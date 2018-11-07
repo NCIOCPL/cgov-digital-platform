@@ -1,6 +1,6 @@
 # Cancer.gov Digital Platform
 
-This project provides the Cancer.gov Digital Platform. A Drupal based Acquia BLT / lightning integrated solution with dependencies managed by [Composer](https://getcomposer.org/).
+This project provides the Cancer.gov Digital Platform. A Drupal based Acquia BLT integrated solution with dependencies managed by [Composer](https://getcomposer.org/).
 
 
 ## Usage
