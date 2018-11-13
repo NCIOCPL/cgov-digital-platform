@@ -7,7 +7,7 @@ services:
   web:
     ## Use the web folder
     build:
-      context: web      
+      context: web
     volumes:
       ## The project root
       - ../:/var/www:cached
@@ -15,13 +15,14 @@ services:
       - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
       - ./web/runtime/php_apache2.ini:/etc/php/7.2/apache2/php.ini
       - ./web/runtime/php_cli.ini:/etc/php/7.2/cli/php.ini
-      - ./web/runtime/php-conf:/etc/php/7.2/mods-available  
+      - ./web/runtime/php-conf:/etc/php/7.2/mods-available
       ## Block local git repo management
       - ./web/runtime/empty-git:/var/www/.git
     env_file:
       - ./docker.env
     ports:
       - "80:80"
+      - "9000:9000"
     networks:
       drupalvm:
     depends_on:

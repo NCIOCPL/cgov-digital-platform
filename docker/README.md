@@ -33,7 +33,7 @@
 * *docker-compose.override.yml* - A docker compose override file which allows you to locally override anything in the docker-compose.yml. This is primarily used for volume mounts. This file is untracked in source control. This is not really required unless you have been told to create it! See https://runnable.com/docker/advanced-docker-compose-configuration for a good discussion of the file.
 * `docker-compose.override.yml.sample` - A sample override file.
 * *docker.env* - A file used to store environment variables (usually secrets or local configuration) which is "pushed" into each container within the docker-compose file. This file is untracked in source control.
-* `docker.env.sample` - A sample docker environment variables file. 
+* `docker.env.sample` - A sample docker environment variables file.
 
 ## Software
 * db
@@ -61,7 +61,7 @@
     * xml
   * Apache 2
   * Composer
-  * Drush Launcher 
+  * Drush Launcher
   * curl
   * git
   * vim
@@ -73,9 +73,11 @@
 XDebug is the PHP runtime debugger. While it helpful in stepping through code, it has major performance implications. So XDebug is not enabled by default. The other annoying thing about XDebug is that it must be configured for your specific IDE.
 
 *This is still being worked on*
-TODO: 
+TODO:
 1. Setup the xdebug.ini overrides (VSCode & PHPStorm)
-3. Expose port
+1. Edit docker.env and set `XDEBUG_SAPI` to `apache2` in order to enable the XDEBUG module for apache. (If you *really* need to debug
+  command line, then set it to `cli`.)
+    1. Check /etc/php/7.2/apache2/conf.d/xdebug.ini
 2. Setup the docker-compose.override.yml.sample
 3. Test & document
 
