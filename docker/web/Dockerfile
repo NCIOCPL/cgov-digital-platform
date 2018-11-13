@@ -41,13 +41,17 @@ RUN DEBIAN_FRONTEND=noninteractive \
     vim \
     zip
 
+
 # Replace configuration files with our own.
 ## We will be mounting these in the composer so that
 ## we don't have to rebuild to update config changes.
 #COPY apache2.conf /etc/apache2/apache2.conf
-#COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 #COPY php_apache2.ini /etc/php/7.2/apache2/php.ini
 #COPY php_cli.ini /etc/php/7.2/cli/php.ini
+
+# Copy up the available sites config. The startup script
+# manipulates this file based on env vars.
+COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 ## These are the PHP modules that are available to be 
 ## loaded by the CLI & apache. This should be inline with
@@ -69,6 +73,9 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Make composer faster
+RUN composer global require "hirak/prestissimo:^0.3"
 
 ## Install Drush Launcher (runs local drush instances)
 RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \

@@ -1,4 +1,7 @@
 
+# DO NOT TRY AND RUN GIT WITHIN THE CONTAINER
+(cause you can't)
+
 ## What is this?
 
 ## Running your development stack
