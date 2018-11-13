@@ -6,7 +6,17 @@
 1. Change the passwords in `docker.env` to be different than in the sample. If need be modify the virtual hosts list (APACHE_SITE_ALIAS) as well.
 1. Run `docker-compose up -d` within this directory to start up the stack.
 
+### Initial Setup of Machine
+1. Install docker
+1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker.
+   1. `brew install dnsmasq`
+   1. `sudo echo 'address=/devbox/127.0.0.1' >> /usr/local/etc/dnsmasq.conf`
+   1. `sudo mkdir -p /etc/resolver`
+   1. `echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/devbox` to setup DNS for the sites
+   1. `sudo brew services restart dnsmasq`
+
 ### Initial Setup of Site
+
 1. Run `docker exec -it docker_web_1 /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `composer install` -- Install all vendor files
