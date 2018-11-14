@@ -25,8 +25,6 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 
 ### 2. Initial setup of your project
 1. Clone the project to a location on your hard drive
-1. Modify `<project_root>/docroot/sites/default/settings/local.settings.php`
-   1. Change the default database's host name to be `db`. (Look for `'host' => 'localhost',`)
 1. Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
 1. You will probably want to start things and install the site. So go to [Initial Setup of Site](#Initial-Setup-of-Site) to do that.
 
@@ -39,7 +37,11 @@ This is how you can install a site. NOTE: at some point we will have a real site
 1. Run `docker exec -it docker_web_1 /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `composer install` -- Install all vendor files
-1. `blt setup` -- Perform the initial site install
+1. `blt setup` -- Perform the initial site install. It will fail with a mySQL error.
+1. Modify `<project_root>/docroot/sites/default/settings/local.settings.php`
+   1. Change the default database's host name to be `db`. (Look for `'host' => 'localhost',`)
+1. `blt setup` -- It should work now.
+
 
 **NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
 

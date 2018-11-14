@@ -15,7 +15,6 @@ services:
       - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
       - ./web/runtime/php_apache2.ini:/etc/php/7.2/apache2/php.ini
       - ./web/runtime/php_cli.ini:/etc/php/7.2/cli/php.ini
-      - ./web/runtime/php-conf:/etc/php/7.2/mods-available
       ## Block local git repo management
       - ./web/runtime/empty-git:/var/www/.git
     env_file:
