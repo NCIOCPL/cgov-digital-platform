@@ -1,22 +1,22 @@
 <?php
 
-namespace Drupal\Tests\microsite_domain\Functional;
+namespace Drupal\Tests\www_profile_domain\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Tests microsite_domain installation profile expectations.
+ * Tests www_profile_domain installation profile expectations.
  *
- * @group microsite_domain
+ * @group www_profile_domain
  */
-class microsite_domainTest extends BrowserTestBase {
+class www_profile_domainTest extends BrowserTestBase {
 
-  protected $profile = 'microsite_domain';
+  protected $profile = 'www_profile_domain';
 
   /**
-   * Tests microsite_domain installation profile.
+   * Tests www_profile_domain installation profile.
    */
-  public function testmicrosite_domain() {
+  public function testwww_profile_domain() {
     $this->drupalGet('');
     // Check the login block is present.
     $this->assertLink(t('Create new account'));
