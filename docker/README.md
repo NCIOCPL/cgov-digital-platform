@@ -26,6 +26,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 ### 2. Initial setup of your project
 1. Clone the project to a location on your hard drive
 1. Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
+1. Copy the `<project_root>/blt/example.local.blt.yml` to `<project_root>/blt/local.blt.yml`. This will allow you to set an local dev overrides for BLT. When working in the docker stack, this also overrides the database host.
 1. You will probably want to start things and install the site. So go to [Initial Setup of Site](#Initial-Setup-of-Site) to do that.
 
 **NOTE:** If you would like to change the db password, which you should and to, make sure you update the local.settings.php file's database password as well.
@@ -38,9 +39,6 @@ This is how you can install a site. NOTE: at some point we will have a real site
 1. `cd /var/www`
 1. `composer install` -- Install all vendor files
 1. `blt setup` -- Perform the initial site install. It will fail with a mySQL error.
-1. Modify `<project_root>/docroot/sites/default/settings/local.settings.php`
-   1. Change the default database's host name to be `db`. (Look for `'host' => 'localhost',`)
-1. `blt setup` -- It should work now.
 
 
 **NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
@@ -116,9 +114,7 @@ You should not need to at this point. So this section is TBD.
 1. Work on debugging
 1. Add in memcached
 1. Add instructions for rebuilding / force rebuilding
-1. Document DNSMASQ / How to setup host names
 1. Create aliases for containered commands (blt, drush, composer?)
 1. Make nice project name in composer so it is not just docker_svc_1
 1. Avoid root
 1. Configure settings to match env vars
-1. Fix auto hook creation junk.

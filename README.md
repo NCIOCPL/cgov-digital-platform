@@ -2,6 +2,25 @@
 
 This project provides the Cancer.gov Digital Platform. A Drupal based Acquia BLT integrated solution with dependencies managed by [Composer](https://getcomposer.org/).
 
+## Running the Development Environment
+See [Docker Instructions](docker/README.md)
+
+## Folder Structure
+* **blt** - The BLT configuration
+* **config** - The Drupal configuration (https://blt.readthedocs.io/en/9.x/configuration-management/)
+* **docker** - The development stack.
+* **docroot** - the web site
+* **drush** - Drush configurations
+* **patches** - local patch files
+* **scripts** - ??? something for composer
+* **tests** - BeHat and Unit tests
+
+
+
+
+
+# IGNORE BELOW FOR NOW!
+This section is based on the output of the composer project that was used to setup this repo. Much of this is valid, but should be reviewed.
 
 ## Usage
 
