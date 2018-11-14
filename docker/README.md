@@ -25,6 +25,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 
 ### 2. Initial setup of your project
 1. Clone the project to a location on your hard drive
+1. Copy `<project_root>/docroot/sites/default/settings/default.local.settings.php`to  `<project_root>/docroot/sites/default/settings/local.settings.php`
 1. Modify `<project_root>/docroot/sites/default/settings/local.settings.php`
    1. Change the default database's host name to be `db`. (Look for `'host' => 'localhost',`)
 1. Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
