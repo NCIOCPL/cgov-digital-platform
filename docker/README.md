@@ -3,13 +3,18 @@
 (cause you can't)
 
 ## What is this?
+The configuration needed for running the CGov Digital Platform in a docker compose stack. (As opposed to Vagrant, which has issues on Windows, and can be slow to recreate)
 
 ## Running your development stack
-1. Copy the `docker.env.sample` file to a file named `docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
-1. Change the passwords in `docker.env` to be different than in the sample. If need be modify the virtual hosts list (APACHE_SITE_ALIAS) as well.
-1. Run `docker-compose up -d` within this directory to start up the stack.
 
-### Initial Setup of Machine
+### Quick Reference
+**Make sure your machine and project have been setup before starting**
+* **STARTING:** Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
+* **STOPING:** `docker-compose down` within this directory (`docker`) to start up the stack.
+
+**NOTE:** Currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
+
+### 1. Initial Setup of Your Machine
 1. Install docker
 1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker.
    1. `brew install dnsmasq`
@@ -18,12 +23,33 @@
    1. `echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/devbox` to setup DNS for the sites
    1. `sudo brew services restart dnsmasq`
 
-### Initial Setup of Site
+### 2. Initial setup of your project
+1. Clone the project to a location on your hard drive
+1. Modify `<project_root>/docroot/sites/default/settings/local.settings.php`
+   1. Change the default database's host name to be `db`. (Look for `'host' => 'localhost',`)
+1. Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
+1. You will probably want to start things and install the site. So go to [Initial Setup of Site](#Initial-Setup-of-Site) to do that.
 
+**NOTE:** If you would like to change the db password, which you should and to, make sure you update the local.settings.php file's database password as well.
+
+### 3. Initial Setup of Site
+This is how you can install a site. NOTE: at some point we will have a real site, so 
+1. Start the stack
+   * Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
 1. Run `docker exec -it docker_web_1 /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `composer install` -- Install all vendor files
 1. `blt setup` -- Perform the initial site install
+
+**NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
+
+
+### Managing Virtual Hosts
+At some point in time there will be multiple websites within our project. (e.g. www & dceg) You can add additional virtual hosts to the apache configuration by:
+1. Edit `docker.env` 
+1. Add the new host name (space separated) to the `APACHE_SITE_ALIAS` variable.
+1. Save the file
+1. Restart the stack
 
 ## File Structure
 * **db** - Directory containing the files needed for the database container. See [db/README.md](db/README.md) for more information.
