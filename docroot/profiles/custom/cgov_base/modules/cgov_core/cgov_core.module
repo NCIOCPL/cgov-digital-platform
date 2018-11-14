@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_core.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function cgov_core_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the cgov_core module.
+    case 'help.page.cgov_core':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('CGov Core Components') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function cgov_core_theme() {
+  return [
+    'cgov_core' => [
+      'render element' => 'children',
+    ],
+  ];
+}
