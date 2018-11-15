@@ -1,1 +1,0 @@
-You should never try to manage this git repository from within the container!
