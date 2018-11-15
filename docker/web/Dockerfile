@@ -31,7 +31,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     php7.2-oauth \
     php7.2-opcache \
     php7.2-readline \
-    php7.2-sqlite3 \    
+    php7.2-sqlite3 \
     php7.2-soap \
     php7.2-xdebug \
     php7.2-xml \
@@ -40,6 +40,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
     git \
     vim \
     zip
+
+# Set Timezone
+RUN ln -s -f /usr/share/zoneinfo/America/New_York /etc/localtime
 
 
 # Replace configuration files with our own.
@@ -53,7 +56,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 # manipulates this file based on env vars.
 COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-## These are the PHP modules that are available to be 
+## These are the PHP modules that are available to be
 ## loaded by the CLI & apache. This should be inline with
 ## the modules installed above.
 COPY ./build/php-conf /etc/php/7.2/mods-available
@@ -88,12 +91,12 @@ RUN curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal \
 RUN php --version; composer --version; drupal --version; drush --drush-launcher-version
 
 ## Enable BLT function
-COPY ./build/blt.sh /tmp/blt.sh 
+COPY ./build/blt.sh /tmp/blt.sh
 RUN cat /tmp/blt.sh >> ~/.bashrc
 
 ## Turn off xdebug as it uses resources that could be best used
-## elsewhere. Once the container is up you can use 
-## phpenmod -s <SAPI> xdebug 
+## elsewhere. Once the container is up you can use
+## phpenmod -s <SAPI> xdebug
 ## where SAPI is probably, most likely, apache2
 RUN phpdismod -s cli xdebug
 RUN phpdismod -s apache2 xdebug
