@@ -1,0 +1,33 @@
+name: CGov Site
+type: profile
+description: 'Minimal CGov site configuration.'
+version: 1.0.1
+core: 8.x
+install:
+  # from Minimal
+  - node
+  - block
+  - dblog
+  - page_cache
+  - dynamic_page_cache
+  # from Standard
+  - toolbar
+  - config
+  - taxonomy
+  - views_ui
+  - field_ui
+  - user
+  - path
+  - datetime
+  - datetime_range
+  - file
+  - image
+  - link
+  - options
+  - text
+  # from CGOV
+  - cgov_core
+
+themes:
+  - cgov_common
+  - seven
