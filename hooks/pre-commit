@@ -1,0 +1,14 @@
+#!/bin/sh
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+if [ "$STAGED" != "" ]
+then
+    echo "Checking compliance with Drupal coding standards ..."
+    ./vendor/bin/phpcs $STAGED
+    if [ $? != 0 ]
+    then
+        echo "Fix the problems reported and try again ..."
+        exit 1
+    fi
+fi
+exit 0
