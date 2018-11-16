@@ -2,18 +2,18 @@ langcode: en
 status: true
 dependencies:
   theme:
-    - seven
-id: primary_local_tasks
-theme: seven
-region: header
+    - cgov_admin
+id: cgov_admin_secondary_local_tasks
+theme: cgov_admin
+region: pre_content
 weight: 0
 provider: null
 plugin: local_tasks_block
 settings:
   id: local_tasks_block
-  label: 'Primary Tabs'
+  label: 'Secondary Tabs'
   provider: core
   label_display: '0'
-  primary: true
-  secondary: false
+  primary: false
+  secondary: true
 visibility: {  }
