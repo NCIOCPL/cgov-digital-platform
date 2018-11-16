@@ -33,6 +33,7 @@ services:
     ## TODO: Map mysql data file directory to persit db compose down commands.
     volumes:
       - ./db/overrides/backups:/var/mysql/backups:delegated
+      - db:/var/lib/mysql
     env_file:
       - ./docker.env
     ports:
@@ -42,3 +43,6 @@ services:
 
 networks:
   drupalvm:
+
+volumes:
+  db:
