@@ -42,7 +42,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
     zip
 
 # Set Timezone
-RUN ln -s -f /usr/share/zoneinfo/America/New_York /etc/localtime
+RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata
 
 
 # Replace configuration files with our own.
