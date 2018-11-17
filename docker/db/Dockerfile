@@ -9,15 +9,23 @@ FROM ubuntu:xenial
 ################################################################################
 
 # Update the package manager, then install MariaDB server.
-RUN apt-get update && apt-get install -y software-properties-common 
+RUN apt-get update && apt-get install -y software-properties-common
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 RUN add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.lstn.net/mariadb/repo/10.0/ubuntu xenial main'
- 
-RUN apt-get install -y mariadb-server
 
+RUN apt-get install -y mariadb-server
 
 # Reconfigure the bind address of MySQL to allow any incoming network connection.
 RUN sed -i -e "s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
+
+# Set Timezone
+# NOTE: The xenial (16.04) base image doesn't include timezone data, so that needs to be installed.
+#       The bionic (18.04) image resolves this problem.
+RUN DEBIAN_FRONTEND=noninteractive && \
+  apt install -y tzdata && \
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata
+
 
 # Copy our custom entrypoint and make it executable.
 COPY ./build/docker-entrypoint.sh /usr/local/bin/
