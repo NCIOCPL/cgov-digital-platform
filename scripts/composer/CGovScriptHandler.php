@@ -19,32 +19,58 @@ class CGovScriptHandler {
    * Initializes a fresh clone of the cgov-digital-platform
    */
   public static function initializeProject(Event $event) {
-    
-    echo "CGov Project Initialization: Begin";
+    $io = $event->getIO();
+    $io->write("CGov Project Initialization: Begin");
 
-    //Get BLT folder
+    //Get project root path
     $project_root = join([ __DIR__, "../.." ], "/");
 
-    
-    $blt_file = array(
+    $bltFile = array(
         "path" => join([$project_root, "blt"]),
         "sample" => "example.local.blt.yml",
         "real" => "local.blt.yml"
     );
 
-    $dockerenv_file = array(
+    $dockerenvFile = array(
       "path" => join([$project_root, "docker"]),
       "sample" => "docker.env.sample",
       "real" => "docker.env"
     );
 
-    $files_to_copy = [
-      $blt_file,
-      $dockerenv_file
+    $filesToCopy = [
+      $bltFile,
+      $dockerenvFile
     ];
 
+    //Validate 
+    $encounteredError = false;
+    foreach($filesToCopy as $fileInfo) {
+      if (!CGovScriptHandler::isLocalFileValid($fileInfo)) {
+        $io->writeError(
+          sprintf(
+            '<error>CGov Project Initialization: ERROR %s already exists. Cleanup first.</error>',
+            $fileInfo["real"]
+          )
+        );
+        $encounteredError = true;
+      }
+    }
 
-    echo "CGov Project Initialization: Complete";
+    if ($encounteredError) {
+      $io->writeError(
+        sprintf(
+          '<error>CGov Project Initialization: Existing files. Exiting.</error>',
+          $fileInfo["real"]
+        )
+      );
+      exit(1);
+    }
+
+    $event->getIO()->write("CGov Project Initialization: Complete");
+  }
+
+  private static function isLocalFileValid($fileInfo) {
+    return true;
   }
 
   /**
@@ -53,7 +79,7 @@ class CGovScriptHandler {
    * @param [Object] 
    * @return void
    */
-  private static function copySampleToReal($copyObj) {
+  private static function copyLocalFile($fileInfo) {
 
   }
 
