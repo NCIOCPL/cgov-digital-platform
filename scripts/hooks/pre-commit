@@ -1,13 +1,24 @@
 #!/bin/sh
 
+#----------------------------------------------------------------------
+# See if the installed phpcs is older than what we need.
+#
+# This is somewhat fragile, as 'sort -V` will only work correctly if
+# Squiz Labs keeps the format of the output string from `phpcs --version`.
+#----------------------------------------------------------------------
+function too_old() {
+    test "$(printf '%s\n%s' "$@" | sort -V | head -n 1)" != "$1";
+}
+
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
 PHPCS=./vendor/bin/phpcs
+REQUIRED="PHP_CodeSniffer version 3.3"
+
 if [ "$STAGED" != "" ]
 then
     if [ ! -x $PHPCS ]
     then
         PHPCS=$(which phpcs 2>/dev/null)
-	echo "PHPCS HAS BEEN SET TO $PHPCS"
     fi
     if [ ! -x $PHPCS ]
     then
@@ -18,6 +29,11 @@ then
     if [ $? -ne 0 ]
     then
         echo "The Drupal coding standards are not installed ..."
+        exit 1
+    fi
+    if too_old "$REQUIRED" "$(phpcs --version)"
+    then
+        echo "$REQUIRED or better required"
         exit 1
     fi
     echo "Checking compliance with Drupal coding standards ..."
