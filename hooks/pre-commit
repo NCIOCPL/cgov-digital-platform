@@ -1,12 +1,13 @@
 #!/bin/sh
 
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+PHPCS=./vendor/bin/phpcs
 if [ "$STAGED" != "" ]
 then
-    PHPCS=$(which phpcs 2>/dev/null)
-    if [ "$PHPCS" == "" ]
+    if [ ! -x $PHPCS ]
     then
-        PHPCS=./vendor/bin/phpcs
+        PHPCS=$(which phpcs 2>/dev/null)
+	echo "PHPCS HAS BEEN SET TO $PHPCS"
     fi
     if [ ! -x $PHPCS ]
     then
