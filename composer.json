@@ -52,7 +52,8 @@
     },
     "autoload": {
         "classmap": [
-            "scripts/composer/ScriptHandler.php"
+            "scripts/composer/ScriptHandler.php",
+            "scripts/composer/CGovScriptHandler.php"
         ],
         "files": [
             "load.environment.php"
@@ -83,7 +84,11 @@
             "rm -rf vendor composer.lock docroot/core docroot/modules/contrib docroot/profiles/contrib docroot/themes/contrib",
             "@composer clearcache --ansi",
             "@composer install --ansi"
-        ]
+        ],
+        "cgov-init": "CGovPlatform\\composer\\CGovScriptHandler::initializeProject"
+    },
+    "scripts-descriptions": {
+        "cgov-init": "Initializes a fresh clone from github. (Setup local docker env, local blt, install hooks)"
     },
     "extra": {
         "patchLevel": {
