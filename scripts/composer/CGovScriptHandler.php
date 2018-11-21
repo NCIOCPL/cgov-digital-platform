@@ -42,7 +42,7 @@ class CGovScriptHandler {
       if (!CGovScriptHandler::isLocalFileValid($fileInfo)) {
         $io->writeError(
           sprintf(
-            '<error>CGov Project Initialization: ERROR %s already exists. Cleanup first.</error>',
+            '<error>CGov Project Initialization: ERROR %s already exists. Cannot replace existing file!</error>',
             $fileInfo["real"]
           )
         );
