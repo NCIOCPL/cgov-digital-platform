@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Tests\Unit;
+namespace Drupal\Tests\cgov_core\Unit;
 
 use Drupal\Tests\UnitTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Tests\Kernel;
+namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -9,20 +9,23 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeTypeInterface;
 
 /**
- * Tests node browser field storage.
- *
- * @group cgov_core
+ * Base class which does most of the work for field storage tests.
  */
-class NodeBrowserTitleFieldStorageTest extends KernelTestBase {
+abstract class CGovFieldStorageTestBase extends KernelTestBase {
 
   /**
-   * Modules to enable.
+   * The field name to test.
    *
-   * @var array
+   * @var string
    */
-  public static $modules = [
-    'user', 'system', 'field', 'node', 'text', 'filter', 'cgov_core',
-  ];
+  protected $fieldName;
+
+  /**
+   * The field label.
+   *
+   * @var string
+   */
+  protected $fieldLabel;
 
   /**
    * Sets up the test environment.
@@ -38,13 +41,24 @@ class NodeBrowserTitleFieldStorageTest extends KernelTestBase {
   }
 
   /**
-   * Tests node browser title field storage persistence.
+   * Tests text(plain) field storage persistence.
    *
-   * This works even if there are no instances.
+   * This will:
+   *   - Check the config exists.
+   *   - Check the field can be attached to a node.
+   *   - Checks that when the node is removed the field still exists.
+   *   - Checks that when the module is disabled, the field is removed.
+   *
+   * @param string $fieldName
+   *   The machine name of the field to test.
+   * @param string $fieldLabel
+   *   The label of the field to test.
    */
-  public function testFieldOverrides() {
-    $fieldName = 'field_browser_title';
-    $fieldLabel = 'Browser Title';
+  protected function baseTestPlainTextField($fieldName, $fieldLabel) {
+
+    if (empty($fieldName) || empty($fieldLabel)) {
+      throw new Exception("Field Name and Label MUST be set.");
+    }
 
     // Check configuration for field.
     $field_storage = FieldStorageConfig::loadByName('node', $fieldName);

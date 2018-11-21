@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Tests\Kernel;
+namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 
