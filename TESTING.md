@@ -32,4 +32,4 @@ Run `blt test:phpunit`
   * where `<type>` is Unit, Kernel or Functional.
   * NOTE: folders under `<type>` need to be taken into account in the namespace. See the notes about PHPUnit tests on https://www.drupal.org/docs/develop/standards/psr-4-namespaces-and-autoloading-in-drupal-8 for more information.
 
-Please check out a modules README.md for more specific information on how testing has been defined for that project.
+Please check out a module's README.md for more specific information on how testing has been defined for that project.

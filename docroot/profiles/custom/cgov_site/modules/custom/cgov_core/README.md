@@ -19,7 +19,7 @@ These Kernel tests make sure that field storage items are configured and attache
 
 Field Storage Tests are placed in the `FieldStorage` directory under the `cgov_core/tests/src/Kernel` directory. The tests classes should be derived from the `CGovFieldStorageTestBase` class which takes care of most of the work.
 
-Example Code see comments for descriptions
+Example Code (see comments for descriptions)
 ```php
 <?php
 
@@ -73,4 +73,4 @@ class NodeMyFieldFieldStorageTest extends CGovFieldStorageTestBase {
 ```
 
 
-### Function Tests (Comming Soon)
+### Functional Tests (Coming Soon)
