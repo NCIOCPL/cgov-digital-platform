@@ -78,6 +78,7 @@ class Hoover {
    *   Number of errors (1 or 0).
    */
   private static function unlink(string $path, IOInterface $io) {
+    @\chmod($path, 0777);
     if (!\unlink($path)) {
       $io->writeError("<error>Unable to delete $path</error>");
       return 1;
@@ -102,6 +103,9 @@ class Hoover {
     if (\is_link($dir)) {
       return self::unlink($dir, $io);
     }
+
+    // Make sure we have all the permissions we need.
+    @\chmod($dir, 0777);
 
     // Keep track of how many problems arise.
     $errors = 0;
