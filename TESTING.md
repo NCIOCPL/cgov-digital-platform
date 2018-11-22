@@ -17,8 +17,19 @@ To make testing work you must:
 
 Run `blt test:phpunit`
 
-## Folder Structure
-* src
-  * Kernel - Kernel tests go here
-  * Unit - Unit tests go here
-  * Functional - Browser tests go here -- Coming Soon!
+## Making Tests
+
+* Test Methods begin with the word `test`
+* Tests should live with your module in the a folder structure as:
+  * `<module name>`
+    * tests
+      * src
+        * Unit - Unit tests; those test that do not require Drupal and only use mocks.
+        * Kernel - Kernel tests; those tests that require Drupal, but only call APIs. Requires a working simpletest db
+        * Functional (coming soon); aka Browser tests. Those tests that interface with the Drupal admin web interfaces. Reqiures a working simpletest db and web site. This is not like a BeHat test, it ensures the functionality works, NOT how it visualy looks. (e.g. does the "Add new content type" button work?)
+* Test Classes should have a `Drupal\Tests\<module name>\<type>` namespace
+  * where `<module name>` is the module name (e.g. cgov_core)
+  * where `<type>` is Unit, Kernel or Functional.
+  * NOTE: folders under `<type>` need to be taken into account in the namespace. See the notes about PHPUnit tests on https://www.drupal.org/docs/develop/standards/psr-4-namespaces-and-autoloading-in-drupal-8 for more information.
+
+Please check out a module's README.md for more specific information on how testing has been defined for that project.
