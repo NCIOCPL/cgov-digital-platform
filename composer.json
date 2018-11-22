@@ -53,7 +53,8 @@
     "autoload": {
         "classmap": [
             "scripts/composer/ScriptHandler.php",
-            "scripts/composer/CGovScriptHandler.php"
+            "scripts/composer/CGovScriptHandler.php",
+            "scripts/composer/Hoover.php"
         ],
         "files": [
             "load.environment.php"
@@ -85,10 +86,15 @@
             "@composer clearcache --ansi",
             "@composer install --ansi"
         ],
-        "cgov-init": "CGovPlatform\\composer\\CGovScriptHandler::initializeProject"
+        "cgov-init": "CGovPlatform\\composer\\CGovScriptHandler::initializeProject",
+        "cgov-clean": [
+            "CGovPlatform\\composer\\Hoover::clean",
+            "@composer clearcache --ansi"
+        ]
     },
     "scripts-descriptions": {
-        "cgov-init": "Initializes a fresh clone from github. (Setup local docker env, local blt, install hooks)"
+        "cgov-init": "Initializes a fresh clone from github. (Setup local docker env, local blt, install hooks)",
+        "cgov-clean": "Clean the cancer.gov project tree."
     },
     "extra": {
         "patchLevel": {
