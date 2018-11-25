@@ -44,6 +44,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 # Install google chrome (for some reason, tacking on gnupg to previous list failed).
 # https://github.com/bryanpizzillo/cgov-digital-platform/issues/48
+# See also https://hub.docker.com/r/selenium/node-chrome/~/dockerfile/
 RUN apt install gnupg -y
 RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
