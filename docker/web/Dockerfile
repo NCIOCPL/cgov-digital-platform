@@ -54,6 +54,7 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 # Install the chrome webdriver.
+# Using 'latest' in download URL no longer works, apparently.
 RUN CD_VERSION=2.44 && echo "Using chromedriver version: "$CD_VERSION \
   && curl -o /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CD_VERSION/chromedriver_linux64.zip \
   && rm -rf /opt/selenium/chromedriver \
