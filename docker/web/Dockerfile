@@ -41,6 +41,28 @@ RUN DEBIAN_FRONTEND=noninteractive \
     vim \
     zip
 
+
+# Install google chrome (for some reason, tacking on gnupg to previous list failed).
+# https://github.com/bryanpizzillo/cgov-digital-platform/issues/48
+RUN apt install gnupg -y
+RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update -qqy \
+  && apt-get -qqy install google-chrome-stable \
+  && rm /etc/apt/sources.list.d/google-chrome.list \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# Install the chrome webdriver.
+RUN CD_VERSION=2.44 && echo "Using chromedriver version: "$CD_VERSION \
+  && curl -o /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CD_VERSION/chromedriver_linux64.zip \
+  && rm -rf /opt/selenium/chromedriver \
+  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
+  && rm /tmp/chromedriver_linux64.zip \
+  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-latest \
+  && chmod 755 /opt/selenium/chromedriver-latest \
+  && ln -fs /opt/selenium/chromedriver-latest /usr/bin/chromedriver
+
+
 # Set Timezone
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
