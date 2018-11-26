@@ -10,7 +10,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 ### Quick Reference
 **Make sure your machine and project have been setup before starting**
 * **STARTING:** Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
-* **STOPING:** `docker-compose down` within this directory (`docker`) to start up the stack.
+* **STOPPING:** `docker-compose down` within this directory (`docker`) to start up the stack.
 
 **NOTE:** Currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
 
@@ -36,7 +36,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 This is how you can install a site. NOTE: at some point we will have a real site, so
 1. Start the stack
    * Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
-1. Run `docker exec -it docker_web_1 /bin/bash` to login to the web container
+1. Run `docker exec -it cgov_web /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `composer install` -- Install all vendor files
 1. `blt setup` -- Perform the initial site install.
