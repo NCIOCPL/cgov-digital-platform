@@ -94,6 +94,12 @@ RUN php --version; composer --version; drupal --version; drush --drush-launcher-
 ## Enable BLT function
 COPY ./build/blt.sh /tmp/blt.sh
 RUN cat /tmp/blt.sh >> ~/.bashrc
+RUN rm /tmp/blt.sh
+
+## Add custom bashrc code
+COPY ./build/custom-bashrc.sh /tmp/bashrc.sh
+RUN cat /tmp/bashrc.sh >> ~/.bashrc
+RUN rm /tmp/bashrc.sh
 
 ## Turn off xdebug as it uses resources that could be best used
 ## elsewhere. Once the container is up you can use
