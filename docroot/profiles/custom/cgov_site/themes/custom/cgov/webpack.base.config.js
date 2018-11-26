@@ -8,6 +8,22 @@ const config = {
         filename: '[name].js',
         path: path.join(__dirname, 'dist/js'),
     },
+    module: {
+		rules: [
+			{
+				test: /\.s?css$/,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
+					'css-loader', 
+					'postcss-loader', 
+					'sass-loader'
+				],
+			},
+
+		]
+	},
     plugins: [
 		new MiniCssExtractPlugin({
 			filename: "../styles/[name].css"
