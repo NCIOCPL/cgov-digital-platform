@@ -27,6 +27,7 @@ services:
       - db
     image: cgov_web
     container_name: cgov_web
+    hostname: cgov_web
 
   db:
     build:
@@ -43,6 +44,7 @@ services:
       drupalvm:
     image: cgov_db
     container_name: cgov_db
+    hostname: cgov_db
 
 networks:
   drupalvm:
