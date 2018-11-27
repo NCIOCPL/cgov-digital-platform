@@ -1,3 +1,4 @@
+import { newWindow } from 'core/src/utilities';
 import './Common.scss';
 
-console.log('test');
+newWindow('https://www.cancer.gov');
