@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.cgov_home_landing.field_short_title
+    - node.type.cgov_home_landing
+  module:
+    - user
+id: node.cgov_home_landing.teaser
+targetEntityType: node
+bundle: cgov_home_landing
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_short_title: true
