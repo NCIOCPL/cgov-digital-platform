@@ -23,11 +23,10 @@ services:
       - "80:80"
     networks:
       drupalvm:
+        aliases:
+          - simpletest
     depends_on:
       - db
-    image: cgov_web
-    container_name: cgov_web
-    hostname: cgov_web
 
   db:
     build:
@@ -42,9 +41,6 @@ services:
       - "3306:3306"
     networks:
       drupalvm:
-    image: cgov_db
-    container_name: cgov_db
-    hostname: cgov_db
 
 networks:
   drupalvm:
