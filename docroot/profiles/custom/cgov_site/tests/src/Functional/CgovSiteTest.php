@@ -6,7 +6,7 @@ use Drupal\Tests\SchemaCheckTestTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Tests Standard installation profile expectations.
+ * Tests CGOV_SITE installation profile expectations are being met.
  *
  * @group cgov
  * @group cgov_site
@@ -28,6 +28,12 @@ class CgovSiteTest extends BrowserTestBase {
    * Tests cgov_site installation profile.
    */
   public function testCgovSiteProfile() {
+    // Verify all basic roles exist.
+    $roles = user_roles();
+    $this->assertArrayHasKey('anonymous', $roles, 'Anonymous role exists.');
+    $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
+    $this->assertArrayHasKey('administrator', $roles, 'Administrator role exists.');
+
     // Verify Home page loads for anonymous user.
     $this->drupalGet('<front>');
     $this->assertResponse(200);
