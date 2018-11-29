@@ -2,27 +2,16 @@
 
 namespace Drupal\Tests\cgov_site\Functional;
 
-
-use Drupal\Component\Utility\Html;
-use Drupal\media\Entity\MediaType;
 use Drupal\Tests\SchemaCheckTestTrait;
-use Drupal\contact\Entity\ContactForm;
-use Drupal\Core\Url;
-use Drupal\dynamic_page_cache\EventSubscriber\DynamicPageCacheSubscriber;
-use Drupal\filter\Entity\FilterFormat;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\user\Entity\Role;
-use Drupal\Tests\system\Functional\Module;
 
 /**
  * Tests Standard installation profile expectations.
  *
  * @group cgov
  * @group cgov_site
- *
  */
-class CgovSiteTest extends BrowserTestBase
-{
+class CgovSiteTest extends BrowserTestBase {
 
   use SchemaCheckTestTrait;
 
@@ -37,10 +26,8 @@ class CgovSiteTest extends BrowserTestBase
 
   /**
    * Tests cgov_site installation profile.
-   *
    */
-  public function testCgovSiteProfile()
-  {
+  public function testCgovSiteProfile() {
     // Verify Home page loads for anonymous user.
     $this->drupalGet('<front>');
     $this->assertResponse(200);
@@ -56,7 +43,7 @@ class CgovSiteTest extends BrowserTestBase
 
     // Load Appearance (themes) page.
     $this->drupalGet('admin/appearance');
-    // Verify we have permission to view page
+    // Verify we have permission to view page.
     $this->assertResponse(200);
 
     // Verify local tasks (tabs) menu items are present.
@@ -70,5 +57,3 @@ class CgovSiteTest extends BrowserTestBase
   }
 
 }
-
-
