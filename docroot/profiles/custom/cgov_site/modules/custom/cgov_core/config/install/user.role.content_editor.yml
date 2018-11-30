@@ -2,8 +2,16 @@ uuid: 083f5d40-5f1e-45ee-a562-98254022d7bc
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: a9hFcLBtv1FXamAT73z17333p8ALG43K7W5fSQjLxjs
 id: content_editor
 label: 'Content Editor'
-weight: 3
+weight: -6
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access content overview'
+  - 'create cgov_article content'
+  - 'delete own cgov_article content'
+  - 'edit any cgov_article content'
+  - 'revert cgov_article revisions'
+  - 'view cgov_article revisions'
