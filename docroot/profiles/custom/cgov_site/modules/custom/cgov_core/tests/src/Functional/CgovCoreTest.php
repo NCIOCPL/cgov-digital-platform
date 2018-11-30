@@ -106,21 +106,6 @@ class CgovCoreTest extends BrowserTestBase {
     // Logout.
     $this->drupalLogout();
 
-
-
-//    // Try to add an Article
-//    $this->drupalGet('/node/add/cgov_article');
-//    // Verify we have permission to view page.
-//    $this->assertResponse(200);
-//
-//    // Verify local tasks (tabs) menu items are present.
-//    $this->assertSession()->elementContains('css', '.block-local-tasks-block', 'List');
-//    $this->assertSession()->elementContains('css', '.block-local-tasks-block', 'Settings');
-//
-//    // Verify enabled themes.
-//    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Common Base Theme');
-//    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Admin Theme');
-//    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'Seven');
   }
 
 }
