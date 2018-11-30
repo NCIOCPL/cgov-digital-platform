@@ -34,10 +34,6 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
     $this->assertArrayHasKey('administrator', $roles, 'Administrator role exists.');
 
-    // Verify Home page loads for anonymous user.
-    $this->drupalGet('<front>');
-    $this->assertResponse(200);
-
     // Create admin user and login.
     $this->adminUser = $this->drupalCreateUser([
       'administer blocks',
