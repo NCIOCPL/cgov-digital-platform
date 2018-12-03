@@ -15,7 +15,9 @@ See [Testing Instructions](TESTING.md)
 * **docroot** - the web site
 * **drush** - Drush configurations
 * **patches** - local patch files
-* **scripts** - ??? something for composer
+* **scripts** - utility scripts
+  * **composer** - Composer scripts
+  * **hooks** - Git hook scripts
 * **tests** - BeHat and Unit tests
 
 
