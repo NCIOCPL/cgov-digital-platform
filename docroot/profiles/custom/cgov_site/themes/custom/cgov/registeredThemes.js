@@ -6,5 +6,4 @@
 
 module.exports = [
     'cgov_common',
-    'cgov_www'
 ];

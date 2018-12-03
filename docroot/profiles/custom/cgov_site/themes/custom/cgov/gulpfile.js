@@ -2,21 +2,14 @@ const path = require('path');
 const gulp = require('gulp');
 const svgSprite = require('gulp-svg-sprite');
 const merge = require('merge-stream');
+const spriteConfig = require('./spriteConfig.js');
 const themes = require('./registeredThemes.js');
 
-const svgSpriteConfig = {
-    mode: {
-        css: {
-            render: {
-                css: true
-            }
-        }
-    }
-}
 gulp.task('sprites', () => {
     return merge(themes.map(themePath => {
-        return gulp.src(`${ themePath }/assets/sprites/**/*.svg`)
-            .pipe(svgSprite(svgSpriteConfig))
+        console.log('*****', themePath)
+        return gulp.src('**/*.svg', { cwd: `${ themePath }/assets/sprites`})
+            .pipe(svgSprite(spriteConfig))
             .pipe(gulp.dest(`${ themePath }/dist`))
     }))
 });
