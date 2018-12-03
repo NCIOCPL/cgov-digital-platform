@@ -18,7 +18,7 @@ module.exports = {
             render: {
                 scss: {
                     dest: "../src/styles/sprites/_svg-sprite-map.scss",
-                    template: 'sprite-template.scss'
+                    template: 'src/sprites/sprite-template.scss'
                 }
             },
             layout:"vertical",
