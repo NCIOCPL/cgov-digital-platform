@@ -30,7 +30,7 @@ const config = {
 	},
     plugins: [
 		new MiniCssExtractPlugin({
-			filename: "../styles/[name].css"
+			filename: "../css/[name].css"
 		}),
 	],
 }
