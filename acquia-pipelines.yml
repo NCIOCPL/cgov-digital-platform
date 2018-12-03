@@ -16,25 +16,24 @@ events:
             script:
               - composer validate --no-check-all --ansi
               - composer install --ansi
-              - source ${BLT_DIR}/scripts/pipelines/setup_env
-              - nvm install v8.14.0
-              - npm install --global npm
+              - source ${SOURCE_DIR}/scripts/pipelines/setup_env
+              ## Node is installed as part of setup_env
         - validate:
             type: script
             script:
-              - source ${BLT_DIR}/scripts/pipelines/validate
+              - source ${SOURCE_DIR}/scripts/pipelines/validate
         - setup-app:
             type: script
             script:
-              - source ${BLT_DIR}/scripts/pipelines/setup_app
+              - source ${SOURCE_DIR}/scripts/pipelines/setup_app
         - tests:
             type: script
             script:
-              - source ${BLT_DIR}/scripts/pipelines/tests
+              - source ${SOURCE_DIR}/scripts/pipelines/tests
         - build-artifact:
             type: script
             script:
-              - source ${BLT_DIR}/scripts/pipelines/build_artifact
+              - source ${SOURCE_DIR}/scripts/pipelines/build_artifact
   pr-merged:
     steps:
       - deploy:
