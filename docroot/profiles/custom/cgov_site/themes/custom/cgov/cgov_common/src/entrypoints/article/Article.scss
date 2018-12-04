@@ -1,5 +1,11 @@
+@import '../../styles/sprites/svg-sprite';
+
 $articleVariable: purple;
 
 * {
     background: $articleVariable;
+}
+
+.page-options--email a::before {
+    @include svg-sprite(mail-envelope-closed-blue);
 }
