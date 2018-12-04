@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const svgSprite = require('gulp-svg-sprite');
 const merge = require('merge-stream');
 const spriteConfig = require('./spriteConfig.js');
-const themes = require('./registeredThemes.js');
+const themes = require('./themes.config.js');
 
 gulp.task('sprites', () => {
     return merge(themes.map(themePath => {
