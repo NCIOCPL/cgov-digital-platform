@@ -9,6 +9,7 @@ const themeConfig = {
         alias: {
             "Core": path.resolve(__dirname, '..'),
             "Utilities": path.resolve(__dirname, '..', 'src', 'utilities'),
+            "Styles": path.resolve(__dirname, 'src', 'styles')
         }
     },
     output: {
