@@ -8,6 +8,11 @@ export PATH=${COMPOSER_BIN}:${PATH}
 export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
 export SIMPLETEST_DB=mysql://simpletest:simpletest@localhost/simpletest
 
-blt tests:all --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
+## Behat tests will run the server
+blt tests:behat:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
+
+blt tests:server:start --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
+blt tests:phpunit:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
+blt tests:server:kill --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
 
 set +v
