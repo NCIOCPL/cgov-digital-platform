@@ -1,4 +1,4 @@
-import { newWindow } from 'Utilities';
+import { newWindow } from 'Core/utilities';
 import './Common.scss';
 
 const a = { A: 'AAA' };
