@@ -12,7 +12,7 @@ git config --global user.email "noreply@acquia.com"
 mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS drupal"
 
 ## Let's setup the simpletest database here as well
-mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest"
+mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest; GRANT ALL ON simpletest.* TO 'drupal'@'localhost';"
 
 # Setup NVM.
 nvm install v10.14.1
