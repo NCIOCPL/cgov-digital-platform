@@ -13,7 +13,7 @@ mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS drupal"
 
 ## Let's setup the simpletest database here as well
 mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest"
-mysql -u root -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+mysql -u root -proot -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
 
 # Setup NVM.
 nvm install v10.14.1
