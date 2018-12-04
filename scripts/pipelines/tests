@@ -8,6 +8,13 @@ export PATH=${COMPOSER_BIN}:${PATH}
 export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
 export SIMPLETEST_DB=mysql://drupal:drupal@localhost/simpletest
 
+echo "BLT"
+cat /mnt/tmp/local.prod/source/blt/local.blt.yml
+echo "SETTINGS"
+cat /mnt/tmp/local.prod/source/docroot/sites/default/settings.php
+echo "LOCAL SETTINGS"
+cat /mnt/tmp/local.prod/source/docroot/sites/default/settings/local.settings.php
+
 blt tests:all --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --yes --ansi --verbose
 
 set +v
