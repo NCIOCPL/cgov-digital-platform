@@ -25,12 +25,24 @@ const config = {
 					'sass-loader'
 				],
 			},
+			{
+				test: /\.svg$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							outputPath: '../images/sprites',
+							name: '[name].[ext]'
+						}
+					}
+				]
+			}
 
 		]
 	},
     plugins: [
 		new MiniCssExtractPlugin({
-			filename: "../css/[name].css"
+			filename: "../css/[name].css",
 		}),
 	],
 }
