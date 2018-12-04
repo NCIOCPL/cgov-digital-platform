@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -ev
+
+export PATH=${COMPOSER_BIN}:$PATH
+
+# Set git info.
+git config --global user.name "Acquia Cloud"
+git config --global user.email "noreply@acquia.com"
+
+# Create MySQL DB.
+mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS drupal"
+
+## Let's setup the simpletest database here as well
+mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest"
+mysql -u root -proot -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+
+# Setup NVM.
+nvm install v10.14.1
+npm install -g npm
+
+#  The local.hostname must be set to 127.0.0.1:8888 because we are using drush runserver to test the site.
+yaml-cli update:value blt/blt.yml project.local.hostname '127.0.0.1:8888'
+## SIMPLETEST HOST??
+
+set +v
