@@ -1,0 +1,121 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - content_moderation
+id: editorial_workflow
+label: 'Editorial Workflow'
+type: content_moderation
+type_settings:
+  states:
+    archive_requested:
+      published: false
+      default_revision: false
+      label: 'Archive Requested'
+      weight: 3
+    archived:
+      published: false
+      default_revision: true
+      label: Archived
+      weight: 4
+    draft:
+      label: Draft
+      published: false
+      default_revision: false
+      weight: -4
+    editing:
+      published: false
+      default_revision: false
+      label: Editing
+      weight: 1
+    post_publication_review:
+      published: false
+      default_revision: false
+      label: 'Post-Publication Review'
+      weight: 2
+    published:
+      label: Published
+      published: true
+      default_revision: true
+      weight: -2
+    review:
+      published: false
+      default_revision: false
+      label: Review
+      weight: 0
+  transitions:
+    approve:
+      label: Approve
+      from:
+        - post_publication_review
+      to: published
+      weight: 5
+    approve_archive:
+      label: 'Approve Archive'
+      from:
+        - archive_requested
+      to: archived
+      weight: 8
+    back_to_draft:
+      label: 'Back To Draft'
+      from:
+        - review
+      to: draft
+      weight: -1
+    back_to_editing:
+      label: 'Back To Editing'
+      from:
+        - post_publication_review
+      to: editing
+      weight: 4
+    publish:
+      label: Publish
+      from:
+        - review
+      to: published
+      weight: 0
+    quick_publish:
+      label: 'Quick Publish'
+      from:
+        - draft
+      to: published
+      weight: 1
+    quick_publish_2:
+      label: 'Quick Publish'
+      from:
+        - editing
+      to: published
+      weight: 6
+    reject_archive:
+      label: 'Reject Archive'
+      from:
+        - archive_requested
+      to: published
+      weight: 9
+    request_archive:
+      label: 'Request Archive'
+      from:
+        - published
+      to: archive_requested
+      weight: 7
+    request_review:
+      label: 'Request Review'
+      from:
+        - draft
+      to: review
+      weight: -2
+    request_review_2:
+      label: 'Request Review'
+      from:
+        - editing
+      to: post_publication_review
+      weight: 3
+    revise:
+      label: Revise
+      from:
+        - published
+      to: editing
+      weight: 2
+  entity_types:
+    node: {}
+  default_moderation_state: draft

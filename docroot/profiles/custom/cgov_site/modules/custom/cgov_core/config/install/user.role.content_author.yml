@@ -5,4 +5,12 @@ id: content_author
 label: 'Content Author'
 weight: -8
 is_admin: null
-permissions: {  }
+permissions:
+  - 'use editorial_workflow transition back_to_draft'
+  - 'use editorial_workflow transition back_to_editing'
+  - 'use editorial_workflow transition request_archive'
+  - 'use editorial_workflow transition request_review'
+  - 'use editorial_workflow transition request_review_2'
+  - 'use editorial_workflow transition revise'
+  - 'view any unpublished content'
+  - 'view latest version'
