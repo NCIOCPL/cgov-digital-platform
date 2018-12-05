@@ -2,7 +2,7 @@ const path = require('path');
 const gulp = require('gulp');
 const svgSprite = require('gulp-svg-sprite');
 const merge = require('merge-stream');
-const spriteConfig = require('./spriteConfig.js');
+const spriteConfig = require('./sprites.config.js');
 const themes = require('./themes.config.js');
 
 gulp.task('sprites', () => {
