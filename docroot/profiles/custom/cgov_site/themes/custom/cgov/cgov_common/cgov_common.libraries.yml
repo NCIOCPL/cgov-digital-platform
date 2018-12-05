@@ -2,11 +2,11 @@ global-styling:
   version: 1.x
   css:
     theme:
-      dist/css/Common.css: {}
+      dist/css/Common.css: { preprocess: false }
 global-scripts:
   version: 1.x
   js:
-    scripts/Common.js: {}
+    dist/js/Common.js: { preprocess: false }
   dependencies:
     - core/jquery
     - core/jquery.ui
@@ -15,9 +15,9 @@ article:
   version: 1.x
   css:
     theme:
-      dist/css/Article.css: {}
+      dist/css/Article.css: { preprocess: false }
   js:
-    scripts/Article.js: {}
+    dist/js/Article.js: { preprocess: false }
   dependencies:
     - core/jquery
     - core/jquery.ui
