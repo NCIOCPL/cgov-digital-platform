@@ -12,12 +12,12 @@ type_settings:
       published: false
       default_revision: false
       label: 'Archive Requested'
-      weight: 3
+      weight: 1
     archived:
       published: false
       default_revision: true
       label: Archived
-      weight: 4
+      weight: 2
     draft:
       label: Draft
       published: false
@@ -27,12 +27,12 @@ type_settings:
       published: false
       default_revision: false
       label: Editing
-      weight: 1
+      weight: -1
     post_publication_review:
       published: false
       default_revision: false
       label: 'Post-Publication Review'
-      weight: 2
+      weight: 0
     published:
       label: Published
       published: true
@@ -42,16 +42,16 @@ type_settings:
       published: false
       default_revision: false
       label: Review
-      weight: 0
+      weight: -3
   transitions:
     approve:
-      label: Approve
+      label: 'Approve Edits of Published Content'
       from:
         - post_publication_review
       to: published
       weight: 5
     approve_archive:
-      label: 'Approve Archive'
+      label: 'Approve Archive Request'
       from:
         - archive_requested
       to: archived
@@ -81,13 +81,13 @@ type_settings:
       to: published
       weight: 1
     quick_publish_2:
-      label: 'Quick Publish'
+      label: 'Quick Publish (Replace Existing Published Revision)'
       from:
         - editing
       to: published
       weight: 6
     reject_archive:
-      label: 'Reject Archive'
+      label: 'Reject Archive Request'
       from:
         - archive_requested
       to: published
@@ -105,13 +105,19 @@ type_settings:
       to: review
       weight: -2
     request_review_2:
-      label: 'Request Review'
+      label: 'Request Review of Published Content'
       from:
         - editing
       to: post_publication_review
       weight: 3
+    resurrect_archived_content:
+      label: 'Resurrect Archived Content'
+      from:
+        - archived
+      to: draft
+      weight: 10
     revise:
-      label: Revise
+      label: 'Revise Published Content'
       from:
         - published
       to: editing
