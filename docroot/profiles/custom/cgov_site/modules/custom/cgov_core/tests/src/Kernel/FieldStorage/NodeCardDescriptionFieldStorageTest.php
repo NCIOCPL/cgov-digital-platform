@@ -15,7 +15,7 @@ class NodeCardDescriptionFieldStorageTest extends CGovFieldStorageTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'field', 'node', 'text', 'filter', 'cgov_core',
+    'user', 'system', 'field', 'node', 'text', 'filter', 'workflows', 'content_moderation', 'cgov_core',
   ];
 
   /**
