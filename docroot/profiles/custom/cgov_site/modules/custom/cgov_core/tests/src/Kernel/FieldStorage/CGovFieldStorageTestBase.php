@@ -37,6 +37,8 @@ abstract class CGovFieldStorageTestBase extends KernelTestBase {
     $this->installSchema('user', 'users_data');
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
+    $this->installEntitySchema('workflow');
+    $this->installEntitySchema('content_moderation_state');
     $this->installConfig(['field', 'node', 'cgov_core']);
   }
 
