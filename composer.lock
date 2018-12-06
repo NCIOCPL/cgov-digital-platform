@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d890bb732eb53200c22810ff83ce1da",
+    "content-hash": "f8189ce2c8c444159b10571e6477b154",
     "packages": [
         {
             "name": "acquia/blt",
@@ -2909,6 +2909,9 @@
                     "recurse": false,
                     "replace": false,
                     "merge-extra": false
+                },
+                "patches_applied": {
+                    "2599228 : Programmatically created translatable content type returns SQL error on content creation": "https://www.drupal.org/files/issues/2018-11-29/2599228-104.patch"
                 }
             },
             "autoload": {
@@ -8167,17 +8170,6 @@
         {
             "name": "webflo/drupal-core-require-dev",
             "version": "8.7.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webflo/drupal-core-require-dev.git",
-                "reference": "f551d0b71bbfd10444f5d8805ebf2052fb155a46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webflo/drupal-core-require-dev/zipball/f551d0b71bbfd10444f5d8805ebf2052fb155a46",
-                "reference": "f551d0b71bbfd10444f5d8805ebf2052fb155a46",
-                "shasum": ""
-            },
             "require": {
                 "behat/mink": "1.7.x-dev",
                 "behat/mink-goutte-driver": "^1.2",
