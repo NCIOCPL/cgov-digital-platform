@@ -7,13 +7,27 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 
 ## Running your development stack
 
-### Quick Reference
+### Quick Reference - Single Docker Instance
 **Make sure your machine and project have been setup before starting**
 * **STARTING:** Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
+* **CONNECTING:** `docker-compose exec web /bin/bash` within this directory (`docker`) to start up the stack.
 * **STOPPING:** `docker-compose down` within this directory (`docker`) to start up the stack.
 
 **NOTE:** Currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
 
+### Quick Reference - Multiple Docker Instances
+**Make sure your machine and project have been setup before starting**
+* **STARTING:** 
+  - Run the `up1` alias to bring up an instance called `cgov` using web port `80` and db port `3306`.
+  - Run the `up2` alias to bring up an instance called `devbox` using web port `8002` and db port `3307`.
+  - Run the `up3` alias to bring up an instance called `reference` using web port `8003` and db port `3308`.
+   
+* **CONNECTING:** 
+  - Run the `ssh1`, `ssh2`, or `ssg3` aliases to `ssh` into a container.
+  
+* **STOPPING:** 
+  - Run the `down1`, `down2`, or `down3` aliases to bring down a container.
+  
 ### 1. Initial Setup of Your Machine
 1. Install docker
 1. Install PHP & Composer
@@ -29,8 +43,10 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 1. `cd <project_root>`
 1. Run `composer install` this will install the PHP packages to run the site, and also used by the git pre-commit hook
 1. Run `composer cgov-init` to initialize the sample project files. This currently does the following:
-   * Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
    * Copy the `<project_root>/blt/example.local.blt.yml` to `<project_root>/blt/local.blt.yml`. This will allow you to set an local dev overrides for BLT. When working in the docker stack, this also overrides the database host.
+   * Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
+   * Copy the `<project_root>/docker/docker.bashrc.example` to `~/.docker.bashrc`. 
+   * Add a command to your `~/.profile` (or `.bash_profile` or `.bashrc`) to `source ~/.docker.bashrc` to load the `ldock() function and associated aliases for running multiple concurrent docker instances`
 1. Install our git hook by running `git config --local core.hooksPath scripts/hooks`. This will help ensure that all code conventions are are caught before a build, rather than during the build. 
 1. You will probably want to start things and install the site. So go to [Initial Setup of Site](#Initial-Setup-of-Site) to do that.
 
@@ -117,6 +133,6 @@ You should not need to at this point. So this section is TBD.
 1. Add in memcached
 1. Add instructions for rebuilding / force rebuilding
 1. Create aliases for containered commands (blt, drush, composer?)
-1. Make nice project name in composer so it is not just docker_svc_1
+1. ~~Make nice project name in composer so it is not just docker_svc_1~~
 1. Avoid root
 1. Configure settings to match env vars
