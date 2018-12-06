@@ -20,7 +20,7 @@ services:
     env_file:
       - ./docker.env
     ports:
-      - "80:80"
+      - "${WEB_PORT}"
     networks:
       drupalvm:
         aliases:
@@ -38,7 +38,7 @@ services:
     env_file:
       - ./docker.env
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}"
     networks:
       drupalvm:
 

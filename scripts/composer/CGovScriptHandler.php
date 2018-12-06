@@ -16,57 +16,63 @@ class CGovScriptHandler {
     $io = $event->getIO();
     $io->write("CGov Project Initialization: Begin");
 
-    // Get project root path.
-    $project_root = implode("/", [__DIR__, "../.."]);
+    // Get project root path (2 levels up)
+    $project_root = dirname(dirname(__DIR__));
 
     $bltFile = array(
-      "path" => implode("/", [$project_root, "blt"]),
+      "srcpath" => implode("/", [$project_root, "blt"]),
+      "destpath" => implode("/", [$project_root, "blt"]),
       "sample" => "example.local.blt.yml",
       "real" => "local.blt.yml",
     );
 
     $dockerenvFile = array(
-      "path" => implode("/", [$project_root, "docker"]),
+      "srcpath" => implode("/", [$project_root, "docker"]),
+      "destpath" => implode("/", [$project_root, "docker"]),
       "sample" => "docker.env.sample",
       "real" => "docker.env",
+    );
+
+    $bashrcFile = array(
+      "srcpath" => implode("/", [$project_root, "docker"]),
+      "destpath" => implode("/", [getenv('HOME')]),
+      "sample" => "docker.bashrc.sample.sh",
+      "real" => ".docker.bashrc.sh",
     );
 
     $filesToCopy = [
       $bltFile,
       $dockerenvFile,
+      $bashrcFile,
+    ];
+
+    $filesToSource = [
+      $bashrcFile,
     ];
 
     // Validate to make sure the files do not exist.
-    $encounteredError = FALSE;
     foreach ($filesToCopy as $fileInfo) {
       if (!CGovScriptHandler::isLocalFileValid($fileInfo)) {
         $io->writeError(
           sprintf(
-            '<error>CGov Project Initialization: ERROR %s already exists. Cannot replace existing file!</error>',
-            $fileInfo["real"]
+            '<warning>CGov Project Initialization: %s already exists. Will not replace existing file.</warning>',
+            implode("/", [$fileInfo["destpath"], $fileInfo["real"]])
           )
         );
-        $encounteredError = TRUE;
+      }
+      else {
+        // Copy the file into place.
+        CGovScriptHandler::copyLocalFile($fileInfo);
+        $io->write(sprintf('CGov Project Initialization: Created %s .', implode("/", [$fileInfo["destpath"], $fileInfo["real"]])));
       }
     }
 
-    // If there was an error we need to exit.
-    if ($encounteredError) {
-      $io->writeError(
-        sprintf(
-          '<error>CGov Project Initialization: Existing files. Exiting.</error>',
-          $fileInfo["real"]
-        )
-      );
-      exit(1);
-    }
-
     // Copy the files.
-    foreach ($filesToCopy as $fileInfo) {
-      CGovScriptHandler::copyLocalFile($fileInfo);
+    foreach ($filesToSource as $fileInfo) {
+      CGovScriptHandler::sourceLocalFile($fileInfo, $io);
     }
 
-    $event->getIO()->write("CGov Project Initialization: Complete");
+    $io->write("CGov Project Initialization: Complete");
   }
 
   /**
@@ -79,7 +85,7 @@ class CGovScriptHandler {
    *   TRUE if the file does NOT exist.
    */
   private static function isLocalFileValid($fileInfo) {
-    return !file_exists(implode("/", [$fileInfo["path"], $fileInfo["real"]]));
+    return !file_exists(implode("/", [$fileInfo["destpath"], $fileInfo["real"]]));
   }
 
   /**
@@ -90,9 +96,54 @@ class CGovScriptHandler {
    */
   private static function copyLocalFile($fileInfo) {
     copy(
-      implode("/", [$fileInfo["path"], $fileInfo["sample"]]),
-      implode("/", [$fileInfo["path"], $fileInfo["real"]])
+      implode("/", [$fileInfo["srcpath"], $fileInfo["sample"]]),
+      implode("/", [$fileInfo["destpath"], $fileInfo["real"]])
     );
+  }
+
+  /**
+   * Copies a sample config file to a real file.
+   *
+   * @param object $fileInfo
+   *   The file information to copy.
+   * @param object $io
+   *   The io handler use for displaying warnings/messages.
+   */
+  private static function sourceLocalFile($fileInfo, $io) {
+    $home = getenv('HOME');
+
+    // List files in search order.
+    $startupFiles = ["$home/.profile", "$home/.bash_profile", "$home/.bashrc"];
+
+    // Select the first startup file found for destination file to be updated.
+    foreach ($startupFiles as $filename) {
+      if (file_exists($filename)) {
+        $startupFile = $filename;
+        break;
+      }
+    }
+
+    $destFile = implode("/", [$fileInfo["destpath"], $fileInfo["real"]]);
+    $fileContents = file_get_contents($startupFile);
+
+    // Code to be added to source file.
+    $shellCode = "# added by 'composer cgov-init'\nsource $destFile\n";
+
+    // Add shell code to startup file if it is not already there.
+    if (strpos($fileContents, $shellCode) === FALSE) {
+      // Append shellcode to startup file.
+      $io->write("Adding $destFile to $startupFile");
+      file_put_contents($startupFile, $fileContents . "\n" . $shellCode . "\n");
+
+      // Notify user how to incorporate changes.
+      $io->write("To update your shell settings, run 'source $startupFile' or log out and back in again.'");
+    }
+    else {
+      // Display message that shell is already present.
+      $io->writeError(
+        sprintf("<warning>CGov Project Initialization: %s already reads in %s code. No changes made.</warning>",
+          $startupFile, $destFile));
+    }
   }
 
 }
