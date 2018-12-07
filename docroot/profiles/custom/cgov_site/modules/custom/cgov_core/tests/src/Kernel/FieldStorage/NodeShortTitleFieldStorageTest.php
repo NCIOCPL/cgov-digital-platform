@@ -15,7 +15,8 @@ class NodeShortTitleFieldStorageTest extends CGovFieldStorageTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'field', 'node', 'text', 'filter', 'workflows', 'content_moderation', 'cgov_core',
+    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'workflows', 'content_moderation',
+    'language', 'content_translation', 'cgov_core',
   ];
 
   /**
