@@ -35,12 +35,9 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertArrayHasKey('administrator', $roles, 'Administrator role exists.');
 
     // Create admin user and login.
-    $this->adminUser = $this->drupalCreateUser([
-      'administer blocks',
-      'administer themes',
-      'access administration pages',
-      'view the administration theme',
-    ]);
+    $this->adminUser = $this->drupalCreateUser();
+    $this->adminUser->addRole('administrator');
+    $this->adminUser->save();
     $this->drupalLogin($this->adminUser);
 
     // Load Appearance (themes) page.

@@ -5,4 +5,12 @@ id: content_editor
 label: 'Content Editor'
 weight: -7
 is_admin: null
-permissions: {  }
+permissions:
+  - 'use editorial_workflow transition approve'
+  - 'use editorial_workflow transition approve_archive'
+  - 'use editorial_workflow transition back_to_draft'
+  - 'use editorial_workflow transition back_to_editing'
+  - 'use editorial_workflow transition publish'
+  - 'use editorial_workflow transition reject_archive'
+  - 'view any unpublished content'
+  - 'view latest version'
