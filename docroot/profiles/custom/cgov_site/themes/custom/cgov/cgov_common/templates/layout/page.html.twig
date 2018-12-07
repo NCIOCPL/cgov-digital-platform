@@ -13,24 +13,18 @@
   <!-- Global nav/utilit bar/language  -->
   <div class="fixedtotop">
     <div class="headroom-area">
-        {# ******************** #}
-        {# ******************** #}
-        {# ******************** #}
-        {# language bar logic here #}
-        {# ******************** #}
-        {# ******************** #}
-        {# ******************** #}
-          <!-- LANGUAGE BAR -->
-          <div class="language-bar">
-            <div class="row sitewide-language">
-              <div id="LangList1" class="large-12 columns">
-                <ul>
-                  <li><a onclick="NCIAnalytics.ClickLink(this,'Language Select Spanish');" href="/espanol/cancer/tratamiento/efectos-secundarios/anemia">Español</a></li>
-                </ul>
-              </div>
+        <!-- LANGUAGE BAR -->
+        {# {{ page.language_bar }} #}
+        <div class="language-bar">
+          <div class="row sitewide-language">
+            <div id="LangList1" class="large-12 columns">
+              <ul>
+                <li><a onclick="NCIAnalytics.ClickLink(this,'Language Select Spanish');" href="/espanol/cancer/tratamiento/efectos-secundarios/anemia">Español</a></li>
+              </ul>
             </div>
-          </div><!-- end "language-bar" -->
-          <!-- END LANGUAGE BAR -->
+          </div>
+        </div>
+        <!-- END LANGUAGE BAR -->
         <!-- UTILITY NAV -->
         <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
           {# {{ page.utility_bar }} #}
