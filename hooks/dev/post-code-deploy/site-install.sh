@@ -11,6 +11,6 @@
 # Map the script inputs to convenient names.
 site="$1"
 target_env="$2"
-
+#test
 echo "Running on ${1}.${2}"
 ##drush @$site.$target_env updatedb --yes
