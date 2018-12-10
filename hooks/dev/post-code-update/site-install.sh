@@ -22,7 +22,7 @@ repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-blt setup:drupal:install --environment=$target_env -v --yes --no-interaction
+blt internal:drupal:install --environment=$target_env -v --yes --no-interaction
 
 
 set +v
