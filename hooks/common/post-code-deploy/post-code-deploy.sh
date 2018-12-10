@@ -19,15 +19,12 @@ deployed_tag="$4"
 repo_url="$5"
 repo_type="$6"
 
-echo "Common Post-code-deploy"
-
 # Prep for BLT commands.
 repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-blt artifact:ac-hooks:post-code-deploy $site $target_env $source_branch $deployed_tag $repo_url $repo_type --environment=$target_env -v --yes --no-interaction
-
-echo "Complete Common Post-code-deploy"
+## TODO: need to figure out what to do here if it is a fresh db
+##blt artifact:ac-hooks:post-code-deploy $site $target_env $source_branch $deployed_tag $repo_url $repo_type --environment=$target_env -v --yes --no-interaction
 
 set +v
