@@ -17,7 +17,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 ### 1. Initial Setup of Your Machine
 1. Install docker
 1. Install PHP & Composer
-1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker.
+1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker's "web" container.
    1. `brew install dnsmasq`
    1. `sudo echo 'address=/devbox/127.0.0.1' >> /usr/local/etc/dnsmasq.conf`
    1. `sudo mkdir -p /etc/resolver`
@@ -40,6 +40,8 @@ This is how you can install a site. NOTE: at some point we will have a real site
 1. Run `docker-compose -f docker/docker-compose.yml exec web /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `blt setup` -- Perform the initial site install.
+
+The site is now accessible via [www.devbox](http://www.devbox)
 
 
 **NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
