@@ -17,9 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
-  protected $routeMatch;
-
-  public $currentNodeType = 'test';
+  public $currentNodeType = '';
 
   /**
    * {@inheritdoc}
@@ -38,26 +36,22 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentRouteMatch $route_match) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->routeMatch = $route_match;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getNodeType() {
-    $nid = '';
-    // $node = $this->routeMatch()->getParameter('node');
-    // if ($node instanceof NodeInterface) {
-    // $nid = $node->getType();
-    // }
-    return $nid;
+    $this->currentNodeType = $route_match->getParameter('node')->getType();
   }
 
   /**
    * {@inheritdoc}
    */
   public function getPageOptionsForPageType($nodeType) {
-    return $nodeType;
+    switch ($nodeType) {
+      case 'cgov_article':
+        return ['article', 'page'];
+
+      case 'cgov_home_landing':
+        return ['home', 'landing'];
+
+    }
+    return [];
   }
 
   /**
