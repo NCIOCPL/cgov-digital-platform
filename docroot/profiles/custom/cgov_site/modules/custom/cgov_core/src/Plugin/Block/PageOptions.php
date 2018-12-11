@@ -66,11 +66,24 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
     $options = [];
     switch ($nodeType) {
       case 'cgov_article':
-        $options = ['facebook', 'resize'];
+        $options = [
+          'resize',
+          'print',
+          'email',
+          'facebook',
+          'twitter',
+          'pinterest',
+        ];
         break;
 
       case 'cgov_home_landing':
-        $options = ['email', 'twitter'];
+        $options = [
+          'print',
+          'email',
+          'facebook',
+          'twitter',
+          'pinterest',
+        ];
         break;
 
     }
