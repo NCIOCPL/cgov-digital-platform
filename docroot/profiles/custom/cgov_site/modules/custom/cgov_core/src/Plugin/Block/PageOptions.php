@@ -113,6 +113,9 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
     return [
       '#type' => 'block',
       'options' => $this->getPageOptionsForPageType($this->currentNodeType),
+      // This is a hack to replicate the behavior currently on the site for
+      // home and landing pages, which are exceptional.
+      'hasColumnsLayout' => $this->currentNodeType === 'cgov_home_landing' ? TRUE : FALSE,
     ];
   }
 
