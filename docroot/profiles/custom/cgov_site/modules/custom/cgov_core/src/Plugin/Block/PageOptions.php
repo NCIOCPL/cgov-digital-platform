@@ -19,6 +19,26 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
   public $currentNodeType = '';
 
+  private static $optionConfigs = [
+    'facebook' => 'true',
+    'twitter' => 'true',
+    'email' => 'true',
+    'resize' => 'true',
+    'print' => 'true',
+    'pinterest' => 'true',
+  ];
+
+  /**
+   * {@inheritdoc}
+   */
+  private static function getOptionsConfigMap($options) {
+    $optionConfigs = self::$optionConfigs;
+    $configMap = array_combine($options, array_map(function ($option) use ($optionConfigs) {
+      return $optionConfigs[$option];
+    }, $options));
+    return $configMap;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -43,15 +63,21 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function getPageOptionsForPageType($nodeType) {
+    $options = [];
     switch ($nodeType) {
       case 'cgov_article':
-        return ['article', 'page'];
+        $options = ['facebook', 'resize'];
+        break;
 
       case 'cgov_home_landing':
-        return ['home', 'landing'];
+        $options = ['email', 'twitter'];
+        break;
 
     }
-    return [];
+    if (count($options) > 0) {
+      $options = self::getOptionsConfigMap($options);
+    }
+    return $options;
   }
 
   /**
@@ -59,7 +85,8 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     return [
-      '#options' => $this->getPageOptionsForPageType($this->currentNodeType),
+      '#type' => 'block',
+      'options' => $this->getPageOptionsForPageType($this->currentNodeType),
     ];
   }
 
