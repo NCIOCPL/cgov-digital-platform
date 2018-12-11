@@ -19,6 +19,24 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
   public $currentNodeType = '';
 
+  private static $nodeOptions = [
+    'cgov_home_landing' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_article' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+  ];
+
   private static $optionConfigs = [
     'facebook' => 'true',
     'twitter' => 'true',
@@ -63,34 +81,11 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function getPageOptionsForPageType($nodeType) {
-    $options = [];
-    switch ($nodeType) {
-      case 'cgov_article':
-        $options = [
-          'resize',
-          'print',
-          'email',
-          'facebook',
-          'twitter',
-          'pinterest',
-        ];
-        break;
-
-      case 'cgov_home_landing':
-        $options = [
-          'print',
-          'email',
-          'facebook',
-          'twitter',
-          'pinterest',
-        ];
-        break;
-
+    if (array_key_exists($nodeType, self::$nodeOptions)) {
+      $nodeOptions = self::$nodeOptions[$nodeType];
+      return self::getOptionsConfigMap($nodeOptions);
     }
-    if (count($options) > 0) {
-      $options = self::getOptionsConfigMap($options);
-    }
-    return $options;
+    return [];
   }
 
   /**
