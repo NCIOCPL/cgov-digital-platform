@@ -17,7 +17,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 ### 1. Initial Setup of Your Machine
 1. Install docker
 1. Install PHP & Composer
-1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker.
+1. (Mac only)Install dnsmasq - this will allow http://*.devbox to be routed to docker's "web" container.
    1. `brew install dnsmasq`
    1. `sudo echo 'address=/devbox/127.0.0.1' >> /usr/local/etc/dnsmasq.conf`
    1. `sudo mkdir -p /etc/resolver`
@@ -31,7 +31,6 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 1. Run `composer cgov-init` to initialize the sample project files. This currently does the following:
    * Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
    * Copy the `<project_root>/blt/example.local.blt.yml` to `<project_root>/blt/local.blt.yml`. This will allow you to set an local dev overrides for BLT. When working in the docker stack, this also overrides the database host.
-1. Install our git hook by running `git config --local core.hooksPath scripts/hooks`. This will help ensure that all code conventions are are caught before a build, rather than during the build. 
 1. You will probably want to start things and install the site. So go to [Initial Setup of Site](#Initial-Setup-of-Site) to do that.
 
 ### 3. Initial Setup of Site
@@ -41,6 +40,8 @@ This is how you can install a site. NOTE: at some point we will have a real site
 1. Run `docker-compose -f docker/docker-compose.yml exec web /bin/bash` to login to the web container
 1. `cd /var/www`
 1. `blt setup` -- Perform the initial site install.
+
+The site is now accessible via [www.devbox](http://www.devbox)
 
 
 **NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).

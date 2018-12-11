@@ -16,14 +16,20 @@ class RolesTest extends EntityKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['user', 'system', 'node', 'cgov_core'];
+  public static $modules = [
+    'user', 'system', 'node', 'file', 'workflows', 'content_moderation', 'language',
+    'content_translation', 'cgov_core',
+  ];
 
   /**
    * {@inheritdoc}
    */
   public function setUp() {
     parent::setup();
-    $this->installConfig(['field', 'node', 'user', 'cgov_core']);
+    $this->installConfig([
+      'field', 'node', 'user', 'file', 'workflows', 'content_moderation', 'language',
+      'content_translation', 'cgov_core',
+    ]);
   }
 
   /**
