@@ -47,9 +47,15 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
   ];
 
   /**
-   * {@inheritdoc}
+   * Build array of page options configurations.
+   *
+   * @param array $options
+   *   Page options used on current node.
+   *
+   * @return array
+   *   An associative array of configurations
    */
-  private static function getOptionsConfigMap($options) {
+  private static function getOptionsConfigMap(array $options) {
     $optionConfigs = self::$optionConfigs;
     $configMap = array_combine($options, array_map(function ($option) use ($optionConfigs) {
       return $optionConfigs[$option];
@@ -78,9 +84,21 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Get page options config array for valid node types.
+   *
+   * If a given node type does not have registered page options
+   * configurations return an empty array. Otherwise return an
+   * associative array mapping the page option types to their
+   * individual configuration specifics.
+   *
+   * @param string $nodeType
+   *   The current node/page/view type:
+   *   - examples: cgov_article, cgov_home_landing, etc.
+   *
+   * @return array
+   *   An associative array of configuration specifics.
    */
-  public function getPageOptionsForPageType($nodeType) {
+  public function getPageOptionsForPageType(string $nodeType) {
     if (array_key_exists($nodeType, self::$nodeOptions)) {
       $nodeOptions = self::$nodeOptions[$nodeType];
       return self::getOptionsConfigMap($nodeOptions);
