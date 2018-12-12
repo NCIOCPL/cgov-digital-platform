@@ -1,5 +1,8 @@
+{{ page.notification_banner }}
+
 <header class="push" role="banner">
   <div id="nvcgSlSiteBanner" class="row">
+    {# {{ page.site_banner }} #}
     <div class="contentid-911584 slot-item only-SI nci-logo-pages large-12 columns">
       <a href="/"><img src="https://www.cancer.gov/publishedcontent/images/images/design-elements/logos/nci-logo-full.__v1.svg" alt="National Cancer Institute" width="60%"></a>
     </div>
@@ -9,37 +12,39 @@
 <div id="page">
   <!-- Global nav/utilit bar/language  -->
   <div class="fixedtotop">
-      <div class="headroom-area">
-          <!-- LANGUAGE BAR -->
-          <div class="language-bar">
-            <div class="row sitewide-language">
-              <div id="LangList1" class="large-12 columns">
-                <ul>
-                  <li><a onclick="NCIAnalytics.ClickLink(this,'Language Select Spanish');" href="/espanol/cancer/tratamiento/efectos-secundarios/anemia">Español</a></li>
-                </ul>
-              </div>
-            </div>
-          </div><!-- end "language-bar" -->
-          <!-- END LANGUAGE BAR -->
-
-          <!-- UTILITY NAV -->
-          <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
-            <div class="contentid-911757 slot-item only-SI row utility">
-              <div class="rawHtml"><div class="large-12 columns utility">
-                <span><a href="/contact">1-800-4-CANCER</a></span>
-                <span><a href="https://livehelp.cancer.gov" onclick="window.open('https://livehelp.cancer.gov/', 'LiveHelp','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); return false;">Live Chat</a></span>
-                <span><a href="/publications">Publications</a></span>
-                <span id="utility-dictionary" class="link"> <a href="/publications/dictionaries/cancer-terms">Dictionary</a></span>
-              </div>
+    <div class="headroom-area">
+        <!-- LANGUAGE BAR -->
+        {# {{ page.language_bar }} #}
+        <div class="language-bar">
+          <div class="row sitewide-language">
+            <div id="LangList1" class="large-12 columns">
+              <ul>
+                <li><a onclick="NCIAnalytics.ClickLink(this,'Language Select Spanish');" href="/espanol/cancer/tratamiento/efectos-secundarios/anemia">Español</a></li>
+              </ul>
             </div>
           </div>
-          <!-- END UTILITY NAV -->
-      </div><!-- end "headroom-area" -->
+        </div>
+        <!-- END LANGUAGE BAR -->
+        <!-- UTILITY NAV -->
+        <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
+          {# {{ page.utility_bar }} #}
+          <div class="contentid-911757 slot-item only-SI row utility">
+            <div class="rawHtml"><div class="large-12 columns utility">
+              <span><a href="/contact">1-800-4-CANCER</a></span>
+              <span><a href="https://livehelp.cancer.gov" onclick="window.open('https://livehelp.cancer.gov/', 'LiveHelp','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); return false;">Live Chat</a></span>
+              <span><a href="/publications">Publications</a></span>
+              <span id="utility-dictionary" class="link"> <a href="/publications/dictionaries/cancer-terms">Dictionary</a></span>
+            </div>
+          </div>
+        </div>
+        <!-- END UTILITY NAV -->
+    </div><!-- end "headroom-area" -->
       <!-- BEGIN NAVIGATION -->
       <!-- Begin nav-search bar -->
       <div class="nav-search-bar gradient header">
-        <div id="nvcgSlMainNav" class="row">
-          <div class="contentid-113330 slot-item first-SI">
+         <div id="nvcgSlMainNav" class="row">
+          {# {{ page.main_nav }} #}
+         <div class="contentid-113330 slot-item first-SI">
             <div class="navigation">
               <div class="mobile-menu-bar">
                 <button type="button" class="open-panel nav-header menu-btn">Menu</button>
@@ -96,7 +101,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
       <!-- End nav-search bar -->
       <!-- END NAVIGATION -->
@@ -106,33 +111,37 @@
   <div class="main-content" id="content" tabindex="0">
     <div class="row general-page-body-container collapse">
       <div class="large-12 columns">
-          <div class="row">
-              <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
-                  <div class="contentid-870117 slot-item only-SI">
-                  <ul class="breadcrumbs">
-                    <li><a href="/">Home</a></li>
-                          <li><a href="/about-cancer">About Cancer</a></li>
-                          <li><a href="/about-cancer/treatment">Cancer Treatment</a></li>
-                          <li class="last-breadcrumb"><a href="/about-cancer/treatment/side-effects">Side Effects</a></li>
-                      </ul>
-                  </div>
+        <div class="row">
+          <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
+            {{ page.breadcrumb }}
+              <div class="contentid-870117 slot-item only-SI">
+              <ul class="breadcrumbs">
+                <li><a href="/">Home</a></li>
+                      <li><a href="/about-cancer">About Cancer</a></li>
+                      <li><a href="/about-cancer/treatment">Cancer Treatment</a></li>
+                      <li class="last-breadcrumb"><a href="/about-cancer/treatment/side-effects">Side Effects</a></li>
+                  </ul>
               </div>
-          </div> <!-- END "row" -->
+          </div>
+        </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
       <div class="row">
-      <!--    SECTION NAVIGATION -->
-      {% if page.sidebar_first %}
-      <a id="section-menu-button" href="#">Section Menu</a>
-      <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
-          {{ page.sidebar_first }}
-      </div>
-      {% endif %}
-      {# technically if there is no left nav we change some of the classes below. #}
-      <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
         {{ page.content }}
+        <!--    SECTION NAVIGATION -->
+        {# {% if page.sidebar_first %}
+        <a id="section-menu-button" href="#">Section Menu</a>
+        <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
+            {{ page.sidebar_first }}
+        </div>
+        {% endif %} #}
+        {# technically if there is no left nav we change some of the classes below. #}
+        {# <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
+          {{ page.content }}
+        </div> #}
       </div>
     </div>
   </div>
+
 </div>
 
 <!-- FOOTER -->
