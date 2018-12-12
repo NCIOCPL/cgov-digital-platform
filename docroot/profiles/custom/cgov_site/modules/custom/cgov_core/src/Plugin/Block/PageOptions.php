@@ -4,7 +4,9 @@ namespace Drupal\cgov_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\node\NodeInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_core\Services\PageOptionsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -18,6 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
   public $currentNodeType = '';
+  public $poResult = '';
 
   private static $nodeOptions = [
     'cgov_home_landing' => [
@@ -71,16 +74,21 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('current_route_match')
+      $container->get('current_route_match'),
+      $container->get('cgov_core.page_options_manager')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentRouteMatch $route_match) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, CurrentRouteMatch $route_match, PageOptionsManager $po_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->currentNodeType = $route_match->getParameter('node')->getType();
+    $node = $route_match->getParameter('node');
+    if ($node instanceof NodeInterface) {
+      $this->currentNodeType = $node->getType();
+    }
+    $this->poResult = $po_manager->getConfig();
   }
 
   /**
