@@ -1,7 +1,7 @@
 ---
-name: Technical Task
+name: Technical Item
 about: This issue type represents a concrete techincal task to be completed.
-title: ''
+title: 'Technical Item: '
 labels: ''
 assignees: ''
 
