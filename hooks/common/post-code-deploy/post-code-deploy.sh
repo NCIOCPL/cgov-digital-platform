@@ -26,5 +26,6 @@ cd $repo_root
 
 ## TODO: need to figure out what to do here if it is a fresh db
 ##blt artifact:ac-hooks:post-code-deploy $site $target_env $source_branch $deployed_tag $repo_url $repo_type --environment=$target_env -v --yes --no-interaction
+blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
 
 set +v
