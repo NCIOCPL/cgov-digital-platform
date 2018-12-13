@@ -32,5 +32,6 @@ cd $repo_root
 ## TODO: find a way to determine if this is a fresh db and not run this, if there is an install, run this.
 
 ## blt artifact:ac-hooks:post-code-update $site $target_env $source_branch $deployed_tag $repo_url $repo_type --environment=$target_env -v --yes --no-interaction
+blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
 
 set +v
