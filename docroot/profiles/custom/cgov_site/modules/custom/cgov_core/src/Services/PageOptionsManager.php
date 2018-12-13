@@ -12,6 +12,14 @@ class PageOptionsManager {
 
   protected $pageOptionsConfig = [];
 
+  /**
+   * TODO:.
+   *
+   * In future revisions, available options will be moved to the nodes
+   * themselves, rather than be hardcoded here.
+   *
+   * @var array
+   */
   private static $nodeOptions = [
     'cgov_home_landing' => [
       'print',

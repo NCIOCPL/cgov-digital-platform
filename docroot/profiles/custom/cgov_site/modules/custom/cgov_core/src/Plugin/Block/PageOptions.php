@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
-  public $poResult = [];
+  public $pageOptionsConfigs = [];
 
   /**
    * {@inheritdoc}
@@ -36,7 +36,7 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PageOptionsManager $po_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->poResult = $po_manager->getConfig();
+    $this->pageOptionsConfigs = $po_manager->getConfig();
   }
 
   /**
@@ -45,7 +45,7 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
   public function build() {
     return [
       '#type' => 'block',
-      'options' => $this->poResult,
+      'options' => $this->pageOptionsConfigs,
     ];
   }
 
