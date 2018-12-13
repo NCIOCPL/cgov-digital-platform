@@ -59,6 +59,11 @@ class CGovFieldStorageTest extends KernelTestBase {
       "label" => "Short Title",
       "type" => "plain_text",
     ],
+    [
+      "name" => "field_intro_text",
+      "label" => "Intro Text",
+      "type" => "formatted_text",
+    ],
   ];
 
   /**
@@ -101,7 +106,9 @@ class CGovFieldStorageTest extends KernelTestBase {
 
     foreach ($this->fieldsToTest as $fieldToTest) {
       switch ($fieldToTest["type"]) {
+        // Test plain and formatted (html) text fields identically.
         case "plain_text":
+        case "formatted_text":
           $this->addPlainTextField($type, $fieldToTest["name"], $fieldToTest["label"]);
           break;
       }
