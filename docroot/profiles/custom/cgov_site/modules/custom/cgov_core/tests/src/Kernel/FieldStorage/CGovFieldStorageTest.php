@@ -19,7 +19,7 @@ class CGovFieldStorageTest extends KernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'workflows', 'content_moderation',
+    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
     'language', 'content_translation', 'cgov_core',
   ];
 
@@ -63,6 +63,26 @@ class CGovFieldStorageTest extends KernelTestBase {
       "name" => "field_intro_text",
       "label" => "Intro Text",
       "type" => "formatted_text",
+    ],
+    [
+      "name" => "field_date_posted",
+      "label" => "Posted Date",
+      "type" => "datetime",
+    ],
+    [
+      "name" => "field_date_reviewed",
+      "label" => "Reviewed Date",
+      "type" => "datetime",
+    ],
+    [
+      "name" => "field_date_updated",
+      "label" => "Update Date",
+      "type" => "datetime",
+    ],
+    [
+      "name" => "field_date_display_mode",
+      "label" => "Date Display Mode",
+      "type" => "list_string",
     ],
   ];
 
@@ -109,7 +129,9 @@ class CGovFieldStorageTest extends KernelTestBase {
         // Test plain and formatted (html) text fields identically.
         case "plain_text":
         case "formatted_text":
-          $this->addPlainTextField($type, $fieldToTest["name"], $fieldToTest["label"]);
+        case "datetime":
+        case "list_string":
+          $this->addFieldByName($type, $fieldToTest["name"], $fieldToTest["label"]);
           break;
       }
       $field_storage = FieldStorageConfig::loadByName('node', $fieldToTest["name"]);
@@ -134,6 +156,7 @@ class CGovFieldStorageTest extends KernelTestBase {
       $field_storage = FieldStorageConfig::loadByName('node', $fieldToTest["name"]);
       $this->assertFalse($field_storage, "Node " . $fieldToTest["name"] . " field storage does not exist after uninstalling the CGov Core module.");
     }
+
   }
 
   /**
@@ -152,7 +175,7 @@ class CGovFieldStorageTest extends KernelTestBase {
   }
 
   /**
-   * Adds a plain text field to our new content type.
+   * Adds a new field to our new content type by name.
    *
    * @param Drupal\node\NodeTypeInterface $type
    *   The node type to attach the field.
@@ -161,7 +184,7 @@ class CGovFieldStorageTest extends KernelTestBase {
    * @param string $label
    *   The label to use for the attached field.
    */
-  private function addPlainTextField(NodeTypeInterface $type, $fieldName, $label) {
+  private function addFieldByName(NodeTypeInterface $type, $fieldName, $label) {
     // Add or remove the $fieldName field, as needed.
     $field_storage = FieldStorageConfig::loadByName('node', $fieldName);
     $field = FieldConfig::loadByName('node', $type->id(), $fieldName);
@@ -172,7 +195,6 @@ class CGovFieldStorageTest extends KernelTestBase {
         'label' => $label,
       ]);
       $field->save();
-
     }
 
     return $field;
