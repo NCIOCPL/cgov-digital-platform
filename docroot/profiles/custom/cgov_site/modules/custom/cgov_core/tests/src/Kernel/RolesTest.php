@@ -17,8 +17,8 @@ class RolesTest extends EntityKernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'node', 'file', 'workflows', 'content_moderation', 'language',
-    'content_translation', 'cgov_core',
+    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
+    'language', 'content_translation', 'cgov_core',
   ];
 
   /**
