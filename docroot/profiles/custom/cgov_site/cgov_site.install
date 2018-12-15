@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the cgov_site
+ */
+
+ /**
+  * Implements hook_install().
+  *
+  * Perform actions to set up the site for this profile.
+  *
+  * @see system_install()
+  */
+function cgov_site_install() {
+
+  // Get the Language Negotiator Service.
+  // This is used to set some of the language configuration.
+  $negotiator = \Drupal::service('language_negotiator');
+
+  // Get the type config - used for *some* config changes.
+  $typesConfig = \Drupal::configFactory()->getEditable('language.types');
+
+  // This would normally be in language.types.yml.
+  // NOTE: The normal config export has the types reversed from the UI.
+  $cgovLangTypes = [
+    'language_interface' => [
+      'enabled' => [
+        'language-user-admin' => "-10",
+        'language-selected' => "12",
+      ],
+      'method_weights' => [
+        'language-user-admin' => "-10",
+        'language-url' => "-8",
+        'language-session' => "-4",
+        'language-user' => "-4",
+        'language-browser' => "-2",
+        'language-selected' => "12",
+      ],
+    ],
+    'language_content' => [
+      'enabled' => [
+        'language-url' => "-8",
+        'language-selected' => "12"
+      ],
+      'method_weights' => [
+        'language-content-entity' => "-9",
+        'language-url' => "-8",
+        'language-session' => "-4",
+        'language-user' => "-4",
+        'language-browser' => "-2",
+        'language-interface' => "9",
+        'language-selected' => "12",
+      ],
+    ],
+  ];
+
+  // Set the method weights for each negotiation type.
+  foreach ($cgovLangTypes as $type => $typeConf) {
+    $typesConfig->set(
+      'negotiation.' . $type . '.method_weights',
+      $typeConf['method_weights']
+    )->save();
+  }
+
+  // Updates the configuration based on the given language types.
+  $negotiator->updateConfiguration(['language_interface', 'language_content']);
+
+  // Set the enabled methods.
+  foreach ($cgovLangTypes as $type => $typeConf) {
+    $negotiator->saveConfiguration(
+        $type,
+        $typeConf['enabled']
+    );
+  }
+
+}
