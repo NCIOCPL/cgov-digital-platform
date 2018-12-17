@@ -8,7 +8,7 @@ use Drupal\language\LanguageNegotiatorInterface;
 /**
  * Helper service for various cgov installation tasks.
  *
- * @package Drupal\sitefarm_seed
+ * @package Drupal\cgov_site
  */
 class CgovSiteTools {
 
