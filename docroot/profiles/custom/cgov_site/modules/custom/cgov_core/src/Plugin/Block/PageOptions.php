@@ -6,6 +6,8 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\cgov_core\Services\PageOptionsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Provides a block with page options.
@@ -37,6 +39,19 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PageOptionsManager $po_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->pageOptionsConfigs = $po_manager->getConfig();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function blockAccess(AccountInterface $account) {
+    if ($this->pageOptionsConfigs) {
+      // By default, the block is visible.
+      return AccessResult::allowed();
+    }
+    // Do not render block if page options config is empty
+    // (not a node or unrecognized node type)
+    return AccessResult::forbidden();
   }
 
   /**
