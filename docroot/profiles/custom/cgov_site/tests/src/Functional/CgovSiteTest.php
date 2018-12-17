@@ -53,6 +53,23 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Common Base Theme');
     $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Admin Theme');
     $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'Seven');
+
+    // Test that once the site is install English and Spanish are enabled.
+    $langs = \Drupal::service('language_manager')->getLanguages();
+    $this->assertArrayHasKey('en', $langs, 'English is enabled.');
+    $this->assertArrayHasKey('es', $langs, 'Spanish is enabled.');
+
+    // Test that the language negotiations are correct.
+    $ifaceNegs = \Drupal::config('language.types')->get('negotiation.language_interface.enabled');
+    $this->assertCount(2, array_keys($ifaceNegs), 'Only 2 interface negotiations set.');
+    $this->assertArrayHasKey('language-user-admin', $ifaceNegs, 'User admin interface negotiation set.');
+    $this->assertArrayHasKey('language-selected', $ifaceNegs, 'Selected language interface negotiation set.');
+
+    $contentNegs = \Drupal::config('language.types')->get('negotiation.language_content.enabled');
+    $this->assertCount(2, array_keys($contentNegs), 'Only 2 content negotiations set.');
+    $this->assertArrayHasKey('language-url', $contentNegs, 'URL content negotiation set.');
+    $this->assertArrayHasKey('language-selected', $contentNegs, 'Selected language content negotiation set.');
+
   }
 
 }
