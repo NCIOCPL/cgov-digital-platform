@@ -39,12 +39,12 @@ class PageOptionsManager {
   ];
 
   private static $optionConfigs = [
-    'facebook' => 'true',
-    'twitter' => 'true',
-    'email' => 'true',
-    'resize' => 'true',
-    'print' => 'true',
-    'pinterest' => 'true',
+    'facebook' => TRUE,
+    'twitter' => TRUE,
+    'email' => TRUE,
+    'resize' => TRUE,
+    'print' => TRUE,
+    'pinterest' => TRUE,
   ];
 
   /**
