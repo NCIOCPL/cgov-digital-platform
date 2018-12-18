@@ -132,3 +132,6 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 # If no command is passed to the container, start Apache by default.
 CMD ["apachectl", "-D", "FOREGROUND"]
+
+# Default to /var/www so we don't need to do it by hand.
+WORKDIR /var/www
