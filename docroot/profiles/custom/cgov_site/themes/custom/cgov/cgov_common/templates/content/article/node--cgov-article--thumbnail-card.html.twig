@@ -1,0 +1,17 @@
+<div class="row card-thumbnail">
+	<div class="small-2 columns card-thumbnail-image">
+    {# TODO: Fix when image and url properties added #}
+		<a href="TODO/URL" class="image-hover" data-title="{{ content.field_card_title }}">
+			<img src="TODO/IMG" alt="TODO/IMG-ALT">
+		</a>
+	</div>
+	<div class="small-10 columns card-thumbnail-text">
+		<h3>
+      {# TODO: Fix when url property added #}
+			<a href="TODO/URL">{{ content.field_card_title }}</a>
+		</h3>
+    {% if content.field_list_description %}
+      <p>{{ content.field_list_description.0 }}</p>
+    {% endif %}
+  </div>
+</div>
