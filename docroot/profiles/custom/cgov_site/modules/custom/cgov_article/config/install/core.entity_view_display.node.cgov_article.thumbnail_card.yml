@@ -2,6 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.thumbnail_card
+    - field.field.node.cgov_article.body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_feature_card_description
     - field.field.node.cgov_article.field_card_title
@@ -17,10 +19,10 @@ dependencies:
     - datetime
     - options
     - user
-id: node.cgov_article.default
+id: node.cgov_article.thumbnail_card
 targetEntityType: node
 bundle: cgov_article
-mode: default
+mode: thumbnail_card
 content:
   field_browser_title:
     weight: 104
@@ -106,8 +108,9 @@ content:
     region: content
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
+  body: true
   langcode: true
