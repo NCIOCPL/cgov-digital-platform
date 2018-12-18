@@ -76,6 +76,7 @@ class CgovCoreTools {
   ];
 
   /**
+
    * Constructs a CgovCoreTools object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -89,6 +90,7 @@ class CgovCoreTools {
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
+
   }
 
   /**
