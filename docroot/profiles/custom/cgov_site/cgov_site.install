@@ -14,7 +14,7 @@
   */
 function cgov_site_install() {
   // Get our helper.
-  $siteHelper = \Drupal::service('cgov_site.tools');
+  $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Install proper language negotiation even if English only.
   $siteHelper->installLanguageNegotiation();
