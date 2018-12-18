@@ -4,6 +4,7 @@ namespace Drupal\cgov_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\language\LanguageNegotiatorInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Helper service for various cgov installation tasks.
@@ -25,6 +26,13 @@ class CgovCoreTools {
    * @var \Drupal\language\LanguageNegotiatorInterface
    */
   protected $negotiator;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * Our Language Negotiation settings.
@@ -68,16 +76,19 @@ class CgovCoreTools {
   ];
 
   /**
-   * Constructs a CgovSiteTools object.
+   * Constructs a CgovCoreTools object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    * @param \Drupal\language\LanguageNegotiatorInterface $negotiator
    *   The language negotiation methods manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LanguageNegotiatorInterface $negotiator) {
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, LanguageNegotiatorInterface $negotiator) {
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -108,6 +119,30 @@ class CgovCoreTools {
         $typeConf['enabled']
       );
     }
+  }
+
+  /**
+   * Add Permissions to a role.
+   *
+   * @param array $rolePermissions
+   *   Array of [ RoleID => [ PermissionsList ] ] of permissions to add.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addRolePermissions(array $rolePermissions) {
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roles = $role_storage->loadMultiple(array_keys($rolePermissions));
+
+    // Add all permissions.
+    foreach ($rolePermissions as $roleId => $permissionId) {
+      foreach ($permissionId as $perm) {
+        $roles[$roleId]->grantPermission($perm);
+      }
+      $roles[$roleId]->save();
+    }
+
   }
 
 }

@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_article.module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_article_install() {
+
+  $rolePermissions['content_author'] = [
+    'create cgov_article content',
+    'delete any cgov_article content',
+    'delete own cgov_article content',
+    'edit any cgov_article content',
+    'edit own cgov_article content',
+    'revert cgov_article revisions',
+    'translate cgov_article node',
+    'view cgov_article revisions',
+    // Excluded: 'delete cgov_article revisions'.
+  ];
+
+  $rolePermissions['content_editor'] = $rolePermissions['content_author'] +
+    [
+      // Add additional permissions.
+    ];
+
+  $rolePermissions['advanced_editor'] = $rolePermissions['content_editor'] +
+    [
+      // Add additional permissions.
+    ];
+
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Install proper language negotiation even if English only.
+  $siteHelper->addRolePermissions($rolePermissions);
+
+}

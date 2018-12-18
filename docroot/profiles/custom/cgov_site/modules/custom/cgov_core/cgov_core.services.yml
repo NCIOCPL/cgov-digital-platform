@@ -4,4 +4,4 @@ services:
     arguments: ['@current_route_match']
   cgov_core.tools:
     class: Drupal\cgov_core\CgovCoreTools
-    arguments: ['@config.factory', '@language_negotiator']
+    arguments: ['@config.factory', '@entity_type.manager', '@language_negotiator']
