@@ -1,0 +1,18 @@
+<div class="feature-card">
+  {# TODO: Add url after becomes available #}
+  <a href="/TODO/i/need/to/be/created">
+    <div class="image-hover">
+      {# TODO: This should be if promo image then promo, else if lead, else placeholder #}
+    </div>
+    <h3>
+        {% if content.field_card_title %}
+            {{ content.field_card_title }}
+        {% else %}
+            {{ content.field_short_title }}
+        {% endif %}
+    </h3>
+    {% if content.field_feature_card_description %}
+      <p>{{ content.field_eature_card_description.0 }}</p>
+    {% endif %}
+  </a>
+</div>
