@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_site;
+namespace Drupal\cgov_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\language\LanguageNegotiatorInterface;
@@ -8,9 +8,9 @@ use Drupal\language\LanguageNegotiatorInterface;
 /**
  * Helper service for various cgov installation tasks.
  *
- * @package Drupal\cgov_site
+ * @package Drupal\cgov_core
  */
-class CgovSiteTools {
+class CgovCoreTools {
 
   /**
    * The config factory.
@@ -104,8 +104,8 @@ class CgovSiteTools {
     // Set the enabled methods.
     foreach ($this->cgovLangTypes as $type => $typeConf) {
       $this->negotiator->saveConfiguration(
-          $type,
-          $typeConf['enabled']
+        $type,
+        $typeConf['enabled']
       );
     }
   }
