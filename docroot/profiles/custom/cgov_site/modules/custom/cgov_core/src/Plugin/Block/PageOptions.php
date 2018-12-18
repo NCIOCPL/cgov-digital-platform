@@ -4,7 +4,7 @@ namespace Drupal\cgov_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\cgov_core\Services\PageOptionsManager;
+use Drupal\cgov_core\Services\PageOptionsManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
@@ -36,7 +36,7 @@ class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, PageOptionsManager $po_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, PageOptionsManagerInterface $po_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->pageOptionsConfigs = $po_manager->getConfig();
   }

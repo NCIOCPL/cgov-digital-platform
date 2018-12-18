@@ -8,7 +8,7 @@ use Drupal\node\NodeInterface;
 /**
  * Page Options Manager Service.
  */
-class PageOptionsManager {
+class PageOptionsManager implements PageOptionsManagerInterface {
 
   protected $pageOptionsConfig = [];
 
