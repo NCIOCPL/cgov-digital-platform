@@ -9,6 +9,7 @@
         <h1>
             {{ node.label }}
         </h1>
+        {{ drupal_block('page_options') }}
         <div id="cgvBody">
             {# Article image will come from content.field-lead-image #}
             {{ content.field_lead_image }}
@@ -40,9 +41,9 @@
                             cancer. <i>Journal of Translational Medicine</i> 2009;7:11.</p> <a href="http://www.ncbi.nlm.nih.gov/pubmed/19175928">[PubMed
                             Abstract]</a>
                     </li>
-                </ol>                    
+                </ol>
             </div>
-        </div>                
+        </div>
         {{ content.field_related_resources }}
         <div id="cgvDate">
             <div class="document-dates horizontal">
