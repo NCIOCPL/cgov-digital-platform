@@ -3,6 +3,7 @@
 namespace Drupal\cgov_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\language\LanguageNegotiatorInterface;
 
 /**
@@ -25,6 +26,13 @@ class CgovCoreTools {
    * @var \Drupal\language\LanguageNegotiatorInterface
    */
   protected $negotiator;
+
+  /**
+   * The entity type manager.
+   *
+   * @var Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
 
   /**
    * Our Language Negotiation settings.
@@ -74,10 +82,18 @@ class CgovCoreTools {
    *   The factory for configuration objects.
    * @param \Drupal\language\LanguageNegotiatorInterface $negotiator
    *   The language negotiation methods manager.
+   * @param Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   *   Access to the workflow storage.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, LanguageNegotiatorInterface $negotiator) {
+  public function __construct(
+      ConfigFactoryInterface $config_factory,
+      LanguageNegotiatorInterface $negotiator,
+      EntityTypeManager $entity_type_manager
+    ) {
+
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -108,6 +124,18 @@ class CgovCoreTools {
         $typeConf['enabled']
       );
     }
+  }
+
+  /**
+   * Links a content type to a workflow.
+   *
+   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
+   */
+  public function attachContentTypeToWorkflow($type_name, $workflow_name) {
+    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
+    $workflow = $workflows[$workflow_name];
+    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
+    $workflow->save(TRUE);
   }
 
 }
