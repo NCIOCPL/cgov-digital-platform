@@ -12,6 +12,19 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
  * @package Drupal\cgov_core
  */
 class CgovCoreTools {
+  const DEFAULT_ROLES = ['content_author', 'content_editor', 'advanced_editor'];
+
+  const DEFAULT_PERMISSIONS = [
+    'create [content_type] content',
+    'delete any [content_type] content',
+    'delete own [content_type] content',
+    'edit any [content_type] content',
+    'edit own [content_type] content',
+    'revert [content_type] revisions',
+    'translate [content_type] node',
+    'view [content_type] revisions',
+    // Excluded: 'delete [content_type] revisions'.
+  ];
 
   /**
    * The config factory.
@@ -143,6 +156,85 @@ class CgovCoreTools {
       $roles[$roleId]->save();
     }
 
+  }
+
+  /**
+   * Add Permissions to a role.
+   *
+   * @param string $type_name
+   *   Content type name to be added.
+   * @param mixed $roles
+   *   Roles to be added, as string or array.
+   * @param mixed $permissions
+   *   Permissions to be added, as string or array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException exception.
+   *   Expects getStorage to work.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addContentTypePermissions($type_name, $roles = DEFAULT_ROLES, $permissions = NULL) {
+    // Define Common roles and permissions.
+    $rolePerms['content_author'] = DEFAULT_PERMISSIONS;
+    $rolePerms['content_editor'] = [];
+    $rolePerms['advanced_editor'] = [];
+    $rolePerms['layout_manager'] = DEFAULT_PERMISSIONS;
+
+    // Convert $roles string to array if needed.
+    if (!is_array($roles)) {
+      $roles = [$roles];
+    }
+
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roleObjects = $role_storage->loadMultiple($roles);
+
+    if (count($roleObjects) != count($roles)) {
+      // Role not found, display error message.
+      print "Role(s) [" . implode(', ', $roles) . "] not found in " . __FUNCTION__ . "\n";
+    }
+    else {
+      // Get all role objects.
+      foreach ($roleObjects as $role_name => $roleObj) {
+        echo "ROLE $role_name: \n";
+
+        // Get permissions to assign.
+        // If permissions are passed as a parameter, use that.
+        if ($permissions) {
+          // Convert to array if a string.
+          if (!is_array($permissions)) {
+            $perms = [$permissions];
+          }
+          else {
+            $perms = $permissions;
+          }
+        }
+        else {
+          // No permissions passed, get list of permissions to use.
+          if (isset($rolePerms[$role_name])) {
+            // Get role-specific permissions.
+            $perms = $rolePerms[$role_name];
+          }
+          else {
+            // Load default permissions.
+            $perms = DEFAULT_PERMISSIONS;
+          }
+        }
+
+        // Update all the permissions.
+        foreach ($perms as &$perm) {
+          $perm = str_replace("[content_type]", "$type_name", $perm);
+          // Grant Permission.
+          print "Granting [$perm] to [$role_name]\n";
+          $roleObj->grantPermission($perm);
+          $roleObj->save();
+        }
+        echo "PERMS(strrpl): ";
+        print_r($perms);
+      }
+    }
   }
 
 }

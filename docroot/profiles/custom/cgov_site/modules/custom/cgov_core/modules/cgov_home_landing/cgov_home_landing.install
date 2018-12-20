@@ -13,23 +13,9 @@
  * @see system_install()
  */
 function cgov_home_landing_install() {
-
-  $rolePermissions['layout_manager'] = [
-    'create cgov_home_landing content',
-    'delete any cgov_home_landing content',
-    'delete own cgov_home_landing content',
-    'edit any cgov_home_landing content',
-    'edit own cgov_home_landing content',
-    'revert cgov_home_landing revisions',
-    'translate cgov_home_landing node',
-    'view cgov_home_landing revisions',
-    // Excluded: 'delete cgov_home_landing revisions' .
-  ];
-
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
-  // Install proper language negotiation even if English only.
-  $siteHelper->addRolePermissions($rolePermissions);
-
+  // Add content type permissions.
+  $siteHelper->addContentTypePermissions('cgov_home_landing', 'layout_manager');
 }
