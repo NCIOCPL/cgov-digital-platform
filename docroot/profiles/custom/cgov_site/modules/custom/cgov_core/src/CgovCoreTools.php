@@ -175,12 +175,12 @@ class CgovCoreTools {
    * @throws \Drupal\Core\Entity\EntityStorageException exception
    *   Expects role->save() to work.
    */
-  public function addContentTypePermissions($type_name, $roles = DEFAULT_ROLES, $permissions = NULL) {
+  public function addContentTypePermissions($type_name, $roles = self::DEFAULT_ROLES, $permissions = NULL) {
     // Define Common roles and permissions.
-    $rolePerms['content_author'] = DEFAULT_PERMISSIONS;
+    $rolePerms['content_author'] = self::DEFAULT_PERMISSIONS;
     $rolePerms['content_editor'] = [];
     $rolePerms['advanced_editor'] = [];
-    $rolePerms['layout_manager'] = DEFAULT_PERMISSIONS;
+    $rolePerms['layout_manager'] = self::DEFAULT_PERMISSIONS;
 
     // Convert $roles string to array if needed.
     if (!is_array($roles)) {
@@ -193,13 +193,11 @@ class CgovCoreTools {
 
     if (count($roleObjects) != count($roles)) {
       // Role not found, display error message.
-      print "Role(s) [" . implode(', ', $roles) . "] not found in " . __FUNCTION__ . "\n";
+      echo "Role(s) " . implode(', ', $roles) . " not found in " . __FUNCTION__ . "\n";
     }
     else {
       // Get all role objects.
       foreach ($roleObjects as $role_name => $roleObj) {
-        echo "ROLE $role_name: \n";
-
         // Get permissions to assign.
         // If permissions are passed as a parameter, use that.
         if ($permissions) {
@@ -219,22 +217,39 @@ class CgovCoreTools {
           }
           else {
             // Load default permissions.
-            $perms = DEFAULT_PERMISSIONS;
+            $perms = self::DEFAULT_PERMISSIONS;
           }
         }
 
         // Update all the permissions.
         foreach ($perms as &$perm) {
-          $perm = str_replace("[content_type]", "$type_name", $perm);
+          // Replace placeholders.
+          $perm = str_replace('[content_type]', $type_name, $perm);
+
           // Grant Permission.
-          print "Granting [$perm] to [$role_name]\n";
           $roleObj->grantPermission($perm);
           $roleObj->save();
         }
-        echo "PERMS(strrpl): ";
-        print_r($perms);
       }
     }
+  }
+
+  /**
+   * Remove [content_type] with passed variable in array of parameters.
+   *
+   * @param string $content_type
+   *   Content type to replace [content_type] tokens.
+   * @param array $permissions
+   *   Array of strings containing permission names with [content_type] tokens.
+   *
+   * @return array
+   *   Permission strings with [placeholder] replaced.
+   */
+  public function renameContentTypePermissions(string $content_type, array $permissions) {
+    foreach ($permissions as &$perm) {
+      $perm = str_replace('[content_type]', $content_type, $perm);
+    }
+    return $permissions;
   }
 
 }
