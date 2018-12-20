@@ -93,12 +93,17 @@ class CgovCoreTools {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
    * @param \Drupal\language\LanguageNegotiatorInterface $negotiator
    *   The language negotiation methods manager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, LanguageNegotiatorInterface $negotiator) {
+  public function __construct(
+      ConfigFactoryInterface $config_factory,
+      LanguageNegotiatorInterface $negotiator,
+      EntityTypeManagerInterface $entity_type_manager
+    ) {
+
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
@@ -132,6 +137,18 @@ class CgovCoreTools {
         $typeConf['enabled']
       );
     }
+  }
+
+  /**
+   * Links a content type to a workflow.
+   *
+   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
+   */
+  public function attachContentTypeToWorkflow($type_name, $workflow_name) {
+    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
+    $workflow = $workflows[$workflow_name];
+    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
+    $workflow->save(TRUE);
   }
 
   /**
