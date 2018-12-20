@@ -1,0 +1,285 @@
+/********************* BEGIN Footer Styles ******************************************/
+.site-footer {
+    background: $color-footer-bg url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat -120% 150px;
+    padding: 1em 0;
+    
+    * {
+      color: $white;
+      font-family: $noto-font-stack;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin-bottom: 1em;
+    }
+
+    a {
+      font-weight: 700;
+
+      &:hover, &:focus {
+        color: $white;
+        text-decoration: underline;
+      }
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+}
+
+.site-footer__container {
+  width: 100%;
+  max-width: 62.5em;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-footer__header {
+  text-align: left;
+  margin: 0 auto;
+
+  h1 {
+    font-family: $montserrat-font-stack;
+    font-size: 23px;
+
+    span {
+      font-family: $montserrat-font-stack;
+      display: block;
+      font-size: 16px;
+    }
+  }
+}
+
+.site-footer__nav {
+  display: flex;
+  flex-direction: column;
+  margin: 1em auto;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  li {
+    width: 100%;
+    margin-bottom: 1em;
+    line-height: 1.3em;
+  }
+}
+
+.site-footer__icons {
+  max-width: 232px;
+  margin: 0 auto;
+  margin-bottom: 1.25em; // To match sitewide ul styling
+
+  li {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: 5px;
+    background: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover, &:focus {
+      opacity: 0.8;
+
+      // This is a mini-hack to prevent a weird cropping issue on Chrome
+      // on mobile only when something is selected. BB 2/2018.
+      transform: scale(0.99);
+    }
+  }
+
+  .icon {
+
+    &.facebook {
+      @include svg-sprite(facebook-blue);
+      font-size: 1.2em;
+    }
+
+    &.twitter {
+      @include svg-sprite(twitter-blue);
+      font-size: 1.1em;
+    }
+  
+    &.instagram {
+      @include svg-sprite(instagram-blue);
+      font-size: 1.2em;
+    }
+
+    &.pinterest {
+      @include svg-sprite(pinterest-blue);
+    }
+
+    &.youtube {
+      @include svg-sprite(youtube-blue);
+      font-size: 1.1em;
+    }
+
+    &.linkedin {
+      @include svg-sprite(linkedin-blue);
+      font-size: 120%;
+    }
+
+    &.rss {
+      @include svg-sprite(rss-blue);
+    }
+    &.govdelivery {
+      @include svg-sprite(gov-delivery-blue);
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.site-footer__agencies {
+  width: auto;
+  align-self: center;
+  font-size: 0.8em;
+  
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    
+    &:after {
+      content: '';
+      display: block;
+      margin: 10px auto;
+      width: 75px;
+      height: 1px;
+      background: rgba($white, 0.6);
+    }
+    &:last-child:after {
+      display:none;
+    }
+  }
+}
+
+.site-footer__tagline {
+  width: 95%;
+  align-self: center;
+
+  * {
+    font-weight: 400;
+  }
+}
+
+@include break(medium) {
+  .site-footer {
+    background-position: -30% 150px;
+  }
+
+  .site-footer__header {
+    margin: 0.9375em;
+    
+    * {
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+  }
+
+  .site-footer__nav {
+    max-width: 100%;
+    margin: 0.9375em;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    * {
+      text-align: left;
+    }
+
+    div {
+      flex: 1;
+      padding-right: 1.1em;
+    }
+  }
+
+  .site-footer__icons {
+    max-width: 100%;
+
+    li {
+      margin: 6px 11px 6px 0;
+    }
+  }
+
+  .site-footer__agencies {
+    ul {
+      flex-flow: row wrap;
+      justify-content: center;
+      max-width: 640px;
+
+    }
+    li {
+
+      &:after {
+        content: '';
+        display: inline-block;
+        position: relative;
+        top: 1px;
+        margin: 0 10px;
+        width: 1px;
+        height: 12px;
+        background: rgba($white, 0.6);
+      }
+      &:nth-child(even):after {
+        display: none;
+      }
+    }
+  }
+  
+}
+
+@include break(large) {
+  .site-footer {
+    background-position: 130% 150px;
+  }
+
+  .site-footer__nav {
+
+    div {
+      flex-basis: 20%;
+      margin-right: 2%;
+      padding-right: 10px; 
+    }
+  }
+  .site-footer__agencies {
+    ul {
+      max-width: none;
+    }
+    li {
+      &:not(:last-child):after {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+@include break(xlarge) {
+  .site-footer__container {
+    max-width: 1200px;
+  }
+}
+
+/********************* END Footer Styles ******************************************/
+

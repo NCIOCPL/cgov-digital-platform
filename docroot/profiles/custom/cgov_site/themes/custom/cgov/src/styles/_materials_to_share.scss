@@ -1,0 +1,128 @@
+/****************** BEGIN materials-to-share ********************/
+/* these styles are for adding social (twitter) share links as seen on https://www.cancer.gov/about-nci/organization/crchd/inp/screen-to-save/connect. */
+
+.materials-to-share {
+    clear: both;
+}
+
+.materials-to-share .column1 {
+    width: 25%;
+	padding-top: 15px;
+}
+
+.materials-to-share .column2 {
+    font-size: 0.875em;
+	width: 70%;
+	padding-top: 10px;
+}
+
+.materials-to-share .column2 .addthis_toolbox p {
+  margin-top: 5px;
+}
+
+.materials-to-share figure {
+    margin:  0 auto;
+}
+
+.materials-to-share p {
+    padding: 10px 25px;
+    margin-left: 180px;
+    position: relative;
+    color: $dovegray;
+    font-size: 0.9375em;
+    font-family: $montserrat-font-stack;
+    line-height: 1.4;
+
+    @include bp(small) {
+        margin-left: 0;
+    }
+}
+.materials-to-share p:after,
+.materials-to-share p:before {
+    border: 3px solid $grey00; 
+    bottom: 0;    
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 15px;
+}
+.materials-to-share p:after {
+    border-left: none;
+    right: 0;
+}
+.materials-to-share p:before {
+    border-right: none;
+    left: 0;
+}
+.materials-to-share p:empty {
+    display: none;
+ }
+
+// This is to accomodate the removal of addthis twitter links in favor of a vanilla implementation.
+// Some or most of the rules below are probably deprecated. Dear future you, please do the painful work of figuring out what!
+.materials-to-share .social-share--custom-tweet {
+    margin-right: 5px;
+    margin-top: 4px;
+    float: left;
+    padding: 0 2px;
+
+    @include bp(small) {
+        float: none;
+        padding-top: 30px;
+        width: 100%;
+        height: 40px;
+    }
+}
+
+.materials-to-share .addthis_32x32_style .at300bs {
+    line-height: 32px !important;
+	width: 32px !important;
+	display: block;
+	height: 32px !important;
+	overflow: hidden;
+	background: url($buttons + 'addthis_buttons_32.png') no-repeat left 50%;
+	margin-right: 5px;
+}
+
+.materials-to-share .addthis_32x32_style .at15t_facebook {
+    background-position: 0px -256px;
+}
+
+.materials-to-share .addthis_32x32_style .at15t_twitter {
+    background-position: 0px -1152px;
+}
+
+.materials-to-share .addthis_32x32_style .at300bs .at_a11y {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.materials-to-share .download-image {
+  padding-top: 15px;
+}
+
+.materials-to-share .download-image p{
+  margin-top: 0px;
+  padding-top: 1px;
+}
+
+.materials-to-share .download-image span.download-infographic-button {
+  width: 32px;
+  height: 32px;
+  margin: 0 7px 0 2px;
+  background-image: url($buttons + 'download-button.png');
+  display: block;
+  float: left;
+}
+
+.materials-to-share .two-columns.border-bottom{
+border-bottom:solid 1px #bdbdbd;
+padding-bottom: 20px;
+}
+
+
+/****************** END materials-to-share ********************/

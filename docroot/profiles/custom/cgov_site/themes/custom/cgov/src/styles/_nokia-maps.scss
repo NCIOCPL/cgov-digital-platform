@@ -1,0 +1,68 @@
+/********** Begin cancer Center Map Styles ***********************************/
+/* Styles for the map portion only                                           */
+/*                                                                           */
+/* The ".H_*" styles are for HERE Maps v3.0, the other styles are for the    */
+/* old version of Nokia maps. VE                                             */
+/*****************************************************************************/
+.nm_bubble_content a, .nm_bubble_content a:visited {
+ color: $color-link !important;
+}
+
+/* Overwriting HERE maps styles to match our requirements. VE */
+.ncigeneral {
+    /* Note:  This style is very fragile but HERE maps doesn't provide */
+    /*        a class allowing the HERE map logo to be hidden easily   */
+    #mapContainer div[style*="z-index: 1"] {
+        display: none;
+    }
+    .H_ib {
+        font-size: 1em;
+
+        .H_ib_body {
+            padding: 1.5em;
+        }
+
+        table {
+            margin-bottom: 0;
+
+            span {
+                white-space: nowrap;
+            }
+        }
+    }
+    .H_ib_content a, .H_ib_content a:visited {
+        color: $color-link !important;
+    }
+}
+/********** End cancer Center Map Styles ********************/
+
+/****************** Begin Nokia Maps raw HTML Styles **********/
+#stateSelect, 
+#regionSelect {
+    width: 180px; 
+    }
+#dropDownCCDisplay1 { 
+    padding-bottom: 5px; 
+    label { 
+        width: 20%; 
+        }
+    }
+#dropDownCCDisplay2 label { 
+    width: 20%; 
+    }
+
+/****************** END Nokia Maps raw HTML Styles **********/
+
+#mapContainer {
+	width: 100%;
+	height: 354px;
+	border: 1px solid #BDBDBD;
+	margin: 15px auto 13px auto;
+    padding: 1px;
+    
+    img {
+		max-width: 1024px;
+		max-width: initial;
+	}
+}
+/****************** END Nokia Maps ********************/

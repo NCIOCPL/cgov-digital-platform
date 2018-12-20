@@ -1,0 +1,24 @@
+.flex-columns {
+    display: flex;
+	float: none;
+
+    @include bp(small) {
+        &:not(.multimedia) {
+            display: inherit;
+        }
+    }
+}
+
+@include bp(large-up){
+	.row .gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 2%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+	}
+}

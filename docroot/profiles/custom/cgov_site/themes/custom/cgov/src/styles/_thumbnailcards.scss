@@ -1,0 +1,71 @@
+/* BEGIN THUMBNAIL CARDS ROW */
+// this is to fix a bug where .row .row is giving negative margin to the thumbnail cards on the landing pages
+.card-thumbnail .card-thumbnail {
+	margin-left: 0;
+	margin-right: 0;
+}
+.card-thumbnail {
+	background: $white;
+	padding-top: 1em;
+	padding-bottom: 1em;
+
+	.card-thumbnail:hover { //yes, there is a .card-thumbnail inside the .card-thumbnail
+		a.image-hover {
+			background-color: $black;
+		}
+		img {
+			opacity: .8;
+		}
+		a {
+			color: $lcranberry;
+		}
+	}
+
+	h3 {
+		margin-top: 0.5em;
+	}
+	.small-2 {
+		margin-top: 1em;
+	}
+	.image-hover {
+		display: block;
+
+		img {
+			width: 100%;
+		}
+
+		&:hover, &:focus {
+			background-color: $black;
+			> img {
+				opacity: 0.8;
+			}
+		}
+	}
+	h3 {
+		font-weight: normal;
+		a {
+			@extend %card-link-hover;
+		}
+	}
+}
+@include bp(small) {
+	.card-thumbnail {
+		h3 {
+			margin-top: 0;
+			font-size: 1.125em;
+			line-height: 1.111em;
+		}
+		.small-2, .small-3 {
+			display: none;
+		}
+		.small-10, .small-9 {
+			width: 100%;
+		}
+	}
+	/* no gutter on left and right in mobile */
+	.card, .card-thumbnail div {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+/* END THUMBNAIL CARDS ROW */
