@@ -3,8 +3,8 @@
 namespace Drupal\cgov_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\language\LanguageNegotiatorInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Helper service for various cgov installation tasks.
@@ -12,6 +12,19 @@ use Drupal\language\LanguageNegotiatorInterface;
  * @package Drupal\cgov_core
  */
 class CgovCoreTools {
+  const DEFAULT_ROLES = ['content_author', 'content_editor', 'advanced_editor'];
+
+  const DEFAULT_PERMISSIONS = [
+    'create [content_type] content',
+    'delete any [content_type] content',
+    'delete own [content_type] content',
+    'edit any [content_type] content',
+    'edit own [content_type] content',
+    'revert [content_type] revisions',
+    'translate [content_type] node',
+    'view [content_type] revisions',
+    // Excluded: 'delete [content_type] revisions'.
+  ];
 
   /**
    * The config factory.
@@ -30,7 +43,7 @@ class CgovCoreTools {
   /**
    * The entity type manager.
    *
-   * @var Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -76,19 +89,19 @@ class CgovCoreTools {
   ];
 
   /**
-   * Constructs a CgovSiteTools object.
+   * Constructs a CgovCoreTools object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
    * @param \Drupal\language\LanguageNegotiatorInterface $negotiator
    *   The language negotiation methods manager.
-   * @param Drupal\Core\Entity\EntityTypeManager $entity_type_manager
-   *   Access to the workflow storage.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
       ConfigFactoryInterface $config_factory,
       LanguageNegotiatorInterface $negotiator,
-      EntityTypeManager $entity_type_manager
+      EntityTypeManagerInterface $entity_type_manager
     ) {
 
     $this->negotiator = $negotiator;
@@ -136,6 +149,124 @@ class CgovCoreTools {
     $workflow = $workflows[$workflow_name];
     $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
     $workflow->save(TRUE);
+  }
+
+  /**
+   * Add Permissions to a role.
+   *
+   * @param array $rolePermissions
+   *   Array of [ RoleID => [ PermissionsList ] ] of permissions to add.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addRolePermissions(array $rolePermissions) {
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roles = $role_storage->loadMultiple(array_keys($rolePermissions));
+
+    // Add all permissions.
+    foreach ($rolePermissions as $roleId => $permissionId) {
+      foreach ($permissionId as $perm) {
+        $roles[$roleId]->grantPermission($perm);
+      }
+      $roles[$roleId]->save();
+    }
+
+  }
+
+  /**
+   * Add Permissions to a role.
+   *
+   * @param string $type_name
+   *   Content type name to be added.
+   * @param mixed $roles
+   *   Roles to be added, as string or array.
+   * @param mixed $permissions
+   *   Permissions to be added, as string or array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException exception.
+   *   Expects getStorage to work.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addContentTypePermissions($type_name, $roles = self::DEFAULT_ROLES, $permissions = NULL) {
+    // Define Common roles and permissions.
+    $rolePerms['content_author'] = self::DEFAULT_PERMISSIONS;
+    $rolePerms['content_editor'] = [];
+    $rolePerms['advanced_editor'] = [];
+    $rolePerms['layout_manager'] = self::DEFAULT_PERMISSIONS;
+
+    // Convert $roles string to array if needed.
+    if (!is_array($roles)) {
+      $roles = [$roles];
+    }
+
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roleObjects = $role_storage->loadMultiple($roles);
+
+    if (count($roleObjects) != count($roles)) {
+      // Role not found, display error message.
+      echo "Role(s) " . implode(', ', $roles) . " not found in " . __FUNCTION__ . "\n";
+    }
+    else {
+      // Get all role objects.
+      foreach ($roleObjects as $role_name => $roleObj) {
+        // Get permissions to assign.
+        // If permissions are passed as a parameter, use that.
+        if ($permissions) {
+          // Convert to array if a string.
+          if (!is_array($permissions)) {
+            $perms = [$permissions];
+          }
+          else {
+            $perms = $permissions;
+          }
+        }
+        else {
+          // No permissions passed, get list of permissions to use.
+          if (isset($rolePerms[$role_name])) {
+            // Get role-specific permissions.
+            $perms = $rolePerms[$role_name];
+          }
+          else {
+            // Load default permissions.
+            $perms = self::DEFAULT_PERMISSIONS;
+          }
+        }
+
+        // Update all the permissions.
+        foreach ($perms as &$perm) {
+          // Replace placeholders.
+          $perm = str_replace('[content_type]', $type_name, $perm);
+
+          // Grant Permission.
+          $roleObj->grantPermission($perm);
+          $roleObj->save();
+        }
+      }
+    }
+  }
+
+  /**
+   * Remove [content_type] with passed variable in array of parameters.
+   *
+   * @param string $content_type
+   *   Content type to replace [content_type] tokens.
+   * @param array $permissions
+   *   Array of strings containing permission names with [content_type] tokens.
+   *
+   * @return array
+   *   Permission strings with [placeholder] replaced.
+   */
+  public function renameContentTypePermissions(string $content_type, array $permissions) {
+    foreach ($permissions as &$perm) {
+      $perm = str_replace('[content_type]', $content_type, $perm);
+    }
+    return $permissions;
   }
 
 }
