@@ -89,11 +89,8 @@ class WorkflowTest extends KernelTestBase {
     $this->users['advanced']->addRole('content_author');
     $this->users['advanced']->addRole('content_editor');
     $this->users['advanced']->addRole('advanced_editor');
-    $entityTypeManager = $this->container->get('entity_type.manager');
-    $workflows = $entityTypeManager->getStorage('workflow')->loadMultiple();
-    $workflow = $workflows['editorial_workflow'];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', 'pony');
-    $workflow->save(TRUE);
+    $tools = $this->container->get('cgov_core.tools');
+    $tools->attachContentTypeToWorkflow('pony', 'editorial_workflow');
   }
 
   /**

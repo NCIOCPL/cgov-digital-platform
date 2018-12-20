@@ -3,9 +3,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.cgov_article.body
     - field.field.node.cgov_article.field_browser_title
-    - field.field.node.cgov_article.field_feature_card_description
     - field.field.node.cgov_article.field_card_title
+    - field.field.node.cgov_article.field_date_display_mode
+    - field.field.node.cgov_article.field_date_posted
+    - field.field.node.cgov_article.field_date_reviewed
+    - field.field.node.cgov_article.field_date_updated
+    - field.field.node.cgov_article.field_feature_card_description
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_short_title
@@ -19,13 +24,18 @@ mode: teaser
 content:
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
+  body: true
   field_browser_title: true
-  field_feature_card_description: true
   field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
   field_list_description: true
   field_page_description: true
   field_short_title: true
