@@ -1,0 +1,318 @@
+/*
+* CSS TOGGLE SWITCH
+*
+* Ionuț Colceriu - ghinda.net
+* https://github.com/ghinda/css-toggle-switch
+*
+*/
+
+/* supported values are px, rem-calc, em-calc
+ */
+$size-unit: em !default;
+$em-base: 16 !default;
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+/* imports
+ */
+/* Functions
+ */
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@function convert-to-em($value)  {
+  $value: strip-unit($value) / strip-unit($em-base) * 1em;
+  @if ($value == 0em) { $value: 0; }
+  @return $value;
+}
+
+@function em-calc($values) {
+  $max: length($values);
+  @if $max == 1 { @return convert-to-em(nth($values, 1)); }
+  $em-values: ();
+  @for $i from 1 through $max {
+    $em-values: append($em-values, convert-to-em(nth($values, $i)));
+  }
+  @return $em-values;
+}
+
+@function convert-to-rem($value)  {
+  $value: strip-unit($value) / strip-unit($em-base) * 1rem;
+  @if ($value == 0rem) { $value: 0; }
+  @return $value;
+}
+
+@function rem-calc($values) {
+  $max: length($values);
+  @if $max == 1 { @return convert-to-rem(nth($values, 1)); }
+  $rem-values: ();
+  @for $i from 1 through $max {
+    $rem-values: append($rem-values, convert-to-rem(nth($values, $i)));
+  }
+  @return $rem-values;
+}
+
+@function convert-to-px($value)  {
+  $value: strip-unit($value) * 1px;
+  @if ($value == 0px) { $value: 0; }
+  @return $value;
+}
+
+@function px-calc($values) {
+  $max: length($values);
+  @if $max == 1 { @return convert-to-px(nth($values, 1)); }
+  $px-values: ();
+  @for $i from 1 through $max {
+    $px-values: append($px-values, convert-to-px(nth($values, $i)));
+  }
+  @return $px-values;
+}
+
+@function size($value) {
+  @if $size-unit == px {
+    @return px-calc($value)
+  }
+  @if $size-unit == rem {
+    @return rem-calc($value)
+  }
+  @if $size-unit == em {
+    @return em-calc($value)
+  }
+}
+
+/* Shared
+ */
+
+@mixin switch-shared() {
+  @include clearfix;
+  position: relative;
+  display: block;
+
+  a {
+    display: block;
+    transition: all 0.2s ease-out;
+  }
+
+  label,
+  > span {
+    /* breathing room for bootstrap/foundation classes.
+     */
+    line-height: 2em;
+  }
+
+  /* simulate default browser focus outlines on the switch,
+   * when the inputs are focused.
+   */
+  input:focus ~ span a,
+  input:focus + label {
+    //outline-width: 2px;
+    //outline-style: solid;
+    //outline-color: Highlight;
+
+    /* Chrome/Opera gets its native focus styles.
+     */
+    //@media (-webkit-min-device-pixel-ratio:0) {
+    //  outline-color: -webkit-focus-ring-color;
+    //  outline-style: auto;
+    //}
+  }
+}
+
+/* Hide by default
+ */
+.switch-toggle a,
+.switch-light span span {
+  display: none;
+}
+
+/* We can't test for a specific feature,
+ * so we only target browsers with support for media queries.
+ */
+@media only screen {
+  /* Checkbox
+   */
+
+  .switch-light {
+    @include switch-shared();
+  }
+
+  /* don't hide the input from screen-readers and keyboard access
+   */
+  .switch-light input {
+    display: inline;
+    position: absolute;
+    opacity: 0;
+    z-index: 3;
+  }
+
+  .switch-light input:checked ~ span a {
+    right: 0%;
+  }
+
+  /* inherit from label
+   */
+  .switch-light strong {
+    font-weight: inherit;
+  }
+
+  .switch-light > span {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    min-height: 2em;
+    /* overwrite 3rd party classes padding
+     * eg. bootstrap .alert
+     */
+    padding: 0;
+
+    text-align: left;
+  }
+
+  .switch-light span span {
+    position: relative;
+    z-index: 2;
+    display: block;
+    float: left;
+    width: 50%;
+
+    text-align: center;
+
+    user-select: none;
+  }
+
+  .switch-light a {
+    position: absolute;
+    right: 50%;
+    top: 0;
+    z-index: 1;
+    display: block;
+    width: 50%;
+    height: 100%;
+    padding: 0;
+  }
+
+
+  /* iOS Theme
+*/
+  .switch-ios {
+    $inactive-color: #D8D9DB;
+    // $active-color: #2a72a5;
+    $active-color: #accae1;
+    $switch-color: #2B7BBA;
+
+    &.switch-light {
+      span span {
+        color: darken($inactive-color, 60%);
+      }
+
+      a {
+        left: 0;
+        top: 0;
+        width: size(32);
+        height: size(32);
+        // background-color: #fff;
+        background-color: $switch-color;
+        border-radius: 100%;
+        border: size(4) solid $inactive-color;
+
+        transition: all .2s ease-out;
+      }
+
+      > span {
+        //display: block;
+        box-sizing: content-box;
+        width: 100%;
+        height: size(32);
+        background-color: $inactive-color;
+        border-radius: size(28);
+        border: 1px dotted transparent;
+
+        transition: all .4s ease-out;
+      }
+
+      > span span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+
+        //line-height: size(30);
+        vertical-align: middle;
+
+        transition: all .2s ease-out;
+
+        &:first-of-type {
+          opacity: 1;
+          padding-left: size(30);
+        }
+
+        &:last-of-type {
+          padding-right: size(30);
+          padding-left: size(5);
+        }
+      }
+
+      input:checked {
+        ~ span a {
+          left: 100%;
+          border-color: $active-color;
+          margin-left: size(-32);
+        }
+
+        ~ span {
+          box-shadow: inset 0 0 0 30px $active-color;
+        }
+
+        ~ span span {
+          &:first-of-type {
+            opacity: 0;
+          }
+
+          &:last-of-type {
+            opacity: 1;
+            // color: #fff;
+          }
+        }
+      }
+    }
+
+    &.switch-toggle {
+      background-color: $inactive-color;
+      border-radius: 30px;
+      box-shadow: inset rgba(0, 0, 0, 0.1) 0 1px 0;
+
+      a {
+        background-color: $active-color;
+        border: size(2) solid $inactive-color;
+        border-radius: size(28);
+
+        transition: all 0.12s ease-out;
+      }
+
+      label {
+        height: 2.4em;
+
+        color: darken($inactive-color, 30%);
+        line-height: 2.4em;
+        vertical-align: middle;
+      }
+    }
+
+    input:checked + label {
+      color: darken($inactive-color, 60%);
+    }
+
+    input:focus ~ span {
+      border: 1px dotted #2b7bba;
+    }
+  }
+}

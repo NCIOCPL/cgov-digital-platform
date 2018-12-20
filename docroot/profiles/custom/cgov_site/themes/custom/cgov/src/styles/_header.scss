@@ -1,0 +1,237 @@
+/********************* BEGIN Header Styles ******************************************/
+// desktop (general)
+header {
+	padding-top: 1.5em;
+}
+
+/* Regular pages */
+.nci-logo-pages.columns {
+	padding-left: 0;
+	padding-right: 0;
+}
+.nci-logo-pages a {
+	display: block;
+}
+
+.nci-logo-pages {
+	// SVG is default for most browers
+	// GIF is default for IE8-
+
+	$logo-width-desktop: 60%;
+	$logo-padding-desktop: 7.5px;
+
+	$logo-width-mobile: 90%;
+	$logo-padding-mobile: 13px;
+
+	img[src*='.svg'] {
+		// Fix for Firefox subpixel height rendering -- if >= .5, then move up to next pixel
+		transform: translate(0px, 0.5px);
+	}
+
+	// default; should NOT be in a media query to allow the logo to print properly in IE8
+	//@include bp(xtra-large) {
+	img {
+		width: 60%;
+	}
+
+	a {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	//}
+
+	@include bp(large) {
+		img {
+			width: $logo-width-desktop;
+		}
+
+		a {
+			padding-left: $logo-padding-desktop;
+			padding-right: $logo-padding-desktop;
+		}
+	}
+
+	@include bp(medium) {
+		img {
+			width: 70%;
+			min-width: ($logo-width-mobile / 100%) * (640px - $logo-padding-mobile); // this calculates the width that the logo would be at largest point in the mobile breakpoint, IF there were no scrollbar (should be 640px - $padding-mobile - <scrollbar width>)
+			max-width: ($logo-width-desktop / 100%) * (strip-unit($row-width)*$em-base - $logo-padding-desktop); // this calculates the width that the logo is at the smallest point in the desktop breakpoint
+		}
+
+		a {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+
+	@include bp(small) {
+		img {
+			width: $logo-width-mobile;
+		}
+
+		a {
+			padding-left: $logo-padding-mobile;
+			padding-right: $logo-padding-mobile;
+		}
+	}
+}
+
+/* mobile menu sprites - must be set outside of media query for mixins to operate */
+button.nav-header,
+a.nav-contact,
+a.nav-dictionary,
+button.nav-search {
+	&::before {
+		font-size:16px;
+		content: "";
+		position: absolute;
+		top:2px;
+		left: 50%;
+		@include transform(translateX(-50%));
+	}
+}
+button.nav-header::before {
+	@include svg-sprite(menu);
+	top:7px;
+}
+a.nav-contact::before {
+	@include svg-sprite(info);
+}
+a.nav-dictionary::before {
+	@include svg-sprite(book);
+}
+button.nav-search::before {
+	@include svg-sprite(search-large);
+	//font-size: 210%; //just under 300% to prevent unfavorable rounding
+}
+//_:-ms-fullscreen, :root button.nav-search::before {
+//	font-size: 90%; // because IE is stupid
+//}
+
+	/* popup */
+.nci-logo {
+	font-weight: bold;
+	font-size: 37.7px;
+	// I can haz svg?
+	background: url($logos + "NIH-red-logo.png") no-repeat 20px 0;
+	min-height: 54px;
+
+	&.columns {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	a {
+		color: #bb0e3d;
+		padding-left: 113px;
+		padding-top: 16px;
+		display: block;
+
+		span {
+			position: absolute;
+			left: -10000px;
+			color: #5d5d5d;
+			font-size: 0.6em;
+		}
+	}
+}
+
+// tablet
+@include bp(medium) {
+	.nci-logo {
+		//background: url($logos + "NIH-red-logo-tablet.png") no-repeat 30px 0;
+		font-size: 24px;
+		min-height: 36px;
+
+		a {
+			padding-left: 95px;
+			padding-top: 9px;
+		}
+	}
+}
+
+/* begin mobile menu bar styles */
+// smartphone + tablet
+@include bp(medium-down) {
+
+	header {
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+	.mobile-menu-bar {
+		> a,
+		> button {
+			display: inline-block;
+			position: relative;
+			background: transparent no-repeat center 0;
+			width: 13%;
+			padding: 3em 0 0 0;
+			margin: 1em 8%;
+			font-family: $montserrat-font-stack;
+			line-height: 1;
+			font-weight: bold;
+			font-size: 0.8em;
+			color: #fff;
+			text-transform: uppercase;
+			text-align: center;
+
+			&:hover, &:focus {
+				color: #fff;
+			}
+		}
+		> button {
+			-webkit-appearance: none;
+			appearance: none;
+			border: none;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		button.nav-header {
+			margin-left: 0;
+		}
+		button.nav-search {
+			margin-right: 0;
+		}
+	}
+}
+
+// smartphone
+@include bp(small) {
+	.nci-logo {
+		//background: url($logos + "NIH-red-logo-smartphone.png") no-repeat 30px 0;
+		font-size: 16px;
+		min-height: 28px;
+
+		a {
+			padding-left: 80px;
+			padding-top: 5px;
+		}
+	}
+	.mobile-menu-bar {
+		> a,
+		> button {
+			width: 19%;
+		}
+	}
+	button.nav-header {
+		margin-right: 4%;
+	}
+	a.nav-contact, a.nav-dictionary {
+		margin-left: 4%;
+		margin-right: 4%;
+	}
+	button.nav-search {
+		margin-left: 4%;
+	}
+}
+
+// x-small
+@include bp(xtra-small) {
+	.nci-logo {
+		font-size: 13px;
+	}
+}
+/* end mobile menu styles */
+/********************* END Header Styles ******************************************/

@@ -1,0 +1,50 @@
+/* Counter / pager styles above listing body*/
+.ct-listing-util-top  {
+
+    @include bp(large) {
+      hr {
+        margin-top: 32px;
+        margin-bottom: 0px;
+      }
+    }
+  }
+  
+  @include bp(medium-down) {
+    .ct-listing-util-top {
+      .ct-listing-pager {
+        float: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      hr {
+        margin-bottom: 5px;
+      }
+    }
+  
+    .ct-listing-util-bottom {
+      .ct-listing-pager {
+        float: left !important;
+      }
+    }
+  }
+
+  a.listing-chat-button {
+    display: block;
+    float: left;
+    position: relative;
+    z-index: 2;
+    padding: 3px 10px;
+    border-radius: 4px;
+    box-shadow: 3px 3px 5px #888888;
+    margin: -8% 15px 15px 32%;
+    background-color: #62539d;
+    color: #fff;
+    text-decoration: none;
+    line-height: 24px;
+    font-family: $montserrat-font-stack;
+    font-size: 1.125em;
+  
+    &:hover, &:active {
+      text-decoration: none;
+    }
+  }
