@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.cgov_article.field_date_posted
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
+    - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_short_title
@@ -16,6 +17,7 @@ dependencies:
   module:
     - datetime
     - options
+    - text
     - user
 id: node.cgov_article.default
 targetEntityType: node
@@ -79,6 +81,13 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_intro_text:
+    weight: 112
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
     region: content
   field_list_description:
     weight: 107
