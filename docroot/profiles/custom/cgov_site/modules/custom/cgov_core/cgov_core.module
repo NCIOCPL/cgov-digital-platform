@@ -4,3 +4,31 @@
  * @file
  * Contains cgov_core.module.
  */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_access().
+ */
+function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  $publish_permission = 'use editorial_workflow transition publish';
+  $reason = 'Authors not allowed to delete content which has ever been published';
+  switch ($op) {
+    case 'delete':
+      // Return AccessResult::forbidden();
+      if (!$account->hasPermission($publish_permission)) {
+        $query = \Drupal::database()->select('node_field_revision', 'r');
+        $query->condition('r.status', 1);
+        $query->condition('r.nid', $node->id());
+        if ($query->countQuery()->execute()->fetchField() > 0) {
+          return AccessResult::forbidden($reason);
+        }
+      }
+      break;
+
+    default:
+      return AccessResult::neutral();
+  }
+}

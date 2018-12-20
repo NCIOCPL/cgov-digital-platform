@@ -76,7 +76,11 @@ class WorkflowTest extends KernelTestBase {
     ]);
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
-    $perms = ['create pony content', 'edit any pony content'];
+    $perms = [
+      'create pony content',
+      'edit any pony content',
+      'delete any pony content',
+    ];
     $node_type = NodeType::create(['type' => 'pony', 'label' => 'Pony']);
     $node_type->save();
     $this->users['admin'] = $this->createUser([], NULL, TRUE);
@@ -91,6 +95,25 @@ class WorkflowTest extends KernelTestBase {
     $this->users['advanced']->addRole('advanced_editor');
     $tools = $this->container->get('cgov_core.tools');
     $tools->attachContentTypeToWorkflow('pony', 'editorial_workflow');
+  }
+
+  /**
+   * Test control of when an author can delete content nodes.
+   */
+  public function testAuthorDeletion() {
+    $entityTypeManager = $this->container->get('entity_type.manager');
+    $accessHandler = $entityTypeManager->getAccessControlHandler('node');
+    $this->setCurrentUser($this->users['admin']);
+    $node = $this->createNode(['type' => 'pony']);
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['author']));
+    $node->moderation_state->value = 'published';
+    $node->save();
+    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['editor']));
+    $node->moderation_state->value = 'archived';
+    $node->save();
+    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['editor']));
   }
 
   /**
