@@ -1,0 +1,36 @@
+/********************* BEGIN Language Bar Styles ******************************************/
+.language-bar {
+  background-color: #fff;
+  padding: 0 0 0.2em;
+  min-height: 28px;
+}
+.sitewide-language {
+    padding-right: 0;
+}
+.sitewide-language a {
+    color: $color-link;
+}
+.sitewide-language ul {
+    text-align: right;
+		margin-bottom: 1.5em;
+}
+.sitewide-language li {
+    float: right;
+    margin-left: 1em;
+    text-align: right;
+}
+@include bp(medium-down) {
+	.language-bar {
+      background: #2a71a5;
+	}
+	.sitewide-language a {
+      color: white;
+	}
+}
+@include bp(small) {
+	/* remove padding on language links to fit all on one line */
+	.sitewide-language {
+		padding-right: 0;
+	}
+}
+/********************* END Language Bar Styles ******************************************/

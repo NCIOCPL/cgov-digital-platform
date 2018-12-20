@@ -1,0 +1,96 @@
+//
+// Icons
+//
+
+$text-icon-help-size: 25px;
+$text-icon-help-border-size: 2px;
+.text-icon-help,
+.main-content .text-icon-help {
+	font-size: em-calc(16px);
+	line-height: 1;
+	font-family: $montserrat-font-stack;
+	font-weight: bold;
+	color: $color-link;
+	background-color: white;
+	display: inline-block;
+	height: em-calc($text-icon-help-size, 16px);
+	width: em-calc($text-icon-help-size, 16px);
+	padding: (em-calc($text-icon-help-size, 16px) - 1em) / 2 - em-calc($text-icon-help-border-size, 16px)/2;
+	text-align: center;
+	border: $text-icon-help-border-size solid $color-link;
+	border-radius: 1em;
+	@include box-shadow(0px 2px 4px 0px rgba(0, 0, 0, 0.1) inset);
+
+	&:hover, &:focus {
+		color: #bb0e3d;
+		border-color: #bb0e3d;
+		text-decoration: none;
+	}
+}
+
+.icon-exit-notification {
+	@include svg-sprite(external-link-blue);
+	display: inline-block;
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+}
+
+.feature-card .image-hover a.icon-exit-notification, .cthp-card-image a.icon-exit-notification {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
+	width: 35.173439px;
+	height: 30px;
+	display: inline-block;
+	@include svg-sprite(external-link-purple);
+}
+@include bp(small) {
+		.feature-card .image-hover a.icon-exit-notification {
+			font-size: .7em;
+		}
+		.cthp-card-image a.icon-exit-notification {
+			display: none;
+		}
+	}
+// the cthp cards produce multiple links (around image and caption) this hides the exit disclaimer from the caption.
+@include bp(medium-up) {
+	.cgvcancertypehome .cardBody .icon-exit-notification {
+		display: none;
+	}
+}
+.cthp-card-image {
+	position: relative;
+}
+.cthp-card-image .icon-exit-notification {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.CDR_audiofile {
+	@include svg-sprite(volume-up-blue);
+	display: inline-block;
+	//position: relative;
+	//top: calc(19px/4);
+	vertical-align: sub;
+}
+
+#sitesearch {
+	// reset general <button> styling
+	//background: none;
+	border: none;
+	@include box-shadow(none);
+	@include transition(none);
+	padding: 0;
+	margin: 0;
+
+	@include svg-sprite(search);
+	background-color: transparent;
+	min-height: auto;
+	//display: block;
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+	right: 1em;
+}

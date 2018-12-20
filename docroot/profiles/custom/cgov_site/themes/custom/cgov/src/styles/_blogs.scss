@@ -1,0 +1,307 @@
+/********** BEGIN Blogs Styles ******************************************/
+/*Begin Blog Subscribe Button CSS*/
+.subscribeRSS {
+	margin-bottom: 10px;
+}
+
+.subscribeRSS a.blogRSS:before {
+}
+
+.subscribeRSS a.blogRSS span {
+	// padding-left: 5px;
+	display: inline-block;
+}
+/*End Blog Subscribe Button CSS*/
+
+// blog comment policy
+.blog-comment-policy {
+	display: none;
+	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
+	// @see all.js
+}
+
+/*Begin Blog Content CSS*/
+.blog-post-publishing-info {
+	font-size: 12px;
+}
+p.blog-post-publishing-info {
+	margin-top: 0;
+}
+.blog.body-banner:before {
+	@include call-to-action-corner();
+	content: "Blog";
+}
+.blog-post {
+	padding-top: 16px;
+
+	&:first-child {
+		border-top: none;
+		margin-top: 0;
+		padding-top: 0;
+	}
+	h3 {
+		margin: 0;
+		width: 70%;
+		float: left;
+	}
+	h3.no-comments {
+		width: 100%;
+	}
+	.post-info .post-title > a {
+		display: block;
+		float: right;
+		
+		// @TODO: Remove once IntenseDebate has been correctly implemented to replace Disqus
+		.blog-list & {
+			display: none;
+		}
+	}
+	// this was done to override the padding that foundation rows get. The requirement was no left padding for the images on the blog results page, ie /news-events/cancer-currents-blog
+	.post-thumb {
+		padding-left: 0;	
+	}
+	.post-thumb img {
+		max-width: 100%;
+	}
+}
+
+.cgvblogseries {
+	.list {
+		a.title {
+			font-size: 1.5em;	
+		}
+	}
+}
+
+@include bp(small) {
+	.post-thumb {
+		display: none;	
+	}
+}
+
+.blog-list {
+	margin-top: 24px;
+}
+.blog-pager {
+	border-top: 1px solid #bdbdbd;
+	padding-top: 24px;
+
+	a {
+		display: block;
+
+		&.newer {
+			float: right;
+		}
+		&.older {
+			float: left;
+		}
+	}
+}
+.post-title {
+	> h3 {
+		font-weight: normal;
+	}
+	a {
+		text-decoration: none;
+
+		&:hover, &:focus {
+			text-decoration: none;
+			color: $lcranberry;
+		}
+	}
+}
+// comment-count is a span element. This style is unused. The icon is not even on the server
+//a.comment-count {
+//	background: url($icons + "comment-icon.png") no-repeat;
+//	padding-left: 26px;
+//	height: 22px;
+//}
+.date-author {
+	padding-top: 10px;
+}
+.blog-post-older {
+	float: left;
+	width: 50%;
+    padding-right: 0.3em;
+}
+.blog-post-newer {
+	width: 50%;
+	text-align: right;
+	float: right;
+    padding-left: 0.3em;
+}
+.blog-post-older p,
+.blog-post-newer p {
+	margin-top: 0;
+}
+
+.cgvblogpost {
+	figure.image-right-medium {
+		margin-left: 1em;
+		padding-left: 2.5em;
+		background-color: transparent;
+	}
+}
+
+.blog-intro-text {
+	width: 100%;
+	margin-bottom: 1em;
+	padding: 1em 1.25em;
+	border-left: 3px solid $purple;
+	background-color: $white03;
+
+	p {
+		margin: 0;
+		padding-bottom: 1em;
+		font-size: 0.8em;
+		font-family: $montserrat-font-stack;
+	}
+	p:last-child {
+		padding: 0;
+	}
+}
+
+.right-rail {
+	margin-top: 1.25em;
+	padding-left: 0;
+
+	.slot-item {
+		// shadowing around each box in the right rail
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+		border-radius: 1px;
+		padding: 0.25em 1em 0.1em 1em;
+		margin-bottom: 1em;
+	}
+
+	.managed.list {
+		margin-bottom: 0.35em;
+
+		ul > li {
+			margin: 0;
+			padding: 0.15em 0;
+		}
+
+		p.title {
+			margin: 0.5em 0;
+		}
+
+		a.title {
+			font-size: 1em;
+		}
+
+		.byline {
+			margin-bottom: 0.4em;
+			//padding-bottom: 0.5em;
+
+			p {
+				margin: 0;
+				font-size: 0.85em;
+			}
+		}
+
+		.current-categories-link {
+			// on-state styling for categories list
+			border-left: 3px solid #82368d;
+    		background-color: #f5f5f5;
+			margin-left: -1.1em;
+			margin-right: -1.1em;
+			padding: 0.15em 1em;
+		}
+	}
+}
+
+@include bp(medium-down) {
+	.right-rail {
+		padding-left: 0.9375em;
+	}
+}
+
+@include bp(medium-up) {
+	// set width of blog intro text for tablet and desktop, depending on size of image
+	figure.image-right-medium + .blog-intro-text { 
+		width: 60%;
+	}
+	figure.image-right-small + .blog-intro-text {
+		width: 75%;
+	}
+}
+
+@include bp(large-up) {
+	[data-cde-pagetemplate="NVCGBlogSeriesPageTemplate"], [data-cde-pagetemplate="NVCGBlogPostPageTemplate"] {
+		/* hide the left nav from view on large-up for blog posts*/
+		#nvcgSlSectionNav {
+			display: none !important;
+		}
+		
+		/* correct the contentzone padding, as the nav is hidden */
+		.contentzone {
+			padding-left: 1.6em !important;
+			
+			/* if the right rail is missing, set the contentzone width to 100*/
+			&:last-child {
+				width:100%;
+			}
+		}
+	}
+}
+
+@include bp(small) {
+	// remove extra padding (used for intro text on desktop/tablet only)
+	.cgvblogpost {
+		figure.image-right-medium {
+			padding-left: 0;
+			margin-left: 0;
+		}
+	}
+}
+
+#blog-cards {
+	.columns {
+		// overwrite foundation default behavior of floating last column to the right, WCMSFEQ-506
+		float: left !important;	
+	}
+}
+
+@include bp(medium-down) {
+	// hide blog feature cards on tablet/mobile
+	#blog-cards {
+		display: none;
+	}
+}
+
+@include bp(medium) {
+	#nvcgSlListBlogRTRail > div {
+		float: left; width: 30%; margin: 10px;
+	}
+}
+.current-archive-link{
+	color: #2e2e2e !important;
+	border-left: 3px solid #82368d;
+    margin-left: -13px;
+    padding-left: 10px;
+    background-color: #f5f5f5;
+}
+
+.current-archive-link a {
+     pointer-events: none;
+     color: #2e2e2e;
+}
+
+.blog-feature {
+	margin-bottom: 1em;
+
+	h3 {
+		font-weight: normal;
+		color: #2b7bba;
+		font-size: 0.95em;
+		line-height: 1.272;
+	}
+}
+
+.card.blog-feature {
+	background: #f5f5f5;
+}
+
+/*end Blog Content CSS*/
+
+/********** END Blogs Styles ******************************************/

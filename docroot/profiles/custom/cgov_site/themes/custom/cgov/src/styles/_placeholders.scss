@@ -1,0 +1,28 @@
+// These are effectively mixins that should be eventually converted to such or deprecated. Aggregated here to avoid having to 
+
+%no-bullets {
+	padding: 0;
+	& > li {
+		background: none;
+		list-style-type: none;
+		padding: 0;
+		&:before {
+			display: none;
+			content: none;
+		}
+	}
+	ul {
+		margin: 5px 0 8px;
+		& > li {
+			padding: 0 0 0 10px;
+			margin: 0 0 5px;
+		}
+	}
+}
+
+%card-link-hover {
+	&:hover, &:focus {
+		color: $lcranberry;
+		text-decoration: none;
+	}
+}

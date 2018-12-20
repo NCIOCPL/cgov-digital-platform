@@ -1,0 +1,29 @@
+.directory-search-terms {
+  // clearfix
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  dt, dd {
+    float: left;
+  }
+  dt {
+    font-weight: bold;
+    clear: both;
+  }
+  dd {
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+  ~ div {
+    > ul.no-bullets {
+      margin-top: 1em;
+
+      li {
+        margin: 0;
+      }
+    }
+  }
+}

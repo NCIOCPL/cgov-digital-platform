@@ -1,0 +1,59 @@
+// mtn updated bkgrnd images to pull from sprite  06-19-17
+a.arrow-link {
+	padding: 1px 2em 1px 0;
+	width: 100%;
+	display: block;
+	color: $body-font-color;
+	text-decoration: none;
+	position: relative;
+	@extend %card-link-hover;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	&::before {
+		@include svg-sprite(chevron-circle-lt-blue, $rotate:right);
+		content: "";
+		right: 0;
+		position: absolute;
+		margin-top: -8px;
+		top: 39%;
+	}
+
+	&:hover::before {
+		@include svg-sprite(chevron-circle-red, $rotate:right);
+	  }
+}
+
+a.arrow-link-white {
+	@extend a.arrow-link;
+	padding-right: 26px;
+}
+
+@include bp(medium-up) {
+	a.arrow-link-white {
+		&::before {
+			@include svg-sprite(chevron-circle-white, $rotate:right);
+		}
+	}
+}
+/**** Styles for arrow links inside version toggle button ****/
+a.toggle-arrow-link {
+	&::after {
+		content: "";
+		position: absolute;
+		right: 2%;					
+		@include svg-sprite(chevron-circle-white,$rotate:right);
+	}
+	@media only screen and (max-width: 709px) {
+		&::after {
+			@include svg-sprite(chevron-circle-dk-blue,$rotate:right);
+		}
+		&:hover, &:focus {
+			&::after {
+				@include svg-sprite(chevron-circle-red);
+			}
+		}
+	}
+}
