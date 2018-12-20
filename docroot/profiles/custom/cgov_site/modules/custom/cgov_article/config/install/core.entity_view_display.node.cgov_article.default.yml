@@ -4,12 +4,12 @@ dependencies:
   config:
     - field.field.node.cgov_article.body
     - field.field.node.cgov_article.field_browser_title
-    - field.field.node.cgov_article.field_feature_card_description
     - field.field.node.cgov_article.field_card_title
     - field.field.node.cgov_article.field_date_display_mode
     - field.field.node.cgov_article.field_date_posted
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
+    - field.field.node.cgov_article.field_feature_card_description
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_short_title
@@ -28,20 +28,12 @@ content:
     type: text_default
     weight: 11
     region: content
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   field_browser_title:
     weight: 3
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_feature_card_description:
-    weight: 106
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -49,7 +41,7 @@ content:
     region: content
   field_card_title:
     weight: 2
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -57,14 +49,14 @@ content:
     region: content
   field_date_display_mode:
     weight: 10
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
     weight: 7
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -73,7 +65,7 @@ content:
     region: content
   field_date_reviewed:
     weight: 8
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -82,16 +74,24 @@ content:
     region: content
   field_date_updated:
     weight: 9
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_feature_card_description:
+    weight: 106
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_list_description:
     weight: 6
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -99,7 +99,7 @@ content:
     region: content
   field_page_description:
     weight: 4
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -107,7 +107,7 @@ content:
     region: content
   field_short_title:
     weight: 1
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
