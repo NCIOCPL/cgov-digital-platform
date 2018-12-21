@@ -10,11 +10,13 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_short_title
     - node.type.cgov_article
   module:
+    - content_moderation
     - datetime
     - path
     - text
@@ -77,6 +79,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_intro_text:
+    weight: 30
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
     region: content
   field_feature_card_description:
     weight: 6
