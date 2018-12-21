@@ -1,0 +1,116 @@
+/********** BEGIN News Page Styles ******************************************/
+a.arrow-link.news-footer {
+	display: inline;
+}
+
+.news-share {
+	margin-bottom: 10px;
+	
+	
+	//ul {margin-left: 23px;}
+	ul li { position: relative; }
+	//ul a[class^="news"]:before {
+  //  position: absolute;
+  //  top: 8px;
+  //  left: -26px;
+  //}
+
+	ul > li {
+		margin-bottom: 5px;
+	}
+
+	a:first-child {
+		display: inline-block;
+		position: relative;
+		padding-left: 23px;
+		line-height: 130%;
+	}
+
+	a:before {
+		content: " ";
+		//display: inline-block;
+		margin-right: 0.5em;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	a.news-twitter:before {
+		top: 3px;
+		@include svg-sprite(twitter-blue);
+	}
+	
+	a.news-facebook:before {
+		left: 4px;
+		top: 1px;
+		min-width: 18px;
+		@include svg-sprite(facebook-blue);
+	}
+
+	a.news-youtube:before {
+		top: -2px;
+		@include svg-sprite(youtube-blue);
+	}
+
+	a.news-rss:before {
+		top: 3px;
+		@include svg-sprite(rss-blue);
+	}
+	a.news-govdelivery:before {
+		top: 3px;
+		@include svg-sprite(gov-delivery-blue);
+		font-size: .85em;
+	}
+	a.news-events:before {
+		@include svg-sprite(calendar-blue);
+	}
+	
+	a.icon-exit-notification {
+		vertical-align: bottom;
+		margin-bottom: 6px;
+	}
+}
+
+li.news-share {
+
+}
+
+@include bp(small){
+	.news-share {
+		margin: 0;
+	}
+	.news .list .general-list-item a.news-footer {
+		padding-left: 15px;
+	}
+}
+
+.news .card {
+	padding-top: 0em;
+}
+
+.news .list .general-list-item {
+	display: list-item;
+}
+
+
+.news .list li {
+	display: none;
+}
+
+@include bp(medium-up) {
+	.news .large-8.gutter {
+		width: 66%;
+	}
+
+	.news .card {
+		margin-bottom: 1em;
+		padding-left: 0.9375em;
+		padding-right: 0.9375em;
+	}
+}
+// for Recent Press Releases title
+.news .dynamic > .title {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+/********** END News Page Styles ******************************************/

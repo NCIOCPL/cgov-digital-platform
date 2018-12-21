@@ -1,0 +1,294 @@
+/****************** START IMAGE CAROUSEL STYLES ******************/
+.ic-carousel {
+	margin-bottom: 30px;
+
+	.row:nth-child(2) {
+		padding-bottom: 2px;
+	}
+
+	@include bp(large-up){
+		margin-left: 18%;
+		margin-right: 18%;
+
+		.slick-slide img {
+			max-height: 401px;
+		}
+	}
+	@include bp('(max-width: 1024px) and (min-width: 769px)') {
+		margin-left: 25%;
+		margin-right: 25%;
+
+		.slick-slide img {
+			max-height: 356px;
+		}
+	}
+	@include bp('(max-width: 768px) and (min-width: 641px)') {
+		margin-left: 18%;
+		margin-right: 18%;
+
+		.slick-slide img {
+			max-height: 413px;
+		}
+	}
+	@include bp(small) {
+		margin: 10px 0px 30px;
+
+		 .pagingInfo, .ic-carousel-title h4 {
+			padding-left: 5px;
+		}
+
+		.slick-slide {
+			margin: 0 5px 0 5px !important;
+		}
+		.slick-slide img {
+    		display: block;
+			max-width: 100%;
+			max-height: 450px;
+		}
+	}
+
+	.slick-slider {
+		margin-bottom: 0;
+		overflow: hidden;
+	}
+
+	.slick-track {
+		display: flex;
+		align-items: center;
+	}
+
+	.slick-slide {
+		background-color: $offwhite;
+		border-color: $offwhite;
+		float: none;
+
+		img {
+			margin: auto;
+		}
+	}
+
+	.slick-list {
+		left: -1px;
+	}
+}
+
+.ic-carousel-title h4 {
+	line-height: 1.333em;
+}
+
+.ic-controls {
+	border-top: solid 1px #ccc;
+	margin-top: 10px;
+}
+
+.ic-credit {
+	color: #757575;
+	font-size: 11px;
+	line-height: 15px;
+	text-align: right;
+	margin-top: 3px;
+	padding-right: 1px;
+}
+
+.ic-caption p {
+	color: #606060;
+	font-size: 13px;
+	line-height: 18px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 1px;
+	@include bp(small) {
+		margin-bottom: 10px;
+	}	
+}
+
+.pagingInfo {
+	color: #606060;
+	float: left;
+	font-family: $montserrat-font-stack;
+	font-size: 14px;
+	width: 50%;
+	margin-top: 5px;
+}
+
+.arrows-for-ic-carousel {
+  float: right;
+  text-align: right;
+  width: 50%;
+  margin-top: 12px;
+
+  button {
+	background-color: transparent;
+    border: 0 none;
+    cursor: pointer;
+    display: inline;
+    height: 40px;
+    padding: 0;
+	width: 40px;
+  }
+
+  .previous {
+	@include svg-sprite(chevron-dkblue);
+	transform: rotate(-90deg) scaleX(-1);
+	font-size: 1.875em;
+  }
+
+  .next {
+	@include svg-sprite(chevron-dkblue);
+	transform: rotate(90deg);
+	font-size: 1.875em;
+  }
+}
+
+span.ic-arrow-button {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+/****************** END IMAGE CAROUSEL STYLES ******************/
+
+/****************** START VIDEO CAROUSEL STYLES ******************/
+
+.yt-carousel {
+	width: 85%;
+	margin: auto;
+	margin-top: 30px;
+	@include bp(small) {
+		width: 100%;
+	} 
+}
+
+.ytc-thumb-container {
+	background-color: $offwhite;
+	border-color: $offwhite;
+	padding-top: 10px;
+	padding-right: 10px;
+	span {
+		display: block;		
+		font-size: 13px;
+		line-height: 1.334;
+		padding-left: 4px;
+		padding-top: 4px;
+		color: $dgrey00;
+	}
+}
+
+.yt-carousel-thumb img {
+	padding: 6px;
+}
+
+.yt-carousel-thumb.ytc-clicked img {
+	background-color: #c74769;
+}
+
+.yt-carousel-arrows {
+	margin-top: 35px;
+	padding: 0px 10px;
+	text-align: center;	
+	@include bp(xtra-large) {
+		button.previous {
+			margin-right: 7px;
+		}
+		button.next {
+			margin-left: 7px;
+		}
+	}
+	@include bp(xtra-large) {
+		margin-top: 50px;
+	} 
+}
+
+.yt-carousel-m-arrows {
+	margin-top: 35px;
+	padding: 0px 10px;
+	@include bp(xtra-small) {
+		width: 90px;
+	}
+}
+
+.yt-carousel-arrows button,	
+.yt-carousel-m-arrows button {
+	background-color: transparent;
+    border: 0 none;
+    cursor: pointer;
+    display: inline;
+    height: 40px;
+    padding: 0;
+    width: 40px;
+}
+
+.yt-carousel-arrows .previous,
+.yt-carousel-m-arrows .m-previous {
+	@include svg-sprite(chevron-dkblue);
+	font-size: 1.875em;
+	transform: rotate(-90deg) scaleX(-1);
+}
+.yt-carousel-arrows .next,
+.yt-carousel-m-arrows .m-next {
+	@include svg-sprite(chevron-dkblue);	
+	font-size: 1.875em;
+    transform: rotate(90deg);
+}
+
+button.previous.ytc-hidden,
+button.next.ytc-hidden {
+	background-image: none;
+	&:focus {
+		outline: 0;
+	}
+	&:hover {
+		cursor: default;
+	}
+}
+
+.yt-carousel-pager {
+	color: $dgrey00;
+	display: block;
+	font-family: $montserrat-font-stack;
+	font-size: 14px;
+	margin-top: 15px;
+}
+
+.yt-carousel-m-pager {
+	color: $dgrey00;
+	float: left;
+	font-family: $montserrat-font-stack;
+	font-size: 14px;
+	margin: 12px 10px;
+	width: 50%;
+}
+
+/** Custom breakpoints for desktop/tablet slick transition **/
+@media only screen and (min-width: 770px) and (max-width: 1024px) {
+	.yt-carousel {		
+		width: 80%;
+	}
+}
+@media only screen and (min-width: 770px) {
+	.yt-carousel-m-controls {
+		display: none;
+	}
+}
+@media only screen and (max-width: 769px) {
+	.yt-carousel-controls {
+		display: none;
+	}
+	.yt-carousel-m-arrows {
+		margin-top: 14px;
+		padding: 0px 8px;
+		float: right;
+	}
+}
+@media only screen and (max-width: 860px) {
+	.yt-carousel-m-arrows {
+		text-align: right;
+		width: 40% !important;
+		.m-next {
+			margin-right: 1px;
+		}
+	}	
+}
+
+/****************** END VIDEO CAROUSEL STYLES ******************/

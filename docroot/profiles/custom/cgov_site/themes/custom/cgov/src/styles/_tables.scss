@@ -1,0 +1,202 @@
+/* BEGIN TABLE STYLES */
+
+/* begin default content table styling */
+td, th {
+	vertical-align: top;
+}
+
+%default-caption {
+	font-family: $montserrat-font-stack;
+	font-weight: normal;
+	color: $header-font-color;
+	text-align: left;
+	padding: 20px 0 10px;
+	font-size: 1.375em;
+	/* using padding instead of margin due to problem in Safari */
+}
+
+table.table-default {
+	border-collapse: collapse;
+	margin: 15px 0;
+
+	caption {
+		@extend %default-caption;
+
+		geneticsprofessional & {
+			/* genetics-professional-specific fix to prevent table captions from wrapping */
+			white-space: nowrap;
+		}
+	}
+	tr {
+		background-color: #fff;
+
+		/* removed "zebra striping" due to 508 color contrast concerns
+		&:nth-child(even) {
+			background-color: #e8f3f6;
+		}
+		*/
+	}
+	th {
+		font-family: $noto-font-stack;
+		font-weight: bold;
+		color: $body-font-color;
+		background-color: #d0f1f2;
+		/*text-align: left;*/
+	}
+	td, th {
+		/* both definitions are for #bgbgbg at 0.28 opacity */
+		border: 1px solid rgb(236, 236, 236);
+		border: 1px solid rgba(189, 189, 189, 0.28);
+		padding: 20px;
+		border-spacing: 0;
+		-webkit-background-clip: padding-box; /* for Safari */
+		background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+
+		p:first-child {
+			margin-top: 0;
+		}
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+	ul {
+		padding-left: 4px;
+	}
+}
+table.table-default-center-td td {
+	text-align: center;
+}
+table.table-default.complex-table tr {
+	background-color: #fff;
+}
+/* end default content table styling */
+
+/* table enlarge styles */
+.scrollable.has-scroll {
+	position: relative;
+	overflow: hidden;
+	/* Clips the shadow created with the pseudo-element in the next rule. Not necessary for the actual scrolling. */
+}
+.scrollable.has-scroll:after {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 50px;
+	height: 100%;
+	border-radius: 10px 0 0 10px / 50% 0 0 50%;
+	@include box-shadow(-5px 0 10px rgba(0, 0, 0, 0.25));
+	content: '';
+}
+/* This is the element whose content will be scrolled if necessary */
+
+.scrollable.has-scroll > div {
+	overflow-x: auto;
+}
+figure.table {
+	margin: 15px 0; // same as table.table-default
+	margin-top: 0;
+
+	.table-default {
+		margin: 0;
+	}
+
+	figcaption, .emptyCaptionShim {
+		@extend %default-caption; // same as table.table-default caption
+			font-size: 1.25em;     // 20px
+			line-height: 1.4;
+
+		& + a.article-image-enlarge {
+			top: 10px;
+		}
+	}
+}
+
+@include bp(small){
+	table .article-image-enlarge {
+		font-size: 7px;
+		margin-top: -5px;
+		padding-left: 3px !important;
+		padding-right: 24px !important;
+	}
+}
+.ui-front {
+	z-index: 1001;
+}
+.ui-dialog {
+	z-index: 1002;
+}
+.table-enlarged .ui-dialog-titlebar {
+	display: none;
+}
+.table-enlarged .popup-close {
+	margin: 0.3125em 2.25em 0.3125em 1em;
+}
+/* end table enlarge styles */
+
+/* PDQ table styling */
+.pdqcancerinfosummary table thead tr th{
+	text-align: center;
+}
+
+/* Enlarge table for PDQ */
+/* now that we are not using "zebra striping" we don't need to change the color of links
+table tbody tr td a{
+	color: #2ba6cb !important;
+}
+*/
+table tbody tr td a:hover{
+	color: #2795b6;
+	text-decoration: underline;
+}
+/* ENLARGE text within table for PDQ */
+table tbody tr td figure a{
+	color: white !important;
+}
+/* End PDQ table styling */
+/* END TABLE STYLES */
+[class^="flexTable"] {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+	min-width: 170px;
+	> div {
+		box-sizing: border-box;
+		flex-grow: 1;
+		width: 100%;  // Default to full width
+		padding: 0.4em 0.8em;
+		overflow: hidden; // Or flex might break
+		list-style: none;
+		white-space: normal;
+		> h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
+	}
+}
+.flexTable--2cols > div { width: 50%; }
+.flexTable--3cols > div { width: 33.33%; }
+.flexTable--4cols > div { width: 25%; }
+.flexTable--5cols > div { width: 20%; }
+.flexTable--6cols > div { width: 16.6%; }
+
+.highcharts-tooltip .flexTable--2cols {
+	> div:nth-child(odd) {
+		position: relative;
+		width:60%;
+		span {
+			position: absolute;
+			top: 4px;
+			left: 0;
+		}
+	}
+	> div:nth-child(even) {width:40%}
+}
+// Horray for one-off cases!
+.highcharts-tooltip .flexTable--2cols.cellWidths-45-55 {
+	> div:nth-child(odd) {width:45%}
+	> div:nth-child(even) {width:55%}
+}
+
+.highcharts-tooltip .flexTable--2cols.cellWidths-50-50 {
+	> div:nth-child(odd) {width:50%}
+	> div:nth-child(even) {width:50%}
+}
+/* END TABLE STYLES */

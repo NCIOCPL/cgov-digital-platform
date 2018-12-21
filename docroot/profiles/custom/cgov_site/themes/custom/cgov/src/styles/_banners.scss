@@ -1,0 +1,80 @@
+/* Public Archive banner/Colo banner */
+.public-archive-banner, .notification-banner > div > div  {
+	background: $lcranberry;
+	font-family: $montserrat-font-stack;
+	font-size: 1.125em;
+	font-weight: bold;
+	line-height: 1.12;
+	color: white;
+	padding: 1.28em;
+	margin-bottom: 1px;
+	a {
+		color: white;
+		text-decoration: underline;
+	}
+	p:first-child {
+		margin-top: 0;
+	}
+	p:last-child {
+		margin-bottom: 0;
+	}
+}
+/* END Public Archive banner */
+
+/* BEGIN Site Notices banners (including Colo and Emergency) */
+$notice-banner-padding: 23px 25px;
+$notice-banner-font-size-desktop: 18px;
+$notice-banner-line-height-desktop: 20px;
+$notice-banner-font-size-mobile: 12px;
+$notice-banner-line-height-mobile: 14px;
+.site-notification {
+	margin-top: 1px;
+	background-color: $lcranberry;
+	margin-bottom:1px;
+	.first-SI &, .only-SI & {
+		margin-top: 0;
+	}
+	.row {
+		padding: em-calc($notice-banner-padding);
+	}
+	.notification {
+		font-family: $montserrat-font-stack;
+		font-weight: bold;
+		font-size: em-calc($notice-banner-font-size-desktop);
+		line-height: em-calc($notice-banner-line-height-desktop, $notice-banner-font-size-desktop);
+		color: white;
+
+		a {
+			display: table;
+			padding-right:em-calc(41px);
+			color: white;
+			overflow:visible;
+			line-height:em-calc(20px);
+			font-size:16px;
+			padding-bottom: 0.01em;
+			
+			&:hover {
+				text-decoration: underline;
+				
+			}
+			&::after {
+				content:"";
+				@include svg-sprite(chevron-circle-cream,$rotate:right);
+				margin-left: 10px;
+				vertical-align: bottom;
+			}
+		}
+	}
+}
+.row.banner-slot {
+	margin-top: 1.3em;
+}
+@include bp(small) {
+	.site-notification {
+		.notification {
+			font-size: em-calc($notice-banner-font-size-mobile);
+			line-height: em-calc($notice-banner-line-height-mobile, $notice-banner-font-size-mobile);
+		}
+	}
+}
+/* END Site Notices banners */

@@ -1,0 +1,157 @@
+/****************** BEGIN images ********************/
+%enlarge-infographic {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #fff;
+	background-color: #403f3f;
+	padding: 0.3125em 2.25em 0.3125em 1em;
+	font-weight: bold;
+	text-transform: uppercase;
+	opacity: 0.9;
+	text-align: right;
+	line-height: normal;
+
+	&:hover, &:focus {
+		text-decoration: none;
+		background-color: #bb0e3d;
+	}
+
+	&::before {
+		@include svg-sprite(search);
+		content: "";
+		position: absolute;
+		right: .6em;
+		@include vCenter;
+	}
+}
+
+figure {
+	margin-bottom: 10px;
+	overflow: hidden;
+	position: relative;
+
+	a.article-image-enlarge {
+		background-color: rgba(18, 62, 88, 0.7);
+		font-size: 0.875em !important;
+		@extend %enlarge-infographic;
+	}
+
+	/* image right 25% width */
+	&.image-right-small {
+		float: right;
+		width: 25%;
+		margin: 0 0 2.5em 2.5em;
+	}
+	/* image right 40% width */
+	&.image-right-medium {
+		float: right;
+		width: 40%;
+		 margin: 0 0 2.5em 2.5em;
+	}
+	/* image left 25% width */
+	&.image-left-small {
+		float: left;
+		width: 25%;
+		margin: 0 2.5em 2.5em 0;
+	}
+	/* image left 40% width */
+	&.image-left-medium {
+		float: left;
+		width: 40%;
+		margin: 0 2.5em 2.5em 0;
+	}
+	/* image center 75% width */
+	&.image-center {
+		width: 75%;
+		margin: 2.5em auto;
+		/* center images using the centered templates */
+		img {
+			margin: 0 auto;
+		}
+	}
+	/* image center 100% width */
+	&.image-center-full {
+		width: 100%;
+		margin: 2.5em auto;
+		/* center images using the centered templates */
+		img {
+			margin: 0 auto;
+		}
+	}
+	/* image center 40% width */
+	&.image-center-medium{
+		width: 40%;
+		margin: 2.5em auto;
+		/* center images using the centered templates */
+		img{
+			margin: 0 auto;
+		}
+	}
+	/* contain image inside fig */
+	img {
+		max-width: 100%;
+		/* remove white space under image */
+		display: block;
+	}
+}
+@include bp(small) {
+	figure {
+		&.image-right-small, &.image-left-small, &.image-right-medium, &.image-left-medium, &.image-center {
+            float: none;
+			width: 100%;
+			margin: 0 0 1em 0;
+		}	
+	}
+}
+a.infographic-view-full,a.video-view-full {
+	background-color: rgba(18, 62, 88, 0.7);
+	@extend %enlarge-infographic;
+	&::before {
+		@include svg-sprite(chevron-white);
+		font-size: .9em;
+		transform: translateY(-50%) rotate(90deg);
+	}
+}
+
+.centered-set {
+	text-align: center;
+}
+.centered-element {
+	display: inline-block;
+	max-width: 100%;
+	position: relative;
+}
+.centered-exempt {
+	text-align: left;
+}
+table figure {
+	display: table;
+	table-layout: fixed;
+}
+.caption-container {
+	padding: 1.25em 0.9375em;
+	line-height: 1.5em;
+	background-color: $caption-background;
+	font-size: 14px;
+	font-family: $montserrat-font-stack;
+	text-align: left;
+	margin-top: -0.3125em;
+
+	p {
+		margin:0;
+	}
+	.image-photo-credit {
+		font-size: 12px;
+	}
+}
+
+// this is done to fix a problem in tables/chrome, where a figure image is causing text in other tds to go beyond their borders
+table figure img {
+	display: inline-block;
+	vertical-align: top;
+}
+.oar-staff-directory figure.image-left-small.centered-set {
+	margin: 0;
+}
+/****************** END images ********************/

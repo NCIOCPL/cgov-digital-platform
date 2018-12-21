@@ -1,0 +1,40 @@
+/* BEGIN CARDS GENERAL RULES */
+
+/* equal height cards for desktop, visually push a div to the bottom of it's container */
+.card {
+	padding-top: 1em;
+	background-color: $white; /* for IE browsers that don't understand rgba */
+	background-color: rgba($white, 0.8);
+
+	a {
+		&:hover, &:focus {
+			.image-hover {
+				// default styling for Card image behavior on hover
+				background-color: $black;
+
+				img {
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+	a:hover, a:focus{
+		text-decoration: none;
+	}
+	.equalheight > div {
+		&, > a {
+			height: 100%;
+		}
+	}
+	.card-row & a {
+		color: $body-font-color;
+	}
+	ul {
+		@extend %no-bullets;
+
+		> li {
+			margin: 0;
+		}
+	}
+}
+/* END CARDS GENERAL RULES */
