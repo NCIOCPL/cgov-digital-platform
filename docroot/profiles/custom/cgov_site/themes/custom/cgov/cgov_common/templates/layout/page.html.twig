@@ -13,18 +13,15 @@
   <!-- Global nav/utilit bar/language  -->
   <div class="fixedtotop">
     <div class="headroom-area">
+        {% if page.language_bar %}
         <!-- LANGUAGE BAR -->
-        {# {{ page.language_bar }} #}
         <div class="language-bar">
           <div class="row sitewide-language">
-            <div id="LangList1" class="large-12 columns">
-              <ul>
-                <li><a onclick="NCIAnalytics.ClickLink(this,'Language Select Spanish');" href="/espanol/cancer/tratamiento/efectos-secundarios/anemia">Español</a></li>
-              </ul>
-            </div>
+            {{ page.language_bar }}
           </div>
         </div>
         <!-- END LANGUAGE BAR -->
+        {% endif %}
         <!-- UTILITY NAV -->
         <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
           {# {{ page.utility_bar }} #}
