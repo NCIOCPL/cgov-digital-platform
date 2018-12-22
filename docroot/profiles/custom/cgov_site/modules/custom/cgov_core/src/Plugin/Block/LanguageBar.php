@@ -17,6 +17,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Provides a block that displays alternate language links.
  *
+ * This is based off of Drupal\language\Plugin\Block\LanguageBlock.
+ *
  * @Block(
  *  id = "cgov_language_bar",
  *  admin_label = "Language Bar",
@@ -95,11 +97,10 @@ class LanguageBar extends BlockBase implements ContainerFactoryPluginInterface {
    */
   protected function blockAccess(AccountInterface $account) {
     // If this site is not multilingual this should not display.
-    // Of course, if this site is not multilingual, there should be no block.
+    // Of course, if this site is not multilingual, there should be no block...
     $access = $this->languageManager->isMultilingual() ? AccessResult::allowed() : AccessResult::forbidden();
 
-    // TODO: Are there any alternate languages? Yes. allowed, else forbidden.
-    // TODO: Is the current route an allowed type? (e.g. Node or special Media)
+    // Cache this fact based on the list of languages for the site.
     return $access->addCacheTags(['config:configurable_language_list']);
   }
 
@@ -124,18 +125,24 @@ class LanguageBar extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    // Initialize the render array response to be empty.
     $build = [];
+
+    // The next few lines are from LanguageBlock - getLanguageSwitchLinks is
+    // looking for front or current.
+    // TODO: See if we can just use the route matcher or even the loaded entity.
     $route_name = $this->pathMatcher->isFrontPage() ? '<front>' : '<current>';
     $links = $this->languageManager->getLanguageSwitchLinks(
       LanguageInterface::TYPE_CONTENT,
       Url::fromRoute($route_name)
     );
 
-    // Remove the current language.
+    // Remove the current language from the list of links.
     $curr_lang = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $filtered_links = array_diff_key($links->links, [$curr_lang => '']);
 
-    // Now, are the links things that exist?
+    // Filter out untranslated URLs, by default ALL possible links are
+    // returned by getLanguageSwitchLinks.
     if ($curr_entity = $this->getCurrEntity()) {
       $translations = array_keys($curr_entity->getTranslationLanguages());
       $filtered_links = array_filter(
@@ -147,11 +154,13 @@ class LanguageBar extends BlockBase implements ContainerFactoryPluginInterface {
       );
     }
     else {
+      // TODO: If we have a View page we would end up here
+      // we do not have that case yet fix this when that happens.
       $filtered_links = [];
     }
 
-    // Now that we have the alternate links,
-    // we need to see what *actually* has a live translation.
+    // Now that we have the alternate links, or nothing.
+    // if nothing do not output anything.
     if (isset($links->links)) {
       $build = [
         '#theme' => 'links__language_block',
