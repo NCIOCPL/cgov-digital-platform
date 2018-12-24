@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Theme override for Article Body Section Heading.
+ *
+ * This is normally in an H2, but it could be an H3 under certain
+ * circumstances. So we will just let the parent paragraph template
+ * worry about the wrapping element. Maybe based on a setting on the
+ * paragraph or something.
+ */
+#}
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}
