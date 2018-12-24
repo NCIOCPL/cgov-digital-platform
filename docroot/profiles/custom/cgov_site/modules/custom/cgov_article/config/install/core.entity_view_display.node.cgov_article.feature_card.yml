@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.feature_card
-    - field.field.node.cgov_article.body
+    - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
     - field.field.node.cgov_article.field_date_display_mode
@@ -18,20 +18,12 @@ dependencies:
   module:
     - datetime
     - options
-    - text
     - user
 id: node.cgov_article.feature_card
 targetEntityType: node
 bundle: cgov_article
 mode: feature_card
 content:
-  body:
-    type: text_default
-    weight: 12
-    region: content
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
   field_browser_title:
     weight: 3
     label: hidden
@@ -121,3 +113,5 @@ content:
     third_party_settings: {  }
 hidden:
   langcode: true
+  field_article_body: true
+  field_intro_text: true
