@@ -84,6 +84,11 @@ class CGovFieldStorageTest extends KernelTestBase {
       "label" => "Date Display Mode",
       "type" => "list_string",
     ],
+    [
+      "name" => "field_search_engine_restrictions",
+      "label" => "Search Engine Restrictions",
+      "type" => "list_string",
+    ],
   ];
 
   /**
