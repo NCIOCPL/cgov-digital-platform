@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.cgov_article.body
+    - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
     - field.field.node.cgov_article.field_date_display_mode
@@ -17,6 +17,7 @@ dependencies:
     - node.type.cgov_article
   module:
     - datetime
+    - entity_reference_revisions
     - options
     - text
     - user
@@ -25,15 +26,22 @@ targetEntityType: node
 bundle: cgov_article
 mode: full
 content:
-  body:
-    type: text_default
-    weight: 7
+  content_moderation_control:
+    weight: 0
     region: content
-    label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_article_body:
+    type: entity_reference_revisions_entity_view
+    weight: 8
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_browser_title:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -41,7 +49,7 @@ content:
     type: string
     region: content
   field_card_title:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
@@ -49,31 +57,13 @@ content:
     type: string
     region: content
   field_date_display_mode:
-    weight: 11
+    weight: 13
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
-    weight: 8
-    label: hidden
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
-    weight: 9
-    label: hidden
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
     weight: 10
     label: hidden
     settings:
@@ -82,15 +72,25 @@ content:
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_feature_card_description:
-    weight: 5
+  field_date_reviewed:
+    weight: 12
     label: hidden
     settings:
-      link_to_entity: false
+      format_type: medium
+      timezone_override: ''
     third_party_settings: {  }
-    type: string
+    type: datetime_default
     region: content
-  field_list_description:
+  field_date_updated:
+    weight: 11
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
     weight: 6
     label: hidden
     settings:
@@ -98,8 +98,23 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_intro_text:
+    type: text_default
+    weight: 7
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_list_description:
+    weight: 9
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_page_description:
-    weight: 4
+    weight: 5
     label: hidden
     settings:
       link_to_entity: false
@@ -107,7 +122,7 @@ content:
     type: string
     region: content
   field_short_title:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       link_to_entity: false

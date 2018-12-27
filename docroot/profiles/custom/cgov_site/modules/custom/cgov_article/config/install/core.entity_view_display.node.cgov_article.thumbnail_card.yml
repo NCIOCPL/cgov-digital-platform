@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.thumbnail_card
-    - field.field.node.cgov_article.body
+    - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
     - field.field.node.cgov_article.field_date_display_mode
@@ -112,5 +112,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  body: true
+  content_moderation_control: true
+  field_article_body: true
+  field_intro_text: true
   langcode: true

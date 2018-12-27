@@ -60,6 +60,7 @@ class CgovCoreTools {
     'language_interface' => [
       'enabled' => [
         'language-user-admin' => "-10",
+        'language-url' => "-8",
         'language-selected' => "12",
       ],
       'method_weights' => [
