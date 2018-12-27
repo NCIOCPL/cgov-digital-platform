@@ -5,3 +5,117 @@
  * Functions to support theming in the cgov_common theme.
  */
 
+ /**
+  * Date Display Mode.
+  *
+  * This is some classic Drupal contortionist work possibly better handled with
+  * a computed field value or a custom block in the future.
+  * In order to have three unassociated fields' display mode controlled by a
+  * fourth unassociated field's (this one) preprocess function, we need a way
+  * to both examine and render those fields outside the normal flow.
+  */
+function cgov_common_preprocess_field__field_date_display_mode(&$variables) {
+  $node = $variables['element']['#object'];
+  if (!$node) {
+    return;
+  }
+  // If there are no display modes this preprocess never runs. But
+  // leaving the guard clause anyway for the nonce.
+  if (!isset($variables['items']) || empty($variables['items'])) {
+    return;
+  }
+
+  // This is a mapping of the field machine name and content display text.
+  // Unfortunately the content display text needs to match and it's a string.
+  // Ugh.
+  // NB: The current sort method is stable, so in the case of two dates, being
+  // the same, the order of priority is determined by the order of this map.
+  // I.e., if all three date types are the same time stamp, field_date_reviewed
+  // will be the only one shown on an article page.
+  $dates = [
+    'Posted Date' => 'field_date_posted',
+    'Updated Date' => 'field_date_updated',
+    'Reviewed Date' => 'field_date_reviewed',
+  ];
+
+  // Retrieve date types selected for display.
+  // Also, if there are no display modes this preprocess never runs. but
+  // leaving the array type check anyway for the nonce.
+  $items = $variables['items'];
+  $availableModes = [];
+  foreach ($items as $item) {
+    $type = $item['content']['#markup'];
+    // Weird preferred php push method, not array declaration.
+    $availableModes[] = $type;
+  }
+
+  // Now we need to filter out the date types we don't want.
+  // (Based on the user selected date display modes).
+  $filteredDates = [];
+  foreach ($dates as $formattedDate => $machineName) {
+    $selectedDateType = in_array($formattedDate, $availableModes);
+    if ($selectedDateType) {
+      $filteredDates[$formattedDate] = $machineName;
+    }
+  };
+
+  // The date entities to pass to the render array.
+  // (They are not renderable in the twig template in their current state).
+  $dateEntities = [];
+  foreach ($filteredDates as $machineName) {
+    $dateEntities[$machineName] = $node->get($machineName);
+  }
+
+  // If it is an article, we need to retrieve the date values, sort them
+  // and remove all but the first.
+  $nodeType = $node->getType();
+  $isArticlePage = $nodeType === 'cgov_article';
+  if ($isArticlePage) {
+    // --------------------------------------------------------------------
+    // TODO: if() code should be an external function, taking and returning the
+    // $dateEntities array, for cleanness.
+    // --------------------------------------------------------------------
+    // 1. Create a multidimensional array including the date value for sorting.
+    $dateEntitiesWithValues = [];
+    foreach ($dateEntities as $machineName => $dateEntity) {
+      $dateEntitiesWithValues[] = [
+        $machineName,
+        $dateEntity,
+        // The following retrieves the DateTimeItem fromt he DateTimeItemList
+        // and then pulls it's datetime_iso8601 time for sorting, rather than
+        // the formatted value.
+        $dateEntity->get(0)->value,
+      ];
+    };
+
+    // 2. Sort (in place) according to datetime_iso8601 value ascending.
+    usort($dateEntitiesWithValues, function ($entity1, $entity2) {
+      $entity1UnixTime = strtotime($entity1[2]);
+      $entity2UnixTime = strtotime($entity2[2]);
+      if ($entity1UnixTime == $entity2UnixTime) {
+        return 0;
+      }
+      return ($entity1UnixTime > $entity2UnixTime) ? 1 : -1;
+    });
+
+    // 3. Retrieve most recent value after sort.
+    $mostRecentDate = array_pop($dateEntitiesWithValues);
+
+    // 4. Clear the $dateEntities array and replace most recent element only.
+    $dateEntities = [];
+    $mostRecentMachineName = $mostRecentDate[0];
+    $mostRecentDateEntity = $mostRecentDate[1];
+    $dateEntities[$mostRecentMachineName] = $mostRecentDateEntity;
+  }
+
+  // We want to render the date fields in the display field template,
+  // so we replace the entity with it's view here to render them.
+  // (Hopefully means it doesn't break translation this way,
+  // rather than passing values already formatted.)
+  foreach ($dateEntities as $machineName => $entity) {
+    $dateEntities[$machineName] = $dateEntities[$machineName]->view();
+  }
+
+  // Pass the renderable entities to the template.
+  $variables['dates'] = $dateEntities;
+}
