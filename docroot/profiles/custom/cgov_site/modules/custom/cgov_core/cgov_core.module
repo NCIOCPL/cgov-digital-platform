@@ -4,3 +4,22 @@
  * @file
  * Contains cgov_core.module.
  */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_translation_create().
+ */
+function cgov_core_entity_translation_create(EntityInterface $translation) {
+  $serviceName = 'content_moderation.moderation_information';
+  $moderationInformation = \Drupal::service($serviceName);
+  if ($moderationInformation->isModeratedEntity($translation)) {
+    $workflow = $moderationInformation->getWorkflowForEntity($translation);
+    $configuration = $workflow->getTypePlugin()->getConfiguration();
+    $state = 'draft';
+    if (!empty($configuration['default_moderation_state'])) {
+      $state = $configuration['default_moderation_state'];
+    }
+    $translation->moderation_state = $state;
+  }
+}
