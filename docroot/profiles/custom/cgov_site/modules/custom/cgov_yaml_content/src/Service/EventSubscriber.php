@@ -74,22 +74,24 @@ class EventSubscriber implements EventSubscriberInterface {
       // is specified.
       $regions = $theme->getRegions();
       $isValidRegion = in_array($savedEntityRegion, $regions);
-      if ($isValidRegion) {
-        // We need to create a block top attach the block_content to
-        // in a given theme region.
-        $blockSettings = [
-          'id' => self::generateRandomString(10),
-          'plugin' => 'block_content:' . $savedEntity->uuid(),
-          'provider' => 'block_content',
-          'region' => $savedEntityRegion,
-          'theme' => $theme->getName(),
-          'weight' => 0,
-          'status' => TRUE,
-        ];
-        printf('Adding default block to ' . $savedEntityRegion . ' region.');
-        $block = Block::create($blockSettings);
-        $block->save();
+      if (!$isValidRegion) {
+        return;
       }
+
+      // We need to create a block top attach the block_content to
+      // in a given theme region.
+      $blockSettings = [
+        'id' => self::generateRandomString(10),
+        'plugin' => 'block_content:' . $savedEntity->uuid(),
+        'provider' => 'block_content',
+        'region' => $savedEntityRegion,
+        'theme' => $theme->getName(),
+        'weight' => 0,
+        'status' => TRUE,
+      ];
+      printf('Adding default block to ' . $savedEntityRegion . ' region.');
+      $block = Block::create($blockSettings);
+      $block->save();
     };
   }
 
