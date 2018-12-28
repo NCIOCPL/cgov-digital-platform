@@ -17,7 +17,6 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
   $reason = 'Authors not allowed to delete content which has ever been published';
   switch ($op) {
     case 'delete':
-      // Return AccessResult::forbidden();
       if (!$account->hasPermission($publish_permission)) {
         $query = \Drupal::database()->select('node_field_revision', 'r');
         $query->condition('r.status', 1);

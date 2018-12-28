@@ -77,9 +77,10 @@ class WorkflowTest extends KernelTestBase {
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
     $perms = [
+      'access content',
       'create pony content',
-      'edit any pony content',
       'delete any pony content',
+      'edit any pony content',
     ];
     $node_type = NodeType::create(['type' => 'pony', 'label' => 'Pony']);
     $node_type->save();
