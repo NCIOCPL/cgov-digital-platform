@@ -1,0 +1,77 @@
+.popup .popuplogo{
+	max-width: 500px;
+	margin: 20px 10px 0 10px;
+}
+
+.popup .popuplogo img{
+	max-height: 30px;
+}
+
+.popup div.heading {
+	font-size: 1.0625em;
+	font-weight: bold;
+	margin: 0 0 0 2.1875em;
+}
+.popup .audioPronounceLink {
+	margin: 1.5625em 0 0 2.1875em;
+}
+.audioPronounceLink .term {
+	font-weight: bold;
+}
+.popup .definition {
+	margin: 1.25em 0 0 2.1875em;
+}
+.popup .definitionImage {
+	margin: 1.25em 0 0 2.1875em;
+}
+.popup .nci-logo {
+	margin: 0.5em (0.3125em * 2 + 1.1875em) 0 0.5em;
+	float: left;
+	padding: 0 0 0.2em;
+
+	a {
+		padding-top: 13px;
+		padding-left: 105px;
+
+		
+		&:hover {
+			cursor: inherit;	
+		}
+	}
+}
+@include bp(small) {
+	.popup .nci-logo {
+		a {
+			padding-top: 3px;
+			padding-left: 85px;
+		}
+	}
+}
+@include bp(medium) {
+	.popup .nci-logo {
+
+		a {
+			padding-top: 6px;
+			padding-left: 95px;
+		}
+	}
+}
+.popup .caption-container {
+	display: none;
+}
+.popup-close a {
+	@include svg-sprite(close-blue);
+	display: inline-block;
+	position: relative;
+}
+.popup-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0.3125em;
+	opacity: 0.9;
+}
+
+.popup .CDR_audiofile {
+	margin-left: 0.625em;
+}

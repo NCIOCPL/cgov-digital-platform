@@ -61,8 +61,9 @@ class CgovSiteTest extends BrowserTestBase {
 
     // Test that the language negotiations are correct.
     $ifaceNegs = \Drupal::config('language.types')->get('negotiation.language_interface.enabled');
-    $this->assertCount(2, array_keys($ifaceNegs), 'Only 2 interface negotiations set.');
+    $this->assertCount(3, array_keys($ifaceNegs), 'Only 3 interface negotiations set.');
     $this->assertArrayHasKey('language-user-admin', $ifaceNegs, 'User admin interface negotiation set.');
+    $this->assertArrayHasKey('language-url', $ifaceNegs, 'Language URL interface negotiation set.');
     $this->assertArrayHasKey('language-selected', $ifaceNegs, 'Selected language interface negotiation set.');
 
     $contentNegs = \Drupal::config('language.types')->get('negotiation.language_content.enabled');

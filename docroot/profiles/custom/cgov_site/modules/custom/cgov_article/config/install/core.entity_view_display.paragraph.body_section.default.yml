@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.body_section.field_body_section_content
+    - field.field.paragraph.body_section.field_body_section_heading
+    - paragraphs.paragraphs_type.body_section
+  module:
+    - text
+id: paragraph.body_section.default
+targetEntityType: paragraph
+bundle: body_section
+mode: default
+content:
+  field_body_section_content:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_body_section_heading:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

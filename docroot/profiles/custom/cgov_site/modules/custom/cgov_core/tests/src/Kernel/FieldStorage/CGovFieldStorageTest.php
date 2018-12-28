@@ -35,8 +35,8 @@ class CGovFieldStorageTest extends KernelTestBase {
       "type" => "plain_text",
     ],
     [
-      "name" => "field_card_description",
-      "label" => "Card Description",
+      "name" => "field_feature_card_description",
+      "label" => "Feature Card Description",
       "type" => "plain_text",
     ],
     [
@@ -82,6 +82,11 @@ class CGovFieldStorageTest extends KernelTestBase {
     [
       "name" => "field_date_display_mode",
       "label" => "Date Display Mode",
+      "type" => "list_string",
+    ],
+    [
+      "name" => "field_search_engine_restrictions",
+      "label" => "Search Engine Restrictions",
       "type" => "list_string",
     ],
   ];

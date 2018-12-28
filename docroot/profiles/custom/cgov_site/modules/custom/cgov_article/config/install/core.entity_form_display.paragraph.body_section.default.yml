@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.body_section.field_body_section_content
+    - field.field.paragraph.body_section.field_body_section_heading
+    - paragraphs.paragraphs_type.body_section
+  module:
+    - text
+id: paragraph.body_section.default
+targetEntityType: paragraph
+bundle: body_section
+mode: default
+content:
+  field_body_section_content:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_body_section_heading:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

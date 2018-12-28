@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Theme override to display article body field.
+ *
+ * This template handles a single section using a normal display,
+ * and when there are multiple sections it displays the "On This
+ * Page" navigation.
+ */
+#}
+{% if items | length > 1 %}
+  {# Only add accordion and OTP nav if there are multiple sections. #}
+  <div class="accordion">
+  {# TODO: Find a way to ensure there will be at least 1 link before drawing. #}
+  <nav class="on-this-page hide-otp-on-collapse" role="navigation">
+    {# See admin/config/regional/translate for Spanish string. #}
+    <h6>{% trans %}On This Page{% endtrans %}</h6>
+    <ul>
+      {% for item in items %}
+        {% if item.content['#paragraph'].field_body_section_heading.value %}
+        <li>
+          <a href="#{{ item.content['#paragraph'].field_body_section_heading.value | clean_id }}">
+            {{- item.content['#paragraph'].field_body_section_heading.value -}}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
+{% for item in items %}
+  {# The Paragraphs template renders the <section> tag. #}
+  {{ item.content }}
+{% endfor %}
+{% if items | length > 1 %}
+  </div>
+{% endif %}

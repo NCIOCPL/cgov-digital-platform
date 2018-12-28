@@ -1,0 +1,70 @@
+/****************** BEGIN Contact Info styles ********************/
+
+//.live-help-button {
+//	@include svg-sprite(live-help-logo);
+//	font-size: 315%; // sprite icon max size is 32px. Using font-size to zoom it up
+//}
+
+.contact-buttons {
+	overflow: auto;
+}
+
+.contact-buttons a {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 8px 15px 0;
+	text-decoration: none;
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	display: block;
+	color: #fff;
+	line-height: 24px;
+	font-family: $montserrat-font-stack;
+	font-size: 13px;
+}
+
+.contact-buttons a:hover {
+	text-decoration: none;
+}
+
+.contact-buttons a.phone {
+	background-color: #82368c;
+}
+.contact-buttons a.chat {
+	background-color: #bb0e3d;
+}
+.contact-buttons a.email {
+	background-color: #ff5f00;
+}
+
+.contact-buttons a.icon {
+	padding:8px 11px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.contact-buttons a.icon span {
+	padding-left: 11px;
+	vertical-align: top;
+}
+
+.contact-buttons a.icon:before {
+	content: "";
+	font-size: 130%;
+}
+
+// these are used on Contact Us mobile page
+.contact-buttons .phone:before {
+	@include svg-sprite(phone-white)
+}
+.contact-buttons .chat:before {
+	@include svg-sprite(comment-white)
+}
+.contact-buttons .email:before {
+	@include svg-sprite(mail-envelope-closed-white)
+}
+
+/****************** END Contact Info styles ********************/

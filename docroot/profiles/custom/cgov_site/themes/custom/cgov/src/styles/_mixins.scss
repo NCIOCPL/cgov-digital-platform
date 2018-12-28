@@ -1,0 +1,83 @@
+@mixin sprite($x-coordinate: 0, $y-coordinate: 0, $width: 0, $height: 0) {
+	background: url($icons + "nci-sprite.png") no-repeat $x-coordinate $y-coordinate;
+	width: $width;
+	height: $height;
+}
+
+@mixin placeholder {
+	&:-moz-placeholder { @content; }
+	&::-moz-placeholder { @content; }
+	&:-ms-input-placeholder { @content; }
+	&::-webkit-input-placeholder { @content; }
+}
+
+@mixin transition($transitions...) {
+	-webkit-transition: $transitions;
+	-moz-transition: $transitions;
+	-o-transition: $transitions;
+	transition: $transitions;
+}
+@mixin transition-delay($transition-delay) {
+	-webkit-transition-delay: $transition-delay;
+	-moz-transition-delay: $transition-delay;
+	-o-transition-delay: $transition-delay;
+	transition-delay: $transition-delay;
+}
+
+@mixin transform($transforms...) {
+	-webkit-transform: $transforms;
+	-moz-transform: $transforms;
+	-ms-transform: $transforms;
+	-o-transform: $transforms;
+	transform: $transforms;
+}
+@mixin transform-origin($transform-origin) {
+	-webkit-transform-origin: $transform-origin;
+	-moz-transform-origin: $transform-origin;
+	-ms-transform-origin: $transform-origin;
+	-o-transform-origin: $transform-origin;
+	transform-origin: $transform-origin;
+}
+
+@mixin box-shadow($shadows...) {
+	-webkit-box-shadow: $shadows;
+	-moz-box-shadow: $shadows;
+	box-shadow: $shadows;
+}
+
+@mixin hCenter {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+@mixin vCenter {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@mixin call-to-action-corner() {
+	text-transform: uppercase;
+	position: absolute;
+	z-index: 88;
+	padding: 0.62em;
+	color: #FFFFFF;
+	background-color: #403f3f;
+
+	// rotate the call to action:
+	right: 0;
+	@include transform-origin(top right);
+	@include transform(
+		rotate(90deg)
+		translate(100%, -1px)); // -1px to fix rendering issues
+}
+
+@mixin card-clickable {
+	// the following classes are to remove padding from the card and give it to the anchor tag so that the whole card is clickable
+	.columns {
+		padding: 0;
+		a {
+			padding: em-calc(30px);
+			display: block;
+		}
+	}
+}
