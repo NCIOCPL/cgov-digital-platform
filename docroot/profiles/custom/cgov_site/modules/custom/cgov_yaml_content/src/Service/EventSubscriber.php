@@ -59,40 +59,44 @@ class EventSubscriber implements EventSubscriberInterface {
    */
   public function addToRegion(EntityPostSaveEvent $event) {
     $savedEntity = $event->getEntity();
+
+    // We don't need this to run on default node entities.
     $entityType = $savedEntity->bundle();
     $isRawHTMLBlock = $entityType === 'raw_html_block';
-    if ($isRawHTMLBlock) {
-      // If no default region is set on the custom block, there's
-      // nothing to do here.
-      $savedEntityRegion = $savedEntity->get('field_default_region')->get(0)->value;
-      if (!$savedEntityRegion) {
-        return;
-      }
+    if (!$isRawHTMLBlock) {
+      return;
+    }
 
-      $theme = $this->themeManager->getActiveTheme();
-      // We only want to create a block when a valid default region
-      // is specified.
-      $regions = $theme->getRegions();
-      $isValidRegion = in_array($savedEntityRegion, $regions);
-      if (!$isValidRegion) {
-        return;
-      }
+    // If no default region is set on the custom block, there's
+    // nothing to do here.
+    $savedEntityRegion = $savedEntity->get('field_default_region')->get(0)->value;
+    if (!$savedEntityRegion) {
+      return;
+    }
 
-      // We need to create a block top attach the block_content to
-      // in a given theme region.
-      $blockSettings = [
-        'id' => self::generateRandomString(10),
-        'plugin' => 'block_content:' . $savedEntity->uuid(),
-        'provider' => 'block_content',
-        'region' => $savedEntityRegion,
-        'theme' => $theme->getName(),
-        'weight' => 0,
-        'status' => TRUE,
-      ];
-      printf('Adding default block to ' . $savedEntityRegion . ' region.');
-      $block = Block::create($blockSettings);
-      $block->save();
-    };
+    $theme = $this->themeManager->getActiveTheme();
+    // We only want to create a block when a valid default region
+    // is specified.
+    $regions = $theme->getRegions();
+    $isValidRegion = in_array($savedEntityRegion, $regions);
+    if (!$isValidRegion) {
+      return;
+    }
+
+    // We need to create a block to attach the block_content to
+    // to place in a given theme region.
+    $blockSettings = [
+      'id' => self::generateRandomString(10),
+      'plugin' => 'block_content:' . $savedEntity->uuid(),
+      'provider' => 'block_content',
+      'region' => $savedEntityRegion,
+      'theme' => $theme->getName(),
+      'weight' => 0,
+      'status' => TRUE,
+    ];
+    printf('Adding default block to ' . $savedEntityRegion . ' region.');
+    $block = Block::create($blockSettings);
+    $block->save();
   }
 
 }
