@@ -13,6 +13,11 @@ use Drupal\Core\Theme\ThemeManagerInterface;
  */
 class EventSubscriber implements EventSubscriberInterface {
 
+  /**
+   * Drupal Core Theme Manager.
+   *
+   * @var \Drupal\Core\Theme\ThemeManagerInterface
+   */
   protected $themeManager;
 
   /**
