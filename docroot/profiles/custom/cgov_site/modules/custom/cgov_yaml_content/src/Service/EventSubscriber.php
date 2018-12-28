@@ -89,7 +89,7 @@ class EventSubscriber implements EventSubscriberInterface {
     }
 
     // We need to create a block to attach the block_content to
-    // to place in a given theme region.
+    // place in a given theme region.
     $blockSettings = [
       'id' => self::generateRandomString(10),
       'plugin' => 'block_content:' . $savedEntity->uuid(),
@@ -99,9 +99,9 @@ class EventSubscriber implements EventSubscriberInterface {
       'weight' => 0,
       'status' => TRUE,
     ];
-    printf('Adding default block to ' . $savedEntityRegion . ' region.');
     $block = Block::create($blockSettings);
     $block->save();
+    printf('Added default block to ' . $savedEntityRegion . ' region.');
   }
 
 }
