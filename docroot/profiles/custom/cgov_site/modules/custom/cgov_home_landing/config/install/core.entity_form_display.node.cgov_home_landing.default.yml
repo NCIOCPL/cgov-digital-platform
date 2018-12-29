@@ -3,17 +3,20 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_home_landing.field_browser_title
-    - field.field.node.cgov_home_landing.field_feature_card_description
     - field.field.node.cgov_home_landing.field_card_title
     - field.field.node.cgov_home_landing.field_date_display_mode
     - field.field.node.cgov_home_landing.field_date_posted
     - field.field.node.cgov_home_landing.field_date_reviewed
     - field.field.node.cgov_home_landing.field_date_updated
+    - field.field.node.cgov_home_landing.field_feature_card_description
     - field.field.node.cgov_home_landing.field_list_description
     - field.field.node.cgov_home_landing.field_page_description
+    - field.field.node.cgov_home_landing.field_search_engine_restrictions
     - field.field.node.cgov_home_landing.field_short_title
     - node.type.cgov_home_landing
+    - workflows.workflow.editorial_workflow
   module:
+    - content_moderation
     - datetime
     - path
 id: node.cgov_home_landing.default
@@ -29,14 +32,6 @@ content:
     third_party_settings: {  }
   field_browser_title:
     weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_feature_card_description:
-    weight: 6
     settings:
       size: 60
       placeholder: ''
@@ -75,6 +70,14 @@ content:
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_feature_card_description:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_list_description:
     weight: 7
     settings:
@@ -90,6 +93,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_search_engine_restrictions:
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
     region: content
   field_short_title:
     weight: 2
