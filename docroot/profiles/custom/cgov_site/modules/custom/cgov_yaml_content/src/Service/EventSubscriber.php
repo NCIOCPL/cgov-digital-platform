@@ -46,7 +46,7 @@ class EventSubscriber implements EventSubscriberInterface {
    * @param int $length
    *   A number.
    */
-  private static function generateRandomString(int $length) {
+  public static function generateRandomString(int $length) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
