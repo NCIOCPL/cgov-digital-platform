@@ -14,8 +14,19 @@ use Drupal\node\NodeInterface;
  * Implements hook_entity_translation_create().
  *
  * Corrects the initial moderation state for a new translation.
+ * The hook is called when a new translation is created, giving us
+ * the opportunity to modify the object for that translation. We're
+ * setting the initial moderation state for the translation, and
+ * that in turn is used by the logic which determines which states
+ * are available when the new translation is save. The bug for which
+ * this workaround is implemented just copies the initial state from
+ * the current state of the original language. When the Drupal core
+ * team fixes https://www.drupal.org/project/drupal/issues/3021222,
+ * this workaround can be removed.
+ *
  * See https://github.com/NCIOCPL/cgov-digital-platform/issues/371
- * for more details.
+ * for more details about the bug and exactly what the software is
+ * doing.
  *
  * @var Drupal\Core\Entity\EntityInterface $translation
  *   The entity object for the new translation of a content object.
