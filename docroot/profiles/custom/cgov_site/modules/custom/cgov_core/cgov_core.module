@@ -6,9 +6,19 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_entity_translation_create().
+ *
+ * Corrects the initial moderation state for a new translation.
+ * See https://github.com/NCIOCPL/cgov-digital-platform/issues/371
+ * for more details.
+ *
+ * @var Drupal\Core\Entity\EntityInterface $translation
+ *   The entity object for the new translation of a content object.
  */
 function cgov_core_entity_translation_create(EntityInterface $translation) {
   $serviceName = 'content_moderation.moderation_information';
@@ -21,5 +31,28 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
       $state = $configuration['default_moderation_state'];
     }
     $translation->moderation_state = $state;
+  }
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  $publish_permission = 'use editorial_workflow transition publish';
+  $reason = 'Authors not allowed to delete content which has ever been published';
+  switch ($op) {
+    case 'delete':
+      if (!$account->hasPermission($publish_permission)) {
+        $query = \Drupal::database()->select('node_field_revision', 'r');
+        $query->condition('r.status', 1);
+        $query->condition('r.nid', $node->id());
+        if ($query->countQuery()->execute()->fetchField() > 0) {
+          return AccessResult::forbidden($reason);
+        }
+      }
+      break;
+
+    default:
+      return AccessResult::neutral();
   }
 }
