@@ -3,6 +3,7 @@
 namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -99,7 +100,30 @@ class WorkflowTest extends KernelTestBase {
   }
 
   /**
-   * Test control of when an author can delete content nodes.
+   * Check available moderation states of new translation (issue #371).
+   */
+  public function testNewTranslationModerationState() {
+    ConfigurableLanguage::createFromLangcode('es')->save();
+    $this->setCurrentUser($this->users['admin']);
+    $node = $this->createNode(['type' => 'pony']);
+    $node->moderation_state->value = 'published';
+    $node->save();
+    $translation = $node->addTranslation('es', ['title' => 'Spanish title']);
+    $this->assertEquals($translation->moderation_state->value, 'draft');
+    $translation->save();
+    $tests = [['draft', 0], ['review', 0], ['editing', 1], ['archived', 1]];
+    foreach ($tests as $test) {
+      list($state, $expected_violations) = $test;
+      $translation->moderation_state->value = $state;
+      $violations = $translation->validate();
+      $negative = $expected_violations ? ' not' : '';
+      $message = "Moderation state '$state' should$negative be available";
+      $this->assertEquals(count($violations), $expected_violations, $message);
+    }
+  }
+
+  /**
+   * Test control of when an author can delete content nodes (issue #121).
    */
   public function testAuthorDeletion() {
     $entityTypeManager = $this->container->get('entity_type.manager');
@@ -118,7 +142,7 @@ class WorkflowTest extends KernelTestBase {
   }
 
   /**
-   * Verify that the transitions are handled as expected.
+   * Verify that the transitions are handled as expected (issue #64).
    *
    * We're cutting corners here. If we did this "properly," we would register
    * the `transitionCases` method below as a dataProvider, which would enable
