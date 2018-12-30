@@ -1,0 +1,11 @@
+--- vendor/acquia/blt/src/Robo/Commands/Tests/BehatCommand.php-dist	2018-12-28 14:59:44.000000000 -0500
++++ vendor/acquia/blt/src/Robo/Commands/Tests/BehatCommand.php	2018-12-28 15:00:37.000000000 -0500
+@@ -175,7 +175,7 @@
+     $this->logger->info("Launching headless chrome...");
+     $this->getContainer()
+       ->get('executor')
+-      ->execute("'$chrome_bin' --headless --disable-web-security --remote-debugging-port={$this->chromePort} {$this->chromeArgs} $chrome_host")
++      ->execute("'$chrome_bin' --no-sandbox --headless --disable-web-security --remote-debugging-port={$this->chromePort} {$this->chromeArgs} $chrome_host")
+       ->background(TRUE)
+       ->printOutput(TRUE)
+       ->printMetadata(TRUE)
