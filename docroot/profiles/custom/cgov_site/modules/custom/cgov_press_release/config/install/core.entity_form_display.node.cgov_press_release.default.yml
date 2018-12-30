@@ -3,9 +3,13 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_press_release.body
+    - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_sort_date
     - node.type.cgov_press_release
+    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
+    - datetime
     - path
     - text
 id: node.cgov_press_release.default
@@ -28,6 +32,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_press_release_type:
+    weight: 122
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_sort_date:
+    weight: 123
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   langcode:
     type: language_select
     weight: 2
@@ -76,6 +92,11 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  translation:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   uid:
     type: entity_reference_autocomplete
     weight: 5
