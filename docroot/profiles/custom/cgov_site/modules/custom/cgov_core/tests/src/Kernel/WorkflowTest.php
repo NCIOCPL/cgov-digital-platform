@@ -3,6 +3,7 @@
 namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
@@ -76,7 +77,12 @@ class WorkflowTest extends KernelTestBase {
     ]);
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
-    $perms = ['create pony content', 'edit any pony content'];
+    $perms = [
+      'access content',
+      'create pony content',
+      'delete any pony content',
+      'edit any pony content',
+    ];
     $node_type = NodeType::create(['type' => 'pony', 'label' => 'Pony']);
     $node_type->save();
     $this->users['admin'] = $this->createUser([], NULL, TRUE);
@@ -94,7 +100,49 @@ class WorkflowTest extends KernelTestBase {
   }
 
   /**
-   * Verify that the transitions are handled as expected.
+   * Check available moderation states of new translation (issue #371).
+   */
+  public function testNewTranslationModerationState() {
+    ConfigurableLanguage::createFromLangcode('es')->save();
+    $this->setCurrentUser($this->users['admin']);
+    $node = $this->createNode(['type' => 'pony']);
+    $node->moderation_state->value = 'published';
+    $node->save();
+    $translation = $node->addTranslation('es', ['title' => 'Spanish title']);
+    $this->assertEquals($translation->moderation_state->value, 'draft');
+    $translation->save();
+    $tests = [['draft', 0], ['review', 0], ['editing', 1], ['archived', 1]];
+    foreach ($tests as $test) {
+      list($state, $expected_violations) = $test;
+      $translation->moderation_state->value = $state;
+      $violations = $translation->validate();
+      $negative = $expected_violations ? ' not' : '';
+      $message = "Moderation state '$state' should$negative be available";
+      $this->assertEquals(count($violations), $expected_violations, $message);
+    }
+  }
+
+  /**
+   * Test control of when an author can delete content nodes (issue #121).
+   */
+  public function testAuthorDeletion() {
+    $entityTypeManager = $this->container->get('entity_type.manager');
+    $accessHandler = $entityTypeManager->getAccessControlHandler('node');
+    $this->setCurrentUser($this->users['admin']);
+    $node = $this->createNode(['type' => 'pony']);
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['author']));
+    $node->moderation_state->value = 'published';
+    $node->save();
+    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['editor']));
+    $node->moderation_state->value = 'archived';
+    $node->save();
+    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
+    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['editor']));
+  }
+
+  /**
+   * Verify that the transitions are handled as expected (issue #64).
    *
    * We're cutting corners here. If we did this "properly," we would register
    * the `transitionCases` method below as a dataProvider, which would enable
