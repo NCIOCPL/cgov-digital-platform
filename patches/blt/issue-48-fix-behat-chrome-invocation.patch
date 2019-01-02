@@ -1,0 +1,13 @@
+diff --git a/src/Robo/Commands/Tests/BehatCommand.php b/src/Robo/Commands/Tests/BehatCommand.php
+index 3eca7c3e..ad58ee0e 100644
+--- a/src/Robo/Commands/Tests/BehatCommand.php
++++ b/src/Robo/Commands/Tests/BehatCommand.php
+@@ -175,7 +175,7 @@ protected function launchChrome() {
+     $this->logger->info("Launching headless chrome...");
+     $this->getContainer()
+       ->get('executor')
+-      ->execute("'$chrome_bin' --headless --disable-web-security --remote-debugging-port={$this->chromePort} {$this->chromeArgs} $chrome_host")
++      ->execute("'$chrome_bin' --no-sandbox --headless --disable-web-security --remote-debugging-port={$this->chromePort} {$this->chromeArgs} $chrome_host")
+       ->background(TRUE)
+       ->printOutput(TRUE)
+       ->printMetadata(TRUE)
