@@ -98,6 +98,9 @@ class EventSubscriber implements EventSubscriberInterface {
       'theme' => $theme->getName(),
       'weight' => 0,
       'status' => TRUE,
+      'settings' => [
+        'label_display' => '0',
+      ],
     ];
     $block = Block::create($blockSettings);
     $block->save();
