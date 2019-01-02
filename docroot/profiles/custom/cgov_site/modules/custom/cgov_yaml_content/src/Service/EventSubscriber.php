@@ -90,6 +90,8 @@ class EventSubscriber implements EventSubscriberInterface {
 
     // We need to create a block to attach the block_content to
     // place in a given theme region.
+    $entityLangcode = $savedEntity->language()->getId();
+
     $blockSettings = [
       'id' => self::generateRandomString(10),
       'plugin' => 'block_content:' . $savedEntity->uuid(),
@@ -100,6 +102,15 @@ class EventSubscriber implements EventSubscriberInterface {
       'status' => TRUE,
       'settings' => [
         'label_display' => '0',
+      ],
+      'langcode' => $entityLangcode,
+      'visibility' => [
+        'language' => [
+          'id' => 'language',
+          'langcodes' => [
+            $entityLangcode => $entityLangcode,
+          ],
+        ],
       ],
     ];
     $block = Block::create($blockSettings);
