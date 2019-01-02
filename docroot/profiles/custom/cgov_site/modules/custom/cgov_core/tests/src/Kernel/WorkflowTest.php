@@ -83,8 +83,13 @@ class WorkflowTest extends KernelTestBase {
       'delete any pony content',
       'edit any pony content',
     ];
+    $tools = $this->container->get('cgov_core.tools');
     $node_type = NodeType::create(['type' => 'pony', 'label' => 'Pony']);
     $node_type->save();
+    $tools->attachContentTypeToWorkflow('pony', 'editorial_workflow');
+    $node_type = NodeType::create(['type' => 'unicorn']);
+    $node_type->save();
+    $tools->attachContentTypeToWorkflow('unicorn', 'pdq_workflow');
     $this->users['admin'] = $this->createUser([], NULL, TRUE);
     $this->users['author'] = $this->createUser($perms);
     $this->users['author']->addRole('content_author');
@@ -95,8 +100,34 @@ class WorkflowTest extends KernelTestBase {
     $this->users['advanced']->addRole('content_author');
     $this->users['advanced']->addRole('content_editor');
     $this->users['advanced']->addRole('advanced_editor');
-    $tools = $this->container->get('cgov_core.tools');
-    $tools->attachContentTypeToWorkflow('pony', 'editorial_workflow');
+  }
+
+  /**
+   * Verify the PDQ moderation state transitions (issue #258).
+   */
+  public function testPdqWorkflowTransitions() {
+    $perms = ['create unicorn content', 'edit any unicorn content'];
+    $pdq_importer = $this->createUser($perms);
+    $pdq_importer->addRole('pdq_importer');
+    $states = ['draft', 'published'];
+    $allowed = 'Transition should be allowed for PDQ Importer role';
+    $forbidden = 'Transition should not be allowed';
+    foreach ($states as $from) {
+      foreach ($states as $to) {
+        $this->setCurrentUser($this->users['admin']);
+        $node = $this->createNode(['type' => 'unicorn']);
+        $node->moderation_state->value = $from;
+        $node->save();
+        $node->setNewRevision(TRUE);
+        $node->moderation_state->value = $to;
+        $this->setCurrentUser($pdq_importer);
+        $violations = $node->validate();
+        $this->assertCount(0, $violations, $allowed);
+        $this->setCurrentUser($this->users['advanced']);
+        $violations = $node->validate();
+        $this->assertCount(1, $violations, $forbidden);
+      }
+    }
   }
 
   /**
