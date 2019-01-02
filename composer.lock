@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0dd1209d3a16e9319338664caabab6ad",
+    "content-hash": "a83716b7fd75a8af9c8ad50ed58a187b",
     "packages": [
         {
             "name": "acquia/blt",
@@ -68,6 +68,9 @@
                 "composer-exit-on-patch-failure": true,
                 "branch-alias": {
                     "dev-master": "9.x-dev"
+                },
+                "patches_applied": {
+                    "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
                 }
             },
             "autoload": {
@@ -8555,6 +8558,11 @@
         {
             "name": "webflo/drupal-core-require-dev",
             "version": "8.7.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webflo/drupal-core-require-dev.git",
+                "reference": "f551d0b71bbfd10444f5d8805ebf2052fb155a46"
+            },
             "require": {
                 "behat/mink": "1.7.x-dev",
                 "behat/mink-goutte-driver": "^1.2",
