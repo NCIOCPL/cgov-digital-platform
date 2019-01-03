@@ -6,9 +6,6 @@ use Acquia\Blt\Robo\BltTasks;
 
 /**
  * Handle importing default yaml content.
- *
- * Future iterations should allow for command line
- * specification of the specific module to install.
  */
 class YamlContentCommand extends BltTasks {
 
@@ -45,7 +42,6 @@ class YamlContentCommand extends BltTasks {
    * Import default yaml content from module.
    *
    * @command custom:import_custom_yaml_content
-   * @description Do the thing.
    */
   public function importCustomYamlContent() {
     $this->say("Importing cgov_yaml_content module default content!");
