@@ -13,7 +13,7 @@ class YamlContentCommand extends BltTasks {
    * Enable and install yaml content from custom module.
    *
    * Pass the name of the module contain default yaml content.
-   * Eg, "blt custom:instal_default_yaml_content cgov_yaml_content".
+   * Eg, "blt custom:install_default_yaml_content cgov_yaml_content".
    *
    * @param string $module
    *   Name of module with yaml content.
