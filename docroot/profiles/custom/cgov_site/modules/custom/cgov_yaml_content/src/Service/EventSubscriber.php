@@ -101,7 +101,9 @@ class EventSubscriber implements EventSubscriberInterface {
       'weight' => 0,
       'status' => TRUE,
       'settings' => [
+        'id' => 'block_content:' . $savedEntity->uuid(),
         'label_display' => '0',
+        'provider' => 'block_content',
       ],
       'langcode' => $entityLangcode,
       'visibility' => [
@@ -109,6 +111,10 @@ class EventSubscriber implements EventSubscriberInterface {
           'id' => 'language',
           'langcodes' => [
             $entityLangcode => $entityLangcode,
+          ],
+          'negate' => FALSE,
+          'context_mapping' => [
+            'language' => '@language.current_language_context:language_content',
           ],
         ],
       ],
