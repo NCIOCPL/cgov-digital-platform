@@ -50,19 +50,48 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
  */
 function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
   $publish_permission = 'use editorial_workflow transition publish';
-  $reason = 'Authors not allowed to delete content which has ever been published';
   switch ($op) {
+
+    // Currently we only have something to say about deletions.
     case 'delete':
+
+      // Only weigh in for content controlled by `editorial_workflow`.
+      $entityTypeManager = \Drupal::service('entity_type.manager');
+      $workflows = $entityTypeManager->getStorage('workflow')->loadMultiple();
+      $workflow = $workflows['editorial_workflow'];
+      $typePlugin = $workflow->getTypePlugin();
+      if (!$typePlugin->appliesToEntityTypeAndBundle('node', $node->bundle())) {
+        break;
+      }
+
+      // Authors can only delete nodes in the `draft` state, and only if the
+      // node has never been published.
+      $state = $node->moderation_state->value;
       if (!$account->hasPermission($publish_permission)) {
+        $reason = 'Authors not allowed to delete content ';
+        if ($state !== 'draft') {
+          $reason .= "in '$state' moderation state";
+          return AccessResult::forbidden($reason);
+        }
         $query = \Drupal::database()->select('node_field_revision', 'r');
         $query->condition('r.status', 1);
         $query->condition('r.nid', $node->id());
         if ($query->countQuery()->execute()->fetchField() > 0) {
+          $reason .= 'which has ever been published';
+          return AccessResult::forbidden($reason);
+        }
+      }
+      else {
+
+        // Editors can also delete nodes which are in the `archived` state.
+        if ($state !== 'draft' && $state !== 'archived') {
+          $reason = "Content in '$state' moderation state cannot be deleted";
           return AccessResult::forbidden($reason);
         }
       }
       break;
 
+    // Let other modules weigh in for nodes whose deletion we haven't vetoed.
     default:
       return AccessResult::neutral();
   }
