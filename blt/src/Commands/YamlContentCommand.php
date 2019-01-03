@@ -13,10 +13,9 @@ use Acquia\Blt\Robo\BltTasks;
 class YamlContentCommand extends BltTasks {
 
   /**
-   * Print "Hello world!" to the console.
+   * Enable and install yaml content from custom module.
    *
    * @command custom:install_default_yaml_content
-   * @description This is an example command.
    */
   public function installDefaultYamlContent() {
     $commands = [
@@ -30,7 +29,6 @@ class YamlContentCommand extends BltTasks {
    * Enable custom yaml content module.
    *
    * @command custom:enable_custom_yaml_content
-   * @description Do the thing.
    */
   public function enableCustomYamlContent() {
     $this->say("Installing cgov_yaml_content module!");
