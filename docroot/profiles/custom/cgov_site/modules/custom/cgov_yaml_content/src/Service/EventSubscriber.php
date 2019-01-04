@@ -35,6 +35,7 @@ class EventSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events = [];
+    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
 
     return $events;
@@ -54,6 +55,30 @@ class EventSubscriber implements EventSubscriberInterface {
       $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+  }
+
+  /**
+   * Add available Spanish translations.
+   *
+   * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
+   *   The event fired before entity field data is imported and assigned.
+   */
+  public function addSpanishTranslations(EntityPostSaveEvent $event) {
+    $yamlContent = $event->getContentData();
+    foreach ($yamlContent as $key => $value) {
+      // Test if current key is spanish translation.
+      $test = "/.+__ES$/";
+      $isSpanishTranslationField = preg_match($test, $key);
+      if ($isSpanishTranslationField) {
+        $originalEnglishFieldName = substr($key, 0, -4);
+        $spanishContent = $value['value'];
+        if ($spanishContent != NULL) {
+          printf("Add spanish translation for $originalEnglishFieldName field.\n");
+          $entity = $event->getEntity();
+          $entity->addTranslation('es', [$originalEnglishFieldName => $spanishContent]);
+        }
+      }
+    }
   }
 
   /**
@@ -121,7 +146,7 @@ class EventSubscriber implements EventSubscriberInterface {
     ];
     $block = Block::create($blockSettings);
     $block->save();
-    printf('Added default block to ' . $savedEntityRegion . ' region.');
+    printf("Added default block to $savedEntityRegion region.\n");
   }
 
 }
