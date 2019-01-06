@@ -156,7 +156,7 @@ class WorkflowTest extends KernelTestBase {
   /**
    * Test control of when an author can delete content nodes (issue #121).
    */
-  public function testAuthorDeletion() {
+  public function testDeletion() {
     $entityTypeManager = $this->container->get('entity_type.manager');
     $accessHandler = $entityTypeManager->getAccessControlHandler('node');
     $this->setCurrentUser($this->users['admin']);
@@ -164,8 +164,7 @@ class WorkflowTest extends KernelTestBase {
     $this->assertTrue($accessHandler->access($node, 'delete', $this->users['author']));
     $node->moderation_state->value = 'published';
     $node->save();
-    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
-    $this->assertTrue($accessHandler->access($node, 'delete', $this->users['editor']));
+    $this->assertFalse($accessHandler->access($node, 'delete', $this->users['editor']));
     $node->moderation_state->value = 'archived';
     $node->save();
     $this->assertFalse($accessHandler->access($node, 'delete', $this->users['author']));
