@@ -2,13 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
-  module:
-    - user
   enforced:
     module:
     - cgov_core
+  module:
+    - datetime
+    - user
 id: node.pdq_cancer_information_summary.default
 targetEntityType: node
 bundle: pdq_cancer_information_summary
@@ -18,6 +20,15 @@ content:
     weight: -20
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_date_posted:
+    weight: 102
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_short_title:
     weight: 101
