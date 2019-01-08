@@ -33,5 +33,6 @@ cd $repo_root
 
 ## Perform a fresh install
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
+blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
 
 set +v
