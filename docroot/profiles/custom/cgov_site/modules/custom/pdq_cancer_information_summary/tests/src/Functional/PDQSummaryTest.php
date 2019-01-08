@@ -47,7 +47,7 @@ class PDQSummaryTest extends BrowserTestBase {
 
     // Create admin user and login.
     $this->adminUser = $this->drupalCreateUser();
-    $this->adminUser->addRole('administrator');
+    $this->adminUser->addRole('pdq_importer');
     $this->adminUser->save();
     $this->drupalLogin($this->adminUser);
   }
