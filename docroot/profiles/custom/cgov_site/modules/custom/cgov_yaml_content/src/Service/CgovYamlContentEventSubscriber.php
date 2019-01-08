@@ -144,8 +144,8 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    * Default block_content content blocks need to be attached to
    * blocks in order to be placed in regions on a given theme.
    * In addition, block_content content.yml files need to specify
-   * a field_default_region that matches a valid region in
-   * the active theme in order to be created and placed.
+   * a region__CONFIG containing a value field that matches a
+   * valid region in the active theme in order to be created and placed.
    *
    * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
    *   The triggered event when an entity has been saved.
