@@ -4,6 +4,19 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.cgov_press_release.body
+    - field.field.node.cgov_press_release.field_browser_title
+    - field.field.node.cgov_press_release.field_card_title
+    - field.field.node.cgov_press_release.field_date_display_mode
+    - field.field.node.cgov_press_release.field_date_posted
+    - field.field.node.cgov_press_release.field_date_reviewed
+    - field.field.node.cgov_press_release.field_date_updated
+    - field.field.node.cgov_press_release.field_feature_card_description
+    - field.field.node.cgov_press_release.field_list_description
+    - field.field.node.cgov_press_release.field_page_description
+    - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_search_engine_restrictions
+    - field.field.node.cgov_press_release.field_short_title
+    - field.field.node.cgov_press_release.field_sort_date
     - node.type.cgov_press_release
   module:
     - text
@@ -21,10 +34,28 @@ content:
       trim_length: 600
     third_party_settings: {  }
     region: content
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   links:
     weight: 100
     settings: {  }
     third_party_settings: {  }
     region: content
 hidden:
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_list_description: true
+  field_page_description: true
+  field_press_release_type: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  field_sort_date: true
   langcode: true
