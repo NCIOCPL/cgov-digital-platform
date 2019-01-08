@@ -4,3 +4,95 @@
  * @file
  * Contains cgov_core.module.
  */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_translation_create().
+ *
+ * Corrects the initial moderation state for a new translation.
+ * The hook is called when a new translation is created, giving us
+ * the opportunity to modify the object for that translation. We're
+ * setting the initial moderation state for the translation, and
+ * that in turn is used by the logic which determines which states
+ * are available when the new translation is save. The bug for which
+ * this workaround is implemented just copies the initial state from
+ * the current state of the original language. When the Drupal core
+ * team fixes https://www.drupal.org/project/drupal/issues/3021222,
+ * this workaround can be removed.
+ *
+ * See https://github.com/NCIOCPL/cgov-digital-platform/issues/371
+ * for more details about the bug and exactly what the software is
+ * doing.
+ *
+ * @var Drupal\Core\Entity\EntityInterface $translation
+ *   The entity object for the new translation of a content object.
+ */
+function cgov_core_entity_translation_create(EntityInterface $translation) {
+  $serviceName = 'content_moderation.moderation_information';
+  $moderationInformation = \Drupal::service($serviceName);
+  if ($moderationInformation->isModeratedEntity($translation)) {
+    $workflow = $moderationInformation->getWorkflowForEntity($translation);
+    $configuration = $workflow->getTypePlugin()->getConfiguration();
+    $state = 'draft';
+    if (!empty($configuration['default_moderation_state'])) {
+      $state = $configuration['default_moderation_state'];
+    }
+    $translation->moderation_state = $state;
+  }
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  $publish_permission = 'use editorial_workflow transition publish';
+  switch ($op) {
+
+    // Currently we only have something to say about deletions.
+    case 'delete':
+
+      // Only weigh in for content controlled by `editorial_workflow`.
+      $entityTypeManager = \Drupal::service('entity_type.manager');
+      $workflows = $entityTypeManager->getStorage('workflow')->loadMultiple();
+      $workflow = $workflows['editorial_workflow'];
+      $typePlugin = $workflow->getTypePlugin();
+      if (!$typePlugin->appliesToEntityTypeAndBundle('node', $node->bundle())) {
+        break;
+      }
+
+      // Authors can only delete nodes in the `draft` state, and only if the
+      // node has never been published.
+      $state = $node->moderation_state->value;
+      if (!$account->hasPermission($publish_permission)) {
+        $reason = 'Authors not allowed to delete content ';
+        if ($state !== 'draft') {
+          $reason .= "in '$state' moderation state";
+          return AccessResult::forbidden($reason);
+        }
+        $query = \Drupal::database()->select('node_field_revision', 'r');
+        $query->condition('r.status', 1);
+        $query->condition('r.nid', $node->id());
+        if ($query->countQuery()->execute()->fetchField() > 0) {
+          $reason .= 'which has ever been published';
+          return AccessResult::forbidden($reason);
+        }
+      }
+      else {
+
+        // Editors can also delete nodes which are in the `archived` state.
+        if ($state !== 'draft' && $state !== 'archived') {
+          $reason = "Content in '$state' moderation state cannot be deleted";
+          return AccessResult::forbidden($reason);
+        }
+      }
+      break;
+
+    // Let other modules weigh in for nodes whose deletion we haven't vetoed.
+    default:
+      return AccessResult::neutral();
+  }
+}
