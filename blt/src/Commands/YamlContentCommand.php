@@ -38,7 +38,7 @@ class YamlContentCommand extends BltTasks {
    * @param string $module
    *   Name of module to enable.
    *
-   * @command custom:enable_custom_yaml_content
+   * @command custom:enable_cgov_yaml_content
    */
   public function enableCgovYamlContent($module) {
     $this->say("************************************************");
@@ -59,7 +59,7 @@ class YamlContentCommand extends BltTasks {
    * @param string $module
    *   Name of module to import from.
    *
-   * @command custom:import_custom_yaml_content
+   * @command custom:import_cgov_yaml_content
    */
   public function importCgovYamlContent($module) {
     $this->say("***************************************************************");
