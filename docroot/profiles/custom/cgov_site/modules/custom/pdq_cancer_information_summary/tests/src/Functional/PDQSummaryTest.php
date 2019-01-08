@@ -26,10 +26,16 @@ class PDQSummaryTest extends BrowserTestBase {
 
   /*
   Set up friendly names for the various fields as the generated IDs can be
-  rather confusing at first.
+  rather confusing at first. (Note that these values are from the id attribute
+  of the field's generated HTML, and are not the same as the machine_name.)
    */
   const PAGE_TITLE = 'edit-title-0-value';
   const SHORT_TITLE = 'edit-field-short-title-0-value';
+  const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
+  const POSTED_DATE_TIME = 'edit-field-date-posted-0-value-time';
+  const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
+  const UPDATED_DATE_TIME = 'edit-field-date-updated-0-value-time';
+  const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -41,7 +47,7 @@ class PDQSummaryTest extends BrowserTestBase {
 
     // Create admin user and login.
     $this->adminUser = $this->drupalCreateUser();
-    $this->adminUser->addRole('administrator');
+    $this->adminUser->addRole('pdq_importer');
     $this->adminUser->save();
     $this->drupalLogin($this->adminUser);
   }
@@ -59,14 +65,35 @@ class PDQSummaryTest extends BrowserTestBase {
     // Verify fields exist.
     $this->assertSession()->fieldExists(PDQSummaryTest::PAGE_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::SHORT_TITLE);
+    $this->assertSession()->fieldExists(PDQSummaryTest::POSTED_DATE_DATE);
+    $this->assertSession()->fieldExists(PDQSummaryTest::POSTED_DATE_TIME);
+    $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_DATE);
+    $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_TIME);
+    $this->assertSession()->fieldExists(PDQSummaryTest::LIST_DESCRIPTION);
+
+    /*
+    We need to figure out how to test filling out the form and submitting it.
+    The difficulty is that no failure occurs when
+    $this->getSession()->getPage()->pressButton() a client-side error occurs
+    (e.g. a required field is missing).  This opens the door for errors to
+    potentially be hidden.
+
+    If a means can be determined to generically check for any client-side error
+    (as opposed to an enumerated list), then the code to fill out and submit
+    the form might look something like this (minus some line break shenanigans
+    to get around comment-formatting limitations from PHPCS):
 
     // Fill out the fields.
-    $this->getSession()->getPage()->fillField(PDQSummaryTest::PAGE_TITLE, 'pony');
-    $this->getSession()->getPage()->fillField(PDQSummaryTest::SHORT_TITLE, 'pony');
+    $this->getSession()->getPage()->
+    -   fillField(PDQSummaryTest::PAGE_TITLE, 'pony');
+    $this->getSession()->getPage()->
+    -   fillField(PDQSummaryTest::SHORT_TITLE, 'pony');
 
     // Submit the form and check for success.
     $this->getSession()->getPage()->pressButton(PDQSummaryTest::SAVE_BUTTON);
+    $this->drupalPostForm(NULL, )
     $this->assertResponse(200);
+     */
   }
 
 }

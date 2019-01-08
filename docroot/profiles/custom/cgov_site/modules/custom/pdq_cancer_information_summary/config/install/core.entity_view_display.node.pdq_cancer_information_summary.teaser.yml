@@ -3,6 +3,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_list_description
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
   module:
@@ -18,5 +21,8 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_date_posted: true
+  field_date_updated: true
+  field_list_description: true
   field_short_title: true
   langcode: true
