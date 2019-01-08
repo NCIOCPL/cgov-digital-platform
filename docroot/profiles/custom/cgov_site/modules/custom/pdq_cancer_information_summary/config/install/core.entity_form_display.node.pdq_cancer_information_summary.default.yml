@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
     - workflows.workflow.pdq_workflow
@@ -26,6 +27,12 @@ content:
     third_party_settings: {  }
   field_date_posted:
     weight: 122
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 123
     settings: {  }
     third_party_settings: {  }
     type: datetime_default

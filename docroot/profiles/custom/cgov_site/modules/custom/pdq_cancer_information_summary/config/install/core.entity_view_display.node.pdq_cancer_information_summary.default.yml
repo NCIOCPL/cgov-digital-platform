@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
   enforced:
@@ -23,6 +24,15 @@ content:
     region: content
   field_date_posted:
     weight: 102
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 103
     label: above
     settings:
       format_type: medium
