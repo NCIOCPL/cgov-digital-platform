@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains pdq_cancer_information_summary.install.
+ */
+
+use Drupal\cgov_core\CgovCoreTools;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function pdq_cancer_information_summary_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions and assign to workflow.
+  $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
+  $siteHelper->attachContentTypeToWorkflow('pdq_cancer_information_summary', 'pdq_workflow');
+}

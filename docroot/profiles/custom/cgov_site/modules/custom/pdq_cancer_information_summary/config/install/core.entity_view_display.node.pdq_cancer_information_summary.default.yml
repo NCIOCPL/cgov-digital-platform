@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.pdq_cancer_information_summary.field_short_title
+    - node.type.pdq_cancer_information_summary
+  module:
+    - user
+  enforced:
+    module:
+    - cgov_core
+id: node.pdq_cancer_information_summary.default
+targetEntityType: node
+bundle: pdq_cancer_information_summary
+mode: default
+content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_short_title:
+    weight: 101
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

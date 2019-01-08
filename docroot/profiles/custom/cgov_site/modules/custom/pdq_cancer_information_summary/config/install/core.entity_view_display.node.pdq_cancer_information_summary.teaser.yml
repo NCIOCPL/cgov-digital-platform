@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pdq_cancer_information_summary.field_short_title
+    - node.type.pdq_cancer_information_summary
+  module:
+    - user
+id: node.pdq_cancer_information_summary.teaser
+targetEntityType: node
+bundle: pdq_cancer_information_summary
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_short_title: true
+  langcode: true
