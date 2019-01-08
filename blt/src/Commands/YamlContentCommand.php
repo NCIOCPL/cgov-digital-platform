@@ -22,9 +22,9 @@ class YamlContentCommand extends BltTasks {
    * @param string $module
    *   Name of module with yaml content.
    *
-   * @command custom:install_default_yaml_content
+   * @command custom:install_cgov_yaml_content_by_module
    */
-  public function installDefaultYamlContentByModule($module) {
+  public function installCgovYamlContentByModule($module) {
     $commands = [
       'custom:enable_cgov_yaml_content' => ['module' => $module],
       'custom:import_cgov_yaml_content' => ['module' => $module],
