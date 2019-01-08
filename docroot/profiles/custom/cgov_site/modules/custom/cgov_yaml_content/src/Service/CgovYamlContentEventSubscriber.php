@@ -162,7 +162,11 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
 
     // If no default region is set on the custom block, there's
     // nothing to do here.
-    $savedEntityRegion = $savedEntity->get('field_default_region')->get(0)->value;
+    // However, the region setting is not on the entity but on the
+    // processed yaml content array. We need to pull it from here. (If
+    // it exists).
+    $yamlContent = $event->getContentData();
+    $savedEntityRegion = isset($yamlContent['region__CONFIG']) ? $yamlContent['region__CONFIG']['value'] : NULL;
     if (!$savedEntityRegion) {
       return;
     }
