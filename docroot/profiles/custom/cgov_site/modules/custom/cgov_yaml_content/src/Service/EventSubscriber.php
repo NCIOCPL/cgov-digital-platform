@@ -6,6 +6,7 @@ use Drupal\yaml_content\Event\YamlContentEvents;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
 
 /**
@@ -65,19 +66,75 @@ class EventSubscriber implements EventSubscriberInterface {
    */
   public function addSpanishTranslations(EntityPostSaveEvent $event) {
     $yamlContent = $event->getContentData();
-    foreach ($yamlContent as $key => $value) {
-      // Test if current key is spanish translation.
-      $test = "/.+__ES$/";
-      $isSpanishTranslationField = preg_match($test, $key);
+    $entity = $event->getEntity();
+    $translatedFields = [];
+    // 1. Gather Spanish field translations.
+    // The yaml files contain fields (marked XXX__ES) that are
+    // not valid for the given entity type and therefore not saved in
+    // the initially created entity. Here we grab them, work backwards
+    // to determine the English field they apply to and then manually
+    // construct an array of translated fields to be used inn the creation
+    // of a new translation entity.
+    foreach ($yamlContent as $fieldName => $fieldValues) {
+      // Non-valid, translation storage fields match this patter.
+      $testForSpanishTranslation = "/.+__ES$/";
+      $isSpanishTranslationField = preg_match($testForSpanishTranslation, $fieldName);
       if ($isSpanishTranslationField) {
-        $originalEnglishFieldName = substr($key, 0, -4);
-        $spanishContent = $value['value'];
-        if ($spanishContent != NULL) {
-          printf("Add spanish translation for $originalEnglishFieldName field.\n");
-          $entity = $event->getEntity();
-          $entity->addTranslation('es', [$originalEnglishFieldName => $spanishContent]);
+        $originalEnglishFieldName = substr($fieldName, 0, -4);
+        $spanishContent = $fieldValues;
+        if ($spanishContent !== NULL) {
+          $translatedFields[$originalEnglishFieldName] = $spanishContent;
         }
       }
+    }
+    // 2. Check for paragraphs.
+    // Paragraphs have to be treated differently from other
+    // entity types. Instead of adding a translation to the
+    // paragraph entity, we create a translated duplicate and
+    // replace the original English paragraph with a reference to
+    // it. Magic associates the two distinct paragraphs by being
+    // contained in the same field on the same entity.
+    foreach ($translatedFields as $fieldName => $fieldData) {
+      if (is_array($fieldData) && count($fieldData) > 0) {
+        // Multiple paragraphs can be in the same field.
+        // NB: Translations are not required to have the same
+        // number of paragraph entities for a given field
+        // as the original entity.
+        $translatedParagraphs = [];
+        foreach ($fieldData as $dataArray) {
+          if (is_array($dataArray)) {
+            $fieldEntityType = $dataArray['entity'];
+            if ($fieldEntityType === 'paragraph') {
+              $paragraph = Paragraph::create($dataArray);
+              $paragraph->langcode = 'es';
+              $paragraph->save();
+              $translatedParagraphs[] = [
+                'target_id' => $paragraph->id(),
+                'target_revision_id' => $paragraph->getRevisionId(),
+              ];
+            };
+          }
+        }
+        if (count($translatedParagraphs) > 0) {
+          $translatedFields[$fieldName] = $translatedParagraphs;
+        }
+      }
+    }
+    // 3. Build translation entity.
+    // We need to create a full mapping of the original entity, not just
+    // the translated fields.
+    $entityArray = $entity->toArray();
+    $translation = array_merge($entityArray, $translatedFields);
+    $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
+    if ($spanishTranslationAlreadyExists) {
+      $spanishTranslation = $entity->getTranslation('es');
+      foreach ($translatedFields as $fieldName => $translatedContent) {
+        $spanishTranslation->{$fieldName} = $translatedContent;
+      }
+    }
+    else {
+      $entity->addTranslation('es', $translation);
+      $entity->save();
     }
   }
 
@@ -114,9 +171,7 @@ class EventSubscriber implements EventSubscriberInterface {
     }
 
     // We need to create a block to attach the block_content to
-    // place in a given theme region.
-    $entityLangcode = $savedEntity->language()->getId();
-
+    // to place in a given theme region.
     $blockSettings = [
       'id' => self::generateRandomString(10),
       'plugin' => 'block_content:' . $savedEntity->uuid(),
@@ -130,19 +185,7 @@ class EventSubscriber implements EventSubscriberInterface {
         'label_display' => '0',
         'provider' => 'block_content',
       ],
-      'langcode' => $entityLangcode,
-      'visibility' => [
-        'language' => [
-          'id' => 'language',
-          'langcodes' => [
-            $entityLangcode => $entityLangcode,
-          ],
-          'negate' => FALSE,
-          'context_mapping' => [
-            'language' => '@language.current_language_context:language_content',
-          ],
-        ],
-      ],
+      'visibility' => [],
     ];
     $block = Block::create($blockSettings);
     $block->save();
