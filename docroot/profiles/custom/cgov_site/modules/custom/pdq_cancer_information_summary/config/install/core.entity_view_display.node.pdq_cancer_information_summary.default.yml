@@ -6,12 +6,14 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_list_description
     - field.field.node.pdq_cancer_information_summary.field_short_title
+    - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
     - node.type.pdq_cancer_information_summary
   enforced:
     module:
     - cgov_core
   module:
     - datetime
+    - options
     - user
 id: node.pdq_cancer_information_summary.default
 targetEntityType: node
@@ -56,6 +58,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_pdq_summary_type:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   links:
     weight: 100
