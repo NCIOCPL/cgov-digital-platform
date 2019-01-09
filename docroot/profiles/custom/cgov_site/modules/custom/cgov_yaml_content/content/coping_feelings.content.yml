@@ -1,0 +1,515 @@
+### TESTS:
+# On this page
+# Separate media items for article image
+# TBD Embedded Images
+# TBD Pull Quotes
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Sad Woman Looking Out Window"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'sad-woman-looking-out-window-article.jpg'
+      alt: 'Sad Woman Looking Out Window'
+  field_credit:
+    value: "iStock"
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Elderly Man Looking Out Window"
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'elderly-man-looking-out-window-article.jpg'
+      alt: 'Un hombre de edad mira hacia el frente.'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Feelings and Cancer"
+  title__ES:
+      value: "Los sentimientos y el cáncer"
+  field_page_description:
+    value: "Ways to cope with your emotions and manage the emotional effects of cancer, including anger, fear, stress, and depression."
+  field_page_description__ES:
+    value: "El cáncer puede causar una amplia gama de sentimientos, ya sea que usted esté en tratamiento ahora, que ya lo haya terminado o un miembro de la familia o amigo. Entérese de las sugerencias para hacer frente a las muchas emociones que surgen con el cáncer."
+  field_short_title:
+    value: "Feelings and Cancer"
+  field_short_title__ES:
+    value: "Los sentimientos y el cáncer"
+  field_browser_title:
+    value: ""
+  field_browser_title_ES:
+    value: "Hacer frente - Los sentimientos y el cáncer"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Sad Woman Looking Out Window'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Elderly Man Looking Out Window'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+        <p>Just as cancer affects your physical health, it can bring up a wide range of feelings you&rsquo;re not used to dealing with. It can also make&nbsp;existing&nbsp;feelings seem more intense. They may change daily, hourly, or even minute to minute. This is true whether you&rsquo;re currently in treatment, done with treatment, or a friend or family member. These feelings are all normal.</p>
+        <p>Often the values you grew up with affect how you think about and&nbsp;cope with cancer. For example some people:</p>
+        <ul>
+        <li>Feel they have to be strong and protect their friends and families</li>
+        <li>Seek support and turn to loved ones or other cancer survivors</li>
+        <li>Ask for help from counselors or other professionals</li>
+        <li>Turn to their faith to help them cope</li>
+        </ul>
+        <p>Whatever you decide, it's important to do what's right for you and not to compare yourself with others. Your friends and family members may share some of the same feelings. If you feel comfortable, share this information with them.</p>
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+        <p>Del mismo modo como el c&aacute;ncer afecta su salud f&iacute;sica, tambi&eacute;n puede ocasionar una amplia variedad de sentimientos que usted no&nbsp;acostumbra enfrentar. Asimismo, puede hacer que los&nbsp;sentimientos que se presentan&nbsp;parezcan&nbsp;m&aacute;s intensos. Estos sentimientos pueden cambiar a diario, cada hora o incluso cada minuto. Esto es cierto ya sea que usted est&eacute; actualmente en tratamiento,&nbsp;que lo haya terminado, o que se trate de&nbsp;un amigo o de un&nbsp;familiar. Todos estos sentimientos son normales.</p>
+        <p>A menudo los valores con los que se cri&oacute; afectan su manera de pensar y de hacer frente al c&aacute;ncer. Por ejemplo, algunas personas:</p>
+        <ul>
+        <li>Sienten que tienen que ser fuertes y proteger a sus amigos y familias</li>
+        <li>Buscan apoyo y recurren a seres queridos u otros supervivientes de c&aacute;ncer</li>
+        <li>Piden ayuda a consejeros u otros profesionales</li>
+        <li>Recurren a su fe para que les ayude a sobrellevar la enfermedad</li>
+        </ul>
+        <p>Sea lo que decida hacer, es importante que haga lo que es adecuado para usted y no se compare con otras personas. Sus amigos y familiares pueden compartir algunos de los mismos sentimientos. Si se siente a gusto, comparta esta informaci&oacute;n con ellos.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Overwhelmed"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>When you first learn that you have cancer, you may feel as if your life is out of control. This could be because:</p>
+            <ul>
+            <li>You wonder if you're going to live.</li>
+            <li>Your normal routine is disrupted by doctor visits and treatments.</li>
+            <li>People use medical terms that you don't understand.</li>
+            <li>You feel like you can't do the things you enjoy.</li>
+            <li>You feel helpless and lonely.</li>
+            </ul>
+            <p>Even if you feel out of control, there are ways you can take charge. It may help to learn as much as you can about your cancer. The more you know, the more in control you'll feel. Ask your doctor questions and don't be afraid to say when you don't understand.</p>
+            <p>For some people, it&nbsp;feels better to stay busy. If you have the energy, try taking part in activities such as music, crafts, reading, or learning something new.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Denial"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>When you were first diagnosed, you may have had trouble believing or accepting the fact that you have cancer. This is called denial. It can be helpful because it can give you time to adjust to your diagnosis. It can also give you time to feel hopeful and better about the future.</p>
+            <p>Sometimes, denial is a serious problem. If it lasts too long, it can keep you from getting the treatment you need.</p>
+            <p>The good news is that most people work through denial. Usually by the time treatment begins, most people accept the fact that they have cancer and move forward. This is true for those with cancer as well as the people they love and care about.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Anger"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>It's very normal to ask, "Why me?" and be angry at the cancer. You may also feel anger or resentment towards your health care providers, your healthy friends and your loved ones. &nbsp;And if you're religious, you may even feel angry with God.</p>
+            <p>Anger often comes from feelings that are hard to show. Common examples are:</p>
+            <ul>
+            <li>fear</li>
+            <li>panic</li>
+            <li>frustration</li>
+            <li>anxiety</li>
+            <li>helplessness</li>
+            </ul>
+            <p>If you feel angry, you don't have to pretend that everything is okay. It's not healthy to keep it inside you. Talk with your family and friends about your anger. Or, ask your doctor to refer you to a counselor. And know that anger can be helpful in that it may motivate you to take action.&nbsp;</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Fear and Worry"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>It's scary to hear that you have cancer. You may be afraid or worried about:</p>
+            <ul>
+            <li>Being in pain, either from the cancer or the treatment</li>
+            <li>Feeling sick or looking different as a result of your treatment</li>
+            <li>Taking care of your family</li>
+            <li>Paying your bills</li>
+            <li>Keeping your job</li>
+            <li>Dying</li>
+            </ul>
+            <p>Some fears about cancer are based on stories, rumors, or wrong information. To cope with fears and worries, it often helps to be informed. Most people feel better when they learn the facts. They feel less afraid and know what to expect. Learn about your cancer and understand what you can do to be an active partner in your care. Some studies even suggest that people who are well-informed about their illness and treatment are more likely to follow their treatment plans and recover from cancer more quickly than those who are not.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Hope"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>[EMBEDDED IMAGE (woman-praying-article.jpg) PLACEHOLDER]</p>
+            <p>Once people accept that they have cancer, they often feel a sense of hope. There are many reasons to feel hopeful. Millions of people who have had cancer are alive today. Your chances of living with cancer&mdash;and living beyond it&mdash;are better now than they have ever been before. And people with cancer can lead active lives, even during treatment.</p>
+            <p>Some doctors think that hope may help your body deal with cancer. So, scientists are studying whether a hopeful outlook and positive attitude helps people feel better. Here are some ways you can build your sense of hope:</p>
+            <ul>
+            <li>Plan your days as you've always done.</li>
+            <li>Don't limit the things you like to do just because you have cancer.</li>
+            <li>Look for reasons to have hope. If it helps, write them down or talk to others about them.</li>
+            <li>Spend time in nature.</li>
+            <li>Reflect on your religious or spiritual beliefs.</li>
+            <li>Listen to stories about people with cancer who are leading active lives.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Stress and Anxiety"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Both during and after treatment, it's normal to have stress over all the life changes you are going through. Anxiety means you have extra worry, can't relax, and feel tense. You may notice that:</p>
+            <ul>
+            <li>Your heart beats faster.</li>
+            <li>You have headaches or muscle pains.</li>
+            <li>You don't feel like eating. Or you eat more.</li>
+            <li>You feel sick to your stomach or have diarrhea.</li>
+            <li>You feel shaky, weak, or dizzy.</li>
+            <li>You have a tight feeling in your throat and chest.</li>
+            <li>You sleep too much or too little.</li>
+            <li>You find it hard to concentrate.</li>
+            </ul>
+            <p>If you have any of these feelings, talk to your doctor. Though they are common signs of stress, you will want to make sure they aren't due to medicines or treatment.</p>
+            <p>Stress can keep your body from healing as well as it should.</p>
+            <p>If you're worried about your stress, ask your doctor to suggest a counselor for you to talk to. You could also take a class that teaches ways to deal with stress. The key is to find ways to control your stress and not to let it control you.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Sadness and Depression"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many people with cancer feel sad. They feel a sense of loss of their health, and the life they had before they learned they had the disease. Even when you&rsquo;re done with treatment, you may still feel sad. This is a normal response to any serious illness. It may take time to work through and accept all the changes that are taking place.</p>
+            <p>When you're sad, you may have very little energy, feel tired, or not want to eat. For some, these feelings go away or lessen over time. But for others, these emotions can become stronger. The painful feelings don't get any better, and they get in the way of daily life. This may be a medical condition called <b>depression</b>. For some, cancer treatment may have added to this problem by changing the way the brain works.</p>
+            <h3>Getting Help for Depression</h3>
+            <p>Depression can be treated. Below are common signs of depression. If you have any of the following signs for more than 2 weeks, talk to your doctor about treatment. Be aware that some of these symptoms could be due to physical problems, so it's important to talk about them with your doctor.</p>
+            <p>Emotional signs:</p>
+            <ul>
+            <li>Feelings of sadness that don't go away</li>
+            <li>Feeling emotionally numb</li>
+            <li>Feeling nervous or shaky</li>
+            <li>Having a sense of guilt or feeling unworthy</li>
+            <li>Feeling helpless or hopeless, as if life has no meaning</li>
+            <li>Feeling short-tempered, moody</li>
+            <li>Having a hard time concentrating, feeling scatterbrained</li>
+            <li>Crying for long periods of time or many times each day</li>
+            <li>Focusing on worries and problems</li>
+            <li>No interest in the hobbies and activities you used to enjoy</li>
+            <li>Finding it hard to enjoy everyday things, such as food or being with family and friends</li>
+            <li>Thinking about hurting yourself</li>
+            <li>Thoughts about killing yourself</li>
+            </ul>
+            <p>Body changes:</p>
+            <ul>
+            <li>Unintended weight gain or loss not due to illness or treatment</li>
+            <li>Sleep problems, such as not being able to sleep, having nightmares, or sleeping too much</li>
+            <li>Racing heart, dry mouth, increased perspiration, upset stomach, diarrhea</li>
+            <li>Changes in energy level</li>
+            <li>Fatigue that doesn't go away</li>
+            <li>Headaches, other aches and pains</li>
+            </ul>
+            <p>If your doctor thinks that you suffer from depression, he or she may give you medicine to help you feel less tense. Or, he or she may refer you to other experts. Don't feel that you should have to control these feelings on your own. Getting the help you need is important for your life and your health.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Guilt"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>If you feel guilty, know that many people with cancer feel this way. You may blame yourself for upsetting the people you love, or worry that you're a burden in some way. Or, you may envy other people's good health and be ashamed of this feeling. You might even blame yourself for lifestyle choices that you think could have led to your cancer.</p>
+            <p>These feelings are all very common. It may help you to share them with someone. Let your doctor know if you would like to talk with a counselor or go to a support group.</p>
+            <!-- Pullquote -->
+            <div class="pullquote">
+            <p class="pullquote-text">When I start to feel guilty that I caused my illness, I think of how little kids get cancer. That makes me realize that cancer can just happen. It isn't my fault.</p>
+            <p class="author">Becky</p>
+            </div>
+            <!-- End Pullquote -->
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Loneliness"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>People with cancer often feel lonely or distant from others. This may be for a number of reasons:</p>
+            <ul>
+            <li>Friends sometimes have a hard time dealing with cancer and may not visit or call you.</li>
+            <li>You may feel too sick to take part in the hobbies and activities you used to enjoy.</li>
+            <li>Sometimes, even when you&rsquo;re with people you care about, you may feel that no one understands what you&rsquo;re going through.</li>
+            </ul>
+            <p><b>It&rsquo;s also normal to feel alone after treatment.</b> You may miss the support you got from your health care team. Many people have a sense that their safety net has been pulled away, and they get less attention. It&rsquo;s common to still feel cut off from certain friends or family members. Some of them may think that now that treatment is over, you will be back to normal soon, even though this may not be true. Others may want to help but don&rsquo;t know how.</p>
+            <p>Look for emotional support in different ways. It could help you to talk to other people who have cancer or to join a support group. Or, you may feel better talking only to a close friend or family member, or counselor, or a member of your faith or spiritual community. Do what feels right for you.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Gratitude"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Some people see their cancer as a "wake-up call." They realize the importance of enjoying the little things in life. They go places they've never been. They finish projects they had started but put aside. They spend more time with friends and family. They mend broken relationships.</p>
+            <p>It may be hard at first, but you can find joy in your life if you have cancer. Pay attention to the things you do each day that make you smile. They can be as simple as drinking a good cup of coffee, being with a child,&nbsp;or talking to a friend.</p>
+            <p>You can also do things that are more special to you, like being in nature or praying in a place that has meaning for you. Or, it could be playing a sport you love or cooking a good meal. Whatever you choose, embrace the things that bring you joy when you can.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Ways to Cope with Your Emotions"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <h3>Express Your Feelings</h3>
+            <p>People have found that when they express strong feelings like anger or sadness, they're more able to let go of them. Some sort out their feelings by talking to friends or family, other cancer survivors, a support group, or a counselor. But even if you prefer not to discuss your cancer with others, you can still sort out your feelings by thinking about them or writing them down.</p>
+            <h3>Look for the Positive</h3>
+            <p>Sometimes this means looking for the good even in a bad time or trying to be hopeful instead of thinking the worst. Try to use your energy to focus on wellness and what you can do now to stay as healthy as possible.</p>
+            <h3>Don't Blame Yourself for Your Cancer</h3>
+            <p>Some people believe that they got cancer because of something they did or did not do. But scientists don't know why one person gets cancer and one person doesn't. All bodies are different. Remember, cancer can happen to anyone.</p>
+            <h3>Don't Try to Be Upbeat If You're Not</h3>
+            <p>Many people say they want to have the freedom to give in to their feelings sometimes. As one woman said, &ldquo;When it gets really bad, I just tell my family I'm having a bad cancer day and go upstairs and crawl into bed.&rdquo;</p>
+            <h3>You Choose When to Talk about Your Cancer</h3>
+            <p>It can be hard for people to know how to talk to you about your cancer. Often loved ones mean well, but they don't know what to say or how to act. You can make them feel more at ease by asking them what they think or how they feel.</p>
+            <h3>Find Ways to Help Yourself Relax</h3>
+            <p>Whatever activity helps you unwind, you should take some time to do it. <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000730354&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000730354&amp;version=Patient&amp;language=English">Meditation</a>, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000689577&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000689577&amp;version=Patient&amp;language=English">guided imagery</a>, and <a href="/about-cancer/coping/feelings/relaxation" title="">relaxation exercises</a> are just a few ways that have been shown to help others; these may help you relax when you feel worried.</p>
+            <h3>Be as Active as You Can</h3>
+            <p>Getting out of the house and doing something can help you focus on other things besides cancer and the worries it brings. Exercise or gentle yoga and stretching can help too.</p>
+            <h3>Look for Things You Enjoy</h3>
+            <p>You may like hobbies such as woodworking, photography, reading, or crafts. Or find creative outlets such as art, movies, music, or dance.</p>
+            <h3>Look at What You Can Control</h3>
+            <p>Some people say that putting their lives in order helps. Being involved in your health care, keeping your appointments, and making changes in your lifestyle are among the things you can control. Even setting a daily schedule can give you a sense of control. And while no one can control every thought, some say that they try not to dwell on the fearful ones,&nbsp;but&nbsp;instead&nbsp;do what they can to enjoy the&nbsp;positive parts of life.</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Agobio"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cuando usted se entera por primera vez de que tiene c&aacute;ncer, puede sentir que su vida se sale de control. Esto podr&iacute;a ser porque:</p>
+            <ul>
+            <li>Se pregunta si va a vivir.</li>
+            <li>Su rutina normal se ve interrumpida por visitas al m&eacute;dico y tratamientos.</li>
+            <li>La gente usa t&eacute;rminos m&eacute;dicos que usted no entiende.</li>
+            <li>Siente que no puede hacer lo que le gusta.</li>
+            <li>Siente incapacidad y soledad.</li>
+            </ul>
+            <p>Aun cuando usted se siente sin control, hay formas de volver a controlar la situaci&oacute;n. Trate de informarse tanto como pueda acerca de su c&aacute;ncer. Pregunte a su m&eacute;dico y no tema decir cuando no entiende algo.</p>
+            <p>Adem&aacute;s, muchas personas se sienten mejor si se mantienen ocupadas. Usted puede participar en actividades tales como m&uacute;sica, artesan&iacute;as, lectura, o aprender algo nuevo.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Negación"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cuando usted recibi&oacute; el diagn&oacute;stico por primera vez, es posible que le haya costado creer o aceptar el hecho de que tiene c&aacute;ncer. Esto se llama negaci&oacute;n. Puede ser &uacute;til ya que puede darle tiempo para adaptarse a su diagn&oacute;stico. La negaci&oacute;n puede tambi&eacute;n darle tiempo para sentir esperanza y m&aacute;s optimismo para el futuro.</p>
+            <p>A veces, la negaci&oacute;n&nbsp;es un problema grave. Si dura demasiado tiempo, puede impedirle recibir el tratamiento que necesita.</p>
+            <p>La buena noticia es que la mayor&iacute;a de las personas superan la negaci&oacute;n. Generalmente, para cuando empieza el tratamiento, la mayor&iacute;a de la gente acepta el hecho de que tiene c&aacute;ncer y sigue adelante. Esto es cierto para aquellos con c&aacute;ncer, as&iacute; como para las personas que ellos aman y por las que se preocupan.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Enojo"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Es normal que se pregunte, &ldquo;&iquest;por qu&eacute; a m&iacute;?" y sienta ira contra el c&aacute;ncer. Es probable que tambi&eacute;n sienta enojo o resentimiento con sus proveedores de asistencia m&eacute;dica, sus amigos sanos y sus seres queridos. Y si usted pertenece a alguna religi&oacute;n, puede&nbsp;ser que&nbsp;tambi&eacute;n se enoje con Dios.</p>
+            <p>El enojo, a menudo, se origina de sentimientos dif&iacute;ciles de mostrar, tales como:</p>
+            <ul>
+            <li>Miedo</li>
+            <li>P&aacute;nico</li>
+            <li>Frustraci&oacute;</li>
+            <li>Ansiedad&nbsp;</li>
+            <li>Impotencia</li>
+            </ul>
+            <p>Si siente enojo, no tiene que aparentar que todo est&aacute; bien. El enojo puede ser &uacute;til dado que puede motivarle a actuar. Hable con su familia y amigos acerca de su enojo. O, p&iacute;dale a su m&eacute;dico que le refiera a un consejero. Y&nbsp;sepa que el enojo puede ser &uacute;til ya que puede motivarlo a tomar medidas.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Temor y preocupación"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Asusta o&iacute;r que uno tiene c&aacute;ncer. Es posible que tenga miedo o preocupaci&oacute;n de:</p>
+            <ul>
+            <li>Sentir dolor, ya sea debido al c&aacute;ncer o al tratamiento</li>
+            <li>Sentir la enfermedad o verse diferente como resultado de su tratamiento</li>
+            <li>Encargarse de su familia</li>
+            <li>Pagar sus cuentas</li>
+            <li>Conservar su trabajo</li>
+            <li>Morir</li>
+            </ul>
+            <p>Algunos temores al c&aacute;ncer se basan en historias, en rumores o en informaci&oacute;n equivocada. Generalmente ayuda tener una buena informaci&oacute;n&nbsp;para hacer frente a los temores y a las preocupaciones. La mayor&iacute;a de la gente tiene menos temor cuando conoce la realidad. Sienten menos temor y saben qu&eacute; esperar. Aprenda acerca de su c&aacute;ncer y entienda lo que puede hacer para ser un participante activo en su cuidado. Algunos estudios incluso indican que las personas que est&aacute;n bien informadas de su enfermedad y tratamiento tienen m&aacute;s probabilidad de&nbsp;seguir sus planes de tratamiento y de recuperarse del c&aacute;ncer con m&aacute;s rapidez que quienes no lo est&aacute;n.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Esperanza"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>[EMBEDDED IMAGE (girl-hugging-guy-from-behind-article) PLACEHOLDER]</p>
+            <p>Una vez que las personas aceptan que tienen c&aacute;ncer, a menudo sienten esperanza. Hay muchas razones para sentir esperanza. Millones de personas que han tenido c&aacute;ncer est&aacute;n vivas hoy en d&iacute;a. Sus posibilidades de vivir con c&aacute;ncer &mdash;y de sobrevivir al c&aacute;ncer&mdash; son mejores ahora que nunca antes. Y las personas con c&aacute;ncer pueden llevar vidas activas, aun durante el tratamiento.</p>
+            <p>Algunos m&eacute;dicos creen que la esperanza puede ayudar al cuerpo a superar el c&aacute;ncer. De modo que, los cient&iacute;ficos est&aacute;n estudiando si un pron&oacute;stico optimista y una actitud positiva ayuda a que las personas se sientan mejor. Aqu&iacute; se ofrecen algunas sugerencias con las que puede fortalecer un sentido de esperanza:</p>
+            <ul>
+            <li>Planifique sus d&iacute;as como lo ha hecho siempre.</li>
+            <li>No limite lo que le gusta hacer solo porque tiene c&aacute;ncer.</li>
+            <li>Busque razones para tener esperanza. Si le ayuda, an&oacute;telas o hable de esas razones con otras personas.</li>
+            <li>Pase tiempo en la naturaleza,</li>
+            <li>Reflexione sobre sus creencias religiosas o espirituales.</li>
+            <li>Escuche historias sobre personas con c&aacute;ncer que est&aacute;n llevando vidas activas.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Estrés y ansiedad"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Tanto durante el tratamiento como despu&eacute;s del mismo, es normal tener estr&eacute;s debido a todos los cambios por los que est&aacute; pasando en su vida. La ansiedad significa que tiene preocupaciones adicionales, no puede relajarse y siente tensi&oacute;n. Tal vez usted nota que:</p>
+            <ul>
+            <li>Su coraz&oacute;n late con m&aacute;s rapidez.</li>
+            <li>Tiene dolores de cabeza o dolores musculares.</li>
+            <li>No siente ganas de comer. O come m&aacute;s.</li>
+            <li>Tiene malestar estomacal o diarrea.</li>
+            <li>Siente que tiembla, que est&aacute; d&eacute;bil o que tiene mareos.</li>
+            <li>Tiene un nudo en la garganta y en el pecho.</li>
+            <li>Duerme demasiado o muy poco.</li>
+            <li>Le resulta dif&iacute;cil concentrarse.</li>
+            </ul>
+            <p>Si siente alguna de estas cosas, hable con su m&eacute;dico. Si bien estos son signos comunes de estr&eacute;s, usted querr&aacute; asegurarse de que no se deben a los medicamentos ni al tratamiento.</p>
+            <p>El estr&eacute;s tambi&eacute;n puede impedir que su cuerpo se cure de la manera en que deber&iacute;a hacerlo.</p>
+            <p>Si siente preocupaci&oacute;n por el estr&eacute;s, pida a su m&eacute;dico que le sugiera a un consejero con qui&eacute;n hablar. Tambi&eacute;n podr&iacute;a tomar una clase que ense&ntilde;e formas de sobrellevar el estr&eacute;s. La clave es encontrar c&oacute;mo controlar su estr&eacute;s y no dejar que este le controle a usted.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Tristeza y depresión"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Muchas personas con c&aacute;ncer se sienten tristes. Tienen una sensaci&oacute;n de haber perdido su&nbsp;salud y&nbsp;la vida que ten&iacute;an antes de enterarse de tener la enfermedad. Incluso cuando haya terminado el tratamiento, puede ser&nbsp;que todav&iacute;a&nbsp;sienta tristeza. Esta es una respuesta normal ante cualquier enfermedad grave. Es posible que lleve tiempo superar y aceptar todos los cambios que est&aacute;n ocurriendo.</p>
+            <p>Cuando siente depresi&oacute;n, puede sentirse con muy poca energ&iacute;a, con cansancio y sin ganas de comer. En algunas personas, estos sentimientos desaparecen o disminuyen con el tiempo. En otras, estas emociones pueden intensificarse. Los sentimientos dolorosos no mejoran y se interponen en la vida cotidiana. Esto puede ser una afecci&oacute;n m&eacute;dica llamada <b>depresi&oacute;n</b>. Para algunas personas, el tratamiento del c&aacute;ncer puede haber contribuido a este problema cambiando la forma como&nbsp;funciona el cerebro.</p>
+            <h3>C&oacute;mo obtener ayuda para la depresi&oacute;n</h3>
+            <p>La depresi&oacute;n tiene tratamiento. A continuaci&oacute;n se detallan signos comunes de depresi&oacute;n. Si usted tiene alguno de los siguientes signos durante m&aacute;s de 2 semanas, hable con su m&eacute;dico acerca del tratamiento. Sepa que algunos de estos s&iacute;ntomas podr&iacute;an deberse a problemas f&iacute;sicos, por lo que es importante que hable acerca de los mismos con su m&eacute;dico.</p>
+            <p>Signos emocionales:</p>
+            <ul>
+            <li>Sentimientos de tristeza que no desaparecen</li>
+            <li>Sentir par&aacute;lisis emocional</li>
+            <li>Sentir nerviosismo o estremecimiento</li>
+            <li>Tener un sentimiento de culpa o sentirse sin valor</li>
+            <li>Sentirse&nbsp;impotente o sin esperanza, como que la vida no tiene sentido</li>
+            <li>Sentirse irritable, con mal humor</li>
+            <li>Le resulta dif&iacute;cil concentrarse, se siente con la mente en otro lado</li>
+            <li>Llorar por largos ratos o muchas veces al d&iacute;a</li>
+            <li>Se enfoca en las preocupaciones y los problemas</li>
+            <li>Falta de inter&eacute;s en pasatiempos y en actividades que sol&iacute;a disfrutar</li>
+            <li>Le resulta dif&iacute;cil disfrutar las cosas cotidianas, tales como la comida o estar con la familia y los amigos</li>
+            <li>Piensa en hacerse da&ntilde;o</li>
+            <li>Pensamientos de suicidarse</li>
+            </ul>
+            <p>Cambios en el cuerpo:</p>
+            <ul>
+            <li>Aumento o p&eacute;rdida de peso involuntario que no se debe a la enfermedad ni al tratamiento</li>
+            <li>Trastornos del sue&ntilde;o, tales como no poder dormir, tener pesadillas o dormir demasiado</li>
+            <li>Palpitaciones, sequedad de la boca, aumento de la sudoraci&oacute;n, malestar estomacal, diarrea</li>
+            <li>Cambios en su nivel de energ&iacute;a</li>
+            <li>Fatiga que no desaparece</li>
+            <li>Dolores de cabeza, otros malestares y dolores</li>
+            </ul>
+            <p>Si su m&eacute;dico piensa que usted padece depresi&oacute;n, puede recetarle medicamentos para ayudarle a que sienta menos tensi&oacute;n. O, puede remitirle a otros expertos. No sienta que tiene que controlar estos sentimientos por su cuenta. Obtener la ayuda que necesita es importante para su vida y su salud.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Culpa"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Si se siente culpable, sepa que muchas personas con c&aacute;ncer se sienten as&iacute;. Es posible que se culpe por afectar a las personas que quiere, o que le preocupe ser de alg&uacute;n modo una carga para los dem&aacute;s. O puede envidiar la buena salud de los dem&aacute;s y se averg&uuml;ence de este sentimiento. Podr&iacute;a culparse por haber elegido un estilo de vida que usted cree ha contribuido al c&aacute;ncer.</p>
+            <p>Todos estos sentimientos son muy comunes. Es posible que le ayude si los comparte con alguien. Notifique a su m&eacute;dico si le gustar&iacute;a hablar con un consejero o ir a un grupo de apoyo.</p>
+            <!-- Pullquote -->
+            <div class="pullquote">
+            <p class="pullquote-text">"Cuando empiezo a sentirme culpable de haber causado mi enfermedad, pienso en c&oacute;mo los ni&ntilde;os peque&ntilde;os pueden padecer c&aacute;ncer. Con eso me doy cuenta de que el c&aacute;ncer puede suceder sin raz&oacute;n. No es mi culpa".</p>
+            <p class="author">Rebeca</p>
+            </div>
+            <!-- End Pullquote -->
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Soledad"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Las personas con c&aacute;ncer se sienten a menudo solas o distanciadas de los dem&aacute;s. Esto se puede deber a varias razones:</p>
+            <ul>
+            <li>Es dif&iacute;cil para los amigos abordar el tema del c&aacute;ncer y pueden no visitarle ni llamarle por tel&eacute;fono.</li>
+            <li>Usted puede sentirse muy mal como para participar en los pasatiempos y en las actividades que sol&iacute;a disfrutar.</li>
+            <li>Y, a veces, aun cuando est&aacute; con las personas que quiere, es posible que sienta que nadie entiende por lo que est&aacute; pasando.</li>
+            </ul>
+            <p><b>Tambi&eacute;n es normal sentir soledad&nbsp;despu&eacute;s del tratamiento.</b> Es posible que extra&ntilde;e el apoyo que recib&iacute;a de su equipo de atenci&oacute;n de salud. Muchas personas tienen la sensaci&oacute;n de que le han retirado su red de seguridad y de que reciben menos atenci&oacute;n. Es com&uacute;n que a&uacute;n se sienta sin conexi&oacute;n con algunos amigos o familiares. Puede ser que algunos de ellos piensen que ahora que el tratamiento ha finalizado, usted pronto volver&aacute; a la vida normal aunque tal vez esto no sea cierto. Es posible que otros quieran ayudar pero no sepan c&oacute;mo hacerlo.</p>
+            <p>Busque apoyo emocional de diferentes maneras. Podr&iacute;a ayudarle hablar con otras personas que tienen c&aacute;ncer o unirse a un grupo de apoyo. O bien, puede sentirse mejor si habla solo a un amigo cercano o&nbsp;a un familiar, o&nbsp;a un consejero, o&nbsp;a un miembro de su comunidad religiosa o espiritual. Haga lo que crea es adecuado para usted.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Gratitud"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Algunas personas ven su c&aacute;ncer como una 'llamada de atenci&oacute;n'. Se dan cuenta de la importancia de disfrutar las cosas peque&ntilde;as de la vida. Van a lugares donde nunca han estado. Terminan proyectos que hab&iacute;an empezado pero dejaron de lado. Pasan m&aacute;s tiempo con los amigos y la familia. Reanudan las amistades rotas.</p>
+            <p>Puede ser dif&iacute;cil al principio, pero puede haber alegr&iacute;a en su vida si tiene c&aacute;ncer. Ponga atenci&oacute;n a las cosas que hace cada d&iacute;a que le hacen sonre&iacute;r. Pueden ser tan sencillas como tomar una buena taza de caf&eacute; o hablar con un amigo.</p>
+            <p>Usted puede tambi&eacute;n hacer las cosas que le son m&aacute;s especiales, como estar en la naturaleza o rezar en un lugar que tiene significado para usted. O, podr&iacute;a practicar un deporte que le gusta o cocinar una buena comida. Cualquiera que sea la actividad que elija, siempre que pueda, haga las cosas que le dan alegr&iacute;a.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: ""
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <h2>Otras&nbsp;formas de hacer frente a sus emociones</h2>
+            <h3>Exprese sus sentimientos</h3>
+            <p>Las gente se da cuenta&nbsp;de que cuando expresaa&nbsp;sentimientos fuertes como enojo o tristeza, tiene m'as posibilidad de deshacerse de ellos. Algunas personas ordenan sus sentimientos hablando con amigos o familiares, con otros supervivientes de c&aacute;ncer, un grupo de apoyo, o un consejero. Pero a&uacute;n si usted prefiere no hablar de su c&aacute;ncer con otros, puede ordenar sus sentimientos pensando en ellos o tomando notas.</p>
+            <h3>Busque lo positivo</h3>
+            <p>En ocasiones, esto significa buscar lo bueno incluso en tiempos malos, o tratar de tener esperanzas en vez de&nbsp;pensar en&nbsp;lo peor. Trate de usar su energ&iacute;a para enfocarse en el bienestar y en lo que puede hacer para mantenerse con la mejor salud posible.</p>
+            <h3>No se culpe por su c&aacute;ncer</h3>
+            <p>Algunas personas creen que tienen c&aacute;ncer como resultado de algo que hicieron o que no hicieron. Recuerde, cualquier persona puede tener c&aacute;ncer.</p>
+            <h3>No trate de aparentar tener entusiasmo si no lo tiene</h3>
+            <p>Muchas personas dicen que en ocasiones quieren tener la libertad de rendirse a sus sentimientos. Como dijo una mujer, "cuando la situaci&oacute;n se pone muy mal, simplemente digo a mi familia que estoy teniendo un mal d&iacute;a de c&aacute;ncer, subo las escaleras y me meto en la cama".</p>
+            <h3>Usted elije cu&aacute;ndo hablar de su c&aacute;ncer</h3>
+            <p>Puede ser que a la gente le resulte dif&iacute;cil saber c&oacute;mo hablar con usted&nbsp;de su c&aacute;ncer. A menudo, los seres queridos tienen buenas intenciones, pero no saben qu&eacute; decir o c&oacute;mo actuar. Usted puede hacer que se sientan a gusto si les pregunta lo&nbsp;qu&eacute; piensan o lo que&nbsp;sienten.</p>
+            <h3>Encuentre formas que le ayuden a relajarse</h3>
+            <p>Cualquiera que sea la actividad que le ayude a relajarse, debe tomarse un tiempo para hacerla. La <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000730354&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000730354&amp;version=Patient&amp;language=Spanish">meditaci&oacute;n</a>, la <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000689577&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000689577&amp;version=Patient&amp;language=Spanish">visualizaci&oacute;n guiada</a> y los <a href="/espanol/cancer/sobrellevar/sentimientos/relajarse" title="">ejercicios de relajaci&oacute;n</a> son solo algunas formas que han mostrado ser beneficiosas para otras personas; esto puede ayudar a que se relaje cuando siente preocupaci&oacute;n.</p>
+            <h3>Tenga la mayor actividad&nbsp;que pueda</h3>
+            <p>Salir de la casa y hacer algo puede ayudarle a enfocarse en otras cosas adem&aacute;s del c&aacute;ncer y de las preocupaciones que causa esta situaci&oacute;n. El ejercicio o el yoga suave y estirarse pueden ayudarle&nbsp;tambi&eacute;n.</p>
+            <h3>Busque las cosas que disfruta</h3>
+            <p>Puede ser&nbsp;que le gusten los&nbsp;pasatiempos como la carpinter&iacute;a, la fotograf&iacute;a, la lectura o las manualidades. O busque actividades como el arte, la m&uacute;sica o el baile.</p>
+            <h3>F&iacute;jese en lo que usted puede&nbsp;controlar</h3>
+            <p>Algunas personas dicen que ayuda ordenar sus vidas. Participar en sus cuidados&nbsp;m&eacute;dicos, asistir a sus citas y hacer cambios en su estilo de vida son cosas que usted puede controlar. Incluso establecer un programa diario puede darle un sentido de control. Y, si bien, nadie puede controlar todos los pensamientos, algunos dicen que tratan de no pensar obsesivamente en las cosas que les causan temor, sino hacer lo que pueden para disfrutar de los momentos positivos de su vida.</p>
+  field_date_posted:
+    value: "2018-08-20T22:25:11"
+  field_date_reviewed:
+    value: "2018-08-20T22:25:11"
+  field_date_updated:
+    value: "2018-08-20T22:25:11"
+  field_date_display_mode:
+    value: "updated"

@@ -27,7 +27,7 @@ drush:
   default_alias: '${drush.aliases.local}'
 modules:
   local:
-    enable: [dblog, devel, kint, seckit, views_ui]
+    enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
     uninstall: [acquia_connector, shield]
   ci:
     enable: {  }
@@ -42,7 +42,7 @@ modules:
     enable: [acquia_connector, shield]
     uninstall: [devel, views_ui]
 phpunit:
-  - config: ${docroot}/core/phpunit.xml.dist
+  - config: ${repo.root}/phpunit.xml
     path: ${docroot}/profiles/custom/cgov_site
     class: null
     file: null
