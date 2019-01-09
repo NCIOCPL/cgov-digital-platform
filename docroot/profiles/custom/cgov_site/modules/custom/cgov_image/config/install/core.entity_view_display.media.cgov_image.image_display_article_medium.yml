@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.image_display_article_medium
+    - field.field.media.cgov_image.field_accessible_version
+    - field.field.media.cgov_image.field_caption
+    - field.field.media.cgov_image.field_credit
+    - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_original_source
+    - media.type.cgov_image
+  module:
+    - image
+    - text
+id: media.cgov_image.image_display_article_medium
+targetEntityType: media
+bundle: cgov_image
+mode: image_display_article_medium
+content:
+  field_caption:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_credit:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_media_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  created: true
+  field_accessible_version: true
+  field_original_source: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

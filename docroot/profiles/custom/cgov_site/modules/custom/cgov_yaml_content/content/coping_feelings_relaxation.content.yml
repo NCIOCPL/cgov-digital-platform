@@ -1,0 +1,176 @@
+#######
+# TESTS:
+# Single content block
+# Image with translation for article image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Ocean Sunset View Mykonos"
+  name__ES:
+    value: "Ocean Sunset View Mykonos - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ocean-sunset-view-mykonos-article.jpg'
+      alt: 'sunset ocean view in Mykonos'
+      alt__ES: "vista del mar en el ocaso en Mykonos"
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Learning to Relax"
+  title__ES:
+    value: "Aprenda a relajarse"
+  field_page_description:
+    value: "Relaxation and imagery exercises to help reduce pain and stress from cancer and its treatment."
+  field_page_description__ES:
+    value: "Ejercicios de relajación y de visualización para ayudar a reducir el dolor y el estrés del cáncer y de su tratamiento."
+  field_short_title:
+    value: "Learning to Relax"
+  field_short_title__ES:
+    value: "Aprenda a relajarse"
+  field_browser_title:
+    value: "Coping with Cancer - Learning to Relax"
+  field_browser_title_ES:
+    value: ""
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many people with cancer have found that doing relaxation or imagery exercises has helped them cope with pain and stress.</p>
+            <p>Take the time to learn helpful relaxation skills, such as the ones below, and practice them when you can. You can also take a class, buy a relaxation DVD or CD, or find other exercises online.</p>
+            <h2 id="ui-id-2">Getting Started</h2>
+            <p>For each exercise, find a quiet place where you can rest undisturbed. Let others know you need time for yourself. Make the setting peaceful for you. For example, dim the lights and find a comfortable chair or couch.</p>
+            <p>You may find that your mind wanders, which is normal. When you notice yourself thinking of something else, gently direct your attention back to your body. Be sure to maintain your deep breathing.</p>
+            <p>Some people like to listen to slow, familiar music while they practice these exercises.</p>
+            <h3>Breathing and Muscle Tensing</h3>
+            <ul>
+            <li>Get into a comfortable position where you can relax your muscles. Close your eyes and clear your mind of distractions. You can sit up or lie down. If you’re lying down, you may want to put a small pillow under your neck and knees.</li>
+            <li>Breathe deeply, at a slow and relaxing pace. Concentrate on breathing deeply and slowly, raising your belly with each breath, rather than just your chest.</li>
+            <li>Next, go through each of your major muscle groups, tensing (squeezing) them for a few seconds and then letting go. Start at the top of your head and work your way down. Tense and relax your face and jaws, then shoulders and arms.</li>
+            <li>Continue tensing and relaxing each muscle group as you go down (chest, lower back, buttocks, legs), ending with your feet. Focus completely on releasing all the tension from your muscles and notice the differences you feel when they are relaxed.</li>
+            <li>When you are done, focus on the pleasant feeling of relaxation for as long as you like.</li>
+            </ul>
+            <h3>Slow Rhythmic Breathing</h3>
+            <ul>
+            <li>Stare at an object or shut your eyes and think of a peaceful scene. Take a slow, deep breath.</li>
+            <li>As you breathe in, tense your muscles. As you breathe out, relax your muscles and feel the tension leaving.</li>
+            <li>Remain relaxed and begin breathing slowly and comfortably, taking about 9 to 12 breaths a minute. To maintain a slow, even rhythm, you can silently say to yourself, “In, one, two. Out, one, two."</li>
+            <li>If you ever feel out of breath, take a deep breath, and continue the slow breathing.</li>
+            <li>Each time you breathe out, feel yourself relaxing and going limp. Continue the slow, rhythmic breathing for up to 10 minutes.</li>
+            <li>To end the session, count silently and slowly from one to three. Open your eyes. Say to yourself, “I feel alert and relaxed.” Begin moving slowly.</li>
+            </ul>
+            <h3>Imagery</h3>
+            <p>Imagery usually works best with your eyes closed. To begin, create an image in your mind. For example, you may want to think of a place or activity that made you happy in the past. Explore this place or activity. Notice how calm you feel.</p>
+            <p>If you have severe pain, you may imagine yourself as a person without pain. In your image, cut the wires that send pain signals from one part of your body to another. Or you may want to imagine a ball of healing energy. Others have found the following exercise to be very helpful:</p>
+            <ul>
+            <li>Close your eyes and breathe slowly. As you breathe in, say silently and slowly to yourself, “In, one, two,” and as you breathe out, say “Out, one, two.” Do this for a few minutes.</li>
+            <li>Imagine a ball of healing energy forming in your lungs or on your chest. Imagine it forming and taking shape.</li>
+            <li>When you’re ready, imagine that the air you breathe in blows this ball of energy to the area where you feel pain. Once there, the ball heals and relaxes you. You may imagine that the ball gets bigger and bigger as it takes away more of your discomfort.</li>
+            <li>As you breathe out, imagine the air blowing the ball away from your body. As it floats away, all of your pain goes with it.</li>
+            <li>Repeat the last two steps each time you breathe in and out.</li>
+            </ul>
+            <p>To end the imagery, count slowly to three, breathe in deeply, open your eyes, and say silently to yourself, “I feel alert and relaxed.”</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+      - format: "full_html"
+        value: |
+          <p>Mucha gente con cáncer se ha dado cuenta que al relajarse o hacer ejercicio con visualización les ha ayudado a superar el dolor o el estrés.&nbsp;</p>
+          <p>Tómese su tiempo para aprender habilidades útiles de relajación, como las que se mencionan abajo, y practíquelas cuando pueda.&nbsp; Usted puede tomar una clase, comprar un DVD o un CD, o encontrar otros ejercicios en Internet.</p>
+          <h2 id="ui-id-2">Para empezar</h2>
+          <p>Para cada ejercicio, encuentre un lugar tranquilo en donde pueda descansar sin que le molesten. Diga a los demás que necesita estar a solas por un rato. Haga que la situación sea apacible para usted. Por ejemplo, disminuya las luces y acomódese en una silla o en un sofá cómodo.</p>
+          <p>Puede ser que su mente desvaríe, lo cual es normal. Cuando se dé cuenta de que piensa en otra cosa, regrese suavemente su atención a su cuerpo.&nbsp; Asegúrese de mantener una respiración profunda.</p>
+          <p>A alguna gente le gusta escuchar música lenta, familiar, mientras practica estos ejercicios.</p>
+          <h3>Respiración y tensión de músculos</h3>
+          <ul>
+          <li>
+          <p>Póngase en una posición cómoda en la que pueda relajar sus músculos. Cierre los ojos y despeje su mente de distracciones. Usted puede sentarse o recostarse. Si se recuesta, puede ser que quiera poner una pequeña almohada bajo su cuello y sus rodillas.</p>
+          </li>
+          <li>
+          <p>Respire profundamente, a un ritmo lento y relajante. Concéntrese en respirar profunda y lentamente, elevando su estómago en cada respiración, en vez de elevar solo el pecho.</p>
+          </li>
+          <li>
+          <p>Luego, recorra cada uno de los grupos principales de músculos, poniéndolos en tensión (apretándolos) por unos segundos y luego soltándolos.&nbsp;&nbsp; Empiece en la parte de arriba de la cabeza y vaya lentamente hacia abajo. Tensione y relaje la cara y mandíbulas, luego los hombros y brazos.</p>
+          </li>
+          <li>
+          <p>Siga poniendo en tensión y relajando cada grupo de músculos,&nbsp; conforme va hacia abajo (pecho,&nbsp; espalda, nalgas, piernas) y termine en sus pies.&nbsp; Concéntrese en despejar toda tensión de sus músculos y note la diferencia que siente cuando están relajados.</p>
+          </li>
+          <li>
+          <p>Cuando termine, enfóquese todo el tiempo que desee en la agradable sensación de relajación.</p>
+          </li>
+          </ul>
+          <h3>Respiración rítmica lenta</h3>
+          <ul>
+          <li>
+          <p>Fije su mirada en un objeto o cierre los ojos y piense en una escena apacible. Respire profunda y lentamente.</p>
+          </li>
+          <li>
+          <p>Conforme aspira, ponga en tensión sus músculos. Al exhalar, relaje sus músculos y sienta que la tensión sale de usted.</p>
+          </li>
+          <li>
+          <p>Mantenga la relajación y empiece a respirar lenta y cómodamente, y respire de 9 a 12 veces por minuto. Para mantener un ritmo lento, parejo, usted puede decir para sí, “Adentro, uno, dos. Afuera, uno, dos”.</p>
+          </li>
+          <li>
+          <p>Si siente que le falta aire, respire una vez profundamente y continúe la respiración lenta.</p>
+          </li>
+          <li>
+          <p>Cada vez que usted exhale, sienta que se relaja y que se pone flexible. Siga respirando lenta y rítmicamente por 10 minutos.</p>
+          </li>
+          <li>
+          <p>Para terminar la sesión, cuente en silencio y lentamente de uno a tres. Abra los ojos. Dígase, “me siento alerta y en un estado de relajación”. Empiece a moverse lentamente.</p>
+          </li>
+          </ul>
+          <h3>Visualización</h3>
+          <p>La visualización funciona de ordinario mejor con los ojos cerrados. Para empezar, cree una imagen en su mente. Por ejemplo, puede pensar en un lugar o en una actividad que le hizo feliz en el pasado. Explore este lugar o esta actividad. Fíjese en toda la calma que tiene ahora.</p>
+          <p>Si tiene un dolor fuerte, imagínese que usted es una persona sin dolor. En su imagen, corte los cables que envían señales de dolor de una parte de su cuerpo a la otra. O puede imaginarse una esfera de energía de salud. Otros han encontrado que el ejercicio siguiente es muy útil:</p>
+          <ul>
+          <li>
+          <p>Cierre los ojos y respire lentamente. Conforme aspira, dígase en silencio y lentamente, “Adentro, uno, dos,” Y, conforme exhala diga “Afuera, uno, dos”.&nbsp; Haga esto durante algunos minutos.</p>
+          </li>
+          <li>
+          <p>Imagine una esfera de energía de salud que se forma en sus pulmones o en su pecho. Imagínela formándose como una esfera.</p>
+          </li>
+          <li>
+          <p>Al lograrlo, imagine que el aire que usted aspira sopla la esfera de energía hacia el lugar en donde siente dolor.&nbsp; Cuando llega allí, la esfera le sana y le relaja. Puede imaginarse que la esfera crece y crece conforme le quita más molestias de su cuerpo.</p>
+          </li>
+          <li>
+          <p>Al exhalar el aire, imagine que el aire sopla la esfera lejos de su cuerpo. Al irse flotando, se lleva dentro el dolor que usted tenía.</p>
+          </li>
+          <li>
+          <p>Repita los dos últimos pasos cada vez que usted aspira &nbsp;y exhale.</p>
+          </li>
+          </ul>
+          <p>Para terminar la visualización, cuente lentamente hasta tres, aspire profundamente, abra los ojos y diga en silencio para sí, “me siento alerta y en un estado de relajación”.</p>
+  field_date_posted:
+    value: "2016-02-29T22:25:11"
+  field_date_reviewed:
+    value: "2016-02-29T22:25:11"
+  field_date_updated:
+    value: "2016-02-29T22:25:11"
+  field_date_display_mode:
+    value: "posted"
