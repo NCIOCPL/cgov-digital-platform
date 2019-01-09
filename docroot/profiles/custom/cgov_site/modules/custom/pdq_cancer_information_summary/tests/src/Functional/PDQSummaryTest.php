@@ -36,6 +36,7 @@ class PDQSummaryTest extends BrowserTestBase {
   const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
   const UPDATED_DATE_TIME = 'edit-field-date-updated-0-value-time';
   const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
+  const SUMMARY_TYPE = 'edit-field-pdq-summary-type';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -70,6 +71,7 @@ class PDQSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_DATE);
     $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_TIME);
     $this->assertSession()->fieldExists(PDQSummaryTest::LIST_DESCRIPTION);
+    $this->assertSession()->fieldExists(PDQSummaryTest::SUMMARY_TYPE);
 
     /*
     We need to figure out how to test filling out the form and submitting it.
