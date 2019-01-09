@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_list_description
+    - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
@@ -28,27 +29,34 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
-    weight: 12
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
     weight: 13
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_list_description:
+  field_date_updated:
     weight: 14
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_list_description:
+    weight: 15
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_pdq_summary_type:
+  field_pdq_cdr_id:
     weight: 11
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_pdq_summary_type:
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: options_select
