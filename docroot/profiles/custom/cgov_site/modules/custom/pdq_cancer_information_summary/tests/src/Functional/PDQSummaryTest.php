@@ -32,9 +32,7 @@ class PDQSummaryTest extends BrowserTestBase {
   const PAGE_TITLE = 'edit-title-0-value';
   const SHORT_TITLE = 'edit-field-short-title-0-value';
   const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
-  const POSTED_DATE_TIME = 'edit-field-date-posted-0-value-time';
   const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
-  const UPDATED_DATE_TIME = 'edit-field-date-updated-0-value-time';
   const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
 
   const SAVE_BUTTON = 'edit-submit';
@@ -66,9 +64,7 @@ class PDQSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQSummaryTest::PAGE_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::SHORT_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::POSTED_DATE_DATE);
-    $this->assertSession()->fieldExists(PDQSummaryTest::POSTED_DATE_TIME);
     $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_DATE);
-    $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_TIME);
     $this->assertSession()->fieldExists(PDQSummaryTest::LIST_DESCRIPTION);
 
     /*
