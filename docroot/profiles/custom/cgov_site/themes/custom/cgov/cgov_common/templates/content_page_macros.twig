@@ -5,35 +5,32 @@
  */
 #}
 
-{% macro displayDates(node) %}
+{% macro displayDates(node, content) %}
   {% if node.field_date_display_mode | length > 0 %}
     {# The context used with trans is because some of the labels are translated differently
         in core.
     #}
-    {% set posted_date = node.field_date_posted.value|date('U')|format_date('cgov_display_date') %}
-    {% set updated_date = node.field_date_updated.value|date('U')|format_date('cgov_display_date') %}
-    {% set reviewed_date = node.field_date_reviewed.value|date('U')|format_date('cgov_display_date') %}
     <div id="cgvDate">
       <div class="document-dates horizontal">
         <ul class="clearfix">
-          {# if "posted" in node.field_date_display_mode #}
-          <li>
-            <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
-            {{ posted_date }}
-          </li>
-          {# endif #}
-          {# if "updated" in node.field_date_display_mode #}
-          <li>
-            <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
-            {{ updated_date }}
-          </li>
-          {# endif #}
-          {# if "reviewed" in node.field_date_display_mode #}
-          <li>
-            <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
-            {{ reviewed_date }}
-          </li>
-          {# endif #}
+          {% if content.field_date_posted[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
+              {{ node.field_date_posted.value|date('U')|format_date('cgov_display_date') }}
+            </li>
+          {% endif %}
+          {% if content.field_date_updated[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
+              {{ node.field_date_updated.value|date('U')|format_date('cgov_display_date') }}
+            </li>
+          {% endif %}
+          {% if content.field_date_reviewed[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
+              {{ node.field_date_reviewed.value|date('U')|format_date('cgov_display_date') }}
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
