@@ -2,18 +2,16 @@ langcode: en
 status: true
 dependencies:
   module:
-    - datetime
     - node
-  enforced:
-    module:
-    - cgov_press_release
-id: node.field_sort_date
-field_name: field_sort_date
+id: node.field_subtitle
+field_name: field_subtitle
 entity_type: node
-type: datetime
+type: string
 settings:
-  datetime_type: date
-module: datetime
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true
