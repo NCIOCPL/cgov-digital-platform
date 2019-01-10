@@ -17,6 +17,7 @@ dependencies:
     - field.field.node.cgov_press_release.field_search_engine_restrictions
     - field.field.node.cgov_press_release.field_short_title
     - field.field.node.cgov_press_release.field_sort_date
+    - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
   module:
     - datetime
@@ -154,6 +155,14 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_subtitle:
+    weight: 117
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
   links:
     weight: 100
