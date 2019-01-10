@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_list_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
     - workflows.workflow.pdq_workflow
@@ -60,6 +61,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_public_use:
+    weight: 26
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_short_title:
     weight: 10
