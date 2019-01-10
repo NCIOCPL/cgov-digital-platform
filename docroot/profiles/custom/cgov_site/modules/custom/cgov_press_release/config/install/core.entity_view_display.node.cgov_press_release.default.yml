@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.cgov_press_release.field_list_description
     - field.field.node.cgov_press_release.field_page_description
     - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_public_use
     - field.field.node.cgov_press_release.field_search_engine_restrictions
     - field.field.node.cgov_press_release.field_short_title
     - field.field.node.cgov_press_release.field_sort_date
@@ -119,6 +120,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_public_use:
+    weight: 116
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
     region: content
   field_search_engine_restrictions:
     weight: 114
