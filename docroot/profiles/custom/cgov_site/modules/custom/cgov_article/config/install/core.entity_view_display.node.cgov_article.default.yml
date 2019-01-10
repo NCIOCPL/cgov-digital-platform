@@ -10,6 +10,8 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_image_article
+    - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
@@ -37,7 +39,7 @@ content:
     region: content
   field_article_body:
     type: entity_reference_revisions_entity_view
-    weight: 9
+    weight: 10
     label: hidden
     settings:
       view_mode: default
@@ -68,7 +70,7 @@ content:
     type: list_default
     region: content
   field_date_posted:
-    weight: 10
+    weight: 11
     label: above
     settings:
       format_type: medium
@@ -77,7 +79,7 @@ content:
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 12
+    weight: 13
     label: above
     settings:
       format_type: medium
@@ -86,7 +88,7 @@ content:
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 11
+    weight: 12
     label: above
     settings:
       format_type: medium
@@ -102,8 +104,17 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_intro_text:
+  field_image_article:
+    type: entity_reference_entity_view
     weight: 8
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
+  field_intro_text:
+    weight: 9
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -126,7 +137,7 @@ content:
     type: string
     region: content
   field_search_engine_restrictions:
-    weight: 13
+    weight: 14
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -147,3 +158,4 @@ content:
     region: content
 hidden:
   langcode: true
+  field_image_promotional: true

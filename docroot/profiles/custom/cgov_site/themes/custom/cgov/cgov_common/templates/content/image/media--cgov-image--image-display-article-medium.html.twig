@@ -1,0 +1,20 @@
+{# need to fix image-right-medium as a param #}
+<figure class="image-right-medium centered-set">
+    <div class="centered-element">
+        {# probably need to just render the img ourselves here... #}
+       {{content.field_media_image}}
+    </div>
+    {% if content.field_caption or content.field_credit %}
+    <figcaption>
+       <div class="caption-container no-resize">
+           {% if content.field_caption %}
+           <p>{{content.field_caption}}</p>
+           {% endif %}
+
+           {% if content.field_credit %}
+           <div class="image-photo-credit">{% trans %}Credit{% endtrans %}: {{content.field_credit}}</div>
+           {% endif %}
+       </div>
+    </figcaption>
+    {% endif %}
+</figure>
