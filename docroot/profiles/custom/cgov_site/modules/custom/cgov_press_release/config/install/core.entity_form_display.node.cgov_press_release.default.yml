@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
     - field.field.node.cgov_press_release.field_card_title
@@ -24,6 +25,7 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - entity_browser
     - path
     - text
 id: node.cgov_press_release.default
@@ -97,20 +99,32 @@ content:
   field_image_article:
     weight: 11
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_image_promotional:
     weight: 12
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_list_description:
     weight: 8
@@ -170,7 +184,7 @@ content:
     weight: 0
     region: content
     settings:
-      include_locked: true
+      include_locked: false
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
