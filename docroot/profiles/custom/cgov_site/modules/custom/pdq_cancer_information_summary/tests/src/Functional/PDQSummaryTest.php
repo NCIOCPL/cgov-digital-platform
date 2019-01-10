@@ -32,10 +32,12 @@ class PDQSummaryTest extends BrowserTestBase {
   const PAGE_TITLE = 'edit-title-0-value';
   const SHORT_TITLE = 'edit-field-short-title-0-value';
   const CDR_ID = 'edit-field-pdq-cdr-id-0-value';
+  const SUMMARY_TYPE = 'edit-field-pdq-summary-type';
   const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
   const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
   const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
-  const SUMMARY_TYPE = 'edit-field-pdq-summary-type';
+  const PUBLIC_USE = 'edit-field-public-use-value';
+  const AUDIENCE_TYPE = 'edit-field-pdq-audience';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -66,10 +68,12 @@ class PDQSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQSummaryTest::PAGE_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::SHORT_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::CDR_ID);
+    $this->assertSession()->fieldExists(PDQSummaryTest::SUMMARY_TYPE);
     $this->assertSession()->fieldExists(PDQSummaryTest::POSTED_DATE_DATE);
     $this->assertSession()->fieldExists(PDQSummaryTest::UPDATED_DATE_DATE);
     $this->assertSession()->fieldExists(PDQSummaryTest::LIST_DESCRIPTION);
-    $this->assertSession()->fieldExists(PDQSummaryTest::SUMMARY_TYPE);
+    $this->assertSession()->fieldExists(PDQSummaryTest::PUBLIC_USE);
+    $this->assertSession()->fieldExists(PDQSummaryTest::AUDIENCE_TYPE);
 
     /*
     We need to figure out how to test filling out the form and submitting it.

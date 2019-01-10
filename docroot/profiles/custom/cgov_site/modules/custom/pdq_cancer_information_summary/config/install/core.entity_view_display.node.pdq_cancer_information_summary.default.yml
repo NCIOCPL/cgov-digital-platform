@@ -5,8 +5,10 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_list_description
+    - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_short_title
     - node.type.pdq_cancer_information_summary
   enforced:
@@ -52,6 +54,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_pdq_audience:
+    weight: 108
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_pdq_cdr_id:
     weight: 106
     label: above
@@ -67,6 +76,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_public_use:
+    weight: 107
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
     region: content
   field_short_title:
     weight: 101
