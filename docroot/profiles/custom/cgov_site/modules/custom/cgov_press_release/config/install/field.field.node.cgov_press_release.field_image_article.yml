@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image_article
+    - media.type.cgov_image
+    - node.type.cgov_press_release
+id: node.cgov_press_release.field_image_article
+field_name: field_image_article
+entity_type: node
+bundle: cgov_press_release
+label: 'Article Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
