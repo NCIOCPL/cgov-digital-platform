@@ -34,6 +34,11 @@ class PDQFieldStorageTest extends KernelTestBase {
       "label" => "CDR ID",
       "type" => "plain_text",
     ],
+    [
+      "name" => "field_pdq_audience",
+      "label" => "Audience",
+      "type" => "list_string",
+    ],
   ];
 
   /**
