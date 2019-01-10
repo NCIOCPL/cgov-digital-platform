@@ -6,7 +6,7 @@
 #}
 
 {% macro displayDates(node, content) %}
-  {% if node.field_date_display_mode | length > 0 %}
+  {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
     {# The context used with trans is because some of the labels are translated differently
         in core.
     #}

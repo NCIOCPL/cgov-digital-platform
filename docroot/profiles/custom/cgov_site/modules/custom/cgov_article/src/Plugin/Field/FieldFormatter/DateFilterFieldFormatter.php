@@ -73,7 +73,7 @@ class DateFilterFieldFormatter extends FormatterBase {
     // (This is a guard, but shouldn't be an issue if this filter
     // is only used on fields on content types that have a
     // field_date_display_mode).
-    if ($displayModesList === NULL || count($displayModesList) === 0) {
+    if ($displayModesList === NULL) {
       return TRUE;
     }
 
