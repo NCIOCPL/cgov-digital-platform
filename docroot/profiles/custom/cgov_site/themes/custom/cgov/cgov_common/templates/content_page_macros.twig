@@ -16,19 +16,19 @@
           {% if content.field_date_posted[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
-              {{ node.field_date_posted.value|date('U')|format_date('cgov_display_date') }}
+              {{ content.field_date_posted[0] }}
             </li>
           {% endif %}
           {% if content.field_date_updated[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
-              {{ node.field_date_updated.value|date('U')|format_date('cgov_display_date') }}
+              {{ content.field_date_updated[0] }}
             </li>
           {% endif %}
           {% if content.field_date_reviewed[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
-              {{ node.field_date_reviewed.value|date('U')|format_date('cgov_display_date') }}
+              {{ content.field_date_reviewed[0] }}
             </li>
           {% endif %}
         </ul>
