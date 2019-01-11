@@ -89,6 +89,16 @@ class CGovFieldStorageTest extends KernelTestBase {
       "label" => "Search Engine Restrictions",
       "type" => "list_string",
     ],
+    [
+      "name" => "field_syndicate",
+      "label" => "Syndicate",
+      "type" => "boolean",
+    ],
+    [
+      "name" => "field_syndication_keywords",
+      "label" => "Syndication Keywords",
+      "type" => "plain_text",
+    ],
   ];
 
   /**
@@ -136,6 +146,7 @@ class CGovFieldStorageTest extends KernelTestBase {
         case "formatted_text":
         case "datetime":
         case "list_string":
+        case "boolean":
           $this->addFieldByName($type, $fieldToTest["name"], $fieldToTest["label"]);
           break;
       }
