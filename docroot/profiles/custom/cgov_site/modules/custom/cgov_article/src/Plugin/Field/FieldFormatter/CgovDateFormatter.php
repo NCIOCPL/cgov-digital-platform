@@ -8,17 +8,17 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
 
 /**
- * Plugin implementation of the 'date_filter_field_formatter' formatter.
+ * Plugin implementation of the 'cgov_date_formatter' formatter.
  *
  * @FieldFormatter(
- *   id = "date_filter_field_formatter",
- *   label = @Translation("Date filter field formatter"),
+ *   id = "cgov_date_formatter",
+ *   label = @Translation("Cgov date"),
  *   field_types = {
  *     "datetime"
  *   }
  * )
  */
-class DateFilterFieldFormatter extends DateTimeDefaultFormatter {
+class CgovDateFormatter extends DateTimeDefaultFormatter {
 
   /**
    * Filter Date.
