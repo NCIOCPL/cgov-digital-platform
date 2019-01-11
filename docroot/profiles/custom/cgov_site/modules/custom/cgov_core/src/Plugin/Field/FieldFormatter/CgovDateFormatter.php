@@ -11,6 +11,10 @@ use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
 /**
  * Plugin implementation of the 'cgov_date_formatter' formatter.
  *
+ * If a date display mode field exists on the same entity as this field
+ * and if that field contains a reference to this field, further logic
+ * will be executed to determine if this field should be displayed.
+ *
  * @FieldFormatter(
  *   id = "cgov_date_formatter",
  *   label = @Translation("Cgov date"),
@@ -49,13 +53,6 @@ class CgovDateFormatter extends DateTimeDefaultFormatter {
 
   /**
    * Filter Date.
-   *
-   * If a date display mode field exists on the same entity as this field
-   * and if that field contains a reference to this field, further logic
-   * will be executed to determine if this field should be displayed.
-   * If the date display mode field exists and doesn't reference this
-   * field, then this field should not be rendered.
-   * In all other cases it should be displayed as normal.
    *
    * @param \Drupal\Core\Field\FieldItemListInterface $items
    *   The current field's List interface.
