@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_article\Plugin\Field\FieldFormatter;
+namespace Drupal\cgov_core\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemInterface;
