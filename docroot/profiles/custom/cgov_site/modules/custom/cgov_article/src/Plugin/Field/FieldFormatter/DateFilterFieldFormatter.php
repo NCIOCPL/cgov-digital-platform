@@ -5,8 +5,7 @@ namespace Drupal\cgov_article\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
 
 /**
  * Plugin implementation of the 'date_filter_field_formatter' formatter.
@@ -19,34 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class DateFilterFieldFormatter extends FormatterBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function defaultSettings() {
-    return [
-      // Implement default settings.
-    ] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    return [
-      // Implement settings form.
-    ] + parent::settingsForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $summary = [];
-    // Implement settings summary.
-    return $summary;
-  }
+class DateFilterFieldFormatter extends DateTimeDefaultFormatter {
 
   /**
    * Filter Date.
@@ -61,7 +33,7 @@ class DateFilterFieldFormatter extends FormatterBase {
    * @param \Drupal\Core\Field\FieldItemListInterface $items
    *   The current field's List interface.
    */
-  public function filterDate(FieldItemListInterface $items) {
+  public function cgovDateFilter(FieldItemListInterface $items) {
     $node = $items->getEntity();
     if (!$node) {
       return TRUE;
@@ -146,9 +118,9 @@ class DateFilterFieldFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-    $shouldDisplayDate = $this->filterDate($items);
+    $shouldDisplayDate = $this->cgovDateFilter($items);
     if ($shouldDisplayDate) {
-      $elements[0] = ['#markup' => $this->viewValue($items[0])];
+      return parent::viewElements($items, $langcode);
     }
 
     return $elements;
