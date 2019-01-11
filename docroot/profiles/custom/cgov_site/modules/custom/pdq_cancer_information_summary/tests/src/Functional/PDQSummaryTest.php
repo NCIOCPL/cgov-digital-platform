@@ -41,6 +41,7 @@ class PDQSummaryTest extends BrowserTestBase {
   const SECTION_ID = 'edit-field-summary-sections-0-subform-field-pdq-section-id-0-value';
   const SECTION_TITLE = 'edit-field-summary-sections-0-subform-field-pdq-section-title-0-value';
   const SECTION_HTML = 'edit-field-summary-sections-0-subform-field-pdq-section-html-0-value';
+  const SYNDICATION_KEYWORDS = 'edit-field-syndication-keywords-0-value';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -80,6 +81,7 @@ class PDQSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQSummaryTest::SECTION_ID);
     $this->assertSession()->fieldExists(PDQSummaryTest::SECTION_TITLE);
     $this->assertSession()->fieldExists(PDQSummaryTest::SECTION_HTML);
+    $this->assertSession()->fieldExists(PDQSummaryTest::SYNDICATION_KEYWORDS);
 
     /*
     We need to figure out how to test filling out the form and submitting it.
