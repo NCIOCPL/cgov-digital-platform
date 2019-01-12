@@ -11,12 +11,16 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_image_article
+    - field.field.node.cgov_article.field_image_promotional
+    - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
+    - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
     - node.type.cgov_article
   module:
-    - datetime
+    - cgov_core
     - options
     - user
 id: node.cgov_article.thumbnail_card
@@ -51,28 +55,31 @@ content:
     weight: 108
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_reviewed:
     weight: 109
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_updated:
     weight: 110
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_feature_card_description:
     weight: 106
@@ -114,5 +121,8 @@ content:
 hidden:
   content_moderation_control: true
   field_article_body: true
+  field_image_article: true
+  field_image_promotional: true
   field_intro_text: true
+  field_search_engine_restrictions: true
   langcode: true
