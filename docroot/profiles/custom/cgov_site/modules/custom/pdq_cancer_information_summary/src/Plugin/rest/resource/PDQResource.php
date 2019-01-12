@@ -84,7 +84,9 @@ class PDQResource extends ResourceBase {
    *   The CDR ID of a PDQ Summary document or Drupal node ID.
    *
    * @return \Drupal\rest\ResourceResponse
-   *   The response containing node ID(s) or a Drupal node
+   *   The response containing node ID(s) or the values (in a keyed array)
+   *   for a Drupal node. There can be multiple nested arrays for the
+   *   English (keyed by 'en') and Spanish ('es') versions of the summary.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
    *   Thrown when the summary node was not found.
@@ -92,22 +94,21 @@ class PDQResource extends ResourceBase {
    *   Thrown when no ID was provided.
    */
   public function get($id) {
-    // This is just a stub to confirm we can use the GET verb.
-    // The rest is left over from the POC, to be replaced when
-    // we have the CDR ID field defined.
-    if ($id !== 'some-bogus-value') {
-      $fields = ['nid' => 42, 'title' => 'Test Summary'];
-      return new ResourceResponse($fields);
-    }
+
+    // Make sure the client gave us something to look for.
     if (!$id) {
       throw new BadRequestHttpException(t('No ID was provided'));
     }
+
+    // If we got a CDR ID, find the corresponding node IDs (should
+    // be only one, but we return all we found, and it's the client's
+    // problem to deal with cases where more than one node is found).
     if (substr($id, 0, 3) === 'CDR') {
       $cdr_id = substr($id, 3);
-      $query = \Drupal::database()->select('node__field_cdr_id', 'c');
+      $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
       $query->addField('c', 'entity_id');
-      $query->condition('c.bundle', 'pdq_summary');
-      $query->condition('c.field_cdr_id_value', $cdr_id);
+      $query->condition('c.bundle', 'pdq_cancer_information_summary');
+      $query->condition('c.field_pdq_cdr_id_value', $cdr_id);
       $nids = $query->execute()->fetchCol();
       if (!empty($nids)) {
         return new ResourceResponse($nids);
@@ -115,29 +116,35 @@ class PDQResource extends ResourceBase {
       $msg = t('@id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
+
+    // We got a node ID, so return the corresponding node's values.
     $node = Node::load($id);
     if (empty($node)) {
       $msg = t('Node @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
-    $sections = [];
-    foreach ($node->field_summary_sections as $section) {
-      $s = Paragraph::load($section->target_id);
-      $sections[] = [
-        "title" => $s->field_section_title->value,
-        "html" => $s->field_section_html->value,
-      ];
-    }
     $fields = [
-      "nid" => $node->id(),
-      "cdr_id" => $node->field_cdr_id->value,
-      "created" => date('c', $node->getCreatedTime()),
-      "language" => $node->langcode->value,
-      "url" => $node->path->alias,
-      "title" => $node->getTitle(),
-      "published" => $node->promote->value,
-      "sections" => $sections,
+      'nid' => $node->id(),
+      'created' => date('c', $node->getCreatedTime()),
     ];
+    foreach (['en', 'es'] as $code) {
+      if ($node->hasTranslation($code)) {
+        $translation = $node->getTranslation($code);
+        $fields[$code] = [
+          'title' => $translation->getTitle(),
+          'cdr_id' => $translation->field_pdq_cdr_id->value,
+          'audience' => $translation->field_pdq_audience->value,
+          'summary_type' => $translation->field_pdq_summary_type->value,
+          'posted_date' => $translation->field_date_posted->value,
+          'updated_date' => $translation->field_date_updated->value,
+          'short_title' => $translation->field_short_title->value,
+          'description' => $translation->field_list_description->value,
+          'public_use' => $translation->field_public_use,
+          'url' => $translation->path->alias,
+          'published' => $translation->promote->value,
+        ];
+      }
+    }
     return new ResourceResponse($fields);
   }
 
@@ -156,6 +163,10 @@ class PDQResource extends ResourceBase {
    * (we'll let the upstream client take care of that logic).
    *
    * See https://stackoverflow.com/questions/630453/put-vs-post-in-rest
+   *
+   * In contrast with the CDR, the Drupal CMS stores an English
+   * Cancer Information Summary document and it's Spanish translation
+   * document in the same node.
    *
    * Incomplete until we get the rest of the fields defined.
    *
@@ -180,40 +191,56 @@ class PDQResource extends ResourceBase {
       $node = Node::create([
         'type' => 'pdq_cancer_information_summary',
         'langcode' => 'en',
-        'path' => ['alias' => $summary['url']],
-        'title' => $summary['title'],
       ]);
     }
     else {
       $node = Node::load($nid);
-      $node = $node->addTranslation('es', [
-        'title' => $summary['title'],
-        'path' => ['alias' => $summary['url']],
-      ]);
+      $node = $node->addTranslation('es');
     }
-    if (!empty($summary['short_title'])) {
-      $short_title = substr($summary['short_title'], 0, 100);
-      $node->set('field_short_title', $short_title);
-    }
-    if (!empty($summary['description'])) {
-      $description = substr($summary['description'], 0, 320);
-      $node->set('field_list_description', $description);
-    }
-    $posted = $summary['posted_date'];
-    $updated = $summary['updated_date'];
-    $posted = empty($posted) ? date('y-m-d') : $posted;
-    $posted = empty($updated) ? date('y-m-d') : $updated;
-    $node->set('field_date_posted', $posted);
-    $node->set('field_date_updated', $updated);
+    $today = date('Y-m-d');
+    $node->setTitle(($summary['title']));
     $node->setOwnerId($this->currentUser->id());
+    $node->set('path', ['alias' => $summary['url']]);
+    $node->set('field_pdq_cdr_id', $summary['cdr_id']);
+    $node->set('field_pdq_audience', $summary['audience']);
+    $node->set('field_pdq_summary_type', $summary['summary_type']);
+    $node->set('field_date_posted', $summary['posted_date'] ?? $today);
+    $node->set('field_date_updated', $summary['updated_date'] ?? $today);
+    $node->set('field_short_title', $summary['short_title']);
+    $node->set('field_list_description', $summary['description']);
+    $node->set('field_public_use', TRUE);
 
-    // Do this later after dev/testing.
+    // Assemble and plug in the summary sections.
+    $sections = [];
+    foreach ($summary['sections'] as $section) {
+      $paragraph = Paragraph::create([
+        'type' => 'pdq_summary_section',
+        'field_section_id' => ['value' => $section['id']],
+        'field_section_title' => [
+          'value' => $section['title'],
+          'format' => 'plain_text',
+        ],
+        'field_section_html' => [
+          'value' => $section['html'],
+          'format' => 'full_html',
+        ],
+      ]);
+      $paragraph->save();
+      $sections[] = [
+        'target_id' => $paragraph->id(),
+        'target_revision_id' => $paragraph->getRevisionId(),
+      ];
+    }
+    $node->set('field_summary_sections', $sections);
+
+    // @todo: defer this, using 'draft' initially.
     $node->moderation_state->value = 'published';
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';
     $code = empty($nid) ? 201 : 200;
-    $args = ['%verb' => $verb, '%nid' => $node->id()];
-    $this->logger->notice('%verb %nid', $args);
+    $cdr_id = $summary['cdr_id'];
+    $args = ['%verb' => $verb, '%cdrid' => $cdr_id, '%nid' => $node->id()];
+    $this->logger->notice('%verb %cdrid as %nid', $args);
     return new ResourceResponse(['nid' => $node->id()], $code);
   }
 
