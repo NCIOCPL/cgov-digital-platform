@@ -1,4 +1,5 @@
 {{ attach_library('cgov_common/article') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
     <div class="resize-content">
@@ -7,11 +8,13 @@
         </h1>
         {{ drupal_block('page_options') }}
         <div id="cgvBody">
-          {# TODO: Output article image here #}
+          {{ content.field_image_article }}
+          {{ content.field_intro_text }}
           {{ content.field_article_body }}
         </div>
     </div>
     {# TODO: Article footer stuff has to go somewhere. TBD. #}
     <footer class="article-footer">
+      {{ contentPageMacros.displayDates(node) }}
     </footer>
 </article>

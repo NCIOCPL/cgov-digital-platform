@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.cgov_image_media_browser
+  module:
+    - views
+name: cgov_image_browser
+label: 'Image Browser'
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select Image'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  dff1a973-16cd-4b5b-8a9d-0673b3b262a5:
+    settings:
+      view: cgov_image_media_browser
+      view_display: entity_browser_1
+      submit_text: 'Select image'
+      auto_select: false
+    uuid: dff1a973-16cd-4b5b-8a9d-0673b3b262a5
+    weight: 1
+    label: view
+    id: view

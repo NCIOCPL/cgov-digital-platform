@@ -2,21 +2,21 @@ langcode: en
 status: true
 dependencies:
   module:
-    - datetime
+    - media
     - node
   enforced:
     module:
-    - cgov_press_release
-id: node.field_sort_date
-field_name: field_sort_date
+      - cgov_image
+id: node.field_image_article
+field_name: field_image_article
 entity_type: node
-type: datetime
+type: entity_reference
 settings:
-  datetime_type: date
-module: datetime
+  target_type: media
+module: core
 locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
-persist_with_no_fields: false
+persist_with_no_fields: true
 custom_storage: false

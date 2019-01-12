@@ -4,8 +4,9 @@ dependencies:
   config:
     - field.storage.node.field_press_release_type
     - node.type.cgov_press_release
-  module:
-    - options
+  enforced:
+    module:
+    - cgov_press_release
 id: node.cgov_press_release.field_press_release_type
 field_name: field_press_release_type
 entity_type: node
@@ -17,4 +18,4 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

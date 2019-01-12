@@ -3,24 +3,18 @@ status: true
 dependencies:
   module:
     - node
-    - options
   enforced:
     module:
     - cgov_press_release
 id: node.field_press_release_type
 field_name: field_press_release_type
 entity_type: node
-type: list_string
+type: string
 settings:
-  allowed_values:
-    -
-      value: nci_press_release
-      label: 'NCI Press Release'
-    -
-      value: nci_news_note
-      label: 'NCI News Note'
-  allowed_values_function: ''
-module: options
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true
