@@ -92,6 +92,9 @@ class PDQResource extends ResourceBase {
    *   Thrown when no ID was provided.
    */
   public function get($id) {
+    // This is just a stub to confirm we can use the GET verb.
+    // The rest is left over from the POC, to be replaced when
+    // we have the CDR ID field defined.
     if ($id !== 'some-bogus-value') {
       $fields = ['nid' => 42, 'title' => 'Test Summary'];
       return new ResourceResponse($fields);
@@ -154,6 +157,8 @@ class PDQResource extends ResourceBase {
    *
    * See https://stackoverflow.com/questions/630453/put-vs-post-in-rest
    *
+   * Incomplete until we get the rest of the fields defined.
+   *
    * @param array $summary
    *   The summary document values.
    *
@@ -164,6 +169,12 @@ class PDQResource extends ResourceBase {
    *   Throws exception expected.
    */
   public function post(array $summary) {
+
+    // Simplified approach, doesn't support updates of existing
+    // nodes. At this point we're just trying to make sure we
+    // can save a new summary and add its Spanish translation.
+    // If the values have a node ID (nid) this is the Spanish
+    // summary.
     $nid = $summary['nid'];
     if (empty($nid)) {
       $node = Node::create([
@@ -195,31 +206,9 @@ class PDQResource extends ResourceBase {
     $node->set('field_date_posted', $posted);
     $node->set('field_date_updated', $updated);
     $node->setOwnerId($this->currentUser->id());
-    // $node->setTitle($summary['title']);
-    // Switch to false after dev/testing.
-    // $node->setPublished(TRUE);
+
     // Do this later after dev/testing.
     $node->moderation_state->value = 'published';
-    //$sections = [];
-    //foreach ($summary['sections'] as $section) {
-    //  $paragraph = Paragraph::create([
-    //    'type' => 'pdq_summary_section',
-    //    'field_section_html' => [
-    //      'value' => $section['html'],
-    //      'format' => 'full_html',
-    //    ],
-    //    'field_section_title' => [
-    //      'value' => $section['title'],
-    //      'format' => 'plain_text',
-    //    ],
-    //  ]);
-    //  $paragraph->save();
-    //  $sections[] = [
-    //    'target_id' => $paragraph->id(),
-    //    'target_revision_id' => $paragraph->getRevisionId(),
-    //  ];
-    //}
-    //$node->set('field_summary_sections', $sections);
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';
     $code = empty($nid) ? 201 : 200;
@@ -242,6 +231,8 @@ class PDQResource extends ResourceBase {
    *   Throws exception expected.
    */
   public function delete($id) {
+    // To be rewritten from the original POC code once we have
+    // the CDR ID field defined.
     if (substr($id, 0, 3) === 'CDR') {
       $cdr_id = substr($id, 3);
     }
