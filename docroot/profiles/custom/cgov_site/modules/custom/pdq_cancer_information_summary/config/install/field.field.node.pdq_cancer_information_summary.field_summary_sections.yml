@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary_sections
+    - node.type.pdq_cancer_information_summary
+    - paragraphs.paragraphs_type.pdq_summary_section
+  module:
+    - entity_reference_revisions
+id: node.pdq_cancer_information_summary.field_summary_sections
+field_name: field_summary_sections
+entity_type: node
+bundle: pdq_cancer_information_summary
+label: 'Summary Sections'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      pdq_summary_section: pdq_summary_section
+    target_bundles_drag_drop:
+      body_section:
+        weight: 3
+        enabled: false
+      pdq_summary_section:
+        enabled: true
+        weight: 4
+field_type: entity_reference_revisions

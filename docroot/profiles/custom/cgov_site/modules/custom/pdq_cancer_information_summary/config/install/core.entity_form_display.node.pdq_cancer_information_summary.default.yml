@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_short_title
+    - field.field.node.pdq_cancer_information_summary.field_summary_sections
     - node.type.pdq_cancer_information_summary
     - workflows.workflow.pdq_workflow
   enforced:
@@ -18,6 +19,7 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - paragraphs
     - path
 id: node.pdq_cancer_information_summary.default
 targetEntityType: node
@@ -83,6 +85,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_summary_sections:
+    type: entity_reference_paragraphs
+    weight: 26
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
     region: content
   langcode:
     type: language_select
