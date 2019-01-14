@@ -16,8 +16,6 @@
         {{ page.utility_bar }}
       </div>
       <!-- END UTILITY NAV -->
-    </div>
-      <!-- end "headroom-area" -->
       <!-- BEGIN NAVIGATION -->
       <!-- Begin nav-search bar -->
       <div class="nav-search-bar gradient header">
@@ -43,6 +41,8 @@
       </div>
       <!-- End nav-search bar -->
       <!-- END NAVIGATION -->
+    </div>
+      <!-- end "headroom-area" -->
   </div><!-- END Global nav/utility bar/language -->
 
   <!-- Begin MAIN CONTENT AREA -->
@@ -57,12 +57,12 @@
       </div> <!-- END "large-12 columns" -->
       <div class="row">
         <!--    SECTION NAVIGATION -->
-        {# {% if page.sidebar_first %}
+         {% if page.section_nav %}
         <a id="section-menu-button" href="#">Section Menu</a>
         <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
-            {{ page.sidebar_first }}
+            {{ page.section_nav }}
         </div>
-        {% endif %} #}
+        {% endif %}
         {# TODO: technically if there is no left nav we change some of the classes below. #}
         <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
           {{ page.content }}

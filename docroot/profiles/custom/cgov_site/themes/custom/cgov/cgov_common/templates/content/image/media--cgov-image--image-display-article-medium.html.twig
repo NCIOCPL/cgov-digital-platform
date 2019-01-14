@@ -4,7 +4,7 @@
         {# probably need to just render the img ourselves here... #}
        {{content.field_media_image}}
     </div>
-    {% if content.field_caption or content.field_credit %}
+    {% if content.field_caption|render|striptags|trim or content.field_credit|render|striptags|trim  %}
     <figcaption>
        <div class="caption-container no-resize">
            {% if content.field_caption %}
