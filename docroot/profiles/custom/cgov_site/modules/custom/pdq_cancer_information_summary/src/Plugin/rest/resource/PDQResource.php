@@ -130,6 +130,15 @@ class PDQResource extends ResourceBase {
     foreach (['en', 'es'] as $code) {
       if ($node->hasTranslation($code)) {
         $translation = $node->getTranslation($code);
+        $sections = [];
+        foreach ($translation->field_summary_sections as $section) {
+          $s = Paragraph::load($section->target_id);
+          $sections[] = [
+            'id' => $s->field_section_id->value,
+            'title' => $s->field_section_title->value,
+            'html' => $s->field_section_html->value,
+          ];
+        }
         $fields[$code] = [
           'title' => $translation->getTitle(),
           'cdr_id' => $translation->field_pdq_cdr_id->value,
@@ -142,6 +151,7 @@ class PDQResource extends ResourceBase {
           'public_use' => $translation->field_public_use,
           'url' => $translation->path->alias,
           'published' => $translation->promote->value,
+          'section' => $sections,
         ];
       }
     }
