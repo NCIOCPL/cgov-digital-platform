@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.pdq_summary_section.field_section_html
+    - field.field.paragraph.pdq_summary_section.field_section_id
+    - field.field.paragraph.pdq_summary_section.field_section_title
+    - paragraphs.paragraphs_type.pdq_summary_section
+  module:
+    - text
+id: paragraph.pdq_summary_section.default
+targetEntityType: paragraph
+bundle: pdq_summary_section
+mode: default
+content:
+  field_section_html:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_section_id:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_section_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

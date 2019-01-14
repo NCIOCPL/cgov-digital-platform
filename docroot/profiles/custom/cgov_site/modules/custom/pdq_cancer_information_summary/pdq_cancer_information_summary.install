@@ -10,15 +10,22 @@ use Drupal\cgov_core\CgovCoreTools;
 /**
  * Implements hook_install().
  *
- * Perform actions to set up the site for this profile.
+ * Set up the site for Cancer Information Summaries.
  *
  * @see system_install()
  */
 function pdq_cancer_information_summary_install() {
+
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Add content type permissions and assign to workflow.
+  $restfulPermissions = [
+    'restful delete pdq_cis_api',
+    'restful get pdq_cis_api',
+    'restful post pdq_cis_api',
+  ];
   $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
+  $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
   $siteHelper->attachContentTypeToWorkflow('pdq_cancer_information_summary', 'pdq_workflow');
 }
