@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install pdq_core module.
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_install().
+ *
+ * Create the account used for importing PDQ content.
+ */
+function pdq_core_install() {
+  $user = User::create();
+  $user->setUsername('PDQ');
+  $user->setEmail('pdq@cancer.gov');
+  $user->enforceIsNew();
+  $user->setPassword(getenv('PDQ_IMPORTER_PASS'));
+  $user->addRole('pdq_importer');
+  $user->activate();
+  $user->save();
+}
