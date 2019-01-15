@@ -197,7 +197,12 @@ class PDQResource extends ResourceBase {
     // If the values have a node ID (nid) this is the Spanish
     // summary.
     $nid = $summary['nid'];
+    $language = $summary['language'];
     if (empty($nid)) {
+      if ($language != 'en') {
+        $msg = 'New summary node must be the English version';
+        throw new BadRequestHttpException($msg);
+      }
       $node = Node::create([
         'type' => 'pdq_cancer_information_summary',
         'langcode' => 'en',
@@ -205,7 +210,12 @@ class PDQResource extends ResourceBase {
     }
     else {
       $node = Node::load($nid);
-      $node = $node->addTranslation('es');
+      if ($node->hasTranslation($language)) {
+        $node = $node->getTranslation($language);
+      }
+      else {
+        $node = $node->addTranslation($language);
+      }
     }
     $today = date('Y-m-d');
     $node->setTitle(($summary['title']));
@@ -250,7 +260,7 @@ class PDQResource extends ResourceBase {
     $code = empty($nid) ? 201 : 200;
     $cdr_id = $summary['cdr_id'];
     $args = ['%verb' => $verb, '%cdrid' => $cdr_id, '%nid' => $node->id()];
-    $this->logger->notice('%verb %cdrid as %nid', $args);
+    $this->logger->notice('%verb %nid for %cdrid', $args);
     return new ResourceResponse(['nid' => $node->id()], $code);
   }
 
