@@ -1,3 +1,28 @@
+# https://www.cancer.gov/news-events/press-releases/2019/deep-learning-cervical-cancer-screening
+# Image EN/ES
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Nurse with stethoscope and phone in hand"
+  name__ES:
+    value: "Nurse with stethoscope and phone in hand - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+  - '#process':
+      callback: 'file'
+      args:
+      - 'image'
+      - type: 'module'
+        filename: 'cervical-cancer-screening-article.jpeg'
+    alt: 'Nurse with stethoscope and phone in hand photo'
+    alt__ES: 'Nurse with stethoscope and phone in hand photo - ES'
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: "iStock - ES"
+# Node English / Spanish
 - entity: "node"
   type: "cgov_press_release"
   title: "AI approach outperformed human experts in identifying cervical precancer"
@@ -7,6 +32,14 @@
   status: 1
   moderation_state:
     value: 'published'
+  field_image_article:
+  - target_type: 'media'
+    '#process':
+      callback: 'reference'
+      args:
+      - 'media'
+      - bundle: 'cgov_image'
+        name: 'Nurse with stethoscope and phone in hand'
   body:
     - format: "full_html"
       value: |
@@ -47,6 +80,132 @@
   field_date_updated:
     value: "2019-01-10"
 
+# https://www.cancer.gov/news-events/press-releases/2019/BRCA-exchange
+- entity: "media"
+  bundle: "cgov_image"
+  name: "The BRCA Exchange graphic"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+  - '#process':
+      callback: 'file'
+      args:
+      - 'image'
+      - type: 'module'
+        filename: 'BRCA-exchange-article.jpg'
+    alt: 'The BRXA Exhange graphic'
+  field_credit:
+    value: "iStock"
+- entity: "media"
+  bundle: "cgov_image"
+  name: "The BRCA Exchange graphic"
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+  - '#process':
+      callback: 'file'
+      args:
+      - 'image'
+      - type: 'module'
+        filename: 'BRCA-exchange-article.jpg'
+    alt: 'El gráfico de intercambio BRCA'
+
+- entity: "node"
+  type: "cgov_press_release"
+  title: "BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk"
+#  title__ES:
+#    value: "Cgov Press Release - Spanish"
+  field_image_article:
+  - target_type: 'media'
+    '#process':
+      callback: 'reference'
+      args:
+      - 'media'
+      - bundle: 'cgov_image'
+        name: 'The BRCA Exchange graphic'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  body:
+  - format: "full_html"
+    value: |
+      <div id="cgvBody">
+      	<div class="contentid-1134426 slot-item only-SI">
+      				<div class="press-release-date-contact row collapse">
+                      			<div class="document-dates horizontal">
+      			<ul class="clearfix">
+      														<li><strong>Posted:</strong> January
+       9, 2019</li>
+      							</ul>
+      		</div>
+      	<div class="media-contact columns large-4 right">
+             <div class="row collapse-edges">
+                  <div class="media-contact-info">
+                          <strong>Contact:</strong>
+                  </div>
+                  <div class="media-contact-info">
+      				<a href="mailto:ncipressofficers@mail.nih.gov">NCI Press Office</a>
+                          <p>240-760-6600</p>
+                  </div>
+              </div>
+      </div>
+       </div>
+
+                <figure class="image-right-medium centered-set">        <div class="centered-element">                      <img src="/PublishedContent/Images/images/pressreleases/BRCA-exchange-article.__v100384786.jpg" alt=""><!--Comment-->
+                                                      </div>
+                        <figcaption>
+                  <div class="caption-container no-resize">
+                                                  <div class="image-photo-credit">Credit: BRCA Challenge</div>                          </div>
+                </figcaption>
+                    </figure>
+
+      <p>A global resource that includes data on thousands of inherited variants in the <em>BRCA1</em> and <em>BRCA2</em> genes is available to the public. The BRCA Exchange was created through the BRCA Challenge, a long-term&nbsp;demonstration project initiated by the Global Alliance for Genomics and Health (GA4GH) to enhance sharing of <em>BRCA1 </em>and<em> BRCA2</em> data. The resource, available through a website and a new <a href="https://brcaexchange.org/about/app">smartphone app</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>, allows clinicians to review expert classifications of variants in these major cancer predisposition genes as part of their individual assessment of complex questions related to cancer prevention, screening, and intervention for high-risk patients.&nbsp;</p>
+      <p>The five-year BRCA Challenge project was funded in part by the National Cancer Institute (NCI), part of the National Institutes of Health, and through the <a href="https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative">Cancer Moonshot</a><span>℠</span>. A paper detailing the development of the BRCA Exchange was published January 8, 2019, in&nbsp;<em>PLOS Genetics</em>.</p>
+      <p>“This project has yielded a meta-analysis of <em>BRCA1</em> and <em>BRCA2 </em>variants collected from multiple sources to understand how experts annotate specific mutations in the two genes,” said Stephen J. Chanock, M.D., director of NCI’s Division of Cancer Epidemiology and Genetics and lead author of the paper. “There’s an urgent need for sharing data in cancer predisposition research. The BRCA Exchange is proof of principle that large-scale collaboration and data sharing can be achieved and can provide the latest and best quality information to enable clinicians and individuals to improve care.”</p>
+
+                <figure class="image-right-medium centered-set">        <div class="media-highlight centered-element">                      <img src="/PublishedContent/Images/about-cancer/causes-prevention/genetics/brca-challenge-infographic-article.__v100338300.png" alt=""><!--Comment-->
+                          <a href="/about-cancer/causes-prevention/genetics/brca-exchange-infographic" class="infographic-view-full no-resize" target="_blank">View Infographic</a>          <span class="media-label media-infographic en-us"> </span>
+              </div>              </figure>
+      <p>Certain inherited variants in these genes can increase the risk of breast, ovarian, and other cancers by varying degrees, whereas others are not associated with disease. Clinicians and patients need to know whether a given variant is likely to be disease-associated (pathogenic) and how likely a pathogenic variant is to cause cancer (penetrance). Until now, the available data on the inherited variants in these genes were not aggregated in a comprehensive way.</p>
+      <p>The BRCA Exchange dataset is composed of information from existing clinical databases—the Breast Cancer Information Core, ClinVar, and the Leiden Open Variation Database—as well as population databases and data from clinicians, clinical laboratories, and researchers worldwide. It currently includes more than 20,000 unique <em>BRCA1</em> and <em>BRCA2</em> variants. More than 6,100 variants in the database have been classified by an expert panel, the Evidence-based Network for the Interpretation of Germline Mutant Alleles, and approximately 3,700 of these variants are known to cause disease. The BRCA Exchange pools variants from data resources worldwide, which should lead to inclusion of rare variants that are very occasionally observed.</p>
+      <p>With a single-point-of-access website (<a href="http://www.brcaexchange.org">www.brcaexchange.org</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>), the BRCA Exchange provides information on these gene variants to clinicians, researchers, data scientists, patients, and patient advocates. It also serves as a demonstration project showing that this kind of comprehensive data sharing—requiring collaboration across hundreds of organizations, the establishment of an infrastructure to house the information, and the development of data-sharing protocols—is possible for other cancer predisposition genes and, indeed, for genes associated with other diseases.&nbsp;</p>
+      <p>Next steps for the project include collaboration with additional global data generators and data holders, continued technical development, and increased engagement with patients and patient advocates around the world.</p>
+      <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s contact center,&nbsp;the Cancer Information Service, at 1-800-4-CANCER (1-800-422-6237).</p>
+      <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
+      <p></p>
+
+      	</div>
+      </div>
+#  body__ES:
+#  - format: "full_html"
+#    value: |
+#      <p>ES Body Content 2</p>
+  field_browser_title:
+    value: "This is the Cgov Browser Title"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_date_display_mode:
+  field_list_description:
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2019-01-09"
+  field_date_reviewed:
+    value: "2019-01-09"
+  field_short_title:
+    value: "Short Title English"
+  field_date_updated:
+    value: "2019-01-09"
+
+
+### Prototype node
 - entity: "node"
   type: "cgov_press_release"
   title: "Cgov Press Release - English"
