@@ -134,9 +134,9 @@ class PDQResource extends ResourceBase {
         foreach ($translation->field_summary_sections as $section) {
           $s = Paragraph::load($section->target_id);
           $sections[] = [
-            'id' => $s->field_section_id->value,
-            'title' => $s->field_section_title->value,
-            'html' => $s->field_section_html->value,
+            'id' => $s->field_pdq_section_id->value,
+            'title' => $s->field_pdq_section_title->value,
+            'html' => $s->field_pdq_section_html->value,
           ];
         }
         $fields[$code] = [
@@ -235,12 +235,12 @@ class PDQResource extends ResourceBase {
     foreach ($summary['sections'] as $section) {
       $paragraph = Paragraph::create([
         'type' => 'pdq_summary_section',
-        'field_section_id' => ['value' => $section['id']],
-        'field_section_title' => [
+        'field_pdq_section_id' => ['value' => $section['id']],
+        'field_pdq_section_title' => [
           'value' => $section['title'],
           'format' => 'plain_text',
         ],
-        'field_section_html' => [
+        'field_pdq_section_html' => [
           'value' => $section['html'],
           'format' => 'full_html',
         ],

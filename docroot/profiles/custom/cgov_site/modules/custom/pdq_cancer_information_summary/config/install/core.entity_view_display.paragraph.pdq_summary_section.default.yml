@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.pdq_summary_section.field_section_html
-    - field.field.paragraph.pdq_summary_section.field_section_id
-    - field.field.paragraph.pdq_summary_section.field_section_title
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_html
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_id
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_title
     - paragraphs.paragraphs_type.pdq_summary_section
   module:
     - text
@@ -13,14 +13,14 @@ targetEntityType: paragraph
 bundle: pdq_summary_section
 mode: default
 content:
-  field_section_html:
+  field_pdq_section_html:
     weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_section_id:
+  field_pdq_section_id:
     weight: 0
     label: inline
     settings:
@@ -28,7 +28,7 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_section_title:
+  field_pdq_section_title:
     weight: 1
     label: hidden
     settings:
