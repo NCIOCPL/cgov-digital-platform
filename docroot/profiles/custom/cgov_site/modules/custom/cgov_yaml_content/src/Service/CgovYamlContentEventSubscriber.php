@@ -3,6 +3,7 @@
 namespace Drupal\cgov_yaml_content\Service;
 
 use Drupal\yaml_content\Event\YamlContentEvents;
+use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
@@ -22,13 +23,23 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $themeManager;
 
   /**
+   * Yaml Content Content Loader.
+   *
+   * @var \Drupal\yaml_content\ContentLoader\ContentLoaderInterface
+   */
+  protected $contentLoader;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
+   * @param \Drupal\yaml_content\ContentLoader\ContentLoaderInterface $contentLoader
+   *   Content Loader.
    */
-  public function __construct(ThemeManagerInterface $themeManager) {
+  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader) {
     $this->themeManager = $themeManager;
+    $this->contentLoader = $contentLoader;
   }
 
   /**
