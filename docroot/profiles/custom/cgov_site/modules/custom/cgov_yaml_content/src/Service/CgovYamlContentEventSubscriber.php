@@ -98,6 +98,12 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
         }
       }
     }
+
+    $noFieldsToTranslate = count($translatedFields) === 0;
+    if ($noFieldsToTranslate) {
+      return;
+    }
+
     // 2. Check for paragraphs.
     // Paragraphs have to be treated differently from other
     // entity types. Instead of adding a translation to the
