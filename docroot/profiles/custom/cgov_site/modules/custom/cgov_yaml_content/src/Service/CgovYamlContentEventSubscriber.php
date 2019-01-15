@@ -123,18 +123,20 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // 3. Build translation entity.
     // We need to create a full mapping of the original entity, not just
     // the translated fields.
-    $entityArray = $entity->toArray();
-    $translation = array_merge($entityArray, $translatedFields);
-    $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
-    if ($spanishTranslationAlreadyExists) {
-      $spanishTranslation = $entity->getTranslation('es');
-      foreach ($translatedFields as $fieldName => $translatedContent) {
-        $spanishTranslation->{$fieldName} = $translatedContent;
+    if ($translatedFields) {
+      $entityArray = $entity->toArray();
+      $translation = array_merge($entityArray, $translatedFields);
+      $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
+      if ($spanishTranslationAlreadyExists) {
+        $spanishTranslation = $entity->getTranslation('es');
+        foreach ($translatedFields as $fieldName => $translatedContent) {
+          $spanishTranslation->{$fieldName} = $translatedContent;
+        }
       }
-    }
-    else {
-      $entity->addTranslation('es', $translation);
-      $entity->save();
+      else {
+        $entity->addTranslation('es', $translation);
+        $entity->save();
+      }
     }
   }
 
