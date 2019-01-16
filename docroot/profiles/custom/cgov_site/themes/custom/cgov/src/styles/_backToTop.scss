@@ -1,0 +1,49 @@
+.site-footer .back-to-top {
+  /* place on top of all other elements */
+  z-index: 998;
+  display: none;
+  position: fixed;
+  right: 0.5em;
+  bottom: 1em;
+  color: $body-font-color;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px 5px 0;
+
+  text-shadow:
+          -1px -1px 3px #fff,
+          1px -1px 3px #fff,
+          -1px 1px 3px #fff,
+          1px 1px 3px #fff;
+
+  &::before {
+    content: " ";
+    display: block;
+    width: 55px;
+    height: 55px;
+    border: 4px solid #7fd0d1;
+    border-radius: 50%;
+    background-color: #fff;
+    margin-bottom: 2px;
+  }
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 26px;
+    @include hCenter;
+    @include svg-sprite(chevron-lblue);
+    font-size: 30px;
+  }
+  &:hover, &:focus {
+    color: $body-font-color;
+    text-decoration: none;
+  }
+}
+
+@include bp(small) {
+  .back-to-top {
+    display: none !important;
+  }
+}
