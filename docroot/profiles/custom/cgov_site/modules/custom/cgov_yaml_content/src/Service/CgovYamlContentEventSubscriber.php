@@ -99,6 +99,17 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       }
     }
 
+    // Guard clause: Don't translate fields that don't have an
+    // english counterpart.
+    foreach ($translatedFields as $fieldName => $fieldValue) {
+      $fieldExistsOnEnglishEntity = $entity->hasField($fieldName);
+      if (!$fieldExistsOnEnglishEntity) {
+        unset($translatedFields[$fieldName]);
+      }
+    }
+
+    // Guard clause: Don't add an entity translation when no fields
+    // have translations.
     $noFieldsToTranslate = count($translatedFields) === 0;
     if ($noFieldsToTranslate) {
       return;
@@ -167,7 +178,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     foreach ($translatedFields as $fieldName => $fieldValue) {
       $spanishTranslation->{$fieldName} = $processedTranslatedEntity->{$fieldName};
     }
-    $entity->save();
+    $spanishTranslation->save();
   }
 
   /**
