@@ -172,13 +172,16 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
     if (!$spanishTranslationAlreadyExists) {
-      $entity->addTranslation('es');
+      $entityArray = $entity->toArray();
+      $translation = array_merge($entityArray, $translatedFields);
+      $entity->addTranslation('es', $translation);
     }
     $spanishTranslation = $entity->getTranslation('es');
     foreach ($translatedFields as $fieldName => $fieldValue) {
       $spanishTranslation->{$fieldName} = $processedTranslatedEntity->{$fieldName};
     }
-    $spanishTranslation->save();
+    $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+    $entity->save();
   }
 
   /**
