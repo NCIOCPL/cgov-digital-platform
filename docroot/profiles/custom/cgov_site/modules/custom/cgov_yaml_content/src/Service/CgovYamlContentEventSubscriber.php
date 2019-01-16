@@ -137,22 +137,37 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
         }
       }
     }
-    // 3. Build translation entity.
-    // We need to create a full mapping of the original entity, not just
-    // the translated fields.
-    $entityArray = $entity->toArray();
-    $translation = array_merge($entityArray, $translatedFields);
+
+    // 3. Translate "#process" fields.
+    // The yaml_content loader offers the ability to use process functions
+    // as callbacks in the yml.
+    // Translated fields also doing that don't have access to this feature
+    // so we are going to borrow the functionality. Unfortunately, the
+    // preprocess method is protected, so we need to use another public
+    // method to access it.
+    // The yaml_content ContentLoader buildEntity method expects the parsed
+    // yaml to work with, so we want to make sure the version with the spanish
+    // fields replacing the english ones is provided.
+    // Ultimately we are provided a second entity that has the process fields
+    // in a post processed state, from which we can grab the values to add to
+    // our translation. This returned entity is not saved, here or in
+    // yaml_content.
+    // Also, it's important to note that behind the scenes, this will also allow
+    // yaml_content to correctly move the processed files into the
+    // sites/default/files  directory for later access.
+    $translatedYaml = array_merge($yamlContent, $translatedFields);
+    $processedTranslatedEntity = $this->contentLoader->buildEntity($translatedYaml['entity'], $translatedYaml);
+
+    // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
-    if ($spanishTranslationAlreadyExists) {
-      $spanishTranslation = $entity->getTranslation('es');
-      foreach ($translatedFields as $fieldName => $translatedContent) {
-        $spanishTranslation->{$fieldName} = $translatedContent;
-      }
+    if (!$spanishTranslationAlreadyExists) {
+      $entity->addTranslation('es');
     }
-    else {
-      $entity->addTranslation('es', $translation);
-      $entity->save();
+    $spanishTranslation = $entity->getTranslation('es');
+    foreach ($translatedFields as $fieldName => $fieldValue) {
+      $spanishTranslation->{$fieldName} = $processedTranslatedEntity->{$fieldName};
     }
+    $entity->save();
   }
 
   /**
