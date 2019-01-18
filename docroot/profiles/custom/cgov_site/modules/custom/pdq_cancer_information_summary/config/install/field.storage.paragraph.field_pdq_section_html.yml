@@ -4,8 +4,11 @@ dependencies:
   module:
     - paragraphs
     - text
-id: paragraph.field_section_html
-field_name: field_section_html
+  enforced:
+    module:
+      - pdq_cancer_information_summary
+id: paragraph.field_pdq_section_html
+field_name: field_pdq_section_html
 entity_type: paragraph
 type: text_long
 settings: {  }
@@ -14,5 +17,5 @@ locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
-persist_with_no_fields: false
+persist_with_no_fields: true
 custom_storage: false
