@@ -80,13 +80,17 @@ class PDQResource extends ResourceBase {
   /**
    * Responds to GET requests.
    *
+   * See also \Drupal\pdq_core\Plugin\rest\resource::get(), which
+   * takes a CDR ID and returns all of the node ids (with language)
+   * which match.
+   *
    * @param string $id
-   *   The CDR ID of a PDQ Summary document or Drupal node ID.
+   *   A Drupal node ID.
    *
    * @return \Drupal\rest\ResourceResponse
-   *   The response containing node ID(s) or the values (in a keyed array)
-   *   for a Drupal node. There can be multiple nested arrays for the
-   *   English (keyed by 'en') and Spanish ('es') versions of the summary.
+   *   The values (in a keyed array) for a Drupal node. There can be multiple
+   *   nested arrays for the English (keyed by 'en') and Spanish ('es')
+   *   versions of the summary.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
    *   Thrown when the summary node was not found.
@@ -98,23 +102,6 @@ class PDQResource extends ResourceBase {
     // Make sure the client gave us something to look for.
     if (!$id) {
       throw new BadRequestHttpException(t('No ID was provided'));
-    }
-
-    // If we got a CDR ID, find the corresponding node IDs (should
-    // be only one, but we return all we found, and it's the client's
-    // problem to deal with cases where more than one node is found).
-    if (substr($id, 0, 3) === 'CDR') {
-      $cdr_id = substr($id, 3);
-      $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
-      $query->addField('c', 'entity_id');
-      $query->condition('c.bundle', 'pdq_cancer_information_summary');
-      $query->condition('c.field_pdq_cdr_id_value', $cdr_id);
-      $nids = $query->execute()->fetchCol();
-      if (!empty($nids)) {
-        return new ResourceResponse($nids);
-      }
-      $msg = t('@id not found', ['@id' => $id]);
-      throw new NotFoundHttpException($msg);
     }
 
     // We got a node ID, so return the corresponding node's values.
@@ -191,13 +178,12 @@ class PDQResource extends ResourceBase {
    */
   public function post(array $summary) {
 
-    // Simplified approach, doesn't support updates of existing
-    // nodes. At this point we're just trying to make sure we
-    // can save a new summary and add its Spanish translation.
-    // If the values have a node ID (nid) this is the Spanish
-    // summary.
+    // Extract the bits we'll use frequently.
     $nid = $summary['nid'];
     $language = $summary['language'];
+
+    // If the node doesn't already exist, create it. The English
+    // summary must be stored before its Spanish translation.
     if (empty($nid)) {
       if ($language != 'en') {
         $msg = 'New summary node must be the English version';
@@ -208,6 +194,9 @@ class PDQResource extends ResourceBase {
         'langcode' => 'en',
       ]);
     }
+
+    // The node already exists: fetch it and point to the entity
+    // for the language being stored.
     else {
       $node = Node::load($nid);
       if ($node->hasTranslation($language)) {
@@ -217,20 +206,8 @@ class PDQResource extends ResourceBase {
         $node = $node->addTranslation($language);
       }
     }
-    $today = date('Y-m-d');
-    $node->setTitle(($summary['title']));
-    $node->setOwnerId($this->currentUser->id());
-    $node->set('path', ['alias' => $summary['url']]);
-    $node->set('field_pdq_cdr_id', $summary['cdr_id']);
-    $node->set('field_pdq_audience', $summary['audience']);
-    $node->set('field_pdq_summary_type', $summary['summary_type']);
-    $node->set('field_date_posted', $summary['posted_date'] ?? $today);
-    $node->set('field_date_updated', $summary['updated_date'] ?? $today);
-    $node->set('field_short_title', $summary['short_title']);
-    $node->set('field_list_description', $summary['description']);
-    $node->set('field_public_use', TRUE);
 
-    // Assemble and plug in the summary sections.
+    // Assemble the summary sections as Paragraph entities.
     $sections = [];
     foreach ($summary['sections'] as $section) {
       $paragraph = Paragraph::create([
@@ -251,62 +228,35 @@ class PDQResource extends ResourceBase {
         'target_revision_id' => $paragraph->getRevisionId(),
       ];
     }
-    $node->set('field_summary_sections', $sections);
 
-    // @todo: defer this, using 'draft' initially.
-    $node->moderation_state->value = 'published';
+    // Fill in the values for the summary.
+    $today = date('Y-m-d');
+    $node->setTitle(($summary['title']));
+    $node->setOwnerId($this->currentUser->id());
+    $node->set('path', ['alias' => $summary['url']]);
+    $node->set('field_pdq_cdr_id', $summary['cdr_id']);
+    $node->set('field_pdq_audience', $summary['audience']);
+    $node->set('field_pdq_summary_type', $summary['summary_type']);
+    $node->set('field_date_posted', $summary['posted_date'] ?? $today);
+    $node->set('field_date_updated', $summary['updated_date'] ?? $today);
+    $node->set('field_short_title', $summary['short_title']);
+    $node->set('field_list_description', $summary['description']);
+    $node->set('field_summary_sections', $sections);
+    $node->set('field_public_use', TRUE);
+
+    // Store the summary, leaving it unpublished. We'll make all of the
+    // summaries published in a separate pass after they've all been
+    // stored, in order to minimize the window of time during which
+    // older versions exist alongside newer.
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';
     $code = empty($nid) ? 201 : 200;
     $cdr_id = $summary['cdr_id'];
     $args = ['%verb' => $verb, '%cdrid' => $cdr_id, '%nid' => $node->id()];
     $this->logger->notice('%verb %nid for %cdrid', $args);
-    return new ResourceResponse(['nid' => $node->id()], $code);
-  }
 
-  /**
-   * Responds to DELETE requests.
-   *
-   * @param string $id
-   *   The CDR ID of a PDQ Summary document (optionally prefixed by
-   *   "CDR").
-   *
-   * @return \Drupal\rest\ModifiedResourceResponse
-   *   The HTTP response object.
-   *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   *   Throws exception expected.
-   */
-  public function delete($id) {
-    // To be rewritten from the original POC code once we have
-    // the CDR ID field defined.
-    if (substr($id, 0, 3) === 'CDR') {
-      $cdr_id = substr($id, 3);
-    }
-    else {
-      $cdr_id = $id;
-    }
-    $this->logger->notice("Deleting PDQ summary document CDR$id");
-    $query = \Drupal::database()->select('node__field_cdr_id', 'c');
-    $query->addField('c', 'entity_id');
-    $query->condition('c.bundle', 'pdq_summary');
-    $query->condition('c.field_cdr_id_value', $cdr_id);
-    $nids = $query->execute()->fetchCol();
-    if (empty($nids)) {
-      throw new NotFoundHttpException("$id not found");
-    }
-    $sh = \Drupal::entityTypeManager()->getStorage('node');
-    $nodes = $sh->loadMultiple($nids);
-    try {
-      foreach ($nids as $nid) {
-        $this->logger->notice("Deleted pdq_summary node $nid.");
-      }
-      $sh->delete($nodes);
-      return new ModifiedResourceResponse(NULL, 204);
-    }
-    catch (EntityStorageException $e) {
-      throw new HttpException(500, 'Internal Server Error', $e);
-    }
+    // Tell the caller the ID for the possibly new node.
+    return new ModifiedResourceResponse(['nid' => $node->id()], $code);
   }
 
 }
