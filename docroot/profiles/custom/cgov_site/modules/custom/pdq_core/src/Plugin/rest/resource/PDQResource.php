@@ -215,11 +215,11 @@ class PDQResource extends ResourceBase {
     $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
     $query->fields('c', ['entity_id', 'langcode']);
     $query->condition('c.bundle', 'pdq_cancer_information_summary');
-    $query->condition('c.field_cdr_id_value', $id);
+    $query->condition('c.field_pdq_cdr_id_value', $id);
+    $query->condition('c.deleted', 0);
     $results = $query->execute();
     foreach ($results as $result) {
-      list($nid, $langcode) = $result;
-      $matches[] = [$nid, $langcode];
+      $matches[] = [$result->entity_id, $result->langcode];
     }
     return $matches;
   }
