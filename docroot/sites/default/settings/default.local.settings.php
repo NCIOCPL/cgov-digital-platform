@@ -8,8 +8,8 @@
 use Drupal\Component\Assertion\Handle;
 
 $db_name = '${drupal.db.database}';
-if (isset($acsf_site_name)) {
-  $db_name .= '_' . $acsf_site_name;
+if (isset($_acsf_site_name)) {
+  $db_name .= '_' . $_acsf_site_name;
 }
 
 /**
@@ -108,10 +108,10 @@ $settings['extension_discovery_scan_tests'] = FALSE;
 /**
  * Configure static caches.
  *
- * Note: you should test with the config, bootstrap, and discovery caches enabled to 
+ * Note: you should test with the config, bootstrap, and discovery caches enabled to
  * test that metadata is cached as expected. However, in the early stages of development,
- * you may want to disable them. Overrides to these bins must be explicitly set for each 
- * bin to change the default configuration provided by Drupal core in core.services.yml. 
+ * you may want to disable them. Overrides to these bins must be explicitly set for each
+ * bin to change the default configuration provided by Drupal core in core.services.yml.
  * See https://www.drupal.org/node/2754947
  */
 
@@ -159,9 +159,9 @@ $config['system.file']['path']['temporary'] = '/tmp';
  * Private file path.
  */
 $settings['file_private_path'] = $dir . '/files-private';
-if (isset($acsf_site_name)) {
-  $settings['file_public_path'] = "sites/default/files/$acsf_site_name";
-  $settings['file_private_path'] = "$repo_root/files-private/$acsf_site_name";
+if (isset($_acsf_site_name)) {
+  $settings['file_public_path'] = "sites/default/files/$_acsf_site_name";
+  $settings['file_private_path'] = "$repo_root/files-private/$_acsf_site_name";
 }
 
 /**
