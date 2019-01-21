@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_item
+    - node.type.cgov_article
+    - node.type.cgov_home_landing
+    - paragraphs.paragraphs_type.cgov_card_internal
+id: paragraph.cgov_card_internal.field_featured_item
+field_name: field_featured_item
+entity_type: paragraph
+bundle: cgov_card_internal
+label: 'Featured Item'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      cgov_article: cgov_article
+      cgov_home_landing: cgov_home_landing
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: cgov_article
+field_type: entity_reference

@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.cgov_home_landing.field_date_reviewed
     - field.field.node.cgov_home_landing.field_date_updated
     - field.field.node.cgov_home_landing.field_feature_card_description
+    - field.field.node.cgov_home_landing.field_landing_contents
     - field.field.node.cgov_home_landing.field_list_description
     - field.field.node.cgov_home_landing.field_page_description
     - field.field.node.cgov_home_landing.field_search_engine_restrictions
@@ -16,6 +17,7 @@ dependencies:
     - node.type.cgov_home_landing
   module:
     - datetime
+    - entity_reference_revisions
     - options
     - user
 id: node.cgov_home_landing.default
@@ -85,6 +87,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_landing_contents:
+    type: entity_reference_revisions_entity_view
+    weight: 113
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
     region: content
   field_list_description:
     weight: 107
