@@ -135,6 +135,7 @@ class PDQResource extends ResourceBase {
           'updated_date' => $translation->field_date_updated->value,
           'short_title' => $translation->field_short_title->value,
           'description' => $translation->field_list_description->value,
+          'keywords' => $translation->field_syndication_keywords->value,
           'public_use' => $translation->field_public_use,
           'url' => $translation->path->alias,
           'published' => $translation->promote->value,
@@ -241,6 +242,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
     $node->set('field_short_title', $summary['short_title']);
     $node->set('field_list_description', $summary['description']);
+    $node->set('field_syndication_keywords', $summary['keywords']);
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', TRUE);
 
