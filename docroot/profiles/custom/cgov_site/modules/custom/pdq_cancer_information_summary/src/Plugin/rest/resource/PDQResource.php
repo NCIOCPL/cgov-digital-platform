@@ -244,7 +244,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_list_description', $summary['description']);
     $node->set('field_syndication_keywords', $summary['keywords']);
     $node->set('field_summary_sections', $sections);
-    $node->set('field_public_use', TRUE);
+    $node->set('field_public_use', 1);
 
     // Store the summary, leaving it unpublished. We'll make all of the
     // summaries published in a separate pass after they've all been
