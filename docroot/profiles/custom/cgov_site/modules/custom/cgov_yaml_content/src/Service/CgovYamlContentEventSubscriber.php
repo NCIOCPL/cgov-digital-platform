@@ -70,6 +70,49 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Create a new Spanish paragraph.
+   *
+   * @param array $fieldData
+   *   Field data as array.
+   */
+  public function createParagraph(array $fieldData) {
+    var_dump($fieldData);
+    $paragraph = Paragraph::create($fieldData);
+    $paragraph->langcode = 'es';
+    $paragraph->save();
+    $paragraphEntityReferenceFields = [
+      'target_id' => $paragraph->id(),
+      'target_revision_id' => $paragraph->getRevisionId(),
+    ];
+    var_dump($paragraphEntityReferenceFields);
+    return $paragraphEntityReferenceFields;
+  }
+
+  /**
+   * Translate paragraphs (recursive).
+   *
+   * @param array|string $fields
+   *   Entity/Field data as array.
+   */
+  public function translateParagraphs($fields) {
+    if (!is_array($fields)) {
+      return $fields;
+    }
+
+    $isParagraph = $fields['entity'] === 'paragraph';
+
+    foreach ($fields as $key => $value) {
+      $fields[$key] = $this->translateParagraphs($value);
+    }
+
+    if ($isParagraph) {
+      $fields = $this->createParagraph($fields);
+    }
+
+    return $fields;
+  }
+
+  /**
    * Add available Spanish translations.
    *
    * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
@@ -122,32 +165,11 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // replace the original English paragraph with a reference to
     // it. Magic associates the two distinct paragraphs by being
     // contained in the same field on the same entity.
-    foreach ($translatedFields as $fieldName => $fieldData) {
-      if (is_array($fieldData) && count($fieldData) > 0) {
-        // Multiple paragraphs can be in the same field.
-        // NB: Translations are not required to have the same
-        // number of paragraph entities for a given field
-        // as the original entity.
-        $translatedParagraphs = [];
-        foreach ($fieldData as $dataArray) {
-          if (is_array($dataArray)) {
-            $fieldEntityType = $dataArray['entity'];
-            if ($fieldEntityType === 'paragraph') {
-              $paragraph = Paragraph::create($dataArray);
-              $paragraph->langcode = 'es';
-              $paragraph->save();
-              $translatedParagraphs[] = [
-                'target_id' => $paragraph->id(),
-                'target_revision_id' => $paragraph->getRevisionId(),
-              ];
-            };
-          }
-        }
-        if (count($translatedParagraphs) > 0) {
-          $translatedFields[$fieldName] = $translatedParagraphs;
-        }
-      }
-    }
+    // Multiple paragraphs can be in the same field.
+    // NB: Translations are not required to have the same
+    // number of paragraph entities for a given field
+    // as the original entity.
+    $translatedFields = $this->translateParagraphs($translatedFields);
 
     // 3. Translate "#process" fields.
     // The yaml_content loader offers the ability to use process functions
@@ -176,6 +198,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $translation = array_merge($entityArray, $translatedFields);
       $entity->addTranslation('es', $translation);
     }
+
     $spanishTranslation = $entity->getTranslation('es');
     foreach ($translatedFields as $fieldName => $fieldValue) {
       $spanishTranslation->{$fieldName} = $processedTranslatedEntity->{$fieldName};
