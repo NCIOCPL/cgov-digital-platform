@@ -4,22 +4,19 @@ dependencies:
   config:
     - field.storage.node.field_public_use
     - node.type.cgov_press_release
-  module:
-    - options
-  enforced:
-    module:
-    - cgov_core
 id: node.cgov_press_release.field_public_use
 field_name: field_public_use
 entity_type: node
 bundle: cgov_press_release
-label: 'Public Use Text'
-description: 'Public Use Text appears at the bottom of the page.'
-required: true
+label: 'Public Use'
+description: ''
+required: false
 translatable: true
 default_value:
   -
-    value: '0'
+    value: 0
 default_value_callback: ''
-settings: {  }
-field_type: list_string
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
