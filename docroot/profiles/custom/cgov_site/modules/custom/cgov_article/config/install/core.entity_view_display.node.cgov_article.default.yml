@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
+    - field.field.node.cgov_article.field_public_use
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
     - node.type.cgov_article
@@ -135,6 +136,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_public_use:
+    weight: 15
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_search_engine_restrictions:
     weight: 14
