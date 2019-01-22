@@ -1,3 +1,19 @@
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Find a Clinical Trial"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'find_clinical_trial.jpg'
+      alt: 'Find a Clinical Trial'
+
 - entity: "node"
   type: "cgov_home_landing"
   langcode: en
@@ -22,6 +38,47 @@
       type: "cgov_primary_feature_row"
       field_container_heading:
         - value: "Featured Content"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
       ## Cards here
     ######## End Feature Row ###########
     ######## Begin Guide Row ###########
