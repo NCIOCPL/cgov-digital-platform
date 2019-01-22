@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying cards.
+ */
+#}
+
+{% macro featureCard(title, description, image, url) %}
+  <div class="feature-card">
+    <a href="{{ url }}">
+      {% if image %}
+        <div class="image-hover">
+          {{ image }}
+        </div>
+      {% endif %}
+      <h3>{{ title }}<h3>
+      {% if description %}
+        <p>{{ description }}</p>
+      {% endif %}
+    </a>
+  </div>
+{% endmacro %}
