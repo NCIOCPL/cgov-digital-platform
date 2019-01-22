@@ -5,7 +5,6 @@
  * Install pdq_core module.
  */
 
-use Drupal\cgov_core\CgovCoreTools;
 use Drupal\user\Entity\User;
 
 /**
@@ -14,18 +13,6 @@ use Drupal\user\Entity\User;
  * Create the account used for importing PDQ content.
  */
 function pdq_core_install() {
-
-  // Get our helper.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Add content type permissions and assign to workflow.
-  $restfulPermissions = [
-    'restful delete pdq_api',
-    'restful get pdq_api',
-    'restful post pdq_api',
-  ];
-  $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
-  $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
   $user = User::create();
   $user->setUsername('PDQ');
   $user->setEmail('pdq@cancer.gov');
