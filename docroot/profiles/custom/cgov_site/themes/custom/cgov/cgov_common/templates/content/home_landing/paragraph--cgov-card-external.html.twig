@@ -16,7 +16,5 @@
 {# ###### Setup Img ######## #}
 {% set image = content.field_image_promotional %}
 
-{{ dump(content.field_image_promotional[0]["#media"]|keys)}}
-
 {## Render Card ##}
 {{cardMacros.featureCard(title, description, image, url)}}
