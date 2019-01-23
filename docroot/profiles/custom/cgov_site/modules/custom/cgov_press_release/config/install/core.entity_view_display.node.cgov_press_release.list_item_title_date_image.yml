@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.list_item_title_date_image
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
     - field.field.node.cgov_press_release.field_card_title
@@ -25,10 +26,10 @@ dependencies:
     - options
     - text
     - user
-id: node.cgov_press_release.default
+id: node.cgov_press_release.list_item_title_date_image
 targetEntityType: node
 bundle: cgov_press_release
-mode: default
+mode: list_item_title_date_image
 content:
   body:
     label: hidden
@@ -39,9 +40,9 @@ content:
     region: content
   content_moderation_control:
     weight: -20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_browser_title:
     weight: 110
     label: above
@@ -172,8 +173,8 @@ content:
     region: content
   links:
     weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   langcode: true
