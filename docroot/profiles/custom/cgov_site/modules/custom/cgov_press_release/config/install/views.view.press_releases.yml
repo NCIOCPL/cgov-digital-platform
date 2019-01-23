@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.list_item_title_date_desc
     - field.storage.node.field_date_posted
     - node.type.cgov_press_release
   module:
@@ -71,7 +71,36 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: default
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            field_date_posted: field_date_posted
+            title: title
+          info:
+            field_date_posted:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
       row:
         type: fields
         options:
@@ -144,6 +173,71 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: node
+          entity_field: title
+          plugin_id: field
       filters:
         status:
           value: '1'
@@ -165,6 +259,46 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: bundle
+        langcode:
+          id: langcode
+          table: node_field_revision
+          field: langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            '***LANGUAGE_language_content***': '***LANGUAGE_language_content***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: langcode
+          plugin_id: language
       sorts:
         field_date_posted_value:
           id: field_date_posted_value
@@ -244,10 +378,10 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_date_posted'
-  page_1:
+  pr_list_en:
     display_plugin: page
-    id: page_1
-    display_title: Page
+    id: pr_list_en
+    display_title: 'PR Listing-EN'
     position: 1
     display_options:
       display_extenders: {  }
@@ -265,7 +399,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: list_item_title_date_desc
       arguments:
         field_date_posted_value_year:
           id: field_date_posted_value_year
@@ -313,6 +447,87 @@ display:
           tokenize: false
           content: "<a href=\"2019\">2019</a> |\r\n<a href=\"2018\">2018</a> |\r\n<a href=\"2017\">2017</a> |\r\n<a href=\"2016\">2016</a> |\r\n<a href=\"2015\">2015</a> |\r\n<a href=\"2014\">2014</a>"
           plugin_id: text_custom
+      display_description: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_date_posted'
+  pr_list_es:
+    display_plugin: page
+    id: pr_list_es
+    display_title: 'PR Listing-ES'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: noticias/comunicados-de-prensa
+      rendering_language: '***LANGUAGE_language_content***'
+      style:
+        type: default
+        options: {  }
+      defaults:
+        style: false
+        row: false
+        arguments: false
+        header: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: list_item_title_date_desc
+      arguments:
+        field_date_posted_value_year:
+          id: field_date_posted_value_year
+          table: node__field_date_posted
+          field: field_date_posted_value_year
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: default
+          exception:
+            value: all
+            title_enable: true
+            title: All
+          title_enable: true
+          title: '{{ arguments.field_date_posted_value_year }} Press Releases'
+          default_argument_type: raw
+          default_argument_options:
+            index: 2
+            use_alias: false
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          plugin_id: datetime_year
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: "<a href=\"2019\">2019</a> |\r\n<a href=\"2018\">2018</a> |\r\n<a href=\"2017\">2017</a> |\r\n<a href=\"2016\">2016</a> |\r\n<a href=\"2015\">2015</a> |\r\n<a href=\"2014\">2014</a>"
+          plugin_id: text_custom
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
