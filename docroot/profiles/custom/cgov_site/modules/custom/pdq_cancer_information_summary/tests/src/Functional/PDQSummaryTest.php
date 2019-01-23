@@ -36,7 +36,7 @@ class PDQSummaryTest extends BrowserTestBase {
   const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
   const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
   const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
-  const PUBLIC_USE = 'edit-field-public-use-value';
+  const PUBLIC_USE = 'edit-field-public-use';
   const AUDIENCE_TYPE = 'edit-field-pdq-audience';
   const SECTION_ID = 'edit-field-summary-sections-0-subform-field-pdq-section-id-0-value';
   const SECTION_TITLE = 'edit-field-summary-sections-0-subform-field-pdq-section-title-0-value';
