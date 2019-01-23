@@ -90,6 +90,14 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   /**
    * Translate paragraphs (recursive).
    *
+   * Walk the field arrays. If paragraphs are
+   * found, create a nnew entity and replace the
+   * field with the paragraph reference fields.
+   * This must be done deepest nested first so
+   * parent paragraphs will have children
+   * paragraph references at the time of their
+   * creation.
+   *
    * @param array|string $fields
    *   Entity/Field data as array.
    */
@@ -176,13 +184,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // so we are going to borrow the functionality. Unfortunately, the
     // preprocess method is protected, so we need to use another public
     // method to access it.
-    // The yaml_content ContentLoader buildEntity method expects the parsed
-    // yaml to work with, so we want to make sure the version with the spanish
-    // fields replacing the english ones is provided.
-    // Ultimately we are provided a second entity that has the process fields
-    // in a post processed state, from which we can grab the values to add to
-    // our translation. This returned entity is not saved, here or in
-    // yaml_content.
     // Also, it's important to note that behind the scenes, this will also allow
     // yaml_content to correctly move the processed files into the
     // sites/default/files  directory for later access.
@@ -192,6 +193,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
         $translatedFields[$key] = FieldProcessor::processFieldData($key, $value);
       }
     }
+
     // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
     if (!$spanishTranslationAlreadyExists) {
