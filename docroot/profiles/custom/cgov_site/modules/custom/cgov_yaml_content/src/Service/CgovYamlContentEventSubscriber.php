@@ -2,6 +2,7 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
+use Drupal\cgov_yaml_content\FieldProcessor\FieldProcessor;
 use Drupal\yaml_content\Event\YamlContentEvents;
 use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
@@ -76,7 +77,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Field data as array.
    */
   public function createParagraph(array $fieldData) {
-    var_dump($fieldData);
     $paragraph = Paragraph::create($fieldData);
     $paragraph->langcode = 'es';
     $paragraph->save();
@@ -84,7 +84,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       'target_id' => $paragraph->id(),
       'target_revision_id' => $paragraph->getRevisionId(),
     ];
-    var_dump($paragraphEntityReferenceFields);
     return $paragraphEntityReferenceFields;
   }
 
@@ -99,12 +98,11 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       return $fields;
     }
 
-    $isParagraph = $fields['entity'] === 'paragraph';
-
     foreach ($fields as $key => $value) {
       $fields[$key] = $this->translateParagraphs($value);
     }
 
+    $isParagraph = $fields['entity'] === 'paragraph';
     if ($isParagraph) {
       $fields = $this->createParagraph($fields);
     }
@@ -188,9 +186,12 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // Also, it's important to note that behind the scenes, this will also allow
     // yaml_content to correctly move the processed files into the
     // sites/default/files  directory for later access.
-    $translatedYaml = array_merge($yamlContent, $translatedFields);
-    $processedTranslatedEntity = $this->contentLoader->buildEntity($translatedYaml['entity'], $translatedYaml);
-
+    $this->contentLoader->setExistenceCheck(TRUE);
+    foreach ($translatedFields as $key => $value) {
+      if (is_array($value) && isset($value['process'])) {
+        $translatedFields[$key] = FieldProcessor::processFieldData($key, $value);
+      }
+    }
     // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
     if (!$spanishTranslationAlreadyExists) {
@@ -201,7 +202,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
 
     $spanishTranslation = $entity->getTranslation('es');
     foreach ($translatedFields as $fieldName => $fieldValue) {
-      $spanishTranslation->{$fieldName} = $processedTranslatedEntity->{$fieldName};
+      $spanishTranslation->{$fieldName} = $fieldValue;
     }
     $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
     $entity->save();
