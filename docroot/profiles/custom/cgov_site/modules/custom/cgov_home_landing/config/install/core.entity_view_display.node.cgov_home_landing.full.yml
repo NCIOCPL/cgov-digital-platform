@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_home_landing.field_browser_title
     - field.field.node.cgov_home_landing.field_card_title
     - field.field.node.cgov_home_landing.field_date_display_mode
@@ -18,18 +18,24 @@ dependencies:
     - field.field.node.cgov_home_landing.field_short_title
     - node.type.cgov_home_landing
   module:
+    - entity_reference_revisions
     - user
-id: node.cgov_home_landing.teaser
+id: node.cgov_home_landing.full
 targetEntityType: node
 bundle: cgov_home_landing
-mode: teaser
+mode: full
 content:
-  links:
-    weight: 100
-    settings: {  }
+  field_landing_contents:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
     region: content
 hidden:
+  content_moderation_control: true
   field_browser_title: true
   field_card_title: true
   field_date_display_mode: true
@@ -38,9 +44,9 @@ hidden:
   field_date_updated: true
   field_feature_card_description: true
   field_image_promotional: true
-  field_landing_contents: true
   field_list_description: true
   field_page_description: true
   field_search_engine_restrictions: true
   field_short_title: true
   langcode: true
+  links: true

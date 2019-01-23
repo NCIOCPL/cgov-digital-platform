@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_home_landing.field_browser_title
     - field.field.node.cgov_home_landing.field_card_title
     - field.field.node.cgov_home_landing.field_date_display_mode
@@ -9,16 +10,17 @@ dependencies:
     - field.field.node.cgov_home_landing.field_date_reviewed
     - field.field.node.cgov_home_landing.field_date_updated
     - field.field.node.cgov_home_landing.field_feature_card_description
+    - field.field.node.cgov_home_landing.field_image_promotional
     - field.field.node.cgov_home_landing.field_landing_contents
     - field.field.node.cgov_home_landing.field_list_description
     - field.field.node.cgov_home_landing.field_page_description
     - field.field.node.cgov_home_landing.field_search_engine_restrictions
     - field.field.node.cgov_home_landing.field_short_title
     - node.type.cgov_home_landing
-    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - datetime
+    - entity_browser
     - paragraphs
     - path
 id: node.cgov_home_landing.default
@@ -28,7 +30,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -49,25 +51,25 @@ content:
     type: string_textfield
     region: content
   field_date_display_mode:
-    weight: 12
+    weight: 13
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
     region: content
   field_date_posted:
-    weight: 9
+    weight: 10
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 11
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 10
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -79,6 +81,21 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_image_promotional:
+    weight: 9
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
     region: content
   field_landing_contents:
     type: entity_reference_paragraphs
@@ -109,7 +126,7 @@ content:
     type: string_textfield
     region: content
   field_search_engine_restrictions:
-    weight: 13
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -131,13 +148,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 19
+    weight: 20
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -145,7 +162,7 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 18
+    weight: 19
     region: content
     third_party_settings: {  }
   title:
@@ -157,13 +174,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   translation:
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 17
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60

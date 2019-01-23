@@ -2,60 +2,54 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
+    - core.entity_view_mode.paragraph.thumbnail_card
     - field.field.paragraph.cgov_card_external.field_featured_url
     - field.field.paragraph.cgov_card_external.field_image_promotional
     - field.field.paragraph.cgov_card_external.field_override_card_description
     - field.field.paragraph.cgov_card_external.field_override_card_title
     - paragraphs.paragraphs_type.cgov_card_external
   module:
-    - entity_browser
     - link
-id: paragraph.cgov_card_external.default
+id: paragraph.cgov_card_external.thumbnail_card
 targetEntityType: paragraph
 bundle: cgov_card_external
-mode: default
+mode: thumbnail_card
 content:
   field_featured_url:
     weight: 3
+    label: hidden
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
-    type: link_default
+    type: link_separate
     region: content
   field_image_promotional:
+    type: entity_reference_entity_view
     weight: 2
+    label: hidden
     settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
+      view_mode: image_crop_featured
+      link: false
     third_party_settings: {  }
-    type: entity_browser_entity_reference
     region: content
   field_override_card_description:
     weight: 1
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
+      link_to_entity: false
     third_party_settings: {  }
-    type: string_textfield
+    type: string
     region: content
   field_override_card_title:
     weight: 0
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
+      link_to_entity: false
     third_party_settings: {  }
-    type: string_textfield
+    type: string
     region: content
-hidden:
-  created: true
-  status: true
-  uid: true
+hidden: {  }
