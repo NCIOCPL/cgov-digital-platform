@@ -20,3 +20,21 @@
     </a>
   </div>
 {% endmacro %}
+
+{% macro thumbnailCard(title, list_description, image, url) %}
+  <div class="row card-thumbnail">
+    {# TODO: What if no image? #}
+    <div class="small-2 columns card-thumbnail-image">
+      {# TODO: ESCAPE THE TITLE. USE ATTR CORRECTLY #}
+      <a href="{{url}}" class="image-hover" data-title="{{title}}">{{image}}</a>
+    </div>
+    <div class="small-10 columns card-thumbnail-text">
+      <h3>
+        <a href="{{url}}">{{title}}</a>
+      </h3>
+      {% if list_description %}
+        <p>{{list_description}}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}

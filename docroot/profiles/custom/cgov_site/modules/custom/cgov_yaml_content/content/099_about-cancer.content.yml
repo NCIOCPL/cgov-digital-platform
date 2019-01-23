@@ -142,8 +142,110 @@
     ######## Begin Secondary Card Row ###########
     - entity: 'paragraph'
       type: "cgov_secondary_feature_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
     ######## End Secondary Card Row ###########
 
+    ######## MULTIMEDIA HERE TBD ##############
+
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Thumbnail Row ##############
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Begin Feature Row ###########
