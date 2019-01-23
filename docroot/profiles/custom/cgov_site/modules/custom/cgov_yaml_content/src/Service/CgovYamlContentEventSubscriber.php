@@ -2,7 +2,9 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
+use Drupal\cgov_yaml_content\FieldProcessor\FieldProcessor;
 use Drupal\yaml_content\Event\YamlContentEvents;
+use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
@@ -22,13 +24,23 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $themeManager;
 
   /**
+   * Yaml Content Content Loader.
+   *
+   * @var \Drupal\yaml_content\ContentLoader\ContentLoaderInterface
+   */
+  protected $contentLoader;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
+   * @param \Drupal\yaml_content\ContentLoader\ContentLoaderInterface $contentLoader
+   *   Content Loader.
    */
-  public function __construct(ThemeManagerInterface $themeManager) {
+  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader) {
     $this->themeManager = $themeManager;
+    $this->contentLoader = $contentLoader;
   }
 
   /**
@@ -56,6 +68,54 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+  }
+
+  /**
+   * Create a new Spanish paragraph.
+   *
+   * @param array $fieldData
+   *   Field data as array.
+   */
+  public function createParagraph(array $fieldData) {
+    $paragraph = Paragraph::create($fieldData);
+    $paragraph->langcode = 'es';
+    $paragraph->save();
+    $paragraphEntityReferenceFields = [
+      'target_id' => $paragraph->id(),
+      'target_revision_id' => $paragraph->getRevisionId(),
+    ];
+    return $paragraphEntityReferenceFields;
+  }
+
+  /**
+   * Translate paragraphs (recursive).
+   *
+   * Walk the field arrays. If paragraphs are
+   * found, create a nnew entity and replace the
+   * field with the paragraph reference fields.
+   * This must be done deepest nested first so
+   * parent paragraphs will have children
+   * paragraph references at the time of their
+   * creation.
+   *
+   * @param array|string $fields
+   *   Entity/Field data as array.
+   */
+  public function translateParagraphs($fields) {
+    if (!is_array($fields)) {
+      return $fields;
+    }
+
+    foreach ($fields as $key => $value) {
+      $fields[$key] = $this->translateParagraphs($value);
+    }
+
+    $isParagraph = $fields['entity'] === 'paragraph';
+    if ($isParagraph) {
+      $fields = $this->createParagraph($fields);
+    }
+
+    return $fields;
   }
 
   /**
@@ -87,6 +147,23 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
         }
       }
     }
+
+    // Guard clause: Don't translate fields that don't have an
+    // english counterpart.
+    foreach ($translatedFields as $fieldName => $fieldValue) {
+      $fieldExistsOnEnglishEntity = $entity->hasField($fieldName);
+      if (!$fieldExistsOnEnglishEntity) {
+        unset($translatedFields[$fieldName]);
+      }
+    }
+
+    // Guard clause: Don't add an entity translation when no fields
+    // have translations.
+    $noFieldsToTranslate = count($translatedFields) === 0;
+    if ($noFieldsToTranslate) {
+      return;
+    }
+
     // 2. Check for paragraphs.
     // Paragraphs have to be treated differently from other
     // entity types. Instead of adding a translation to the
@@ -94,50 +171,43 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // replace the original English paragraph with a reference to
     // it. Magic associates the two distinct paragraphs by being
     // contained in the same field on the same entity.
-    foreach ($translatedFields as $fieldName => $fieldData) {
-      if (is_array($fieldData) && count($fieldData) > 0) {
-        // Multiple paragraphs can be in the same field.
-        // NB: Translations are not required to have the same
-        // number of paragraph entities for a given field
-        // as the original entity.
-        $translatedParagraphs = [];
-        foreach ($fieldData as $dataArray) {
-          if (is_array($dataArray)) {
-            $fieldEntityType = $dataArray['entity'];
-            if ($fieldEntityType === 'paragraph') {
-              $paragraph = Paragraph::create($dataArray);
-              $paragraph->langcode = 'es';
-              $paragraph->save();
-              $translatedParagraphs[] = [
-                'target_id' => $paragraph->id(),
-                'target_revision_id' => $paragraph->getRevisionId(),
-              ];
-            };
-          }
-        }
-        if (count($translatedParagraphs) > 0) {
-          $translatedFields[$fieldName] = $translatedParagraphs;
-        }
+    // Multiple paragraphs can be in the same field.
+    // NB: Translations are not required to have the same
+    // number of paragraph entities for a given field
+    // as the original entity.
+    $translatedFields = $this->translateParagraphs($translatedFields);
+
+    // 3. Translate "#process" fields.
+    // The yaml_content loader offers the ability to use process functions
+    // as callbacks in the yml.
+    // Translated fields also doing that don't have access to this feature
+    // so we are going to borrow the functionality. Unfortunately, the
+    // preprocess method is protected, so we need to use another public
+    // method to access it.
+    // Also, it's important to note that behind the scenes, this will also allow
+    // yaml_content to correctly move the processed files into the
+    // sites/default/files  directory for later access.
+    $this->contentLoader->setExistenceCheck(TRUE);
+    foreach ($translatedFields as $key => $value) {
+      if (is_array($value) && isset($value['process'])) {
+        $translatedFields[$key] = FieldProcessor::processFieldData($key, $value);
       }
     }
-    // 3. Build translation entity.
-    // We need to create a full mapping of the original entity, not just
-    // the translated fields.
-    if ($translatedFields) {
+
+    // 4. Create translation.
+    $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
+    if (!$spanishTranslationAlreadyExists) {
       $entityArray = $entity->toArray();
       $translation = array_merge($entityArray, $translatedFields);
-      $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
-      if ($spanishTranslationAlreadyExists) {
-        $spanishTranslation = $entity->getTranslation('es');
-        foreach ($translatedFields as $fieldName => $translatedContent) {
-          $spanishTranslation->{$fieldName} = $translatedContent;
-        }
-      }
-      else {
-        $entity->addTranslation('es', $translation);
-        $entity->save();
-      }
+      $entity->addTranslation('es', $translation);
     }
+
+    $spanishTranslation = $entity->getTranslation('es');
+    foreach ($translatedFields as $fieldName => $fieldValue) {
+      $spanishTranslation->{$fieldName} = $fieldValue;
+    }
+    $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+    $entity->save();
   }
 
   /**
