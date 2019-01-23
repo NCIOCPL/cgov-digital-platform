@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_card_internal.field_featured_item
+    - field.field.paragraph.cgov_card_internal.field_override_card_description
+    - field.field.paragraph.cgov_card_internal.field_override_card_title
+    - paragraphs.paragraphs_type.cgov_card_internal
+id: paragraph.cgov_card_internal.default
+targetEntityType: paragraph
+bundle: cgov_card_internal
+mode: default
+content:
+  field_featured_item:
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: feature_card
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_override_card_description:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_override_card_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

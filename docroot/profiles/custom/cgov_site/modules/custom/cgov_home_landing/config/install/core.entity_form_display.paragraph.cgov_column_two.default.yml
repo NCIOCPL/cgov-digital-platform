@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_column_two.field_main_contents
+    - field.field.paragraph.cgov_column_two.field_secondary_contents
+    - paragraphs.paragraphs_type.cgov_column_two
+  module:
+    - paragraphs
+id: paragraph.cgov_column_two.default
+targetEntityType: paragraph
+bundle: cgov_column_two
+mode: default
+content:
+  field_main_contents:
+    weight: 0
+    settings:
+      title: Item
+      title_plural: Items
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: cgov_card_raw_html
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
+    region: content
+  field_secondary_contents:
+    type: entity_reference_paragraphs
+    weight: 1
+    settings:
+      title: Item
+      title_plural: Items
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: cgov_card_raw_html
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
