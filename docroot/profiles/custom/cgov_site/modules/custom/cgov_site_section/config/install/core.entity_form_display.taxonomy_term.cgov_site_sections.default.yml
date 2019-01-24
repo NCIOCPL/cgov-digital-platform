@@ -22,43 +22,42 @@ bundle: cgov_site_sections
 mode: default
 content:
   description:
-    type: text_textfield
-    weight: 0
+    type: text_textarea
+    weight: 1
     region: content
     settings:
-      size: 60
       placeholder: ''
+      rows: 5
     third_party_settings: {  }
   field_breadcrumb_root:
-    weight: 40
+    weight: 12
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_landing_page:
-    weight: 36
-    settings:
-      display_label: true
+    weight: 10
+    settings: {  }
     third_party_settings: {  }
-    type: boolean_checkbox
+    type: options_select
     region: content
   field_levels_to_display:
-    weight: 34
+    weight: 8
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
     region: content
   field_main_nav_root:
-    weight: 37
+    weight: 11
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_mega_menu_content:
-    weight: 39
+    weight: 13
     settings:
       match_operator: CONTAINS
       size: 60
@@ -67,7 +66,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_navigation_label:
-    weight: 32
+    weight: 6
     settings:
       size: 60
       placeholder: ''
@@ -75,7 +74,7 @@ content:
     type: string_textfield
     region: content
   field_pretty_url:
-    weight: 38
+    weight: 3
     settings:
       size: 60
       placeholder: ''
@@ -83,20 +82,20 @@ content:
     type: string_textfield
     region: content
   field_section_nav_root:
-    weight: 33
+    weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_show_in_navigation:
-    weight: 35
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_site_section_name:
-    weight: 31
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -112,7 +111,7 @@ content:
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: -5
+    weight: 0
     region: content
     settings:
       size: 60
@@ -120,7 +119,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
