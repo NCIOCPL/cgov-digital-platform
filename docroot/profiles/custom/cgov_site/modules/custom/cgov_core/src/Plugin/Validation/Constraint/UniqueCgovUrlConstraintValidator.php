@@ -12,8 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package Drupal\cgov_core\Plugin\Validation\Constraint
  */
-class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface
-{
+class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements ContainerInjectionInterface {
 
   /**
    * Validator 2.5 and upwards compatible execution context.

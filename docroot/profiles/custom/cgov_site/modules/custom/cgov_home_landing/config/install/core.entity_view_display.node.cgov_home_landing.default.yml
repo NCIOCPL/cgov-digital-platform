@@ -11,8 +11,10 @@ dependencies:
     - field.field.node.cgov_home_landing.field_feature_card_description
     - field.field.node.cgov_home_landing.field_list_description
     - field.field.node.cgov_home_landing.field_page_description
+    - field.field.node.cgov_home_landing.field_pretty_url
     - field.field.node.cgov_home_landing.field_search_engine_restrictions
     - field.field.node.cgov_home_landing.field_short_title
+    - field.field.node.cgov_home_landing.field_site_section
     - node.type.cgov_home_landing
   module:
     - datetime
@@ -25,9 +27,9 @@ mode: default
 content:
   content_moderation_control:
     weight: -20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_browser_title:
     weight: 104
     label: above
@@ -102,6 +104,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+#  field_pretty_url:
+#    weight: 113
+#    label: hidden
+#    settings:
+#      link_to_entity: false
+#    third_party_settings: {  }
+#    type: string
+#    region: content
   field_search_engine_restrictions:
     weight: 112
     label: above
@@ -117,10 +127,18 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+#  field_site_section:
+#    weight: 114
+#    label: hidden
+#    settings:
+#      link: true
+#    third_party_settings: {  }
+#    type: entity_reference_label
+    region: content
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true

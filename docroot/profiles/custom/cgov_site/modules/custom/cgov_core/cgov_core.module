@@ -6,7 +6,6 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
@@ -99,12 +98,9 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
 }
 
 /**
- * Implements hook_eneity_type_build()
- *
- * @param array $entity_types
+ * Implements hook_entity_type_build().
  */
 function cgov_core_entity_type_build(array &$entity_types) {
-
   // Add our custom validation to the node entity.
   $entity_types['node']->addConstraint('UniqueCgovUrl');
 }
