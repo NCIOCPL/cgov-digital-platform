@@ -27,6 +27,13 @@
  * Site Factory will not start a task.
  */
 
+ /*
+  * Check to see if we are running in the ncigov application, i.e. ACSF
+  */
+if (empty($_ENV['AH_SITE_GROUP']) || $_ENV['AH_SITE_GROUP'] != 'ncigov') {
+  exit(0);
+}
+
 /**
  * Constant for the Site Factory WIP task status for completion without error.
  */
