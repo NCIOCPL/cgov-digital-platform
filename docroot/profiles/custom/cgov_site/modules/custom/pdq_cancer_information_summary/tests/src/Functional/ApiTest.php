@@ -27,15 +27,29 @@ class ApiTest extends BrowserTestBase {
   protected $pdqImporter;
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+
+    // Create PDQ user and login.
+    $this->pdqImporter = $this->drupalCreateUser();
+    $this->pdqImporter->addRole('pdq_importer');
+    $this->pdqImporter->save();
+    // Don't $this->drupalLogin($this->pdqImporter);.
+  }
+
+  /**
    * Verify correct storage of new Cancer Information Summary.
    */
   public function testApis() {
     // @var \Drupal\Core\Url
-    $url = Url::fromUri('https://rksystems.com');
+    $url = Url::fromUri('base:pdq/api/cis/0');
     // @var \Psr\Http\Message\ResponseInterface
-    $response = $this->request('GET', $url, []);
-    $this->assertEqual(200, $response->getStatusCode());
-    $this->assertTrue(2 > 1);
+    $response = $this->request('GET', $url, ['query' => ['_format' => 'json']]);
+    $this->assertResponse(200);
+    $payload = json_decode($response->getBody()->__toString(), TRUE);
+    $this->assertEqual($payload['foo'], 'bar');
   }
 
   /**
@@ -44,7 +58,10 @@ class ApiTest extends BrowserTestBase {
   private function request($method, Url $url, array $options) {
     $options[RequestOptions::HTTP_ERRORS] = FALSE;
     $options[RequestOptions::ALLOW_REDIRECTS] = FALSE;
-    $options = $this->decorateWithXdebugCookie($options);
+    $options = $this->addCookies($options);
+    $credentials = $this->pdqImporter->name->value . ':' . $this->pdqImporter->passRaw;
+    $auth = base64_encode($credentials);
+    $options[RequestOptions::HEADERS]['Authorization'] = 'Basic ' . $auth;
     $client = $this->getHttpClient();
     return $client->request($method, $url->setAbsolute(TRUE)->toString(), $options);
   }
@@ -52,7 +69,7 @@ class ApiTest extends BrowserTestBase {
   /**
    * Helper method to set cookies.
    */
-  private function decorateWithXdebugCookie(array $request_options) {
+  private function addCookies(array $request_options) {
     $session = $this->getSession();
     $driver = $session->getDriver();
     if ($driver instanceof BrowserKitDriver) {
