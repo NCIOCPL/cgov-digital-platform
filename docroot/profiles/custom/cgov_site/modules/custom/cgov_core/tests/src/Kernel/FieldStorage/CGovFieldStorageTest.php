@@ -20,7 +20,7 @@ class CGovFieldStorageTest extends KernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core',
+    'language', 'content_translation', 'cgov_core', 'taxonomy',
   ];
 
   /**

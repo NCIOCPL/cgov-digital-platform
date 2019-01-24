@@ -18,7 +18,7 @@ class RolesTest extends EntityKernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core',
+    'language', 'content_translation', 'cgov_core', 'taxonomy',
   ];
 
   /**
@@ -28,7 +28,7 @@ class RolesTest extends EntityKernelTestBase {
     parent::setup();
     $this->installConfig([
       'field', 'node', 'user', 'file', 'workflows', 'content_moderation', 'language',
-      'content_translation', 'cgov_core',
+      'content_translation', 'cgov_core', 'taxonomy',
     ]);
   }
 
