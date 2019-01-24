@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.list_item_title_date
     - core.entity_view_mode.node.list_item_title_date_desc
     - field.storage.node.field_date_posted
     - node.type.cgov_press_release
@@ -399,7 +400,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: list_item_title_date_desc
+          view_mode: list_item_title_date
       arguments:
         field_date_posted_value_year:
           id: field_date_posted_value_year
