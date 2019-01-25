@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_updated
+    - node.type.cgov_blog_post
+  module:
+    - datetime
+id: node.cgov_blog_post.field_date_updated
+field_name: field_date_updated
+entity_type: node
+bundle: cgov_blog_post
+label: 'Updated Date'
+description: 'Date that changes were published to body text of page.'
+required: false
+translatable: true
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime
