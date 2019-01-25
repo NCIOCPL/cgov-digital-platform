@@ -1,0 +1,18 @@
+{{ attach_library('cgov_common/blog_post') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+    <div class="resize-content">
+        <h1>
+            {{ node.label }}
+        </h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+          {# content #}
+        </div>
+    </div>
+    {# TODO: Article footer stuff has to go somewhere. TBD. #}
+    <footer class="article-footer">
+      {{ contentPageMacros.displayDates(node, content) }}
+    </footer>
+</article>

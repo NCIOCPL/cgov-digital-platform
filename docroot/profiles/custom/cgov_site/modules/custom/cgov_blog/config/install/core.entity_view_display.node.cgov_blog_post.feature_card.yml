@@ -1,0 +1,126 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.feature_card
+    - field.field.node.cgov_blog_post.field_browser_title
+    - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_date_display_mode
+    - field.field.node.cgov_blog_post.field_date_posted
+    - field.field.node.cgov_blog_post.field_date_reviewed
+    - field.field.node.cgov_blog_post.field_date_updated
+    - field.field.node.cgov_blog_post.field_feature_card_description
+    - field.field.node.cgov_blog_post.field_image_promotional
+    - field.field.node.cgov_blog_post.field_list_description
+    - field.field.node.cgov_blog_post.field_page_description
+    - field.field.node.cgov_blog_post.field_search_engine_restrictions
+    - field.field.node.cgov_blog_post.field_short_title
+    - node.type.cgov_blog_post
+  module:
+    - cgov_core
+    - options
+    - user
+id: node.cgov_blog_post.feature_card
+targetEntityType: node
+bundle: cgov_blog_post
+mode: feature_card
+content:
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_browser_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_card_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_date_display_mode:
+    weight: 10
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_date_posted:
+    weight: 7
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_reviewed:
+    weight: 8
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_updated:
+    weight: 9
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_feature_card_description:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_list_description:
+    weight: 6
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_page_description:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_short_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_image_promotional: true
+  field_search_engine_restrictions: true
+  langcode: true

@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_blog.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_blog_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
+  $siteHelper->attachContentTypeToWorkflow('cgov_blog_post', 'editorial_workflow');
+
+}
