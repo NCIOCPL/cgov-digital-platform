@@ -147,7 +147,6 @@ class PDQResource extends ResourceBase {
         $errors[] = [$nid, $language, $message];
       }
     }
-    $nid = $summary['nid'];
     return new ModifiedResourceResponse(['errors' => $errors], 200);
   }
 
@@ -188,6 +187,7 @@ class PDQResource extends ResourceBase {
     // Apply deletion logic based on language.
     if ($langcode === 'es') {
       $node->removeTranslation('es');
+      $node->save();
     }
     else {
       if ($node->hasTranslation('es')) {
