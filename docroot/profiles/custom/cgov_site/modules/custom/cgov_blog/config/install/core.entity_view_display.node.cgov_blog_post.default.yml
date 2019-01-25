@@ -15,14 +15,13 @@ dependencies:
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
     - node.type.cgov_blog_post
-  module:
-    - datetime
-    - options
-    - text
-    - user
   enforced:
     module:
+      - cgov_core
+  module:
     - cgov_core
+    - options
+    - user
 id: node.cgov_blog_post.default
 targetEntityType: node
 bundle: cgov_blog_post
@@ -131,5 +130,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  langcode: true
   field_image_promotional: true
+  langcode: true
