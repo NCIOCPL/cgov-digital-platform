@@ -103,7 +103,9 @@ class PDQResource extends ResourceBase {
       $msg = t('CDR ID @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
-    return new ResourceResponse($matches);
+    $response = new ResourceResponse($matches);
+    $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
+    return $response;
   }
 
   /**

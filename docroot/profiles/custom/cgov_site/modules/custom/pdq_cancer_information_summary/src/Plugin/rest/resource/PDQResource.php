@@ -143,7 +143,9 @@ class PDQResource extends ResourceBase {
         ];
       }
     }
-    return new ResourceResponse($fields);
+    $response = new ResourceResponse($fields);
+    $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
+    return $response;
   }
 
   /**
