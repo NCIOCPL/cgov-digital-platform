@@ -125,7 +125,7 @@ class ApiTest extends BrowserTestBase {
   }
 
   /**
-   * Verify correct storage of new Cancer Information Summary.
+   * Verify correct behavior of PDQ Cancer Information Summary APIs.
    */
   public function testApis() {
 
