@@ -15,20 +15,76 @@ class CgovUserCommands extends DrushCommands {
   /**
    * Changes User Information.
    *
-   * Use this to change the admin user's name and password.
+   * This is done here because passing passwords
+   * on the cmd line causes them to be logged.
    *
-   * @param string $username
-   *   The new username.
-   * @param string $password
-   *   The new password.
+   * The YML file looks like:
+   * ```yaml
+   * admin:
+   *   username: 'admin'
+   *   password: 'password123'
+   * ```
+   *
+   * @param string $usersFile
+   *   Path to the yml file containing the admin information.
    *
    * @command cgov:change-admin-user
    * @aliases change-admin-user, chadm
-   * @usage drush cgov:change-admin-user newadmin "correct horse battery staple"
-   *   Set the username of the admin user to newadmin with a new password.
+   * @usage drush cgov:change-admin-user /tmp/drupal-users-file.yml
+   *   Set the username and password of the admin user to match the yml.
    * @bootstrap full
    */
-  public function changeAdminUserInfo($username, $password) {
+  public function changeAdminUserInfo($usersFile) {
+    // TODO: Relative file paths do not work here. Make them work.
+    if (!file_exists($usersFile)) {
+      throw new \Exception(dt('Unable to load file !file.', ['!file' => $usersFile]));
+    }
+
+    // Load Config File.
+    $userConfig = Yaml::parse(file_get_contents($usersFile));
+
+    if (!array_key_exists('admin', $userConfig)) {
+      $this->logger->warning('Admin key missing from configuration');
+      return;
+    }
+
+    if (!$this->isAdminValid($userConfig['admin'])) {
+      throw new \Exception(dt('Invalid config !file.', ['!file' => $usersFile]));
+    }
+
+    $user = $userConfig['admin']['username'];
+    $pass = $userConfig['admin']['password'];
+
+    $this->resetAdmin($user, $pass);
+  }
+
+  /**
+   * Checks if the admin block is valid.
+   *
+   * @param mixed $admin
+   *   The admin block from the yaml.
+   *
+   * @return bool
+   *   TRUE if valid, FALSE if not.
+   */
+  protected function isAdminValid($admin) {
+    return (
+      array_key_exists('username', $admin) &&
+      $admin['username'] != '' &&
+      array_key_exists('password', $admin) &&
+      $admin['password'] != ''
+    );
+  }
+
+  /**
+   * Actual function to change admin user and pass.
+   *
+   * @param string $username
+   *   Username.
+   * @param string $password
+   *   Password.
+   */
+  protected function resetAdmin($username, $password) {
     /** @var \Drupal\user\Entity\User $account */
     if ($account = User::load(1)) {
       if ($username) {
