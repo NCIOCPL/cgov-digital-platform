@@ -32,8 +32,7 @@ class UsersCommand extends BltTasks {
     if (array_key_exists('admin', $userConfig)) {
       if ($this->isAdminBlockValid($userConfig['admin'])) {
         $commands['cgov:user:reset-admin'] = [
-          'username' => $userConfig['admin']['username'],
-          'password' => $userConfig['admin']['password'],
+          'users_file_path' => $users_file_path,
         ];
       }
       else {
@@ -89,18 +88,15 @@ class UsersCommand extends BltTasks {
   /**
    * Resets the user 1 username and password.
    *
-   * @param string $username
-   *   The username.
-   * @param string $password
-   *   The password.
+   * @param mixed $users_file_path
+   *   The associative array of the user.
    *
    * @command cgov:user:reset-admin
    */
-  public function resetAdmin($username, $password) {
+  public function resetAdmin($users_file_path) {
     $task = $this->taskDrush()
       ->drush('change-admin-user')
-      ->rawArg($username)
-      ->rawArg($password)
+      ->rawArg($users_file_path)
       ->printOutput(TRUE);
     $result = $task->interactive($this->input()->isInteractive())->run();
     return $result;
