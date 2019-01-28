@@ -24,7 +24,7 @@ repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-$users_file="$HOME/cgov-drupal-users.yml"
+users_file="$HOME/cgov-drupal-users.yml"
 
 ## TODO: need to figure out what to do here if it is a fresh db
 ## Perform a fresh install.
