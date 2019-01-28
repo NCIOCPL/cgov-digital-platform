@@ -1,0 +1,38 @@
+# These files and their children will not be copied to the deployment artifact.
+# If these files already exist in the upstream artifact, they will be removed.
+/.drush-use
+/.github
+/.idea
+/.travis.yml
+/.vagrant
+/acquia-pipelines.yml
+/blt.sh
+/box
+/build
+/deploy
+/docroot/core
+/docroot/libraries/contrib
+/docroot/modules/contrib
+/docroot/sites/*/files
+/files-private
+/docroot/sites/*/private
+/docroot/themes/contrib
+## We want our commands in /drush/Commands, so we will deal with it
+## using a .gitignore file.
+##/drush/Commands
+/README.md
+/readme
+/sites/development.services.yml
+/sites/blt.development.services.yml
+/tests
+/tmp
+/Vagrantfile
+/.gitignore
+.git
+example.*
+local.settings.php
+local.drush.yml
+local.site.yml
+node_modules
+/vendor
+local.blt.yml
