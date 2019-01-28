@@ -135,7 +135,11 @@ class PDQResource extends ResourceBase {
           'updated_date' => $translation->field_date_updated->value,
           'short_title' => $translation->field_short_title->value,
           'description' => $translation->field_list_description->value,
-          'keywords' => $translation->field_syndication_keywords->value,
+
+          // This field will probably not be retained for the intitial
+          // release.
+          // 'keywords' => $translation->field_syndication_keywords->value,
+          // End of suppressed field.
           'public_use' => $translation->field_public_use->value,
           'url' => $translation->path->alias,
           'published' => $translation->status->value,
@@ -242,7 +246,10 @@ class PDQResource extends ResourceBase {
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
     $node->set('field_short_title', $summary['short_title']);
     $node->set('field_list_description', $summary['description']);
-    $node->set('field_syndication_keywords', $summary['keywords']);
+
+    // Field suppresse for now.
+    // $node->set('field_syndication_keywords', $summary['keywords']);
+    // End of suppressed field.
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', 1);
 

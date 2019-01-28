@@ -39,7 +39,9 @@ class ApiTest extends BrowserTestBase {
     'cdr_id' => 5001,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
-    'keywords' => 'cancer, treatment',
+    // Begin suppressed field.
+    // 'keywords' => 'cancer, treatment',
+    // End suppressed field.
     'posted_date' => '2020-01-01',
     'updated_date' => '2020-01-02',
     'sections' => [
@@ -63,7 +65,9 @@ class ApiTest extends BrowserTestBase {
     'cdr_id' => 5002,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
-    'keywords' => 'cancer, treatment',
+    // Begin suppressed field.
+    // 'keywords' => 'cancer, treatment',
+    // End suppressed field.
     'posted_date' => '2020-01-04',
     'updated_date' => '2020-01-05',
     'sections' => [
@@ -81,7 +85,9 @@ class ApiTest extends BrowserTestBase {
     'audience',
     'cdr_id',
     'description',
-    'keywords',
+    // Begin suppressed field.
+    // 'keywords',
+    // End suppressed field.
     'posted_date',
     'title',
     'sections',
