@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.list_item_title_date
-    - core.entity_view_mode.node.list_item_title_desc_image
+    - core.entity_view_mode.node.list_item_title_date_desc_image
     - field.storage.node.field_date_posted
     - node.type.cgov_press_release
   module:
@@ -375,127 +375,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.node.field_date_posted'
-  block_1:
-    display_plugin: block
-    id: block_1
-    display_title: 'PR Listing Block-EN'
-    position: 7
-    display_options:
-      display_extenders: {  }
-      display_description: 'Block for /news-events/ landing page'
-      style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-      defaults:
-        style: false
-        row: false
-        arguments: false
-        pager: false
-        use_more: false
-        use_more_always: false
-        use_more_text: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: list_item_title_desc_image
-      arguments: {  }
-      pager:
-        type: some
-        options:
-          items_per_page: 10
-          offset: 0
-      use_more: true
-      use_more_always: true
-      use_more_text: 'All NCI News'
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.node.field_date_posted'
-  feed_1:
-    display_plugin: feed
-    id: feed_1
-    display_title: 'PR RSS-EN'
-    position: 5
-    display_options:
-      display_extenders: {  }
-      row:
-        type: node_rss
-        options: {  }
-      display_description: 'Press Release RSS Feed for English'
-      style:
-        type: rss
-        options:
-          uses_fields: false
-          description: 'Press Releases - Cancer.gov'
-      pager:
-        type: some
-        options:
-          items_per_page: 50
-          offset: 0
-      path: rss/press-releases
-      arguments: {  }
-      defaults:
-        arguments: false
-        header: false
-      header: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.node.field_date_posted'
-  feed_2:
-    display_plugin: feed
-    id: feed_2
-    display_title: 'PR RSS-ES'
-    position: 5
-    display_options:
-      display_extenders: {  }
-      row:
-        type: node_rss
-        options: {  }
-      display_description: 'Press Release RSS Feed for Spanish'
-      style:
-        type: rss
-        options:
-          uses_fields: false
-          description: 'Press Releases - Cancer.gov'
-      pager:
-        type: some
-        options:
-          items_per_page: 50
-          offset: 0
-      path: rss/comunicados-de-prensa
-      arguments: {  }
-      defaults:
-        arguments: false
-        title: false
-        sitename_title: false
-        header: false
-      title: 'Comunicados de prensa'
-      sitename_title: false
-      header: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -1108,20 +987,33 @@ display:
         use_more: false
         use_more_always: false
         use_more_text: false
+        footer: false
       row:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: list_item_title_desc_image
+          view_mode: list_item_title_date_desc_image
       arguments: {  }
       pager:
         type: some
         options:
           items_per_page: 10
           offset: 0
-      use_more: true
+      use_more: false
       use_more_always: true
       use_more_text: 'All NCI News'
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: '<a href="/news-events/press-releases/2019">All NCI News</a>'
+          plugin_id: text_custom
     cache_metadata:
       max-age: -1
       contexts:

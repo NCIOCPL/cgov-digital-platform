@@ -36,3 +36,25 @@
     </div>
   {% endif %}
 {% endmacro %}
+
+{% macro press_release_item(node, content, display) %}
+    <article>
+      <div class="resize-content">
+        {% if 'title' in display %}
+        <h2>
+          {{ node.label }}
+        </h2>
+        {% endif %}
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+          {% if 'image' in display %}{{ content.field_image_article }}{% endif %}
+          {% if 'desc' in display %}{{ content.field_intro_text }}{% endif %}
+          {% if 'body' in display %}{{ content.field_article_body }}{% endif %}
+        </div>
+      </div>
+      {# TODO: Article footer stuff has to go somewhere. TBD. #}
+      <footer class="article-footer">
+        {% if 'date' in display %}{{ content.field_date_posted }}{% endif %}
+      </footer>
+    </article>
+{% endmacro %}
