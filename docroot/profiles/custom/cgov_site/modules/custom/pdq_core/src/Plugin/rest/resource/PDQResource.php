@@ -103,7 +103,9 @@ class PDQResource extends ResourceBase {
       $msg = t('CDR ID @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
-    return new ResourceResponse($matches);
+    $response = new ResourceResponse($matches);
+    $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
+    return $response;
   }
 
   /**
@@ -145,7 +147,6 @@ class PDQResource extends ResourceBase {
         $errors[] = [$nid, $language, $message];
       }
     }
-    $nid = $summary['nid'];
     return new ModifiedResourceResponse(['errors' => $errors], 200);
   }
 
@@ -186,6 +187,7 @@ class PDQResource extends ResourceBase {
     // Apply deletion logic based on language.
     if ($langcode === 'es') {
       $node->removeTranslation('es');
+      $node->save();
     }
     else {
       if ($node->hasTranslation('es')) {

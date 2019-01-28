@@ -136,14 +136,16 @@ class PDQResource extends ResourceBase {
           'short_title' => $translation->field_short_title->value,
           'description' => $translation->field_list_description->value,
           'keywords' => $translation->field_syndication_keywords->value,
-          'public_use' => $translation->field_public_use,
+          'public_use' => $translation->field_public_use->value,
           'url' => $translation->path->alias,
-          'published' => $translation->promote->value,
-          'section' => $sections,
+          'published' => $translation->status->value,
+          'sections' => $sections,
         ];
       }
     }
-    return new ResourceResponse($fields);
+    $response = new ResourceResponse($fields);
+    $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
+    return $response;
   }
 
   /**
@@ -165,8 +167,6 @@ class PDQResource extends ResourceBase {
    * In contrast with the CDR, the Drupal CMS stores an English
    * Cancer Information Summary document and it's Spanish translation
    * document in the same node.
-   *
-   * Incomplete until we get the rest of the fields defined.
    *
    * @param array $summary
    *   The summary document values.
