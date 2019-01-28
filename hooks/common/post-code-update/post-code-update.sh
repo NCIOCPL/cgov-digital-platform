@@ -27,7 +27,7 @@ repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-$users_file = "$HOME/cgov-drupal-users.yml"
+$users_file="$HOME/cgov-drupal-users.yml"
 
 ## Perform a fresh install
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
