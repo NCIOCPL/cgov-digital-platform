@@ -11,10 +11,8 @@ dependencies:
     - field.field.taxonomy_term.cgov_site_sections.field_pretty_url
     - field.field.taxonomy_term.cgov_site_sections.field_section_nav_root
     - field.field.taxonomy_term.cgov_site_sections.field_show_in_navigation
-    - field.field.taxonomy_term.cgov_site_sections.field_site_section_name
     - taxonomy.vocabulary.cgov_site_sections
   module:
-    - path
     - text
 id: taxonomy_term.cgov_site_sections.default
 targetEntityType: taxonomy_term
@@ -30,7 +28,7 @@ content:
       rows: 5
     third_party_settings: {  }
   field_breadcrumb_root:
-    weight: 12
+    weight: 8
     settings:
       display_label: true
     third_party_settings: {  }
@@ -38,26 +36,29 @@ content:
     region: content
   field_landing_page:
     weight: 10
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: entity_reference_autocomplete
     region: content
   field_levels_to_display:
-    weight: 8
+    weight: 9
     settings:
-      placeholder: ''
+      placeholder: (1-5)
     third_party_settings: {  }
     type: number
     region: content
   field_main_nav_root:
-    weight: 11
+    weight: 6
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_mega_menu_content:
-    weight: 13
+    weight: 11
     settings:
       match_operator: CONTAINS
       size: 60
@@ -66,7 +67,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_navigation_label:
-    weight: 6
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -89,18 +90,10 @@ content:
     type: boolean_checkbox
     region: content
   field_show_in_navigation:
-    weight: 9
+    weight: 5
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
-  field_site_section_name:
-    weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
+    type: options_buttons
     region: content
   langcode:
     type: language_select
@@ -117,10 +110,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  path: true
