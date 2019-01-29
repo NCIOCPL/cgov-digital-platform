@@ -29,7 +29,7 @@
 
   {# ###### Setup Img ######## #}
   {# TODO: Setup image #}
-  {% set image = null %}
+  {% set image = content.field_featured_item %}
 
   {## Render Card ##}
   {{cardMacros.featureCard(title, description, image, url)}}
