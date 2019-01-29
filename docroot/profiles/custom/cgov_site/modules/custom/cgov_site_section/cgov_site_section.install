@@ -11,9 +11,7 @@
 function cgov_site_section_install() {
 
   $field_manager = \Drupal::service('entity_field.manager');
-
   $field_storage_manager = \Drupal::service('field_storage_definition.listener');
-  print_r(array_keys($field_manager->getFieldStorageDefinitions('taxonomy_term', 'cgov_site_sections')));
 
   $definition = $field_manager->getFieldStorageDefinitions('taxonomy_term', 'cgov_site_sections')['computed_path'];
 
@@ -24,7 +22,10 @@ function cgov_site_section_install() {
  * Implements hook_uninstall().
  */
 function cgov_site_section_uninstall() {
-  $entity_manager = \Drupal::entityManager();
-  $definition = $entity_manager->getLastInstalledFieldStorageDefinitions('taxonomy_term')['computed_path'];
-  $entity_manager->onFieldStorageDefinitionDelete($definition);
+  $field_manager = \Drupal::service('entity_field.manager');
+  $field_storage_manager = \Drupal::service('field_storage_definition.listener');
+
+  $definition = $field_manager->getFieldStorageDefinitions('taxonomy_term', 'cgov_site_sections')['computed_path'];
+
+  $field_storage_manager->onFieldStorageDefinitionDelete($definition);
 }
