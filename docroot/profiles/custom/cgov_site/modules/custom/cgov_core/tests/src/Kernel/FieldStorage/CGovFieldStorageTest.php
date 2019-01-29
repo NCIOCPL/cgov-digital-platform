@@ -89,16 +89,6 @@ class CGovFieldStorageTest extends KernelTestBase {
       "label" => "Search Engine Restrictions",
       "type" => "list_string",
     ],
-    [
-      "name" => "field_syndicate",
-      "label" => "Syndicate",
-      "type" => "boolean",
-    ],
-    [
-      "name" => "field_syndication_keywords",
-      "label" => "Syndication Keywords",
-      "type" => "plain_text",
-    ],
   ];
 
   /**
