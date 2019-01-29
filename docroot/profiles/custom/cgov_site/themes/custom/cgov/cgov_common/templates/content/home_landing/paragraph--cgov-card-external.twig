@@ -4,11 +4,15 @@
  # get the title, description, image and URL from the paragraph fields.
  #}
 
+{% set cardType = (\strpos(content.theme_hook_suggestions[2], 'feature_card') ? 'featureCard' : 'thumbnailCard' %}
+
+{% set cardType = 'featureCard' %}
+
 {# ###### Setup Title ####### #}
 {% set title = content.field_override_card_title[0] %}
 
 {# ###### Setup Description ####### #}
-{% set list_description = content.field_override_card_description[0] %}
+{% set description = content.field_override_card_description[0] %}
 
 {# ###### Setup URL ######## #}
 {% set url = content.field_featured_url.uri %}
@@ -17,4 +21,4 @@
 {% set image = content.field_image_promotional %}
 
 {## Render Card ##}
-{{cardMacros.thumbnailCard(title, list_description, image, url)}}
+{{cardMacros[cardType](title, description, image, url)}}
