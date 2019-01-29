@@ -8,6 +8,9 @@
 {% if content.field_featured_item[0] %}
 
   {% set cardType = 'featureCard' %}
+  {% if 'thumbnail' in _context.theme_hook_suggestions[2] %}
+    {% set cardType = 'thumbnailCard' %}
+  {% endif %}
   
   {# ###### Setup Title ####### #}
   {% if content.field_override_card_title[0] %}
@@ -23,9 +26,8 @@
     {% set description = content.field_override_card_description[0] %}
   {% elseif content.field_featured_item[0]["#node"].field_feature_card_description[0] %}
     {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
-  {% elseif content.field_featured_item[0]["#node"].field_feature_list_description[0] %}
-    {% set description = content.field_featured_item[0]["#node"].field_feature_list_description[0].value %}
-    {% set cardType = 'thumbnailCard' %}
+  {% elseif content.field_featured_item[0]["#node"].field_list_description[0] %}
+    {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
   {# Else no description #}
   {# Else no description #}
   {% endif %}
@@ -39,5 +41,5 @@
   {% set image = content.field_featured_item %}
 
   {## Render Card ##}
-  {{cardMacros[cardType](title, description, image, url)}}
+  {{ attribute(cardMacros, cardType, [title, description, image, url])}}
 {% endif %}
