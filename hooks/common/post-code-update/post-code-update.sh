@@ -27,12 +27,11 @@ repo_root="/var/www/html/$site.$target_env"
 export PATH=$repo_root/vendor/bin:$PATH
 cd $repo_root
 
-## This does not work unless there is a previously existing database
-## For the foreseeable future we will not be running this.
-## TODO: find a way to determine if this is a fresh db and not run this, if there is an install, run this.
+users_file="$HOME/cgov-drupal-users.yml"
 
 ## Perform a fresh install
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
+blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
 
 set +v
