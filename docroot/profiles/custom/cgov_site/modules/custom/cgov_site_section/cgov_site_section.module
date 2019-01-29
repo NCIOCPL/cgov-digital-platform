@@ -43,21 +43,18 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'cgov_site_sections') {
-
     $field_pretty_url = $entity->get('field_pretty_url')->value;
 
-    if ($entity->id() && isset($field_pretty_url)) {
-      $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($entity->id());
+    if (!empty($entity->id()) && isset($field_pretty_url)) {
+      $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($entity->get('parent')->target_id);
       $values = [];
 
-      unset($ancestors[$entity->id()]);
       foreach ($ancestors as $term) {
         $value = $term->get('field_pretty_url')->value;
         $values[] = $value;
       }
       $computed_parent = implode('/', $values);
       $entity->set('computed_path', $computed_parent . '/' . $field_pretty_url);
-
     }
     else {
       $entity->set('computed_path', $field_pretty_url);
