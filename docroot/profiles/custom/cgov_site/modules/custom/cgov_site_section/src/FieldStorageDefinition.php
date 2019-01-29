@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\entity_test;
+namespace Drupal\cgov_site_section;
 
 use Drupal\Core\Field\BaseFieldDefinition;
 

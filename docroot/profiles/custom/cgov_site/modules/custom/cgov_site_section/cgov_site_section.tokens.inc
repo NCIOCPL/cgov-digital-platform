@@ -44,7 +44,6 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
 
           $values = [];
           foreach (token_element_children($array) as $key) {
-            \Drupal::logger('CGOV Site Section')->notice('Processing nci-join-path Token');
             $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($key);
             $value = $term->get('field_pretty_url')->value;
             $values[] = $value;
