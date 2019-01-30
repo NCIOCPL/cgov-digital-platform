@@ -16,9 +16,11 @@ dependencies:
     - field.field.node.cgov_press_release.field_list_description
     - field.field.node.cgov_press_release.field_page_description
     - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_pretty_url
     - field.field.node.cgov_press_release.field_public_use
     - field.field.node.cgov_press_release.field_search_engine_restrictions
     - field.field.node.cgov_press_release.field_short_title
+    - field.field.node.cgov_press_release.field_site_section
     - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
     - workflows.workflow.editorial_workflow
@@ -35,7 +37,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 10
+    weight: 12
     settings:
       rows: 9
       summary_rows: 3
@@ -44,19 +46,11 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 21
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   field_browser_title:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_card_title:
     weight: 6
     settings:
       size: 60
@@ -64,32 +58,40 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_card_title:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_date_display_mode:
-    weight: 16
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
     region: content
   field_date_posted:
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
     weight: 15
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_date_reviewed:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_date_updated:
-    weight: 14
+    weight: 16
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_feature_card_description:
-    weight: 9
+    weight: 11
     settings:
       size: 60
       placeholder: ''
@@ -97,7 +99,7 @@ content:
     type: string_textfield
     region: content
   field_image_article:
-    weight: 11
+    weight: 13
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -112,7 +114,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_image_promotional:
-    weight: 12
+    weight: 14
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -127,7 +129,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_list_description:
-    weight: 8
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -135,7 +137,7 @@ content:
     type: string_textfield
     region: content
   field_page_description:
-    weight: 7
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -143,7 +145,15 @@ content:
     type: string_textfield
     region: content
   field_press_release_type:
-    weight: 17
+    weight: 19
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 3
     settings:
       size: 60
       placeholder: ''
@@ -151,27 +161,36 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 18
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_search_engine_restrictions:
-    weight: 19
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_short_title:
-    weight: 5
+    weight: 7
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_site_section:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_subtitle:
-    weight: 3
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -187,13 +206,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 25
+    weight: 27
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 24
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -201,26 +220,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 22
+    weight: 24
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 26
+    weight: 28
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 23
+    weight: 25
     region: content
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 2
+    weight: 4
     region: content
     settings:
       size: 60
@@ -233,7 +252,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 20
+    weight: 22
     settings:
       match_operator: CONTAINS
       size: 60
