@@ -5,6 +5,7 @@
  * Contains cgov_core.module.
  */
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
@@ -105,26 +106,17 @@ function cgov_core_entity_type_build(array &$entity_types) {
   $entity_types['node']->addConstraint('UniqueCgovUrl');
 }
 
-
-function cgov_core_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
-  if ($entity_type->id() == 'taxonomy_term' && $bundle == 'cgov_site_sections' && !empty($fields['field_pretty_url'])) {
-    $fields['field_pretty_url']->setPropertyConstraints('value', array(
-        'Regex' => array(
-          'pattern' => '/^[a-zA-Z0-9-]*$/',
-          'message' => 'Please use numbers only in the Pretty URL field.',
-        ),
-        )
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node') && !empty($fields['field_pretty_url'])) {
+    $fields['field_pretty_url']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[a-zA-Z0-9-]*$/',
+        'message' => 'The Pretty URL field only accepts letters, numbers and dashes.',
+      ],
+    ]
     );
   }
 }
-
-//function hook_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
-//  if (!empty($fields['field_some_reference'])) {
-//    $fields['field_some_reference']->addConstraint('UniqueField', [
-//      'message' => 'An entity reference %value already exists.'
-//    ]);
-//  }
-//}
-//
-//
-////
