@@ -1,6 +1,6 @@
 @import '~Core/styles/breakpoints';
 @import '~Core/styles/colors';
-@import 'sprites/svg-sprite';
+@import '~Styles/sprites/svg-sprite';
 /* COMMON for all page options */
 .page-options {
 	margin: 1em 0;
@@ -53,7 +53,7 @@ a.social-share--custom-tweet {
 	align-items: center;
 	height: 56px;
 	width: 166px;
-	
+
 	&::after {
 		content: '';
 		@include svg-sprite(tweet-this, mq);
@@ -185,11 +185,11 @@ a.social-share--custom-tweet {
 @include bp(small) {
 
 	#blogPageOptionsOuterContainer {
-		// This is to hide some craziness where a margin is being applied to a script only block 
+		// This is to hide some craziness where a margin is being applied to a script only block
 		// because of how the page-options are being moved around.
 		display: none;
 	}
-	
+
 	.page-options-container {
 		display: flex;
 		align-items: center;
@@ -218,7 +218,7 @@ a.social-share--custom-tweet {
 	.page-options {
 		width: 100%;
 		float: none;
-		
+
 		ul {
 			justify-content: space-between;
 		}
@@ -228,7 +228,7 @@ a.social-share--custom-tweet {
 			height: 48px;
 		}
 	}
-	
+
 }
 
 /* TABLET page options */
