@@ -4,12 +4,7 @@
  # get the title, description, image and URL from the paragraph fields.
  #}
 
-{% set cardType = 'featureCard' %}
-
-{% set cardType = 'featureCard' %}
-{% if _context.view_mode is same as('thumbnail_card') %}
-  {% set cardType = 'thumbnailCard' %}
-{% endif %}
+{% set cardType = _context.view_mode %}
 
 {# ###### Setup Title ####### #}
 {% set title = content.field_override_card_title[0] %}

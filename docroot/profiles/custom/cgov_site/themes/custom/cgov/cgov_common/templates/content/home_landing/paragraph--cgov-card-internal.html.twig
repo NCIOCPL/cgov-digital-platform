@@ -7,10 +7,7 @@
  #}
 {% if content.field_featured_item[0] %}
 
-  {% set cardType = 'featureCard' %}
-  {% if _context.view_mode is same as('thumbnail_card') %}
-    {% set cardType = 'thumbnailCard' %}
-  {% endif %}
+  {% set cardType = _context.view_mode %}
   
   {# ###### Setup Title ####### #}
   {% if content.field_override_card_title[0] %}
