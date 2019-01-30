@@ -1,4 +1,4 @@
-{{ attach_library('cgov_common/blog_post') }}
+
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
@@ -8,7 +8,7 @@
         </h1>
         {{ drupal_block('page_options') }}
         <div id="cgvBody">
-          {# content #}
+          {{ content }}
         </div>
     </div>
     {# TODO: Article footer stuff has to go somewhere. TBD. #}
