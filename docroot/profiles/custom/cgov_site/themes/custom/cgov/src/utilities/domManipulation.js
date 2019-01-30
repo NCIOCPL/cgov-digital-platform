@@ -121,7 +121,12 @@ export const getCanonicalURL = (document = window.document) => document.querySel
  * @param {HTMLElement} [document=window.document]
  * @return {string}
  */
-export const getMetaURL = document => document.querySelector("meta[property='og:url']").getAttribute('content');
+export const getMetaURL = document => {
+  // MIGRATION NOTE:
+  // The elvis operator check is needed until the og:url metatag is available.
+  return document.querySelector("meta[property='og:url']")
+            && document.querySelector("meta[property='og:url']").getAttribute('content');
+}
 
 /**
  * On Some pages, the Page Options block is manually moved around the DOM based on the window width.
