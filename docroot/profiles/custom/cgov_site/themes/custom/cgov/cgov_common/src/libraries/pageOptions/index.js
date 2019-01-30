@@ -3,6 +3,7 @@ import {
     getNodeArray,
 } from 'Core/utilities';
 import pageOptionsTypes from './types';
+import './index.scss';
 
 const getPageOptionsNodes = (pageOptionsTypes) => {
     const pageOptions = Object.entries(pageOptionsTypes).reduce((acc, [type, settings]) => {
