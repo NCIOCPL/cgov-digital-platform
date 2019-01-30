@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_show_in_navigation
+field_name: field_show_in_navigation
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: main_nav
+      label: 'Hide in Main Nav'
+    -
+      value: section_nav
+      label: 'Hide in Section Nav'
+    -
+      value: mobile_nav
+      label: 'Hide in Mobile Nav'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

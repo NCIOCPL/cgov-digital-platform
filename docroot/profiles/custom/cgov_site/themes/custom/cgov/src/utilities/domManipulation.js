@@ -3,8 +3,8 @@
  * a provided class is found. Returns true if classname is found on any DOM node higher in the tree than
  * the provided node.
  * A DNA test for DOM Nodes if you will.
- * 
- * @param {node} node 
+ *
+ * @param {node} node
  * @param {string} className - classname only, do not use '.' selector
  * @return {boolean}
  */
@@ -18,7 +18,7 @@ export const checkNodeAncestryForClass = (node, className) => {
 		}
 		node = node.parentNode;
 	}
-	
+
 	return hasAncestor;
 };
 
@@ -26,12 +26,12 @@ export const checkNodeAncestryForClass = (node, className) => {
 /**
  * Return an array of nodes that match a given selector string starting from a given node
  * in the DOM tree.
- * 
- * DOM Querying typically returns nodelists not true arrays. We want to always get an array 
+ *
+ * DOM Querying typically returns nodelists not true arrays. We want to always get an array
  * back from querySelectorAll for easy reasoning.
- * 
- * @param {string} selector 
- * @param {node} [node=document] 
+ *
+ * @param {string} selector
+ * @param {node} [node=document]
  * @returns {node[]}
  */
 export const getNodeArray = (selector, node = document) => {
@@ -58,17 +58,17 @@ export const createFragment = html => {
 export const appendNodes = (nodes, parent) => nodes.map(node => parent.appendChild(node));
 
 /**
- * Given an array of arrays containing meta property attribute names and the corresponding value, will 
+ * Given an array of arrays containing meta property attribute names and the corresponding value, will
  * return an object with the property names as keys and the metatags content as values
- * 
+ *
  * Example metaTags = [
     ['property', 'og:url'],
-    ['property', 'og:title'], 
+    ['property', 'og:title'],
     ['property', 'og:description'],
     ['name', 'twitter:card']
 ]
  *returns { 'og:url': 'XXXX', 'og:description': 'XXXX'}
- *  
+ *
  * @param {Array[]} metaTags Array of arrays of propertyType & propertyName pairs for metatags
  * @param {Object} document Document (or document.documentElement for quicker searching) explicit for testing without DOM
  * @return {Object}
@@ -96,12 +96,20 @@ export const getMetaData = (metaTags, document) => {
  * @return {string}
  */
 export const getDocumentLanguage = (document = window.document) => {
-	return document.querySelector('meta[name="content-language"]').getAttribute('content');
+  // MIGRATION NOTE:
+  // The fallback values were added during migration because a content-language attribute was not available
+  // at the time this file was ported.
+  const language = document.querySelector('meta[name="content-language"]')
+    ? document.querySelector('meta[name="content-language"]').getAttribute('content')
+    : document.documentElement.lang
+      ? document.documentElement.lang
+      : 'en';
+  return language;
 }
 
 /**
  * Retrieve the canonical URL from the document head
- * 
+ *
  * @param {HTMLElement} [document=window.document]
  * @return {string}
  */
@@ -109,11 +117,16 @@ export const getCanonicalURL = (document = window.document) => document.querySel
 
 /**
  * Retrieve the URL from the document metadata og:url property
- * 
+ *
  * @param {HTMLElement} [document=window.document]
  * @return {string}
  */
-export const getMetaURL = document => document.querySelector("meta[property='og:url']").getAttribute('content');
+export const getMetaURL = document => {
+  // MIGRATION NOTE:
+  // The elvis operator check is needed until the og:url metatag is available.
+  return document.querySelector("meta[property='og:url']")
+            && document.querySelector("meta[property='og:url']").getAttribute('content');
+}
 
 /**
  * On Some pages, the Page Options block is manually moved around the DOM based on the window width.
@@ -131,7 +144,7 @@ export const pageOptionsTransporter = () => {
 		}
 	}
 	mediaQueryListener.addListener(mqEventHandler)
-	// Initialize page options block in correct page location on load 
+	// Initialize page options block in correct page location on load
 	// mediaQueryListeners don't automatically handle load events (they are for resizes primarily)
 	// so we need to manually invoke the handler. mediaQueryListener has a property .matches
 	// at all times which matches the event.matches property as well, so the callback works the same.

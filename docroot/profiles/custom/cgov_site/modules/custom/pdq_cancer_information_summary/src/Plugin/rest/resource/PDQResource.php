@@ -169,7 +169,7 @@ class PDQResource extends ResourceBase {
    * See https://stackoverflow.com/questions/630453/put-vs-post-in-rest
    *
    * In contrast with the CDR, the Drupal CMS stores an English
-   * Cancer Information Summary document and it's Spanish translation
+   * Cancer Information Summary document and its Spanish translation
    * document in the same node.
    *
    * @param array $summary
