@@ -15,19 +15,21 @@ dependencies:
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
+    - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
+    - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
+  enforced:
+    module:
+      - cgov_core
   module:
     - datetime
     - entity_reference_revisions
     - options
     - text
     - user
-  enforced:
-    module:
-    - cgov_core
 id: node.cgov_article.default
 targetEntityType: node
 bundle: cgov_article
@@ -35,9 +37,9 @@ mode: default
 content:
   content_moderation_control:
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_article_body:
     type: entity_reference_revisions_entity_view
     weight: 10
@@ -137,6 +139,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_pretty_url:
+    weight: 16
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_public_use:
     weight: 15
     label: hidden
@@ -159,11 +169,19 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_site_section:
+    weight: 17
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   links:
     weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
-  langcode: true
   field_image_promotional: true
+  langcode: true

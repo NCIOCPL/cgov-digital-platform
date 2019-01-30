@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_landing_page
+    - taxonomy.vocabulary.cgov_site_sections
+id: taxonomy_term.cgov_site_sections.field_landing_page
+field_name: field_landing_page
+entity_type: taxonomy_term
+bundle: cgov_site_sections
+label: 'Landing Page'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles: NULL
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: NULL
+field_type: entity_reference

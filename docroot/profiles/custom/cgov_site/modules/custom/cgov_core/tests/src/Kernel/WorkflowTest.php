@@ -34,6 +34,7 @@ class WorkflowTest extends KernelTestBase {
     'node',
     'options',
     'system',
+    'taxonomy',
     'text',
     'user',
     'workflows',
@@ -60,6 +61,7 @@ class WorkflowTest extends KernelTestBase {
     parent::setUp();
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('node');
+    $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
     $this->installEntitySchema('workflow');
     $this->installConfig([
@@ -72,6 +74,7 @@ class WorkflowTest extends KernelTestBase {
       'user',
       'filter',
       'language',
+      'taxonomy',
       'user',
       'workflows',
     ]);
