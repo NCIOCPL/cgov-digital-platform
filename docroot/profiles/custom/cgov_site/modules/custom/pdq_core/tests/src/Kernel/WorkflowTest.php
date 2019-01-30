@@ -37,6 +37,7 @@ class WorkflowTest extends KernelTestBase {
     'rest',
     'serialization',
     'system',
+    'taxonomy',
     'text',
     'user',
     'workflows',
