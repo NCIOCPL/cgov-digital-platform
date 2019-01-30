@@ -6,6 +6,9 @@
  # we will duplicate it.
  #}
 {% if content.field_featured_item[0] %}
+
+  {% set cardType = _context.view_mode %}
+  
   {# ###### Setup Title ####### #}
   {% if content.field_override_card_title[0] %}
     {% set title = content.field_override_card_title[0] %}
@@ -18,8 +21,10 @@
   {# ###### Setup Description ####### #}
   {% if content.field_override_card_description[0] %}
     {% set description = content.field_override_card_description[0] %}
-  {% elseif content.field_featured_item[0]["#node"].field_feature_card_description[0] %}
+  {% elseif cardType is same as('feature_card') %}
     {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
+  {% elseif cardType is same as('thumbnail_card') %}
+    {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
   {# Else no description #}
   {% endif %}
 
@@ -32,5 +37,9 @@
   {% set image = content.field_featured_item %}
 
   {## Render Card ##}
-  {{cardMacros.featureCard(title, description, image, url)}}
+  {% if cardType is same as('feature_card') %}
+    {{ cardMacros.featureCard(title, description, image, url) }}
+  {% elseif cardType is same as('thumbnail_card') %}
+    {{ cardMacros.thumbnailCard(title, description, image, url) }}
+  {% endif %}
 {% endif %}

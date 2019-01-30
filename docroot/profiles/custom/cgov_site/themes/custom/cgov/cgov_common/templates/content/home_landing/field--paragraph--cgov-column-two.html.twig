@@ -1,0 +1,6 @@
+{% if label %}
+<h3{{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>
+{% endif %}
+{% for item in items %}
+  <div{{ item.attributes }}>{{ item.content }}</div>
+{% endfor %}
