@@ -28,4 +28,21 @@ class SlevenCommand extends BltTasks {
     $this->invokeCommands($commands);
   }
 
+  /**
+   * Rebuilds the front-end and only the front-end.
+   *
+   * This does not drush cr as you might do it without
+   * a site installed.
+   *
+   * @command cgov:rebuild-feq
+   */
+  public function rebuildfeq() {
+
+    $commands = [
+      'source:build:frontend' => [],
+    ];
+
+    $this->invokeCommands($commands);
+  }
+
 }
