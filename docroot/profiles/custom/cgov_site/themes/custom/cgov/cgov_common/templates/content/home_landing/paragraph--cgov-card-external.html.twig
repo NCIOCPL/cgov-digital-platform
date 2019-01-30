@@ -6,7 +6,8 @@
 
 {% set cardType = 'featureCard' %}
 
-{% if 'thumbnail' in _context.theme_hook_suggestions[2] %}
+{% set cardType = 'featureCard' %}
+{% if _context.view_mode is same as('thumbnail_card') %}
   {% set cardType = 'thumbnailCard' %}
 {% endif %}
 
@@ -23,4 +24,8 @@
 {% set image = content.field_image_promotional %}
 
 {## Render Card ##}
-{{ attribute(cardMacros, cardType, [title, description, image, url])}}
+{% if cardType is same as('featureCard') %}
+  {{ cardMacros.featureCard(title, description, image, url) }}
+{% elseif cardType is same as('thumbnailCard') %}
+  {{ cardMacros.thumbnailCard(title, description, image, url) }}
+{% endif %}

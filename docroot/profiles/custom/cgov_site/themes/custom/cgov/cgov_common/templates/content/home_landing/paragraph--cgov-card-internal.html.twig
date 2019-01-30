@@ -8,7 +8,7 @@
 {% if content.field_featured_item[0] %}
 
   {% set cardType = 'featureCard' %}
-  {% if 'thumbnail' in _context.theme_hook_suggestions[2] %}
+  {% if _context.view_mode is same as('thumbnail_card') %}
     {% set cardType = 'thumbnailCard' %}
   {% endif %}
   
@@ -24,11 +24,10 @@
   {# ###### Setup Description ####### #}
   {% if content.field_override_card_description[0] %}
     {% set description = content.field_override_card_description[0] %}
-  {% elseif content.field_featured_item[0]["#node"].field_feature_card_description[0] %}
+  {% elseif cardType is same as('featureCard') %}
     {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
-  {% elseif content.field_featured_item[0]["#node"].field_list_description[0] %}
+  {% elseif cardType is same as('thumbnailCard') %}
     {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
-  {# Else no description #}
   {# Else no description #}
   {% endif %}
 
@@ -41,5 +40,9 @@
   {% set image = content.field_featured_item %}
 
   {## Render Card ##}
-  {{ attribute(cardMacros, cardType, [title, description, image, url])}}
+  {% if cardType is same as('featureCard') %}
+    {{ cardMacros.featureCard(title, description, image, url) }}
+  {% elseif cardType is same as('thumbnailCard') %}
+    {{ cardMacros.thumbnailCard(title, description, image, url) }}
+  {% endif %}
 {% endif %}
