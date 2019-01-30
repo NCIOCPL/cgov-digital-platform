@@ -2,6 +2,7 @@
 
 namespace Drupal\pdq_core\Plugin\rest\resource;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -35,6 +36,13 @@ class PDQResource extends ResourceBase {
   protected $currentUser;
 
   /**
+   * Access to entity storage.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a new PdqResource object.
    *
    * @param array $configuration
@@ -49,6 +57,8 @@ class PDQResource extends ResourceBase {
    *   A logger instance.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Used (indirectly) to create entity queries.
    */
   public function __construct(
     array $configuration,
@@ -56,10 +66,12 @@ class PDQResource extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    AccountProxyInterface $current_user) {
+    AccountProxyInterface $current_user,
+    EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -72,7 +84,8 @@ class PDQResource extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -214,14 +227,16 @@ class PDQResource extends ResourceBase {
       $id = substr($id, 3);
     }
     $matches = [];
-    $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
-    $query->fields('c', ['entity_id', 'langcode']);
-    $query->condition('c.bundle', 'pdq_cancer_information_summary');
-    $query->condition('c.field_pdq_cdr_id_value', $id);
-    $query->condition('c.deleted', 0);
-    $results = $query->execute();
-    foreach ($results as $result) {
-      $matches[] = [$result->entity_id, $result->langcode];
+    $storage = $this->entityTypeManager->getStorage('node');
+    foreach (['en', 'es'] as $langcode) {
+      $nids = $storage->getQuery()
+        ->condition('field_pdq_cdr_id', $id, '=', $langcode)
+        ->execute();
+      if (!empty($nids)) {
+        foreach ($nids as $nid) {
+          $matches[] = [$nid, $langcode];
+        }
+      }
     }
     return $matches;
   }
