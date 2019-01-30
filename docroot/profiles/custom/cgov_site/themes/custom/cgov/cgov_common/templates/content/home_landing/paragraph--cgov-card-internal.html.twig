@@ -21,9 +21,9 @@
   {# ###### Setup Description ####### #}
   {% if content.field_override_card_description[0] %}
     {% set description = content.field_override_card_description[0] %}
-  {% elseif cardType is same as('featureCard') %}
+  {% elseif cardType is same as('feature_card') %}
     {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
-  {% elseif cardType is same as('thumbnailCard') %}
+  {% elseif cardType is same as('thumbnail_card') %}
     {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
   {# Else no description #}
   {% endif %}
@@ -37,9 +37,9 @@
   {% set image = content.field_featured_item %}
 
   {## Render Card ##}
-  {% if cardType is same as('featureCard') %}
+  {% if cardType is same as('feature_card') %}
     {{ cardMacros.featureCard(title, description, image, url) }}
-  {% elseif cardType is same as('thumbnailCard') %}
+  {% elseif cardType is same as('thumbnail_card') %}
     {{ cardMacros.thumbnailCard(title, description, image, url) }}
   {% endif %}
 {% endif %}

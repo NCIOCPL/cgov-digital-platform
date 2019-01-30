@@ -19,8 +19,8 @@
 {% set image = content.field_image_promotional %}
 
 {## Render Card ##}
-{% if cardType is same as('featureCard') %}
+{% if cardType is same as('feature_card') %}
   {{ cardMacros.featureCard(title, description, image, url) }}
-{% elseif cardType is same as('thumbnailCard') %}
+{% elseif cardType is same as('thumbnail_card') %}
   {{ cardMacros.thumbnailCard(title, description, image, url) }}
 {% endif %}
