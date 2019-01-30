@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_blog_post_body
     - field.field.node.cgov_blog_post.field_date_display_mode
     - field.field.node.cgov_blog_post.field_date_posted
     - field.field.node.cgov_blog_post.field_date_reviewed
@@ -22,6 +23,7 @@ dependencies:
   module:
     - cgov_core
     - options
+    - text
     - user
 id: node.cgov_blog_post.default
 targetEntityType: node
@@ -48,6 +50,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_blog_post_body:
+    weight: 15
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
     region: content
   field_date_display_mode:
     weight: 10
