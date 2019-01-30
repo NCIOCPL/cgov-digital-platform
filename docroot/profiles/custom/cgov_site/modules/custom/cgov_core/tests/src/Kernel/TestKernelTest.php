@@ -16,7 +16,9 @@ class TestKernelTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['user', 'system', 'field', 'node', 'text', 'filter'];
+  public static $modules = ['user', 'system', 'field', 'node',
+    'text', 'filter', 'taxonomy',
+  ];
 
   /**
    * Sets up the test environment.
@@ -28,6 +30,7 @@ class TestKernelTest extends KernelTestBase {
     $this->installSchema('user', 'users_data');
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
+    $this->installEntitySchema('taxonomy_term');
     $this->installConfig(['field', 'node']);
   }
 

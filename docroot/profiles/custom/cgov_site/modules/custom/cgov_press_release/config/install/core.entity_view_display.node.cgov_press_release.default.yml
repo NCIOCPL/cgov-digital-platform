@@ -15,9 +15,11 @@ dependencies:
     - field.field.node.cgov_press_release.field_list_description
     - field.field.node.cgov_press_release.field_page_description
     - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_pretty_url
     - field.field.node.cgov_press_release.field_public_use
     - field.field.node.cgov_press_release.field_search_engine_restrictions
     - field.field.node.cgov_press_release.field_short_title
+    - field.field.node.cgov_press_release.field_site_section
     - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
   module:
@@ -39,9 +41,9 @@ content:
     region: content
   content_moderation_control:
     weight: -20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_browser_title:
     weight: 110
     label: above
@@ -140,6 +142,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_pretty_url:
+    weight: 121
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_public_use:
     weight: 116
     label: hidden
@@ -162,6 +172,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_site_section:
+    weight: 122
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   field_subtitle:
     weight: 117
     label: above
@@ -172,8 +190,8 @@ content:
     region: content
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true
