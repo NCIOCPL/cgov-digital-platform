@@ -15,12 +15,10 @@ use Drupal\Core\Entity\Plugin\Validation\Constraint\CompositeConstraintBase;
  */
 class UniqueCgovUrlConstraint extends CompositeConstraintBase {
 
-
   /**
    * {@inheritdoc}
    */
   public $prettyUrlInUse = 'The Pretty URL is already in use for this section.';
-
 
   /**
    * {@inheritdoc}

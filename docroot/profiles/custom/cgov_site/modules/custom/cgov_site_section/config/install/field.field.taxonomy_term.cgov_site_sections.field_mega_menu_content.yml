@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.content_block
     - field.storage.taxonomy_term.field_mega_menu_content
     - taxonomy.vocabulary.cgov_site_sections
 id: taxonomy_term.cgov_site_sections.field_mega_menu_content
@@ -18,10 +17,9 @@ default_value_callback: ''
 settings:
   handler: 'default:block_content'
   handler_settings:
-    target_bundles:
-      content_block: content_block
+    target_bundles: NULL
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: ''
+    auto_create_bundle: NULL
 field_type: entity_reference

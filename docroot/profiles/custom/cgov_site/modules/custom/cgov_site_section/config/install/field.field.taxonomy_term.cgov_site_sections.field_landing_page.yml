@@ -3,8 +3,6 @@ status: true
 dependencies:
   config:
     - field.storage.taxonomy_term.field_landing_page
-    - node.type.cgov_article
-    - node.type.cgov_home_landing
     - taxonomy.vocabulary.cgov_site_sections
 id: taxonomy_term.cgov_site_sections.field_landing_page
 field_name: field_landing_page
@@ -19,11 +17,9 @@ default_value_callback: ''
 settings:
   handler: 'default:node'
   handler_settings:
-    target_bundles:
-      cgov_article: cgov_article
-      cgov_home_landing: cgov_home_landing
+    target_bundles: NULL
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: cgov_article
+    auto_create_bundle: NULL
 field_type: entity_reference
