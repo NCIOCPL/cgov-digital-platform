@@ -3,7 +3,6 @@
 namespace Drupal\Tests\pdq_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
