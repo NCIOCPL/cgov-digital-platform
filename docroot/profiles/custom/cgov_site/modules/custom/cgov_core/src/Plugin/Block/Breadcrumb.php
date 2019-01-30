@@ -20,14 +20,17 @@ use Drupal\Core\Access\AccessResult;
  */
 class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
 
-  protected $breadcrumbs = [];
+  protected $breadcrumbs = [
+    ['href' => '/a', 'label' => 'A'],
+    ['href' => '/b', 'label' => 'B'],
+  ];
 
   /**
    * Cgov Navigation Manager Service.
    *
    * @var \Drupal\cgov_core\Services\CgovNavigationManagerInterface
    */
-  protected $navigationManager;
+  protected $navMgr;
 
   /**
    * Constructs an LanguageBar object.
@@ -48,7 +51,7 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
     CgovNavigationManagerInterface $navigationManager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->navigationManager = $navigationManager;
+    $this->navMgr = $navigationManager;
   }
 
   /**
@@ -71,11 +74,37 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Get breadcrumbs.
+   *
+   * Using navigation service, return
+   * array of breadcrumbs to render.
+   */
+  public function getBreadcrumbs() {
+    $terminusTest = NULL;
+    $exceptionTests = [];
+    // $rootTest = 'field_breadcrumb_root';
+    // $navRoot = $this->navMgr->getNavRoot($rootTest);
+    $sections = $this->navMgr->getSections($terminusTest, $exceptionTests);
+    $breadcrumbs = array_map(function ($section) {
+      $href = $section->getField('path');
+      $label = $section->getField('');
+      return [
+        'href' => $href,
+        'label' => $label,
+      ];
+    }, $sections);
+    $this->breadcrumbs = $breadcrumbs;
+    return $breadcrumbs;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function build() {
+    // $breadcrumbs = $this->getBreadcrumbs();
     $build = [
       '#type' => 'block',
+      '#cache' => ['contexts' => ['url.path']],
       'breadcrumbs' => $this->breadcrumbs,
     ];
 
