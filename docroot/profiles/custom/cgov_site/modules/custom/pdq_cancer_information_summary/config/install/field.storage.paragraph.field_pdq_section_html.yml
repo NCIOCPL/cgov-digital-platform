@@ -2,15 +2,17 @@ langcode: en
 status: true
 dependencies:
   module:
-    - node
+    - paragraphs
+    - text
   enforced:
     module:
-      - cgov_core
-field_name: field_syndicate
-entity_type: node
-type: boolean
+      - pdq_cancer_information_summary
+id: paragraph.field_pdq_section_html
+field_name: field_pdq_section_html
+entity_type: paragraph
+type: text_long
 settings: {  }
-module: core
+module: text
 locked: false
 cardinality: 1
 translatable: true
