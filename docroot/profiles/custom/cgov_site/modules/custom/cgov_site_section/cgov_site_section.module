@@ -46,6 +46,9 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
 
     if (!empty($entity->id()) && isset($field_pretty_url)) {
+
+
+
       $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($entity->get('parent')->target_id);
       $values = [];
 

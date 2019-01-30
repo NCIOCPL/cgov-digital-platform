@@ -104,3 +104,27 @@ function cgov_core_entity_type_build(array &$entity_types) {
   // Add our custom validation to the node entity.
   $entity_types['node']->addConstraint('UniqueCgovUrl');
 }
+
+
+function cgov_core_entity_bundle_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type, $bundle) {
+  if ($entity_type->id() == 'taxonomy_term' && $bundle == 'cgov_site_sections' && !empty($fields['field_pretty_url'])) {
+    $fields['field_pretty_url']->setPropertyConstraints('value', array(
+        'Regex' => array(
+          'pattern' => '/^[a-zA-Z0-9-]*$/',
+          'message' => 'Please use numbers only in the Pretty URL field.',
+        ),
+        )
+    );
+  }
+}
+
+//function hook_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+//  if (!empty($fields['field_some_reference'])) {
+//    $fields['field_some_reference']->addConstraint('UniqueField', [
+//      'message' => 'An entity reference %value already exists.'
+//    ]);
+//  }
+//}
+//
+//
+////
