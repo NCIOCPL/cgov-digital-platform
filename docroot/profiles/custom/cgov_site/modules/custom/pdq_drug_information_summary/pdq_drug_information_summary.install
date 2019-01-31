@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Contains pdq_drug_information_summary.install.
+ */
+
+use Drupal\cgov_core\CgovCoreTools;
+
+/**
+ * Implements hook_install().
+ *
+ * Set up the site for Cancer Information Summaries.
+ *
+ * @see system_install()
+ */
+function pdq_drug_information_summary_install() {
+
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions and assign to workflow.
+  $restfulPermissions = [
+    'restful get pdq_dis_api',
+    'restful post pdq_dis_api',
+  ];
+  $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
+  $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
+  $siteHelper->attachContentTypeToWorkflow('pdq_drug_information_summary', 'pdq_workflow');
+}
