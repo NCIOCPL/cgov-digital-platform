@@ -3,9 +3,9 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
+    - field.field.node.cgov_blog_post.field_blog_post_body
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
-    - field.field.node.cgov_blog_post.field_blog_post_body
     - field.field.node.cgov_blog_post.field_date_display_mode
     - field.field.node.cgov_blog_post.field_date_posted
     - field.field.node.cgov_blog_post.field_date_reviewed
@@ -38,6 +38,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_blog_post_body:
+    weight: 16
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
   field_browser_title:
     weight: 3
     settings:
@@ -53,14 +61,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_blog_post_body:
-    weight: 16
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
     region: content
   field_date_display_mode:
     weight: 13
