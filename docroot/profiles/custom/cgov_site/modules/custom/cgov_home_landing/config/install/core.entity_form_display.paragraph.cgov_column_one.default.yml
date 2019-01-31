@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_column_one.field_main_contents
+    - paragraphs.paragraphs_type.cgov_column_one
+  module:
+    - paragraphs
+id: paragraph.cgov_column_one.default
+targetEntityType: paragraph
+bundle: cgov_column_one
+mode: default
+content:
+  field_main_contents:
+    type: entity_reference_paragraphs
+    weight: 0
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

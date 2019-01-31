@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_column_two.field_main_contents
+    - field.field.paragraph.cgov_column_two.field_secondary_contents
+    - paragraphs.paragraphs_type.cgov_column_two
+  module:
+    - entity_reference_revisions
+id: paragraph.cgov_column_two.default
+targetEntityType: paragraph
+bundle: cgov_column_two
+mode: default
+content:
+  field_main_contents:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_secondary_contents:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }

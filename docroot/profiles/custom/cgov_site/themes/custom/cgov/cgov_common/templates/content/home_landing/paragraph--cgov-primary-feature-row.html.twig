@@ -1,0 +1,9 @@
+
+{% if content.field_container_heading[0] %}
+<div class="row feature-primary-title">
+  <h3>{{- content.field_container_heading[0] -}}</h3>
+</div>
+{% endif %}
+<div class="row feature-primary flex-columns">
+  {{ content.field_row_cards }}
+</div>

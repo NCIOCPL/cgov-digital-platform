@@ -1,0 +1,8 @@
+{# The proper image display style for thumbnail must be set for this #}
+{% if content.field_image_promotional and content.field_image_promotional[0] %}
+  {{content.field_image_promotional}}
+{% elseif content.field_image_article and content.field_image_article[0] %}
+  {{content.field_image_article}}
+{% else %}
+  {# TODO: Use old placeholder image. #}
+{% endif %}

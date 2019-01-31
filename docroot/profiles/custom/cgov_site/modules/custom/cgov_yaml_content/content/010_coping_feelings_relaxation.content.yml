@@ -47,6 +47,16 @@
     value: "Coping with Cancer - Learning to Relax"
   field_browser_title_ES:
     value: ""
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
   field_image_article:
     - target_type: 'media'
       '#process':
