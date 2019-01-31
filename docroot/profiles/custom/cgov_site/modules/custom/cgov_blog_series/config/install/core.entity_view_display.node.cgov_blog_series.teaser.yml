@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.cgov_blog_series.field_browser_title
+    - field.field.node.cgov_blog_series.field_card_title
+    - field.field.node.cgov_blog_series.field_date_display_mode
+    - field.field.node.cgov_blog_series.field_date_posted
+    - field.field.node.cgov_blog_series.field_date_reviewed
+    - field.field.node.cgov_blog_series.field_date_updated
+    - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_image_promotional
+    - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_page_description
+    - field.field.node.cgov_blog_series.field_search_engine_restrictions
+    - field.field.node.cgov_blog_series.field_short_title
+    - node.type.cgov_blog_series
+  module:
+    - user
+id: node.cgov_blog_series.teaser
+targetEntityType: node
+bundle: cgov_blog_series
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_image_promotional: true
+  field_list_description: true
+  field_page_description: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  langcode: true
