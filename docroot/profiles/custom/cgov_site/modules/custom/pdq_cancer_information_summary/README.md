@@ -19,6 +19,6 @@ Loads the editing user interface through a web browser (using `Drupal\Tests\Brow
 
 #### Adding Fields
 
-New fields should be added to [PDQSummaryTest.php](tests/src/Functional/PDQSummaryTest.php) with their existence tested in `testSummaryFieldsExist()`.
+New fields should be added to [PDQCancerSummaryTest.php](tests/src/Functional/PDQSummaryTest.php) with their existence tested in `testSummaryFieldsExist()`.
 
 Field presence tests require the ID of the UI element from the editing page. These names are based on the field's machine name, the exact rules for generating the filed name varies according to the field type (e.g. the "Short Title" input field has the ID `edit-field-short-title-0-value`. The "Posted Date" date selector has the ID `edit-field-date-posted-0-value-date`). The field names can most easily be found by loading the page and inspecting the HTML.

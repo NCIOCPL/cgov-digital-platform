@@ -6,7 +6,7 @@ use Drupal\Tests\SchemaCheckTestTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Tests Functionality of the PDQ Cancer Information Summary content type.
+ * Tests Functionality of the PDQ Drug Information Summary content type.
  *
  * @group cgov
  * @group cgov_site
@@ -85,12 +85,12 @@ class PDQDrugSummaryTest extends BrowserTestBase {
 
     // Fill out the fields.
     $this->getSession()->getPage()->
-    -   fillField(PDQSummaryTest::PAGE_TITLE, 'pony');
+    -   fillField(PDQDrugSummaryTest::PAGE_TITLE, 'pony');
     $this->getSession()->getPage()->
-    -   fillField(PDQSummaryTest::SHORT_TITLE, 'pony');
+    -   fillField(PDQDrugSummaryTest::SHORT_TITLE, 'pony');
 
     // Submit the form and check for success.
-    $this->getSession()->getPage()->pressButton(PDQSummaryTest::SAVE_BUTTON);
+    $this->getSession()->getPage()->pressButton(PDQDrugSummaryTest::SAVE_BUTTON);
     $this->drupalPostForm(NULL, )
     $this->assertResponse(200);
      */
