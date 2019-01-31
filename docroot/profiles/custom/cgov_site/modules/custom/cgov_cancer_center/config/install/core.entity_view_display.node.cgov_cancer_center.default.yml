@@ -29,8 +29,7 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_search_engine_restrictions
     - field.field.node.cgov_cancer_center.field_short_title
     - field.field.node.cgov_cancer_center.field_sort_title
-    - field.field.node.cgov_cancer_center.field_syndicate
-    - field.field.node.cgov_cancer_center.field_syndication_keywords
+    - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
     - field.field.node.cgov_cancer_center.field_website_url
     - field.field.node.cgov_cancer_center.field_zip_code
@@ -266,23 +265,12 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_syndicate:
-    weight: 114
+  field_state:
+    weight: 135
     label: hidden
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
+    settings: {  }
     third_party_settings: {  }
-    type: boolean
-    region: content
-  field_syndication_keywords:
-    weight: 115
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
+    type: list_default
     region: content
   field_website_title:
     weight: 129
