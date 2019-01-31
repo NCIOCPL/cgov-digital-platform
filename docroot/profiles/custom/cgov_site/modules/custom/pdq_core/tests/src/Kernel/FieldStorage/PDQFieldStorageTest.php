@@ -11,7 +11,7 @@ use Drupal\node\NodeTypeInterface;
 /**
  * Base class which does most of the work for field storage tests.
  */
-class CGovFieldStorageTest extends KernelTestBase {
+class PDQFieldStorageTest extends KernelTestBase {
 
   /**
    * Modules to enable.
@@ -20,7 +20,7 @@ class CGovFieldStorageTest extends KernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core', 'taxonomy',
+    'language', 'content_translation', 'pdq_core', 'paragraphs', 'rest', 'serialization',
   ];
 
   /**
@@ -30,63 +30,13 @@ class CGovFieldStorageTest extends KernelTestBase {
    */
   private $fieldsToTest = [
     [
-      "name" => "field_browser_title",
-      "label" => "Browser Title",
+      "name" => "field_pdq_cdr_id",
+      "label" => "CDR ID",
       "type" => "plain_text",
     ],
     [
-      "name" => "field_feature_card_description",
-      "label" => "Feature Card Description",
-      "type" => "plain_text",
-    ],
-    [
-      "name" => "field_card_title",
-      "label" => "Card Title",
-      "type" => "plain_text",
-    ],
-    [
-      "name" => "field_list_description",
-      "label" => "List Description",
-      "type" => "plain_text",
-    ],
-    [
-      "name" => "field_page_description",
-      "label" => "Page Description",
-      "type" => "plain_text",
-    ],
-    [
-      "name" => "field_short_title",
-      "label" => "Short Title",
-      "type" => "plain_text",
-    ],
-    [
-      "name" => "field_intro_text",
-      "label" => "Intro Text",
-      "type" => "formatted_text",
-    ],
-    [
-      "name" => "field_date_posted",
-      "label" => "Posted Date",
-      "type" => "datetime",
-    ],
-    [
-      "name" => "field_date_reviewed",
-      "label" => "Reviewed Date",
-      "type" => "datetime",
-    ],
-    [
-      "name" => "field_date_updated",
-      "label" => "Update Date",
-      "type" => "datetime",
-    ],
-    [
-      "name" => "field_date_display_mode",
-      "label" => "Date Display Mode",
-      "type" => "list_string",
-    ],
-    [
-      "name" => "field_search_engine_restrictions",
-      "label" => "Search Engine Restrictions",
+      "name" => "field_pdq_audience",
+      "label" => "Audience",
       "type" => "list_string",
     ],
   ];
@@ -105,7 +55,7 @@ class CGovFieldStorageTest extends KernelTestBase {
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'file', 'language', 'content_translation', 'cgov_core',
+      'field', 'node', 'file', 'language', 'content_translation', 'pdq_core',
     ]);
   }
 
@@ -136,7 +86,6 @@ class CGovFieldStorageTest extends KernelTestBase {
         case "formatted_text":
         case "datetime":
         case "list_string":
-        case "boolean":
           $this->addFieldByName($type, $fieldToTest["name"], $fieldToTest["label"]);
           break;
       }
@@ -155,8 +104,8 @@ class CGovFieldStorageTest extends KernelTestBase {
       $this->assertTrue(count($field_storage->getBundles()) == 0, "Node " . $fieldToTest["name"] . " field storage exists after deleting the only instance of a field.");
     }
 
-    // Test uninstalling cgov_core removes the fields.
-    \Drupal::service('module_installer')->uninstall(['cgov_core']);
+    // Test uninstalling pdq_core removes the fields.
+    \Drupal::service('module_installer')->uninstall(['pdq_core']);
 
     foreach ($this->fieldsToTest as $fieldToTest) {
       $field_storage = FieldStorageConfig::loadByName('node', $fieldToTest["name"]);

@@ -8,7 +8,8 @@ const themeConfig = {
         modules: [path.resolve(__dirname, '../src'), 'node_modules'],
         alias: {
             "Core": path.resolve(__dirname, '..', 'src'),
-            "Styles": path.resolve(__dirname, 'src', 'styles')
+            "Styles": path.resolve(__dirname, 'src', 'styles'),
+            "Libraries": path.resolve(__dirname, 'src', 'libraries'),
         }
     },
     output: {

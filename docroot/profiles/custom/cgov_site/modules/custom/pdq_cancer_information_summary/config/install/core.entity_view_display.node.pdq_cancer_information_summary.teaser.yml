@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_list_description
+    - field.field.node.pdq_cancer_information_summary.field_pdq_audience
+    - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_public_use
+    - field.field.node.pdq_cancer_information_summary.field_short_title
+    - node.type.pdq_cancer_information_summary
+  module:
+    - user
+id: node.pdq_cancer_information_summary.teaser
+targetEntityType: node
+bundle: pdq_cancer_information_summary
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_date_posted: true
+  field_date_updated: true
+  field_list_description: true
+  field_pdq_audience: true
+  field_pdq_cdr_id: true
+  field_pdq_summary_type: true
+  field_public_use: true
+  field_short_title: true
+  langcode: true
