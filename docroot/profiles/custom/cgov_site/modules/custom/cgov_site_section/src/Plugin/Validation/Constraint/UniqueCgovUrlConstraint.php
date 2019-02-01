@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Plugin\Validation\Constraint;
+namespace Drupal\cgov_site_section\Plugin\Validation\Constraint;
 
 use Drupal\Core\Entity\Plugin\Validation\Constraint\CompositeConstraintBase;
 
@@ -23,7 +23,7 @@ class UniqueCgovUrlConstraint extends CompositeConstraintBase {
   /**
    * {@inheritdoc}
    */
-  public $sectionInUse = 'This section already has a landing page';
+  public $sectionInUse = 'This section already has a landing page.';
 
   /**
    * {@inheritdoc}
