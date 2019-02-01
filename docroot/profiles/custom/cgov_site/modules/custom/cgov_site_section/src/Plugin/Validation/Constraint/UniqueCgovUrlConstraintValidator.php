@@ -20,7 +20,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
   /**
    * Validator 2.5 and upwards compatible execution context.
    *
-   * @var \Symfony\Component\Validator\Context\sExecutionContextInterface
+   * @var \Symfony\Component\Validator\Context\ExecutionContextInterface
    */
 
   protected $context;
