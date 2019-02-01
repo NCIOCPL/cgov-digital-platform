@@ -8,6 +8,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 
 /**
  * Validates the UniqueCgovUrl Constraint.
@@ -86,7 +87,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
    * NOTE: There is a core validator 'UniqueFieldValueValidator' however it
    * does not handle entity reference validation.
    *
-   * @param \Drupal\Core\Field\FieldItemListInterface $field
+   * @param \Drupal\Core\Field\EntityReferenceFieldItemListInterface $field
    *   The entity reference field being checked for uniqueness.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity on which to check across for uniqueness.
@@ -97,7 +98,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
    * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    *   Error for missing data.
    */
-  public function isUniqueLandingSection(FieldItemListInterface $field, EntityInterface $entity) {
+  public function isUniqueLandingSection(EntityReferenceFieldItemListInterface $field, EntityInterface $entity) {
 
     $value_taken = NULL;
 
@@ -114,16 +115,17 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
 
       // Query for the conditions.
       // The id could be NULL, cast it to 0 in that case.
-      $value_taken = (bool) \Drupal::entityQuery($entity_type_id)
-        ->condition($id_key, (int) $entity->id(), '<>')
+     $query =  \Drupal::entityQuery($entity_type_id)
+        ->condition($id_key, (bool) $entity->id(), '<>')
         ->condition($field_name, $value)
-        ->condition('field_pretty_url', NULL)
+        ->notExists('field_pretty_url')
         ->range(0, 1)
-        ->count()
-        ->execute();
+        ->count();
+
+      $value_taken = $query->execute();
     }
 
-    return $value_taken;
+    return !$value_taken;
   }
 
   /**
@@ -165,7 +167,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
       ->count()
       ->execute();
 
-    return $value_taken;
+    return !$value_taken;
   }
 
 }

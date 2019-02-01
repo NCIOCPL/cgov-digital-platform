@@ -5,7 +5,7 @@ namespace Drupal\cgov_site_section\Plugin\Validation\Constraint;
 use Drupal\Core\Entity\Plugin\Validation\Constraint\CompositeConstraintBase;
 
 /**
- * A composite contraint.
+ * A composite constraint validating Site Section and Pretty URL.
  *
  * @Constraint(
  *   id = "UniqueCgovUrl",
