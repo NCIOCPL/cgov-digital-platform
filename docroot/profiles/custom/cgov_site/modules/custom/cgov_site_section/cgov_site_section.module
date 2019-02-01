@@ -43,6 +43,14 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
+
+  // Format the Pretty URL
+  if (!empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+
+
   if ($entity->bundle() === 'cgov_site_sections') {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
 
@@ -55,13 +63,29 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
         $values[] = $value;
       }
       $computed_parent = implode('/', $values);
-      $entity->set('computed_path', '/' . $computed_parent . '/' . $field_pretty_url);
+      $computed_path = strtolower('/' . $computed_parent . '/' . $field_pretty_url);
+
+      $entity->set('computed_path', $computed_path);
     }
     else {
-      $entity->set('computed_path', '/' . $field_pretty_url);
+      $computed_path = strtolower('/' . $field_pretty_url);
+      $entity->set('computed_path', $computed_path);
     }
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prior to saving a node, formats the field..
+ */
+function cgov_site_section_node_presave($entity) {
+  if (!empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+}
+
 
 /**
  * Implements hook_entity_type_build().

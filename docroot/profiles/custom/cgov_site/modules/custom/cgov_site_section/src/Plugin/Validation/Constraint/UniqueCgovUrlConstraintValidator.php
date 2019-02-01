@@ -20,7 +20,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
   /**
    * Validator 2.5 and upwards compatible execution context.
    *
-   * @var \Symfony\Component\Validator\Context\ExecutionContextInterface
+   * @var \Symfony\Component\Validator\Context\s ExecutionContextInterface
    */
 
   protected $context;
@@ -115,7 +115,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
 
       // Query for the conditions.
       // The id could be NULL, cast it to 0 in that case.
-     $query =  \Drupal::entityQuery($entity_type_id)
+      $query = \Drupal::entityQuery($entity_type_id)
         ->condition($id_key, (bool) $entity->id(), '<>')
         ->condition($field_name, $value)
         ->notExists('field_pretty_url')
