@@ -43,6 +43,14 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
+
+  // Format the Pretty URL
+  if (!empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+
+
   if ($entity->bundle() === 'cgov_site_sections') {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
 
@@ -55,10 +63,55 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
         $values[] = $value;
       }
       $computed_parent = implode('/', $values);
-      $entity->set('computed_path', '/' . $computed_parent . '/' . $field_pretty_url);
+      $computed_path = strtolower('/' . $computed_parent . '/' . $field_pretty_url);
+
+      $entity->set('computed_path', $computed_path);
     }
     else {
-      $entity->set('computed_path', '/' . $field_pretty_url);
+      $computed_path = strtolower('/' . $field_pretty_url);
+      $entity->set('computed_path', $computed_path);
     }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prior to saving a node, formats the field..
+ */
+function cgov_site_section_node_presave($entity) {
+  if (!empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+}
+
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * Validates that on a node a Site Section and Pretty URL
+ * combination will be unique.
+ */
+function cgov_site_section_entity_type_build(array &$entity_types) {
+  // Add our custom validation to the node entity.
+  $entity_types['node']->addConstraint('UniqueCgovUrl');
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ *
+ * Validates that the Pretty URL Field on Nodes and Site Sections
+ * matches the required pattern.
+ */
+function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node') && !empty($fields['field_pretty_url'])) {
+    $fields['field_pretty_url']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[a-zA-Z0-9-]*$/',
+        'message' => 'The Pretty URL field only accepts letters, numbers, and dashes.',
+      ],
+    ]
+    );
   }
 }
