@@ -44,12 +44,11 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
 
-  // Format the Pretty URL
+  // Format the Pretty URL.
   if (!empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
     $entity->set('field_pretty_url', strtolower($field_pretty_url));
   }
-
 
   if ($entity->bundle() === 'cgov_site_sections') {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
@@ -85,7 +84,6 @@ function cgov_site_section_node_presave($entity) {
     $entity->set('field_pretty_url', strtolower($field_pretty_url));
   }
 }
-
 
 /**
  * Implements hook_entity_type_build().
