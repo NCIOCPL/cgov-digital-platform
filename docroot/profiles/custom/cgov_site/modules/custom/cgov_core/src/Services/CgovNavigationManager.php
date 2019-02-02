@@ -6,14 +6,40 @@ use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Path\CurrentPathStack;
+use Drupal\taxonomy\TermInterface;
+use Drupal\cgov_core\NavItem;
 
 /**
  * Cgov Navigation Manager Service.
  *
- * Use to retrieve innformation and entities related to the Site Section
+ * Use to retrieve information and entities related to the Site Section
  * taxonomy term tree.
+ * The closest Site Section Term and Term Ancestry Tree will be
+ * memoized for the duration of this request to be shared between
+ * navigation block plugins.
  */
 class CgovNavigationManager implements CgovNavigationManagerInterface {
+
+  /**
+   * Am I initialized.
+   *
+   * @var bool
+   */
+  protected $initialized;
+
+  /**
+   * Site Section closest to current request path.
+   *
+   * @var \Drupal\taxonomy\TermInterface
+   */
+  protected $closestSiteSection;
+
+  /**
+   * Array of ancestors from root to current.
+   *
+   * @var \Drupal\taxonomy\TermInterface[]
+   */
+  protected $fullAncestry;
 
   /**
    * Retrieve raw path for the current request.
@@ -56,10 +82,18 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
     $this->pathAliasManager = $pathAliasManager;
     $this->entityTypeManager = $entityTypeManager;
     $this->entityFieldManager = $entityFieldManager;
-    // $this->getClosestSiteSection();
-    // $path = $this->currentPath->getPath();
-    // $aliasedPath = $this->pathAliasManager->getAliasByPath($path);
-    // $this->getNavRoot('field_breadcrumb_root');
+  }
+
+  /**
+   * Setup current instance.
+   */
+  protected function initialize() {
+    if ($this->initialized) {
+      return;
+    }
+    $this->initialized = TRUE;
+    $this->closestSiteSection = $this->getClosestSiteSection();
+    $this->fullAncestry = $this->getTermAncestry($this->closestSiteSection);
   }
 
   /**
@@ -69,13 +103,14 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    * ancestry until we find the first Site Section
    * matching the path fragment.
    *
-   * @return \Drupal\taxonomy\Entity\Term|null
+   * @return \Drupal\taxonomy\TermInterface|null
    *   Get closest site section. This should always
    *   at least return the root site section, but
    *   just in case...
    */
   public function getClosestSiteSection() {
-    /* @var \Drupal\taxonomy\Entity\Term|null */
+    $this->initialize();
+    /* @var \Drupal\taxonomy\TermInterface|null */
     $siteSection = NULL;
     /* @var string */
     $path = $this->currentPath->getPath();
@@ -84,7 +119,7 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
     $pathFragments = explode('/', trim($aliasedPath, '/'));
     for ($i = 0; $i <= count($pathFragments); $i++) {
       $pathTest = '/' . implode('/', array_slice($pathFragments, 0, count($pathFragments) - $i));
-      /* @var \Drupal\taxonomy\Entity\Term */
+      /* @var \Drupal\taxonomy\TermInterface */
       $siteSection = $this->getSiteSectionByComputedPath($pathTest);
       if ($siteSection) {
         break;
@@ -100,11 +135,12 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   Aliased path to look up in computed_path field
    *   on Site Section Terms.
    *
-   * @return \Drupal\taxonomy\Entity\Term|null
+   * @return \Drupal\taxonomy\TermInterface|null
    *   Term with computed_path field value matching
    *   given path.
    */
   public function getSiteSectionByComputedPath(string $path) {
+    $this->initialize();
     /* @var \Drupal\taxonomy\TermStorageInterface */
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
     $queryResults = $termStorage->loadByProperties(['computed_path' => $path]);
@@ -117,63 +153,65 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
     // returned by loadByProperties will either be empty or have exactly
     // one key value pair.
     $tid = array_keys($queryResults)[0];
-    /* @var \Drupal\taxonomy\Entity\Term */
+    /* @var \Drupal\taxonomy\TermInterface */
     $term = $queryResults[$tid];
     return $term;
   }
 
   /**
-   * Get Parent ID from Term ID.
-   *
-   * @param int $tid
-   *   Term ID.
-   *
-   * @return int|null
-   *   Term id of immediate parent term.
-   */
-  public function getParentId(int $tid) {
-    /* @var \Drupal\taxonomy\TermStorageInterface */
-    $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
-    /* @var \Drupal\Core\Entity\EntityInterface[] */
-    $parents = $termStorage->loadParents($tid);
-    // Load parents return an associative array where key is $tid
-    // obviating the need to query the term itself for its id.
-    if (count(array_keys($parents))) {
-      return array_keys($parents)[0];
-    }
-  }
-
-  /**
-   * Return ordered array of Term Ancestor Ids.
+   * Return ordered array of Ancestor Terms.
    *
    * Unfortunately, the built-in methods for TermStorage
    * only return flatmaps representing Term ancestry.
    * In order to return an ordered array, sorted
    * hierarchically, we need to walk up the parent chain
    * manually.
-   * (We could load all parents and then do a sort in place
-   * but I think this will be clearer for now).
    *
    * NOTE: This method operates under the assumption that all
    * Site Sections can have only one parent. If that changes,
    * good luck.
    *
-   * @param int $tid
-   *   ID of base term.
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Base Term.
    *
-   * @return int[]
+   * @return \Drupal\taxonomy\TermInterface[]
    *   Array of term ids ordered from root->child
    *   representing the ancestry of a term.
    */
-  public function generateTermAncestry(int $tid) {
-    /* @var int[] */
-    $ancestry = [$tid];
-    $parentId = $this->getParentId($tid);
-    while ($parentId !== NULL) {
-      array_unshift($ancestry, $parentId);
-      $parentId = $this->getParentId($parentId);
+  public function getTermAncestry(TermInterface $term) {
+    $this->initialize();
+    /* @var \Drupal\taxonomy\TermInterface[] */
+    $ancestry = [$term];
+    /* @var \Drupal\taxonomy\TermInterface */
+    $parentTerm = $this->getParentTerm($term);
+    while ($parentTerm !== NULL) {
+      array_unshift($ancestry, $parentTerm);
+      $parentTerm = $this->getParentTerm($parentTerm);
     }
     return $ancestry;
+  }
+
+  /**
+   * Get parent of given term.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term to retrieve parent from.
+   *
+   * @return \Drupal\taxonomy\TermInterface
+   *   Parent of provided term.
+   */
+  public function getParentTerm(TermInterface $term) {
+    $this->initialize();
+    /* @var \Drupal\taxonomy\TermStorageInterface */
+    $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
+    /* @var \Drupal\Core\Entity\EntityInterface[] */
+    $parents = $termStorage->loadParents($term->id());
+    // Load parents return an associative array where key is $tid
+    // obviating the need to query the term itself for its id.
+    if (count(array_keys($parents))) {
+      /* @var \Drupal\taxonomy\TermInterface */
+      return $parents[array_keys($parents)[0]];
+    }
   }
 
   /**
@@ -191,80 +229,124 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   Represents valid field on site section term entity.
    */
   public function isValidSiteSectionField(string $fieldName) {
+    $this->initialize();
     /* @var \Drupal\Core\Field\FieldDefinitionInterface[] */
     $definitions = $this->entityFieldManager->getFieldDefinitions('taxonomy_term', 'cgov_site_sections');
     return isset($definitions[$fieldName]);
   }
 
   /**
-   * Get Term Id of Nav Root.
+   * Get Nav Root Term.
    *
    * Provide the appropriate field for which you
-   * want the nav root Term id. eg 'field_breadcrumb_root'.
-   *
-   * This function calls another function that retrieves the entire
-   * ancestry starting from the Nav Root and returns only the first
-   * element (the Nav Root).
+   * want the nav root Term. eg 'field_breadcrumb_root'.
    *
    * @param string $testFieldName
    *   Name of field to check for root status.
    *
-   * @return int[]|null
-   *   Term id of nav root for given term.
+   * @return \Drupal\cgov_core\NavItemInterface|null
+   *   Nav Item representing nav root term.
    */
   public function getNavRoot(string $testFieldName) {
-    /* @var int[] */
-    $ancestryFromNavRoot = $this->getAncestryFromNavRoot($testFieldName);
-    // Just in case an invalid field name was passed.
-    if ($ancestryFromNavRoot && count($ancestryFromNavRoot)) {
-      return $ancestryFromNavRoot[0];
+    $this->initialize();
+    if ($this->isValidSiteSectionField($testFieldName)) {
+      foreach ($this->fullAncestry as $term) {
+        $isNavRoot = $term->{$testFieldName}->value;
+        if ($isNavRoot) {
+          $navItem = $this->newNavItem($term);
+          return $navItem;
+        }
+      }
     }
   }
 
   /**
-   * Get the path from nav root to current term.
+   * Create new NavItem.
    *
-   * Returns an ordered list of term ids representing
-   * the direct route from the nav root to the closest
-   * site section.
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Base Term to wrap.
    *
-   * @param string $testFieldName
-   *   Name of field to check for root status.
-   *
-   * @return int[]|null
-   *   Array of term ids ordered from navroot->child
-   *   representing the ancestry of a term.
+   * @return \Drupal\cgov_core\NavItemInterface
+   *   Nav Item wrapping given Term.
    */
-  public function getAncestryFromNavRoot(string $testFieldName) {
-    // Valid fields are like 'field_breadcrumb_root'.
-    // Invalid fields are like 'field_hockey'.
-    if (!$this->isValidSiteSectionField($testFieldName)) {
-      return;
-    }
-    // Every path should be able to reach at least one
-    // site section, falling all the way back to the root.
-    /* @var \Drupal\taxonomy\Entity\TermInterface */
-    $siteSection = $this->getClosestSiteSection();
-    if ($siteSection) {
-      $tid = intval($siteSection->id());
-      /* @var int[] */
-      $siteSectionAncestry = $this->generateTermAncestry($tid);
-      kint($siteSectionAncestry);
-      $navRootIndex = 0;
-      for ($i = 0; $i < count($siteSectionAncestry); $i++) {
-        $tid = $siteSectionAncestry[$i];
-        /* @var \Drupal\taxonomy\Entity\TermInterface */
-        $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($tid);
-        // Returns a bool in the form of 0 or 1.
-        $isNavRoot = $term->{$testFieldName}->value;
-        if ($isNavRoot) {
-          $navRootIndex = $i;
-          break;
-        }
+  public function newNavItem(TermInterface $term) {
+    $isInActivePath = $this->isTermInActivePath($term);
+    return new NavItem($this, $term, $isInActivePath);
+  }
+
+  /**
+   * Get active path status for Term.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term.
+   *
+   * @return bool
+   *   TRUE if given term is in active path.
+   */
+  public function isTermInActivePath(TermInterface $term) {
+    $termId = $term->id();
+    $isInActivePath = FALSE;
+    foreach ($this->fullAncestry as $ancestor) {
+      $ancestorId = $ancestor->id();
+      if ($termId === $ancestorId) {
+        $isInActivePath = TRUE;
       }
-      $ancestryFromNavRootToClosest = array_slice($siteSectionAncestry, $navRootIndex);
-      return $ancestryFromNavRootToClosest;
     }
+    return $isInActivePath;
+  }
+
+  /**
+   * Test if Term is base Term for current request.
+   *
+   * The Navigation Manager service caches the site
+   * section closest to the page for the current HTTP
+   * request. This tests whether a given Term matches
+   * the cached Term.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term.
+   *
+   * @return bool
+   *   Return TRUE if given Term matches cached.
+   */
+  public function isCurrentSiteSection(TermInterface $term) {
+    return $this->closestSiteSection->id() === $term->id();
+  }
+
+  /**
+   * Get immediate children of given Term.
+   *
+   * Given a Term, return all immediate descendent Terms,
+   * excepting those that do not have an assigned landing
+   * page.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   Term.
+   *
+   * @return \Drupal\taxonomy\TermInterface[]
+   *   Children terms filtered that have an
+   *   associated landing page.
+   */
+  public function getChildTerms(TermInterface $term) {
+    $parentId = $term->id();
+    $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $childrenMap = $termStorage->loadChildren($parentId);
+    // We want a simple list instead of id keyed assoc array.
+    $childrenList = [];
+    foreach ($childrenMap as $childTerm) {
+      // While skipping nav sections without landing pages
+      // can be ok in nav root discovery, it always represents
+      // a terminus point in building any kind of nav tree.
+      // The one exception is the root, but because it is the
+      // root it will never be validated in a getChildren function.
+      // @var [ [ 'target_id' => int ]]
+      $landingPageFieldValue = $childTerm->field_landing_page->getValue();
+      $hasLandingPage = count($landingPageFieldValue) > 0 && $landingPageFieldValue[0]['target_id'];
+      if ($hasLandingPage) {
+        $childrenList[] = $childTerm;
+      }
+    }
+    return $childrenList;
   }
 
 }

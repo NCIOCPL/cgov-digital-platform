@@ -20,11 +20,6 @@ use Drupal\Core\Access\AccessResult;
  */
 class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
 
-  protected $breadcrumbs = [
-    ['href' => '/a', 'label' => 'A'],
-    ['href' => '/b', 'label' => 'B'],
-  ];
-
   /**
    * Cgov Navigation Manager Service.
    *
@@ -74,38 +69,55 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get breadcrumbs.
+   * Get breadcrumbs to render.
    *
    * Using navigation service, return
    * array of breadcrumbs to render.
+   *
+   * @return array
+   *   Array of breadcrumbs.
    */
   public function getBreadcrumbs() {
-    $terminusTest = NULL;
-    $exceptionTests = [];
-    // $rootTest = 'field_breadcrumb_root';
-    // $navRoot = $this->navMgr->getNavRoot($rootTest);
-    $sections = $this->navMgr->getSections($terminusTest, $exceptionTests);
-    $breadcrumbs = array_map(function ($section) {
-      $href = $section->getField('path');
-      $label = $section->getField('');
+    $navRoot = $this->navMgr->getNavRoot('field_breadcrumb_root');
+    $breadcrumbs = [$navRoot];
+    $child = $navRoot;
+    while ($child) {
+      $children = $child->getChildren(['isInActivePath']);
+      $child = NULL;
+      // We should only ever find one child in the active path.
+      // Otherwise this is NULL and the while loop exits.
+      if (count($children)) {
+        $child = $children[0];
+        // Requirement: Do not include breadcrumb for active page.
+        if ($child && !$child->isCurrentSiteSection()) {
+          $breadcrumbs[] = $child;
+        }
+      }
+    }
+    $formattedBreadcrumbs = array_map(function ($breadcrumb) {
       return [
-        'href' => $href,
-        'label' => $label,
+        'href' => $breadcrumb->getHref(),
+        'label' => $breadcrumb->getLabel(),
       ];
-    }, $sections);
-    $this->breadcrumbs = $breadcrumbs;
-    return $breadcrumbs;
+    }, $breadcrumbs);
+
+    // Requirement: If the only breadcrumb is the root, we
+    // don't want to render any breadcrumbs.
+    if (count($formattedBreadcrumbs) === 1 && $formattedBreadcrumbs[0]['href'] === '/') {
+      $formattedBreadcrumbs = [];
+    }
+    return $formattedBreadcrumbs;
   }
 
   /**
    * {@inheritdoc}
    */
   public function build() {
-    // $breadcrumbs = $this->getBreadcrumbs();
+    $breadcrumbs = $this->getBreadcrumbs();
     $build = [
       '#type' => 'block',
       '#cache' => ['contexts' => ['url.path']],
-      'breadcrumbs' => $this->breadcrumbs,
+      'breadcrumbs' => $breadcrumbs,
     ];
 
     return $build;
