@@ -79,34 +79,38 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function getBreadcrumbs() {
     $navRoot = $this->navMgr->getNavRoot('field_breadcrumb_root');
-    $breadcrumbs = [$navRoot];
-    $child = $navRoot;
-    while ($child) {
-      $children = $child->getChildren(['isInActivePath']);
-      $child = NULL;
-      // We should only ever find one child in the active path.
-      // Otherwise this is NULL and the while loop exits.
-      if (count($children)) {
-        $child = $children[0];
-        // Requirement: Do not include breadcrumb for active page.
-        if ($child && !$child->isCurrentSiteSection()) {
-          $breadcrumbs[] = $child;
+    // We don't want to render anything if there is the current
+    // request is not associated with the Site Section vocabulary tree.
+    if ($navRoot) {
+      $breadcrumbs = [$navRoot];
+      $child = $navRoot;
+      while ($child) {
+        $children = $child->getChildren(['isInActivePath']);
+        $child = NULL;
+        // We should only ever find one child in the active path.
+        // Otherwise this is NULL and the while loop exits.
+        if (count($children)) {
+          $child = $children[0];
+          // Requirement: Do not include breadcrumb for active page.
+          if ($child && !$child->isCurrentSiteSection()) {
+            $breadcrumbs[] = $child;
+          }
         }
       }
-    }
-    $formattedBreadcrumbs = array_map(function ($breadcrumb) {
-      return [
-        'href' => $breadcrumb->getHref(),
-        'label' => $breadcrumb->getLabel(),
-      ];
-    }, $breadcrumbs);
+      $formattedBreadcrumbs = array_map(function ($breadcrumb) {
+        return [
+          'href' => $breadcrumb->getHref(),
+          'label' => $breadcrumb->getLabel(),
+        ];
+      }, $breadcrumbs);
 
-    // Requirement: If the only breadcrumb is the root, we
-    // don't want to render any breadcrumbs.
-    if (count($formattedBreadcrumbs) === 1 && $formattedBreadcrumbs[0]['href'] === '/') {
-      $formattedBreadcrumbs = [];
+      // Requirement: If the only breadcrumb is the root, we
+      // don't want to render any breadcrumbs.
+      if (count($formattedBreadcrumbs) === 1 && $formattedBreadcrumbs[0]['href'] === '/') {
+        $formattedBreadcrumbs = [];
+      }
+      return $formattedBreadcrumbs;
     }
-    return $formattedBreadcrumbs;
   }
 
   /**

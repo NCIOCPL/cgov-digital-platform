@@ -37,9 +37,15 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
   /**
    * Array of ancestors from root to current.
    *
+   * We initialize it as an empty array to save a few
+   * extra guard checks for methods that loop over this
+   * array. Those would fail in the case of some methods
+   * being called during a request not associated with any
+   * Site Sections.
+   *
    * @var \Drupal\taxonomy\TermInterface[]
    */
-  protected $fullAncestry;
+  protected $fullAncestry = [];
 
   /**
    * Retrieve raw path for the current request.
@@ -93,7 +99,12 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
     }
     $this->initialized = TRUE;
     $this->closestSiteSection = $this->getClosestSiteSection();
-    $this->fullAncestry = $this->getTermAncestry($this->closestSiteSection);
+    // Guard against when this service is called inadvertantly by
+    // a request from an entity not associated with the Site Section
+    // vocabulary.
+    if ($this->closestSiteSection) {
+      $this->fullAncestry = $this->getTermAncestry($this->closestSiteSection);
+    }
   }
 
   /**
@@ -270,6 +281,7 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   Nav Item wrapping given Term.
    */
   public function newNavItem(TermInterface $term) {
+    $this->initialize();
     $isInActivePath = $this->isTermInActivePath($term);
     return new NavItem($this, $term, $isInActivePath);
   }
@@ -284,6 +296,7 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   TRUE if given term is in active path.
    */
   public function isTermInActivePath(TermInterface $term) {
+    $this->initialize();
     $termId = $term->id();
     $isInActivePath = FALSE;
     foreach ($this->fullAncestry as $ancestor) {
@@ -310,6 +323,7 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   Return TRUE if given Term matches cached.
    */
   public function isCurrentSiteSection(TermInterface $term) {
+    $this->initialize();
     return $this->closestSiteSection->id() === $term->id();
   }
 
@@ -328,6 +342,7 @@ class CgovNavigationManager implements CgovNavigationManagerInterface {
    *   associated landing page.
    */
   public function getChildTerms(TermInterface $term) {
+    $this->initialize();
     $parentId = $term->id();
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
     $childrenMap = $termStorage->loadChildren($parentId);
