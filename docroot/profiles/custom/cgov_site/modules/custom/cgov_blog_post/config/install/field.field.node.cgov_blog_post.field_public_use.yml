@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_public_use
+    - node.type.cgov_blog_post
+  module:
+    - options
+id: node.cgov_blog_post.field_public_use
+field_name: field_public_use
+entity_type: node
+bundle: cgov_blog_post
+label: 'Public Use Text'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings: {  }
+field_type: list_integer
