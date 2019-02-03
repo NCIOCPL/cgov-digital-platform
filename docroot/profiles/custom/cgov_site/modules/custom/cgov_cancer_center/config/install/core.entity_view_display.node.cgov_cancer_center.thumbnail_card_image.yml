@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.thumbnail_card_image
     - field.field.node.cgov_cancer_center.body
     - field.field.node.cgov_cancer_center.field_address_1
     - field.field.node.cgov_cancer_center.field_address_2
@@ -35,27 +35,32 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
-    - text
     - user
-id: node.cgov_cancer_center.teaser
+id: node.cgov_cancer_center.thumbnail_card_image
 targetEntityType: node
 bundle: cgov_cancer_center
-mode: teaser
+mode: thumbnail_card_image
 content:
-  body:
-    label: hidden
-    type: text_summary_or_trimmed
-    weight: 101
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
+  content_moderation_control:
+    weight: -20
     region: content
-  links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_label
+    weight: 126
     region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
+  body: true
   field_address_1: true
   field_address_2: true
   field_browser_title: true
@@ -66,7 +71,6 @@ hidden:
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
-  field_image_promotional: true
   field_institution_type: true
   field_list_description: true
   field_org_head_name: true
