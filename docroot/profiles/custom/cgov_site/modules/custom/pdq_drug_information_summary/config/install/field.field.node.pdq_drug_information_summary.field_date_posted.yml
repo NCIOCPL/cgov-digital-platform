@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_posted
+    - node.type.pdq_drug_information_summary
+  module:
+    - datetime
+id: node.pdq_drug_information_summary.field_date_posted
+field_name: field_date_posted
+entity_type: node
+bundle: pdq_drug_information_summary
+label: 'Posted Date'
+description: 'Date the content was posted. Defaults to today''s date but can be overridden. '
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
