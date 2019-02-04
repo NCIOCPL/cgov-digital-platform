@@ -1,0 +1,134 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.feature_card
+    - field.field.node.cgov_cancer_center.body
+    - field.field.node.cgov_cancer_center.field_address_1
+    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_browser_title
+    - field.field.node.cgov_cancer_center.field_card_title
+    - field.field.node.cgov_cancer_center.field_city
+    - field.field.node.cgov_cancer_center.field_date_display_mode
+    - field.field.node.cgov_cancer_center.field_date_posted
+    - field.field.node.cgov_cancer_center.field_date_reviewed
+    - field.field.node.cgov_cancer_center.field_date_updated
+    - field.field.node.cgov_cancer_center.field_feature_card_description
+    - field.field.node.cgov_cancer_center.field_image_promotional
+    - field.field.node.cgov_cancer_center.field_institution_type
+    - field.field.node.cgov_cancer_center.field_list_description
+    - field.field.node.cgov_cancer_center.field_org_head_name
+    - field.field.node.cgov_cancer_center.field_org_head_title
+    - field.field.node.cgov_cancer_center.field_page_description
+    - field.field.node.cgov_cancer_center.field_parent_institution
+    - field.field.node.cgov_cancer_center.field_phone_label_1
+    - field.field.node.cgov_cancer_center.field_phone_label_2
+    - field.field.node.cgov_cancer_center.field_phone_number_1
+    - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_search_engine_restrictions
+    - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_sort_title
+    - field.field.node.cgov_cancer_center.field_state
+    - field.field.node.cgov_cancer_center.field_website_title
+    - field.field.node.cgov_cancer_center.field_website_url
+    - field.field.node.cgov_cancer_center.field_zip_code
+    - node.type.cgov_cancer_center
+  module:
+    - user
+id: node.cgov_cancer_center.feature_card
+targetEntityType: node
+bundle: cgov_cancer_center
+mode: feature_card
+content:
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_card_title:
+    weight: 102
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_feature_card_description:
+    type: string
+    weight: 105
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_label
+    weight: 101
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_list_description:
+    weight: 106
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_page_description:
+    weight: 107
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_short_title:
+    weight: 103
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_sort_title:
+    weight: 104
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_address_1: true
+  field_address_2: true
+  field_browser_title: true
+  field_city: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_institution_type: true
+  field_org_head_name: true
+  field_org_head_title: true
+  field_parent_institution: true
+  field_phone_label_1: true
+  field_phone_label_2: true
+  field_phone_number_1: true
+  field_phone_number_2: true
+  field_region: true
+  field_search_engine_restrictions: true
+  field_state: true
+  field_website_title: true
+  field_website_url: true
+  field_zip_code: true
+  langcode: true
