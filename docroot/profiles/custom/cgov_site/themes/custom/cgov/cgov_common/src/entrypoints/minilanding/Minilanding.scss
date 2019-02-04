@@ -1,0 +1,291 @@
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '~Core/styles/breakpoints';
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+@import "~Core/styles/nci-foundation_mixins";
+@import "~Core/styles/nci-foundation_variables";
+@import "~Core/styles/thumbnailcards";
+// @import "~Core/styles/hero";
+// @import "~Core/styles/cards";
+
+
+// override default top margin for h1 elements on home/landing pages
+.mini-landing h1 {
+  margin-top: .58em;
+}
+
+// Creates a flex wrapper for elements with equalheight class to hook on
+#content .flex-columns {
+  display: flex;
+  float: none;
+
+  @include bp('(max-width: 765px)') {
+    &.guide-card {
+      display: inherit;
+    }
+  }
+
+  @include bp(small) {
+    &:not(.multimedia) {
+      display: inherit;
+    }
+  }
+}
+
+
+/* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
+.feature-primary .rawHtml,
+.feature-primary .rawHtml .featured-text {
+  height: 100%;
+}
+
+.feature-primary {
+  margin-bottom: 1em;
+
+  a {
+    &,
+    h3 {
+      color: $white;
+    }
+  }
+
+  h3 {
+    font-weight: normal;
+    color: $white;
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+
+  .card {
+    background: $dteal;
+  }
+
+  .featured-text {
+    // featured-text is used for the funding opportunities box
+    padding: 15px;
+    background: $white;
+    color: $color-link !important;
+
+    // this is needed to overcome padding that was put in cards anchor tag
+    a {
+      padding: 0 !important; //needed to overcome specificity
+      color: $color-link;
+      @extend %card-link-hover;
+    }
+
+    h3 {
+      color: $header-font-color;
+    }
+
+    p {
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  @include card-clickable;
+}
+
+@include bp(medium-down) {
+  .feature-primary-title {
+    background: #14819b;
+  }
+
+  /* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
+  .row.feature-primary {
+    max-width: 64.5em;
+    background: $dteal;
+  }
+
+  .feature-primary-title h3 {
+    font-size: 1.375em;
+    color: white;
+    padding: 0.625em 30px;
+    margin: 0em;
+  }
+}
+
+@include bp(large-up) {
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+
+  .feature-primary-title {
+    display: none;
+  }
+}
+
+.feature-secondary {
+  margin-bottom: 1em;
+
+  .card {
+    background: $white;
+  }
+
+  h3 {
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+
+  a {
+    h3 {
+      font-weight: normal;
+      color: $color-link;
+    }
+
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+
+    @extend %card-link-hover;
+  }
+
+  p {
+    margin-bottom: 0;
+    color: $body-font-color;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+
+  @include card-clickable;
+}
+
+@include bp(small) {
+  .feature-primary {
+    margin-bottom: 0;
+  }
+
+  .feature-primary .card {
+    background: #14819b;
+  }
+
+  .feature-primary .columns a,
+  .feature-secondary .columns a {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    overflow: auto;
+  }
+
+  .feature-primary .image-hover,
+  .feature-secondary .image-hover {
+    float: left;
+    width: 30%;
+  }
+
+  .feature-primary h3,
+  .feature-secondary h3 {
+    margin-top: 0;
+    float: right;
+    width: 70%;
+    font-size: 1.13em;
+    line-height: 1.111em;
+  }
+
+  .feature-primary a:hover h3,
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+
+  .feature-primary p,
+  .feature-secondary p,
+  .card-thumbnail img {
+    display: none;
+  }
+
+  /* the portal pages needed these items to not hit the edge of screen on mobile only */
+  .feature-primary h3,
+  .feature-primary p,
+  .feature-secondary h3,
+  .feature-secondary p,
+  .other-sites-carousel h3,
+  .row.card-thumbnail h4,
+  .row.card-thumbnail h3,
+  .row.card-thumbnail p {
+    padding-left: 15px;
+  }
+
+  .feature-primary .featured-text {
+    display: none;
+  }
+}
+
+/* END FEATURE AND SECONDARY PRIMARY CARDS ROW */
+
+
+@include bp(large-up) {
+
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+  }
+}
+
+
+//.row:not(.flex-columns) .card > .slot-item {
+.card>.slot-item {
+  @extend %autoheight-fix;
+}
+
+/* END MULIMEDIA ROW */
+
+/* BEGIN Director's Row */
+.infographic {
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+
+  figcaption {
+    padding: 0.5em 1em;
+  }
+}
+
+.infographic-enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
+
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
+
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: .6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+}
+
+// adding a position relative to feature card images so exit disclaimer notification icon can be positioned to its bottom right
+.feature-card {
+  .image-hover {
+    position: relative;
+  }
+}
+
+/********************* END Mini Landing Page Styles ******************************************/
