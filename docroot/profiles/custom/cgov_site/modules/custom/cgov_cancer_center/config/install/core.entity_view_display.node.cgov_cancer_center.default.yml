@@ -1,0 +1,296 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cgov_cancer_center.body
+    - field.field.node.cgov_cancer_center.field_address_1
+    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_browser_title
+    - field.field.node.cgov_cancer_center.field_card_title
+    - field.field.node.cgov_cancer_center.field_city
+    - field.field.node.cgov_cancer_center.field_date_display_mode
+    - field.field.node.cgov_cancer_center.field_date_posted
+    - field.field.node.cgov_cancer_center.field_date_reviewed
+    - field.field.node.cgov_cancer_center.field_date_updated
+    - field.field.node.cgov_cancer_center.field_feature_card_description
+    - field.field.node.cgov_cancer_center.field_image_promotional
+    - field.field.node.cgov_cancer_center.field_institution_type
+    - field.field.node.cgov_cancer_center.field_list_description
+    - field.field.node.cgov_cancer_center.field_org_head_name
+    - field.field.node.cgov_cancer_center.field_org_head_title
+    - field.field.node.cgov_cancer_center.field_page_description
+    - field.field.node.cgov_cancer_center.field_parent_institution
+    - field.field.node.cgov_cancer_center.field_phone_label_1
+    - field.field.node.cgov_cancer_center.field_phone_label_2
+    - field.field.node.cgov_cancer_center.field_phone_number_1
+    - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_search_engine_restrictions
+    - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_sort_title
+    - field.field.node.cgov_cancer_center.field_state
+    - field.field.node.cgov_cancer_center.field_website_title
+    - field.field.node.cgov_cancer_center.field_website_url
+    - field.field.node.cgov_cancer_center.field_zip_code
+    - node.type.cgov_cancer_center
+  module:
+    - datetime
+    - options
+    - text
+    - user
+id: node.cgov_cancer_center.default
+targetEntityType: node
+bundle: cgov_cancer_center
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 124
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_address_1:
+    weight: 112
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_address_2:
+    weight: 113
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_browser_title:
+    weight: 104
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_card_title:
+    weight: 103
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_city:
+    weight: 114
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_date_display_mode:
+    weight: 130
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_date_posted:
+    weight: 127
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_reviewed:
+    weight: 129
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 128
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
+    weight: 107
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_image_promotional:
+    weight: 126
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_institution_type:
+    weight: 109
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_list_description:
+    weight: 106
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_org_head_name:
+    weight: 110
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_org_head_title:
+    weight: 111
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_page_description:
+    weight: 105
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_parent_institution:
+    weight: 108
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_label_1:
+    weight: 118
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_label_2:
+    weight: 120
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_number_1:
+    weight: 119
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_number_2:
+    weight: 121
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_region:
+    weight: 117
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_search_engine_restrictions:
+    weight: 131
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_short_title:
+    weight: 102
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_sort_title:
+    weight: 101
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_state:
+    weight: 115
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_website_title:
+    weight: 122
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_website_url:
+    weight: 123
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_zip_code:
+    weight: 116
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

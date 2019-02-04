@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_cancer_center.install.
+ */
+
+ use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_cancer_center_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  $siteHelper->addContentTypePermissions('cgov_cancer_center', ['content_author']);
+  $siteHelper->attachContentTypeToWorkflow('cgov_cancer_center', 'editorial_workflow');
+
+  $typeItems = [
+    'Cancer Center',
+    'Comprehensive Cancer Center',
+    'Basic Laboratory Cancer Center',
+  ];
+
+  $regionItems = [
+    'East North Central',
+    'East South Central',
+    'Mid-Atlantic',
+    'Mountain',
+    'New England',
+    'Pacific',
+    'South Atlantic',
+    'West North Central',
+    'West South Central',
+  ];
+
+  _cgov_cancer_center_add_taxonomy_terms('cgov_cancer_center_type', $typeItems);
+
+  _cgov_cancer_center_add_taxonomy_terms('cgov_cancer_center_regions', $regionItems);
+}
+
+/**
+ * Local function to install default taxonomy terms for Cancer Center Type.
+ */
+function _cgov_cancer_center_add_taxonomy_terms($vocabulary, $items) {
+  foreach ($items as $item) {
+    Term::create([
+      'parent' => [],
+      'name' => $item,
+      'vid' => $vocabulary,
+    ])->save();
+  }
+}
