@@ -75,18 +75,75 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    *   Multidimensional section nav.
    */
   public function getSectionNav() {
-    return [];
+    $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
+    if ($navRoot) {
+      // TODO: REQUIREMENTS QUESTION
+      // What is the default render depth?
+      $renderDepth = $navRoot->getRenderDepth() ? intval($navRoot->getRenderDepth()) : 5;
+      $renderTree = $this->renderNavElement($navRoot, $renderDepth);
+      return $renderTree;
+    }
+  }
+
+  /**
+   * Create render tree of NavItems.
+   *
+   * @param \Drupal\cgov_core\NavItemInterface $navItem
+   *   Nav item.
+   * @param int $renderDepth
+   *   How many more levels to rennder in the tree.
+   * @param int $currentLevel
+   *   Used to generate level specific classnames.
+   *
+   * @return array
+   *   Nav tree.
+   */
+  public function renderNavElement(NavItemInterface $navItem, int $renderDepth, int $currentLevel = 0) {
+    if (!$navItem || !$renderDepth) {
+      return [];
+    }
+    $isInCurrentPath = $navItem->getIsInCurrentPath();
+    $isCurrentSection = $navItem->isCurrentSiteSection();
+    $href = $navItem->getHref();
+    $label = $navItem->getLabel();
+    $childList = $navItem->getChildren();
+    $hasChildren = count($childList) > 0;
+    $children = [];
+    if ($renderDepth > 1 && $hasChildren) {
+      $children = array_map(function ($child) use ($renderDepth, $currentLevel) {
+        $currentLevel++;
+        return $this->renderNavElement($child, $renderDepth - 1, $currentLevel);
+      }, $childList);
+    }
+    $class = "";
+    $class .= "level-$currentLevel";
+    if ($hasChildren) {
+      $class .= " has-children";
+    }
+    if ($isInCurrentPath) {
+      $class .= " contains-current";
+    }
+    $isExpanded = $isInCurrentPath;
+    $renderElement = [
+      'href' => $href,
+      'label' => $label,
+      'class' => $class,
+      'isExpanded' => $isExpanded,
+      'isCurrentSection' => $isCurrentSection,
+      'children' => $children,
+    ];
+    return $renderElement;
   }
 
   /**
    * {@inheritdoc}
    */
   public function build() {
-    $sectionNav = $this->getSectionNav();
+    $navTree = $this->getSectionNav();
     $build = [
       '#type' => 'block',
       '#cache' => ['contexts' => ['url.path']],
-      'section_nav' => $sectionNav,
+      'nav_tree' => $navTree,
     ];
 
     return $build;
