@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.cgov_content_browser
+  module:
+    - views
+name: cgov_content_browser
+label: 'Content Browser'
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select content'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  2a0926d0-ca3f-49c9-af76-1d68e0281565:
+    settings:
+      view: cgov_content_browser
+      view_display: entity_browser_1
+      submit_text: 'Select content'
+      auto_select: false
+    uuid: 2a0926d0-ca3f-49c9-af76-1d68e0281565
+    weight: 1
+    label: Find
+    id: view

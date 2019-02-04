@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
+    - field.field.node.cgov_article.field_related_resources
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
     - field.field.node.cgov_article.field_site_section
@@ -171,6 +172,18 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_related_resources:
+    type: paragraphs_classic_asymmetric
+    weight: 17
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
     region: content
   field_search_engine_restrictions:
     weight: 22
