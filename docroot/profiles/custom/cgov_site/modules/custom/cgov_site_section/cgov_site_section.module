@@ -27,7 +27,6 @@ function cgov_site_section_entity_field_storage_info(EntityTypeInterface $entity
  * Implements hook_entity_bundle_field_info().
  */
 function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
-
   if ($entity_type->id() === 'taxonomy_term' && $bundle === 'cgov_site_sections') {
     /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface $custom_bundle_field_storage */
     $custom_bundle_field_storage = cgov_site_section_entity_field_storage_info($entity_type)['computed_path'];
@@ -39,14 +38,15 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * {@inheritdoc}
+ * Prior to saving a taxonomy term, this sets the value for the psuedo computed
+ * field 'computed_path'. 'computed_path' consists of the parents terms path
+ *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'cgov_site_sections') {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
 
     if (!empty($entity->id()) && isset($field_pretty_url)) {
-
       $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($entity->get('parent')->target_id);
       $values = [];
 
@@ -55,10 +55,10 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
         $values[] = $value;
       }
       $computed_parent = implode('/', $values);
-      $entity->set('computed_path', $computed_parent . '/' . $field_pretty_url);
+      $entity->set('computed_path', '/' . $computed_parent . '/' . $field_pretty_url);
     }
     else {
-      $entity->set('computed_path', $field_pretty_url);
+      $entity->set('computed_path', '/' . $field_pretty_url);
     }
   }
 }
