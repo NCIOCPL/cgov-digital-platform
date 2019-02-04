@@ -11,30 +11,11 @@
 // @import "~Core/styles/hero";
 // @import "~Core/styles/cards";
 
-
-// override default top margin for h1 elements on home/landing pages
-.mini-landing h1 {
-  margin-top: .58em;
-}
-
 // Creates a flex wrapper for elements with equalheight class to hook on
 #content .flex-columns {
   display: flex;
   float: none;
-
-  @include bp('(max-width: 765px)') {
-    &.guide-card {
-      display: inherit;
-    }
-  }
-
-  @include bp(small) {
-    &:not(.multimedia) {
-      display: inherit;
-    }
-  }
 }
-
 
 /* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
 .feature-primary .rawHtml,
@@ -66,8 +47,16 @@
   }
 
   .card {
-    background: $dteal;
-  }
+		background: $dteal;
+		
+		img {
+			width: 100%;
+		}
+	}
+	
+	.large-6 {
+		margin-left: 3%;
+	}
 
   .featured-text {
     // featured-text is used for the funding opportunities box
@@ -233,18 +222,21 @@
 
   .equalheight .push-to-bottom-desktop {
     height: 100%;
-  }
+	}
+	
+	.row .large-4.gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 3%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+	}
 }
 
-
-//.row:not(.flex-columns) .card > .slot-item {
-.card>.slot-item {
-  @extend %autoheight-fix;
-}
-
-/* END MULIMEDIA ROW */
-
-/* BEGIN Director's Row */
 .infographic {
   position: relative;
   /* allows for appearance of equal height cards on home page */
