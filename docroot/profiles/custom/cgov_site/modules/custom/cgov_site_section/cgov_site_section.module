@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\cgov_site_section\FieldStorageDefinition;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_entity_field_storage_info().
@@ -43,34 +44,93 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
-
   // Format the Pretty URL.
   if (!empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
     $entity->set('field_pretty_url', strtolower($field_pretty_url));
   }
 
-  if ($entity->bundle() === 'cgov_site_sections') {
-    $field_pretty_url = $entity->get('field_pretty_url')->value;
+  // Only do the following for site sections.
+  if ($entity->bundle() !== 'cgov_site_sections') {
+    return;
+  }
 
-    if (!empty($entity->id()) && isset($field_pretty_url)) {
-      $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($entity->get('parent')->target_id);
-      $values = [];
+  // Calculate and set the compute_path field.
+  // TODO: Only recalculate path if parent or pretty url changed.
+  // Assume one parent. Sections cannot be multiple places.
+  $parent_tid = $entity->get('parent')->target_id;
 
-      foreach ($ancestors as $term) {
-        $value = $term->get('field_pretty_url')->value;
-        $values[] = $value;
-      }
-      $computed_parent = implode('/', $values);
-      $computed_path = strtolower('/' . $computed_parent . '/' . $field_pretty_url);
-
-      $entity->set('computed_path', $computed_path);
+  $parent_path = '/';
+  // Unless it is TID 0 (the root), let's get the parents computed path.
+  if ($parent_tid != 0) {
+    try {
+      $parent_entity = Term::load($parent_tid);
+      $parent_path = $parent_entity->get('computed_path')->value;
     }
-    else {
-      $computed_path = strtolower('/' . $field_pretty_url);
-      $entity->set('computed_path', $computed_path);
+    catch (Exception $e) {
+      $parent_path = NULL;
+      \Drupal::logger('cgov_site_section')
+        ->notice('Could not retrieve computed path for tid: ' . $parent_tid);
     }
   }
+
+  // This is section's "folder name".
+  $field_pretty_url = $entity->get('field_pretty_url')->value;
+
+  // Assumption: Only root terms can have empty pretty url.
+  $entity->set(
+    'computed_path',
+    $parent_path === '/' ?
+      $parent_path . $field_pretty_url :
+      $parent_path . '/' . $field_pretty_url
+  );
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * If a term has either changed its parent or pretty url name,
+ * then we need to cascade those changes to any subsections and
+ * pages within those subsections.
+ */
+function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
+
+  // Only do this for site sections. In the future if there is
+  // a vocabulary in which we attach site_section for managing its node's
+  // pretty urls, then that vocabulary needs to do something very similar.
+  // BUT not in here!
+  if ($entity->bundle() !== 'cgov_site_sections') {
+    return;
+  }
+
+  // TODO: This comparison should be done somewhere else and less messy.
+  // Do not do unnessesary updates, so only cascade if a change was
+  // made to a significant field.
+  if (
+    $entity->original->get('computed_path')->value ===
+    $entity->get('computed_path')->value &&
+    $entity->original->get('parent')->target_id ===
+    $entity->get('parent')->target_id &&
+    $entity->original->get('field_pretty_url')->value ===
+    $entity->get('field_pretty_url')->value
+  ) {
+    return;
+  }
+
+  $term_storage = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term");
+
+  // Update immediate child sections.
+  $subsections = $term_storage->loadChildren($entity->id(), 'cgov_site_sections');
+
+  // Resave the sections. This should trigger the presave above with will set
+  // the computed_path to the new path.
+  foreach ($subsections as $section) {
+    $section->save();
+  }
+
+  // TODO: Figure out how to get pathauto to update all the aliases using
+  // pathauto. To do it here is A) too slow, and B) fraught with
+  // issue regarding workflow and the various entity types we would have to hit.
 }
 
 /**
