@@ -1,0 +1,17 @@
+{% set image = content.field_image_article %}
+{# TODO: Override with image_promotional if present #}
+
+<div class="list-item-image image container">
+  <a class="item-image image" href="{{ url }}">
+    {{ image }}
+  </a>
+</div>
+
+<div class="title-and-desc title desc container">
+  <a class="title" href="{{ url }}" onclick="NCIAnalytics.SearchResults(this,1);s.linkTrackVars='prop57,prop58,prop59,prop60'; s.prop57='Recent Press Releases'; s.prop58='{{ label }}'; s.prop59='Recent Press Releases:1'; s.prop60='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','RecentPressReleases')">
+    {{ label }}
+  </a>
+  <div class="description">
+    <div class="date">{{ content.field_date_posted }}</div>
+  </div>
+</div>
