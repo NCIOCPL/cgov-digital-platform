@@ -27,7 +27,7 @@ import './Common.scss';
 // import { buildOTP, makeOutline } from 'Common/Enhancements/NCI.page';
 // import search from 'Modules/search/search';
 // import mobilemenu from 'Modules/nav/mobilemenu';
-// import sectionmenu from 'Modules/nav/sectionmenu';
+import sectionNav from 'Libraries/sectionNav/sectionNav';
 // import exitDisclaimer from 'Common/Enhancements/exitDisclaimer';
 // import backToTop from 'Modules/backToTop/backToTop';
 // import { makeAllAccordions } from 'Modules/accordion/accordion';
@@ -78,7 +78,7 @@ const onDOMContentLoaded = () => {
 
 	// mobilemenu();
 
-	// sectionmenu();
+	sectionNav();
 
 	// search.init();
 
