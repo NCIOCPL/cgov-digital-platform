@@ -1,3 +1,28 @@
-<h3>I am a sectionn nav</h3>
-{{ content }}
-<p>Goo goo ga choo</p>
+{% macro nav_level(links) %}
+  {% import _self as macros %}
+  {% for link in links %}
+    <li class="{{ link.class }}">
+      <div>
+        <a href="{{ link.href }}">{{ link.label }}</a>
+      </div>
+      {% if link.children|length > 0 %}
+        <ul>
+          {{ macros.nav_level(link.children) }}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+<li class="{{ content.nav_tree.class }}">
+  <div>
+    <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
+  </div>
+  {% if content.nav_tree.children|length > 0 %}
+    <ul>
+      {{ macros.nav_level(content.nav_tree.children) }}
+    </ul>
+  {% endif %}
+</li>
+
