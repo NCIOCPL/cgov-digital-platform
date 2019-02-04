@@ -7,19 +7,15 @@ dependencies:
 id: cgov_pretty_url
 label: 'Cgov Pretty Url'
 type: 'canonical_entities:node'
-pattern: '/[node:field_site_section:entity:parents:nci-join-path]/[node:field_site_section:entity:field_pretty_url]/[node:field_pretty_url:value]'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
 selection_criteria:
-  1bfb9996-5b91-4170-8a6c-8b0fc34b31cd:
+  61fd44d2-b0ff-4f55-a06d-06308f220b79:
     id: node_type
-    bundles:
-      cgov_article: cgov_article
-      cgov_home_landing: cgov_home_landing
-      cgov_press_release: cgov_press_release
-    negate: false
+    bundles: null
     context_mapping:
       node: node
-    uuid: 1bfb9996-5b91-4170-8a6c-8b0fc34b31cd
-  368ff1ef-e638-4413-b3c0-1d1e987497d1:
+    uuid: 61fd44d2-b0ff-4f55-a06d-06308f220b79
+  16b41c88-c5bc-4efe-b039-34a54add6e5e:
     id: language
     langcodes:
       en: en
@@ -27,7 +23,7 @@ selection_criteria:
     negate: false
     context_mapping:
       language: 'node:langcode:language'
-    uuid: 368ff1ef-e638-4413-b3c0-1d1e987497d1
+    uuid: 16b41c88-c5bc-4efe-b039-34a54add6e5e
 selection_logic: and
 weight: -10
 relationships:
