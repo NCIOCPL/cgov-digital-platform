@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: pdq_pattern
+label: 'PDQ Pattern'
+type: 'canonical_entities:node'
+pattern: '[node:url]'
+selection_criteria:
+  ef1d7404-5893-4fd9-8a84-b5f1e27b168b:
+    id: node_type
+    bundles:
+      pdq_cancer_information_summary: pdq_cancer_information_summary
+    negate: false
+    context_mapping:
+      node: node
+    uuid: ef1d7404-5893-4fd9-8a84-b5f1e27b168b
+selection_logic: and
+weight: -5
+relationships: {  }
