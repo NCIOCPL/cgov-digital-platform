@@ -79,7 +79,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
     if ($navRoot) {
       // TODO: REQUIREMENTS QUESTION
-      // What is the default render depth?
+      // What is the default render depth? I'm just making this up.
       $renderDepth = $navRoot->getRenderDepth() ? intval($navRoot->getRenderDepth()) : 5;
       $renderTree = $this->renderNavElement($navRoot, $renderDepth);
       return $renderTree;
@@ -103,6 +103,8 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     if (!$navItem || !$renderDepth) {
       return [];
     }
+    // TODO: Consider building this as nested markup elements to completely
+    // obviate the need for a template that simply parallels this logic.
     $isInCurrentPath = $navItem->getIsInCurrentPath();
     $isCurrentSection = $navItem->isCurrentSiteSection();
     $href = $navItem->getHref();

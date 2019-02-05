@@ -192,7 +192,6 @@ class NavItem implements NavItemInterface {
    *   Label value.
    */
   public function getIsInCurrentPath() {
-    // TODO: Rename Current to Active in all referennces in service and here.
     return $this->isInCurrentPath;
   }
 
