@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.list_item_title_date
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
     - field.field.node.cgov_press_release.field_card_title
@@ -24,41 +24,100 @@ dependencies:
     - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
   module:
-    - datetime
+    - cgov_core
+    - options
+    - text
     - user
-id: node.cgov_press_release.list_item_title_date
+id: node.cgov_press_release.full
 targetEntityType: node
 bundle: cgov_press_release
-mode: list_item_title_date
+mode: full
 content:
-  field_date_posted:
+  body:
+    label: hidden
+    type: text_default
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content_moderation_control:
     weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_posted:
+    weight: 5
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
+    region: content
+  field_date_reviewed:
+    weight: 6
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_updated:
+    weight: 7
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_image_article:
+    weight: 3
+    label: hidden
+    settings:
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_press_release_type:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_public_use:
+    weight: 8
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_subtitle:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
 hidden:
-  body: true
-  content_moderation_control: true
   field_browser_title: true
   field_card_title: true
   field_date_display_mode: true
-  field_date_reviewed: true
-  field_date_updated: true
   field_feature_card_description: true
-  field_image_article: true
   field_image_promotional: true
   field_list_description: true
   field_page_description: true
-  field_press_release_type: true
   field_pretty_url: true
-  field_public_use: true
   field_search_engine_restrictions: true
   field_short_title: true
   field_site_section: true
-  field_subtitle: true
   langcode: true
   links: true

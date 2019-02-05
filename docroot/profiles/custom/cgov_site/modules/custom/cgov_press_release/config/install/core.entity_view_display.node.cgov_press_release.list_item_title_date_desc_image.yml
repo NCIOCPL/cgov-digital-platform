@@ -24,7 +24,7 @@ dependencies:
     - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
   module:
-    - cgov_core
+    - datetime
     - user
 id: node.cgov_press_release.list_item_title_date_desc_image
 targetEntityType: node
@@ -32,20 +32,19 @@ bundle: cgov_press_release
 mode: list_item_title_date_desc_image
 content:
   field_date_posted:
-    type: cgov_date_formatter
+    type: datetime_default
     weight: 0
     region: content
-    label: above
+    label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
-      display_strategy: all
+      format_type: cgov_display_date
     third_party_settings: {  }
   field_image_article:
     type: entity_reference_entity_view
     weight: 3
     region: content
-    label: above
+    label: hidden
     settings:
       link: true
       view_mode: default
@@ -54,7 +53,7 @@ content:
     type: entity_reference_entity_view
     weight: 2
     region: content
-    label: above
+    label: hidden
     settings:
       link: true
       view_mode: default
@@ -63,7 +62,7 @@ content:
     type: string
     weight: 1
     region: content
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }

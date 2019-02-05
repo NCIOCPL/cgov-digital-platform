@@ -1,5 +1,7 @@
 {% set image = content.field_image_article %}
-{# TODO: Override with image_promotional if present #}
+{% if content.field_image_promotional|render %}
+  {% set image = content.field_image_promotional %}
+{% endif  %}
 
 <div class="list-item-image image container">
   <a class="item-image image" href="{{ url }}">
