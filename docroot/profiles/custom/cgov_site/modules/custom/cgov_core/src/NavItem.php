@@ -74,6 +74,13 @@ class NavItem implements NavItemInterface {
   protected $isMainNavRoot;
 
   /**
+   * Levels to render if this is root.
+   *
+   * @var int
+   */
+  protected $renderDepth;
+
+  /**
    * Rules for hiding this NavItem.
    *
    * The default values here are provided as
@@ -140,6 +147,7 @@ class NavItem implements NavItemInterface {
     $this->isBreadcrumbRoot = $this->term->field_breadcrumb_root->value;
     $this->isSectionNavRoot = $this->term->field_section_nav_root->value;
     $this->isMainNavRoot = $this->term->field_main_nav_root->value;
+    $this->renderDepth = $this->term->field_levels_to_display->value;
 
     $this->label = $this->term->field_navigation_label->value
       ? $this->term->field_navigation_label->value
@@ -185,6 +193,16 @@ class NavItem implements NavItemInterface {
    */
   public function getIsInCurrentPath() {
     return $this->isInCurrentPath;
+  }
+
+  /**
+   * Return depth to render from this root.
+   *
+   * @return int
+   *   Render depth.
+   */
+  public function getRenderDepth() {
+    return $this->renderDepth;
   }
 
   /**

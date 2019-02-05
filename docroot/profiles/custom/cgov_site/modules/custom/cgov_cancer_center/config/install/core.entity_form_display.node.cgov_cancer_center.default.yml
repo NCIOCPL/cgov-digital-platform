@@ -1,0 +1,347 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cgov_cancer_center.body
+    - field.field.node.cgov_cancer_center.field_address_1
+    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_browser_title
+    - field.field.node.cgov_cancer_center.field_card_title
+    - field.field.node.cgov_cancer_center.field_city
+    - field.field.node.cgov_cancer_center.field_date_display_mode
+    - field.field.node.cgov_cancer_center.field_date_posted
+    - field.field.node.cgov_cancer_center.field_date_reviewed
+    - field.field.node.cgov_cancer_center.field_date_updated
+    - field.field.node.cgov_cancer_center.field_feature_card_description
+    - field.field.node.cgov_cancer_center.field_image_promotional
+    - field.field.node.cgov_cancer_center.field_institution_type
+    - field.field.node.cgov_cancer_center.field_list_description
+    - field.field.node.cgov_cancer_center.field_org_head_name
+    - field.field.node.cgov_cancer_center.field_org_head_title
+    - field.field.node.cgov_cancer_center.field_page_description
+    - field.field.node.cgov_cancer_center.field_parent_institution
+    - field.field.node.cgov_cancer_center.field_phone_label_1
+    - field.field.node.cgov_cancer_center.field_phone_label_2
+    - field.field.node.cgov_cancer_center.field_phone_number_1
+    - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_search_engine_restrictions
+    - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_sort_title
+    - field.field.node.cgov_cancer_center.field_state
+    - field.field.node.cgov_cancer_center.field_website_title
+    - field.field.node.cgov_cancer_center.field_website_url
+    - field.field.node.cgov_cancer_center.field_zip_code
+    - node.type.cgov_cancer_center
+    - workflows.workflow.editorial_workflow
+  module:
+    - content_moderation
+    - datetime
+    - path
+    - text
+id: node.cgov_cancer_center.default
+targetEntityType: node
+bundle: cgov_cancer_center
+mode: default
+content:
+  body:
+    weight: 145
+    type: text_textarea_with_summary
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_address_1:
+    weight: 133
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_address_2:
+    weight: 134
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_browser_title:
+    weight: 125
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_card_title:
+    weight: 124
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_city:
+    weight: 135
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_date_display_mode:
+    weight: 151
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_date_posted:
+    weight: 148
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_reviewed:
+    weight: 150
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 149
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
+    weight: 128
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_image_promotional:
+    weight: 147
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_institution_type:
+    weight: 130
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_list_description:
+    weight: 127
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_org_head_name:
+    weight: 131
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_org_head_title:
+    weight: 132
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_page_description:
+    weight: 126
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_parent_institution:
+    weight: 129
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone_label_1:
+    weight: 139
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone_label_2:
+    weight: 141
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone_number_1:
+    weight: 140
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone_number_2:
+    weight: 142
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_region:
+    weight: 138
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_search_engine_restrictions:
+    weight: 154
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_short_title:
+    weight: 123
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_sort_title:
+    weight: 122
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_state:
+    weight: 136
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_website_title:
+    weight: 143
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_website_url:
+    weight: 144
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_zip_code:
+    weight: 137
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 120
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden: {  }

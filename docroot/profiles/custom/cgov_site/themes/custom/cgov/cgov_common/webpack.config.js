@@ -14,8 +14,13 @@ const themeConfig = {
     },
     output: {
 		path: path.join(__dirname, "dist/js")
+  },
+  externals: {
+		'jquery': 'jQuery',
+		'jQuery': 'jQuery',
+		'jquery-ui': 'jQuery.ui',
+		'CDEConfig': 'CDEConfig'
 	},
-
 }
 
 module.exports = Object.assign(baseConfig, themeConfig);
