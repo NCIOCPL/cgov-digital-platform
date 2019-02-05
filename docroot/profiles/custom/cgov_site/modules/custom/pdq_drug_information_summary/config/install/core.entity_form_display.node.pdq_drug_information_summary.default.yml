@@ -2,16 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.pdq_cancer_information_summary.field_date_posted
-    - field.field.node.pdq_cancer_information_summary.field_date_updated
-    - field.field.node.pdq_cancer_information_summary.field_list_description
-    - field.field.node.pdq_cancer_information_summary.field_pdq_audience
-    - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
-    - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
-    - field.field.node.pdq_cancer_information_summary.field_public_use
-    - field.field.node.pdq_cancer_information_summary.field_short_title
-    - field.field.node.pdq_cancer_information_summary.field_summary_sections
-    - node.type.pdq_cancer_information_summary
+    - field.field.node.pdq_drug_information_summary.body
+    - field.field.node.pdq_drug_information_summary.field_date_posted
+    - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_page_description
+    - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
+    - field.field.node.pdq_drug_information_summary.field_public_use
+    - node.type.pdq_drug_information_summary
     - workflows.workflow.pdq_workflow
   enforced:
     module:
@@ -19,13 +18,22 @@ dependencies:
   module:
     - content_moderation
     - datetime
-    - paragraphs_asymmetric_translation_widgets
     - path
-id: node.pdq_cancer_information_summary.default
+    - text
+id: node.pdq_drug_information_summary.default
 targetEntityType: node
-bundle: pdq_cancer_information_summary
+bundle: pdq_drug_information_summary
 mode: default
 content:
+  body:
+    weight: 120
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea_with_summary
+    region: content
   created:
     type: datetime_timestamp
     weight: 3
@@ -33,70 +41,54 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
-    weight: 13
+    weight: 102
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 14
+    weight: 103
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_list_description:
-    weight: 15
+  field_page_description:
+    weight: 110
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_pdq_audience:
-    weight: 16
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_pdq_cdr_id:
-    weight: 11
+  field_pdq_audio_id:
+    weight: 131
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
     region: content
-  field_pdq_summary_type:
-    weight: 12
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_public_use:
-    weight: 17
+  field_pdq_cdr_id:
+    weight: 106
     settings:
-      display_label: true
+      placeholder: ''
     third_party_settings: {  }
-    type: boolean_checkbox
+    type: number
     region: content
-  field_short_title:
-    weight: 10
+  field_pdq_pronunciation_key:
+    weight: 132
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_summary_sections:
-    type: paragraphs_classic_asymmetric
-    weight: 26
+  field_public_use:
+    weight: 130
     settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
+      display_label: true
     third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
   langcode:
     type: language_select
     weight: 1

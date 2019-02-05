@@ -1,0 +1,108 @@
+### TESTS:
+# Cancer Center content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Ocean Sunset View Mykonos"
+  name__ES:
+    value: "Ocean Sunset View Mykonos - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ocean-sunset-view-mykonos-article.jpg'
+      alt: 'sunset ocean view in Mykonos'
+      alt__ES:
+        value: "vista del mar en el ocaso en Mykonos"
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_cancer_center"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Duke Cancer Center"
+  field_sort_title:
+    value: "Duke Cancer Center"
+  field_short_title:
+    value: "Duke Cancer Center"
+  field_page_description:
+    value: "Information about the Duke Cancer Center."
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_parent_institution:
+    value: "Duke University Medical Center"
+  field_institution_type:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_type'
+            name: 'Comprehensive Cancer Center'
+  field_org_head_name:
+    value: "Michael B. Kastan, M.D., Ph.D."
+  field_org_head_title:
+    value: "Executive Director"
+  field_address_1:
+    value: "Box 2714"
+  field_address_2:
+    value: "2424 Erwin Road"
+  field_city:
+    value: "Durham"
+  field_state:
+    value: "NC"
+  field_zip_code:
+    value: "27710"
+  field_region:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_regions'
+            name: 'South Atlantic'
+  field_phone_label_1:
+    value: "Consultation and Referral Service"
+  field_phone_number_1:
+    value: "1-888-275-3853"
+  field_website_title:
+    value: "Visit Website"
+  field_website_url:
+    value: "http://www.dukecancerinstitute/org/"
+  body:
+    - format: "full_html"
+      value: |
+        <p>In 1972, the Duke Comprehensive Cancer Center, now known as the Duke Cancer Institute (DCI), was established and designated by NCI as one of the first comprehensive cancer centers. The DCI serves as the focus for all of Duke University’s activities in cancer. It is a single entity that integrates and aligns patient care and research with the goals of improving patient outcomes, decreasing the burden of cancer and accelerating scientific progress.</p>
+        <p>More than 300 clinicians and researchers within the DCI represent 19 basic and clinical departments. These researchers are dedicated to a broad spectrum of cancer research and the translation of that research into the latest in patient care.</p>
+        <p>The Institute comprises 9 NCI-designated basic, clinical, translational and population science focused research programs designed to address research opportunities impacting cancer care. These programs include Tumor Biology, Cancer Genetics and Genomics, Cancer Control and Population Sciences, Neuro-Oncology, Women’s Cancer, Hematologic Malignancies and Cellular Therapies, Solid Tumor Therapeutics, Radiation Oncology and Imaging, and Developmental Therapeutics. DCI also has disease site groups which bring together clinical care, clinical research and basic research in a multidisciplinary approach to promoting and advancing the diagnosis, treatment and continuing care of cancer patients. Representing areas of specialized expertise, DCI disease-site groups include Brain and Spinal Cord Tumors, Breast, Gynecologic, Thoracic, Gastrointestinal, Hematologic Malignancies and Cellular Therapy, Genitourinary, Head and Neck, Endocrine Neoplasias, Melanoma, Sarcoma, and Pediatric cancers.</p>
+        <p>DCI researchers bring a diversity of knowledge which has led to a number of significant collaborations on campus and beyond. In one notable partnership at Duke, the DCI is collaborating with the Nicholas School of the Environment to unravel the relationship between genes and the environment in order to understand better why some people develop disease and why some remain unaffected when exposed to the same environmental factors.</p>
+        <p>In addition, DCI has developed global partnerships in Singapore, India, and China. In 2010, Duke University and the National University of Singapore (NUS) agreed to expand the growth of the Duke-NUS Graduate Medical School. The venture continues to strengthen Duke’s contribution as a research and educational partner and positions Singapore as a global hub of biomedical expertise.</p>
+        <p>More than 50,000 individuals receive care at the Duke Cancer Institute each year. These individuals represent virtually every state in the nation and every county in North Carolina.</p>
+        <p>The Duke Cancer Network provides an array of oncology related services in a regional network of 14 community cancer programs in North Carolina, the southeast and Michigan. Through the Network, the DCI offers patients and their providers access to state-of-the-art research and education programs and provides new cancer education initiatives for patients in rural areas. These community collaborations also provide patients and their providers with greater access to the most advanced treatments and clinical trials.</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <p><i>* This profile was provided by the Duke Cancer Institute.</i></p>
+  field_date_posted:
+    value: "2012-07-26"
+  field_date_reviewed:
+    value: "2012-07-26"
+  field_date_updated:
+    value: "2015-01-09"
+  field_date_display_mode:
+    value: "updated"
