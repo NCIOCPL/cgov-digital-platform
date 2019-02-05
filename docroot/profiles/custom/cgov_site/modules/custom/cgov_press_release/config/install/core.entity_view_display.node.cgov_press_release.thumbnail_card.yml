@@ -1,0 +1,92 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.thumbnail_card
+    - field.field.node.cgov_press_release.body
+    - field.field.node.cgov_press_release.field_browser_title
+    - field.field.node.cgov_press_release.field_card_title
+    - field.field.node.cgov_press_release.field_date_display_mode
+    - field.field.node.cgov_press_release.field_date_posted
+    - field.field.node.cgov_press_release.field_date_reviewed
+    - field.field.node.cgov_press_release.field_date_updated
+    - field.field.node.cgov_press_release.field_feature_card_description
+    - field.field.node.cgov_press_release.field_image_article
+    - field.field.node.cgov_press_release.field_image_promotional
+    - field.field.node.cgov_press_release.field_list_description
+    - field.field.node.cgov_press_release.field_page_description
+    - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_pretty_url
+    - field.field.node.cgov_press_release.field_public_use
+    - field.field.node.cgov_press_release.field_search_engine_restrictions
+    - field.field.node.cgov_press_release.field_short_title
+    - field.field.node.cgov_press_release.field_site_section
+    - field.field.node.cgov_press_release.field_subtitle
+    - node.type.cgov_press_release
+  module:
+    - user
+id: node.cgov_press_release.thumbnail_card
+targetEntityType: node
+bundle: cgov_press_release
+mode: thumbnail_card
+content:
+  field_card_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_image_article:
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_image_promotional:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_list_description:
+    type: string
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_short_title:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_browser_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_page_description: true
+  field_press_release_type: true
+  field_pretty_url: true
+  field_public_use: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  field_subtitle: true
+  langcode: true
+  links: true

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: article_url
+label: 'Article URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  aa91e8ac-3e1c-46e4-94e4-2f815d03b5d9:
+    id: node_type
+    bundles:
+      cgov_article: cgov_article
+    negate: false
+    context_mapping:
+      node: node
+    uuid: aa91e8ac-3e1c-46e4-94e4-2f815d03b5d9
+selection_logic: and
+weight: -5
+relationships: {  }
