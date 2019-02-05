@@ -6,22 +6,18 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_token_info().
  */
 function cgov_site_section_token_info() {
   $info = [];
+  $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
 
-  $info['tokens']['array']['tail'] = [
-    'name' => t('Tail'),
-    'description' => t('Slice the array.'),
-    'type' => 'array',
-  ];
-
-  $info['tokens']['array']['nci-join-path'] = [
-    'name' => t('Joined path'),
-    'description' => t('Join by URL Name.'),
+  $info['tokens']['cgov_tokens']['cgov-computed-path'] = [
+    'name' => t('Computed Path'),
+    'description' => t('The computed path of the term..'),
   ];
 
   return $info;
@@ -29,35 +25,34 @@ function cgov_site_section_token_info() {
 
 /**
  * Implements hook_tokens().
+ *
+ * Generates a custom token which fetches a terms computed_path.
+ *
+ * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+ *   Error for missing data.
  */
 function cgov_site_section_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
-
   $replacements = [];
+  foreach ($tokens as $name => $original) {
+    switch ($name) {
+      case 'cgov-computed-path':
 
-  if ($type == 'array' && !empty($data['array']) && is_array($data['array'])) {
-
-    $array = $data['array'];
-
-    foreach ($tokens as $name => $original) {
-      switch ($name) {
-        case 'nci-join-path':
-
-          $values = [];
-          foreach (token_element_children($array) as $key) {
-            $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($key);
-            $value = $term->get('field_pretty_url')->value;
-            $values[] = $value;
+        if (!empty($data['node'])) {
+          /* @var \Drupal\node\NodeInterface $node */
+          $node = $data['node'];
+          if (!empty($node->get('field_site_section')->first())) {
+            try {
+              $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
+              $term = Term::load($tid);;
+              $replacements[$original] = $term->get('computed_path')->value;
+            }
+            catch (Exception $e) {
+              \Drupal::logger('cgov_site_section')
+                ->notice('Could not retrieve computed path for tid: ' . $tid);
+            }
           }
-          $replacements[$original] = implode('/', $values);
-
           break;
-
-        case 'tail':
-          $tail = array_shift($array, TRUE);
-          $replacements[$original] = token_render_array($tail, $options);
-
-          break;
-      }
+        }
     }
   }
   return $replacements;

@@ -44,11 +44,18 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
-  // Only do this for site sections.
+  // Format the Pretty URL.
+  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+
+  // Only do the following for site sections.
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
 
+  // Calculate and set the compute_path field.
   // TODO: Only recalculate path if parent or pretty url changed.
   // Assume one parent. Sections cannot be multiple places.
   $parent_tid = $entity->get('parent')->target_id;
@@ -56,9 +63,15 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   $parent_path = '/';
   // Unless it is TID 0 (the root), let's get the parents computed path.
   if ($parent_tid != 0) {
-    // TODO: Add guards here.
-    $parent_entity = Term::load($parent_tid);
-    $parent_path = $parent_entity->get('computed_path')->value;
+    try {
+      $parent_entity = Term::load($parent_tid);
+      $parent_path = $parent_entity->get('computed_path')->value;
+    }
+    catch (Exception $e) {
+      $parent_path = NULL;
+      \Drupal::logger('cgov_site_section')
+        ->notice('Could not retrieve computed path for tid: ' . $parent_tid);
+    }
   }
 
   // This is section's "folder name".
@@ -95,11 +108,11 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   // made to a significant field.
   if (
     $entity->original->get('computed_path')->value ===
-      $entity->get('computed_path')->value &&
+    $entity->get('computed_path')->value &&
     $entity->original->get('parent')->target_id ===
-      $entity->get('parent')->target_id &&
+    $entity->get('parent')->target_id &&
     $entity->original->get('field_pretty_url')->value ===
-      $entity->get('field_pretty_url')->value
+    $entity->get('field_pretty_url')->value
   ) {
     return;
   }
@@ -116,8 +129,47 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   }
 
   // TODO: Figure out how to get pathauto to update all the aliases using
-  // pathauto.
-  // To do it here is A) too slow, and B) frought with issue regarding workflow
-  // and
-  // the various entity types we would have to hit.
+  // pathauto. To do it here is A) too slow, and B) fraught with
+  // issue regarding workflow and the various entity types we would have to hit.
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prior to saving a node, formats the field..
+ */
+function cgov_site_section_node_presave($entity) {
+  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+}
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * Validates that on a node a Site Section and Pretty URL
+ * combination will be unique.
+ */
+function cgov_site_section_entity_type_build(array &$entity_types) {
+  // Add our custom validation to the node entity.
+  $entity_types['node']->addConstraint('UniqueCgovUrl');
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ *
+ * Validates that the Pretty URL Field on Nodes and Site Sections
+ * matches the required pattern.
+ */
+function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node') && !empty($fields['field_pretty_url'])) {
+    $fields['field_pretty_url']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[a-zA-Z0-9-]*$/',
+        'message' => 'The Pretty URL field only accepts letters, numbers, and dashes.',
+      ],
+    ]
+    );
+  }
 }
