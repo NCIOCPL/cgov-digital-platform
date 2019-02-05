@@ -32,7 +32,7 @@ mode: list_item_title_desc_image
 content:
   field_image_article:
     type: entity_reference_entity_view
-    weight: 2
+    weight: 1
     region: content
     label: hidden
     settings:
@@ -41,7 +41,7 @@ content:
     third_party_settings: {  }
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 1
+    weight: 0
     region: content
     label: hidden
     settings:
@@ -50,7 +50,15 @@ content:
     third_party_settings: {  }
   field_list_description:
     type: string
-    weight: 0
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_page_description:
+    type: string
+    weight: 3
     region: content
     label: hidden
     settings:
@@ -66,7 +74,6 @@ hidden:
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
-  field_page_description: true
   field_press_release_type: true
   field_pretty_url: true
   field_public_use: true
