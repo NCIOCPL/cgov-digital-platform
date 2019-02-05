@@ -1,0 +1,143 @@
+id: articletest_migration
+label: 'Custom article migration'
+source:
+  constants:
+    rid: 5
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/article_paratest.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+        -
+         name: title
+         label: title
+         selector: title
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: field_search_engine_restrictions
+
+
+        -
+         name: field_public_use
+         label: field_public_use
+         selector: field_public_use
+
+        -
+         name: field_intro_text
+         label: field_intro_text
+         selector: field_intro_text
+
+
+        -
+         name: field_short_title
+         label: field_short_title
+         selector: field_short_title
+
+
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: field_page_description
+
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: field_date_posted
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: field_date_reviewed
+
+        -
+         name: term_id
+         label: term_id
+         selector: term_id
+
+        -
+         name: paragraphs
+         label: paragraphs
+         selector: paragraphs
+
+        -
+         name: para_id
+         label: para_id
+         selector: para_id
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: field_pretty_url
+
+        -
+         name: field_date_display_mode
+         label: field_date_display_mode
+         selector: field_date_display_mode
+
+
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+  title: title
+  field_short_title: field_short_title
+  field_page_description: field_page_description
+  field_date_posted: field_date_posted
+  field_date_reviewed: field_date_reviewed
+  field_date_updated: field_date_updated
+  field_search_engine_restrictions: field_search_engine_restrictions
+  field_public_use: field_public_use
+  field_intro_text/value: field_intro_text
+  field_intro_text/format:
+   plugin: default_value
+   default_value: full_html
+
+
+  field_site_section:
+    plugin: migration_lookup
+    migration: sitesectionsql_migration
+    source: term_id
+    no_stub: true
+
+  field_pretty_url: field_pretty_url
+
+
+  temp_text:
+    plugin: migration_lookup
+    migration: paragraph_migration
+    no_stub: true
+    source: para_id
+
+  field_article_body:
+    plugin: iterator
+    source: '@temp_text'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_article
+
+migration_dependencies:
+  required:
+    - sitesectionsql_migration
+    - paragraph_migration

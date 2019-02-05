@@ -1,0 +1,46 @@
+id: internallink_migration
+label: 'Custom internallink migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/internallink.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: para_id
+         label: para_id
+         selector: para_id
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_internal_link_target_id
+         label: field_internal_link_target_id
+         selector: field_internal_link_target_id
+
+        -
+         name: field_override_title
+         label: field_override_title
+         selector: field_override_title
+
+
+  ids:
+    para_id:
+      type: integer
+
+
+process:
+ field_internal_link/target_id: field_internal_link_target_id
+ field_override_title: field_override_title
+ id: para_id
+ langcode: langcode
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_internal_link
+migration_dependencies: {  }

@@ -1,0 +1,48 @@
+id: sitesectionlanding_migration
+label: 'taxonomy sitesection migration'
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/sitesection_landing.xml
+  item_selector: /rows/row
+
+
+  fields:
+        -
+         name: term_id
+         label: term_id
+         selector: term_id
+
+        -
+         name: name
+         label: name
+         selector: name
+
+        -
+         name: field_landing_page
+         label: field_landing_page
+         selector: field_landing_page
+
+
+
+  ids:
+    term_id:
+      type: integer
+
+process:
+  tid: term_id
+  name: name
+
+
+  vid:
+   plugin: default_value
+   default_value: cgov_site_sections
+
+  field_landing_page: field_landing_page
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: cgov_site_sections
+  overwrite_properties:
+    - field_landing_page

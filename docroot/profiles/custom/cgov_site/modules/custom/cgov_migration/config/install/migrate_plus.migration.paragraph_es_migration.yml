@@ -1,0 +1,54 @@
+id: paragraph_es_migration
+label: 'Custom paragraph migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/para_es.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: para_id
+         label: para_id
+         selector: '@para_id'
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+
+        -
+         name: field_body_section_content
+         label: field_body_section_content
+         selector: '.'
+
+        -
+         name: field_body_section_heading
+         label: field_body_section_heading
+         selector: heading
+
+
+
+  ids:
+    para_id:
+      type: integer
+
+
+process:
+ field_body_section_content/value: field_body_section_content
+ field_body_section_content/format:
+   plugin: default_value
+   default_value: full_html
+
+   field_body_section_heading: field_body_section_heading
+
+ id: para_id
+
+ langcode: langcode
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: body_section
+migration_dependencies: {  }

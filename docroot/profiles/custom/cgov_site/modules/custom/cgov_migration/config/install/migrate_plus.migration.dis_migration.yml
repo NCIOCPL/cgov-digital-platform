@@ -1,0 +1,42 @@
+id: dis_migration
+label: 'Custom drug info summary migration'
+source:
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/dis.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+
+        -
+         name: title
+         label: title
+         selector: title
+
+        -
+         name: field_pdq_cdr_id
+         label: field_pdq_cdr_id
+         selector: field_pdq_cdr_id
+
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+  title: title
+  field_pdq_cdr_id: field_pdq_cdr_id
+
+
+destination:
+  plugin: entity:node
+  default_bundle: pdq_drug_information_summary
+
+migration_dependencies: { }

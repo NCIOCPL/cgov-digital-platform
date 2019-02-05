@@ -1,0 +1,122 @@
+id: sitesectiones_migration
+label: 'taxonomy sitesection migration'
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/sitesection_es.xml
+  item_selector: /rows/row
+
+
+  fields:
+        -
+         name: term_id
+         label: term_id
+         selector: term_id
+
+        -
+         name: name
+         label: name
+         selector: name
+        -
+         name: computed_path
+         label: computed_path
+         selector: computed_path
+        -
+         name: parent
+         label: parent
+         selector: parent
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: field_pretty_url
+
+        -
+         name: field_section_nav_root
+         label: field_section_nav_root
+         selector: field_section_nav_root
+
+        -
+         name: field_navigation_label
+         label: field_navigation_label
+         selector: field_navigation_label
+        -
+         name: field_mega_menu_content
+         label: field_mega_menu_content
+         selector: field_mega_menu_content
+
+
+        -
+         name: field_navigation_display_options
+         label: field_navigation_display_options
+         selector: field_navigation_display_options
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_breadcrumb_root
+         label: field_breadcrumb_root
+         selector: field_breadcrumb_root
+
+
+        -
+         name: field_landing_page
+         label: field_landing_page
+         selector: field_landing_page
+
+        -
+         name: field_levels_to_display
+         label: field_levels_to_display
+         selector: field_levels_to_display
+
+        -
+         name: field_main_nav_root
+         label: field_main_nav_root
+         selector: field_main_nav_root
+
+
+
+
+
+
+  ids:
+    term_id:
+      type: integer
+
+process:
+  tid: term_id
+  name: name
+  langcode: langcode
+
+
+  vid:
+   plugin: default_value
+   default_value: cgov_site_sections
+
+  field_breadcrumb_root: field_breadcrumb_root
+  field_landing_page: field_landing_page
+  field_levels_to_display: field_levels_to_display
+  field_main_nav_root: field_main_nav_root
+  field_mega_menu_content: field_mega_menu_content
+  field_navigation_label: field_navigation_label
+  field_pretty_url: field_pretty_url
+  field_section_nav_root: field_section_nav_root
+  field_navigation_display_options: field_navigation_display_options
+
+  parent:
+    plugin: migration_lookup
+    migration: sitesectiones_migration
+    source: parent
+    no_stub: true
+
+  computed_path: computed_path
+
+
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: cgov_site_sections
+  overwrite_properties:
+    - computed_path

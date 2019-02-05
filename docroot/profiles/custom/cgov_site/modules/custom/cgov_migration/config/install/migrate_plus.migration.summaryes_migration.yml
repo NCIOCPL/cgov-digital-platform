@@ -1,0 +1,53 @@
+id: summaryes_migration
+label: 'Custom summary es migration'
+source:
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/private-files-mig/summary_es.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+
+        -
+         name: title
+         label: title
+         selector: title
+
+        -
+         name: field_pdq_cdr_id
+         label: field_pdq_cdr_id
+         selector: field_pdq_cdr_id
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: summary_migration
+
+  title: title
+  langcode: langcode
+  field_pdq_cdr_id: field_pdq_cdr_id
+
+
+destination:
+  plugin: entity:node
+  default_bundle: pdq_cancer_information_summary
+  translations: true
+
+migration_dependencies:
+  required:
+    - summary_migration
