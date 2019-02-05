@@ -3,19 +3,19 @@ status: true
 dependencies:
   module:
     - node
-id: pdq_pattern
-label: 'PDQ Pattern'
+id: article_url
+label: 'Article URL'
 type: 'canonical_entities:node'
-pattern: '[node:url]'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
 selection_criteria:
-  ef1d7404-5893-4fd9-8a84-b5f1e27b168b:
+  aa91e8ac-3e1c-46e4-94e4-2f815d03b5d9:
     id: node_type
     bundles:
-      pdq_cancer_information_summary: pdq_cancer_information_summary
+      cgov_article: cgov_article
     negate: false
     context_mapping:
       node: node
-    uuid: ef1d7404-5893-4fd9-8a84-b5f1e27b168b
+    uuid: aa91e8ac-3e1c-46e4-94e4-2f815d03b5d9
 selection_logic: and
 weight: -5
 relationships: {  }
