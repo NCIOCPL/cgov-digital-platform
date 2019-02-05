@@ -42,25 +42,33 @@ content:
     third_party_settings: {  }
   field_image_article:
     type: entity_reference_entity_view
-    weight: 3
-    region: content
-    label: hidden
-    settings:
-      link: true
-      view_mode: default
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
     weight: 2
     region: content
     label: hidden
     settings:
-      link: true
-      view_mode: default
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
     third_party_settings: {  }
   field_list_description:
     type: string
-    weight: 1
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_page_description:
+    type: string
+    weight: 4
     region: content
     label: hidden
     settings:
@@ -75,7 +83,6 @@ hidden:
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
-  field_page_description: true
   field_press_release_type: true
   field_pretty_url: true
   field_public_use: true
