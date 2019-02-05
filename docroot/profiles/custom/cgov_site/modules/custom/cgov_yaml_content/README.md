@@ -8,6 +8,17 @@ This tool is especially helpful for expediting demo preparations, test environme
 ## How do you use me?
 
 First create XXX.content.yml files in the cgov_yaml_content/content directory. Then run 'drush ycim cgov_yaml_content' from the command line after installing Drupal (inside the Docker container).
+
+All of the files in the content directory are sorted alphabetically before loading. So if you have dependencies across files, you need to make sure the files are named such that the order is maintained. As such we are following the Basic Programming style of line numbering. (Numbers start the filenames and you leave enough space between the next group to fit new items in)
+* 000-009 Site Sections
+* 010-090 Content Pages
+* 099-199 Landing pages
+
+(Note, you can have a bunch of Content Page files start with 010_XXX. It is ok as long as there are no dependencies.)
+
+Additionally the file names should be descriptive either by Content Type where we are bulk loading things of the same type that are dumped in the same folders. (e.g. press releases, or PDQ summaries) For actual articles and landing pages they should be named with enough of their file path that we could figure out where on the Cancer.gov front-end they live in. (e.g. 010_coping_feelings.content.yml, 010_coping_feelings_relaxation.content.yml or 099_about-cancer.content.yml)
+
+
 NOTE: The CLI command is now baked into the blt helper command 'blt cgov:reinstall' as well as post code-deploy hooks for ODE environments.
 
 ## What are the gotchas? How is the sausage made? Implementation overview:
