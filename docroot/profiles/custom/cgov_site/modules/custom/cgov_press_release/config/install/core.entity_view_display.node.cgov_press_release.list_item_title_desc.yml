@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.list_item_title_desc
+    - field.field.node.cgov_press_release.body
+    - field.field.node.cgov_press_release.field_browser_title
+    - field.field.node.cgov_press_release.field_card_title
+    - field.field.node.cgov_press_release.field_date_display_mode
+    - field.field.node.cgov_press_release.field_date_posted
+    - field.field.node.cgov_press_release.field_date_reviewed
+    - field.field.node.cgov_press_release.field_date_updated
+    - field.field.node.cgov_press_release.field_feature_card_description
+    - field.field.node.cgov_press_release.field_image_article
+    - field.field.node.cgov_press_release.field_image_promotional
+    - field.field.node.cgov_press_release.field_list_description
+    - field.field.node.cgov_press_release.field_page_description
+    - field.field.node.cgov_press_release.field_press_release_type
+    - field.field.node.cgov_press_release.field_pretty_url
+    - field.field.node.cgov_press_release.field_public_use
+    - field.field.node.cgov_press_release.field_search_engine_restrictions
+    - field.field.node.cgov_press_release.field_short_title
+    - field.field.node.cgov_press_release.field_site_section
+    - field.field.node.cgov_press_release.field_subtitle
+    - node.type.cgov_press_release
+  module:
+    - user
+id: node.cgov_press_release.list_item_title_desc
+targetEntityType: node
+bundle: cgov_press_release
+mode: list_item_title_desc
+content:
+  field_list_description:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_image_article: true
+  field_image_promotional: true
+  field_page_description: true
+  field_press_release_type: true
+  field_pretty_url: true
+  field_public_use: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  field_site_section: true
+  field_subtitle: true
+  langcode: true
+  links: true
