@@ -7,10 +7,10 @@ dependencies:
     - field.field.taxonomy_term.cgov_site_sections.field_levels_to_display
     - field.field.taxonomy_term.cgov_site_sections.field_main_nav_root
     - field.field.taxonomy_term.cgov_site_sections.field_mega_menu_content
+    - field.field.taxonomy_term.cgov_site_sections.field_navigation_display_options
     - field.field.taxonomy_term.cgov_site_sections.field_navigation_label
     - field.field.taxonomy_term.cgov_site_sections.field_pretty_url
     - field.field.taxonomy_term.cgov_site_sections.field_section_nav_root
-    - field.field.taxonomy_term.cgov_site_sections.field_show_in_navigation
     - taxonomy.vocabulary.cgov_site_sections
   module:
     - options
@@ -74,6 +74,13 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_navigation_display_options:
+    weight: 12
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_navigation_label:
     weight: 2
     label: above
@@ -99,13 +106,6 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     type: boolean
-    region: content
-  field_show_in_navigation:
-    weight: 5
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
     region: content
 hidden:
   langcode: true
