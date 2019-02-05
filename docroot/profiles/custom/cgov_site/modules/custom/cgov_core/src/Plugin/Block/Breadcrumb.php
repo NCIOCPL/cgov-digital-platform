@@ -84,7 +84,9 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
     if ($navRoot) {
       $breadcrumbs = [$navRoot];
       $child = $navRoot;
-      while ($child) {
+      // We only want to go as far as one level below the current site
+      // section.
+      while ($child && !$child->isCurrentSiteSection()) {
         $children = $child->getChildren(['isInActivePath']);
         $child = NULL;
         // We should only ever find one child in the active path.
