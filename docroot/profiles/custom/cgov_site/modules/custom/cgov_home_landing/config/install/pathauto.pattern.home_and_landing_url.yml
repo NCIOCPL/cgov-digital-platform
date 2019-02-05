@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: home_and_landing_url
+label: 'Home and Landing URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  d38ab68a-916f-4169-80d9-1c3acbbbb46d:
+    id: node_type
+    bundles:
+      cgov_home_landing: cgov_home_landing
+    negate: false
+    context_mapping:
+      node: node
+    uuid: d38ab68a-916f-4169-80d9-1c3acbbbb46d
+selection_logic: and
+weight: -5
+relationships: {  }
