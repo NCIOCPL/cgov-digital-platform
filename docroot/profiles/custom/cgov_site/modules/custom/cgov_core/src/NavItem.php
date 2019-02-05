@@ -141,6 +141,7 @@ class NavItem implements NavItemInterface {
    */
   protected function initialize(TermInterface $term) {
     // TODO: Break some of these into their own protected functions.
+    // TODO: Error handle if fields don't exist.
     $this->term = $term;
     $this->termId = $this->term->id();
     $this->landingPage = $this->term->field_landing_page->getValue();
@@ -155,7 +156,7 @@ class NavItem implements NavItemInterface {
     $this->href = $this->term->computed_path->value;
 
     // @var [['value' => string], ['value' => string]]
-    $navigationDisplayRules = $this->term->field_show_in_navigation->getValue();
+    $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
     $displayRules = [];
     foreach ($navigationDisplayRules as $rule) {
