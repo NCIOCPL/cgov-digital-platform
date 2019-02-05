@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\cgov_core\NavItem;
 
 /**
  * Provides a 'Section Nav' block.
@@ -88,7 +89,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Create render tree of NavItems.
    *
-   * @param \Drupal\cgov_core\NavItemInterface $navItem
+   * @param \Drupal\cgov_core\NavItem $navItem
    *   Nav item.
    * @param int $renderDepth
    *   How many more levels to rennder in the tree.
@@ -98,7 +99,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    * @return array
    *   Nav tree.
    */
-  public function renderNavElement(NavItemInterface $navItem, int $renderDepth, int $currentLevel = 0) {
+  public function renderNavElement(NavItem $navItem, int $renderDepth, int $currentLevel = 0) {
     if (!$navItem || !$renderDepth) {
       return [];
     }
