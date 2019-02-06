@@ -8,7 +8,7 @@ use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
 /**
  * Nav Item.
  *
- * Custom wrapper arounnd native Site Section object
+ * Custom wrapper around native Site Section object
  * (currently Term Entities).
  */
 class NavItem implements NavItemInterface {
