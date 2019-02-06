@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
-    - field.field.node.cgov_blog_series.field_date_posted
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_image_article
     - field.field.node.cgov_blog_series.field_image_promotional
@@ -20,25 +19,14 @@ dependencies:
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
-    - datetime
     - entity_browser
-    - text
 id: node.cgov_blog_series.default
 targetEntityType: node
 bundle: cgov_blog_series
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 12
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-    third_party_settings: {  }
-    region: content
   field_browser_title:
-    weight: 5
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -46,21 +34,15 @@ content:
     type: string_textfield
     region: content
   field_card_title:
-    weight: 6
+    weight: 5
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_date_posted:
-    type: datetime_default
-    weight: 17
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_feature_card_description:
-    weight: 9
+    weight: 8
     settings:
       size: 60
       placeholder: ''
@@ -68,7 +50,7 @@ content:
     type: string_textfield
     region: content
   field_image_article:
-    weight: 13
+    weight: 10
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -83,7 +65,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_image_promotional:
-    weight: 14
+    weight: 11
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -97,23 +79,7 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
-  field_intro_text:
-    weight: 11
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_list_description:
-    weight: 8
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_page_description:
     weight: 7
     settings:
       size: 60
@@ -121,8 +87,16 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_page_description:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_pretty_url:
-    weight: 2
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -130,19 +104,19 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 15
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_search_engine_restrictions:
-    weight: 16
+    weight: 13
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_short_title:
-    weight: 4
+    weight: 3
     settings:
       size: 60
       placeholder: ''
@@ -164,14 +138,16 @@ content:
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 3
+    weight: 2
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  body: true
   created: true
+  field_intro_text: true
   moderation_state: true
   path: true
   promote: true

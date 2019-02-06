@@ -5,7 +5,6 @@ dependencies:
     - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
-    - field.field.node.cgov_blog_series.field_date_posted
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_image_article
     - field.field.node.cgov_blog_series.field_image_promotional
@@ -19,7 +18,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
-    - datetime
     - options
     - text
     - user
@@ -55,15 +53,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_date_posted:
-    weight: 19
-    label: hidden
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
     region: content
   field_feature_card_description:
     weight: 7
