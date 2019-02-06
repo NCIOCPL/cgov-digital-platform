@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: pdq_cis_url
+label: 'PDQ Summary URL'
+type: 'canonical_entities:node'
+pattern: '[node:field_pdq_url:value]'
+selection_criteria:
+  6d81fb7c-9081-47ab-97e2-f333cc5a6fcc:
+    id: node_type
+    bundles:
+      pdq_cancer_information_summary: pdq_cancer_information_summary
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 6d81fb7c-9081-47ab-97e2-f333cc5a6fcc
+selection_logic: and
+weight: -5
+relationships: {  }
