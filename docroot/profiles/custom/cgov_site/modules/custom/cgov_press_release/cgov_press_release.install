@@ -5,6 +5,9 @@
  * Contains cgov_press_release.install.
  */
 
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+
 /**
  * Implements hook_install().
  *
@@ -19,5 +22,52 @@ function cgov_press_release_install() {
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_press_release', ['content_author']);
   $siteHelper->attachContentTypeToWorkflow('cgov_press_release', 'editorial_workflow');
+
+  // Create Contact Us block for Press Releases.
+  $block_region = 'content';
+  $block_label = 'Contact Us - Press Releases';
+  $block_html = <<<EOMarkup
+    <div class="media-contact columns large-4 right">
+       <div class="row collapse-edges">
+         <div class="media-contact-info">
+            <strong>Contact:</strong>
+         </div>
+         <div class="media-contact-info">
+           <a href="mailto:ncipressofficers@mail.nih.gov">NCI Press Office</a>
+           <p>240-760-6600</p>
+         </div>
+       </div>
+    </div>
+EOMarkup;
+
+  // Create block content.
+  $block_content = BlockContent::create([
+    'type' => 'raw_html_block',
+    'info' => $block_label,
+  ]);
+  $block_content->set('body', $block_html);
+  $block_content->save();
+
+  // Assign block to Region.
+  $block = Block::create([
+    'id' => 'contact_us__press_release',
+    'plugin' => 'block_content:' . $block_content->uuid(),
+    'region' => $block_region,
+    'provider' => 'block_content',
+    'weight' => -100,
+    'theme' => \Drupal::config('system.theme')->get('default'),
+    'visibility' => [
+      'node_type' =>
+        [
+          'id' => 'node_type',
+          'bundles' => ['cgov_press_release' => 'cgov_press_release'],
+        ],
+    ],
+    'settings' => [
+      'label' => $block_label,
+      'label_display' => FALSE,
+    ],
+  ]);
+  $block->save();
 
 }
