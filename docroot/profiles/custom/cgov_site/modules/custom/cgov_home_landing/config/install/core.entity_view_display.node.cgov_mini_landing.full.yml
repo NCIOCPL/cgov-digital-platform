@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.cgov_mini_landing.field_banner_image
     - field.field.node.cgov_mini_landing.field_browser_title
     - field.field.node.cgov_mini_landing.field_card_title
     - field.field.node.cgov_mini_landing.field_date_display_mode
@@ -21,15 +22,25 @@ dependencies:
     - node.type.cgov_mini_landing
   module:
     - entity_reference_revisions
+    - image
     - user
 id: node.cgov_mini_landing.full
 targetEntityType: node
 bundle: cgov_mini_landing
 mode: full
 content:
+  field_banner_image:
+    type: image
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
   field_landing_contents:
     type: entity_reference_revisions_entity_view
-    weight: 0
+    weight: 1
     label: hidden
     settings:
       view_mode: default

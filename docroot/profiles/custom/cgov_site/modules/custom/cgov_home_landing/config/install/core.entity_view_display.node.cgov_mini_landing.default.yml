@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.cgov_mini_landing.field_banner_image
     - field.field.node.cgov_mini_landing.field_browser_title
     - field.field.node.cgov_mini_landing.field_card_title
     - field.field.node.cgov_mini_landing.field_date_display_mode
@@ -21,6 +22,7 @@ dependencies:
   module:
     - datetime
     - entity_reference_revisions
+    - image
     - options
     - user
 id: node.cgov_mini_landing.default
@@ -29,36 +31,45 @@ bundle: cgov_mini_landing
 mode: default
 content:
   content_moderation_control:
-    weight: -20
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_banner_image:
+    weight: 13
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
   field_browser_title:
-    weight: 104
-    label: above
+    weight: 4
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_card_title:
-    weight: 103
-    label: above
+    weight: 3
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_date_display_mode:
-    weight: 111
-    label: above
+    weight: 11
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
-    weight: 108
-    label: above
+    weight: 8
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -66,8 +77,8 @@ content:
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 109
-    label: above
+    weight: 9
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -75,8 +86,8 @@ content:
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 110
-    label: above
+    weight: 10
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
@@ -84,16 +95,16 @@ content:
     type: datetime_default
     region: content
   field_feature_card_description:
-    weight: 106
-    label: above
+    weight: 6
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_image_promotional:
-    weight: 114
-    label: above
+    weight: 15
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -101,46 +112,46 @@ content:
     region: content
   field_landing_contents:
     type: entity_reference_revisions_entity_view
-    weight: 113
-    label: above
+    weight: 14
+    label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
     region: content
   field_list_description:
-    weight: 107
-    label: above
+    weight: 7
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_page_description:
-    weight: 105
-    label: above
+    weight: 5
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   field_search_engine_restrictions:
-    weight: 112
-    label: above
+    weight: 12
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_short_title:
-    weight: 102
-    label: above
+    weight: 2
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
   links:
-    weight: 100
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
