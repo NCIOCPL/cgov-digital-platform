@@ -115,14 +115,13 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
 
       // Query for the conditions.
       // The id could be NULL, cast it to 0 in that case.
-      $query = \Drupal::entityQuery($entity_type_id)
-        ->condition($id_key, (bool) $entity->id(), '<>')
+      $value_taken = (bool) \Drupal::entityQuery($entity_type_id)
+        ->condition($id_key, (int) $entity->id(), '<>')
         ->condition($field_name, $value)
         ->notExists('field_pretty_url')
         ->range(0, 1)
-        ->count();
-
-      $value_taken = $query->execute();
+        ->count()
+        ->execute();
     }
 
     return !$value_taken;
