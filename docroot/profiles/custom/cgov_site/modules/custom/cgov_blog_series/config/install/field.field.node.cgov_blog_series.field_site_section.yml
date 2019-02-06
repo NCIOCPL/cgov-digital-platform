@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_section
+    - node.type.cgov_blog_series
+    - taxonomy.vocabulary.cgov_site_sections
+id: node.cgov_blog_series.field_site_section
+field_name: field_site_section
+entity_type: node
+bundle: cgov_blog_series
+label: 'Site Section'
+description: 'Used to indicate how a page should be handled by both internal (sitewide search) and external (Google) search engines.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cgov_site_sections: cgov_site_sections
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
