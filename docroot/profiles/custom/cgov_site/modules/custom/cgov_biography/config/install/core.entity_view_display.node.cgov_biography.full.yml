@@ -38,7 +38,7 @@ dependencies:
     - field.field.node.cgov_biography.field_twitter_handle
     - node.type.cgov_biography
   module:
-    - datetime
+    - cgov_core
     - options
     - text
     - user
@@ -71,7 +71,7 @@ content:
     weight: 20
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
@@ -96,8 +96,9 @@ content:
     settings:
       timezone_override: ''
       format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_reviewed:
     weight: 30
@@ -105,8 +106,9 @@ content:
     settings:
       timezone_override: ''
       format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_updated:
     weight: 29
@@ -114,8 +116,9 @@ content:
     settings:
       timezone_override: ''
       format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_email_address:
     weight: 23
@@ -147,7 +150,7 @@ content:
     region: content
     label: hidden
     settings:
-      view_mode: image_display_article_medium
+      view_mode: image_crop_article
       link: false
     third_party_settings: {  }
   field_last_name:
