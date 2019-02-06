@@ -1,5 +1,20 @@
-<li class="general-list-item general list-item">
-  <div class="title-and-desc title desc container">
-    <a class="title" href="/publications/pdq/information-summaries/adult-treatment">PDQ® Cancer Information Summaries: Adult Treatment</a>
-  </div><!-- end title & desc container -->
-</li>
+{% if content.field_internal_link[0] %}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_card_title[0] %}
+    {% set title = content.field_override_card_title[0] %}
+  {% else %}
+    {% set title = content.field_internal_link[0]["#node"].title.value %}
+  {% endif %}
+
+
+  {# Setup the URL #}
+  {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
+
+  <li class="general-list-item general list-item">
+    <div class="title-and-desc title desc container">
+      <a class="title" href="{{url}}">{{title}}</a>
+    </div><!-- end title & desc container -->
+  </li>
+
+{% endif %}
