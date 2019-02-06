@@ -1,0 +1,31 @@
+{{ attach_library('cgov_common/minilanding') }}
+<article>
+
+  {# TODO: Public archive banner ??? #}
+
+  {# TODO: Add the banner field #}
+  <!-- Banner Area -->
+  <div id="cgvBodyHeader" class="row banner-slot">
+    <div class="contentid-869644 slot-item only-SI large-12 columns body-banner">
+      <a name="CCCT+Banner"></a><div class="body-banner"><img alt="" src="https://www.cancer.gov/PublishedContent/Images/images/design-elements/body-banners/CCCT-banner.__v200305060.jpg" title=""></div>
+    </div>
+  </div>
+  <!-- End Banner Area -->
+
+  <div class="resize-content">
+
+    <!-- PAGE TITLE -->
+    <h1>{{ node.label }}</h1>
+    <!-- END PAGE TITLE -->
+    {{ drupal_block('page_options') }}
+
+    <!-- Contents -->
+    {{content.field_landing_contents}}
+    <!-- End Contents -->
+
+    <footer class="article-footer">
+      {# Related Resources??? #}
+      {# Dates??? #}
+    </footer>
+  </div>
+</article>
