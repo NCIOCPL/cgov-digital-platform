@@ -1,0 +1,106 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.pdq_drug_information_summary.body
+    - field.field.node.pdq_drug_information_summary.field_date_posted
+    - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_page_description
+    - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
+    - field.field.node.pdq_drug_information_summary.field_public_use
+    - node.type.pdq_drug_information_summary
+  enforced:
+    module:
+      - pdq_core
+  module:
+    - datetime
+    - text
+    - user
+id: node.pdq_drug_information_summary.default
+targetEntityType: node
+bundle: pdq_drug_information_summary
+mode: default
+content:
+  body:
+    weight: 120
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_date_posted:
+    weight: 102
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 103
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_page_description:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pdq_audio_id:
+    weight: 131
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_pdq_cdr_id:
+    weight: 106
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_pdq_pronunciation_key:
+    weight: 132
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_public_use:
+    weight: 130
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

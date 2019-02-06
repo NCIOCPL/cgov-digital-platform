@@ -1,0 +1,236 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.cgov_cancer_center.body
+    - field.field.node.cgov_cancer_center.field_address_1
+    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_browser_title
+    - field.field.node.cgov_cancer_center.field_card_title
+    - field.field.node.cgov_cancer_center.field_city
+    - field.field.node.cgov_cancer_center.field_date_display_mode
+    - field.field.node.cgov_cancer_center.field_date_posted
+    - field.field.node.cgov_cancer_center.field_date_reviewed
+    - field.field.node.cgov_cancer_center.field_date_updated
+    - field.field.node.cgov_cancer_center.field_feature_card_description
+    - field.field.node.cgov_cancer_center.field_image_promotional
+    - field.field.node.cgov_cancer_center.field_institution_type
+    - field.field.node.cgov_cancer_center.field_list_description
+    - field.field.node.cgov_cancer_center.field_org_head_name
+    - field.field.node.cgov_cancer_center.field_org_head_title
+    - field.field.node.cgov_cancer_center.field_page_description
+    - field.field.node.cgov_cancer_center.field_parent_institution
+    - field.field.node.cgov_cancer_center.field_phone_label_1
+    - field.field.node.cgov_cancer_center.field_phone_label_2
+    - field.field.node.cgov_cancer_center.field_phone_number_1
+    - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_search_engine_restrictions
+    - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_sort_title
+    - field.field.node.cgov_cancer_center.field_state
+    - field.field.node.cgov_cancer_center.field_website_title
+    - field.field.node.cgov_cancer_center.field_website_url
+    - field.field.node.cgov_cancer_center.field_zip_code
+    - node.type.cgov_cancer_center
+  module:
+    - datetime
+    - options
+    - text
+    - user
+id: node.cgov_cancer_center.full
+targetEntityType: node
+bundle: cgov_cancer_center
+mode: full
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content_moderation_control:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_address_1:
+    weight: 7
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_address_2:
+    weight: 8
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_city:
+    weight: 9
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_date_posted:
+    weight: 21
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_reviewed:
+    weight: 23
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 22
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_image_promotional:
+    weight: 2
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_institution_type:
+    weight: 4
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_org_head_name:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_org_head_title:
+    weight: 6
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_parent_institution:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_label_1:
+    weight: 13
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_label_2:
+    weight: 15
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_number_1:
+    weight: 14
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone_number_2:
+    weight: 16
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_region:
+    weight: 12
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_state:
+    weight: 10
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_website_title:
+    weight: 17
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_website_url:
+    weight: 18
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_zip_code:
+    weight: 11
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_feature_card_description: true
+  field_list_description: true
+  field_page_description: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  field_sort_title: true
+  langcode: true
