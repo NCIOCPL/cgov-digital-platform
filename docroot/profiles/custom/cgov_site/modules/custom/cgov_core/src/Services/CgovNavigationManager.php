@@ -18,7 +18,7 @@ use Drupal\cgov_core\NavItem;
  * memoized for the duration of this request to be shared between
  * navigation block plugins.
  */
-class CgovNavigationManager implements CgovNavigationManagerInterface {
+class CgovNavigationManager {
 
   /**
    * Am I initialized.

@@ -3,7 +3,7 @@
 namespace Drupal\cgov_core;
 
 use Drupal\taxonomy\TermInterface;
-use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 
 /**
  * Nav Item.
@@ -11,12 +11,12 @@ use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
  * Custom wrapper around native Site Section object
  * (currently Term Entities).
  */
-class NavItem implements NavItemInterface {
+class NavItem {
 
   /**
    * Cgov Navigation Manager service.
    *
-   * @var \Drupal\cgov_core\Services\CgovNavigationManagerInterface
+   * @var \Drupal\cgov_core\Services\CgovNavigationManager
    */
   protected $navMgr;
 
@@ -112,7 +112,7 @@ class NavItem implements NavItemInterface {
   /**
    * Constructs a new instance of a Nav Item.
    *
-   * @param \Drupal\cgov_core\Services\CgovNavigationManagerInterface $navMgr
+   * @param \Drupal\cgov_core\Services\CgovNavigationManager $navMgr
    *   Instance of Navigation Manager service that created this
    *   NavItem.
    * @param \Drupal\taxonomy\TermInterface $term
@@ -122,7 +122,7 @@ class NavItem implements NavItemInterface {
    *   section closest to current request.
    */
   public function __construct(
-    CgovNavigationManagerInterface $navMgr,
+    CgovNavigationManager $navMgr,
     TermInterface $term,
     bool $isInCurrentPath
     ) {
@@ -141,6 +141,8 @@ class NavItem implements NavItemInterface {
    */
   protected function initialize(TermInterface $term) {
     // TODO: Break some of these into their own protected functions.
+    // Or do we want the getters to all interact directly with the term
+    // since there isn't much precalculation anyway.
     // TODO: Error handle if fields don't exist.
     $this->term = $term;
     $this->termId = $this->term->id();
@@ -158,6 +160,7 @@ class NavItem implements NavItemInterface {
     // @var [['value' => string], ['value' => string]]
     $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
+    // Build a lookup table for easier reference later.
     $displayRules = [];
     foreach ($navigationDisplayRules as $rule) {
       $rule = $rule['value'];
