@@ -30,7 +30,7 @@ class CgovNavigationManager {
   /**
    * Site Section closest to current request path.
    *
-   * @var \Drupal\taxonomy\TermInterface
+   * @var \Drupal\taxonomy\TermInterface|null
    */
   protected $closestSiteSection;
 
@@ -244,6 +244,23 @@ class CgovNavigationManager {
     /* @var \Drupal\Core\Field\FieldDefinitionInterface[] */
     $definitions = $this->entityFieldManager->getFieldDefinitions('taxonomy_term', 'cgov_site_sections');
     return isset($definitions[$fieldName]);
+  }
+
+  /**
+   * Test if current path can reach any site section.
+   *
+   * If walking up the path never finds a valid
+   * site section, the current page is not a part
+   * of the site's navigation structure using the site
+   * section vocabulary. Therefore any plugins relying
+   * on this service should be disabled.
+   *
+   * @return bool
+   *   Whether current path is a part of navigation tree.
+   */
+  public function getCurrentPathIsInNavigationTree() {
+    $this->initialize();
+    return $this->closestSiteSection !== NULL;
   }
 
   /**

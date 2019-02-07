@@ -69,8 +69,11 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account) {
-    // TODO: Block access rules.
-    return AccessResult::allowed();
+    $shouldDisplay = $this->navMgr->getCurrentPathIsInNavigationTree();
+    if ($shouldDisplay) {
+      return AccessResult::allowed();
+    }
+    return AccessResult::forbidden();
   }
 
   /**
