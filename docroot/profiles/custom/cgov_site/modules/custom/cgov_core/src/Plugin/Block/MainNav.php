@@ -120,7 +120,9 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
           <a href='$href'>$label</a>
         </div>
         $children
-        $megamenu
+        <div class='sub-nav-mega' aria-expanded='true' aria-haspopup='true'>
+          $megamenu
+        </div>
       </li>
       ";
       $renderedMegaNavTrees[] = $markup;
