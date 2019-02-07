@@ -1,0 +1,65 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_landing_contents
+    - node.type.cgov_mini_landing
+    - paragraphs.paragraphs_type.cgov_thumbnail_row
+  module:
+    - entity_reference_revisions
+id: node.cgov_mini_landing.field_landing_contents
+field_name: field_landing_contents
+entity_type: node
+bundle: cgov_mini_landing
+label: Contents
+description: 'Contents of the Landing Page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_two_item_feature_row: cgov_two_item_feature_row
+      cgov_thumbnail_row: cgov_thumbnail_row
+      cgov_content_block: cgov_content_block
+    target_bundles_drag_drop:
+      cgov_content_block:
+        enabled: true
+        weight: -23
+      cgov_two_item_feature_row:
+        enabled: true
+        weight: -22
+      cgov_primary_feature_row:
+        enabled: false
+        weight: -21
+      cgov_guide_row:
+        enabled: false
+        weight: -20
+      cgov_secondary_feature_row:
+        enabled: false
+        weight: -19
+      cgov_thumbnail_row:
+        enabled: true
+        weight: -18
+      cgov_column_one:
+        enabled: false
+        weight: -17
+      cgov_column_two:
+        enabled: false
+        weight: -16
+      body_section:
+        weight: -15
+        enabled: false
+      cgov_card_external:
+        weight: -14
+        enabled: false
+      cgov_card_internal:
+        weight: -13
+        enabled: false
+      cgov_card_raw_html:
+        weight: -12
+        enabled: false
+field_type: entity_reference_revisions
