@@ -41,40 +41,43 @@ function cgov_press_release_install() {
     </div>
 EOMarkup;
 
-  // Create block content.
-  $block_content = BlockContent::create([
-    'type' => 'raw_html_block',
-    'info' => $block_label,
-    'body' => ['value' => $block_html, 'format' => 'full_html'],
-  ]);
-  $block_content->save();
+  // Disable install hook.
+  if (FALSE) {
+    // Create block content.
+    $block_content = BlockContent::create([
+      'type' => 'raw_html_block',
+      'info' => $block_label,
+      'body' => ['value' => $block_html, 'format' => 'full_html'],
+    ]);
+    $block_content->save();
 
-  // Assign block to Region.
-  $data = [
-    'id' => 'contact_us__press_release',
-    'plugin' => 'block_content:' . $block_content->uuid(),
-    'region' => $block_region,
-    'provider' => 'block_content',
-    'weight' => -100,
-    'theme' => $block_theme,
-    'visibility' => [
-      'node_type' =>
-        [
-          'id' => 'node_type',
-          'bundles' => ['cgov_press_release' => 'cgov_press_release'],
-          'context_mapping' =>
-            [
-              'node' => '@node.node_route_context:node',
-            ],
-        ],
-    ],
-    'settings' => [
-      'label' => $block_label,
-      'label_display' => '0',
-    ],
-  ];
+    // Assign block to Region.
+    $data = [
+      'id' => 'contact_us__press_release',
+      'plugin' => 'block_content:' . $block_content->uuid(),
+      'region' => $block_region,
+      'provider' => 'block_content',
+      'weight' => -100,
+      'theme' => $block_theme,
+      'visibility' => [
+        'node_type' =>
+          [
+            'id' => 'node_type',
+            'bundles' => ['cgov_press_release' => 'cgov_press_release'],
+            'context_mapping' =>
+              [
+                'node' => '@node.node_route_context:node',
+              ],
+          ],
+      ],
+      'settings' => [
+        'label' => $block_label,
+        'label_display' => '0',
+      ],
+    ];
 
-  $block = Block::create($data);
-  $block->save();
+    $block = Block::create($data);
+    $block->save();
+  }
 
 }
