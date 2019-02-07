@@ -26,7 +26,6 @@ function cgov_press_release_install() {
   // Create Contact Us block for Press Releases.
   $block_theme = \Drupal::config('system.theme')->get('default');
   $block_region = 'content';
-  print "ADD BLOCK TO THEME $block_theme BLOCK $block_region\n";
   $block_label = 'Contact Us - Press Releases';
   $block_html = <<<EOMarkup
     <div class="media-contact columns large-4 right">
@@ -75,10 +74,7 @@ EOMarkup;
     ],
   ];
 
-  print "CREATING BLOCK: ";
-  print_r($data);
   $block = Block::create($data);
   $block->save();
 
-  print "BLOCK ADDED\n";
 }
