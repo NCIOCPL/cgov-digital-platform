@@ -4,6 +4,7 @@ namespace Drupal\cgov_core;
 
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
+use Drupal\Component\Utility\Html;
 
 /**
  * Nav Item.
@@ -187,6 +188,26 @@ class NavItem {
    */
   public function getHref() {
     return $this->href;
+  }
+
+  /**
+   * Retrieve raw megamenu html markup.
+   *
+   * The markup for megamenus are stored in content
+   * blocks as URI encoded raw html. We need to
+   * retrieve it and unencode the html.
+   *
+   * @return string
+   *   Megamenu content block markup.
+   */
+  public function getMegamenuContent() {
+    $megamenuFieldEntityReference = $this->term->field_mega_menu_content;
+    if ($megamenuFieldEntityReference) {
+      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('body')->value;
+      $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
+      return $megamenuMarkupDecoded;
+    }
+    return "";
   }
 
   /**

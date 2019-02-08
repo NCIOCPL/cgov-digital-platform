@@ -9,7 +9,6 @@ use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\cgov_core\NavItem;
-use Drupal\cgov_core\Megamenu;
 
 /**
  * Provides a 'Main Nav' block.
@@ -104,6 +103,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     $renderedMegaNavTrees = [];
     for ($i = 0; $i < count($megaNavRootItems); $i++) {
       $rootItem = $megaNavRootItems[$i];
+      $rootItem->getMegamenuContent();
       $itemIndex = $i + 1;
       $href = $rootItem->getHref();
       $label = $rootItem->getLabel();
@@ -117,7 +117,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
         $currentStatusClassname = "current-page";
       }
       $children = $this->renderMobileNavLevel($rootItem, $containsCurrent, 2);
-      $megamenu = $this->renderMegamenu($href);
+      $megamenu = $rootItem->getMegamenuContent();
       $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
       $markup = "
       <li class='nav-item lvl-1 $hasChildrenClassname $currentStatusClassname item-$itemIndex'>
@@ -134,23 +134,6 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     }
     $megaNav = implode("", $renderedMegaNavTrees);
     return $megaNav;
-  }
-
-  /**
-   * Generate Megamenu markup.
-   *
-   * Retrieve raw html string from store based
-   * on path.
-   *
-   * @param string $href
-   *   Megamenu Parent.
-   *
-   * @return string
-   *   Megamenu contents as markup string.
-   */
-  public function renderMegamenu(string $href) {
-    $megamenuMarkup = Megamenu::$content[$href];
-    return $megamenuMarkup;
   }
 
   /**
