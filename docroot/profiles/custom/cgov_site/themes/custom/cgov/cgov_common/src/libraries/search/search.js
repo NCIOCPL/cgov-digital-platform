@@ -1,8 +1,7 @@
 import $ from 'jquery';
 import patch from './WCMSFEQ-410';
 import { toggleMobileMenu, $openPanelBtn } from 'Libraries/mainNav/mobilemenu';
-//import * as Nav from 'Common/Enhancements/NCI.Nav';
-//import './search.scss'; //styles are imported into nvcg.scss currently
+import './search.scss'; // TODO: POST-MIGRATION
 
 // This search module is for click events in the mobile and tablet top level navigation menu
 
