@@ -21,8 +21,10 @@ dependencies:
     - field.field.node.cgov_blog_post.field_site_section
     - node.type.cgov_blog_post
   module:
+    - content_moderation
     - datetime
     - entity_browser
+    - path
     - text
 id: node.cgov_blog_post.default
 targetEntityType: node
@@ -179,9 +181,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
 hidden:
   created: true
-  moderation_state: true
   path: true
   promote: true
   status: true

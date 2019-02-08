@@ -4,3 +4,30 @@
  * @file
  * Contains cgov_blog_post.module.
  */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Add custom validation for Cgov Blog Posts only.
+  if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
+
+    // Adding a test checkbox.
+    $form['terms'] = [
+      '#type' => 'checkbox',
+      '#title' => t("This is my test checkbox. It does nothing."),
+    ];
+
+    // Debug:
+    ksm($form);
+  } /* End if blog post */
+  /*
+   * TODO:
+   * - verify series
+   * - block series editing once published
+   * - state validation
+   */
+}
