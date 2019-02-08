@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
+    - content_moderation
     - entity_browser
 id: node.cgov_blog_series.default
 targetEntityType: node
@@ -136,6 +137,12 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
   title:
     type: string_textfield
     weight: 2
@@ -148,7 +155,6 @@ hidden:
   body: true
   created: true
   field_intro_text: true
-  moderation_state: true
   path: true
   promote: true
   status: true

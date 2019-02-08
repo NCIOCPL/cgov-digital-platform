@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_blog_topics
+    - node.type.cgov_blog_post
+  module:
+    - options
+id: node.cgov_blog_post.field_blog_topics
+field_name: field_blog_topics
+entity_type: node
+bundle: cgov_blog_post
+label: 'Blog Topics'
+description: 'Select terms used to categorize blog posts'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
