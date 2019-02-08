@@ -1,8 +1,0 @@
-{% for item in items %}
-  {% if item.content|render|trim == 'Display' %}
-    <div class="public-use">
-      <p id="public-use"><i>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “{{ drupal_title() }}”</i></p>
-
-      <p id="comment-policy" class="blog-comment-policy">We welcome your comments on this post. All comments must follow our <a href="/policies/comments">comment policy</a>.</p></div>
-  {% endif %}
-{% endfor %}
