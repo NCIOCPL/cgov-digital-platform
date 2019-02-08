@@ -44,15 +44,16 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  *  and this terms Pretty URL Field.
  */
 function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
-  // Format the Pretty URL.
-  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
-    $field_pretty_url = $entity->get('field_pretty_url')->value;
-    $entity->set('field_pretty_url', strtolower($field_pretty_url));
-  }
-
   // Only do the following for site sections.
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
+  }
+  
+  // Convert the URL to lowercase as we only want lowercased items and the server
+  // is case-sensative.
+  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
   }
 
   // Calculate and set the compute_path field.
@@ -66,6 +67,12 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
     try {
       $parent_entity = Term::load($parent_tid);
       $parent_path = $parent_entity->get('computed_path')->value;
+      $parent_langcode = $parent_entity->get('langcode')->value;
+
+      // Set the current entities language field based on it's parent term.
+      // Ultimately will override the value set by the user in the form
+      // with that of the root taxonomy term.
+      $entity->set('langcode', $parent_langcode);
     }
     catch (Exception $e) {
       $parent_path = NULL;
@@ -98,11 +105,10 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   // Only do this for site sections. In the future if there is
   // a vocabulary in which we attach site_section for managing its node's
   // pretty urls, then that vocabulary needs to do something very similar.
-  // BUT not in here!
+  // BUT not in this module!
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
-
   // TODO: This comparison should be done somewhere else and less messy.
   // Do not do unnessesary updates, so only cascade if a change was
   // made to a significant field.
@@ -112,11 +118,12 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
     $entity->original->get('parent')->target_id ===
     $entity->get('parent')->target_id &&
     $entity->original->get('field_pretty_url')->value ===
-    $entity->get('field_pretty_url')->value
+    $entity->get('field_pretty_url')->value &&
+    $entity->original->get('langcode')->value ===
+    $entity->get('langcode')->value
   ) {
     return;
   }
-
   $term_storage = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term");
 
   // Update immediate child sections.
