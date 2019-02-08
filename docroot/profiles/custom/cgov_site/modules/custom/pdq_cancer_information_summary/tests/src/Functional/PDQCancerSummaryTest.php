@@ -81,7 +81,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_ID);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_TITLE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_HTML);
-    $this->assertSession()->fieldExists(PDQDrugSummaryTest::URL);
+    $this->assertSession()->fieldExists(PDQCancerSummaryTest::URL);
 
     /*
     Remove check for syndication keywords until the feature is implemented.
