@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\RemoveCommand;
 
 /**
  * Implements hook_form_alter().
@@ -15,14 +18,15 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
-    // Adding a test checkbox.
-    $form['terms'] = [
-      '#type' => 'checkbox',
-      '#title' => t("This is my test checkbox. It does nothing."),
+    // Test change method.
+    $form['field_blog_series']['widget']['#ajax'] = [
+      'callback' => 'set_blog_cats',
+      'event' => 'change',
     ];
 
     // Debug:
-    ksm($form);
+    // ksm($form['field_blog_topics']);
+    // ksm($form['field_blog_series']);
   } /* End if blog post */
   /*
    * TODO:
@@ -30,4 +34,16 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
    * - block series editing once published
    * - state validation
    */
+}
+
+/**
+ * Ajax callback.
+ */
+function set_blog_cats(array $form, FormStateInterface $form_state) {
+  $term_name = 'Hello, world';
+  $response = new AjaxResponse();
+  $response->addCommand(new RemoveCommand('.dummy-label'));
+  $response->addCommand(new AppendCommand('#edit-field-blog-topics', '<label class="dummy-label">' . $term_name . '</label>'));
+
+  return $response;
 }
