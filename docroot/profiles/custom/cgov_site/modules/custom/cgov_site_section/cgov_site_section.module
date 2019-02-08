@@ -48,6 +48,9 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
+  
+  // Convert the URL to lowercase as we only want lowercased items and the server
+  // is case-sensative.
   if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
     $entity->set('field_pretty_url', strtolower($field_pretty_url));
