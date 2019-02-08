@@ -50,6 +50,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     $events = [];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
+    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addLandingPage'];
 
     return $events;
   }
@@ -272,6 +273,52 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     $block = Block::create($blockSettings);
     $block->save();
     printf("Added default block to $savedEntityRegion region.\n");
+  }
+
+  /**
+   * Add Landing Pages to Site Sections.
+   *
+   * Programmatically add entity reference in Terms for
+   * landing pages.
+   *
+   * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
+   *   The triggered event when an entity has been saved.
+   */
+  public function addLandingPage(EntityPostSaveEvent $event) {
+    $savedEntity = $event->getEntity();
+    $entityType = $savedEntity->getEntityTypeId();
+    // $bundleType = $savedEntity->bundle();
+    // TODO: For now we want to do the same thing for all content
+    // types. In the future, special rules will have to be added
+    // to accomodate CTHP bundles.
+    $isNode = $entityType === 'node';
+    if (!$isNode) {
+      return;
+    }
+    $hasPrettyUrl = $savedEntity->hasField('field_pretty_url');
+    $hasSiteSection = $savedEntity->hasField('field_site_section');
+    if (!$hasPrettyUrl || !$hasSiteSection) {
+      return;
+    }
+    $prettyUrlValue = $savedEntity->get('field_pretty_url')->value;
+    // Anything that has a pretty url is not a landing page.
+    if ($prettyUrlValue) {
+      return;
+    }
+    $siteSectionEntityReferenceFieldItemListField = $savedEntity->get('field_site_section');
+    $siteSectionEntityList = $siteSectionEntityReferenceFieldItemListField->referencedEntities();
+    $hasSiteSectionEntityReference = count($siteSectionEntityList) > 0;
+    // Somebody was a bad boy and forgot to add the correct site section
+    // reference in this field in their .content.yml file.
+    if (!$hasSiteSectionEntityReference) {
+      return;
+    }
+    $siteSection = $siteSectionEntityList[0];
+    $savedEntityReference = [
+      'target_id' => $savedEntity->id(),
+    ];
+    $siteSection->set('field_landing_page', $savedEntityReference);
+    $siteSection->save();
   }
 
 }
