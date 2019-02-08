@@ -35,7 +35,7 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
-    - datetime
+    - cgov_core
     - options
     - text
     - user
@@ -84,42 +84,46 @@ content:
     weight: 21
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_reviewed:
     weight: 23
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_date_updated:
     weight: 22
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+    type: cgov_date_formatter
     region: content
   field_image_promotional:
     weight: 2
     label: hidden
     settings:
-      link: true
+      view_mode: image_crop_article
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    type: entity_reference_entity_view
     region: content
   field_institution_type:
     weight: 4
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
@@ -183,7 +187,7 @@ content:
     weight: 12
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     type: entity_reference_label
     region: content
