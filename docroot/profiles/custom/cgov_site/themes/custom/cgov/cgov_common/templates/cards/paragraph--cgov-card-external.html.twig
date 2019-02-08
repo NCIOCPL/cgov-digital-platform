@@ -10,7 +10,11 @@
 {% set title = content.field_override_card_title[0] %}
 
 {# ###### Setup Description ####### #}
-{% set description = content.field_override_card_description[0] %}
+{% if cardType is same as('feature_card') %}
+  {% set description = content.field_override_card_description[0] %}
+{% elseif cardType is same as('thumbnail_card') %}
+  {% set description = content.field_override_list_description[0] %}
+{% endif %}
 
 {# ###### Setup URL ######## #}
 {% set url = content.field_featured_url.uri %}
