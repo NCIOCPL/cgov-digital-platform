@@ -1,3 +1,8 @@
+@import '~Core/styles/breakpoints';
+@import '~Core/styles/fonts';
+@import '~Core/styles/colors';
+@import '~Core/styles/mixins';
+
 .nav-menu .nav-item {
 	$nav-max-lines: 1;
 	@mixin nav-item-spacing($nav-item-list, $nav-item-width-add) {
@@ -272,7 +277,7 @@
 		text-decoration: underline;
 	}
 
-	/* remove scroll bar from megamenu 
+	/* remove scroll bar from megamenu
 	.mega-menu-scroll {
 		overflow-y: scroll;
 	}
@@ -290,7 +295,7 @@
 		margin: 8px 0 0 0;
 		padding: 0;
 	}
-	
+
 	/* MegaMenu styles for side exits */
 	nav .sub-nav-group-wrapper {
 		max-width: 70em;
@@ -301,7 +306,7 @@
 	}
 }
 
-@include bp(xtra-large) {	
+@include bp(xtra-large) {
 	.row, nav .sub-nav-group-wrapper {
 		max-width: 1200px;
 	}
