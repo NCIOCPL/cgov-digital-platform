@@ -39,6 +39,11 @@ class PDQFieldStorageTest extends KernelTestBase {
       "label" => "Audience",
       "type" => "list_string",
     ],
+    [
+      "name" => "field_pdq_url",
+      "label" => "PDQ Summary URL",
+      "type" => "string",
+    ],
   ];
 
   /**

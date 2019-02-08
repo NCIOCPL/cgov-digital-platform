@@ -35,7 +35,7 @@ class ApiTest extends BrowserTestBase {
     'short_title' => 'Test Short Title',
     'description' => 'Test description',
     'language' => 'en',
-    'url' => '/test/url',
+    'url' => '/types/lymphoma/hp/adult-hodgkin-treatment-pdq',
     'cdr_id' => 5001,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
@@ -61,7 +61,7 @@ class ApiTest extends BrowserTestBase {
     'short_title' => "T\u{ed}tulo corto",
     'description' => "Descripci\u{f3}n",
     'language' => 'es',
-    'url' => '/expanol/test/url',
+    'url' => '/tipos/linfoma/pro/tratamiento-hodgkin-adultos-pdq',
     'cdr_id' => 5002,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
@@ -188,6 +188,10 @@ class ApiTest extends BrowserTestBase {
     $this->assertTrue($values['es']['published'], 'Published');
     $this->checkValues($values, ['en', 'es']);
 
+    // Make sure the pathauto mechanism is behaving correctly.
+    $this->checkPathauto($this->english);
+    $this->checkPathauto($this->spanish);
+
     // Try to delete the English summary (should fail).
     $this->delete($this->english, FALSE);
 
@@ -262,7 +266,7 @@ class ApiTest extends BrowserTestBase {
   }
 
   /**
-   * Get the current values for a given node.
+   * Get the current values for a given node via the RESTful API.
    *
    * @param int $nid
    *   Unique node ID.
@@ -341,6 +345,34 @@ class ApiTest extends BrowserTestBase {
       $payload = json_decode($response->getBody()->__toString(), TRUE);
       $this->assertEqual($payload['message'], 'Spanish translation exists');
     }
+  }
+
+  /**
+   * Make sure the pathauto mechanism has kicked in.
+   *
+   * The idea here is that the mnemonic ("pretty") URL should get the same
+   * HTML back as the canonical URL using the node ID. This happens because
+   * we have registered a rule which tells the `pathauto` module to use the
+   * value of our new `pdq_url` field in constructing the "pretty" URL.
+   *
+   * @param array $summary
+   *   Values for the summary to be visited.
+   */
+  private function checkPathauto(array $summary) {
+    $nid = $summary['nid'];
+    $url = "node/$nid";
+    if ($summary['language'] === 'es') {
+      $url = "espanol/$url";
+    }
+    $expected = $this->drupalGet($url);
+    $this->assertResponse(200);
+    $url = ltrim($summary['url'], '/');
+    if ($summary['language'] === 'es') {
+      $url = "espanol/$url";
+    }
+    $actual = $this->drupalGet($url);
+    $this->assertResponse(200);
+    $this->assertEqual($actual, $expected);
   }
 
 }
