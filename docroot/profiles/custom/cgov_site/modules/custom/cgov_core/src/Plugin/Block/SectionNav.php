@@ -5,7 +5,7 @@ namespace Drupal\cgov_core\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\cgov_core\NavItem;
@@ -24,7 +24,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Cgov Navigation Manager Service.
    *
-   * @var \Drupal\cgov_core\Services\CgovNavigationManagerInterface
+   * @var \Drupal\cgov_core\Services\CgovNavigationManager
    */
   protected $navMgr;
 
@@ -37,14 +37,14 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\cgov_core\Services\CgovNavigationManagerInterface $navigationManager
+   * @param \Drupal\cgov_core\Services\CgovNavigationManager $navigationManager
    *   Cgov navigation service.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    CgovNavigationManagerInterface $navigationManager
+    CgovNavigationManager $navigationManager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
@@ -66,7 +66,11 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account) {
-    return AccessResult::allowed();
+    $shouldDisplay = $this->navMgr->getCurrentPathIsInNavigationTree();
+    if ($shouldDisplay) {
+      return AccessResult::allowed();
+    }
+    return AccessResult::forbidden();
   }
 
   /**
@@ -92,7 +96,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    * @param \Drupal\cgov_core\NavItem $navItem
    *   Nav item.
    * @param int $renderDepth
-   *   How many more levels to rennder in the tree.
+   *   How many more levels to render in the tree.
    * @param int $currentLevel
    *   Used to generate level specific classnames.
    *
@@ -100,6 +104,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    *   Nav tree.
    */
   public function renderNavElement(NavItem $navItem, int $renderDepth, int $currentLevel = 0) {
+    // Recursive base case.
     if (!$navItem || !$renderDepth) {
       return [];
     }

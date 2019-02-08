@@ -3,20 +3,21 @@
 namespace Drupal\cgov_core;
 
 use Drupal\taxonomy\TermInterface;
-use Drupal\cgov_core\Services\CgovNavigationManagerInterface;
+use Drupal\cgov_core\Services\CgovNavigationManager;
+use Drupal\Component\Utility\Html;
 
 /**
  * Nav Item.
  *
- * Custom wrapper arounnd native Site Section object
+ * Custom wrapper around native Site Section object
  * (currently Term Entities).
  */
-class NavItem implements NavItemInterface {
+class NavItem {
 
   /**
    * Cgov Navigation Manager service.
    *
-   * @var \Drupal\cgov_core\Services\CgovNavigationManagerInterface
+   * @var \Drupal\cgov_core\Services\CgovNavigationManager
    */
   protected $navMgr;
 
@@ -112,7 +113,7 @@ class NavItem implements NavItemInterface {
   /**
    * Constructs a new instance of a Nav Item.
    *
-   * @param \Drupal\cgov_core\Services\CgovNavigationManagerInterface $navMgr
+   * @param \Drupal\cgov_core\Services\CgovNavigationManager $navMgr
    *   Instance of Navigation Manager service that created this
    *   NavItem.
    * @param \Drupal\taxonomy\TermInterface $term
@@ -122,7 +123,7 @@ class NavItem implements NavItemInterface {
    *   section closest to current request.
    */
   public function __construct(
-    CgovNavigationManagerInterface $navMgr,
+    CgovNavigationManager $navMgr,
     TermInterface $term,
     bool $isInCurrentPath
     ) {
@@ -141,6 +142,9 @@ class NavItem implements NavItemInterface {
    */
   protected function initialize(TermInterface $term) {
     // TODO: Break some of these into their own protected functions.
+    // Or do we want the getters to all interact directly with the term
+    // since there isn't much precalculation anyway.
+    // TODO: Error handle if fields don't exist.
     $this->term = $term;
     $this->termId = $this->term->id();
     $this->landingPage = $this->term->field_landing_page->getValue();
@@ -155,8 +159,9 @@ class NavItem implements NavItemInterface {
     $this->href = $this->term->computed_path->value;
 
     // @var [['value' => string], ['value' => string]]
-    $navigationDisplayRules = $this->term->field_show_in_navigation->getValue();
+    $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
+    // Build a lookup table for easier reference later.
     $displayRules = [];
     foreach ($navigationDisplayRules as $rule) {
       $rule = $rule['value'];
@@ -183,6 +188,26 @@ class NavItem implements NavItemInterface {
    */
   public function getHref() {
     return $this->href;
+  }
+
+  /**
+   * Retrieve raw megamenu html markup.
+   *
+   * The markup for megamenus are stored in content
+   * blocks as URI encoded raw html. We need to
+   * retrieve it and unencode the html.
+   *
+   * @return string
+   *   Megamenu content block markup.
+   */
+  public function getMegamenuContent() {
+    $megamenuFieldEntityReference = $this->term->field_mega_menu_content;
+    if ($megamenuFieldEntityReference) {
+      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('body')->value;
+      $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
+      return $megamenuMarkupDecoded;
+    }
+    return "";
   }
 
   /**
