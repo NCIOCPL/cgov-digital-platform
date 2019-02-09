@@ -76,6 +76,16 @@ EOMarkup;
               'node' => '@node.node_route_context:node',
             ],
         ],
+      'language' =>
+        [
+          'id' => 'language',
+          'langcodes' => ['en' => 'en'],
+          'negate' => FALSE,
+          'context_mapping' =>
+            [
+              'language' => '@language.current_language_context:language_interface',
+            ],
+        ],
     ],
     'settings' => [
       'label' => $block_label,
