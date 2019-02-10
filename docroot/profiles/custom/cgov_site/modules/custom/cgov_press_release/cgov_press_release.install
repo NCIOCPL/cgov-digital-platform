@@ -5,6 +5,9 @@
  * Contains cgov_press_release.install.
  */
 
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+
 /**
  * Implements hook_install().
  *
@@ -19,5 +22,78 @@ function cgov_press_release_install() {
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_press_release', ['content_author']);
   $siteHelper->attachContentTypeToWorkflow('cgov_press_release', 'editorial_workflow');
+}
+
+/**
+ * Implements hook_themes_installed().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_themes_installed()
+ */
+function cgov_press_release_themes_installed() {
+  // Create Contact Us block for Press Releases.
+  $block_theme = \Drupal::config('system.theme')->get('default');
+  $block_region = 'press_release_contact';
+  $block_label = 'Contact Us - Press Releases';
+  $block_html = <<<EOMarkup
+    <div class="media-contact columns large-4 right">
+       <div class="row collapse-edges">
+         <div class="media-contact-info">
+            <strong>Contact:</strong>
+         </div>
+         <div class="media-contact-info">
+           <a href="mailto:ncipressofficers@mail.nih.gov">NCI Press Office</a>
+           <p>240-760-6600</p>
+         </div>
+       </div>
+    </div>
+EOMarkup;
+
+  // Create block content.
+  $block_content = BlockContent::create([
+    'type' => 'raw_html_block',
+    'info' => $block_label,
+    'body' => ['value' => $block_html, 'format' => 'full_html'],
+  ]);
+  $block_content->save();
+
+  // Assign block to Region.
+  $data = [
+    'id' => 'contact_us__press_release',
+    'plugin' => 'block_content:' . $block_content->uuid(),
+    'region' => $block_region,
+    'provider' => 'block_content',
+    'weight' => 0,
+    'theme' => $block_theme,
+    'visibility' => [
+      'node_type' =>
+        [
+          'id' => 'node_type',
+          'bundles' => ['cgov_press_release' => 'cgov_press_release'],
+          'context_mapping' =>
+            [
+              'node' => '@node.node_route_context:node',
+            ],
+        ],
+      'language' =>
+        [
+          'id' => 'language',
+          'langcodes' => ['en' => 'en'],
+          'negate' => FALSE,
+          'context_mapping' =>
+            [
+              'language' => '@language.current_language_context:language_interface',
+            ],
+        ],
+    ],
+    'settings' => [
+      'label' => $block_label,
+      'label_display' => '0',
+    ],
+  ];
+
+  $block = Block::create($data);
+  $block->save();
 
 }
