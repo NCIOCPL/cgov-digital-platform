@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
     - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
+    - field.field.node.pdq_drug_information_summary.field_pdq_url
     - field.field.node.pdq_drug_information_summary.field_public_use
     - node.type.pdq_drug_information_summary
     - workflows.workflow.pdq_workflow
@@ -76,6 +77,14 @@ content:
     region: content
   field_pdq_pronunciation_key:
     weight: 132
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pdq_url:
+    weight: 133
     settings:
       size: 60
       placeholder: ''
