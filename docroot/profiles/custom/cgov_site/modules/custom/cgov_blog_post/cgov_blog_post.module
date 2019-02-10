@@ -7,7 +7,9 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\AppendCommand;
+// USE Drupal\Core\Ajax\AppendCommand;!
+use Drupal\Core\Ajax\BeforeCommand;
+use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 
 /**
@@ -22,6 +24,10 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     $form['field_blog_series']['widget']['#ajax'] = [
       'callback' => 'set_blog_cats',
       'event' => 'change',
+      'progress' => [
+        'type' => 'throbber',
+        'message' => NULL,
+      ],
     ];
 
     // Debug:
@@ -40,10 +46,11 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
  * Ajax callback.
  */
 function set_blog_cats(array $form, FormStateInterface $form_state) {
-  $term_name = 'Hello, world';
-  $response = new AjaxResponse();
-  $response->addCommand(new RemoveCommand('.dummy-label'));
-  $response->addCommand(new AppendCommand('#edit-field-blog-topics', '<label class="dummy-label">' . $term_name . '</label>'));
+  $term_name = '==&hearts; debug &hearts;==';
+  $ajax_response = new AjaxResponse();
+  $ajax_response->addCommand(new RemoveCommand('.dummy-label'));
+  $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="dummy-label">' . $term_name . '</div>'));
+  $ajax_response->addCommand(new CssCommand('.dummy-label + #edit-field-blog-topics-wrapper', ['color' => 'red']));
 
-  return $response;
+  return $ajax_response;
 }
