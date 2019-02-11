@@ -5,12 +5,13 @@
  * Contains cgov_blog_post.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 // USE Drupal\Core\Ajax\AppendCommand;!
 use Drupal\Core\Ajax\BeforeCommand;
-use Drupal\Core\Ajax\CssCommand;
+// Uuse Drupal\Core\Ajax\CssCommand;.
 use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_alter().
@@ -19,6 +20,17 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
 
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
+
+    /* @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+    $formObject = $form_state->getFormObject();
+    if ($formObject instanceof EntityFormInterface) {
+      $entity = $formObject->getEntity();
+      if (
+        $entity->getEntityTypeId() === 'node'
+      ) {
+        $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
+      }
+    }
 
     // Get the current workflow state.
     // ksm($moderation_state;:
@@ -74,7 +86,5 @@ function set_blog_cats(array $form, FormStateInterface $form_state) {
   $ajax_response = new AjaxResponse();
   $ajax_response->addCommand(new RemoveCommand('.dummy-label'));
   $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="dummy-label">' . $term_name . '</div>'));
-  $ajax_response->addCommand(new CssCommand('.dummy-label + #edit-field-blog-topics-wrapper', ['color' => 'red']));
-
   return $ajax_response;
 }
