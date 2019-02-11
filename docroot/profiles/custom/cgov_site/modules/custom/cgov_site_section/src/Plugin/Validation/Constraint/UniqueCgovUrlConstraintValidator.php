@@ -47,8 +47,8 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
    *   Error for missing data.
    */
   public function validate($entity, Constraint $constraint) {
-    $is_populated_section = $entity->hasField('field_site_section') && !empty($entity->get('field_site_section')->first()->getValue()['target_id']);
-    $is_populated_pretty_url = $entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url')->first()->value);
+    $is_populated_section = $entity->hasField('field_site_section') && !empty($entity->get('field_site_section')->first());
+    $is_populated_pretty_url = $entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url')->first());
 
     if ($is_populated_section) {
       $site_section = $entity->get('field_site_section');
