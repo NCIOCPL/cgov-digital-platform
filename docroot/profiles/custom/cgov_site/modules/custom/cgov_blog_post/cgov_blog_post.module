@@ -24,7 +24,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
     ksm($moderation_state);
 
-    // Do form behavior based on workflow
+    // Do form behavior based on workflow.
     switch ($moderation_state) {
       case "draft":
         $form['field_blog_series']['widget']['#ajax'] = [
@@ -36,6 +36,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
           ],
         ];
         break;
+
       case "archive_requested":
       case "archived":
       case "post_publication_review":
@@ -44,6 +45,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
       case "review":
       default:
         break;
+
     }
 
     // Debug:
