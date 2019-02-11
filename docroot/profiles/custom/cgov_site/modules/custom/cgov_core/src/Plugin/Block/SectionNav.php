@@ -114,7 +114,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     $isCurrentSection = $navItem->isCurrentSiteSection();
     $href = $navItem->getHref();
     $label = $navItem->getLabel();
-    $childList = $navItem->getChildren();
+    $childList = $navItem->getChildren(['hide_in_section_nav']);
     $hasChildren = count($childList) > 0;
     $children = [];
     if ($renderDepth > 1 && $hasChildren) {
