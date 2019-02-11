@@ -21,20 +21,31 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
     // Get the current workflow state.
-    // $moderation_state:
-    // $form['moderation_state']['widget'][0]['state']['#default_value'].
-    // Test change method.
-    $form['field_blog_series']['widget']['#ajax'] = [
-      'callback' => 'set_blog_cats',
-      'event' => 'change',
-      'progress' => [
-        'type' => 'throbber',
-        'message' => NULL,
-      ],
-    ];
+    $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+    ksm($moderation_state);
 
-    // draft, review, published, editing.
-    // post_publication_review, archive Requested, archived.
+    // Do form behavior based on workflow
+    switch ($moderation_state) {
+      case "draft":
+        $form['field_blog_series']['widget']['#ajax'] = [
+          'callback' => 'set_blog_cats',
+          'event' => 'change',
+          'progress' => [
+            'type' => 'throbber',
+            'message' => NULL,
+          ],
+        ];
+        break;
+      case "archive_requested":
+      case "archived":
+      case "post_publication_review":
+      case "editing":
+      case "published":
+      case "review":
+      default:
+        break;
+    }
+
     // Debug:
     // ksm($moderation_state);
     // ksm($form['field_blog_series']);
