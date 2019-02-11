@@ -19,12 +19,14 @@
                 <br/>{{ content.field_institution_type }}
               {%- endif -%}
             </div>
-            <p>
-              {{ content.field_org_head_name|escape|striptags('<!-- -->')|trim }}
-              {%- if content.field_org_head_title -%}
-                , {{ content.field_org_head_title|escape|striptags('<!-- -->')|trim }}
-              {%- endif -%}
-            </p>
+            {%- if content.field_org_head_name -%}
+              <p>
+                {{ content.field_org_head_name|escape|striptags('<!-- -->')|trim }}
+                {%- if content.field_org_head_title -%}
+                  , {{ content.field_org_head_title|escape|striptags('<!-- -->')|trim }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
             {% if content.field_address_1 %}
               <p>
                 {{ content.field_address_1 }}
