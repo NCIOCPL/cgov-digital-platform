@@ -21,9 +21,8 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
     // Get the current workflow state.
+    // ksm($moderation_state;:
     $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
-    ksm($moderation_state);
-
     // Do form behavior based on workflow.
     switch ($moderation_state) {
       case "draft":
@@ -31,10 +30,14 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
           'callback' => 'set_blog_cats',
           'event' => 'change',
           'progress' => [
-            'type' => 'throbber',
             'message' => NULL,
+            'type' => 'throbber',
           ],
+          'wrapper' => 'display-filtered-topics',
         ];
+
+        $form['field_blog_topics']['#prefix'] = '<div id="display-filtered-topics">';
+        $form['field_blog_topics']['#suffix'] = '</div>';
         break;
 
       case "archive_requested":
@@ -43,6 +46,9 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
       case "editing":
       case "published":
       case "review":
+        $form['field_blog_series']['#disabled'] = TRUE;
+        break;
+
       default:
         break;
 
@@ -50,7 +56,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
 
     // Debug:
     // ksm($moderation_state);
-    // ksm($form['field_blog_series']);
+    ksm($form['field_blog_series']);
   } /* End if blog post */
   /*
    * TODO:
