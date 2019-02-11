@@ -141,7 +141,7 @@ class PDQResource extends ResourceBase {
           // 'keywords' => $translation->field_syndication_keywords->value,
           // End of suppressed field.
           'public_use' => $translation->field_public_use->value,
-          'url' => $translation->path->alias,
+          'url' => $translation->field_pdq_url->value,
           'published' => $translation->status->value,
           'sections' => $sections,
         ];
@@ -238,7 +238,7 @@ class PDQResource extends ResourceBase {
     $today = date('Y-m-d');
     $node->setTitle(($summary['title']));
     $node->setOwnerId($this->currentUser->id());
-    $node->set('path', ['alias' => $summary['url']]);
+    $node->set('field_pdq_url', $summary['url']);
     $node->set('field_pdq_cdr_id', $summary['cdr_id']);
     $node->set('field_pdq_audience', $summary['audience']);
     $node->set('field_pdq_summary_type', $summary['summary_type']);
@@ -247,7 +247,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_short_title', $summary['short_title']);
     $node->set('field_list_description', $summary['description']);
 
-    // Field suppresse for now.
+    // Field suppressed for now.
     // $node->set('field_syndication_keywords', $summary['keywords']);
     // End of suppressed field.
     $node->set('field_summary_sections', $sections);
