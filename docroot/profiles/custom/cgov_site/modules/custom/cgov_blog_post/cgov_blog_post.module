@@ -20,6 +20,9 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
+    // Get the current workflow state.
+    $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+
     // Test change method.
     $form['field_blog_series']['widget']['#ajax'] = [
       'callback' => 'set_blog_cats',
@@ -30,8 +33,9 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
       ],
     ];
 
+    // draft, review, published, editing, post_publication_review, archive Requested, archived
     // Debug:
-    // ksm($form['field_blog_topics']);
+    // ksm($moderation_state);
     // ksm($form['field_blog_series']);
   } /* End if blog post */
   /*
