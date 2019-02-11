@@ -6,9 +6,7 @@
  */
 
 use Drupal\Core\Ajax\AjaxResponse;
-// USE Drupal\Core\Ajax\AppendCommand;!
 use Drupal\Core\Ajax\BeforeCommand;
-// Uuse Drupal\Core\Ajax\CssCommand;.
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -34,12 +32,12 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
 
     // Get the current workflow state.
     // ksm($moderation_state;:
-    $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+    $moderation_state = get_moderation_state($form);
     // Do form behavior based on workflow.
     switch ($moderation_state) {
       case "draft":
         $form['field_blog_series']['widget']['#ajax'] = [
-          'callback' => 'set_blog_cats',
+          'callback' => 'set_categories',
           'event' => 'change',
           'progress' => [
             'message' => NULL,
@@ -47,9 +45,6 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
           ],
           'wrapper' => 'display-filtered-topics',
         ];
-
-        $form['field_blog_topics']['#prefix'] = '<div id="display-filtered-topics">';
-        $form['field_blog_topics']['#suffix'] = '</div>';
         break;
 
       case "archive_requested":
@@ -63,28 +58,53 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
 
       default:
         break;
-
     }
 
     // Debug:
     // ksm($moderation_state);
-    ksm($form['field_blog_series']);
-  } /* End if blog post */
+    // ksm($form['field_blog_series']);
+  }
   /*
    * TODO:
    * - verify series
-   * - block series editing once published
-   * - state validation
    */
 }
 
 /**
  * Ajax callback.
  */
-function set_blog_cats(array $form, FormStateInterface $form_state) {
-  $term_name = '==&hearts; debug &hearts;==';
+function set_categories(array $form, FormStateInterface $form_state) {
+
+  $show_next = 'show-next-field';
   $ajax_response = new AjaxResponse();
-  $ajax_response->addCommand(new RemoveCommand('.dummy-label'));
-  $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="dummy-label">' . $term_name . '</div>'));
+  $moderation_state = get_moderation_state($form);
+
+  // Do AJAX behavior based on workflow.
+  switch ($moderation_state) {
+
+    case "draft":
+      $ajax_response->addCommand(new RemoveCommand('.' . $show_next));
+      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="' . $show_next . '"></div>'));
+      break;
+
+    case "archive_requested":
+    case "archived":
+    case "editing":
+    case "post_publication_review":
+    case "published":
+    case "review":
+    default:
+      break;
+  }
+
   return $ajax_response;
+}
+
+/**
+ * Util function to return the moderation state of a given form.
+ */
+function get_moderation_state(array $form) {
+  $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+  // TODO: null check.
+  return $moderation_state;
 }
