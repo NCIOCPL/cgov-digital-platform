@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: pdq_dis_url
+label: 'PDQ Summary URL'
+type: 'canonical_entities:node'
+pattern: '[node:field_pdq_url:value]'
+selection_criteria:
+  c37bffdc-c407-4a47-aaca-2a8c44762dc3:
+    id: node_type
+    bundles:
+      pdq_drug_information_summary: pdq_drug_information_summary
+    negate: false
+    context_mapping:
+      node: node
+    uuid: c37bffdc-c407-4a47-aaca-2a8c44762dc3
+selection_logic: and
+weight: -5
+relationships: {  }
