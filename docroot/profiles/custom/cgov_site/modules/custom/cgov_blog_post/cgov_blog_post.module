@@ -37,7 +37,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     switch ($moderation_state) {
       case "draft":
       case "review":
-          $form['field_blog_series']['widget']['#ajax'] = [
+        $form['field_blog_series']['widget']['#ajax'] = [
           'callback' => 'set_categories',
           'event' => 'change',
           'progress' => [
