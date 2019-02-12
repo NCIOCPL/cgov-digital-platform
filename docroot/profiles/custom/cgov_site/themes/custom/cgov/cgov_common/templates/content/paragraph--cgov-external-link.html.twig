@@ -4,11 +4,11 @@
   {% set title = content.field_override_title[0] %}
 
   {# Setup the URL #}
-  {% set url = content.field_external_link.uri %}
+  {% set url = content.field_external_link[0]['#url'] %}
 
   <li class="general-list-item general list-item">
     <div class="title-and-desc title desc container">
-      <a class="title" href="{{url}}">{{title}}</a>
+      <a class="title" href="{{ url }}">{{title}}</a>
     </div><!-- end title & desc container -->
   </li>
 
