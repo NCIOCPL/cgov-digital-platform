@@ -7,6 +7,7 @@
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\BeforeCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -112,6 +113,7 @@ function display_cats(array $form, FormStateInterface $form_state) {
 
     case "draft":
       $filtered = filter_cats($form);
+      $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['hello']));
       $ajax_response->addCommand(new RemoveCommand('.' . $show_topics));
       $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper',
           '<div class="' . $show_topics . '">' . $filtered . '</div>'));
