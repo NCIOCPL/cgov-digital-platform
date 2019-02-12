@@ -38,7 +38,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
       case "draft":
       case "review":
         $form['field_blog_series']['widget']['#ajax'] = [
-          'callback' => 'set_categories',
+          'callback' => 'display_cats',
           'event' => 'change',
           'progress' => [
             'message' => NULL,
@@ -72,7 +72,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
 /**
  * Ajax callback.
  */
-function set_categories(array $form, FormStateInterface $form_state) {
+function display_cats(array $form, FormStateInterface $form_state) {
 
   $show_topics = 'show-topics-field';
   $ajax_response = new AjaxResponse();
@@ -82,8 +82,10 @@ function set_categories(array $form, FormStateInterface $form_state) {
   switch ($moderation_state) {
 
     case "draft":
+      $filtered = filter_cats($form);
       $ajax_response->addCommand(new RemoveCommand('.' . $show_topics));
-      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="' . $show_topics . '"></div>'));
+      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper',
+          '<div class="' . $show_topics . '">' . $filtered . '</div>'));
       break;
 
     case "archive_requested":
@@ -97,6 +99,20 @@ function set_categories(array $form, FormStateInterface $form_state) {
   }
 
   return $ajax_response;
+}
+
+/**
+ * Filter taxonomy categories.
+ */
+function filter_cats(array $form) {
+  return 'bar';
+}
+
+/**
+ * Clear all taxonomy checks.
+ */
+function clear_cats(array $form) {
+
 }
 
 /**
