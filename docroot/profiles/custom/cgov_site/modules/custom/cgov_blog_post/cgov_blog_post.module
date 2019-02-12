@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\BeforeCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -67,6 +68,13 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
    * TODO:
    * - verify series
    */
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function cgov_blog_post_entity_presave(EntityInterface $entity) {
+  // Do things to make the Blog Categories save upon changing.
 }
 
 /**
