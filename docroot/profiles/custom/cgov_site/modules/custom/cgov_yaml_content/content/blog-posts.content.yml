@@ -11,7 +11,13 @@
   field_author: 
     value: 'field_author'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents'
   body:
     - format: "full_html"
       value: |
@@ -99,7 +105,13 @@
   field_author: 
     value: 'field_author'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
   body:
     - format: "full_html"
       value: |
