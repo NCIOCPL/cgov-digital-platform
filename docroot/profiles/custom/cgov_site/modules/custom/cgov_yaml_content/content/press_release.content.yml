@@ -33,14 +33,32 @@
   status: 1
   moderation_state:
     value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Noticias'
+  field_pretty_url:
+    value: 'deep-learning-cervical-cancer-screening'
+  field_pretty_url__ES:
+    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
   field_image_article:
   - target_type: 'media'
     '#process':
       callback: 'reference'
       args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'Health care provider looking at a smartphone'
+        - 'media'
+        - bundle: 'cgov_image'
+          name: 'Health care provider looking at a smartphone'
   field_browser_title:
     value: "AI approach outperformed human experts in identifying cervical precancer"
   field_browser_title__ES:
@@ -167,9 +185,9 @@
   - '#process':
       callback: 'file'
       args:
-      - 'image'
-      - type: 'module'
-        filename: 'BRCA-exchange-article.jpg'
+        - 'image'
+        - type: 'module'
+          filename: 'BRCA-exchange-article.jpg'
     alt: 'The BRXA Exhange graphic'
   field_credit:
     value: "BRCA Challenge"
