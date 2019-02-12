@@ -36,23 +36,22 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     // Do form behavior based on workflow.
     switch ($moderation_state) {
       case "draft":
-        $form['field_blog_series']['widget']['#ajax'] = [
+      case "review":
+          $form['field_blog_series']['widget']['#ajax'] = [
           'callback' => 'set_categories',
           'event' => 'change',
           'progress' => [
             'message' => NULL,
             'type' => 'throbber',
           ],
-          'wrapper' => 'display-filtered-topics',
         ];
         break;
 
       case "archive_requested":
       case "archived":
-      case "post_publication_review":
       case "editing":
+      case "post_publication_review":
       case "published":
-      case "review":
         $form['field_blog_series']['#disabled'] = TRUE;
         break;
 
@@ -75,7 +74,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
  */
 function set_categories(array $form, FormStateInterface $form_state) {
 
-  $show_next = 'show-next-field';
+  $show_topics = 'show-topics-field';
   $ajax_response = new AjaxResponse();
   $moderation_state = get_moderation_state($form);
 
@@ -83,8 +82,8 @@ function set_categories(array $form, FormStateInterface $form_state) {
   switch ($moderation_state) {
 
     case "draft":
-      $ajax_response->addCommand(new RemoveCommand('.' . $show_next));
-      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="' . $show_next . '"></div>'));
+      $ajax_response->addCommand(new RemoveCommand('.' . $show_topics));
+      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper', '<div class="' . $show_topics . '"></div>'));
       break;
 
     case "archive_requested":

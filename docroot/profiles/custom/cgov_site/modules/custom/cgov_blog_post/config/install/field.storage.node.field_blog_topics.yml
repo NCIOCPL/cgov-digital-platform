@@ -3,36 +3,14 @@ status: true
 dependencies:
   module:
     - node
-    - options
+    - taxonomy
 id: node.field_blog_topics
 field_name: field_blog_topics
 entity_type: node
-type: list_string
+type: entity_reference
 settings:
-  allowed_values:
-    -
-      value: 'Biology of Cancer'
-      label: 'Biology of Cancer'
-    -
-      value: 'Cancer Risk'
-      label: 'Cancer Risk'
-    -
-      value: 'Clinical Trials'
-      label: 'Clinical Trials'
-    -
-      value: Disparities
-      label: Disparities
-    -
-      value: 'Global Health'
-      label: 'Global Health'
-    -
-      value: Prevention
-      label: Prevention
-    -
-      value: Technology
-      label: Technology
-  allowed_values_function: ''
-module: options
+  target_type: taxonomy_term
+module: core
 locked: false
 cardinality: 4
 translatable: true
