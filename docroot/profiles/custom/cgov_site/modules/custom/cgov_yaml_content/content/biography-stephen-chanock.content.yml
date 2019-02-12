@@ -1,0 +1,119 @@
+### TESTS:
+# Biography content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Ocean Sunset View Mykonos"
+  name__ES:
+    value: "Ocean Sunset View Mykonos - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ocean-sunset-view-mykonos-article.jpg'
+      alt: 'sunset ocean view in Mykonos'
+      alt__ES:
+        value: "vista del mar en el ocaso en Mykonos"
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_biography"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Stephen J. Chanock, M.D."
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  field_pretty_url:
+    value: "chanock-stephen"
+  field_short_title:
+    value: "Stephen J. Chanock, M.D."
+  field_browser_title:
+    value: "Stephen J. Chanock, M.D. - Biography"
+  field_page_description:
+    value: "Biography page for Stephen J. Chanock, M.D."
+  field_list_description:
+    value: "Biography page for Stephen J. Chanock, M.D."
+  field_feature_card_description:
+    value: "Biography page for Stephen J. Chanock, M.D."
+  field_first_name:
+    value: "Stephen"
+  field_middle_name:
+    value: "J."
+  field_last_name:
+    value: "Chanock"
+  field_suffix:
+    value: "M.D."
+  field_title:
+    value: "Director"
+  field_org_name_1:
+    value: "National Cancer Institute"
+  field_org_url_1:
+    value: "https://www.cancer.gov"
+  field_org_name_2:
+    value: "Division of Cancer Epidemiology & Genetics"
+  field_org_url_2:
+    value: "https://dceg.cancer.gov"
+  field_campus:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_biography_campus'
+            name: 'NCI Shady Grove Campus'
+  field_room_number:
+    value: "Room 7E412"
+  field_phone_number:
+    value: "240-276-7150"
+  field_email_address:
+    value: "chanocks@mail.nih.gov"
+  field_twitter_handle:
+    value: "NCIChanock"
+  field_scientific_publications:
+    value: "https://dceg2.cancer.gov/cgi-bin-pubsearch/pubsearch/index.pl?EntryLimit=0&branch=ALL&searchTxtAuth=chanock%20s&authorOption=exact&pi=0010114442"
+  field_date_posted:
+    value: "2019-02-07"
+  field_date_reviewed:
+    value: "2019-02-07"
+  field_date_updated:
+    value: "2019-02-07"
+  field_date_display_mode:
+    value: "updated"
+  body:
+  - format: "full_html"
+    value: |
+      <p>Dr. Stephen Chanock is a leading expert in the discovery and characterization of cancer susceptibility regions in the human genome. He has received numerous awards for his scientific contributions to our understanding of common inherited genetic variants associated with cancer risk and outcomes.</p>
+      <p>Dr. Chanock received his M.D. from Harvard Medical School in 1983 and completed clinical training in pediatrics, pediatric infectious diseases, and pediatric hematology/oncology and research training in molecular genetics at Boston Children&rsquo;s Hospital and the Dana-Farber Cancer Institute, Boston. Since 1995, Dr. Chanock has served as the Medical Director for <a href="http://www.speciallove.org/index.php?option=com_content&amp;view=article&amp;id=46&amp;Itemid=67" target="_blank" rel="noopener noreferrer">Camp Fantastic</a>, a week-long recreational camp for pediatric cancer patients, which is a joint venture of the NCI and Special Love, Inc.</p>
+      <p>From 2001-2007, he was a tenured investigator in the Genomic Variation Section of the Pediatric Oncology Branch in the NCI Center for Cancer Research. He also served as co-chair of NCI's Genetics, Genomics and Proteomics Faculty for five years. In 2001, he was appointed as Chief of the Cancer Genomics Research Laboratory (formerly Core Genotyping Facility), and in 2007 as Chief of the Laboratory of Translational Genomics, both within the NCI Division of Cancer Epidemiology and Genetics (DCEG). Dr. Chanock co-led the Cancer Genetic Markers of Susceptibility project. From 2012 to 2013, he also served as Acting Co-Director of the NCI Center for Cancer Genomics. Dr. Chanock was appointed Director of DCEG in August 2013.&nbsp;</p>
+      <p>For more information on Dr. Chanock's research interests, please see the <a href="https://dceg.cancer.gov/about/organization/lgs">Laboratory of Genetic Susceptibility</a> page. Follow Dr. Chanock on Twitter <a href="https://twitter.com/NCIChanock">@NCIChanock</a>.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_search_engine_restrictions: 0
