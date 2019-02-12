@@ -5,7 +5,6 @@
  * Contains cgov_core.module.
  */
 
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
@@ -95,28 +94,5 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
     // Let other modules weigh in for nodes whose deletion we haven't vetoed.
     default:
       return AccessResult::neutral();
-  }
-}
-
-/**
- * Implements hook_entity_type_build().
- */
-function cgov_core_entity_type_build(array &$entity_types) {
-  // Add our custom validation to the node entity.
-  $entity_types['node']->addConstraint('UniqueCgovUrl');
-}
-
-/**
- * Implements hook_entity_bundle_field_info_alter().
- */
-function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
-  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node') && !empty($fields['field_pretty_url'])) {
-    $fields['field_pretty_url']->setPropertyConstraints('value', [
-      'Regex' => [
-        'pattern' => '/^[a-zA-Z0-9-]*$/',
-        'message' => 'The Pretty URL field only accepts letters, numbers and dashes.',
-      ],
-    ]
-    );
   }
 }

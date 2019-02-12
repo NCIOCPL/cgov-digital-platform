@@ -1,0 +1,82 @@
+{{ attach_library('cgov_common/cancer_center') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<cancer-center>
+    <div class="resize-content">
+        {{ drupal_block('page_options') }}
+        <div id="nvcgSlProfilePanel" class="profile-panel">
+          <div class="inst-profile-image">
+          {{ content.field_image_promotional }}
+          </div>
+          <div class="profile-panel-content">
+            <h1>
+              {{ node.label }}
+            </h1>
+            {% if content.field_parent_institution or content.field_institution_type %}
+            <div class="profile-title">
+            {% endif %}
+              {% if content.field_parent_institution %}
+              {{ content.field_parent_institution }}
+              {% endif %}
+              {% if content.field_institution_type %}
+              <br />
+              {{ content.field_institution_type }}
+              {% endif %}
+            </div>
+            {% if content.field_org_head_name %}
+            <p>
+            {% endif %}
+              {{ content.field_org_head_name }}
+              {% if content.field_org_head_title %}
+              , {{ content.field_org_head_title }}
+              {% endif %}
+            {% if content.field_org_head_name %}
+            </p>
+            {% endif %}
+            {% if content.field_address_1 %}
+            <p>
+            {% endif %}
+              {{ content.field_address_1 }}
+              {% if content.field_address_2 %}
+              <br />
+              {{ content.field_address_2 }}
+              {% endif %}
+              {% if content.field_city %}
+              <br />
+              {{ content.field_city }}
+              {% endif %}
+              {% if content.field_state %}
+              , {{ content.field_state }}
+              {% endif %}
+              {% if content.field_zip_code %}
+              {{ content.field_zip_code }}
+              {% endif %}
+            {% if content.field_address_1 %}
+            </p>
+            {% endif %}
+            {% if content.field_phone_label_1 and content.field_phone_number_1 %}
+            <p>
+              {{ content.field_phone_label_1 }}: <a href="tel:{{ content.field_phone_number_1 }}" rel="nofollow">{{ content.field_phone_number_1 }}</a>
+            </p>
+            {% endif %}
+            {% if content.field_phone_label_2 and content.phone_number_2 %}
+            <p>
+              {{ content.field_phone_label_2 }}: <a href="tel:{{ content.field_phone_number_2 }}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
+            </p>
+            {% endif %}
+            {% if content.field_website_title and content.field_website_url %}
+            <p>
+              <a href="{{ content.field_website_url }}">{{ content.field_website_title }}</a>
+            </p>
+            {% endif %}
+          </div>
+        <div>
+        <div id="cgvBody">
+          {{ content.body }}
+        </div>
+        {# TODO: Article footer stuff has to go somewhere. TBD. #}
+        <footer class="article-footer">
+          {{ contentPageMacros.displayDates(node, content) }}
+        </footer>
+    </div>
+</cancer-center>

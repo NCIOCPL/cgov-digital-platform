@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pdq_drug_information_summary.body
+    - field.field.node.pdq_drug_information_summary.field_date_posted
+    - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_page_description
+    - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_drug_information_summary.field_pdq_pronunciation_key
+    - field.field.node.pdq_drug_information_summary.field_public_use
+    - node.type.pdq_drug_information_summary
+  module:
+    - user
+id: node.pdq_drug_information_summary.teaser
+targetEntityType: node
+bundle: pdq_drug_information_summary
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  body: true
+  field_date_posted: true
+  field_date_updated: true
+  field_page_description: true
+  field_pdq_audio_id: true
+  field_pdq_cdr_id: true
+  field_pdq_pronunciation_key: true
+  field_public_use: true
+  langcode: true
