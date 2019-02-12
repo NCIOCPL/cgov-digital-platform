@@ -226,8 +226,17 @@ p.blog-post-publishing-info {
 	}
 }
 
+.blog-post {
+  // override an unusual style in mainContent that worked in the old CMS because .contentzone
+  // was never the first-child on a blog page. The section nav was always `display:none` before it,
+  // but now section nav is not being generated
+  div.row > div.contentzone:first-child {
+    width: 75%;
+  }
+}
+
 @include bp(large-up) {
-	[data-cde-pagetemplate="NVCGBlogSeriesPageTemplate"], [data-cde-pagetemplate="NVCGBlogPostPageTemplate"] {
+	.blog-post {
 		/* hide the left nav from view on large-up for blog posts*/
 		#nvcgSlSectionNav {
 			display: none !important;
