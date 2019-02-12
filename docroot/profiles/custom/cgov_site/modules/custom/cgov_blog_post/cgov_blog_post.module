@@ -60,14 +60,35 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
         break;
     }
 
-    // Debug:
-    // ksm($moderation_state);
-    // ksm($form['field_blog_series']);
+    // BEGIN DEBUGGING SECTION:
+    $vocabulary_id = 'cgov_blog_topics';
+    $blog_topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vocabulary_id);
+
+    // Get Blog Topics and IDs.
+    $blog_topic_names = [];
+    $blog_topic_owner_series_ids = [];
+    foreach ($blog_topics as $blog_topic) {
+      $blog_topic_names[] = $blog_topic->name;
+      $blog_topic_owner_series_ids[] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
+    }
+
+    // Debug item 1: get list of all available topics.
+    ksm(implode('|', $blog_topic_names));
+
+    // Debug item 2: get the Owner Series node (content) ID for each topic.
+    ksm(implode('|', $blog_topic_owner_series_ids));
+
+    // Debug item 3: get Blog Series.
+    ksm($form['field_blog_series']['widget']['#options']);
+    /*
+    foreach($target_ids as $target_id) {
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $node = $node_storage->load(10);
+    ksm($node);
+    }
+     */
+    // END DEBUGGING SECTION.
   }
-  /*
-   * TODO:
-   * - verify series
-   */
 }
 
 /**
@@ -113,14 +134,14 @@ function display_cats(array $form, FormStateInterface $form_state) {
  * Filter taxonomy categories.
  */
 function filter_cats(array $form) {
-  return 'bar';
+  return '== debug filtered categories ==';
 }
 
 /**
  * Clear all taxonomy checks.
  */
 function clear_cats(array $form) {
-
+  return '== debug cleared category checkboxes ==';
 }
 
 /**
