@@ -196,7 +196,7 @@ class CgovNavigationManager {
     /* @var \Drupal\taxonomy\TermInterface */
     $parentTerm = $this->getParentTerm($term);
     while ($parentTerm !== NULL) {
-      array_unshift($ancestry, $parentTerm);
+      $ancestry[] = $parentTerm;
       $parentTerm = $this->getParentTerm($parentTerm);
     }
     return $ancestry;
