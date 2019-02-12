@@ -1,21 +1,27 @@
-{{ attach_library('cgov_common/article') }}
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-    <div class="resize-content">
-        <h1>
-            {{ node.label }}
-        </h1>
-        {{ drupal_block('page_options') }}
-        <div id="cgvBody">
-          {{ drupal_region('press_release_contact') }}
-          {{ content.field_image_article }}
-          {{ content.field_intro_text }}
-          {{ content.body }}
-        </div>
+  <div class="resize-content">
+    {{ content.field_press_release_type }}
+
+    <h1>
+      {{ node.label }}
+    </h1>
+    {{ drupal_block('page_options') }}
+    <div id="cgvBody">
+
+      <div class="press-release-date-contact row collapse">
+        {{ contentPageMacros.displayDates(node,content) }}
+        {{ drupal_region('press_release_contact') }}
+      </div>
+      
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
     </div>
-  {# TODO: Article footer stuff has to go somewhere. TBD. #}
+  </div>
+  
   <footer class="article-footer">
-      {#{{ content.field_public_use }}#}
-    </footer>
+    {# {{ content.field_public_use }} #}
+  </footer>
 </article>
