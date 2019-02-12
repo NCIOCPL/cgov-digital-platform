@@ -36,6 +36,7 @@ class PDQDrugSummaryTest extends BrowserTestBase {
   const PUBLIC_USE = 'edit-field-public-use';
   const LIST_DESCRIPTION = 'edit-field-page-description-0-value';
   const BODY = 'edit-body-0-value';
+  const URL = 'edit-field-pdq-url-0-value';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -70,6 +71,7 @@ class PDQDrugSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQDrugSummaryTest::PUBLIC_USE);
     $this->assertSession()->fieldExists(PDQDrugSummaryTest::LIST_DESCRIPTION);
     $this->assertSession()->fieldExists(PDQDrugSummaryTest::BODY);
+    $this->assertSession()->fieldExists(PDQDrugSummaryTest::URL);
 
     /*
     We need to figure out how to test filling out the form and submitting it.
