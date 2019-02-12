@@ -231,6 +231,20 @@ class NavItem {
   }
 
   /**
+   * Determine whether NavItem has filter rule.
+   *
+   * @param string $rule
+   *   Display rule to test.
+   *
+   * @return bool
+   *   Return TRUE if NavItem has display rule.
+   */
+  public function hasDisplayRule($rule) {
+    $hasDisplayRule = isset($this->displayRules[$rule]) && $this->displayRules[$rule] === TRUE;
+    return $hasDisplayRule;
+  }
+
+  /**
    * Test if this is current site section.
    *
    * Return TRUE if Navigation manager matches
@@ -263,18 +277,19 @@ class NavItem {
   public function getChildren(array $filters = []) {
     // @var \Drupal\taxonomy\TermInterface[]
     $allChildTerms = $this->navMgr->getChildTerms($this->term);
-    $filteredChildren = array_filter($allChildTerms, function ($child) use ($filters) {
+    // Build the navItems to make interacting with terms easier.
+    $navItems = array_map(function ($term) {
+      return $this->navMgr->newNavItem($term);
+    }, $allChildTerms);
+    $filteredChildren = array_filter($navItems, function ($child) use ($filters) {
       foreach ($filters as $filter) {
-        if ($child->{$filter}) {
+        if ($child->hasDisplayRule($filter)) {
           return FALSE;
         }
       }
       return TRUE;
     });
-    $navItems = array_map(function ($term) {
-      return $this->navMgr->newNavItem($term);
-    }, $filteredChildren);
-    return $navItems;
+    return $filteredChildren;
   }
 
 }
