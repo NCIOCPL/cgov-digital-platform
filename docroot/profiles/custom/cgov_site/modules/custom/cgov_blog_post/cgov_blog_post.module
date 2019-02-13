@@ -51,17 +51,11 @@ function cgov_blog_post_entity_presave(EntityInterface $entity) {
 }
 
 /**
- * Ajax callback.
+ * Create an Ajax object, then invoke the drawBlogTopics() method in our library JS.
  */
 function display_cats(array $form, FormStateInterface $form_state) {
-  // Create our AJAX object.
   $ajax_response = new AjaxResponse();
-
-  // Do AJAX behavior based on workflow.
-  if (is_draft($form)) {
-    $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['hello']));
-  }
-
+  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['~~~ debug ~~~']));
   return $ajax_response;
 }
 
@@ -88,8 +82,6 @@ function filter_cats(array $form) {
   // Debug item 2: get the Owner Series node (content) ID for each topic.
   ksm(implode('|', $blog_topic_owner_series_ids));
 
-  // Debug item 3: get Blog Series.
-  ksm($form['field_blog_series']['widget']['#options']);
   /*
   foreach($target_ids as $target_id) {
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
@@ -97,7 +89,6 @@ function filter_cats(array $form) {
   ksm($node);
   }
    */
-  ksm('END debugging!!!');
 }
 
 /**
@@ -111,15 +102,16 @@ function clear_cats(array $form) {
  * Util function to return the moderation state of a given form.
  */
 function get_moderation_state(array $form) {
-  $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
   // TODO: null check.
+  $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
   return $moderation_state;
 }
 
 /**
- * Util function to return the moderation state of a given form.
+ * Check if content item is in a draft state.
  */
 function is_draft(array $form) {
+  // TODO: Add user check and return true for admins.
   $moderation_state = get_moderation_state($form);
   $is_draft = ($moderation_state == 'draft') ? TRUE : FALSE;
   return $is_draft;
