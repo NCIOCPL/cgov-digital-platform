@@ -69,26 +69,15 @@ function filter_cats(array $form) {
   $blog_topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vocabulary_id);
 
   // Get Blog Topics and IDs.
-  $blog_topic_names = [];
-  $blog_topic_owner_series_ids = [];
+  $muh_array = [];
   foreach ($blog_topics as $blog_topic) {
-    $blog_topic_names[] = $blog_topic->name;
-    $blog_topic_owner_series_ids[] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
+    $bs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
+    $bt = $blog_topic->name;
+    $muh_array[$bt] = $bs;
   }
 
-  // Debug item 1: get list of all available topics.
-  ksm(implode('|', $blog_topic_names));
-
-  // Debug item 2: get the Owner Series node (content) ID for each topic.
-  ksm(implode('|', $blog_topic_owner_series_ids));
-
-  /*
-  foreach($target_ids as $target_id) {
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $node = $node_storage->load(10);
-  ksm($node);
-  }
-   */
+  // Show pairs:
+  ksm($muh_array);
 }
 
 /**
