@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_blog_series
-    - node.type.cgov_blog_post
+    - field.storage.taxonomy_term.field_owner_blog
     - node.type.cgov_blog_series
-id: node.cgov_blog_post.field_blog_series
-field_name: field_blog_series
-entity_type: node
-bundle: cgov_blog_post
-label: 'Blog Series'
-description: 'Select the Blog to which this Post will belong.'
+    - taxonomy.vocabulary.cgov_blog_topics
+id: taxonomy_term.cgov_blog_topics.field_owner_blog
+field_name: field_owner_blog
+entity_type: taxonomy_term
+bundle: cgov_blog_topics
+label: 'Owner Blog'
+description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

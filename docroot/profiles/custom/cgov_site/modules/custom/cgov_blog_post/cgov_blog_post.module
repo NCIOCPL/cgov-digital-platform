@@ -5,10 +5,10 @@
  * Contains cgov_blog_post.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\AppendCommand;
-use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_alter().
@@ -18,32 +18,132 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
-    // Test change method.
-    $form['field_blog_series']['widget']['#ajax'] = [
-      'callback' => 'set_blog_cats',
-      'event' => 'change',
-    ];
+    /* @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+    $formObject = $form_state->getFormObject();
+    if ($formObject instanceof EntityFormInterface) {
+      $entity = $formObject->getEntity();
+      if (
+        $entity->getEntityTypeId() === 'node'
+      ) {
+        $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
+      }
+    }
 
-    // Debug:
-    // ksm($form['field_blog_topics']);
-    // ksm($form['field_blog_series']);
-  } /* End if blog post */
-  /*
-   * TODO:
-   * - verify series
-   * - block series editing once published
-   * - state validation
-   */
+    // Get the current workflow state.
+    // ksm($moderation_state;:
+    $moderation_state = get_moderation_state($form);
+    // Do form behavior based on workflow.
+    switch ($moderation_state) {
+      case "draft":
+      case "review":
+        $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
+        $form['field_blog_series']['widget']['#ajax'] = [
+          'callback' => 'display_cats',
+          'event' => 'change',
+          'progress' => [
+            'message' => NULL,
+            'type' => 'throbber',
+          ],
+        ];
+        break;
+
+      case "archive_requested":
+      case "archived":
+      case "editing":
+      case "post_publication_review":
+      case "published":
+        $form['field_blog_series']['#disabled'] = TRUE;
+        break;
+
+      default:
+        break;
+    }
+
+    // BEGIN DEBUGGING SECTION:
+    $vocabulary_id = 'cgov_blog_topics';
+    $blog_topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vocabulary_id);
+
+    // Get Blog Topics and IDs.
+    $blog_topic_names = [];
+    $blog_topic_owner_series_ids = [];
+    foreach ($blog_topics as $blog_topic) {
+      $blog_topic_names[] = $blog_topic->name;
+      $blog_topic_owner_series_ids[] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
+    }
+
+    // Debug item 1: get list of all available topics.
+    ksm(implode('|', $blog_topic_names));
+
+    // Debug item 2: get the Owner Series node (content) ID for each topic.
+    ksm(implode('|', $blog_topic_owner_series_ids));
+
+    // Debug item 3: get Blog Series.
+    ksm($form['field_blog_series']['widget']['#options']);
+    /*
+    foreach($target_ids as $target_id) {
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $node = $node_storage->load(10);
+    ksm($node);
+    }
+     */
+    // END DEBUGGING SECTION.
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function cgov_blog_post_entity_presave(EntityInterface $entity) {
+  // Do things to make the Blog Categories save upon changing.
 }
 
 /**
  * Ajax callback.
  */
-function set_blog_cats(array $form, FormStateInterface $form_state) {
-  $term_name = 'Hello, world';
-  $response = new AjaxResponse();
-  $response->addCommand(new RemoveCommand('.dummy-label'));
-  $response->addCommand(new AppendCommand('#edit-field-blog-topics', '<label class="dummy-label">' . $term_name . '</label>'));
+function display_cats(array $form, FormStateInterface $form_state) {
 
-  return $response;
+  $ajax_response = new AjaxResponse();
+  $moderation_state = get_moderation_state($form);
+
+  // Do AJAX behavior based on workflow.
+  switch ($moderation_state) {
+
+    case "draft":
+      $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['hello']));
+      break;
+
+    case "archive_requested":
+    case "archived":
+    case "editing":
+    case "post_publication_review":
+    case "published":
+    case "review":
+    default:
+      break;
+  }
+
+  return $ajax_response;
+}
+
+/**
+ * Filter taxonomy categories.
+ */
+function filter_cats(array $form) {
+  return '== debug filtered categories ==';
+}
+
+/**
+ * Clear all taxonomy checks.
+ */
+function clear_cats(array $form) {
+  return '== debug cleared category checkboxes ==';
+}
+
+/**
+ * Util function to return the moderation state of a given form.
+ */
+function get_moderation_state(array $form) {
+  $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+  // TODO: null check.
+  return $moderation_state;
 }
