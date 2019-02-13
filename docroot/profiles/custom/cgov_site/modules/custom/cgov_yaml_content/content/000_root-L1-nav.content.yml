@@ -26,8 +26,9 @@
 #   field_section_nav_root:
 #     value: true
 #   field_navigation_display_options:
-#     value:
-#        - hide_in_main_nav
+#     - value: 'hide_in_main_nav'
+#     - value: 'hide_in_section_nav'
+#     - value: 'hide_in_mobile_nav'
 #   parent:
 
 ##############################
@@ -132,6 +133,176 @@
           - "taxonomy_term"
           - vid: "cgov_site_sections"
             name: "Home"
+            
+## News & Events > Press Releases
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases"
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        Press Releases
+  field_pretty_url:
+    value: "press-releases"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "News & Events"
+
+## News & Events > Press Releases > 2019
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2019"
+  field_navigation_label: "2019"
+  langcode: 'en'
+  weight: '100'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2019 Press Releases
+  field_pretty_url:
+    value: "2019"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+## News & Events > Press Releases > 2018
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2018"
+  field_navigation_label: "2018"
+  langcode: 'en'
+  weight: '110'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2018 Press Releases
+  field_pretty_url:
+    value: "2018"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+## News & Events > Press Releases > 2017
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2017"
+  field_navigation_label: "2017"
+  langcode: 'en'
+  weight: '120'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2017 Press Releases
+  field_pretty_url:
+    value: "2017"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+## News & Events > Press Releases > 2016
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2016"
+  field_navigation_label: "2016"
+  langcode: 'en'
+  weight: '130'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2016 Press Releases
+  field_pretty_url:
+    value: "2016"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+## News & Events > Press Releases > 2015
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2015"
+  field_navigation_label: "2015"
+  langcode: 'en'
+  weight: '140'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2015 Press Releases
+  field_pretty_url:
+    value: "2015"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+## News & Events > Press Releases > 2014
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Press Releases 2014"
+  field_navigation_label: "2014"
+  langcode: 'en'
+  weight: '150'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2014 Press Releases
+  field_pretty_url:
+    value: "2014"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Press Releases"
+
+
 
 ## About NCI
 - entity: "taxonomy_term"
@@ -160,9 +331,7 @@
   field_pretty_url:
     value: "publications"
   field_navigation_display_options:
-    value:
-      ## This means hide
-      - hide_in_main_nav
+    - value: 'hide_in_main_nav'
   parent:
     - "#process":
         callback: "reference"
@@ -268,6 +437,177 @@
           - "taxonomy_term"
           - vid: "cgov_site_sections"
             name: "Español Home"
+
+## Noticias > Comunicados de Prensa
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa"
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        Comunicados de Prensa - ES
+  field_pretty_url:
+    value: "comunicados-de-prensa"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Noticias"
+
+## Noticias > Comunicados de Prensa > 2019
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2019"
+  field_navigation_label: "2019"
+  langcode: 'es'
+  weight: '100'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2019 - ES
+  field_pretty_url:
+    value: "2019"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+
+## Noticias > Comunicados de Prensa > 2018
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2018"
+  field_navigation_label: "2018"
+  langcode: 'es'
+  weight: '110'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2018 - ES
+  field_pretty_url:
+    value: "2018"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+
+## Noticias > Comunicados de Prensa > 2017
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2017"
+  field_navigation_label: "2017"
+  langcode: 'es'
+  weight: '120'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2017 - ES
+  field_pretty_url:
+    value: "2017"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+            
+## Noticias > Comunicados de Prensa > 2016
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2016"
+  field_navigation_label: "2016"
+  langcode: 'es'
+  weight: '130'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2016 - ES
+  field_pretty_url:
+    value: "2016"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+
+
+## Noticias > Comunicados de Prensa > 2015
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2015"
+  field_navigation_label: "2015"
+  langcode: 'es'
+  weight: '140'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2015 - ES
+  field_pretty_url:
+    value: "2015"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+
+
+## Noticias > Comunicados de Prensa > 2014
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Comunicados de Prensa 2014"
+  field_navigation_label: "2014"
+  langcode: 'es'
+  weight: '150'
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        2014 - ES
+  field_pretty_url:
+    value: "2014"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Comunicados de Prensa"
+
 
 ## Nuestro instituto
 - entity: "taxonomy_term"
