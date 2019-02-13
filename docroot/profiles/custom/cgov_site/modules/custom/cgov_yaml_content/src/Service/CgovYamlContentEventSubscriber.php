@@ -2,7 +2,6 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
-use Drupal\cgov_yaml_content\FieldProcessor\FieldProcessor;
 use Drupal\yaml_content\Event\YamlContentEvents;
 use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
@@ -10,6 +9,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
+use Drupal\Core\Entity\Query\QueryFactory;
 
 /**
  * Handle yaml_content custom events.
@@ -31,16 +31,26 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $contentLoader;
 
   /**
+   * Drupal Entity Query Factory.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryFactory
+   */
+  protected $entityQueryFactory;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
    * @param \Drupal\yaml_content\ContentLoader\ContentLoaderInterface $contentLoader
    *   Content Loader.
+   * @param \Drupal\Core\Entity\Query\QueryFactory $entityQueryFactory
+   *   Query factory.
    */
-  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader) {
+  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader, QueryFactory $entityQueryFactory) {
     $this->themeManager = $themeManager;
     $this->contentLoader = $contentLoader;
+    $this->entityQueryFactory = $entityQueryFactory;
   }
 
   /**
@@ -50,7 +60,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     $events = [];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
-    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addLandingPage'];
+    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['handlePostSaveEvents'];
 
     return $events;
   }
@@ -182,16 +192,30 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // The yaml_content loader offers the ability to use process functions
     // as callbacks in the yml.
     // Translated fields also doing that don't have access to this feature
-    // so we are going to borrow the functionality. Unfortunately, the
-    // preprocess method is protected, so we need to use another public
-    // method to access it.
-    // Also, it's important to note that behind the scenes, this will also allow
-    // yaml_content to correctly move the processed files into the
-    // sites/default/files  directory for later access.
+    // so we are going to borrow the functionality.
     $this->contentLoader->setExistenceCheck(TRUE);
     foreach ($translatedFields as $key => $value) {
-      if (is_array($value) && isset($value['process'])) {
-        $translatedFields[$key] = FieldProcessor::processFieldData($key, $value);
+      // For 'reference' #process directives.
+      if (is_array($value) && isset($value['#process'])) {
+        if (isset($value['#process']['callback']) && $value['#process']['callback'] === 'reference') {
+          $entity_type = $value['#process']['args'][0];
+          $args = $value['#process']['args'][1];
+          $query = $this->entityQueryFactory->get($entity_type);
+          foreach ($args as $property => $value) {
+            $query->condition($property, $value);
+          }
+          $entity_ids = $query->execute();
+          if (count($entity_ids) > 0) {
+            $first_id = array_shift($entity_ids);
+            $fieldReferenceArray = ['target_id' => $first_id];
+            $translatedFields[$key] = $fieldReferenceArray;
+          }
+          else {
+            // Reference can't be found.
+            // TODO: Create thing instead?
+            unset($translatedFields[$key]);
+          }
+        }
       }
     }
 
@@ -208,6 +232,12 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $spanishTranslation->{$fieldName} = $fieldValue;
     }
     $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+    // We need to discreetly save the translation to trigger pathauto
+    // url alias building.
+    $spanishTranslation->save();
+    // In the event that this translation should be a landing page we want
+    // to set that up now.
+    $this->addLandingPage($spanishTranslation);
     $entity->save();
   }
 
@@ -276,16 +306,23 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Add Landing Pages to Site Sections.
-   *
-   * Programmatically add entity reference in Terms for
-   * landing pages.
+   * Call local functions to handle events.
    *
    * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
    *   The triggered event when an entity has been saved.
    */
-  public function addLandingPage(EntityPostSaveEvent $event) {
+  public function handlePostSaveEvents(EntityPostSaveEvent $event) {
     $savedEntity = $event->getEntity();
+    $this->addLandingPage($savedEntity);
+  }
+
+  /**
+   * Add Landing Pages to Site Sections.
+   *
+   * Programmatically add entity reference in Terms for
+   * landing pages.
+   */
+  public function addLandingPage($savedEntity) {
     $entityType = $savedEntity->getEntityTypeId();
     // $bundleType = $savedEntity->bundle();
     // TODO: For now we want to do the same thing for all content
