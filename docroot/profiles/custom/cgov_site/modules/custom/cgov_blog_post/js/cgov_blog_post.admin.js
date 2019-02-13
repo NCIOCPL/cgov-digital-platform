@@ -1,6 +1,6 @@
 (function($) {
     $.fn.drawBlogTopics = function(data) {
-        alert('I can feel it coming in the air tonight.')
-    };
+        console.log('dont you know this is a land of confusion.');
+    }
     //TODO: clean up and add guts
 })(jQuery);

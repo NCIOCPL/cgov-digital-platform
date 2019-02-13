@@ -6,10 +6,7 @@
  */
 
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\BeforeCommand;
 use Drupal\Core\Ajax\InvokeCommand;
-use Drupal\Core\Ajax\RemoveCommand;
-use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -39,6 +36,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     switch ($moderation_state) {
       case "draft":
       case "review":
+        $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
         $form['field_blog_series']['widget']['#ajax'] = [
           'callback' => 'display_cats',
           'event' => 'change',
@@ -104,7 +102,6 @@ function cgov_blog_post_entity_presave(EntityInterface $entity) {
  */
 function display_cats(array $form, FormStateInterface $form_state) {
 
-  $show_topics = 'show-topics-field';
   $ajax_response = new AjaxResponse();
   $moderation_state = get_moderation_state($form);
 
@@ -112,11 +109,7 @@ function display_cats(array $form, FormStateInterface $form_state) {
   switch ($moderation_state) {
 
     case "draft":
-      $filtered = filter_cats($form);
       $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['hello']));
-      $ajax_response->addCommand(new RemoveCommand('.' . $show_topics));
-      $ajax_response->addCommand(new BeforeCommand('#edit-field-blog-topics-wrapper',
-          '<div class="' . $show_topics . '">' . $filtered . '</div>'));
       break;
 
     case "archive_requested":
