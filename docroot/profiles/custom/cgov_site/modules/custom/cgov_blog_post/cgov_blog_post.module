@@ -18,18 +18,11 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
 
-    /* @var Drupal\Core\Entity\FieldableEntityInterface $entity */
-    $formObject = $form_state->getFormObject();
-    if ($formObject instanceof EntityFormInterface) {
-      $entity = $formObject->getEntity();
-      if (
-        $entity->getEntityTypeId() === 'node'
-      ) {
-        $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
-      }
-    }
+    // Add the admin JS library so we can run the InvokeCommand. See
+    // https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Ajax%21InvokeCommand.php/class/InvokeCommand/8.2.x
+    $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
 
-    /* If this is editable, fire off ajax function */
+    // If this is a draft or administrator role, fire off ajax function.
     if (is_draft($form)) {
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
       $form['field_blog_series']['widget']['#ajax'] = [
