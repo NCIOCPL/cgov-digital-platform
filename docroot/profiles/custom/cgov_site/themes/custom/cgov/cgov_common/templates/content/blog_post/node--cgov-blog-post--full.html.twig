@@ -1,0 +1,25 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+  <div class="resize-content">
+    {{ content.field_press_release_type }}
+    <h1>
+      {{ node.label }}
+    </h1>
+    <div id="nvcgSubTitle">
+      <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a></div>
+    </div>
+
+    <div id="cgvBody">
+      {{ contentPageMacros.displayDates(node,content) }}
+      
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
+    </div>
+  </div>
+  
+  <footer class="article-footer">
+    {#{{ content.field_public_use }}#}
+  </footer>
+</article>

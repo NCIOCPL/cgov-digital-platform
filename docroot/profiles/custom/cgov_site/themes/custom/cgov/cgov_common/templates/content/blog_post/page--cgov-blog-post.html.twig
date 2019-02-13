@@ -1,0 +1,80 @@
+{{ attach_library('cgov_common/blogPost') }}
+{{ page.notification_banner }}
+
+<header class="push" role="banner">
+  <div id="nvcgSlSiteBanner" class="row">
+     {{ page.site_banner }}
+  </div>
+</header>
+
+<div id="page" class="blog-post">
+  <!-- Global nav/utilit bar/language  -->
+  <div class="fixedtotop">
+    <div class="headroom-area">
+      {{ page.language_bar }}
+      <!-- UTILITY NAV -->
+      <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
+        {{ page.utility_bar }}
+      </div>
+      <!-- END UTILITY NAV -->
+      <!-- BEGIN NAVIGATION -->
+      <!-- Begin nav-search bar -->
+      <div class="nav-search-bar gradient header">
+        <div id="nvcgSlMainNav" class="row">
+          {{ page.main_nav }}
+          <div class="contentid-911752 slot-item last-SI">
+            <div class="rawHtml">
+              <div class="search" role="search">
+                <form action="/search/results" method="post" id="siteSearchForm" name="siteSearchForm"
+                      onsubmit="NCIAnalytics.SiteWideSearch(this);">
+                  <label class="hidden" for="swKeyword">Search</label>
+                  <input placeholder="search" class="searchString ui-autocomplete-input" id="swKeyword" maxlength="255"
+                         name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value=""
+                         autocomplete="off" type="text" aria-autocomplete="list" aria-haspopup="true">
+                  <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                    <span class="hidden">Search</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End nav-search bar -->
+      <!-- END NAVIGATION -->
+    </div>
+      <!-- end "headroom-area" -->
+  </div><!-- END Global nav/utility bar/language -->
+
+  <!-- Begin MAIN CONTENT AREA -->
+  <div class="main-content" id="content" tabindex="0">
+    <div class="row general-page-body-container collapse">
+      <div class="large-12 columns">
+        <div class="row">
+          <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
+            {{ page.breadcrumb }}
+          </div>
+          {{ drupal_block('page_options') }}
+        </div> <!-- END "row" -->
+      </div> <!-- END "large-12 columns" -->
+      <div class="row">
+        <div id="main" class="medium-9 columns contentzone has-section-nav" role="main">
+          {{ page.content }}
+        </div>
+        <div id="nvcgSlListBlogRTRail" class="medium-3 columns right right-rail">
+          {# placeholder for featured posts #}
+          {# placeholder for blog categories #}
+          {# placeholder for blog archives #}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div id="nvcgSlFooter">
+    {{ page.footer }}
+  </div>
+</footer>
+<!-- END FOOTER -->
