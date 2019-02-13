@@ -1,0 +1,113 @@
+### TESTS:
+# Cancer Center content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Ocean Sunset View Mykonos"
+  name__ES:
+    value: "Ocean Sunset View Mykonos - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ocean-sunset-view-mykonos-article.jpg'
+      alt: 'sunset ocean view in Mykonos'
+      alt__ES:
+        value: "vista del mar en el ocaso en Mykonos"
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_cancer_center"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  title: "Dana Farber/Harvard Cancer Center"
+  field_sort_title:
+    value: "Dana Farber/Harvard Cancer Center"
+  field_short_title:
+    value: "Dana Farber/Harvard Cancer Center"
+  field_page_description:
+    value: "Information about the Dana Farber/Harvard Cancer Center."
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_institution_type:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_type'
+            name: 'Comprehensive Cancer Center'
+  field_org_head_name:
+    value: "Laurie H. Glimcher, M.D."
+  field_org_head_title:
+    value: "President & CEO"
+  field_address_1:
+    value: "450 Brookline Avenue"
+  field_city:
+    value: "Boston"
+  field_state:
+    value: "MA"
+  field_zip_code:
+    value: "02215"
+  field_region:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_cancer_center_regions'
+            name: 'New England'
+  field_phone_label_1:
+    value: "Main"
+  field_phone_number_1:
+    value: "1-617-632-3000"
+  field_phone_label_2:
+    value: "Spanish Speakers"
+  field_phone_number_2:
+    value: "1-617-632-3673"
+  field_website_title:
+    value: "Visit Website"
+  field_website_url:
+    value: "http://www.dfhcc.harvard.edu"
+  body:
+    - format: "full_html"
+      value: |
+        <p>Founded in 1997, Dana-Farber/Harvard Cancer Center (DF/HCC) is a cancer research consortium that integrates and builds on the collective talent and resources of five principal Harvard-affiliated hospitals and two Harvard health science schools. It is the successor organization to the Dana-Farber Cancer Institute Comprehensive Cancer Center, which was first designated as an NCI cancer center in 1973.</p>
+        <p>The seven institutional members that comprise the DF/HCC consortium are: Beth Israel Deaconess Medical Center, Boston Children’s Hospital, Brigham and Women’s Hospital, Dana-Farber Cancer Institute, Harvard Medical School, Harvard School of Public Health, and Massachusetts General Hospital. The member institutions combine their scientific strengths to accelerate research findings from the laboratory, clinical research trials, and studies of populations, enhancing patient care and the understanding of underlying causes of cancer.</p>
+        <p>DF/HCC brings together more than 1,000 faculty members, whose collective cancer-relevant research support exceeds $600 million, from the participating institutions through multidisciplinary, inter-institutional programs that stimulate collaboration and discovery. The Center supports 18 established disease-and discipline-based research programs. Sixteen shared resources provide specialized services that enable investigators to conduct innovative cancer research.</p>
+        <p>The Center’s large clinical research program takes a unified approach to approving, activating, monitoring, and supporting the cancer-related clinical trials conducted at member institutions. DF/HCC has a unified Institutional Review Board (IRB), protocol review and monitoring system, data and safety monitoring process, contracting and budgeting, education and training, and informatics.</p>
+        <p>Through its extensive research activities, DF/HCC is committed to maximizing the impact of its research on all cancer patients through improved prevention, diagnosis, and treatment, with a particular emphasis on eliminating disparities in minority and medically underserved populations.</p>
+        <p>A cornerstone of the work to accomplish this mission is the Initiative to Eliminate Cancer Disparities (IECD). This strategic project addresses inequalities in cancer across population groups and focuses on five areas: increasing research on cancer disparities, engaging diverse communities in improving cancer prevention and treatment, increasing the number of minorities in the biomedical workforce through training outreach programs, enhancing faculty diversity, and fostering culturally sensitive care.</p>
+        <br />
+        <p><i>* This profile was provided by the Dana-Farber/Harvard Cancer Center.</i></p>
+  field_date_posted:
+    value: "2012-07-26"
+  field_date_reviewed:
+    value: "2012-07-26"
+  field_date_updated:
+    value: "2015-01-09"
+  field_date_display_mode:
+    - value: 'updated'
+  field_pretty_url:
+    value: "dfharvard"
