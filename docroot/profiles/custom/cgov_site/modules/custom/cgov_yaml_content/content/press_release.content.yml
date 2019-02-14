@@ -11,14 +11,14 @@
     value: 'published'
   field_original_source:
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-      - 'image'
-      - type: 'module'
-        filename: 'cervical-cancer-screening-article.jpeg'
-    alt: 'Health care provider looking at a smartphone'
-    alt__ES: 'Health care provider looking at a smartphone - ES'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'cervical-cancer-screening-article.jpeg'
+      alt: 'Health care provider looking at a smartphone'
+      alt__ES: 'Health care provider looking at a smartphone - ES'
   field_credit:
     value: "iStock"
   field_credit__ES:
@@ -181,26 +181,17 @@
   status: 1
   moderation_state:
     value: 'published'
-  field_original_source:
-  field_site_section:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Press Releases 2019'
-  field_pretty_url:
-    value: 'BRCA-exchange'
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-        - 'image'
-        - type: 'module'
-          filename: 'BRCA-exchange-article.jpg'
-    alt: 'The BRXA Exhange graphic'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'BRCA-exchange-article.jpg'
+      alt: 'The BRXA Exhange graphic'
   field_credit:
     value: "BRCA Challenge"
+
 - entity: "node"
   type: "cgov_press_release"
   title: "BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk"
@@ -268,22 +259,24 @@
 - entity: "media"
   bundle: "cgov_image"
   name: "tMDS-AML graphic"
-  name__ES: "tMDS-AML graphic-ES"
+  name__ES:
+    value: "tMDS-AML graphic-ES"
   langcode: en
   status: 1
   moderation_state:
     value: 'published'
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-        - 'image'
-        - type: 'module'
-          filename: 'chemo-patient-with-male-friend-article.__v10092281.jpg'
-    alt: 'tMDS-AML graphic ALT'
-    alt__ES: 'tMDS-AML graphic ALT - ES'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'chemo-patient-with-male-friend-article.__v10092281.jpg'
+      alt: 'tMDS-AML graphic ALT'
+      alt__ES: 'tMDS-AML graphic ALT - ES'
   field_credit: "iStock"
-  field_credit__ES: "iStock - ES"
+  field_credit__ES:
+    value: "iStock - ES"
 
 - entity: "node"
   type: "cgov_press_release"
@@ -300,12 +293,12 @@
         - vid: 'cgov_site_sections'
           name: 'Press Releases 2018'
   field_site_section__ES:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Comunicados de Prensa 2018'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2018'
   field_pretty_url:
     value: 'tMDS-AML-risk-chemo'
   field_pretty_url__ES:
@@ -342,64 +335,66 @@
   field_date_reviewed: "2018-12-19"
   field_date_updated: "2018-12-18"
   field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'tMDS-AML graphic'
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'tMDS-AML graphic'
   body:
-  - format: "full_html"
-    value: |
-      <p>Findings from a new study by researchers at the National Cancer Institute (NCI) show that patients treated with chemotherapy for most solid tumors during 2000–2014 experienced an increased risk of therapy-related myelodysplastic syndrome/acute myeloid leukemia (tMDS/AML). The study, which used U.S. population-based cancer registry data from NCI’s Surveillance, Epidemiology, and End Results (SEER) program and treatment information from the SEER–Medicare database, was published December 20, 2018, in <em>JAMA Oncology</em>. NCI is part of the National Institutes of Health.</p>
-      <p>Advances in treatment over the last several decades have resulted in improved survival for patients with many types of cancer. However, survivors may be at increased risk of developing a subsequent treatment-related cancer. In this study, researchers aimed to quantify the risk of developing tMDS/AML, a rare but often fatal blood cancer, in patients treated with chemotherapy.</p>
-      <p>“We’ve known for a long time that the development of myeloid leukemia is a very rare adverse effect of some types of cancer treatments that damage cells,” said Lindsay Morton, Ph.D., lead author of the study and a senior investigator in NCI’s Division of Cancer Epidemiology and Genetics. “There have been many changes in cancer treatment over time, including the introduction of new chemotherapy drugs and drug combinations, but we didn’t know what the risk of therapy-related leukemia looked like for patients since these changes were made.”</p>
-      <p>Because tMDS/AML is rare, most data on the disease have come from case series, case–control studies, and clinical trials, which often include a relatively small number of tMDS/AML cases. In this study, investigators brought a population-based data approach to the research, with a much larger sample size and prospective data from long-term patient follow-up.</p>
-      <p>To this end, they analyzed SEER registry data on more than 700,000 patients age 20–84 in the United States with solid tumors who were diagnosed and treated with initial chemotherapy during 2000–2013 and survived at least one year after diagnosis. Of these patients, 1,619 developed tMDS/AML through 2014. When the researchers analyzed the risk of tMDS/AML by original cancer type, they found that risk was increased by 1.5-fold to more than 10-fold for 22 of the 23 solid cancer types investigated (all except colon cancer).</p>
-      <p>These findings expand the groups of survivors at risk of tMDS/AML following treatment with chemotherapy because, in the past, excess risks were established only after chemotherapy for cancers of the lung, ovary, breast, soft tissue, testis, and brain/central nervous system. In the present analysis, cumulative incidence of tMDS/AML was less than 1 percent at 10 years after chemotherapy for most solid cancer types. However, prognosis following tMDS/AML diagnosis was very poor.</p>
-      <p>Because information on the specific chemotherapy agents was not available in the SEER registry data, the researchers used the SEER–Medicare linked database to examine the patterns of use of specific chemotherapy agents during the same time period. Among 165,000 patients in the SEER–Medicare database who received initial chemotherapy for a first primary solid cancer during the study period, 2000–2013, there was a substantial rise in use of platinum-based chemotherapy agents, from 57 percent of patients in 2000–2001, to 81 percent of patients in 2012–2013. Platinum-based chemotherapy agents are known to increase risk of tMDS/AML.</p>
-      <p>“The most important message from this study is that, while advances in cancer treatment approaches have improved the prognosis for many types of cancer, the number of patients at risk of developing rare, therapy-related leukemia after cancer chemotherapy in the modern treatment era has markedly expanded,” Dr. Morton said. “Assessments of treatment risks and benefits should balance these risks and other adverse effects of chemotherapy against potential gains in survival following treatment for the initial solid cancer.”</p>
-      <p>The researchers wrote that their study shows that continued efforts to minimize exposure to leukemia-causing chemotherapy agents and to develop effective and less toxic chemotherapeutic approaches are critical going forward.</p>
-      <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
-      <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
+    - format: "full_html"
+      value: |
+        <p>Findings from a new study by researchers at the National Cancer Institute (NCI) show that patients treated with chemotherapy for most solid tumors during 2000–2014 experienced an increased risk of therapy-related myelodysplastic syndrome/acute myeloid leukemia (tMDS/AML). The study, which used U.S. population-based cancer registry data from NCI’s Surveillance, Epidemiology, and End Results (SEER) program and treatment information from the SEER–Medicare database, was published December 20, 2018, in <em>JAMA Oncology</em>. NCI is part of the National Institutes of Health.</p>
+        <p>Advances in treatment over the last several decades have resulted in improved survival for patients with many types of cancer. However, survivors may be at increased risk of developing a subsequent treatment-related cancer. In this study, researchers aimed to quantify the risk of developing tMDS/AML, a rare but often fatal blood cancer, in patients treated with chemotherapy.</p>
+        <p>“We’ve known for a long time that the development of myeloid leukemia is a very rare adverse effect of some types of cancer treatments that damage cells,” said Lindsay Morton, Ph.D., lead author of the study and a senior investigator in NCI’s Division of Cancer Epidemiology and Genetics. “There have been many changes in cancer treatment over time, including the introduction of new chemotherapy drugs and drug combinations, but we didn’t know what the risk of therapy-related leukemia looked like for patients since these changes were made.”</p>
+        <p>Because tMDS/AML is rare, most data on the disease have come from case series, case–control studies, and clinical trials, which often include a relatively small number of tMDS/AML cases. In this study, investigators brought a population-based data approach to the research, with a much larger sample size and prospective data from long-term patient follow-up.</p>
+        <p>To this end, they analyzed SEER registry data on more than 700,000 patients age 20–84 in the United States with solid tumors who were diagnosed and treated with initial chemotherapy during 2000–2013 and survived at least one year after diagnosis. Of these patients, 1,619 developed tMDS/AML through 2014. When the researchers analyzed the risk of tMDS/AML by original cancer type, they found that risk was increased by 1.5-fold to more than 10-fold for 22 of the 23 solid cancer types investigated (all except colon cancer).</p>
+        <p>These findings expand the groups of survivors at risk of tMDS/AML following treatment with chemotherapy because, in the past, excess risks were established only after chemotherapy for cancers of the lung, ovary, breast, soft tissue, testis, and brain/central nervous system. In the present analysis, cumulative incidence of tMDS/AML was less than 1 percent at 10 years after chemotherapy for most solid cancer types. However, prognosis following tMDS/AML diagnosis was very poor.</p>
+        <p>Because information on the specific chemotherapy agents was not available in the SEER registry data, the researchers used the SEER–Medicare linked database to examine the patterns of use of specific chemotherapy agents during the same time period. Among 165,000 patients in the SEER–Medicare database who received initial chemotherapy for a first primary solid cancer during the study period, 2000–2013, there was a substantial rise in use of platinum-based chemotherapy agents, from 57 percent of patients in 2000–2001, to 81 percent of patients in 2012–2013. Platinum-based chemotherapy agents are known to increase risk of tMDS/AML.</p>
+        <p>“The most important message from this study is that, while advances in cancer treatment approaches have improved the prognosis for many types of cancer, the number of patients at risk of developing rare, therapy-related leukemia after cancer chemotherapy in the modern treatment era has markedly expanded,” Dr. Morton said. “Assessments of treatment risks and benefits should balance these risks and other adverse effects of chemotherapy against potential gains in survival following treatment for the initial solid cancer.”</p>
+        <p>The researchers wrote that their study shows that continued efforts to minimize exposure to leukemia-causing chemotherapy agents and to develop effective and less toxic chemotherapeutic approaches are critical going forward.</p>
+        <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
+        <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
 
   body__ES:
-  - format: "full_html"
-    value: |
-      <p>Resultados de un nuevo estudio por investigadores del Instituto Nacional del Cáncer (NCI) muestran que los pacientes tratados con quimioterapia para la mayoría de los tumores sólidos de 2000 a 2014 experimentaron un riesgo mayor de síndrome mielodisplásico y leucemia mieloide aguda (tMDS/AML) relacionados con la terapia. El estudio, que usó datos del registro de cáncer basado en la población de los Estados Unidos del programa de Vigilancia, Epidemiología y Resultados Finales (SEER) del NCI e información de tratamientos de la base de datos de SEER-Medicare, fue publicado el 20 de diciembre de 2018 en <em>JAMA Oncology</em>. El NCI es un componente de los Institutos Nacionales de la Salud.</p>
-      <p>Los avances en tratamiento en las últimas décadas han dado como resultado mejor supervivencia para pacientes con muchos tipos de cáncer. Sin embargo, los supervivientes pueden tener un riesgo mayor de padecer un cáncer subsiguiente relacionado con el tratamiento. En este estudio, los investigadores trataron de cuantificar el riesgo de padecer tMDS/AML, un cáncer raro de la sangre pero fatal con frecuencia, en pacientes tratados con quimioterapia.</p>
-      <p>“Por mucho tiempo hemos sabido que la formación de leucemia mieloide es un efecto adverso muy raro de algunos tipos de tratamientos para el cáncer que dañan las células”, dijo la doctora Lindsay Morton, autora principal del estudio e investigadora superior de la División de Epidemiología y Genética del Cáncer. “Con el pasar del tiempo ha habido muchos cambios en el tratamiento del cáncer, incluida la introducción de nuevos fármacos de quimioterapia y de combinaciones de fármacos, pero no sabíamos cuál era el riesgo de la leucemia relacionada con la terapia para los pacientes desde que se hicieron esos cambios”.</p>
-      <p>Puesto que la tMDS/AML es rara, la mayoría de los datos sobre esta enfermedad provienen de series de casos, de estudios de casos y controles, y de estudios clínicos, los cuales incluyen con frecuencia un número relativamente pequeño de casos de tMDS/AML.&nbsp;En este estudio, los investigadores aportaron un planteamiento de datos demográficos a la investigación, con el tamaño de la muestra mucho más grande y datos prospectivos de seguimiento a pacientes por más tiempo.</p>
-      <p>Con este fin, ellos analizaron los datos del registro de SEER en más de 700&nbsp;000 pacientes de 20 a 84 años de edad en los Estados Unidos con tumores sólidos que habían sido diagnosticados y tratados con quimioterapia inicial durante el período de 2000 a 2013 y sobrevivieron al menos un año después del diagnóstico. De estos pacientes, 1619 presentaron tMDS/AML durante 2014. Cuando los investigadores analizaron el riesgo de tMDS/AML según el tipo original de cáncer, encontraron que el riesgo se incrementó 1,5 veces a más de 10 veces para 22 de los 23 tipos sólidos de cáncer en investigación (todos con excepción de cáncer de colon).</p>
-      <p>Estos resultados se extienden a los grupos de supervivientes con riesgo de tMDS/AML después de tratamiento con quimioterapia porque, en el pasado, los riesgos excedentes se establecieron solo después de la quimioterapia para cánceres de pulmón, ovario, seno, tejido blando, testículo y cerebro o sistema nervioso central. En el presente análisis, la incidencia acumulada de tMDS/AML fue inferior a 1&nbsp;% en 10 años después de la quimioterapia para la mayoría de los tipos sólidos de cáncer. No obstante, el pronóstico después del diagnóstico de tMDS/AML fue muy precario.</p>
-      <p>Dado que no había información en cuanto a los fármacos específicos de quimioterapia en los datos del registro de SEER, los investigadores usaron la base de datos de SEER-Medicare para examinar los patrones de uso de sustancias específicas de quimioterapia durante el mismo período de tiempo. De los 165&nbsp;000 pacientes en la base de datos SEER-Medicare que recibieron quimioterapia inicial para un primer cáncer primario sólido durante el período de estudio, 2000 a 2013, hubo un aumento sustancial en el uso de sustancias de quimioterapia a base de platino, de 57&nbsp;% de pacientes en 2000 a 2001, a 81&nbsp;% de pacientes en 2012 a 2013. Los fármacos de quimioterapia a base de platino se sabe que aumentan el riesgo de tMDS/AML.</p>
-      <p>“El mensaje más importante de este estudio es que, mientras los avances en planteamientos de tratamiento de cáncer han mejorado el pronóstico para muchos tipos de cáncer, el número de pacientes con riesgo de presentar una leucemia rara relacionada con la terapia después de quimioterapia para cáncer en la era moderna de tratamientos se ha extendido en forma destacada”, dijo la doctora Morton. “Evaluaciones de los riesgos y beneficios del tratamiento deberán equilibrar estos riesgos y otros efectos adversos de la quimioterapia contra aumentos posibles en la supervivencia después de tratamiento para el cáncer sólido inicial”.</p>
-      <p>Los investigadores escribieron que su estudio muestra que los continuos esfuerzos para reducir al mínimo la exposición a las sustancias de quimioterapia que causan leucemia y para formular planteamientos quimioterapéuticos eficaces y menos tóxicos son críticos de ahora en adelante.</p>
-      <p><strong>Acerca del Instituto Nacional del Cáncer (NCI):</strong>&nbsp;El Instituto Nacional del Cáncer, NCI, dirige el Programa Nacional de Cáncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir drásticamente la frecuencia del cáncer y mejorar las vidas de los pacientes con cáncer y de sus familias, por medio de la investigación acerca de la prevención y la biología del cáncer, la creación de nuevas intervenciones y la capacitación y el acceso a mentores de nuevos investigadores. Para obtener más información sobre el cáncer, visite, por favor, el sitio web del NCI en <a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Información sobre el Cáncer) al 1-800-422-6237 (1-800-4-CANCER).</p>
-      <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigación médica del país, están compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE. UU. &nbsp;NIH es la principal dependencia federal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener más información sobre los NIH y sus programas, <br> visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
+    - format: "full_html"
+      value: |
+        <p>Resultados de un nuevo estudio por investigadores del Instituto Nacional del Cáncer (NCI) muestran que los pacientes tratados con quimioterapia para la mayoría de los tumores sólidos de 2000 a 2014 experimentaron un riesgo mayor de síndrome mielodisplásico y leucemia mieloide aguda (tMDS/AML) relacionados con la terapia. El estudio, que usó datos del registro de cáncer basado en la población de los Estados Unidos del programa de Vigilancia, Epidemiología y Resultados Finales (SEER) del NCI e información de tratamientos de la base de datos de SEER-Medicare, fue publicado el 20 de diciembre de 2018 en <em>JAMA Oncology</em>. El NCI es un componente de los Institutos Nacionales de la Salud.</p>
+        <p>Los avances en tratamiento en las últimas décadas han dado como resultado mejor supervivencia para pacientes con muchos tipos de cáncer. Sin embargo, los supervivientes pueden tener un riesgo mayor de padecer un cáncer subsiguiente relacionado con el tratamiento. En este estudio, los investigadores trataron de cuantificar el riesgo de padecer tMDS/AML, un cáncer raro de la sangre pero fatal con frecuencia, en pacientes tratados con quimioterapia.</p>
+        <p>“Por mucho tiempo hemos sabido que la formación de leucemia mieloide es un efecto adverso muy raro de algunos tipos de tratamientos para el cáncer que dañan las células”, dijo la doctora Lindsay Morton, autora principal del estudio e investigadora superior de la División de Epidemiología y Genética del Cáncer. “Con el pasar del tiempo ha habido muchos cambios en el tratamiento del cáncer, incluida la introducción de nuevos fármacos de quimioterapia y de combinaciones de fármacos, pero no sabíamos cuál era el riesgo de la leucemia relacionada con la terapia para los pacientes desde que se hicieron esos cambios”.</p>
+        <p>Puesto que la tMDS/AML es rara, la mayoría de los datos sobre esta enfermedad provienen de series de casos, de estudios de casos y controles, y de estudios clínicos, los cuales incluyen con frecuencia un número relativamente pequeño de casos de tMDS/AML.&nbsp;En este estudio, los investigadores aportaron un planteamiento de datos demográficos a la investigación, con el tamaño de la muestra mucho más grande y datos prospectivos de seguimiento a pacientes por más tiempo.</p>
+        <p>Con este fin, ellos analizaron los datos del registro de SEER en más de 700&nbsp;000 pacientes de 20 a 84 años de edad en los Estados Unidos con tumores sólidos que habían sido diagnosticados y tratados con quimioterapia inicial durante el período de 2000 a 2013 y sobrevivieron al menos un año después del diagnóstico. De estos pacientes, 1619 presentaron tMDS/AML durante 2014. Cuando los investigadores analizaron el riesgo de tMDS/AML según el tipo original de cáncer, encontraron que el riesgo se incrementó 1,5 veces a más de 10 veces para 22 de los 23 tipos sólidos de cáncer en investigación (todos con excepción de cáncer de colon).</p>
+        <p>Estos resultados se extienden a los grupos de supervivientes con riesgo de tMDS/AML después de tratamiento con quimioterapia porque, en el pasado, los riesgos excedentes se establecieron solo después de la quimioterapia para cánceres de pulmón, ovario, seno, tejido blando, testículo y cerebro o sistema nervioso central. En el presente análisis, la incidencia acumulada de tMDS/AML fue inferior a 1&nbsp;% en 10 años después de la quimioterapia para la mayoría de los tipos sólidos de cáncer. No obstante, el pronóstico después del diagnóstico de tMDS/AML fue muy precario.</p>
+        <p>Dado que no había información en cuanto a los fármacos específicos de quimioterapia en los datos del registro de SEER, los investigadores usaron la base de datos de SEER-Medicare para examinar los patrones de uso de sustancias específicas de quimioterapia durante el mismo período de tiempo. De los 165&nbsp;000 pacientes en la base de datos SEER-Medicare que recibieron quimioterapia inicial para un primer cáncer primario sólido durante el período de estudio, 2000 a 2013, hubo un aumento sustancial en el uso de sustancias de quimioterapia a base de platino, de 57&nbsp;% de pacientes en 2000 a 2001, a 81&nbsp;% de pacientes en 2012 a 2013. Los fármacos de quimioterapia a base de platino se sabe que aumentan el riesgo de tMDS/AML.</p>
+        <p>“El mensaje más importante de este estudio es que, mientras los avances en planteamientos de tratamiento de cáncer han mejorado el pronóstico para muchos tipos de cáncer, el número de pacientes con riesgo de presentar una leucemia rara relacionada con la terapia después de quimioterapia para cáncer en la era moderna de tratamientos se ha extendido en forma destacada”, dijo la doctora Morton. “Evaluaciones de los riesgos y beneficios del tratamiento deberán equilibrar estos riesgos y otros efectos adversos de la quimioterapia contra aumentos posibles en la supervivencia después de tratamiento para el cáncer sólido inicial”.</p>
+        <p>Los investigadores escribieron que su estudio muestra que los continuos esfuerzos para reducir al mínimo la exposición a las sustancias de quimioterapia que causan leucemia y para formular planteamientos quimioterapéuticos eficaces y menos tóxicos son críticos de ahora en adelante.</p>
+        <p><strong>Acerca del Instituto Nacional del Cáncer (NCI):</strong>&nbsp;El Instituto Nacional del Cáncer, NCI, dirige el Programa Nacional de Cáncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir drásticamente la frecuencia del cáncer y mejorar las vidas de los pacientes con cáncer y de sus familias, por medio de la investigación acerca de la prevención y la biología del cáncer, la creación de nuevas intervenciones y la capacitación y el acceso a mentores de nuevos investigadores. Para obtener más información sobre el cáncer, visite, por favor, el sitio web del NCI en <a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Información sobre el Cáncer) al 1-800-422-6237 (1-800-4-CANCER).</p>
+        <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigación médica del país, están compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE. UU. &nbsp;NIH es la principal dependencia federal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener más información sobre los NIH y sus programas, <br> visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
 
 
 # https://www.cancer.gov/news-events/press-releases/2018/cll-ibrutinib-trial, EN & ES
 - entity: "media"
   bundle: "cgov_image"
   name: "A photo of a female doctor drawing blood from a patient"
-  name__ES: "A photo of a female doctor drawing blood from a patient-ES"
+  name__ES:
+    value: "A photo of a female doctor drawing blood from a patient-ES"
   langcode: en
   status: 1
   moderation_state:
     value: 'published'
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-      - 'image'
-      - type: 'module'
-        filename: 'doctordrawingblood-article.__v20093246.jpg'
-    alt: 'A photo of a female doctor drawing blood from a patient ALT'
-    alt__ES: 'A photo of a female doctor drawing blood from a patient ALT - ES'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'doctordrawingblood-article.__v20093246.jpg'
+        alt: 'A photo of a female doctor drawing blood from a patient ALT'
+        alt__ES: 'A photo of a female doctor drawing blood from a patient ALT - ES'
   field_credit: "iStock"
-  field_credit__ES: "iStock - ES"
+  field_credit__ES:
+    value: "iStock - ES"
 
 - entity: "node"
   type: "cgov_press_release"
@@ -409,19 +404,19 @@
     value: "Ibrutinib más rituximab fue superior al tratamiento convencional para algunos pacientes con leucemia linfocítica crónica"
   status: 1
   field_site_section:
-  - '#process':
+    - '#process':
       callback: 'reference'
       args:
         - 'taxonomy_term'
         - vid: 'cgov_site_sections'
           name: 'Press Releases 2018'
   field_site_section__ES:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Comunicados de Prensa 2018'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2018'
   field_pretty_url:
     value: 'cll-ibrutinib-trial'
   field_pretty_url__ES:
@@ -460,48 +455,48 @@
   field_date_reviewed: "2018-12-13"
   field_date_updated: "2018-12-12"
   field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'A photo of a female doctor drawing blood from a patient'
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'A photo of a female doctor drawing blood from a patient'
   body:
-  - format: "full_html"
-    value: |
-      <p>An interim analysis of a large phase 3 clinical trial found that the combination of ibrutinib plus rituximab was superior to standard treatment for patients age 70 and younger with previously untreated chronic lymphocytic leukemia (CLL). The trial met its primary endpoint of an improvement in progression-free survival (the length of time patients live before their disease worsens). The combination also improved overall survival, the trial’s secondary endpoint. In general, patients in the ibrutinib–rituximab arm were less likely to experience serious side effects than those in the standard treatment arm. Until now, the standard treatment for previously untreated CLL has been a six-month course of FCR, which combines the chemotherapy drugs fludarabine and cyclophosphamide with rituximab.</p>
-      <p>The data and safety monitoring board overseeing the trial, known as E1912, recommended that these results be released immediately given their significance to public health. The findings were presented as a late-breaking abstract at the American Society of Hematology (ASH) annual meeting on December 4, 2018. The trial was sponsored by the National Cancer Institute (NCI), part of the National Institutes of Health, and designed by researchers with the ECOG-ACRIN Cancer Research Group.</p>
-      <p>"These results are practice-changing and immediately establish ibrutinib and rituximab as the new standard of care for the initial treatment of CLL in patients age 70 and younger," said lead investigator Tait Shanafelt, M.D., a professor of hematology at the Stanford University School of Medicine in Palo Alto, California. "The E1912 trial showed that the combination of ibrutinib and rituximab not only provided better leukemia control, it also prolonged life and had fewer side effects."</p>
-      <p>"These definitive results show why large trials like this, that test new therapies in an effort to achieve clinically meaningful benefit for patients, are so important," said Richard F. Little, M.D., of the Cancer Therapy Evaluation Program at NCI.</p>
-      <p>The study was conducted through NCI’s National Clinical Trials Network. Pharmacyclics LLC provided ibrutinib and clinical trial support funding under a cooperative research and development agreement with NCI and a separate agreement with ECOG-ACRIN.</p>
-      <p>CLL is one of the most common types of leukemia in adults. It typically occurs during or after middle age and rarely occurs in individuals under the age of 40. Ibrutinib and rituximab are targeted treatments. Ibrutinib interferes with the survival of lymphocytic leukemia cells, and rituximab enhances the ability of the body's immune system to destroy the cells. Ibrutinib is approved by the U.S. Food and Drug Administration for the treatment of some blood cancers, including CLL.</p>
-      <p>The trial enrolled 529 patients between January 2014 and June 2016. Those enrolled in the trial were adults age 70 and younger who had never received treatment for CLL and required treatment. Patients were randomly assigned to receive either the ibrutinib–rituximab combination or FCR.</p>
-      <p>The first planned interim analysis for progression-free survival was performed in September 2018. With a median follow-up of 33.4 months, the hazard ratio for progression-free survival favored the ibrutinib group over the FCR group (HR=0.352). This means that, at any given time, the risk of disease progression was reduced by about two-thirds (65 percent) for patients in the ibrutinib group compared with the FCR group. This observed improvement in progression-free survival exceeded the trial design target. Overall survival was also superior for patients in the ibrutinib arm.</p>
-      <p>According to the data and safety monitoring board's recommendation, the outcome has been disclosed to all patients participating in the study and their physicians. Patients who are receiving ibrutinib in the trial can continue therapy, as long as it remains effective. All patients assigned to FCR have completed treatment and are continuing to be monitored per standard of care. Quality of life was rigorously measured in both arms, and the data are awaiting analysis.</p>
-      <p>Findings from another NCI-supported trial on ibrutinib in patients with CLL were also presented at the ASH meeting and published in <em>The New England Journal of Medicine</em>. The A041202 trial—an international phase 3 clinical trial coordinated by the Alliance for Clinical Trials in Oncology—demonstrated that ibrutinib produces superior progression-free survival compared with standard chemoimmunotherapy (bendamustine plus rituximab) in previously untreated patients with CLL who are age 65 and older. The study found that adding rituximab to ibrutinib did not improve progression-free survival beyond ibrutinib alone.</p>
-      <p>"These two NCI-funded trials have collectively established ibrutinib-based therapy as the first line treatment for CLL patients of any age," Dr. Little said.</p>
-      <p><strong>About the ECOG-ACRIN Cancer Research Group (ECOG-ACRIN):</strong> ECOG-ACRIN is a membership-based scientific organization that designs and conducts cancer research involving adults who have or are at risk of developing cancer. Research personnel in nearly 1,200 member institutions are involved in Group science, which is organized into three programs: Cancer Control and Outcomes, Therapeutic Studies, and Biomarker Sciences. The Group's primary funding is from the National Cancer Institute (NCI). Visit <a href="http://www.ecog-acrin.org/">www.ecog-acrin.org</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>, follow on Twitter @eaonc, or call 215-789-3631.</p>
-      <p><strong>About the National Cancer Institute (NCI):</strong> NCI leads the National Cancer Program and NIH's efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at <a href="/" title="">cancer.gov</a> or call NCI's Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
-      <p><strong>About the National Institutes of Health (NIH):</strong> NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit <a href="https://www.nih.gov/">nih.gov</a>.</p>
+    - format: "full_html"
+      value: |
+        <p>An interim analysis of a large phase 3 clinical trial found that the combination of ibrutinib plus rituximab was superior to standard treatment for patients age 70 and younger with previously untreated chronic lymphocytic leukemia (CLL). The trial met its primary endpoint of an improvement in progression-free survival (the length of time patients live before their disease worsens). The combination also improved overall survival, the trial’s secondary endpoint. In general, patients in the ibrutinib–rituximab arm were less likely to experience serious side effects than those in the standard treatment arm. Until now, the standard treatment for previously untreated CLL has been a six-month course of FCR, which combines the chemotherapy drugs fludarabine and cyclophosphamide with rituximab.</p>
+        <p>The data and safety monitoring board overseeing the trial, known as E1912, recommended that these results be released immediately given their significance to public health. The findings were presented as a late-breaking abstract at the American Society of Hematology (ASH) annual meeting on December 4, 2018. The trial was sponsored by the National Cancer Institute (NCI), part of the National Institutes of Health, and designed by researchers with the ECOG-ACRIN Cancer Research Group.</p>
+        <p>"These results are practice-changing and immediately establish ibrutinib and rituximab as the new standard of care for the initial treatment of CLL in patients age 70 and younger," said lead investigator Tait Shanafelt, M.D., a professor of hematology at the Stanford University School of Medicine in Palo Alto, California. "The E1912 trial showed that the combination of ibrutinib and rituximab not only provided better leukemia control, it also prolonged life and had fewer side effects."</p>
+        <p>"These definitive results show why large trials like this, that test new therapies in an effort to achieve clinically meaningful benefit for patients, are so important," said Richard F. Little, M.D., of the Cancer Therapy Evaluation Program at NCI.</p>
+        <p>The study was conducted through NCI’s National Clinical Trials Network. Pharmacyclics LLC provided ibrutinib and clinical trial support funding under a cooperative research and development agreement with NCI and a separate agreement with ECOG-ACRIN.</p>
+        <p>CLL is one of the most common types of leukemia in adults. It typically occurs during or after middle age and rarely occurs in individuals under the age of 40. Ibrutinib and rituximab are targeted treatments. Ibrutinib interferes with the survival of lymphocytic leukemia cells, and rituximab enhances the ability of the body's immune system to destroy the cells. Ibrutinib is approved by the U.S. Food and Drug Administration for the treatment of some blood cancers, including CLL.</p>
+        <p>The trial enrolled 529 patients between January 2014 and June 2016. Those enrolled in the trial were adults age 70 and younger who had never received treatment for CLL and required treatment. Patients were randomly assigned to receive either the ibrutinib–rituximab combination or FCR.</p>
+        <p>The first planned interim analysis for progression-free survival was performed in September 2018. With a median follow-up of 33.4 months, the hazard ratio for progression-free survival favored the ibrutinib group over the FCR group (HR=0.352). This means that, at any given time, the risk of disease progression was reduced by about two-thirds (65 percent) for patients in the ibrutinib group compared with the FCR group. This observed improvement in progression-free survival exceeded the trial design target. Overall survival was also superior for patients in the ibrutinib arm.</p>
+        <p>According to the data and safety monitoring board's recommendation, the outcome has been disclosed to all patients participating in the study and their physicians. Patients who are receiving ibrutinib in the trial can continue therapy, as long as it remains effective. All patients assigned to FCR have completed treatment and are continuing to be monitored per standard of care. Quality of life was rigorously measured in both arms, and the data are awaiting analysis.</p>
+        <p>Findings from another NCI-supported trial on ibrutinib in patients with CLL were also presented at the ASH meeting and published in <em>The New England Journal of Medicine</em>. The A041202 trial—an international phase 3 clinical trial coordinated by the Alliance for Clinical Trials in Oncology—demonstrated that ibrutinib produces superior progression-free survival compared with standard chemoimmunotherapy (bendamustine plus rituximab) in previously untreated patients with CLL who are age 65 and older. The study found that adding rituximab to ibrutinib did not improve progression-free survival beyond ibrutinib alone.</p>
+        <p>"These two NCI-funded trials have collectively established ibrutinib-based therapy as the first line treatment for CLL patients of any age," Dr. Little said.</p>
+        <p><strong>About the ECOG-ACRIN Cancer Research Group (ECOG-ACRIN):</strong> ECOG-ACRIN is a membership-based scientific organization that designs and conducts cancer research involving adults who have or are at risk of developing cancer. Research personnel in nearly 1,200 member institutions are involved in Group science, which is organized into three programs: Cancer Control and Outcomes, Therapeutic Studies, and Biomarker Sciences. The Group's primary funding is from the National Cancer Institute (NCI). Visit <a href="http://www.ecog-acrin.org/">www.ecog-acrin.org</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>, follow on Twitter @eaonc, or call 215-789-3631.</p>
+        <p><strong>About the National Cancer Institute (NCI):</strong> NCI leads the National Cancer Program and NIH's efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at <a href="/" title="">cancer.gov</a> or call NCI's Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
+        <p><strong>About the National Institutes of Health (NIH):</strong> NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit <a href="https://www.nih.gov/">nih.gov</a>.</p>
 
   body__ES:
-  - format: "full_html"
-    value: |
-      <p>Un análisis provisional de un estudio clínico grande en fase 3 encontró que la combinación de ibrutinib más rituximab fue superior al tratamiento convencional para pacientes de 70 años y más jóvenes con leucemia linfocítica crónica (LLC) sin tratamiento previo. El estudio satisfizo su objetivo principal de una mejoría de la supervivencia sin avance (el tiempo&nbsp; que viven los pacientes antes de que empeore su enfermedad).&nbsp;La combinación mejoró también la supervivencia en general, el segundo objetivo del estudio. En general, los pacientes del grupo de ibrutinib y rituximab tuvieron menos probabilidad de experimentar efectos secundarios graves que los del grupo de tratamiento convencional. Hasta ahora, el tratamiento convencional para LLC sin tratamiento previo ha sido un curso de seis meses de FCR, el cual combina los fármacos de quimioterapia fludarabina y ciclofosfamida con rituximab.</p>
-      <p>Los datos y el consejo de vigilancia que supervisó el estudio, conocido como E 1912, recomendaron que se difundieran estos resultados de inmediato dada su importancia para la salud pública. Los resultados fueron presentados como un resumen de última hora en la reunión anual de la Sociedad Estadounidense de Hematología (ASH) el 4 de diciembre de 2018. El estudio fue patrocinado por el Instituto Nacional del Cáncer (NCI), componente de los Institutos Nacionales de la Salud, y diseñado por investigadores del Grupo de Investigación Oncológica ECOG-ACRIN.</p>
-      <p>“Estos resultados están cambiando la practica y han establecido a ibrutinib y rituximab como la nueva norma de tratamiento inicial de la leucemia linfocítica crónica en pacientes de 70 años y más jóvenes”, dijo el investigador principal doctor Tait Shanafelt, profesor de hematología en la Facultad de Medicina de la Universidad de Stanford en Palo Alto, California. “El estudio E1912 mostró que la combinación de ibrutinib y rituximab no solo proveyeron un mejor control de la leucemia, sino también prolongaron la vida y tuvieron menos efectos secundarios”.</p>
-      <p>“Estos resultados definitivos muestran por qué grandes estudios como este, que evalúan nuevas terapias con el fin de lograr beneficios de mucha importancia clínica para los pacientes, son tan significativos”, dijo el doctor Richard F. Little, del Programa de Evaluación de Terapias Oncológicas en el NCI.</p>
-      <p>El estudio fue dirigido por la Red Nacional de Estudios Clínicos.&nbsp; La compañía Pharmacyclics LLC proveyó ibrutinib y el apoyo financiero para el estudio clínico de acuerdo a un convenio cooperativo de investigación y desarrollo con NCI y un convenio separado con ECOG-ACRIN.</p>
-      <p>La LLC es uno de los tipos de leucemia más comunes en adultos. De ordinario ocurre durante o después de la madurez de edad y raramente sucede en individuos menores de 40 años de edad.&nbsp; El ibrutinib y rituximab son tratamientos dirigidos. Ibrutinib interfiere con la supervivencia de las células linfocíticas de leucemia, y el rituximab aumenta la capacidad del sistema inmunitario del cuerpo para destruir las células. Ibrutinib está aprobado por la Administración de Alimentos y Medicamentos de los Estados Unidos para el tratamiento de algunos cánceres de la sangre, incluyendo la LLC.</p>
-      <p>El estudio inscribió a 529 pacientes entre enero de 2014 y junio de 2016. Quienes se inscribieron en el estudio eran adultos de 70 años de edad y más jóvenes que nunca habían recibido tratamiento para LLC y requerían tratamiento. Los pacientes fueron asignados al azar para recibir ya sea la combinación de ibrutinib y rituximab o la combinación de FCR.</p>
-      <p>El primer análisis provisional planeado para supervivencia sin avance de la enfermedad se efectuó en septiembre de 2018. Con una mediana de seguimiento de 33,4 meses, el cociente de riesgos instantáneos (HR) para la supervivencia sin avance favoreció al grupo de ibrutinib sobre el grupo de FCR (HR=0,352).&nbsp; Esto significa que, a cualquier momento, se redujo el riesgo de avance del cáncer cerca de dos tercios (65&nbsp;%) para los pacientes en el grupo de ibrutinib en comparación con el grupo de FCR.&nbsp; Esta mejoría que se observó en la supervivencia sin avance excedió la meta del diseño del estudio. En general, la supervivencia fue superior también para pacientes del grupo de ibrutinib.</p>
-      <p>De acuerdo con los datos y la recomendación del consejo de vigilancia de la seguridad, el resultado ha sido dado a conocer a todos los pacientes participantes en el estudio y a sus médicos. Los pacientes que están recibiendo ibrutinib en el estudio pueden continuar la terapia, mientras siga siendo eficaz. Todos los pacientes asignados a FCR han completado el tratamiento y han seguido siendo observados de acuerdo a las normas de atención.&nbsp; La calidad de vida fue medida rigurosamente en ambos grupos, y los datos están en espera de ser analizados.</p>
-      <p>Los resultados de otro estudio apoyado por el NCI de ibrutinib en pacientes con LLC se presentaron también en la reunión de la ASH y se publicaron en la revista <em>The New England Journal of Medicine</em>. El estudio A041202—un estudio clínico internacional en fase 3 coordinado por la Alianza para Estudios Clínicos en Oncología—demostró que ibrutinib produce superior supervivencia sin avance en comparación con quimioinmunoterapia convencional (bendamustina más rituximab) en pacientes de 65 años o más con LLC que no han tenido tratamiento previo.&nbsp;&nbsp; El estudio encontró que la adición de rituximab a ibrutinib no mejoró la supervivencia sin avance más que ibrutinib solo.</p>
-      <p>“Estos dos estudios financiados por el NCI han establecido colectivamente a la terapia a base de ibrutinib como primer línea de tratamiento para pacientes con LLC de cualquier edad,” dijo el doctor Little.</p>
-      <p><strong>Acerca del Grupo de Investigación Oncológica (ECOG-ACRIN): </strong>El Grupo de Investigación Oncológica (ECOG-ACRIN) es una organización científica de membresía que diseña y lleva a cabo investigaciones oncológicas en adultos con cáncer o que tienen riesgo de padecer cáncer. Personal de investigación en cerca de 1200 instituciones miembros participan en ciencia del Grupo, la cual está organizada en tres programas: Control y resultados de cáncer, Estudios terapéuticos y Ciencias de marcadores biológicos. El financiamiento principal del grupo proviene del Instituto Nacional del Cáncer (NCI). Visite <a href="https://ecog-acrin.org/">www.ecog-acrin.org</a><a class="icon-exit-notification" title="Notificación de salida" href="/espanol/politicas/enlaces"><span class="hidden">Notificación de salida</span></a>, sígalo en Twitter @eaonc, o llame al 215-789-3631.</p>
-      <p><strong>Acerca del Instituto Nacional del Cáncer (NCI):</strong>&nbsp;El Instituto Nacional del Cáncer, NCI, dirige el Programa Nacional de Cáncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir drásticamente la frecuencia del cáncer y mejorar las vidas de los pacientes con cáncer y de sus familias, por medio de la investigación acerca de la prevención y la biología del cáncer, la creación de nuevas intervenciones y la capacitación y el acceso a mentores de nuevos investigadores. Para obtener más información sobre el cáncer, visite, por favor, el sitio web del NCI en&nbsp;<a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Información sobre el Cáncer) al 1-800-422-6237 (1-800-4-CANCER)</p>
-      <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigación médica del país, están compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE.&nbsp;UU.&nbsp; NIH es la principal dependencia federal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener más información sobre los NIH y sus programas, visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
+    - format: "full_html"
+      value: |
+        <p>Un análisis provisional de un estudio clínico grande en fase 3 encontró que la combinación de ibrutinib más rituximab fue superior al tratamiento convencional para pacientes de 70 años y más jóvenes con leucemia linfocítica crónica (LLC) sin tratamiento previo. El estudio satisfizo su objetivo principal de una mejoría de la supervivencia sin avance (el tiempo&nbsp; que viven los pacientes antes de que empeore su enfermedad).&nbsp;La combinación mejoró también la supervivencia en general, el segundo objetivo del estudio. En general, los pacientes del grupo de ibrutinib y rituximab tuvieron menos probabilidad de experimentar efectos secundarios graves que los del grupo de tratamiento convencional. Hasta ahora, el tratamiento convencional para LLC sin tratamiento previo ha sido un curso de seis meses de FCR, el cual combina los fármacos de quimioterapia fludarabina y ciclofosfamida con rituximab.</p>
+        <p>Los datos y el consejo de vigilancia que supervisó el estudio, conocido como E 1912, recomendaron que se difundieran estos resultados de inmediato dada su importancia para la salud pública. Los resultados fueron presentados como un resumen de última hora en la reunión anual de la Sociedad Estadounidense de Hematología (ASH) el 4 de diciembre de 2018. El estudio fue patrocinado por el Instituto Nacional del Cáncer (NCI), componente de los Institutos Nacionales de la Salud, y diseñado por investigadores del Grupo de Investigación Oncológica ECOG-ACRIN.</p>
+        <p>“Estos resultados están cambiando la practica y han establecido a ibrutinib y rituximab como la nueva norma de tratamiento inicial de la leucemia linfocítica crónica en pacientes de 70 años y más jóvenes”, dijo el investigador principal doctor Tait Shanafelt, profesor de hematología en la Facultad de Medicina de la Universidad de Stanford en Palo Alto, California. “El estudio E1912 mostró que la combinación de ibrutinib y rituximab no solo proveyeron un mejor control de la leucemia, sino también prolongaron la vida y tuvieron menos efectos secundarios”.</p>
+        <p>“Estos resultados definitivos muestran por qué grandes estudios como este, que evalúan nuevas terapias con el fin de lograr beneficios de mucha importancia clínica para los pacientes, son tan significativos”, dijo el doctor Richard F. Little, del Programa de Evaluación de Terapias Oncológicas en el NCI.</p>
+        <p>El estudio fue dirigido por la Red Nacional de Estudios Clínicos.&nbsp; La compañía Pharmacyclics LLC proveyó ibrutinib y el apoyo financiero para el estudio clínico de acuerdo a un convenio cooperativo de investigación y desarrollo con NCI y un convenio separado con ECOG-ACRIN.</p>
+        <p>La LLC es uno de los tipos de leucemia más comunes en adultos. De ordinario ocurre durante o después de la madurez de edad y raramente sucede en individuos menores de 40 años de edad.&nbsp; El ibrutinib y rituximab son tratamientos dirigidos. Ibrutinib interfiere con la supervivencia de las células linfocíticas de leucemia, y el rituximab aumenta la capacidad del sistema inmunitario del cuerpo para destruir las células. Ibrutinib está aprobado por la Administración de Alimentos y Medicamentos de los Estados Unidos para el tratamiento de algunos cánceres de la sangre, incluyendo la LLC.</p>
+        <p>El estudio inscribió a 529 pacientes entre enero de 2014 y junio de 2016. Quienes se inscribieron en el estudio eran adultos de 70 años de edad y más jóvenes que nunca habían recibido tratamiento para LLC y requerían tratamiento. Los pacientes fueron asignados al azar para recibir ya sea la combinación de ibrutinib y rituximab o la combinación de FCR.</p>
+        <p>El primer análisis provisional planeado para supervivencia sin avance de la enfermedad se efectuó en septiembre de 2018. Con una mediana de seguimiento de 33,4 meses, el cociente de riesgos instantáneos (HR) para la supervivencia sin avance favoreció al grupo de ibrutinib sobre el grupo de FCR (HR=0,352).&nbsp; Esto significa que, a cualquier momento, se redujo el riesgo de avance del cáncer cerca de dos tercios (65&nbsp;%) para los pacientes en el grupo de ibrutinib en comparación con el grupo de FCR.&nbsp; Esta mejoría que se observó en la supervivencia sin avance excedió la meta del diseño del estudio. En general, la supervivencia fue superior también para pacientes del grupo de ibrutinib.</p>
+        <p>De acuerdo con los datos y la recomendación del consejo de vigilancia de la seguridad, el resultado ha sido dado a conocer a todos los pacientes participantes en el estudio y a sus médicos. Los pacientes que están recibiendo ibrutinib en el estudio pueden continuar la terapia, mientras siga siendo eficaz. Todos los pacientes asignados a FCR han completado el tratamiento y han seguido siendo observados de acuerdo a las normas de atención.&nbsp; La calidad de vida fue medida rigurosamente en ambos grupos, y los datos están en espera de ser analizados.</p>
+        <p>Los resultados de otro estudio apoyado por el NCI de ibrutinib en pacientes con LLC se presentaron también en la reunión de la ASH y se publicaron en la revista <em>The New England Journal of Medicine</em>. El estudio A041202—un estudio clínico internacional en fase 3 coordinado por la Alianza para Estudios Clínicos en Oncología—demostró que ibrutinib produce superior supervivencia sin avance en comparación con quimioinmunoterapia convencional (bendamustina más rituximab) en pacientes de 65 años o más con LLC que no han tenido tratamiento previo.&nbsp;&nbsp; El estudio encontró que la adición de rituximab a ibrutinib no mejoró la supervivencia sin avance más que ibrutinib solo.</p>
+        <p>“Estos dos estudios financiados por el NCI han establecido colectivamente a la terapia a base de ibrutinib como primer línea de tratamiento para pacientes con LLC de cualquier edad,” dijo el doctor Little.</p>
+        <p><strong>Acerca del Grupo de Investigación Oncológica (ECOG-ACRIN): </strong>El Grupo de Investigación Oncológica (ECOG-ACRIN) es una organización científica de membresía que diseña y lleva a cabo investigaciones oncológicas en adultos con cáncer o que tienen riesgo de padecer cáncer. Personal de investigación en cerca de 1200 instituciones miembros participan en ciencia del Grupo, la cual está organizada en tres programas: Control y resultados de cáncer, Estudios terapéuticos y Ciencias de marcadores biológicos. El financiamiento principal del grupo proviene del Instituto Nacional del Cáncer (NCI). Visite <a href="https://ecog-acrin.org/">www.ecog-acrin.org</a><a class="icon-exit-notification" title="Notificación de salida" href="/espanol/politicas/enlaces"><span class="hidden">Notificación de salida</span></a>, sígalo en Twitter @eaonc, o llame al 215-789-3631.</p>
+        <p><strong>Acerca del Instituto Nacional del Cáncer (NCI):</strong>&nbsp;El Instituto Nacional del Cáncer, NCI, dirige el Programa Nacional de Cáncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir drásticamente la frecuencia del cáncer y mejorar las vidas de los pacientes con cáncer y de sus familias, por medio de la investigación acerca de la prevención y la biología del cáncer, la creación de nuevas intervenciones y la capacitación y el acceso a mentores de nuevos investigadores. Para obtener más información sobre el cáncer, visite, por favor, el sitio web del NCI en&nbsp;<a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Información sobre el Cáncer) al 1-800-422-6237 (1-800-4-CANCER)</p>
+        <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigación médica del país, están compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE.&nbsp;UU.&nbsp; NIH es la principal dependencia federal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener más información sobre los NIH y sus programas, visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
 
 # https://www.cancer.gov/news-events/press-releases/2017/sharpless-nci-director, EN only
 - entity: "media"
@@ -512,13 +507,13 @@
   moderation_state:
     value: 'published'
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-      - 'image'
-      - type: 'module'
-        filename: 'ned-sharpless-article.__v150033319.jpg'
-    alt: 'tMDS-AML graphic ALT'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ned-sharpless-article.__v150033319.jpg'
+        alt: 'tMDS-AML graphic ALT'
   field_credit: "iStock"
 
 - entity: "node"
@@ -527,7 +522,7 @@
   title: "Norman Sharpless sworn in as director of the National Cancer Institute"
   status: 1
   field_site_section:
-  - '#process':
+    - '#process':
       callback: 'reference'
       args:
         - 'taxonomy_term'
@@ -555,76 +550,59 @@
   field_date_reviewed: "2018-12-19"
   field_date_updated: "2018-12-18"
   field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'Ned Sharpless headshot photo'
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ned Sharpless headshot photo'
   body:
-  - format: "full_html"
-    value: |
-      <p>Norman E. “Ned” Sharpless, M.D., took the oath of office late Tuesday, October 17, 2017, to become the 15th director of the National Cancer Institute (NCI), part of the National Institutes of Health. He succeeds Harold E. Varmus, M.D., who stepped down as director in March 2015. Douglas R. Lowy, M.D., has been NCI’s acting director since April 2015.</p>
-      <p>“It is an honor to welcome Dr. Sharpless to the Department of Health and Human Services and the National Institutes of Health,” said Acting Health and Human Services Secretary Eric D. Hargan. “We are grateful to Dr. Lowy for his service as acting director, and we look forward to Dr. Sharpless playing an integral role in this administration’s aggressive efforts to advance cancer research and cures for cancer patients.”</p>
-      <p>“Dr. Sharpless is an outstanding scientist, clinician, and administrator, and we are very fortunate to have him join the NIH leadership team,” said NIH Director Francis S. Collins M.D., Ph.D. “I look forward to his insight, influence, and partnership at NCI, as cancer research is experiencing an unprecedented era of rapid progress.”</p>
-      <p>Dr. Sharpless comes to NCI from the University of North Carolina School of Medicine, Chapel Hill, where he served as director of the NCI-Designated Lineberger Comprehensive Cancer Center and as the Wellcome Distinguished Professor in Cancer Research. As a practicing oncologist at the N.C. Cancer Hospital, the clinical arm of Lineberger, he specialized in the care of patients with hematologic cancers. He is the author of more than 150 original scientific papers, reviews, and book chapters, and is an inventor on 10 patents. His research has focused on the molecular biology of cancer and aging.</p>
-      <p>“I am honored and humbled to assume this role at NCI, the world’s premier cancer research institution,” Dr. Sharpless said. “This is an exciting moment for cancer research, as new discoveries and technological improvements are accelerating our progress against cancer, an ancient and unrelenting foe.”</p>
-      <p>After earning his undergraduate and medical degrees from the University of North Carolina at Chapel Hill, Dr. Sharpless completed his internal medicine residency at the Massachusetts General Hospital and a hematology/oncology fellowship at Dana-Farber/Partners Cancer Care, both of Harvard Medical School in Boston. He is a member of the American Society for Clinical Investigation and the Association of American Physicians. He cofounded two clinical-stage biotechnology companies: G1 Therapeutics and HealthSpan Diagnostics.</p>
-      <p>Dr. Lowy will resume his role as a deputy director at NCI, and will continue his work as chief of the Laboratory of Cellular Oncology in NCI’s Center for Cancer Research.</p>
-      <p><strong>About the National Cancer Institute (NCI):</strong> NCI leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at <a href="/" title="">cancer.gov</a> or NCI’s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
-      <p><strong>About the National Institutes of Health (NIH):</strong> NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit <a href="https://www.nih.gov/">nih.gov</a>.</p>
+    - format: "full_html"
+      value: |
+        <p>Norman E. “Ned” Sharpless, M.D., took the oath of office late Tuesday, October 17, 2017, to become the 15th director of the National Cancer Institute (NCI), part of the National Institutes of Health. He succeeds Harold E. Varmus, M.D., who stepped down as director in March 2015. Douglas R. Lowy, M.D., has been NCI’s acting director since April 2015.</p>
+        <p>“It is an honor to welcome Dr. Sharpless to the Department of Health and Human Services and the National Institutes of Health,” said Acting Health and Human Services Secretary Eric D. Hargan. “We are grateful to Dr. Lowy for his service as acting director, and we look forward to Dr. Sharpless playing an integral role in this administration’s aggressive efforts to advance cancer research and cures for cancer patients.”</p>
+        <p>“Dr. Sharpless is an outstanding scientist, clinician, and administrator, and we are very fortunate to have him join the NIH leadership team,” said NIH Director Francis S. Collins M.D., Ph.D. “I look forward to his insight, influence, and partnership at NCI, as cancer research is experiencing an unprecedented era of rapid progress.”</p>
+        <p>Dr. Sharpless comes to NCI from the University of North Carolina School of Medicine, Chapel Hill, where he served as director of the NCI-Designated Lineberger Comprehensive Cancer Center and as the Wellcome Distinguished Professor in Cancer Research. As a practicing oncologist at the N.C. Cancer Hospital, the clinical arm of Lineberger, he specialized in the care of patients with hematologic cancers. He is the author of more than 150 original scientific papers, reviews, and book chapters, and is an inventor on 10 patents. His research has focused on the molecular biology of cancer and aging.</p>
+        <p>“I am honored and humbled to assume this role at NCI, the world’s premier cancer research institution,” Dr. Sharpless said. “This is an exciting moment for cancer research, as new discoveries and technological improvements are accelerating our progress against cancer, an ancient and unrelenting foe.”</p>
+        <p>After earning his undergraduate and medical degrees from the University of North Carolina at Chapel Hill, Dr. Sharpless completed his internal medicine residency at the Massachusetts General Hospital and a hematology/oncology fellowship at Dana-Farber/Partners Cancer Care, both of Harvard Medical School in Boston. He is a member of the American Society for Clinical Investigation and the Association of American Physicians. He cofounded two clinical-stage biotechnology companies: G1 Therapeutics and HealthSpan Diagnostics.</p>
+        <p>Dr. Lowy will resume his role as a deputy director at NCI, and will continue his work as chief of the Laboratory of Cellular Oncology in NCI’s Center for Cancer Research.</p>
+        <p><strong>About the National Cancer Institute (NCI):</strong> NCI leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at <a href="/" title="">cancer.gov</a> or NCI’s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
+        <p><strong>About the National Institutes of Health (NIH):</strong> NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit <a href="https://www.nih.gov/">nih.gov</a>.</p>
 
 # https://www.cancer.gov/news-events/press-releases/2017/annual-report-to-nation-1975-2014, EN & ES, Different Images
 # Using different language images due to EN/ES text within the image
 - entity: "media"
   bundle: "cgov_image"
   name: "Cancer Death Rates Declined graphic"
-  name__ES: "Cancer Death Rates Declined graphic-ES"
+  name__ES:
+    value: "Cancer Death Rates Declined graphic-ES"
   langcode: en
   status: 1
-  field_site_section:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Press Releases 2017'
-  field_site_section__ES:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Comunicados de Prensa 2017'
-  field_pretty_url:
-    value: 'deep-learning-cervical-cancer-screening'
-  field_pretty_url__ES:
-    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
   moderation_state:
     value: 'published'
-  field_original_source:
   field_media_image:
-  - '#process':
-      callback: 'file'
-      args:
-      - 'image'
-      - type: 'module'
-        filename: 'cancer-death-rates-declined.__v400101332.png'
-    alt: 'Cancer death rate chart ALT'
-    alt__ES: 'Cancer death rate chart ALT - ES'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'cancer-death-rates-declined.__v400101332.png'
+        alt: 'Cancer death rate chart ALT'
+        alt__ES: 'Cancer death rate chart ALT - ES'
   # @todo: not working - alternate graphic for spanish language (eg: Medical Illustration method)
   field_media_image__ES:
-  - '#process':
-      callback: 'file'
-      args:
-      - 'image'
-      - type: 'module'
-        filename: 'cancer-death-rates-declined-esp.__v400125360.png'
-    alt: 'Cancer Death Rates Declined ALT'
-    alt__ES: 'Cancer Death Rates Declined ALT - ES'
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'cancer-death-rates-declined-esp.__v400125360.png'
+        alt: 'Cancer Death Rates Declined ALT'
+        alt__ES: 'Cancer Death Rates Declined ALT - ES'
   field_credit: "iStock"
-  field_credit__ES: "iStock - ES"
+  field_credit__ES:
+    value: "iStock - ES"
 
 # Sample press release node
 - entity: "node"
@@ -635,19 +613,19 @@
     value: "Informe Anual a la Nación: siguen descendiendo los índices de mortalidad por cáncer"
   status: 1
   field_site_section:
-  - '#process':
-      callback: 'reference'
-      args:
-      - 'taxonomy_term'
-      - vid: 'cgov_site_sections'
-        name: 'Press Releases 2019'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2019'
   field_site_section__ES:
-  - '#process':
-      callback: 'reference'
-      args:
-      - 'taxonomy_term'
-      - vid: 'cgov_site_sections'
-        name: 'Comunicados de Prensa 2019'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2019'
   field_pretty_url:
     value: 'deep-learning-cervical-cancer-screening'
   field_pretty_url__ES:
@@ -682,49 +660,49 @@
   field_date_reviewed: "2017-03-31"
   field_date_updated: "2017-03-31"
   field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'Cancer Death Rates Declined graphic'
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cancer Death Rates Declined graphic'
   field_image_article__ES:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'Cancer Death Rates Declined graphic-ES'
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cancer Death Rates Declined graphic-ES'
   body:
-  - format: "full_html"
-    value: |
-      <p>Overall cancer death rates continue to decrease in men, women, and children for all major racial and ethnic groups, according to the latest Annual Report to the Nation on the Status of Cancer, 1975-2014. The report finds that death rates during the period 2010-2014 decreased for 11 of the 16 most common types of cancer in men and for 13 of the 18 most common types of cancer in women, including lung, colorectal, female breast, and prostate cancers. Meanwhile, death rates increased for cancers of the liver, pancreas, and brain in men and for liver and uterine cancer in women. The report finds overall cancer incidence rates, or rates of new cancers, decreased in men but stabilized in women during the period 1999-2013.</p>
-      <p>The Report to the Nation is released each year in a collaborative effort by the American Cancer Society; the Centers for Disease Control and Prevention (CDC) and the National Cancer Institute (NCI), both parts of the Department of Health and Human Services; and the North American Association of Central Cancer Registries (NAACCR).</p>
-      <p>The report appears early online in the <em>Journal of the National Cancer Institute</em> (<em>JNCI</em>) and includes a special section, which this year focuses on survival expressed as percentage. It finds that several but not all cancer types showed a significant improvement over time for both early- and late-stage disease, and varied significantly by race/ethnicity and state.</p>
-      <p>“While trends in death rates are the most commonly used measure to assess progress against cancer, survival trends are also an important measure to evaluate progress in improvement of cancer outcomes,” said Ahmedin Jemal, D.V.M., Ph.D., of the American Cancer Society and lead author of the study. “We last included a special section on cancer survival in 2004, and as we found then, survival improved over time for almost all cancers at every stage of diagnosis. But survival remains very low for some types of cancer and for most types of cancers diagnosed at an advanced stage.”</p>
-      <p>Compared to cases diagnosed in 1975-1977, five-year survival for cancers diagnosed in 2006-2012 increased significantly for all but two types of cancer: cervix and uterus. The greatest absolute increases in survival (25 percent or greater) were seen in prostate and kidney cancers as well as non-Hodgkin lymphoma, myeloma, and leukemia.</p>
-      <p>Cancers with the lowest five-year relative survival for cases diagnosed in 2006-2012 were pancreas (8.5 percent), liver (18.1 percent), lung (18.7 percent), esophagus (20.5 percent), stomach (31.1 percent) and brain (35 percent); those with the highest were prostate (99.3 percent), thyroid (98.3 percent), melanoma (93.2 percent) and female breast (90.8 percent).</p>
-      <p>“While this report found that five-year survival for most types of cancer improved among both blacks and whites over the past several decades, racial disparities for many common cancers have persisted, and they may have increased for prostate cancer and female breast cancer,” said Lynne T. Penberthy, M.D., M.P.H., associate director of NCI’s Surveillance Research Program. “We still have a lot of work to do to understand the causes of these differences, but certainly differences in the kinds and timing of recommended treatments are likely to play a role.”</p>
-      <p>“This report found that tobacco-related cancers have low survival rates, which underscores the importance of continuing to do what we know works to significantly reduce tobacco use,” said Lisa C. Richardson, M.D., M.P.H., director of CDC’s Division of Cancer Prevention and Control. “In addition, every state in the nation has an adult obesity prevalence of 20 percent or more. With obesity as a risk factor for cancer, we need to continue to support communities and families in prevention approaches that can help reverse the nation’s obesity epidemic. We need to come together to create interventions aimed at increasing the uptake of recommended, effective cancer screening tests, and access to timely cancer care.”</p>
-      <p>The authors also stated that more attention and resources are needed to identify major risk factors for common cancers, such as colorectal, breast, and prostate, as are concerted efforts to understand the increasing incidence trends in uterine, female breast, and pancreatic cancer.</p>
-      <p>“The continued drops in overall cancer death rates in the United States are welcome news, reflecting improvements in prevention, early detection, and treatment,” said Betsy A. Kohler, M.P.H., C.T.R., executive director of NAACCR. “But this report also shows us that progress has been limited for several cancers, which should compel us to renew our commitment to efforts to discover new strategies for prevention, early detection, and treatment, and to apply proven interventions broadly and equitably.”</p>
-      <p>Article: Annual Report to the Nation on the Status of Cancer, 1975–2014, Featuring Survival JNCI J Natl Cancer Inst (2017) 109(9): djx030 doi: 10.1093/jnci/djx030</p>
-      <p>To view the full report, see: <a href="https://academic.oup.com/jnci/article-lookup/doi/10.1093/jnci/djx030">https://academic.oup.com/jnci/article-lookup/doi/10.1093/jnci/djx030</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a></p>
-      <p>For a Q&amp;A on this report, go to: <a href="https://www.cdc.gov/cancer/dcpc/research/articles/arn_7514.htm">https://www.cdc.gov/cancer/dcpc/research/articles/arn_7514.htm</a></p>
-      <p>For more about the report, see: <a href="https://seer.cancer.gov/report_to_nation">https://seer.cancer.gov/report_to_nation</a></p>
+    - format: "full_html"
+      value: |
+        <p>Overall cancer death rates continue to decrease in men, women, and children for all major racial and ethnic groups, according to the latest Annual Report to the Nation on the Status of Cancer, 1975-2014. The report finds that death rates during the period 2010-2014 decreased for 11 of the 16 most common types of cancer in men and for 13 of the 18 most common types of cancer in women, including lung, colorectal, female breast, and prostate cancers. Meanwhile, death rates increased for cancers of the liver, pancreas, and brain in men and for liver and uterine cancer in women. The report finds overall cancer incidence rates, or rates of new cancers, decreased in men but stabilized in women during the period 1999-2013.</p>
+        <p>The Report to the Nation is released each year in a collaborative effort by the American Cancer Society; the Centers for Disease Control and Prevention (CDC) and the National Cancer Institute (NCI), both parts of the Department of Health and Human Services; and the North American Association of Central Cancer Registries (NAACCR).</p>
+        <p>The report appears early online in the <em>Journal of the National Cancer Institute</em> (<em>JNCI</em>) and includes a special section, which this year focuses on survival expressed as percentage. It finds that several but not all cancer types showed a significant improvement over time for both early- and late-stage disease, and varied significantly by race/ethnicity and state.</p>
+        <p>“While trends in death rates are the most commonly used measure to assess progress against cancer, survival trends are also an important measure to evaluate progress in improvement of cancer outcomes,” said Ahmedin Jemal, D.V.M., Ph.D., of the American Cancer Society and lead author of the study. “We last included a special section on cancer survival in 2004, and as we found then, survival improved over time for almost all cancers at every stage of diagnosis. But survival remains very low for some types of cancer and for most types of cancers diagnosed at an advanced stage.”</p>
+        <p>Compared to cases diagnosed in 1975-1977, five-year survival for cancers diagnosed in 2006-2012 increased significantly for all but two types of cancer: cervix and uterus. The greatest absolute increases in survival (25 percent or greater) were seen in prostate and kidney cancers as well as non-Hodgkin lymphoma, myeloma, and leukemia.</p>
+        <p>Cancers with the lowest five-year relative survival for cases diagnosed in 2006-2012 were pancreas (8.5 percent), liver (18.1 percent), lung (18.7 percent), esophagus (20.5 percent), stomach (31.1 percent) and brain (35 percent); those with the highest were prostate (99.3 percent), thyroid (98.3 percent), melanoma (93.2 percent) and female breast (90.8 percent).</p>
+        <p>“While this report found that five-year survival for most types of cancer improved among both blacks and whites over the past several decades, racial disparities for many common cancers have persisted, and they may have increased for prostate cancer and female breast cancer,” said Lynne T. Penberthy, M.D., M.P.H., associate director of NCI’s Surveillance Research Program. “We still have a lot of work to do to understand the causes of these differences, but certainly differences in the kinds and timing of recommended treatments are likely to play a role.”</p>
+        <p>“This report found that tobacco-related cancers have low survival rates, which underscores the importance of continuing to do what we know works to significantly reduce tobacco use,” said Lisa C. Richardson, M.D., M.P.H., director of CDC’s Division of Cancer Prevention and Control. “In addition, every state in the nation has an adult obesity prevalence of 20 percent or more. With obesity as a risk factor for cancer, we need to continue to support communities and families in prevention approaches that can help reverse the nation’s obesity epidemic. We need to come together to create interventions aimed at increasing the uptake of recommended, effective cancer screening tests, and access to timely cancer care.”</p>
+        <p>The authors also stated that more attention and resources are needed to identify major risk factors for common cancers, such as colorectal, breast, and prostate, as are concerted efforts to understand the increasing incidence trends in uterine, female breast, and pancreatic cancer.</p>
+        <p>“The continued drops in overall cancer death rates in the United States are welcome news, reflecting improvements in prevention, early detection, and treatment,” said Betsy A. Kohler, M.P.H., C.T.R., executive director of NAACCR. “But this report also shows us that progress has been limited for several cancers, which should compel us to renew our commitment to efforts to discover new strategies for prevention, early detection, and treatment, and to apply proven interventions broadly and equitably.”</p>
+        <p>Article: Annual Report to the Nation on the Status of Cancer, 1975–2014, Featuring Survival JNCI J Natl Cancer Inst (2017) 109(9): djx030 doi: 10.1093/jnci/djx030</p>
+        <p>To view the full report, see: <a href="https://academic.oup.com/jnci/article-lookup/doi/10.1093/jnci/djx030">https://academic.oup.com/jnci/article-lookup/doi/10.1093/jnci/djx030</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a></p>
+        <p>For a Q&amp;A on this report, go to: <a href="https://www.cdc.gov/cancer/dcpc/research/articles/arn_7514.htm">https://www.cdc.gov/cancer/dcpc/research/articles/arn_7514.htm</a></p>
+        <p>For more about the report, see: <a href="https://seer.cancer.gov/report_to_nation">https://seer.cancer.gov/report_to_nation</a></p>
 
   body__ES:
-  - format: "full_html"
-    value: |
-      <p><span>Los índices de mortalidad por cáncer en general continúan disminuyendo en hombres, mujeres y niños de todos los grupos raciales y étnicos, de acuerdo al último Informe Anual a la Nación sobre el Estado del Cáncer, de 1975 a 2014. El informe declara que los índices de mortalidad durante el período de 2010 a 2014 disminuyeron en 11 de los 16 tipos de cáncer más comunes en los hombres y en 13 de los 18 tipos más comunes de cáncer en las mujeres, incluidos el cáncer de pulmón, el de colon y recto, de seno femenino y el de próstata. Mientras tanto, los índices de mortalidad aumentaron para cáncer de hígado, páncreas y cerebro en los hombres y de hígado y de cáncer de cuello uterino en las mujeres. El informe declara que los índices de incidencia de cáncer en general, o los índices de nuevos cánceres, disminuyeron en los hombres, pero se estabilizaron en las mujeres durante el período de 1999 a 2013.</span></p>
-      <p><span>El Informe a la Nación es publicado cada año en un proyecto de colaboración por parte de la Sociedad Americana contra El Cáncer; los Centros para el Control y Prevención de Enfermedades (CDC) y el Instituto Nacional del Cáncer (NCI), ambos componentes del Departamento de Salud y Servicios Humanos; y la Asociación Norteamericana de Registros Centrales de Cáncer (NAACCR). </span></p>
-      <p><span>El informe aparece primero en línea en&nbsp;la revista <em>Journal of the National Cancer Institute</em> e incluye una sección especial, que este año se concentra en la supervivencia expresada como porcentajes. Se concluye que varios, aunque no todos, tipos de cáncer mostraron una mejora significativa durante ese tiempo tanto para cánceres en estadio inicial como para los de estadio avanzado, y variaron mucho según la raza o etnia y el estado.</span></p>
-      <p><span>“Mientras las tendencias en los índices de mortalidad son la medida que se usa con más regularidad para evaluar el progreso contra el cáncer, las tendencias de supervivencia son también una medida importante para evaluar el progreso en la mejora de los resultados del cáncer", dijo el doctor Ahmedin Jemal, de la Sociedad Americana Contra el Cáncer y autor principal del estudio. “La última vez incluimos una sección especial sobre la supervivencia del cáncer en 2004 y, como nos dimos cuenta entonces, la supervivencia mejoró en ese tiempo en casi todos los cánceres en cada estadio de diagnóstico. Pero la supervivencia sigue siendo muy baja para algunos tipos de cáncer y en la mayoría de los tipos de cánceres diagnosticados en estadios avanzados”.</span></p>
-      <p><span>En comparación con los casos diagnosticados de 1975 a 1977, la supervivencia de cinco años para los cánceres diagnosticados de 2006 a 2012 aumentó significativamente para todos con excepción de dos tipos de cáncer: de cuello uterino y de útero. Los mayores incrementos absolutos de supervivencia (25&nbsp;% o más) se observaron en los cánceres de próstata y de riñón, así como en linfoma no Hodgkin, mieloma y leucemia.</span></p>
-      <p><span>Los cánceres con la menor supervivencia relativa a cinco años para los casos diagnosticados de 2006 a 2012 fueron de páncreas (8,5&nbsp;%), hígado (18,1&nbsp;%), pulmón (18,7&nbsp;%), esófago (20,5&nbsp;%), estómago (31,1&nbsp;%) y cerebro (35&nbsp;%); los cánceres con la mayor supervivencia fueron de próstata (99,3&nbsp;%), tiroides 98,3&nbsp;%, melanoma (93,2&nbsp;%) y de seno femenino (90,8&nbsp;%). </span></p>
-      <p><span>“Aunque este informe encontró que la supervivencia a cinco años para la mayoría de los tipos de cáncer mejoró tanto en los negros como en los blancos en las últimas décadas, las desigualdades raciales para muchos cánceres comunes han persistido, y pueden haber aumentado para el cáncer de próstata y el cáncer de seno femenino", dijo la doctora Lynne T. Penberthy, directora adjunta del Programa de Investigación de Vigilancia del NCI. “Todavía tenemos mucho trabajo por hacer para comprender las causas de estas diferencias, pero las diferencias en los tipos y programas de los tratamientos recomendados probablemente tienen una importante función".</span></p>
-      <p><span>“Este informe&nbsp;indicó que los cánceres relacionados con el tabaco tienen índices bajos de supervivencia, lo que subraya la importancia de seguir haciendo lo que sabemos funciona para reducir significativamente el consumo de tabaco", dijo la doctora Lisa C. Richardson, directora de la División de Prevención y Control del Cáncer de los CDC. “Además, en cada estado de la nación, la obesidad ocurre en 20&nbsp;% de los adultos o más. Con la obesidad como factor de riesgo para el cáncer, necesitamos seguir apoyando a las comunidades y familias en planteamientos de prevención que puedan ayudar a contrarrestar la epidemia de obesidad de la nación. Necesitamos unirnos para crear intervenciones dirigidas a aumentar la captación de pruebas efectivas de exámenes de detección de cáncer, y el acceso oportuno a cuidados de cáncer". </span></p>
-      <p><span>Los autores declararon también que son necesarios más recursos y atención para identificar los principales factores de riesgo para los cánceres comunes, tales como el cáncer colorrectal, de seno y de próstata, así como esfuerzos combinados para comprender las tendencias crecientes de incidencia en el cáncer de útero, de seno en mujeres y de páncreas.</span></p>
-      <p><span>“La disminución continua de los índices de mortalidad por cáncer en general en los Estados Unidos son noticias bien recibidas, lo que refleja mejoras en la prevención, en la detección temprana y en el tratamiento”, indicó la directora ejecutiva de la NAACCR, Betsy A. Kohler. “Pero este informe nos muestra también que el progreso ha sido limitado para varios cánceres, lo cual nos debe obligar a renovar nuestro compromiso en programas de descubrimiento de nuevas estrategias para la prevención, la detección temprana y el tratamiento, y para aplicar en forma amplia e imparcial intervenciones de eficacia comprobada“. </span></p>
+    - format: "full_html"
+      value: |
+        <p><span>Los índices de mortalidad por cáncer en general continúan disminuyendo en hombres, mujeres y niños de todos los grupos raciales y étnicos, de acuerdo al último Informe Anual a la Nación sobre el Estado del Cáncer, de 1975 a 2014. El informe declara que los índices de mortalidad durante el período de 2010 a 2014 disminuyeron en 11 de los 16 tipos de cáncer más comunes en los hombres y en 13 de los 18 tipos más comunes de cáncer en las mujeres, incluidos el cáncer de pulmón, el de colon y recto, de seno femenino y el de próstata. Mientras tanto, los índices de mortalidad aumentaron para cáncer de hígado, páncreas y cerebro en los hombres y de hígado y de cáncer de cuello uterino en las mujeres. El informe declara que los índices de incidencia de cáncer en general, o los índices de nuevos cánceres, disminuyeron en los hombres, pero se estabilizaron en las mujeres durante el período de 1999 a 2013.</span></p>
+        <p><span>El Informe a la Nación es publicado cada año en un proyecto de colaboración por parte de la Sociedad Americana contra El Cáncer; los Centros para el Control y Prevención de Enfermedades (CDC) y el Instituto Nacional del Cáncer (NCI), ambos componentes del Departamento de Salud y Servicios Humanos; y la Asociación Norteamericana de Registros Centrales de Cáncer (NAACCR). </span></p>
+        <p><span>El informe aparece primero en línea en&nbsp;la revista <em>Journal of the National Cancer Institute</em> e incluye una sección especial, que este año se concentra en la supervivencia expresada como porcentajes. Se concluye que varios, aunque no todos, tipos de cáncer mostraron una mejora significativa durante ese tiempo tanto para cánceres en estadio inicial como para los de estadio avanzado, y variaron mucho según la raza o etnia y el estado.</span></p>
+        <p><span>“Mientras las tendencias en los índices de mortalidad son la medida que se usa con más regularidad para evaluar el progreso contra el cáncer, las tendencias de supervivencia son también una medida importante para evaluar el progreso en la mejora de los resultados del cáncer", dijo el doctor Ahmedin Jemal, de la Sociedad Americana Contra el Cáncer y autor principal del estudio. “La última vez incluimos una sección especial sobre la supervivencia del cáncer en 2004 y, como nos dimos cuenta entonces, la supervivencia mejoró en ese tiempo en casi todos los cánceres en cada estadio de diagnóstico. Pero la supervivencia sigue siendo muy baja para algunos tipos de cáncer y en la mayoría de los tipos de cánceres diagnosticados en estadios avanzados”.</span></p>
+        <p><span>En comparación con los casos diagnosticados de 1975 a 1977, la supervivencia de cinco años para los cánceres diagnosticados de 2006 a 2012 aumentó significativamente para todos con excepción de dos tipos de cáncer: de cuello uterino y de útero. Los mayores incrementos absolutos de supervivencia (25&nbsp;% o más) se observaron en los cánceres de próstata y de riñón, así como en linfoma no Hodgkin, mieloma y leucemia.</span></p>
+        <p><span>Los cánceres con la menor supervivencia relativa a cinco años para los casos diagnosticados de 2006 a 2012 fueron de páncreas (8,5&nbsp;%), hígado (18,1&nbsp;%), pulmón (18,7&nbsp;%), esófago (20,5&nbsp;%), estómago (31,1&nbsp;%) y cerebro (35&nbsp;%); los cánceres con la mayor supervivencia fueron de próstata (99,3&nbsp;%), tiroides 98,3&nbsp;%, melanoma (93,2&nbsp;%) y de seno femenino (90,8&nbsp;%). </span></p>
+        <p><span>“Aunque este informe encontró que la supervivencia a cinco años para la mayoría de los tipos de cáncer mejoró tanto en los negros como en los blancos en las últimas décadas, las desigualdades raciales para muchos cánceres comunes han persistido, y pueden haber aumentado para el cáncer de próstata y el cáncer de seno femenino", dijo la doctora Lynne T. Penberthy, directora adjunta del Programa de Investigación de Vigilancia del NCI. “Todavía tenemos mucho trabajo por hacer para comprender las causas de estas diferencias, pero las diferencias en los tipos y programas de los tratamientos recomendados probablemente tienen una importante función".</span></p>
+        <p><span>“Este informe&nbsp;indicó que los cánceres relacionados con el tabaco tienen índices bajos de supervivencia, lo que subraya la importancia de seguir haciendo lo que sabemos funciona para reducir significativamente el consumo de tabaco", dijo la doctora Lisa C. Richardson, directora de la División de Prevención y Control del Cáncer de los CDC. “Además, en cada estado de la nación, la obesidad ocurre en 20&nbsp;% de los adultos o más. Con la obesidad como factor de riesgo para el cáncer, necesitamos seguir apoyando a las comunidades y familias en planteamientos de prevención que puedan ayudar a contrarrestar la epidemia de obesidad de la nación. Necesitamos unirnos para crear intervenciones dirigidas a aumentar la captación de pruebas efectivas de exámenes de detección de cáncer, y el acceso oportuno a cuidados de cáncer". </span></p>
+        <p><span>Los autores declararon también que son necesarios más recursos y atención para identificar los principales factores de riesgo para los cánceres comunes, tales como el cáncer colorrectal, de seno y de próstata, así como esfuerzos combinados para comprender las tendencias crecientes de incidencia en el cáncer de útero, de seno en mujeres y de páncreas.</span></p>
+        <p><span>“La disminución continua de los índices de mortalidad por cáncer en general en los Estados Unidos son noticias bien recibidas, lo que refleja mejoras en la prevención, en la detección temprana y en el tratamiento”, indicó la directora ejecutiva de la NAACCR, Betsy A. Kohler. “Pero este informe nos muestra también que el progreso ha sido limitado para varios cánceres, lo cual nos debe obligar a renovar nuestro compromiso en programas de descubrimiento de nuevas estrategias para la prevención, la detección temprana y el tratamiento, y para aplicar en forma amplia e imparcial intervenciones de eficacia comprobada“. </span></p>
