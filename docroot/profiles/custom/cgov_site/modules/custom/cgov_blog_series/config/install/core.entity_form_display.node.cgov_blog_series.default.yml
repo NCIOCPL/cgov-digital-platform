@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
@@ -50,6 +51,14 @@ content:
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
+  field_banner_image:
+    weight: 16
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
   field_blog_series_shortname:
     weight: 9
     settings:
@@ -91,7 +100,7 @@ content:
     type: link_default
     region: content
   field_image_promotional:
-    weight: 16
+    weight: 17
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -137,7 +146,7 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 17
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -151,7 +160,7 @@ content:
     type: string_textfield
     region: content
   field_search_engine_restrictions:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -179,13 +188,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 19
+    weight: 20
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
