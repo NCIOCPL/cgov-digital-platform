@@ -156,7 +156,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     $navTree = $this->getSectionNav();
     $build = [
       '#type' => 'block',
-      '#cache' => ['contexts' => ['url.path']],
+      '#cache' => ['max-age' => 0],
       'nav_tree' => $navTree,
     ];
 
