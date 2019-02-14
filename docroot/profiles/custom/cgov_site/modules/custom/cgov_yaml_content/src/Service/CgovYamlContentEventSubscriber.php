@@ -113,13 +113,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    * paragraph references at the time of their
    * creation.
    *
-   * @param array $fields
+   * @param array|string $fields
    *   Entity/Field data as array.
    *
    * @return array
    *   Processed fields.
    */
-  public function translateParagraphs(array $fields) {
+  public function translateParagraphs($fields) {
     if (!is_array($fields)) {
       return $fields;
     }
@@ -180,13 +180,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   /**
    * Test for and handle #process directives.
    *
-   * @param array $fields
+   * @param array|string $fields
    *   Entity/Field data as array.
    *
    * @return array
    *   Processed fields.
    */
-  public function handleProcessDirectives(array $fields) {
+  public function handleProcessDirectives($fields) {
     foreach ($fields as $fieldName => $fieldData) {
       // Test for process directives:
       // Process directives are associative arrays with
