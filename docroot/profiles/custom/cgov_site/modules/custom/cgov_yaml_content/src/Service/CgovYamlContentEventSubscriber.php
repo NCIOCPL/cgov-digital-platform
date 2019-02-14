@@ -3,7 +3,6 @@
 namespace Drupal\cgov_yaml_content\Service;
 
 use Drupal\yaml_content\Event\YamlContentEvents;
-use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
@@ -25,13 +24,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $themeManager;
 
   /**
-   * Yaml Content Content Loader.
-   *
-   * @var \Drupal\yaml_content\ContentLoader\ContentLoaderInterface
-   */
-  protected $contentLoader;
-
-  /**
    * Drupal Entity Query Factory.
    *
    * @var \Drupal\Core\Entity\Query\QueryFactory
@@ -50,8 +42,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
-   * @param \Drupal\yaml_content\ContentLoader\ContentLoaderInterface $contentLoader
-   *   Content Loader.
    * @param \Drupal\Core\Entity\Query\QueryFactory $entityQueryFactory
    *   Query factory.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
@@ -59,12 +49,10 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     ThemeManagerInterface $themeManager,
-    ContentLoaderInterface $contentLoader,
     QueryFactory $entityQueryFactory,
     EntityTypeManagerInterface $entityTypeManager
     ) {
     $this->themeManager = $themeManager;
-    $this->contentLoader = $contentLoader;
     $this->entityQueryFactory = $entityQueryFactory;
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -125,10 +113,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    * paragraph references at the time of their
    * creation.
    *
-   * @param array|string $fields
+   * @param array $fields
    *   Entity/Field data as array.
+   *
+   * @return array
+   *   Processed fields.
    */
-  public function translateParagraphs($fields) {
+  public function translateParagraphs(array $fields) {
     if (!is_array($fields)) {
       return $fields;
     }
@@ -142,6 +133,108 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $fields = $this->createParagraph($fields);
     }
 
+    return $fields;
+  }
+
+  /**
+   * Retrieve entity reference by params.
+   *
+   * Important to note is this doesn't currently
+   * support updating the references (such as adding
+   * an 'alt' tag to images.)
+   *
+   * @param array $value
+   *   Process directive array in this format:
+   *   ```yaml
+   *   '#process':
+   *     callback: '<callback string>'
+   *     args:
+   *       - <callback argument 1>
+   *       - <callback argument 2>
+   *       - <...>
+   *    ```.
+   *
+   * @return array
+   *   Entity reference.
+   */
+  public function processReference(array $value) {
+    $fieldReferenceArray = [];
+    $entity_type = $value['#process']['args'][0];
+    $args = $value['#process']['args'][1];
+    $query = $this->entityQueryFactory->get($entity_type);
+    foreach ($args as $property => $value) {
+      $query->condition($property, $value);
+    }
+    $entity_ids = $query->execute();
+    if (count($entity_ids) > 0) {
+      $first_id = array_shift($entity_ids);
+      $fieldReferenceArray = ['target_id' => $first_id];
+    }
+    else {
+      // Reference can't be found.
+      // TODO: Create thing instead?
+    }
+    return $fieldReferenceArray;
+  }
+
+  /**
+   * Test for and handle #process directives.
+   *
+   * @param array $fields
+   *   Entity/Field data as array.
+   *
+   * @return array
+   *   Processed fields.
+   */
+  public function handleProcessDirectives(array $fields) {
+    foreach ($fields as $fieldName => $fieldData) {
+      // Test for process directives:
+      // Process directives are associative arrays with
+      // a '#process', 'callback', and 'args' key.
+      // Frustratingly, there are multiple ways of formatting #process
+      // directives in yaml_content (we are going to ignore the target_type
+      // key since it seems redundant (until inevitably proven otherwise.))
+      // Fields can contain multiple directives. So we are only looking
+      // for arrays.
+      $fieldContainsArray = is_array($fieldData);
+      if ($fieldContainsArray) {
+        // We will have to determine later on if passing an array of elements is
+        // is appropriate or not. For now we will assume so and gather them here
+        // before adding them to the field.
+        $processedFieldContents = [];
+        foreach ($fieldData as $value) {
+          $isProcessDirective = is_array($value) && isset($value['#process']);
+          if ($isProcessDirective) {
+            // For 'reference' #process directives.
+            if (isset($value['#process']['callback']) && $value['#process']['callback'] === 'reference') {
+              $processedReference = $this->processReference($value);
+              $processedFieldContents[] = $processedReference;
+            }
+            elseif ((isset($value['#process']['callback']) && $value['#process']['callback'] === 'file')) {
+              // TODO: Handle file process directives. Until then, avoid errors
+              // by skipping the translated field altogether.
+            }
+            else {
+              // You made a mistake formatting your process directive. Ha ha.
+              // Go directly to jail, do not pass go.
+              // TODO: Throw, when exception handling gets added in.
+            }
+          }
+          else {
+            // NOTE: Because of the simple multipass processing we're doing, a
+            // field that mixed paragraphs and process directives is currently
+            // unsupported. However, we will try and preserve non directive
+            // elements and see what happens... (In theory, paragraphs would've
+            // already been created and the references inserted here).
+            $processedFieldContents[] = $value;
+          }
+        }
+        // NOTE: This implementation does not test field cardinality. This
+        // means that if an array is provided when only a single element should
+        // be, it will probably be very unhappy.
+        $fields[$fieldName] = $processedFieldContents;
+      }
+    }
     return $fields;
   }
 
@@ -219,32 +312,8 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // The yaml_content loader offers the ability to use process functions
     // as callbacks in the yml.
     // Translated fields also doing that don't have access to this feature
-    // so we are going to borrow the functionality.
-    $this->contentLoader->setExistenceCheck(TRUE);
-    foreach ($translatedFields as $key => $value) {
-      // For 'reference' #process directives.
-      if (is_array($value) && isset($value['#process'])) {
-        if (isset($value['#process']['callback']) && $value['#process']['callback'] === 'reference') {
-          $entity_type = $value['#process']['args'][0];
-          $args = $value['#process']['args'][1];
-          $query = $this->entityQueryFactory->get($entity_type);
-          foreach ($args as $property => $value) {
-            $query->condition($property, $value);
-          }
-          $entity_ids = $query->execute();
-          if (count($entity_ids) > 0) {
-            $first_id = array_shift($entity_ids);
-            $fieldReferenceArray = ['target_id' => $first_id];
-            $translatedFields[$key] = $fieldReferenceArray;
-          }
-          else {
-            // Reference can't be found.
-            // TODO: Create thing instead?
-            unset($translatedFields[$key]);
-          }
-        }
-      }
-    }
+    // so we are going to recreate the functionality on an as-needed basis.
+    $translatedFields = $this->handleProcessDirectives($translatedFields);
 
     // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
