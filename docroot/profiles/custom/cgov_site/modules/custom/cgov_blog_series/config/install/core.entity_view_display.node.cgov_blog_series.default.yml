@@ -3,21 +3,27 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_blog_series.body
+    - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
-    - field.field.node.cgov_blog_series.field_image_article
+    - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_intro_text
     - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
     - field.field.node.cgov_blog_series.field_pretty_url
     - field.field.node.cgov_blog_series.field_public_use
+    - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
+    - link
     - options
     - text
     - user
@@ -38,6 +44,31 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_about_blog:
+    weight: 29
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_allow_comments:
+    weight: 28
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_blog_series_shortname:
+    weight: 24
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_browser_title:
     weight: 4
     label: hidden
@@ -62,17 +93,21 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_article:
-    weight: 22
-    label: above
+  field_feedburner_url:
+    weight: 25
+    label: hidden
     settings:
-      link: true
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
     third_party_settings: {  }
-    type: entity_reference_label
+    type: link
     region: content
   field_image_promotional:
     weight: 23
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -92,6 +127,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_num_display_posts:
+    weight: 27
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
     region: content
   field_page_description:
     weight: 5
@@ -115,6 +159,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_recommended_content_header:
+    weight: 26
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
   field_search_engine_restrictions:
     weight: 18
