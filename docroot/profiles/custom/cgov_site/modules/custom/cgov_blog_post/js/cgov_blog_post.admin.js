@@ -1,24 +1,22 @@
 (function($) {
-  $.fn.drawBlogTopics = function(data) {
-    // Hide all checkboxes by default
-    $('#edit-field-blog-topics .js-form-item').addClass('to-be-hidden');
+  $.fn.drawBlogTopics = function(topics) {
+    // Uncheck and hide all checkboxes when this function is called.
+    $('#edit-field-blog-topics .js-form-item').addClass('visually-hidden');
+    $('#edit-field-blog-topics .form-checkbox').prop('checked', false);
 
-    // Get the seleccted series ID
-    var seriesId = $('select#edit-field-blog-series')[0].value;
+    // Get the seleccted series ID.
+    var sid = $('select#edit-field-blog-series')[0].value;
 
-    // What do we want from the data params?
-    // 1. Selected Blog Series (number)
-    // 2. ?
-    // 3. Profit.
-    // TODO: hide toics wrapper if not categories
-    for (var key in data) {
-      if(data[key] === seriesId) {
-        console.log(key + ', ' + data[key]);
+    // If the topic ID matches the series ID, remove the hidden class and show the checkboxes.
+    for (var tid in topics) {
+      if(topics[tid] === sid) {
+        jQuery('input[value=' + tid + ']').parent().removeClass('visually-hidden');
       }
     }
 
-    //console.log(data);
-    console.log('series ID: ' + seriesId);
   };
-  //TODO: clean up and add guts
+  // TODO: hide topics wrapper if not in categories
+  // TODO: clear checkmarks on switch & select other
+  // TODO: make visually-hidden a wrapper
+  // TODO: follow Drupal JS coding/naming standards
 })(jQuery);
