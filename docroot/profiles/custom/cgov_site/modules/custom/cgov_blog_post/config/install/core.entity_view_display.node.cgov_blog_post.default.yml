@@ -101,21 +101,23 @@ content:
     type: string
     region: content
   field_image_article:
+    type: entity_reference_entity_view
     weight: 22
+    region: content
     label: hidden
     settings:
-      link: true
+      view_mode: image_display_article_medium
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_image_promotional:
+    type: entity_reference_entity_view
     weight: 23
+    region: content
     label: hidden
     settings:
-      link: true
+      view_mode: image_display_article_medium
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_intro_text:
     weight: 13
     label: hidden

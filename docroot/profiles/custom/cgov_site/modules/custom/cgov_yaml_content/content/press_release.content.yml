@@ -23,6 +23,7 @@
     value: "iStock"
   field_credit__ES:
     value: "iStock - ES"
+
 # Node English / Spanish
 - entity: "node"
   type: "cgov_press_release"
@@ -33,14 +34,32 @@
   status: 1
   moderation_state:
     value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2019'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2019'
+  field_pretty_url:
+    value: 'deep-learning-cervical-cancer-screening'
+  field_pretty_url__ES:
+    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
   field_image_article:
   - target_type: 'media'
     '#process':
       callback: 'reference'
       args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'Health care provider looking at a smartphone'
+        - 'media'
+        - bundle: 'cgov_image'
+          name: 'Health care provider looking at a smartphone'
   field_browser_title:
     value: "AI approach outperformed human experts in identifying cervical precancer"
   field_browser_title__ES:
@@ -57,8 +76,6 @@
     value: 'NCI Press Release'
   field_press_release_type__ES:
     value: 'Comunicado de prensa del NCI'
-  field_date_display_mode:
-    value: "reviewed"
   field_list_description:
   field_page_description:
     value: |
@@ -76,6 +93,13 @@
     value: "Planteamiento de IA superó a expertos humanos en la identificación de precáncer cervical"
   field_date_updated:
     value: "2019-01-10"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
+  field_date_display_mode__ES:
+    - value: 'reviewed'
+    - value: 'updated'
   body:
     - format: "full_html"
       value: |
@@ -158,13 +182,22 @@
   moderation_state:
     value: 'published'
   field_original_source:
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Press Releases 2019'
+  field_pretty_url:
+    value: 'BRCA-exchange'
   field_media_image:
   - '#process':
       callback: 'file'
       args:
-      - 'image'
-      - type: 'module'
-        filename: 'BRCA-exchange-article.jpg'
+        - 'image'
+        - type: 'module'
+          filename: 'BRCA-exchange-article.jpg'
     alt: 'The BRXA Exhange graphic'
   field_credit:
     value: "BRCA Challenge"
@@ -176,9 +209,9 @@
     '#process':
       callback: 'reference'
       args:
-      - 'media'
-      - bundle: 'cgov_image'
-        name: 'The BRCA Exchange graphic'
+        - 'media'
+        - bundle: 'cgov_image'
+          name: 'The BRCA Exchange graphic'
   langcode: en
   status: 1
   moderation_state:
@@ -194,6 +227,9 @@
   field_press_release_type__ES:
     value: 'Comunicado de prensa del NCI'
   field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
   field_list_description:
     value: "List Description overriding meta description"
   field_page_description:
@@ -241,9 +277,9 @@
   - '#process':
       callback: 'file'
       args:
-      - 'image'
-      - type: 'module'
-        filename: 'chemo-patient-with-male-friend-article.__v10092281.jpg'
+        - 'image'
+        - type: 'module'
+          filename: 'chemo-patient-with-male-friend-article.__v10092281.jpg'
     alt: 'tMDS-AML graphic ALT'
     alt__ES: 'tMDS-AML graphic ALT - ES'
   field_credit: "iStock"
@@ -256,6 +292,24 @@
   title__ES:
     value: "Estudio encuentra elevado riesgo de algunos raros cánceres de la sangre después de quimioterapia para la mayoría de los tumores sólidos"
   status: 1
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Press Releases 2018'
+  field_site_section__ES:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Comunicados de Prensa 2018'
+  field_pretty_url:
+    value: 'tMDS-AML-risk-chemo'
+  field_pretty_url__ES:
+    value: 'tMDS-AML-riesgo-quimio'
   moderation_state:
     value: 'published'
   field_browser_title: "This is the Cgov Browser Title"
@@ -274,6 +328,7 @@
   field_press_release_type__ES:
     value: 'Comunicado de prensa del NCI'
   field_date_display_mode:
+    - value: 'posted'
   field_list_description:
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
@@ -353,6 +408,24 @@
   title__ES:
     value: "Ibrutinib más rituximab fue superior al tratamiento convencional para algunos pacientes con leucemia linfocítica crónica"
   status: 1
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Press Releases 2018'
+  field_site_section__ES:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Comunicados de Prensa 2018'
+  field_pretty_url:
+    value: 'cll-ibrutinib-trial'
+  field_pretty_url__ES:
+    value: 'llc-ibrutinib-estudio'
   moderation_state:
     value: 'published'
   field_browser_title: "This is the Cgov Browser Title"
@@ -371,6 +444,9 @@
   field_press_release_type__ES:
     value: 'Comunicado de prensa del NCI'
   field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
   field_list_description:
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
@@ -450,6 +526,15 @@
   langcode: en
   title: "Norman Sharpless sworn in as director of the National Cancer Institute"
   status: 1
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Press Releases 2017'
+  field_pretty_url:
+    value: 'sharpless-nci-director'
   moderation_state:
     value: 'published'
   field_browser_title: "This is the Cgov Browser Title"
@@ -458,6 +543,9 @@
   field_card_title:
     value: "Press Release Title English"
   field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
   field_list_description:
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
@@ -495,6 +583,24 @@
   name__ES: "Cancer Death Rates Declined graphic-ES"
   langcode: en
   status: 1
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Press Releases 2017'
+  field_site_section__ES:
+  - '#process':
+      callback: 'reference'
+      args:
+        - 'taxonomy_term'
+        - vid: 'cgov_site_sections'
+          name: 'Comunicados de Prensa 2017'
+  field_pretty_url:
+    value: 'deep-learning-cervical-cancer-screening'
+  field_pretty_url__ES:
+    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
   moderation_state:
     value: 'published'
   field_original_source:
@@ -520,6 +626,7 @@
   field_credit: "iStock"
   field_credit__ES: "iStock - ES"
 
+# Sample press release node
 - entity: "node"
   type: "cgov_press_release"
   langcode: en
@@ -527,6 +634,24 @@
   title__ES:
     value: "Informe Anual a la Nación: siguen descendiendo los índices de mortalidad por cáncer"
   status: 1
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+      - 'taxonomy_term'
+      - vid: 'cgov_site_sections'
+        name: 'Press Releases 2019'
+  field_site_section__ES:
+  - '#process':
+      callback: 'reference'
+      args:
+      - 'taxonomy_term'
+      - vid: 'cgov_site_sections'
+        name: 'Comunicados de Prensa 2019'
+  field_pretty_url:
+    value: 'deep-learning-cervical-cancer-screening'
+  field_pretty_url__ES:
+    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
   moderation_state:
     value: 'published'
   field_browser_title: "This is the Cgov Browser Title"
@@ -541,6 +666,9 @@
   field_card_title__ES:
     value: "Press Release Title Spanish"
   field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
   field_list_description:
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
