@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_biography.install.
+ */
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_biography_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  $siteHelper->addContentTypePermissions('cgov_biography', ['content_author']);
+  $siteHelper->attachContentTypeToWorkflow('cgov_biography', 'editorial_workflow');
+
+  $campusItems = [
+    'NCI Shady Grove Campus',
+    'NIH Bethesda Campus',
+    'NCI Frederick Campus',
+  ];
+
+  _cgov_biography_add_taxonomy_terms('cgov_biography_campus', $campusItems);
+}
+
+/**
+ * Local function to install default taxonomy terms for Biographies.
+ */
+function _cgov_biography_add_taxonomy_terms($vocabulary, $items) {
+  foreach ($items as $item) {
+    Term::create([
+      'parent' => [],
+      'name' => $item,
+      'vid' => $vocabulary,
+    ])->save();
+  }
+}
