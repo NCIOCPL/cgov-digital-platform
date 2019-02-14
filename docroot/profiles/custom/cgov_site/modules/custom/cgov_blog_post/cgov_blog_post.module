@@ -36,6 +36,7 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     }
     else {
       // TODO: initialize with correct categories showing.
+      $form['field_blog_topics']['#disabled'] = TRUE;
       $form['field_blog_series']['#disabled'] = TRUE;
     }
   }
