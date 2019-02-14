@@ -23,6 +23,8 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
 
     // If this is a draft or administrator role, fire off ajax function.
+    // TODO: add variants.
+    // TODO: initialize with correct categories showing.
     if (is_draft($form)) {
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
       $form['field_blog_series']['widget']['#ajax'] = [
@@ -102,5 +104,7 @@ function is_draft(array $form) {
   // TODO: Add user check and return true for admins.
   $moderation_state = get_moderation_state($form);
   $is_draft = ($moderation_state == 'draft') ? TRUE : FALSE;
+  // Return true until topic options are fixed.
+  $is_draft = TRUE;
   return $is_draft;
 }
