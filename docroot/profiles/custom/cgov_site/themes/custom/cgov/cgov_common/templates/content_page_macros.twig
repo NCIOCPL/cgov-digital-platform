@@ -10,7 +10,15 @@
     {# The context used with trans is because some of the labels are translated differently
         in core.
     #}
-    <div id="cgvDate">
+
+    {% if node.getType == 'cgov_blog_post' %}
+      {% if content.field_date_posted[0] %}
+        <p class="blog-post-publishing-info">
+          {{ content.field_date_posted.value|date("F j, Y") }}, {% trans with {'context': 'CGov UI' } %}by{% endtrans %} {{ content.field_author }}
+        </p>
+      {% endif %}
+    {% else %}
+
       <div class="document-dates horizontal">
         <ul class="clearfix">
           {% if content.field_date_posted[0] %}
@@ -33,6 +41,6 @@
           {% endif %}
         </ul>
       </div>
-    </div>
+    {% endif %}
   {% endif %}
 {% endmacro %}

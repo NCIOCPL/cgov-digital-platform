@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_section
+    - node.type.cgov_cancer_center
+id: node.cgov_cancer_center.field_site_section
+field_name: field_site_section
+entity_type: node
+bundle: cgov_cancer_center
+label: 'Site Section'
+description: 'The section of the site in which this content should live. This will inform the URL.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles: NULL
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
