@@ -91,7 +91,16 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
       // We only want to go as far as one level below the current site
       // section.
       while ($child && !$child->isCurrentSiteSection()) {
-        $children = $child->getChildren(['isInActivePath']);
+        $children = $child->getChildren();
+        // Filter results to only the child in the current path.
+        // (Should always be just one).
+        $children = array_filter($children, function ($child) {
+          if ($child->getIsInCurrentPath() === TRUE) {
+            return TRUE;
+          }
+          return FALSE;
+        });
+
         $child = NULL;
         // We should only ever find one child in the active path.
         // Otherwise this is NULL and the while loop exits.

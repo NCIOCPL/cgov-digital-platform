@@ -99,7 +99,14 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    *   Markup as string.
    */
   public function renderMainNav(NavItem $navRoot) {
-    $megaNavRootItems = $navRoot->getChildren(['hide_in_main_nav']);
+    $megaNavRootItems = $navRoot->getChildren();
+    $megaNavRootItems = array_filter($megaNavRootItems, function ($child) {
+      if ($child->hasDisplayRule('hide_in_main_nav')) {
+        return FALSE;
+      }
+      return TRUE;
+    });
+
     $renderedMegaNavTrees = [];
     for ($i = 0; $i < count($megaNavRootItems); $i++) {
       $rootItem = $megaNavRootItems[$i];
@@ -152,7 +159,13 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function renderMobileNavLevel(NavItem $rootItem, bool $isOpen, int $currentDepth) {
     $isNotLastLevel = self::MOBILE_NAV_MAX_DEPTH - $currentDepth > 0;
-    $mobileItemsToRender = $rootItem->getChildren(['hide_in_mobile_nav']);
+    $mobileItemsToRender = $rootItem->getChildren();
+    $mobileItemsToRender = array_filter($mobileItemsToRender, function ($child) {
+      if ($child->hasDisplayRule('hide_in_mobile_nav')) {
+        return FALSE;
+      }
+      return TRUE;
+    });
     $hasItemsToRender = count($mobileItemsToRender);
     if (!$hasItemsToRender) {
       return "";
