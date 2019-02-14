@@ -177,6 +177,35 @@
           </li>
           </ul>
           <p>Para terminar la visualización, cuente lentamente hasta tres, aspire profundamente, abra los ojos y diga en silencio para sí, “me siento alerta y en un estado de relajación”.</p>
+  field_related_resources:
+        - entity: 'paragraph'
+          type: "cgov_managed_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_managed_link"
+          field_override_title:
+            - value: 'Overridden Title'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_external_link:
+            - uri: 'https://www.google.com'
   field_date_posted:
     value: "2016-02-29"
   field_date_reviewed:
