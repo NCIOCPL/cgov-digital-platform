@@ -35,11 +35,9 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
       ];
     }
     else {
+      // TODO: initialize with correct categories showing.
       $form['field_blog_series']['#disabled'] = TRUE;
     }
-
-    // Get filtered categories (debugging).
-    filter_cats($form);
   }
 }
 
@@ -47,39 +45,17 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
  * Implements hook_entity_presave().
  */
 function cgov_blog_post_entity_presave(EntityInterface $entity) {
-  // Do things to make the Blog Categories save upon changing.
+  // TODO: validate selected Blog Topics before saving.
 }
 
 /**
  * Create an Ajax object & invoke the drawBlogTopics() method in our library JS.
  */
 function display_cats(array $form, FormStateInterface $form_state) {
-
-  $my_arr = filter_cats($form);
+  $ajax_args = get_id_pairs($form);
   $ajax_response = new AjaxResponse();
-  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', [$my_arr]));
+  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', [$ajax_args]));
   return $ajax_response;
-}
-
-/**
- * Filter taxonomy categories.
- */
-function filter_cats(array $form) {
-
-  // BEGIN DEBUGGING SECTION:
-  $vocabulary_id = 'cgov_blog_topics';
-  $blog_topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vocabulary_id);
-
-  // Get Blog Topics and IDs.
-  $muh_array = [];
-  foreach ($blog_topics as $blog_topic) {
-    $bs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
-    $bt = $blog_topic->tid;
-    $muh_array[$bt] = $bs;
-  }
-
-  // Show pairs:
-  return $muh_array;
 }
 
 /**
@@ -87,6 +63,26 @@ function filter_cats(array $form) {
  */
 function clear_cats(array $form) {
   return '== debug cleared category checkboxes ==';
+}
+
+/**
+ * Get an array of all taxonomy/owner blog pairs.
+ */
+function get_id_pairs(array $form) {
+
+  // Get the list of topics (categories) from the vocabulary ID.
+  // TODO: refactor / clean up.
+  $vid = 'cgov_blog_topics';
+  $topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vid);
+
+  // Return Blog Topic IDs and associated node IDs as an array.
+  $id_pairs = [];
+  foreach ($topics as $topic) {
+    $tid = $topic->tid;
+    $nid = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid)->get('field_owner_blog')->target_id;
+    $id_pairs[$tid] = $nid;
+  }
+  return $id_pairs;
 }
 
 /**
