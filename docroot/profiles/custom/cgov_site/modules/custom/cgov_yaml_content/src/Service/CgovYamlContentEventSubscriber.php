@@ -10,6 +10,7 @@ use Drupal\block\Entity\Block;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Handle yaml_content custom events.
@@ -38,6 +39,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $entityQueryFactory;
 
   /**
+   * Drupal Entity Type Manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
@@ -46,11 +54,19 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Content Loader.
    * @param \Drupal\Core\Entity\Query\QueryFactory $entityQueryFactory
    *   Query factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Drupal Entity Type Manager.
    */
-  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader, QueryFactory $entityQueryFactory) {
+  public function __construct(
+    ThemeManagerInterface $themeManager,
+    ContentLoaderInterface $contentLoader,
+    QueryFactory $entityQueryFactory,
+    EntityTypeManagerInterface $entityTypeManager
+    ) {
     $this->themeManager = $themeManager;
     $this->contentLoader = $contentLoader;
     $this->entityQueryFactory = $entityQueryFactory;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**
@@ -138,6 +154,17 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function addSpanishTranslations(EntityPostSaveEvent $event) {
     $yamlContent = $event->getContentData();
     $entity = $event->getEntity();
+
+    // The following may seem a bit redundant, but it was realized that
+    // pathauto hooks and yaml_content hooks were passing/receiving
+    // stale copies of the entities they were modifying. This allows us
+    // to update our copy of the entity from the yaml_content event
+    // and corrects an issue where pathauto was not generating url aliases
+    // on spanish translations on the first pass of the ycim command.
+    $entityId = $entity->id();
+    $entityType = $entity->getEntityTypeId();
+    $entity = $this->entityTypeManager->getStorage($entityType)->load($entityId);
+
     $translatedFields = [];
     // 1. Gather Spanish field translations.
     // The yaml files contain fields (marked XXX__ES) that are
