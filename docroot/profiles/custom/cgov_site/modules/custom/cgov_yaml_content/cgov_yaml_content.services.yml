@@ -1,6 +1,6 @@
 services:
   cgov_yaml_content.event_subscriber:
     class: Drupal\cgov_yaml_content\Service\CgovYamlContentEventSubscriber
-    arguments: ['@theme.manager', '@yaml_content.content_loader']
+    arguments: ['@theme.manager', '@entity.query', '@entity_type.manager']
     tags:
       - {name: event_subscriber}
