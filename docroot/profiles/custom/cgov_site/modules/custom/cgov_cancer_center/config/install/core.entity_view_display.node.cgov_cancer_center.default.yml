@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_cancer_center.body
+    - field.field.node.cgov_cancer_center.field_address
     - field.field.node.cgov_cancer_center.field_address_1
     - field.field.node.cgov_cancer_center.field_address_2
     - field.field.node.cgov_cancer_center.field_browser_title
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
+    - address
     - datetime
     - entity_reference_revisions
     - options
@@ -59,6 +61,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_address:
+    weight: 19
+    settings:
+      default_country: null
+    third_party_settings: {  }
+    type: address_default
+    region: content
+    label: hidden
   field_address_1:
     weight: 13
     label: hidden

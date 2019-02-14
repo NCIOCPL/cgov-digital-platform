@@ -38,6 +38,7 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
+    - address
     - cgov_core
     - entity_reference_revisions
     - options
@@ -58,6 +59,13 @@ content:
   content_moderation_control:
     weight: 1
     region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_address:
+    type: address_default
+    weight: 18
+    region: content
+    label: above
     settings: {  }
     third_party_settings: {  }
   field_address_1:
