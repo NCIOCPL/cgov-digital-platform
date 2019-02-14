@@ -24,19 +24,19 @@
           {% if content.field_date_posted[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
-              {{ content.field_date_posted }}
+              {{ content.field_date_posted[0] }}
             </li>
           {% endif %}
           {% if content.field_date_updated[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
-              {{ content.field_date_updated }}
+              {{ content.field_date_updated[0] }}
             </li>
           {% endif %}
           {% if content.field_date_reviewed[0] %}
             <li>
               <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
-              {{ content.field_date_reviewed }}
+              {{ content.field_date_reviewed[0] }}
             </li>
           {% endif %}
         </ul>
