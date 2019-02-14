@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.cgov_biography.field_phone_number
     - field.field.node.cgov_biography.field_prefix
     - field.field.node.cgov_biography.field_pretty_url
+    - field.field.node.cgov_biography.field_related_resources
     - field.field.node.cgov_biography.field_room_number
     - field.field.node.cgov_biography.field_scientific_publications
     - field.field.node.cgov_biography.field_search_engine_restrictions
@@ -38,6 +39,7 @@ dependencies:
     - node.type.cgov_biography
   module:
     - datetime
+    - entity_reference_revisions
     - options
     - text
     - user
@@ -253,6 +255,15 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 35
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_room_number:
     weight: 27
     label: above

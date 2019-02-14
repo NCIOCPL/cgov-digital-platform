@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
     - field.field.node.cgov_blog_post.field_site_section
@@ -23,6 +24,7 @@ dependencies:
   module:
     - datetime
     - entity_browser
+    - paragraphs_asymmetric_translation_widgets
     - text
 id: node.cgov_blog_post.default
 targetEntityType: node
@@ -144,6 +146,18 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_related_resources:
+    type: paragraphs_classic_asymmetric
+    weight: 18
+    region: content
+    settings:
+      title: 'Related Resource'
+      title_plural: 'Related Resources'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
   field_search_engine_restrictions:
     weight: 16
     settings: {  }

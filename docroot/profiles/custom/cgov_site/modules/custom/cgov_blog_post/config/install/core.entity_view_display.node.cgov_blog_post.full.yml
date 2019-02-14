@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_browser_title
@@ -26,15 +27,15 @@ dependencies:
     - options
     - text
     - user
-id: node.cgov_blog_post.default
+id: node.cgov_blog_post.full
 targetEntityType: node
 bundle: cgov_blog_post
-mode: default
+mode: full
 content:
   body:
     label: hidden
     type: text_default
-    weight: 2
+    weight: 6
     settings: {  }
     third_party_settings: {  }
     region: content
@@ -44,119 +45,6 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_author:
-    weight: 11
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_browser_title:
-    weight: 5
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_card_title:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_date_posted:
-    weight: 16
-    label: hidden
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_feature_card_description:
-    weight: 8
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 17
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_display_article_medium
-      link: false
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 18
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_display_article_medium
-      link: false
-    third_party_settings: {  }
-  field_intro_text:
-    weight: 13
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: content
-  field_list_description:
-    weight: 7
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_page_description:
-    weight: 6
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_pretty_url:
-    weight: 12
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_public_use:
-    weight: 14
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
-  field_related_resources:
-    type: entity_reference_revisions_entity_view
-    weight: 19
-    region: content
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-  field_search_engine_restrictions:
-    weight: 15
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
-  field_short_title:
     weight: 3
     label: hidden
     settings:
@@ -164,26 +52,61 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_site_section:
-    weight: 9
+  field_date_posted:
+    weight: 2
     label: hidden
     settings:
-      link: true
+      timezone_override: ''
+      format_type: cgov_display_date
     third_party_settings: {  }
-    type: entity_reference_label
+    type: datetime_default
     region: content
-  langcode:
-    type: language
-    weight: 10
+  field_image_article:
+    type: entity_reference_entity_view
+    weight: 4
     region: content
     label: hidden
     settings:
-      link_to_entity: false
-      native_language: false
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
+  field_intro_text:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_public_use:
+    weight: 8
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 7
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
   links:
     weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_browser_title: true
+  field_card_title: true
+  field_feature_card_description: true
+  field_image_promotional: true
+  field_list_description: true
+  field_page_description: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  field_site_section: true
+  langcode: true
