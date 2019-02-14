@@ -1,0 +1,114 @@
+### TESTS:
+# Biography content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Ocean Sunset View Mykonos"
+  name__ES:
+    value: "Ocean Sunset View Mykonos - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ocean-sunset-view-mykonos-article.jpg'
+      alt: 'sunset ocean view in Mykonos'
+      alt__ES:
+        value: "vista del mar en el ocaso en Mykonos"
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_biography"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Jennifer K. Loukissas, M.P.P."
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  field_pretty_url:
+    value: "loukissas-jennifer"
+  field_short_title:
+    value: "Jennifer K. Loukissas, M.P.P."
+  field_browser_title:
+    value: "Jennifer K. Loukissas, M.P.P. - Biography"
+  field_page_description:
+    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+  field_list_description:
+    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+  field_feature_card_description:
+    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+  field_first_name:
+    value: "Jennifer"
+  field_middle_name:
+    value: "K."
+  field_last_name:
+    value: "Loukissas"
+  field_suffix:
+    value: "M.P.P"
+  field_title:
+    value: "Chief, Communications Team"
+  field_org_name_1:
+    value: "National Cancer Institute"
+  field_org_name_2:
+    value: "Division of Cancer Epidemiology & Genetics, Office of the Director"
+  field_campus:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_biography_campus'
+            name: 'NCI Shady Grove Campus'
+  field_room_number:
+    value: "Room 7E434"
+  field_phone_number:
+    value: "240-276-7367"
+  field_email_address:
+    value: "loukissj@mail.nih.gov"
+  field_linkedin_handle:
+    value: "jennifer-loukissas-b09b254"
+  field_twitter_handle:
+    value: "jloukissas"
+  field_date_posted:
+    value: "2019-02-07"
+  field_date_reviewed:
+    value: "2019-02-07"
+  field_date_updated:
+    value: "2019-02-07"
+  field_date_display_mode:
+    value: "updated"
+  body:
+  - format: "full_html"
+    value: |
+      <p>Jennifer Loukissas serves as the Chief of the Communications team in the National Cancer Institute’s Division of Cancer Epidemiology and Genetics. Ms. Loukissas helps DCEG investigators and trainees to transmit their research findings to a variety of lay audiences including news media, research advocates, general public, the United States Congress, and other governmental agencies.</p>
+      <p>Ms. Loukissas manages the Division’s web and social media presence, and serves as senior managing editor for the Linkage newsletter. Equally important is her management of crisis communications for the Division. She also regularly delivers training on communicating science to investigators and trainees in NIH and academia. Ms. Loukissas is an award-winning science writer with 15 years of experience in public affairs. She came to the NIH in 2002 as Presidential Management Intern following receipt of a Master's Degree in Public Policy from Duke University; she holds a Bachelor of Arts in English from Haverford College.</p>
+      <p>Follow Ms. Loukissas on Twitter <a href="https://twitter.com/jloukissas">@jloukissas</a>.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_search_engine_restrictions: 0

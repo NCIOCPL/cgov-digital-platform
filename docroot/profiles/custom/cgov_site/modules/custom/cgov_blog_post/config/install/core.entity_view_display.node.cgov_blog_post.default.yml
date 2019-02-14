@@ -83,21 +83,23 @@ content:
     type: string
     region: content
   field_image_article:
+    type: entity_reference_entity_view
     weight: 22
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
+    label: hidden
+    settings:
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
   field_image_promotional:
+    type: entity_reference_entity_view
     weight: 23
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
+    label: hidden
+    settings:
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
   field_intro_text:
     weight: 13
     label: hidden

@@ -41,6 +41,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
   const SECTION_ID = 'edit-field-summary-sections-0-subform-field-pdq-section-id-0-value';
   const SECTION_TITLE = 'edit-field-summary-sections-0-subform-field-pdq-section-title-0-value';
   const SECTION_HTML = 'edit-field-summary-sections-0-subform-field-pdq-section-html-0-value';
+  const URL = 'edit-field-pdq-url-0-value';
 
   const SAVE_BUTTON = 'edit-submit';
 
@@ -80,6 +81,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_ID);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_TITLE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_HTML);
+    $this->assertSession()->fieldExists(PDQCancerSummaryTest::URL);
 
     /*
     Remove check for syndication keywords until the feature is implemented.
