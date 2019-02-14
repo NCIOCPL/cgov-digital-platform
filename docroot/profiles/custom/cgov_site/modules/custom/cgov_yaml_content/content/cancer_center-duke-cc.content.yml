@@ -30,6 +30,13 @@
   status: 1
   moderation_state:
     value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
   title: "Duke Cancer Center"
   field_sort_title:
     value: "Duke Cancer Center"
@@ -82,7 +89,7 @@
   field_website_title:
     value: "Visit Website"
   field_website_url:
-    value: "http://www.dukecancerinstitute/org/"
+    value: "http://www.dukecancerinstitute.org/"
   body:
     - format: "full_html"
       value: |
@@ -94,9 +101,6 @@
         <p>More than 50,000 individuals receive care at the Duke Cancer Institute each year. These individuals represent virtually every state in the nation and every county in North Carolina.</p>
         <p>The Duke Cancer Network provides an array of oncology related services in a regional network of 14 community cancer programs in North Carolina, the southeast and Michigan. Through the Network, the DCI offers patients and their providers access to state-of-the-art research and education programs and provides new cancer education initiatives for patients in rural areas. These community collaborations also provide patients and their providers with greater access to the most advanced treatments and clinical trials.</p>
         <br />
-        <br />
-        <br />
-        <br />
         <p><i>* This profile was provided by the Duke Cancer Institute.</i></p>
   field_date_posted:
     value: "2012-07-26"
@@ -106,3 +110,5 @@
     value: "2015-01-09"
   field_date_display_mode:
     - value: 'updated'
+  field_pretty_url:
+    value: "dukeci"
