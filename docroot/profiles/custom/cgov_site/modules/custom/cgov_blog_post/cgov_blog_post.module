@@ -54,8 +54,10 @@ function cgov_blog_post_entity_presave(EntityInterface $entity) {
  * Create an Ajax object & invoke the drawBlogTopics() method in our library JS.
  */
 function display_cats(array $form, FormStateInterface $form_state) {
+
+  $my_arr = filter_cats($form);
   $ajax_response = new AjaxResponse();
-  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', ['~~~ debug ~~~']));
+  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', [$my_arr]));
   return $ajax_response;
 }
 
@@ -72,12 +74,12 @@ function filter_cats(array $form) {
   $muh_array = [];
   foreach ($blog_topics as $blog_topic) {
     $bs = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($blog_topic->tid)->get('field_owner_blog')->target_id;
-    $bt = $blog_topic->name;
+    $bt = $blog_topic->tid;
     $muh_array[$bt] = $bs;
   }
 
   // Show pairs:
-  ksm($muh_array);
+  return $muh_array;
 }
 
 /**
