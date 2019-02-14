@@ -35,7 +35,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
   const SUMMARY_TYPE = 'edit-field-pdq-summary-type';
   const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
   const UPDATED_DATE_DATE = 'edit-field-date-updated-0-value-date';
-  const LIST_DESCRIPTION = 'edit-field-list-description-0-value';
+  const META_DESCRIPTION = 'edit-field-page-description-0-value';
   const PUBLIC_USE = 'edit-field-public-use';
   const AUDIENCE_TYPE = 'edit-field-pdq-audience';
   const SECTION_ID = 'edit-field-summary-sections-0-subform-field-pdq-section-id-0-value';
@@ -75,7 +75,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SUMMARY_TYPE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::POSTED_DATE_DATE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::UPDATED_DATE_DATE);
-    $this->assertSession()->fieldExists(PDQCancerSummaryTest::LIST_DESCRIPTION);
+    $this->assertSession()->fieldExists(PDQCancerSummaryTest::META_DESCRIPTION);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::PUBLIC_USE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::AUDIENCE_TYPE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SECTION_ID);
