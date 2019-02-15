@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_biography.body
     - field.field.node.cgov_biography.field_browser_title
     - field.field.node.cgov_biography.field_campus
@@ -27,6 +28,7 @@ dependencies:
     - field.field.node.cgov_biography.field_phone_number
     - field.field.node.cgov_biography.field_prefix
     - field.field.node.cgov_biography.field_pretty_url
+    - field.field.node.cgov_biography.field_related_resources
     - field.field.node.cgov_biography.field_room_number
     - field.field.node.cgov_biography.field_scientific_publications
     - field.field.node.cgov_biography.field_search_engine_restrictions
@@ -40,6 +42,8 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - entity_browser
+    - paragraphs_asymmetric_translation_widgets
     - path
     - text
 id: node.cgov_biography.default
@@ -48,7 +52,7 @@ bundle: cgov_biography
 mode: default
 content:
   body:
-    weight: 31
+    weight: 27
     type: text_textarea_with_summary
     settings:
       rows: 9
@@ -88,25 +92,25 @@ content:
     type: string_textfield
     region: content
   field_date_display_mode:
-    weight: 30
+    weight: 33
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_date_posted:
-    weight: 27
+    weight: 30
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 29
+    weight: 32
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 28
+    weight: 31
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -136,7 +140,7 @@ content:
     type: string_textfield
     region: content
   field_image_article:
-    weight: 32
+    weight: 28
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -151,7 +155,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_image_promotional:
-    weight: 33
+    weight: 29
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -261,6 +265,18 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_related_resources:
+    type: paragraphs_classic_asymmetric
+    weight: 34
+    region: content
+    settings:
+      title: 'Related Resource'
+      title_plural: 'Related Resources'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
   field_room_number:
     weight: 21
     settings:
@@ -272,10 +288,10 @@ content:
   field_scientific_publications:
     weight: 26
     settings:
-      rows: 5
       placeholder: ''
+      size: 60
     third_party_settings: {  }
-    type: string_textarea
+    type: string_textfield
     region: content
   field_search_engine_restrictions:
     weight: 35

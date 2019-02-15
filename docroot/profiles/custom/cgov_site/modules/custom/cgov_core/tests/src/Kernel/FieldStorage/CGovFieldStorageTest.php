@@ -19,8 +19,8 @@ class CGovFieldStorageTest extends KernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core', 'taxonomy',
+    'user', 'system', 'file', 'link', 'field', 'views', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
+    'language', 'content_translation', 'cgov_core', 'taxonomy', 'entity_browser', 'entity_reference_revisions', 'paragraphs',
   ];
 
   /**
@@ -105,7 +105,8 @@ class CGovFieldStorageTest extends KernelTestBase {
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'file', 'language', 'content_translation', 'cgov_core',
+      'field', 'node', 'file', 'link', 'language', 'content_translation', 'views',
+      'entity_browser', 'entity_reference_revisions', 'paragraphs', 'cgov_core',
     ]);
   }
 
