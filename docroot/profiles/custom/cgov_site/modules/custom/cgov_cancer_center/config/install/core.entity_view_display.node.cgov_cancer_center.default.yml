@@ -4,11 +4,8 @@ dependencies:
   config:
     - field.field.node.cgov_cancer_center.body
     - field.field.node.cgov_cancer_center.field_address
-    - field.field.node.cgov_cancer_center.field_address_1
-    - field.field.node.cgov_cancer_center.field_address_2
     - field.field.node.cgov_cancer_center.field_browser_title
     - field.field.node.cgov_cancer_center.field_card_title
-    - field.field.node.cgov_cancer_center.field_city
     - field.field.node.cgov_cancer_center.field_date_display_mode
     - field.field.node.cgov_cancer_center.field_date_posted
     - field.field.node.cgov_cancer_center.field_date_reviewed
@@ -32,10 +29,8 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_short_title
     - field.field.node.cgov_cancer_center.field_site_section
     - field.field.node.cgov_cancer_center.field_sort_title
-    - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
     - field.field.node.cgov_cancer_center.field_website_url
-    - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
     - address
@@ -62,29 +57,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_address:
-    weight: 19
-    settings:
-      default_country: null
-    third_party_settings: {  }
-    type: address_default
-    region: content
-    label: hidden
-  field_address_1:
+    type: address_plain
     weight: 13
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
     region: content
-  field_address_2:
-    weight: 14
-    label: hidden
-    settings:
-      link_to_entity: false
+    label: above
+    settings: {  }
     third_party_settings: {  }
-    type: string
-    region: content
   field_browser_title:
     weight: 5
     label: hidden
@@ -95,14 +73,6 @@ content:
     region: content
   field_card_title:
     weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_city:
-    weight: 15
     label: hidden
     settings:
       link_to_entity: false
@@ -295,13 +265,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_state:
-    weight: 16
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
   field_website_title:
     weight: 23
     label: hidden
@@ -312,14 +275,6 @@ content:
     region: content
   field_website_url:
     weight: 24
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_zip_code:
-    weight: 17
     label: hidden
     settings:
       link_to_entity: false
