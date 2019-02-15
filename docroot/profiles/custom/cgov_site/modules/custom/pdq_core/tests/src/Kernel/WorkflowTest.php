@@ -70,6 +70,7 @@ class WorkflowTest extends KernelTestBase {
       'content_translation',
       'field',
       'file',
+      'image',
       'link',
       'node',
       'pdq_core',
