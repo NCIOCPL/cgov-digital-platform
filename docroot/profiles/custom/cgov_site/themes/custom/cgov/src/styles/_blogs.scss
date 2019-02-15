@@ -237,16 +237,16 @@ p.blog-post-publishing-info {
 
 @include bp(large-up) {
 	.blog-post {
-		/* hide the left nav from view on large-up for blog posts*/
+		// hide the left nav from view on large-up for blog posts
 		#nvcgSlSectionNav {
 			display: none !important;
 		}
 		
-		/* correct the contentzone padding, as the nav is hidden */
+		// correct the contentzone padding, as the nav is hidden
 		.contentzone {
 			padding-left: 1.6em !important;
 			
-			/* if the right rail is missing, set the contentzone width to 100*/
+			// if the right rail is missing, set the contentzone width to 100
 			&:last-child {
 				width:100%;
 			}
@@ -308,9 +308,7 @@ p.blog-post-publishing-info {
 }
 
 .card.blog-feature {
-	background: #f5f5f5;
+	border: 1px solid $yetAnotherGrey;
+	background-color: $white;
+	box-shadow: 0 0 9px 1px rgba($black,.15);
 }
-
-/*end Blog Content CSS*/
-
-/********** END Blogs Styles ******************************************/

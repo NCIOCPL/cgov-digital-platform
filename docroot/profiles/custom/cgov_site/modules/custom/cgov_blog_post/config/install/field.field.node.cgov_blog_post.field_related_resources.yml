@@ -1,0 +1,68 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_resources
+    - node.type.cgov_blog_post
+    - paragraphs.paragraphs_type.cgov_external_link
+    - paragraphs.paragraphs_type.cgov_managed_link
+  module:
+    - entity_reference_revisions
+id: node.cgov_blog_post.field_related_resources
+field_name: field_related_resources
+entity_type: node
+bundle: cgov_blog_post
+label: 'Related Resources'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_external_link: cgov_external_link
+      cgov_managed_link: cgov_managed_link
+    target_bundles_drag_drop:
+      cgov_external_link:
+        enabled: true
+        weight: 14
+      body_section:
+        weight: 15
+        enabled: false
+      cgov_card_external:
+        weight: 16
+        enabled: false
+      cgov_card_internal:
+        weight: 17
+        enabled: false
+      cgov_card_raw_html:
+        weight: 18
+        enabled: false
+      cgov_column_one:
+        weight: 19
+        enabled: false
+      cgov_column_two:
+        weight: 20
+        enabled: false
+      cgov_guide_row:
+        weight: 21
+        enabled: false
+      cgov_managed_link:
+        enabled: true
+        weight: 13
+      cgov_primary_feature_row:
+        weight: 23
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: 24
+        enabled: false
+      cgov_thumbnail_row:
+        weight: 25
+        enabled: false
+      pdq_summary_section:
+        weight: 26
+        enabled: false
+field_type: entity_reference_revisions
