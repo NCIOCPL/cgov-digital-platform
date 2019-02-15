@@ -23,11 +23,13 @@ dependencies:
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
     - field.field.node.cgov_blog_series.field_site_section
+    - image.style.thumbnail
     - node.type.cgov_blog_series
     - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - entity_browser
+    - image
     - link
     - path
     - text
@@ -54,10 +56,10 @@ content:
   field_banner_image:
     weight: 16
     settings:
-      rows: 5
-      placeholder: ''
+      preview_image_style: thumbnail
+      progress_indicator: throbber
     third_party_settings: {  }
-    type: string_textarea
+    type: image_image
     region: content
   field_blog_series_shortname:
     weight: 9
