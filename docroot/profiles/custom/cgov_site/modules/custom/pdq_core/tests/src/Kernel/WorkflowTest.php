@@ -43,7 +43,6 @@ class WorkflowTest extends KernelTestBase {
     'views',
     'entity_browser',
     'entity_reference_revisions',
-    'paragraphs',
     'text',
     'user',
     'workflows',
