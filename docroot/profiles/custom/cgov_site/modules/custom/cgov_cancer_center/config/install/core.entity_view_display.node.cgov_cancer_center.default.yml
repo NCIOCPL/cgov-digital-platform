@@ -24,9 +24,12 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_phone_label_2
     - field.field.node.cgov_cancer_center.field_phone_number_1
     - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_pretty_url
     - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_related_resources
     - field.field.node.cgov_cancer_center.field_search_engine_restrictions
     - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_site_section
     - field.field.node.cgov_cancer_center.field_sort_title
     - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
@@ -35,6 +38,7 @@ dependencies:
     - node.type.cgov_cancer_center
   module:
     - datetime
+    - entity_reference_revisions
     - options
     - text
     - user
@@ -46,17 +50,17 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 124
+    weight: 25
     settings: {  }
     third_party_settings: {  }
     region: content
   content_moderation_control:
-    weight: -20
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_address_1:
-    weight: 112
+    weight: 13
     label: hidden
     settings:
       link_to_entity: false
@@ -64,7 +68,7 @@ content:
     type: string
     region: content
   field_address_2:
-    weight: 113
+    weight: 14
     label: hidden
     settings:
       link_to_entity: false
@@ -72,7 +76,7 @@ content:
     type: string
     region: content
   field_browser_title:
-    weight: 104
+    weight: 5
     label: hidden
     settings:
       link_to_entity: false
@@ -80,7 +84,7 @@ content:
     type: string
     region: content
   field_card_title:
-    weight: 103
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -88,7 +92,7 @@ content:
     type: string
     region: content
   field_city:
-    weight: 114
+    weight: 15
     label: hidden
     settings:
       link_to_entity: false
@@ -96,14 +100,14 @@ content:
     type: string
     region: content
   field_date_display_mode:
-    weight: 130
+    weight: 30
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
-    weight: 127
+    weight: 27
     label: hidden
     settings:
       format_type: medium
@@ -112,7 +116,7 @@ content:
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 129
+    weight: 29
     label: hidden
     settings:
       format_type: medium
@@ -121,7 +125,7 @@ content:
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 128
+    weight: 28
     label: hidden
     settings:
       format_type: medium
@@ -130,7 +134,7 @@ content:
     type: datetime_default
     region: content
   field_feature_card_description:
-    weight: 107
+    weight: 8
     label: hidden
     settings:
       link_to_entity: false
@@ -138,7 +142,7 @@ content:
     type: string
     region: content
   field_image_promotional:
-    weight: 126
+    weight: 26
     label: hidden
     settings:
       link: true
@@ -146,7 +150,7 @@ content:
     type: entity_reference_label
     region: content
   field_institution_type:
-    weight: 109
+    weight: 10
     label: hidden
     settings:
       link: true
@@ -154,7 +158,7 @@ content:
     type: entity_reference_label
     region: content
   field_list_description:
-    weight: 106
+    weight: 7
     label: hidden
     settings:
       link_to_entity: false
@@ -162,7 +166,7 @@ content:
     type: string
     region: content
   field_org_head_name:
-    weight: 110
+    weight: 11
     label: hidden
     settings:
       link_to_entity: false
@@ -170,7 +174,7 @@ content:
     type: string
     region: content
   field_org_head_title:
-    weight: 111
+    weight: 12
     label: hidden
     settings:
       link_to_entity: false
@@ -178,7 +182,7 @@ content:
     type: string
     region: content
   field_page_description:
-    weight: 105
+    weight: 6
     label: hidden
     settings:
       link_to_entity: false
@@ -186,7 +190,7 @@ content:
     type: string
     region: content
   field_parent_institution:
-    weight: 108
+    weight: 9
     label: hidden
     settings:
       link_to_entity: false
@@ -194,7 +198,7 @@ content:
     type: string
     region: content
   field_phone_label_1:
-    weight: 118
+    weight: 19
     label: hidden
     settings:
       link_to_entity: false
@@ -202,7 +206,7 @@ content:
     type: string
     region: content
   field_phone_label_2:
-    weight: 120
+    weight: 21
     label: hidden
     settings:
       link_to_entity: false
@@ -210,7 +214,7 @@ content:
     type: string
     region: content
   field_phone_number_1:
-    weight: 119
+    weight: 20
     label: hidden
     settings:
       link_to_entity: false
@@ -218,7 +222,15 @@ content:
     type: string
     region: content
   field_phone_number_2:
-    weight: 121
+    weight: 22
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pretty_url:
+    weight: 32
     label: hidden
     settings:
       link_to_entity: false
@@ -226,30 +238,47 @@ content:
     type: string
     region: content
   field_region:
-    weight: 117
+    weight: 18
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 34
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_search_engine_restrictions:
-    weight: 131
+    weight: 31
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_short_title:
-    weight: 102
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
+  field_site_section:
+    weight: 33
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   field_sort_title:
-    weight: 101
+    weight: 2
     label: hidden
     settings:
       link_to_entity: false
@@ -257,14 +286,14 @@ content:
     type: string
     region: content
   field_state:
-    weight: 115
+    weight: 16
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_website_title:
-    weight: 122
+    weight: 23
     label: hidden
     settings:
       link_to_entity: false
@@ -272,7 +301,7 @@ content:
     type: string
     region: content
   field_website_url:
-    weight: 123
+    weight: 24
     label: hidden
     settings:
       link_to_entity: false
@@ -280,7 +309,7 @@ content:
     type: string
     region: content
   field_zip_code:
-    weight: 116
+    weight: 17
     label: hidden
     settings:
       link_to_entity: false
@@ -288,9 +317,9 @@ content:
     type: string
     region: content
   links:
-    weight: 100
+    weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true

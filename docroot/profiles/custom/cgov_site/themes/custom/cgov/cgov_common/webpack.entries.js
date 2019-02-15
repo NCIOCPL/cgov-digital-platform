@@ -5,4 +5,6 @@ module.exports = {
     "Article": path.resolve(__dirname, "src/entrypoints/article/Article.js"),
     "Homelanding": path.resolve(__dirname, "src/entrypoints/homelanding/Homelanding.js"),
     "Minilanding": path.resolve(__dirname, "src/entrypoints/minilanding/Minilanding.js"),
+    "CancerCenters": path.resolve(__dirname, "src/entrypoints/cancerCenters/CancerCenters.js"),
+    "BlogPost": path.resolve(__dirname, "src/entrypoints/blogPost/BlogPost.js"),
 }

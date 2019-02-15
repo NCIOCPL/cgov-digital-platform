@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_site_section
     - node.type.cgov_home_landing
+    - taxonomy.vocabulary.cgov_site_sections
 id: node.cgov_home_landing.field_site_section
 field_name: field_site_section
 entity_type: node
@@ -17,7 +18,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: NULL
+    target_bundles:
+      cgov_site_sections: cgov_site_sections
     sort:
       field: name
       direction: asc
