@@ -134,7 +134,7 @@ class PDQResource extends ResourceBase {
           'posted_date' => $translation->field_date_posted->value,
           'updated_date' => $translation->field_date_updated->value,
           'short_title' => $translation->field_short_title->value,
-          'description' => $translation->field_list_description->value,
+          'description' => $translation->field_page_description->value,
 
           // This field will probably not be retained for the intitial
           // release.
@@ -245,7 +245,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_date_posted', $summary['posted_date'] ?? $today);
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
     $node->set('field_short_title', $summary['short_title']);
-    $node->set('field_list_description', $summary['description']);
+    $node->set('field_page_description', $summary['description']);
 
     // Field suppressed for now.
     // $node->set('field_syndication_keywords', $summary['keywords']);
