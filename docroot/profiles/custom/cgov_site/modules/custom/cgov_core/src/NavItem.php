@@ -156,7 +156,13 @@ class NavItem {
     $this->label = $this->term->field_navigation_label->value
       ? $this->term->field_navigation_label->value
       : $this->term->name->value;
-    $this->href = $this->term->computed_path->value;
+
+    $href = $this->term->computed_path->value;
+    // We need to manually prepend the '/espanol' for spanish terms.
+    if ($this->term->language()->getId() === 'es') {
+      $href = "/espanol$href";
+    }
+    $this->href = $href;
 
     // @var [['value' => string], ['value' => string]]
     $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
