@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Path\CurrentPathStack;
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\NavItem;
+use Psr\Log\LoggerInterface;
 
 /**
  * Cgov Navigation Manager Service.
@@ -76,18 +77,27 @@ class CgovNavigationManager {
   protected $entityFieldManager;
 
   /**
+   * Logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
   public function __construct(
     CurrentPathStack $currentPath,
     AliasManagerInterface $pathAliasManager,
     EntityTypeManagerInterface $entityTypeManager,
-    EntityFieldManagerInterface $entityFieldManager
+    EntityFieldManagerInterface $entityFieldManager,
+    LoggerInterface $logger
     ) {
     $this->currentPath = $currentPath;
     $this->pathAliasManager = $pathAliasManager;
     $this->entityTypeManager = $entityTypeManager;
     $this->entityFieldManager = $entityFieldManager;
+    $this->logger = $logger;
   }
 
   /**
@@ -97,6 +107,7 @@ class CgovNavigationManager {
     if ($this->initialized) {
       return;
     }
+    $this->logger->notice('Cgov Navigation Manager initialized.');
     $this->initialized = TRUE;
     $this->closestSiteSection = $this->getClosestSiteSection();
     // Guard against when this service is called inadvertantly by
@@ -104,6 +115,9 @@ class CgovNavigationManager {
     // vocabulary.
     if ($this->closestSiteSection) {
       $this->fullAncestry = $this->getTermAncestry($this->closestSiteSection);
+      $this->logger->notice("NavMgr: Full Ancestry = " . implode(", ", array_map(function ($el) {
+        return "(" . strval($el->id()) . ": '" . $el->computed_path->value . "')";
+      }, $this->fullAncestry)));
     }
   }
 
@@ -282,6 +296,7 @@ class CgovNavigationManager {
         $isNavRoot = $term->{$testFieldName}->value;
         if ($isNavRoot) {
           $navItem = $this->newNavItem($term);
+          $this->logger->notice("NavMgr: (NavItem created) href= '{$navItem->getHref()}', id= @id", ["@id" => strval($term->id())]);
           return $navItem;
         }
       }

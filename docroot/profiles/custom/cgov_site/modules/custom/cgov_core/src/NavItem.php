@@ -156,18 +156,22 @@ class NavItem {
     $this->label = $this->term->field_navigation_label->value
       ? $this->term->field_navigation_label->value
       : $this->term->name->value;
-    $this->href = $this->term->computed_path->value;
+
+    $href = $this->term->computed_path->value;
+    // We need to manually prepend the '/espanol' for spanish terms.
+    if ($this->term->language()->getId() === 'es') {
+      $href = "/espanol$href";
+    }
+    $this->href = $href;
 
     // @var [['value' => string], ['value' => string]]
     $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
-    // Build a lookup table for easier reference later.
-    $displayRules = [];
+    // Populate a lookup table for easier reference later.
     foreach ($navigationDisplayRules as $rule) {
       $rule = $rule['value'];
-      $displayRules[$rule] = TRUE;
+      $this->displayRules[$rule] = TRUE;
     };
-    $this->displayRules = $displayRules;
   }
 
   /**
@@ -266,30 +270,17 @@ class NavItem {
    * Optional, pass an array of class properties
    * with boolean values to filter children against.
    *
-   * @param string[] $filters
-   *   Optional list of properties to filter children
-   *   against, each string should map to a valid
-   *   property on this class instance.
-   *
    * @return \Drupal\cgov_core\NavItemInterface[]
    *   Filtered array of direct descendents.
    */
-  public function getChildren(array $filters = []) {
+  public function getChildren() {
     // @var \Drupal\taxonomy\TermInterface[]
     $allChildTerms = $this->navMgr->getChildTerms($this->term);
     // Build the navItems to make interacting with terms easier.
     $navItems = array_map(function ($term) {
       return $this->navMgr->newNavItem($term);
     }, $allChildTerms);
-    $filteredChildren = array_filter($navItems, function ($child) use ($filters) {
-      foreach ($filters as $filter) {
-        if ($child->hasDisplayRule($filter)) {
-          return FALSE;
-        }
-      }
-      return TRUE;
-    });
-    return $filteredChildren;
+    return $navItems;
   }
 
 }
