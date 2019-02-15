@@ -135,11 +135,16 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
     $breadcrumbs = $this->getBreadcrumbs();
     $build = [
       '#type' => 'block',
-      '#cache' => ['max-age' => 0],
       'breadcrumbs' => $breadcrumbs,
     ];
-
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }

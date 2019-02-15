@@ -296,7 +296,7 @@ class CgovNavigationManager {
         $isNavRoot = $term->{$testFieldName}->value;
         if ($isNavRoot) {
           $navItem = $this->newNavItem($term);
-          $this->logger->notice("NavItem created: href= '{$navItem->getHref()}', id= @id", ["@id" => strval($term->id())]);
+          $this->logger->notice("NavMgr: (NavItem created) href= '{$navItem->getHref()}', id= @id", ["@id" => strval($term->id())]);
           return $navItem;
         }
       }

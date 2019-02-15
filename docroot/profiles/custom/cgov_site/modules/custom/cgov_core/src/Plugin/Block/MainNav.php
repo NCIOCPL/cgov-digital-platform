@@ -215,8 +215,14 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     $build = [
       '#markup' => $navTree,
     ];
-
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }
