@@ -19,7 +19,7 @@ class PDQFieldStorageTest extends KernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
+    'user', 'system', 'file', 'field', 'image', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
     'language', 'content_translation', 'pdq_core', 'paragraphs', 'rest', 'serialization',
   ];
 
