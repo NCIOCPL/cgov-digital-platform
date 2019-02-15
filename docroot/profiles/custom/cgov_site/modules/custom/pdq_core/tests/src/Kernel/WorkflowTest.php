@@ -30,6 +30,7 @@ class WorkflowTest extends KernelTestBase {
     'file',
     'link',
     'filter',
+    'image',
     'language',
     'node',
     'options',
