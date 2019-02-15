@@ -2,20 +2,28 @@ langcode: en
 status: true
 dependencies:
   module:
+    - file
+    - image
     - node
-    - text
-  enforced:
-    module:
-      - cgov_core
 id: node.field_banner_image
 field_name: field_banner_image
 entity_type: node
-type: string_long
-settings: {  }
-module: core
+type: image
+settings:
+  uri_scheme: public
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  target_type: file
+  display_field: false
+  display_default: false
+module: image
 locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
-persist_with_no_fields: true
+persist_with_no_fields: false
 custom_storage: false
