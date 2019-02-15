@@ -5,6 +5,7 @@ namespace Drupal\cgov_core;
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
 
 /**
  * Nav Item.
@@ -38,9 +39,9 @@ class NavItem {
   /**
    * Current NavItem has associated landing page.
    *
-   * @var bool
+   * @var int
    */
-  protected $landingPage;
+  protected $landingPageId;
 
   /**
    * TRUE if this NavItem is in active path.
@@ -147,7 +148,12 @@ class NavItem {
     // TODO: Error handle if fields don't exist.
     $this->term = $term;
     $this->termId = $this->term->id();
-    $this->landingPage = $this->term->field_landing_page->getValue();
+
+    $hasLandingPage = count($this->term->field_landing_page->getValue()) && isset($this->term->field_landing_page->getValue()[0]['target_id']);
+    if ($hasLandingPage) {
+      $this->landingPageId = $this->term->field_landing_page->getValue()[0]['target_id'];
+    }
+
     $this->isBreadcrumbRoot = $this->term->field_breadcrumb_root->value;
     $this->isSectionNavRoot = $this->term->field_section_nav_root->value;
     $this->isMainNavRoot = $this->term->field_main_nav_root->value;
@@ -157,12 +163,13 @@ class NavItem {
       ? $this->term->field_navigation_label->value
       : $this->term->name->value;
 
-    $href = $this->term->computed_path->value;
-    // We need to manually prepend the '/espanol' for spanish terms.
-    if ($this->term->language()->getId() === 'es') {
-      $href = "/espanol$href";
+    // Only site sections with landing pages can have a link.
+    // Nav plugins should never be calling getHref on NavItems without landing
+    // pages (since those are filtered )
+    if ($this->landingPageId) {
+      $href = Url::fromRoute('entity.node.canonical', ['node' => $this->landingPageId])->toString();
+      $this->href = $href;
     }
-    $this->href = $href;
 
     // @var [['value' => string], ['value' => string]]
     $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
