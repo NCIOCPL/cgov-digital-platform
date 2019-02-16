@@ -13,7 +13,7 @@
 {% set description = content.field_override_card_description[0] %}
 
 {# ###### Setup URL ######## #}
-{% set url = content.field_featured_url.uri %}
+{% set url = content.field_featured_url[0]['#url'] %}
 
 {# ###### Setup Img ######## #}
 {% set image = content.field_image_promotional %}
