@@ -1,3 +1,9 @@
+@import '~Core/styles/breakpoints';
+// @import '~Core/styles/fonts';
+@import '~Core/styles/variables';
+@import '~Core/styles/colors';
+@import '~Core/styles/mixins';
+
 .nav-menu .nav-item {
 	$nav-max-lines: 1;
 	@mixin nav-item-spacing($nav-item-list, $nav-item-width-add) {
@@ -180,7 +186,7 @@
 
 		/* sub-navigation panel open state */
 		&.open {
-			max-height:300px;
+			max-height:460px;
 			opacity: 1;
 			visibility: visible;
 			transition-delay: 500ms;
@@ -215,9 +221,9 @@
 	.sub-nav-mega ul {
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 2% 0 0;
+		margin: 0 3% 0 0;
 		padding: 0;
-		line-height: 1.3em;
+		line-height: 1.1em;
 	}
 
 	/* make columns out of sub nav groups */
@@ -229,12 +235,13 @@
 
 	/* mega menu group headers (level 2) */
 	.sub-nav-group-header {
-		font-size: 1.0625em;
+		font-size: 15px;
 		text-transform: uppercase;
 		font-weight: bold;
 		color: $color-link;
 		display: block;
 		font-family: $montserrat-font-stack;
+		line-height: 19px;
 	}
 	/* sub nav group header hover color */
 	.sub-nav-group-header:hover, .sub-nav-group-header:focus {
@@ -263,17 +270,19 @@
 
 	/* mega menu group links (level 3) */
 	.sub-nav-group ul li a {
-		font-size: 0.9375em;
+		font-size: 14px;
 		color: #2f2f2f;
+		line-height: 17px;
 	}
 	.sub-nav-group ul li a:hover, .sub-nav-group ul li a:focus {
 		text-decoration: underline;
 	}
 
-	/* decrease height of mega menu and add scroll bar */
+	/* remove scroll bar from megamenu
 	.mega-menu-scroll {
 		overflow-y: scroll;
 	}
+	*/
 	html.windows .mega-menu-scroll .sub-nav-group-subwrapper {
 		position:relative;
 		left:10px;
@@ -287,7 +296,7 @@
 		margin: 8px 0 0 0;
 		padding: 0;
 	}
-	
+
 	/* MegaMenu styles for side exits */
 	nav .sub-nav-group-wrapper {
 		max-width: 70em;
@@ -298,7 +307,7 @@
 	}
 }
 
-@include bp(xtra-large) {	
+@include bp(xtra-large) {
 	.row, nav .sub-nav-group-wrapper {
 		max-width: 1200px;
 	}

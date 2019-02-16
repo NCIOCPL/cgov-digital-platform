@@ -1,0 +1,35 @@
+{% macro nav_level(links) %}
+  {% import _self as macros %}
+  {% for link in links %}
+    <li class="{{ link.class }}">
+      <div class="{{ link.isCurrentSection ? 'current-page' : '' }}">
+        <a href="{{ link.href }}">{{ link.label }}</a>
+        {# Sadly, for legacy reasons, we need to defer to the FE code for injecting buttons #}
+        {# TODO: Post-migration refactor to move template generating to templates.  %}
+        {# {% if link.children|length > 0 %}
+          <button class="toggle" aria-expanded="{{ link.isExpanded ? 'true' : 'false' }}" type="button">
+            <span class="hidden">{{ link.isExpanded ? 'Collapse' : 'Expand' }}</span>
+          </button>
+        {% endif %} #}
+      </div>
+      {% if link.children|length > 0 %}
+        <ul style="display:{{ link.isExpanded ? 'block;' : 'none;'}}">
+          {{ macros.nav_level(link.children) }}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+<li class="{{ content.nav_tree.class }}">
+  <div>
+    <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
+  </div>
+  {% if content.nav_tree.children|length > 0 %}
+    <ul>
+      {{ macros.nav_level(content.nav_tree.children) }}
+    </ul>
+  {% endif %}
+</li>
+

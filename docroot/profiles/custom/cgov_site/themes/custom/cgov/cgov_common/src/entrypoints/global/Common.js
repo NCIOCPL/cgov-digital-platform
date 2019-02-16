@@ -25,9 +25,9 @@ import './Common.scss';
 // import 'Plugins/jquery.nci.prevent_enter';
 
 // import { buildOTP, makeOutline } from 'Common/Enhancements/NCI.page';
-// import search from 'Modules/search/search';
-// import mobilemenu from 'Modules/nav/mobilemenu';
-// import sectionmenu from 'Modules/nav/sectionmenu';
+import search from 'Libraries/search/search';
+import mobilemenu from 'Libraries/mainNav/mobilemenu';
+import sectionNav from 'Libraries/sectionNav/sectionNav';
 // import exitDisclaimer from 'Common/Enhancements/exitDisclaimer';
 // import backToTop from 'Modules/backToTop/backToTop';
 // import { makeAllAccordions } from 'Modules/accordion/accordion';
@@ -42,8 +42,8 @@ import './Common.scss';
 import pageOptions from 'Libraries/pageOptions';
 
 // import SiteWideSearch from 'Common/Enhancements/sitewidesearch';
-// import megaMenuModule from 'Modules/megamenu/megamenu';
-// import headroomPlugin from 'Modules/headroom/headroom';
+import megaMenuModule from 'Libraries/megamenu/megamenu';
+import headroomPlugin from 'Core/libraries/headroom/headroom';
 // import DeepLinkPatch from 'Modules/utility/deepLinkPatch';
 // import linkAudioPlayer from 'Modules/linkAudioPlayer/linkAudioPlayer';
 
@@ -53,9 +53,9 @@ import pageOptions from 'Libraries/pageOptions';
 const onDOMContentLoaded = () => {
 
 	// /*** BEGIN header component ***/
-	// megaMenuModule();
+	megaMenuModule();
 
-	// headroomPlugin();
+	headroomPlugin();
 
 	// // This initializes jQuery UI Autocomplete on the site-wide search widget.
 	// SiteWideSearch();
@@ -71,16 +71,16 @@ const onDOMContentLoaded = () => {
 
 	// /*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
 
-	// // OCEPROJECT-3098 HACK to fix the Spanish mega menu on the Spanish homepage
-	// if (/^\/espanol\/?$/.test(location.pathname)) {
-	// 	$('#mega-nav .contains-current').removeClass('contains-current');
-	// }
+	// OCEPROJECT-3098 HACK to fix the Spanish mega menu on the Spanish homepage
+	if (/^\/espanol\/?$/.test(location.pathname)) {
+		$('#mega-nav .contains-current').removeClass('contains-current');
+	}
 
-	// mobilemenu();
+	mobilemenu();
 
-	// sectionmenu();
+	sectionNav();
 
-	// search.init();
+	search.init();
 
 	// /*** END mobile nav ***/
 
