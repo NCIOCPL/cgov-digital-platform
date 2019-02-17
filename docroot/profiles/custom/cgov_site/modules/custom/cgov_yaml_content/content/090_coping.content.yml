@@ -49,8 +49,14 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Coping with Cancer'
-
+            computed_path: '/about-cancer/coping'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar'
   ### English Contents
   field_landing_contents:
     ######## Begin two item Row ###########

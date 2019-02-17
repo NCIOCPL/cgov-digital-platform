@@ -1,0 +1,31 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "About NCI"
+  title__ES:
+      value: "Nuestro instituto"
+  field_page_description:
+    value: "Information about the National Cancer Institute, including information about NCI's organization, budget, advisory boards, and employment opportunities."
+  field_page_description__ES:
+    value: "Información sobre el Instituto Nacional del Cáncer que incluye aspectos como su estructura organizativa, presupuesto y juntas asesoras."
+  field_short_title:
+    value: "About NCI"
+  field_short_title__ES:
+    value: "Nuestro instituto"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/instituto'
