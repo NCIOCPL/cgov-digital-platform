@@ -3,6 +3,7 @@
 namespace Drupal\Tests\pdq_cancer_information_summary\Functional;
 
 use Drupal\Core\Url;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -153,6 +154,9 @@ class ApiTest extends BrowserTestBase {
     $this->assertFalse($values['en']['published'], 'Not yet published');
     $this->checkValues($values, ['en']);
 
+    // Confirm the existence of the site sections.
+    $this->checkSiteSections($this->english);
+
     // Store a modified revision (still unpublished).
     $section = ['id' => '_3', 'title' => 'Section 3', 'html' => '<p>3</p>'];
     $this->english['sections'][] = $section;
@@ -180,6 +184,9 @@ class ApiTest extends BrowserTestBase {
     $this->assertFalse($values['en']['published'], 'Not yet published');
     $this->assertFalse($values['es']['published'], 'Not yet published');
     $this->checkValues($values, ['en', 'es']);
+
+    // Confirm the existence of the Spanish site sections.
+    $this->checkSiteSections($this->spanish);
 
     // Publish the summaries and make sure they're still intact.
     $this->publish();
@@ -373,6 +380,49 @@ class ApiTest extends BrowserTestBase {
     $actual = $this->drupalGet($url);
     $this->assertResponse(200);
     $this->assertEqual($actual, $expected);
+  }
+
+  /**
+   * Confirm that the site section terms have been created.
+   *
+   * @param array $summary
+   *   Values for the summary which should appear in site navigation.
+   */
+  private function checkSiteSections(array $summary) {
+    $url = $summary['url'];
+    $language = $summary['language'];
+    $nid = $summary['nid'];
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', 'cgov_site_sections');
+    $query->condition('field_landing_page.target_id', $nid);
+    $query->condition('langcode', $language);
+    $tids = $query->execute();
+    $this->assertCount(1, $tids, 'found term for landing page');
+    $section = Term::load(array_pop($tids));
+    $tail = TRUE;
+    $tokens = explode('/', trim($url, '/'));
+    $lang_ok = 'language code is correct';
+    while (!empty($tokens)) {
+      $section_langcode = $section->get('langcode')->value;
+      $this->assertEqual($section_langcode, $language, $lang_ok);
+      $token = array_pop($tokens);
+      $name = $section->getName();
+      $pretty_url = $section->get('field_pretty_url')->value;
+      $this->assertEqual($pretty_url, $token, 'pretty url is correct');
+      if ($tail) {
+        $nav_label = $summary['short_title'];
+        $path = $section->get('computed_path')->value;
+        $this->assertEqual($name, $nav_label, 'nav label is correct');
+        $this->assertEqual($path, $url, 'computed path is correct');
+        $tail = FALSE;
+      }
+      else {
+        $this->assertEqual($name, $token, 'section name matches url token');
+      }
+      $section = Term::load($section->get('parent')->target_id);
+    }
+    $this->assertEqual($section->get('parent')->target_id, 0, 'found root');
+    $this->assertEqual($section->get('langcode')->value, $language, $lang_ok);
   }
 
 }
