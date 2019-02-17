@@ -30,6 +30,8 @@
       {% set description = content.field_override_list_description[0] %}
     {% elseif content.field_featured_item[0]["#node"].field_list_description[0] %}
       {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
+    {% elseif content.field_featured_item[0]["#node"].field_page_description[0] %}
+      {% set description = content.field_featured_item[0]["#node"].field_page_description[0].value %}
     {% endif %}
   {# Else no description #}
   {% endif %}
