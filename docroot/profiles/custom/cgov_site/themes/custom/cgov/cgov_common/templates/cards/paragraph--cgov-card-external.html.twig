@@ -1,4 +1,4 @@
-{% import '@cgov_common/card_macros.twig' as cardMacros %}
+{% import '@cgov_common/cards/card_macros.twig' as cardMacros %}
 
 {# This needs to parallel the feature card template. However, we
  # get the title, description, image and URL from the paragraph fields.
@@ -10,7 +10,11 @@
 {% set title = content.field_override_card_title[0] %}
 
 {# ###### Setup Description ####### #}
-{% set description = content.field_override_card_description[0] %}
+{% if cardType is same as('feature_card') %}
+  {% set description = content.field_override_card_description[0] %}
+{% elseif cardType is same as('thumbnail_card') %}
+  {% set description = content.field_override_list_description[0] %}
+{% endif %}
 
 {# ###### Setup URL ######## #}
 {% set url = content.field_featured_url[0]['#url'] %}
