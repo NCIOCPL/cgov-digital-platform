@@ -1,4 +1,6 @@
-
-<div class="row thumbnail-section">
+{% if content.field_container_heading[0] %}
+  <h2>{{content.field_container_heading[0]}}</h2>
+{% endif %}
+<div class="row  card-thumbnail thumbnail-section">
   {{ content.field_unlimited_row_cards }}
 </div>
