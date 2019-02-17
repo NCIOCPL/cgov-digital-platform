@@ -1,0 +1,89 @@
+## TESTS:
+### Mini Landing Page (no banner)
+### Sets section with child pages for additional testing
+
+- entity: "node"
+  type: "cgov_mini_landing_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS Central"
+  field_page_description:
+    value: "To help solve the 30-year challenge of how to treat RAS-driven cancers, we need an open model of collaboration. Whether you are a dedicated RAS expert or curious researcher, we encourage you to help advance the research by joining our RAS community."
+  field_meta_description:
+    value: "RAS Central is NCI's online forum for RAS researchers, featuring blog posts, an online discussion forum, events and videos, and other useful tools and resources"
+  field_short_title:
+    value: "RAS Central"
+  field_browser_title:
+    value: "RAS Central"
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central'
+
+########## Current Intro Text — need to verify this is correct markup ###########
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: cgov_one_column" ####IS THIS TYPE CORRECT?###
+      field_main_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <p>One way we can help solve the 30-year challenge of how to treat RAS-driven cancers is to build an open model of collaboration among government, academic, and industry researchers that will re-energize efforts to develop RAS therapeutics. Whether you are a dedicated RAS expert or curious researcher, we encourage you to help us advance our research by being part of the RAS community.</p>
+
+######## BEGIN THUMBNAIL CARDS ########
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'RAS Dialogue Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden Desc - Post comments, ask questions, share information, and stay up-to-date with expert Rasologists.'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_blog_series'
+                    title: 'RAS Dialogue'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'RAS Lab Discussion Forum Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden Desc - RAS Lab is an online discussion forum to facilitate the exchange of scientific information among researchers in cancers related to RAS.'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Lab Discussion Forum'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Meetings & Videos Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden desc - Explore upcoming RAS-related workshops, seminars, and conferences and previously recorded webcasts of such events.'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Meetings & Videos'
+    ######## End Thumbnail Row ##############

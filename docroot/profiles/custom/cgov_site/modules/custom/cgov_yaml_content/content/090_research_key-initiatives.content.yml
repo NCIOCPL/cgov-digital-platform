@@ -1,0 +1,114 @@
+## TESTS:
+### Mini Landing Page (no banner)
+### Root Section Nav that only shows 1 level (itself, no childeren) of navigation
+### "Special" callout box (2-column with embedded thumbnail image)
+
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Key Initiatives"
+  title__ES:
+    value: "Iniciativas clave"
+  field_page_description:
+    value: "Learn about major research initiatives NCI has developed to address specific issues of high priority for the cancer research community."
+  field_page_description__ES:
+    value: "Entérese acerca de las principales iniciativas de investigación creadas por el NCI para responder a cuestiones específicas de alta prioridad para la comunidad de investigación oncológica."
+  field_short_title:
+    value: "Key Initiatives"
+  field_short_title__ES:
+    value: "Iniciativas clave"
+  field_browser_title:
+    value: "Key Initiatives"
+  field_browser_title_ES:
+    value: "Iniciativas clave"
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/investigacion/iniciativas-clave'
+  ### English Contents
+  field_landing_contents:
+    ## Intro Text ##
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <p>NCI has worked to leverage its role as the leader of the National Cancer Program to expand our understanding of cancer and to translate new knowledge into better cancer prevention and treatment. Although the majority of NCI’s funding supports investigator-initiated science, the institute also invests in major research initiatives to facilitate and support research on specific issues of importance to the cancer research enterprise. Some of these key initiatives include:</p>
+            <div class="callout-box-full">
+            <div class="row collapse-edges">
+            <div class="large-3 columns"> ###EMBED THUMBNAIL IMAGE###
+            </div>
+            <div class="large-9 columns">
+            <h3><a href="/research/key-initiatives/moonshot-cancer-initiative" title="">Cancer Moonshot</a></h3>
+            <p>The cancer initiative is increasing resources and collaboration to make research advances available to patients across America. NCI is accepting applications for research grants that align with the goals of the Cancer Moonshot.</p>
+            <span style="background-color: #319fbe; padding: 5px 10px; display: inlinde-block;"><a href="/research/key-initiatives/moonshot-cancer-initiative/funding" style="color: white !important; text-decoration: none !important;" title="">See Funding Opportunities</a></span></div>
+            </div>
+            </div>
+            </div>
+  #### End intro text ####
+  #### Begin thumbnail cards ####
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_mini_landing_page'
+                    title: 'The Ras Initiative'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'National Clinical Trials Network (NCTN)'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                - 'node'
+                - type: 'cgov_article'
+                  title: 'NCI Community Oncology Research Program (NCORP)'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: "NCI's Role in Immunotherapy Research"
+          field_override_list_description:
+            - value: 'Advances in cancer immunotherapy are the result of several decades of basic research, much of it supported by NCI, on how the immune system responds to cancer. NCI continues to support a wide range of research, from basic research to clinical trials, to advance the field of cancer immunotherapy.'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: "NCI's Role in Immunotherapy Research"
+      ##### End Thumbnail Cards #####
