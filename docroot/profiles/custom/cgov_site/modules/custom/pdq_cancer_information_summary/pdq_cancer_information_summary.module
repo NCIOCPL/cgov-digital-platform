@@ -37,10 +37,27 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
   // Collect the values we need from the summary.
   $langcode = $entity->get('langcode')->value;
   $url = $entity->get('field_pdq_url')->value;
-  $nav_label = $entity->get('field_short_title');
+  $nav_label = $entity->get('field_short_title')->value;
 
   // Find the root of the navigation tree for this language.
   $section = _pdq_cis_load_site_section($langcode);
+
+  // If the root term isn't there, create it.
+  if (empty($section)) {
+    $section = Term::create([
+      'vid' => 'cgov_site_sections',
+      'name' => $langcode === 'en' ? 'Home' : "Espa\u{f1}ol Home",
+      'parent' => 0,
+      'status' => 1,
+      'langcode' => $langcode,
+      'field_breadcrumb_root' => TRUE,
+      'field_main_nav_root' => TRUE,
+    ]);
+    if ($langcode === 'es') {
+      $section->set('field_navigation_label', "P\u{e1}gina principal");
+    }
+    $section->save();
+  }
 
   // Walk through the tokens from the exploded URL, making sure we have
   // a site section term corresponding to each of those tokens.
@@ -59,6 +76,7 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
         'field_pretty_url' => $token,
         'parent' => $section_id,
         'status' => 1,
+        'langcode' => $langcode,
       ]);
       if ($is_last_token) {
         $child->set('field_landing_page', $entity);
