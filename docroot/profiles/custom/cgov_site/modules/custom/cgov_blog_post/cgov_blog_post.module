@@ -5,8 +5,6 @@
  * Contains cgov_blog_post.module.
  */
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -22,23 +20,17 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
     // https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Ajax%21InvokeCommand.php/class/InvokeCommand/8.2.x
     $form['#attached']['library'][] = 'cgov_blog_post/cgov_blog_post_admin';
 
+    // Add Drupal JS settings.
+    // TODO: Add selector settings.
+    $id_pairs = get_id_pairs($form);
+    $form['#attached']['drupalSettings']['adminJS']['idPairs'] = $id_pairs;
+    $form['#attached']['drupalSettings']['adminJS']['selectable'] = is_selectable($form);
+
     // If this is a draft or administrator role, fire off ajax function.
-    // TODO: add variants.
-    // TODO: initialize with correct categories showing.
-    if (is_draft($form)) {
+    if (is_selectable($form)) {
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
-      $form['field_blog_series']['widget']['#ajax'] = [
-        'callback' => 'display_cats',
-        'event' => 'change',
-        'progress' => [
-          'message' => NULL,
-          'type' => 'throbber',
-        ],
-      ];
     }
     else {
-      // TODO: initialize with correct categories showing.
-      $form['field_blog_topics']['#disabled'] = TRUE;
       $form['field_blog_series']['#disabled'] = TRUE;
     }
   }
@@ -49,23 +41,6 @@ function cgov_blog_post_form_alter(&$form, FormStateInterface $form_state, $form
  */
 function cgov_blog_post_entity_presave(EntityInterface $entity) {
   // TODO: validate selected Blog Topics before saving.
-}
-
-/**
- * Create an Ajax object & invoke the drawBlogTopics() method in our library JS.
- */
-function display_cats(array $form, FormStateInterface $form_state) {
-  $ajax_args = get_id_pairs($form);
-  $ajax_response = new AjaxResponse();
-  $ajax_response->addCommand(new InvokeCommand(NULL, 'drawBlogTopics', [$ajax_args]));
-  return $ajax_response;
-}
-
-/**
- * Clear all taxonomy checks.
- */
-function clear_cats(array $form) {
-  return '== debug cleared category checkboxes ==';
 }
 
 /**
@@ -89,22 +64,17 @@ function get_id_pairs(array $form) {
 }
 
 /**
- * Util function to return the moderation state of a given form.
+ * Set change rules for Blog Series dropdown.
  */
-function get_moderation_state(array $form) {
-  // TODO: null check.
-  $moderation_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
-  return $moderation_state;
-}
+function is_selectable(array $form) {
+  // Check for the draft state.
+  $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+  $selectable = ($curr_state == 'draft') ? TRUE : FALSE;
 
-/**
- * Check if content item is in a draft state.
- */
-function is_draft(array $form) {
-  // TODO: Add user check and return true for admins.
-  $moderation_state = get_moderation_state($form);
-  $is_draft = ($moderation_state == 'draft') ? TRUE : FALSE;
-  // Return true until topic options are fixed.
-  $is_draft = TRUE;
-  return $is_draft;
+  // Check for user role.
+  $curr_roles = \Drupal::currentUser()->getRoles();
+  if (in_array('advanced_editor', $curr_roles) || in_array('site_admin', $curr_roles)) {
+    $selectable = TRUE;
+  }
+  return $selectable;
 }
