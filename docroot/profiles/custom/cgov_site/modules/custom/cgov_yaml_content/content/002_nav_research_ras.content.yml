@@ -1,0 +1,151 @@
+## RAS Content
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "The RAS Initiative"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  field_pretty_url:
+    value: "ras"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Community Outreach"
+  field_pretty_url:
+    value: "outreach"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Spokes/Funding"
+  field_pretty_url:
+    value: "spokes-funding"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "RAS Target Identification"
+  field_pretty_url:
+    value: "target-identification"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "RAS Screens & Assays"
+  field_pretty_url:
+    value: "screens-assays"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+
+### RAS Central ###
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "RAS Central"
+  field_pretty_url:
+    value: "ras-central"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "RAS Dialogue"
+  field_pretty_url:
+    value: "blog"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "RAS Lab Discussion Forum"
+  field_pretty_url:
+    value: "discussion-forum"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Meetings & Videos"
+  field_pretty_url:
+    value: "meetings-videos"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Tools & Resources"
+  field_pretty_url:
+    value: "tools-resources"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central'
+
+### END RAS Central ###
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "About"
+  field_pretty_url:
+    value: "about"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'

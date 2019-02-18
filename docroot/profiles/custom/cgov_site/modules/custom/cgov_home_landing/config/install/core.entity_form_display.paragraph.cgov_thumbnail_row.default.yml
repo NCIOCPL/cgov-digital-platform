@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.cgov_thumbnail_row.field_unlimited_row_cards
+    - field.field.paragraph.cgov_thumbnail_row.field_container_heading
     - paragraphs.paragraphs_type.cgov_thumbnail_row
   module:
     - paragraphs
@@ -11,8 +12,16 @@ targetEntityType: paragraph
 bundle: cgov_thumbnail_row
 mode: default
 content:
-  field_unlimited_row_cards:
+  field_container_heading:
     weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_unlimited_row_cards:
+    weight: 1
     settings:
       title: Card
       title_plural: Cards

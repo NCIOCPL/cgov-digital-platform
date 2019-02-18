@@ -17,7 +17,12 @@ function cgov_home_landing_install() {
   $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Add content type permissions.
+  // Home and Landing.
   $siteHelper->addContentTypePermissions('cgov_home_landing', ['content_author']);
   $siteHelper->attachContentTypeToWorkflow('cgov_home_landing', 'editorial_workflow');
+
+  // Mini Landing.
+  $siteHelper->addContentTypePermissions('cgov_mini_landing', ['content_author']);
+  $siteHelper->attachContentTypeToWorkflow('cgov_mini_landing', 'editorial_workflow');
 
 }

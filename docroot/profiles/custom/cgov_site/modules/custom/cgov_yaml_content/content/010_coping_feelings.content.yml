@@ -67,7 +67,14 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Feelings and Cancer'
+            computed_path: '/about-cancer/coping/feelings'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar/sentimientos'
   field_image_article:
     - target_type: 'media'
       '#process':
