@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - media
+id: image_url
+label: 'Image URL'
+type: 'canonical_entities:media'
+pattern: '/image/[media:mid]'
+selection_criteria:
+  054e5d05-cadc-4f40-ae74-51866c1c48a1:
+    id: 'entity_bundle:media'
+    bundles:
+      cgov_image: cgov_image
+    negate: false
+    context_mapping:
+      media: media
+    uuid: 054e5d05-cadc-4f40-ae74-51866c1c48a1
+selection_logic: and
+weight: -5
+relationships: {  }

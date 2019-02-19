@@ -7,7 +7,7 @@
 </header>
 
 <div id="page">
-  <!-- Global nav/utilit bar/language  -->
+  <!-- Global nav/utility bar/language  -->
   <div class="fixedtotop">
     <div class="headroom-area">
       {{ page.language_bar }}
@@ -16,33 +16,49 @@
         {{ page.utility_bar }}
       </div>
       <!-- END UTILITY NAV -->
-      <!-- BEGIN NAVIGATION -->
-      <!-- Begin nav-search bar -->
-      <div class="nav-search-bar gradient header">
-        <div id="nvcgSlMainNav" class="row">
-          {{ page.main_nav }}
-          <div class="contentid-911752 slot-item last-SI">
-            <div class="rawHtml">
-              <div class="search" role="search">
-                <form action="/search/results" method="post" id="siteSearchForm" name="siteSearchForm"
-                      onsubmit="NCIAnalytics.SiteWideSearch(this);">
-                  <label class="hidden" for="swKeyword">Search</label>
-                  <input placeholder="search" class="searchString ui-autocomplete-input" id="swKeyword" maxlength="255"
-                         name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value=""
-                         autocomplete="off" type="text" aria-autocomplete="list" aria-haspopup="true">
-                  <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
-                    <span class="hidden">Search</span>
-                  </button>
-                </form>
-              </div>
+    </div>
+    <!-- end "headroom-area" -->
+    <!-- BEGIN NAVIGATION -->
+    <!-- Begin nav-search bar -->
+    <div class="nav-search-bar gradient header">
+      <div id="nvcgSlMainNav" class="row">
+        {{ page.main_nav }}
+        <div class="slot-item last-SI">
+          <div class="rawHtml">
+            <div class="search" role="search">
+              <form
+                action="/search/results"
+                method="post"
+                id="siteSearchForm"
+                name="siteSearchForm"
+                onsubmit="NCIAnalytics.SiteWideSearch(this);"
+              >
+                <label class="hidden" for="swKeyword">Search</label>
+                <input
+                  placeholder="search"
+                  class="searchString ui-autocomplete-input"
+                  id="swKeyword"
+                  maxlength="255"
+                  name="swKeyword"
+                  onblur="bSearchBoxBool=false;"
+                  onfocus="bSearchBoxBool=true;"
+                  value=""
+                  autocomplete="off"
+                  type="text"
+                  aria-autocomplete="list"
+                  aria-haspopup="true"
+                >
+                <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                  <span class="hidden">Search</span>
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
       <!-- End nav-search bar -->
       <!-- END NAVIGATION -->
-    </div>
-      <!-- end "headroom-area" -->
   </div><!-- END Global nav/utility bar/language -->
 
   <!-- Begin MAIN CONTENT AREA -->
@@ -50,18 +66,13 @@
     <div class="row general-page-body-container collapse">
       <div class="large-12 columns">
         <div class="row">
-          <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
-            {{ page.breadcrumb }}
-          </div>
+          {{ page.breadcrumb }}
         </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
       <div class="row">
         <!--    SECTION NAVIGATION -->
-         {% if page.section_nav %}
-        <a id="section-menu-button" href="#">Section Menu</a>
-        <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
+        {% if page.section_nav %}
             {{ page.section_nav }}
-        </div>
         {% endif %}
         {# TODO: technically if there is no left nav we change some of the classes below. #}
         <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">

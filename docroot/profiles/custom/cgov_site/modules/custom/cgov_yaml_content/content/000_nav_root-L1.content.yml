@@ -1,0 +1,373 @@
+### Load up Sections
+# Roots go here
+# There should be no landing pages as the pages need these
+# to be created.
+
+### EXAMPLE
+# - entity: "taxonomy_term"
+#   vid: "cgov_site_sections"
+#   name: "Name"
+#   field_breadcrumb_root:
+#     value: true
+#   field_landing_page:
+#     value: ## process directive
+#   field_levels_to_display:
+#     value: 5
+#   field_main_nav_root:
+#     value: true
+#   field_mega_menu_content:
+#      - format: "full_html"
+#        value: |
+#           HTML HERE
+#   field_navigation_label:
+#     value: "Name"
+#   field_pretty_url:
+#     value: "bit"
+#   field_section_nav_root:
+#     value: true
+#   field_navigation_display_options:
+#     - value: 'hide_in_main_nav'
+#     - value: 'hide_in_section_nav'
+#     - value: 'hide_in_mobile_nav'
+#   parent:
+
+##############################
+######## ENGLISH #############
+##############################
+
+## English Home
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Home"
+  field_breadcrumb_root:
+    value: true
+  field_main_nav_root:
+    value: true
+
+## About Cancer
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "About Cancer"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /about-cancer"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"> <div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/about-cancer/understanding" class="sub-nav-group-header">Understanding Cancer</a> <ul> <li><a href="/about-cancer/understanding/what-is-cancer">What Is Cancer</a></li> <li><a href="/about-cancer/understanding/statistics">Cancer Statistics</a></li> <li><a href="/about-cancer/understanding/disparities">Cancer Disparities</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/causes-prevention" class="sub-nav-group-header">Causes &amp; Prevention</a> <ul> <li><a href="/about-cancer/causes-prevention/risk">Risk Factors</a></li> <li><a href="/about-cancer/causes-prevention/genetics">Genetics</a></li> <li><a href="/about-cancer/causes-prevention/patient-prevention-overview-pdq">Cancer Prevention Overview</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/screening" class="sub-nav-group-header">Screening</a> <ul> <li><a href="/about-cancer/screening/patient-screening-overview-pdq">Cancer Screening Overview</a></li> <li><a href="/about-cancer/screening/screening-tests">Screening Tests</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/diagnosis-staging" class="sub-nav-group-header">Diagnosis &amp; Staging</a> <ul> <li><a href="/about-cancer/diagnosis-staging/symptoms">Symptoms</a></li> <li><a href="/about-cancer/diagnosis-staging/diagnosis">Diagnosis</a></li> <li><a href="/about-cancer/diagnosis-staging/staging">Staging</a></li> <li><a href="/about-cancer/diagnosis-staging/prognosis">Prognosis</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/treatment" class="sub-nav-group-header">Treatment</a> <ul> <li><a href="/about-cancer/treatment/types">Types of Treatment</a></li> <li><a href="/about-cancer/treatment/side-effects/">Side Effects</a></li> <li><a href="/about-cancer/treatment/clinical-trials">Clinical Trials</a></li> <li><a href="/about-cancer/treatment/drugs">Cancer Drugs</a></li> <li><a href="/about-cancer/treatment/cam">Complementary &amp; Alternative Medicine</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/coping" class="sub-nav-group-header">Coping</a> <ul> <li><a href="/about-cancer/coping/feelings">Feelings &amp; Cancer</a></li> <li><a href="/about-cancer/coping/adjusting-to-cancer">Adjusting to Cancer</a></li> <li><a href="/about-cancer/coping/self-image">Self Image &amp; Sexuality</a></li> <li><a href="/about-cancer/coping/day-to-day">Day to Day Life</a></li> <li><a href="/about-cancer/coping/survivorship">Survivorship</a></li> <li><a href="/about-cancer/coping/caregiver-support">Support for Caregivers</a></li> <li><a href="/about-cancer/coping/questions">Questions to Ask About Cancer</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/advanced-cancer" class="sub-nav-group-header">Advanced Cancer</a> <ul> <li><a href="/about-cancer/advanced-cancer/care-choices">Choices For Care</a></li> <li><a href="/about-cancer/advanced-cancer/talking">Talking About Advanced Cancer</a></li> <li><a href="/about-cancer/advanced-cancer/feelings">Coping With Your Feelings</a></li> <li><a href="/about-cancer/advanced-cancer/planning">Planning for Advanced Cancer</a></li> <li><a href="/about-cancer/advanced-cancer/caregivers">Advanced Cancer &amp; Caregivers</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-cancer/managing-care" class="sub-nav-group-header">Managing Cancer Care</a> <ul> <li><a href="/about-cancer/managing-care/services">Finding Health Care Services</a></li> <li><a href="/about-cancer/managing-care/track-care-costs">Managing Costs and Medical Information</a></li> <li><a href="/about-cancer/managing-care/advance-directives">Advance Directives</a></li> <li><a href="/about-cancer/managing-care/using-trusted-resources">Using Trusted Resources</a></li> </ul> </li> </ul> </div> </div>
+  field_pretty_url:
+    value: "about-cancer"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## Types
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Cancer Types"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /types"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group cancer-types-border-container"> <li><a href="/types/common-cancers" class="sub-nav-group-header">Common Cancer Types</a> <ul> <li><a href="/types/bladder">Bladder Cancer</a></li> <li><a href="/types/breast">Breast Cancer</a></li> <li><a href="/types/colorectal">Colorectal Cancer</a></li> <li><a href="/types/kidney">Kidney (Renal Cell) Cancer</a></li> <li><a href="/types/leukemia">Leukemia</a></li> </ul> <ul> <li><a href="/types/liver">Liver Cancer</a></li> <li><a href="/types/lung">Lung Cancer</a></li> <li><a href="/types/lymphoma">Lymphoma</a></li> <li><a href="/types/pancreatic">Pancreatic Cancer</a></li> </ul> <ul> <li><a href="/types/prostate">Prostate Cancer</a></li> <li><a href="/types/skin">Skin Cancer</a></li> <li><a href="/types/thyroid">Thyroid Cancer</a></li> <li><a href="/types/uterine">Uterine Cancer</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/types" class="sub-nav-group-header">All Cancer Types</a> <ul> <li><a href="/types">A to Z List of Cancers</a></li> <li><a href="/types/by-body-location">Cancers by Body Location</a></li> <li><a href="/types/childhood-cancers">Childhood Cancers</a></li> <li><a href="/types/aya">Adolescent &amp; Young Adult Cancers</a></li> <li><a href="/types/metastatic-cancer">Metastatic Cancer</a></li> <li><a href="/types/recurrent-cancer">Recurrent Cancer</a></li> </ul> </li> </ul> </div></div>
+  field_pretty_url:
+    value: "types"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## Research
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Research"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /research"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"> <div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/research/nci-role" class="sub-nav-group-header">NCI's Role in Cancer Research</a> <ul> <li><a href="/research/nci-role/intramural">Intramural Research</a></li> <li><a href="/research/nci-role/extramural">Extramural Research</a></li> <li><a href="/research/nci-role/bioinformatics">Bioinformatics &amp; Big Data</a></li> <li><a href="/research/nci-role/cancer-centers">NCI-Designated Cancer Centers</a></li> <li><a href="/research/nci-role/fnlcr">Frederick National Lab</a></li> <li><a href="/research/nci-role/partners-collaborators">Partners &amp; Collaborators</a></li> <li><a href="/research/nci-role/spotlight">Spotlight on Scientists</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/research/areas" class="sub-nav-group-header">NCI Research Areas</a> <ul> <li><a href="/research/areas/biology">Cancer Biology</a></li> <li><a href="/research/areas/genomics">Cancer Genomics</a></li> <li><a href="/research/areas/causes">Causes of Cancer</a></li> <li><a href="/research/areas/diagnosis">Diagnosis</a></li> <li><a href="/research/areas/prevention">Prevention</a></li> <li><a href="/research/areas/screening">Screening &amp; Early Detection</a></li> <li><a href="/research/areas/treatment">Treatment</a></li> <li><a href="/research/areas/public-health">Cancer &amp; Public Health</a></li> <li><a href="/research/areas/disparities">Cancer Health Disparities</a></li> <li><a href="/research/areas/childhood">Childhood Cancer</a></li> <li><a href="/research/areas/clinical-trials">Clinical Trials</a></li> <li><a href="/research/areas/global-health">Global Health</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/research/key-initiatives" class="sub-nav-group-header">Key Initiatives</a> <ul> <li><a href="/research/key-initiatives/moonshot-cancer-initiative">Cancer Moonshot</a></li> <li><a href="/about-nci/organization/ccg/research/computational-genomics/gdc">Genomic Data Commons</a></li> <li><a href="/research/areas/clinical-trials/nctn">National Clinical Trials Network</a></li> <li><a href="/research/key-initiatives/ras">RAS Initiative</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/research/progress" class="sub-nav-group-header">Progress</a> <ul> <li><a href="/research/progress/annual-report-nation">Annual Report to the Nation</a></li> <li><a href="/research/progress/discovery">Stories of Discovery</a></li> </ul> </li><br/><br/> <li> <a href="/research/resources" class="sub-nav-group-header">Resources for Researchers</a> </li> </ul> </div> </div>
+  field_pretty_url:
+    value: "research"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## Grants and Training
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Grants & Training"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /grants-training"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"> <div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/grants-training/grants-funding" class="sub-nav-group-header">Research Grants</a> <ul> <li><a href="/grants-training/grants-funding/funding-opportunities">Funding Opportunities</a></li> <li><a href="/grants-training/grants-funding/contacts">Research Program Contacts</a></li> <li><a href="/grants-training/grants-funding/funding-strategy">Funding Strategy</a></li> </ul> </li> <br/> <li><a href="/grants-training/policies-process" class="sub-nav-group-header">Grants Policies &amp; Process</a> <ul> <li><a href="/grants-training/policies-process/overview">Introduction to Grants Process</a></li> <li><a href="/grants-training/policies-process/legal">Legal Requirements</a></li> <li><a href="/grants-training/policies-process/nci-policies">NCI Policies</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/grants-training/apply-grant" class="sub-nav-group-header">Apply for a Grant</a> <ul> <li><a href="/grants-training/apply-grant/development">Application Development &amp; Submission</a></li> <li><a href="/grants-training/apply-grant/receipt">Receipt &amp; Assignment</a></li> <li><a href="/grants-training/apply-grant/peer-review">Peer Review &amp; Outcomes</a></li> <li><a href="/grants-training/apply-grant/award-issuance">Award Issuance</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/grants-training/manage-award" class="sub-nav-group-header">Manage Your Award</a> <ul> <li><a href="/grants-training/manage-award/contacts">Grants Management Contacts</a></li> <li><a href="/grants-training/manage-award/monitoring">Monitoring</a></li> <li><a href="/grants-training/manage-award/prior-approvals">Prior Approvals</a></li> <li><a href="/grants-training/manage-award/report-audit">Annual Reporting &amp; Auditing</a></li> <li><a href="/grants-training/manage-award/grant-transfer">Grant Transfer</a></li> <li><a href="/grants-training/manage-award/grant-closeout">Grant Closeout</a></li> </ul> </li> <br/> <li> <a href="/grants-training/contracts-business" class="sub-nav-group-header">Contracts &amp; Small Business</a> </li> </ul><ul class="sub-nav-group"> <li><a href="/grants-training/training" class="sub-nav-group-header">Training</a> <ul> <li><a href="/grants-training/training/at-nci">Cancer Training at NCI (Intramural)</a></li> <li><a href="/grants-training/training/resources-trainees">Resources for Trainees</a></li> <li><a href="/grants-training/training/funding">Funding for Cancer Training (Extramural)</a></li> <li><a href="/grants-training/training/diversity-training">Building a Diverse Workforce</a></li> <li><a href="/grants-training/training/contact">Training Program Contacts</a></li> </ul> </li> </ul> </div> </div>
+  field_pretty_url:
+    value: "grants-training"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## News & Events
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "News & Events"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /news-events"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"> <div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/news-events/press-releases/2019" class="sub-nav-group-header">All Press Releases</a> <ul> <li><a href="/news-events/press-releases/2019">2019</a></li> <li><a href="/news-events/press-releases/2018">2018</a></li> <li><a href="/news-events/press-releases/2017">2017</a></li> <li><a href="/news-events/press-releases/2016">2016</a></li> <li><a href="/news-events/press-releases/2015">2015</a></li> <li><a href="/news-events/press-releases/2014">2014</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/news-events/media-resources" class="sub-nav-group-header">Media Resources</a> <ul> <li><a href="/news-events/media-resources/contacts">Media Contacts</a></li> <li><a href="/news-events/media-resources/multicultural">Multicultural Media</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/news-events/events" class="sub-nav-group-header">Events</a> <ul> <li><a href="/news-events/events/scientific-meetings">Scientific Meetings &amp; Lectures</a></li> <li><a href="/news-events/events/conferences">Conferences</a></li> <li><a href="/news-events/events/advisory-board-meetings">Advisory Board Meetings</a></li> <li><a href="/news-events/events/social-media">Social Media</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/news-events/cancer-currents-blog" class="sub-nav-group-header">Cancer Currents Blog</a></li> </ul> </div> </div>
+  field_pretty_url:
+    value: "news-events"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## About NCI
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "About NCI"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /about-nci"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/about-nci/overview" class="sub-nav-group-header">Overview &amp; Mission</a> <ul> <li><a href="/about-nci/overview/history">History of NCI</a></li> <li><a href="/about-nci/overview/contributing">Contributing to Cancer Research</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/leadership" class="sub-nav-group-header">Senior Leadership</a> <ul> <li><a href="/about-nci/leadership/director">Director</a></li> <li><a href="/about-nci/leadership/nci-deputy-director">Deputy Director</a></li> <li><a href="/about-nci/leadership/previous">Previous Directors</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/organization" class="sub-nav-group-header">NCI Organization</a> <ul> <li><a href="/about-nci/organization">Divisions, Offices &amp; Centers</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/advisory-boards" class="sub-nav-group-header">Advisory Boards &amp; Review Groups</a></li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/budget" class="sub-nav-group-header">Budget &amp; Appropriations</a> <ul> <li><a href="/about-nci/budget/">Current Year Budget</a></li> <li><a href="/about-nci/budget/plan">Annual Plan &amp; Budget Proposal</a></li> <li><a href="/about-nci/budget/congressional-justification">Congressional Justification</a></li> <li><a href="/about-nci/budget/fact-book">NCI Budget Fact Book</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/legislative" class="sub-nav-group-header">Legislative Activities</a> <ul> <li><a href="/about-nci/legislative/hearings">Hearings &amp; Testimonies</a></li> <li><a href="/about-nci/legislative/current-congress">Current Congress</a></li> <li><a href="/about-nci/legislative/history">Legislative History</a></li> <li><a href="/about-nci/legislative/committees">Committees of Interest</a></li> <li><a href="/about-nci/legislative/resources">Legislative Resources</a></li> <li><a href="/about-nci/legislative/recent-public-laws">Recent Public Laws</a></li> </ul> </li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/careers" class="sub-nav-group-header">Careers</a></li> </ul><ul class="sub-nav-group"> <li><a href="/about-nci/visit" class="sub-nav-group-header">Visitor Information</a></li> </ul> </div></div>
+  field_pretty_url:
+    value: "about-nci"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## Publications
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Publications"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "publications"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+
+## Spanish Home
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Español Home"
+  langcode: "es"
+  field_navigation_label:
+    value: "Página principal"
+  field_breadcrumb_root:
+    value: true
+  field_main_nav_root:
+    value: true
+
+## El Cancer
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "El cáncer"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /espanol/cancer"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/naturaleza" class="sub-nav-group-header">Naturaleza del cáncer</a> <ul> <li><a href="/espanol/cancer/naturaleza/que-es">¿Qué es el cáncer?</a></li> <li><a href="/espanol/cancer/naturaleza/estadisticas">Estadísticas del cáncer</a></li> <li><a href="/espanol/cancer/naturaleza/desigualdades">Desigualdades por cáncer</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/causas-prevencion" class="sub-nav-group-header">Causas y prevención</a> <ul> <li><a href="/espanol/cancer/causas-prevencion/riesgo">Factores de riesgo</a></li> <li><a href="/espanol/cancer/causas-prevencion/genetica">Genética</a></li> <li><a href="/espanol/cancer/causas-prevencion/aspectos-generales-prevencion-paciente-pdq">Aspectos generales de la prevención del cáncer</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/deteccion" class="sub-nav-group-header">Detección</a> <ul> <li><a href="/espanol/cancer/deteccion/aspectos-generales-deteccion-paciente-pdq">Aspectos generales de los exámenes de detección del cáncer</a></li> <li><a href="/espanol/cancer/deteccion/examenes-de-deteccion">Exámenes de detección del cáncer</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/diagnostico-estadificacion" class="sub-nav-group-header">Diagnóstico y estadificación</a> <ul> <li><a href="/espanol/cancer/diagnostico-estadificacion/sintomas">Síntomas</a></li> <li><a href="/espanol/cancer/diagnostico-estadificacion/diagnostico">Diagnóstico</a></li> <li><a href="/espanol/cancer/diagnostico-estadificacion/estadificacion">Estadificación</a></li> <li><a href="/espanol/cancer/diagnostico-estadificacion/pronostico">Pronóstico</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/tratamiento" class="sub-nav-group-header">Tratamiento</a> <ul> <li><a href="/espanol/cancer/tratamiento/tipos">Tipos de tratamiento</a></li> <li><a href="/espanol/cancer/tratamiento/efectos-secundarios">Efectos secundarios</a></li> <li><a href="/espanol/cancer/tratamiento/estudios-clinicos">Estudios clínicos</a></li> <li><a href="/espanol/cancer/tratamiento/medicamentos">Medicamentos contra el cáncer</a></li> <li><a href="/espanol/cancer/tratamiento/mca">Medicina complementaria y alternativa</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/sobrellevar" class="sub-nav-group-header">Cómo hacer frente al cáncer </a> <ul> <li><a href="/espanol/cancer/sobrellevar/sentimientos">Los sentimientos y el cáncer</a></li> <li><a href="/espanol/cancer/sobrellevar/adaptacion-al-cancer">La adaptación al cáncer</a></li> <li><a href="/espanol/cancer/sobrellevar/imagen-propia">Imagen propia y sexualidad</a></li> <li><a href="/espanol/cancer/sobrellevar/dia-a-dia">La vida día a día</a></li> <li><a href="/espanol/cancer/sobrellevar/supervivencia/">Supervivencia</a></li> <li><a href="/espanol/cancer/sobrellevar/apoyo-a-quien-cuida">Apoyo para quienes cuidan a pacientes con cáncer</a></li> <li><a href="/espanol/cancer/sobrellevar/preguntas">Preguntas para hacer sobre el cáncer</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/cancer-avanzado" class="sub-nav-group-header">Cáncer avanzado</a> <ul> <li><a href="/espanol/cancer/cancer-avanzado/opciones-de-cuidado">Opciones para su atención médica</a></li> <li><a href="/espanol/cancer/cancer-avanzado/conversacion">Conversación sobre el cáncer avanzado</a></li> <li><a href="/espanol/cancer/cancer-avanzado/sentimientos">Superar sus sentimientos</a></li> <li><a href="/espanol/cancer/cancer-avanzado/planes">Planes para atender un cáncer avanzado</a></li> <li><a href="/espanol/cancer/cancer-avanzado/cuidadores">Cáncer avanzado y quienes cuidan</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/cancer/manejo-del-cancer" class="sub-nav-group-header">Manejo de la atención del cáncer</a> <ul> <li><a href="/espanol/cancer/manejo-del-cancer/servicios">Localización de servicios médicos</a></li> <li><a href="/espanol/cancer/manejo-del-cancer/instrucciones-adelantadas">Instrucciones adelantadas</a></li> <li><a href="/espanol/cancer/manejo-del-cancer/uso-de-recursos-fidedignos">Uso de recursos fidedignos</a></li> </ul> </li> </ul> </div></div>
+  field_pretty_url:
+    value: "cancer"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Tipos
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Tipos de cáncer"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      langcode: en
+      info: "Megamenu: /espanol/tipos"
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group cancer-types-border-container"> <li><a href="/espanol/tipos/comunes-general" class="sub-nav-group-header">Tipos comunes de cáncer</a> <ul> <li><a href="/espanol/tipos/colorrectal">Cáncer colorrectal</a></li> <li><a href="/espanol/tipos/higado">Cáncer de hígado</a></li> <li><a href="/espanol/tipos/leucemia">Leucemia</a></li> <li><a href="/espanol/tipos/linfoma">Linfoma</a></li> <li><a href="/espanol/tipos/pancreas">Cáncer de páncreas</a></li> </ul> <ul> <li><a href="/espanol/tipos/piel">Cáncer de piel</a></li> <li><a href="/espanol/tipos/prostata">Cáncer de próstata</a></li> <li><a href="/espanol/tipos/pulmon">Cáncer de pulmón</a></li> <li><a href="/espanol/tipos/rinon">Cáncer de riñón (células renales)</a></li> </ul> <ul> <li><a href="/espanol/tipos/seno">Cáncer de seno (mama)</a></li> <li><a href="/espanol/tipos/tiroides">Cáncer de tiroides</a></li> <li><a href="/espanol/tipos/uterino">Cáncer de útero</a></li> <li><a href="/espanol/tipos/vejiga">Cáncer de vejiga</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/tipos" class="sub-nav-group-header">Todos los tipos de cáncer</a> <ul> <li><a href="/espanol/tipos">Cánceres de la A a la Z</a></li> <li><a href="/espanol/tipos/por-partes-cuerpo">Cáncer según su ubicación en el cuerpo</a></li> <li><a href="/espanol/tipos/infantil">Cánceres infantiles</a></li> <li><a href="/espanol/tipos/adolescentes-adultos-jovenes">Adolescentes y adultos jóvenes con cáncer</a></li> <li><a href="/espanol/tipos/cancer-metastatico">Cáncer metastásico</a></li> <li><a href="/espanol/tipos/cancer-que-regresa">Cáncer recurrente</a></li> </ul> </li> </ul> </div></div>
+  field_pretty_url:
+    value: "tipos"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Investigacion
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Investigación"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /espanol/investigacion"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/espanol/investigacion/papel-del-nci" class="sub-nav-group-header">Papel del NCI en la investigación del cáncer</a> <ul> <li><a href="/espanol/investigacion/papel-del-nci">El NCI financia investigaciones en Estados Unidos y en el mundo</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/investigacion/areas" class="sub-nav-group-header">Áreas de investigación del NCI</a> <ul> <li><a href="/espanol/investigacion/areas/biologia">Biología del cáncer</a></li> <li><a href="/espanol/investigacion/areas/genomica">Genómica del cáncer</a></li> <li><a href="/espanol/investigacion/areas/causas">Causas de cáncer</a></li> <li><a href="/espanol/investigacion/areas/diagnostico">Diagnóstico</a></li> <li><a href="/espanol/investigacion/areas/prevencion">Prevención</a></li> <li><a href="/espanol/investigacion/areas/examenes-de-deteccion">Exámenes de detección y detección temprana</a></li> <li><a href="/espanol/investigacion/areas/tratamiento">Tratamiento</a></li> <li><a href="/espanol/investigacion/areas/salud-publica">Cáncer y salud pública</a></li> <li><a href="/espanol/investigacion/areas/desigualdades">Desigualdades en salud por cáncer</a></li> <li><a href="/espanol/investigacion/areas/cancer-infantil">Investigación de cánceres en la niñez</a></li> <li><a href="/espanol/investigacion/areas/salud-mundial">Salud mundial</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/investigacion/iniciativas-clave" class="sub-nav-group-header">Iniciativas clave</a> <ul> <li><a href="/espanol/investigacion/iniciativas-clave/mision-contra-cancer">Misión contra el Cáncer</a></li> <li><a href="/espanol/investigacion/areas/estudios-clinicos/nctn">Aspectos generales de la Red Nacional de Estudios Clínicos del NCI</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/tipos" class="sub-nav-group-header">Investigación por tipo de cáncer</a> <ul> <li><a href="/espanol/tipos">Búsqueda de investigaciones por tipo de cáncer</a></li>	</ul> </li> </ul> </div></div>
+  field_pretty_url:
+    value: "investigacion"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Subvenciones y capacitación
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Subvenciones y capacitación"
+  field_pretty_url:
+    value: "subvenciones-capacitacion"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Noticias
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Noticias"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /espanol/noticias"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"> <div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/espanol/noticias/comunicados-de-prensa/2019" class="sub-nav-group-header">Comunicados de prensa</a> <ul> <li><a href="/espanol/noticias/comunicados-de-prensa/2018">2019</a></li> <li><a href="/espanol/noticias/comunicados-de-prensa/2018">2018</a></li> <li><a href="/espanol/noticias/comunicados-de-prensa/2017">2017</a></li> <li><a href="/espanol/noticias/comunicados-de-prensa/2016">2016</a></li> <li><a href="/espanol/noticias/comunicados-de-prensa/2015">2015</a></li> <li><a href="/espanol/noticias/comunicados-de-prensa/2014">2014</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/noticias/temas-y-relatos-blog" class="sub-nav-group-header">Blog Temas y Relatos</a> </li> </ul> </div> </div>
+  field_pretty_url:
+    value: "noticias"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Nuestro instituto
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Nuestro instituto"
+  field_mega_menu_content:
+    - entity: "block_content"
+      type: "raw_html_block"
+      info: "Megamenu: /espanol/instituto"
+      langcode: en
+      status: 1
+      body:
+      - format: "full_html"
+        value: |
+          <div class="sub-nav-group-wrapper"><div class="sub-nav-group-subwrapper"> <ul class="sub-nav-group"> <li><a href="/espanol/instituto/general" class="sub-nav-group-header">Aspectos generales del NCI</a> <ul> <li><a href="/espanol/instituto/general/historia">Historia del NCI</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/instituto/director" class="sub-nav-group-header">Director del NCI</a> <ul> <li><a href="/espanol/instituto/director">Página del director</a></li> </ul> </li> </ul> <ul class="sub-nav-group"> <li><a href="/espanol/instituto/organizacion" class="sub-nav-group-header">Estructura organizativa del NCI</a> <ul> <li><a href="/espanol/instituto/organizacion">Divisiones, oficinas y centros del Instituto Nacional del Cáncer</a></li> </ul> </li> </ul> </div></div>
+  field_pretty_url:
+    value: "instituto"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Publications
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Publicaciones"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "publicaciones"
+  field_navigation_display_options:
+    value:
+      - hide_in_main_nav
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"

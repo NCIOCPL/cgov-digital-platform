@@ -17,6 +17,7 @@ dependencies:
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
+    - field.field.node.cgov_article.field_related_resources
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
     - field.field.node.cgov_article.field_site_section
@@ -153,6 +154,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 18
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
     region: content
   field_search_engine_restrictions:
     weight: 14

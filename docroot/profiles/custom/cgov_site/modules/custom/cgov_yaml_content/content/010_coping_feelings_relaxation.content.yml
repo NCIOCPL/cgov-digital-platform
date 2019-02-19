@@ -56,7 +56,14 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
+            computed_path: '/about-cancer/coping/feelings/relaxation'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar/sentimientos/relajarse'
   field_image_article:
     - target_type: 'media'
       '#process':

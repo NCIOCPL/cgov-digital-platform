@@ -13,8 +13,6 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
-    - field.field.media.cgov_video.field_original_source
-    - field.field.media.cgov_video.field_page_title
     - field.field.media.cgov_video.field_pretty_url
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
@@ -31,12 +29,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 15
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_body:
-    weight: 8
+    weight: 10
     settings:
       rows: 5
       placeholder: ''
@@ -44,22 +42,6 @@ content:
     type: text_textarea
     region: content
   field_browser_title:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_caption:
-    weight: 9
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
-  field_card_title:
     weight: 5
     settings:
       size: 60
@@ -67,32 +49,48 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_caption:
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_card_title:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_date_display_mode:
-    weight: 27
+    weight: 16
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_date_posted:
-    weight: 11
+    weight: 13
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_reviewed:
-    weight: 12
+    weight: 15
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 26
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_feature_card_description:
-    weight: 6
+    weight: 7
     settings:
       rows: 5
       placeholder: ''
@@ -100,7 +98,7 @@ content:
     type: string_textarea
     region: content
   field_list_description:
-    weight: 28
+    weight: 8
     settings:
       rows: 5
       placeholder: ''
@@ -109,37 +107,13 @@ content:
     region: content
   field_media_oembed_video:
     type: oembed_textfield
-    weight: 7
+    weight: 9
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    region: content
-  field_original_source:
-    weight: 10
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_page_title:
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
     region: content
   field_pretty_url:
-    weight: 1
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_short_title:
     weight: 3
     settings:
       size: 60
@@ -147,35 +121,51 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_short_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_site_section:
-    weight: 0
+    weight: 2
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   langcode:
     type: language_select
-    weight: 13
+    weight: 0
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 16
+    weight: 19
     settings: {  }
     region: content
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 17
+    weight: 20
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 14
+    weight: 17
     settings:
       match_operator: CONTAINS
       size: 60
@@ -183,5 +173,4 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
-  name: true
   path: true

@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.cgov_thumbnail_row.field_container_heading
     - field.field.paragraph.cgov_thumbnail_row.field_unlimited_row_cards
     - paragraphs.paragraphs_type.cgov_thumbnail_row
   module:
@@ -11,8 +12,16 @@ targetEntityType: paragraph
 bundle: cgov_thumbnail_row
 mode: default
 content:
-  field_unlimited_row_cards:
+  field_container_heading:
     weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_unlimited_row_cards:
+    weight: 1
     label: hidden
     settings:
       view_mode: thumbnail_card
