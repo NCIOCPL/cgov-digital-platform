@@ -1,99 +1,113 @@
-@include bp(small) {
-	.topic-feature {
-		margin-bottom: 0;
-	}
-	.feature-primary .card {
-		background: #14819b;
-	}
-	.topic-feature.columns a {
-		padding-bottom: 15px;
-		padding-top: 15px;
-		overflow: auto;
-	}
-	.topic-feature .image-hover {
-		float: left;
-		width: 30%;
-	}
-
-	.topic-feature a:hover {
-		color: white;
-    }
-    
-	.topic-feature h3, .topic-feature p {
-		padding-left: 15px;
-	}
-}
-
-.topic-feature.card {
-	padding: 0;
-}
+@import "./colors";
 
 .topic-feature {
 	margin-bottom: 1em;
-    background-color: $paleblue;
-    
-    &.card.left {
-        margin-right: 1em;
-    }
+	border: 1px solid $yetAnotherGrey;
+	background-color: $white;
+	box-shadow: 0 0 9px 1px rgba($black,.15);
 
-    &.card.right {
-        margin-left: 1em;
-    }
+	&.card {
+		padding: 0;
+
+		&.left {
+			margin-right: 1em;
+		}
+		&.right {
+			margin-left: 1em;
+		}
+	}
 
 	h3 {
 		font-size: 1.375em;
 		line-height: 1.272;
 	}
+
 	a {
 		padding: 1.875em;
 		display: block;
+
 		h3 {
 			font-weight: normal;
 			color: $color-link;
 		}
-		&:hover, &:focus {
+
+		&:hover,
+		&:focus {
 			h3 {
 				color: $lcranberry;
 			}
 		}
+
 		@extend %card-link-hover;
 	}
+
 	p {
 		margin-bottom: 0;
 		color: $body-font-color;
 		font-size: em-calc(16px);
 		line-height: 1.167em;
 	}
-    @include card-clickable;
-    
-    .feature-card {
+
+	@include card-clickable;
+
+	.feature-card {
 		div {
 			margin-bottom: 1em;
 		}
+
 		h3 {
 			margin-top: 0;
 			font-size: 1.2em;
 			line-height: 1.2;
 		}
+
 		p {
 			line-height: 1.375;
 			font-size: 0.9em;
 			color: #757575;
 		}
-		
-		@include bp(small) {
+	}
+}
+@include bp(small) {
+	.topic-feature {
+		margin: 1.25em 0;
+
+		a:hover {
+			color: white;
+		}
+
+		&.columns a {
+			padding-bottom: 15px;
+			padding-top: 15px;
+			overflow: auto;
+		}
+
+		&.card {
+			&.left, &.right {
+				float: none !important;
+				margin: 1.25em 0;
+			}
+		}
+
+		.image-hover {
+			float: left;
+			width: 30%;
+		}
+
+		&:not(.no-image) .feature-card {
+			h3, p {
+				float: right;
+				width: 68%;
+			}
 			h3 {
 				margin-top: 0;
-				float: right;
-				width: 70%;
 				font-size: 1.13em;
 				line-height: 1.111em;
-			}
-			p {
-				float: right;
-				width: 70%;
 			}
 		}
 	}
 
+	.feature-primary .card {
+		background: #14819b;
+	}
 }

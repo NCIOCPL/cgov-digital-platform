@@ -1,0 +1,79 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.link
+    - field.field.node.cgov_article.field_article_body
+    - field.field.node.cgov_article.field_browser_title
+    - field.field.node.cgov_article.field_card_title
+    - field.field.node.cgov_article.field_date_display_mode
+    - field.field.node.cgov_article.field_date_posted
+    - field.field.node.cgov_article.field_date_reviewed
+    - field.field.node.cgov_article.field_date_updated
+    - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_image_article
+    - field.field.node.cgov_article.field_image_promotional
+    - field.field.node.cgov_article.field_intro_text
+    - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_page_description
+    - field.field.node.cgov_article.field_pretty_url
+    - field.field.node.cgov_article.field_public_use
+    - field.field.node.cgov_article.field_related_resources
+    - field.field.node.cgov_article.field_search_engine_restrictions
+    - field.field.node.cgov_article.field_short_title
+    - field.field.node.cgov_article.field_site_section
+    - node.type.cgov_article
+  enforced:
+    module:
+      - cgov_core
+  module:
+    - user
+id: node.cgov_article.link
+targetEntityType: node
+bundle: cgov_article
+mode: link
+content:
+  field_list_description:
+    weight: 7
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_page_description:
+    weight: 5
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_short_title:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  content_moderation_control: true
+  field_article_body: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_image_article: true
+  field_image_promotional: true
+  field_intro_text: true
+  field_pretty_url: true
+  field_public_use: true
+  field_related_resources: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true

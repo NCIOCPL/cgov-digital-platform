@@ -1,0 +1,70 @@
+@import './breakpoints';
+@import './colors';
+
+/* Feature Cards */
+#profile-feature {
+  display: flex;
+  flex-direction: column wrap;
+  justify-content: flex-start;
+
+  .topic-feature {
+    border: 1px solid $grey04;
+    background-color: $white;
+    box-shadow: 0 0 9px 1px rgba($black,.15);
+
+    &:not(:first-child) {
+      margin-left: 2%;
+    }
+
+    a {
+      padding: 1em 0;
+      word-wrap: break-word;
+    }
+
+    p {
+      margin-bottom: inherit;
+    }
+
+    .feature-card h3 {
+      margin-top: 15px;
+    }
+  }
+
+  @include bp(small) {
+    display: block;
+
+    .topic-feature {
+      .feature-card {
+        div {
+          margin-right: 1em;
+          margin-top: 15px;
+        }
+
+        h3 {
+          margin-top: 15px;
+          float: none;
+          width: unset;
+        }
+      }
+
+      &:not(:first-child) {
+        margin-left: 0px;
+      }
+
+      a {
+        float: none;
+        padding: 15px 15px 15px 0;
+      }
+
+      p {
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+
+        a:hover {
+          color: $lcranberry;
+        }
+      }
+    }
+  }
+}

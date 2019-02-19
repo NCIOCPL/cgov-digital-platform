@@ -12,14 +12,15 @@
 
     <div id="cgvBody">
       {{ contentPageMacros.displayDates(node,content) }}
-      
+
       {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
     </div>
   </div>
-  
+
   <footer class="article-footer">
+    {{ content.field_related_resources }}
     {#{{ content.field_public_use }}#}
   </footer>
 </article>
