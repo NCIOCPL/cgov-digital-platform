@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_owner_blog
+    - node.type.cgov_blog_series
+    - taxonomy.vocabulary.cgov_blog_topics
+id: taxonomy_term.cgov_blog_topics.field_owner_blog
+field_name: field_owner_blog
+entity_type: taxonomy_term
+bundle: cgov_blog_topics
+label: 'Owner Blog'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      cgov_blog_series: cgov_blog_series
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

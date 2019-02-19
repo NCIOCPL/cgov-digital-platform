@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_allow_comments
+    - node.type.cgov_blog_series
+id: node.cgov_blog_series.field_allow_comments
+field_name: field_allow_comments
+entity_type: node
+bundle: cgov_blog_series
+label: 'Allow Comments'
+description: 'If checked, display comment policy text (appears directly below public use text on each blog post).'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean
