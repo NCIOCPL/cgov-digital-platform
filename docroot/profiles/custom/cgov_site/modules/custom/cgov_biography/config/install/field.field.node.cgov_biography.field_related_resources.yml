@@ -5,7 +5,7 @@ dependencies:
     - field.storage.node.field_related_resources
     - node.type.cgov_biography
     - paragraphs.paragraphs_type.cgov_external_link
-    - paragraphs.paragraphs_type.cgov_managed_link
+    - paragraphs.paragraphs_type.cgov_internal_link
   module:
     - entity_reference_revisions
 id: node.cgov_biography.field_related_resources
@@ -24,7 +24,7 @@ settings:
     negate: 0
     target_bundles:
       cgov_external_link: cgov_external_link
-      cgov_managed_link: cgov_managed_link
+      cgov_internal_link: cgov_internal_link
     target_bundles_drag_drop:
       cgov_external_link:
         enabled: true
@@ -50,7 +50,7 @@ settings:
       cgov_guide_row:
         weight: 21
         enabled: false
-      cgov_managed_link:
+      cgov_internal_link:
         enabled: true
         weight: 13
       cgov_primary_feature_row:
