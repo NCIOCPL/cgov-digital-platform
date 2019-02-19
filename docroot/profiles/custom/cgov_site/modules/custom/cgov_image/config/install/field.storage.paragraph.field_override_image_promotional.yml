@@ -4,8 +4,11 @@ dependencies:
   module:
     - media
     - paragraphs
-id: paragraph.field_image_promotional
-field_name: field_image_promotional
+  enforced:
+    module:
+      - cgov_image
+id: paragraph.field_override_image_promotional
+field_name: field_override_image_promotional
 entity_type: paragraph
 type: entity_reference
 settings:
@@ -15,5 +18,5 @@ locked: false
 cardinality: 1
 translatable: true
 indexes: {  }
-persist_with_no_fields: false
+persist_with_no_fields: true
 custom_storage: false
