@@ -1,0 +1,68 @@
+## TESTS:
+### Article
+### No lead image; promotional image used on parent mini landing page
+
+##################### PROMOTIONAL IMAGE FOR PAGE###
+#- entity: "media"
+#  bundle: "cgov_image"
+#  name: "RAS Lab Discussion Forum icon"
+#  langcode: en
+#  status: 1
+#  moderation_state:
+#    value: 'published'
+#  field_media_image:
+#    - '#process':
+#        callback: 'file'
+#        args:
+#          - 'image'
+#          - type: 'module'
+#            filename: 'ras-lab-thumbnail.png'
+#      alt: ""
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS Lab Discussion Forum"
+  field_page_description:
+    value: "RAS Lab is an online discussion forum to facilitate the exchange of scientific information among researchers in cancers related to RAS."
+  field_short_title:
+    value: "RAS Lab Discussion Forum"
+  field_browser_title:
+    value: "RAS Lab Discussion Forum"
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras/ras-central/discussion-forum'
+##  field_image_promotional:
+##    - target_type: 'media'
+##      '#process':
+##        callback: 'reference'
+##        args:
+##          - 'media'
+##          - bundle: 'cgov_image'
+##            name: 'RAS Lab Discussion Forum icon'
+
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>RAS Lab is an online discussion forum to facilitate the exchange of scientific information among researchers in cancers related to RAS.</p>
+            <p>If you are already a member, <a href="https://basecamp.com/2858646/projects/8336301">sign into RAS Lab</a>.</p>
+            <p>If you would like to join RAS Lab, send an email to <a href="mailto:SolveRAS@mail.nih.gov?subject=I%20would%20like%20to%20join%20RAS%20Lab">SolveRAS</a> with the subject line "I would like to join RAS Lab".</p>
+            <p>RAS Lab policies</p>
+            <ul>
+              <li>RAS Lab promotes open and informal scientific discussion. Posts that are derogatory, offensive, political, or commercial in character are not appropriate and will be removed.</li>
+              <li>NCI does not acquire or maintain any personal identification information from RAS Lab.</li>
+              <li><li>For more information, see the section on third-party sites under NCI's <a href="/policies/privacy-security" title="">Privacy and Security Policy</a>, or view Basecamp's <a href="https://basecamp.com/security">security policy</a> and <a href="https://basecamp.com/privacy">privacy policy</a>.</li>
+            </ul>
