@@ -522,6 +522,35 @@
             <p>Puede ser&nbsp;que le gusten los&nbsp;pasatiempos como la carpinter&iacute;a, la fotograf&iacute;a, la lectura o las manualidades. O busque actividades como el arte, la m&uacute;sica o el baile.</p>
             <h3>F&iacute;jese en lo que usted puede&nbsp;controlar</h3>
             <p>Algunas personas dicen que ayuda ordenar sus vidas. Participar en sus cuidados&nbsp;m&eacute;dicos, asistir a sus citas y hacer cambios en su estilo de vida son cosas que usted puede controlar. Incluso establecer un programa diario puede darle un sentido de control. Y, si bien, nadie puede controlar todos los pensamientos, algunos dicen que tratan de no pensar obsesivamente en las cosas que les causan temor, sino hacer lo que pueden para disfrutar de los momentos positivos de su vida.</p>
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Learning to Relax'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_override_title:
+        - value: 'Overridden Title'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Learning to Relax'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
   field_date_posted:
     value: "2018-08-20"
   field_date_reviewed:
