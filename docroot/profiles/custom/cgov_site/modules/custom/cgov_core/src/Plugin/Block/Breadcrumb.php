@@ -94,18 +94,20 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
         $children = $child->getChildren();
         // Filter results to only the child in the current path.
         // (Should always be just one).
-        $children = array_filter($children, function ($child) {
+        // We don't use array_filter because it maintains
+        // original keys.
+        $filteredChildren = [];
+        foreach ($children as $child) {
           if ($child->getIsInCurrentPath() === TRUE) {
-            return TRUE;
+            $filteredChildren[] = $child;
           }
-          return FALSE;
-        });
+        }
 
         $child = NULL;
         // We should only ever find one child in the active path.
         // Otherwise this is NULL and the while loop exits.
-        if (count($children)) {
-          $child = $children[0];
+        if (count($filteredChildren)) {
+          $child = $filteredChildren[0];
           // Requirement: Do not include breadcrumb for active page.
           if ($child && !$child->isCurrentSiteSection()) {
             $breadcrumbs[] = $child;
