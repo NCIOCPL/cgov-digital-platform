@@ -123,8 +123,8 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
 
     // If the last section already exists, make sure it's got the right name.
     elseif ($is_last_token) {
-      if ($child->get('name')->value !== $nav_label) {
-        $child->set('name', $nav_label);
+      if ($child->getName() !== $nav_label) {
+        $child->setName($nav_label);
         $child->save();
       }
     }
