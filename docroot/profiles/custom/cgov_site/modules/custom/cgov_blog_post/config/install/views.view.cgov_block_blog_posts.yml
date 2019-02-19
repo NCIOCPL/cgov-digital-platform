@@ -51,12 +51,15 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: full
+        type: mini
         options:
           items_per_page: 20
           offset: 0
           id: 0
           total_pages: null
+          tags:
+            previous: 'Newer Posts >'
+            next: '< Older Posts'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -65,12 +68,6 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          tags:
-            previous: '‹ Previous'
-            next: 'Next ›'
-            first: '« First'
-            last: 'Last »'
-          quantity: 9
       style:
         type: default
       row:
@@ -345,13 +342,14 @@ display:
       tags:
         - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_date_posted'
-  block_1:
+  block_blog_listing:
     display_plugin: block
-    id: block_1
-    display_title: Block
+    id: block_blog_listing
+    display_title: Blog-Listing
     position: 1
     display_options:
       display_extenders: {  }
+      display_description: 'List of Blog Posts, filtered by series'
     cache_metadata:
       max-age: -1
       contexts:
