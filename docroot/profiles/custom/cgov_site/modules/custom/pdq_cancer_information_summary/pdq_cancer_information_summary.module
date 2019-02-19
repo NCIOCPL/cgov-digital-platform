@@ -12,7 +12,7 @@ use Drupal\taxonomy\Entity\Term;
  * Implements hook_ENTITY_TYPE_insert().
  */
 function pdq_cancer_information_summary_node_insert(EntityInterface $entity) {
-  if ($entity->bundle() === 'pdq_cancer_information_summary') {
+  if (_pdq_cis_needs_site_sections($entity)) {
     _pdq_cis_add_site_sections($entity);
   }
 }
@@ -21,9 +21,46 @@ function pdq_cancer_information_summary_node_insert(EntityInterface $entity) {
  * Implements hook_ENTITY_TYPE_update().
  */
 function pdq_cancer_information_summary_node_update(EntityInterface $entity) {
-  if ($entity->bundle() === 'pdq_cancer_information_summary') {
+  if (_pdq_cis_needs_site_sections($entity)) {
     _pdq_cis_add_site_sections($entity);
   }
+}
+
+/**
+ * Check to see whether we need to add site sections for a summary.
+ *
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   Reference to the PDQ Cancer Information Summary just saved.
+ */
+function _pdq_cis_needs_site_sections(EntityInterface $entity) {
+
+  // Only appropriate for PDQ CIS nodes.
+  if ($entity->bundle() !== 'pdq_cancer_information_summary') {
+    return FALSE;
+  }
+
+  // Don't do anything for unpublished summary revisions.
+  if (!$entity->get('status')->value) {
+    return FALSE;
+  }
+
+  // See if the site sections are already present.
+  $url = $entity->field_pdq_url->value;
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'cgov_site_sections')
+    ->condition('field_landing_page.target_id', $entity->id())
+    ->condition('computed_path', $url)
+    ->execute();
+
+  // If so, and the label used for navigation is unchanged, we're done.
+  $short_title = $entity->get('field_short_title')->value;
+  foreach ($tids as $tid) {
+    $term = Term::load($tid);
+    if ($term->getName() === $short_title) {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 /**
