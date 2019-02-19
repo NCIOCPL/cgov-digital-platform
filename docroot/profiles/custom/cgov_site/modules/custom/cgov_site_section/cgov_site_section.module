@@ -48,8 +48,8 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
-  
-  // Convert the URL to lowercase as we only want lowercased items and the server
+
+  // Convert the URL to lowercase as we only want lowercase items and the server
   // is case-sensative.
   if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
@@ -178,5 +178,22 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
       ],
     ]
     );
+  }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * This allows us to use the computed_path field in views.
+ */
+function cgov_site_section_views_data_alter(array &$data) {
+  if (isset($data['taxonomy_term_field_data'])) {
+    $data['taxonomy_term_field_data']['computed_path'] = [
+      'title' => t('Computed path'),
+      'field' => [
+        // This is not correct. Need to find default text field handler.
+        'id' => 'field',
+      ],
+    ];
   }
 }
