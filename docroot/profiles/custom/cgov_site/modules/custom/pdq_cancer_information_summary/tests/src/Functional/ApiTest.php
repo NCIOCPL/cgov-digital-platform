@@ -154,9 +154,6 @@ class ApiTest extends BrowserTestBase {
     $this->assertFalse($values['en']['published'], 'Not yet published');
     $this->checkValues($values, ['en']);
 
-    // Confirm the existence of the site sections.
-    $this->checkSiteSections($this->english);
-
     // Store a modified revision (still unpublished).
     $section = ['id' => '_3', 'title' => 'Section 3', 'html' => '<p>3</p>'];
     $this->english['sections'][] = $section;
@@ -185,8 +182,12 @@ class ApiTest extends BrowserTestBase {
     $this->assertFalse($values['es']['published'], 'Not yet published');
     $this->checkValues($values, ['en', 'es']);
 
-    // Confirm the existence of the Spanish site sections.
-    $this->checkSiteSections($this->spanish);
+    // Make sure we haven't set the site sections yet.
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', 'cgov_site_sections');
+    $query->condition('field_landing_page.target_id', $nid);
+    $tids = $query->execute();
+    $this->assertEmpty($tids, 'Creation of site sections deferred');
 
     // Publish the summaries and make sure they're still intact.
     $this->publish();
@@ -195,9 +196,22 @@ class ApiTest extends BrowserTestBase {
     $this->assertTrue($values['es']['published'], 'Published');
     $this->checkValues($values, ['en', 'es']);
 
+    // Confirm the existence of the site sections.
+    $this->checkSiteSections($this->english);
+    $this->checkSiteSections($this->spanish);
+
     // Make sure the pathauto mechanism is behaving correctly.
     $this->checkPathauto($this->english);
     $this->checkPathauto($this->spanish);
+
+    // Make sure changes don't affect the site sections until published.
+    $old_short_title = $this->english['short_title'];
+    $this->english['short_title'] = 'New Short Title';
+    $payload = $this->store($this->english, 200);
+    $this->assertEqual($payload['nid'], $nid, 'Uses same node');
+    $this->checkSiteSections($this->english, $old_short_title);
+    $this->publish([[$nid, 'en']]);
+    $this->checkSiteSections($this->english);
 
     // Try to delete the English summary (should fail).
     $this->delete($this->english, FALSE);
@@ -317,12 +331,17 @@ class ApiTest extends BrowserTestBase {
 
   /**
    * Release the summaries to the web site.
+   *
+   * @param array $summaries
+   *   Override which summaries to publish.
    */
-  private function publish() {
-    $summaries = [
-      [$this->english['nid'], 'en'],
-      [$this->spanish['nid'], 'es'],
-    ];
+  private function publish(array $summaries = NULL) {
+    if (empty($summaries)) {
+      $summaries = [
+        [$this->english['nid'], 'en'],
+        [$this->spanish['nid'], 'es'],
+      ];
+    }
     $response = $this->request('POST', $this->pdqUrl, ['json' => $summaries]);
     $this->assertEqual($response->getStatusCode(), 200);
     $errors = json_decode($response->getBody()->__toString(), TRUE)['errors'];
@@ -387,8 +406,13 @@ class ApiTest extends BrowserTestBase {
    *
    * @param array $summary
    *   Values for the summary which should appear in site navigation.
+   * @param string $nav_label
+   *   Optional value for earlier label which should still be visible,
+   *   while a change to the label is waiting to be published.
    */
-  private function checkSiteSections(array $summary) {
+  private function checkSiteSections(array $summary, $nav_label = NULL) {
+
+    // Start by finding the term linked to this summary.
     $url = $summary['url'];
     $language = $summary['language'];
     $nid = $summary['nid'];
@@ -398,19 +422,36 @@ class ApiTest extends BrowserTestBase {
     $query->condition('langcode', $language);
     $tids = $query->execute();
     $this->assertCount(1, $tids, 'found term for landing page');
+
+    // Unfortunately, Drupal needs help knowing when to let go.
+    $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $storage->resetCache($tids);
     $section = Term::load(array_pop($tids));
+
+    // Walk backward through the tokens in the summary's URL.
     $tail = TRUE;
     $tokens = explode('/', trim($url, '/'));
     $lang_ok = 'language code is correct';
     while (!empty($tokens)) {
+
+      // Language for the site section needs to match the summary's language.
       $section_langcode = $section->get('langcode')->value;
       $this->assertEqual($section_langcode, $language, $lang_ok);
+
+      // The 'pretty URL' field is a misnomer. It's really the piece of the
+      // summary's URL for this node in the terminology hierarchy.
       $token = array_pop($tokens);
-      $name = $section->getName();
       $pretty_url = $section->get('field_pretty_url')->value;
       $this->assertEqual($pretty_url, $token, 'pretty url is correct');
+
+      // We need the term's name for all tokens.
+      $name = $section->getName();
       if ($tail) {
-        $nav_label = $summary['short_title'];
+        if (empty($nav_label)) {
+          $nav_label = $summary['short_title'];
+        }
+
+        // For the last token in the URL, fields have different assignments.
         $path = $section->get('computed_path')->value;
         $this->assertEqual($name, $nav_label, 'nav label is correct');
         $this->assertEqual($path, $url, 'computed path is correct');
