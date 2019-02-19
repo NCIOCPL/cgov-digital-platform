@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: biography_url
+label: 'Biography URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  82798133-0309-4131-8259-a7c420cd43f2:
+    id: node_type
+    bundles:
+      cgov_biography: cgov_biography
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 82798133-0309-4131-8259-a7c420cd43f2
+selection_logic: and
+weight: -5
+relationships: {  }
