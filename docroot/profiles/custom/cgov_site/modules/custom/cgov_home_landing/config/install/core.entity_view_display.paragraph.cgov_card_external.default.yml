@@ -3,9 +3,10 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.cgov_card_external.field_featured_url
-    - field.field.paragraph.cgov_card_external.field_image_promotional
+    - field.field.paragraph.cgov_card_external.field_override_image_promotional
     - field.field.paragraph.cgov_card_external.field_override_card_description
     - field.field.paragraph.cgov_card_external.field_override_card_title
+    - field.field.paragraph.cgov_card_external.field_override_list_description
     - paragraphs.paragraphs_type.cgov_card_external
   module:
     - link
@@ -26,15 +27,6 @@ content:
     third_party_settings: {  }
     type: link_separate
     region: content
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 2
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-    region: content
   field_override_card_description:
     weight: 1
     label: hidden
@@ -50,5 +42,21 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_override_image_promotional:
+    type: entity_reference_entity_view
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_override_list_description:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
     region: content
 hidden: {  }

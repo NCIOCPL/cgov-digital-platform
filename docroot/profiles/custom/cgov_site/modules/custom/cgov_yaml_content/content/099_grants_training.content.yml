@@ -1,0 +1,231 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Grants & Training"
+  title__ES:
+      value: "Subvenciones y capacitación"
+  field_page_description:
+    value: "Information about grants and other funding opportunities, the NCI grants process, and funding for training."
+  field_page_description__ES:
+    value: "Información sobre subvenciones y otras oportunidades de financiación, el proceso de subvenciones del NCI y financiamiento para capacitación."
+  field_short_title:
+    value: "Grants and Training"
+  field_short_title__ES:
+    value: "Subvenciones y capacitación"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/grants-training'
+  field_site_section_ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/subvenciones-capacitacion'
+    ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Featured Content"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_items:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Psychological Stress and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          body:
+            - format: "full_html"
+              value: |
+                <div class="featured-text funding-announcements">
+                <h2>Latest Funding Announcements</h2>
+                <ul class="list no-bullets">
+                <li class="general-list-item list-item">
+                <div class="title container">
+                <span class="title">
+                <a href="https://grants.nih.gov/grants/guide/pa-files/PAR-19-184.html" onclick="s.linkTrackVars='prop57,prop58,prop59,prop60'; s.prop57='Biology of Bladder Cancer (R21 Clinical Trial Optional)'; s.prop59='Funding Announcement:1'; s.prop60='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','FundingAnnouncements')">Biology of Bladder Cancer (R21 Clinical Trial Optional)</a> </span>
+                <p class="description dynamic-description">PA-19-184</p>
+                <p class="date dynamic-date">Application Due Date: February 16, 2019</p>
+                </div> </li> </ul>
+                <a class="arrow-link" href="/grants-training/grants/funding-opportunities" onclick="s.linkTrackVars='prop57,prop58,prop59,prop60'; s.prop57='Latest Funding Announcements'; s.prop58='See More'; s.prop59='Funding Announcement:See More'; s.prop60='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','FundingAnnouncements')">See more funding opportunities</a><br> <h3><strong>Cancer Moonshot&#8480; Funding Opportunities</strong></h3> <a class="arrow-link" href="/research/key-initiatives/moonshot-cancer-initiative/blue-ribbon-panel/funding" onclick="s.linkTrackVars='prop57,prop58,prop59,prop60'; s.prop57='BRP Announcements'; s.prop58='See More'; s.prop59='Funding Announcement:See More'; s.prop60='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','FundingAnnouncements')">View list</a> </div></div>
+
+    ######## Begin Guide Row ###########
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Your Guide to NCI Grants & Training"
+      field_guide_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936246 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Research Grant Funding
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/grants-training/grants-funding/funding-opportunities" title="">Funding Opportunities</a></li>
+                    <li><a class="arrow-link" href="/research/key-initiatives/moonshot-cancer-initiative/funding" title="">Cancer Moonshot℠ Funding Opportunities</a></li>
+                    <li><a class="arrow-link" href="/grants-training/grants-funding/funding-strategy" title="">Funding Strategy</a></li>
+                    <li><a class="arrow-link" href="/grants-training/grants-funding/contacts" title="">Research Program Contacts</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936246 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Grants Process
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/grants-training/apply-grant" title="">Apply for a Grant</a></li>
+                    <li><a class="arrow-link" href="/grants-training/manage-award" title="">Manage Your Award</a></li>
+                    <li><a class="arrow-link" href="/grants-training/policies-process" title="">Grants Policies</a></li>
+                    <li><a class="arrow-link" href="/grants-training/manage-award/contacts" title="">Grants Management Contacts</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936246 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Funding for Training
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/grants-training/training/at-nci" title="">Cancer Research Training at NCI</a></li>
+                    <li><a class="arrow-link" href="/grants-training/training/funding" title="">Funding for Cancer Research Training</a></li>
+                    <li><a class="arrow-link" href="/grants-training/training/idwb" title="">Building a Diverse Workforce</a></li>
+                    <li><a class="arrow-link" href="/about-nci/organization/crchd/diversity-training" title="">CRCHD Diversity Training</a></li>
+                    <li><a class="arrow-link" href="/grants-training/training/contact" title="">Training Program Contacts</a></li>
+                  </ul>
+                </div>
+###End Guide Card Row###
+###Begin Secondary Feature Card Row####
+    - entity: 'paragraph'
+      type: "cgov_secondary_feature_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'NCI Grant Policies'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+####End Secondary Feature Card Row#####
+
+######## MULTIMEDIA HERE TBD ##############
+
+#### SPANISH CONTENTS HERE ####
+  field_landing_contents__ES:
+    #### ONE COLUMN ####
+    - entity: 'paragraph'
+      type: "cgov_column_one"
+      field_main_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="row">
+                  <div class="large-12 columns">
+                    <p>
+                      Como líder nacional de investigación del cáncer, el NCI es una
+                      organización gubernamental que capacita a la próxima generación de
+                      investigadores del cáncer en universidades e instituciones de todo el país
+                      y proporciona financiación para investigación científica.
+                    </p>
+                    <p>
+                      Todos los descubrimientos médicos innovadores empiezan con una idea que
+                      necesita financiación para ponerse en práctica. El proceso de subvenciones
+                      del NCI está diseñado para asegurar que se evalúe y otorgue financiación a
+                      las solicitudes con los proyectos de investigación científica más
+                      prometedores, y que se alcancen los objetivos científicos propuestos.
+                    </p>
+                    <p>Las subvenciones y acuerdos cooperativos del NCI se otorgan a:</p>
+                    <ul>
+                      <li>Organizaciones sin fines de lucro</li>
+                      <li>Organizaciones con fines de lucro</li>
+                      <li>Instituciones de educación superior</li>
+                      <li>Hospitales</li>
+                      <li>Fundaciones de investigación</li>
+                      <li>Gobiernos estatales y locales</li>
+                      <li>Instituciones federales</li>
+                      <li>Personas particulares (solo becas)</li>
+                      <li>
+                        Instituciones en el extranjero y organizaciones internacionales (solo
+                        becas de investigación)
+                      </li>
+                      <li>Organizaciones de carácter religioso</li>
+                    </ul>
+                    <p>
+                      Se puede encontrar más información en inglés sobre el proceso de
+                      adjudicación de subvenciones del NCI, la presentación de solicitudes, los
+                      mecanismos de revisión y financiamiento, y los programas de capacitación,
+                      entre otros. Vea la página de
+                      <a href="/grants-training">Grants and Training del NCI</a>.
+                    </p>
+                  </div>
+                </div>

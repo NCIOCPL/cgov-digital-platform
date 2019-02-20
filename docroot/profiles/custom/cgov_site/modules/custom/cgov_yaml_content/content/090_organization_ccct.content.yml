@@ -1,0 +1,159 @@
+###############
+## Tests
+## - "intro text"
+## - feature cards
+## - thumbnails
+## - no Spanish version
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "CCCT Banner"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'CCCT-banner-social-media.jpg'
+      alt: 'CCCT Banner'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Coordinating Center for Clinical Trials (CCCT)"
+  field_page_description:
+    value: "The Coordinating Center for Clinical Trials (CCCT) plays a key role in supporting NCI’s clinical and translational research programs to advance science and patient care."
+  field_card_description:
+    value: "Coordinates the integration of NCI's clinical and associated translational research programs."
+  field_short_title:
+    value: "Coordinating Center for Clinical Trials (CCCT)"
+  field_override_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'CCCT Banner'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/organization/ccct'
+  field_banner_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'CCCT-banner.jpg'
+      alt: ''
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <p>The Coordinating Center for Clinical Trials (CCCT) plays a key role in supporting NCI&rsquo;s clinical and translational research programs to advance science and patient care. For more information on clinical trials use <a href="/research/areas/clinical-trials" title=""></a><a href="/research/areas/clinical-trials" title=""></a><a href="/research/areas/clinical-trials" title="">NCIs clinical trials research</a> page. To find an NCI-sponsored clinical trial, use our <a href="/about-cancer/treatment/clinical-trials/search" title="">clinical trials search</a>.</p>
+    ######## End intro content ###########
+    ########    Card Row   ###############
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+    ########    End Card Row    ###############
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Thumbnail Row ##############

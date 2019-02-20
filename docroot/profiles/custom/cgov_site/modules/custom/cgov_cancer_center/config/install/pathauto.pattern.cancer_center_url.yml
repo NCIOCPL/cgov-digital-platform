@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: cancer_center_url
+label: 'Cancer Center URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  eec0cd92-8867-4c8e-b31a-7c9417592c26:
+    id: node_type
+    bundles:
+      cgov_cancer_center: cgov_cancer_center
+    negate: false
+    context_mapping:
+      node: node
+    uuid: eec0cd92-8867-4c8e-b31a-7c9417592c26
+selection_logic: and
+weight: -5
+relationships: {  }

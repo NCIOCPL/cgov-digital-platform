@@ -2,14 +2,19 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
-use Drupal\cgov_yaml_content\FieldProcessor\FieldProcessor;
 use Drupal\yaml_content\Event\YamlContentEvents;
-use Drupal\yaml_content\ContentLoader\ContentLoaderInterface;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
+use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Component\Render\PlainTextOutput;
+use Drupal\Core\Utility\Token;
+use Drupal\Core\TypedData\Exception\MissingDataException;
+use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Handle yaml_content custom events.
@@ -24,23 +29,48 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $themeManager;
 
   /**
-   * Yaml Content Content Loader.
+   * Drupal Entity Query Factory.
    *
-   * @var \Drupal\yaml_content\ContentLoader\ContentLoaderInterface
+   * @var \Drupal\Core\Entity\Query\QueryFactory
    */
-  protected $contentLoader;
+  protected $entityQueryFactory;
+
+  /**
+   * Drupal Entity Type Manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Drupal token service.
+   *
+   * @var \Drupal\Core\Utility\Token
+   */
+  protected $token;
 
   /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
-   * @param \Drupal\yaml_content\ContentLoader\ContentLoaderInterface $contentLoader
-   *   Content Loader.
+   * @param \Drupal\Core\Entity\Query\QueryFactory $entityQueryFactory
+   *   Query factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Drupal Entity Type Manager.
+   * @param \Drupal\Core\Utility\Token $token
+   *   Drupal token service.
    */
-  public function __construct(ThemeManagerInterface $themeManager, ContentLoaderInterface $contentLoader) {
+  public function __construct(
+    ThemeManagerInterface $themeManager,
+    QueryFactory $entityQueryFactory,
+    EntityTypeManagerInterface $entityTypeManager,
+    Token $token
+    ) {
     $this->themeManager = $themeManager;
-    $this->contentLoader = $contentLoader;
+    $this->entityQueryFactory = $entityQueryFactory;
+    $this->entityTypeManager = $entityTypeManager;
+    $this->token = $token;
   }
 
   /**
@@ -50,7 +80,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     $events = [];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
-    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addLandingPage'];
+    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['handlePostSaveEvents'];
 
     return $events;
   }
@@ -101,6 +131,9 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *
    * @param array|string $fields
    *   Entity/Field data as array.
+   *
+   * @return array
+   *   Processed fields.
    */
   public function translateParagraphs($fields) {
     if (!is_array($fields)) {
@@ -120,6 +153,170 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Retrieve entity reference by params.
+   *
+   * Important to note is this doesn't currently
+   * support updating the references (such as adding
+   * an 'alt' tag to images.)
+   *
+   * @param array $value
+   *   Process directive array in this format:
+   *   ```yaml
+   *   '#process':
+   *     callback: '<callback string>'
+   *     args:
+   *       - <callback argument 1>
+   *       - <callback argument 2>
+   *       - <...>
+   *    ```.
+   *
+   * @return array
+   *   Entity reference.
+   */
+  public function processReference(array $value) {
+    $fieldReferenceArray = [];
+    $entity_type = $value['#process']['args'][0];
+    $args = $value['#process']['args'][1];
+    $query = $this->entityQueryFactory->get($entity_type);
+    foreach ($args as $property => $value) {
+      $query->condition($property, $value);
+    }
+    $entity_ids = $query->execute();
+
+    // Reference entity can't be found. Create it.
+    if (empty($entity_ids)) {
+      $entity = $this->entityTypeManager->getStorage($entity_type)->create($args);
+      $entity_ids = [$entity->id()];
+    }
+
+    // Creating it failed.
+    if (empty($entity_ids)) {
+      return $this->throwParamError('Unable to process reference. Reference not found.', $entity_type);
+    }
+
+    $first_id = array_shift($entity_ids);
+    $fieldReferenceArray = ['target_id' => $first_id];
+    return $fieldReferenceArray;
+  }
+
+  /**
+   * Handle #process file directives.
+   *
+   * @param array $processConfig
+   *   Config.
+   * @param \Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field
+   *   Field.
+   */
+  public function processFile(array $processConfig, FileFieldItemList $field) {
+    var_dump(get_class($field));
+    $entity_type = $processConfig['#process']['args'][0];
+    $filename = $processConfig['#process']['args'][1]['filename'];
+    unset($processConfig['#process']);
+    // After unsetting the #process config, we should be
+    // left with anything intended for the field, such as alt
+    // tags.
+    $path = drupal_get_path('module', 'cgov_yaml_content');
+    $directory = '/data_files/';
+    // If the entity type is an image, look in to the /images directory.
+    if ($entity_type == 'image') {
+      $directory = '/images/';
+    }
+    $fileData = file_get_contents($path . $directory . $filename);
+    $fileExists = $fileData !== FALSE;
+    if ($fileExists) {
+      $destination = 'public://';
+      // Look-up the field's directory configuration.
+      // Returns a token pattern.
+      $directory = $field->getSetting('file_directory');
+      if ($directory) {
+        $directory = trim($directory, '/');
+        $directory = PlainTextOutput::renderFromHtml($this->token->replace($directory));
+        if ($directory) {
+          $destination .= $directory . '/';
+        }
+      }
+
+      // Create the destination directory if it does not already exist.
+      file_prepare_directory($destination, FILE_CREATE_DIRECTORY);
+
+      // Save the file data or return an existing file.
+      $file = file_save_data($fileData, $destination . $filename, FILE_EXISTS_REPLACE);
+
+      // Use the newly created file id as the value.
+      $processConfig['target_id'] = $file->id();
+      return $processConfig;
+    }
+    else {
+      return $this->throwParamError('Unable to process file content. File not found.', $entity_type);
+    }
+
+  }
+
+  /**
+   * Test for and handle #process directives.
+   *
+   * @param array|string $fields
+   *   Entity/Field data as array.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   Entity.
+   *
+   * @return array
+   *   Processed fields.
+   */
+  public function handleProcessDirectives($fields, EntityInterface $entity) {
+    foreach ($fields as $fieldName => $fieldData) {
+      // Test for process directives:
+      // Process directives are associative arrays with
+      // a '#process', 'callback', and 'args' key.
+      // Frustratingly, there are multiple ways of formatting #process
+      // directives in yaml_content (we are going to ignore the target_type
+      // key since it seems redundant (until inevitably proven otherwise.))
+      // Fields can contain multiple directives. So we are only looking
+      // for arrays.
+      $fieldContainsArray = is_array($fieldData);
+      if ($fieldContainsArray) {
+        // We will have to determine later on if passing an array of elements is
+        // is appropriate or not. For now we will assume so and gather them here
+        // before adding them to the field.
+        $processedFieldContents = [];
+        foreach ($fieldData as $value) {
+          $isProcessDirective = is_array($value) && isset($value['#process']);
+          if ($isProcessDirective) {
+            // For 'reference' #process directives.
+            if (isset($value['#process']['callback']) && $value['#process']['callback'] === 'reference') {
+              $processedReference = $this->processReference($value);
+              $processedFieldContents[] = $processedReference;
+            }
+            elseif ((isset($value['#process']['callback']) && $value['#process']['callback'] === 'file')) {
+              $field = $entity->get($fieldName);
+              $processedReference = $this->processFile($value, $field);
+              $processedFieldContents[] = $processedReference;
+            }
+            else {
+              // You made a mistake formatting your process directive. Ha ha.
+              // Go directly to jail, do not pass go.
+              return $this->throwParamError('Unable to process file content. Process callback not file or reference.', "", $value);
+            }
+          }
+          else {
+            // NOTE: Because of the simple multipass processing we're doing, a
+            // field that mixed paragraphs and process directives is currently
+            // unsupported. However, we will try and preserve non directive
+            // elements and see what happens... (In theory, paragraphs would've
+            // already been created and the references inserted here).
+            $processedFieldContents[] = $value;
+          }
+        }
+        // NOTE: This implementation does not test field cardinality. This
+        // means that if an array is provided when only a single element should
+        // be, it will probably be very unhappy.
+        $fields[$fieldName] = $processedFieldContents;
+      }
+    }
+    return $fields;
+  }
+
+  /**
    * Add available Spanish translations.
    *
    * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
@@ -128,6 +325,17 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function addSpanishTranslations(EntityPostSaveEvent $event) {
     $yamlContent = $event->getContentData();
     $entity = $event->getEntity();
+
+    // The following may seem a bit redundant, but it was realized that
+    // pathauto hooks and yaml_content hooks were passing/receiving
+    // stale copies of the entities they were modifying. This allows us
+    // to update our copy of the entity from the yaml_content event
+    // and corrects an issue where pathauto was not generating url aliases
+    // on spanish translations on the first pass of the ycim command.
+    $entityId = $entity->id();
+    $entityType = $entity->getEntityTypeId();
+    $entity = $this->entityTypeManager->getStorage($entityType)->load($entityId);
+
     $translatedFields = [];
     // 1. Gather Spanish field translations.
     // The yaml files contain fields (marked XXX__ES) that are
@@ -182,18 +390,8 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // The yaml_content loader offers the ability to use process functions
     // as callbacks in the yml.
     // Translated fields also doing that don't have access to this feature
-    // so we are going to borrow the functionality. Unfortunately, the
-    // preprocess method is protected, so we need to use another public
-    // method to access it.
-    // Also, it's important to note that behind the scenes, this will also allow
-    // yaml_content to correctly move the processed files into the
-    // sites/default/files  directory for later access.
-    $this->contentLoader->setExistenceCheck(TRUE);
-    foreach ($translatedFields as $key => $value) {
-      if (is_array($value) && isset($value['process'])) {
-        $translatedFields[$key] = FieldProcessor::processFieldData($key, $value);
-      }
-    }
+    // so we are going to recreate the functionality on an as-needed basis.
+    $translatedFields = $this->handleProcessDirectives($translatedFields, $entity);
 
     // 4. Create translation.
     $spanishTranslationAlreadyExists = $entity->hasTranslation('es');
@@ -208,6 +406,12 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $spanishTranslation->{$fieldName} = $fieldValue;
     }
     $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+    // We need to discreetly save the translation to trigger pathauto
+    // url alias building.
+    $spanishTranslation->save();
+    // In the event that this translation should be a landing page we want
+    // to set that up now.
+    $this->addLandingPage($spanishTranslation);
     $entity->save();
   }
 
@@ -276,16 +480,23 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Add Landing Pages to Site Sections.
-   *
-   * Programmatically add entity reference in Terms for
-   * landing pages.
+   * Call local functions to handle events.
    *
    * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
    *   The triggered event when an entity has been saved.
    */
-  public function addLandingPage(EntityPostSaveEvent $event) {
+  public function handlePostSaveEvents(EntityPostSaveEvent $event) {
     $savedEntity = $event->getEntity();
+    $this->addLandingPage($savedEntity);
+  }
+
+  /**
+   * Add Landing Pages to Site Sections.
+   *
+   * Programmatically add entity reference in Terms for
+   * landing pages.
+   */
+  public function addLandingPage($savedEntity) {
     $entityType = $savedEntity->getEntityTypeId();
     // $bundleType = $savedEntity->bundle();
     // TODO: For now we want to do the same thing for all content
@@ -319,6 +530,31 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     ];
     $siteSection->set('field_landing_page', $savedEntityReference);
     $siteSection->save();
+  }
+
+  /**
+   * Prepare an error message and throw error.
+   *
+   * @param string $error_message
+   *   The error message to display.
+   * @param string $entity_type
+   *   The entity type.
+   * @param array $filter_params
+   *   The filters for the query conditions.
+   */
+  protected function throwParamError($error_message, $entity_type = "ENTITY TYPE UNKNOWN", array $filter_params = []) {
+    // Build parameter output description for error message.
+    $error_params = [
+      '[',
+      '  "entity_type" => ' . $entity_type . ',',
+    ];
+    foreach ($filter_params as $key => $value) {
+      $error_params[] = sprintf("  '%s' => '%s',", $key, $value);
+    }
+    $error_params[] = ']';
+    $param_output = implode("\n", $error_params);
+
+    throw new MissingDataException(__CLASS__ . ': ' . $error_message . ': ' . $param_output);
   }
 
 }

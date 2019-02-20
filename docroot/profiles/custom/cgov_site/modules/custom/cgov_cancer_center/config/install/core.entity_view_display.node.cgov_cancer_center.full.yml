@@ -25,9 +25,12 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_phone_label_2
     - field.field.node.cgov_cancer_center.field_phone_number_1
     - field.field.node.cgov_cancer_center.field_phone_number_2
+    - field.field.node.cgov_cancer_center.field_pretty_url
     - field.field.node.cgov_cancer_center.field_region
+    - field.field.node.cgov_cancer_center.field_related_resources
     - field.field.node.cgov_cancer_center.field_search_engine_restrictions
     - field.field.node.cgov_cancer_center.field_short_title
+    - field.field.node.cgov_cancer_center.field_site_section
     - field.field.node.cgov_cancer_center.field_sort_title
     - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
@@ -36,6 +39,7 @@ dependencies:
     - node.type.cgov_cancer_center
   module:
     - cgov_core
+    - entity_reference_revisions
     - options
     - text
     - user
@@ -52,7 +56,7 @@ content:
     third_party_settings: {  }
     region: content
   content_moderation_control:
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -191,6 +195,15 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 20
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_state:
     weight: 10
     label: hidden
@@ -223,7 +236,7 @@ content:
     type: string
     region: content
   links:
-    weight: 1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -234,7 +247,9 @@ hidden:
   field_feature_card_description: true
   field_list_description: true
   field_page_description: true
+  field_pretty_url: true
   field_search_engine_restrictions: true
   field_short_title: true
+  field_site_section: true
   field_sort_title: true
   langcode: true

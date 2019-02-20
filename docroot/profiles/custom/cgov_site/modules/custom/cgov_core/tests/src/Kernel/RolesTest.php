@@ -17,8 +17,27 @@ class RolesTest extends EntityKernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core', 'taxonomy',
+    'user',
+    'system',
+    'file',
+    'link',
+    'field',
+    'image',
+    'node',
+    'text',
+    'filter',
+    'datetime',
+    'options',
+    'workflows',
+    'content_moderation',
+    'language',
+    'content_translation',
+    'cgov_core',
+    'taxonomy',
+    'views',
+    'entity_browser',
+    'entity_reference_revisions',
+    'paragraphs',
   ];
 
   /**
@@ -27,8 +46,22 @@ class RolesTest extends EntityKernelTestBase {
   public function setUp() {
     parent::setup();
     $this->installConfig([
-      'field', 'node', 'user', 'file', 'workflows', 'content_moderation', 'language',
-      'content_translation', 'cgov_core', 'taxonomy',
+      'field',
+      'node',
+      'user',
+      'file',
+      'image',
+      'link',
+      'workflows',
+      'content_moderation',
+      'language',
+      'views',
+      'entity_browser',
+      'entity_reference_revisions',
+      'paragraphs',
+      'content_translation',
+      'cgov_core',
+      'taxonomy',
     ]);
   }
 
