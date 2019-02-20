@@ -4,3 +4,160 @@
  * @file
  * Contains pdq_cancer_information_summary.module.
  */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function pdq_cancer_information_summary_node_insert(EntityInterface $entity) {
+  if (_pdq_cis_needs_site_sections($entity)) {
+    _pdq_cis_add_site_sections($entity);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function pdq_cancer_information_summary_node_update(EntityInterface $entity) {
+  if (_pdq_cis_needs_site_sections($entity)) {
+    _pdq_cis_add_site_sections($entity);
+  }
+}
+
+/**
+ * Check to see whether we need to add site sections for a summary.
+ *
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   Reference to the PDQ Cancer Information Summary just saved.
+ */
+function _pdq_cis_needs_site_sections(EntityInterface $entity) {
+
+  // Only appropriate for PDQ CIS nodes.
+  if ($entity->bundle() !== 'pdq_cancer_information_summary') {
+    return FALSE;
+  }
+
+  // Don't do anything for unpublished summary revisions.
+  if (!$entity->get('status')->value) {
+    return FALSE;
+  }
+
+  // See if the site sections are already present.
+  $url = $entity->field_pdq_url->value;
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'cgov_site_sections')
+    ->condition('field_landing_page.target_id', $entity->id())
+    ->condition('computed_path', $url)
+    ->execute();
+
+  // If so, and the label used for navigation is unchanged, we're done.
+  $short_title = $entity->get('field_short_title')->value;
+  foreach ($tids as $tid) {
+    $term = Term::load($tid);
+    if ($term->getName() === $short_title) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+/**
+ * Common code to add site_section terms.
+ *
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   Reference to the PDQ Cancer Information Summary just saved.
+ */
+function _pdq_cis_add_site_sections(EntityInterface $entity) {
+
+  // Collect the values we need from the summary.
+  $langcode = $entity->get('langcode')->value;
+  $url = $entity->get('field_pdq_url')->value;
+  $nav_label = $entity->get('field_short_title')->value;
+
+  // Find the root of the navigation tree for this language.
+  $section = _pdq_cis_load_site_section($langcode);
+
+  // If the root term isn't there, create it.
+  if (empty($section)) {
+    $section = Term::create([
+      'vid' => 'cgov_site_sections',
+      'name' => $langcode === 'en' ? 'Home' : "Espa\u{f1}ol Home",
+      'parent' => 0,
+      'status' => 1,
+      'langcode' => $langcode,
+      'field_breadcrumb_root' => TRUE,
+      'field_main_nav_root' => TRUE,
+    ]);
+    if ($langcode === 'es') {
+      $section->set('field_navigation_label', "P\u{e1}gina principal");
+    }
+    $section->save();
+  }
+
+  // Walk through the tokens from the exploded URL, making sure we have
+  // a site section term corresponding to each of those tokens.
+  $tokens = explode('/', trim($url, '/'));
+  $count = 0;
+  foreach ($tokens as $token) {
+    $is_last_token = ++$count === count($tokens);
+    $section_id = $section->id();
+    $child = _pdq_cis_load_site_section($langcode, $section_id, $token);
+
+    // If we don't have a term for this section, make one.
+    if (empty($child)) {
+      $child = Term::create([
+        'vid' => 'cgov_site_sections',
+        'name' => $is_last_token ? $nav_label : $token,
+        'field_pretty_url' => $token,
+        'parent' => $section_id,
+        'status' => 1,
+        'langcode' => $langcode,
+      ]);
+      if ($is_last_token) {
+        $child->set('field_landing_page', $entity);
+      }
+      $child->save();
+    }
+
+    // If the last section already exists, make sure it's got the right name.
+    elseif ($is_last_token) {
+      if ($child->getName() !== $nav_label) {
+        $child->setName($nav_label);
+        $child->save();
+      }
+    }
+
+    // Prepare for the next iteration of the loop, if any.
+    $section = $child;
+  }
+}
+
+/**
+ * Helper function to get a site navigation term.
+ *
+ * @param string $langcode
+ *   Either 'en' or 'es' to match language of summary.
+ * @param int $parent
+ *   ID of the parent for the site section.
+ * @param string $url
+ *   The optional value to match for the pretty url field.
+ *
+ * @return Drupal\taxonomy\Entity\Term
+ *   Reference to site section term, if found; else NULL.
+ */
+function _pdq_cis_load_site_section($langcode, $parent = 0, $url = '') {
+  $query = \Drupal::entityQuery('taxonomy_term');
+  $query->condition('vid', 'cgov_site_sections');
+  $query->condition('parent', $parent);
+  $query->condition('langcode', $langcode);
+  if (!empty($url)) {
+    $query->condition('field_pretty_url', $url);
+  }
+  $tids = $query->execute();
+  foreach ($tids as $tid) {
+    return Term::load($tid);
+  }
+  return NULL;
+}
