@@ -7,9 +7,15 @@ const config = {
         filename: '[name].js',
         path: path.join(__dirname, 'dist/js'),
     },
+    externals: {
+      'jquery': 'jQuery',
+      'jQuery': 'jQuery',
+      'jquery-ui': 'jQuery.ui',
+      'CDEConfig': 'CDEConfig'
+    },
     module: {
 		rules: [
-			{ 
+			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: ['babel-loader']
@@ -20,8 +26,8 @@ const config = {
 					{
 						loader: MiniCssExtractPlugin.loader
 					},
-					'css-loader', 
-					'postcss-loader', 
+					'css-loader',
+					'postcss-loader',
 					'sass-loader'
 				],
 			},

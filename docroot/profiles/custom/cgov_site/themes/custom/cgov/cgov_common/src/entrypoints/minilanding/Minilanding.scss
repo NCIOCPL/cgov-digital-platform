@@ -1,0 +1,104 @@
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '~Core/styles/breakpoints';
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+@import "~Core/styles/nci-foundation_mixins";
+@import "~Core/styles/nci-foundation_variables";
+@import "~Core/styles/thumbnailcards";
+// @import "~Core/styles/hero";
+// @import "~Core/styles/cards";
+
+// Creates a flex wrapper for elements with equalheight class to hook on
+#content .flex-columns {
+  display: flex;
+  float: none;
+}
+
+@include bp(small) {
+  .card-thumbnail img {
+    display: none;
+  }
+}
+
+@include bp(medium-up) {
+  // moved over from _hacks.scss
+  .card-thumbnail .small-2 {
+		width: 25%;
+	}
+	.card-thumbnail .small-10 {
+		width: 75%;
+  }
+  
+  // moved over from TopicPage.scss
+  .card-thumbnail-image {
+    padding-left: 0;
+  }
+  .card-thumbnail .small-10.card-thumbnail-text > h3 {
+    margin-top: .5em;
+  }
+}
+
+@include bp(large-up) {
+
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+	}
+	
+	.row .large-4.gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 3%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+  }
+}
+
+.infographic {
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+
+  figcaption {
+    padding: 0.5em 1em;
+  }
+}
+
+.infographic-enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
+
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
+
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: .6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+}
+
+/********************* END Mini Landing Page Styles ******************************************/

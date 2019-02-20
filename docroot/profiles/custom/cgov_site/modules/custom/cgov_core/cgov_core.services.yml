@@ -1,4 +1,7 @@
 services:
+  logger.channel.cgov_core:
+    parent: logger.channel_base
+    arguments: ['cgov_core']
   cgov_core.page_options_manager:
     class: Drupal\cgov_core\Services\PageOptionsManager
     arguments: ['@current_route_match']
@@ -8,3 +11,6 @@ services:
       - '@config.factory'
       - '@language_negotiator'
       - '@entity_type.manager'
+  cgov_core.cgov_navigation_manager:
+    class: Drupal\cgov_core\Services\CgovNavigationManager
+    arguments: ['@path.current', '@path.alias_manager', '@entity_type.manager', '@entity_field.manager', '@logger.channel.cgov_core']

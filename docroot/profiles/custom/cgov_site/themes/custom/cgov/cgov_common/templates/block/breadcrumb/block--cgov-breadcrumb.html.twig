@@ -1,0 +1,9 @@
+{% if content.breadcrumbs|length > 0 %}
+  <ul class="breadcrumbs">
+    {% for breadcrumb in content.breadcrumbs if breadcrumb.href %}
+      <li>
+        <a href="{{ breadcrumb.href|e }}">{{ breadcrumb.label|e }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

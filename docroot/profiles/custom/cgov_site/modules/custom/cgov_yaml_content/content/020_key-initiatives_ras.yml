@@ -1,0 +1,71 @@
+## TESTS:
+### Mini Landing Page with banner
+### Root section nav
+### Two column — content block and callout box
+### Thumbnail cards
+### No Spanish translation
+
+##### Promo Image #####
+- entity: "media"
+  bundle: "cgov_image"
+  name: "RAS Promo"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ras-thumb.jpg'
+      alt: ""
+  ##### End Promo Image #####
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "The RAS Initiative"
+  field_page_description:
+    value: "NCI established the RAS Initiative to explore innovative approaches for attacking the proteins encoded by mutant forms of the KRAS gene and to ultimately create effective, new therapies."
+  field_short_title:
+    value: "The RAS Initiative"
+  field_browser_title:
+    value: "The RAS Initiative"
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+  field_banner_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-banner.jpg'
+      alt: ''
+    ########## Current Intro Text — need to verify this is correct markup ###########
+  field_landing_contents:
+    ## Intro Text ##
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="callout-box-right">
+            <h3>RAS in Space</h3>
+            <p>Samples of KRAS protein were recently launched to the International Space Station for <a href="https://www.nasa.gov/mission_pages/station/research/experiments/explorer/Investigation.html?#id=7885">crystallization trials</a> in low earth orbit.</p>
+            </div>
+            <p>More than 30 percent of all human cancers &ndash; including 95 percent of pancreatic cancers and 45 percent of colorectal cancers &mdash; are driven by mutations of the <i>RAS</i> family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of <i>RAS</i> genes and to ultimately create effective, new therapies for <i>RAS</i>-related cancers.</p>
+    ## End Intro Text ##
+    ###### Begin thumbnail cards #####

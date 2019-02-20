@@ -145,15 +145,20 @@ class PDQResource extends ResourceBase {
   public function post(array $summaries) {
 
     $errors = [];
+    $storage = \Drupal::entityManager()->getStorage('node');
     foreach ($summaries as $summary) {
       try {
         list($nid, $language) = $summary;
-        $node = Node::load($nid);
-        $entity = $node->getTranslation($language);
-        $entity->moderation_state = 'published';
-        $entity->save();
-        unset($entity);
-        unset($node);
+        $revisions = $storage->getQuery()
+          ->latestRevision()
+          ->condition('nid', $nid, '=', $language)
+          ->execute();
+        foreach (array_keys($revisions) as $vid) {
+          $revision = $storage->loadRevision($vid);
+          $translation = $revision->getTranslation($language);
+          $translation->moderation_state->value = 'published';
+          $translation->save();
+        }
       }
       catch (Exception $e) {
         $message = $e->getMessage() ?? 'unexpected failure';
