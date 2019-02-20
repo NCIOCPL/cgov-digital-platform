@@ -78,7 +78,6 @@ class CgovImageFieldStorageTest extends KernelTestBase {
     $this->installSchema('user', 'users_data');
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
-    $this->installEntitySchema('node');
     $this->installEntitySchema('media');
     $this->installEntitySchema('file');
     $this->installEntitySchema('workflow');
