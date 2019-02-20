@@ -60,7 +60,12 @@ export const attachHandlers = (selector, player) => {
             // We don't want to prevent the default event on the <a> element because doing so would 
             // cancel the user interaction event on mobile and prevent the sound from playing,
             // so we need to stash the url and use JavaScript to return undefined
-            audiofile.setAttribute('data-pathname',audiofile.pathname);
+
+            // pathname gives a local absolute path
+            // audiofile.setAttribute('data-pathname',audiofile.pathname);
+
+            // href includes domain for audio files hosted outside of main site
+            audiofile.setAttribute('data-pathname',audiofile.href);
             audiofile.setAttribute('href','javascript:void(0)');
 
             attachHandler(audiofile, player);

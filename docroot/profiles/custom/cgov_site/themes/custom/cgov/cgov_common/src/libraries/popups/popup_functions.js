@@ -76,16 +76,6 @@ const popupFunctions = () => {
 			// fallback?
 			window.open(urlargs, '', 'scrollbars=yes,resizable=yes,width=550,height=550');
 		}
-
-		// currently on the href
-		//popWindow('defbyid','CDR0000045333&version=patient&language=English&dictionary=Cancer.gov'); - this would be a getTerm request
-		//popWindow('definition','malignant') - this would be an search request with an exact match option
-
-		// using the dictionary service - from bestbets.js
-		//https://www.cancer.gov/Dictionary.Service/v1/search?dictionary=term&searchText=prostate&language=English&searchType=exact&offset=0&maxResuts=0
-
-		//  search: function(dictionary, searchText, language, searchType, offset, maxResults) {
-		// getTerm: function(dictionary, termID, language) {
 	}
 
 	const triggerModal = (term) => {
@@ -116,18 +106,15 @@ const popupFunctions = () => {
 				${images.map(item => `<figure><img src="${item.ref}" alt="${item.alt}" /><figcaption><div class="caption-container">${item.caption}</div></figcaption></figure>`).join('')}
 			`;
 			return template
-		}
-
+    }
+    
 		// this is the complete template that will be rendered to the dialog popup. It will conditionally check for data values before attempting to render anything. This way we can avoid property undefined errors and empty DOM nodes.
-		//TODO: still no info on what term.related.summary and term.related.term are used for, what their data structure is, and if they're ever populated by the service
-		let hasMoreInfo = !!term.related.external && !!term.related.external.length || !!term.related.summary && !!term.related.summary.length || !!term.related.term && !!term.related.term.length;
-
 		let template = `
 			<dl>
 				<dt class="term">
 					<div class="title">${config.lang.Definition_Title[lang]}:</div>
 					<dfn>${term.term}</dfn>
-					${term.pronunciation ? `<span class="pronunciation">${term.pronunciation.key} <a href="${term.pronunciation.audio}" class="CDR_audiofile"><span class="hidden">listen</span></a></span>` : ''}
+					${term.pronunciation ? `<span class="pronunciation">${term.pronunciation.key} <a href="https://www-red-dev.cancer.gov${term.pronunciation.audio}" class="CDR_audiofile"><span class="hidden">listen</span></a></span>` : ''}
 				</dt>
 				${term.definition.html ? `<dd class="definition">${term.definition.html}</dd>` : ''}
 				${!!term.images && !!term.images.length ? renderImages(term.images) : ''}
