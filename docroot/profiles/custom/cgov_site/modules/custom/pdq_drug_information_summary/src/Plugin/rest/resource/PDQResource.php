@@ -187,6 +187,7 @@ class PDQResource extends ResourceBase {
     // nodes published in a separate pass after they've all been
     // stored, in order to minimize the window of time during which
     // older versions exist alongside newer.
+    $node->moderation_state->value = 'draft';
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';
     $code = empty($nid) ? 201 : 200;
