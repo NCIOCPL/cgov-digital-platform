@@ -103,7 +103,7 @@ const popupFunctions = () => {
 		const renderImages = (images) => {
 			//TODO: render as a carousel if more than two images?
 			let template = `
-				${images.map(item => `<figure><img src="${item.ref}" alt="${item.alt}" /><figcaption><div class="caption-container">${item.caption}</div></figcaption></figure>`).join('')}
+				${images.map(item => `<figure><img src="https://www-red-dev.cancer.gov${item.ref}" alt="${item.alt}" /><figcaption><div class="caption-container">${item.caption}</div></figcaption></figure>`).join('')}
 			`;
 			return template
     }
