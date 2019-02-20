@@ -770,3 +770,13 @@ $settings['entity_update_batch_size'] = 50;
 # }
 $config_directories['sync'] = '../config/sync';
 require DRUPAL_ROOT . "/../vendor/acquia/blt/settings/blt.settings.php";
+
+# development snippet to help bust cache issues
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
+
+$settings['cache']['bins']['render'] = 'cache.backend.null';
+$settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+$settings['cache']['bins']['page'] = 'cache.backend.null';
+
+$settings['extension_discovery_scan_tests'] = FALSE;
