@@ -22,7 +22,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     'user', 'system', 'file', 'field', 'image', 'media', 'text', 'filter',
     'datetime', 'options', 'workflows', 'content_moderation', 'language',
     'content_translation', 'media_test_source', 'cgov_media', 'taxonomy',
-    'pathauto',
+    'pathauto', 'token', 'ctools',
   ];
 
   /**
