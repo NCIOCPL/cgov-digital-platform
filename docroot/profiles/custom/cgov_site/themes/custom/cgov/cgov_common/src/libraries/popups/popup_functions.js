@@ -103,7 +103,7 @@ const popupFunctions = () => {
 		const renderImages = (images) => {
 			//TODO: render as a carousel if more than two images?
 			let template = `
-				${images.map(item => `<figure><img src="https://www-red-dev.cancer.gov${item.ref}" alt="${item.alt}" /><figcaption><div class="caption-container">${item.caption}</div></figcaption></figure>`).join('')}
+				${images.map(item => `<figure><img src="https://www.cancer.gov${item.ref}" alt="${item.alt}" /><figcaption><div class="caption-container">${item.caption}</div></figcaption></figure>`).join('')}
 			`;
 			return template
     }
@@ -114,7 +114,7 @@ const popupFunctions = () => {
 				<dt class="term">
 					<div class="title">${config.lang.Definition_Title[lang]}:</div>
 					<dfn>${term.term}</dfn>
-					${term.pronunciation ? `<span class="pronunciation">${term.pronunciation.key} <a href="https://www-red-dev.cancer.gov${term.pronunciation.audio}" class="CDR_audiofile"><span class="hidden">listen</span></a></span>` : ''}
+					${term.pronunciation ? `<span class="pronunciation">${term.pronunciation.key} <a href="https://www.cancer.gov${term.pronunciation.audio}" class="CDR_audiofile"><span class="hidden">listen</span></a></span>` : ''}
 				</dt>
 				${term.definition.html ? `<dd class="definition">${term.definition.html}</dd>` : ''}
 				${!!term.images && !!term.images.length ? renderImages(term.images) : ''}
