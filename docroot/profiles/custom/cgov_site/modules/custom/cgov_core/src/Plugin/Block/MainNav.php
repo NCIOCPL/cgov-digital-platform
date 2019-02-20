@@ -100,16 +100,15 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function renderMainNav(NavItem $navRoot) {
     $megaNavRootItems = $navRoot->getChildren();
-    $megaNavRootItems = array_filter($megaNavRootItems, function ($child) {
-      if ($child->hasDisplayRule('hide_in_main_nav')) {
-        return FALSE;
+    $filteredMegaNavRootItems = [];
+    foreach ($megaNavRootItems as $child) {
+      if (!$child->hasDisplayRule('hide_in_main_nav')) {
+        $filteredMegaNavRootItems[] = $child;
       }
-      return TRUE;
-    });
-
+    }
     $renderedMegaNavTrees = [];
-    for ($i = 0; $i < count($megaNavRootItems); $i++) {
-      $rootItem = $megaNavRootItems[$i];
+    for ($i = 0; $i < count($filteredMegaNavRootItems); $i++) {
+      $rootItem = $filteredMegaNavRootItems[$i];
       $rootItem->getMegamenuContent();
       $itemIndex = $i + 1;
       $href = $rootItem->getHref();
@@ -160,19 +159,18 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
   public function renderMobileNavLevel(NavItem $rootItem, bool $isOpen, int $currentDepth) {
     $isNotLastLevel = self::MOBILE_NAV_MAX_DEPTH - $currentDepth > 0;
     $mobileItemsToRender = $rootItem->getChildren();
-    $mobileItemsToRender = array_filter($mobileItemsToRender, function ($child) {
-      if ($child->hasDisplayRule('hide_in_mobile_nav')) {
-        return FALSE;
+    $filteredMobileItemsToRender = [];
+    foreach ($mobileItemsToRender as $child) {
+      if (!$child->hasDisplayRule('hide_in_mobile_nav')) {
+        $filteredMobileItemsToRender[] = $child;
       }
-      return TRUE;
-    });
-    $hasItemsToRender = count($mobileItemsToRender);
+    }
+    $hasItemsToRender = count($filteredMobileItemsToRender);
     if (!$hasItemsToRender) {
       return "";
     }
     $renderedMobileItems = [];
-    for ($i = 0; $i < count($mobileItemsToRender); $i++) {
-      $mobileItem = $mobileItemsToRender[$i];
+    foreach ($filteredMobileItemsToRender as $mobileItem) {
       $href = $mobileItem->getHref();
       $label = $mobileItem->getLabel();
       $containsCurrent = $mobileItem->getIsInCurrentPath();
