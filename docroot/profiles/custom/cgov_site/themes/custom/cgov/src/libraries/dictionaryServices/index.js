@@ -1,4 +1,4 @@
-const $ = jQuery.noConflict();
+import $ from 'jquery';
 /**
  * jQuery XMLHttpRequest object
  * @external jqXHR

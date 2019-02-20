@@ -1,9 +1,10 @@
+import $ from 'jquery';
 import dictionary from 'Core/libraries/dictionaryServices';
 import queryString from 'query-string';
-import * as config from 'Core/utilities/NCI.config';
+import * as config from 'Core/libraries/nciConfig/NCI.config';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 import NCIModal from 'Core/libraries/modal';
-const $ = jQuery.noConflict();
+
 
 const lang = $('html').attr('lang') || 'en';
 // Set the language for finding the dictionary term/definition
