@@ -14,7 +14,6 @@ dependencies:
     - field.field.node.cgov_biography.field_email_address
     - field.field.node.cgov_biography.field_feature_card_description
     - field.field.node.cgov_biography.field_first_name
-    - field.field.node.cgov_biography.field_image_article
     - field.field.node.cgov_biography.field_image_promotional
     - field.field.node.cgov_biography.field_last_name
     - field.field.node.cgov_biography.field_linkedin_handle
@@ -76,12 +75,9 @@ content:
     region: content
   field_campus:
     weight: 20
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: options_select
     region: content
   field_card_title:
     weight: 5
@@ -138,21 +134,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_image_article:
-    weight: 28
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
     region: content
   field_image_promotional:
     weight: 29
@@ -309,12 +290,9 @@ content:
     region: content
   field_site_section:
     weight: 1
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: options_select
     region: content
   field_suffix:
     weight: 14
