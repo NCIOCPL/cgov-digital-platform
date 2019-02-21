@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
+    - field.field.node.cgov_blog_post.field_blog_comments
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
     - field.field.node.cgov_blog_post.field_date_posted
@@ -23,6 +24,7 @@ dependencies:
     - node.type.cgov_blog_post
   module:
     - datetime
+    - disqus
     - entity_reference_revisions
     - options
     - text
@@ -52,6 +54,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_blog_comments:
+    type: disqus_comment
+    weight: 9
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_date_posted:
     weight: 2
     label: hidden

@@ -5,6 +5,7 @@ dependencies:
     - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
+    - field.field.node.cgov_blog_post.field_blog_comments
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
     - field.field.node.cgov_blog_post.field_date_posted
@@ -16,6 +17,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
     - field.field.node.cgov_blog_post.field_site_section
@@ -24,7 +26,9 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - disqus
     - entity_browser
+    - paragraphs_asymmetric_translation_widgets
     - text
 id: node.cgov_blog_post.default
 targetEntityType: node
@@ -48,6 +52,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_blog_comments:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: disqus_comment
+    region: content
   field_browser_title:
     weight: 5
     settings:
