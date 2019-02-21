@@ -12,13 +12,13 @@
                 <nav class="on-this-page" role="navigation">
                     <h6>On This Page</h6>
                     <ul>
-                    {% for key, item in content.field_summary_sections if key|first != '#' %}
-                    <li id="{{key}}">
-                        <a href="#{{- item['#paragraph'].fields['field_pdq_section_id'].getValue()[0]['value'] -}}">
-                            {{- item['#paragraph'].fields['field_pdq_section_title'].getValue()[0]['value']  -}}
-                        </a>
-                    </li>
-                    {% endfor %}
+                        {% for key, item in content.field_summary_sections if key|first != '#' %}
+                        <li id="{{key}}">
+                            <a href="#{{- item['#paragraph'].fields['field_pdq_section_id'].getValue()[0]['value'] -}}">
+                                {{- item['#paragraph'].fields['field_pdq_section_title'].getValue()[0]['value']  -}}
+                            </a>
+                        </li>
+                        {% endfor %}
                     </ul>
                 </nav>
                 {% endif %}
