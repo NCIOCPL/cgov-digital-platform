@@ -52,19 +52,19 @@
               </a>
               {% endif %}
             </p>
-            {% if content.field_campus or content.field_room_number %}
+            {% if content.field_campus or content.field_office_location %}
             <p>
             {% endif %}
               {% if content.field_campus %}
               {{ content.field_campus }}
               {% endif %}
-              {% if content.field_campus and content.field_room_number %}
+              {% if content.field_campus and content.field_office_location %}
               |
               {% endif %}
-              {% if content.field_room_number %}
-              {{ content.field_room_number }}
+              {% if content.field_office_location %}
+              {{ content.field_office_location }}
               {% endif %}
-            {% if content.field_campus or content.field_room_number %}
+            {% if content.field_campus or content.field_office_location %}
             </p>
             {% endif %}
             {% if content.field_phone_number or content.field_email_address %}
