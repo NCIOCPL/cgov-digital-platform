@@ -1,0 +1,183 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.cgov_event.body
+    - field.field.node.cgov_event.field_all_day_event
+    - field.field.node.cgov_event.field_browser_title
+    - field.field.node.cgov_event.field_card_title
+    - field.field.node.cgov_event.field_city_state
+    - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_series
+    - field.field.node.cgov_event.field_event_start_date
+    - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_promotional
+    - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_page_description
+    - field.field.node.cgov_event.field_pretty_url
+    - field.field.node.cgov_event.field_related_resources
+    - field.field.node.cgov_event.field_room
+    - field.field.node.cgov_event.field_search_engine_restrictions
+    - field.field.node.cgov_event.field_short_title
+    - field.field.node.cgov_event.field_site_section
+    - field.field.node.cgov_event.field_venue
+    - node.type.cgov_event
+  module:
+    - cgov_core
+    - entity_reference_revisions
+    - text
+    - user
+id: node.cgov_event.full
+targetEntityType: node
+bundle: cgov_event
+mode: full
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content_moderation_control:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_all_day_event:
+    type: boolean
+    weight: 11
+    region: content
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+  field_browser_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_card_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_city_state:
+    type: string
+    weight: 13
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_event_end_date:
+    type: datetime_default
+    weight: 10
+    region: content
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_event_series:
+    weight: 8
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_event_start_date:
+    type: datetime_default
+    weight: 9
+    region: content
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_feature_card_description:
+    weight: 7
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 25
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_article
+      link: false
+    third_party_settings: {  }
+  field_list_description:
+    weight: 6
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_page_description:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_related_resources:
+    type: entity_reference_revisions_entity_view
+    weight: 27
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_room:
+    type: string
+    weight: 14
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_short_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_venue:
+    weight: 13
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
