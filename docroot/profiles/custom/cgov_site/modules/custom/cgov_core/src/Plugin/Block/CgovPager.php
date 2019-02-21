@@ -4,8 +4,11 @@ namespace Drupal\cgov_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Path\PathMatcherInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -41,7 +44,14 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
   protected $routeMatcher;
 
   /**
-   * Constructs an LanguageBar object.
+   * An entity query.
+   *
+   * @var Drupal\Core\Entity\Query\QueryFactory
+   */
+  protected $entityQuery;
+
+  /**
+   * Constructs a CgovPager object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -55,6 +65,8 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   The path matcher.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
    *   The route matcher.
+   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
+   *   An entity query.
    */
   public function __construct(
     array $configuration,
@@ -62,12 +74,14 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
     $plugin_definition,
     LanguageManagerInterface $language_manager,
     PathMatcherInterface $path_matcher,
-    RouteMatchInterface $route_matcher
+    RouteMatchInterface $route_matcher,
+    QueryFactory $entity_query
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->languageManager = $language_manager;
     $this->pathMatcher = $path_matcher;
     $this->routeMatcher = $route_matcher;
+    $this->entityQuery = $entity_query;
   }
 
   /**
@@ -80,7 +94,8 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
       $plugin_definition,
       $container->get('language_manager'),
       $container->get('path.matcher'),
-      $container->get('current_route_match')
+      $container->get('current_route_match'),
+      $container->get('entity.query')
     );
   }
 
@@ -111,7 +126,11 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
     // Debug entity object.
     if ($curr_entity = $this->getCurrEntity()) {
       $content_type = $curr_entity->bundle();
-      // A ksm($content_type);!
+      $query = $this->entityQuery->get('node');
+      $query->condition('status', 1);
+      $query->condition('type', $content_type);
+      $entity_ids = $query->execute();
+      ksm($entity_ids);
     }
 
     // Build custom pager based on type.
