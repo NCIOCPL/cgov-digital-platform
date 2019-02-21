@@ -8,7 +8,7 @@
         {{ drupal_block('page_options') }}
         <div id="cgvBody">
             <div class="summary-sections">
-                {{ content|field_label }}
+                {% if content.field_summary_sections|length > 0 %}
                 <nav class="on-this-page" role="navigation">
                     <h6>On This Page</h6>
                     <ul>
@@ -21,7 +21,7 @@
                     {% endfor %}
                     </ul>
                 </nav>
-
+                {% endif %}
                 <div class="accordion">
                     {{ content.field_summary_sections }}
                 </div>
