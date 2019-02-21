@@ -2,16 +2,10 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Path\PathMatcherInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -91,18 +85,6 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  protected function blockAccess(AccountInterface $account) {
-    // If this site is not multilingual this should not display.
-    // Of course, if this site is not multilingual, there should be no block...
-    $access = $this->languageManager->isMultilingual() ? AccessResult::allowed() : AccessResult::forbidden();
-
-    // Cache this fact based on the list of languages for the site.
-    return $access->addCacheTags(['config:configurable_language_list']);
-  }
-
-  /**
    * Gets the current entity if there is one.
    *
    * @return Drupal\Core\Entity\ContentEntityInterface
@@ -125,11 +107,25 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
   public function build() {
     // Initialize the render array response to be empty.
     $build = [];
-    
-    // Draw something. I dunno.
-    $build = [
-      '#markup' => 'Hello, meatloaf',
-    ];
+
+    // Debug entity object.
+    if ($curr_entity = $this->getCurrEntity()) {
+      $content_type = $curr_entity->bundle();
+      // A ksm($content_type);!
+    }
+
+    // Build custom pager based on type.
+    switch ($content_type) {
+      case 'cgov_blog_post':
+        $build['#markup'] = 'Hello, meatloaf';
+        break;
+
+      default:
+        $build['#markup'] = 'its a-me, Mario';
+    }
+
+    // Debug build object.
+    // Xksm($build);!
     return $build;
   }
 
