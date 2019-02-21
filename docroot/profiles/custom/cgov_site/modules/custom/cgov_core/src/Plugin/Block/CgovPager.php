@@ -15,17 +15,15 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a block that displays alternate language links.
- *
- * This is based off of Drupal\language\Plugin\Block\LanguageBlock.
+ * Provides a block that displays pager variants.
  *
  * @Block(
- *  id = "cgov_pager_links",
- *  admin_label = "Pager Links",
+ *  id = "cgov_pager",
+ *  admin_label = "CGov Pager",
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
-class PagerLinks extends BlockBase implements ContainerFactoryPluginInterface {
+class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The language manager.
@@ -127,52 +125,11 @@ class PagerLinks extends BlockBase implements ContainerFactoryPluginInterface {
   public function build() {
     // Initialize the render array response to be empty.
     $build = [];
-
-    // The next few lines are from LanguageBlock - getLanguageSwitchLinks is
-    // looking for front or current.
-    // TODO: See if we can just use the route matcher or even the loaded entity.
-    $route_name = $this->pathMatcher->isFrontPage() ? '<front>' : '<current>';
-    $links = $this->languageManager->getLanguageSwitchLinks(
-      LanguageInterface::TYPE_CONTENT,
-      Url::fromRoute($route_name)
-    );
-
-    // Remove the current language from the list of links.
-    $curr_lang = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
-    $filtered_links = array_diff_key($links->links, [$curr_lang => '']);
-
-    // Filter out untranslated URLs, by default ALL possible links are
-    // returned by getLanguageSwitchLinks.
-    if ($curr_entity = $this->getCurrEntity()) {
-      $translations = array_keys($curr_entity->getTranslationLanguages());
-      $filtered_links = array_filter(
-        $filtered_links,
-        function ($v, $k) use ($translations) {
-          return in_array($k, $translations);
-        },
-        ARRAY_FILTER_USE_BOTH
-      );
-    }
-    else {
-      // TODO: If we have a View page we would end up here
-      // we do not have that case yet fix this when that happens.
-      $filtered_links = [];
-    }
-
-    // Now that we have the alternate links, or nothing.
-    // if nothing do not output anything.
-    if (isset($links->links)) {
-      $build = [
-        '#theme' => 'links__language_block',
-        '#links' => $filtered_links,
-        '#attributes' => [
-          'class' => [
-            "language-switcher-{$links->method_id}",
-          ],
-        ],
-        '#set_active_class' => TRUE,
-      ];
-    }
+    
+    // Draw something. I dunno.
+    $build = [
+      '#markup' => 'Hello, meatloaf',
+    ];
     return $build;
   }
 
