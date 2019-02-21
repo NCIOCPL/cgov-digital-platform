@@ -1,0 +1,260 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research"
+  title__ES:
+      value: "Investigación"
+  field_page_description:
+    value: "Information from the National Cancer Institute on research conducted or supported by the institute. Includes overviews of NCI's research areas, NCI's priority initiatives, and information about NCI's role in cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre las investigaciones realizadas o patrocinadas por el instituto."
+  field_short_title:
+    value: "Cancer Research"
+  field_short_title__ES:
+    value: "Investigación"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/investigacion'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Featured Content"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ## Cards here
+    ######## End Feature Row ###########
+    ######## Begin Guide Row ###########
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Your Guide to NCI Research"
+      field_guide_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936246 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    NCI Research Areas
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/research/areas/biology" title="">Cancer Biology</a></li>
+                    <li><a class="arrow-link" href="/research/areas/genomics" title="">Cancer Genomics</a></li>
+                    <li><a class="arrow-link" href="/research/areas/causes" title="">Causes of Cancer</a></li>
+                    <li><a class="arrow-link" href="/research/areas/diagnosis" title="">Diagnosis</a></li>
+                    <li><a class="arrow-link" href="/research/areas/prevention" title="">Prevention</a></li>
+                    <li><a class="arrow-link" href="/research/areas/screening" title="">Screening &amp; Early Detection</a></li>
+                    <li><a class="arrow-link" href="/research/areas/treatment" title="">Treatment</a></li>
+                    <li><a class="arrow-link" href="/research/areas/public-health" title="">Cancer &amp; Public Health</a></li>
+                    <li><a class="arrow-link" href="/research/areas/disparities" title="">Cancer Health Disparities</a></li>
+                    <li><a class="arrow-link" href="/research/areas/childhood" title="">Childhood Cancer</a></li>
+                    <li><a class="arrow-link" href="/research/areas/clinical-trials" title="">Clinical Trials</a></li>
+                    <li><a class="arrow-link" href="/research/areas/global-health" title="">Global Health</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936245 slot-item equalheight large-4 columns card gutter">
+                  <h2>
+                    Key Initiatives & Progress
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/research/key-initiatives" title="">Key Initiatives</a></li>
+                    <li><a class="arrow-link" href="/research/progress/annual-report-nation" title="">Annual Report to the Nation</a></li>
+                    <li><a class="arrow-link" href="/research/progress/250-years-milestones" title="">Milestones in Cancer Research &amp; Discovery</a></li>
+                    <li><a class="arrow-link" href="/research/progress/discovery" title="">Stories of Discovery</a></li>
+                  </ul>
+                </div>
+
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-936245 slot-item equalheight large-4 columns card gutter">
+                  <h2>
+                    NCI's Role in Cancer Research
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/research/nci-role/intramural" title="">Intramural Research</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/extramural" title="">Extramural Research</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/bioinformatics" title="">Bioinformatics and Cancer</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/cancer-centers" title="">NCI-Designated Cancer Centers</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/fnlcr" title="">Frederick National Lab</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/partners-collaborators" title="">Partners and Collaborators</a></li>
+                    <li><a class="arrow-link" href="/research/nci-role/spotlight" title="">Spotlight on Scientists</a></li>
+                  </ul>
+                </div>
+    ######## End Guide Row ###########
+
+    ######## MULTIMEDIA HERE TBD ##############
+
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Thumbnail Row ##############
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Contenido especial"
+      ## Cards here
+    ######## End Feature Row ###########
+    ######## Begin Guide Row ###########
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Su guía de información sobre las investigaciones del NCI"
+      field_guide_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-1100555 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Iniciativas clave y progreso
+                  </h2>
+                  <ul>
+                  <li><a href="/espanol/noticias/comunicados-de-prensa/2017/informe-anual-a-la-nacion-1975-2014" class="arrow-link" title="">Informe Anual a la Nación</a></li>
+                  <li><a href="/espanol/cancer/tratamiento/tipos/terapia-dirigida" class="arrow-link" title="">Medicina de precisión</a></li>
+                  <li><a href="/espanol/investigacion/iniciativas-clave/inmunoterapia" class="arrow-link" title="">Inmunoterapia</a></li>
+                  <li><a class="arrow-link" href="/espanol/tipos/pulmon/investigacion/lung-map" title="">Estudio Lung-MAP</a></li>
+                  <li><a href="/espanol/cancer/tratamiento/estudios-clinicos/patrocinados-por-nci/nci-match" class="arrow-link" title="">Estudio NCI-MATCH</a></li>
+                  <li><a class="arrow-link" href="/espanol/tipos/pulmon/investigacion/alchemist" title="">Estudios ALCHEMIST</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <div class="contentid-1100554 slot-item equalheight large-4 columns card gutter">
+                  <h2>
+                    El proceso de investigación del cáncer
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/espanol/investigacion/papel-del-nci" title="">El papel que desempeña el NCI en la investigación del cáncer</a></li>
+                    <li><a class="arrow-link" href="/espanol/investigacion/papel-del-nci/centros-oncologicos" title="">Centros Oncológicos designados por el NCI</a></li>
+                  </ul>
+                </div>
+    ######## End Guide Row ###########
+
+    ######## MULTIMEDIA ROW TBD ###########

@@ -1,0 +1,143 @@
+###############
+## Tests
+## - "intro text"
+## - raw html cards
+## - thumbnail with title
+## - no banner
+## - No promo image
+## - waaay different Spanish version
+## - English image on Spanish Version?
+##   It does as of 2/7/2019
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "CBIIT"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'CBIIT-thumb.jpg'
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Shady Grove Campus"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nci-shady-grove-building-article.jpg'
+      alt: 'National Cancer Institute Shady Grove Campus'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Organization"
+  title__ES:
+    value: "Estructura organizativa del NCI"
+#  field_page_description:
+#    value: ""
+#  field_card_description:
+#    value: ""
+  field_short_title:
+    value: "NCI Organization"
+  field_short_title__ES:
+    value: "Estructura organizativa del NCI"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/organization'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/instituto/organizacion'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="nci-organization">
+              <p>As the nation's leading federal agency for cancer research, NCI has 30 divisions, offices, and centers who work together to build, maintain, and enhance a cohesive and comprehensive cancer research agenda. Their work ranges from cutting-edge research on cancer causes, treatment, and prevention; to training the next generation of cancer researchers; to funding and supporting the nation's vast network of scientists and cancer research institutions; to informing and educating the American public and the world about cancer. The NIH Office of Management Assessment maintains the official <a href="https://oma.od.nih.gov/IC_Organization_Chart/NCI%20Organizational%20Chart.pdf">NCI organization chart</a>.</p>
+              <nav class="on-this-page" role="navigation">
+                <h6>On This Page</h6>
+                <ul>
+                  <li><a href="#divisions">NCI Divisions and Centers</a></li>
+                  <li><a href="#offices">NCI Office of the Director</a></li>
+                </ul>
+              </nav>
+            </div>
+    ######## End intro content ###########
+    ########    Raw Block   ###############
+    # - entity: 'paragraph'
+    #  type: "cgov_two_item_feature_row"
+    #  field_two_item_row_cards:
+    ########    End Card Row    ###############
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_container_heading:
+        value: "NCI Office of the Director"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: "Center for Biomedical Informatics and Information Technology (CBIIT)"
+          field_override_list_description:
+            - value: "Collaborates across NCI to plan, provide, and coordinate technology, standards, and scientific computing in support of the NCI mission to speed discovery, facilitate open science, and progress towards precision treatment in cancer care and a learning healthcare system."
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'CBIIT'
+          field_featured_url:
+            - uri: 'http://cbiit.nci.nih.gov/'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_mini_landing'
+                    title: 'Coordinating Center for Clinical Trials (CCCT)'
+    ######## End Thumbnail Row ##############
+  ### Spanish Contents
+  field_landing_contents__ES:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            [EMBED nci-shady-grove-building-article]
+            <p>En su calidad de ser la principal dependencia del gobierno federal de Estados Unidos dedicada a la investigación del cáncer, el Instituto Nacional del Cáncer (NCI) cuenta con 30 divisiones, oficinas y centros que trabajan en conjunto para diseñar, mantener y mejorar un programa de investigación del cáncer cohesionado e integral.</p>
+            <p>El trabajo de estas divisiones, centros y oficinas cubre una gran variedad de funciones que incluyen estudios innovadores sobre las causas, el tratamiento y la prevención del cáncer; capacitación de nuevas generaciones de investigadores del cáncer; financiación y apoyo a una amplia red de científicos e instituciones de investigación del cáncer; y educación y difusión de información sobre el cáncer al público estadounidense y mundial.</p>
+            <p>Para mayor información sobre la organización interna del NCI, vea la página <a href="/about-nci/organization" title="">NCI Organization</a>.</p>
+    ######## End intro content ###########
