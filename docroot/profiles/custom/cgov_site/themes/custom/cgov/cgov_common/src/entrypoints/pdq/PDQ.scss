@@ -1,0 +1,36 @@
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import "~Core/styles/breakpoints";
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+
+.pdq-hp-patient-toggle {
+  /* margin-top: -10px; -->  half the icon height */
+  a {
+    &::after {
+      content: '';
+      @include svg-sprite(chevron-circle-dk-blue, $rotate: right);
+      margin-left: 10px;
+      vertical-align: bottom;
+    }
+
+    &:hover,
+    &:focus {
+      color: $lcranberry;
+
+      &::after {
+        @include svg-sprite(chevron-circle-red);
+      }
+    }
+  }
+}
+
+section {
+    &+ section {
+        margin-top: 70px;
+    }
+}
+
+/********************* END PDQ Page Styles ******************************************/

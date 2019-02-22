@@ -1,0 +1,38 @@
+{{ attach_library('cgov_common/pdq') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<article>
+    <div class="resize-content">
+        <h1>{{- node.label -}}</h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+            <div class="summary-sections">
+                {% if content.field_summary_sections|length > 0 %}
+                <nav class="on-this-page" role="navigation">
+                    <h6>On This Page</h6>
+                    <ul>
+                        {% for key, item in content.field_summary_sections if key|first != '#' %}
+                        <li id="{{key}}">
+                            <a href="#{{- item['#paragraph'].fields['field_pdq_section_id'].getValue()[0]['value'] -}}">
+                                {{- item['#paragraph'].fields['field_pdq_section_title'].getValue()[0]['value']  -}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+                {% endif %}
+                <div class="accordion">
+                    {{ content.field_summary_sections }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# TODO: Article footer stuff has to go somewhere. TBD. #}
+    <footer class="article-footer">
+      {{- contentPageMacros.displayDates(node, content) -}}
+      {{- contentPageMacros.displayPublicUse() -}}
+      {{- contentPageMacros.displaySyndication() -}}
+    </footer>
+</article>
