@@ -1,0 +1,14 @@
+{% if element.videoId %}
+  {% set data = element.videoId['#data'] %}
+  {% set id = data.id %}
+  {% set title = data.title %}
+  <figure class="video">
+    <div id="ytplayer-{{id}}" class="flex-video widescreen" data-video-id="{{id}}" data-video-title="{{title}}">
+      <noscript>
+        <p>
+          <a href="https://www.youtube.com/watch?v={{id}}" target="_blank" title="{{title}}">View this video on YouTube.</a>
+        </p>
+      </noscript>
+    </div>
+  </figure>
+{% endif %}

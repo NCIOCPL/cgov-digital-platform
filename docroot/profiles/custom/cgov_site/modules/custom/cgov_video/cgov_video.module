@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_video.module.
+ */
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function cgov_video_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+  if (isset($variables['element']['#formatter']) && $variables['element']['#formatter'] === 'cgov_youtube_oembed') {
+    $suggestions[] = 'field__media__cgov_video_youtube';
+  }
+}
