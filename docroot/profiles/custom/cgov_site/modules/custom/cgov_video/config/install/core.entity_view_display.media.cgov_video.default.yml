@@ -13,6 +13,8 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_original_source
+    - field.field.media.cgov_video.field_page_title
     - field.field.media.cgov_video.field_pretty_url
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
@@ -21,7 +23,6 @@ dependencies:
   module:
     - datetime
     - image
-    - media
     - options
     - text
     - user
@@ -119,12 +120,11 @@ content:
     type: basic_string
     region: content
   field_media_oembed_video:
-    type: oembed
+    type: string
     weight: 6
     label: above
     settings:
-      max_width: 0
-      max_height: 0
+      link_to_entity: false
     third_party_settings: {  }
     region: content
   field_pretty_url:
@@ -168,5 +168,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_original_source: true
+  field_page_title: true
   langcode: true
   name: true
