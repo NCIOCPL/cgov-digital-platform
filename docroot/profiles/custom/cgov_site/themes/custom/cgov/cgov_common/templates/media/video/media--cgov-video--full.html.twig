@@ -1,0 +1,20 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<article>
+    <div class="resize-content">
+        <h1>
+          {{ name }}
+        </h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+          {{ content.field_body }}
+          <figure class="video">
+            {{ content.field_media_oembed_video }}
+            {{ content.field_caption }}
+          </figure>
+        </div>
+    </div>
+    <footer class="article-footer">
+      {{ content.field_related_resources }}
+      {{ contentPageMacros.displayDates(media, content) }}
+    </footer>
+</article>
