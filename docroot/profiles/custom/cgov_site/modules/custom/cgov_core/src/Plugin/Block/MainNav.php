@@ -109,7 +109,6 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     $renderedMegaNavTrees = [];
     for ($i = 0; $i < count($filteredMegaNavRootItems); $i++) {
       $rootItem = $filteredMegaNavRootItems[$i];
-      $rootItem->getMegamenuContent();
       $itemIndex = $i + 1;
       $href = $rootItem->getHref();
       $label = $rootItem->getLabel();
