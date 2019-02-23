@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_blog_topics
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_citation
     - field.field.node.cgov_blog_post.field_date_posted
     - field.field.node.cgov_blog_post.field_feature_card_description
     - field.field.node.cgov_blog_post.field_image_article
@@ -80,6 +81,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_citation:
+    weight: 19
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+    type: paragraphs_classic_asymmetric
     region: content
   field_date_posted:
     type: datetime_default

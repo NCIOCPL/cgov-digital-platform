@@ -1,0 +1,6 @@
+{% if content.field_citation_content[0] %}
+  <li>
+    {{ content.field_citation_content }}
+    <a href="https://www.ncbi.nlm.nih.gov/pubmed/{{ content.field_pubmed_id|trim }}">[PubMed Abstract]</a>
+  </li>
+{% endif %}
