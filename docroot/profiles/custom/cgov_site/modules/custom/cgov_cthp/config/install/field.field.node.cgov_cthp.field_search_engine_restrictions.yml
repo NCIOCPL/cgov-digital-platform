@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_search_engine_restrictions
+    - node.type.cgov_cthp
+  module:
+    - options
+  enforced:
+    module:
+    - cgov_core
+id: node.cgov_cthp.field_search_engine_restrictions
+field_name: field_search_engine_restrictions
+entity_type: node
+bundle: cgov_cthp
+label: 'Search Engine Restrictions'
+description: ''
+required: true
+translatable: true
+default_value:
+  -
+    value: IncludeSearch
+default_value_callback: ''
+settings: {  }
+field_type: list_string
