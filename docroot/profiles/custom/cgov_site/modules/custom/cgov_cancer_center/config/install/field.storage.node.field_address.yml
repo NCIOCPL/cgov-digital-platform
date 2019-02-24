@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
+    - address
     - node
-id: node.field_zip_code
-field_name: field_zip_code
+id: node.field_address
+field_name: field_address
 entity_type: node
-type: string
-settings:
-  max_length: 50
-  is_ascii: false
-  case_sensitive: false
-module: core
+type: address
+settings: {  }
+module: address
 locked: false
 cardinality: 1
 translatable: true
