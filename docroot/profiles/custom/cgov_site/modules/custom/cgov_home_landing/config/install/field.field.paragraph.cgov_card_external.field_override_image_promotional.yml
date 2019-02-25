@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_override_image_promotional
+    - media.type.cgov_image
+    - paragraphs.paragraphs_type.cgov_card_external
+id: paragraph.cgov_card_external.field_override_image_promotional
+field_name: field_override_image_promotional
+entity_type: paragraph
+bundle: cgov_card_external
+label: 'Promotional Image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

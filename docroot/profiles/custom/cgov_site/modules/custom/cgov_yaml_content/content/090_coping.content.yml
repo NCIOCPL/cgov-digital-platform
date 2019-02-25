@@ -1,0 +1,137 @@
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Man and his wife"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'man-and-his-wife-social-media.jpg'
+      alt: 'Man and his wife'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Coping with Cancer"
+  title__ES:
+      value: "Cómo hacer frente al cáncer"
+  field_page_description:
+    value: "Information for patients, families, and caregivers to help manage emotional and lifestyle effects of cancer, treatment, and life after treatment."
+  field_page_description__ES:
+    value: "Información de apoyo para pacientes y personas a cargo de su cuidado sobre cómo controlar los efectos físicos y emocionales del cáncer y su tratamiento."
+  field_card_description:
+    value: "Supportive information on managing the physical and emotional effects of cancer and treatment for both patients and caregivers."
+  field_card_description__ES:
+    value: "Información de apoyo para pacientes y personas a cargo de su cuidado sobre cómo controlar los efectos físicos y emocionales del cáncer y su tratamiento."
+  field_short_title:
+    value: "Coping with Cancer"
+  field_short_title__ES:
+    value: "Cómo hacer frente al cáncer"
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Man and his wife'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin two item Row ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <p>You may have just learned that you have cancer. Or you may be in treatment, finishing treatment, or have a friend or family member with cancer. Having cancer changes your life and the lives of those around you. The symptoms and <a href="/about-cancer/treatment/side-effects" title="">side effects</a> of the disease and its treatment may cause certain physical changes, but they can also affect the way you feel and how you live.</p>
+            <p>The information in this section is meant to help you cope with the many issues and concerns that occur when you have cancer. There are resources available to help you learn about the disease and about the people who can help you. See our <a href="/publications/patient-education" title="">publications on coping</a> and our evidence-based <a href="/publications/pdq/information-summaries/supportive-care" title="">PDQ&reg; summaries</a> about supportive and palliative care topics. Know that you are not alone.</p>
+    ######## End two item Row ###########
+
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_unlimited_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Thumbnail Row ##############
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      ## Cards here
+    ######## End Feature Row ###########

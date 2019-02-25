@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Theme macros for common content page tasks.
+ */
+#}
+
+{% macro displayDates(node, content) %}
+  {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
+    {# The context used with trans is because some of the labels are translated differently
+        in core.
+    #}
+
+    {% if node.getType == 'cgov_blog_post' %}
+      {% if content.field_date_posted[0] %}
+        <p class="blog-post-publishing-info">
+          {{ content.field_date_posted.value|date("F j, Y") }}, {% trans with {'context': 'CGov UI' } %}by{% endtrans %} {{ content.field_author }}
+        </p>
+      {% endif %}
+    {% else %}
+
+      <div class="document-dates horizontal">
+        <ul class="clearfix">
+          {% if content.field_date_posted[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
+              {{ content.field_date_posted[0] }}
+            </li>
+          {% endif %}
+          {% if content.field_date_updated[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
+              {{ content.field_date_updated[0] }}
+            </li>
+          {% endif %}
+          {% if content.field_date_reviewed[0] %}
+            <li>
+              <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
+              {{ content.field_date_reviewed[0] }}
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endmacro %}

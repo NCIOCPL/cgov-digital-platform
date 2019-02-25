@@ -1,0 +1,53 @@
+{% import '@cgov_common/cards/card_macros.twig' as cardMacros %}
+
+{# This needs to parallel the feature card template. The biggest difference is that
+ # this template allows for overrides. I cannot see a straight forward way of overriding
+ # the node's title and description fields and still using the Feature Card template. So
+ # we will duplicate it.
+ #}
+{% if content.field_featured_item[0] %}
+
+  {% set cardType = _context.view_mode %}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_card_title[0] %}
+    {% set title = content.field_override_card_title[0] %}
+  {% elseif content.field_featured_item[0]["#node"].field_card_title[0] %}
+    {% set title = content.field_featured_item[0]["#node"].field_card_title[0].value %}
+  {% else %}
+    {% set title = content.field_featured_item[0]["#node"].field_short_title[0].value %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% if cardType is same as('feature_card') %}
+    {% if content.field_override_card_description[0] %}
+      {% set description = content.field_override_card_description[0] %}
+    {% elseif content.field_featured_item[0]["#node"].field_feature_card_description[0] %}
+      {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
+    {% endif %}
+  {% elseif cardType is same as('thumbnail_card') %}
+    {% if content.field_override_list_description[0] %}
+      {% set description = content.field_override_list_description[0] %}
+    {% elseif content.field_featured_item[0]["#node"].field_list_description[0] %}
+      {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
+    {% elseif content.field_featured_item[0]["#node"].field_page_description[0] %}
+      {% set description = content.field_featured_item[0]["#node"].field_page_description[0].value %}
+    {% endif %}
+  {# Else no description #}
+  {% endif %}
+
+  {# ###### Setup URL ######## #}
+  {# TODO: See if there is a cleaner way from the entity ref to the nid #}
+  {% set url = path('entity.node.canonical', {'node':  content.field_featured_item[0]["#node"].nid[0].value}) %}
+
+  {# ###### Setup Img ######## #}
+  {# TODO: Setup image #}
+  {% set image = content.field_featured_item %}
+
+  {## Render Card ##}
+  {% if cardType is same as('feature_card') %}
+    {{ cardMacros.featureCard(title, description, image, url) }}
+  {% elseif cardType is same as('thumbnail_card') %}
+    {{ cardMacros.thumbnailCard(title, description, image, url) }}
+  {% endif %}
+{% endif %}

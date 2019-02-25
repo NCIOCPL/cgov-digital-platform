@@ -1,0 +1,19 @@
+{% set image = content.field_image_article %}
+{% if content.field_image_promotional|render %}
+  {% set image = content.field_image_promotional %}
+{% endif  %}
+
+<div class="list-item-image image container">
+  <a class="item-image image" href="{{ url }}">
+    {{ image }}
+  </a>
+</div>
+
+<div class="title-and-desc title desc container">
+  <a class="title" href="{{ url }}">
+    {{ label }}
+  </a>
+  <div class="description">
+    <div class="date">{{ content.field_date_posted }}</div>
+  </div>
+</div>

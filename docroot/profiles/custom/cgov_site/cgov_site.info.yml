@@ -35,10 +35,17 @@ install:
   - cgov_core
   - cgov_media
   - cgov_image
+  - cgov_list
   - cgov_article
+  - cgov_blog_post
   - cgov_home_landing
   - cgov_content_block
   - cgov_press_release
+  - cgov_site_section
+  - pdq_cancer_information_summary
+  - pdq_drug_information_summary
+  - cgov_cancer_center
+  - cgov_biography
   # other Core
   - media
   - workflows
@@ -52,6 +59,9 @@ install:
   # other
   - yaml_content
   - twig_tweak
+  - address
+  - twig_field_value
+  - pathauto
   - paragraphs
   - paragraphs_asymmetric_translation_widgets
   - ctools
@@ -60,3 +70,5 @@ install:
 themes:
   - cgov_common
   - cgov_admin
+'interface translation project': cgov_site
+'interface translation server pattern': profiles/custom/cgov_site/translations/%project.%language.po

@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_levels_to_display
+    - taxonomy.vocabulary.cgov_site_sections
+id: taxonomy_term.cgov_site_sections.field_levels_to_display
+field_name: field_levels_to_display
+entity_type: taxonomy_term
+bundle: cgov_site_sections
+label: 'Number of Levels to Display'
+description: 'The number of levels to display for this section.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 5
+default_value_callback: ''
+settings:
+  min: 1
+  max: 5
+  prefix: ''
+  suffix: ''
+field_type: integer

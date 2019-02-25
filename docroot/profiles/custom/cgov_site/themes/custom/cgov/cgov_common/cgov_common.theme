@@ -5,3 +5,17 @@
  * Functions to support theming in the cgov_common theme.
  */
 
+/**
+ * Allows us to have node based page templates.
+ *
+ * @param array $suggestions
+ *   The list of theme suggestions to augment.
+ * @param array $variables
+ *   Collection of variables.
+ */
+function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $content_type = $node->bundle();
+    $suggestions[] = 'page__' . $content_type;
+  }
+}

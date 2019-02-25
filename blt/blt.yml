@@ -1,23 +1,23 @@
 project:
-  machine_name: blted8
-  prefix: BLT
-  human_name: 'BLTed 8'
+  machine_name: microsite
+  prefix: NCIOCPL
+  human_name: 'Cancer.gov Digital Platform Microsite'
   profile:
     name: cgov_site
   local:
     protocol: http
-    hostname: 'www.devbox'
+    hostname: microsite.devbox
 git:
   default_branch: develop
   remotes:
-    acquia: ncigovcd@svn-29892.prod.hosting.acquia.com:ncigovcd.git
+    acquia: 'ncigovcd@svn-29892.prod.hosting.acquia.com:ncigovcd.git'
   hooks:
     pre-commit: false
     commit-msg: false
 deploy:
   tag_source: true
+  exclude_file: ${repo.root}/scripts/blt/deploy/deploy-exclude.txt
 cm:
-  # Temporary until we figure out what it needs to be.
   strategy: core-only
 drush:
   aliases:
@@ -42,42 +42,36 @@ modules:
     enable: [acquia_connector, shield]
     uninstall: [devel, views_ui]
 phpunit:
-  - config: ${repo.root}/phpunit.xml
-    path: ${docroot}/profiles/custom/cgov_site
+  -
+    config: '${repo.root}/phpunit.xml'
+    path: '${docroot}/profiles/custom/cgov_site'
     class: null
     file: null
 command-hooks:
-  # Executed when front end dependencies should be installed.
   frontend-reqs:
-    dir: ${docroot}/profiles/custom/cgov_site/themes/custom/cgov
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
     command: 'npm ci'
-  # Executed when front end assets should be generated.
   frontend-assets:
-    dir: ${docroot}/profiles/custom/cgov_site/themes/custom/cgov
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
     command: 'npm run build'
   frontend-test:
-    # E.g., ${docroot}/sites/all/themes/custom/mytheme.
-    dir: ${docroot}/profiles/custom/cgov_site/themes/custom/cgov
-    # E.g., `npm test`.
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
     command: null
   pre-commit:
-    # E.g., ${docroot}
-    dir: ${docroot}
-    # E.g., `php -l`.
+    dir: '${docroot}'
     command: null
-  # Executed before configuration is imported.
   pre-config-import:
-    dir: ${docroot}
+    dir: '${docroot}'
     command: null
-  # Executed after deployment artifact is created.
   post-deploy-build:
     dir: '${deploy.dir}/docroot'
     command: null
-  # Executed after source:build is run.
   post-setup-build:
-    dir: ${docroot}
+    dir: '${docroot}'
     command: null
-  # Executed after deploy:push-all is run.
   post-deploy:
-    dir: ${docroot}
+    dir: '${docroot}'
     command: null
+## Cancer.gov Specific Settings
+cgov:
+  drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
