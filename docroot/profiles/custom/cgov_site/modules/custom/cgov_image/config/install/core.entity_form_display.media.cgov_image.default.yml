@@ -9,8 +9,10 @@ dependencies:
     - field.field.media.cgov_image.field_original_source
     - image.style.thumbnail
     - media.type.cgov_image
+    - workflows.workflow.image_workflow
   module:
-    - image
+    - content_moderation
+    - image_widget_crop
     - text
 id: media.cgov_image.default
 targetEntityType: media
@@ -44,10 +46,28 @@ content:
   field_media_image:
     weight: 2
     settings:
-      progress_indicator: throbber
+      show_default_crop: true
+      warn_multiple_usages: false
       preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - freeform
+        - thumbnail
+        - 4x3
+        - 3x4
+        - 1x1
+        - 16x9
+        - 9x16
+      crop_types_required:
+        - 1x1
+        - 3x4
+        - 4x3
+        - freeform
+        - thumbnail
+      progress_indicator: throbber
+      show_crop_area: false
     third_party_settings: {  }
-    type: image_image
+    type: image_widget_crop
     region: content
   field_original_source:
     weight: 4
@@ -63,6 +83,12 @@ content:
     region: content
     settings:
       include_locked: false
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
     third_party_settings: {  }
   name:
     type: string_textfield
