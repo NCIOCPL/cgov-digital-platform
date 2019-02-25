@@ -126,6 +126,26 @@ class ApiTest extends BrowserTestBase {
     $this->assertTrue($values['published'], 'Published');
     $this->checkValues($values);
 
+    // Verify the catalog API.
+    $response = $this->request('GET', "$this->pdqUrl/list");
+    $this->assertEqual($response->getStatusCode(), 200);
+    $values = json_decode($response->getBody()->__toString(), TRUE);
+    $this->assertCount(1, $values, 'One entry in catalog');
+    $values = array_pop($values);
+    $this->assertCount(7, $values, 'Catalog entry has 7 values');
+    $this->assertEqual($values['cdr_id'], $this->drug['cdr_id'],
+      'CDR ID is correct');
+    $this->assertEqual($values['nid'], $nid, 'Node ID is correct');
+    $this->assertEqual(preg_match('/^\d+$/', $values['vid']), 1,
+      'Version ID is numeric');
+    $this->assertEqual($values['langcode'], 'en');
+    $this->assertEqual($values['type'], 'pdq_drug_information_summary');
+    $pat = '/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/';
+    $this->assertEqual(preg_match($pat, $values['created']), 1,
+      'Created is datetime');
+    $this->assertEqual(preg_match($pat, $values['changed']), 1,
+      'Changed is datetime');
+
     // Make sure the pathauto mechanism is behaving correctly.
     $this->checkPathauto($this->drug);
 
