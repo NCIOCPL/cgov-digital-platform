@@ -8,21 +8,25 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - image.style.cgov_article
     - media.type.cgov_image
   module:
     - image
-    - text
 id: media.cgov_image.image_crop_article
 targetEntityType: media
 bundle: cgov_image
 mode: image_crop_article
 content:
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_media_image:
     weight: 0
     label: hidden
     settings:
-      ## TODO: This should reference just the article crop or article field
-      image_style: ''
+      image_style: cgov_article
       image_link: ''
     third_party_settings: {  }
     type: image

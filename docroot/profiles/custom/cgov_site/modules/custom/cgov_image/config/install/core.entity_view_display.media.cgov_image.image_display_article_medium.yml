@@ -8,6 +8,7 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - image.style.cgov_article
     - media.type.cgov_image
   module:
     - image
@@ -36,12 +37,13 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: ''
+      image_style: cgov_article
       image_link: ''
     third_party_settings: {  }
     type: image
     region: content
 hidden:
+  content_moderation_control: true
   created: true
   field_accessible_version: true
   field_original_source: true
