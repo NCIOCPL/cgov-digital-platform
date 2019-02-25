@@ -18,8 +18,7 @@ use Drupal\block_content\Entity\BlockContent;
 function cgov_core_themes_installed() {
   // Create Contact Us block for Press Releases.
   $block_theme = \Drupal::config('system.theme')->get('default');
-  //$block_region = 'public_use';
-  $block_region = 'content';
+  $block_region = 'public_use';
   $block_label = 'Public Use';
   $block_html = <<<EOMarkup
 If you would like to reproduce some or all of this content, see Reuse of NCI Information for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title].”
