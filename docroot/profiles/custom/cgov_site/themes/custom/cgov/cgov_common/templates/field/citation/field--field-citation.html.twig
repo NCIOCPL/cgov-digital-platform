@@ -2,8 +2,12 @@
 	<div>
     <h6>{% trans %}Citations{% endtrans %}</h6>
     <ol class="article-citation">
+     {#} {% set citation_list_number = 1 %}#}
       {% for item in items %}
-        {{ item.content }}
+        <li id="r{{ loop.index }}">
+          {{ item.content }}
+          {#{% set citation_list_number = citation_list_number + 1 %}#}
+        </li>
       {% endfor %}
     </ol>
 	</div>
