@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_content
+    - node.type.cgov_article
+    - node.type.cgov_biography
+    - node.type.cgov_blog_post
+    - node.type.cgov_press_release
+    - paragraphs.paragraphs_type.cgov_cthp_feature_card
+id: paragraph.cgov_cthp_feature_card.field_featured_content
+field_name: field_featured_content
+entity_type: paragraph
+bundle: cgov_cthp_feature_card
+label: 'Featured Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles: NULL
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pdq_links
+    - paragraphs.paragraphs_type.cgov_cthp_guide_card
+id: paragraph.cgov_cthp_guide_card.field_pdq_links
+field_name: field_pdq_links
+entity_type: paragraph
+bundle: cgov_cthp_guide_card
+label: 'PDQ Links'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      pdq_cancer_information_summary: pdq_cancer_information_summary
+      pdq_drug_information_summary: pdq_drug_information_summary
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: pdq_cancer_information_summary
+field_type: entity_reference

@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.cgov_cthp.field_audience_toggle
     - field.field.node.cgov_cthp.field_browser_title
     - field.field.node.cgov_cthp.field_card_title
+    - field.field.node.cgov_cthp.field_cthp_cards
     - field.field.node.cgov_cthp.field_feature_card_description
     - field.field.node.cgov_cthp.field_image_promotional
     - field.field.node.cgov_cthp.field_list_description
@@ -56,6 +57,15 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_cthp_cards:
+    type: entity_reference_revisions_entity_view
+    weight: 12
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
   field_feature_card_description:
     weight: 6
     label: above
@@ -98,7 +108,7 @@ content:
     type: string
     region: content
   field_search_engine_restrictions:
-    weight: 19
+    weight: 13
     label: above
     settings: {  }
     third_party_settings: {  }

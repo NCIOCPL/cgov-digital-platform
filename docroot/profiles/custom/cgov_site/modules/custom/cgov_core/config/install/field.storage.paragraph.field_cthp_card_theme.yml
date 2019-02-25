@@ -1,0 +1,50 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_cthp_card_theme
+field_name: field_cthp_card_theme
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: cthp-treatment
+      label: Treatment
+    -
+      value: cthp-research
+      label: Research
+    -
+      value: cthp-causes
+      label: 'Causes & Prevention'
+    -
+      value: cthp-screening
+      label: Screening
+    -
+      value: cthp-genetics
+      label: Genetics
+    -
+      value: cthp-survival
+      label: 'Survival Rates & Prognosis'
+    -
+      value: cthp-general
+      label: 'General Resources on Coping'
+    -
+      value: overview
+      label: Overview
+    -
+      value: pink-feature
+      label: 'Pink Feature'
+    -
+      value: yellow-feature
+      label: 'Yellow Feature'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_research_page
+    - node.type.cgov_cthp
+    - paragraphs.paragraphs_type.cgov_cthp_research_card
+id: paragraph.cgov_cthp_research_card.field_research_page
+field_name: field_research_page
+entity_type: paragraph
+bundle: cgov_cthp_research_card
+label: 'Research Page'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      cgov_cthp: cgov_cthp
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
