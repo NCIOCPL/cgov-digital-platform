@@ -23,6 +23,7 @@ dependencies:
   module:
     - datetime
     - image
+    - media
     - options
     - text
     - user
@@ -120,11 +121,12 @@ content:
     type: basic_string
     region: content
   field_media_oembed_video:
-    type: string
+    type: oembed
     weight: 6
     label: above
     settings:
-      link_to_entity: false
+      max_width: 0
+      max_height: 0
     third_party_settings: {  }
     region: content
   field_pretty_url:
