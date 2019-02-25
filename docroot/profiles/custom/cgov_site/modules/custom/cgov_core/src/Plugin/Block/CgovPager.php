@@ -9,6 +9,7 @@ use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+// Uuse Drupal\node\Entity\Node;.
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -129,8 +130,13 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
       $query = $this->entityQuery->get('node');
       $query->condition('status', 1);
       $query->condition('type', $content_type);
-      $entity_ids = $query->execute();
+      // S$entity_ids = $query->execute();.
+      /*
+      foreach($entity_ids as $nid) {
+      $title = Node::load($nid)->title->value;
       ksm($entity_ids);
+      }
+       */
     }
 
     // Build custom pager based on type.
