@@ -12,50 +12,40 @@
         </div>
         <div class="profile-panel-content">
           <h1>{{ node.label }}</h1>
-          {% if content.field_parent_institution or content.field_institution_type %}
+          {% if content.field_parent_institution[0] or content.field_institution_type[0] %}
             <div class="profile-title">
               {{ content.field_parent_institution }}
-              {% if content.field_institution_type %}
-                <br/>{{ content.field_institution_type }}
-              {%- endif -%}
+              {% if content.field_parent_institution[0] and content.field_institution_type[0] %}
+                <br/>
+              {% endif %}
+            {{ content.field_institution_type }}
             </div>
-            {%- if content.field_org_head_name -%}
-              <p>
-                {{ content.field_org_head_name|escape|striptags('<!-- -->')|trim }}
-                {%- if content.field_org_head_title -%}
-                  , {{ content.field_org_head_title|escape|striptags('<!-- -->')|trim }}
-                {%- endif -%}
-              </p>
-            {%- endif -%}
-            {% if content.field_address_1 %}
-              <p>
-                {{ content.field_address_1 }}
-                {% if content.field_address_2 %}
-                  <br/>{{ content.field_address_2 }}
-                {% endif %}
-                {%- if content.field_state -%}
-                  <br/>{{ content.field_city|escape|striptags('<!-- -->')|trim }}, {{ content.field_state|escape|striptags('<!-- -->')|trim }}
-                {% else %}
-                  <br/>{{ content.field_city }}
-                {% endif %}
-                {{ content.field_zip_code }}
-              </p>
-            {% endif %}
-            {% if content.field_phone_label_1 and content.field_phone_number_1 %}
-              <p>
-                {{ content.field_phone_label_1 }}: <a href="tel:{{ content.field_phone_number_1 }}" rel="nofollow">{{ content.field_phone_number_1 }}</a>
-              </p>
-            {% endif %}
-            {% if content.field_phone_label_2 and content.field_phone_number_2 %}
-              <p>
-                {{ content.field_phone_label_2 }}: <a href="tel:{{ content.field_phone_number_2 }}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
-              </p>
-            {% endif %}
-            {% if content.field_website_title and content.field_website_url %}
-              <p>
-                <a href="{{ content.field_website_url }}">{{ content.field_website_title }}</a>
-              </p>
-            {% endif %}
+          {%- endif -%}
+          {%- if content.field_org_head_name[0] -%}
+            <p>
+              {{ content.field_org_head_name|escape|striptags('<!-- -->')|trim }}
+              {%- if content.field_org_head_title[0] -%}
+                , {{ content.field_org_head_title }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          {% if content.field_address[0] %}
+            {{ content.field_address }}
+          {% endif %}
+          {% if content.field_phone_label_1[0] and content.field_phone_number_1[0] %}
+            <p>
+              {{ content.field_phone_label_1|escape|striptags('<!-- -->')|trim }}: <a href="tel:{{ content.field_phone_number_1|escape|striptags('<!-- -->')|trim }}" rel="nofollow">{{ content.field_phone_number_1 }}</a>
+            </p>
+          {% endif %}
+          {% if content.field_phone_label_2[0] and content.field_phone_number_2[0] %}
+            <p>
+              {{ content.field_phone_label_2|escape|striptags('<!-- -->')|trim }}: <a href="tel:{{ content.field_phone_number_2|escape|striptags('<!-- -->')|trim }}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
+            </p>
+          {% endif %}
+          {% if content.field_website_title[0] and content.field_website_url[0] %}
+            <p>
+              <a href="{{ content.field_website_url|escape|striptags('<!-- -->')|trim }}">{{ content.field_website_title }}</a>
+            </p>
           {% endif %}
         </div>
         <!-- end profile panel content -->

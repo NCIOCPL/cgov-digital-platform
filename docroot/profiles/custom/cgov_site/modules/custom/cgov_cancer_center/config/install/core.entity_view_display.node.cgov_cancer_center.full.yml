@@ -4,11 +4,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_cancer_center.body
-    - field.field.node.cgov_cancer_center.field_address_1
-    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_address
     - field.field.node.cgov_cancer_center.field_browser_title
     - field.field.node.cgov_cancer_center.field_card_title
-    - field.field.node.cgov_cancer_center.field_city
     - field.field.node.cgov_cancer_center.field_date_display_mode
     - field.field.node.cgov_cancer_center.field_date_posted
     - field.field.node.cgov_cancer_center.field_date_reviewed
@@ -32,15 +30,13 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_short_title
     - field.field.node.cgov_cancer_center.field_site_section
     - field.field.node.cgov_cancer_center.field_sort_title
-    - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
     - field.field.node.cgov_cancer_center.field_website_url
-    - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
   module:
+    - address
     - cgov_core
     - entity_reference_revisions
-    - options
     - text
     - user
 id: node.cgov_cancer_center.full
@@ -60,30 +56,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_address_1:
+  field_address:
+    type: address_plain
     weight: 7
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
     region: content
-  field_address_2:
-    weight: 8
-    label: hidden
-    settings:
-      link_to_entity: false
+    label: above
+    settings: {  }
     third_party_settings: {  }
-    type: string
-    region: content
-  field_city:
-    weight: 9
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_date_posted:
     weight: 21
     label: hidden
@@ -204,13 +183,6 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-  field_state:
-    weight: 10
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
   field_website_title:
     weight: 17
     label: hidden
@@ -221,14 +193,6 @@ content:
     region: content
   field_website_url:
     weight: 18
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_zip_code:
-    weight: 11
     label: hidden
     settings:
       link_to_entity: false
