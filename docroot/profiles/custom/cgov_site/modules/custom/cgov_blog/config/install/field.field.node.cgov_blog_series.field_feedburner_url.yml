@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_feedburner_url
+    - node.type.cgov_blog_series
+  module:
+    - link
+id: node.cgov_blog_series.field_feedburner_url
+field_name: field_feedburner_url
+entity_type: node
+bundle: cgov_blog_series
+label: 'FeedBurner URL'
+description: 'Link to allow users to sign up for blog updates. Appears as ''Subscribe'' link below blog series title.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link
