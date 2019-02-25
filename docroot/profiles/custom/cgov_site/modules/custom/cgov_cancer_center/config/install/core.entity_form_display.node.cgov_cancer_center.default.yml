@@ -4,11 +4,9 @@ dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_cancer_center.body
-    - field.field.node.cgov_cancer_center.field_address_1
-    - field.field.node.cgov_cancer_center.field_address_2
+    - field.field.node.cgov_cancer_center.field_address
     - field.field.node.cgov_cancer_center.field_browser_title
     - field.field.node.cgov_cancer_center.field_card_title
-    - field.field.node.cgov_cancer_center.field_city
     - field.field.node.cgov_cancer_center.field_date_display_mode
     - field.field.node.cgov_cancer_center.field_date_posted
     - field.field.node.cgov_cancer_center.field_date_reviewed
@@ -32,13 +30,12 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_short_title
     - field.field.node.cgov_cancer_center.field_site_section
     - field.field.node.cgov_cancer_center.field_sort_title
-    - field.field.node.cgov_cancer_center.field_state
     - field.field.node.cgov_cancer_center.field_website_title
     - field.field.node.cgov_cancer_center.field_website_url
-    - field.field.node.cgov_cancer_center.field_zip_code
     - node.type.cgov_cancer_center
     - workflows.workflow.editorial_workflow
   module:
+    - address
     - content_moderation
     - datetime
     - entity_browser
@@ -65,21 +62,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_address_1:
+  field_address:
     weight: 14
     settings:
-      size: 60
-      placeholder: ''
+      default_country: US
     third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_address_2:
-    weight: 15
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
+    type: address_default
     region: content
   field_browser_title:
     weight: 6
@@ -97,19 +85,11 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_city:
-    weight: 16
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_date_display_mode:
     weight: 31
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: options_buttons
     region: content
   field_date_posted:
     weight: 28
@@ -284,12 +264,6 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_state:
-    weight: 17
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   field_website_title:
     weight: 24
     settings:
@@ -300,14 +274,6 @@ content:
     region: content
   field_website_url:
     weight: 25
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_zip_code:
-    weight: 18
     settings:
       size: 60
       placeholder: ''
