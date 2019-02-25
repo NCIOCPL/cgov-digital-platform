@@ -3,6 +3,7 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 
 <article>
+{# {{kint(_context)}} #}
     <div class="resize-content">
         <h1>{{- node.label -}}</h1>
         {{ drupal_block('page_options') }}
@@ -12,13 +13,11 @@
                 <nav class="on-this-page" role="navigation">
                     <h6>On This Page</h6>
                     <ul>
-                        {% for key, item in content.field_summary_sections if key|first != '#' %}
-                        <li id="{{key}}">
-                            <a href="#{{- item['#paragraph'].fields['field_pdq_section_id'].getValue()[0]['value'] -}}">
-                                {{- item['#paragraph'].fields['field_pdq_section_title'].getValue()[0]['value']  -}}
-                            </a>
+                      {% for key, item in sectionData %}
+                        <li>
+                          <a href="#{{- item.id -}}">{{- item.title  -}}</a>
                         </li>
-                        {% endfor %}
+                      {% endfor %}
                     </ul>
                 </nav>
                 {% endif %}

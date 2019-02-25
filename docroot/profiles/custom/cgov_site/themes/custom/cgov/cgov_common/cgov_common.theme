@@ -19,3 +19,22 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     $suggestions[] = 'page__' . $content_type;
   }
 }
+
+/**
+ * Digging into paragraph entities to fetch the field section id and title.
+ *
+ * @param array $variables
+ *   Collection of variables.
+ */
+function cgov_common_preprocess_node__pdq_cancer_information_summary(array &$variables) {
+  $variables['sectionData'] = [];
+  $sections = $variables['content']['field_summary_sections'];
+  foreach ($sections as $key => $value) {
+    if (strpos($key, '#') !== 0) {
+      array_push($variables['sectionData'], (object) [
+        "id" => $value['#paragraph']->get('field_pdq_section_id')->getValue()[0]['value'],
+        "title" => $value['#paragraph']->get('field_pdq_section_title')->getValue()[0]['value'],
+      ]);
+    }
+  }
+}
