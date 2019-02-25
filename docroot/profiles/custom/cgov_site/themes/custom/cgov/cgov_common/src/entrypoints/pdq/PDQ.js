@@ -1,27 +1,43 @@
-import $ from 'jquery';
+// import $ from 'jquery';
+import { getNodeArray } from 'Core/utilities/domManipulation';
 import './PDQ.scss';
 
 const onDOMContentLoaded = () => {
-    // move health professional/patient toggle up to article head
-    $('.pdq-hp-patient-toggle').detach().insertAfter('h1');
-
-    // creates the table of contents for the individual sections based on the h3 contained within the section
-    function buildSectionTOC(sectionNode) {
-        let $sectionNode = $(sectionNode);
-        let $nav = $('<nav>').addClass('in-this-section').attr('role', 'navigation').append($('<h6>In This Section</h6><ul></ul>'));
-        $sectionNode.find('h3').each(function(){
-            let $this = $(this);
-            $nav.find('ul').append($('<li><a href="#' + $this.attr('id') + '">' + $this.html()+ '</a></li>'));
-        });
-        $nav.insertAfter( $sectionNode.find('h2') );
-    }
-
-    // parse PDQ sections for need for section TOC
-    $('#cgvBody section').each(function(){
-        if($(this).find('h3').length > 1){
-            buildSectionTOC(this);
-        }
-    })
+  // move health professional/patient toggle up to article head
+  moveToggle();
+  
+  buildInThisSection(getNodeArray('#cgvBody .accordion > section'));
 }
 
 document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
+
+
+const moveToggle = () => {
+  const toggle = document.querySelector('.pdq-hp-patient-toggle', '#cgvBody');
+  const pageTitle = document.querySelector('h1', '#main');
+  pageTitle.insertAdjacentElement('afterend',toggle);
+}
+
+const buildInThisSection = (sections) => {
+  sections.map((section)=>{
+    const headers = getNodeArray('h3, h4',section);
+    
+    // filter out "About This PDQ" section, sections with no h3's or h4's and sections with Key Points
+    if(section.id !== '_AboutThis_1' && headers.length > 0 && !headers[0].id.match(/kpBox/)) {
+      let nav = `<nav class="in-this-section role="navigation"><h6>In This Section</h6><ul>`;
+      headers.map((header,i) => {
+        if( i !== 0 && headers[i-1].nodeName.toLowerCase() === 'h3' && header.nodeName.toLowerCase() === 'h4' ){
+          nav += `<ul><li><a href="#${header.id}">${header.innerHTML}</a></li>`;
+        } else {
+          nav += `<li><a href="#${header.id}">${header.innerHTML}</a></li>`;
+        }
+        if (headers[i+1] && headers[i+1].nodeName === 'h3' && header.nodeName === 'h4') {
+          nav += `</ul>`;
+        }
+      });
+      nav += `</ul></nav>`;
+
+      section.firstElementChild.insertAdjacentHTML('afterend',nav);
+    }
+  });
+}
