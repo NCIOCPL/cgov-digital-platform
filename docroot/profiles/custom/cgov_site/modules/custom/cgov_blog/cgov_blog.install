@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains cgov_blog_post.install.
+ * Contains cgov_blog.install.
  */
 
 /**
@@ -12,12 +12,13 @@
  *
  * @see system_install()
  */
-function cgov_blog_post_install() {
+function cgov_blog_install() {
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
+  $siteHelper->addContentTypePermissions('cgov_blog_series', ['content_author']);
   $siteHelper->attachContentTypeToWorkflow('cgov_blog_post', 'editorial_workflow');
-
+  $siteHelper->attachContentTypeToWorkflow('cgov_blog_series', 'editorial_workflow');
 }
