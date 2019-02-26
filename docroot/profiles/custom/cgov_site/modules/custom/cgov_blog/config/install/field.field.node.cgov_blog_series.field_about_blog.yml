@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_about_blog
+    - node.type.cgov_blog_series
+  module:
+    - text
+id: node.cgov_blog_series.field_about_blog
+field_name: field_about_blog
+entity_type: node
+bundle: cgov_blog_series
+label: 'About Blog'
+description: 'Text that appears below the blog title and above the first blog post. Should be no more than 1-2 sentences.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

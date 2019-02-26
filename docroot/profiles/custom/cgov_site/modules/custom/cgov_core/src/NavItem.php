@@ -213,7 +213,8 @@ class NavItem {
    */
   public function getMegamenuContent() {
     $megamenuFieldEntityReference = $this->term->field_mega_menu_content;
-    $hasMegamenu = !$megamenuFieldEntityReference->isEmpty();
+    $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
+    $hasMegamenu = count($referencedEntities) > 0;
     if ($hasMegamenu) {
       $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('body')->value;
       $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
