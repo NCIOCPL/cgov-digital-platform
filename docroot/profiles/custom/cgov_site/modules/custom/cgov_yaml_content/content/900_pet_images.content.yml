@@ -66,3 +66,23 @@
           - type: 'module'
             filename: 'pet_frisco_thumbnail.jpg'
       alt: 'Frisco king of Shenandoah'
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Zedd Octopus"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_zedd_happy.jpg'
+      alt: 'Zedd vs the Octopus'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Zedd having an exciting fun fight with an octopus.
