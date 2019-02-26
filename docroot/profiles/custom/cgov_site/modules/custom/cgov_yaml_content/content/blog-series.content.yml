@@ -1,0 +1,57 @@
+- entity: "node"
+  type: "cgov_blog_series"
+  title: "Cancer Currents Blog"
+  title:
+    value: "Cancer Currents Blog"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: 'CC Blog My Browser title'
+  field_card_title:
+    value: 'CC Blog My Card title'
+  field_feature_card_description:
+    value: 'News and research updates from the National Cancer Institute'
+  field_pretty_url:
+    value: "cancer-currents-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "Cancer Currents"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+
+- entity: "node"
+  type: "cgov_blog_series"
+  title: "RAS Dialogue Blog"
+  title:
+    value: "RAS Dialogue Blog"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: 'RAS Dialogue'
+  field_card_title:
+    value: 'RAS Dialogue'
+  field_feature_card_description:
+    value: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
+  field_pretty_url:
+    value: "ras-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "RAS Blog"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Research'
