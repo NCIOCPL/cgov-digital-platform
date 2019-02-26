@@ -4,12 +4,10 @@ namespace Drupal\cgov_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
-use Drupal\Core\Path\PathMatcherInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-// Uuse Drupal\node\Entity\Node;.
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -22,20 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The path matcher.
-   *
-   * @var \Drupal\Core\Path\PathMatcherInterface
-   */
-  protected $pathMatcher;
 
   /**
    * The route matcher.
@@ -52,6 +36,13 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
   protected $entityQuery;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a CgovPager object.
    *
    * @param array $configuration
@@ -60,29 +51,25 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\Core\Path\PathMatcherInterface $path_matcher
-   *   The path matcher.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
    *   The route matcher.
    * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
    *   An entity query.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    LanguageManagerInterface $language_manager,
-    PathMatcherInterface $path_matcher,
     RouteMatchInterface $route_matcher,
-    QueryFactory $entity_query
+    QueryFactory $entity_query,
+    EntityTypeManagerInterface $entity_type_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->languageManager = $language_manager;
-    $this->pathMatcher = $path_matcher;
     $this->routeMatcher = $route_matcher;
     $this->entityQuery = $entity_query;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -93,10 +80,9 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('language_manager'),
-      $container->get('path.matcher'),
       $container->get('current_route_match'),
-      $container->get('entity.query')
+      $container->get('entity.query'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -118,40 +104,105 @@ class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Create a new node storage instance.
+   *
+   * @return Drupal\Core\Entity\EntityStorageInterface
+   *   The node storage or NULL.
+   */
+  private function getNodeStorage() {
+    $node_storage = $this->entityTypeManager->getStorage('node');
+    return isset($node_storage) ? $node_storage : NULL;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function build() {
-    // Initialize the render array response to be empty.
-    $build = [];
-
-    // Debug entity object.
+    // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->getCurrEntity()) {
+      $content_id = $curr_entity->id();
       $content_type = $curr_entity->bundle();
-      $query = $this->entityQuery->get('node');
-      $query->condition('status', 1);
-      $query->condition('type', $content_type);
-      // S$entity_ids = $query->execute();.
-      /*
-      foreach($entity_ids as $nid) {
-      $title = Node::load($nid)->title->value;
-      ksm($entity_ids);
-      }
-       */
     }
 
-    // Build custom pager based on type.
+    // Render our pager markup based on content type.
+    // Note: wherever pssible, we should use out-of-the box pagination from
+    // the view. This plugin is currently being used by Blog Posts only.
     switch ($content_type) {
       case 'cgov_blog_post':
-        $build['#markup'] = 'Hello, meatloaf';
+        $build['#markup'] = $this->drawBlogPostOlderNewer($content_id, $content_type);
         break;
 
       default:
-        $build['#markup'] = 'its a-me, Mario';
+        $build['#markup'] = '';
+        break;
+    }
+    return $build;
+  }
+
+  /**
+   * Draw Older/Newer links for Blog Post.
+   *
+   * @param string $cid
+   *   The nid of the current content item.
+   * @param string $type
+   *   The content type machine name.
+   */
+  private function drawBlogPostOlderNewer($cid, $type) {
+    // TODO: filter by series.
+    // Build our query object.
+    $query = $this->entityQuery->get('node');
+    $query->condition('status', 1);
+    $query->condition('type', $type);
+    $query->sort('field_date_posted');
+    $entity_ids = $query->execute();
+
+    // Build associative array.
+    foreach ($entity_ids as $nid) {
+      $node = $this->getNodeStorage()->load($nid);
+      $blog_links[] = [
+        'nid' => $nid,
+        'date' => $node->field_date_posted->value,
+        'title' => $node->title->value,
+      ];
     }
 
-    // Debug build object.
-    // Xksm($build);!
-    return $build;
+    // Open Blog Post pagination div.
+    $markup = "<div id='cgov-blog-post-pagination>";
+
+    // Draw our prev/next links.
+    // TODO: hook up translation.
+    foreach ($blog_links as $index => $blog_link) {
+      if ($blog_link['nid'] == $cid) {
+        $length = count($blog_links);
+
+        // Link previous post if exists.
+        if ($index > 0) {
+          $prev = $blog_links[$index - 1];
+          $markup .= "
+            <div class='blog-post-older'>
+              <a href=/node/" . $prev['nid'] . ">&lt; Older Post</a>
+              <p><i>" . $prev['title'] . "</i></p>
+            </div>
+          ";
+        }
+
+        // Link next post if exists.
+        if ($index < ($length - 1)) {
+          $next = $blog_links[$index + 1];
+          $markup .= "
+            <div class='blog-post-newer'>
+              <a href=/node/" . $next['nid'] . ">Newer Post &gt;</a>
+              <p><i>" . $next['title'] . "</i></p>
+            </div>
+          ";
+        }
+        break;
+      }
+    }
+
+    // Close pagination div and return HTML.
+    $markup .= "</div>";
+    return $markup;
   }
 
   /**
