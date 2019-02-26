@@ -7,11 +7,16 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - field.field.media.cgov_image.field_override_img_featured
+    - field.field.media.cgov_image.field_override_img_panoramic
+    - field.field.media.cgov_image.field_override_img_social_media
+    - field.field.media.cgov_image.field_override_img_thumbnail
     - image.style.thumbnail
     - media.type.cgov_image
     - workflows.workflow.image_workflow
   module:
     - content_moderation
+    - image
     - image_widget_crop
     - text
 id: media.cgov_image.default
@@ -77,6 +82,38 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_override_img_featured:
+    weight: 7
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_override_img_panoramic:
+    weight: 10
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_override_img_social_media:
+    weight: 8
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_override_img_thumbnail:
+    weight: 9
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
   langcode:
     type: language_select
     weight: 0
@@ -86,7 +123,7 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 100
+    weight: 13
     settings: {  }
     region: content
     third_party_settings: {  }
@@ -102,11 +139,11 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 8
+    weight: 12
     region: content
     third_party_settings: {  }
   translation:
-    weight: 7
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
