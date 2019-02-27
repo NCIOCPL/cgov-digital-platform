@@ -2,27 +2,16 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
   <div class="resize-content">
-    {{ content.field_press_release_type }}
     <h1>
-      {{ node.label }}
+      {{ content.title }}
     </h1>
     <div id="nvcgSubTitle">
       <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a></div>
     </div>
 
     <div id="cgvBody">
-      {{ contentPageMacros.displayDates(node,content) }}
-
-      {{ content.field_image_article }}
-      {{ content.field_intro_text }}
       {{ content.body }}
     </div>
-
-    <ul style="color:plum;">
-      <strong>Field placeholders:</strong><hr/>
-      <li>field_blog_series: {{ content.field_blog_series }}</li>
-      <li>field_blog_topics: {{ content.field_blog_topics }}</li>
-    </ul>
 
   </div>
 
