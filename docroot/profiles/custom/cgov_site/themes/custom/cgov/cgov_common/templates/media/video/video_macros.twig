@@ -5,12 +5,12 @@
  */
 #}
 
-{% macro video(content, showCaption = false , showTitle = false) %}
+{% macro video(content, showCaption = true , showTitle = false, additionalClasses = "") %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and content.name|field_value %}
   {% if hasRequiredBaseFields %}
     {% set title = content.name %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
-    <figure class="video">
+    <figure class="{{'video ' ~ additionalClasses}}">
       {% if showTitle %}
         <p tabindex="0" class="title">{{ title }}</p>
       {% endif %}
