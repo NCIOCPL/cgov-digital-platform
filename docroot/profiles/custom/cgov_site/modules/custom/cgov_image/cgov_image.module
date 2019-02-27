@@ -28,13 +28,88 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     return;
   }
 
-  // Make sure we are in a crop view.
+  // Take Care of Crop Views.
   $isMatch = preg_match('/^image_crop_(?P<img>.+)$/', $view_mode, $match);
-  if (!$isMatch) {
+  if ($isMatch) {
+    _cgov_image_filter_view_image(
+      $build,
+      $entity,
+      $display,
+      $view_mode,
+      $match['img']
+    );
     return;
   }
 
-  $img_type = $match['img'];
+  // Handle Enlarge Mode for article displays.
+  if (preg_match('/^image_display_article_.+$/', $view_mode)) {
+    _cgov_image_add_enlarge_link(
+      $build,
+      $entity,
+      $display,
+      $view_mode
+    );
+  }
+
+}
+
+/**
+ * Adds in the enlarge image URI.
+ *
+ * This is used for modes that are embedded in the body content.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ */
+function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->get('field_display_enlarge')->value == 1) {
+    $build['enlarge_uri'] = $build['field_media_image']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'cgov_enlarged',
+      ],
+    ]);
+  }
+}
+
+/**
+ * Filters out unwanted image fields from view display.
+ *
+ * This is used for crop display modes to choose the override
+ * field vs. the crop.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ * @param string $img_type
+ *   The image we are rendering.
+ */
+function _cgov_image_filter_view_image(
+  array &$build,
+  EntityInterface $entity,
+  EntityViewDisplayInterface $display,
+  $view_mode,
+  $img_type
+) {
 
   // Only certain image types will have overrides.
   if (in_array($img_type, ['featured', 'panoramic', 'social_media', 'thumbnail'])) {
