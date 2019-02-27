@@ -1,5 +1,5 @@
 import AudioPlayer from './AudioPlayer';
-import { getNodeArray } from 'Utilities/domManipulation';
+import { getNodeArray } from '../../utilities/domManipulation';
 
 export const AUDIO_FILE_DATA_ATTRIBUTE = "data-NCI-link-audio-file";
 export const DEFAULT_AUDIO_FILE_TARGET_SELECTOR = 'a.CDR_audiofile';
