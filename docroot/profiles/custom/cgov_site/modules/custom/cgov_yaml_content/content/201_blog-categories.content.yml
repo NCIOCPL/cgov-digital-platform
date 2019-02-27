@@ -42,6 +42,20 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
+  name: "Leadership & Expert Views"
+  field_pretty_url:
+    value: "leadership-expert-view"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
   name: "Technology"
   field_pretty_url:
     value: "technology"
