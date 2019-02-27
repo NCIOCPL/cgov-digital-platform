@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_mini_landing.field_banner_image
     - field.field.node.cgov_mini_landing.field_browser_title
     - field.field.node.cgov_mini_landing.field_card_title
@@ -163,9 +164,17 @@ content:
     region: content
   field_site_section:
     weight: 1
-    settings: {  }
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      field_widget_replace: true
+      selection_mode: selection_edit
+      field_widget_edit: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   langcode:
     type: language_select
