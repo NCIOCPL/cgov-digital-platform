@@ -34,7 +34,7 @@ var dictionary = {
 	 * Base endpoint for the dictionary webservice.
 	 * @readonly
 	 */
-	endpoint: 'https://www-red-dev.cancer.gov/Dictionary.Service/v1',
+	endpoint: 'https://www.cancer.gov/Dictionary.Service/v1',
 
 	/**
 	 * Performs a search for terms with names that start with or contain certain text.
