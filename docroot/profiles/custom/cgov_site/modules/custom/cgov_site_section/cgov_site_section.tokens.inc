@@ -54,9 +54,26 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
           break;
         }
 
-        // TODO: set owner series + pub year as replacement.
       case 'blog-post-path':
-        $replacements[$original] = 'blog-placeholder';
+        if (!empty($data['node'])) {
+          $node = $data['node'];
+          try {
+            // TODO: set owner series + pub year as replacement.
+            // TODO: validate field values.
+            // Get and format blog series field.
+            $bs = $node->get('field_blog_series')->entity->label();
+            $bs = preg_replace('/\s+/', '-', $bs);
+
+            // Get and format posted date field.
+            $date = $node->get('field_date_posted')->value;
+            $date = explode('-', $date)[0];
+            $replacements[$original] = $bs . '/' . $date;
+          }
+          catch (Exception $e) {
+            \Drupal::logger('cgov_site_section')
+              ->notice('Error generating pretty URL for blog post.');
+          }
+        }
         break;
     }
   }
