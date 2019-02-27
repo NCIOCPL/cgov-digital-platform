@@ -53,6 +53,11 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
           }
           break;
         }
+
+        // TODO: set owner series + pub year as replacement.
+      case 'blog-post-path':
+        $replacements[$original] = 'blog-placeholder';
+        break;
     }
   }
   return $replacements;
