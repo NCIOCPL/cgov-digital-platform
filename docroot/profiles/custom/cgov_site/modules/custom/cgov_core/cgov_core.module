@@ -54,6 +54,10 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
  * language when it gets enabled.
  */
 function cgov_core_configurable_language_insert($entity) {
+  $public_use_es = <<<EOMarkup
+Si desea reproducir parte o la totalidad de este contenido, consulte Reutilización de la información del NCI para obtener orientación sobre derechos de autor y permisos. En el caso de la reproducción digital permitida, acredite al Instituto Nacional del Cáncer como la fuente y enlace al producto original del NCI utilizando el título del producto original; por ejemplo, “[current-page:title].”
+EOMarkup;
+
   $langcode = $entity->id();
 
   $query = \Drupal::entityQuery('block_content');
@@ -63,7 +67,10 @@ function cgov_core_configurable_language_insert($entity) {
   $eid = array_shift($result);
   $block = entity_load('block_content', $eid);
   $title = $block->info->value . " - " . $langcode;
-  $block_translated = $block->addTranslation('es', ['info' => $title]);
+  $block_translated = $block->addTranslation('es', [
+    'info' => $title,
+    'body' => ['value' => $public_use_es, 'format' => 'streamlined'],
+  ]);
   $block_translated->save();
 
   drupal_set_message("Added block_content: $title");
