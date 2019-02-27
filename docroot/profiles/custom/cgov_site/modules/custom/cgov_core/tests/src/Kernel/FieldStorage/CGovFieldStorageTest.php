@@ -19,8 +19,32 @@ class CGovFieldStorageTest extends KernelTestBase {
    * @var array
    */
   public static $modules = [
-    'user', 'system', 'file', 'image', 'link', 'field', 'views', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'cgov_core', 'taxonomy', 'entity_browser', 'entity_reference_revisions', 'paragraphs',
+    'user',
+    'system',
+    'file',
+    'image',
+    'link',
+    'field',
+    'views',
+    'node',
+    'text',
+    'filter',
+    'datetime',
+    'options',
+    'workflows',
+    'content_moderation',
+    'language',
+    'content_translation',
+    'cgov_core',
+    'taxonomy',
+    'block',
+    'block_content',
+    'token',
+    'token_filter',
+    'entity_browser',
+    'entity_reference_revisions',
+    'paragraphs',
+    'editor',
   ];
 
   /**
@@ -100,13 +124,31 @@ class CGovFieldStorageTest extends KernelTestBase {
     // Necessary for module uninstall.
     $this->installSchema('user', 'users_data');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('block_content');
     $this->installEntitySchema('node');
     $this->installEntitySchema('file');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'file', 'image', 'link', 'language', 'content_translation', 'views',
-      'entity_browser', 'entity_reference_revisions', 'paragraphs', 'cgov_core',
+      'system',
+      'user',
+      'field',
+      'node',
+      'file',
+      'image',
+      'link',
+      'language',
+      'content_translation',
+      'views',
+      'entity_browser',
+      'entity_reference_revisions',
+      'paragraphs',
+      'cgov_core',
+      'block',
+      'block_content',
+      'token',
+      'token_filter',
+      'editor',
     ]);
   }
 

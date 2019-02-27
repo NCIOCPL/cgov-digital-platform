@@ -54,8 +54,8 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
  * language when it gets enabled.
  */
 function cgov_core_configurable_language_insert($entity) {
-  $public_use_es = <<<EOMarkup
-Si desea reproducir parte o la totalidad de este contenido, consulte Reutilización de la información del NCI para obtener orientación sobre derechos de autor y permisos. En el caso de la reproducción digital permitida, acredite al Instituto Nacional del Cáncer como la fuente y enlace al producto original del NCI utilizando el título del producto original; por ejemplo, “[current-page:title].”
+  $public_use['es'] = <<<EOMarkup
+Si desea copiar algo de este texto, vea <a href="/espanol/politicas/derechos-de-autor-y-uso">Derechos de autor y uso de imágenes y contenido</a> sobre instrucciones de derechos de autor y permisos. En caso de reproducción digital permitida, por favor, dé crédito al Instituto Nacional del Cáncer como su creador, y enlace al producto original del NCI usando el título original del producto; por ejemplo,  “[current-page:title].”
 EOMarkup;
 
   $langcode = $entity->id();
@@ -64,16 +64,22 @@ EOMarkup;
   $query->condition('info', 'Public Use')
     ->condition('langcode', 'en');
   $result = $query->execute();
-  $eid = array_shift($result);
-  $block = entity_load('block_content', $eid);
-  $title = $block->info->value . " - " . $langcode;
-  $block_translated = $block->addTranslation('es', [
-    'info' => $title,
-    'body' => ['value' => $public_use_es, 'format' => 'streamlined'],
-  ]);
-  $block_translated->save();
-
-  drupal_set_message("Added block_content: $title");
+  if (count($result)) {
+    $eid = array_shift($result);
+    $block = entity_load('block_content', $eid);
+    $title = $block->info->value . " - " . $langcode;
+    if (isset($public_use[$langcode]) && !$block->hasTranslation($langcode)) {
+      $block_translated = $block->addTranslation('es', [
+        'info' => $title,
+        'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
+      ]);
+      $block_translated->save();
+      drupal_set_message("Added block_content: $title");
+    }
+    else {
+      drupal_set_message("Need to add translation for block_content: '$title'' in " . __FUNCTION__);
+    }
+  }
 }
 
 /**
