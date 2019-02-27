@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_blog.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Add custom validation for Cgov Blog Posts only.
+  if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
+
+    // Add the admin JS library so we can run the InvokeCommand. See
+    // https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Ajax%21InvokeCommand.php/class/InvokeCommand/8.2.x
+    $form['#attached']['library'][] = 'cgov_blog/cgov_blog_post_admin';
+
+    // Add Drupal JS settings.
+    // TODO: Add selector settings.
+    $id_pairs = get_id_pairs($form);
+    $form['#attached']['drupalSettings']['adminJS']['idPairs'] = $id_pairs;
+    $form['#attached']['drupalSettings']['adminJS']['selectable'] = is_selectable($form);
+
+    // If this is a draft or administrator role, fire off ajax function.
+    if (is_selectable($form)) {
+      $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
+    }
+    else {
+      $form['field_blog_series']['#disabled'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function cgov_blog_entity_presave(EntityInterface $entity) {
+  // TODO: validate selected Blog Topics before saving.
+}
+
+/**
+ * Get an array of all taxonomy/owner blog pairs.
+ */
+function get_id_pairs(array $form) {
+
+  // Get the list of topics (categories) from the vocabulary ID.
+  // TODO: refactor / clean up.
+  $vid = 'cgov_blog_topics';
+  $topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vid);
+
+  // Return Blog Topic IDs and associated node IDs as an array.
+  $id_pairs = [];
+  foreach ($topics as $topic) {
+    $tid = $topic->tid;
+    $nid = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid)->get('field_owner_blog')->target_id;
+    $id_pairs[$tid] = $nid;
+  }
+  return $id_pairs;
+}
+
+/**
+ * Set change rules for Blog Series dropdown.
+ */
+function is_selectable(array $form) {
+  // Check for the draft state.
+  $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+  $selectable = ($curr_state == 'draft') ? TRUE : FALSE;
+
+  // Check for user role.
+  $curr_roles = \Drupal::currentUser()->getRoles();
+  if (in_array('advanced_editor', $curr_roles) || in_array('site_admin', $curr_roles)) {
+    $selectable = TRUE;
+  }
+  return $selectable;
+}
