@@ -31,7 +31,7 @@
         </div>
       </div>
       {% set hasCaption = content.field_caption|field_value %}
-      {% if showCaption and hasCaption %}
+      {% if hasCaption %}
         <figcaption class="caption-container">
           {{ content.field_caption }}
         </figcaption>
