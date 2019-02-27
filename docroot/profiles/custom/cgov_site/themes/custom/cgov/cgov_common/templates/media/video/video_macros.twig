@@ -5,13 +5,16 @@
  */
 #}
 
-{% macro video(content) %}
+{% macro video(content, showCaption = false , showTitle = false) %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and content.name|field_value %}
   {% if hasRequiredBaseFields %}
-    {% set name = content.name %}
+    {% set title = content.name %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
     <figure class="video">
-      <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
+      {% if showTitle %}
+        <p tabindex="0" class="title">{{ title }}</p>
+      {% endif %}
+      <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ title }}">
         <div class="video-preview--container" tabindex="0">
           {% set hasThumbnail = content.thumbnail|field_value %}
           {% if hasThumbnail %}
@@ -23,11 +26,11 @@
               <path d="M 45,24 27,14 27,34" fill="#fff"></path>
             </svg>
           </div>
-          <p>{{ name }}</p>
+          <p>{{ title }}</p>
         </div>
       </div>
       {% set hasCaption = content.field_caption|field_value %}
-      {% if hasCaption %}
+      {% if showCaption and hasCaption %}
         <figcaption class="caption-container">
           {{ content.field_caption }}
         </figcaption>
