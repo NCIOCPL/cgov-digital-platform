@@ -213,6 +213,43 @@ class ApiTest extends BrowserTestBase {
     $this->publish([[$nid, 'en']]);
     $this->checkSiteSections($this->english);
 
+    // Verify the catalog API.
+    $response = $this->request('GET', "$this->pdqUrl/list");
+    $this->assertEqual($response->getStatusCode(), 200);
+    $values = json_decode($response->getBody()->__toString(), TRUE);
+    $this->assertCount(2, $values, 'One entries in catalog');
+
+    // Results are ordered by CDR ID, so this is the Spanish summary.
+    $entry = array_pop($values);
+    $this->assertCount(7, $entry, 'Catalog entry has 7 values');
+    $this->assertEqual($entry['cdr_id'], $this->spanish['cdr_id'],
+      'CDR ID is correct');
+    $this->assertEqual($entry['nid'], $nid, 'Node ID is correct');
+    $this->assertEqual(preg_match('/^\d+$/', $entry['vid']), 1,
+      'Version ID is numeric');
+    $this->assertEqual($entry['langcode'], 'es', 'Language is Spanish');
+    $this->assertEqual($entry['type'], 'pdq_cancer_information_summary');
+    $pattern = '/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/';
+    $this->assertEqual(preg_match($pattern, $entry['created']), 1,
+      'Created is datetime');
+    $this->assertEqual(preg_match($pattern, $entry['changed']), 1,
+      'Changed is datetime');
+
+    // Same checks for the English summary.
+    $entry = array_pop($values);
+    $this->assertCount(7, $entry, 'Catalog entry has 7 values');
+    $this->assertEqual($entry['cdr_id'], $this->english['cdr_id'],
+      'CDR ID is correct');
+    $this->assertEqual($entry['nid'], $nid, 'Node ID is correct');
+    $this->assertEqual(preg_match('/^\d+$/', $entry['vid']), 1,
+      'Version ID is numeric');
+    $this->assertEqual($entry['langcode'], 'en', 'Language is English');
+    $this->assertEqual($entry['type'], 'pdq_cancer_information_summary');
+    $this->assertEqual(preg_match($pattern, $entry['created']), 1,
+      'Created is datetime');
+    $this->assertEqual(preg_match($pattern, $entry['changed']), 1,
+      'Changed is datetime');
+
     // Try to delete the English summary (should fail).
     $this->delete($this->english, FALSE);
 

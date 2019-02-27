@@ -93,12 +93,16 @@ class PDQResource extends ResourceBase {
    * Responds to GET requests.
    *
    * @param string $id
-   *   The CDR ID of a PDQ Summary document (optionally prefixed by "CDR").
+   *   The CDR ID of a PDQ Summary document (optionally prefixed by "CDR"),
+   *   or 'list' to get a catalog of PDQ content in the Drupal CMS.
    *
    * @return \Drupal\rest\ResourceResponse
    *   The response containing Drupal node ID(s) matching the CDR ID.
    *   Unless the site has become corrupted, there should only be
    *   one match.
+   *   If instead of a CDR id the parameter passed is 'list' then
+   *   the return value is a sequence of value sets for the PDQ
+   *   nodes in the CMS.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
    *   Thrown when the summary node was not found.
@@ -106,6 +110,11 @@ class PDQResource extends ResourceBase {
    *   Thrown when no ID was provided.
    */
   public function get($id) {
+
+    // Pass the work off to the catalog method if requested.
+    if ($id === 'list') {
+      return $this->catalog();
+    }
 
     // Make sure the client gave us something to look for.
     if (!$id) {
@@ -244,6 +253,40 @@ class PDQResource extends ResourceBase {
       }
     }
     return $matches;
+  }
+
+  /**
+   * Return a catalog of the PDQ content in the Drupal CMS.
+   *
+   * @return array
+   *   Sequence of key-indexed arrays, each of which contains
+   *   values for `cdr_id`, `nid`, `vid`, `created`, `updated`,
+   *   `langcode`, and `type`.
+   */
+  private function catalog() {
+    $join = 'd.nid = c.entity_id AND d.langcode = c.langcode';
+    $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
+    $query->join('node_field_data', 'd', $join);
+    $results = $query->fields('c')
+      ->fields('d', ['created', 'changed'])
+      ->condition('c.deleted', 0)
+      ->orderBy('c.field_pdq_cdr_id_value')
+      ->execute();
+    $content = [];
+    foreach ($results as $result) {
+      $content[] = [
+        'cdr_id' => $result->field_pdq_cdr_id_value,
+        'nid' => $result->entity_id,
+        'vid' => $result->revision_id,
+        'langcode' => $result->langcode,
+        'type' => $result->bundle,
+        'created' => date('Y-m-d H:i:s', $result->created),
+        'changed' => date('Y-m-d H:i:s', $result->changed),
+      ];
+    }
+    $response = new ResourceResponse($content);
+    $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
+    return $response;
   }
 
 }
