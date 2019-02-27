@@ -1,0 +1,35 @@
+{{ attach_library('cgov_common/pdq') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<article>
+{# {{kint(_context)}} #}
+    <div class="resize-content">
+        <h1>{{- node.label -}}</h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+            <div class="summary-sections">
+                {% if content.field_summary_sections|length > 0 %}
+                <nav class="on-this-page" role="navigation">
+                    <h6>{% trans %}On This Page{% endtrans %}</h6>
+                    <ul>
+                      {% for key, item in sectionData %}
+                        <li>
+                          <a href="#{{- item.id -}}">{{- item.title  -}}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                </nav>
+                {% endif %}
+                <div class="accordion">
+                    {{ content.field_summary_sections }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# TODO: Article footer stuff has to go somewhere. TBD. #}
+    <footer class="article-footer">
+      {{- contentPageMacros.displayDates(node, content) -}}
+    </footer>
+</article>
