@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_cancer_center.body
     - field.field.node.cgov_cancer_center.field_address
     - field.field.node.cgov_cancer_center.field_browser_title
@@ -251,10 +252,18 @@ content:
     type: string_textfield
     region: content
   field_site_section:
-    weight: 0
-    settings: {  }
+    weight: 1
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      field_widget_replace: true
+      selection_mode: selection_edit
+      field_widget_edit: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   field_sort_title:
     weight: 3
