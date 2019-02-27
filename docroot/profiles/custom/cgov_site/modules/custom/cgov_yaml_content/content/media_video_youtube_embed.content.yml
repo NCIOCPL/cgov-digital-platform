@@ -1,0 +1,24 @@
+- entity: "media"
+  bundle: "cgov_video"
+  name: "Hedge Maze"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "hedge-maze"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  field_body: "Dear god, get me out of here!"
+  field_browser_title: "I am a video browser title"
+  field_caption: "I am a video caption"
+  field_card_title: "I am a video card title"
+  field_feature_card_description: "I am a video feature card description"
+  field_list_description: "I am a video list description"
+  field_page_title: "I am a video page title"
+  field_short_title: "I am a video short title"
+  field_media_oembed_video: "https://www.youtube.com/watch?v=k1MHY_AFNAM"
