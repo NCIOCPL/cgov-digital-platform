@@ -13,17 +13,17 @@
 
               <h1>
                 {% spaceless %}
-                {% if content.field_prefix|field_value %}
-                {{ content.field_prefix|field_value }}
-                {% endif %}
-                {{ content.field_first_name|field_value }}
-                {% if content.field_middle_name %}
-                {{ content.field_middle_name|field_value }}
-                {% endif %}
-                {{- content.field_last_name|field_value -}}
-                {%- if content.field_suffix -%}
-                ,&nbsp;{{ content.field_suffix|field_value }}
-                {%- endif -%}
+                  {% if content.field_prefix|field_value %}
+                    {{ content.field_prefix|field_value }}
+                  {% endif %}
+                  {{ content.field_first_name|field_value }}
+                  {% if content.field_middle_name %}
+                    {{ content.field_middle_name|field_value }}
+                  {% endif %}
+                  {{- content.field_last_name|field_value -}}
+                  {%- if content.field_suffix -%}
+                    ,&nbsp;{{ content.field_suffix|field_value }}
+                  {%- endif -%}
                 {% endspaceless %}
               </h1>
 
@@ -35,7 +35,7 @@
               <p>
                 <a href="{{ content.field_org_url_1|field_value }}" class="profile-org">{{ content.field_org_name_1 }}</a>
                 {% if content.field_org_name_2|field_value %}
-                <a href="{{ content.field_org_url_2|field_value }}" class="profile-org">{{ content.field_org_name_2 }}</a>
+                  <a href="{{ content.field_org_url_2|field_value }}" class="profile-org">{{ content.field_org_name_2 }}</a>
                 {% endif %}
               </p>
               {% endif %}
@@ -44,15 +44,15 @@
               {% if content.field_campus|field_value or content.field_room_number|field_value %}
               <p>
                 {% if content.field_campus|field_value %}
-                {{ content.field_campus }}
+                  {{ content.field_campus }}
                 {% endif %}
 
                 {% if content.field_campus|field_value and content.field_room_number|field_value %}
-                |
+                  |
                 {% endif %}
 
                 {% if content.field_room_number|field_value %}
-                {{ content.field_room_number }}
+                  {{ content.field_room_number }}
                 {% endif %}
               </p>
               {% endif %}
@@ -61,17 +61,17 @@
               {% if content.field_phone_number|field_value or content.field_email_address|field_value %}
               <div class="profile-contact-info">
                 {% if content.field_phone_number|field_value %}
-                <div class="profile-contact-phone">{{ content.field_phone_number|field_value }}</div>
+                  <div class="profile-contact-phone">{{ content.field_phone_number|field_value }}</div>
                 {% endif %}
                 {% if content.field_phone_number|field_value and content.field_email_address|field_value %}
-                <span class="contact-divider">|</span>
+                  <span class="contact-divider">|</span>
                 {% endif %}
                 {% if content.field_email_address|field_value %}
-                <div class="profile-contact-email">
-                  <a href="mailto:{{ content.field_email_address|field_value }}">
-                    {{ content.field_email_address|field_value }}
-                  </a>
-                </div>
+                  <div class="profile-contact-email">
+                    <a href="mailto:{{ content.field_email_address|field_value }}">
+                      {{ content.field_email_address|field_value }}
+                    </a>
+                  </div>
                 {% endif %}
               </div>
               {% endif %}
@@ -107,12 +107,18 @@
 
         <div id="cgvBody">
           {{ content.body }}
+
+          {# TODO: replace placeholder below with customizable content #}
+          <div class="press-contact">
+            <h2>Press Contacts</h2>
+            <p>To request an interview with NCI researchers, contact the NCI Office of Media Relations.</p>
+              <a href="mailto:ncipressofficers@mail.nih.gov" class="press-contact-email">ncipressofficers@mail.nih.gov</a>
+              <div class="press-contact-phone">240-760-6600</div>
+          </div>
         </div>
 
-        {# TODO: Article footer stuff has to go somewhere. TBD. #}
         <footer class="article-footer">
           {{ content.field_related_resources }}
-          {{ contentPageMacros.pressContact(node, content) }}
         </footer>
     </div>
 </article>
