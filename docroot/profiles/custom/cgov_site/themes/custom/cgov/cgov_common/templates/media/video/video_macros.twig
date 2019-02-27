@@ -5,9 +5,10 @@
  */
 #}
 
-{% macro video(name, content) %}
-  {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
+{% macro video(content) %}
+  {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and content.name|field_value %}
   {% if hasRequiredBaseFields %}
+    {% set name = content.name %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
     <figure class="video">
       <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
