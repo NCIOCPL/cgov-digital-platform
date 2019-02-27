@@ -15,6 +15,10 @@ const injectIFrame = (videoHook, videoSource) => {
       const iFrames = iFrameContainer.getElementsByTagName('iframe');
       const iFrame = iFrames[0];
       if(iFrame){
+        // We need to append this so that the video in the iFrame begins playing
+        // instantaneously, keeping up the illusion that the preview video was
+        // the real thing.
+        iFrame.src += "&autoplay=1";
         videoHook.innerHTML = ''; // Wipe out Play button and Thumbnail and Title
         videoHook.appendChild(iFrame);
         iFrame.focus();
