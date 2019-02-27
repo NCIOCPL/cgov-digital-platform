@@ -46,6 +46,30 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
 }
 
 /**
+ * Implements hook_ENTITY_insert().
+ *
+ * Perform any actions that are required when adding a new language.
+ * During the install process, only EN is enabled, so use this hook
+ * to add any other translations or other things needed by a new
+ * language when it gets enabled.
+ */
+function cgov_core_configurable_language_insert($entity) {
+  $langcode = $entity->id();
+
+  $query = \Drupal::entityQuery('block_content');
+  $query->condition('info', 'Public Use')
+    ->condition('langcode', 'en');
+  $result = $query->execute();
+  $eid = array_shift($result);
+  $block = entity_load('block_content', $eid);
+  $title = $block->info->value . " - " . $langcode;
+  $block_translated = $block->addTranslation('es', ['info' => $title]);
+  $block_translated->save();
+
+  drupal_set_message("Added block_content: $title");
+}
+
+/**
  * Implements hook_node_access().
  */
 function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {

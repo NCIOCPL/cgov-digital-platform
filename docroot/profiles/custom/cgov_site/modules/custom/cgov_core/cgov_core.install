@@ -23,9 +23,6 @@ function cgov_core_themes_installed() {
   $block_html = <<<EOMarkup
 If you would like to reproduce some or all of this content, see Reuse of NCI Information for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title].”
 EOMarkup;
-  $block_html_es = <<<EOMarkup
-SPANISH: If you would like to reproduce some or all of this content, see Reuse of NCI Information for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title].”
-EOMarkup;
 
   // Create block content.
   $block_content = BlockContent::create([
@@ -35,14 +32,6 @@ EOMarkup;
     'body' => ['value' => $block_html, 'format' => 'streamlined'],
   ]);
   $block_content->save();
-
-  // Create block content translation.
-  if (FALSE) {
-    $block_content_es = $block_content->addTranslation('es', [
-      'body' => ['value' => $block_html_es, 'format' => 'streamlined'],
-    ]);
-    $block_content_es->save();
-  }
 
   // Assign block to Region.
   $data = [
