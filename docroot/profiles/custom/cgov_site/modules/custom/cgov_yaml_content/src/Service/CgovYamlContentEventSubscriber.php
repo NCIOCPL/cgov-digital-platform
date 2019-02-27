@@ -4,12 +4,14 @@ namespace Drupal\cgov_yaml_content\Service;
 
 use Drupal\yaml_content\Event\YamlContentEvents;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
+use Drupal\yaml_content\Event\EntityPreSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Utility\Token;
 use Drupal\Core\TypedData\Exception\MissingDataException;
@@ -50,6 +52,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $token;
 
   /**
+   * Drupal Event Dispatcher.
+   *
+   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
+   */
+  protected $eventDispatcher;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
@@ -60,17 +69,21 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Drupal Entity Type Manager.
    * @param \Drupal\Core\Utility\Token $token
    *   Drupal token service.
+   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+   *   Drupal Event Dispatcher.
    */
   public function __construct(
     ThemeManagerInterface $themeManager,
     QueryFactory $entityQueryFactory,
     EntityTypeManagerInterface $entityTypeManager,
-    Token $token
+    Token $token,
+    ContainerAwareEventDispatcher $dispatcher
     ) {
     $this->themeManager = $themeManager;
     $this->entityQueryFactory = $entityQueryFactory;
     $this->entityTypeManager = $entityTypeManager;
     $this->token = $token;
+    $this->eventDispatcher = $dispatcher;
   }
 
   /**
@@ -406,6 +419,12 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $spanishTranslation->{$fieldName} = $fieldValue;
     }
     $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+
+    // Raise the preSave event so that other subscribers can modify
+    // the entity before saving.
+    $entity_pre_save_event = new EntityPreSaveEvent($event->getContentLoader(), $spanishTranslation, $yamlContent);
+    $this->eventDispatcher->dispatch(YamlContentEvents::ENTITY_PRE_SAVE, $entity_pre_save_event);
+
     // We need to discreetly save the translation to trigger pathauto
     // url alias building.
     $spanishTranslation->save();
