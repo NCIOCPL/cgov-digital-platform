@@ -42,6 +42,10 @@ export const lang = {
         en: 'On This Page',
         es: 'En Esta Página'
     },
+    InThisSection: {
+        en: 'In This Section',
+        es: 'En esta sección'
+    },
     Search: {
         en: 'Search',
         es: 'Buscar'
