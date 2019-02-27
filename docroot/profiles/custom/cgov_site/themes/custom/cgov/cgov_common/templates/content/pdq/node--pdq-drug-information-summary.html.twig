@@ -8,23 +8,7 @@
         <h1>{{- node.label -}}</h1>
         {{ drupal_block('page_options') }}
         <div id="cgvBody">
-            <div class="summary-sections">
-                {% if content.field_summary_sections|length > 0 %}
-                <nav class="on-this-page" role="navigation">
-                    <h6>{% trans %}On This Page{% endtrans %}</h6>
-                    <ul>
-                      {% for key, item in sectionData %}
-                        <li>
-                          <a href="#{{- item.id -}}">{{- item.title  -}}</a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                </nav>
-                {% endif %}
-                <div class="accordion">
-                    {{ content.field_summary_sections }}
-                </div>
-            </div>
+          {{ content.body }}
         </div>
     </div>
 
