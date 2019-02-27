@@ -5,16 +5,17 @@
  */
 #}
 
-{% macro video(content, showCaption = false , showTitle = false, additionalClasses = "") %}
-  {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and content.name|field_value %}
+{% macro video(name, content, additionalClasses = "") %}
+  {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
   {% if hasRequiredBaseFields %}
-    {% set title = content.name %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
     <figure class="{{'video ' ~ additionalClasses}}">
-      {% if showTitle %}
-        <p tabindex="0" class="title">{{ title }}</p>
+      {# Check whether the active video display mode has explicitly set the 'name' as an available field #}
+      {% set hasTitle = content.name %}
+      {% if hasTitle %}
+        <p tabindex="0" class="title">{{ name }}</p>
       {% endif %}
-      <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ title }}">
+      <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
         <div class="video-preview--container" tabindex="0">
           {% set hasThumbnail = content.thumbnail|field_value %}
           {% if hasThumbnail %}
@@ -26,7 +27,7 @@
               <path d="M 45,24 27,14 27,34" fill="#fff"></path>
             </svg>
           </div>
-          <p>{{ title }}</p>
+          <p>{{ name }}</p>
         </div>
       </div>
       {% set hasCaption = content.field_caption|field_value %}
