@@ -159,7 +159,7 @@ class CgovBlogArchive extends BlockBase implements ContainerFactoryPluginInterfa
     $query = $this->entityQuery->get('node');
     $query->condition('status', 1);
     $query->condition('type', $content_type);
-    $query->sort('field_date_posted');
+    $query->sort('field_date_posted', 'DESC');
     $entity_ids = $query->execute();
 
     // Create series filter.
@@ -195,7 +195,6 @@ class CgovBlogArchive extends BlockBase implements ContainerFactoryPluginInterfa
   private function drawArchiveByYear($cid, $content_type) {
     // Get an array of blog field collections to populate links.
     $blog_links = $this->getMonthsYears($cid, $content_type);
-    ksm($blog_links);
 
     // Open Blog Post pagination div.
     $markup = "<div id='cgov-blog-post-pagination>";
@@ -206,8 +205,9 @@ class CgovBlogArchive extends BlockBase implements ContainerFactoryPluginInterfa
     }
 
     $markup .= "<ul>";
-    foreach ($year_links as $year) {
-      $markup .= '<li>' . $year . '</li>';
+    $year_counts = array_count_values($year_links);
+    foreach ($year_counts as $key => $year) {
+      $markup .= '<li>' . $key . ' i hate php ' . $year . '</li>';
     }
 
     $markup .= "</ul>";
