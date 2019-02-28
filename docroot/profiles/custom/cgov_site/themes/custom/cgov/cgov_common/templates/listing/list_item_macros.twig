@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying list items.
+ */
+#}
+
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+
+{% macro listItem(title, date, description, image, url, view_mode) %}
+  <li class="general-list-item general list-item">
+    {% if 'image' in view_mode %}
+      <div class="list-item-image image container">
+				<a class="item-image image" href="{{ url }}">
+          {{ image }}
+			  </a>
+      </div>
+    {% endif %}
+    <div class="title-and-desc title desc container">
+      <a class="title" href="{{ url }}">
+        {{ title }}, {{ view_mode }}
+      </a>
+      {% if 'desc' in view_mode or 'date' in view_mode and (description or date) %}
+      <div class="description">
+        {% if 'date' in view_mode and date %}
+          <div class="date">{{ date }}</div>
+        {% endif %}
+        {% if description %}
+          <p class="body"> {{ description }}</p>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </li>
+{% endmacro %}
