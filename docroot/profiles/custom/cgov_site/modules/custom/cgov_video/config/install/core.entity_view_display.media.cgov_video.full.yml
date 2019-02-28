@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.full
     - field.field.media.cgov_video.field_body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
@@ -25,61 +26,34 @@ dependencies:
     - media
     - options
     - text
-    - user
-id: media.cgov_video.default
+id: media.cgov_video.full
 targetEntityType: media
 bundle: cgov_video
-mode: default
+mode: full
 content:
-  created:
-    label: hidden
-    type: timestamp
-    weight: 0
-    region: content
-    settings:
-      date_format: medium
-      custom_date_format: ''
-      timezone: ''
-    third_party_settings: {  }
   field_body:
-    weight: 16
+    weight: 3
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
-    region: content
-  field_browser_title:
-    weight: 9
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
     region: content
   field_caption:
-    weight: 13
+    weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_card_title:
-    weight: 10
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_date_display_mode:
-    weight: 21
+    weight: 7
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
-    weight: 17
+    weight: 4
     label: hidden
     settings:
       timezone_override: ''
@@ -89,7 +63,7 @@ content:
     type: cgov_date_formatter
     region: content
   field_date_reviewed:
-    weight: 19
+    weight: 5
     label: hidden
     settings:
       timezone_override: ''
@@ -99,7 +73,7 @@ content:
     type: cgov_date_formatter
     region: content
   field_date_updated:
-    weight: 20
+    weight: 6
     label: hidden
     settings:
       timezone_override: ''
@@ -108,71 +82,35 @@ content:
     third_party_settings: {  }
     type: cgov_date_formatter
     region: content
-  field_feature_card_description:
-    weight: 11
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_list_description:
-    weight: 22
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
   field_media_oembed_video:
     type: oembed
-    weight: 6
+    weight: 1
     label: hidden
     settings:
       max_width: 0
       max_height: 0
     third_party_settings: {  }
     region: content
-  field_pretty_url:
-    weight: 12
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_short_title:
-    weight: 8
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_site_section:
-    weight: 15
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   thumbnail:
     type: image
-    weight: 5
+    weight: 0
     label: hidden
     settings:
       image_style: ''
       image_link: ''
     region: content
     third_party_settings: {  }
-  uid:
-    label: hidden
-    type: author
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  created: true
+  field_browser_title: true
+  field_card_title: true
+  field_feature_card_description: true
+  field_list_description: true
   field_original_source: true
   field_page_title: true
+  field_pretty_url: true
+  field_short_title: true
+  field_site_section: true
   langcode: true
   name: true
+  uid: true
