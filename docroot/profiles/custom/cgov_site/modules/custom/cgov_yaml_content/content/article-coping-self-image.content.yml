@@ -1,0 +1,550 @@
+### TESTS:
+# On this page
+# Separate media items for article image
+# TBD Embedded Images
+# TBD Pull Quotes
+
+# Content items must be defined before they can be referenced by other content items
+# (e.g. image and link tags). This file contains:
+#   Two imagess.
+#   Two placeholder articles.
+# The actual test document begins at line 190.
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "sad woman"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'sad-woman-article.jpg'
+      alt: 'sad woman'
+  field_credit: 'National Cancer Institute'
+- entity: "media"
+  bundle: "cgov_image"
+  name: "woman-in-wig-looking-in-mirror-article"
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'woman-in-wig-looking-in-mirror-article.jpg'
+      alt: 'Una mujer se prueba una peluca frente a un espejo de mano.'
+
+# This is the first of two placeholder articles.
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Sexual Health Issues in Men with Cancer"
+  title__ES:
+      value: "Problemas de salud sexual en hombres con cáncer"
+  field_page_description:
+    value: "This page is a placeholder."
+  field_page_description__ES:
+    value: "Esta página es un marcador de posición."
+  field_short_title:
+    value: Sexual Health Issues in Men with Cancer"
+  field_short_title__ES:
+    value: "Problemas de salud sexual en hombres con cáncer"
+  field_browser_title:
+    value: "Placeholder"
+  field_browser_title_ES:
+    value: "Hacer frente - Marcador de posición"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping/self-image'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar/imagen-propia'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+            <p>This page is a placeholder.</p>
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+            <p>Esta página es un marcador de posición.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Placeholder"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>This page is a placeholder.</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Marcador de posición"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Esta página es un marcador de posición.</p>
+  field_date_posted:
+    value: "2019-04-01"
+  field_date_reviewed:
+    value: "2019-04-01"
+  field_date_updated:
+    value: "2019-04-01"
+  field_date_display_mode:
+    - value: 'updated'
+
+# This is the second of two placeholder articles.
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Sexual Health Issues in Women with Cancer"
+  title__ES:
+      value: "Problemas de salud sexual en mujeres con cáncer"
+  field_page_description:
+    value: "This page is a placeholder."
+  field_page_description__ES:
+    value: "Esta página es un marcador de posición."
+  field_short_title:
+    value: Sexual Health Issues in Women with Cancer"
+  field_short_title__ES:
+    value: "Problemas de salud sexual en mujeres con cáncer"
+  field_browser_title:
+    value: "Placeholder"
+  field_browser_title_ES:
+    value: "Hacer frente - Marcador de posición"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping/self-image'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar/imagen-propia'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+            <p>This page is a placeholder.</p>
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+            <p>Esta página es un marcador de posición.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Placeholder"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>This page is a placeholder.</p>
+
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Marcador de posición"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Esta página es un marcador de posición.</p>
+
+  field_date_posted:
+    value: "2019-04-01"
+  field_date_reviewed:
+    value: "2019-04-01"
+  field_date_updated:
+    value: "2019-04-01"
+  field_date_display_mode:
+    - value: 'updated'
+
+# Begin the actual article.
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Self-Image and Sexuality"
+  title__ES:
+      value: "Su imagen propia y su sexualidad"
+  field_page_description:
+    value: "Cancer and its treatment can affect how you look and feel about yourself and your body. There are steps you can take to cope with body changes and issues related to sexuality and intimacy."
+  field_page_description__ES:
+    value: "Cómo hacer frente a la manera en que el cáncer y su tratamiento pueden cambiar la forma como usted se ve y se siente."
+  field_short_title:
+    value: Self-Image and Sexuality"
+  field_short_title__ES:
+    value: "Su imagen propia y su sexualidad"
+  field_browser_title:
+    value: "Self-Image, Sexuality, and Cancer"
+  field_browser_title_ES:
+    value: "Hacer frente - Su imagen propia y su sexualidad"
+## This is the default URL
+#  field_pretty_url:
+#    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping/self-image'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar/imagen-propia'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'sad woman'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'woman-in-wig-looking-in-mirror-article'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+        <p>Each of us has a mental picture of how we look, our "self-image." Although we may not always like how we look, we're used to our self-image and accept it. But cancer and its treatment can change how you look and feel about yourself. Know you aren't alone in how you feel. Many others have similar feelings.</p>
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+        <p>Cada uno de nosotros tiene una imagen mental de cómo nos vemos; es decir, tenemos nuestra "propia imagen". Aunque no siempre nos gusta cómo nos vemos, estamos acostumbrados a nuestra imagen propia y la aceptamos. Sin embargo, el cáncer y su tratamiento pueden cambiar la forma cómo nos vemos y cómo nos sentimos. Sepa que usted no está solo en la forma cómo se siente. Muchas otras personas tienen sentimientos similares.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Body Changes during and after Treatment"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Some body changes are short-term while others will last forever. Either way, your looks may be a big concern during or after treatment. For example, people with ostomies after colon or rectal surgery are sometimes afraid to go out. They worry about carrying equipment around or fear that it may leak. Some may feel ashamed or afraid that others will reject them.</p>
+            <p>Every person changes in different ways. Some will be noticeable to other people, but some changes only you will notice. For some of these you may need time to adjust. Issues you may face include:</p>
+            <ul>
+            <li>Hair loss or skin changes</li>
+            <li>Scars or changes in the way you look caused by surgery</li>
+            <li>Weight changes</li>
+            <li>Loss of limbs</li>
+            <li>Ostomy</li>
+            <li>Loss of fertility, which means it can be hard to get pregnant or father a child</li>
+            </ul>
+            <p>Even if others can't see them, your body changes may trouble you. Feelings of anger and grief about changes in your body are natural. Feeling bad about your body can also lower your sex drive. This loss may make you feel even worse about yourself.</p>
+            <p>Changes in the way you look can also be hard for your loved ones, which in turn, can be hard on you. For example, parents and grandparents often worry about how they look to a child or grandchild. They fear that changes in their appearance may scare the child or get in the way of their staying close.</p>
+            <h3>Coping with Body Changes</h3>
+            <p>How do you cope with body changes?</p>
+            <ul>
+            <li>Mourn your losses and know it's okay to feel sad, angry, and frustrated.&nbsp;Your feelings&nbsp;are real, and you have a right to grieve.</li>
+            <li>Try to focus on the ways that coping with cancer has made you stronger, wiser, and more realistic.</li>
+            <li>If your skin has changed from radiation, ask your doctor about ways you can care for it.</li>
+            <li>Look for new ways to enhance your appearance. A new haircut, hair color, makeup, or clothing may give you a lift. If you're wearing a wig, you can take it to a hairdresser to shape and style.</li>
+            <li>Talk to other patients for advice.</li>
+            <li>If you choose to wear a breast form (prosthesis), make sure it fits you well. Don't be afraid to ask the clerk or someone close to you for help. And check your health insurance plan to see if it will pay for it.</li>
+            </ul>
+            <p>Coping with these changes can be hard. But, over time, most people learn to adjust to them and move forward. See our&nbsp;<a href="https://www.cancer.gov/about-cancer/coping">Coping with Cancer</a> pages for more tips.&nbsp;If you need to, ask your doctor to suggest a counselor who you can talk with about your feelings.</p>
+            <h3>Staying Active</h3>
+            <p>Many people find that staying active can help their self-image. Some things you can try are:</p>
+            <ul>
+            <li>Walking or running</li>
+            <li>Swimming</li>
+            <li>Playing a sport</li>
+            <li>Taking an exercise class</li>
+            <li>Weight training</li>
+            <li>Stretching or yoga</li>
+            </ul>
+            <p>You may find that being active helps you cope with changes. It can reduce your stress and help you relax. It may also help you to feel stronger and more in control of your body. Start slowly if you need to and take your time. If needed, ask a trainer at your local gym or a physical therapist for tips. Talk with your doctor about ways you can stay active.</p>
+            <p>Hobbies and volunteer work can also help improve your self-image and self-esteem. You may like to read, listen to music, do crossword or other kinds of puzzles, garden or landscape, or write a blog, just to name a few.&nbsp;Or you could volunteer at a church or a local agency, or become a mentor or tutor, for example.&nbsp;You may find that you feel better about yourself when you get involved in helping others and doing things you enjoy.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Changes in Your Sex Life"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>It's common for people to have problems with sex because of cancer and its treatment. When your treatment is over, you may feel like having sex&nbsp;again, but it may take some time. Sexual problems can last longer than other side effects of cancer treatment. It's important to seek help in learning how to adapt to these changes.</p>
+            <p>Until then, you and your spouse or partner may need to find new ways to show that you care about each other. This can include touching, holding, hugging, and cuddling.</p>
+            <h3>Treatment-Related Problems</h3>
+            <p>Sexual problems are often caused by changes to your body. Depending on the cancer you had, you may have short-term or long-term problems with sex after treatment. These changes result from chemotherapy, radiation, surgery, or certain medicines. Sometimes emotional issues such as anxiety, depression, worry, and stress may cause problems with sex.</p>
+            <p>What types of problems occur? Common concerns are:</p>
+            <ul>
+            <li><strong>Worries about intimacy after treatment</strong>. Some may struggle with their body image after treatment. Even thinking about being seen without clothes may be stressful. People may worry that having sex will hurt or that they won't be able to perform or will feel less attractive. Pain, loss of interest, depression, or cancer medicines can also affect sex drive.</li>
+            <li><strong>Not being able to have sex as you did before.</strong> Some cancer treatments cause changes in sex organs that also change your sex life.
+            <ul>
+            <li>Some men can no longer get or keep an erection after treatment for prostate cancer, cancer of the penis, or cancer of the testes. Some treatments can also weaken a man's orgasm or make it dry. Less common problems include being unable to ejaculate or ejaculation going backward into the bladder.</li>
+            <li>After cancer treatment, some women find it harder, or even painful, to have sex. While some cancer treatments can cause these problems,&nbsp;there may be no clear cause. Some women also have pain or numbness in their genital area.</li>
+            </ul>
+            </li>
+            <li><strong>Having menopause symptoms.</strong> When women stop getting their periods, they can get hot flashes, dryness or tightness in the vagina, and/or other problems that can affect their desire to have sex.</li>
+            <li><strong>Losing the ability to have children</strong>. Some cancer treatments can cause infertility, making it impossible for cancer survivors to have children. But keep in mind that:
+            <ul>
+            <li>Depending on your age, the type of treatment you received, and the length of time since treatment, you may still be able to have children.</li>
+            <li>Families can come together in many ways. Some people choose adoption or surrogacy. Some people get involved in the lives of nieces or nephews, or in child mentoring programs.</li>
+            <li>You may choose to focus on other interests and passions in life.</li>
+            <li>You can reach out to your health care team with questions or concerns, as well as to professionally led <a href="https://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45917">support groups. </a>Or you can contact <a href="https://www.livestrong.org/we-can-help/livestrong-fertility">LIVESTRONG Fertility</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> for more information, and for referrals to fertility programs in the United States.</li>
+            </ul>
+            </li>
+            </ul>
+            <h3>Ask for Help</h3>
+            <p>Even though you may feel awkward, let your doctor or nurse know if you're having problems with intimacy or sex. There may be treatments or other ways you and your loved one can give each other pleasure. If your doctor can't talk with you about sexual problems, ask for the name of a doctor who can. Some people also find it helpful to talk with other couples.</p>
+            <p>Sexual problems may not always get better on their own. Sometimes there can be an underlying medical problem that causes&nbsp;changes.&nbsp;Common&nbsp;changes&nbsp;and some solutions are:</p>
+            <ul>
+            <li><strong>Erection problems</strong>. Medicine, assistive devices, counseling, surgery, or other approaches may help.</li>
+            <li><strong>Vaginal dryness</strong>. Dryness or tightness in the vagina can be caused by menopause. Ask whether using a water-based lubricant during sex, using vaginal dilators before sex, and/or taking hormones or using a hormone cream are options for you.</li>
+            <li><strong>Muscle weakness</strong>. You can help strengthen muscles in your genital area by doing <b>Kegel</b> exercises. This is when you practice controlling your muscles to stop the flow of urine. You can do these exercises even when you are not urinating. Just tighten and relax the muscles as you sit, stand, or go about your day.</li>
+            </ul>
+            <p>Other issues you may want to talk about include:</p>
+            <ul>
+            <li><strong>Concerns about having children.</strong> Discuss family planning concerns with your doctor. If you're a woman, ask if you still need to use birth control, even if you are not getting your period.</li>
+            <li><strong>Talking with a counselor</strong>. Some people find that sexual problems related to cancer start to strain their relationship with their partner. If this is the case, ask a nurse or social worker if you can talk to a counselor. Talking to someone alone, or with your partner, may help.</li>
+            <li><strong>Seeing a specialist. A sex therapist may</strong> be able to help you talk openly about your problems, work through your concerns, and come up with new ways to help you and your partner.</li>
+            </ul>
+            <h3>Tell Your Partner How You Feel</h3>
+            <p>Talking to your loved one and sharing your feelings and concerns is very important. Even for a couple that has been together a long time, it can be hard to stay connected.</p>
+            <p>Let your partner know if you want to have sex or would rather just hug, kiss, and cuddle. He or she may be afraid to have sex with you. Or your partner may be worried about hurting you or think that you're not feeling well.</p>
+            <p>Talk to your partner about any concerns you have about your sex life. Be open about your feelings and stay positive to avoid blame.</p>
+            <h3>Finding Ways to Be Intimate</h3>
+            <p>You can still have an intimate relationship in spite of cancer. Intimacy isn't just physical. It also involves feelings. Here are some ways to improve your intimate relationship:</p>
+            <ul>
+            <li>Focus on just talking and renewing your connection.</li>
+            <li>Protect your time together. Turn off the phone and TV. If needed, find someone to take care of the kids for a few hours.</li>
+            <li>Take it slow. Plan an hour or so to be together without being physical. For example, you may want to listen to music or take a walk.</li>
+            <li>Try new touch. Cancer treatment or surgery can change a patient's body. Areas where touch used to feel good may now be numb or painful. Some of these changes will go away. Some will stay. For now, you can figure out together what kinds of touch feel good, such as holding, hugging, and cuddling.</li>
+            </ul>
+            <h3>Feeling Intimate after Treatment</h3>
+            <p>Although cancer treatment may be over, sexual problems may remain for a while. But you can find other ways to show that you care about each other. Feeling close to your partner is important.</p>
+            <ul>
+            <li>Be proud of your body. It got you through treatment!</li>
+            <li>Think of things that help you feel more attractive and confident.</li>
+            <li>Focus on the positive. Try to be aware of your thoughts, since they can affect your sex life.</li>
+            <li>Be open to change. You may find new ways to enjoy intimacy.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Dating"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>If you're single, body changes and concerns about sex can affect how you feel about dating. As you struggle to accept the changes yourself, you may also worry about how others will feel. For example, you may wonder how someone will react to physical things, such as hair loss, scars or ostomies. Or it can feel awkward to bring up sexual problems or loss of fertility, which can make feeling close even harder.</p>
+            <p>Starting to date again&nbsp;may feel like a challenge. You may wonder how and when to tell a new person in your life about your cancer and body changes. For some cancer survivors, the fear of being rejected keeps them from seeking the social life they would like to have. Others who choose not to date may face pressure from friends or family to be more sociable. Here are some ideas that can make it easier to get back into social situations:</p>
+            <ul>
+            <li>Focus on activities that you have time to enjoy, such as going to festivals and group outings, taking classes or joining a club.</li>
+            <li>Try not to let cancer be an excuse for not dating and trying to meet people.</li>
+            <li>Wait until you feel a sense of trust and friendship before telling a new date about your cancer.</li>
+            <li>Talk to your friends about dating or get advice from other cancer survivors.</li>
+            </ul>
+            <p>Think about dating as a learning process with the goal of having a social life you enjoy. You get to choose who or how often you date. And not every date has to be perfect. If some people reject you (which can happen with or without cancer), you have not failed. Try to remember that not all dates worked out before you had cancer. And perhaps, your cancer experience gives you a sense of purpose and appreciation for a relationship that you didn't have before.</p>
+
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Los cambios en el cuerpo durante y después del tratamiento"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Algunos cambios en el cuerpo duran poco tiempo,&nbsp;mientras que otros&nbsp;se quedan&nbsp;para siempre. De todas maneras, su apariencia puede ser una gran preocupación durante o después del tratamiento. Por ejemplo, las personas con ostomías después de una cirugía de colon o de recto a veces temen salir a la calle. Les preocupa llevar un&nbsp;aparato a todos partes o temen que&nbsp;pueda gotear. Algunos pueden sentir vergüenza&nbsp;o temer que otras personas les rechacen.</p>
+            <p>Cada persona cambia de diferentes maneras. Algunos cambios los pueden notar los demás, otros cambios solo usted los podrá notar. Quizás necesite tiempo para adaptarse a algunos de estos cambios. Otras situaciones a las que podría enfrentarse son:</p>
+            <ul>
+            <li>Caída del pelo o cambios en la piel</li>
+            <li>Cicatrices o cambios causados por la cirugía y su efecto en la forma como se ve</li>
+            <li>Cambios en el peso</li>
+            <li>Pérdida de las extremidades</li>
+            <li>Pérdida de la <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046399&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046399&amp;version=Patient&amp;language=Spanish">fecundidad</a>, lo que significa que puede ser difícil quedar embarazada o engendrar un hijo</li>
+            </ul>
+            <p>Aunque los demás no puedan verlos, los cambios en su cuerpo pueden molestarle. Los sentimientos de enojo y tristeza por los cambios en su cuerpo son normales. Sentirse mal con su cuerpo también puede hacer que disminuya su deseo sexual. Esto puede hacer que se sienta todavía peor.</p>
+            <p>Los cambios en la manera en que se ve también pueden resultar difíciles para sus seres queridos, y&nbsp;puede ser difícil para usted. Por ejemplo, los padres y abuelos a menudo se preocupan por la forma en que sus hijos o nietos los ven. Temen que los cambios en su apariencia puedan asustar al niño o ser un obstáculo para que ellos se acerquen.</p>
+            <h3>Superación de&nbsp;los cambios en el cuerpo</h3>
+            <p>¿Cómo superar&nbsp;los cambios corporales?</p>
+            <ul>
+            <li>Lamente lo que ha perdido. Es&nbsp;real y usted tiene derecho a afligirse.</li>
+            <li>Trate de concentrarse en que usted ha&nbsp;superado el cáncer y esto le ha hecho más fuerte; ahora sabe más y es más&nbsp;realista.</li>
+            <li>Si nota que su&nbsp;piel&nbsp;ha cambiado por&nbsp;la radiación, pregunte a su médico lo que puede hacer para cuidarla.</li>
+            <li>Busque nuevas formas de mejorar su apariencia. Un nuevo corte de pelo, color de cabello, maquillaje o ropa que puedan levantarle el ánimo. Si usa&nbsp;una peluca, llévela&nbsp;al peluquero para que le dé forma y estilo.</li>
+            <li>Si prefiere&nbsp;usar una prótesis para el seno, asegúrese de que le quede bien. No tenga miedo de pedir ayuda en la tienda de pelucas&nbsp;o a algún conocido. Y consulte con su plan de seguro médico para ver si cubren la peluca.</li>
+            </ul>
+            <p>Superar&nbsp;estos cambios puede ser difícil. Pero, con el tiempo, la mayoría de las personas aprenden a aceptarlos y a seguir adelante. Si lo necesita, pida a su médico que le recomiende a&nbsp;un consejero para hablar de sus sentimientos.</p>
+            <h3>Mantener la actividad</h3>
+            <p>Muchas personas se dan cuenta de que su imagen propia se puede beneficiar si se mantienen activas.</p>
+            <p>Esto es lo que puede hacer:</p>
+            <ul>
+            <li>Caminar o correr</li>
+            <li>Nadar</li>
+            <li>Andar en bicicleta</li>
+            <li>Jugar un deporte</li>
+            <li>Tomar una clase de ejercicios</li>
+            <li>Estirarse o hacer yoga</li>
+            </ul>
+            <p>Puede darse cuenta de que&nbsp;si mantiene&nbsp;la actividad podrá&nbsp;superar mejor&nbsp;los cambios. Esto puede reducir su tensión y ayudarle a relajarse. Puede ayudarle a sentirse más fuerte y a tener más control de su cuerpo. Empiece poco a poco si es necesario y tómese su tiempo. Hable con su médico acerca de la forma de mantener la actividad.</p>
+            <p>Los pasatiempos y el trabajo voluntario pueden ayudarle también a mejorar su propia imagen y su amor propio. Tal vez le guste leer, escuchar música,&nbsp;completar crucigramas o algún otro tipo de rompecabezas, como trabajo en el jardín o escribir. O usted puede ofrecer trabajo voluntario en una iglesia o en una oficina local, o&nbsp;sevir de mentor o tutor, por ejemplo. Puede darse cuenta de que se siente mejor cuando ayuda a otros y&nbsp;hace lo que disfruta.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Los cambios en su vida sexual"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Es normal que la gente tenga problemas con el sexo debido al cáncer y a su tratamiento. Pero, al terminar&nbsp;su tratamiento, puede sentir ganas de tener relaciones sexuales nuevamente, aunque puede necesitar un poco de tiempo. Los problemas sexuales pueden durar más que los otros efectos secundarios físicos del tratamiento de cáncer. Por esto es importante buscar ayuda para saber cómo adaptarse a estos cambios.</p>
+            <p>Hasta entonces, es posible que usted y su cónyuge o pareja sientan la necesidad de encontrar nuevas formas de demostrarse cariño. Esto puede ser tocarse, tomarse de la mano, abrazarse o acariciarse.</p>
+            <h3>Problemas relacionados con el tratamiento</h3>
+            <p>A menudo los problemas sexuales son causados por cambios en su cuerpo. Dependiendo de su&nbsp;cáncer, es posible que experimente problemas con el sexo a corto o a largo plazo después del tratamiento. Estos cambios resultan de la quimioterapia, de&nbsp;la radiación, la cirugía o de determinados medicamentos. A veces los problemas emocionales como la ansiedad, la depresión, las preocupaciones y la tensión&nbsp;pueden afectar el&nbsp;sexo.</p>
+            <p>¿Cuáles&nbsp;problemas pueden presentarse? Algunas inquietudes comunes son:</p>
+            <ul>
+            <li><b>Preocupación de&nbsp;tener&nbsp;intimidad después&nbsp;del tratamiento.</b> Algunas personas pueden luchar con la&nbsp;imagen de su cuerpo&nbsp;después del tratamiento. Aun el pensamiento de verse sin ropa puede ser estresante. Pueden preocuparse de que las&nbsp;relaciones sexuales les causen dolor&nbsp;o que no podrán desempeñarse bien o&nbsp;se sentirán sin atracción</li>
+            <li><b>Cambios en la vida sexual.</b> Algunos tratamientos del cáncer causan cambios en los órganos sexuales, lo que también cambia la vida sexual.
+            <ul>
+            <li>Algunos hombres ya no pueden tener o mantener una erección después del tratamiento para el cáncer de próstata, para cáncer de pene o cáncer de los testículos. Algunos tratamientos&nbsp;pueden también&nbsp;debilitar el orgasmo del&nbsp;hombre o que tenga&nbsp;orgasmos secos. Los problemas menos comunes puede ser la dificultad para&nbsp;eyacular o que la eyaculación se regrese a la vejiga.&nbsp;</li>
+            <li>A algunas mujeres les resulta más difícil, e incluso doloroso, tener sexo después del tratamiento del cáncer. Algunos tratamientos del cáncer pueden causar estos problemas, pero la causa puede no ser clara. Algunas mujeres tienen también dolor o entumecimiento en su&nbsp;área&nbsp;genital.</li>
+            </ul>
+            </li>
+            <li><b>Síntomas de&nbsp;menopausia.</b> Cuando las mujeres dejan de tener sus períodos, pueden experimentar sofocos, sequedad o rigidez en la vagina u otros problemas que pueden afectar su deseo de tener relaciones sexuales.</li>
+            <li><b>Incapacidad para tener hijos.</b> Algunos tratamientos para el cáncer pueden causar la infecundidad, lo que hace imposible tener hijos para los supervivientes de cáncer. Pero tenga en cuenta que:
+            <ul>
+            <li>Dependiendo de su edad, del tipo de tratamiento que recibió y del tiempo que ha pasado desde el tratamiento, usted puede todavía tener hijos.</li>
+            <li>Las familias pueden formarse de muchas maneras. Algunas personas eligen adoptar o tener hijos por sustitución. Otras personas comparten las vidas de sobrinas o sobrinos, o en programas de educación de niños.</li>
+            <li>Usted podría elegir enfocarse en lo que le interesa o apasiona en la vida.</li>
+            <li>Puede acudir a su equipo de atención médica con preguntas o preocupaciones, así como a <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045917&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045917&amp;version=Patient&amp;language=Spanish">grupos de apoyo</a> dirigidos por profesionales. O&nbsp;puede ponerse en contacto con <a href="https://www.livestrong.org/we-can-help/livestrong-fertility">LIVESTRONG Fertility</a><a class="icon-exit-notification" title="Notificación de salida" href="/espanol/politicas/enlaces"><span class="hidden">Notificación de salida</span></a> para obtener más información y para recomendaciones&nbsp;de programas de fecundidad en los Estados Unidos.</li>
+            </ul>
+            </li>
+            </ul>
+            <h3>Pida ayuda</h3>
+            <p>Aunque pueda sentir incomodidad, haga saber a su médico o a su enfermera si está teniendo problemas. Puede haber medicamentos o algunas&nbsp;otras formas para que usted&nbsp;y su ser querido puedan darse placer mutuo. Si su médico no puede hablar con usted sobre problemas sexuales, pida el nombre del&nbsp;médico que pueda hacerlo. A algunas personas les resulta útil también hablar con otras parejas.</p>
+            <p>Los problemas sexuales no siempre pueden&nbsp;mejorar por sí solos. A veces puede haber un problema médico subyacente que cause cambios. Los cambios comunes y algunas soluciones son:</p>
+            <ul>
+            <li><b>Problemas de erección:</b> Medicamentos, dispositivos de asistencia,&nbsp;consejería,&nbsp;cirugía y otros métodos pueden ayudar.</li>
+            <li><b>Sequedad vaginal.</b> La sequedad o rigidez en la vagina pueden ser causadas por la menopausia. Pregunte si usar un lubricante a base de agua durante las relaciones sexuales, usar dilatadores vaginales antes del sexo y tomar hormonas o usar una crema con hormonas son opciones que le puedan ayudar.</li>
+            <li><b>Debilidad muscular.</b> Usted puede ayudar a fortalecer los músculos en su zona genital haciendo ejercicios de Kegel. Esto es cuando practica controlar los músculos para detener el flujo de orina. Puede hacer estos ejercicios aun cuando no esté orinando. Simplemente tense y relaje los músculos mientras se sienta, se pone de pie o realiza las tareas cotidianas.</li>
+            </ul>
+            <p>Otros problemas de los que usted puede hablar son:</p>
+            <ul>
+            <li><b>Preocupación de tener hijos.</b> Converse con su médico sobre las inquietudes de planificación familiar. Si usted es mujer, pregunte si aún necesita usar métodos anticonceptivos, incluso si ya no tiene&nbsp;su período.</li>
+            <li><b>Pláticas&nbsp;con un consejero.</b> Algunas personas encuentran que los problemas sexuales relacionados con el cáncer comienzan a crear tensión en la relación con su pareja. Si es así, pregunte a una enfermera o trabajador social si puede hablar con un consejero. Si usted habla con el consejero, o lo hace junto con su pareja, puede ayudarles.</li>
+            <li><b>Consulta con&nbsp;un especialista.</b> Un terapeuta sexual tal vez pueda ayudarle a hablar francamente de&nbsp;sus problemas, a tratar sus preocupaciones&nbsp;y a buscar nuevas formas de ayuda para&nbsp;usted y&nbsp;su pareja.</li>
+            </ul>
+            <h3>Diga a su pareja cómo se siente</h3>
+            <p>Hablar con la persona que ama y compartir sus sentimientos e inquietudes&nbsp;es muy importante. Aun para&nbsp;una pareja que ha estado unida&nbsp;por mucho tiempo, puede resultar difícil mantener la unión.</p>
+            <p>Diga a su pareja si quiere tener sexo o si prefiere abrazarse, besarse y acariciarse&nbsp;uno al otro. Su cónyuge o pareja puede tener miedo de tener sexo con usted. O puede sentir preocupación de lastimarle o pensar que usted no se siente bien.</p>
+            <p>Hable con su pareja sobre cualquier inquietud que tenga sobre su vida sexual. Exprese sus sentimientos con sinceridad y optimismo para evitar las&nbsp;culpas.</p>
+            <h3>Encontrar formas para tener intimidad</h3>
+            <p>Usted puede tener todavía&nbsp;una relación íntima a pesar del cáncer. La intimidad no es solo física. También incluye&nbsp;sentimientos. Estas son algunas formas de mejorar sus relaciones&nbsp;íntimas:</p>
+            <ul>
+            <li>Enfóquense solo en hablar y en renovar su unión.</li>
+            <li>Protejan el tiempo que pasan juntos. Apaguen el teléfono y la televisión. Si es necesario, encuentren a alguien que cuide a los niños por unas horas.</li>
+            <li>Tómenlo con calma. Planifiquen una hora o más para estar juntos sin&nbsp;contacto físico. Por ejemplo, pueden&nbsp;escuchar música o dar un paseo.</li>
+            <li>Prueben nuevas formas de contacto. El tratamiento del cáncer o la cirugía pueden cambiar el cuerpo de un paciente. Las áreas que antes&nbsp;se sentían bien al&nbsp;contacto pueden estar ahora&nbsp;insensibles o causar dolor. Algunos de estos cambios desaparecerán. Otros permanecerán. Por el momento, pueden descubrir juntos el tipo de contacto que les hace sentir bien,&nbsp;como tomarse de las manos, caminar juntos, abrazarse y acariciarse.</li>
+            </ul>
+            <h3>Intimidad después del tratamiento</h3>
+            <p>Aunque el tratamiento del cáncer pueda haber terminado, es posible que los problemas sexuales continúen por un tiempo. Sin embargo,&nbsp;pueden encontrar otras formas de mostrar que se quieren. Es importante sentirse&nbsp;cerca de su pareja.</p>
+            <ul>
+            <li>Tenga&nbsp;orgullo de su cuerpo. ¡Le ayudó a superar el tratamiento!</li>
+            <li>Piense en las cosas que le ayudan a sentirse con más atracción y seguridad.</li>
+            <li>Concéntrese en lo positivo. Trate de estar consciente de sus pensamientos, ya&nbsp;que pueden afectar su vida sexual.</li>
+            <li>Acepte los cambios.&nbsp;Usted puede encontrar nuevas formas de disfrutar la intimidad.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Salir en citas"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Si es soltero o soltera, los cambios en el cuerpo y las inquietudes respecto del sexo pueden afectar cómo se siente&nbsp;de salir en una cita. Además de luchar por aceptar los cambios, usted puede preocuparse también de lo que sentirán los demás por usted. Por ejemplo, se puede preguntar cómo reaccionarán los demás a su aspecto físico, como&nbsp;la caída del cabello, las cicatrices o las ostomías. O puede ser&nbsp;incómodo sacar a relucir&nbsp;problemas sexuales o la falta de fecundidad, lo cual puede dificultar todavía más el acercarse a una persona.</p>
+            <p>El querer salir de nuevo&nbsp;a alguna cita con alguien puede parecer un reto. Tal vez se pregunte cómo y cuándo decir a una persona nueva en su vida acerca de su cáncer y de los cambios en su cuerpo. Para algunos supervivientes de cáncer, el temor al rechazo&nbsp;impide que busquen la vida social que les gustaría tener. Otros que eligen no salir en citas pueden enfrentar la presión de los amigos o de la familia para ser más sociables. Aquí se ofrecen algunas ideas que pueden facilitar volver a tener encuentros&nbsp;sociales:</p>
+            <ul>
+            <li>Enfóquese en actividades en las que tenga tiempo para disfrutar, como ir a festivales y a paseos en grupo y tomar una clase o unirse a un club.</li>
+            <li>No permita que&nbsp;el cáncer sea una excusa para no salir en citas y tratar de conocer gente.</li>
+            <li>Espere hasta sentir&nbsp;confianza y amistad para hablar de su cáncer con una amistad nueva.</li>
+            <li>Hable con sus amigos sobre cómo salir con alguien o pida sugerencias de otros supervivientes de cáncer.</li>
+            </ul>
+            <p>Piense que&nbsp;las citas son parte del&nbsp;proceso de aprendizaje con la meta de tener una vida social que pueda disfrutar. Usted puede escoger con quién tener citas y con qué frecuencia hacerlo. No todas las citas tienen que ser perfectas. Si alguna persona le rechaza (lo cual puede suceder con o sin cáncer), usted no ha fracasado. Recuerde que&nbsp;no todas las citas funcionaron cuando no tenía cáncer. Y tal vez, su experiencia con el cáncer le da un sentido de propósito y de apreciación para una relación que no tuvo antes.</p>
+
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+
+  field_related_resources_ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+
+  field_date_posted:
+    value: "2018-08-20"
+  field_date_reviewed:
+    value: "2018-08-20"
+  field_date_updated:
+    value: "2019-01-28"
+  field_date_display_mode:
+    - value: 'updated'
