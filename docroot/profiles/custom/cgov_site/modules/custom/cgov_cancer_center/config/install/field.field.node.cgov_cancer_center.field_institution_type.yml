@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_institution_type
     - node.type.cgov_cancer_center
-    - taxonomy.vocabulary.cgov_cancer_center_type
+    - taxonomy.vocabulary.cgov_cancer_center_types
 id: node.cgov_cancer_center.field_institution_type
 field_name: field_institution_type
 entity_type: node
@@ -19,7 +19,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      cgov_cancer_center_type: cgov_cancer_center_type
+      cgov_cancer_center_types: cgov_cancer_center_types
     sort:
       field: name
       direction: asc
