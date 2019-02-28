@@ -206,8 +206,8 @@ class CgovBlogArchive extends BlockBase implements ContainerFactoryPluginInterfa
 
     $markup .= "<ul>";
     $year_counts = array_count_values($year_links);
-    foreach ($year_counts as $key => $year) {
-      $markup .= '<li>' . $key . ' i hate php ' . $year . '</li>';
+    foreach ($year_counts as $year => $count) {
+      $markup .= '<li>' . $year . ' (' . $count . ')</li>';
     }
 
     $markup .= "</ul>";
