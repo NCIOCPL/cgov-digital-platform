@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.cgov_cthp_overview_card.field_cthp_overview_card_text
     - paragraphs.paragraphs_type.cgov_cthp_overview_card
   module:
+    - text
     - options
 id: paragraph.cgov_cthp_overview_card.default
 targetEntityType: paragraph
@@ -31,8 +32,10 @@ content:
   field_cthp_overview_card_text:
     weight: 2
     label: above
-    settings: {  }
+    settings:
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
-    type: basic_string
+    type: text_default
     region: content
-hidden: {  }
+hidden: { }
