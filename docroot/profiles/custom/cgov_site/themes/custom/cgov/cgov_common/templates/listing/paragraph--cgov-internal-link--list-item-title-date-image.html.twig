@@ -1,0 +1,30 @@
+{% import '@cgov_common/listing/list_item_macros.twig' as listItemMacros %}
+
+{% if content.field_internal_link[0] %}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_title[0] %}
+    {% set title = content.field_override_title[0] %}
+  {% else %}
+    {% set title = content.field_internal_link[0]["#node"].title.value %}
+  {% endif %}
+
+  {# ###### Setup Date ####### #}
+  {% set date = content.field_internal_link[0]["#node"].field_date_posted.value|date('F d, Y') %}
+
+  {# ###### Setup Img ######## #}
+  {% if content.field_override_image_promotional[0] %}
+    {% set image = content.field_override_image_promotional[0] %}
+  {% elseif content.field_internal_link[0] %}
+    {% set image = content.field_internal_link %}
+  {% endif %}
+
+  {# ###### Setup URL ######## #}
+  {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
+
+  {# ###### Setup View Mode ######## #}
+  {% set view_mode = _context.view_mode %}
+
+  {## Render List Item ##}
+  {{ listItemMacros.listItem(title, date, null, image, url, view_mode) }}
+{% endif %}
