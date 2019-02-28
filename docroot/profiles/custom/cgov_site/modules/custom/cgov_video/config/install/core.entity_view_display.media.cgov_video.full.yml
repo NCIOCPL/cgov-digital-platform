@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.full
-    - field.field.media.cgov_video.field_body
+    - field.field.media.cgov_video.body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
     - field.field.media.cgov_video.field_card_title
@@ -14,8 +14,6 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
-    - field.field.media.cgov_video.field_original_source
-    - field.field.media.cgov_video.field_page_title
     - field.field.media.cgov_video.field_pretty_url
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
@@ -31,7 +29,12 @@ targetEntityType: media
 bundle: cgov_video
 mode: full
 content:
-  field_body:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  body:
     weight: 3
     label: hidden
     settings: {  }
@@ -106,8 +109,6 @@ hidden:
   field_card_title: true
   field_feature_card_description: true
   field_list_description: true
-  field_original_source: true
-  field_page_title: true
   field_pretty_url: true
   field_short_title: true
   field_site_section: true

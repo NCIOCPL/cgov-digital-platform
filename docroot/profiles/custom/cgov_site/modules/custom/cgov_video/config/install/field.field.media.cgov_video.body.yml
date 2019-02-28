@@ -2,17 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_page_title
+    - field.storage.media.body
     - media.type.cgov_video
-id: media.cgov_video.field_page_title
-field_name: field_page_title
+  module:
+    - text
+id: media.cgov_video.body
+field_name: body
 entity_type: media
 bundle: cgov_video
-label: 'Page Title'
+label: Body
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string
+settings:
+  display_summary: false
+field_type: text_with_summary

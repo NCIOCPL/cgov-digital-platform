@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.cgov_video.field_body
+    - field.field.media.cgov_video.body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
     - field.field.media.cgov_video.field_card_title
@@ -17,6 +17,7 @@ dependencies:
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
     - media.type.cgov_video
+    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - datetime
@@ -33,7 +34,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_body:
+  body:
     weight: 10
     settings:
       rows: 5
@@ -163,6 +164,11 @@ content:
     weight: 20
     region: content
     third_party_settings: {  }
+  translation:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   uid:
     type: entity_reference_autocomplete
     weight: 17
