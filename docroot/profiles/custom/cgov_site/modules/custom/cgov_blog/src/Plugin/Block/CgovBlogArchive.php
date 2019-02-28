@@ -193,25 +193,20 @@ class CgovBlogArchive extends BlockBase implements ContainerFactoryPluginInterfa
    *   The content type machine name.
    */
   private function drawArchiveByYear($cid, $content_type) {
+    $markup = '';
+
     // Get an array of blog field collections to populate links.
     $blog_links = $this->getMonthsYears($cid, $content_type);
-
-    // Open Blog Post pagination div.
-    $markup = "<div id='cgov-blog-post-pagination>";
-
-    $year_links = [];
     foreach ($blog_links as $blog_link) {
       $year_links[] = $blog_link['year'];
     }
 
-    $markup .= "<ul>";
-    $year_counts = array_count_values($year_links);
-    foreach ($year_counts as $year => $count) {
-      $markup .= '<li>' . $year . ' (' . $count . ')</li>';
+    // Get counts and values for each available year. I hate php.
+    if (isset($year_links)) {
+      foreach (array_count_values($year_links) as $year => $count) {
+        $markup .= '<li>' . $year . ' (' . $count . ')</li>';
+      }
     }
-
-    $markup .= "</ul>";
-    $markup .= "</div>";
     return $markup;
   }
 
