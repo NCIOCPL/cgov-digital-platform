@@ -10,7 +10,7 @@
   {% endif %}
 
   {# ###### Setup Date ####### #}
-  {% set date = content.field_internal_link[0]["#node"].field_date_posted %}
+  {% set date = content.field_internal_link[0]["#node"].field_date_posted.value|date('F d, Y') %}
 
   {# ###### Setup URL ######## #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
