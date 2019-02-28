@@ -161,6 +161,18 @@ class CgovCoreTools {
   }
 
   /**
+   * Links a media type to a workflow.
+   *
+   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
+   */
+  public function attachMediaTypeToWorkflow($type_name, $workflow_name) {
+    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
+    $workflow = $workflows[$workflow_name];
+    $workflow->getTypePlugin()->addEntityTypeAndBundle('media', $type_name);
+    $workflow->save(TRUE);
+  }
+
+  /**
    * Add Permissions to a role.
    *
    * @param array $rolePermissions
