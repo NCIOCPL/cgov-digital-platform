@@ -59,22 +59,19 @@
         callback: 'reference'
         args:
           - 'taxonomy_term'
-          - vid: 'cgov_cancer_center_type'
+          - vid: 'cgov_cancer_center_types'
             name: 'Comprehensive Cancer Center'
   field_org_head_name:
     value: "Michael B. Kastan, M.D., Ph.D."
   field_org_head_title:
     value: "Executive Director"
-  field_address_1:
-    value: "Box 2714"
-  field_address_2:
-    value: "2424 Erwin Road"
-  field_city:
-    value: "Durham"
-  field_state:
-    value: "NC"
-  field_zip_code:
-    value: "27710"
+  field_address:
+    - address_line1: "Box 2714"
+      address_line2: "2424 Erwin Road"
+      locality: "Durham"
+      administrative_area: "NC"
+      postal_code: "27710"
+      country_code: "US"
   field_region:
     - '#process':
         callback: 'reference'

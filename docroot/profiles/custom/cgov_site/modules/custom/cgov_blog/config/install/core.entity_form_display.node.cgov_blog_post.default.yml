@@ -1,0 +1,230 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_image_browser
+    - field.field.node.cgov_blog_post.body
+    - field.field.node.cgov_blog_post.field_author
+    - field.field.node.cgov_blog_post.field_blog_series
+    - field.field.node.cgov_blog_post.field_blog_topics
+    - field.field.node.cgov_blog_post.field_browser_title
+    - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_date_posted
+    - field.field.node.cgov_blog_post.field_feature_card_description
+    - field.field.node.cgov_blog_post.field_image_article
+    - field.field.node.cgov_blog_post.field_image_promotional
+    - field.field.node.cgov_blog_post.field_intro_text
+    - field.field.node.cgov_blog_post.field_list_description
+    - field.field.node.cgov_blog_post.field_page_description
+    - field.field.node.cgov_blog_post.field_pretty_url
+    - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_related_resources
+    - field.field.node.cgov_blog_post.field_search_engine_restrictions
+    - field.field.node.cgov_blog_post.field_short_title
+    - field.field.node.cgov_blog_post.field_site_section
+    - node.type.cgov_blog_post
+    - workflows.workflow.editorial_workflow
+  module:
+    - content_moderation
+    - datetime
+    - entity_browser
+    - paragraphs_asymmetric_translation_widgets
+    - path
+    - text
+id: node.cgov_blog_post.default
+targetEntityType: node
+bundle: cgov_blog_post
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 14
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  field_author:
+    type: string_textfield
+    weight: 12
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_blog_series:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_blog_topics:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_browser_title:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_card_title:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_date_posted:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_feature_card_description:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_image_article:
+    weight: 15
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_image_promotional:
+    weight: 16
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_intro_text:
+    weight: 13
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_list_description:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_page_description:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_public_use:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_related_resources:
+    type: paragraphs_classic_asymmetric
+    weight: 18
+    region: content
+    settings:
+      title: 'Related Resource'
+      title_plural: 'Related Resources'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+  field_search_engine_restrictions:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_short_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_site_section:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  langcode:
+    type: language_select
+    weight: 0
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 22
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

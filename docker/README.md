@@ -28,6 +28,7 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 1. Clone the project to a location on your hard drive, we will call this `<project_root>`
 1. `cd <project_root>`
 1. Run `composer install` this will install the PHP packages to run the site, and also used by the git pre-commit hook
+   * Run `composer cgov-clean` to remove previously installed composer files.
 1. Run `composer cgov-init` to initialize the sample project files. This currently does the following:
    * Copy the `<project_root>/docker/docker.env.sample` file to a file named `<project_root>/docker/docker.env`. `docker.env` will not be tracked. This is where the containers' local overrides & secrets are managed.
    * Copy the `<project_root>/blt/example.local.blt.yml` to `<project_root>/blt/local.blt.yml`. This will allow you to set an local dev overrides for BLT. When working in the docker stack, this also overrides the database host.

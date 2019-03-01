@@ -14,7 +14,10 @@ label: 'Posted Date'
 description: 'Date the content was posted. Defaults to today''s date but can be overridden. [Display, Date]'
 required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    default_date_type: now
+    default_date: now
 default_value_callback: ''
 settings: {  }
 field_type: datetime
