@@ -8,7 +8,7 @@
 use Drupal\crop\Entity\Crop;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\media\Entity\Media;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_ENTITY_TYPE_view().
@@ -135,7 +135,7 @@ function _cgov_image_filter_view_image(
   if (
     $crop_image_display == NULL ||
     $crop_image_display['settings'] == NULL ||
-    $crop_image_display['settings']['image_style']
+    $crop_image_display['settings']['image_style'] == NULL
   ) {
     // TODO: Log a nice error.
     // No image for you! Configure properly.
@@ -167,7 +167,7 @@ function _cgov_image_filter_view_image(
   }
 
   // Make sure we have an image.
-  $cropped_field = $entity->get('field_media_image');
+  $cropped_field = $entity->field_media_image;
   if (
     $cropped_field == NULL ||
     $cropped_field->target_id == NULL
@@ -176,8 +176,8 @@ function _cgov_image_filter_view_image(
     return;
   }
 
-  $media = Media::load($cropped_field->target_id);
-  $file_uri = $media->field_image->entity->getFileUri();
+  $file = File::load($cropped_field->target_id);
+  $file_uri = $file->getFileUri();
 
   // If we don't have a crop we should strip the image out.
   if (!Crop::cropExists($file_uri, $crop)) {
