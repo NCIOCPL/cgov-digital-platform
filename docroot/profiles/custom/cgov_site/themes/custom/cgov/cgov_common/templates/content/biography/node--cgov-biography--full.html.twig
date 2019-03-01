@@ -11,24 +11,21 @@
             </div>
             <div class="profile-panel-content">
               <h1>
-                {% spaceless %}
-                  {{ content.field_prefix|field_value }}
-                  {{ content.field_first_name|field_value }}
-                  {{ content.field_middle_name|field_value }}
-                  {{- content.field_last_name|field_value }}
-                  {%- if content.field_suffix|field_value -%}
-                    ,&nbsp;{{ content.field_suffix|field_value }}
-                  {%- endif -%}
-                {% endspaceless %}
+                  {{ content.field_prefix }}
+                  {{ content.field_first_name }}
+                  {{ content.field_middle_name }}
+                  {{ content.field_last_name|field_value -}}
+                  {{- (content.field_suffix|field_value) ? ',' : '' }}
+                  {{- content.field_suffix -}}
               </h1>
 
               {{ content.field_title }}
 
               {% if content.field_org_name_1|field_value %}
               <p>
-                <a href="{{ content.field_org_url_1|field_value }}" class="profile-org">{{ content.field_org_name_1 }}</a>
+                <a href="{{- content.field_org_url_1|field_value -}}" class="profile-org">{{ content.field_org_name_1 }}</a>
                 {% if content.field_org_name_2|field_value %}
-                  <a href="{{ content.field_org_url_2|field_value }}" class="profile-org">{{ content.field_org_name_2 }}</a>
+                  <a href="{{- content.field_org_url_2|field_value -}}" class="profile-org">{{ content.field_org_name_2 }}</a>
                 {% endif %}
               </p>
               {% endif %}
@@ -46,9 +43,7 @@
               {% if content.field_phone_number|field_value or content.field_email_address|field_value %}
               <div class="profile-contact-info">
                 {{ content.field_phone_number}}
-                {% if content.field_phone_number|field_value and content.field_email_address|field_value %}
-                  <span class="contact-divider">|</span>
-                {% endif %}
+                {{ (content.field_phone_number|field_value and content.field_email_address|field_value)? '<span class="contact-divider">|</span>': '' }}
                 {{ content.field_email_address }}
               </div>
               {% endif %}
