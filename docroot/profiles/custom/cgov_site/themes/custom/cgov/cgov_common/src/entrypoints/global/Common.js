@@ -18,8 +18,8 @@ import './Common.scss';
 
 // import $ from 'jquery';
 // import 'Common/Enhancements/jQueryUIExtensions';
-// import popupFunctions from 'Common/Enhancements/popup_functions';
-// popupFunctions($);
+import popupFunctions from 'Libraries/popups/popup_functions';
+popupFunctions();
 
 // import 'Common/Plugins/Enlarge';
 // import 'Plugins/jquery.nci.prevent_enter';
