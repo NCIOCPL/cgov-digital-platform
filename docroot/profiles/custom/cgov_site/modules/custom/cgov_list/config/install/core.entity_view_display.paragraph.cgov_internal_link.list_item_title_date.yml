@@ -2,18 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.list_item_title_date
     - field.field.paragraph.cgov_internal_link.field_internal_link
     - field.field.paragraph.cgov_internal_link.field_override_image_promotional
     - field.field.paragraph.cgov_internal_link.field_override_list_description
     - field.field.paragraph.cgov_internal_link.field_override_title
     - paragraphs.paragraphs_type.cgov_internal_link
-id: paragraph.cgov_internal_link.default
+id: paragraph.cgov_internal_link.list_item_title_date
 targetEntityType: paragraph
 bundle: cgov_internal_link
-mode: default
+mode: list_item_title_date
 content:
   field_internal_link:
-    weight: 2
+    weight: 1
     label: hidden
     settings:
       view_mode: link
@@ -21,21 +22,6 @@ content:
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  field_override_image_promotional:
-    weight: 3
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_override_list_description:
-    type: basic_string
-    weight: 1
-    region: content
-    label: above
-    settings: {  }
-    third_party_settings: {  }
   field_override_title:
     weight: 0
     label: hidden
@@ -44,4 +30,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-hidden: {  }
+hidden:
+  field_override_image_promotional: true
+  field_override_list_description: true
