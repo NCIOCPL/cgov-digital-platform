@@ -12,11 +12,9 @@
       {% endif %}
     </h6>
     <ol class="article-citation">
-      {#} {% set citation_list_number = 1 %}#}
       {% for item in items %}
         <li id="r{{ loop.index }}">
           {{ item.content }}
-          {#{% set citation_list_number = citation_list_number + 1 %}#}
         </li>
       {% endfor %}
     </ol>

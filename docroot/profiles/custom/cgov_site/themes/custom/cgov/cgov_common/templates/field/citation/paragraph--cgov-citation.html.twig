@@ -1,6 +1,2 @@
-{% if content.field_citation_content[0] %}
-  {{ content.field_citation_content }}
-{% endif %}
-{% if content.field_pubmed_id[0] %}
-  <a href="https://www.ncbi.nlm.nih.gov/pubmed/{{ content.field_pubmed_id|escape|striptags('<!-- -->')|trim}}">[PubMed Abstract]</a>
-{% endif %}
+{{ content.field_citation_content }}
+{{ content.field_pubmed_id }}
