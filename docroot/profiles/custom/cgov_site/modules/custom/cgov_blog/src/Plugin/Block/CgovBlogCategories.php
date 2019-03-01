@@ -10,11 +10,11 @@ use Drupal\Core\Block\BlockBase;
  */
 
 /**
- * Provides a 'Hello' Block.
+ * Provides a Blog Categories Block.
  *
  * @Block(
  *   id = "cgov_blog_categories",
- *   admin_label = @Translation("Blog Catetories block"),
+ *   admin_label = @Translation("Blog Categories block"),
  *   category = @Translation("Cgov Digital Platform"),
  * )
  */

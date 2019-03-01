@@ -58,18 +58,9 @@
         </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
       <div class="row">
-        <div id="main" class="medium-9 columns contentzone has-section-nav" role="main">
-          {{ page.content }}
-        </div>
-        <div id="nvcgSlListBlogRTRail" class="medium-3 columns right right-rail">
-          {# placeholder for featured posts #}
-          {{ drupal_block('cgov_blog_categories') }}
-          {{ drupal_block('cgov_blog_archive') }}
-        </div>
+        {{ page.content }}
+        {{ page.pager }}
       </div>
-      <!-- PAGER -->
-      {{ page.pager }}
-      <!-- END PAGER -->
     </div>
   </div>
 </div>
