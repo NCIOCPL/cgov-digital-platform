@@ -2,60 +2,53 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_content_browser
+    - core.entity_view_mode.paragraph.list_item_title_date_desc_image
     - field.field.paragraph.cgov_external_link.field_external_link
     - field.field.paragraph.cgov_external_link.field_override_image_promotional
     - field.field.paragraph.cgov_external_link.field_override_list_description
     - field.field.paragraph.cgov_external_link.field_override_title
     - paragraphs.paragraphs_type.cgov_external_link
   module:
-    - entity_browser
     - link
-id: paragraph.cgov_external_link.default
+id: paragraph.cgov_external_link.list_item_title_date_desc_image
 targetEntityType: paragraph
 bundle: cgov_external_link
-mode: default
+mode: list_item_title_date_desc_image
 content:
   field_external_link:
     weight: 2
+    label: hidden
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
-    type: link_default
+    type: link_separate
     region: content
   field_override_image_promotional:
+    type: entity_reference_entity_view
     weight: 3
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      field_widget_replace: false
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
     region: content
+    label: above
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
   field_override_list_description:
-    type: string_textarea
+    type: basic_string
     weight: 1
     region: content
-    settings:
-      rows: 5
-      placeholder: ''
+    label: hidden
+    settings: {  }
     third_party_settings: {  }
   field_override_title:
     weight: 0
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
+      link_to_entity: false
     third_party_settings: {  }
-    type: string_textfield
+    type: string
     region: content
-hidden:
-  created: true
-  status: true
-  uid: true
+hidden: {  }
