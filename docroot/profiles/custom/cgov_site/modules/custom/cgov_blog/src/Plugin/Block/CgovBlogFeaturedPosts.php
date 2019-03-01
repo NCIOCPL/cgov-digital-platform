@@ -26,12 +26,27 @@ class CgovBlogFeaturedPosts extends BlockBase {
   public function build() {
     $build = [
       '#markup' => $this->t('
-          Vitamin D Supplements Don’t Reduce Cancer Incidence
-          December 13, 2018, by NCI Staff
-          Two Radiation Therapy Approaches Prevent Breast Cancer Recurrences
-          December 19, 2018, by NCI Staff
-          Developing Better Approaches for Managing Cancer Pain
-          January 23, 2019, by NCI Staff
+        <li class="general-list-item general list-item">
+            <div class="title-and-desc title desc container"><a class="title" href="#">Vitamin D Supplements Don’t Reduce Cancer Incidence</a>
+                <div class="byline">
+                    <p>December 13, 2018, by NCI Staff</p>
+                </div>
+            </div>
+        </li>
+        <li class="general-list-item general list-item">
+            <div class="title-and-desc title desc container"><a class="title" href="#">Two Radiation Therapy Approaches Prevent Breast Cancer Recurrences</a>
+                <div class="byline">
+                    <p>December 19, 2018, by NCI Staff</p>
+                </div>
+            </div>
+        </li>
+        <li class="general-list-item general list-item">
+            <div class="title-and-desc title desc container"><a class="title" href="#">Developing Better Approaches for Managing Cancer Pain</a>
+                <div class="byline">
+                    <p>January 23, 2019, by NCI Staff</p>
+                </div>
+            </div>
+        </li>
       '),
     ];
     return $build;
