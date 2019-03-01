@@ -18,13 +18,6 @@ RUN apt-get install -y mariadb-server
 # Reconfigure the bind address of MySQL to allow any incoming network connection.
 RUN sed -i -e "s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Set Timezone
-# NOTE: The xenial (16.04) base image doesn't include timezone data, so that needs to be installed.
-#       The bionic (18.04) image resolves this problem.
-RUN DEBIAN_FRONTEND=noninteractive && \
-  apt install -y tzdata && \
-  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
 
 
 # Copy our custom entrypoint and make it executable.
