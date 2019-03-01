@@ -13,23 +13,17 @@
 
               <h1>
                 {% spaceless %}
-                  {% if content.field_prefix|field_value %}
-                    {{ content.field_prefix|field_value }}
-                  {% endif %}
+                  {{ content.field_prefix|field_value }}
                   {{ content.field_first_name|field_value }}
-                  {% if content.field_middle_name %}
-                    {{ content.field_middle_name|field_value }}
-                  {% endif %}
-                  {{- content.field_last_name|field_value -}}
-                  {%- if content.field_suffix -%}
+                  {{ content.field_middle_name|field_value }}
+                  {{- content.field_last_name|field_value }}
+                  {%- if content.field_suffix|field_value -%}
                     ,&nbsp;{{ content.field_suffix|field_value }}
                   {%- endif -%}
                 {% endspaceless %}
               </h1>
 
-              {% if content.field_title|field_value %}
-                <div class="profile-title">{{ content.field_title|field_value }}</div>
-              {% endif %}
+              {{ content.field_title }}
 
               {% if content.field_org_name_1|field_value %}
               <p>
@@ -43,64 +37,37 @@
 
               {% if content.field_campus|field_value or content.field_room_number|field_value %}
               <p>
-                {% if content.field_campus|field_value %}
-                  {{ content.field_campus }}
-                {% endif %}
+                {{ content.field_campus }}
 
                 {% if content.field_campus|field_value and content.field_room_number|field_value %}
                   |
                 {% endif %}
 
-                {% if content.field_room_number|field_value %}
-                  {{ content.field_room_number }}
-                {% endif %}
+                {{ content.field_room_number }}
               </p>
               {% endif %}
 
 
               {% if content.field_phone_number|field_value or content.field_email_address|field_value %}
               <div class="profile-contact-info">
-                {% if content.field_phone_number|field_value %}
-                  <div class="profile-contact-phone">{{ content.field_phone_number|field_value }}</div>
-                {% endif %}
+                {{ content.field_phone_number}}
+
                 {% if content.field_phone_number|field_value and content.field_email_address|field_value %}
                   <span class="contact-divider">|</span>
                 {% endif %}
-                {% if content.field_email_address|field_value %}
-                  <div class="profile-contact-email">
-                    <a href="mailto:{{ content.field_email_address|field_value }}">
-                      {{ content.field_email_address|field_value }}
-                    </a>
-                  </div>
-                {% endif %}
+                
+                {{ content.field_email_address }}
               </div>
               {% endif %}
 
               {% if content.field_twitter_handle or content.field_linkedin_handle %}
                 <div class="profile-panel-social-media">
-                  {% if content.field_twitter_handle %}
-                    <a href="http://www.twitter.com/{{- content.field_twitter_handle|field_value -}}" class="profile-social-link">
-                      <i class="icon twitter" aria-hidden="true"></i>
-                      <span aria-hidden="true">@tweetme</span>
-                      <span class="show-for-sr">Follow me on Twitter</span>
-                    </a>
-                  {% endif %}
-                  {% if content.field_linkedin_handle|field_value %}
-                    <a href="http://www.linkedin.com/in/{{- content.field_linkedin_handle|field_value -}}" class="profile-social-link ">
-                      <i class="icon linkedin" aria-hidden="true"></i>
-                      <span aria-hidden="true">/linkme</span>
-                      <span class="show-for-sr">Connect with me on LinkedIn</span>
-                    </a>
-                  {% endif %}
+                  {{ content.field_twitter_handle }}
+                  {{ content.field_linkedin_handle }}
                 </div>
               {% endif %}
 
-              {% if content.field_scientific_publications %}
-              <div class="profile-publications">
-                <a href="{{- content.field_scientific_publications|field_value -}}" class="profile-social-link publications">
-                <i class="icon publications" aria-hidden="true"></i>
-                <span class="show-for-sr">View my </span>Scientific Publications</a>
-              {% endif %}
+              {{ content.field_scientific_publications }}
             </div>
           </div>
         </div><!-- End profile-panel -->
