@@ -1,0 +1,18 @@
+{% import '@cgov_common/media/video/video_macros.twig' as videoMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+    <div class="resize-content">
+        <h1>
+          {{ name }}
+        </h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+          {{ content.body }}
+          {{ videoMacros.video(name, content) }}
+        </div>
+    </div>
+    <footer class="article-footer">
+      {{ content.field_related_resources }}
+      {{ contentPageMacros.displayDates(media, content) }}
+    </footer>
+</article>
