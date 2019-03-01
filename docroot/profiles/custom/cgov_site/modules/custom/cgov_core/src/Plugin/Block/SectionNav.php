@@ -111,7 +111,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     // TODO: Consider building this as nested markup elements to completely
     // obviate the need for a template that simply parallels this logic.
     $isInCurrentPath = $navItem->getIsInCurrentPath();
-    $isCurrentSection = $navItem->isCurrentSiteSection();
+    $isCurrentSectionLandingPage = $navItem->isCurrentSiteSectionLandingPage();
     $href = $navItem->getHref();
     $label = $navItem->getLabel();
     $childList = $navItem->getChildren();
@@ -143,7 +143,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
       'label' => $label,
       'class' => $class,
       'isExpanded' => $isExpanded,
-      'isCurrentSection' => $isCurrentSection,
+      'isCurrentSectionLandingPage' => $isCurrentSectionLandingPage,
       'children' => $children,
     ];
     return $renderElement;

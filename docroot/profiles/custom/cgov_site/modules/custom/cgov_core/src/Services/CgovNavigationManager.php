@@ -29,6 +29,13 @@ class CgovNavigationManager {
   protected $initialized;
 
   /**
+   * Aliased path for current request.
+   *
+   * @var string
+   */
+  protected $currentPathAlias;
+
+  /**
    * Site Section closest to current request path.
    *
    * @var \Drupal\taxonomy\TermInterface|null
@@ -109,6 +116,7 @@ class CgovNavigationManager {
     }
     $this->logger->notice('Cgov Navigation Manager initialized.');
     $this->initialized = TRUE;
+    $this->currentPathAlias = $this->getCurrentPathAlias();
     $this->closestSiteSection = $this->getClosestSiteSection();
     // Guard against when this service is called inadvertantly by
     // a request from an entity not associated with the Site Section
@@ -119,6 +127,21 @@ class CgovNavigationManager {
         return "(" . strval($el->id()) . ": '" . $el->computed_path->value . "')";
       }, $this->fullAncestry)));
     }
+  }
+
+  /**
+   * Determine the aliased path for the current request.
+   *
+   * @return string
+   *   Returns aliased path.
+   */
+  public function getCurrentPathAlias() {
+    $this->initialize();
+    /* @var string */
+    $path = $this->currentPath->getPath();
+    /* @var string */
+    $aliasedPath = $this->pathAliasManager->getAliasByPath($path);
+    return $aliasedPath;
   }
 
   /**
@@ -137,11 +160,7 @@ class CgovNavigationManager {
     $this->initialize();
     /* @var \Drupal\taxonomy\TermInterface|null */
     $siteSection = NULL;
-    /* @var string */
-    $path = $this->currentPath->getPath();
-    /* @var string */
-    $aliasedPath = $this->pathAliasManager->getAliasByPath($path);
-    $pathFragments = explode('/', trim($aliasedPath, '/'));
+    $pathFragments = explode('/', trim($this->currentPathAlias, '/'));
     for ($i = 0; $i <= count($pathFragments); $i++) {
       $pathTest = '/' . implode('/', array_slice($pathFragments, 0, count($pathFragments) - $i));
       /* @var \Drupal\taxonomy\TermInterface */
@@ -357,6 +376,28 @@ class CgovNavigationManager {
   public function isCurrentSiteSection(TermInterface $term) {
     $this->initialize();
     return $this->closestSiteSection->id() === $term->id();
+  }
+
+  /**
+   * Test closest site section landing page is current request path.
+   *
+   * In some instances, we might want to know whether or not the
+   * current request is from the landing page of a site section or
+   * from a page which defines a pretty url.
+   *
+   * We could determine this by retrieving the current entity being
+   * rendered and seeing if it has a field_pretty_url value set (in
+   * which case it would not be a landing page). However, a much
+   * simpler approach is to simply test whether the closest site section
+   * has a computed path that matches the full aliased path of the
+   * current request.
+   *
+   * @return bool
+   *   Bool.
+   */
+  public function isCurrentSiteSectionLandingPage() {
+    $this->initialize();
+    return $this->closestSiteSection->computed_path->value === $this->currentPathAlias;
   }
 
   /**
