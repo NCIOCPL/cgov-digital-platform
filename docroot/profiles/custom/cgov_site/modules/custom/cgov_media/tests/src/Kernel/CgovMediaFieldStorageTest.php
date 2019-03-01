@@ -21,7 +21,8 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
   public static $modules = [
     'user', 'system', 'file', 'field', 'image', 'media', 'text', 'filter',
     'datetime', 'options', 'workflows', 'content_moderation', 'language',
-    'content_translation', 'media_test_source', 'cgov_media',
+    'content_translation', 'media_test_source', 'cgov_media', 'taxonomy',
+    'pathauto', 'token', 'ctools',
   ];
 
   /**
@@ -50,14 +51,16 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.
     $this->installSchema('user', 'users_data');
+    $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
     $this->installEntitySchema('media');
+    $this->installEntitySchema('pathauto_pattern');
     $this->installEntitySchema('file');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
       'field', 'media', 'file', 'language', 'content_translation',
-      'media_test_source', 'cgov_media',
+      'media_test_source', 'cgov_media', 'pathauto',
     ]);
   }
 
