@@ -59,6 +59,13 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $eventDispatcher;
 
   /**
+   * IWC Manager for managing crops.
+   *
+   * @var \Drupal\image_widget_crop\ImageWidgetCropManager
+   */
+  protected $cropManager;
+
+  /**
    * Create new Event Subscriber class.
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
@@ -91,6 +98,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events = [];
+    $events[YamlContentEvents::ENTITY_PRE_SAVE][] = ['addFileToCrop'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['handlePostSaveEvents'];
@@ -327,6 +335,54 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       }
     }
     return $fields;
+  }
+
+  /**
+   * Add ID and UI to crop structure in images.
+   *
+   * File crops require the ID and URI of the loaded file which is
+   * created in the "process" directives. This will find all those
+   * structures and add it in.
+   *
+   * @param \Drupal\yaml_content\Event\EntityPreSaveEvent $event
+   *   The event fired before the entity is saved.
+   */
+  public function addFileToCrop(EntityPreSaveEvent $event) {
+    $entity = $event->getEntity();
+
+    if ($entity->bundle() != 'cgov_image') {
+      return;
+    }
+
+    $img_field = $entity->field_media_image[0];
+    if ($img_field != NULL) {
+
+      // If we have crop info, then set file id.
+      if ($img_field->image_crop != NULL) {
+
+        // Pluck off the image crop information from the field
+        // as it does not get persisted anyway.
+        $image_crop = $img_field->image_crop;
+        $img_field->image_crop = NULL;
+
+        // Get the File entity.
+        $file_id = $img_field->target_id;
+        $fileStorage = $this->entityTypeManager->getStorage('file');
+        $file = $fileStorage->load($file_id);
+
+        // If for some reason there is no file, get out.
+        if ($file == NULL) {
+          return;
+        }
+
+        // Add the necessary file info to the crop data.
+        $image_crop['file-id'] = $file_id;
+        $image_crop['file-uri'] = $file->getFileUri();
+
+        // Add the crop information back in now that we know is good.
+        $img_field->image_crop = $image_crop;
+      }
+    }
   }
 
   /**
