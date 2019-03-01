@@ -11,7 +11,8 @@
 
 
   {# ###### Setup Date ####### #}
-  {% set date = content.field_internal_link[0]["#node"].field_date_posted.value|date('F d, Y') %}
+  {# TODO: Determine how to display date based on Date Display Mode from node #}
+  {% set date = null %}
 
   {# ###### Setup Description ####### #}
   {% if content.field_override_list_description[0] %}
