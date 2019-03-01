@@ -4,38 +4,42 @@
 <article>
   <div class="resize-content">
     {{ drupal_block('page_options') }}
-      <h1>{{ node.label }}</h1>
-      {% if content.field_event_series[0] %}
-        <h4>
-          {{ content.field_event_series }}
-        </h4>
-      {%- endif -%}
-      <p>
-        {#{% if content.field_event_start_date[0].value|date('Y-m-d') < content.field_event_end_date[0].value|date('Y-m-d') %}
-          {{ content.field_event_start_date[0].value|date('F d') }} - {{ content.field_event_end_date[0].value|date('d, Y') }}<br />
-        {% elseif content.field_event_start_date[0].value|date('Y-m-d') == content.field_event_end_date[0].value|date('Y-m-d') %}
-          {{ content.field_event_start_date[0].value|date('F d, Y') }}<br />
-          {% endif %}
-        {% if content.field_all_day_event[0] %}
-          {{ content.field_event_start_date[0].value|date('H:i A') }} - {{ content.field_event_end_date[0].value|date('H:i A') }}
-        {% endif %}#}
-      </p>
-      {% if content.field_venue[0] or content.field_room[0] or content.field_city_state[0] %}
-        <p>
-          {% if content.field_venue[0] %}
-          {{ content.field_event_venue }}<br/>
-          {% endif %}
-          {% if content.field_room[0] %}
-          {{ content.field_room }}<br/>
-          {% endif %}
-          {% if content.field_city_state[0] %}
-          {{ content.field_city_state }}
-          {% endif %}
-        </p>
+    {{ content.field_image_promotional }}
+    <h1>{{ node.label }}</h1>
+    {% if content.field_event_series[0] %}
+      <h4>
+        {{ content.field_event_series }}
+      </h4>
+    {%- endif -%}
+    <p>
+      {# TODO: Update this with a better way to print dates! #}
+      {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
+        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('d, Y') }}
+      {% else %}
+        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+        {% if content.field_all_day_event[0]['#markup'] == "Off" %}
+          <br/>
+          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('h:i A') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('h:i A') }}
+        {% endif %}
       {% endif %}
-      <div id="cgvBody">
-        {{ content.body }}
-      </div>
+    </p>
+
+    {% if content.field_venue[0] or content.field_room[0] or content.field_city_state[0] %}
+      <p>
+        {% if content.field_venue[0] %}
+        {{ content.field_venue }}<br/>
+        {% endif %}
+        {% if content.field_room[0] %}
+        {{ content.field_room }}<br/>
+        {% endif %}
+        {% if content.field_city_state[0] %}
+        {{ content.field_city_state }}
+        {% endif %}
+      </p>
+    {% endif %}
+    <div id="cgvBody">
+      {{ content.body }}
+    </div>
   </div>
 
   <footer class="article-footer">
