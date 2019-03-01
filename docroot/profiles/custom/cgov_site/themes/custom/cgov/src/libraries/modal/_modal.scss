@@ -1,0 +1,207 @@
+// @import "../../styles/colors";
+// @import "../../styles/breakpoints";
+// @import "../../styles/fonts";
+@import "../../styles/spinner";
+// @import "../../styles/sprites/svg-sprite";
+
+/**************************\
+  Basic Modal Styles
+\**************************/
+@keyframes mmfadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes mmfadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes mmslideIn {
+	from {
+		transform: translateY(15%);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+@keyframes mmslideOut {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-10%);
+	}
+}
+.dialog {
+  position: fixed;
+  top: 50%;
+  z-index: 10;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+.modal {
+  position: relative;
+  z-index: 1000;
+}
+.modal__overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.modal__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 20px;
+	background-color: $modal-background;
+  padding: 10px 0;
+  width: 94vw;
+  max-width: 700px;
+	max-height: 90vh;
+  box-sizing: border-box;
+  color: $white;
+  box-shadow: 0 0 9px 1px rgba($black,.15);
+}
+
+.modal__btn-close {
+  @include svg-sprite(close-gray);
+  cursor: pointer;
+  font-size: .778em;
+  background-color: transparent;
+  border: none;
+  min-height: 28px;
+  &:first-child {
+    margin-bottom: 10px;
+  }
+  &:last-child {
+    margin-top: 10px;
+  }
+}
+
+.modal__content {
+  padding: 0 20px;
+  line-height: 1.5;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: $montserrat-font-stack;
+  -webkit-overflow-scrolling: touch;
+  
+  .CDR_audiofile {
+    @include svg-sprite(volume-up-white);
+    position: relative;
+    top: -1px;
+    font-size: .762em;
+  }
+
+  dl {
+    margin-bottom: 0;
+  }
+
+  dt.term {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 1em;
+    text-align: center;
+    .title {
+      margin-bottom: 5px;
+    }
+    dfn {
+      display: inline;
+      text-transform: capitalize;
+      // text-decoration: underline;
+      border-bottom: 2px solid #fff;
+      line-height: 1.1em;
+    }
+  }
+
+  .caption-container {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  figure {
+    width: 100%;
+    margin: 0 auto 10px;
+    &:last-child {
+      margin-bottom: 0;
+
+      .caption-container {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+// style hacks for stupid IE
+_:-ms-input-placeholder, :root .modal__content {
+  width: 100%;
+  max-height: calc(80vh - 75px);
+}
+
+// amimations
+.modal-slide {
+	display: none;
+	.modal__container {
+		will-change: transform;
+	}
+	.modal__overlay {
+		will-change: transform;
+	}
+}
+.modal-slide.is-open {
+	display: block;
+}
+.modal-slide[aria-hidden="false"] {
+	.modal__overlay {
+		animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+	}
+	.modal__container {
+		animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
+	}
+}
+.modal-slide[aria-hidden="true"] {
+	.modal__overlay {
+		animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+	}
+	.modal__container {
+		animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
+	}
+}
+
+.dialog {
+  will-change: transform;
+}
+.dialog[aria-hidden="false"] {
+  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+.dialog[aria-hidden="true"] {
+  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+@include break(medium) {
+  .modal__content {
+    padding: 0 40px;
+  }
+  .modal__btn-close {
+    align-self: flex-end;
+    margin-right: 10px;
+  }
+  .modal__btn-close[aria-hidden] {
+    display: none;
+  }
+}
