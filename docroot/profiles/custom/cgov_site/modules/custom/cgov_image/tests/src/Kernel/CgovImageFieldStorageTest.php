@@ -20,7 +20,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options',
-    'workflows', 'content_moderation', 'entity_browser', 'paragraphs',
+    'crop', 'image_widget_crop', 'workflows', 'content_moderation', 'entity_browser', 'paragraphs',
     'language', 'content_translation', 'media', 'image', 'views', 'cgov_media', 'cgov_image',
   ];
 
@@ -83,7 +83,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'media', 'file', 'image',
+      'field', 'node', 'media', 'file', 'image', 'crop', 'image_widget_crop',
       'language', 'content_translation', 'views', 'paragraphs',
       'cgov_media', 'entity_browser', 'cgov_image',
     ]);
