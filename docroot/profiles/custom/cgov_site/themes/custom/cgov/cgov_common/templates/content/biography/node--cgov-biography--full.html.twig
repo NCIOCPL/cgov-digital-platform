@@ -33,9 +33,7 @@
               {% if content.field_campus|field_value or content.field_room_number|field_value %}
               <p>
                 {{ content.field_campus }}
-                {% if content.field_campus|field_value and content.field_room_number|field_value %}
-                  |
-                {% endif %}
+                {{ (content.field_campus|field_value and content.field_room_number|field_value)? '|' : '' }}
                 {{ content.field_room_number }}
               </p>
               {% endif %}
@@ -48,14 +46,13 @@
               </div>
               {% endif %}
 
-              {% if content.field_twitter_handle or content.field_linkedin_handle %}
+              {% if content.field_twitter_handle|field_value or content.field_linkedin_handle|field_value or content.field_scientific_publications|field_value %}
                 <div class="profile-panel-social-media">
                   {{ content.field_twitter_handle }}
                   {{ content.field_linkedin_handle }}
+                  {{ content.field_scientific_publications }}
                 </div>
               {% endif %}
-
-              {{ content.field_scientific_publications }}
             </div>
           </div>
         </div><!-- End profile-panel -->

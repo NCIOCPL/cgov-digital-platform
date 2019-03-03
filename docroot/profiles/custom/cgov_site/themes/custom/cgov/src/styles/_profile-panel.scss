@@ -70,12 +70,11 @@
   }
 
   &-social-media {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
+    
     @include break(medium) {
+      display: flex;
       flex-direction: row;
+      width: 100%;
     }
   }
 
@@ -90,18 +89,24 @@
   }
 
   .profile-social-link {
-    align-items: center;
-    display: flex;
-    flex: 1 1 auto;
+    display: inline-block;
+    height: 35px;
     margin-bottom: 15px;
+    margin-right: 20px;
+    width: 35px;
+
+    @include break(medium) {
+      align-items: center;
+      display: flex;
+    }
 
     .icon {
       background: $dteal;
       border-radius: 50%;
-      height: 36px;
+      display: inline-block;
+      height: 35px;
       position: relative;
-      width: 36px;
-      margin-right: 10px;
+      width: 35px;
 
       &::after {
         content: "";
@@ -109,37 +114,57 @@
         font-size: 1.1em;
         height: 28px;
         left: 6px;
+        margin: 0 auto;
         position: absolute;
         top: 4px;
         width: 25px;
-        margin: 0 auto;
+      }
+    }
+
+    &.twitter {
+      @include break(medium) {
+        flex: none;
       }
 
-      &.twitter {
+      .icon {
         &::after {
           @include svg-sprite(twitter-white, bg);
         }
       }
+    }
 
-      &.linkedin {
+    &.linkedin {
+      @include break(medium) {
+        flex: none;
+      }
+      
+      .icon {
         &::after {
           @include svg-sprite(linkedin-white, bg);
           left: 9px;
         }
       }
+    }
 
-      &.publications {
-        background: none;
-        border-radius: 0;
+    &.publications {
+      align-items: center;
+      display: flex;
+      flex: 1 1 auto;
+      margin-right: 0;
+      width: 100%;
+      
+      .icon {
+        display: inline-block;
+        margin-right: 10px;
 
         &::after {
           @include svg-sprite(file-icon, bg);
-          height: 35px;
-          top: 0;
-          width: 30px;
+          left: 0;
+          top: 2px;
         }
       }
     }
+
   }
 }
 
