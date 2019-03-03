@@ -32,6 +32,17 @@
         margin: 0.5em 0;
         padding: 0 15px;
     }
+
+    // Easier than adding the previously used class back onto the element
+    // Just change the selector.
+    > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      margin-top: -9.4%;
+    }
 }
 
 .video-preview--play-button {
@@ -39,14 +50,5 @@
     top: calc(50% - 24px);
     left: calc(50% - 34px);
     width: 68px;
-    height: 48px;    
-}
-
-.video-preview--preview-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    margin-top: -9.4%;
+    height: 48px;
 }

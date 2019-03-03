@@ -21,7 +21,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options',
     'workflows', 'content_moderation', 'entity_browser', 'paragraphs',
-    'language', 'content_translation', 'media', 'image', 'views', 'cgov_media', 'cgov_image',
+    'language', 'content_translation', 'media', 'image', 'views', 'cgov_media', 'cgov_image', 'taxonomy',
   ];
 
   /**
@@ -76,8 +76,8 @@ class CgovImageFieldStorageTest extends KernelTestBase {
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.
     $this->installSchema('user', 'users_data');
+    $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
-    $this->installEntitySchema('node');
     $this->installEntitySchema('media');
     $this->installEntitySchema('file');
     $this->installEntitySchema('workflow');

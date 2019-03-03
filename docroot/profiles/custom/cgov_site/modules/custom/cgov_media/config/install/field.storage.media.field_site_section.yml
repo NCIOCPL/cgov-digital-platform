@@ -2,15 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - node
-id: node.field_subtitle
-field_name: field_subtitle
-entity_type: node
-type: string
+    - media
+    - taxonomy
+id: media.field_site_section
+field_name: field_site_section
+entity_type: media
+type: entity_reference
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1
