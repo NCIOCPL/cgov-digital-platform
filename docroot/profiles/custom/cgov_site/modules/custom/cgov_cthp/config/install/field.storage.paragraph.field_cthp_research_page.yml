@@ -2,15 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
+    - node
     - paragraphs
-id: paragraph.field_pdq_link_heading
-field_name: field_pdq_link_heading
+id: paragraph.field_cthp_research_page
+field_name: field_cthp_research_page
 entity_type: paragraph
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  target_type: node
 module: core
 locked: false
 cardinality: 1

@@ -2,15 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - node
     - paragraphs
-id: paragraph.field_featured_content
-field_name: field_featured_content
+    - text
+id: paragraph.field_html_content
+field_name: field_html_content
 entity_type: paragraph
-type: entity_reference
-settings:
-  target_type: node
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true

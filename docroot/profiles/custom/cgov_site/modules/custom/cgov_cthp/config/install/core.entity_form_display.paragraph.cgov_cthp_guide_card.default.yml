@@ -5,9 +5,9 @@ dependencies:
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_guide_card_desc
-    - field.field.paragraph.cgov_cthp_guide_card.field_pdq_link_heading
-    - field.field.paragraph.cgov_cthp_guide_card.field_pdq_links
-    - field.field.paragraph.cgov_cthp_guide_card.field_view_more_information
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_pdq_link_heading
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_pdq_links
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_view_more_info
     - paragraphs.paragraphs_type.cgov_cthp_guide_card
   module:
     - paragraphs
@@ -39,7 +39,7 @@ content:
     third_party_settings: {  }
     type: text_textarea
     region: content
-  field_pdq_link_heading:
+  field_cthp_pdq_link_heading:
     weight: 3
     settings:
       size: 60
@@ -47,7 +47,7 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_pdq_links:
+  field_cthp_pdq_links:
     weight: 4
     settings:
       entity_browser: cgov_content_browser
@@ -61,7 +61,7 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
-  field_view_more_information:
+  field_cthp_view_more_info:
     type: entity_reference_paragraphs
     weight: 5
     settings:

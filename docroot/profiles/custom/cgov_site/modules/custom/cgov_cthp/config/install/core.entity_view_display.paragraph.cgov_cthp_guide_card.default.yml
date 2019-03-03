@@ -5,9 +5,9 @@ dependencies:
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_guide_card_desc
-    - field.field.paragraph.cgov_cthp_guide_card.field_pdq_link_heading
-    - field.field.paragraph.cgov_cthp_guide_card.field_pdq_links
-    - field.field.paragraph.cgov_cthp_guide_card.field_view_more_information
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_pdq_link_heading
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_pdq_links
+    - field.field.paragraph.cgov_cthp_guide_card.field_cthp_view_more_info
     - paragraphs.paragraphs_type.cgov_cthp_guide_card
   module:
     - entity_reference_revisions
@@ -23,7 +23,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    type: list_key
     region: content
   field_cthp_card_title:
     weight: 0
@@ -40,7 +40,7 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
-  field_pdq_link_heading:
+  field_cthp_pdq_link_heading:
     weight: 3
     label: above
     settings:
@@ -48,16 +48,16 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_pdq_links:
+  field_cthp_pdq_links:
     weight: 4
     label: above
     settings:
-      view_mode: default
-      link: ''
+      view_mode: list_item_title
+      link: false
     third_party_settings: {  }
     type: entity_reference_entity_view
     region: content
-  field_view_more_information:
+  field_cthp_view_more_info:
     type: entity_reference_revisions_entity_view
     weight: 5
     label: above
