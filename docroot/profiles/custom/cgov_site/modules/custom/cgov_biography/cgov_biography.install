@@ -6,6 +6,8 @@
  */
 
 use Drupal\taxonomy\Entity\Term;
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
 
 /**
  * Implements hook_install().
@@ -29,6 +31,75 @@ function cgov_biography_install() {
   ];
 
   _cgov_biography_add_taxonomy_terms('cgov_biography_campuses', $campusItems);
+}
+
+/**
+ * Implements hook_themes_installed().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_themes_installed()
+ */
+function cgov_biography_themes_installed() {
+  // Create Press Information for Journalists block for Biographies.
+  $block_theme = \Drupal::config('system.theme')->get('default');
+  $block_region = 'bio_press_info';
+  $block_label = 'Press Information for Journalists';
+  $block_html = <<<EOMarkup
+    <div class="press-contact">
+      <h2>Press Contacts</h2>
+      <p>To request an interview with NCI researchers, contact the NCI Office of Media Relations.</p>
+      <a href="mailto:ncipressofficers@mail.nih.gov" class="press-contact-email">ncipressofficers@mail.nih.gov</a>
+      <div class="press-contact-phone">240-760-6600</div>
+    </div>
+EOMarkup;
+
+  // Create block content.
+  $block_content = BlockContent::create([
+    'type' => 'raw_html_block',
+    'info' => $block_label,
+    'body' => ['value' => $block_html, 'format' => 'full_html'],
+  ]);
+  $block_content->save();
+
+  // Assign block to Region.
+  $data = [
+    'id' => 'press_information_for_journalists__biography',
+    'plugin' => 'block_content:' . $block_content->uuid(),
+    'region' => $block_region,
+    'provider' => 'block_content',
+    'weight' => 0,
+    'theme' => $block_theme,
+    'visibility' => [
+      'node_type' =>
+        [
+          'id' => 'node_type',
+          'bundles' => ['cgov_biography' => 'cgov_biography'],
+          'context_mapping' =>
+            [
+              'node' => '@node.node_route_context:node',
+            ],
+        ],
+      'language' =>
+        [
+          'id' => 'language',
+          'langcodes' => ['en' => 'en'],
+          'negate' => FALSE,
+          'context_mapping' =>
+            [
+              'language' => '@language.current_language_context:language_interface',
+            ],
+        ],
+    ],
+    'settings' => [
+      'label' => $block_label,
+      'label_display' => '0',
+    ],
+  ];
+
+  $block = Block::create($data);
+  $block->save();
+
 }
 
 /**
