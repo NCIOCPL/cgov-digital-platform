@@ -8,6 +8,34 @@
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 
 {% macro listItem(title, date, description, image, url, view_mode) %}
+  {# Currently Thumbnail lists are not lists #}
+  {% if view_mode == 'list_item_title_desc_image' %}
+    {{ _self._thumbnailListItem(title, description, image, url) }}
+  {% else %}
+    {{ _self._normalListItem(title, date, description, image, url, view_mode) }}
+  {% endif %}
+{% endmacro %}
+
+{% macro _thumbnailListItem(title, list_description, image, url) %}
+  <div class="row card-thumbnail">
+    {# TODO: What if no image? #}
+    <div class="small-2 columns card-thumbnail-image">
+      {# TODO: ESCAPE THE TITLE. USE ATTR CORRECTLY #}
+      <a href="{{url}}" class="image-hover" data-title="{{title}}">{{image}}</a>
+    </div>
+    <div class="small-10 columns card-thumbnail-text">
+      <h3>
+        <a href="{{url}}">{{title}}</a>
+      </h3>
+      {% if list_description %}
+        <p>{{list_description}}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+
+{% macro _normalListItem(title, date, description, image, url, view_mode) %}
   <li class="general-list-item general list-item">
     {% if 'image' in view_mode %}
       <div class="list-item-image image container">
@@ -33,3 +61,4 @@
     </div>
   </li>
 {% endmacro %}
+

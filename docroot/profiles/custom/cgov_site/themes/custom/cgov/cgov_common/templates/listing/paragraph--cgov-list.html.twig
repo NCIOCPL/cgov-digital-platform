@@ -1,5 +1,31 @@
-{{ content.field_list_title }}
 {# TODO: The list item type will dictate the classes for the container. #}
-<div class="row  card-thumbnail thumbnail-section">
-  {{ content.field_list_items }}
-</div>
+{% set style = content.field_list_item_style | field_value %}
+<h3>DEBUG: {{- style -}}</h3>
+
+{# At this point in time, thumbnail lists are different from
+ # other list styles in that they are not HTML lists.
+ #}
+
+{# Header #}
+{% if style == 'list_item_title_desc_image' %}
+  {{ content.field_list_title }}
+  <div class="row  card-thumbnail thumbnail-section">
+{% else %}
+  <div class="managed-list">
+    {# TODO: Add an id for anchor - it that way on www?? #}
+    {% if content.field_list_title|field_value %}
+      <p tabindex="0" class="title">{{- content.field_list_title|field_value -}}</p>
+    {% endif %}
+    <ul>
+{% endif %}
+
+{# Contents #}
+{{ content.field_list_items }}
+
+{# footer #}
+{% if style == 'list_item_title_desc_image' %}
+  </div>
+{% else %}
+    </ul>
+  </div>
+{% endif %}
