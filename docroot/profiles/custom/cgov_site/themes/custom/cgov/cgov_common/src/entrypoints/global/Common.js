@@ -18,8 +18,8 @@ import './Common.scss';
 
 // import $ from 'jquery';
 // import 'Common/Enhancements/jQueryUIExtensions';
-// import popupFunctions from 'Common/Enhancements/popup_functions';
-// popupFunctions($);
+import popupFunctions from 'Libraries/popups/popup_functions';
+popupFunctions();
 
 // import 'Common/Plugins/Enlarge';
 // import 'Plugins/jquery.nci.prevent_enter';
@@ -32,7 +32,7 @@ import sectionNav from 'Libraries/sectionNav/sectionNav';
 // import backToTop from 'Modules/backToTop/backToTop';
 // import { makeAllAccordions } from 'Modules/accordion/accordion';
 // import tableToggle from 'Modules/tableToggle/tableToggle';
-// import flexVideo from 'Modules/videoPlayer/flexVideo';
+import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 // import formControls from 'Modules/forms/formControls';
 // import tooltips from 'Modules/tooltips/referenceTooltip';
 
@@ -102,10 +102,10 @@ const onDOMContentLoaded = () => {
 
 	// /*** END table toggling ***/
 
-	// /*** BEGIN video embedding
-	//  * This enables the embedding of YouTube videos and playlists as iframes.
-	//  ***/
-	// flexVideo();
+	/*** BEGIN video embedding
+	 * This enables the embedding of YouTube videos and playlists as iframes.
+	 ***/
+	flexVideo();
 
 	// /*** BEGIN form controls ***/
 	// formControls();
