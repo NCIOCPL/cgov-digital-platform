@@ -40,11 +40,16 @@
     .profile-title {
       font-size: 18px;
       line-height: 1.33;
+      margin-bottom: 1.25em;
+    }
+    
+    .profile-orgs {
+      margin-bottom: 1.25em;
     }
 
     .profile-org {
-      display: block;
-
+      display: inline-block;
+      
       &:not(:last-child) {
         margin-bottom: 15px;
       }
@@ -177,5 +182,11 @@
     color: $dgrey00;
     font-size: 23px;
     margin-top: 0;
+  }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
