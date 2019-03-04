@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_biography.body
+    - field.field.node.cgov_biography.field_bio_press_info
     - field.field.node.cgov_biography.field_browser_title
     - field.field.node.cgov_biography.field_campus
     - field.field.node.cgov_biography.field_card_title
@@ -59,6 +60,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_bio_press_info:
+    weight: 36
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
   field_browser_title:
     weight: 4
     label: hidden

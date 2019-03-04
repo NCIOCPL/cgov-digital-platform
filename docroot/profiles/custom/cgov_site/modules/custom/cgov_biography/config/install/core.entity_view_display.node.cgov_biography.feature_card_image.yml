@@ -2,7 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.feature_card_image
     - field.field.node.cgov_biography.body
+    - field.field.node.cgov_biography.field_bio_press_info
     - field.field.node.cgov_biography.field_browser_title
     - field.field.node.cgov_biography.field_campus
     - field.field.node.cgov_biography.field_card_title
@@ -55,6 +57,7 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
+  field_bio_press_info: true
   field_browser_title: true
   field_campus: true
   field_card_title: true

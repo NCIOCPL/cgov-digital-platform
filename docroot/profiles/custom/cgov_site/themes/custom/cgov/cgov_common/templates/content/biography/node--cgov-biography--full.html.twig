@@ -102,7 +102,9 @@
         <div>
         <div id="cgvBody">
           {{ content.body }}
-          {{ drupal_region('bio_press_info') }}
+          {% if content.field_bio_press_info[0]['#markup'] == "On" %}
+            {{ drupal_region('bio_press_info') }}
+          {% endif %}
         </div>
         {# TODO: Article footer stuff has to go somewhere. TBD. #}
         <footer class="article-footer">
