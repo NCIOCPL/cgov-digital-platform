@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - media
+id: youtube_video_url
+label: 'Youtube Video URL'
+type: 'canonical_entities:media'
+pattern: '/video/[media:mid]'
+selection_criteria:
+  bba70dfc-39f8-4464-aac6-e2a3d97f1e3e:
+    id: 'entity_bundle:media'
+    bundles:
+      cgov_video: cgov_video
+    negate: false
+    context_mapping:
+      media: media
+    uuid: bba70dfc-39f8-4464-aac6-e2a3d97f1e3e
+selection_logic: and
+weight: -5
+relationships: {  }
