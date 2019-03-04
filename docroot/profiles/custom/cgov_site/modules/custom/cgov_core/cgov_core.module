@@ -52,6 +52,8 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
  * During the install process, only EN is enabled, so use this hook
  * to add any other translations or other things needed by a new
  * language when it gets enabled.
+ *
+ * Adds new Public Use translation when a new language is installed.
  */
 function cgov_core_configurable_language_insert($entity) {
   $public_use['es'] = <<<EOMarkup
@@ -77,7 +79,7 @@ EOMarkup;
       drupal_set_message("Added block_content: $title");
     }
     else {
-      drupal_set_message("Need to add translation for block_content: '$title'' in " . __FUNCTION__);
+      drupal_set_message("Need to add translation for block_content: '$title'' in " . __FILE__ . ':' . __FUNCTION__ . '()');
     }
   }
 }
