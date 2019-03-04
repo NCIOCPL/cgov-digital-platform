@@ -1,0 +1,494 @@
+## Images
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Lead Placeholder"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'lead-placeholder.png'
+      alt: "Lead Placeholder"
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Promo Placeholder"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo-placeholder.png'
+      alt: "Promo Placeholder"
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Override Placeholder"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'override-placeholder.png'
+      alt: "Override Placeholder"
+
+
+## Create Test Content to be Used in Lists
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[No IMG] Title"
+  title__ES:
+      value: "[No IMG] Title - ES"
+  field_page_description:
+    value: "[No IMG] Page Description"
+  field_page_description__ES:
+    value: "[No IMG] Page Descriptiomn - ES"
+  field_list_description:
+    value: "[No IMG] List Description"
+  field_list_description__ES:
+    value: "[No IMG] List Descriptiomn - ES"
+  field_short_title:
+    value: "[No IMG] Short Title"
+  field_short_title__ES:
+    value: "[No IMG] Short Title - ES"
+  field_browser_title:
+    value: "[No IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[No IMG] Browser Title - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "no-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "no-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[No Lead IMG] Title"
+  title__ES:
+      value: "[No Lead IMG] Title - ES"
+  field_page_description:
+    value: "[No Lead IMG] Page Description"
+  field_page_description__ES:
+    value: "[No Lead IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[No Lead IMG] Short Title"
+  field_short_title__ES:
+    value: "[No Lead IMG] Short Title - ES"
+  field_browser_title:
+    value: "[No Lead IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[No Lead IMG] Browser Title - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "no-lead-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_pretty_url__ES:
+    value: "no-lead-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[Lead IMG] Title"
+  title__ES:
+      value: "[Lead IMG] Title - ES"
+  field_page_description:
+    value: "[Lead IMG] Page Description"
+  field_page_description__ES:
+    value: "[Lead IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[Lead IMG] Short Title"
+  field_short_title__ES:
+    value: "[Lead IMG] Short Title - ES"
+  field_browser_title:
+    value: "[Lead IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[Lead IMG] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "lead-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "lead-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[Lead Promo IMG] Title"
+  title__ES:
+      value: "[Lead Promo IMG] Title - ES"
+  field_page_description:
+    value: "[Lead Promo IMG] Page Description"
+  field_page_description__ES:
+    value: "[Lead Promo IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[Lead Promo IMG] Short Title"
+  field_short_title__ES:
+    value: "[Lead Promo IMG] Short Title - ES"
+  field_browser_title:
+    value: "[Lead Promo IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[Lead Promo IMG] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "lead-promo-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "lead-promo-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Mini Landing"
+  title__ES:
+    value: "Test Mini Landing - ES"
+  field_short_title:
+    value: "Test Mini Landing"
+  field_short_title__ES:
+    value: "Test Mini Landing - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/mini-landing'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es/mini-landing-es'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div">
+              <p>This is a content block</p>
+            </div>
+    ######## End intro content ###########
+    ########    Raw Block   ###############
+    # - entity: 'paragraph'
+    #  type: "cgov_two_item_feature_row"
+    #  field_two_item_row_cards:
+    ########    End Card Row    ###############
+    ######## Begin Thumbnail List ##############
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_title:
+        value: "List Item: Title Desc Image"
+      field_list_items:
+        ## Stock Items
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead Promo IMG] Title'
+        ## Image Overrides
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead Promo IMG] Title'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        ## Text Field Overrides
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            value: "Override Title"
+          field_override_list_description:
+            value: "Override Description"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No Lead IMG] Title'
+        ## External Links
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Title"
+          field_override_list_description:
+            - value: "External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "No Desc External Link Title"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+
+    ######## End Thumbnail List ##############
+  ### Spanish Contents
+##  field_landing_contents__ES:
