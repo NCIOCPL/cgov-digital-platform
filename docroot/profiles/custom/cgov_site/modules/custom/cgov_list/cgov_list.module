@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_list.module.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\Entity\EntityViewMode;
+
+/**
+ * Set dynamic allowed values for the list item styling.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function cgov_list_allowed_values_function(
+  FieldStorageConfig $definition,
+  ContentEntityInterface $entity = NULL,
+  $cacheable
+) {
+  // We could make this 'default' as in the default view when no
+  // mode has been specified.
+  $options = [];
+
+  // Find all the display modes for Paragraphs that are for list
+  // view modes.
+  $query = \Drupal::entityQuery('entity_view_mode')
+    ->condition('targetEntityType', 'paragraph')
+    ->condition('id', 'paragraph.list_item_', 'STARTS_WITH');
+  $mode_ids = $query->execute();
+
+  // Actually fetch the entities so we can get the labels.
+  $modes = EntityViewMode::loadMultiple($mode_ids);
+
+  // Populate the options.
+  foreach ($modes as $mode_name => $entity) {
+    $id = str_replace('paragraph.', '', $mode_name);
+    $options[$id] = $entity->label();
+  }
+
+  return $options;
+}

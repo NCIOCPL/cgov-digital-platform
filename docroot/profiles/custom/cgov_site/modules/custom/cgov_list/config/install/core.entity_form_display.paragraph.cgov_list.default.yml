@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.cgov_list.field_list_item_style
     - field.field.paragraph.cgov_list.field_list_items
     - field.field.paragraph.cgov_list.field_list_title
     - paragraphs.paragraphs_type.cgov_list
@@ -12,11 +13,17 @@ targetEntityType: paragraph
 bundle: cgov_list
 mode: default
 content:
-  field_list_items:
+  field_list_item_style:
     weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_list_items:
+    weight: 2
     settings:
-      title: List Item
-      title_plural: List Items
+      title: 'List Item'
+      title_plural: 'List Items'
       edit_mode: open
       add_mode: dropdown
       form_display_mode: default
