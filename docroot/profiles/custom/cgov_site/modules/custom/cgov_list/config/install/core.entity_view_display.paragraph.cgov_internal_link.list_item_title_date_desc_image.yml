@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.list_item_title_date_desc_image
+    - field.field.paragraph.cgov_internal_link.field_internal_link
+    - field.field.paragraph.cgov_internal_link.field_override_image_promotional
+    - field.field.paragraph.cgov_internal_link.field_override_list_description
+    - field.field.paragraph.cgov_internal_link.field_override_title
+    - paragraphs.paragraphs_type.cgov_internal_link
+id: paragraph.cgov_internal_link.list_item_title_date_desc_image
+targetEntityType: paragraph
+bundle: cgov_internal_link
+mode: list_item_title_date_desc_image
+content:
+  field_internal_link:
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: thumbnail_card_image
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_override_image_promotional:
+    type: entity_reference_entity_view
+    weight: 3
+    region: content
+    label: above
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
+  field_override_list_description:
+    type: basic_string
+    weight: 1
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_override_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

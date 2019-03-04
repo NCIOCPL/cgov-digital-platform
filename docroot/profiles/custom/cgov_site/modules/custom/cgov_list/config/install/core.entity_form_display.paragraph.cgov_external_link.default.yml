@@ -2,10 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_content_browser
     - field.field.paragraph.cgov_external_link.field_external_link
+    - field.field.paragraph.cgov_external_link.field_override_image_promotional
+    - field.field.paragraph.cgov_external_link.field_override_list_description
     - field.field.paragraph.cgov_external_link.field_override_title
     - paragraphs.paragraphs_type.cgov_external_link
   module:
+    - entity_browser
     - link
 id: paragraph.cgov_external_link.default
 targetEntityType: paragraph
@@ -13,13 +17,36 @@ bundle: cgov_external_link
 mode: default
 content:
   field_external_link:
-    weight: 1
+    weight: 2
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
     region: content
+  field_override_image_promotional:
+    weight: 3
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      field_widget_replace: false
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_override_list_description:
+    type: string_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_override_title:
     weight: 0
     settings:
