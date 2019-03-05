@@ -1,0 +1,15 @@
+{#
+  This template is here just for documentation.
+
+  This should only be used for the Crop: Display Modes.
+  The back-end will choose between:
+    * the override image (field_override_img_XXX)
+    * the cropped image (field_media_image)
+  It will remove the image that is not used. It will also remove both
+    if they have no image or crop.
+  You should leave this template as just content as it should only
+    ever have a single image field.
+  Obviously if you are making a different display that is not a crop
+    you **SHOULD** create an appropriate twig template.
+#}
+{{content}}

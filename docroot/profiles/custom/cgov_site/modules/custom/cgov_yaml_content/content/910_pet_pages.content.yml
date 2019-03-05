@@ -1,0 +1,202 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Frisco - The Roo Roo Kid"
+  short_title:
+    value: "Frisco - The Roo Roo Kid"
+  field_page_description:
+    value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  field_card_title:
+    value: "Frisco"
+  field_card_description:
+    value: "The Roo Roo Kid"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/pets/frisco'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Frisco - King of Shenandoah'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Zedd - The Adventure Dog"
+  short_title:
+    value: "Zedd - The Adventure Dog"
+  field_page_description:
+    value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  field_card_title:
+    value: "Zedd"
+  field_card_description:
+    value: "Adventure Dog"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/pets/zedd'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Zedd Octopus'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Pets"
+  field_short_title:
+    value: "Pets"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/pets'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+    ######## End intro content ###########
+    ########  Two Card Row   ###############
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Zedd - The Adventure Dog'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Frisco - The Roo Roo Kid'
+        # - entity: 'paragraph'
+        #   type: "cgov_card_external"
+        #   field_override_card_title:
+        #     - value: 'External Card Title'
+        #   field_override_card_description:
+        #     - value: 'External Card Description'
+        #   field_override_image_promotional:
+        #     - target_type: 'media'
+        #       '#process':
+        #         callback: 'reference'
+        #         args:
+        #           - 'media'
+        #           - bundle: 'cgov_image'
+        #             name: 'Find a Clinical Trial'
+        #   field_featured_url:
+        #     - uri: 'https://www.google.com'
+    ########    End Card Row    ###############
+    ######## Begin Thumbnail Row ##############
+    - entity: 'paragraph'
+      type: "cgov_thumbnail_row"
+      field_container_heading:
+        value: "Dogs"
+      field_unlimited_row_cards:
+        # - entity: 'paragraph'
+        #   type: "cgov_card_external"
+        #   field_override_card_title:
+        #     - value: "Center for Biomedical Informatics and Information Technology (CBIIT)"
+        #   field_override_list_description:
+        #     - value: "Collaborates across NCI to plan, provide, and coordinate technology, standards, and scientific computing in support of the NCI mission to speed discovery, facilitate open science, and progress towards precision treatment in cancer care and a learning healthcare system."
+        #   field_override_image_promotional:
+        #     - target_type: 'media'
+        #       '#process':
+        #         callback: 'reference'
+        #         args:
+        #           - 'media'
+        #           - bundle: 'cgov_image'
+        #             name: 'CBIIT'
+        #   field_featured_url:
+        #     - uri: 'http://cbiit.nci.nih.gov/'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Frisco - The Roo Roo Kid'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Zedd - The Adventure Dog'
+    ######## End Thumbnail Row ##############
