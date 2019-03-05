@@ -2,7 +2,7 @@
   {% import _self as macros %}
   {% for link in links %}
     <li class="{{ link.class }}">
-      <div class="{{ link.isCurrentSection ? 'current-page' : '' }}">
+      <div class="{{ link.isCurrentSectionLandingPage ? 'current-page' : '' }}">
         <a href="{{ link.href }}">{{ link.label }}</a>
         {# Sadly, for legacy reasons, we need to defer to the FE code for injecting buttons #}
         {# TODO: Post-migration refactor to move template generating to templates.  %}
