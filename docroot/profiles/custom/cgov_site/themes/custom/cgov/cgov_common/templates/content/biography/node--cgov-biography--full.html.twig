@@ -39,11 +39,11 @@
                 </div>
               {% endif %}
                 
-              {% if content.field_campus|field_value or content.field_room_number|field_value %}
+              {% if content.field_campus|field_value or content.field_office_location|field_value %}
               <p>
                 {{ content.field_campus }}
-                {{ (content.field_campus|field_value and content.field_room_number|field_value)? '|' : '' }}
-                {{ content.field_room_number }}
+                {{ (content.field_campus|field_value and content.field_office_location|field_value)? '|' : '' }}
+                {{ content.field_office_location }}
               </p>
               {% endif %}
 
