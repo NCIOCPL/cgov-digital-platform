@@ -62,6 +62,12 @@ EOMarkup;
 
   $langcode = $entity->id();
 
+  // If no translation defined, exit hook.
+  if (!isset($public_use[$langcode])) {
+    return;
+  }
+
+  // Get the existing English PublicUse block to add the translation.
   $query = \Drupal::entityQuery('block_content');
   $query->condition('info', 'Public Use')
     ->condition('langcode', 'en');
@@ -70,16 +76,14 @@ EOMarkup;
     $eid = array_shift($result);
     $block = entity_load('block_content', $eid);
     $title = $block->info->value . " - " . $langcode;
-    if (isset($public_use[$langcode]) && !$block->hasTranslation($langcode)) {
+    // Create translation if it doesn't already exist.
+    if (!$block->hasTranslation($langcode)) {
       $block_translated = $block->addTranslation('es', [
         'info' => $title,
         'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
       ]);
       $block_translated->save();
-      drupal_set_message("Added block_content: $title");
-    }
-    else {
-      drupal_set_message("Need to add translation for block_content: '$title'' in " . __FILE__ . ':' . __FUNCTION__ . '()');
+      drupal_set_message("Added Public Use block_content: $title");
     }
   }
 }
