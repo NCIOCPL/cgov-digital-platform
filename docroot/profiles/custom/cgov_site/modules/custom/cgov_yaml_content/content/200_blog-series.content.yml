@@ -1,20 +1,21 @@
+## Cancer Currents Blog
 - entity: "node"
   type: "cgov_blog_series"
-  title: "Cancer Currents Blog"
+  title: 'Cancer Currents Blog'
   title:
-    value: "Cancer Currents Blog"
+    value: 'Cancer Currents Blog'
   langcode: en
   status: 1
   moderation_state:
     value: 'published'
   field_browser_title:
-    value: 'CC Blog My Browser title'
+    value: 'Cancer Currents: An NCI Cancer Research Blog'
   field_card_title:
-    value: 'CC Blog My Card title'
+    value: 'Cancer Currents'
   field_feature_card_description:
-    value: 'News and research updates from the National Cancer Institute'
+    value: 'Cancer Currents Blog'
   field_pretty_url:
-    value: "cancer-currents-blog"
+    value: "news-events/cancer-currents-blog"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
@@ -26,7 +27,9 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             name: 'News & Events'
+  field_about_blog: 'A blog featuring news and research updates from the National Cancer Institute.'
 
+## RAS Dialogue Blog
 - entity: "node"
   type: "cgov_blog_series"
   title: "RAS Dialogue Blog"
@@ -41,9 +44,9 @@
   field_card_title:
     value: 'RAS Dialogue'
   field_feature_card_description:
-    value: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
+    value: ''
   field_pretty_url:
-    value: "ras-blog"
+    value: 'research/key-initiatives/ras/ras-central/blog'
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
@@ -55,3 +58,35 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             name: 'Research'
+  field_about_blog: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
+
+## Cancer Currents Blog Espanol
+- entity: "node"
+  type: "cgov_blog_series"
+  title: 'Temas y relatos blog'
+  title:
+    value: 'Temas y relatos blog'
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
+  field_card_title:
+    value: 'Temas y relatos blog'
+  field_feature_card_description:
+    value: 'Temas y relatos blog'
+  field_pretty_url:
+    value: "espanol/noticias/temas-y-relatos-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "emas y relatos"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+  field_about_blog: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
