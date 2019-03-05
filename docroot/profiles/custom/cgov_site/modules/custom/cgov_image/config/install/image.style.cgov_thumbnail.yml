@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.thumbnail
+  module:
+    - crop
+name: cgov_thumbnail
+label: Thumbnail
+effects:
+  01a4c5a8-7d29-432f-a8ea-c91f709336a0:
+    uuid: 01a4c5a8-7d29-432f-a8ea-c91f709336a0
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: thumbnail
+  91726472-cda9-46fc-879e-80bf5e974734:
+    uuid: 91726472-cda9-46fc-879e-80bf5e974734
+    id: image_scale
+    weight: 2
+    data:
+      width: 194
+      height: 146
+      upscale: false
