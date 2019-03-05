@@ -78,7 +78,7 @@ EOMarkup;
     $title = $block->info->value . " - " . $langcode;
     // Create translation if it doesn't already exist.
     if (!$block->hasTranslation($langcode)) {
-      $block_translated = $block->addTranslation('es', [
+      $block_translated = $block->addTranslation($langcode, [
         'info' => $title,
         'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
       ]);
