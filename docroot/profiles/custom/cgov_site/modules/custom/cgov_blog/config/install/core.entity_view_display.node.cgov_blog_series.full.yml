@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
@@ -24,209 +24,202 @@ dependencies:
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
     - field.field.node.cgov_blog_series.field_site_section
-    - image.style.thumbnail
     - node.type.cgov_blog_series
-    - workflows.workflow.editorial_workflow
   module:
-    - content_moderation
-    - entity_browser
+    - entity_reference_revisions
     - image
     - link
-    - paragraphs_asymmetric_translation_widgets
-    - path
+    - options
     - text
-id: node.cgov_blog_series.default
+    - user
+id: node.cgov_blog_series.full
 targetEntityType: node
 bundle: cgov_blog_series
-mode: default
+mode: full
 content:
-  field_about_blog:
-    weight: 12
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
-  field_allow_comments:
-    weight: 11
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
-    region: content
-  field_banner_image:
-    weight: 17
-    settings:
-      preview_image_style: thumbnail
-      progress_indicator: throbber
-    third_party_settings: {  }
-    type: image_image
-    region: content
-  field_blog_series_shortname:
-    weight: 9
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_browser_title:
-    weight: 3
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_card_title:
-    weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_feature_card_description:
-    weight: 8
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_feedburner_url:
-    weight: 14
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-    type: link_default
-    region: content
-  field_image_promotional:
-    weight: 18
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
-  field_list_description:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_num_display_posts:
-    weight: 10
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: number
-    region: content
-  field_page_description:
-    weight: 6
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_pretty_url:
-    weight: 13
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_public_use:
-    weight: 19
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_recommended_content:
-    weight: 16
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
-    third_party_settings: {  }
-    type: paragraphs_classic_asymmetric
-    region: content
-  field_recommended_content_header:
-    weight: 15
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_search_engine_restrictions:
-    weight: 20
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_short_title:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_site_section:
-    weight: 1
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  langcode:
-    type: language_select
+  content_moderation_control:
     weight: 0
     region: content
-    settings:
-      include_locked: true
-    third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 21
     settings: {  }
-    region: content
     third_party_settings: {  }
-  path:
-    type: path
+  field_about_blog:
     weight: 22
-    region: content
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-  title:
-    type: string_textfield
-    weight: 2
+    type: text_default
     region: content
+  field_allow_comments:
+    weight: 21
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_banner_image:
+    weight: 14
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_blog_series_shortname:
+    weight: 16
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_browser_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_card_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_feature_card_description:
+    weight: 7
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_feedburner_url:
+    weight: 17
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_image_promotional:
+    weight: 15
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_intro_text:
+    weight: 11
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_list_description:
+    weight: 6
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_num_display_posts:
+    weight: 20
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_page_description:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pretty_url:
+    weight: 10
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_public_use:
+    weight: 12
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_recommended_content:
+    weight: 19
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_recommended_content_header:
+    weight: 18
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_search_engine_restrictions:
+    weight: 13
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_short_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_site_section:
+    weight: 8
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  langcode:
+    type: language
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+      native_language: false
+    third_party_settings: {  }
+  links:
+    weight: 1
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   body: true
-  created: true
-  field_intro_text: true
-  promote: true
-  status: true
-  sticky: true
-  uid: true
