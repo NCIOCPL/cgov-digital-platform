@@ -1,0 +1,216 @@
+<?php
+
+/**
+ * @file
+ * Contains module hooks for images.
+ */
+
+use Drupal\crop\Entity\Crop;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * For certain fields we have override files, which will override the crop for
+ * an image. Additionally, an image that does not have a crop will still be
+ * a renderable item, except the img src attribute will be to a broken link.
+ *
+ *
+ * The V1 version of this function will clean up the render arrays such that we
+ * can ensure each of the templates only outputs a single field for rendering.
+ * It will remove any crop that had no been set previously.
+ * We only do this for the Image Crop view modes. (image_crop_XXX)
+ */
+function cgov_image_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->bundle() != 'cgov_image') {
+    return;
+  }
+
+  // Take Care of Crop Views.
+  $isMatch = preg_match('/^image_crop_(?P<img>.+)$/', $view_mode, $match);
+  if ($isMatch) {
+    _cgov_image_filter_view_image(
+      $build,
+      $entity,
+      $display,
+      $view_mode,
+      $match['img']
+    );
+    return;
+  }
+
+  // Handle Enlarge Mode for article displays.
+  if (preg_match('/^image_display_article_.+$/', $view_mode)) {
+    _cgov_image_add_enlarge_link(
+      $build,
+      $entity,
+      $display,
+      $view_mode
+    );
+  }
+
+}
+
+/**
+ * Adds in the enlarge image URI.
+ *
+ * This is used for modes that are embedded in the body content.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ */
+function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->get('field_display_enlarge')->value == 1) {
+    $build['enlarge_uri'] = $build['field_media_image']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'cgov_enlarged',
+      ],
+    ]);
+  }
+}
+
+/**
+ * Filters out unwanted image fields from view display.
+ *
+ * This is used for crop display modes to choose the override
+ * field vs. the crop.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ * @param string $img_type
+ *   The image we are rendering.
+ */
+function _cgov_image_filter_view_image(
+  array &$build,
+  EntityInterface $entity,
+  EntityViewDisplayInterface $display,
+  $view_mode,
+  $img_type
+) {
+
+  // Only certain image types will have overrides.
+  if (in_array($img_type, ['featured', 'panoramic', 'social_media', 'thumbnail'])) {
+
+    $override_field_name = 'field_override_img_' . $img_type;
+    $override_field = $entity->get($override_field_name);
+
+    if ($override_field && $override_field->target_id) {
+      // Remove the media image field.
+      unset($build['field_media_image']);
+      return;
+    }
+    else {
+      // There is no override, so remove it.
+      unset($build[$override_field_name]);
+    }
+  }
+
+  // Get the image style for the field_media_image. Guarding against a
+  // misconfigured view mode.
+  $crop_image_display = $display->get('content')['field_media_image'];
+
+  if (
+    $crop_image_display == NULL ||
+    $crop_image_display['settings'] == NULL ||
+    $crop_image_display['settings']['image_style'] == NULL
+  ) {
+    // TODO: Log a nice error.
+    // No image for you! Configure properly.
+    unset($build['field_media_image']);
+    return;
+  }
+
+  // Get the image style, so we can find the crop.
+  $image_style = $crop_image_display['settings']['image_style'];
+
+  if ($image_style == NULL) {
+    // TODO: Log a nice error.
+    // No image for you! Configure properly.
+    unset($build['field_media_image']);
+    return;
+  }
+
+  // TODO: Check the display interface to see which style.
+  // Then we can find the manual crop for that style.
+  $crop = _cgov_image_find_crop_by_style($image_style);
+
+  if ($crop == NULL) {
+    // We do not know what this crop is. For now it is because
+    // our switch statement does not have it. In the future it
+    // will because the style does not have a crop.
+    // TODO: Log a nice error.
+    unset($build['field_media_image']);
+    return;
+  }
+
+  // Make sure we have an image.
+  $cropped_field = $entity->field_media_image;
+  if (
+    $cropped_field == NULL ||
+    $cropped_field->target_id == NULL
+  ) {
+    unset($build['field_media_image']);
+    return;
+  }
+
+  $file = File::load($cropped_field->target_id);
+  $file_uri = $file->getFileUri();
+
+  // If we don't have a crop we should strip the image out.
+  if (!Crop::cropExists($file_uri, $crop)) {
+    unset($build['field_media_image']);
+    return;
+  }
+}
+
+/**
+ * Helper function to get the crop name from the image style.
+ *
+ * @param string $image_style
+ *   The image_style to find the crop for.
+ *
+ * @return string
+ *   NULL if the style does not have a crop, the name of the crop otherwise.
+ */
+function _cgov_image_find_crop_by_style($image_style) {
+  // TODO: Actually find the crop from the style.
+  switch ($image_style) {
+    case "cgov_article":
+    case "cgov_enlarged":
+      return "freeform";
+
+    case "cgov_featured":
+    case "cgov_social_media":
+      return "4x3";
+
+    case "cgov_panoramic":
+      return "16x9";
+
+    case "cgov_thumbnail":
+      return "thumbnail";
+  }
+  return NULL;
+}
