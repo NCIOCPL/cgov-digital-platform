@@ -7,6 +7,10 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - field.field.media.cgov_image.field_override_img_featured
+    - field.field.media.cgov_image.field_override_img_panoramic
+    - field.field.media.cgov_image.field_override_img_social_media
+    - field.field.media.cgov_image.field_override_img_thumbnail
     - image.style.thumbnail
     - media.type.cgov_image
   module:
@@ -71,6 +75,42 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_override_img_featured:
+    weight: 11
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_override_img_panoramic:
+    weight: 14
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_override_img_social_media:
+    weight: 12
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_override_img_thumbnail:
+    weight: 13
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
     region: content
   thumbnail:
     type: image
