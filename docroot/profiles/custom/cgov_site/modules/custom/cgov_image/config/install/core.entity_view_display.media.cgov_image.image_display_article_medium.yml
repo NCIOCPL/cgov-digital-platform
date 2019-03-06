@@ -6,11 +6,18 @@ dependencies:
     - field.field.media.cgov_image.field_accessible_version
     - field.field.media.cgov_image.field_caption
     - field.field.media.cgov_image.field_credit
+    - field.field.media.cgov_image.field_display_enlarge
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - field.field.media.cgov_image.field_override_img_featured
+    - field.field.media.cgov_image.field_override_img_panoramic
+    - field.field.media.cgov_image.field_override_img_social_media
+    - field.field.media.cgov_image.field_override_img_thumbnail
+    - image.style.cgov_article
     - media.type.cgov_image
   module:
     - image
+    - options
     - text
 id: media.cgov_image.image_display_article_medium
 targetEntityType: media
@@ -32,19 +39,31 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_display_enlarge:
+    type: list_key
+    weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_media_image:
     weight: 0
     label: hidden
     settings:
-      image_style: ''
+      image_style: cgov_article
       image_link: ''
     third_party_settings: {  }
     type: image
     region: content
 hidden:
+  content_moderation_control: true
   created: true
   field_accessible_version: true
   field_original_source: true
+  field_override_img_featured: true
+  field_override_img_panoramic: true
+  field_override_img_social_media: true
+  field_override_img_thumbnail: true
   langcode: true
   name: true
   thumbnail: true
