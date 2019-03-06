@@ -1,0 +1,129 @@
+#### This is a collection of images featureing pets for testing our
+#### image scenarios. (Now that images are more complicated we need
+#### some good test content)
+
+#### Remember the images are:
+## * Article (uses freeform crop; max width 970px)
+## * Enlarge (freeform crop; no limit)
+## * Thumbnail (thumbnail (4:3) crop; 194x146)
+## * Featured (4x3 crop; 324x243)
+## * Social Media (4x3 crop; no size)
+## * Panoramic (16x9 crop; 577x324)
+##
+## Crops not used:
+## * 1x1, 3x4, 9x16
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Frisco - King of Shenandoah"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_frisco_king_of_snp.jpg'
+      alt: 'Frisco king of Shenandoah'
+  field_credit:
+    value: "BP"
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Frisco enjoying the view in Shenandoah National Park on a nice spring day.
+  field_override_img_featured:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_frisco_featured.jpg'
+      alt: 'Frisco king of Shenandoah'
+  field_override_img_panoramic:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_frisco_panoramic.jpg'
+      alt: 'Frisco king of Shenandoah'
+  field_override_img_social_media:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_frisco_social_media.jpg'
+      alt: 'Frisco king of Shenandoah'
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_frisco_thumbnail.jpg'
+      alt: 'Frisco king of Shenandoah'
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Zedd Octopus"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_zedd_happy.jpg'
+      alt: 'Zedd vs the Octopus'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 190
+                y: 241
+                width: 935
+                height: 701
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 37
+                y: 113
+                width: 1413
+                height: 1060
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 0
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 38
+                y: 158
+                width: 1404
+                height: 1404
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Zedd having an exciting fun fight with an octopus.
+  field_display_enlarge:
+    value:
+      - 1

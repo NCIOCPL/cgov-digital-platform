@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.image_crop_enlarged
+    - field.field.media.cgov_image.field_accessible_version
+    - field.field.media.cgov_image.field_caption
+    - field.field.media.cgov_image.field_credit
+    - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_original_source
+    - image.style.cgov_enlarged
+    - media.type.cgov_image
+  module:
+    - image
+id: media.cgov_image.image_crop_enlarged
+targetEntityType: media
+bundle: cgov_image
+mode: image_crop_enlarged
+content:
+  field_media_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: cgov_enlarged
+    third_party_settings: {  }
+    type: image_url
+    region: content
+hidden:
+  content_moderation_control: true
+  created: true
+  field_accessible_version: true
+  field_caption: true
+  field_credit: true
+  field_original_source: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

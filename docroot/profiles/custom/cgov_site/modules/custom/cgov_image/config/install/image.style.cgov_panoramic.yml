@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.16x9
+  module:
+    - crop
+name: cgov_panoramic
+label: Panoramic
+effects:
+  e6637c4f-a2d0-40f6-9efa-c58dc6ec6180:
+    uuid: e6637c4f-a2d0-40f6-9efa-c58dc6ec6180
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 16x9
+  8d0c6861-4e88-49c6-aea8-4498de0ec661:
+    uuid: 8d0c6861-4e88-49c6-aea8-4498de0ec661
+    id: image_scale
+    weight: 2
+    data:
+      width: 577
+      height: 324
+      upscale: false

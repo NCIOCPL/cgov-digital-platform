@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.freeform
+  module:
+    - crop
+name: cgov_article
+label: Article
+effects:
+  f7071c86-5969-4978-9978-226e1baae833:
+    uuid: f7071c86-5969-4978-9978-226e1baae833
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: freeform
+  fcd1f3da-7886-4c20-8665-236e0fc7ca6a:
+    uuid: fcd1f3da-7886-4c20-8665-236e0fc7ca6a
+    id: image_scale
+    weight: 2
+    data:
+      width: 970
+      height: null
+      upscale: false
