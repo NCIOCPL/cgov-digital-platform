@@ -1,13 +1,13 @@
 {# TODO: The list item type will dictate the classes for the container. #}
-{% set style = content.field_list_item_style | field_value %}
-<h3>DEBUG: {{- style -}}</h3>
+{% set style = paragraph.field_list_item_style.value %}
+<!-- List Style: {{- style -}} -->
 
 {# At this point in time, thumbnail lists are different from
  # other list styles in that they are not HTML lists.
  #}
 
 {# Header #}
-{% if style == 'list_item_title_desc_image' %}
+{% if style is same as('list_item_title_desc_image') %}
   {{ content.field_list_title }}
   <div class="row  card-thumbnail thumbnail-section">
 {% else %}
