@@ -4,7 +4,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_biography.body
-    - field.field.node.cgov_biography.field_bio_press_info
     - field.field.node.cgov_biography.field_browser_title
     - field.field.node.cgov_biography.field_campus
     - field.field.node.cgov_biography.field_card_title
@@ -12,6 +11,7 @@ dependencies:
     - field.field.node.cgov_biography.field_date_posted
     - field.field.node.cgov_biography.field_date_reviewed
     - field.field.node.cgov_biography.field_date_updated
+    - field.field.node.cgov_biography.field_display_bio_press_info
     - field.field.node.cgov_biography.field_email_address
     - field.field.node.cgov_biography.field_feature_card_description
     - field.field.node.cgov_biography.field_first_name
@@ -60,16 +60,6 @@ content:
     weight: 0
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_bio_press_info:
-    type: boolean
-    weight: 32
-    region: content
-    label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
     third_party_settings: {  }
   field_browser_title:
     weight: 4
@@ -131,6 +121,13 @@ content:
       display_strategy: all
     third_party_settings: {  }
     type: cgov_date_formatter
+    region: content
+  field_bio_press_info:
+    weight: 32
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_email_address:
     weight: 22

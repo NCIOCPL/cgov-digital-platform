@@ -68,7 +68,7 @@
 
         <div id="cgvBody">
           {{ content.body }}
-          {% if content.field_bio_press_info[0]['#markup'] == "On" %}
+          {% if node.field_display_bio_press_info.value == '1' %}
             {{ drupal_region('bio_press_info') }}
           {% endif %}
         </div>

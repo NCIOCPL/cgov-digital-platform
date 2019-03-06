@@ -1,11 +1,14 @@
+uuid: e28ed7ae-184d-45b3-bdbc-9d6ad44681e1
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_bio_press_info
+    - field.storage.node.field_display_bio_press_info
     - node.type.cgov_biography
-id: node.cgov_biography.field_bio_press_info
-field_name: field_bio_press_info
+  module:
+    - options
+id: node.cgov_biography.field_display_bio_press_info
+field_name: field_display_bio_press_info
 entity_type: node
 bundle: cgov_biography
 label: 'Show Press Information for Journalists'
@@ -16,7 +19,5 @@ default_value:
   -
     value: 0
 default_value_callback: ''
-settings:
-  on_label: 'On'
-  off_label: 'Off'
-field_type: boolean
+settings: {  }
+field_type: list_integer
