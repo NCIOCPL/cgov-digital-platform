@@ -38,13 +38,8 @@
                   {% endif %}
                 </div>
               {% endif %}
-<<<<<<< HEAD
-                
-              {% if content.field_campus|field_value or content.field_office_location|field_value %}
-=======
 
               {% if content.field_campus|field_value or content.field_room_number|field_value %}
->>>>>>> upstream/ticket/158-event
               <p>
                 {{ content.field_campus }}
                 {{ (content.field_campus|field_value and content.field_office_location|field_value)? '|' : '' }}
