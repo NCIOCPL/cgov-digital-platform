@@ -25,20 +25,14 @@ dependencies:
     - node.type.cgov_blog_post
   module:
     - datetime
-    - text
     - user
 id: node.cgov_blog_post.blog_post_title_date_author_desc_img
 targetEntityType: node
 bundle: cgov_blog_post
 mode: blog_post_title_date_author_desc_img
 content:
-  content_moderation_control:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_author:
-    weight: 3
+    weight: 2
     label: hidden
     settings:
       link_to_entity: false
@@ -46,7 +40,7 @@ content:
     type: string
     region: content
   field_date_posted:
-    weight: 2
+    weight: 1
     label: hidden
     settings:
       format_type: medium
@@ -56,34 +50,31 @@ content:
     region: content
   field_image_article:
     type: entity_reference_entity_view
-    weight: 5
+    weight: 0
     region: content
     label: hidden
     settings:
       view_mode: image_display_article_medium
       link: false
     third_party_settings: {  }
-  field_intro_text:
-    type: text_default
-    weight: 4
+  field_list_description:
+    type: string
+    weight: 3
     region: content
     label: hidden
-    settings: {  }
-    third_party_settings: {  }
-  links:
-    weight: 1
-    region: content
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
 hidden:
   body: true
+  content_moderation_control: true
   field_blog_series: true
   field_blog_topics: true
   field_browser_title: true
   field_card_title: true
   field_feature_card_description: true
   field_image_promotional: true
-  field_list_description: true
+  field_intro_text: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true
@@ -92,3 +83,4 @@ hidden:
   field_short_title: true
   field_site_section: true
   langcode: true
+  links: true
