@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.blog_post_title_date_author_desc_img
     - field.storage.node.body
     - field.storage.node.field_date_posted
     - node.type.cgov_blog_post
@@ -71,12 +72,10 @@ display:
       style:
         type: default
       row:
-        type: fields
+        type: 'entity:node'
         options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
+          relationship: none
+          view_mode: blog_post_title_date_author_desc_img
       fields:
         title:
           id: title
