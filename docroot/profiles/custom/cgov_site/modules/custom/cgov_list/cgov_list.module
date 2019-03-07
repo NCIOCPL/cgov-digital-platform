@@ -9,10 +9,9 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\Entity\EntityViewMode;
 
 /**
- * Set dynamic allowed values for the list item styling.
+ * Set allowed values for the list item styling.
  *
  * @param \Drupal\field\Entity\FieldStorageConfig $definition
  *   The field definition.
@@ -31,25 +30,15 @@ function cgov_list_allowed_values_function(
   ContentEntityInterface $entity = NULL,
   $cacheable
 ) {
-  // We could make this 'default' as in the default view when no
-  // mode has been specified.
-  $options = [];
-
-  // Find all the display modes for Paragraphs that are for list
-  // view modes.
-  $query = \Drupal::entityQuery('entity_view_mode')
-    ->condition('targetEntityType', 'paragraph')
-    ->condition('id', 'paragraph.list_item_', 'STARTS_WITH');
-  $mode_ids = $query->execute();
-
-  // Actually fetch the entities so we can get the labels.
-  $modes = EntityViewMode::loadMultiple($mode_ids);
-
-  // Populate the options.
-  foreach ($modes as $mode_name => $entity) {
-    $id = str_replace('paragraph.', '', $mode_name);
-    $options[$id] = $entity->label();
-  }
+  // This initially queried the view modes for paragraphs; however,
+  // managed lists should only use a subset of the list item display
+  // modes. So we are keeping it like this if the future requires it,
+  // also it is much easier to change post go-live.
+  $options = [
+    'list_item_title' => 'Compact',
+    'list_item_title_desc' => 'Title and Description',
+    'list_item_title_desc_image' => 'Title, Description, and Image',
+  ];
 
   return $options;
 }
