@@ -63,10 +63,6 @@ RUN CD_VERSION=2.44 && echo "Using chromedriver version: "$CD_VERSION \
   && chmod 755 /opt/selenium/chromedriver-latest \
   && ln -fs /opt/selenium/chromedriver-latest /usr/bin/chromedriver
 
-# Set Timezone
-RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
-
 
 # Replace configuration files with our own.
 ## We will be mounting these in the composer so that

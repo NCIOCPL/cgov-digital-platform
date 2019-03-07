@@ -7,4 +7,5 @@ module.exports = {
     "Minilanding": path.resolve(__dirname, "src/entrypoints/minilanding/Minilanding.js"),
     "CancerCenters": path.resolve(__dirname, "src/entrypoints/cancerCenters/CancerCenters.js"),
     "BlogPost": path.resolve(__dirname, "src/entrypoints/blogPost/BlogPost.js"),
+    "Biography": path.resolve(__dirname, "src/entrypoints/biography/Biography.js")
 }
