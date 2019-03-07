@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.cgov_event.field_event_series
     - field.field.node.cgov_event.field_event_start_date
     - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_article
     - field.field.node.cgov_event.field_image_promotional
     - field.field.node.cgov_event.field_list_description
     - field.field.node.cgov_event.field_page_description
@@ -113,13 +114,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_promotional:
+  field_image_article:
     type: entity_reference_entity_view
     weight: 25
     region: content
     label: hidden
     settings:
-      view_mode: image_crop_article
+      view_mode: image_display_article_medium
       link: false
     third_party_settings: {  }
   field_list_description:
@@ -177,6 +178,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_image_promotional: true
   field_pretty_url: true
   field_search_engine_restrictions: true
   field_site_section: true
