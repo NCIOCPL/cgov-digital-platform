@@ -21,6 +21,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
@@ -183,6 +184,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_show_list_thumbnails:
+    weight: 23
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_site_section:
     weight: 8

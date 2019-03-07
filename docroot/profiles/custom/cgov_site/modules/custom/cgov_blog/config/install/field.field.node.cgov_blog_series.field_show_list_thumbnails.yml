@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_show_list_thumbnails
+    - node.type.cgov_blog_series
+  module:
+    - options
+id: node.cgov_blog_series.field_show_list_thumbnails
+field_name: field_show_list_thumbnails
+entity_type: node
+bundle: cgov_blog_series
+label: 'List Thumbnails'
+description: 'Select `Show Thumbnails` to display a thumbnail image on a Blog Series listing page.'
+required: true
+translatable: false
+default_value:
+  -
+    value: '1'
+default_value_callback: ''
+settings: {  }
+field_type: list_string
