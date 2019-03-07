@@ -32,7 +32,7 @@ class CgovGlossifier extends CKEditorPluginBase {
     return [
       'cgov_glossifier' => [
         'label' => t('Glossify'),
-        'image' => 'profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/images/icon.png',
+        'image' => 'profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/images/button.png',
       ],
     ];
   }
