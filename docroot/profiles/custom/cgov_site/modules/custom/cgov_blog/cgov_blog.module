@@ -34,6 +34,15 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
       $form['field_blog_series']['#disabled'] = TRUE;
     }
   }
+
+  // Set field properties for Blog Series.
+  if ($form_id == 'node_cgov_blog_series_form' || $form_id == 'node_cgov_blog_series_edit_form') {
+
+    // Draw the custom description for the Feedburner field only.
+    $description = $form['field_feedburner_url']['widget']['#description'];
+    $form['field_feedburner_url']['widget'][0]['uri']['#description'] = $description;
+  }
+
 }
 
 /**

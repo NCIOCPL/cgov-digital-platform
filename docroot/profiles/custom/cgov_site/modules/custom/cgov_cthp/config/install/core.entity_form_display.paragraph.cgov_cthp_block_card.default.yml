@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_cthp_block_card.field_cthp_card_theme
+    - field.field.paragraph.cgov_cthp_block_card.field_cthp_card_title
+    - field.field.paragraph.cgov_cthp_block_card.field_cthp_block_card_content
+    - paragraphs.paragraphs_type.cgov_cthp_block_card
+id: paragraph.cgov_cthp_block_card.default
+targetEntityType: paragraph
+bundle: cgov_cthp_block_card
+mode: default
+content:
+  field_cthp_block_card_content:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_cthp_card_theme:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_cthp_card_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

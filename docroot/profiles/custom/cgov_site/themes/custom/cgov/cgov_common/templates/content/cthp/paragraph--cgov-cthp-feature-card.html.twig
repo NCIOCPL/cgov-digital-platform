@@ -1,0 +1,13 @@
+<div class="equalheight bgWhite {{ content.field_cthp_card_theme }}">
+  <h2 style="">{{ content.field_cthp_card_title}}</h2>
+  {{ content.field_cthp_featured_content }}
+  {% set title = content.field_cthp_featured_content[0]["#node"].title.value %}
+  {% set url = path('entity.node.canonical', {'node':  content.field_cthp_featured_content[0]["#node"].nid[0].value}) %}
+  <div class="cardBody">
+    <ul>
+      <li>
+        <a href="{{ url }}" class="arrow-link">{{ title }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

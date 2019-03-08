@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: blog_series_url
+label: 'Blog Series URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  90f2308f-2f3c-41a0-8db1-e6c7c3e9dbf0:
+    id: node_type
+    bundles:
+      cgov_blog_series: cgov_blog_series
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 90f2308f-2f3c-41a0-8db1-e6c7c3e9dbf0
+selection_logic: and
+weight: -5
+relationships: {  }
