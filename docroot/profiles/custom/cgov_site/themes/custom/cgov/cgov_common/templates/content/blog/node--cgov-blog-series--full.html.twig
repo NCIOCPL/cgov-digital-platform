@@ -30,8 +30,11 @@ START OF BLOG SERIES
 
     === Debug ===
     <div>
-      {{ drupal_view('cgov_block_blog_posts','block_1',node.id) }}
-
+      <div class="dynamic list">
+        <ul>
+          {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
+        </ul>
+      </div>
       {{ content.field_blog_series }}
       {{ content.field_blog_topics }}
     </div>

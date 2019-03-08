@@ -3,38 +3,25 @@ status: true
 dependencies:
   config:
     - page_manager.page.node_view
-    - views.view.cgov_block_blog_posts
   module:
     - ctools
     - panels
-    - views
 id: node_view-panels_variant-1
 label: 'Blog Series'
 variant: panels_variant
 variant_settings:
   blocks:
-    f4b8e3df-5498-45b5-abc6-4bc3d8ff44d2:
+    f8946f29-8bb4-4c63-ace3-9d5861e1f940:
       id: 'entity_view:node'
       label: 'Blog Series Page Content'
       provider: ctools
       label_display: '0'
-      view_mode: default
+      view_mode: full
       region: content
       weight: 0
-      uuid: f4b8e3df-5498-45b5-abc6-4bc3d8ff44d2
+      uuid: f8946f29-8bb4-4c63-ace3-9d5861e1f940
       context_mapping:
         entity: node
-    6bd97aa1-6b38-4c8e-9107-81f4803dd188:
-      id: 'views_block:cgov_block_blog_posts-block_bp_list_th'
-      label: 'Blog Post List Content'
-      provider: views
-      label_display: '0'
-      views_label: 'Blog Post List Content'
-      items_per_page: none
-      region: content
-      weight: 0
-      uuid: 6bd97aa1-6b38-4c8e-9107-81f4803dd188
-      context_mapping: {  }
   id: panels_variant
   uuid: 489b60a1-9116-4f9d-a6e1-f4cfd8c1ee7c
   label: null
@@ -46,7 +33,7 @@ variant_settings:
   storage_id: node_view-panels_variant-1
   builder: standard
 page: node_view
-weight: 0
+weight: -10
 selection_criteria:
   -
     id: 'entity_bundle:node'
