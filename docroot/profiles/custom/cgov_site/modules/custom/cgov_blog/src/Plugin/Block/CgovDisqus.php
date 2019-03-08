@@ -118,71 +118,78 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    $build = [];
 
-    // Verify that this is an entity object.
-    if ($curr_entity = $this->getCurrEntity()) {
-      $bpid = $curr_entity->id();
-      $bsid = $curr_entity->get('field_blog_series')->target_id;
-      $owner = $this->getNodeStorage()->load($bsid)->get('field_pretty_url')->value;
-    }
-    // If not an entity object, exit build():
-    else {
-      return;
+    // Verify that this is an entity object and that we have legitimate values.
+    if ($entity = $this->getCurrEntity()) {
+      try {
+        $bs_nid = $entity->get('field_blog_series')->target_id;
+        $bs_entity = $this->getNodeStorage()->load($bs_nid);
+        $has_comments = $bs_entity->get('field_allow_comments')->value;
+      }
+      catch (Exception $e) {
+        ksm('not now said the cow');
+        return $build;
+      }
     }
 
-    $debug = [
+    // If 'Allow Comments' is selected, output the Disqus snippet data.
+    // TODO: create template, remove always true condition.
+    if (($bs_entity && $has_comments) || 1 == 1) {
+      $build = [
+        '#markup' => $this->t('
+          <div id="disqus_thread"></div>
+          <script>
+              /**
+               *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
+               *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 
+               *  PLATFORM OR CMS.
+               *  
+               *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
+               *  https://disqus.com/admin/universalcode/#configuration-variables
+               */
+              /*
+
+              // TODO: Generate programatically.
+              var disqus_identifier = "rx:cgvBlogPost-1140158";
+              var disqus_url = "https://www.cancer.gov/news-events/cancer-currents-blog/foo";
+
+              var disqus_config = function () {
+                  // Replace PAGE_URL with your page′s canonical URL variable
+                  this.page.url = disqus_url;
+                  
+                  // Replace PAGE_IDENTIFIER with your page′s unique identifier variable
+                  this.page.identifier = disqus_identifier; 
+              };
+              */
+              
+              (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+                  var d = document, s = d.createElement("script");
+                  var disqus_shortname = "cancer-currents-dev";
+                  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+                  s.src = "https://" + disqus_shortname + ".disqus.com/embed.js";                
+                  s.setAttribute("data-timestamp", +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script>
+          <noscript>
+              Please enable JavaScript to view the 
+              <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+                  comments powered by Disqus.
+              </a>
+          </noscript>
+        '),
+      ];
+    }
+
+    // Debugging array.
+    $build['#muh_debugger'] = [
       'debug' => '~~ Debugging array ~~',
-      'owner' => $owner,
-      'post-nid' => $bpid,
-      'series-nid' => $bsid,
-      'its-a-me' => 'Mario!',
+      'series-nid' => $bs_nid,
+      'comments-allowed' => $has_comments,
     ];
-    ksm($debug);
+    ksm($build);
 
-    $build = [
-      '#markup' => $this->t('
-        <div id="disqus_thread"></div>
-        <script>
-            /**
-             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
-             *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 
-             *  PLATFORM OR CMS.
-             *  
-             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
-             *  https://disqus.com/admin/universalcode/#configuration-variables
-             */
-            /*
-
-            // TODO: Generate programatically.
-            var disqus_identifier = "rx:cgvBlogPost-1140158";
-            var disqus_url = "https://www.cancer.gov/news-events/cancer-currents-blog/foo";
-
-            var disqus_config = function () {
-                // Replace PAGE_URL with your page′s canonical URL variable
-                this.page.url = disqus_url;
-                
-                // Replace PAGE_IDENTIFIER with your page′s unique identifier variable
-                this.page.identifier = disqus_identifier; 
-            };
-            */
-            
-            (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-                var d = document, s = d.createElement("script");
-                var disqus_shortname = "cancer-currents-dev";
-                // IMPORTANT: Replace EXAMPLE with your forum shortname!
-                s.src = "https://" + disqus_shortname + ".disqus.com/embed.js";                
-                s.setAttribute("data-timestamp", +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>
-            Please enable JavaScript to view the 
-            <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-                comments powered by Disqus.
-            </a>
-        </noscript>
-      '),
-    ];
     return $build;
   }
 
