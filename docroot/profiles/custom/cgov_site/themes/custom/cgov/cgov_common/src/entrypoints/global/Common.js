@@ -30,7 +30,7 @@ import mobilemenu from 'Libraries/mainNav/mobilemenu';
 import sectionNav from 'Libraries/sectionNav/sectionNav';
 // import exitDisclaimer from 'Common/Enhancements/exitDisclaimer';
 // import backToTop from 'Modules/backToTop/backToTop';
-// import { makeAllAccordions } from 'Modules/accordion/accordion';
+import { makeAllAccordions } from 'Core/libraries/accordion';
 // import tableToggle from 'Modules/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 // import formControls from 'Modules/forms/formControls';
@@ -111,7 +111,7 @@ const onDOMContentLoaded = () => {
 	// formControls();
 
 	// /*** BEGIN accordionizer ***/
-	// makeAllAccordions();
+	makeAllAccordions();
 
 	// /*** BEGIN page outlining ***/
 	// // generate the page outline -- this is used for all page-/document-level navigation
