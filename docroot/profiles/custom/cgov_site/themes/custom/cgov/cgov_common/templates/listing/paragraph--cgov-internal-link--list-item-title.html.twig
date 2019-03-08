@@ -12,9 +12,6 @@
   {# ###### Setup the URL ###### #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {# ###### Setup View Mode ######## #}
-  {% set view_mode = _context.view_mode %}
-
-  {{ listItemMacros.listItem(title, null, null, null, url, view_mode) }}
+  {{ listItemMacros.list_item_title(title, url, true) }}
 
 {% endif %}
