@@ -3,7 +3,7 @@
     icons: 'button',
 
     init: editor => {
-      editor.ui.addButton('cgov_glossifier', {
+      editor.ui.addButton('Cgov_glossifier', {
         label: Drupal.t('Glossify Page'),
         icon: 'button',
         toolbar: 'tools, 0',

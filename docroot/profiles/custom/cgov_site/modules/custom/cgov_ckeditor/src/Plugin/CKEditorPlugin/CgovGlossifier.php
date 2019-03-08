@@ -29,10 +29,12 @@ class CgovGlossifier extends CKEditorPluginBase {
   public function getButtons() {
     // Make sure that the path to the image matches the file structure of
     // the CKEditor plugin you are implementing.
+    // NOTE: It doesn't matter that you can specify custom paths. For the icon
+    // to display correctly it needs to be in an icons folder.
     return [
-      'cgov_glossifier' => [
+      'Cgov_glossifier' => [
         'label' => t('Glossify'),
-        'image' => 'profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/images/button.png',
+        'image' => drupal_get_path('module', 'cgov_ckeditor') . '/js/plugins/cgov_glossifier/icons/button.png',
       ],
     ];
   }
