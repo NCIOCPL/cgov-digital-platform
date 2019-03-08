@@ -1,0 +1,56 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.node_view
+  module:
+    - cgov_blog
+    - ctools
+    - panels
+id: node_view-panels_variant-1
+label: 'Blog Post'
+variant: panels_variant
+variant_settings:
+  blocks:
+    e25cefdf-f687-495d-81aa-c03cd5a5d043:
+      id: 'entity_view:node'
+      label: 'Blog Post Full Content'
+      provider: ctools
+      label_display: '0'
+      view_mode: default
+      region: content
+      weight: 0
+      uuid: e25cefdf-f687-495d-81aa-c03cd5a5d043
+      context_mapping:
+        entity: node
+    5df7eb3e-e937-4eaa-bc98-eda8be75cfed:
+      id: cgov_disqus
+      label: 'Cgov Disqus Block'
+      provider: cgov_blog
+      label_display: '0'
+      region: content
+      weight: 0
+      uuid: 5df7eb3e-e937-4eaa-bc98-eda8be75cfed
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 32baa270-9b94-4e70-9868-f9c6f3f48b8c
+  label: null
+  weight: 0
+  layout: layout_onecol
+  layout_settings: {  }
+  page_title: ''
+  storage_type: page_manager
+  storage_id: node_view-panels_variant-1
+  builder: standard
+page: node_view
+weight: -10
+selection_criteria:
+  -
+    id: 'entity_bundle:node'
+    bundles:
+      cgov_blog_post: cgov_blog_post
+    negate: false
+    context_mapping:
+      node: node
+selection_logic: and
+static_context: {  }
