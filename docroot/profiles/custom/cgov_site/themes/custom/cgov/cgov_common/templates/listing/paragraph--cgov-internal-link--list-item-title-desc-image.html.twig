@@ -3,15 +3,15 @@
 {% if content.field_internal_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title|field_value %}
   {% else %}
     {% set title = content.field_internal_link[0]["#node"].title.value %}
   {% endif %}
 
   {# ###### Setup Description ####### #}
-  {% if content.field_override_list_description[0] %}
-    {% set description = content.field_override_list_description[0] %}
+  {% if content.field_override_list_description|field_value %}
+    {% set description = content.field_override_list_description|field_value %}
   {% elseif content.field_internal_link[0]["#node"].field_list_description[0] %}
     {% set description = content.field_internal_link[0]["#node"].field_list_description[0].value %}
   {% elseif content.field_internal_link[0]["#node"].field_page_description[0] %}

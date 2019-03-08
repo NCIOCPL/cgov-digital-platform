@@ -3,8 +3,8 @@
 {% if content.field_internal_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title|field_value %}
   {% else %}
     {% set title = content.field_internal_link[0]["#node"].title.value %}
   {% endif %}
