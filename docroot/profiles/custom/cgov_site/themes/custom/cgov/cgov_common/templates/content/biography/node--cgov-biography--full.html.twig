@@ -68,15 +68,9 @@
 
         <div id="cgvBody">
           {{ content.body }}
-
-          {# TODO: replace placeholder below with customizable content #}
-          <div class="press-contact">
-            <h2>Press Contacts</h2>
-            <p>To request an interview with NCI researchers, contact the NCI Office of Media Relations.<br />
-              <a href="mailto:ncipressofficers@mail.nih.gov" class="press-contact-email">ncipressofficers@mail.nih.gov</a><br />
-              <span class="press-contact-phone">240-760-6600</span>
-            </p>
-          </div>
+          {% if node.field_display_bio_press_info.value == '1' %}
+            {{ drupal_region('bio_press_info') }}
+          {% endif %}
         </div>
 
         <footer class="article-footer">

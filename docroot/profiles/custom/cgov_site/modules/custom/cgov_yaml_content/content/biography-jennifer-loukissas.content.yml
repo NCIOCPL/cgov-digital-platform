@@ -1,6 +1,21 @@
 ### TESTS:
 # Biography content type
 
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Jennifer K. Loukissas, M.P.P."
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Loukissas_Jennifer_2016-ret_160x140-WEB.jpg'
+      alt: 'Jennifer K. Loukissas, M.P.P.'
 - entity: "node"
   type: "cgov_biography"
   langcode: en
@@ -20,13 +35,13 @@
   field_short_title:
     value: "Jennifer K. Loukissas, M.P.P."
   field_browser_title:
-    value: "Jennifer K. Loukissas, M.P.P. - Biography"
+    value: "Jennifer K. Loukissas, M.P.P., biosketch and professional background"
   field_page_description:
-    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+    value: "Jennifer K. Loukissas, M.P.P., biosketch and professional background"
   field_list_description:
-    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+    value: "Jennifer K. Loukissas, M.P.P., biosketch and professional background"
   field_feature_card_description:
-    value: "Biography page for Jennifer K. Loukissas, M.P.P."
+    value: "Jennifer K. Loukissas, M.P.P., biosketch and professional background"
   field_first_name:
     value: "Jennifer"
   field_middle_name:
@@ -79,5 +94,5 @@
         args:
           - 'media'
           - bundle: 'cgov_image'
-            name: 'Ocean Sunset View Mykonos'
+            name: 'Jennifer K. Loukissas, M.P.P.'
   field_search_engine_restrictions: 0
