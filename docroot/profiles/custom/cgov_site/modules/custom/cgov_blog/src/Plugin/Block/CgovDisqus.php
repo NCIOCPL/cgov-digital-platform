@@ -5,7 +5,6 @@ namespace Drupal\cgov_blog\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,13 +28,6 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
   protected $routeMatcher;
 
   /**
-   * An entity query.
-   *
-   * @var Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entityQuery;
-
-  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -53,8 +45,6 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin implementation definition.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
    *   The route matcher.
-   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
-   *   An entity query.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    */
@@ -63,12 +53,10 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
     $plugin_id,
     $plugin_definition,
     RouteMatchInterface $route_matcher,
-    QueryFactory $entity_query,
     EntityTypeManagerInterface $entity_type_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatcher = $route_matcher;
-    $this->entityQuery = $entity_query;
     $this->entityTypeManager = $entity_type_manager;
   }
 
@@ -81,7 +69,6 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
       $plugin_id,
       $plugin_definition,
       $container->get('current_route_match'),
-      $container->get('entity.query'),
       $container->get('entity_type.manager')
     );
   }
@@ -115,83 +102,31 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Returns markup object - the Disqus embed link in this case.
+   *
    * {@inheritdoc}
    */
   public function build() {
     $build = [];
 
-    // Verify that this is an entity object and that we have legitimate values.
-    if ($entity = $this->getCurrEntity()) {
-      try {
-        $bs_nid = $entity->get('field_blog_series')->target_id;
-        $bs_entity = $this->getNodeStorage()->load($bs_nid);
-        $has_comments = $bs_entity->get('field_allow_comments')->value;
-      }
-      catch (Exception $e) {
-        ksm('not now said the cow');
-        return $build;
-      }
+    // Verify the entity object and parent series.
+    if ($post_node = $this->getCurrEntity()) {
+      $series_nid = $post_node->get('field_blog_series')->target_id;
+      $series_node = $this->getNodeStorage()->load($series_nid);
     }
 
     // If 'Allow Comments' is selected, output the Disqus snippet data.
-    // TODO: create template, remove always true condition.
-    // TODO: generate prod vs dev shortname, unique ID, get hostname/path.
-    // TODO: verify that this is the latest version of the markup.
-    if (($bs_entity && $has_comments) || 1 == 1) {
+    // TODO: Remove "always true" condition.
+    if ($series_node && $series_node->get('field_allow_comments')->value) {
+      // IMPORTANT -- ALL THE SHORTNAMES ARE BEING SET TO DEV FOR NOW.
+      // TODO: GET THE ENVIRONMENT VARIABLE FOR PROD VS DEV AND CHECK HERE.
+      $tier = (1 == 2) ? 'prod' : 'dev';
+      $shortname = $series_node->get('field_blog_series_shortname')->value;
+      $shortname = (strlen($shortname) > 0) ? $shortname . '-' . $tier : 'dev';
       $build = [
-        '#markup' => $this->t('
-          <div id="disqus_thread"></div>
-          <script>
-              /**
-               *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
-               *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 
-               *  PLATFORM OR CMS.
-               *  
-               *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
-               *  https://disqus.com/admin/universalcode/#configuration-variables
-               */
-              /*
-
-              // TODO: Generate programatically.
-              var disqus_identifier = "rx:cgvBlogPost-1140158";
-              var disqus_url = "https://www.cancer.gov/news-events/cancer-currents-blog/foo";
-
-              var disqus_config = function () {
-                  // Replace PAGE_URL with your page′s canonical URL variable
-                  this.page.url = disqus_url;
-                  
-                  // Replace PAGE_IDENTIFIER with your page′s unique identifier variable
-                  this.page.identifier = disqus_identifier; 
-              };
-              */
-              
-              (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-                  var d = document, s = d.createElement("script");
-                  var disqus_shortname = "cancer-currents-dev";
-                  // IMPORTANT: Replace EXAMPLE with your forum shortname!
-                  s.src = "https://" + disqus_shortname + ".disqus.com/embed.js";                
-                  s.setAttribute("data-timestamp", +new Date());
-                  (d.head || d.body).appendChild(s);
-              })();
-          </script>
-          <noscript>
-              Please enable JavaScript to view the 
-              <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-                  comments powered by Disqus.
-              </a>
-          </noscript>
-        '),
+        '#markup' => 'https://' . $shortname . '.disqus.com/embed.js',
       ];
     }
-
-    // Debugging array.
-    $build['#muh_debugger'] = [
-      'debug' => '~~ Debugging array ~~',
-      'series-nid' => $bs_nid,
-      'comments-allowed' => $has_comments,
-    ];
-    ksm($build);
-
     return $build;
   }
 
