@@ -135,6 +135,8 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
 
     // If 'Allow Comments' is selected, output the Disqus snippet data.
     // TODO: create template, remove always true condition.
+    // TODO: generate prod vs dev shortname, unique ID, get hostname/path.
+    // TODO: verify that this is the latest version of the markup.
     if (($bs_entity && $has_comments) || 1 == 1) {
       $build = [
         '#markup' => $this->t('
