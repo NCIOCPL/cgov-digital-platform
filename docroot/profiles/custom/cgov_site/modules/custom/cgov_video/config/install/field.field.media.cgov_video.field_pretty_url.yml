@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_pretty_url
+    - media.type.cgov_video
+id: media.cgov_video.field_pretty_url
+field_name: field_pretty_url
+entity_type: media
+bundle: cgov_video
+label: 'Pretty URL'
+description: 'Used as the last segment of the URL. Do not include slash. Leave blank if page is the designated landing page in the site section. Must be lowercase, with no space. Use hyphens to separate words. [See SEO Guidelines PDF for more details.]'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

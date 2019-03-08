@@ -1,11 +1,8 @@
 ### TESTS:
 # Cancer Center content type
-
 - entity: "media"
   bundle: "cgov_image"
-  name: "Ocean Sunset View Mykonos"
-  name__ES:
-    value: "Ocean Sunset View Mykonos - ES"
+  name: "Dana Farber/Harvard Cancer Center"
   langcode: en
   status: 1
   moderation_state:
@@ -16,14 +13,8 @@
         args:
           - 'image'
           - type: 'module'
-            filename: 'ocean-sunset-view-mykonos-article.jpg'
-      alt: 'sunset ocean view in Mykonos'
-      alt__ES:
-        value: "vista del mar en el ocaso en Mykonos"
-  field_credit:
-    value: "iStock"
-  field_credit__ES:
-    value: ""
+            filename: 'dfharvard-article.jpg'
+      alt: 'Dana Farber/Harvard Cancer Center'
 - entity: "node"
   type: "cgov_cancer_center"
   langcode: en
@@ -51,13 +42,13 @@
         args:
           - 'media'
           - bundle: 'cgov_image'
-            name: 'Ocean Sunset View Mykonos'
+            name: 'Dana Farber/Harvard Cancer Center'
   field_institution_type:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
-          - vid: 'cgov_cancer_center_type'
+          - vid: 'cgov_cancer_center_types'
             name: 'Comprehensive Cancer Center'
   field_org_head_name:
     value: "Laurie H. Glimcher, M.D."

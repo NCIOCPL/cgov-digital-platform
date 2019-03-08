@@ -26,6 +26,14 @@ class CgovCoreTools {
     // Excluded: 'delete [content_type] revisions'.
   ];
 
+  const MEDIA_PERMISSIONS = [
+    'create [content_type] media',
+    'delete any [content_type] media',
+    'delete own [content_type] media',
+    'edit any [content_type] media',
+    'edit own [content_type] media',
+  ];
+
   /**
    * The config factory.
    *
@@ -153,6 +161,18 @@ class CgovCoreTools {
   }
 
   /**
+   * Links a media type to a workflow.
+   *
+   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
+   */
+  public function attachMediaTypeToWorkflow($type_name, $workflow_name) {
+    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
+    $workflow = $workflows[$workflow_name];
+    $workflow->getTypePlugin()->addEntityTypeAndBundle('media', $type_name);
+    $workflow->save(TRUE);
+  }
+
+  /**
    * Add Permissions to a role.
    *
    * @param array $rolePermissions
@@ -236,6 +256,82 @@ class CgovCoreTools {
           else {
             // Load default permissions.
             $perms = self::DEFAULT_PERMISSIONS;
+          }
+        }
+
+        // Update all the permissions.
+        foreach ($perms as &$perm) {
+          // Replace placeholders.
+          $perm = str_replace('[content_type]', $type_name, $perm);
+
+          // Grant Permission.
+          $roleObj->grantPermission($perm);
+          $roleObj->save();
+        }
+      }
+    }
+  }
+
+  /**
+   * Add Media Permissions to a role.
+   *
+   * @param string $type_name
+   *   Content type name to be added.
+   * @param mixed $roles
+   *   Roles to be added, as string or array.
+   * @param mixed $permissions
+   *   Permissions to be added, as string or array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException exception.
+   *   Expects getStorage to work.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addMediaTypePermissions($type_name, $roles = self::DEFAULT_ROLES, $permissions = NULL) {
+    // Define Common roles and permissions.
+    $rolePerms['content_author'] = self::MEDIA_PERMISSIONS;
+    $rolePerms['content_editor'] = [];
+    $rolePerms['advanced_editor'] = [];
+    $rolePerms['layout_manager'] = self::MEDIA_PERMISSIONS;
+
+    // Convert $roles string to array if needed.
+    if (!is_array($roles)) {
+      $roles = [$roles];
+    }
+
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roleObjects = $role_storage->loadMultiple($roles);
+
+    if (count($roleObjects) != count($roles)) {
+      // Role not found, display error message.
+      echo "Role(s) " . implode(', ', $roles) . " not found in " . __FUNCTION__ . "\n";
+    }
+    else {
+      // Get all role objects.
+      foreach ($roleObjects as $role_name => $roleObj) {
+        // Get permissions to assign.
+        // If permissions are passed as a parameter, use that.
+        if ($permissions) {
+          // Convert to array if a string.
+          if (!is_array($permissions)) {
+            $perms = [$permissions];
+          }
+          else {
+            $perms = $permissions;
+          }
+        }
+        else {
+          // No permissions passed, get list of permissions to use.
+          if (isset($rolePerms[$role_name])) {
+            // Get role-specific permissions.
+            $perms = $rolePerms[$role_name];
+          }
+          else {
+            // Load default permissions.
+            $perms = self::MEDIA_PERMISSIONS;
           }
         }
 

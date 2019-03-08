@@ -1,0 +1,83 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.video_display_large_title
+    - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_browser_title
+    - field.field.media.cgov_video.field_caption
+    - field.field.media.cgov_video.field_card_title
+    - field.field.media.cgov_video.field_date_display_mode
+    - field.field.media.cgov_video.field_date_posted
+    - field.field.media.cgov_video.field_date_reviewed
+    - field.field.media.cgov_video.field_date_updated
+    - field.field.media.cgov_video.field_feature_card_description
+    - field.field.media.cgov_video.field_list_description
+    - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_short_title
+    - field.field.media.cgov_video.field_site_section
+    - media.type.cgov_video
+  module:
+    - image
+    - media
+    - text
+id: media.cgov_video.video_display_large_title
+targetEntityType: media
+bundle: cgov_video
+mode: video_display_large_title
+content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_caption:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_media_oembed_video:
+    type: oembed
+    weight: 1
+    label: hidden
+    settings:
+      max_width: 0
+      max_height: 0
+    third_party_settings: {  }
+    region: content
+  name:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  thumbnail:
+    type: image
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  body: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_list_description: true
+  field_pretty_url: true
+  field_short_title: true
+  field_site_section: true
+  langcode: true
+  uid: true

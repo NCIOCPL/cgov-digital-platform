@@ -8,10 +8,14 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_media_image
     - field.field.media.cgov_image.field_original_source
+    - field.field.media.cgov_image.field_override_img_featured
+    - field.field.media.cgov_image.field_override_img_panoramic
+    - field.field.media.cgov_image.field_override_img_social_media
+    - field.field.media.cgov_image.field_override_img_thumbnail
+    - image.style.cgov_featured
     - media.type.cgov_image
   module:
     - image
-    - text
 id: media.cgov_image.image_crop_featured
 targetEntityType: media
 bundle: cgov_image
@@ -21,18 +25,30 @@ content:
     weight: 0
     label: hidden
     settings:
-      ## TODO: This should reference just the featured crop or featured field
-      image_style: ''
+      image_style: cgov_featured
       image_link: ''
     third_party_settings: {  }
     type: image
     region: content
+  field_override_img_featured:
+    type: image
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      image_style: cgov_featured
+      image_link: ''
+    third_party_settings: {  }
 hidden:
+  content_moderation_control: true
   created: true
   field_accessible_version: true
   field_caption: true
   field_credit: true
   field_original_source: true
+  field_override_img_panoramic: true
+  field_override_img_social_media: true
+  field_override_img_thumbnail: true
   langcode: true
   name: true
   thumbnail: true

@@ -20,8 +20,9 @@ class CgovImageFieldStorageTest extends KernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options',
-    'workflows', 'content_moderation', 'entity_browser', 'paragraphs',
-    'language', 'content_translation', 'media', 'image', 'views', 'cgov_media', 'cgov_image',
+    'crop', 'image_widget_crop', 'workflows', 'content_moderation', 'entity_browser',
+    'paragraphs', 'taxonomy', 'language', 'content_translation', 'media', 'image', 'views',
+    'cgov_media', 'cgov_image',
   ];
 
   /**
@@ -76,15 +77,15 @@ class CgovImageFieldStorageTest extends KernelTestBase {
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.
     $this->installSchema('user', 'users_data');
+    $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
-    $this->installEntitySchema('node');
     $this->installEntitySchema('media');
     $this->installEntitySchema('file');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'media', 'file', 'image',
-      'language', 'content_translation', 'views', 'paragraphs',
+      'field', 'node', 'media', 'file', 'image', 'crop', 'image_widget_crop',
+      'language', 'content_translation', 'views', 'paragraphs', 'taxonomy',
       'cgov_media', 'entity_browser', 'cgov_image',
     ]);
   }

@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.list_item_title_date
+    - field.field.paragraph.cgov_external_link.field_external_link
+    - field.field.paragraph.cgov_external_link.field_override_image_promotional
+    - field.field.paragraph.cgov_external_link.field_override_list_description
+    - field.field.paragraph.cgov_external_link.field_override_title
+    - paragraphs.paragraphs_type.cgov_external_link
+  module:
+    - link
+id: paragraph.cgov_external_link.list_item_title_date
+targetEntityType: paragraph
+bundle: cgov_external_link
+mode: list_item_title_date
+content:
+  field_external_link:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    type: link_separate
+    region: content
+  field_override_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_override_image_promotional: true
+  field_override_list_description: true
