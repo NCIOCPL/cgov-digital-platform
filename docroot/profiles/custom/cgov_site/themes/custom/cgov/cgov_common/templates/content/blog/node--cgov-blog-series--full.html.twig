@@ -1,0 +1,49 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+START OF BLOG SERIES
+<article>
+  <div class="resize-content">
+    <div class="slot-item only-SI large-12 columns body-banner">
+      <a name="NCI+Update+Blog+Banner"></a>
+      <div class="blog body-banner">{{ content.field_banner_image }}</div>
+    </div>
+    <h1>
+      {{ node.label }}
+    </h1>
+    <div id="nvcgSubTitle">
+      <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a>
+      </div>
+    </div>
+
+    <div id="cgvBody">
+      <div class="slot-item first-SI">
+		    <div>
+          {{ field_about_blog }}
+        </div>
+	    </div>
+      {{ contentPageMacros.displayDates(node,content) }}
+
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
+    </div>
+
+    === Debug ===
+    <div>
+      {{ drupal_view('cgov_block_blog_posts','block_1',node.id) }}
+
+      {{ content.field_blog_series }}
+      {{ content.field_blog_topics }}
+    </div>
+    === End debug ===
+
+  </div>
+
+  <footer class="article-footer">
+    {{ content.field_related_resources }}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>
+END OF BLOG SERIES
