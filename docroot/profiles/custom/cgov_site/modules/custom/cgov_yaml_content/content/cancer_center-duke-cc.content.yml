@@ -1,6 +1,20 @@
 ### TESTS:
 # Cancer Center content type
-
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Duke University Medical Center Duke Cancer Institute"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'dukeci-article.jpg'
+      alt: 'Duke University Medical Center Duke Cancer Institute'
 - entity: "node"
   type: "cgov_cancer_center"
   langcode: en
@@ -28,7 +42,7 @@
         args:
           - 'media'
           - bundle: 'cgov_image'
-            name: 'Ocean Sunset View Mykonos'
+            name: 'Duke University Medical Center Duke Cancer Institute'
   field_parent_institution:
     value: "Duke University Medical Center"
   field_institution_type:
