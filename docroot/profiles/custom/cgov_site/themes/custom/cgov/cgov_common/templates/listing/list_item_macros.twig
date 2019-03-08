@@ -127,11 +127,11 @@
   Outputs the list item's title
  #}
 {% macro _output_list_title(title, url, has_title_heading) %}
-  {% if has_title_heading %}<h2>{% endif %}
+  {% if has_title_heading %}<h3>{% endif %}
   <a class="title" href="{{ url }}">
     {{- title -}}
   </a>
-  {% if has_title_heading %}</h2>{% endif %}
+  {% if has_title_heading %}</h3>{% endif %}
 {% endmacro %}
 
 {#
