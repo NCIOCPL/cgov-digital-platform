@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Plugin\Block;
+namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 
