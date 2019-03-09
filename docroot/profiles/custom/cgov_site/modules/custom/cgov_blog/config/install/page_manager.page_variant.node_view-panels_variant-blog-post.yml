@@ -6,39 +6,39 @@ dependencies:
   module:
     - ctools
     - panels
-id: node_view-panels_variant-1
-label: 'Blog Series'
+id: node_view-panels_variant-blog-post
+label: 'Blog Post'
 variant: panels_variant
 variant_settings:
   blocks:
-    f8946f29-8bb4-4c63-ace3-9d5861e1f940:
+    0f46fbfb-95ae-4880-91a7-acd4ee3c94f4:
       id: 'entity_view:node'
-      label: 'Blog Series Page Content'
+      label: 'Blog Post Full Content'
       provider: ctools
       label_display: '0'
-      view_mode: full
+      view_mode: default
       region: content
       weight: 0
-      uuid: f8946f29-8bb4-4c63-ace3-9d5861e1f940
+      uuid: 0f46fbfb-95ae-4880-91a7-acd4ee3c94f4
       context_mapping:
         entity: node
   id: panels_variant
-  uuid: 489b60a1-9116-4f9d-a6e1-f4cfd8c1ee7c
+  uuid: f3facdb2-a5c2-4db9-93c3-45fea73ffb72
   label: null
   weight: 0
   layout: layout_onecol
   layout_settings: {  }
   page_title: ''
   storage_type: page_manager
-  storage_id: node_view-panels_variant-1
+  storage_id: node_view-panels_variant-blog-post
   builder: standard
 page: node_view
-weight: -10
+weight: 0
 selection_criteria:
   -
     id: 'entity_bundle:node'
     bundles:
-      cgov_blog_series: cgov_blog_series
+      cgov_blog_post: cgov_blog_post
     negate: false
     context_mapping:
       node: node

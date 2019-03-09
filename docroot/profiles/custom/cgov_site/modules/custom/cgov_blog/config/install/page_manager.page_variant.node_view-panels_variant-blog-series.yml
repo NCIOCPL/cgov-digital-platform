@@ -6,49 +6,39 @@ dependencies:
   module:
     - ctools
     - panels
-id: node_view-panels_variant-0
-label: 'Blog Post'
+id: node_view-panels_variant-blog-series
+label: 'Blog Series'
 variant: panels_variant
 variant_settings:
   blocks:
-    ce4e7138-7c36-45c3-8034-979a13cde824:
+    f8946f29-8bb4-4c63-ace3-9d5861e1f940:
       id: 'entity_view:node'
       label: 'Blog Series Page Content'
       provider: ctools
       label_display: '0'
       view_mode: full
       region: content
-      weight: 1
-      uuid: ff081fbf-cbab-41f2-a1f5-ce0cf33c1a36
-      context_mapping: {  }
-    a46ce84a-e740-4482-b3a9-f629374ccb18:
-      id: 'entity_view:node'
-      label: 'Entity view (Content)'
-      provider: ctools
-      label_display: '0'
-      view_mode: full
-      region: content
       weight: 0
-      uuid: a46ce84a-e740-4482-b3a9-f629374ccb18
+      uuid: f8946f29-8bb4-4c63-ace3-9d5861e1f940
       context_mapping:
         entity: node
   id: panels_variant
-  uuid: ce8c9fff-6356-478e-902a-f25313346f57
+  uuid: 489b60a1-9116-4f9d-a6e1-f4cfd8c1ee7c
   label: null
   weight: 0
   layout: layout_onecol
   layout_settings: {  }
   page_title: ''
   storage_type: page_manager
-  storage_id: node_view-panels_variant-0
+  storage_id: node_view-panels_variant-blog-series
   builder: standard
 page: node_view
-weight: -9
+weight: -10
 selection_criteria:
   -
     id: 'entity_bundle:node'
     bundles:
-      cgov_blog_post: cgov_blog_post
+      cgov_blog_series: cgov_blog_series
     negate: false
     context_mapping:
       node: node
