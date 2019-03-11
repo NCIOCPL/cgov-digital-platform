@@ -1,13 +1,23 @@
+{% set url = path('entity.node.canonical', {'node':  content.field_cthp_featured_content[0]["#node"].nid[0].value}) %}
+{% if content.field_cthp_override_description|field_value %}
+  {% set description = content.field_cthp_override_description %}
+{% elseif content.field_cthp_featured_content[0]["#node"].field_feature_card_description[0] %}
+  {% set description = content.field_cthp_featured_content[0]["#node"].field_feature_card_description[0].value %}
+{% else %}
+  {# Don't set description #}
+{% endif %}
+
 <div class="equalheight bgWhite {{ content.field_cthp_card_theme }}">
   <h2 style="">{{ content.field_cthp_card_title}}</h2>
-  {{ content.field_cthp_featured_content }}
-  {% set title = content.field_cthp_featured_content[0]["#node"].title.value %}
-  {% set url = path('entity.node.canonical', {'node':  content.field_cthp_featured_content[0]["#node"].nid[0].value}) %}
-  <div class="cardBody">
-    <ul>
-      <li>
-        <a href="{{ url }}" class="arrow-link">{{ title }}</a>
-      </li>
-    </ul>
-  </div>
+  <div>
+    <a href="{{ url }}">{{ content.field_cthp_featured_content }}</a>
+    {% if description %}
+      <div class="cardBody">
+        <ul>
+          <li>
+            <a href="{{ url }}" class="arrow-link">{{ description }}</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
 </div>
