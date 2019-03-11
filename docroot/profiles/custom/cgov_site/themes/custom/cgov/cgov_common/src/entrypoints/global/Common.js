@@ -28,7 +28,7 @@ popupFunctions();
 import search from 'Libraries/search/search';
 import mobilemenu from 'Libraries/mainNav/mobilemenu';
 import sectionNav from 'Libraries/sectionNav/sectionNav';
-// import exitDisclaimer from 'Common/Enhancements/exitDisclaimer';
+import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
 // import backToTop from 'Modules/backToTop/backToTop';
 // import { makeAllAccordions } from 'Modules/accordion/accordion';
 // import tableToggle from 'Modules/tableToggle/tableToggle';
@@ -87,7 +87,7 @@ const onDOMContentLoaded = () => {
 	// /*** BEGIN Exit Disclaimer
 	//  * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
 	//  ***/
-	// exitDisclaimer();
+	exitDisclaimer();
 
 	pageOptions();
 
