@@ -37,7 +37,7 @@ import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 // import tooltips from 'Modules/tooltips/referenceTooltip';
 
 // // Unfortunately AMD doesn't play nice with export default;
-// import proactiveLiveHelp from 'Modules/liveHelpPopup';
+import proactiveLiveHelp from 'Core/libraries/liveHelpPopup';
 // import sortablejs from 'Modules/sortableTables';
 import pageOptions from 'Libraries/pageOptions';
 
@@ -151,7 +151,7 @@ const onDOMContentLoaded = () => {
 	// $('[data-prevent-enter="true"]').NCI_prevent_enter();
 
 	// // Proactive Live Help for CTS
-	// proactiveLiveHelp();
+	proactiveLiveHelp();
 
 };// END: DOM Ready event
 
@@ -170,11 +170,10 @@ $(window).on('load', function () {
 // 	// to run AFTER the enlarge function above, which does some rewriting of the DOM to wrap a table in a figure
 // 	// element, among other things.
 
-// 	// NOTE: The custom settings are handled in a local wrapper module
+	// NOTE: The custom settings are handled in a local wrapper module
+	// sortablejs();
 
-// 	sortablejs();
-
-// 	// Use custom audio player to override mp3 anchor links
+	// Use custom audio player to override mp3 anchor links
 	linkAudioPlayer();
 
 }); // END: Window Load Event
