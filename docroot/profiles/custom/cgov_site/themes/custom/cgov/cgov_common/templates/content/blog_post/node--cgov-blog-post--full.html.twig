@@ -11,8 +11,9 @@
     </div>
 
     <div id="cgvBody">
-      {{ contentPageMacros.displayDates(node,content) }}
-
+      <!-- TODO: reuse existing date widget if possible. -->
+      <!-- TODO: figure out why the ... trim() breaks. -->      
+      <p class="blog-post-publishing-info">{{ content.field_date_posted }}, by {{ content.field_author }}</p>
       {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
