@@ -16,7 +16,7 @@ initializeCustomEventHandler();
 // import 'Common/Enhancements/analytics';
 import './Common.scss';
 
-// import $ from 'jquery';
+import $ from 'jquery';
 // import 'Common/Enhancements/jQueryUIExtensions';
 import popupFunctions from 'Libraries/popups/popup_functions';
 popupFunctions();
@@ -45,7 +45,7 @@ import pageOptions from 'Libraries/pageOptions';
 import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
 // import DeepLinkPatch from 'Modules/utility/deepLinkPatch';
-// import linkAudioPlayer from 'Modules/linkAudioPlayer/linkAudioPlayer';
+import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 
 // DeepLinkPatch();
 
@@ -157,7 +157,7 @@ const onDOMContentLoaded = () => {
 
 document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
 
-// $(window).on('load', function () {
+$(window).on('load', function () {
 // 	// BEGIN Table Resizing
 // 	//Table enlarging & scrollbar adding.
 // 	//This marks all tables as scrollable, but only adds a shadow to the right side if it is scrolling.
@@ -175,6 +175,6 @@ document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
 // 	sortablejs();
 
 // 	// Use custom audio player to override mp3 anchor links
-// 	linkAudioPlayer();
+	linkAudioPlayer();
 
-// }); // END: Window Load Event
+}); // END: Window Load Event
