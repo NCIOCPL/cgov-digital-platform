@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
@@ -48,12 +49,9 @@ content:
   field_allow_comments:
     weight: 19
     label: hidden
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
+    settings: {  }
     third_party_settings: {  }
-    type: boolean
+    type: list_default
     region: content
   field_banner_image:
     weight: 13
@@ -196,3 +194,4 @@ content:
     third_party_settings: {  }
 hidden:
   field_public_use: true
+  field_show_list_thumbnails: true
