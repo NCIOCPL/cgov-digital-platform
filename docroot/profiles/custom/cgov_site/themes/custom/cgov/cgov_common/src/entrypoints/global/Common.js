@@ -29,7 +29,7 @@ import search from 'Libraries/search/search';
 import mobilemenu from 'Libraries/mainNav/mobilemenu';
 import sectionNav from 'Libraries/sectionNav/sectionNav';
 import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
-// import backToTop from 'Modules/backToTop/backToTop';
+import backToTop from 'Core/libraries/backToTop/backToTop';
 // import { makeAllAccordions } from 'Modules/accordion/accordion';
 // import tableToggle from 'Modules/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
@@ -67,7 +67,7 @@ const onDOMContentLoaded = () => {
 	// // 	});
 	// // }
 
-	// backToTop();
+	backToTop();
 
 	// /*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
 
