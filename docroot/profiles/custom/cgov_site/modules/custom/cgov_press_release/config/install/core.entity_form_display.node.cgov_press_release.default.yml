@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
     - field.field.node.cgov_press_release.field_card_title
@@ -193,12 +194,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
   field_site_section:
-    weight: 2
-    settings: {  }
+    weight: 1
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   field_subtitle:
     weight: 5
