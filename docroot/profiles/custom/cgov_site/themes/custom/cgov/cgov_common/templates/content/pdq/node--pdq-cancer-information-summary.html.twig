@@ -9,9 +9,7 @@
     {{ drupal_block('page_options') }}
     <div id="cgvBody">
       <div class="summary-sections">
-        {% if content.otp_toc|length > 0 %}
-          {{ content.otp_toc }}
-        {% endif %}
+        {{ content.otp_toc }}
         <div class="accordion">
           {{ content.field_summary_sections }}
         </div>
