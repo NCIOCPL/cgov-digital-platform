@@ -32,7 +32,7 @@ bundle: cgov_blog_post
 mode: blog_post_title_date_author_desc_img
 content:
   field_author:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
@@ -40,11 +40,11 @@ content:
     type: string
     region: content
   field_date_posted:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
     third_party_settings: {  }
     type: datetime_default
     region: content
@@ -54,12 +54,21 @@ content:
     region: content
     label: hidden
     settings:
-      view_mode: image_display_article_medium
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_thumbnail
       link: false
     third_party_settings: {  }
   field_list_description:
     type: string
-    weight: 3
+    weight: 4
     region: content
     label: hidden
     settings:
@@ -73,7 +82,6 @@ hidden:
   field_browser_title: true
   field_card_title: true
   field_feature_card_description: true
-  field_image_promotional: true
   field_intro_text: true
   field_page_description: true
   field_pretty_url: true

@@ -1,6 +1,4 @@
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
-<!-- ********************************* BEGIN Page Content ********************************** -->
-START OF BLOG SERIES
+<!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
   <div class="resize-content">
     <div class="slot-item only-SI large-12 columns body-banner">
@@ -11,7 +9,7 @@ START OF BLOG SERIES
       {{ node.label }}
     </h1>
     <div id="nvcgSubTitle">
-      <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a>
+      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a>
       </div>
     </div>
 
@@ -21,24 +19,16 @@ START OF BLOG SERIES
           {{ field_about_blog }}
         </div>
 	    </div>
-      {{ contentPageMacros.displayDates(node,content) }}
-
       {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
     </div>
 
-    === Debug ===
-    <div>
-      <div class="dynamic list">
-        <ul>
-          {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
-        </ul>
-      </div>
-      {{ content.field_blog_series }}
-      {{ content.field_blog_topics }}
+    <div class="dynamic list">
+      <ul>
+        {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
+      </ul>
     </div>
-    === End debug ===
 
   </div>
 
@@ -49,4 +39,4 @@ START OF BLOG SERIES
     {% endif %}
   </footer>
 </article>
-END OF BLOG SERIES
+<!-- ********************************* END Series Page Full Content ********************************** -->

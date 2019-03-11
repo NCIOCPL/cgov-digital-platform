@@ -1,33 +1,17 @@
-{#
-/**
- * @file
- * Override Seven's theme implementation to list Blog Post content.
- *
- * Available variables:
- * - types: List of content types. Each content type contains:
- *   - url: Path to the add content of this type page.
- *   - label: The title of this type of content.
- *   - description: Description of this type of content.
- *
- * @see template_preprocess_node_add_list()
- * @see seven_preprocess_node_add_list()
- */
-#}
-
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+<!-- ********************** Blog Post List Item + Thumb ********************** -->
 {% if content %}
   <li class="general-list-item general list-item">
-
-    <!-- TODO: translate and find the date macro -->
     <div class="title-and-desc title desc container">
         <a class="title" href="{{ url }}" onclick="">{{ label }}</a>
         <div class="description">
           <div class="date-author">
-              {{ content.field_date_posted }}, by {{ content.field_author }}
+            {{ content.field_date_posted }}, {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
+            {{ blogMacros.getAuthor(content) }}
           </div>
           <p>{{ content.field_list_description }}</p>
-          <p><a href="{{ url }}">Continue Reading &gt;</a></p>
+          <p><a href="{{ url }}">{% trans with {'context':'CGov Blog'} %}Continue Reading{% endtrans %} &gt;</a></p>
         </div>
     </div>
-
   </li>
 {% endif %}
