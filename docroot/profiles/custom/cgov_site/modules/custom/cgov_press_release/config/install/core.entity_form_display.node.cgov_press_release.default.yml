@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
     - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
@@ -40,7 +39,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 12
+    weight: 13
     settings:
       rows: 9
       summary_rows: 3
@@ -54,14 +53,6 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_browser_title:
-    weight: 6
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_card_title:
     weight: 8
     settings:
       size: 60
@@ -69,32 +60,40 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_card_title:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_date_display_mode:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
     region: content
   field_date_posted:
-    weight: 15
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
-    weight: 17
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
     weight: 16
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_date_reviewed:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 17
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_feature_card_description:
-    weight: 11
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -102,21 +101,6 @@ content:
     type: string_textfield
     region: content
   field_image_article:
-    weight: 13
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
-  field_image_promotional:
     weight: 14
     settings:
       entity_browser: cgov_image_browser
@@ -131,8 +115,23 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
+  field_image_promotional:
+    weight: 15
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
   field_list_description:
-    weight: 10
+    weight: 11
     settings:
       size: 60
       placeholder: ''
@@ -140,7 +139,7 @@ content:
     type: string_textfield
     region: content
   field_page_description:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -148,7 +147,7 @@ content:
     type: string_textfield
     region: content
   field_press_release_type:
-    weight: 20
+    weight: 6
     settings:
       size: 60
       placeholder: ''
@@ -171,7 +170,7 @@ content:
     region: content
   field_related_resources:
     type: paragraphs_classic_asymmetric
-    weight: 19
+    weight: 20
     region: content
     settings:
       title: 'Related Resource'
@@ -194,6 +193,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_site_section:
     weight: 1
     settings:
@@ -265,7 +265,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   translation:
-    weight: 1
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
