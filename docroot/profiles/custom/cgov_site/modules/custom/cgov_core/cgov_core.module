@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Block\BlockPluginInterface;
 
 /**
  * Implements hook_entity_translation_create().
@@ -46,6 +47,22 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
 }
 
 /**
+ * Implements hook_block_build_alter().
+ *
+ * Set cache context of blocks that vary by url, user, etc.
+ */
+function cgov_core_block_build_alter(array &$build, BlockPluginInterface $block) {
+  // Get name of block's label (will be of
+  // originally-created block if translations exist).
+  $block_label = $block->getPluginDefinition()['admin_label'];
+
+  // Add the 'url' cache context to page-specific blocks.
+  if (strpos($block_label, 'Public Use') === 0) {
+    $build['#cache']['contexts'][] = 'url';
+  }
+}
+
+/**
  * Implements hook_ENTITY_insert().
  *
  * Perform any actions that are required when adding a new language.
@@ -79,6 +96,7 @@ EOMarkup;
     // Create translation if it doesn't already exist.
     if (!$block->hasTranslation($langcode)) {
       $block_translated = $block->addTranslation($langcode, [
+        'id' => "public_use__$langcode",
         'info' => $title,
         'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
       ]);
