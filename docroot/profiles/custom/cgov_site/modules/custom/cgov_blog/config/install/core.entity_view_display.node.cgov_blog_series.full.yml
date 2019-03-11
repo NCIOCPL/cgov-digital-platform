@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
@@ -31,10 +32,10 @@ dependencies:
     - options
     - text
     - user
-id: node.cgov_blog_series.default
+id: node.cgov_blog_series.full
 targetEntityType: node
 bundle: cgov_blog_series
-mode: default
+mode: full
 content:
   content_moderation_control:
     weight: 0
@@ -51,9 +52,12 @@ content:
   field_allow_comments:
     weight: 21
     label: hidden
-    settings: {  }
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
     third_party_settings: {  }
-    type: list_default
+    type: boolean
     region: content
   field_banner_image:
     weight: 14
