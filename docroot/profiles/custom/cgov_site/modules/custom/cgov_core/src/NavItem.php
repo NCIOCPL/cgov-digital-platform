@@ -274,6 +274,20 @@ class NavItem {
   }
 
   /**
+   * Test if this term is the landing page for current site section.
+   *
+   * For visual reasons section navigation requires distinguishing
+   * between the state of being the closest site section in the
+   * current path's ancestry and also being that section's landing page.
+   *
+   * @return bool
+   *   Bool.
+   */
+  public function isCurrentSiteSectionLandingPage() {
+    return $this->isCurrentSiteSection() && $this->navMgr->isCurrentSiteSectionLandingPage();
+  }
+
+  /**
    * Get immediate descendent NavItems.
    *
    * Optional, pass an array of class properties

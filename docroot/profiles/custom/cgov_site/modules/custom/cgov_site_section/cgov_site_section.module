@@ -48,8 +48,8 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
-  
-  // Convert the URL to lowercase as we only want lowercased items and the server
+
+  // Convert the URL to lowercase as we only want lowercase items and the server
   // is case-sensative.
   if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
@@ -179,4 +179,57 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
     ]
     );
   }
+}
+
+/**
+ * Implements hook_views_data().
+ *
+ * This allows us to use the computed_path field in views.
+ */
+function cgov_site_section_views_data() {
+  $data = [];
+
+  // The outermost keys of $data are Views table names, which should usually
+  // be the same as the hook_schema() table names.
+  $data['taxonomy_term__computed_path'] = [];
+  $data['taxonomy_term__computed_path']['table']['group'] = t('Cgov Site Section');
+  $data['taxonomy_term__computed_path']['table']['join'] = [
+    // Within the 'join' section, list one or more tables to automatically
+    // join to. In this example, every time 'node_field_data' is available in
+    // a view, 'example_table' will be too. The array keys here are the array
+    // keys for the other tables, given in their hook_views_data()
+    // implementations. If the table listed here is from another module's
+    // hook_views_data() implementation, make sure your module depends on that
+    // other module.
+    'taxonomy_term_field_data' => [
+      // Primary key field in <entity>_field_data to use in the join.
+      'left_field' => 'tid',
+      // Primary key field in our custom field table to use in the join.
+      'field' => 'entity_id',
+    ],
+  ];
+  // Our custom computed path field, exposed as a field, sort, filter,
+  // and argument.
+  $data['taxonomy_term__computed_path']['computed_path_value'] = [
+    'title' => t('Computed Path'),
+    'help' => t('The computed_path Cgov Site Section field.'),
+    'field' => [
+      // ID of field handler plugin to use.
+      'id' => 'standard',
+    ],
+    'sort' => [
+      // ID of sort handler plugin to use.
+      'id' => 'standard',
+    ],
+    'filter' => [
+      // ID of filter handler plugin to use.
+      'id' => 'string',
+    ],
+    'argument' => [
+      // ID of argument handler plugin to use.
+      'id' => 'string',
+    ],
+  ];
+
+  return $data;
 }

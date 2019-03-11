@@ -1,111 +1,81 @@
-{{ attach_library('cgov_common/cancer_center') }}
+{{ attach_library('cgov_common/biography') }}
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
-<cancer-center>
+<article>
     <div class="resize-content">
         {{ drupal_block('page_options') }}
         <div id="nvcgSlProfilePanel" class="profile-panel">
-          <div class="inst-profile-image">
-          {{ content.field_image_promotional }}
-          </div>
-          <div class="profile-panel-content">
-            <h1>
-              {% if content.field_prefix %}
-              {{ content.field_prefix }}
-              {% endif %}
-              {{ content.field_first_name }}
-              {% if content.field_middle_name %}
-              {{ content.field_middle_name }}
-              {% endif %}
-              {% spaceless %}
-              {{ content.field_last_name }}
-              {% endspaceless %}
-              {% if content.field_suffix %}
-              , {{ content.field_suffix }}
-              {% endif %}
-            </h1>
-            {% if content.field_title %}
-            <div class="profile-title">
+          <div class="slot-item only-SI">
+            <div class="profile-panel-image">
+              {{ content.field_image_promotional }}
+            </div>
+            <div class="profile-panel-content">
+              <h1>
+                  {{ content.field_prefix }}
+                  {{ content.field_first_name }}
+                  {{ content.field_middle_name }}
+                  {{ content.field_last_name|field_value -}}
+                  {{- (content.field_suffix|field_value) ? ', ' : '' }}
+                  {{ content.field_suffix -}}
+              </h1>
+
               {{ content.field_title }}
+
+              {% if content.field_org_name_1|field_value or content.field_org_name_2|field_value %}
+                <div class="profile-orgs">
+                  {% if content.field_org_url_1|field_value %}
+                    <a href="{{- content.field_org_url_1|field_value -}}" class="profile-org">{{ content.field_org_name_1 }}</a>
+                  {% else %}
+                    <div class="profile-org">{{ content.field_org_name_1 }}</div>
+                  {% endif %}
+
+                  {% if content.field_org_name_2|field_value %}
+                    {% if content.field_org_url_2|field_value %}
+                      <a href="{{- content.field_org_url_2|field_value -}}" class="profile-org">{{ content.field_org_name_2 }}</a>
+                    {% else %}
+                      <div class="profile-org">{{ content.field_org_name_2 }}</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if content.field_campus|field_value or content.field_room_number|field_value %}
+              <p>
+                {{ content.field_campus }}
+                {{ (content.field_campus|field_value and content.field_room_number|field_value)? '|' : '' }}
+                {{ content.field_room_number }}
+              </p>
+              {% endif %}
+
+              {% if content.field_phone_number|field_value or content.field_email_address|field_value %}
+              <div class="profile-contact-info">
+                {{ content.field_phone_number}}
+                {{ (content.field_phone_number|field_value and content.field_email_address|field_value)? '<span class="contact-divider">|</span>': '' }}
+                {{ content.field_email_address }}
+              </div>
+              {% endif %}
+
+              {% if content.field_twitter_handle|field_value or content.field_linkedin_handle|field_value or content.field_scientific_publications|field_value %}
+                <div class="profile-panel-social-media">
+                  {{ content.field_twitter_handle }}
+                  {{ content.field_linkedin_handle }}
+                  {{ content.field_scientific_publications }}
+                </div>
+              {% endif %}
             </div>
-            {% endif %}
-            {% if content.field_org_name_1 %}
-            <p class="profile-org">
-            {% endif %}
-              {% if content.field_org_url_1 %}
-              <a href="{{ content.field_org_url_1 }}">
-              {% endif %}
-              {{ content.field_org_name_1 }}
-              {% if content.field_org_url_1 %}
-              </a>
-              {% endif %}
-              {% if content.field_org_name_2 %}
-              <br />
-              {% endif %}
-              {% if content.field_org_url_2 %}
-              <a href="{{ content.field_org_url_2 }}">
-              {% endif %}
-              {% if content.field_org_name_2 %}
-              {{ content.field_org_name_2 }}
-              {% endif %}
-              {% if content.field_org_url_2 %}
-              </a>
-              {% endif %}
-            </p>
-            {% if content.field_campus or content.field_room_number %}
-            <p>
-            {% endif %}
-              {% if content.field_campus %}
-              {{ content.field_campus }}
-              {% endif %}
-              {% if content.field_campus and content.field_room_number %}
-              |
-              {% endif %}
-              {% if content.field_room_number %}
-              {{ content.field_room_number }}
-              {% endif %}
-            {% if content.field_campus or content.field_room_number %}
-            </p>
-            {% endif %}
-            {% if content.field_phone_number or content.field_email_address %}
-            <p>
-            {% endif %}
-              {% if content.field_phone_number %}
-              {{ content.field_phone_number }}
-              {% endif %}
-              {% if content.field_phone_number and content.field_email_address %}
-              |
-              {% endif %}
-              {% if content.field_email_address %}
-              {{ content.field_email_address }}
-              {% endif %}
-            {% if content.field_phone_number or content.field_email_address %}
-            </p>
-            {% endif %}
-            {% if content.field_twitter_handle or content.field_linkedin_handle %}
-            <div class="profile-social-media">
-            {% endif %}
-            {% if content.field_twitter_handle %}
-              <a href="http://www.twitter.com/{{ content.field_twitter_handle }}" class="profile-twitter">@tweetme</a>
-            {% endif %}
-            {% if content.field_linkedin_handle %}
-              <a href="http://www.linkedin.com/in/{{ content.field_linkedin_handle }}" class="profile-linkedin">/linkme</a>
-            {% endif %}
-            {% if content.field_twitter_handle or content.field_linkedin_handle %}
-            </div>
-            {% endif %}
-            {% if content.field_scientific_publications %}
-            <div class="profile-publications">
-              <a href="{{ content.field_scientific_publications }}">Scientific Publications</a>
-            {% endif %}
           </div>
-        <div>
+        </div><!-- End profile-panel -->
+
         <div id="cgvBody">
           {{ content.body }}
+          {% if node.field_display_bio_press_info.value == '1' %}
+            {{ drupal_region('bio_press_info') }}
+          {% endif %}
         </div>
-        {# TODO: Article footer stuff has to go somewhere. TBD. #}
+
         <footer class="article-footer">
           {{ content.field_related_resources }}
+          {{ contentPageMacros.displayDates(node, content) }}
         </footer>
     </div>
-</cancer-center>
+</article>
