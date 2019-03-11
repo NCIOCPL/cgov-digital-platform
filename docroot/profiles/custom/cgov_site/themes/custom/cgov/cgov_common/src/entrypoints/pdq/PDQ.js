@@ -10,6 +10,8 @@ const onDOMContentLoaded = () => {
   moveToggle();
 
   buildInThisSection(getNodeArray('#cgvBody .accordion > section'));
+
+  citAnchorLinks();
 }
 
 document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
@@ -19,7 +21,7 @@ const moveToggle = () => {
   const toggle = document.querySelector('.pdq-hp-patient-toggle', '#cgvBody');
   const pageTitle = document.querySelector('h1', '#main');
   pageTitle.insertAdjacentElement('afterend',toggle);
-}
+};
 
 /* TODO: create an object or field on the content type that holds In This Section link structure */
 const buildInThisSection = (sections) => {
@@ -53,4 +55,16 @@ const buildInThisSection = (sections) => {
       section.firstElementChild.insertAdjacentHTML('afterend',nav);
     }
   });
-}
+};
+
+// fix citation anchor links
+// if you see console errors that say something like: '#section_1.3 h2' is not a valid selector, they're coming from analytics.
+const citAnchorLinks = () => {
+  document.getElementById('cgvBody').addEventListener('click',(e)=>{
+    if(e.target.hash && e.target.hash.match("#cit/")){
+      e.preventDefault();
+      const anchor = e.target.hash.replace("#cit/","");
+      window.location.hash = anchor;
+    }
+  });
+};
