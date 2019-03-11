@@ -1,0 +1,46 @@
+id: externallinksql_migration
+label: 'Custom externallink migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/externallinksql.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: externallink_id
+         label: externallink_id
+         selector: externallink_id
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_external_link_uri
+         label: field_external_link_uri
+         selector: field_external_link_uri
+
+        -
+         name: field_override_title
+         label: field_override_title
+         selector: field_override_title
+
+
+  ids:
+    externallink_id:
+      type: integer
+
+
+process:
+ field_external_link/uri: field_external_link_uri
+ field_override_title: field_override_title
+ id: externallink_id
+ langcode: langcode
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_external_link
+migration_dependencies: {  }
