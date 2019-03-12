@@ -33,7 +33,7 @@ import backToTop from 'Core/libraries/backToTop/backToTop';
 import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
-// import formControls from 'Modules/forms/formControls';
+import formControls from 'Core/libraries/formControls/formControls';
 import tooltips from 'Core/libraries/tooltips/referenceTooltip';
 
 // // Unfortunately AMD doesn't play nice with export default;
@@ -107,8 +107,8 @@ const onDOMContentLoaded = () => {
 	 ***/
 	flexVideo();
 
-	// /*** BEGIN form controls ***/
-	// formControls();
+	/*** BEGIN form controls ***/
+	formControls();
 
 	/*** BEGIN accordionizer ***/
 	makeAllAccordions();
