@@ -14,7 +14,7 @@
     <p>
       {# TODO: Update this with a better way to print dates! #}
       {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
-        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('d, Y') }}
+        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
       {% else %}
         {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
         {% if content.field_all_day_event[0]['#markup'] == "Off" %}
