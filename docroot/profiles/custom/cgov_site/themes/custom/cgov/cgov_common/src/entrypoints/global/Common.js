@@ -44,10 +44,10 @@ import pageOptions from 'Libraries/pageOptions';
 // import SiteWideSearch from 'Common/Enhancements/sitewidesearch';
 import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
-// import DeepLinkPatch from 'Modules/utility/deepLinkPatch';
+import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 
-// DeepLinkPatch();
+DeepLinkPatch();
 
 //DOM Ready event
 const onDOMContentLoaded = () => {
