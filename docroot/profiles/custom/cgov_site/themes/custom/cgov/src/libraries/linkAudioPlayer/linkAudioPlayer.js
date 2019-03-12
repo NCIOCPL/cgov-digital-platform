@@ -1,5 +1,5 @@
 import AudioPlayer from './AudioPlayer';
-import { getNodeArray } from '../../utilities/domManipulation';
+import { getNodeArray } from 'Utilities';
 
 export const AUDIO_FILE_DATA_ATTRIBUTE = "data-NCI-link-audio-file";
 export const DEFAULT_AUDIO_FILE_TARGET_SELECTOR = 'a.CDR_audiofile';
@@ -37,7 +37,7 @@ const attachHandlerFlag = element => {
 }
 
 /**
- * This is exposed as it will allow an audiolink to be dynamically set up after 
+ * This is exposed as it will allow an audiolink to be dynamically set up after
  * the initial page load using the same instance of an AudioPlayer
  * @param {HTMLElement} element
  * @param {function} player
@@ -57,7 +57,7 @@ export const attachHandlers = (selector, player) => {
         const hasHandlerAlready = checkForAudioHandlerFlag(audiofile);
         if(!hasHandlerAlready){
             attachHandlerFlag(audiofile);
-            // We don't want to prevent the default event on the <a> element because doing so would 
+            // We don't want to prevent the default event on the <a> element because doing so would
             // cancel the user interaction event on mobile and prevent the sound from playing,
             // so we need to stash the url and use JavaScript to return undefined
 
@@ -76,11 +76,11 @@ export const attachHandlers = (selector, player) => {
 /**
  *  * LINK AUDIO PLAYER
  * -----------------------
- * Audio files are currently included by the CDE as anchor tags with an MP3 as the source. In the past we 
+ * Audio files are currently included by the CDE as anchor tags with an MP3 as the source. In the past we
  * used a library, jPlayer, to extend the anchor tags functionality and have Flash as a fallback for older browsers.
  * No longer needing to support pre audio element browsers, we can do this natively, but there are a few hoops to jump through.
  * In particular, Safari does not allow programmatic autoplaying of media elements, so a workaround has to be used.
- * 
+ *
  * @param {string} [selector = DEFAULT_AUDIO_FILE_TARGET_SELECTOR]
  * @return {AudioPlayer} Instance of Audio Player
  */
@@ -88,8 +88,8 @@ export const initialize = (selector = DEFAULT_AUDIO_FILE_TARGET_SELECTOR) => {
     const player = new AudioPlayer();
     attachHandlers(selector, player);
 
-    // If another audiolink needs to be set up subsequent to page loads by the same module this audio player can be reused. 
-    return player; 
+    // If another audiolink needs to be set up subsequent to page loads by the same module this audio player can be reused.
+    return player;
 
     // TODO: OR Could attach a global listener at this point that subsequent library could broadcast to
     // TODO: OR set up a mutation listener instead of needing to be called manually when new elements are added. Future changes.
