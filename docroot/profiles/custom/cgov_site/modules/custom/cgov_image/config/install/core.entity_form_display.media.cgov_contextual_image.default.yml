@@ -2,27 +2,23 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.cgov_image.field_accessible_version
-    - field.field.media.cgov_image.field_caption
-    - field.field.media.cgov_image.field_credit
-    - field.field.media.cgov_image.field_display_enlarge
-    - field.field.media.cgov_image.field_media_image
-    - field.field.media.cgov_image.field_original_source
-    - field.field.media.cgov_image.field_override_img_featured
-    - field.field.media.cgov_image.field_override_img_panoramic
-    - field.field.media.cgov_image.field_override_img_social_media
-    - field.field.media.cgov_image.field_override_img_thumbnail
+    - field.field.media.cgov_contextual_image.field_accessible_version
+    - field.field.media.cgov_contextual_image.field_caption
+    - field.field.media.cgov_contextual_image.field_credit
+    - field.field.media.cgov_contextual_image.field_display_enlarge
+    - field.field.media.cgov_contextual_image.field_media_image
+    - field.field.media.cgov_contextual_image.field_original_source
     - image.style.thumbnail
-    - media.type.cgov_image
+    - media.type.cgov_contextual_image
     - workflows.workflow.image_workflow
   module:
     - content_moderation
     - image
 #    - image_widget_crop
     - text
-id: media.cgov_image.default
+id: media.cgov_contextual_image.default
 targetEntityType: media
-bundle: cgov_image
+bundle: cgov_contextual_image
 mode: default
 content:
   field_accessible_version:
@@ -64,17 +60,6 @@ content:
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - freeform
-        - thumbnail
-        - 4x3
-        - 3x4
-        - 1x1
-        - 16x9
-        - 9x16
-      crop_types_required:
-        - 1x1
-        - 3x4
-        - 4x3
-        - thumbnail
       progress_indicator: throbber
       show_crop_area: false
     third_party_settings: {  }
@@ -87,38 +72,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_override_img_featured:
-    weight: 8
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
-  field_override_img_panoramic:
-    weight: 11
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
-  field_override_img_social_media:
-    weight: 9
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
-  field_override_img_thumbnail:
-    weight: 10
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
     region: content
   langcode:
     type: language_select
