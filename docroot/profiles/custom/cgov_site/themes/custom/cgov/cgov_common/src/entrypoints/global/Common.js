@@ -1,6 +1,6 @@
 // Polyfills for older browsers
-// import './polyfills/custom_event';
-// import './polyfills/replaceWith';
+import 'Polyfills/custom_event';
+import 'Polyfills/replaceWith';
 // import 'es6-promise/auto';
 // import 'core-js/fn/array/from';
 // import 'core-js/fn/array/find';
