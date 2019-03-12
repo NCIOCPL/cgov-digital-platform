@@ -31,7 +31,7 @@ import sectionNav from 'Libraries/sectionNav/sectionNav';
 import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
 import backToTop from 'Core/libraries/backToTop/backToTop';
 import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
-// import tableToggle from 'Modules/tableToggle/tableToggle';
+import tableToggle from 'Core/libraries/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 // import formControls from 'Modules/forms/formControls';
 // import tooltips from 'Modules/tooltips/referenceTooltip';
@@ -98,7 +98,7 @@ const onDOMContentLoaded = () => {
 	//  ***/
 
 	// // for each toggleable section...
-	// tableToggle();
+	tableToggle();
 
 	// /*** END table toggling ***/
 
