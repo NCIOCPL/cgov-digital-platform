@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.cgov_press_release.body
     - field.field.node.cgov_press_release.field_browser_title
     - field.field.node.cgov_press_release.field_card_title
+    - field.field.node.cgov_press_release.field_citation
     - field.field.node.cgov_press_release.field_date_display_mode
     - field.field.node.cgov_press_release.field_date_posted
     - field.field.node.cgov_press_release.field_date_reviewed
@@ -62,6 +63,15 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_citation:
+    type: entity_reference_revisions_entity_view
+    weight: 22
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_date_display_mode:
     weight: 6
     label: above
