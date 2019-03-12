@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
@@ -167,5 +168,23 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
     // Let other modules weigh in for nodes whose deletion we haven't vetoed.
     default:
       return AccessResult::neutral();
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ *
+ * Validates that the PubMed ID Field on Citations
+ * matches the required pattern.
+ */
+function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($bundle == 'cgov_citation') && !empty($fields['field_pubmed_id'])) {
+    $fields['field_pubmed_id']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[0-9]*$/',
+        'message' => 'The PubMed ID field only accepts numbers.',
+      ],
+    ]
+    );
   }
 }
