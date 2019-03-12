@@ -38,7 +38,7 @@ import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 
 // // Unfortunately AMD doesn't play nice with export default;
 import proactiveLiveHelp from 'Core/libraries/liveHelpPopup';
-// import sortablejs from 'Modules/sortableTables';
+import sortablejs from 'Core/libraries/sortableTables';
 import pageOptions from 'Libraries/pageOptions';
 
 // import SiteWideSearch from 'Common/Enhancements/sitewidesearch';
@@ -171,7 +171,7 @@ $(window).on('load', function () {
 // 	// element, among other things.
 
 	// NOTE: The custom settings are handled in a local wrapper module
-	// sortablejs();
+	sortablejs();
 
 	// Use custom audio player to override mp3 anchor links
 	linkAudioPlayer();
