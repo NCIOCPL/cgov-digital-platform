@@ -24,7 +24,7 @@ popupFunctions();
 import 'Core/libraries/enlarge/enlarge';
 import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
 
-// import { buildOTP, makeOutline } from 'Common/Enhancements/NCI.page';
+import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
 import search from 'Libraries/search/search';
 import mobilemenu from 'Libraries/mainNav/mobilemenu';
 import sectionNav from 'Libraries/sectionNav/sectionNav';
@@ -106,26 +106,26 @@ const onDOMContentLoaded = () => {
 	/*** BEGIN accordionizer ***/
 	makeAllAccordions();
 
-	// /*** BEGIN page outlining ***/
-	// // generate the page outline -- this is used for all page-/document-level navigation
-	// // set up outlines
-	// $('article').each(function () {
-	// 	var $this = $(this);
+	/*** BEGIN page outlining ***/
+	// generate the page outline -- this is used for all page-/document-level navigation
+	// set up outlines
+	$('article').each(function () {
+		var $this = $(this);
 
-	// 	// check if there already is a built outline for this article
-	// 	if ($this.data('nci-outline')) {
-	// 		return;
-	// 	}
+		// check if there already is a built outline for this article
+		if ($this.data('nci-outline')) {
+			return;
+		}
 
-	// 	// otherwise, build and set the outline
-	// 	var outline = makeOutline(this);
-	// 	$this.data('nci-outline', outline);
-	// });
+		// otherwise, build and set the outline
+		var outline = makeOutline(this);
+		$this.data('nci-outline', outline);
+	});
 
-	// if ($('article').length > 0) {
-	// 	buildOTP();
-	// }
-	// /*** END page outlining ***/
+	if ($('article').length > 0) {
+		buildOTP();
+	}
+	/*** END page outlining ***/
 
 	/*** BEGIN HACK for Blog Series titles
 	 * TODO: remove when Blog Dynamic List Percussion template is updated
