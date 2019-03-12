@@ -17,7 +17,7 @@ initializeCustomEventHandler();
 import './Common.scss';
 
 import $ from 'jquery';
-// import 'Common/Enhancements/jQueryUIExtensions';
+import 'Core/libraries/jQueryUIExtensions/jQueryUIExtensions';
 import popupFunctions from 'Libraries/popups/popup_functions';
 popupFunctions();
 
