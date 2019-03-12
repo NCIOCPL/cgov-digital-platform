@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_citation.field_citation_content
+    - field.field.paragraph.cgov_citation.field_pubmed_id
+    - paragraphs.paragraphs_type.cgov_citation
+  module:
+    - text
+id: paragraph.cgov_citation.default
+targetEntityType: paragraph
+bundle: cgov_citation
+mode: default
+content:
+  field_citation_content:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_pubmed_id:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
