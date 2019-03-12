@@ -22,7 +22,7 @@ import popupFunctions from 'Libraries/popups/popup_functions';
 popupFunctions();
 
 import 'Core/libraries/enlarge/enlarge';
-// import 'Plugins/jquery.nci.prevent_enter';
+import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
 
 // import { buildOTP, makeOutline } from 'Common/Enhancements/NCI.page';
 import search from 'Libraries/search/search';
