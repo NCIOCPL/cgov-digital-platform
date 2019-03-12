@@ -59,6 +59,18 @@ function cgov_core_block_build_alter(array &$build, BlockPluginInterface $block)
   // Add the 'url' cache context to page-specific blocks.
   if (strpos($block_label, 'Public Use') === 0) {
     $build['#cache']['contexts'][] = 'url';
+
+    // Add the 'node' cache context so node updates are caught.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name == 'entity.node.canonical') {
+      // Store the NID of the current node.
+      $nid = \Drupal::routeMatch()->getRawParameter('node');
+      $build['#cache']['tags'][] = "node:$nid";
+    }
+    // If not the node view page (eg: Preview or Latest) don't cache block.
+    else {
+      $build['#cache']['max_age'] = 0;
+    }
   }
 }
 
