@@ -21,7 +21,7 @@
     if ( typeof define === "function" && define.amd ) {
 
         // AMD. Register as an anonymous module.
-        define(["jquery", "jquery-ui", 'slick-carousel', 'Modules/carousel/slick-patch'], factory );
+        define(["jquery", "jquery-ui", 'slick-carousel', 'Core/libraries/carousel/slick-patch'], factory );
     } else {
         // Browser globals
         factory( jQuery );
@@ -41,7 +41,7 @@
 
             // Callbacks
             change: null //This is triggered on a slide change.
-            
+
             //Examples
             //fetchSrc: false, //String or Promise
             //queryParam: false,
@@ -60,15 +60,15 @@
         // Adds the previous next controls to the element
         _addControls: function() {
             this.controls = {};
-            
+
             /*var prevButtonTxt = ENG_PREV_TEXT;
             var nextButtonTxt = ENG_NEXT_TEXT;
-    
+
             if ('language' == 'spanish') {
                 prevButtonTxt = SPN_PREV_TEXT;
-                nextButtonTxt = SPN_NEXT_TEXT;    
+                nextButtonTxt = SPN_NEXT_TEXT;
             }*/
-    
+
             // Script for custom arrows
             // NOTE: The slick library comes with arrows, but they are pre-styled
             // and they go after the carousel. Front End Devs can decide if they'd
@@ -82,19 +82,19 @@
             }).append('<span>', {
                 "class": "ic-arrow-button",
                 text: this.options.previousText
-            })           
-    
+            })
+
             this.controls.$nextButton = $('<button>', {
                 "class": 'next'
             }).append('<span>', {
                 "class": "ic-arrow-button",
                 text: this.options.nextText
             });
-    
+
             this.controls.$status = $('<div>', {
                 "class": 'pagingInfo'
             });
-    
+
             var controls = $('<div>', {
                 "class": 'row ic-controls'
             }).append(
@@ -109,8 +109,8 @@
                     )
                 )
             );
-    
-            this.$el.append(controls);    
+
+            this.$el.append(controls);
         },
         // Helper function to set the status information in the controls area
         _setStatus: function(slick, currentSlide, nextSlide) {
@@ -120,12 +120,12 @@
             var i = (currentSlide ? currentSlide : 0) + 1;
             this.controls.$status.text(i + '/' + slick.slideCount);
         },
-        // jQuery UI "abstract method" called when $el.imagecarousel() is first called on an element. 
-        _create: function () {     
+        // jQuery UI "abstract method" called when $el.imagecarousel() is first called on an element.
+        _create: function () {
 
             var thisCarousel = this;
             thisCarousel.$el = $(this.element);
-            thisCarousel.$sliderEl = thisCarousel.$el.find('.slider').first();     
+            thisCarousel.$sliderEl = thisCarousel.$el.find('.slider').first();
             thisCarousel.title = thisCarousel.$el.find('.ic-carousel-title h4').text();
 
             //Add the controls
@@ -149,14 +149,14 @@
             thisCarousel.$sliderEl.on('swipe', function(event, slick, direction) {
 
                 //Assume that we moved to the next slide first.
-                var currSlide = thisCarousel.$sliderEl.slick('slickCurrentSlide');            
+                var currSlide = thisCarousel.$sliderEl.slick('slickCurrentSlide');
                 var carouselDir = 'unknown';
                 var previousSlide = -1;
 
                 if (direction == 'right') {
                     carouselDir = 'previous';
                     //if we moved to the previous slide, then the previous one is the slide to the right of the current,
-                    //otherwise we have looped and we are now at index 
+                    //otherwise we have looped and we are now at index
                     previousSlide = (currSlide + 1) < thisCarousel.slideCount ? (currSlide + 1) : 0;
                 } else {
                     carouselDir = 'next';
@@ -174,7 +174,7 @@
                     totalImages: thisCarousel.slideCount,
                 });
             })
-           
+
 
             //Find and Attach an instance on the carousel and Enable Slick
             thisCarousel.$sliderEl.slick({
@@ -220,9 +220,9 @@
             })
 
             //TODO: event handlers should be attached using this._on
-            //Handle Pager Actions here            
+            //Handle Pager Actions here
             thisCarousel.controls.$prevButton.click(function(){
-                
+
                 //Only fire off our click event if we actually have slides
                 if (thisCarousel.slideCount > 0) {
 
@@ -239,18 +239,18 @@
                         direction: 'previous',
                         beforeIndex: beforeSlide,
                         afterIndex: nextSlide,
-                        totalImages: thisCarousel.slideCount,                        
+                        totalImages: thisCarousel.slideCount,
                     });
-                }                
-            }); 
-            
+                }
+            });
+
             thisCarousel.controls.$nextButton.click(function(){
-                
+
                 //Only fire off our click event if we actually have slides
                 if (thisCarousel.slideCount > 0) {
-                    
+
                     //Get the current slide.
-                    var beforeSlide = thisCarousel.$sliderEl.slick('slickCurrentSlide');                    
+                    var beforeSlide = thisCarousel.$sliderEl.slick('slickCurrentSlide');
                     var nextSlide = ((beforeSlide + 1) < thisCarousel.slideCount) ? (beforeSlide + 1) : 0;
 
                     thisCarousel.$sliderEl.slick("slickNext");
@@ -264,7 +264,7 @@
                         afterIndex: nextSlide,
                         totalImages: thisCarousel.slideCount,
                     });
-                }                    
+                }
             });
         }
     });

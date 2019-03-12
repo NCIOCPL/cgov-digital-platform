@@ -1,5 +1,5 @@
 // require('slick-carousel/slick/slick.js');
-
+import $ from 'jquery';
 /*
 * slick.js Monkey Patch v2
 *
@@ -47,7 +47,7 @@ $.fn.slick = function(options) {
     // oldSlickFunction() in order to preserve the scope.
 
     //The following patch was only really written to handle the initialization of slick,
-    //not additional calls for information.  A quick fix is to call each if there is an 
+    //not additional calls for information.  A quick fix is to call each if there is an
     //each function, otherwise, we return the call response.
     var callResponse = oldSlickFunction.call(this, options);
 
