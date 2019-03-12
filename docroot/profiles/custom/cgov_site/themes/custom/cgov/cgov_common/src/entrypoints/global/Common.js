@@ -41,7 +41,7 @@ import proactiveLiveHelp from 'Core/libraries/liveHelpPopup';
 import sortablejs from 'Core/libraries/sortableTables';
 import pageOptions from 'Libraries/pageOptions';
 
-// import SiteWideSearch from 'Common/Enhancements/sitewidesearch';
+import SiteWideSearch from 'Libraries/sitewideSearch/sitewideSearch';
 import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
@@ -57,8 +57,8 @@ const onDOMContentLoaded = () => {
 
 	headroomPlugin();
 
-	// // This initializes jQuery UI Autocomplete on the site-wide search widget.
-	// SiteWideSearch();
+	// This initializes jQuery UI Autocomplete on the site-wide search widget.
+	SiteWideSearch();
 
 	// /*** BEGIN dictionary toggle ***/
 	// // var dictionaryToggle = function () {
