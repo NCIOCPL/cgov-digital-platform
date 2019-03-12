@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
+    - field.field.node.cgov_article.field_citation
     - field.field.node.cgov_article.field_date_display_mode
     - field.field.node.cgov_article.field_date_posted
     - field.field.node.cgov_article.field_date_reviewed
@@ -66,6 +67,15 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_citation:
+    type: entity_reference_revisions_entity_view
+    weight: 16
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
   field_date_display_mode:
     weight: 13
     label: above
@@ -149,7 +159,7 @@ content:
     type: string
     region: content
   field_public_use:
-    weight: 15
+    weight: 17
     label: hidden
     settings: {  }
     third_party_settings: {  }
