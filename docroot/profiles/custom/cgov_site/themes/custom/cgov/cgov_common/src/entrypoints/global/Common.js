@@ -148,7 +148,7 @@ const onDOMContentLoaded = () => {
 	tooltips();
 
 	// // initialize the prevent-enter enhancement
-	// $('[data-prevent-enter="true"]').NCI_prevent_enter();
+	$('[data-prevent-enter="true"]').NCI_prevent_enter();
 
 	// // Proactive Live Help for CTS
 	proactiveLiveHelp();
