@@ -34,7 +34,7 @@ import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 // import formControls from 'Modules/forms/formControls';
-// import tooltips from 'Modules/tooltips/referenceTooltip';
+import tooltips from 'Core/libraries/tooltips/referenceTooltip';
 
 // // Unfortunately AMD doesn't play nice with export default;
 import proactiveLiveHelp from 'Core/libraries/liveHelpPopup';
@@ -69,7 +69,7 @@ const onDOMContentLoaded = () => {
 
 	backToTop();
 
-	// /*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
+	/*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
 
 	// OCEPROJECT-3098 HACK to fix the Spanish mega menu on the Spanish homepage
 	if (/^\/espanol\/?$/.test(location.pathname)) {
@@ -82,25 +82,25 @@ const onDOMContentLoaded = () => {
 
 	search.init();
 
-	// /*** END mobile nav ***/
+	/*** END mobile nav ***/
 
-	// /*** BEGIN Exit Disclaimer
-	//  * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
-	//  ***/
+	/*** BEGIN Exit Disclaimer
+	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
+	 ***/
 	exitDisclaimer();
 
 	pageOptions();
 
-	// /*** BEGIN table toggling
-	//  * This allows for toggling between tables.
-	//  * An example can be seen on grants-research-funding.shtml,
-	//  * as of the first commit with this code.
-	//  ***/
+	/*** BEGIN table toggling
+	 * This allows for toggling between tables.
+	 * An example can be seen on grants-research-funding.shtml,
+	 * as of the first commit with this code.
+	 ***/
 
-	// // for each toggleable section...
+	// for each toggleable section...
 	tableToggle();
 
-	// /*** END table toggling ***/
+	/*** END table toggling ***/
 
 	/*** BEGIN video embedding
 	 * This enables the embedding of YouTube videos and playlists as iframes.
@@ -110,7 +110,7 @@ const onDOMContentLoaded = () => {
 	// /*** BEGIN form controls ***/
 	// formControls();
 
-	// /*** BEGIN accordionizer ***/
+	/*** BEGIN accordionizer ***/
 	makeAllAccordions();
 
 	// /*** BEGIN page outlining ***/
@@ -144,8 +144,8 @@ const onDOMContentLoaded = () => {
 	// 	}
 	// });
 
-	// // reference tooltips
-	// tooltips();
+	// reference tooltips
+	tooltips();
 
 	// // initialize the prevent-enter enhancement
 	// $('[data-prevent-enter="true"]').NCI_prevent_enter();
