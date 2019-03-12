@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_blog_topics
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_citation
     - field.field.node.cgov_blog_post.field_date_posted
     - field.field.node.cgov_blog_post.field_feature_card_description
     - field.field.node.cgov_blog_post.field_image_article
@@ -84,6 +85,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_citation:
+    weight: 20
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
     region: content
   field_date_posted:
     weight: 16
