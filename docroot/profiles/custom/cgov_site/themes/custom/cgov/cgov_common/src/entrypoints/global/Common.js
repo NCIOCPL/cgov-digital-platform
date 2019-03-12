@@ -60,13 +60,6 @@ const onDOMContentLoaded = () => {
 	// This initializes jQuery UI Autocomplete on the site-wide search widget.
 	SiteWideSearch();
 
-	// /*** BEGIN dictionary toggle ***/
-	// // var dictionaryToggle = function () {
-	// // 	$("#utility-dropdown").slideToggle(0, function () {
-	// // 		$("#utility-dictionary").toggleClass('active');
-	// // 	});
-	// // }
-
 	backToTop();
 
 	/*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
@@ -134,15 +127,15 @@ const onDOMContentLoaded = () => {
 	// }
 	// /*** END page outlining ***/
 
-	// /*** BEGIN HACK for Blog Series titles
-	//  * TODO: remove when Blog Dynamic List Percussion template is updated
-	//  * with class name for <h3> ***/
+	/*** BEGIN HACK for Blog Series titles
+	 * TODO: remove when Blog Dynamic List Percussion template is updated
+	 * with class name for <h3> ***/
 
-	// $('div.blog-post').each(function () {
-	// 	if ($(this).find('a.comment-count').length < 1) {
-	// 		($(this).find('div.post-title h3').addClass('no-comments'))
-	// 	}
-	// });
+	$('div.blog-post').each(function () {
+		if ($(this).find('a.comment-count').length < 1) {
+			($(this).find('div.post-title h3').addClass('no-comments'))
+		}
+	});
 
 	// reference tooltips
 	tooltips();
