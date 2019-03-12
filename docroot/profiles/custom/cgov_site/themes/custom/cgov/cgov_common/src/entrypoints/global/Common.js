@@ -21,7 +21,7 @@ import $ from 'jquery';
 import popupFunctions from 'Libraries/popups/popup_functions';
 popupFunctions();
 
-// import 'Common/Plugins/Enlarge';
+import 'Core/libraries/enlarge/enlarge';
 // import 'Plugins/jquery.nci.prevent_enter';
 
 // import { buildOTP, makeOutline } from 'Common/Enhancements/NCI.page';
@@ -158,17 +158,17 @@ const onDOMContentLoaded = () => {
 document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
 
 $(window).on('load', function () {
-// 	// BEGIN Table Resizing
-// 	//Table enlarging & scrollbar adding.
-// 	//This marks all tables as scrollable, but only adds a shadow to the right side if it is scrolling.
-// 	//Inspired by http://www.456bereastreet.com/archive/201309/responsive_scrollable_tables/
+	// BEGIN Table Resizing
+	//Table enlarging & scrollbar adding.
+	//This marks all tables as scrollable, but only adds a shadow to the right side if it is scrolling.
+	//Inspired by http://www.456bereastreet.com/archive/201309/responsive_scrollable_tables/
 
-// 	$("#content table:not(.no-auto-enlarge)").overflowEnlarge();
+	$("#content table:not(.no-auto-enlarge)").overflowEnlarge();
 
-// 	// IMPORTANT: sortabletables-js requires a specific DOM structure for the table it is added to
-// 	// (consult https://github.com/BtheGit/sortable-js for more documentation). Because of this, it needs
-// 	// to run AFTER the enlarge function above, which does some rewriting of the DOM to wrap a table in a figure
-// 	// element, among other things.
+	// IMPORTANT: sortabletables-js requires a specific DOM structure for the table it is added to
+	// (consult https://github.com/BtheGit/sortable-js for more documentation). Because of this, it needs
+	// to run AFTER the enlarge function above, which does some rewriting of the DOM to wrap a table in a figure
+	// element, among other things.
 
 	// NOTE: The custom settings are handled in a local wrapper module
 	sortablejs();
