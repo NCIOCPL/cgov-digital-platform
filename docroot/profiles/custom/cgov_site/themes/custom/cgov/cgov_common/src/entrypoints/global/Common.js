@@ -13,7 +13,7 @@ import 'core-js/fn/string/starts-with';
 import initializeCustomEventHandler from 'Core/libraries/customEventHandler';
 initializeCustomEventHandler();
 
-// import 'Common/Enhancements/analytics';
+import 'Libraries/analytics/analytics';
 import './Common.scss';
 
 import $ from 'jquery';
