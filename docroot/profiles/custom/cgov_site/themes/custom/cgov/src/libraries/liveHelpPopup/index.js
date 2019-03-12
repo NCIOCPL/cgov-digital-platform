@@ -1,5 +1,5 @@
 import CookieManager from 'js-cookie';
-import * as DateUtility from 'Core/utilities/dateUtility';
+import * as DateUtility from 'Utilities/dateUtility';
 import basePaths from './settings';
 import ProactiveLiveHelp from './ProactiveLiveHelp';
 

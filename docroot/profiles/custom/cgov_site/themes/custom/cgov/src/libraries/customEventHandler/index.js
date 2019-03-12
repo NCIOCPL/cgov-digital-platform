@@ -1,4 +1,4 @@
-import { createCustomEventBroadcaster } from 'Core/utilities';
+import { createCustomEventBroadcaster } from 'Utilities';
 
 export const customEventGlobalNamespace = 'NCI.UX.Action';
 let registeredEventListeners = {};
