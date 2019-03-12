@@ -1,14 +1,14 @@
 // Polyfills for older browsers
 import 'Polyfills/custom_event';
 import 'Polyfills/replaceWith';
-// import 'es6-promise/auto';
-// import 'core-js/fn/array/from';
-// import 'core-js/fn/array/find';
-// import 'core-js/fn/array/includes';
-// import 'core-js/fn/object/assign';
-// import 'core-js/fn/object/entries';
-// import 'core-js/fn/string/includes';
-// import 'core-js/fn/string/starts-with';
+import 'es6-promise/auto';
+import 'core-js/fn/array/from';
+import 'core-js/fn/array/find';
+import 'core-js/fn/array/includes';
+import 'core-js/fn/object/assign';
+import 'core-js/fn/object/entries';
+import 'core-js/fn/string/includes';
+import 'core-js/fn/string/starts-with';
 
 import initializeCustomEventHandler from 'Core/libraries/customEventHandler';
 initializeCustomEventHandler();
