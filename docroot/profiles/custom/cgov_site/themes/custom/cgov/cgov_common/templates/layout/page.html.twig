@@ -71,7 +71,7 @@
       </div> <!-- END "large-12 columns" -->
       <div class="row">
         <!--    SECTION NAVIGATION -->
-        {% if page.section_nav %}
+        {% if page.section_nav|field_value %}
             {{ page.section_nav }}
         {% endif %}
         {# TODO: technically if there is no left nav we change some of the classes below. #}
