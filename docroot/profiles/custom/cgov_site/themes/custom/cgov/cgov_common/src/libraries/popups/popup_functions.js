@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import dictionary from 'Core/libraries/dictionaryServices';
+import dictionary from 'Core/libraries/dictionaryService';
 import queryString from 'query-string';
 import * as config from 'Core/libraries/nciConfig/NCI.config';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
@@ -8,7 +8,7 @@ import NCIModal from 'Core/libraries/modal';
 
 const lang = $('html').attr('lang') || 'en';
 // Set the language for finding the dictionary term/definition
-let longLang = 'English'; 
+let longLang = 'English';
 if (lang === 'es') {
 	longLang = 'Spanish';
 }
@@ -27,7 +27,7 @@ const popupFunctions = () => {
 	};
 
 	const popWindow = (type, urlargs) => {
-			
+
 		if (type === "definition") {
 			let term = urlargs.replace(/\s/g, '+');
 			$.when(_getDefinition(term)).done(function (termObject) {
@@ -50,12 +50,12 @@ const popupFunctions = () => {
 					triggerModal(content);
 				}
 			});
-			
+
 		} else if (type === "defbyid") {
 			// parse querystring so we can get definition id and dictionary
 			let params = queryString.parse(urlargs);
 			// id's are prefixed with "CDR0000" in the html but the backend service errors out if included in request
-			let id = Object.keys(params)[0].replace("CDR0000",''); 
+			let id = Object.keys(params)[0].replace("CDR0000",'');
 			// Cancer.gov is not defined as a dictionary in DictionaryService so we assign it 'term'
 			let lookup = 'term';
 			if(params.dictionary && params.dictionary !== 'Cancer.gov') {
@@ -108,7 +108,7 @@ const popupFunctions = () => {
 			`;
 			return template
     }
-    
+
 		// this is the complete template that will be rendered to the dialog popup. It will conditionally check for data values before attempting to render anything. This way we can avoid property undefined errors and empty DOM nodes.
 		let template = `
 			<dl>

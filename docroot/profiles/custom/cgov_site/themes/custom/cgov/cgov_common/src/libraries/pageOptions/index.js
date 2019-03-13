@@ -1,7 +1,7 @@
 import {
     getDocumentLanguage,
     getNodeArray,
-} from 'Core/utilities';
+} from 'Utilities';
 import pageOptionsTypes from './types';
 import './index.scss';
 
