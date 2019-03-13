@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.blog_post_title_date_author_desc_img
     - field.storage.node.body
     - field.storage.node.field_date_posted
     - node.type.cgov_blog_post
@@ -71,12 +72,10 @@ display:
       style:
         type: default
       row:
-        type: fields
+        type: 'entity:node'
         options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
+          relationship: none
+          view_mode: blog_post_title_date_author_desc_img
       fields:
         title:
           id: title
@@ -342,14 +341,34 @@ display:
       tags:
         - 'config:field.storage.node.body'
         - 'config:field.storage.node.field_date_posted'
-  block_blog_listing:
+  block_bp_list:
     display_plugin: block
-    id: block_blog_listing
-    display_title: Blog-Listing
+    id: block_bp_list
+    display_title: List-No-Thumb
     position: 1
     display_options:
       display_extenders: {  }
-      display_description: 'List of Blog Posts, filtered by series'
+      display_description: 'List of Blog Posts without thumbnails, filtered by series'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.body'
+        - 'config:field.storage.node.field_date_posted'
+  block_bp_list_th:
+    display_plugin: block
+    id: block_bp_list_th
+    display_title: List-Thumb
+    position: 1
+    display_options:
+      display_extenders: {  }
+      display_description: 'List of Blog Posts with thumbnails, filtered by series'
     cache_metadata:
       max-age: -1
       contexts:
