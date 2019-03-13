@@ -12,28 +12,42 @@ class TranslateCommand extends BltTasks {
   /**
    * Translate strings for all available locales.
    *
-   * @command custom:translate:all
+   * @command custom:locales:translate
    */
   public function translateAll() {
     $commands = [
-      'custom:translate:spanish' => [],
+      'custom:locales:check' => [],
+      'custom:locales:update' => [],
     ];
     $this->invokeCommands($commands);
   }
 
   /**
-   * Translate content to Spanish.
+   * Check all locales.
    *
-   * @command custom:translate:spanish
+   * @command custom:locales:check
    */
-  public function translateSpanish() {
-    $this->say("************************************************");
-    $this->say("***** Creating translations for Spanish *****");
-    $this->say("************************************************");
+  public function localeCheck() {
+    $this->say("********* Check all available locales **********");
+    /** @var \Acquia\Blt\Robo\Tasks\DrushTask $task */
+    $task = $this->taskDrush()
+      ->drush('locale:check')
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
+  }
+
+  /**
+   * Update all locales.
+   *
+   * @command custom:locales:update
+   */
+  public function localeUpdate() {
+    $this->say("********* Update all available locales **********");
     /** @var \Acquia\Blt\Robo\Tasks\DrushTask $task */
     $task = $this->taskDrush()
       ->drush('locale:update')
-      ->rawArg('--langcodes=es')
+      ->rawArg('&& drush cr')
       ->printOutput(TRUE);
     $result = $task->interactive($this->input()->isInteractive())->run();
     return $result;

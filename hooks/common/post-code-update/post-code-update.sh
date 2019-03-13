@@ -33,6 +33,6 @@ users_file="$HOME/cgov-drupal-users.yml"
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
 blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
-blt custom:translate:all
+blt custom:locales:translate
 
 set +v
