@@ -63,6 +63,7 @@ class WorkflowTest extends KernelTestBase {
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('paragraph');
     $this->installEntitySchema('workflow');
     $this->installConfig([
       'cgov_core',
