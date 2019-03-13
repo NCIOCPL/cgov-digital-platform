@@ -11,7 +11,8 @@
 
     <div id="cgvBody">
       <p class="blog-post-publishing-info">
-        {{ content.field_date_posted }}, {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
+        {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
+        {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
         {{ blogMacros.getAuthor(content) }}
       </p>
       {{ content.field_image_article }}

@@ -6,7 +6,8 @@
         <a class="title" href="{{ url }}" onclick="">{{ label }}</a>
         <div class="description">
           <div class="date-author">
-            {{ content.field_date_posted }}, {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
+            {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
+            {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
             {{ blogMacros.getAuthor(content) }}
           </div>
           <p>{{ content.field_list_description }}</p>
