@@ -23,6 +23,7 @@ class SlevenCommand extends BltTasks {
       'custom:install_cgov_yaml_content_by_module' => [
         'module' => 'cgov_yaml_content',
       ],
+      'custom:translate:all' => [],
     ];
 
     $this->invokeCommands($commands);
