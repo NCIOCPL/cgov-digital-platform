@@ -11,7 +11,13 @@
   field_author: 
     value: 'Jim Hartley'
   field_blog_series:
-    value: 'RAS Dialogue'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
   body:
     - format: "full_html"
       value: |
@@ -27,12 +33,14 @@
         <p>Thank you. It's an opportunity to really help in ways that I could not help before, so this really cool.</p>
         <p><strong>I have read that cardiotoxicity is an issue, with both chemotherapy and also with targeted therapies.</strong></p>
         <p>That's something we want to prevent in the future. We don't want to overtreat, and we don't want to give the wrong treatments if you're predisposed.&nbsp; As treatments become more diverse we need to do more understand their long-term consequences.</p>
+  field_short_title:
+    - value: 'Conversation with Elizabeth Jaffee: An Immuno-Oncology Update'
   field_browser_title:
-    value: 'Blog Post Browser title'
+    value: 'Conversation with Elizabeth Jaffee'
   field_card_title:
-    value: 'Blog Post Card title'
+    value: 'Conversation with Elizabeth Jaffee: An Immuno-Oncology Update'
   field_feature_card_description:
-    value: 'Blog Post feature card desc'
+    value: 'Description: Conversation with Elizabeth Jaffee'
   field_intro_text:
     - format: "full_html"
       value: |
@@ -65,15 +73,161 @@
   field_date_posted:
     value: "2018-05-21"
   field_pretty_url:
-    value: "my-blog-post-2"
+    value: "jaffee-immunotherapy"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_short_title:
-    - value: "Blog post short title"
-  field_site_section:
-    - '#process':
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn"
+  title:
+    value: "Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author: 
+    value: 'Jim Hartley'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
         callback: 'reference'
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p><strong><u>Hartley</u>:</strong> The contraption on the <span><a href="https://www.cell.com/cancer-cell/issue?pii=S1535-6108(17)X0011-1">cover of Cancer Cell</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>&nbsp;</span>that contained <span><a href="https://www.ncbi.nlm.nih.gov/pubmed/30300582">your article</a>&nbsp;</span>refers to some of your findings, correct?</p>
+        <p><strong><u>Klijn</u>:</strong> The concept for the cover was created by Allison Bruce who’s a graphics illustrator, we have extensive experience with her and she’s great. She thought of the RAS pathway that we were examining as a Rube Goldberg machine, and she has captured the basic function of the RAS pathway and the feedback mechanism that we and many others have described by having RAS and RAF be a series of gutters and the gray lines represent the paths of the balls without inhibitors. The balls from the RAS and RAF gutters fall down onto the MEK trampoline, and then bounce into the ERK receptacle, where they are deposited into a bucket that then raises the RAS gutter so the balls stop flowing. One of the points of the paper is that MEK inhibition alone, represented by the bat, is not sufficient to stop the pathway, since when you introduce the bat into the system you hit the balls but they bounce back on the wall back up to the RAS gutter and basically keep the signal flowing. Experimentally we see this as an increase in phospho-MEK and RAS-GTP in the presence of a MEK inhibitor. And the introduction of the RAF inhibitor, which is in this case the mitt, makes sure that the balls that get hit out of the system by MEK inhibitor are taken completely out, by depositing them into the funnel down below. So the presence of both MEK and RAF inhibitors basically causes the system to be completely blocked off.</p>
+        <p><strong><u>Malek</u>:</strong> Allison did a really great job, because the Rube Goldberg at its heart is a system that you build that does something very simple using a very over-complicated process. And I thought that was kind of central to this, because the MAP kinase pathway is meant to do something very simple, regulate cell growth, regulate cell proliferation. But it is highly complicated, it’s convoluted which is what this Rube Goldberg illustrates, and to interrogate this pathway with small molecule inhibitors or think of therapeutically approaching this pathway, I think we have to consider the complexity of the signaling when we’re thinking about it.</p>
+        <p><strong><u>Hartley:</u></strong>&nbsp;Is it your view that the increase in BRAF-CRAF dimers that is driven by [the MEK inhibitor] cobimetinib is driven only by increased RAS-GTP?</p>
+        <p><strong><u>Malek</u>:</strong> We are obviously actively working on understanding kinase-independent functions of CRAF. Mariano Barbacid’s <span><a href="https://www.ncbi.nlm.nih.gov/pubmed/29395869">paper</a>&nbsp;</span>that was published earlier this year really showed nicely that in the KRAS-driven GEMMs model in an intervention setting that CRAF depletion inhibited tumor growth. And it’s nicely supported, the earlier papers from Dave Tuveson and Mariano in a tumor initiation context. What we think is going on is, we think that in the presence of MEK inhibition it’s really RAF kinase dependence that is the pathway driver, which is why you see the synergistic activity with RAF kinase inhibitors. The kinase-independent function of RAF appears to be, at least in our early data, MEK independent, and we’re now trying to understand exactly what the molecular mechanism of that is. And there may be context dependence again in places where you might see RAF kinase independent functions vs kinase dependent functions.</p>
+        <p><strong><u>Klijn</u>:</strong> I think also this is a way to explain why single agent RAF inhibition isn’t as effective as you might have expected if everything would have been kinase dependent in that context. I think that one thing that we also tried to say here is that, depending on which of the RASs are mutated, there might be a differential dependency on the kinase function of CRAF, without any other inhibition. I think MEK really drives the dependence on RAF kinase function, but in other contexts those dependencies might fluctuate depending on which RAS is mutated or what the cell context is.</p>
+        <p><strong><u>Malek</u>:</strong> That’s an excellent point, because I think, that’s kind of how we started the paper, where we did this broad cell line profiling with the RAF kinase inhibitors, across hundreds of cell lines, Figure 1 of the paper, Figure 1b, and looked at BRAF-mutant, KRAS-mutant, NRAS-mutant, and wild-type cells. And clearly the RAF inhibitors are quite effective in the V600E cell lines but they were not effective in the majority of KRAS-mutant lines. From there our thinking was, either these cell lines simply don’t care about RAF kinase activity, because we’re dosing the drugs up and we’re just not seeing much of an effect, or maybe our RAF kinase inhibitor is not sufficiently potent and it could be a pharmacology thing. But we know that kinase inhibitor is actually active enough to work in the BRAF V600E setting. In fact if you look at Figure 1b you can see that the RAF inhibitors, the RAF dimer inhibitors anyway, type II, work quite well in NRAS mutant lines. So we think there is a context dependency where there will be subsets of RAS mutants that are going to be more dependent on RAF kinase activity, and there will be others that won’t. And the NRAS data, we didn’t extensively go into them in this paper, but we have data with multiple RAF dimer inhibitors showing greater single agent activity in NRAS-mutant tumors that looks almost equivalent in potency to what we see in the context of BRAF V600E. So we think probably RAF dimers are more active, perhaps it’s because the NRAS mutant lines harbor the Q61 mutation which we know is a more dominant mutation, so perhaps it’s about elevated RAS-GTP levels in that context. I’m actually going to talk about this at the <span><a href="https://www.aacr.org/Meetings/Pages/MeetingDetail.aspx?EventItemID=165#.WlPdgEtG2Ho">AACR RAS meeting</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>&nbsp;</span>in December and get into this concept a little bit more.</p>
+        <p><strong><u>Hartley:</u></strong>&nbsp;I was struck by the fact that in your screen of several hundred cell lines you found synergy between your type II RAF inhibitor and your MEK inhibitor in some cell lines and not in other cell lines, and that was sometimes independent of KRAS status.</p>
+        <p><strong><u>Klijn:</u></strong>&nbsp;Broadly the synergy tracks with RAS mutation status, that’s Figure 4 I believe, Figure 4A, there’s clear and statistically significant enrichment of synergy in the RAS mutant context. So broadly, it tracks with RAS mutations. But there’s still a spread within that group, there are RAS mutants that show less synergy than others and similarly in the wild type situation you can see that there are RAS and BRAF wild type lines that show synergy but are not mutant for those genes. So it’s not a cut and dried, black and white difference, but the enrichment in RAS mutation group is very clear and significant. What I think we say in 4F and G and also the quantification in H is that the synergy is clearly seen in those lines whether mutant or not if they’re able to increase phosphoMEK after MEK inhibition.</p>
+        <p><strong><u>Hartley</u>:</strong> Is this combination therapy clinic worthy, is it phase I worthy?</p>
+        <p><strong><u>Malek</u>:</strong> I think so, we currently have a <span><a href="https://clinicaltrials.gov/ct2/show/NCT03284502">phase I trial</a>&nbsp;</span>ongoing with a company called Hanmi, they have a RAF inhibitor that we are partnering with them on, we’re combining with cobimetinib. <span><a href="https://clinicaltrials.gov/ct2/show/NCT02974725">Novartis</a>&nbsp;</span>is also pursuing this combination, they’re combining both with trametinib, and they’re also running a combination with their ERK inhibitor in development. The key to this again is, can you achieve a therapeutic index with this combination.</p>
+        <p><strong><u>Hartley</u>:</strong> Are you stratifying patients?</p>
+        <p><strong><u>Malek</u>:</strong> Yes, obviously the RAS mutant patients we would expect would be enriched for responses and certainly the KRAS G13Ds in colon might be a place that we would be really interested in testing this combination. And I think the synergy hypothesis leads us to believe that you could dose down the MEK inhibitor and re-wire the pathway and confer RAF kinase dependency under those conditions. So that’s why we think there’s a potential to get a combination dose that’s tolerated in the clinic.</p>
+        <p><strong><u>Hartley</u>:</strong> I’ve heard that toxicity has always been the problem with the MEK inhibitors. Could you go down by a factor of two or four, do you think?</p>
+        <p><strong><u>Malek</u>:</strong> That’s what we’re going to find out. It’s always a challenge developing these combinations. But from our preclinical data it does not look like we have to use cobimetinib at fully efficacious exposures. You see this pathway re-wiring at very low doses, down to 50, 100 nanomolar cobi. So our thinking about this has been, you’re better off reducing the dose of the MEK inhibitor, because that’s basically the strategy, to rewire, and then try and get the RAF inhibitor as high in dose as possible to inhibit RAF dimers. We’re using the MEK inhibitor essentially to confer the dependency and the RAF inhibitor is the real drug you’re using to get efficacy.</p>
+        <p><strong><u>Hartley</u>:</strong> Have you looked for resistance yet?</p>
+        <p><strong><u>Malek</u>:</strong> It will be interesting because most of the mechanisms of resistance to the existing BRAF inhibitors, whether it’s complementing a dimer, driving dimerization, or it’s a splice variant, a RAS mutation, BRAF amplification, they’re basically driving RAF dimers. So I think it will be interesting in this case to see what pathway escape looks like.</p>
+        <p><strong><u>Hartley</u>:</strong> Chris, what was your role in this paper?</p>
+        <p><strong><u>Klijn</u>:</strong> The pure computational part of the paper is the way we handled the drug screening, as well as some RNA seq. I think the major optimization was allowing us to do synergy screening over hundreds of cell lines. You can see that there are some full dose-matrix Bliss plots in here but those are laborious, and you can’t really scale those to the numbers that we wanted to scale them to. So in collaboration with the our functional genomics group, which is our screening core led by Scott Martin, we used co-dilution screens, where you basically screened a single agent over a dose range, and then at co-dilutions with two single agents. We developed ways to make sure that those curves are all comparable and that we get the right statistics out of them, so that you could see the biological effect as you see in the dot plots like the one in Figure 4a, represents quite a bit of work by very many many people, and also a lot of computational development. And then, obviously, the association of genomics afterwards, where we identified the G13Ds as being especially synergistic. All those things are basically grounded in the fact that the synergy statistics are quite robust.</p>
+        <p><strong><u>Hartley</u>:</strong> Chris, did you start out in the lab, or at a computer?</p>
+        <p><strong><u>Klijn</u>:</strong> I was in the lab in the early stages of my career, I did my Ph.D. in the Netherlands Cancer Institute, working on genomics in mouse models, mostly. That’s where I made the switch to computational biology. And after my Ph.D. I moved to Genentech as a postdoc, and after I finished my postdoc I stayed on as a scientist.</p>
+        <p><strong><u>Malek</u>:</strong> And it’s been a really effective way to do discovery science, with this close partnership where Chris is suggesting experiments, looking at the data so we have this iterative process going back and forth, and same thing with his team, he has a team of computational biolgists that work with several members of our department. Basically every scientist is partnered up with a computational biologist. And I think that’s basically essential now, because an individual scientist generates millions, billions of data points, and you need somebody who really understands how to view those big data sets, you need that close interaction to do the work at the scale that we want to do.</p>
+        <p><strong><u>Hartley</u>:</strong> Shiva, is there anything you’d like to say about women in science?</p>
+        <p><strong><u>Malek</u>:</strong> I take my role as a scientific leader in this field really seriously, both obviously from a scientific standpoint to make contributions to the community, but also as a mentor for women. I’m co-organizing the upcoming <span><a href="https://www.aacr.org/Meetings/Pages/MeetingDetail.aspx?EventItemID=165#.WlPdgEtG2Ho">AACR RAS</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>&nbsp;</span>meeting with Karen Cichowski, Frank McCormick, and Gideon Bollag, and we put a lot of thought into the gender balance, making sure that was part of the discussion. I think we have a long ways to go the in the scientific community, I think we need more women at the table, in positions where we can influence, like on organizing committees, where you can open the discussion a little more. Genentech’s been a fantastic place, I talk a little bit about this in my <span><a href="https://www.gene.com/stories/the-gift-of-mentorship">Portrait</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>
+          </span>, and there is a strong network of women that really support each other that’s front and center for me every single day. We have senior leaders like Wendy Young, Lori Friedman, Sara Kenkare-Mitra , there are many that have done a lot to raise other women in the organization. I would like for us to build a network like that in the scientific community and particularly in the RAS community. With folks like Karen Cichowski, Sharon Campbell, Debbie Morrison and Dafna Bar-Sagi, there’s no shortage of great women in the field.</p>
+        <p><strong><u>Hartley</u>:</strong> Chris, do you have any closing thoughts?</p>
+        <p><strong><u>Klijn</u>:</strong> As a junior scientist in the field, as well as a computational scientist in the field, I think it is important to realize that the future of science is probably team-based science. It’s not going to be individuals in individual labs working on a given problem. The problems are too big and the amount of data being generated is too large. A lot of the projects we have here at Genentech are very collaborative and that’s the thing that I really enjoy.</p>
+  field_short_title:
+    - value: 'Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn'
+  field_browser_title:
+    value: 'Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn'
+  field_card_title:
+    value: 'Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn'
+  field_feature_card_description:
+    value: 'Description: Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+        <p>
+          Shiva Malek and her family immigrated to the United States in 1979. She is now Director of Discovery Oncology at Genentech, 
+          a member of the Roche Group, in South San Francisco, California. Together with computational biologist Christiaan Klijn and 
+          their colleagues, Malek has recently shed light on pharmaceutical vulnerabilities in a class of cancers driven by mutant KRAS. 
+          Klijn and Malek were interviewed by Cancer.Gov/RAS editor Jim Hartley.
+        </p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2018-12-06"
+  field_pretty_url:
+    value: "shiva-malek"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Ras–dependent Paracrine Cascades"
+  title:
+    value: "Ras–dependent Paracrine Cascades"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author: 
+    value: 'Kenneth P. Olive'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>One of the prevailing mysteries of Ras is the disconnect between the known cell autonomous effectors of mutant Ras and the cascade of non-cell autonomous changes it induces in the local microenvironment. Despite outstanding progress by the Ras community in delineating the proximal pathways of Ras signaling, there are few secreted or cell-surface proteins represented on the resulting maps (including <a href="/research/key-initiatives/ras/ras-central/blog/2015/ras-pathway-v2" title="">Ras 2.0</a>). Yet alterations in the tumor microenvironment may be one of the most profound consequences of Ras activation. The cancers with a high frequency of Ras mutations (e.g. pancreatic, lung, and colon) are characterized by extensive desmoplasia and stromal cell infiltration, and many studies now find associations between Ras mutation and the activation of specific paracrine pathways that effect biological responses in stromal cells. Genetically engineered mouse models have been particularly useful in characterizing the paracrine effects of mutant Ras expression. A pancreatic cancer model based on tetracycline-inducible mutant K-ras demonstrated rapid stromal regression following withdrawal of mutant K-ras expression.<sup>1</sup> However, detailed molecular mechanisms linking direct Ras effector proteins to secreted/cell surface ligands remain elusive.</p>
+        <p>Some of the most direct evidence of Ras–dependent paracrine signaling comes from studies of tumor development. Many inflammatory conditions predispose to related cancers (eg. chronic pancreatitis is a strong risk factor for pancreatic ductal adenocarcinoma), yet acute inflammation is part of the normal, healthy response to tissue injury. An overly festive night out might injure some acinar cells in the pancreas, resulting in acinar-to-ductal metaplasia (ADM) and inflammation. Normally, after the tissue is repaired, ADM cells return to an acinar state and the acute inflammation resolves. However, in the context of a K-ras mutation, this cycle is broken and the tissue is unable to appropriately resolve the inflammatory response, leading to chronic inflammation and increasing cancer risk.<sup>2</sup></p>
+        <p>Normal epithelial (glandular) tissues have a limited complement of stromal cells. For example, fibroblasts make up just a few percent of cells in the normal pancreas. However, in the setting of chronic inflammation, and later in cancer desmoplasia, fibroblasts and other stromal cell types can dominate the tissue parenchyma. A host of cytokines, chemokines, and other factors are secreted, leading to changes in cellular composition, remodeling of the extracellular matrix, increased mechanical stiffness of the tissue parenchyma, and modulation of the local immune microenvironment, all of which can promote malignancy. Another consequence of desmoplasia can be changes in tissue perfusion that limit the delivery of drugs to tumor tissues, reducing drug efficacy.<sup>3,4</sup></p>
+        <p>Despite the obvious importance of these processes, we actually have a shockingly incomplete understanding of the cellular and extracellular composition of desmoplastic tumors. Fibroblasts, immunocytes, and endothelial cells are clearly major contributors, but these are all broad categories. How many different types of fibroblasts exist in a tumor? How do we visualize them? What are their functional distinctions? The question is even more complicated for immunocytes, a huge category comprising dozens of specific cell types with diverse and often opposing functional roles. Endothelial and lymphendothelial cells can vary in type and form, yielding diverse structures that control perfusion, oxygen saturation, nutrient levels, and other biophysical properties. There are also “immature” cell types such as mesenchymal stem cells, immature myeloid progenitor cells, and endothelial progenitor cells. The word “immature” is a diminutive and often equated to “non-functional”, but in truth such cells are associated with critical functions, as in the case of myeloid derived suppressor cells, which help mediate local immunosuppression. Moreover, there are cell types that exist outside the tumor mass that probably affect biology within the tumor. Tertiary lymph nodes can form in proximity to some tumors, perhaps reflecting a failed or coopted immune response against the tumor. Nerve cells project axonal processes into GI and other cancers, prostate, gastric, and pancreatic tumors, and make direct connections to specific subsets of malignant epithelial cells and potently influencing tumor biology.<sup>5</sup> Even within the malignant compartment, there is significant heterogeneity of differentiation states or progenitor identities. What is clear is that existing cell-specific markers fail to fully capture the heterogeneity of cellular composition within tumors and that even highly multiplexed flow cytometry or immunofluorescent technologies still struggle to provide an unbiased and complete representation of tissue composition. Advances in single-cell sequencing and CyTOF technologies6 may provide tractable means to properly quantify the diversity of cell types that contribute to even the most complex of solid tumors.</p>
+        <p>The stroma regression observed in the inducible K-ras model<sup>6</sup> indicates that mutant Ras plays a major role in orchestrating this stromal response, but the mechanisms are limited to vignettes at this point. For example, K-ras mutation in the pancreas is associated with an increase in the expression of the Sonic Hedgehog ligand, which induces downstream pathway activity in certain fibroblasts to increase cell proliferation and collagen deposition.<sup>7,8</sup> Similarly, K-ras mutation is also associated with the overexpression of GM-CSF, which promotes the recruitment of immunosuppressive myeloid lineages.<sup>9</sup> In the latter case, inhibitors were used to ascertain that K-ras mediated induction of GM-CSF is dependent on both MAPK and PI3K, but the full mechanism leading to its elevated expression is cryptic. It is unclear whether Ras-dependent paracrine signals from the malignant cell can directly control all of the different cell types in the stroma. However, it is apparent that secondary signals propagate between different stromal cell types, indirectly responding to cues from Ras. One example of such a “paracrine cascade” is the indirect regulation of CD8+ T-cells by Gr-1+, CD11b+ myeloid cells responding to the K-ras dependent induction of GM-CSF.<sup>10</sup></p>
+  field_short_title:
+    - value: 'Ras–dependent Paracrine Cascades'
+  field_browser_title:
+    value: 'Ras–dependent Paracrine Cascades'
+  field_card_title:
+    value: 'Ras–dependent Paracrine Cascades'
+  field_feature_card_description:
+    value: 'Description: Ras–dependent Paracrine Cascades'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+        <p>
+          Dr. Kenneth Olive is Assistant Professor at Columbia University and a member of the Herbert Irving Comprehensive Cancer Center. 
+          He trained with Tyler Jacks at MIT and David Tuveson at UPenn and the University of Cambridge. His lab uses mouse models and 
+          human clinical samples to understand, image, and treat pancreatic cancer.
+        </p>
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2017-08-17"
+  field_pretty_url:
+    value: "ras-dependent"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
