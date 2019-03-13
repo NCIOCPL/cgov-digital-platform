@@ -1,4 +1,4 @@
-import { newWindow } from 'Core/utilities/popups';
+import { newWindow } from 'Utilities';
 import {
     onClickAnalytics,
     getContent,

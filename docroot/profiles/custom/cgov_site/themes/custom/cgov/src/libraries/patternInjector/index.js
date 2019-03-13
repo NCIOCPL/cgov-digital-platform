@@ -1,5 +1,5 @@
 import GeoPattern from 'geopattern';
-import { getNodeArray } from 'Core/utilities';
+import { getNodeArray } from 'Utilities';
 
 /**
  * This is a helper library that wraps the GeoPattern external library and simplifies component calls to it for
@@ -40,7 +40,7 @@ const insertPatternIntoElement = (element, imgData) => {
     return element;
 };
 
-const processBackgrounds = settings => {
+const processBackgrounds = (settings = {}) => {
     const elementTypes = Object.entries(settings);
     return elementTypes.map(elementValues => {
         const selector = elementValues[0];

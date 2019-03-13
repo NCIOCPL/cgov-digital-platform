@@ -1,0 +1,96 @@
+
+/** 
+
+Uncomment the following for the new tool tip look and feel
+----------------------------------------------------------
+
+.referencetooltip {
+     padding: 1px 8px 13px 8px;
+     font-size: .8em;
+}
+
+.referencetooltip a {
+    color: $color-link;
+}
+.referencetooltip a:hover, .referencetooltip a:focus {
+    text-decoration: underline;
+}
+
+*/
+
+
+/*** 
+--------- DELETE EVERYTHING PAST THIS POINT FOR THE NEW TOOLTIP LOOK AND FEEL ----------
+***/
+
+.referencetooltip {
+    position: absolute;
+    list-style: none;
+    list-style-image: none;
+    opacity: 0;
+    font-size: 11px;
+    margin: 0;
+    z-index: 1003;
+    padding: 0;
+}
+.referencetooltip li {
+    border: #b3b3b3 1px solid;
+    max-width: 260px;
+    padding: 10px 8px 13px 8px;
+    margin: 0px;
+    background-color: #F7F7F7;
+    @include box-shadow(2px 4px 2px rgba(0, 0, 0, 0.3));
+}
+.referencetooltip li + li {
+    margin-left: 7px;
+    margin-top: -1px;
+    border: 0;
+    padding: 0;
+    height: 3px;
+    width: 0px;
+    background-color: transparent;
+    @include box-shadow(none);
+    border-top: 12px #b3b3b3 solid;
+    border-right: 7px transparent solid;
+    border-left: 7px transparent solid;
+}
+.referencetooltip > li + li:after {
+    content: '';
+    border-top: 8px #F7F7F7 solid;
+    border-right: 5px transparent solid;
+    border-left: 5px transparent solid;
+    margin-top: -12px;
+    margin-left: -5px;
+    z-index: 1;
+    height: 0px;
+    width: 0px;
+    display: block;
+}
+.client-js body .referencetooltip li li {
+    border: none;
+    @include box-shadow(none);
+    height: auto;
+    width: auto;
+    margin: auto;
+    padding: 0;
+    position: static;
+}
+.RTflipped {
+    padding-top: 11px;
+    margin-top: 10px;
+}
+.referencetooltip.RTflipped li + li {
+    position: absolute;
+    top: 0;
+    border-top: 0;
+    border-bottom: 12px #b3b3b3 solid;
+}
+.referencetooltip.RTflipped li + li:after {
+    border-top: 0;
+    border-bottom: 10px #F7F7F7 solid;
+    position: absolute;
+    margin-top: 3px;
+}
+.RTTarget {
+    border: #b3b3b3 1px solid;
+}
