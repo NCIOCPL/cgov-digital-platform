@@ -51,6 +51,12 @@ class RolesTest extends EntityKernelTestBase {
   public function setUp() {
     parent::setup();
     $this->installEntitySchema('block_content');
+    $this->installEntitySchema('content_moderation_state');
+    $this->installEntitySchema('node');
+    $this->installEntitySchema('taxonomy_term');
+    $this->installEntitySchema('user');
+    $this->installEntitySchema('workflow');
+    $this->installEntitySchema('paragraph');
     $this->installConfig([
       'field',
       'node',
