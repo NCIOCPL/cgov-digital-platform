@@ -7,9 +7,15 @@ function requestGlossification() {
         <h2>ISS Current Position</h2>
         <p>Latitude: ${ latitude }</p>
         <p>Longitude: ${ longitude }</p>
+        <br>
+        <h2>Test Zone</h2>
+        <p>Text without highlights</p>
+        <p>Text with unselected <span class="cgov-gloss-unselected">highlights</span></p>
+        <p>Text with selected <span class="cgov-gloss-selected">highlights</span></p>
       `;
       const htmlArea = this.getElement().getDocument().getById('dialog_container');
       htmlArea.setHtml(htmlBody);
+      console.log(htmlArea);
     })
   }
 
@@ -44,3 +50,4 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
     ]
   };
 })
+
