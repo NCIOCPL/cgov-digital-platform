@@ -1,4 +1,4 @@
-id: article_en_migration
+id: article_es_migration
 label: 'Custom article migration'
 source:
 
@@ -6,7 +6,7 @@ source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/article_en.xml
+  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/article_es.xml
   item_selector: /rows/row
   fields:
         -
@@ -118,14 +118,15 @@ source:
       type: integer
 
 process:
-  nid: id
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: article_en_migration
+
   title: title
-
-
   uid:
    plugin: default_value
    default_value: 1
-
 
   status:
    plugin: default_value
@@ -212,7 +213,7 @@ process:
 
   temp_text1:
     plugin: migration_lookup
-    migration: paragraph_en_migration
+    migration: paragraph_es_migration
     no_stub: true
     source: para_ids
 
@@ -227,7 +228,7 @@ process:
   field_article_body/target_id:
     -
       plugin: migration_lookup
-      migration: paragraph_en_migration
+      migration: paragraph_es_migration
 
       no_stub: true
       source: para_id
@@ -239,7 +240,7 @@ process:
   field_article_body/target_revision_id:
     -
       plugin: migration_lookup
-      migration: paragraph_en_migration
+      migration: paragraph_es_migration
 
       no_stub: true
       source: para_id
@@ -253,10 +254,12 @@ process:
 destination:
   plugin: entity:node
   default_bundle: cgov_article
+  translations: true
 
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - paragraph_en_migration
+    - article_en_migration
+    - paragraph_es_migration
     - internallinksql_migration
     - externallinksql_migration

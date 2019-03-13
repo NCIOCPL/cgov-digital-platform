@@ -15,17 +15,17 @@ source:
         -
          name: field_body_section_content
          label: field_body_section_content
-         selector: '.'
+         selector: 'content'
 
         -
          name: field_body_section_heading
          label: field_body_section_heading
-         selector: heading
+         selector: 'heading'
 
         -
          name: langcode
          label: langcode
-         selector: langcode
+         selector: '@langcode'
 
 
   ids:
@@ -37,15 +37,14 @@ process:
  field_body_section_content/value: field_body_section_content
  field_body_section_content/format:
    plugin: default_value
-   default_value: full_html
+   default_value: basic_html
 
-   field_body_section_heading: field_body_section_heading
+ field_body_section_heading: field_body_section_heading
 
  id: para_id
 
- langcode:
-   plugin: default_value
-   default_value: en
+
+ langcode: langcode
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'

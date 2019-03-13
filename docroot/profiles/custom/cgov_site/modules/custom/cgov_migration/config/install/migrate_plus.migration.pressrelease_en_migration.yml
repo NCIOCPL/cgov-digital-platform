@@ -1,0 +1,148 @@
+id: pressrelease_en_migration
+label: 'Custom pressrelease migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/pressrelease_en.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: title
+         label: title
+         selector: '@title'
+
+        -
+         name: body
+         label: body
+         selector: '.'
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+        -
+         name: field_image_article
+         label: field_image_article
+         selector: field_image_article
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: '@field_search_engine_restrictions'
+
+
+        -
+         name: field_public_use
+         label: field_public_use
+         selector: '@field_public_use'
+
+        -
+         name: field_press_release_type
+         label: field_press_release_type
+         selector: '@field_press_release_type'
+
+
+        -
+         name: field_short_title
+         label: field_short_title
+         selector: '@field_short_title'
+
+        -
+         name: field_subtitle
+         label: field_subtitle
+         selector: '@field_subtitle'
+
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: '@field_page_description'
+
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: '@field_date_posted'
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
+
+        -
+         name: field_date_display_mode
+         label: field_date_display_mode
+         selector: '@field_date_display_mode'
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+  title: title
+  body/value: body
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+
+  body/format:
+   plugin: default_value
+   default_value: basic_html
+
+  field_short_title: field_short_title
+  field_page_description: field_page_description
+  field_date_posted: field_date_posted
+  field_date_reviewed: field_date_reviewed
+  field_date_updated: field_date_updated
+  field_search_engine_restrictions: field_search_engine_restrictions
+  field_public_use: field_public_use
+
+
+  field_site_section:
+    plugin: migration_lookup
+    migration: sitesectionsql_migration
+    source: term_id
+    no_stub: true
+
+  field_pretty_url: field_pretty_url
+
+
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_press_release
+
+migration_dependencies:
+  required:
+    - sitesectionsql_migration

@@ -12,23 +12,20 @@ source:
          name: para_id
          label: para_id
          selector: '@para_id'
+        -
+         name: field_body_section_content
+         label: field_body_section_content
+         selector: 'content'
 
+        -
+         name: field_body_section_heading
+         label: field_body_section_heading
+         selector: 'heading'
 
         -
          name: langcode
          label: langcode
          selector: '@langcode'
-
-        -
-         name: field_body_section_content
-         label: field_body_section_content
-         selector: '.'
-
-        -
-         name: field_body_section_heading
-         label: field_body_section_heading
-         selector: heading
-
 
 
   ids:
@@ -40,11 +37,12 @@ process:
  field_body_section_content/value: field_body_section_content
  field_body_section_content/format:
    plugin: default_value
-   default_value: full_html
+   default_value: basic_html
 
-   field_body_section_heading: field_body_section_heading
+ field_body_section_heading: field_body_section_heading
 
  id: para_id
+
 
  langcode: langcode
 

@@ -1,12 +1,12 @@
-id: article_en_migration
-label: 'Custom article migration'
+id: blogpost_es_migration
+label: 'Custom blogpost Spanish  migration'
 source:
 
 
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/article_en.xml
+  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/blogpost_es.xml
   item_selector: /rows/row
   fields:
         -
@@ -38,13 +38,15 @@ source:
          label: field_intro_text
          selector: 'intro'
 
+        -
+         name: body
+         label: body
+         selector: 'body'
 
         -
          name: field_short_title
          label: field_short_title
          selector: '@field_short_title'
-
-
 
         -
          name: field_page_description
@@ -56,21 +58,11 @@ source:
          name: field_date_posted
          label: field_date_posted
          selector: '@field_date_posted'
-        -
-         name: field_date_reviewed
-         label: field_date_reviewid
-         selector: '@field_date_reviewed'
 
         -
          name: term_id
          label: term_id
          selector: '@term_id'
-
-
-        -
-         name: para_id
-         label: para_id
-         selector: para_id
 
         -
          name: field_pretty_url
@@ -78,36 +70,16 @@ source:
          selector: '@field_pretty_url'
 
         -
-         name: field_date_display_mode
-         label: field_date_display_mode
-         selector: '@field_date_display_mode'
-
-
-        -
          name: related_resource_id
          label: related_resource_id
-         selector: related_resource_id/related_resource_id
+         selector: related_resource_id
 
 
 
         -
          name: related_resource_ids
          label: related_resource_ids
-         selector: related_resource_ids/related_resource_ids
-
-
-
-        -
-         name: para_id
-         label: para_id
-         selector: para_id/para_id
-
-
-
-        -
-         name: para_ids
-         label: para_ids
-         selector: para_ids/para_ids
+         selector: related_resource_ids
 
 
 
@@ -118,7 +90,11 @@ source:
       type: integer
 
 process:
-  nid: id
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: blogpost_en_migration
+
   title: title
 
 
@@ -133,17 +109,21 @@ process:
 
   langcode: langcode
 
+  body/value: body
+  body/format:
+   plugin: default_value
+   default_value: basic_html
+
+
   field_short_title: field_short_title
   field_page_description: field_page_description
   field_date_posted: field_date_posted
-  field_date_reviewed: field_date_reviewed
-  field_date_updated: field_date_updated
   field_search_engine_restrictions: field_search_engine_restrictions
   field_public_use: field_public_use
   field_intro_text/value: field_intro_text
   field_intro_text/format:
    plugin: default_value
-   default_value: full_html
+   default_value: basic_html
 
 
   field_site_section:
@@ -153,7 +133,6 @@ process:
     no_stub: true
 
   field_pretty_url: field_pretty_url
-
 
 
   temp_text:
@@ -210,53 +189,15 @@ process:
 
 
 
-  temp_text1:
-    plugin: migration_lookup
-    migration: paragraph_en_migration
-    no_stub: true
-    source: para_ids
-
-  field_article_body:
-    plugin: iterator
-    source: '@temp_text1'
-    process:
-      target_id: '0'
-      target_revision_id: '1'
-
-
-  field_article_body/target_id:
-    -
-      plugin: migration_lookup
-      migration: paragraph_en_migration
-
-      no_stub: true
-      source: para_id
-    -
-      plugin: extract
-      index:
-        - '0'
-
-  field_article_body/target_revision_id:
-    -
-      plugin: migration_lookup
-      migration: paragraph_en_migration
-
-      no_stub: true
-      source: para_id
-    -
-      plugin: extract
-      index:
-        - 1
-
-
 
 destination:
   plugin: entity:node
-  default_bundle: cgov_article
+  default_bundle: cgov_blog_post
+  translations: true
 
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - paragraph_en_migration
+    - blogpost_en_migration
     - internallinksql_migration
     - externallinksql_migration
