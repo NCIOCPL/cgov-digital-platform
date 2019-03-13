@@ -1,3 +1,4 @@
+{{ attach_library('cgov_common/cthp') }}
 {{ page.notification_banner }}
 
 <header class="push" role="banner">
@@ -31,8 +32,7 @@
                 method="post"
                 id="siteSearchForm"
                 name="siteSearchForm"
-                onsubmit="NCIAnalytics.SiteWideSearch(this);"
-              >
+                onsubmit="NCIAnalytics.SiteWideSearch(this);">
                 <label class="hidden" for="swKeyword">Search</label>
                 <input
                   placeholder="search"
@@ -46,8 +46,7 @@
                   autocomplete="off"
                   type="text"
                   aria-autocomplete="list"
-                  aria-haspopup="true"
-                >
+                  aria-haspopup="true" />
                 <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
                   <span class="hidden">Search</span>
                 </button>
@@ -61,28 +60,16 @@
       <!-- END NAVIGATION -->
   </div><!-- END Global nav/utility bar/language -->
 
-  <!-- Begin MAIN CONTENT AREA -->
+    <!-- Begin MAIN CONTENT AREA -->
   <div class="main-content" id="content" tabindex="0">
-    <div class="row general-page-body-container collapse">
-      <div class="large-12 columns">
-        <div class="row">
-          {{ page.breadcrumb }}
-        </div> <!-- END "row" -->
-      </div> <!-- END "large-12 columns" -->
-      <div class="row">
-        <!--    SECTION NAVIGATION -->
-        {% if page.section_nav %}
-            {{ page.section_nav }}
-        {% endif %}
-        {# TODO: technically if there is no left nav we change some of the classes below. #}
-        <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
-          {{ page.content }}
+    <div class="row">
+        <div class="large-12 columns">
+        {{ page.breadcrumb }}
         </div>
-      </div>
     </div>
+    {{ page.content }}
   </div>
-
-</div>
+</div><!-- END #page -->
 
 <!-- FOOTER -->
 <footer class="site-footer">

@@ -1,13 +1,16 @@
-{{ attach_library('cgov_common/cthp') }}
 {# Page Content #}
-<div class="row">
-  <div class="large-12 columns resize-content cthp-padding">
-    <!-- PAGE TITLE -->
-    <h1>{{ node.label }}—{{ content.field_audience_toggle }} Version</h1>
-    <!-- END PAGE TITLE -->
-    {{ drupal_block('page_options') }}
+<div class="cthp-content {{ (content.field_audience_toggle|field_value|render|render is same as('Patient'))? 'cthp-patient-content': 'cthp-hp-content'}}">
+  <div class="row">
+    <div class="large-12 columns resize-content cthp-padding">
+
+      <!-- PAGE TITLE -->
+      <h1>{{ node.label }}—{{ content.field_audience_toggle }} Version</h1>
+      <!-- END PAGE TITLE -->
+      {{ drupal_block('page_options') }}
+      <div id="nvcgSlCTHPIntro"></div>
+      {{ content.field_cthp_cards }}
+    </div>
+
   </div>
-  <div id="nvcgSlCTHPInto"></div>
-  {{ content.field_cthp_cards }}
 </div>
 {# End Title Row#}
