@@ -102,10 +102,11 @@ class CGovFieldStorageTest extends KernelTestBase {
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
     $this->installEntitySchema('file');
+    $this->installEntitySchema('paragraph');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
-      'field', 'node', 'file', 'image', 'link', 'language', 'content_translation', 'views',
+      'field', 'filter', 'node', 'file', 'image', 'link', 'language', 'content_translation', 'views',
       'entity_browser', 'entity_reference_revisions', 'paragraphs', 'cgov_core',
     ]);
   }
