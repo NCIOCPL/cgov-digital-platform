@@ -1,25 +1,83 @@
 function requestGlossification(e) {
-  const rawBody = this.getParentEditor().getData();
-  console.log(rawBody)
-  const preparedBody = cGovPrepareStr(rawBody);
-  console.log(preparedBody);
-  fetch('http://api.open-notify.org/iss-now.json')
-    .then(res => res.json())
-    .then(res => {
-      const { latitude, longitude } = res.iss_position;
-      const htmlBody = `
-        <h2>ISS Current Position</h2>
-        <p>Latitude: ${ latitude }</p>
-        <p>Longitude: ${ longitude }</p>
-        <br>
-        <h2>Test Zone</h2>
-        <p>Text without highlights</p>
-        <p>Text with unselected <span class="cgov-gloss-unselected">highlights</span></p>
-        <p>Text with selected <span class="cgov-gloss-selected">highlights</span></p>
-      `;
-      const htmlArea = this.getElement().getDocument().getById('dialog_container');
-      htmlArea.setHtml(htmlBody);
-    })
+  console.log(this)
+  console.log(this.getElement().$)
+  // this.getElement().removeClass('cke_reset_all');
+  this.getElement().addClass("glossify-dialog-container")
+  // ### This gets us the html content of the editor that called the dialog.
+  // const rawBody = this.getParentEditor().getData();
+  // console.log(rawBody)
+  // const preparedBody = cGovPrepareStr(rawBody);
+  // console.log(preparedBody);
+  const preparedBody = mockRequest.fragment;
+  function processResponse() {
+    const responseBody = mockResponse;
+    const dialogBody = createDialogBodyHtml(preparedBody, responseBody);
+    const htmlArea = this.getElement().getDocument().getById('dialog_container');
+    htmlArea.setHtml(dialogBody);
+  }
+  // Fake request TODO: Make real
+  setTimeout(processResponse.bind(this, null), 0)
+  // Process response.
+}
+
+/**
+ * Given an array of objects containing configuration data
+ * for a glossary term and a string containing the original HTML (after
+ * being processed for sending to the API), we want to generate checkboxes
+ * allowing a user to select the terms they want to be 'glossified' (i.e be
+ * wrapper in an anchor tag pointing at the glossary term).
+ *
+ * @param {string} originalHtml
+ * @param {Object[]} candidateTermConfigs
+ */
+function createDialogBodyHtml(originalHtml, candidateTermConfigs){
+  // NOTE: Because the returned terms specify indexes in the originalHtml,
+  // we need to step through them backwards so that insertions do not
+  // disrupt existing indexes before we process the term.
+  // for(let i = candidateTermConfigs.length - 1; i >= 0; i--){
+  //   const termConfig = candidateTermConfigs[i];
+  //   const preceedingSlice = originalHtml.slice()
+  // }
+  // Trying a slightly different approach...
+  let processedHtml = "";
+  let slowPointer = 0;
+  for(let i = 0; i < candidateTermConfigs.length; i++){
+    const termConfig = candidateTermConfigs[i];
+    const termStartIndex = termConfig.start;
+    const termLength = termConfig.length;
+    const termEndIndex = termConfig.start + termLength;
+    const preceedingSnippet = originalHtml.slice(slowPointer, termStartIndex);
+    processedHtml += preceedingSnippet;
+    slowPointer = termStartIndex;
+    const termText = originalHtml.slice(slowPointer, termEndIndex);
+    slowPointer = termEndIndex;
+    // Create element to wrap term for checkbox selection
+    // TODO: Remove dummy code
+    const cGovUniqueId = 42; // TODO: Replace
+    const language = "English"; // TODO: Replace
+    const termId = termConfig.doc_id;
+    const wrappedTerm =
+      "<input type=checkbox name=terms value="
+      + cGovUniqueId
+      + "><a __newterm=\""
+      + cGovUniqueId
+      + "\" class=\"definition\" href=\"/Common/PopUps/popDefinition.aspx?id="
+      + termId
+      + "&version=Patient&language="
+      + language
+      + "\" onclick=\"javascript:popWindow('defbyid','"
+      + termId
+      + "&version=Patient&language="
+      + language
+      + "'); return false;\">"
+      + termText
+      + "</a>";
+    processedHtml += wrappedTerm;
+  }
+  // We need to grab the tail of the originalHtml
+  const tailSnippet = originalHtml.slice(slowPointer);
+  processedHtml += tailSnippet;
+  return processedHtml;
 }
 
 function saveGlossificationChoices() {
@@ -28,13 +86,22 @@ function saveGlossificationChoices() {
 }
 
 CKEDITOR.dialog.add('glossifyDialog', function(editor) {
+  console.log(editor)
+  console.log(CKEDITOR)
+  // if (typeof editor.config.contentsCss === 'object') {
+  //   editor.config.contentsCss.push(CKEDITOR.getUrl('/profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/dialogs/reference/old.css'));
+  // }
+  // editor.addContentsCss('/profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/dialogs/reference/old.css')
   return {
     title: 'Glossify Page',
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
     onLoad: requestGlossification,
     onOk: saveGlossificationChoices,
-    minWidth: 600,
+    minWidth: 500,
     minHeight: 400,
+    width: 500,
+    height: 400,
+    resizable: CKEDITOR.DIALOG_RESIZE_NONE,
     contents: [
       {
         id: 'tab_1',
@@ -46,13 +113,15 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
             id: 'html',
             type: 'html',
             label: 'Select Elements to Glossify',
-            html: '<div id="dialog_container"><div id="spinner">Loading...</div></div>'
+            html: '<div id="dialog_container"><div id="spinner">Loading...</div></div>',
           }
         ],
       }
     ]
   };
 })
+
+
 
 
 
@@ -155,6 +224,76 @@ function cGovAddUniqueID(data) {
 	cGovUniqueId++;
 	var uniqueID = "<a __oldterm=\"" + cGovUniqueId + "\" " + data;
 	return uniqueID;
+}
+
+/**
+* Completion callback
+* Once the HTTP request is in the ready state, draw the resulting checkbox HTML
+* and initialize events
+*/
+function cGovProcessReqChange() {
+	if (cGovReq.readyState == 4 && cGovReq.status == 200) {
+		//alert("got response, text:\n" + cGovReq.responseText);
+		//cGovStatusWindow.close();
+
+		//Web service transaction has completed, parse the response
+		var env = getElementsByTagNameNS(cGovReq.responseXML, cGovSoapNameSpace, cGovSoapPrefix, "Envelope");
+		//alert("got env");
+		var body = getElementsByTagNameNS(env[0], cGovSoapNameSpace, cGovSoapPrefix, "Body");
+		//alert("got body");
+		var resp = getElementsByTagNameNS(body[0], cGovWSNameSpace, cGovElementPrefix, "glossifyResponse");
+		//alert("got glossifyResponse");
+		var glossifyResult = getElementsByTagNameNS(resp[0], cGovWSNameSpace, cGovElementPrefix, "glossifyResult");
+		//alert("got glossifyResult");
+		var terms = getElementsByTagNameNS(glossifyResult[0], cGovWSNameSpace, cGovElementPrefix, "Term");
+		//alert("got term");
+
+		// Put the terms values into an array
+		var termsArray = cGovBuildTermsArray(terms);
+		cGovMassagedData = cGovBuildCBDisplayString(cGovMassagedData, termsArray);
+		//alert("cGovMassagedData:\n" + cGovMassagedData);
+
+		var checkBoxHtml = (
+		   '<div id="massaged-data">Data element - you should not see this.</div>' +
+		   '<div id="checkbox-html" class="gloss-modal">' +
+			  '<link href="../rx_resources/tinymce/js/tinymce/plugins/glossifier/css/glossify.css" rel="stylesheet" />' +
+			  '<script language="Javascript">' +
+
+				 '$( \'input[name="terms"]\' ).change(function() {' +
+				    'returnChecks()' +
+				 '});' +
+
+				 'function returnChecks() {' +
+					'var myCheckArr = [];' +
+					'var checkedItem = $(\'#Glossify\').contents().find(\'input[name="terms"]\' + \':checked\');' +
+						'checkedItem.each(function() {' +
+							'$this = $(this);' +
+							'myCheckArr.push($this.attr("value"));' +
+						'});' +
+					'$("#massaged-data").attr("data-checked-array", myCheckArr);' +
+				 '}' +
+
+			  '</script>' +
+			  '<div name="Glossify" id="Glossify" class="gloss-modal-content">' +
+				 '<button type="button" class="gloss-close" />' +
+				 '<h1>Glossifier tool</h1>' +
+				 '<h2>Please check/uncheck the word(s) you want glossified</h2>' +
+				 '<hr>' +
+				 cGovMassagedData +
+				 '<hr>' +
+				 '<button name="gloss-sumbit" type="button" value="Submit Changes">Submit Changes</button>' +
+			  '</div>' +
+		   '</div>'
+		);
+
+		// Close the loading screen, add the checkbox screen,
+		// and set click events
+		$('#loading-html').remove();
+		$body.append(checkBoxHtml);
+		$('#Glossify').draggable();
+		setClickEvents();
+	}
+	//else alert("readyState=" + cGovReq.readyState + " status=" + cGovReq.status);
 }
 
 // TEMP MOCKS
