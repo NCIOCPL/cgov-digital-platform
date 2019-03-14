@@ -18,8 +18,8 @@ variant_settings:
       provider: ctools
       label_display: '0'
       view_mode: full
-      region: blog_content
-      weight: -2
+      region: first
+      weight: -10
       uuid: 632602f1-cc28-4426-8505-e80c3f32e18f
       context_mapping:
         entity: node
@@ -28,8 +28,8 @@ variant_settings:
       label: 'Blog Archive block'
       provider: cgov_blog
       label_display: '0'
-      region: blog_content
-      weight: 2
+      region: second
+      weight: 0
       uuid: 2bf4f19a-9adb-4e53-9e9e-d26f3f382d2e
       context_mapping: {  }
     0cf67862-bc9c-48da-91e8-8b2f2f1b0e16:
@@ -37,8 +37,8 @@ variant_settings:
       label: 'Blog Featured Posts block'
       provider: cgov_blog
       label_display: '0'
-      region: blog_content
-      weight: 0
+      region: second
+      weight: -2
       uuid: 0cf67862-bc9c-48da-91e8-8b2f2f1b0e16
       context_mapping: {  }
     623f3b82-b438-4cd1-b613-607ede8fc789:
@@ -46,17 +46,17 @@ variant_settings:
       label: 'Blog Categories block'
       provider: cgov_blog
       label_display: '0'
-      region: blog_content
-      weight: 1
+      region: second
+      weight: -1
       uuid: 623f3b82-b438-4cd1-b613-607ede8fc789
       context_mapping: {  }
     bb5561bb-fcdf-4919-9972-032e6d3eb67a:
       id: cgov_blog_pager
-      label: 'Blog Pager'
+      label: 'Blog Post Pager'
       provider: cgov_blog
       label_display: '0'
-      region: blog_content
-      weight: -1
+      region: first
+      weight: -9
       uuid: bb5561bb-fcdf-4919-9972-032e6d3eb67a
       context_mapping: {  }
   id: panels_variant
