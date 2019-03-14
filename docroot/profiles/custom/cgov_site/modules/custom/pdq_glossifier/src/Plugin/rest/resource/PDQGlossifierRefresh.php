@@ -4,6 +4,7 @@ namespace Drupal\pdq_glossifier\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -91,11 +92,9 @@ class PDQGlossifierRefresh extends ResourceBase {
    */
   public function post(array $terms) {
     $now = date('Y-m-d H:i:s');
-    $name = 'pdq_glossifier.config';
-    $config = \Drupal::service('config.factory')->getEditable($name);
-    $config->set('terms', json_encode($terms));
-    $config->set('updated', $now);
-    $config->save();
+    $fields = ['terms' => json_encode($terms), 'updated' => $now];
+    $conn = Database::getConnection();
+    $conn->update('pdq_glossary')->fields($fields)->execute();
     $count = count($terms);
     $msg = "Stored $count glossary terms";
     $this->logger->notice($msg);

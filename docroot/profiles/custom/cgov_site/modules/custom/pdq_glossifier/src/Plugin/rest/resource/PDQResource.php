@@ -121,8 +121,9 @@ class PDQResource extends ResourceBase {
    */
   private function loadTerms() {
     try {
-      $config = \Drupal::config('pdq_glossifier.config');
-      $terms = json_decode($config->get('terms'), TRUE);
+      $query = \Drupal::database()->select('pdq_glossary', 'g');
+      $json = $query->fields('g', ['terms'])->execute()->fetchField();
+      $terms = json_decode($json, TRUE);
       $normalized = [];
       foreach ($terms as $term => $docs) {
         $normalized_term = $this->normalize($term);
