@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_core\Plugin\Block;
+namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -14,12 +14,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a block that displays pager variants.
  *
  * @Block(
- *  id = "cgov_pager",
- *  admin_label = "CGov Pager",
+ *  id = "cgov_blog_pager",
+ *  admin_label = "Cgov Blog Pager",
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
-class CgovPager extends BlockBase implements ContainerFactoryPluginInterface {
+
+class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The route matcher.
