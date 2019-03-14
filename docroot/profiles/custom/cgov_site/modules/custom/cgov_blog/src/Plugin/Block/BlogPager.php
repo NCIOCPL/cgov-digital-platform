@@ -19,7 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
-
 class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -186,10 +185,8 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function drawBlogPostOlderNewer($cid, $content_type) {
     // Get an array of blog field collections to populate links.
+    $markup = '';
     $blog_links = $this->getBlogPostPagerLinks($cid, $content_type);
-
-    // Open Blog Post pagination div.
-    $markup = "<div id='cgov-blog-post-pagination>";
 
     // Draw our prev/next links.
     // TODO: hook up translation.
@@ -202,9 +199,10 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         // Link previous post if exists.
         if ($index > 0) {
           $prev = $blog_links[$index - 1];
+          $older = $this->t('Older Post');
           $markup .= "
             <div class='blog-post-older'>
-              <a href=/node/" . $prev['nid'] . ">&lt; Older Post</a>
+              <a href=/node/" . $prev['nid'] . ">&lt; " . $older . "</a>
               <p><i>" . $prev['title'] . "</i></p>
             </div>
           ";
@@ -213,9 +211,10 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         // Link next post if exists.
         if ($index < (count($blog_links) - 1)) {
           $next = $blog_links[$index + 1];
+          $newer = $this->t('Older Post');
           $markup .= "
             <div class='blog-post-newer'>
-              <a href=/node/" . $next['nid'] . ">Newer Post &gt;</a>
+              <a href=/node/" . $next['nid'] . ">" . $newer . " &gt;</a>
               <p><i>" . $next['title'] . "</i></p>
             </div>
           ";
@@ -224,8 +223,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       }
     }
 
-    // Close pagination div and return HTML.
-    $markup .= "</div>";
+    // Return HTML.
     return $markup;
   }
 
