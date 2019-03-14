@@ -418,7 +418,7 @@ class PDQResource extends ResourceBase {
    * and single quote marks intelligently. The lengths used for
    * determining which terms should be represented first in the
    * larger regular expression string must however be based on
-   * the number of character which will be matched in the HTML
+   * the number of characters which will be matched in the HTML
    * fragment. So we create altered strings for calculating those
    * lengths. It doesn't really matter which of two strings of the
    * same length appears in the regex first, but we come up with an
