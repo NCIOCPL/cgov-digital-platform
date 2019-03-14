@@ -112,7 +112,7 @@ class PDQResource extends ResourceBase {
   }
 
   /**
-   * Load and decode the PDQ glossary terms from the `config` table.
+   * Load and decode the PDQ glossary terms from our own table.
    *
    * Normalize the term names used as keys for the information.
    *
