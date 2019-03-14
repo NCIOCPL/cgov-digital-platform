@@ -3,8 +3,8 @@
     icons: 'button',
 
     init: function(editor) {
-      const cssString = ".glossify-dialog-container { background: purple !important; color: white !important; font-size: 5em !important; }";
-      CKEDITOR.addCss(cssString)
+      // const cssString = ".glossify-dialog-container { background: purple !important; color: white !important; font-size: 5em !important; }";
+      // CKEDITOR.addCss(cssString)
       CKEDITOR.dialog.add('glossifyDialog', this.path + 'dialogs/glossify.js' );
       editor.addCommand('glossify', new CKEDITOR.dialogCommand('glossifyDialog'));
       editor.ui.addButton('Cgov_glossifier', {

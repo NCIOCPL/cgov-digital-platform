@@ -97,10 +97,10 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
     onLoad: requestGlossification,
     onOk: saveGlossificationChoices,
-    minWidth: 500,
-    minHeight: 400,
-    width: 500,
-    height: 400,
+    // minWidth: 300,
+    // minHeight: 300,
+    // width: "40vw",
+    // height: "75vh",
     resizable: CKEDITOR.DIALOG_RESIZE_NONE,
     contents: [
       {
@@ -114,6 +114,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
             type: 'html',
             label: 'Select Elements to Glossify',
             html: '<div id="dialog_container"><div id="spinner">Loading...</div></div>',
+            style: 'width: 75vw; height: 75vh;'
           }
         ],
       }
