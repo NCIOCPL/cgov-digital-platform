@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Install pdq_glossifier module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Control access to glossifier APIs.
+ */
+function pdq_glossifier_install() {
+
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add API permissions.
+  $update_glossifier = 'restful post pdq_glossary_refresh_api';
+  $access_glossifier = 'restful post pdq_glossifier_api';
+  $siteHelper->addRolePermissions(['pdq_importer' => [$update_glossifier]]);
+  $siteHelper->addRolePermissions(['anonymous' => [$access_glossifier]]);
+}
