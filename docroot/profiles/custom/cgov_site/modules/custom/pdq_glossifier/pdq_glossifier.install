@@ -26,13 +26,19 @@ function pdq_glossifier_install() {
 
   // Add the glossifier table.
   $pdq_glossary = [
+
+    // MEDIUMTEXT hold 16MB, which 16 times more space than we currently use.
     'description' => 'Glossary term info for creating dictionary links.',
     'fields' => [
       'terms' => [
         'description' => 'JSON-encoded term information.',
         'type' => 'text',
+        'size' => 'medium',
         'not null' => TRUE,
       ],
+
+      // YYYY-MM-DD HH:MM:SS, so 19 characters:
+      // 1234567890123456789.
       'updated' => [
         'description' => 'When the data was most recently refreshed.',
         'type' => 'varchar_ascii',
