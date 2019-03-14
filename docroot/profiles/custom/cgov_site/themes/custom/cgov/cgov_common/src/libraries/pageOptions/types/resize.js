@@ -4,7 +4,7 @@ import {
 } from '../utilities';
 import {
     getNodeArray,
-} from 'Core/utilities/domManipulation';
+} from 'Utilities';
 
 const getCurrentFontSize = () => {
     const testElement = document.querySelector('.resize-content') || document.getElementById('cgvBody');

@@ -70,11 +70,12 @@ class WorkflowTest extends KernelTestBase {
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
     $this->installEntitySchema('workflow');
+    $this->installEntitySchema('paragraph');
     $this->installConfig([
+      'field',
       'cgov_core',
       'content_moderation',
       'content_translation',
-      'field',
       'file',
       'image',
       'link',
@@ -87,7 +88,6 @@ class WorkflowTest extends KernelTestBase {
       'entity_browser',
       'entity_reference_revisions',
       'paragraphs',
-      'user',
       'workflows',
     ]);
     $this->installSchema('system', ['sequences']);

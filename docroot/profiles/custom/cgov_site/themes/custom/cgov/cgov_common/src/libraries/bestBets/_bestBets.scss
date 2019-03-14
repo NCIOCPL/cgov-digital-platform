@@ -1,0 +1,108 @@
+.sitewide-results {
+	&.featured {
+		overflow: auto;
+		background: $lightblue;
+		padding: 2.5%;
+
+		h2 {
+			margin-top: 0;
+		}
+		.list-item .title {
+			font-size: 1em;
+		}
+		.list, .list-item {
+			margin-bottom: 0;
+		}
+	}
+}
+// CSS above should only be needed on local
+
+#best-bet-definition {
+	background: white;
+	padding: 16px 19px 10px;
+	margin-left: 10px;
+	border-radius: 3px;
+	box-shadow: 0 0 4px 0 rgba(180,180,180,0.75);
+	
+	h2 {
+		margin-bottom: 0.5em;	
+		margin-top: 0;
+	}
+	dt.term {
+		margin-right: 8px;
+	}
+	dd.pronunciation {
+		margin-left: 0;
+		display: inline-block
+	}
+	dd.definition {
+		margin-top: 7px;	
+	}
+	
+	#best-bets-toggle {
+		border-top: 1px solid #C7C6C6;
+		margin-left: -19px;
+		margin-right: -19px;
+		padding: 10px 19px 0 19px;
+		
+		a {
+			text-decoration: none;
+			color: inherit;
+
+			&:before {
+				content:"";
+				display: inline-block;
+				@include svg-sprite(chevron-black,$rotate:flip);
+				margin: 0 8px 1px 0;
+				font-size: .6em;
+			}
+			&.expanded {
+				&:before {
+					transform: rotate(0);
+					margin-bottom: 3px;
+				}
+			}
+		}
+
+	}
+}
+
+#best-bet-definition {
+	margin: 0;
+	
+	@include bp(small) {
+		margin-top: 1em;
+	}
+}
+#definitionEnd {
+	display: none;
+}
+
+.featured.sitewide-results {
+	margin-left: -0.9375em;
+	margin-right: -0.9375em;
+	padding: 2.5% 0.9375em;
+
+	@include bp(large-up) {
+		margin-left: -3.125em;
+		margin-right: -3.125em;
+		padding: 2.5% 3.125em;
+	}
+
+	@include bp(medium-up) {
+		> .large-8 {
+			padding-right: 0.9375em;
+		}
+	}
+}
+
+// hide definitions in cases where there are multiple best bets, ie paclitaxel and make content span full width
+.featured.sitewide-results:not(:first-of-type) #best-bet-definition {
+	display: none;
+}
+.featured.sitewide-results:not(:first-of-type) .large-8 {
+	width: 100%
+}
+
+
+
