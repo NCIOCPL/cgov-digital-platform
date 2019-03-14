@@ -3,10 +3,18 @@ status: true
 dependencies:
   module:
     - editor
+    - token_filter
 name: 'Full HTML'
 format: full_html
 weight: -8
 filters:
+  token_filter:
+    id: token_filter
+    provider: token_filter
+    status: true
+    weight: 7
+    settings:
+      replace_empty: '0'
   filter_align:
     id: filter_align
     provider: filter
