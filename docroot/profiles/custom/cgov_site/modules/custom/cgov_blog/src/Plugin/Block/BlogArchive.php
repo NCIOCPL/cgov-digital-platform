@@ -3,7 +3,6 @@
 namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -94,49 +93,14 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Gets the current entity if there is one.
-   *
-   * @return Drupal\Core\Entity\ContentEntityInterface
-   *   The retrieved entity, or FALSE if none found.
-   */
-  private function getCurrEntity() {
-    $params = $this->routeMatcher->getParameters()->all();
-    foreach ($params as $param) {
-      if ($param instanceof ContentEntityInterface) {
-        // If you find a ContentEntityInterface stop iterating and return it.
-        return $param;
-      }
-    }
-    return FALSE;
-  }
-
-  /**
-   * Create a new node storage instance.
-   *
-   * @return Drupal\Core\Entity\EntityStorageInterface
-   *   The node storage or NULL.
-   */
-  private function getNodeStorage() {
-    $node_storage = $this->entityTypeManager->getStorage('node');
-    return isset($node_storage) ? $node_storage : NULL;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function build() {
-
-    // If our entity exists, get the nid (content id) and bundle (content type).
-    if ($curr_entity = $this->getCurrEntity()) {
-      $content_id = $curr_entity->id();
-      $content_type = $curr_entity->bundle();
-    }
-
-    $markup1 = $this->drawArchiveByYear($content_id, $content_type);
-    // Ksm($markup1);!
+    $my_archive_markup = $this->drawDummyContent();
+    // Ksm($my_archive_markup);!
     $build = [
       '#type' => 'block',
-      '#markup' => $markup1,
+      '#markup' => $my_archive_markup,
     ];
 
     /*
@@ -147,52 +111,9 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get a collection of years.
-   *
-   * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   * Draw dummy content.
    */
-  private function getMonthsYears($cid, $content_type) {
-    // Build our query object.
-    $query = $this->entityQuery->get('node');
-    $query->condition('status', 1);
-    $query->condition('type', $content_type);
-    $query->sort('field_date_posted', 'DESC');
-    $entity_ids = $query->execute();
-
-    // Create series filter.
-    $filter_node = $this->getNodeStorage()->load($cid);
-    $filter_series = $filter_node->field_blog_series->target_id;
-
-    // Build associative array.
-    foreach ($entity_ids as $entid) {
-      $node = $this->getNodeStorage()->load($entid);
-      $node_series = $node->field_blog_series->target_id;
-
-      if ($node_series == $filter_series) {
-        $date = $node->field_date_posted->value;
-        $date = explode('-', $date);
-
-        $blog_links[] = [
-          'year' => $date[0],
-          'month' => $date[1],
-        ];
-      }
-    }
-    return $blog_links;
-  }
-
-  /**
-   * Get a collection of years.
-   *
-   * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
-   */
-  private function drawArchiveByYear($cid, $content_type) {
+  private function drawDummyContent() {
     $markup = '
       <!-- populated with dummy values for template front end -->
       <h4>2019</h4>
@@ -241,19 +162,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
         <li class="month"><a class href="?filter[year]=2016&filter[month]=7">July</a> (9)</li>
       </ul>
     ';
-
-    // Get an array of blog field collections to populate links.
-    $blog_links = $this->getMonthsYears($cid, $content_type);
-    foreach ($blog_links as $blog_link) {
-      $year_links[] = $blog_link['year'];
-    }
-
-    // Get counts and values for each available year. I hate php.
-    if (isset($year_links) && 1 == 2) {
-      foreach (array_count_values($year_links) as $year => $count) {
-        $markup .= '<li>' . $year . ' (' . $count . ')</li>';
-      }
-    }
     return $markup;
   }
 
