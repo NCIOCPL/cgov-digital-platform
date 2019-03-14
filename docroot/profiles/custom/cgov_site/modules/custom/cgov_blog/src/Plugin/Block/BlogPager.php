@@ -211,7 +211,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         // Link next post if exists.
         if ($index < (count($blog_links) - 1)) {
           $next = $blog_links[$index + 1];
-          $newer = $this->t('Older Post');
+          $newer = $this->t('Newer Post');
           $markup .= "
             <div class='blog-post-newer'>
               <a href=/node/" . $next['nid'] . ">" . $newer . " &gt;</a>
