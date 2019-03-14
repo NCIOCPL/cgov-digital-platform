@@ -21,7 +21,7 @@ function cgov_core_themes_installed() {
   $block_region = 'public_use';
   $block_label = 'Public Use';
   $block_html = <<<EOMarkup
-<em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute”</em>
+<div class="public-use"><p id="public-use"><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p></div>
 EOMarkup;
 
   // Create block content.
@@ -29,7 +29,7 @@ EOMarkup;
     'id' => 'public_use',
     'type' => 'content_block',
     'info' => $block_label,
-    'body' => ['value' => $block_html, 'format' => 'streamlined'],
+    'body' => ['value' => $block_html, 'format' => 'full_html'],
   ]);
   $block_content->save();
 
