@@ -14,7 +14,7 @@ bundle: cgov_card_internal
 mode: default
 content:
   field_featured_item:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       view_mode: feature_card
@@ -39,15 +39,16 @@ content:
     type: string
     region: content
   field_override_image_promotional:
-    weight: 4
-    label: above
+    weight: 2
+    label: hidden
     settings:
-      link: true
+      view_mode: image_crop_featured
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    type: entity_reference_entity_view
     region: content
   field_override_list_description:
-    weight: 3
+    weight: 4
     label: hidden
     settings: {  }
     third_party_settings: {  }
