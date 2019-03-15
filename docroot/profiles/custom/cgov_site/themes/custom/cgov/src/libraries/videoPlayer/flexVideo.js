@@ -2,7 +2,7 @@ import {
 	checkNodeAncestryForClass,
 	getNodeArray,
 	keyHandler
-} from 'Core/utilities';
+} from 'Utilities';
 import axios from 'axios';
 
 // Triggered by 'click' listener on preview thumbnail
