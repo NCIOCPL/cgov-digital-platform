@@ -1,13 +1,45 @@
+function ReplaceWithPolyfill() {
+  'use-strict'; // For safari, and IE > 10
+  var parent = this.parentNode, i = arguments.length, currentNode;
+  if (!parent) return;
+  if (!i) // if there are no arguments
+    parent.removeChild(this);
+  while (i--) { // i-- decrements i and returns the value of i before the decrement
+    currentNode = arguments[i];
+    if (typeof currentNode !== 'object'){
+      currentNode = this.ownerDocument.createTextNode(currentNode);
+    } else if (currentNode.parentNode){
+      currentNode.parentNode.removeChild(currentNode);
+    }
+    // the value of "i" below is after the decrement
+    if (!i) // if currentNode is the first argument (currentNode === arguments[0])
+      parent.replaceChild(currentNode, this);
+    else // if currentNode isn't the first
+      parent.insertBefore(this.previousSibling, currentNode);
+  }
+}
+if (!Element.prototype.replaceWith)
+    Element.prototype.replaceWith = ReplaceWithPolyfill;
+if (!CharacterData.prototype.replaceWith)
+    CharacterData.prototype.replaceWith = ReplaceWithPolyfill;
+if (!DocumentType.prototype.replaceWith)
+    DocumentType.prototype.replaceWith = ReplaceWithPolyfill;
+
 function requestGlossification(e) {
-  console.log(this)
-  console.log(this.getElement().$)
+  // This is how we blow away the reset CSS
+  // But we'll need to recreate a lot of it to retain the drupal UI look.
   // this.getElement().removeClass('cke_reset_all');
-  this.getElement().addClass("glossify-dialog-container")
+  // This should eventually allow us to hook in and override. Still not working.
+  // this.getElement().addClass("glossify-dialog-container")
+
+  // TODO: TODO: Handle caching previously glossified terms so that those checkboxes can
+  // be automatically set after the glossifaction request is made a again.
+
+  // TODO: Use editor contents when ready to talk to API.
   // ### This gets us the html content of the editor that called the dialog.
   // const rawBody = this.getParentEditor().getData();
-  // console.log(rawBody)
   // const preparedBody = cGovPrepareStr(rawBody);
-  // console.log(preparedBody);
+
   const preparedBody = mockRequest.fragment;
   function processResponse() {
     const responseBody = mockResponse;
@@ -15,9 +47,8 @@ function requestGlossification(e) {
     const htmlArea = this.getElement().getDocument().getById('dialog_container');
     htmlArea.setHtml(dialogBody);
   }
-  // Fake request TODO: Make real
+  // Fake request TODO: Make real  (jquery.ajax probably)
   setTimeout(processResponse.bind(this, null), 0)
-  // Process response.
 }
 
 /**
@@ -31,47 +62,52 @@ function requestGlossification(e) {
  * @param {Object[]} candidateTermConfigs
  */
 function createDialogBodyHtml(originalHtml, candidateTermConfigs){
-  // NOTE: Because the returned terms specify indexes in the originalHtml,
-  // we need to step through them backwards so that insertions do not
-  // disrupt existing indexes before we process the term.
-  // for(let i = candidateTermConfigs.length - 1; i >= 0; i--){
-  //   const termConfig = candidateTermConfigs[i];
-  //   const preceedingSlice = originalHtml.slice()
-  // }
-  // Trying a slightly different approach...
+  // Instead of editing the string contents, we create a new string. This
+  // allows us to do the whole concatenation in one pass. The slow pointer
+  // keeps the new, longer string in sync with the indexes of the original string.
+  // (Which is important as long as the api uses indexes and length to identify terms).
   let processedHtml = "";
   let slowPointer = 0;
   for(let i = 0; i < candidateTermConfigs.length; i++){
     const termConfig = candidateTermConfigs[i];
-    const termStartIndex = termConfig.start;
-    const termLength = termConfig.length;
-    const termEndIndex = termConfig.start + termLength;
+    // TODO: Remove parseint when bob changes api to numbers
+    const termStartIndex = parseInt(termConfig.start);
+    const termLength = parseInt(termConfig.length);
+    const termEndIndex = termStartIndex + termLength;
     const preceedingSnippet = originalHtml.slice(slowPointer, termStartIndex);
     processedHtml += preceedingSnippet;
     slowPointer = termStartIndex;
     const termText = originalHtml.slice(slowPointer, termEndIndex);
     slowPointer = termEndIndex;
     // Create element to wrap term for checkbox selection
-    // TODO: Remove dummy code
-    const cGovUniqueId = 42; // TODO: Replace
+    // IE Add in inputs now with all the rest of the attributes as data attributes.
+    // Then when I strip the checkboxes I can build the anchor tag.
+    // This is because, even on percussion now, clicking the links causes you to be
+    // directed to an error page. That would avoid the issue.
+    // <input
+    //  type="checkbox"
+    //  name="terms"
+    //  value=uniqueID
+    //  data-term-id=termId
+    //  data-language=language
+    // />
+    const cGovUniqueId = Math.random() * 1000000; // TODO: Replace
     const language = "English"; // TODO: Replace
     const termId = termConfig.doc_id;
+    const isFirstOccurenceOfTerm = termConfig.first_occurrence;
+    const firstStyles = isFirstOccurenceOfTerm ? "background-color: #ffff00;" : "";
+    const labelStyle = "display: inline-block;" + firstStyles;
     const wrappedTerm =
-      "<input type=checkbox name=terms value="
-      + cGovUniqueId
-      + "><a __newterm=\""
-      + cGovUniqueId
-      + "\" class=\"definition\" href=\"/Common/PopUps/popDefinition.aspx?id="
-      + termId
-      + "&version=Patient&language="
-      + language
-      + "\" onclick=\"javascript:popWindow('defbyid','"
-      + termId
-      + "&version=Patient&language="
-      + language
-      + "'); return false;\">"
+      "<label "
+      + "data-term-id='" + termId + "' "
+      + "data-language='" + language + "' "
+      + "style='"
+      + labelStyle
+      + "' data-glossify-label>"
       + termText
-      + "</a>";
+      + "<input type='checkbox'"
+      + "/>"
+      + "</label>"
     processedHtml += wrappedTerm;
   }
   // We need to grab the tail of the originalHtml
@@ -81,13 +117,45 @@ function createDialogBodyHtml(originalHtml, candidateTermConfigs){
 }
 
 function saveGlossificationChoices() {
+  const dialogContainer = this.getElement().getDocument().getById('dialog_container').$;
+  const labels = dialogContainer.querySelectorAll('label[data-glossify-label]');
+  // IE11 for the win!
+  const labelsArray = Array.prototype.slice.call(labels, 0);
+  labelsArray.forEach(label => {
+    const checkbox = label.querySelector('input');
+    const isSelected = checkbox.checked;
+    if(!isSelected) {
+      const originalText = label.textContent;
+      label.replaceWith(originalText);
+    }
+    else {
+      const originalText = label.textContent;
+      const id = label.dataset.termId;
+      const language = label.dataset.language;
+      const paramString = id + "&version=Patient&language=" + language;
+      const href = "/Common/PopUps/popDefinition.aspx?id=" + paramString;
+      const onClickHandler = function() {
+        window.popWindow('defbyid', paramString);
+        return false;
+      };
+
+      const anchor = document.createElement('a');
+      anchor.onclick = onClickHandler;
+      anchor.href = href;
+      anchor.textContent = originalText;
+
+      label.replaceWith(anchor);
+    }
+  })
   const htmlArea = this.getElement().getDocument().getById('dialog_container').getHtml();
-  this._.editor.insertHtml(htmlArea);
+  const currentEditor = this._.editor;
+  // Note: editor.insertHtml does not clear previous contents of editor. This does.
+  currentEditor.setData(htmlArea);
 }
 
 CKEDITOR.dialog.add('glossifyDialog', function(editor) {
-  console.log(editor)
-  console.log(CKEDITOR)
+  // console.log(editor)
+  // console.log(CKEDITOR)
   // if (typeof editor.config.contentsCss === 'object') {
   //   editor.config.contentsCss.push(CKEDITOR.getUrl('/profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/dialogs/reference/old.css'));
   // }
@@ -101,7 +169,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
     // minHeight: 300,
     // width: "40vw",
     // height: "75vh",
-    resizable: CKEDITOR.DIALOG_RESIZE_NONE,
+    resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
     contents: [
       {
         id: 'tab_1',
@@ -166,7 +234,7 @@ function cGovPrepareStr(data) {
 		else if (c == "\r") {
 			result += cGovCRConst;
 		}
-		else if (c == "”") {	//right doulbe quote
+		else if (c == "”") {	//right double quote
 			result += "&#148;";
 		}
 		else if (c == "—") {	//em dash
