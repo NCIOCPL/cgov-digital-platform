@@ -20,9 +20,9 @@ source:
          selector: name
 
         -
-         name: parent
-         label: parent
-         selector: parent
+         name: field_owner_blog
+         label: field_owner_blog
+         selector: field_owner_blog
 
         -
          name: field_pretty_url
@@ -37,15 +37,24 @@ source:
 process:
   tid: term_id
   name: name
-  langcode: langcode
+
+  field_owner_blog:
+    plugin: migration_lookup
+    migration: blogseries_en_migration
+    source: field_owner_blog
+    no_stub: true
 
 
   vid:
    plugin: default_value
-   default_value: cgov_site_sections
+   default_value: cgov_blog_topics
 
 
 
 destination:
   plugin: entity:taxonomy_term
-  default_bundle: cgov_blog_series
+  default_bundle: cgov_blog_topics
+
+migration_dependencies:
+  required:
+    - blogseries_en_migration

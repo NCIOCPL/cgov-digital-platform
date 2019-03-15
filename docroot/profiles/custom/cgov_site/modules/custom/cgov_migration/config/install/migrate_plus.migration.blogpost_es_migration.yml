@@ -22,6 +22,20 @@ source:
          name: langcode
          label: langcode
          selector: '@langcode'
+
+
+
+        -
+         name: field_blog_series
+         label: field_blog_series
+         selector: '@field_blog_series'
+
+
+        -
+         name: field_blog_topics
+         label: field_blog_topics
+         selector: '@field_blog_topics'
+
         -
          name: field_search_engine_restrictions
          label: field_search_engine_restrictions
@@ -82,7 +96,10 @@ source:
          selector: related_resource_ids
 
 
-
+        -
+         name: author
+         label: author
+         selector: '@author'
 
 
   ids:
@@ -108,11 +125,12 @@ process:
    default_value: 1
 
   langcode: langcode
+  field_author: author
 
   body/value: body
   body/format:
    plugin: default_value
-   default_value: basic_html
+   default_value: full_html
 
 
   field_short_title: field_short_title
@@ -123,7 +141,7 @@ process:
   field_intro_text/value: field_intro_text
   field_intro_text/format:
    plugin: default_value
-   default_value: basic_html
+   default_value: full_html
 
 
   field_site_section:
@@ -134,6 +152,17 @@ process:
 
   field_pretty_url: field_pretty_url
 
+  field_blog_series:
+    plugin: migration_lookup
+    migration: blogseries_en_migration
+    source: field_blog_series
+    no_stub: true
+
+  field_site_topics:
+    plugin: migration_lookup
+    migration: blogtopics_migration
+    source: field_blog_topics
+    no_stub: true
 
   temp_text:
     plugin: migration_lookup
@@ -200,6 +229,7 @@ destination:
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - blogpost_en_migration
     - internallinksql_migration
     - externallinksql_migration
+    - blogseries_es_migration
+    - blogtopics_migration
