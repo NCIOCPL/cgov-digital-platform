@@ -1,11 +1,11 @@
 langcode: en
-status: false
+status: true
 dependencies:
   config:
-    - filter.format.basic_html
+    - filter.format.streamlined
   module:
     - ckeditor
-format: basic_html
+format: streamlined
 editor: ckeditor
 settings:
   toolbar:
@@ -16,8 +16,9 @@ settings:
           items:
             - Bold
             - Italic
+            - Format
         -
-          name: Linking
+          name: Links
           items:
             - DrupalLink
             - DrupalUnlink
@@ -27,27 +28,18 @@ settings:
             - BulletedList
             - NumberedList
         -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalImage
-        -
-          name: 'Block Formatting'
-          items:
-            - Format
-        -
-          name: Tools
+          name: Source
           items:
             - Source
   plugins:
-    stylescombo:
-      styles: ''
     language:
       language_list: un
+    stylescombo:
+      styles: ''
     tokenbrowser:
       token_types: {  }
 image_upload:
-  status: true
+  status: false
   scheme: public
   directory: inline-images
   max_size: ''
