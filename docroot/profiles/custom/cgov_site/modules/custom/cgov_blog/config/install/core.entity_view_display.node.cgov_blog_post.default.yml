@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_recommended_content
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
@@ -88,7 +89,7 @@ content:
     region: content
   field_citation:
     weight: 20
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -167,6 +168,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_recommended_content:
+    weight: 27
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
     region: content
   field_related_resources:
     type: entity_reference_revisions_entity_view

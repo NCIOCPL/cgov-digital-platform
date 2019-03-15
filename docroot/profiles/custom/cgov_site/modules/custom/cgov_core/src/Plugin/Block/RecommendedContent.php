@@ -115,6 +115,8 @@ class RecommendedContent extends BlockBase implements ContainerFactoryPluginInte
     // Change view based on CT.
     switch ($content_type) {
       case 'cgov_blog_post':
+        ksm($curr_entity->get('field_recommended_content'));
+
         $build = [
           '#markup' => $this->t('
               <div class="contentid-1073806 slot-item first-SI equalheight large-4 columns card gutter blog-feature">
