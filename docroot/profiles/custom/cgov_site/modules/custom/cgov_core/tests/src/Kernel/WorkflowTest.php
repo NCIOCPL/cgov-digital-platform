@@ -44,6 +44,11 @@ class WorkflowTest extends KernelTestBase {
     'text',
     'user',
     'workflows',
+    'token',
+    'token_filter',
+    'block',
+    'block_content',
+    'editor',
   ];
 
   /**
@@ -69,6 +74,7 @@ class WorkflowTest extends KernelTestBase {
     $this->installEntitySchema('node');
     $this->installEntitySchema('taxonomy_term');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('block_content');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('paragraph');
     $this->installConfig([
@@ -80,6 +86,7 @@ class WorkflowTest extends KernelTestBase {
       'image',
       'link',
       'node',
+      'system',
       'user',
       'filter',
       'language',
@@ -89,9 +96,15 @@ class WorkflowTest extends KernelTestBase {
       'entity_reference_revisions',
       'paragraphs',
       'workflows',
+      'token',
+      'token_filter',
+      'block',
+      'block_content',
+      'editor',
     ]);
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
+
     $perms = [
       'access content',
       'create pony content',
