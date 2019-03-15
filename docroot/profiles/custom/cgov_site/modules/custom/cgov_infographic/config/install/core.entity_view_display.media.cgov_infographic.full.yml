@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.full
     - field.field.media.cgov_infographic.body
     - field.field.media.cgov_infographic.field_accessible_version
     - field.field.media.cgov_infographic.field_browser_title
@@ -24,12 +25,20 @@ dependencies:
     - media.type.cgov_infographic
   module:
     - image
+    - text
     - user
-id: media.cgov_infographic.default
+id: media.cgov_infographic.full
 targetEntityType: media
 bundle: cgov_infographic
-mode: default
+mode: full
 content:
+  body:
+    type: text_default
+    weight: 0
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   content_moderation_control:
     weight: -20
     region: content
@@ -45,9 +54,16 @@ content:
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
+  field_accessible_version:
+    type: basic_string
+    weight: 0
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_infographic:
     weight: 6
-    label: above
+    label: hidden
     settings:
       image_style: ''
       image_link: ''
@@ -71,8 +87,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  body: true
-  field_accessible_version: true
   field_browser_title: true
   field_card_title: true
   field_date_display_mode: true
