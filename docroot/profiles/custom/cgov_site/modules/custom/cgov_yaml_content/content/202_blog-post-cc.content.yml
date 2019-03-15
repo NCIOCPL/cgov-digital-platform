@@ -36,7 +36,13 @@
   field_author:
     value: 'NCI Staff'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
   body:
     - format: "full_html"
       value: |
@@ -96,10 +102,119 @@
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Blog post short title"
-  field_site_section:
-    - '#process':
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies"
+  title:
+    value: "HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'NCI Staff'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
         callback: 'reference'
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+            <p>The Human Tumor Atlas Network initiative will create maps of human tumors, including their surrounding environment, which can include immune cells, blood vessels, and other components of the tumor's supporting structure.</p>
+            <div class="image-photo-credit">Credit: National Cancer Institute</div>
+            </div>
+            </figcaption>
+            </figure>
+            <p>If you’re heading to a completely new destination, chances are you might consult a website or app that predicts the best route using up-to-date maps and traffic information.</p>
+            <p>What if oncologists had a similar resource that used highly detailed maps of cancer to predict the best route to treat someone with cancer or prevent cancer in someone who is at increased risk?</p>
+            <p>The <a href="/research/key-initiatives/moonshot-cancer-initiative/implementation/human-tumor-atlas" title="">Human Tumor Atlas Network</a> (HTAN), an NCI-funded collaborative research project, was established to do just that—create detailed “maps” of a variety of cancers that may be used to investigate how cancer might develop, spread, or respond to treatment.</p>
+            <p>The maps will capture the molecular features of cancer, similar to what has been done with other cancer “atlases.” However, the most unique aspect of HTAN is that the features of cancer will be mapped across space and time.</p>
+            <p>In addition, HTAN researchers will leverage the latest biotechnologies and computational approaches to study the biology of cancer in unprecedented ways.</p>
+            <p>For example, the HTAN maps will incorporate the 3-dimensional location of individual cells in a tumor, like building addresses. And just like an interactive map that indicates whether a building is a home or a business, the HTAN maps will also be annotated with information about the type of cell at each “address.”</p>
+            <p>But tumors, like cities, change over time, and an out-of-date map is not a very reliable resource. As such, the HTAN maps will depict how the molecular, cellular, and spatial features of a tumor change as it progresses over time.</p>
+            <p>With these highly detailed maps, HTAN aims to generate a more comprehensive understanding of cancer than was previously possible, the initiative’s leaders said.</p>
+            <h2 id="ui-id-2">“A Very Timely Effort”</h2>
+            <p>The idea for HTAN came from the Cancer Moonshot℠, in the form of a <a href="/research/key-initiatives/moonshot-cancer-initiative/blue-ribbon-panel/blue-ribbon-panel-report-summary.pdf#ui-id-3" title="">recommendation from its Blue Ribbon Panel</a>.</p>
+            <p>“It is a very timely effort because there has been a real blossoming of the technologies that are required to look at cells in depth, to an extent that was not possible 10 years ago,” said HTAN co-leader Tracy Lively, Ph.D., of NCI’s <a href="https://dctd.cancer.gov/">Division of Cancer Treatment and Diagnosis</a>.</p>
+            <p>And these technologies have recently become available “not just to a few specialized labs, but broadly enough that labs with deep interest and expertise in cancer can now harness them,” she added.</p>
+            <p>The network consists of 10 teams from research institutions across the country. At a kickoff meeting held last November, each team outlined how it is generating tumor atlases using a different combination of technologies and approaches.</p>
+            <p>“When we are trying to understand the underlying biology [of cancer], we really need a highly multifaceted approach and to approach it from many different angles,” said Andrew Adey, Ph.D., an HTAN-funded scientist from Oregon Health and Science University.</p>
+            <p>Each map will represent a particular type of cancer as it <a href="/research/areas/biology/human-tumor-atlas-network-infographic" title="">goes through a specific transition</a>. For example, the HTAN team from Children’s Hospital of Philadelphia is generating a map of pediatric high-grade <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045700&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045700&amp;version=Patient&amp;language=English">glioma</a> as it transitions from responding to standard treatments to developing <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000416100&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000416100&amp;version=Patient&amp;language=English">resistance</a> to them.</p>
+            <h2 id="ui-id-3">Getting Down to Street Level: Analyzing Single Cells</h2>
+            <p>Looking at a city with a birds-eye view can reveal general structures like buildings and parks. But with a street-level view, you can see individual details of those places, such as whether a building is residential or commercial.</p>
+            <p>In the past, it was difficult for researchers to get such a “street-level view” of cells because, for most laboratory tests, a sample of cells is mixed together and analyzed as a group.</p>
+            <p>It’s like putting a bunch of cells in a blender and looking at the result, said Dana Pe’er, Ph.D., a leader of the HTAN team at Memorial Sloan Kettering Cancer Center (MSKCC). With this “bulk” approach, Dr. Pe’er explained, the individual differences (called heterogeneity) are lost.</p>
+            <p>However, technological advances now allow researchers to quickly and affordably analyze molecular characteristics of single cells. By combining individual data from hundreds or thousands of single cells from a tumor, researchers can get a better handle on its heterogeneity.</p>
+            <p>These single-cell technologies are “opening an entire new world for cancer and biomedicine,” Dr. Pe’er said.</p>
+            <p>Each HTAN team is using different single-cell technologies, but their end-goal is the same: to map the location of and understand the role of each type of cell in a tumor. For example, the researchers hope to differentiate cancer cells and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046356&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046356&amp;version=Patient&amp;language=English">immune cells</a>, and to determine if those immune cells are helping the cancer grow or attacking it.</p>
+            <p>“To understand not just the tumor cells, but also the surrounding <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000791175&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000791175&amp;version=Patient&amp;language=English">microenvironment</a>, we need to utilize newer technologies … to really dissect the different populations in a tumor,” said Li Ding, Ph.D., a leader of the team at Washington University in St. Louis.</p>
+            <h2 id="ui-id-4">Looking Beyond the DNA Blueprint</h2>
+            <p>A city’s blueprint might show you the original outline of streets and highways, but it couldn’t tell you what buildings and landscapes have popped up along those streets, or how the outline was altered as the city was developed.</p>
+            <p>Similarly, while there’s no doubt that the sequence of DNA (often referred to as the blueprint of a cell) reveals clues about cancer biology, it’s not the whole story.</p>
+            <p>In addition to <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000753867&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000753867&amp;version=Patient&amp;language=English">DNA sequencing</a>, HTAN researchers are using single-cell technologies to study other biological molecules such as <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046568&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046568&amp;version=Patient&amp;language=English">RNA</a> and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046092&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046092&amp;version=Patient&amp;language=English">proteins</a>, which can reveal important information about cancer cells.</p>
+            <p>For example, the MSKCC team is studying the dynamics of <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046710&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046710&amp;version=Patient&amp;language=English">metastasis</a> by sequencing RNA of single cells from <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045847&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045847&amp;version=Patient&amp;language=English">primary tumors</a> in the lung and pancreas, and metastatic tumors in the brain.</p>
+            <p>With <a href="/about-nci/organization/ccg/blog/2019/interview-scRNA-seq" title="">single-cell RNA sequencing</a>, the researchers can identify what type of cell it is and determine its traits, such as the potential to metastasize, Dr. Pe’er said. With their maps, they hope to gain a better understanding of the mechanisms of metastasis and how they are regulated.</p>
+            <p>Other teams are studying how <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000717443&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000717443&amp;version=Patient&amp;language=English">epigenetic</a> modifications—alterations that control which <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045693&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045693&amp;version=Patient&amp;language=English">genes</a> are switched on and off without changing the actual DNA sequence—shift as cancer progresses.</p>
+            <p>The team from Oregon Health and Science University, for example, is using a technology known as ATAC-seq to analyze one kind of epigenetic modification. This technology is more efficient and easier to use than previous epigenetic tests, explained Oregon team member Dr. Adey.</p>
+            <p>He and his colleagues <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4836442/">adapted ATAC-seq to analyze single cells</a> and are using this approach to study epigenetic changes that occur as metastatic breast tumors become resistant to standard therapies.</p>
+            <p>Multiple studies have shown that certain epigenetic shifts make cancer cells resistant to a given treatment. The team hopes that delving deeper into these shifts will help them better understand these resistance mechanisms and, possibly, how to subvert them.</p>
+            <p>To create their maps, the HTAN team from Washington University is using <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5830451/">a new technology called nanoPOTS</a> to identify hundreds of proteins in single cells. By analyzing the proteins in cells collected from breast, brain, and pancreatic tumors during and after treatment, the team hopes to learn how changes in the types of cells in a tumor correlate with the patient’s response to treatment.</p>
+            <p>For example, this approach could shed light on how the types of immune cells in a tumor change during and after treatment, explained Dr. Ding.</p>
+            <p>The hope is that, down the road, researchers may be able to use the HTAN atlases as a resource to probe for answers about cancer biology.</p>
+            <p>One way that researchers may utilize the maps, for example, is to “identify <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045618&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045618&amp;version=Patient&amp;language=English">biomarkers</a> for risk stratification and early cancer detection, and identify precise targets for prevention and therapy,” said HTAN co-leader Sudhir Srivastava, Ph.D., of NCI’s <a href="https://prevention.cancer.gov/">Division of Cancer Prevention</a>.</p>
+            <p>Such markers and targets may enable oncologists to create models that predict how an individual’s cancer may progress and respond to treatment, he explained.</p>
+            <h2 id="ui-id-5">Studying Cancer in Context</h2>
+            <figure class="image-right-medium centered-set">
+            <div class="centered-element">
+            <img src="/PublishedContent/Images/news-events/cancer-currents-blog/2019/MxIF-McKinley.__v10054842.jpg" alt="A sample of a human colon tumor analyzed by MxIF. Each of the five colors represents a different protein."><!--Comment-->
+            </div>
+            <figcaption>
+            <div class="caption-container no-resize">
+            <p>A sample of a human colon tumor analyzed by MxIF. Each of the five colors represents a different protein.</p>
+            <div class="image-photo-credit">Credit: Eliot McKinley, Ph.D., Vanderbilt University School of Medicine</div>
+            </div>
+            </figcaption>
+            </figure>
+            <p>A map wouldn’t be able to direct you to a destination if the components of the city were drawn arbitrarily on the page. You’d need to know how the streets and buildings are organized in relation to one another to reach your destination.</p>
+            <p>Likewise, a tumor atlas needs to convey how the components of the tumor microenvironment—blood vessels, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044013&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044013&amp;version=Patient&amp;language=English">connective tissue</a>, immune cells, and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044059&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044059&amp;version=Patient&amp;language=English">microorganisms</a>—are organized in relation to one another and to cancer cells.</p>
+            <p>But in the past, said Dr. Lively, “many of our technologies for looking at cells required us to take the tumor apart,” thereby losing the spatial relationships between these components.</p>
+            <p>Advanced <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046361&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046361&amp;version=Patient&amp;language=English">imaging</a> technologies now enable researchers to study the intact tumor microenvironment in great detail. Using such technologies to tie molecular and spatial information together is a major objective of HTAN, Dr. Lively noted.</p>
+            <p>These methods “are incredibly important because you can study the cells in context,” said Dr. Pe’er. For example, one could address a question like, “how does a cancer cell next to an immune cell behave differently than one that isn’t?” she said.</p>
+            <p>HTAN investigators are using several imaging techniques that can single out different molecules—sometimes upwards of 100—by highlighting each one with a different color.</p>
+            <p>For example, the HTAN team from Vanderbilt University is using one technique, called multiplex immunofluorescence (MxIF), that can highlight up to 60 different molecules, including proteins, RNA, and microbes. They are using this technology to study how the microenvironment changes during colon cancer development.</p>
+            <p>“Imaging-based approaches like multiplex immunofluorescence are going to be key for these efforts,” said Ken Lau, Ph.D., a leader of the Vanderbilt team.</p>
+            <p>The Vanderbilt researchers will interrogate combinations of proteins and RNA to delineate the types of cells in samples of <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046220&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046220&amp;version=Patient&amp;language=English">precancerous</a> growths in the colon and full-blown colon tumors. They will then analyze how the interaction and organization of these cells changes during cancer progression.</p>
+            <p>The team is also using MxIF to study microorganisms, because certain bacterial species in the gut are linked to the development and progression of colon cancer.</p>
+            <p>“The <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000738008&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000738008&amp;version=Patient&amp;language=English">microbiome</a> organizes into structures called biofilms,” Dr. Lau explained. “It’s very important to look at how these biofilms are spatially organized and where exactly the different microbes are,” he said. For instance, he said, microbes can sit on top of a colon tumor or they can invade into the tumor, and that can change how the tumor behaves.</p>
+            <h2 id="ui-id-6">Collaborating to Address New Challenges</h2>
+            <p>The <a href="https://twitter.com/ncihtan">HTAN project</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> is a large undertaking and the first 3-dimensional atlas project to focus solely on tumors, Dr. Lively noted. That means there will be a lot of kinks to work out, many of which the HTAN scientists discussed at the kickoff meeting.</p>
+            <p>One challenge will be isolating enough single cells for single-cell assays, Dr. Adey said. Sometimes large parts of a tumor sample have died and broken open, making it difficult to isolate single cells, he explained.</p>
+            <p>And even once that challenge is met, some of the newer technologies still need improvements, said Dr. Pe’er. At the meeting, the HTAN researchers agreed on the need to optimize each assay or test before it can be used on large sets of samples.</p>
+            <p>Computation and interpretation of large data sets is another big bottleneck, Dr. Pe’er said. Part of the issue is not having enough computational biologists, she noted.</p>
+            <p>Another challenge is generating datasets in a consistent way that allows them to be compared to one another, said Dr. Ding.</p>
+            <p>“We are dealing with a collection of different technologies and we need to be conscious about standardization. If we don’t, it will be difficult to make conclusions,” she said.</p>
+            <p>Although these are significant challenges, the combined expertise of the network is a good starting point to tackle these issues, Dr. Adey said. “Having this network of peers to exchange ideas and experiences with is going to be incredibly valuable,” he explained.</p>
+            <p>Dr. Lively agreed, saying, “I think the real value of putting the network together is that … there is going to be tremendous sharing and cross-fertilization.”</p>
+  field_browser_title:
+    value: 'HTAN'
+  field_card_title:
+    value: 'HTAN'
+  field_feature_card_description:
+    value: 'HTAN'
+  field_list_description:
+    value: 'HTAN: list desc'
+  field_page_description:
+    value: 'HTAN: page desc'
+  field_date_posted:
+    value: "2019-02-15"
+  field_pretty_url:
+    value: 'news-events/cancer-currents-blog/2019/human-tumor-atlas-network-cancer-maps'
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "HTAN"

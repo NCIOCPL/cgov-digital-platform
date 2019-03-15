@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
@@ -28,10 +29,10 @@ dependencies:
     - options
     - text
     - user
-id: node.cgov_blog_series.default
+id: node.cgov_blog_series.full
 targetEntityType: node
 bundle: cgov_blog_series
-mode: default
+mode: full
 content:
   content_moderation_control:
     weight: 0
@@ -39,21 +40,21 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_about_blog:
-    weight: 21
+    weight: 20
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_allow_comments:
-    weight: 22
+    weight: 19
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_banner_image:
-    weight: 14
+    weight: 13
     label: hidden
     settings:
       image_style: ''
@@ -62,7 +63,7 @@ content:
     type: image
     region: content
   field_blog_series_shortname:
-    weight: 16
+    weight: 15
     label: hidden
     settings:
       link_to_entity: false
@@ -94,7 +95,7 @@ content:
     type: string
     region: content
   field_feedburner_url:
-    weight: 17
+    weight: 16
     label: hidden
     settings:
       trim_length: 80
@@ -106,7 +107,7 @@ content:
     type: link
     region: content
   field_image_promotional:
-    weight: 15
+    weight: 14
     label: hidden
     settings:
       link: true
@@ -122,7 +123,7 @@ content:
     type: string
     region: content
   field_num_display_posts:
-    weight: 19
+    weight: 18
     label: hidden
     settings:
       thousand_separator: ''
@@ -146,15 +147,8 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_public_use:
-    weight: 12
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: content
   field_recommended_content_header:
-    weight: 18
+    weight: 17
     label: hidden
     settings:
       link_to_entity: false
@@ -162,7 +156,7 @@ content:
     type: string
     region: content
   field_search_engine_restrictions:
-    weight: 13
+    weight: 12
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -175,13 +169,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_show_list_thumbnails:
-    weight: 23
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
     region: content
   field_site_section:
     weight: 8
@@ -205,4 +192,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_public_use: true
+  field_show_list_thumbnails: true
