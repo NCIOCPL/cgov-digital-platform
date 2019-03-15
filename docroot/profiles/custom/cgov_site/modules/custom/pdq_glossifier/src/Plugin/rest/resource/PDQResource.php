@@ -231,9 +231,11 @@ class PDQResource extends ResourceBase {
 
               // Otherwise, include an entry for each dictionary requested
               // by the client if this term belongs in that dictionary.
-              elseif (!empty($dictionaries)) {
+              // Include all dictionaries if the client didn't restrict
+              // the request by dictionary.
+              else {
                 foreach ($dicts as $dict) {
-                  if (in_array($dict, $dictionaries)) {
+                  if (empty($dictionaries) || in_array($dict, $dictionaries)) {
                     $result[] = $this->wrap($match, $doc_id, $lang, $dict);
                   }
                 }
