@@ -1,0 +1,74 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.node_view
+  module:
+    - cgov_blog
+    - ctools
+    - panels
+id: node_view-panels_variant-blog-series
+label: 'Blog Series'
+variant: panels_variant
+variant_settings:
+  blocks:
+    63b0f70d-9bde-4a42-9e68-6511a6586d43:
+      id: 'entity_view:node'
+      label: 'Blog Series Page Content'
+      provider: ctools
+      label_display: '0'
+      view_mode: full
+      region: first
+      weight: -10
+      uuid: 63b0f70d-9bde-4a42-9e68-6511a6586d43
+      context_mapping:
+        entity: node
+    fd774278-00c9-40c5-b6c8-fdfccbc6ca34:
+      id: cgov_blog_featured_posts
+      label: 'Blog Featured Posts block'
+      provider: cgov_blog
+      label_display: '0'
+      region: second
+      weight: -1
+      uuid: fd774278-00c9-40c5-b6c8-fdfccbc6ca34
+      context_mapping: {  }
+    4670b1fc-374a-4fe5-aab5-460bdab843e8:
+      id: cgov_blog_categories
+      label: 'Blog Categories block'
+      provider: cgov_blog
+      label_display: '0'
+      region: second
+      weight: 0
+      uuid: 4670b1fc-374a-4fe5-aab5-460bdab843e8
+      context_mapping: {  }
+    c0c4dec6-8da1-4895-b86d-6206a2ca5995:
+      id: cgov_blog_archive
+      label: 'Blog Archive block'
+      provider: cgov_blog
+      label_display: '0'
+      region: second
+      weight: 1
+      uuid: c0c4dec6-8da1-4895-b86d-6206a2ca5995
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 19f2638d-acd8-4b28-baea-8ff0127cceab
+  label: null
+  weight: 0
+  layout: layout_twocol
+  layout_settings: {  }
+  page_title: ''
+  storage_type: page_manager
+  storage_id: node_view-panels_variant-blog-series
+  builder: standard
+page: node_view
+weight: 0
+selection_criteria:
+  -
+    id: 'entity_bundle:node'
+    bundles:
+      cgov_blog_series: cgov_blog_series
+    negate: false
+    context_mapping:
+      node: node
+selection_logic: and
+static_context: {  }
