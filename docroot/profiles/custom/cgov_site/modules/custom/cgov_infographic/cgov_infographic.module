@@ -22,8 +22,10 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
   // page containing only the accessible text.
   if ($build['#view_mode'] == 'full' && isset($build['field_accessible_version'])) {
 
-    // Set the longdesc attribute. This needs to be a URL.
-    $build['field_infographic'][0]['#item_attributes']['longdesc'] = 'abce';
-
+    // Set the longdesc attribute. \Drupal::service() returns with a leading /.
+    // TODO: This needs to become the MVC route for the logic for re-rendering
+    // .     just the long description text.
+    $build['field_infographic'][0]['#item_attributes']['longdesc'] =
+      '/PublishedContent/longdescription' . \Drupal::service('path.current')->getPath() . '-' . $entity->id();
   }
 }
