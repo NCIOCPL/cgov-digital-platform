@@ -1,10 +1,10 @@
-<div class="equalheight bgWhite {{ content.field_cthp_card_theme }}">
+<div class="equalheight bgWhite {{ content.field_cthp_card_theme|field_value }}">
   <h2 style="">{{ content.field_cthp_card_title}}</h2>
   <div class="cardBody">
-    {% if content.field_cthp_guide_card_desc[0] %}
+    {% if content.field_cthp_guide_card_desc|field_value %}
       {{ content.field_cthp_guide_card_desc }}
     {% endif %}
-    {% if content.field_cthp_pdq_link_heading[0] %}
+    {% if content.field_cthp_pdq_link_heading|field_value %}
       <h4 class="cthp-pdq-label">
         {{ content.field_cthp_pdq_link_heading }}
       </h4>
