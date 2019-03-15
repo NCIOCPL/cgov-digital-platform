@@ -224,7 +224,7 @@ class PDQResource extends ResourceBase {
         ],
         'field_pdq_section_html' => [
           'value' => $section['html'],
-          'format' => 'full_html',
+          'format' => 'raw_html',
         ],
       ]);
       $paragraph->save();
