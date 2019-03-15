@@ -1,0 +1,24 @@
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+    <div class="resize-content">
+        <h1>
+          {{ name }}
+        </h1>
+        {{ drupal_block('page_options') }}
+        <div id="cgvBody">
+          {{ content.body }}
+
+          <figure class="image-center-full centered-set">
+              <div class="centered-element">
+                  {{ content.field_infographic }}
+                  <a class="article-image-enlarge no-resize" href="/PublishedContent/Images/about-nci/overview/nci-at-a-glance-enlarge.__v3000344589.gif" target="_blank">Enlarge</a>
+              </div>
+          </figure>
+
+        </div>
+    </div>
+    <footer class="article-footer">
+      {{ content.field_related_resources }}
+      {{ contentPageMacros.displayDates(media, content) }}
+    </footer>
+</article>
