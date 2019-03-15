@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cgov_core
+    - ctools
+    - node
+  theme:
+    - cgov_common
+id: cgov_common_recommended
+theme: cgov_common
+region: recommended
+weight: 0
+provider: null
+plugin: cgov_recommended_content
+settings:
+  id: cgov_recommended_content
+  label: 'Cgov Recommended Content'
+  provider: cgov_core
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      cgov_blog_post: cgov_blog_post
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      cgov_blog_post: cgov_blog_post
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
