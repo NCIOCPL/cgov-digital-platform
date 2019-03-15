@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.thumbnail_card
-    - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
-    - field.field.node.cgov_blog_series.field_intro_text
     - field.field.node.cgov_blog_series.field_list_description
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
@@ -21,38 +20,18 @@ dependencies:
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - node.type.cgov_blog_series
   module:
-    - text
     - user
 id: node.cgov_blog_series.thumbnail_card
 targetEntityType: node
 bundle: cgov_blog_series
 mode: thumbnail_card
 content:
-  body:
-    label: hidden
-    type: text_default
-    weight: 101
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  content_moderation_control:
-    weight: -20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_browser_title:
-    weight: 104
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_card_title:
-    weight: 103
+    weight: 1
     label: hidden
     settings:
       link_to_entity: false
@@ -60,7 +39,7 @@ content:
     type: string
     region: content
   field_feature_card_description:
-    weight: 107
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
@@ -68,15 +47,7 @@ content:
     type: string
     region: content
   field_list_description:
-    weight: 106
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_page_description:
-    weight: 105
+    weight: 2
     label: hidden
     settings:
       link_to_entity: false
@@ -84,36 +55,29 @@ content:
     type: string
     region: content
   field_short_title:
-    weight: 102
+    weight: 0
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
-  field_site_section:
-    weight: 108
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  links:
-    weight: 100
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  content_moderation_control: true
   field_about_blog: true
+  field_allow_comments: true
   field_banner_image: true
   field_blog_series_shortname: true
+  field_browser_title: true
   field_feedburner_url: true
   field_image_promotional: true
-  field_intro_text: true
   field_num_display_posts: true
+  field_page_description: true
   field_pretty_url: true
   field_public_use: true
   field_recommended_content_header: true
   field_search_engine_restrictions: true
+  field_show_list_thumbnails: true
+  field_site_section: true
   langcode: true
+  links: true

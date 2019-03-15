@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
-    - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
@@ -13,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
-    - field.field.node.cgov_blog_series.field_intro_text
     - field.field.node.cgov_blog_series.field_list_description
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
@@ -23,6 +21,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - image.style.thumbnail
     - node.type.cgov_blog_series
@@ -95,7 +94,7 @@ content:
     type: string_textfield
     region: content
   field_feedburner_url:
-    weight: 14
+    weight: 15
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -141,7 +140,7 @@ content:
     type: string_textfield
     region: content
   field_pretty_url:
-    weight: 2
+    weight: 14
     settings:
       size: 60
       placeholder: ''
@@ -167,7 +166,7 @@ content:
     type: paragraphs_classic_asymmetric
     region: content
   field_recommended_content_header:
-    weight: 15
+    weight: 16
     settings:
       size: 60
       placeholder: ''
@@ -187,6 +186,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_show_list_thumbnails:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_site_section:
     weight: 1
@@ -222,9 +227,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  body: true
   created: true
-  field_intro_text: true
   promote: true
   status: true
   sticky: true
