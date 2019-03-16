@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @Block(
  *   id = "cgov_blog_archive",
- *   admin_label = @Translation("Cgov Blog Archive block"),
+ *   admin_label = @Translation("Cgov Blog Archive"),
  *   category = @Translation("Cgov Digital Platform"),
  * )
  */

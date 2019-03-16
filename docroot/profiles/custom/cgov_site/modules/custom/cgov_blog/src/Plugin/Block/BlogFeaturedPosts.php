@@ -14,7 +14,7 @@ use Drupal\Core\Block\BlockBase;
  *
  * @Block(
  *   id = "cgov_blog_featured_posts",
- *   admin_label = @Translation("Ggov Blog Featured Posts block"),
+ *   admin_label = @Translation("Cgov Blog Featured Posts"),
  *   category = @Translation("Cgov Digital Platform"),
  * )
  */
