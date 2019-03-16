@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying cards.
+ */
+#}
+
+{# 
+# Get the content author or default to 'NCI Staff' if none found.
+# @param content
+#}
+{% macro getAuthor(content) %}
+  {% if content.field_author and content.field_author|length > 2 %}
+    {{content.field_author}}
+  {% else %}
+    {% trans with {'context': 'CGov Blog' } %}NCI Staff{% endtrans %}
+  {% endif %}
+{% endmacro %}
+
+{# 
+# Look for an associated promo or article imaage.
+# @param content
+#}
+{% macro getImage(content) %}
+  {% if content.field_image_promotional and content.field_image_promotional[0] %}
+    {{content.field_image_promotional}}
+  {% elseif content.field_image_article and content.field_image_article[0] %}
+    {{content.field_image_article}}
+  {% else %}
+    {# TODO: Use old placeholder image. #}
+  {% endif %}
+{% endmacro %}
