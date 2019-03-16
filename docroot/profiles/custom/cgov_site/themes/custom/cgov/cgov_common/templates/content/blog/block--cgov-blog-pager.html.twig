@@ -1,0 +1,17 @@
+<div id='cgov-blog-post-pagination>' class='blog-pager'>
+
+  {% if content['#prev_node'] is not empty %}
+    <div class='blog-post-older'>
+      <a href="/node/{{ content['#prev_node'] }}">&lt; {{ content['#prev_text'] }}</a>
+      <p><i>{{ content['#prev_title'] }}</i></p>
+    </div>
+  {% endif %}
+
+  {% if content['#next_node'] is not empty %}
+    <div class='blog-post-newer'>
+      <a href="/node/{{ content['#next_node'] }}">{{ content['#next_text'] }} &gt;</a>
+      <p><i>{{ content['#next_title'] }}</i></p>
+    </div>
+  {% endif %}
+
+</div>

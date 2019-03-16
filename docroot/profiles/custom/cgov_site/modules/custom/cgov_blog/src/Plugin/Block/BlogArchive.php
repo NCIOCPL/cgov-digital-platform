@@ -132,11 +132,11 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       $content_type = $curr_entity->bundle();
     }
 
-    $markup1 = $this->drawArchiveByYear($content_id, $content_type);
+    $my_archive_markup = $this->drawArchiveByYear($content_id, $content_type);
     // Ksm($markup1);!
     $build = [
       '#type' => 'block',
-      '#markup' => $markup1,
+      '#markup' => $my_archive_markup,
     ];
 
     /*
@@ -193,55 +193,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The content type machine name.
    */
   private function drawArchiveByYear($cid, $content_type) {
-    $markup = '
-      <!-- populated with dummy values for template front end -->
-      <h4>2019</h4>
-      <ul>
-        <li class="month">March (0)</li>
-        <li class="month"><a class href="?filter[year]=2019&filter[month]=2">February</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2019&filter[month]=1">January</a> (6)</li>
-      </ul>
-      <h4>2018</h4>
-      <ul>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=12">December</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=11">November</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=10">October</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=9">September</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=8">August</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=7">July</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=6">June</a> (12)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=5">May</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=4">April</a> (10)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=3">March</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=2">February</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2018&filter[month]=1">January</a> (10)</li>
-      </ul>
-      <h4>2017</h4>
-      <ul>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=12">December</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=11">November</a> (13)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=10">October</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=9">September</a> (12)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=8">August</a> (14)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=7">July</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=6">June</a> (13)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=5">May</a> (10)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=4">April</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=3">March</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=2">February</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2017&filter[month]=1">January</a> (7)</li>
-      </ul>
-      <h4>2016</h4>
-      <ul>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=12">December</a> (8)</li>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=11">November</a> (8)</li>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=10">October</a> (9)</li>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=9">September</a> (11)</li>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=8">August</a> (8)</li>
-        <li class="month"><a class href="?filter[year]=2016&filter[month]=7">July</a> (9)</li>
-      </ul>
-    ';
-
     // Get an array of blog field collections to populate links.
     $blog_links = $this->getMonthsYears($cid, $content_type);
     foreach ($blog_links as $blog_link) {
@@ -251,9 +202,58 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     // Get counts and values for each available year. I hate php.
     if (isset($year_links) && 1 == 2) {
       foreach (array_count_values($year_links) as $year => $count) {
-        $markup .= '<li>' . $year . ' (' . $count . ')</li>';
+        $markup = '<li>' . $year . ' (' . $count . ')</li>';
       }
     }
+
+    $markup = '
+    <!-- populated with dummy values for template front end -->
+    <h4>2019</h4>
+    <ul>
+      <li class="month">March (0)</li>
+      <li class="month"><a class href="?filter[year]=2019&filter[month]=2">February</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2019&filter[month]=1">January</a> (6)</li>
+    </ul>
+    <h4>2018</h4>
+    <ul>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=12">December</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=11">November</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=10">October</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=9">September</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=8">August</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=7">July</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=6">June</a> (12)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=5">May</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=4">April</a> (10)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=3">March</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=2">February</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2018&filter[month]=1">January</a> (10)</li>
+    </ul>
+    <h4>2017</h4>
+    <ul>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=12">December</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=11">November</a> (13)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=10">October</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=9">September</a> (12)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=8">August</a> (14)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=7">July</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=6">June</a> (13)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=5">May</a> (10)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=4">April</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=3">March</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=2">February</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2017&filter[month]=1">January</a> (7)</li>
+    </ul>
+    <h4>2016</h4>
+    <ul>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=12">December</a> (8)</li>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=11">November</a> (8)</li>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=10">October</a> (9)</li>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=9">September</a> (11)</li>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=8">August</a> (8)</li>
+      <li class="month"><a class href="?filter[year]=2016&filter[month]=7">July</a> (9)</li>
+    </ul>
+  ';
     return $markup;
   }
 

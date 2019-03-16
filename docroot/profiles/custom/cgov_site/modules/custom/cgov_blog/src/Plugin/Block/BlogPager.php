@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a block that displays pager variants.
  *
  * @Block(
- *  id = "blog_pager",
- *  admin_label = "GGov Blog Pager",
+ *  id = "cgov_blog_pager",
+ *  admin_label = "Cgov Blog Pager",
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
@@ -129,7 +129,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     // the view. This plugin is currently being used by Blog Posts only.
     switch ($content_type) {
       case 'cgov_blog_post':
-        $build['#markup'] = $this->drawBlogPostOlderNewer($content_id, $content_type);
+        $markup = $this->drawBlogPostOlderNewer($content_id, $content_type);
+        $build['#prev_node'] = $markup['prev_node'] ?? '';
+        $build['#prev_text'] = $markup['prev_text'] ?? '';
+        $build['#prev_title'] = $markup['prev_title'] ?? '';
+        $build['#next_node'] = $markup['next_node'] ?? '';
+        $build['#next_text'] = $markup['next_text'] ?? '';
+        $build['#next_title'] = $markup['next_title'] ?? '';
         break;
 
       default:
@@ -185,13 +191,10 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function drawBlogPostOlderNewer($cid, $content_type) {
     // Get an array of blog field collections to populate links.
+    $markup = [];
     $blog_links = $this->getBlogPostPagerLinks($cid, $content_type);
 
-    // Open Blog Post pagination div.
-    $markup = "<div id='cgov-blog-post-pagination>";
-
     // Draw our prev/next links.
-    // TODO: hook up translation.
     foreach ($blog_links as $index => $blog_link) {
 
       // Look for the entry that matches the current node.
@@ -200,31 +203,24 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
 
         // Link previous post if exists.
         if ($index > 0) {
-          $prev = $blog_links[$index - 1];
-          $markup .= "
-            <div class='blog-post-older'>
-              <a href=/node/" . $prev['nid'] . ">&lt; Older Post</a>
-              <p><i>" . $prev['title'] . "</i></p>
-            </div>
-          ";
+          $p = $blog_links[$index - 1];
+          $markup['prev_node'] = $p['nid'];
+          $markup['prev_title'] = $p['title'];
+          $markup['prev_text'] = $this->t('Older Post');
         }
 
         // Link next post if exists.
         if ($index < (count($blog_links) - 1)) {
-          $next = $blog_links[$index + 1];
-          $markup .= "
-            <div class='blog-post-newer'>
-              <a href=/node/" . $next['nid'] . ">Newer Post &gt;</a>
-              <p><i>" . $next['title'] . "</i></p>
-            </div>
-          ";
+          $n = $blog_links[$index + 1];
+          $markup['next_node'] = $n['nid'];
+          $markup['next_title'] = $n['title'];
+          $markup['next_text'] = $this->t('Newer Post');
         }
         break;
       }
     }
 
-    // Close pagination div and return HTML.
-    $markup .= "</div>";
+    // Return HTML.
     return $markup;
   }
 
