@@ -7,7 +7,7 @@
   {# Don't set description #}
 {% endif %}
 
-<div class="equalheight bgWhite {{ content.field_cthp_card_theme }}">
+<div class="equalheight bgWhite {{ content.field_cthp_card_theme|field_value }}">
   <h2 style="">{{ content.field_cthp_card_title}}</h2>
   <div>
     <a href="{{ url }}">{{ content.field_cthp_featured_content }}</a>

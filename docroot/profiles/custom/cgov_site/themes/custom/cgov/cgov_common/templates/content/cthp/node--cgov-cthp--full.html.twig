@@ -1,13 +1,24 @@
-{{ attach_library('cgov_common/cthp') }}
 {# Page Content #}
-<div class="row">
-  <div class="large-12 columns resize-content cthp-padding">
-    <!-- PAGE TITLE -->
-    <h1>{{ node.label }}—{{ content.field_audience_toggle }} Version</h1>
-    <!-- END PAGE TITLE -->
-    {{ drupal_block('page_options') }}
+{% set isPatient = (content.field_audience_toggle|field_value|render|render is same as('Patient')) %}
+{% set toggleTarget = (isPatient)? 'Health Professional' : 'Patient' %}
+
+
+<div class="cthp-content {{ (isPatient)? 'cthp-patient-content': 'cthp-hp-content'}}">
+  <div class="row">
+    <div class="large-12 columns resize-content cthp-padding">
+
+      <!-- PAGE TITLE -->
+      <h1>{{ node.label }}—{{ content.field_audience_toggle }} Version <br /> {{ content.field_pretty_url }}</h1>
+      <!-- END PAGE TITLE -->
+      {{ drupal_block('page_options') }}
+      <div id="nvcgSlCTHPIntro">
+        <div class="cthp-version-toggle no-resize">
+          <a class="toggle-arrow-link" href="/types/breast/hp">{{ toggleTarget }} Version</a>
+        </div>
+      </div>
+      {{ content.field_cthp_cards }}
+    </div>
+
   </div>
-  <div id="nvcgSlCTHPInto"></div>
-  {{ content.field_cthp_cards }}
 </div>
 {# End Title Row#}
