@@ -67,6 +67,7 @@ class BlogManager implements BlogManagerInterface {
    */
   public function getSeriesEntity() {
     $currEntity = $this->getCurrentEntity();
+    $currId = $currEntity->id();
     $currBundle = $currEntity->bundle();
 
     // If this is a series.
@@ -76,7 +77,8 @@ class BlogManager implements BlogManagerInterface {
         break;
 
       case 'cgov_blog_post':
-        $seriesNode = $this->getNodeStorage()->load($currEntity->id());
+        $seriesNodeId = $this->getNodeStorage()->load($currId)->get('field_blog_series')->target_id;
+        $seriesNode = $this->getNodeStorage()->load($seriesNodeId);
         break;
 
       default:
@@ -84,6 +86,14 @@ class BlogManager implements BlogManagerInterface {
         break;
     }
     return $seriesNode;
+  }
+
+  /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesId() {
+    $sid = getSeriesEntity();
+    return $sid->id();
   }
 
   /**
