@@ -8,17 +8,17 @@ namespace Drupal\cgov_blog\Services;
 class BlogManager implements BlogManagerInterface {
 
   /**
-   * Determine whether the entity is a Blog Series.
+   * {@inheritdoc}
    */
-  public function isSeries() {
+  public function getCurrentEntity() {
     return FALSE;
   }
 
   /**
-   * Get the Blog Series entity.
+   * {@inheritdoc}
    */
-  public function getSeries() {
-    return "Cancer Currents Blog";
+  public function getSeriesEntity($nid) {
+    return FALSE;
   }
 
 }

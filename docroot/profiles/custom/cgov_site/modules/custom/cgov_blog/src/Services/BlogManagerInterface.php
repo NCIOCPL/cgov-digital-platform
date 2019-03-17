@@ -8,13 +8,22 @@ namespace Drupal\cgov_blog\Services;
 interface BlogManagerInterface {
 
   /**
-   * Determine whether the entity is a Blog Series.
+   * Get the current entity type.
+   *
+   * @return Drupal\Core\Entity\ContentEntityInterface
+   *   The retrieved entity, or FALSE if none found.
    */
-  public function isSeries();
+  public function getCurrentEntity();
 
   /**
-   * Get the Blog Series entity.
+   * Get the associated Blog Series entity.
+   *
+   * @param string $nid
+   *   A node ID representing a single content item.
+   *
+   * @return Drupal\Core\Entity\ContentEntityInterface
+   *   The retrieved entity, or FALSE if none found.
    */
-  public function getSeries();
+  public function getSeriesEntity($nid);
 
 }
