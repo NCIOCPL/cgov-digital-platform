@@ -23,8 +23,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class BlogCategories extends BlockBase implements ContainerFactoryPluginInterface {
 
-  public $isSeries = FALSE;
-  public $series = [];
+  public $currEntity = FALSE;
+  public $seriesEntity = [];
 
   /**
    * {@inheritdoc}
@@ -37,8 +37,8 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
     BlogManagerInterface $blog_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->isSeries = $blog_manager->isSeries();
-    $this->series = $blog_manager->getSeries();
+    $this->currEntity = $blog_manager->getCurrentEntity();
+    $this->seriesEntity = $blog_manager->getSeriesEntity('-1');
   }
 
   /**
