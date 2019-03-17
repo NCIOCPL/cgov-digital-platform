@@ -7,11 +7,6 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/*
- * NOTE: this is a dummy plugin for front-end templating only.
- * The innards are still being built out.
- */
-
 /**
  * Provides a Featured Posts Block.
  *
@@ -23,8 +18,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class BlogCategories extends BlockBase implements ContainerFactoryPluginInterface {
 
-  public $currEntity = FALSE;
-  public $seriesEntity = [];
+  /**
+   * The current entity.
+   *
+   * @var \Drupal\Core\Entity\ContentEntityInterface
+   */
+  public $currEntity;
+
+  /**
+   * The associated series entity.
+   *
+   * @var \Drupal\Core\Entity\ContentEntityInterface
+   */
+  public $seriesEntity;
 
   /**
    * {@inheritdoc}
@@ -38,21 +44,18 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->currEntity = $blog_manager->getCurrentEntity();
-    $nid = $this->currEntity->id();
-    $this->seriesEntity = $blog_manager->getSeriesEntity($nid);
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    // Construct a new instance of this class.
+    // Create an instance of this plugin with the blog_manager service.
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
       $container->get('cgov_blog.blog_manager')
-      // TODO: assign variables correctly.
     );
   }
 
@@ -62,11 +65,14 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    $isSeries = $this->currEntity->id();
-    $working = (isset($isSeries)) ? $isSeries : 'nope';
+    // ToDO: Add null check.
+    $curr_id = $this->currEntity->id();
+    $series_id = 'placeholder';
     $build = [
-      '#markup' => '<b><i>Debug BlogCategories.php->build(): </i></b>
-                    <ol><li>' . $working . '</li></ol>',
+      '#markup' => '
+            <p>Debug BlogCategories.php:build()</p>
+            <li>Current ID: ' . $curr_id . '</li>
+            <li>Current ID: ' . $series_id . '</li>',
     ];
     return $build;
   }

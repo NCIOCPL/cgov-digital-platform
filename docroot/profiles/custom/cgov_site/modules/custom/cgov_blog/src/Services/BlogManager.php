@@ -66,7 +66,20 @@ class BlogManager implements BlogManagerInterface {
    * {@inheritdoc}
    */
   public function getSeriesEntity($nid) {
-    return FALSE;
+    // BlogManagerInterface implementation.
+    $seriesNode = $this->getNodeStorage()->load($nid);
+    return $seriesNode;
+  }
+
+  /**
+   * Create a new node storage instance.
+   *
+   * @return Drupal\Core\Entity\EntityStorageInterface
+   *   The node storage or NULL.
+   */
+  private function getNodeStorage() {
+    $node_storage = $this->entityTypeManager->getStorage('node');
+    return isset($node_storage) ? $node_storage : NULL;
   }
 
 }
