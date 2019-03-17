@@ -18,12 +18,9 @@ interface BlogManagerInterface {
   /**
    * Get the associated Blog Series entity.
    *
-   * @param string $nid
-   *   A node ID representing a single content item.
-   *
    * @return Drupal\Core\Entity\ContentEntityInterface
    *   The retrieved entity, or FALSE if none found.
    */
-  public function getSeriesEntity($nid);
+  public function getSeriesEntity();
 
 }

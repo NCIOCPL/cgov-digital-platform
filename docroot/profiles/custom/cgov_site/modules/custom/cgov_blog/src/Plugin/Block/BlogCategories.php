@@ -59,12 +59,16 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    */
   public function build() {
     // ToDO: Add null check.
-    $curr_id = $this->blogManager->getCurrentEntity()->id();
-    $series_id = $this->blogManager->getSeriesEntity($curr_id)->id();
+    $curr_ent = $this->blogManager->getCurrentEntity();
+    $curr_id = $curr_ent->id();
+    $curr_type = $curr_ent->bundle();
+
+    $series_id = $this->blogManager->getSeriesEntity()->id();
     $build = [
       '#markup' => '
             <p>Debug BlogCategories.php:build()</p>
             <li>Current ID: ' . $curr_id . '</li>
+            <li>Current Type: ' . $curr_type . '</li>
             <li>Series ID: ' . $series_id . '</li>',
     ];
     return $build;

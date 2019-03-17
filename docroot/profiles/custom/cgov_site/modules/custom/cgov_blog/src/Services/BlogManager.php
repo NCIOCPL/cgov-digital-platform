@@ -65,9 +65,24 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSeriesEntity($nid) {
-    // BlogManagerInterface implementation.
-    $seriesNode = $this->getNodeStorage()->load($nid);
+  public function getSeriesEntity() {
+    $currEntity = $this->getCurrentEntity();
+    $currBundle = $currEntity->bundle();
+
+    // If this is a series.
+    switch ($currBundle) {
+      case 'cgov_blog_series':
+        $seriesNode = $currEntity;
+        break;
+
+      case 'cgov_blog_post':
+        $seriesNode = $this->getNodeStorage()->load($currEntity->id());
+        break;
+
+      default:
+        $seriesNode = NULL;
+        break;
+    }
     return $seriesNode;
   }
 
