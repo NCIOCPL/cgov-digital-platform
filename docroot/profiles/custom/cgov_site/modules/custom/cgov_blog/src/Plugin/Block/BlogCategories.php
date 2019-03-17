@@ -19,18 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class BlogCategories extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The current entity.
+   * The BlogManager object.
    *
-   * @var \Drupal\Core\Entity\ContentEntityInterface
+   * @var \Drupal\cgov_blog\Services\BlogManagerInterface
    */
-  public $currEntity;
-
-  /**
-   * The associated series entity.
-   *
-   * @var \Drupal\Core\Entity\ContentEntityInterface
-   */
-  public $seriesEntity;
+  public $blogManager;
 
   /**
    * {@inheritdoc}
@@ -43,7 +36,7 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
     BlogManagerInterface $blog_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->currEntity = $blog_manager->getCurrentEntity();
+    $this->blogManager = $blog_manager;
   }
 
   /**
@@ -66,13 +59,13 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    */
   public function build() {
     // ToDO: Add null check.
-    $curr_id = $this->currEntity->id();
-    $series_id = 'placeholder';
+    $curr_id = $this->blogManager->getCurrentEntity()->id();
+    $series_id = $this->blogManager->getSeriesEntity($curr_id)->id();
     $build = [
       '#markup' => '
             <p>Debug BlogCategories.php:build()</p>
             <li>Current ID: ' . $curr_id . '</li>
-            <li>Current ID: ' . $series_id . '</li>',
+            <li>Series ID: ' . $series_id . '</li>',
     ];
     return $build;
   }
