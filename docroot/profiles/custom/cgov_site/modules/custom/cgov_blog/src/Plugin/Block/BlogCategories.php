@@ -38,7 +38,8 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->currEntity = $blog_manager->getCurrentEntity();
-    $this->seriesEntity = $blog_manager->getSeriesEntity('-1');
+    $nid = $this->currEntity->id();
+    $this->seriesEntity = $blog_manager->getSeriesEntity($nid);
   }
 
   /**
@@ -51,15 +52,18 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
       $plugin_id,
       $plugin_definition,
       $container->get('cgov_blog.blog_manager')
+      // TODO: assign variables correctly.
     );
   }
 
   /**
+   * Create HTML .
+   *
    * {@inheritdoc}
    */
   public function build() {
-    $isSeries = '';
-    $working = (isset($isSeries)) ? 'true' : 'false';
+    $isSeries = $this->currEntity->id();
+    $working = (isset($isSeries)) ? $isSeries : 'nope';
     $build = [
       '#markup' => '<b><i>Debug BlogCategories.php->build(): </i></b>
                     <ol><li>' . $working . '</li></ol>',

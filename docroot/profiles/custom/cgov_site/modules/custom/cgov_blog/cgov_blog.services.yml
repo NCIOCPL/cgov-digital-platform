@@ -1,4 +1,4 @@
 services:
   cgov_blog.blog_manager:
     class: Drupal\cgov_blog\Services\BlogManager
-    arguments: [ ]
+    arguments: [ '@entity_type.manager', '@current_route_match']
