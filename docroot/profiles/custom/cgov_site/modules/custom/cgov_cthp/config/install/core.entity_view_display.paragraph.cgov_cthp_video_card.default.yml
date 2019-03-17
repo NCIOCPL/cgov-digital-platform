@@ -5,6 +5,8 @@ dependencies:
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_override_description
+    - field.field.paragraph.cgov_cthp_video_card.field_cthp_target_link
+    - field.field.paragraph.cgov_cthp_video_card.field_cthp_video
     - paragraphs.paragraphs_type.cgov_cthp_video_card
   module:
     - options
@@ -35,5 +37,23 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_cthp_target_link:
+    type: entity_reference_revisions_entity_view
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_cthp_video:
+    weight: 3
+    label: above
+    settings:
+      view_mode: video_display_cthp_multimedia
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
     region: content
 hidden: {  }
