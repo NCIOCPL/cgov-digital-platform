@@ -84,13 +84,6 @@ function createDialogBodyHtml(originalHtml, candidateTermConfigs){
     // Then when I strip the checkboxes I can build the anchor tag.
     // This is because, even on percussion now, clicking the links causes you to be
     // directed to an error page. That would avoid the issue.
-    // <input
-    //  type="checkbox"
-    //  name="terms"
-    //  value=uniqueID
-    //  data-term-id=termId
-    //  data-language=language
-    // />
     const cGovUniqueId = Math.random() * 1000000; // TODO: Replace
     const language = "English"; // TODO: Replace
     const termId = termConfig.doc_id;
@@ -163,7 +156,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   return {
     title: 'Glossify Page',
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
-    onLoad: requestGlossification,
+    onShow: requestGlossification,
     onOk: saveGlossificationChoices,
     // minWidth: 300,
     // minHeight: 300,
