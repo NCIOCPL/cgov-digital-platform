@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.panoramic_image
-    - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
-    - field.field.node.cgov_blog_series.field_intro_text
     - field.field.node.cgov_blog_series.field_list_description
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
@@ -41,16 +40,15 @@ content:
       link: false
     third_party_settings: {  }
 hidden:
-  body: true
   content_moderation_control: true
   field_about_blog: true
+  field_allow_comments: true
   field_banner_image: true
   field_blog_series_shortname: true
   field_browser_title: true
   field_card_title: true
   field_feature_card_description: true
   field_feedburner_url: true
-  field_intro_text: true
   field_list_description: true
   field_num_display_posts: true
   field_page_description: true

@@ -1,6 +1,5 @@
 ## TESTS:
-### Mini Landing Page (no banner)
-### Sets section with child pages for additional testing
+### CTHP
 
 - entity: "node"
   type: "cgov_cthp"
@@ -43,26 +42,58 @@
       field_cthp_pdq_link_heading:
         - value: "PDQ Treatment Information for Patients"
       field_cthp_pdq_links:
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Treatment (PDQ®)–Patient Version'
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Treatment (PDQ®)–Patient Version'
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Causes & Prevention'
+      field_cthp_card_theme:
+        - value: 'cthp-causes'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Prevention Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Prevention (PDQ®)–Patient Version'
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Screening'
+      field_cthp_card_theme:
+        - value: 'cthp-screening'
+      field_cthp_guide_card_description:
+        - format: "full_html"
+          value: |
+            <p>NCI has only limited information about breast cancer screening for patients.</p>
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Screening Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Screening (PDQ®)–Patient Version'
       field_cthp_view_more_info:
         - entity: 'paragraph'
           type: "cgov_internal_link"
@@ -85,14 +116,22 @@
                   - type: 'pdq_cancer_information_summary'
                     title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
     - entity: 'paragraph'
-      type: "cgov_cthp_guide_card"
+      type: "cgov_cthp_video_card"
       field_cthp_card_title:
-        - value: 'Causes & Prevention'
+        - value: 'Statistics'
       field_cthp_card_theme:
-        - value: 'cthp-causes'
-      field_cthp_pdq_link_heading:
-        - value: "PDQ Prevention Information for Patients"
-      field_cthp_pdq_links:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
         - entity: 'paragraph'
           type: "cgov_internal_link"
           field_internal_link:
@@ -101,63 +140,8 @@
                 callback: 'reference'
                 args:
                   - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Prevention (PDQ®)–Patient Version'
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
-      field_cthp_view_more_info:
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Prevention (PDQ®)–Health Professional Version'
-    - entity: 'paragraph'
-      type: "cgov_cthp_guide_card"
-      field_cthp_card_title:
-        - value: 'Screening'
-      field_cthp_card_theme:
-        - value: 'cthp-screening'
-      field_cthp_guide_card_description:
-        - format: "full_html"
-          value: |
-            <p>NCI has only limited information about breast cancer screening for patients.</p>
-      field_cthp_pdq_link_heading:
-        - value: "PDQ Screening Information for Patients"
-      field_cthp_pdq_links:
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Screening (PDQ®)–Patient Version'
-      field_cthp_view_more_info:
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Screening (PDQ®)–Health Professional Version'
+                  - type: 'cgov_home_landing'
+                    title: 'Cancer Types'
     - entity: 'paragraph'
       type: "cgov_cthp_block_card"
       field_cthp_card_title:
@@ -213,14 +197,34 @@
       field_cthp_override_description:
         - value: "Information about surgical options, follow-up care, and breast cancer screening after reconstruction."
       field_cthp_featured_content:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Breast Reconstruction After Mastectomy'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'After Treatment Ends'
+      field_cthp_card_theme:
+        - value: 'cthp-pink-feature'
+      field_cthp_override_description:
+        - value: "An introduction to breast cancer survivors and the issues they face after treatment ends."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
         - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Breast Reconstruction After Mastectomy'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Title'
+          field_external_link:
+            - uri: 'https://www.google.com'
     ######## End Thumbnail Row ##############

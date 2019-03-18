@@ -12,13 +12,8 @@
     #}
 
     {% if node.getType == 'cgov_blog_post' %}
-      {% if content.field_date_posted[0] %}
-        <p class="blog-post-publishing-info">
-          {{ content.field_date_posted.value|date("F j, Y") }}, {% trans with {'context': 'CGov UI' } %}by{% endtrans %} {{ content.field_author }}
-        </p>
-      {% endif %}
+      {# Do nothing if this is a Blog Post. Blog Post dates are a special case with different fields. #}
     {% else %}
-
       <div class="document-dates horizontal">
         <ul class="clearfix">
           {% if content.field_date_posted[0] %}

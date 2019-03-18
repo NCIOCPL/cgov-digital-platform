@@ -5,7 +5,7 @@
  */
 #}
 
-{% macro video(name, content, additionalClasses = "") %}
+{% macro video(name, content, additionalClasses = "", showCaption = true) %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
   {% if hasRequiredBaseFields %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
@@ -28,7 +28,7 @@
         </div>
       </div>
       {% set hasCaption = content.field_caption|field_value %}
-      {% if hasCaption %}
+      {% if hasCaption and showCaption %}
         <figcaption class="caption-container">
           {{ content.field_caption }}
         </figcaption>

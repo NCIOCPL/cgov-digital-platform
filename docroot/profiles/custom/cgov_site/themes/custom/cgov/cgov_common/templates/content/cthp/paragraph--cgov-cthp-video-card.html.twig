@@ -1,3 +1,25 @@
+{% if content.field_cthp_override_description|field_value %}
+  {% set description = content.field_cthp_override_description %}
+{% endif %}
+
+{% if content.field_cthp_target_link[0] %}
+  {% set nodeType = paragraph.field_cthp_target_link[0].entity.bundle %}
+  {% if nodeType is same as('cgov_internal_link') %}
+    {% set url = path('entity.node.canonical', {'node':  paragraph.field_cthp_target_link[0].entity.field_internal_link[0].target_id }) %}
+  {% elseif nodeType is same as('cgov_external_link') %}
+    {% set url = paragraph.field_cthp_target_link[0].entity.field_external_link[0].uri %}
+  {% endif %}
+{% endif %}
+
 <div class="equalheight bgWhite {{ content.field_cthp_card_theme|field_value }}">
   <h2 style="">{{ content.field_cthp_card_title}}</h2>
+  <div>
+    {{ content.field_cthp_video }}
+    {% if description and content.field_cthp_target_link|field_value %}
+    {{ devel_breakpoint() }}
+      <div class="cardBody">
+        <a href="{{ url }}" class="arrow-link cthp-mm-text-area">{{ description }}</a>
+      </div>
+    {% endif %}
+  </div>
 </div>

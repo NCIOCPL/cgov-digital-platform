@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.streamlined
+    - filter.format.simple
   module:
     - ckeditor
-format: streamlined
+format: simple
 editor: ckeditor
 settings:
   toolbar:
@@ -16,25 +16,11 @@ settings:
           items:
             - Bold
             - Italic
-        -
-          name: Links
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
-          name: Formatting
-          items:
-            - Format
   plugins:
-    stylescombo:
-      styles: ''
     language:
       language_list: un
+    stylescombo:
+      styles: ''
 image_upload:
   status: false
   scheme: public
