@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_blog_series
@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_recommended_content
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
@@ -39,7 +40,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 13
+    weight: 14
     settings:
       rows: 9
       summary_rows: 3
@@ -48,20 +49,20 @@ content:
     region: content
   field_author:
     type: string_textfield
-    weight: 11
+    weight: 12
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   field_blog_series:
-    weight: 10
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_blog_topics:
-    weight: 16
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
@@ -83,7 +84,7 @@ content:
     type: string_textfield
     region: content
   field_citation:
-    weight: 18
+    weight: 20
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -96,7 +97,7 @@ content:
     region: content
   field_date_posted:
     type: datetime_default
-    weight: 21
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -109,21 +110,6 @@ content:
     type: string_textfield
     region: content
   field_image_article:
-    weight: 14
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
-  field_image_promotional:
     weight: 15
     settings:
       entity_browser: cgov_image_browser
@@ -138,8 +124,23 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
+  field_image_promotional:
+    weight: 16
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
   field_intro_text:
-    weight: 12
+    weight: 13
     settings:
       rows: 5
       placeholder: ''
@@ -171,14 +172,26 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 19
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
+  field_recommended_content:
+    weight: 19
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    type: paragraphs_classic_asymmetric
+    region: content
   field_related_resources:
     type: paragraphs_classic_asymmetric
-    weight: 17
+    weight: 18
     region: content
     settings:
       title: 'Related Resource'
@@ -189,7 +202,7 @@ content:
       default_paragraph_type: _none
     third_party_settings: {  }
   field_search_engine_restrictions:
-    weight: 20
+    weight: 22
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -225,13 +238,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 23
+    weight: 25
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 22
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -242,6 +255,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
