@@ -1,0 +1,37 @@
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+<!-- ********************************* BEGIN Blog Post Page Full Content ********************************** -->
+<article>
+  <div class="resize-content">
+    <h1>
+      {{ node.label }}
+    </h1>
+    <div id="nvcgSubTitle">
+      <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a></div>
+    </div>
+
+    <div id="cgvBody">
+      <p class="blog-post-publishing-info">
+        {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
+        {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
+        {{ blogMacros.getAuthor(content) }}
+      </p>
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
+    </div>
+
+    <hr/>
+      <i>
+      === Debug ===
+      <br/>content.field_blog_series: {{ content.field_blog_series }}
+      </i>
+    <hr/>
+
+  </div>
+
+  <footer class="article-footer">
+    {{ content.field_related_resources }}
+    {#{{ content.field_public_use }}#}
+  </footer>
+</article>
+<!-- ********************************* END Blog Post Page Full Content ********************************** -->

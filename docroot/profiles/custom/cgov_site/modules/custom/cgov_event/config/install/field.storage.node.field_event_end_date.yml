@@ -2,16 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
+    - datetime
     - node
-id: node.field_room_number
-field_name: field_room_number
+id: node.field_event_end_date
+field_name: field_event_end_date
 entity_type: node
-type: string
+type: datetime
 settings:
-  max_length: 50
-  is_ascii: false
-  case_sensitive: false
-module: core
+  datetime_type: datetime
+module: datetime
 locked: false
 cardinality: 1
 translatable: true
