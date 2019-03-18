@@ -5,6 +5,7 @@
  * Contains cgov_infographic custom logic.
  */
 
+use Drupal\Core\Url;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
@@ -22,10 +23,10 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
   // page containing only the accessible text.
   if ($build['#view_mode'] == 'full' && isset($build['field_accessible_version'])) {
 
-    // Set the longdesc attribute. \Drupal::service() returns with a leading /.
-    // TODO: This needs to become the MVC route for the logic for re-rendering
-    // .     just the long description text.
+    // Set the longdesc attribute to a URL pointing to the infographic module's
+    // route for outputing the long description.
+    $args = ['node' => $entity->id()];
     $build['field_infographic'][0]['#item_attributes']['longdesc'] =
-      '/PublishedContent/longdescription' . \Drupal::service('path.current')->getPath() . '-' . $entity->id();
+      Url::fromRoute('cgov_infographic.long_description', $args)->toString();
   }
 }
