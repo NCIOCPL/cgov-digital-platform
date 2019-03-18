@@ -16,12 +16,9 @@
  */
 #}
 <item>
-  VIEWS-VIEW-ROW-RSS.HTML-TWIG
-  {{ content.field_image_promtional }}
-  NID:{{ nid }}
-  Row.NID: {{ row.nid }}
   <title>{{ title }}</title>
   <link>{{ link }}</link>
+  {{ get_enclosure(row.nid) }}
   <description>{{ description }}</description>
   {% for item in item_elements -%}
     <{{ item.key }}{{ item.attributes -}}
@@ -31,5 +28,4 @@
       {{ ' />' }}
     {% endif %}
   {%- endfor %}
-{{ devel_breakpoint }}
 </item>
