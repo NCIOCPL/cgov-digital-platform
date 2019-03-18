@@ -58,20 +58,37 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    // ToDO: Add null check.
-    $curr_ent = $this->blogManager->getCurrentEntity();
-    $curr_id = $curr_ent->id();
-    $curr_type = $curr_ent->bundle();
-
-    $series_id = $this->blogManager->getSeriesEntity()->id();
+    $markup = $this->drawBlogCategories();
     $build = [
-      '#markup' => '
-            <p>Debug BlogCategories.php:build()</p>
-            <li>Current ID: ' . $curr_id . '</li>
-            <li>Current Type: ' . $curr_type . '</li>
-            <li>Series ID: ' . $series_id . '</li>',
+      '#markup' => $markup,
     ];
     return $build;
+  }
+
+  /**
+   * Draw categories.
+   *
+   * {@inheritdoc}
+   */
+  private function drawBlogCategories() {
+    // ToDO: Add null check.
+    $categories = $this->blogManager->getSeriesCategories();
+
+    $list = '';
+    foreach ($categories as $cat) {
+      $url = '#';
+      $name = $cat->name;
+
+      $list .= '
+        <li class="general-list-item general list-item">
+          <div class="title-and-desc title desc container">
+            <a class="title" href="' . $url . '">' . $name . '
+            </a>
+          </div><!-- end title & desc container -->
+        </li>';
+    }
+
+    return $list;
   }
 
 }

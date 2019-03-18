@@ -77,7 +77,7 @@ class BlogManager implements BlogManagerInterface {
         break;
 
       case 'cgov_blog_post':
-        $seriesNodeId = $this->getNodeStorage()->load($currId)->get('field_blog_series')->target_id;
+        $seriesNodeId = $this->getNodeStorage()->load($currId)->field_blog_series->target_id;
         $seriesNode = $this->getNodeStorage()->load($seriesNodeId);
         break;
 
@@ -92,8 +92,16 @@ class BlogManager implements BlogManagerInterface {
    * Get the Blog Series ID.
    */
   public function getSeriesId() {
-    $sid = getSeriesEntity();
-    return $sid->id();
+    $series = $this->getSeriesEntity();
+    return $series->id();
+  }
+
+  /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesCategories() {
+    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
+    return $taxonomy;
   }
 
   /**
@@ -105,6 +113,17 @@ class BlogManager implements BlogManagerInterface {
   private function getNodeStorage() {
     $node_storage = $this->entityTypeManager->getStorage('node');
     return isset($node_storage) ? $node_storage : NULL;
+  }
+
+  /**
+   * Create a new node storage instance.
+   *
+   * @return Drupal\Core\Entity\EntityStorageInterface
+   *   The taxonomy storage or NULL.
+   */
+  private function getTaxonomyStorage() {
+    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    return isset($taxonomy_storage) ? $taxonomy_storage : NULL;
   }
 
 }
