@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_venue
+    - node.type.cgov_event
+    - taxonomy.vocabulary.cgov_event_venues
+id: node.cgov_event.field_venue
+field_name: field_venue
+entity_type: node
+bundle: cgov_event
+label: Venue
+description: 'Begin typing location of event and if applicable, select venue from autosuggest dropdown.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cgov_event_venues: cgov_event_venues
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
