@@ -1,9 +1,9 @@
-import { newWindow } from 'Core/utilities/popups';
+import { newWindow } from 'Utilities';
 import {
     getMetaData,
     getMetaURL,
     getCanonicalURL,
-} from 'Core/utilities/domManipulation';
+} from 'Utilities';
 import { broadcastCustomEvent } from 'Core/libraries/customEventHandler';
 
 // Currently we aren't using most of these tags since the services themselves are scraping the info they

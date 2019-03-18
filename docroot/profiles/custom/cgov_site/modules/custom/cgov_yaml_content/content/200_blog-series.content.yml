@@ -2,24 +2,40 @@
 - entity: "node"
   type: "cgov_blog_series"
   title: 'Cancer Currents Blog'
-  title:
-    value: 'Cancer Currents Blog'
+  title__ES:
+    value: 'Temas y relatos blog'
   langcode: en
   status: 1
   moderation_state:
     value: 'published'
+  field_page_description:
+    value: 'cancer currents, blog'
   field_browser_title:
     value: 'Cancer Currents: An NCI Cancer Research Blog'
+  field_browser_title__ES:
+    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
   field_card_title:
     value: 'Cancer Currents'
+  field_card_title__ES:
+    value: 'Temas y relatos blog'
   field_feature_card_description:
     value: 'Cancer Currents Blog'
+  field_feature_card_description__ES:
+    value: 'Temas y relatos blog'
   field_pretty_url:
-    value: "news-events/cancer-currents-blog"
+    value: "cancer-currents-blog"
+  field_pretty_url__ES:
+    value: "temas-y-relatos-blog"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Cancer Currents"
+  field_short_title__ES:
+    - value: "emas y relatos"
+  field_about_blog:
+    value: 'A blog featuring news and research updates from the National Cancer Institute.'
+  field_about_blog__ES:
+    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
   field_site_section:
     - '#process':
         callback: 'reference'
@@ -27,12 +43,25 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             name: 'News & Events'
-  field_about_blog: 'A blog featuring news and research updates from the National Cancer Institute.'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Noticias'
+  field_banner_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nci-update-blog-banner.__v40051732.jpg'
+      alt: 'Doctor pointing to medical display screen with stylus'
 
 ## RAS Dialogue Blog
 - entity: "node"
   type: "cgov_blog_series"
-  title: "RAS Dialogue Blog"
   title:
     value: "RAS Dialogue Blog"
   langcode: en
@@ -45,8 +74,10 @@
     value: 'RAS Dialogue'
   field_feature_card_description:
     value: ''
+  field_page_description:
+    value: 'ras, research, dialogue, blog'
   field_pretty_url:
-    value: 'research/key-initiatives/ras/ras-central/blog'
+    value: 'blog'
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
@@ -57,36 +88,13 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Research'
+            name: 'RAS Central'
   field_about_blog: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
-
-## Cancer Currents Blog Espanol
-- entity: "node"
-  type: "cgov_blog_series"
-  title: 'Temas y relatos blog'
-  title:
-    value: 'Temas y relatos blog'
-  langcode: es
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_browser_title:
-    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
-  field_card_title:
-    value: 'Temas y relatos blog'
-  field_feature_card_description:
-    value: 'Temas y relatos blog'
-  field_pretty_url:
-    value: "espanol/noticias/temas-y-relatos-blog"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_short_title:
-    - value: "emas y relatos"
-  field_site_section:
+  field_banner_image:
     - '#process':
-        callback: 'reference'
+        callback: 'file'
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_about_blog: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
+          - 'image'
+          - type: 'module'
+            filename: 'ras-blog-banner.__v400106190.jpg'
+      alt: 'Join the Discussion text with image of gears'
