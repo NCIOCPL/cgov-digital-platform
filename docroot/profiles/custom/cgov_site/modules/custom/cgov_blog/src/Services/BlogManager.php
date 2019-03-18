@@ -110,7 +110,7 @@ class BlogManager implements BlogManagerInterface {
    * @return Drupal\Core\Entity\EntityStorageInterface
    *   The node storage or NULL.
    */
-  private function getNodeStorage() {
+  public function getNodeStorage() {
     $node_storage = $this->entityTypeManager->getStorage('node');
     return isset($node_storage) ? $node_storage : NULL;
   }
@@ -121,7 +121,7 @@ class BlogManager implements BlogManagerInterface {
    * @return Drupal\Core\Entity\EntityStorageInterface
    *   The taxonomy storage or NULL.
    */
-  private function getTaxonomyStorage() {
+  public function getTaxonomyStorage() {
     $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
     return isset($taxonomy_storage) ? $taxonomy_storage : NULL;
   }

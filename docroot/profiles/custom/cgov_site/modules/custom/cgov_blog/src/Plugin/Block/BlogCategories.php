@@ -26,7 +26,16 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   public $blogManager;
 
   /**
-   * {@inheritdoc}
+   * Constructs a blog entity object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\cgov_blog\Services\BlogManagerInterface $blog_manager
+   *   A blog manager object.
    */
   public function __construct(
     // Constructor with args.
