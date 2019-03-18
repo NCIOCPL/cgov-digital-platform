@@ -5,6 +5,8 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
+    - field.field.node.cgov_blog_post.field_blog_series
+    - field.field.node.cgov_blog_post.field_blog_topics
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
     - field.field.node.cgov_blog_post.field_citation
@@ -53,14 +55,21 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_citation:
-    type: entity_reference_revisions_entity_view
-    weight: 8
+  field_blog_series:
+    type: entity_reference_label
+    weight: 9
     region: content
     label: hidden
     settings:
-      view_mode: default
-      link: ''
+      link: true
+    third_party_settings: {  }
+  field_blog_topics:
+    type: entity_reference_label
+    weight: 10
+    region: content
+    label: hidden
+    settings:
+      link: true
     third_party_settings: {  }
   field_date_posted:
     weight: 2
