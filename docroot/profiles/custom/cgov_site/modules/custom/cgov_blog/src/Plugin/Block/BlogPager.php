@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @Block(
  *  id = "blog_pager",
- *  admin_label = "GGov Blog Pager",
+ *  admin_label = "Cgov Blog Pager",
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
