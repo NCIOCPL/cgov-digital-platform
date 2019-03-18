@@ -1,9 +1,14 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - crop
+third_party_settings:
+  crop:
+    image_field: _none
 id: cgov_file
 label: File
-description: ''
+description: 'Used to upload all downloadable file types, such as PDFs, Excel spreadsheets, and Word docs. '
 source: file
 queue_thumbnail_downloads: false
 new_revision: false
