@@ -62,11 +62,10 @@
     float: left;
     width: 55%;
   }
+
   @include bp(small) {
-    .cthp-body {
-      float: none;
-      width: 100%;
-    }
+    float: none;
+    width: 100%;
   }
 }
 
@@ -77,22 +76,22 @@
   }
 }
 
-.large-12.columns.cthp-intro-multimedia.clearfix {
-  padding-top: 5px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  margin-left: 15px;
-}
-@include bp(small) {
-  .large-12.columns.cthp-intro-multimedia.clearfix {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 0.9375em;
-  }
-}
-@media only screen and (max-width: 1024px) {
-  .large-12.columns.cthp-intro-multimedia.clearfix {
-    margin-left: 0;
+.cthp-intro-multimedia {
+  .clearfix {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    margin-left: 15px;
+    
+    @include bp(small) {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0.9375em;
+    }
+    
+    @media only screen and (max-width: 1024px) {
+      margin-left: 0;
+    }
   }
 }
 
@@ -189,6 +188,7 @@
     }
   }
 }
+
 @include bp(small) {
   .cthp-card-container img {
     display: none;
@@ -203,15 +203,19 @@
     text-transform: uppercase;
   }
 }
+
+
 .cthpCard .cardBody ul li {
   list-style-type: none;
   padding-left: 0.9375em;
 }
+
 .cthpCard .cthp-general .cardBody ul li,
 .cthpCard a + .cardBody ul li,
 .cthpCard .cardBody br + ul li {
   padding-left: 0;
 }
+
 .cthp-overview .cardBody {
   p {
     margin-top: 2px;
@@ -220,6 +224,7 @@
     }
   }
 }
+
 .cthpCard .rawHtml .cardBody {
   p {
     margin-top: 2px;
@@ -231,9 +236,11 @@
     margin-bottom: 20px;
   }
 }
+
 .cthp-overview .ui-accordion-content .cardBody p:last-child {
   margin-bottom: 20px;
 }
+
 .cthp-research .cardBody {
   p {
     margin-top: 2px;
@@ -250,6 +257,7 @@
     margin-top: 19px;
   }
 }
+
 .more-info-list ul li:before,
 .cthp-pdq-label ul li:before,
 .cardBody h4 + ul li:before,
@@ -263,16 +271,20 @@
   font-size: 1.1em;
   color: $default-text;
 }
+
 .main-content a.viewAll {
   color: $body-font-color;
 }
+
 .main-content a.viewAll:hover,
 .main-content a.viewAll:focus {
   text-decoration: none;
 }
+
 .guide h2 {
   color: #fff;
 }
+
 .cthp-version-toggle {
   position: relative;
   float: left;
@@ -315,9 +327,11 @@
   .cthp-hp-content .cthp-version-toggle {
     background-color: #dde7f5;
   }
+
   .cthp-patient-content .cthp-version-toggle {
     background-color: #f7f8f3;
   }
+
   .cthp-version-toggle {
     display: inline-block;
     float: none;
@@ -367,6 +381,7 @@
     top: 20px;
   }
 }
+
 .bp20 {
   padding-bottom: 1.25em;
 }
@@ -481,15 +496,18 @@
     margin-left: 0;
   }
 }
+
 /* TODO: Clean up names and update Percussion template html to fix last-minute style change
 /* Move double high back above first 2 cards */
 .large-6.columns.cthp-overview-doublehigh {
   width: 100%;
 }
+
 /* Align the slotted media image inside the Overview Card */
 .cthp-overview-doublehigh .cthp-intro-multimedia figure {
   padding-top: 16px;
 }
+
 /* Format card title */
 h2.cthp-overview-title {
   color: #ffffff;
@@ -516,14 +534,14 @@ h2.cthp-overview-title {
     padding-right: 0;
   }
 }
+
 .doublehigh-expand {
   pointer-events: none;
-}
-@include bp(small) {
-  .doublehigh-expand {
-    display: none;
+  @include bp(small) {
+      display: none;
   }
 }
+
 /** End CTHP Overview styling */
 
 /** Begin CTHP Card styling */
