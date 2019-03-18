@@ -52,7 +52,7 @@ const buildInThisSection = (sections) => {
       });
       nav += `</li></ul></nav>`;
 
-      section.firstElementChild.insertAdjacentHTML('afterend',nav);
+      section.querySelector(".pdq-sections").insertAdjacentHTML('afterbegin',nav);
     }
   });
 };

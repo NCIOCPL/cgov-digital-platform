@@ -27,14 +27,16 @@
   }
 }
 
-section {
-  &+ section {
-      margin-top: 70px;
-  }
-}
-
 .contentzone:first-child {
   padding-left: 0;
+}
+
+@include break(medium) {
+  section {
+    &+ section {
+        margin-top: 70px;
+    }
+  }
 }
 
 /********************* END PDQ Page Styles ******************************************/
