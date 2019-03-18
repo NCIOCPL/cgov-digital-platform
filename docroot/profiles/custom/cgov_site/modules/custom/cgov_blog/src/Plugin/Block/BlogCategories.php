@@ -62,7 +62,7 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   }
 
   /**
-   * Create HTML .
+   * Create HTML.
    *
    * {@inheritdoc}
    */

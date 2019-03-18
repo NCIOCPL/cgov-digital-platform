@@ -105,6 +105,13 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
+   * Get the Blog Featured content.
+   */
+  public function getBlogFeaturedContent() {
+    return '';
+  }
+
+  /**
    * Create a new node storage instance.
    *
    * @return Drupal\Core\Entity\EntityStorageInterface
