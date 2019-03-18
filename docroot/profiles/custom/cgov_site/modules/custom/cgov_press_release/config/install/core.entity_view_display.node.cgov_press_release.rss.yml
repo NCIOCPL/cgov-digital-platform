@@ -34,99 +34,54 @@ bundle: cgov_press_release
 mode: rss
 content:
   body:
-    label: hidden
+    label: above
     type: text_default
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  content_moderation_control:
     weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_browser_title:
-    weight: 5
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
     type: string
-    region: content
-  field_card_title:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_image_article:
-    weight: 8
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_entity_view
-    region: content
-  field_image_promotional:
-    weight: 9
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_entity_view
-    region: content
-  field_list_description:
-    weight: 6
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_pretty_url:
-    weight: 10
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_short_title:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_subtitle:
-    weight: 7
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  links:
     weight: 1
     region: content
-    settings: {  }
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_image_article:
+    type: entity_reference_label
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_label
+    weight: 2
+    region: content
+    label: above
+    settings:
+      link: true
     third_party_settings: {  }
 hidden:
+  content_moderation_control: true
+  field_card_title: true
   field_citation: true
   field_date_display_mode: true
   field_date_posted: true
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
+  field_list_description: true
   field_page_description: true
   field_press_release_type: true
+  field_pretty_url: true
   field_public_use: true
   field_related_resources: true
   field_search_engine_restrictions: true
+  field_short_title: true
   field_site_section: true
+  field_subtitle: true
   langcode: true
+  links: true
