@@ -4,16 +4,21 @@ dependencies:
   config:
     - field.field.media.cgov_file.field_browser_title
     - field.field.media.cgov_file.field_card_title
+    - field.field.media.cgov_file.field_date_display_mode
+    - field.field.media.cgov_file.field_date_posted
+    - field.field.media.cgov_file.field_date_reviewed
+    - field.field.media.cgov_file.field_date_updated
     - field.field.media.cgov_file.field_feature_card_description
-    - field.field.media.cgov_file.field_file_attachment_size
     - field.field.media.cgov_file.field_list_description
     - field.field.media.cgov_file.field_media_file
     - field.field.media.cgov_file.field_pretty_url
     - field.field.media.cgov_file.field_short_title
     - field.field.media.cgov_file.field_site_section
     - media.type.cgov_file
+    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
+    - datetime
     - file
     - path
 id: media.cgov_file.default
@@ -23,7 +28,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 12
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -43,16 +48,32 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_date_display_mode:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_date_posted:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_reviewed:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_feature_card_description:
     weight: 8
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_file_attachment_size:
-    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -108,7 +129,7 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 15
+    weight: 18
     settings: {  }
     region: content
     third_party_settings: {  }
@@ -122,7 +143,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 13
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -130,12 +151,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 17
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 14
     settings:
       match_operator: CONTAINS
       size: 60
