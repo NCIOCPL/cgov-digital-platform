@@ -1,0 +1,42 @@
+<!-- ********************************* BEGIN Series Page Full Content ********************************** -->
+<article>
+  <div class="resize-content">
+    <div class="slot-item only-SI large-12 columns body-banner">
+      <a name="NCI+Update+Blog+Banner"></a>
+      <div class="blog body-banner">{{ content.field_banner_image }}</div>
+    </div>
+    <h1>
+      {{ node.label }}
+    </h1>
+    <div id="nvcgSubTitle">
+      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a>
+      </div>
+    </div>
+
+    <div id="cgvBody">
+      <div class="slot-item first-SI">
+		    <div>
+          {{ field_about_blog }}
+        </div>
+	    </div>
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
+    </div>
+
+    <div class="dynamic list">
+      <ul>
+        {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
+      </ul>
+    </div>
+
+  </div>
+
+  <footer class="article-footer">
+    {{ content.field_related_resources }}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>
+<!-- ********************************* END Series Page Full Content ********************************** -->
