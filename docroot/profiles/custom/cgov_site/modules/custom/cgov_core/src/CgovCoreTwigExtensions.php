@@ -61,26 +61,49 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   generated enclosure tag.
    */
   public function getEnclosure($nid) {
+    // Set $debug=TRUE to show displayed image source in comments.
+    $debug = FALSE;
+
+    // Image style to use when rendering images.
     $thumbnail_image_style = 'cgov_thumbnail';
 
+    // Load the current node.
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     if (!$node) {
       return FALSE;
     }
 
+    // Check for available images to display.
     if ($node->hasField('field_image_article')) {
       $displaying = 'article';
       $media_field = $node->get('field_image_article')->entity;
       $media_image_file = $media_field->get('field_media_image')->entity;
+      // Check for overridden thumbnail image.
+      $media_image_thumbnail_file = $media_field->get('field_override_img_thumbnail')->entity;
+      if ($media_image_thumbnail_file) {
+        $displaying = 'article thumbnail override';
+        $media_image_file = $media_image_thumbnail_file;
+      }
     }
 
+    // Check if there is a promotional image specified, if so use it.
     if ($node->hasField('field_image_promotional')) {
-      $displaying = 'promo';
-      $media_field = $node->get('field_image_article')->entity;
-      $media_image_file = $media_field->get('field_media_image')->entity;
+      $promo_media_field = $node->get('field_image_promotional')->entity;
+      // Check if promo image is present.
+      if ($promo_media_field) {
+        $displaying = 'promo';
+        $media_image_file = $promo_media_field->get('field_media_image')->entity;
+
+        // Check for overridden thumbnail image.
+        $media_image_thumbnail_file = $promo_media_field->get('field_override_img_thumbnail')->entity;
+        if ($media_image_thumbnail_file) {
+          $displaying = 'promo thumbnail override';
+          $media_image_file = $media_image_thumbnail_file;
+        }
+      }
     }
 
-    // Get URI of media image file (eg: public://2019-03/image.jpg)
+    // Get URI of media image file (eg: public://2019-03/image.jpg).
     $image_uri = $media_image_file->getFileUri();
 
     // Generate new derivative image from imagestyle.
@@ -95,8 +118,10 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     // Convert 'public://path/image.jpg'
     // to '/sites/default/files/path/image.jpg'.
     $relative_imagestyle_uri = file_url_transform_relative(file_create_url($thumbnail_uri));
+    // Remove querystring, if present (eg: path/image.jpg?h=98765az)
+    $relative_imagestyle_uri = strtok($relative_imagestyle_uri, '?');
     // Add HTTP scheme (HTTP[S]) and hostname.
-    $absolute_imagestyle_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() . base_path() . $relative_imagestyle_uri;
+    $absolute_imagestyle_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() . ltrim(base_path(), '/') . $relative_imagestyle_uri;
 
     // Get the filesystem path (not web path) to the imagestyle
     // file so we can get filesize.
@@ -104,7 +129,11 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $styled_file_size = filesize($imagestyle_filename);
     $styled_mime_type = image_type_to_mime_type(exif_imagetype($imagestyle_filename));
 
-    $enclosure = "<enclosure url='$absolute_imagestyle_url' length='$styled_file_size' type='$styled_mime_type' data-imagetype='$displaying' />";
+    $enclosure = "<enclosure url='$absolute_imagestyle_url' length='$styled_file_size' type='$styled_mime_type' />";
+
+    if ($debug) {
+      $enclosure .= "<!-- image source: $displaying -->";
+    }
 
     return $enclosure;
   }
