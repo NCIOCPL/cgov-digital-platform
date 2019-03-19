@@ -16,7 +16,9 @@
         {{ blogMacros.getAuthor(content) }}
       </p>
       {{ content.field_image_article }}
-      {{ content.field_intro_text }}
+      <div class="blog-intro-text">
+        {{ content.field_intro_text }}
+      </div>
       {{ content.body }}
       {% if content.field_recommended_content[0] %}
         <div id="recommended-content-cards">
