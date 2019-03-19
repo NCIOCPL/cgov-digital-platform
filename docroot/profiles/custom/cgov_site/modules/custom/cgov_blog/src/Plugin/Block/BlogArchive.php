@@ -83,11 +83,10 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       $content_type = $curr_entity->bundle();
     }
 
-    $markup1 = $this->drawArchiveByYear($content_id, $content_type);
-    // Ksm($markup1);!
+    // TODO: Add check for year vs. month vs. none.
+    $archive_years = $this->drawArchiveByYear($content_id, $content_type);
     $build = [
-      '#type' => 'block',
-      '#markup' => $markup1,
+      '#archive_years' => $archive_years,
     ];
 
     /*
@@ -144,22 +143,22 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The content type machine name.
    */
   private function drawArchiveByYear($cid, $content_type) {
-    $markup = '';
+    $archive = [];
 
     // Get an array of blog field collections to populate links.
     $blog_links = $this->getMonthsYears($cid, $content_type);
-    foreach ($blog_links as $blog_link) {
-      $year_links[] = $blog_link['year'];
+    foreach ($blog_links as $link) {
+      $years[] = $link['year'];
     }
 
-    // Get counts and values for each available year. I hate php.
-    if (isset($year_links) || 1 == 1) {
-      foreach (array_count_values($year_links) as $year => $count) {
-        $markup .= '<li>' . $year . ' (' . $count . ')</li>';
+    // Get counts and values for each available year.
+    if (isset($years) && $years[0]) {
+      foreach (array_count_values($years) as $year => $count) {
+        $archive[$year] = strval($count);
       }
     }
 
-    return $markup;
+    return $archive;
   }
 
 }

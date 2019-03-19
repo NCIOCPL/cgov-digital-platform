@@ -24,33 +24,27 @@ class BlogFeaturedPosts extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
+    $featured[0] = [
+      'title' => 'New Lung Cancer Target',
+      'href' => 'xpol-kras-lung-target/',
+      'date' => $this->t('February 2, 2017'),
+      'author' => 'Amy E. Blum, M.A.',
+    ];
+    $featured[1] = [
+      'title' => 'A tour of GDC DAVE',
+      'href' => 'gdc-dave-tour/',
+      'date' => $this->t('September 12, 2017'),
+      'author' => 'Zhining Wang, Ph.D.',
+    ];
+    $featured[2] = [
+      'title' => 'TCGA&apos;s PanCanAtlas',
+      'href' => 'tcga-pancan-atlas/',
+      'date' => $this->t('January 9, 2017'),
+      'author' => 'Amy E. Blum, M.A.',
+    ];
+
     $build = [
-      '#markup' => $this->t('
-      <li class="general-list-item general list-item">
-        <div class="title-and-desc title desc container">
-            <a class="title" href="#xpo1-kras-lung-target">New Lung Cancer Target</a>
-            <div class="byline">
-                <p>February 2, 2017, by Amy E. Blum, M.A.</p>
-            </div>
-        </div>
-      </li>
-      <li class="general-list-item general list-item">
-        <div class="title-and-desc title desc container">
-            <a class="title" href="#gdc-dave-tour">A tour of GDC DAVE</a>
-            <div class="byline">
-                <p>September 12, 2017, by Zhining Wang, Ph.D.</p>
-            </div>
-        </div>
-      </li>
-      <li class="general-list-item general list-item">
-        <div class="title-and-desc title desc container">
-            <a class="title" href="#tcga-pancan-atlas">TCGA&apos;s PanCanAtlas</a>
-            <div class="byline">
-                <p>January 9, 2017, by Amy E. Blum, M.A.</p>
-            </div>
-        </div>
-      </li>
-      '),
+      '#featured' => $featured,
     ];
     return $build;
   }

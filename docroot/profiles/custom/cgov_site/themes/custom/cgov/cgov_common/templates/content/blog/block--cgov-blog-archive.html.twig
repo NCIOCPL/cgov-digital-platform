@@ -1,0 +1,14 @@
+<div id="blog-archive-accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+   <h3 id="archive" class="blog-archive-header ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-state-default ui-accordion-icons accordion-header-active ui-state-active" role="tab" aria-controls="blog-archive-accordion-year" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon toggle"></span>
+     {% trans %}Archive{% endtrans %}
+   </h3>
+   <div id="blog-archive-accordion-year" class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion ui-widget accordion-content-active" aria-labelledby="archive" role="tablist" aria-hidden="true" style="">
+      <ul>
+         {% for year, count in content['#archive_years'] %}
+            <li class="year">
+               <a class="" href="?filter[year]={{year}}">{{year}}</a> {{count}}
+            </li>
+         {% endfor %}
+      </ul>
+   </div>
+</div>
