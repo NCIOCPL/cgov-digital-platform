@@ -1,9 +1,8 @@
 ## Cancer Currents Blog
+## TODO: Fix translation
 - entity: "node"
   type: "cgov_blog_series"
   title: 'Cancer Currents Blog'
-  title__ES:
-    value: 'Temas y relatos blog'
   langcode: en
   status: 1
   moderation_state:
@@ -12,30 +11,18 @@
     value: 'cancer currents, blog'
   field_browser_title:
     value: 'Cancer Currents: An NCI Cancer Research Blog'
-  field_browser_title__ES:
-    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
   field_card_title:
     value: 'Cancer Currents'
-  field_card_title__ES:
-    value: 'Temas y relatos blog'
   field_feature_card_description:
     value: 'Cancer Currents Blog'
-  field_feature_card_description__ES:
-    value: 'Temas y relatos blog'
   field_pretty_url:
     value: "cancer-currents-blog"
-  field_pretty_url__ES:
-    value: "temas-y-relatos-blog"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Cancer Currents"
-  field_short_title__ES:
-    - value: "emas y relatos"
   field_about_blog:
     value: 'A blog featuring news and research updates from the National Cancer Institute.'
-  field_about_blog__ES:
-    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
   field_site_section:
     - '#process':
         callback: 'reference'
@@ -43,13 +30,6 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             name: 'News & Events'
-  field_site_section__ES:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Noticias'
   field_banner_image:
     - '#process':
         callback: 'file'

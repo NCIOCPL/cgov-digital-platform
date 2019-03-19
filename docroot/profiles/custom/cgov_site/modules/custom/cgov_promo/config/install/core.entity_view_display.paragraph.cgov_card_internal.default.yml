@@ -5,7 +5,6 @@ dependencies:
     - field.field.paragraph.cgov_card_internal.field_featured_item
     - field.field.paragraph.cgov_card_internal.field_override_card_description
     - field.field.paragraph.cgov_card_internal.field_override_card_title
-    - field.field.paragraph.cgov_card_internal.field_override_image_promotional
     - field.field.paragraph.cgov_card_internal.field_override_list_description
     - paragraphs.paragraphs_type.cgov_card_internal
 id: paragraph.cgov_card_internal.default
@@ -14,7 +13,7 @@ bundle: cgov_card_internal
 mode: default
 content:
   field_featured_item:
-    weight: 3
+    weight: 2
     label: hidden
     settings:
       view_mode: feature_card
@@ -38,17 +37,8 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_override_image_promotional:
-    weight: 2
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_entity_view
-    region: content
   field_override_list_description:
-    weight: 4
+    weight: 3
     label: hidden
     settings: {  }
     third_party_settings: {  }
