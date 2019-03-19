@@ -15,7 +15,11 @@
     </div>
     {# TODO: Article footer stuff has to go somewhere. TBD. #}
     <footer class="article-footer">
+      {{ content.field_citation }}
       {{ content.field_related_resources }}
       {{ contentPageMacros.displayDates(node, content) }}
+      {% if node.field_public_use.value == '1' %}
+        {{ drupal_region('public_use') }}
+      {% endif %}
     </footer>
 </article>

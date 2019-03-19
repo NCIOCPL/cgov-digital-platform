@@ -6,9 +6,11 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Block\BlockPluginInterface;
 
 /**
  * Implements hook_entity_translation_create().
@@ -42,6 +44,78 @@ function cgov_core_entity_translation_create(EntityInterface $translation) {
       $state = $configuration['default_moderation_state'];
     }
     $translation->moderation_state = $state;
+  }
+}
+
+/**
+ * Implements hook_block_build_alter().
+ *
+ * Set cache context of blocks that vary by url, user, etc.
+ */
+function cgov_core_block_build_alter(array &$build, BlockPluginInterface $block) {
+  // Get name of block's label (will be of
+  // originally-created block if translations exist).
+  $block_label = $block->getPluginDefinition()['admin_label'];
+
+  // Add the 'url' cache context to page-specific blocks.
+  if (strpos($block_label, 'Public Use') === 0) {
+    $build['#cache']['contexts'][] = 'url';
+
+    // Add the 'node' cache context so node updates are caught.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name == 'entity.node.canonical') {
+      // Store the NID of the current node.
+      $nid = \Drupal::routeMatch()->getRawParameter('node');
+      $build['#cache']['tags'][] = "node:$nid";
+    }
+    // If not the node view page (eg: Preview or Latest) don't cache block.
+    else {
+      $build['#cache']['max_age'] = 0;
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_insert().
+ *
+ * Perform any actions that are required when adding a new language.
+ * During the install process, only EN is enabled, so use this hook
+ * to add any other translations or other things needed by a new
+ * language when it gets enabled.
+ *
+ * Adds new Public Use translation when a new language is installed.
+ */
+function cgov_core_configurable_language_insert($entity) {
+  $public_use['es'] = <<<EOMarkup
+<em>Si desea copiar algo de este texto, vea <a href="/espanol/politicas/derechos-de-autor-y-uso">Derechos de autor y uso de imágenes y contenido</a> sobre instrucciones de derechos de autor y permisos. En caso de reproducción digital permitida, por favor, dé crédito al Instituto Nacional del Cáncer como su creador, y enlace al producto original del NCI usando el título original del producto; por ejemplo,  “[current-page:title].”</em>
+EOMarkup;
+
+  $langcode = $entity->id();
+
+  // If no translation defined, exit hook.
+  if (!isset($public_use[$langcode])) {
+    return;
+  }
+
+  // Get the existing English PublicUse block to add the translation.
+  $query = \Drupal::entityQuery('block_content');
+  $query->condition('info', 'Public Use')
+    ->condition('langcode', 'en');
+  $result = $query->execute();
+  if (count($result)) {
+    $eid = array_shift($result);
+    $block = entity_load('block_content', $eid);
+    $title = $block->info->value . " - " . $langcode;
+    // Create translation if it doesn't already exist.
+    if (!$block->hasTranslation($langcode)) {
+      $block_translated = $block->addTranslation($langcode, [
+        'id' => "public_use__$langcode",
+        'info' => $title,
+        'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
+      ]);
+      $block_translated->save();
+      drupal_set_message("Added Public Use block_content: $title");
+    }
   }
 }
 
@@ -94,5 +168,23 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
     // Let other modules weigh in for nodes whose deletion we haven't vetoed.
     default:
       return AccessResult::neutral();
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ *
+ * Validates that the PubMed ID Field on Citations
+ * matches the required pattern.
+ */
+function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($bundle == 'cgov_citation') && !empty($fields['field_pubmed_id'])) {
+    $fields['field_pubmed_id']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[0-9]*$/',
+        'message' => 'The PubMed ID field only accepts numbers.',
+      ],
+    ]
+    );
   }
 }
