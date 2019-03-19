@@ -29,6 +29,10 @@ class CGovInfographicController extends ControllerBase {
       // We will just show a standard "access denied" page in this case.
       throw new AccessDeniedHttpException();
     }
+
+    return [
+      '#markup' => $this->t('<p>Hello.</p>'),
+    ];
   }
 
 }
