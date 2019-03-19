@@ -69,8 +69,10 @@
 #}
 {% macro list_item_title_date(title, date, url, has_title_heading) %}
   <li class="general-list-item general list-item">
-    {{ _self._output_list_title(title, url, has_title_heading) }}
-    {{ _self._output_list_desc_date(null, date) }}
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(null, date) }}
+    </div>
   </li>
 {% endmacro %}
 
