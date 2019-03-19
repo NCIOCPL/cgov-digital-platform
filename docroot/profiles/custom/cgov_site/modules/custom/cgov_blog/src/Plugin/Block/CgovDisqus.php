@@ -35,7 +35,7 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
-   * Constructs a CgovPager object.
+   * Constructs a CgovDisqus object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
