@@ -5,6 +5,8 @@
  * Functions to support theming in the cgov_common theme.
  */
 
+use \Drupal\node\Entity\Node;
+
 /**
  * Allows us to have node based page templates.
  *
@@ -19,8 +21,8 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     // If $node is the NID instead of Node object, get Node object.
     // This happens on route 'entity.node.revision' due to the issue:
     // See https://www.drupal.org/project/drupal/issues/2730631 .
-    if (!$node instanceof NodeInterface) {
-      $node = entity_load('node', $node);
+    if (!$node instanceof Node) {
+      $node = Node::load($node);
     }
 
     // Add theme suggestion of 'page__article', 'page__biography', etc.
