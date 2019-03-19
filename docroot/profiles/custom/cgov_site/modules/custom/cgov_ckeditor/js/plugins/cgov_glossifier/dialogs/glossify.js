@@ -1,151 +1,3 @@
-function ReplaceWithPolyfill() {
-  'use-strict'; // For safari, and IE > 10
-  var parent = this.parentNode, i = arguments.length, currentNode;
-  if (!parent) return;
-  if (!i) // if there are no arguments
-    parent.removeChild(this);
-  while (i--) { // i-- decrements i and returns the value of i before the decrement
-    currentNode = arguments[i];
-    if (typeof currentNode !== 'object'){
-      currentNode = this.ownerDocument.createTextNode(currentNode);
-    } else if (currentNode.parentNode){
-      currentNode.parentNode.removeChild(currentNode);
-    }
-    // the value of "i" below is after the decrement
-    if (!i) // if currentNode is the first argument (currentNode === arguments[0])
-      parent.replaceChild(currentNode, this);
-    else // if currentNode isn't the first
-      parent.insertBefore(this.previousSibling, currentNode);
-  }
-}
-if (!Element.prototype.replaceWith)
-    Element.prototype.replaceWith = ReplaceWithPolyfill;
-if (!CharacterData.prototype.replaceWith)
-    CharacterData.prototype.replaceWith = ReplaceWithPolyfill;
-if (!DocumentType.prototype.replaceWith)
-    DocumentType.prototype.replaceWith = ReplaceWithPolyfill;
-
-function requestGlossification(e) {
-  // This is how we blow away the reset CSS
-  // But we'll need to recreate a lot of it to retain the drupal UI look.
-  // this.getElement().removeClass('cke_reset_all');
-  // This should eventually allow us to hook in and override. Still not working.
-  // this.getElement().addClass("glossify-dialog-container")
-
-  // TODO: TODO: Handle caching previously glossified terms so that those checkboxes can
-  // be automatically set after the glossifaction request is made a again.
-
-  // TODO: Use editor contents when ready to talk to API.
-  // ### This gets us the html content of the editor that called the dialog.
-  // const rawBody = this.getParentEditor().getData();
-  // const preparedBody = cGovPrepareStr(rawBody);
-
-  const preparedBody = mockRequest.fragment;
-  function processResponse() {
-    const responseBody = mockResponse;
-    const dialogBody = createDialogBodyHtml(preparedBody, responseBody);
-    const htmlArea = this.getElement().getDocument().getById('dialog_container');
-    htmlArea.setHtml(dialogBody);
-  }
-  // Fake request TODO: Make real  (jquery.ajax probably)
-  setTimeout(processResponse.bind(this, null), 0)
-}
-
-/**
- * Given an array of objects containing configuration data
- * for a glossary term and a string containing the original HTML (after
- * being processed for sending to the API), we want to generate checkboxes
- * allowing a user to select the terms they want to be 'glossified' (i.e be
- * wrapper in an anchor tag pointing at the glossary term).
- *
- * @param {string} originalHtml
- * @param {Object[]} candidateTermConfigs
- */
-function createDialogBodyHtml(originalHtml, candidateTermConfigs){
-  // Instead of editing the string contents, we create a new string. This
-  // allows us to do the whole concatenation in one pass. The slow pointer
-  // keeps the new, longer string in sync with the indexes of the original string.
-  // (Which is important as long as the api uses indexes and length to identify terms).
-  let processedHtml = "";
-  let slowPointer = 0;
-  for(let i = 0; i < candidateTermConfigs.length; i++){
-    const termConfig = candidateTermConfigs[i];
-    // TODO: Remove parseint when bob changes api to numbers
-    const termStartIndex = parseInt(termConfig.start);
-    const termLength = parseInt(termConfig.length);
-    const termEndIndex = termStartIndex + termLength;
-    const preceedingSnippet = originalHtml.slice(slowPointer, termStartIndex);
-    processedHtml += preceedingSnippet;
-    slowPointer = termStartIndex;
-    const termText = originalHtml.slice(slowPointer, termEndIndex);
-    slowPointer = termEndIndex;
-    // Create element to wrap term for checkbox selection
-    // IE Add in inputs now with all the rest of the attributes as data attributes.
-    // Then when I strip the checkboxes I can build the anchor tag.
-    // This is because, even on percussion now, clicking the links causes you to be
-    // directed to an error page. That would avoid the issue.
-    const cGovUniqueId = Math.random() * 1000000; // TODO: Replace
-    const language = "English"; // TODO: Replace
-    const termId = termConfig.doc_id;
-    const isFirstOccurenceOfTerm = termConfig.first_occurrence;
-    const firstStyles = isFirstOccurenceOfTerm ? "background-color: #ffff00;" : "";
-    const labelStyle = "display: inline-block;" + firstStyles;
-    const wrappedTerm =
-      "<label "
-      + "data-term-id='" + termId + "' "
-      + "data-language='" + language + "' "
-      + "style='"
-      + labelStyle
-      + "' data-glossify-label>"
-      + termText
-      + "<input type='checkbox'"
-      + "/>"
-      + "</label>"
-    processedHtml += wrappedTerm;
-  }
-  // We need to grab the tail of the originalHtml
-  const tailSnippet = originalHtml.slice(slowPointer);
-  processedHtml += tailSnippet;
-  return processedHtml;
-}
-
-function saveGlossificationChoices() {
-  const dialogContainer = this.getElement().getDocument().getById('dialog_container').$;
-  const labels = dialogContainer.querySelectorAll('label[data-glossify-label]');
-  // IE11 for the win!
-  const labelsArray = Array.prototype.slice.call(labels, 0);
-  labelsArray.forEach(label => {
-    const checkbox = label.querySelector('input');
-    const isSelected = checkbox.checked;
-    if(!isSelected) {
-      const originalText = label.textContent;
-      label.replaceWith(originalText);
-    }
-    else {
-      const originalText = label.textContent;
-      const id = label.dataset.termId;
-      const language = label.dataset.language;
-      const paramString = id + "&version=Patient&language=" + language;
-      const href = "/Common/PopUps/popDefinition.aspx?id=" + paramString;
-      const onClickHandler = function() {
-        window.popWindow('defbyid', paramString);
-        return false;
-      };
-
-      const anchor = document.createElement('a');
-      anchor.onclick = onClickHandler;
-      anchor.href = href;
-      anchor.textContent = originalText;
-
-      label.replaceWith(anchor);
-    }
-  })
-  const htmlArea = this.getElement().getDocument().getById('dialog_container').getHtml();
-  const currentEditor = this._.editor;
-  // Note: editor.insertHtml does not clear previous contents of editor. This does.
-  currentEditor.setData(htmlArea);
-}
-
 CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   // console.log(editor)
   // console.log(CKEDITOR)
@@ -174,7 +26,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
             id: 'html',
             type: 'html',
             label: 'Select Elements to Glossify',
-            html: '<div id="dialog_container"><div id="spinner">Loading...</div></div>',
+            html: '<div class="glossify-dialog-container"><div class="spinner">Loading...</div></div>',
             style: 'width: 75vw; height: 75vh;'
           }
         ],
@@ -183,49 +35,262 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   };
 })
 
+function ReplaceWithPolyfill() {
+  'use-strict'; // For safari, and IE > 10
+  var parent = this.parentNode, i = arguments.length, currentNode;
+  if (!parent) return;
+  if (!i) // if there are no arguments
+    parent.removeChild(this);
+  while (i--) { // i-- decrements i and returns the value of i before the decrement
+    currentNode = arguments[i];
+    if (typeof currentNode !== 'object'){
+      currentNode = this.ownerDocument.createTextNode(currentNode);
+    } else if (currentNode.parentNode){
+      currentNode.parentNode.removeChild(currentNode);
+    }
+    // the value of "i" below is after the decrement
+    if (!i) // if currentNode is the first argument (currentNode === arguments[0])
+      parent.replaceChild(currentNode, this);
+    else // if currentNode isn't the first
+      parent.insertBefore(this.previousSibling, currentNode);
+  }
+}
+if (!Element.prototype.replaceWith)
+    Element.prototype.replaceWith = ReplaceWithPolyfill;
+if (!CharacterData.prototype.replaceWith)
+    CharacterData.prototype.replaceWith = ReplaceWithPolyfill;
+if (!DocumentType.prototype.replaceWith)
+    DocumentType.prototype.replaceWith = ReplaceWithPolyfill;
 
+// IE11 for the win! Need a way to handle nodelists with modern array methods.
+function arrayifyNodelist(nodeList){
+  return Array.prototype.slice.call(nodeList, 0);
+}
 
+function requestGlossification() {
+  // This is how we blow away the reset CSS
+  // But we'll need to recreate a lot of it to retain the drupal UI look.
+  // this.getElement().removeClass('cke_reset_all');
+  // This should eventually allow us to hook in and override. Still not working.
+  // this.getElement().addClass("glossify-dialog-container")
 
+  // ### This gets us the html content of the editor that called the dialog.
+  const rawBody = this.getParentEditor().getData();
+  // TODO: Confirm whether getting the langcode from the editor instance is sufficient.
+  // https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-langCode
+  const language = this.getParentEditor().langCode;
+  const preparedBody = cGovPrepareStr(rawBody);
 
-// OLD CODE - Not refactored
-var cGovCRConst = "&#x000d;";	//carriage return substitute
-var cGovLFConst = "&#x000a;";	//line feed substitute
+  function processResponse(responseBody) {
+    const dialogBody = createDialogBodyHtml(preparedBody, responseBody, language);
+    // Each CKEditor instance builds its own dialog element at the bottom of the page.
+    // There is no standard way of targeting them for reuse.
+    // This lets us stay within the scope of the correct dialog. Other methods built into the CKEditor dialog
+    // element like getContentElement come with their own complications. By using the $ attribute
+    // we have access to native DOM elements and bypass the CKEditor API.
+    htmlArea = this.getElement().$.querySelector('.glossify-dialog-container');
+    htmlArea.innerHTML = dialogBody;
+
+    // We used a simple span with a rel=glossified attribute to "remember" which terms
+    // were previously glossified. We need to first set the input to 'checked' to reflect its
+    // previously selected state and then remove the span tag.
+    const previouslyGlossifiedTerms = this.getElement().$.querySelectorAll("span[rel='glossified']");
+    const previouslyGlossifiedTermsArray = arrayifyNodelist(previouslyGlossifiedTerms);
+    previouslyGlossifiedTermsArray.forEach(function(span) {
+      const termText = span.dataset.term;
+      const termId = span.dataset.id;
+      const termLanguage = span.dataset.language;
+      const labelString = createGlossificationTermOptionElementString(termText, termId, termLanguage);
+      // Because we have a string instead of a DOM element to work with, we're going to use a little
+      // trickery here to get a DOM element by first inserting the string and then reextracting it
+      // as an element (which lets us programmatically check the input and use the replaceWith method.)
+      span.innerHTML = labelString;
+      const labelTag = span.querySelector('label');
+      const inputTag = labelTag.querySelector('input');
+      inputTag.checked = true;
+      span.replaceWith(labelTag);
+    })
+  }
+
+  // We have to nest our request in a preliminary request so that we can first
+  // retrieve the necessary csrf token to make an authenticated request to the api.
+  // NOTE: Nested jquery calls make it rough to main the this context for using getElement later
+  const this_editor = this;
+  jQuery.get(Drupal.url('session/token'))
+    .done(function (data) {
+      const csrfToken = data;
+      jQuery.ajax({
+        context: this_editor,
+        url: '/pdq/api/glossifier',
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          'X-CSRF-Token': csrfToken,
+        },
+        data: JSON.stringify({
+          'fragment': preparedBody,
+          'languages': [
+            'en'
+          ],
+          'dictionaries': [
+            'Cancer.gov'
+          ],
+        }),
+      })
+      .done(function(data) {
+        processResponse.call(this, data)
+      })
+      // TODO: Error Handling for non 200
+    });
+    // TODO: Error handling for non 200
+}
+
+function createGlossificationTermOptionElementString(termText, termId, termLanguage, isFirstOccurenceOfTerm){
+  // Create element to wrap term for checkbox selection
+  // IE Add in inputs now with all the rest of the attributes as data attributes.
+  // Then when I strip the checkboxes I can build the anchor tag.
+  // This is because, even on percussion now, clicking the links causes you to be
+  // directed to an error page. That would avoid the issue.
+  const firstStyles = isFirstOccurenceOfTerm ? "background-color: #ffff00;" : "";
+  const labelStyle = "display: inline-block;" + firstStyles;
+  const wrappedTerm =
+    "<label "
+    + "data-term-id='" + termId + "' "
+    + "data-language='" + termLanguage + "' "
+    + "style='"
+    + labelStyle
+    + "' data-glossify-label>"
+    + termText
+    + "<input type='checkbox'"
+    + "/>"
+    + "</label>";
+  return wrappedTerm;
+}
+
+// Create a glossified term.
+// Future revisions to change the form of these links (for modal purposes
+// possibly) should look to change this logic.
+function glossifyTermFromLabel(label){
+  const originalText = label.textContent;
+  const id = label.dataset.termId;
+  const language = label.dataset.language;
+  const paramString = id + "&version=Patient&language=" + language;
+  const href = "/Common/PopUps/popDefinition.aspx?id=" + paramString;
+  const onClickHandler = function() {
+    window.popWindow('defbyid', paramString);
+    return false;
+  };
+
+  const anchor = document.createElement('a');
+  anchor.onclick = onClickHandler;
+  anchor.className = 'definition';
+  anchor.href = href;
+  anchor.textContent = originalText;
+
+  label.replaceWith(anchor);
+}
 
 /**
-* Prepare the data for sending to web service. Replace cr and lf with code, mark old web service
-* provided URLs with __oldterm
-*/
+ * Given an array of objects containing configuration data
+ * for a glossary term and a string containing the original HTML (after
+ * being processed for sending to the API), we want to generate checkboxes
+ * allowing a user to select the terms they want to be 'glossified' (i.e be
+ * wrapper in an anchor tag pointing at the glossary term).
+ *
+ * @param {string} originalHtml
+ * @param {Object[]} candidateTermConfigs
+ */
+function createDialogBodyHtml(originalHtml, candidateTermConfigs, language){
+  // Instead of editing the string contents, we create a new string. This
+  // allows us to do the whole concatenation in one pass. The slow pointer
+  // keeps the new, longer string in sync with the indexes of the original string.
+  // (Which is important as long as the api uses indexes and length to identify terms).
+  let processedHtml = "";
+  let slowPointer = 0;
+  for(let i = 0; i < candidateTermConfigs.length; i++){
+    const termConfig = candidateTermConfigs[i];
+    const termStartIndex = termConfig.start;
+    const termLength = termConfig.length;
+    const termEndIndex = termStartIndex + termLength;
+    const preceedingSnippet = originalHtml.slice(slowPointer, termStartIndex);
+    processedHtml += preceedingSnippet;
+    slowPointer = termStartIndex;
+    const termText = originalHtml.slice(slowPointer, termEndIndex);
+    slowPointer = termEndIndex;
+    const termId = termConfig.doc_id;
+    const isFirstOccurenceOfTerm = termConfig.first_occurrence;
+    const wrappedTerm = createGlossificationTermOptionElementString(termText, termId, language, isFirstOccurenceOfTerm)
+    processedHtml += wrappedTerm;
+  }
+  // We need to grab the tail of the originalHtml
+  const tailSnippet = originalHtml.slice(slowPointer);
+  processedHtml += tailSnippet;
+  return processedHtml;
+}
+
+function saveGlossificationChoices() {
+  const dialogContainer = this.getElement().$.querySelector('.glossify-dialog-container')
+  const labels = dialogContainer.querySelectorAll('label[data-glossify-label]');
+  const labelsArray = arrayifyNodelist(labels);
+  labelsArray.forEach(function(label) {
+    const checkbox = label.querySelector('input');
+    const isSelected = checkbox.checked;
+    if(!isSelected) {
+      // Restore the term as basic text. No glossification.
+      const originalText = label.textContent;
+      label.replaceWith(originalText);
+    }
+    else {
+      glossifyTermFromLabel(label);
+    }
+  })
+  const htmlArea = this.getElement().$.querySelector('.glossify-dialog-container').innerHTML;
+  const currentEditor = this._.editor;
+  // Note: editor.insertHtml does not clear previous contents of editor. This does.
+  currentEditor.setData(htmlArea);
+}
+
+/**
+ * Prepare the data for sending to web service.
+ */
 function cGovPrepareStr(data) {
-	//alert("In cGovPrepareStr, data= " + data);
-	var tempData = data;
-	var result="";
-	// These expressions look for two specific styles of links and then change them from
-	//	<a whatever> to <a __oldterm>
-	//	<a href="/dictionary/db_alpha.aspx?expand=s#symptom" onclick="javascript:popWindow('definition','symptom'); return false;">symptoms</a>
-	//	<a class="definition" href="/Common/PopUps/popDefinition.aspx?term=bone marrow&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('definition','bone marrow&amp;version=Patient&amp;language=English');  return(false);">bone marrow</a>
-	// The most complete patterns (from the old Admin Tool code) don't work here:
-	//	<a\s+(href=\"/dictionary/db_alpha.aspx\?expand=.+?>.+?</a>)
-	//	<a\\s+(class=\"definition\".+?>.+?</a>)
-	// The following two expressions expect the links to be in a particular order. The second set expect
-	// a different order. No matter what order they are in in the editor, they always seem to come back the
-	// second way. If this turns out to not be the case, we'll have to run the first two expressions as well
-	// as the second.
-	// var rxDict1 = new RegExp("<a\\s+(href=.+dictionary/db_alpha.aspx.+</a>)","i");
-	var rxDef1 = new RegExp("<a\\s+(class=\"definition\".+?>.+?</a>)");
-	var rxDict2 = new RegExp("<a\\s+(onclick=\"javascript:popWindow.+?href=.+?dictionary/db_alpha.aspx.+?</a>)","i");
-	var rxDef2 = new RegExp("<a\\s+(onclick=\"javascript:popWindow.+?href=.+?popDefinition.aspx.+?</a>)");
-	var rxDef3 = new RegExp("<a\\s+(href=\"/Common/PopUps/popDefinition.aspx.+?</a>)");
-	tempData = cGovDoRegExp1(rxDict2, tempData);
-	tempData = cGovDoRegExp1(rxDef2, tempData);
-	tempData = cGovDoRegExp1(rxDef1, tempData);
-	tempData = cGovDoRegExp1(rxDef3, tempData);
-	for (var i=0;i<tempData.length;i++) {
-		var c = tempData.charAt(i);
-		if (c == "\n") {
-			result += cGovLFConst;
+  // DEPRECATED? TODO: Determine if this needs to be kept.
+  // /**
+  // * Replace Spanish-character entities with literal values
+  // */
+  // function fixSpanish(editorContent) {
+  //   var fixedSpanish = editorContent;
+  //   fixedSpanish = fixedSpanish.split('&Aacute;').join('Á');
+  //   fixedSpanish = fixedSpanish.split('&aacute;').join('á');
+  //   fixedSpanish = fixedSpanish.split('&Eacute;').join('É');
+  //   fixedSpanish = fixedSpanish.split('&eacute;').join('é');
+  //   fixedSpanish = fixedSpanish.split('&Iacute;').join('Í');
+  //   fixedSpanish = fixedSpanish.split('&iacute;').join('í');
+  //   fixedSpanish = fixedSpanish.split('&Oacute;').join('Ó');
+  //   fixedSpanish = fixedSpanish.split('&oacute;').join('ó');
+  //   fixedSpanish = fixedSpanish.split('&Uacute;').join('Ú');
+  //   fixedSpanish = fixedSpanish.split('&uacute;').join('ú');
+  //   fixedSpanish = fixedSpanish.split('&Yacute;').join('Ý');
+  //   fixedSpanish = fixedSpanish.split('&yacute;').join('ý');
+  //   fixedSpanish = fixedSpanish.split('&Ntilde;').join('Ñ');
+  //   fixedSpanish = fixedSpanish.split('&ntilde;').join('ñ');
+  //   return fixedSpanish;
+  // }
+
+	let tempData = data;
+  let result = "";
+  // 1) Save previously glossified term state as an element that the API will
+  // ignore.
+  tempData = cachePreviouslyGlossifiedTerms(tempData);
+  // 2) Sanitize the string.
+	for (let i=0; i < tempData.length; i++) {
+		let c = tempData.charAt(i);
+		if (c == "\n") {  //line feed substitute
+			result += "&#x000a;";
 		}
-		else if (c == "\r") {
-			result += cGovCRConst;
+		else if (c == "\r") { //carriage return substitute
+			result += "&#x000d;";
 		}
 		else if (c == "”") {	//right double quote
 			result += "&#148;";
@@ -246,921 +311,35 @@ function cGovPrepareStr(data) {
 			result += c;
 		}
 	}
-	//alert("result = " + result);
 	return result;
 }
 
-/**
-* Called for each regex, does the actual work of finding and editing the target link
-*/
-function cGovDoRegExp1(theRegExp, result) {
-	var done = false;
-	var offset = 0;
-	while (!done) {
-		var temp = result.substr(offset);
-		if (temp == null) {
-			done = true;
-		}
-		else {
-			var target = theRegExp.exec(temp);
-			//alert("target = " + target);
-			if (target == null) {
-				done = true;
-			}
-			else {
-				offset += target.index;
-				var iDed = cGovAddUniqueID(target[1]);
-				result = result.replace(target[0],iDed);
-				//alert("result = " + result);
-				offset += iDed.length;
-			}
-		}
-	}
+
+function cachePreviouslyGlossifiedTerms(body) {
+  const glossifiedTermTest = new RegExp("<a\\s+class=\"definition\".+?>(.+?)</a>", "g");
+  const result = body.replace(glossifiedTermTest, wrapTermToSaveState);
 	return result;
 }
 
-/**
-* Add the __oldterm= to the old links
-*/
-function cGovAddUniqueID(data) {
-	cGovUniqueId++;
-	var uniqueID = "<a __oldterm=\"" + cGovUniqueId + "\" " + data;
-	return uniqueID;
+function wrapTermToSaveState(match, firstCaptureGroup) {
+  const fullMatch = match;
+  const termMatch = firstCaptureGroup;
+  // TODO: Error handling
+  const extractDataTest = /(CDR[0-9]+).+language=([A-z]+)/i;
+  const extractedData = fullMatch.match(extractDataTest);
+  const id = extractedData[1];
+  const language = extractedData[2];
+  // All preexisting glossified links are expected to match the same pattern that
+  // allows us to extract enough data to reconstruct them after a new glossification pass.
+  // The API is already set up to ignore all tags but only the contents of a tags.
+  // Since we use a span, we don't want the term to be findable and store it as a data attribute
+  // rather than a text node.
+  // We don't want to reglossify terms specifically because the terms
+  // themselves may not match the glossary (because content editors can manually edit them
+  // after a glossification pass and we need to preserve that alteration.)
+  const wrappedTerm =
+    "<span rel='glossified' data-id='" + id
+    + "' data-language='" + language
+    + "' data-term='" + termMatch + "'/>";
+	return wrappedTerm;
 }
-
-/**
-* Completion callback
-* Once the HTTP request is in the ready state, draw the resulting checkbox HTML
-* and initialize events
-*/
-function cGovProcessReqChange() {
-	if (cGovReq.readyState == 4 && cGovReq.status == 200) {
-		//alert("got response, text:\n" + cGovReq.responseText);
-		//cGovStatusWindow.close();
-
-		//Web service transaction has completed, parse the response
-		var env = getElementsByTagNameNS(cGovReq.responseXML, cGovSoapNameSpace, cGovSoapPrefix, "Envelope");
-		//alert("got env");
-		var body = getElementsByTagNameNS(env[0], cGovSoapNameSpace, cGovSoapPrefix, "Body");
-		//alert("got body");
-		var resp = getElementsByTagNameNS(body[0], cGovWSNameSpace, cGovElementPrefix, "glossifyResponse");
-		//alert("got glossifyResponse");
-		var glossifyResult = getElementsByTagNameNS(resp[0], cGovWSNameSpace, cGovElementPrefix, "glossifyResult");
-		//alert("got glossifyResult");
-		var terms = getElementsByTagNameNS(glossifyResult[0], cGovWSNameSpace, cGovElementPrefix, "Term");
-		//alert("got term");
-
-		// Put the terms values into an array
-		var termsArray = cGovBuildTermsArray(terms);
-		cGovMassagedData = cGovBuildCBDisplayString(cGovMassagedData, termsArray);
-		//alert("cGovMassagedData:\n" + cGovMassagedData);
-
-		var checkBoxHtml = (
-		   '<div id="massaged-data">Data element - you should not see this.</div>' +
-		   '<div id="checkbox-html" class="gloss-modal">' +
-			  '<link href="../rx_resources/tinymce/js/tinymce/plugins/glossifier/css/glossify.css" rel="stylesheet" />' +
-			  '<script language="Javascript">' +
-
-				 '$( \'input[name="terms"]\' ).change(function() {' +
-				    'returnChecks()' +
-				 '});' +
-
-				 'function returnChecks() {' +
-					'var myCheckArr = [];' +
-					'var checkedItem = $(\'#Glossify\').contents().find(\'input[name="terms"]\' + \':checked\');' +
-						'checkedItem.each(function() {' +
-							'$this = $(this);' +
-							'myCheckArr.push($this.attr("value"));' +
-						'});' +
-					'$("#massaged-data").attr("data-checked-array", myCheckArr);' +
-				 '}' +
-
-			  '</script>' +
-			  '<div name="Glossify" id="Glossify" class="gloss-modal-content">' +
-				 '<button type="button" class="gloss-close" />' +
-				 '<h1>Glossifier tool</h1>' +
-				 '<h2>Please check/uncheck the word(s) you want glossified</h2>' +
-				 '<hr>' +
-				 cGovMassagedData +
-				 '<hr>' +
-				 '<button name="gloss-sumbit" type="button" value="Submit Changes">Submit Changes</button>' +
-			  '</div>' +
-		   '</div>'
-		);
-
-		// Close the loading screen, add the checkbox screen,
-		// and set click events
-		$('#loading-html').remove();
-		$body.append(checkBoxHtml);
-		$('#Glossify').draggable();
-		setClickEvents();
-	}
-	//else alert("readyState=" + cGovReq.readyState + " status=" + cGovReq.status);
-}
-
-// TEMP MOCKS
-
-const mockRequest = {
-  "fragment": "<div class=\"rxbodyfield\">&#x000a;<p>With so many new and promising cancer treatments being developed, the need for clinical trials to efficiently and effectively test them has never been greater.</p>&#x000a;<p>Maximizing the number of patients who are eligible for clinical trials, while still maintaining an appropriate level of safety, is a top priority for NCI leadership, given the challenges of enrolling enough patients in clinical trials. Eligibility criteria&mdash;the requirements that must be met before a person can enroll in a trial&mdash;have not kept pace with the modernization of clinical trials. Restrictive criteria have not only been a significant hurdle for many patients who have wanted to participate in trials, but they have also limited the generalizability of study findings.</p>&#x000a;<p>Over the past several years, NCI has made efforts to address the issue of trial eligibility by working to broaden the criteria for some NCI-funded trials. For example, researchers are encouraged to relax the use of upper age limits in adult trials and <a href=\"https://percussion.cancer.gov:443/Rhythmyx/assembler/render?sys_revision=3&amp;sys_context=0&amp;sys_authtype=0&amp;sys_siteid=305&amp;sys_variantid=2056&amp;sys_contentid=1100977\" sys_contentid=\"1100977\" inlinetype=\"rxhyperlink\" sys_variantid=\"2056\" sys_dependentvariantid=\"2056\" sys_dependentid=\"1100977\" rxinlineslot=\"103\" sys_siteid=\"305\" sys_folderid=\"\" sys_relationshipid=\"7270303\">allow people with cancer who are HIV+ to enroll in trials</a>, as appropriate.</p>&#x000a;<p>Beginning in 2016, the American Society of Clinical Oncology (ASCO) and the advocacy organization, Friends of Cancer Research (Friends), launched an effort to further expand eligibility criteria for cancer clinical trials in the hope that more patients will be able to join trials, leading to more rapid advances in cancer treatment.</p>&#x000a;<p>NCI and Food and Drug Administration (FDA) staff have been key contributors to the ongoing effort. The project has led to new and expanded eligibility recommendations, which NCI translated into language that can be used more easily in clinical trial protocols. This new language is now being used by the NCI-sponsored <a href=\"https://percussion.cancer.gov:443/Rhythmyx/assembler/render?sys_revision=85&amp;sys_context=0&amp;sys_authtype=0&amp;sys_siteid=305&amp;sys_variantid=2297&amp;sys_contentid=770089\" sys_contentid=\"770089\" inlinetype=\"rxhyperlink\" sys_variantid=\"2297\" sys_dependentvariantid=\"2297\" sys_dependentid=\"770089\" rxinlineslot=\"103\" sys_siteid=\"305\" sys_folderid=\"\" sys_relationshipid=\"7270304\">National Clinical Trials Network (NCTN)</a> and <a href=\"https://ctep.cancer.gov/initiativesprograms/etctn.htm\">Experimental Therapeutics Clinical Trials Network (ETCTN)</a>.</p>&#x000a;<h2><strong>Why Are Eligibility Criteria Necessary?</strong></h2>&#x000a;<p>Eligibility criteria are an important part of clinical trials. They help ensure that participants in a trial are alike&nbsp;in terms of specific factors, such as type and stage of cancer, general health, and previous treatment received. When all participants meet the same eligibility criteria, it is more likely that the trial&rsquo;s outcomes are the result of the intervention being tested than of other factors, such as health conditions or chance. Eligibility requirements are also important for patient safety. They decrease the chances that patients who might experience dangerous side effects from a study drug are enrolled in the trial.</p>&#x000a;<p>In 2016, ASCO&ndash;Friends assembled four working groups to develop new recommendations for expanding eligibility criteria. Each group focused on one of four variables that most often exclude a patient&rsquo;s participation in a trial: brain metastases, HIV/AIDS, organ dysfunction and prior and concurrent cancers, and minimum age for enrollment.</p>&#x000a;<p>Working group members, which included scientists, regulators, patient advocates, and industry representatives, used an extensive review process that&nbsp;included an&nbsp;examination of the scientific literature and available clinical results. They analyzed variables such as the number of potential patients who were excluded from enrolling in trials and whether trials that had less restrictive eligibility criteria had higher rates of serious adverse events.</p>&#x000a;<p>Members developed recommendations for new eligibility criteria that would be appropriate for both early- and late-phase trials. However, some differences in the criteria for trials of different phases were unavoidable. For example, in early-phase trials, because less is known about the drugs being tested, stricter eligibility criteria are necessary to help ensure that patients are not put at undue risk.</p>&#x000a;<p>Once the ASCO&ndash;Friends working groups&rsquo; recommendations were agreed upon, NCI compiled them into a final document that outlined new <a href=\"https://ctep.cancer.gov/protocolDevelopment/docs/NCI_ASCO_Friends_Eligibility_Criteria.pdf\">inclusion/exclusion criteria required for NCI-sponsored NCTN and ETCTN clinical trials</a>. These criteria were implemented in November 2018.</p>&#x000a;<p>In developing the final document, NCI also broadened the focus. For instance, the NCI language addresses eligibility of not only patients with HIV but also patients with other viral infections, including hepatitis B and C. All ETCTN and NCTN trials must follow the new eligibility criteria unless researchers provide strong scientific rationale not to do so.</p>&#x000a;<p>Patients in clinical trials that are now following the new inclusion criteria will be more representative of the real-world patient population, thus translating into trial results that are more applicable and meaningful to patients treated in everyday practice.</p>&#x000a;<h2><strong>Other Barriers to Clinical Trial Enrollment</strong></h2>&#x000a;<p>Although restrictive eligibility criteria can exclude patients from participating in clinical trials, there are many other barriers to participation.</p>&#x000a;<p>Health care providers may not&nbsp;offer their patients the opportunity to participate in a trial for many reasons. For example, patients may have comorbidities&mdash;other medical conditions&mdash;that may make it difficult for them to tolerate aggressive therapy.</p>&#x000a;<p>And some clinicians may not offer a clinical trial to a patient based on assumptions about the patient. For instance, a provider may assume that a patient lives too far away from the trial location and would have trouble making it&nbsp;to the clinic for trial visits. Or a provider might assume that a patient does not have the social support to adhere to the treatment regimen or would have trouble understanding a very complex trial protocol and be unable to decide whether to participate.</p>&#x000a;<p>NCI encourages health care providers to question these assumptions. We believe that clinicians should present the option to participate in clinical trials to their patients so that they can make informed decisions about trial participation together. Clinicians should not make this decision for their patients.</p>&#x000a;<p>Educating and raising clinicians&rsquo; awareness are essential to promoting clinical trial enrollment. To this end,&nbsp;NCI and many other organizations provide educational opportunities to enhance clinicians&rsquo; understanding of clinical trials and patient enrollment. It is important that health care providers be aware of available clinical trials and talk to their patients when a clinical trial might be an appropriate option for them. Patients themselves can <a href=\"https://percussion.cancer.gov:443/Rhythmyx/assembler/render?sys_revision=102&amp;sys_context=0&amp;sys_authtype=0&amp;sys_siteid=305&amp;sys_variantid=2317&amp;sys_contentid=63867\" sys_contentid=\"63867\" inlinetype=\"rxhyperlink\" sys_variantid=\"2317\" sys_dependentvariantid=\"2317\" sys_dependentid=\"63867\" rxinlineslot=\"103\" sys_siteid=\"305\" sys_folderid=\"\" sys_relationshipid=\"7270305\">learn more about clinical trials</a> and how to ask their providers about participation.</p>&#x000a;<h2><strong>Expanding Criteria while Ensuring Patient Safety: Finding the Right Balance</strong></h2>&#x000a;<p>Because the new NCI eligibility criteria were just implemented, it will take some time before we can evaluate the impact of these specific changes. And other changes to the inclusion criteria may be on the way, given that ASCO&ndash;Friends are convening additional meetings to address eligibility criteria that were not the focus of the initial effort. These include how much treatment patients may have had before entering a trial and what medications a patient might be using to treat other health conditions.</p>&#x000a;<p>Clinical trial enrollment is a complex issue and ongoing critical assessment of clinical trial eligibility criteria is essential to achieve the right balance between expanding criteria while ensuring patient safety. With less restrictive criteria translating into study conclusions that are more relevant to the broader patient population, we can make faster progress in the discovery of new targeted cancer treatments and immunotherapies that will benefit more people.</p>&#x000a;</div>",
-  "dictionaries": [
-    "Cancer.gov"
-  ],
-  "languages": [
-    "en"
-  ]
-}
-
-const mockResponse = [
-  {
-    "start": "67",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "115",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "244",
-    "length": "3",
-    "doc_id": "CDR0000559085",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "265",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "360",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "429",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "446",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "596",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "655",
-    "length": "11",
-    "doc_id": "CDR0000390271",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "692",
-    "length": "3",
-    "doc_id": "CDR0000559085",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "844",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "951",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1600",
-    "length": "8",
-    "doc_id": "CDR0000044168",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "1609",
-    "length": "8",
-    "doc_id": "CDR0000045434",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "1667",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1731",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1756",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1763",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1810",
-    "length": "4",
-    "doc_id": "CDR0000478788",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "1873",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1905",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "1913",
-    "length": "28",
-    "doc_id": "CDR0000454785",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "1943",
-    "length": "3",
-    "doc_id": "CDR0000454786",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "2079",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "2140",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "2209",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "2824",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "2880",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "2926",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "2953",
-    "length": "6",
-    "doc_id": "CDR0000658776",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3051",
-    "length": "5",
-    "doc_id": "CDR0000045885",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3060",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "3122",
-    "length": "3",
-    "doc_id": "CDR0000044362",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3153",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "3247",
-    "length": "12",
-    "doc_id": "CDR0000454757",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3311",
-    "length": "10",
-    "doc_id": "CDR0000651193",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3437",
-    "length": "3",
-    "doc_id": "CDR0000559085",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "3468",
-    "length": "12",
-    "doc_id": "CDR0000046580",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3494",
-    "length": "4",
-    "doc_id": "CDR0000348921",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3643",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "3777",
-    "length": "16",
-    "doc_id": "CDR0000045314",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3795",
-    "length": "3",
-    "doc_id": "CDR0000044985",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3799",
-    "length": "4",
-    "doc_id": "CDR0000045950",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3805",
-    "length": "5",
-    "doc_id": "CDR0000257523",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3811",
-    "length": "11",
-    "doc_id": "CDR0000390268",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3848",
-    "length": "7",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "3941",
-    "length": "10",
-    "doc_id": "CDR0000044724",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "4093",
-    "length": "10",
-    "doc_id": "CDR0000044724",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "4129",
-    "length": "8",
-    "doc_id": "CDR0000044168",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4212",
-    "length": "3",
-    "doc_id": "CDR0000559085",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4300",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4421",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4666",
-    "length": "5",
-    "doc_id": "CDR0000348921",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "4695",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4738",
-    "length": "6",
-    "doc_id": "CDR0000658776",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "4884",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5233",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5281",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5342",
-    "length": "3",
-    "doc_id": "CDR0000044985",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5375",
-    "length": "5",
-    "doc_id": "CDR0000044629",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "5381",
-    "length": "10",
-    "doc_id": "CDR0000045364",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "5403",
-    "length": "11",
-    "doc_id": "CDR0000046146",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "5422",
-    "length": "3",
-    "doc_id": "CDR0000044362",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5436",
-    "length": "4",
-    "doc_id": "CDR0000776356",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "5468",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5523",
-    "length": "10",
-    "doc_id": "CDR0000044724",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5584",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5650",
-    "length": "4",
-    "doc_id": "CDR0000478788",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5875",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "5946",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "6010",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "6089",
-    "length": "21",
-    "doc_id": "CDR0000650566",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6270",
-    "length": "10",
-    "doc_id": "CDR0000651193",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "6335",
-    "length": "10",
-    "doc_id": "CDR0000046053",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6346",
-    "length": "7",
-    "doc_id": "CDR0000044737",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6405",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "6697",
-    "length": "14",
-    "doc_id": "CDR0000440116",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6739",
-    "length": "7",
-    "doc_id": "CDR0000045864",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6804",
-    "length": "8",
-    "doc_id": "CDR0000044714",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "6875",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "6890",
-    "length": "21",
-    "doc_id": "CDR0000650566",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7014",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7277",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7322",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7435",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7496",
-    "length": "21",
-    "doc_id": "CDR0000650566",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7540",
-    "length": "15",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "7590",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8291",
-    "length": "3",
-    "doc_id": "CDR0000044267",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8295",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8342",
-    "length": "4",
-    "doc_id": "CDR0000478788",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8561",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8776",
-    "length": "10",
-    "doc_id": "CDR0000651193",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8802",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8868",
-    "length": "10",
-    "doc_id": "CDR0000430407",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": true
-  },
-  {
-    "start": "8882",
-    "length": "14",
-    "doc_id": "CDR0000045961",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "8897",
-    "length": "20",
-    "doc_id": "CDR0000346518",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "9203",
-    "length": "6",
-    "doc_id": "CDR0000045333",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  },
-  {
-    "start": "9246",
-    "length": "4",
-    "doc_id": "CDR0000478788",
-    "dictionary": "Cancer.gov",
-    "language": "en",
-    "first_occurrence": false
-  }
-]
