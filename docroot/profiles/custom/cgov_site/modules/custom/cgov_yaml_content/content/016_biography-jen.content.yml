@@ -1,0 +1,139 @@
+### TESTS:
+# Biography content type
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Jennifer K"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Loukissas_Jennifer_2016-ret_160x140-WEB.jpg'
+      alt: 'Jennifer K. Loukissas, M.P.P.'
+- entity: "node"
+  type: "cgov_biography"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Jennifer"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  field_pretty_url:
+    value: "loukissas-jen"
+  field_short_title:
+    value: "Jennifer K. Loukissas"
+  field_browser_title:
+    value: "biosketch and professional background - Placeholder"
+  field_page_description:
+    value: "biosketch and professional background - Placeholder"
+  field_list_description:
+    value: "biosketch and professional background - Placeholder"
+  field_feature_card_description:
+    value: "biosketch and professional background - Placeholder"
+  field_first_name:
+    value: "Jen"
+  field_middle_name:
+    value: "K."
+  field_last_name:
+    value: "Lou"
+  field_suffix:
+    value: "M.P.P"
+  field_title:
+    value: "Chief, Communications Team"
+  field_org_name_1:
+    value: "National Cancer Institute"
+  field_org_name_2:
+    value: "Division of Cancer Epidemiology & Genetics, Office of the Director"
+  field_campus:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_biography_campuses'
+            name: 'NCI Shady Grove Campus'
+  field_office_location:
+    value: "Room 7E434"
+  field_phone_number:
+    value: "240-276-7367"
+  field_email_address:
+    value: "loukissj@mail.nih.gov"
+  field_linkedin_handle:
+    value: "jennifer-loukissas-b09b254"
+  field_twitter_handle:
+    value: "jloukissas"
+  field_date_posted:
+    value: "2019-02-07"
+  field_date_reviewed:
+    value: "2019-02-07"
+  field_date_updated:
+    value: "2019-02-07"
+  field_date_display_mode:
+    value: "updated"
+  body:
+  - format: "full_html"
+    value: |
+      <p>Jennifer Loukissas serves as the Chief of the Communications team in the National Cancer Institute’s Division of Cancer Epidemiology and Genetics. Ms. Loukissas helps DCEG investigators and trainees to transmit their research findings to a variety of lay audiences including news media, research advocates, general public, the United States Congress, and other governmental agencies.</p>
+      <p>Ms. Loukissas manages the Division’s web and social media presence, and serves as senior managing editor for the Linkage newsletter. Equally important is her management of crisis communications for the Division. She also regularly delivers training on communicating science to investigators and trainees in NIH and academia. Ms. Loukissas is an award-winning science writer with 15 years of experience in public affairs. She came to the NIH in 2002 as Presidential Management Intern following receipt of a Master's Degree in Public Policy from Duke University; she holds a Bachelor of Arts in English from Haverford College.</p>
+      <p>Follow Ms. Loukissas on Twitter <a href="https://twitter.com/jloukissas">@jloukissas</a>.</p>
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Jennifer K'
+  field_search_engine_restrictions: 0
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Feelings and Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_override_title:
+        - value: 'Overridden Title'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Learning to Relax'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.gov/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Google.com'
+      field_external_link:
+        - uri: 'http://www.google.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
