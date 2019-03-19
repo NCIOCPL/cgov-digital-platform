@@ -1,12 +1,5 @@
-<div id="nvcgRelatedResourcesArea">
-	<div>
-		<aside class="related-resources list">
-      <h6>{% trans %}Recommended Conent{% endtrans %}</h6>
-      <ul>
-        {% for item in items %}
-          {{ item.content }}
-        {% endfor %}
-      </ul>
-    </aside>
-	</div>
+<div id="nvcgSlLayoutFeatureA" class="row flex-columns">
+  {% for item in items %}
+    {{ item.content }}
+  {% endfor %}
 </div>

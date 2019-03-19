@@ -18,14 +18,14 @@
       {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
+      {% if content.field_recommended_content[0] %}
+        <div id="recommended-content-cards">
+          <h4>{{ node.field_blog_series.entity.field_recommended_content_header.value }}</h4>
+          {{ content.field_recommended_content }}
+        <div>
+      {% endif %}
+      <i>Debug content.field_blog_series: {{ content.field_blog_series }}</i><br/>
     </div>
-
-    <hr/>
-      <i>
-      === Debug ===
-      <br/>content.field_blog_series: {{ content.field_blog_series }}
-      </i>
-    <hr/>
 
   </div>
 

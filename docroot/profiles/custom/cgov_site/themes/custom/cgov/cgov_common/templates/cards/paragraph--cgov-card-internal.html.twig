@@ -44,10 +44,17 @@
   {# TODO: Setup image #}
   {% set image = content.field_featured_item %}
 
-  {## Render Card ##}
+  {# ###### Setup Override Img ######## #}
+  {% if content.field_override_image_promotional[0] %}
+    {% set image = content.field_override_image_promotional %}
+  {% endif %}
+
+  {# # Render Card # #}
   {% if cardType is same as('feature_card') %}
     {{ cardMacros.featureCard(title, description, image, url) }}
   {% elseif cardType is same as('thumbnail_card') %}
     {{ cardMacros.thumbnailCard(title, description, image, url) }}
+  {% elseif cardType is same as('recommended_content_card') %}
+    {{ cardMacros.recommendedContentCard(title, image, url) }}
   {% endif %}
 {% endif %}
