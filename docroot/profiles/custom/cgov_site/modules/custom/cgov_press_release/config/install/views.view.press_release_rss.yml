@@ -3,7 +3,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.rss
+    - node.type.cgov_press_release
   module:
+    - datetime
     - node
     - user
 id: press_release_rss
@@ -32,7 +34,7 @@ display:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }
@@ -138,28 +140,107 @@ display:
           expose:
             operator: ''
           group: 1
-      sorts:
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          order: DESC
-          entity_type: node
-          entity_field: created
-          plugin_id: date
+        langcode:
+          id: langcode
+          table: node_field_revision
+          field: langcode
           relationship: none
           group_type: group
           admin_label: ''
+          operator: in
+          value:
+            es: es
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: langcode
+          plugin_id: language
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            cgov_press_release: cgov_press_release
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+      sorts:
+        field_date_posted_value:
+          id: field_date_posted_value
+          table: node__field_date_posted
+          field: field_date_posted_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
           exposed: false
           expose:
             label: ''
           granularity: second
+          plugin_id: datetime
       header: {  }
       footer: {  }
       empty: {  }
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
+      title: 'NCI News Releases'
     cache_metadata:
       max-age: -1
       contexts:
@@ -172,7 +253,7 @@ display:
   pr_feed:
     display_plugin: feed
     id: pr_feed
-    display_title: Feed
+    display_title: 'Feed RSS-EN'
     position: 1
     display_options:
       display_extenders: {  }
@@ -181,16 +262,54 @@ display:
         options:
           relationship: none
           view_mode: rss
-      path: rss
+      path: PublishedContent/RSS/syndication/rss/ncinewsreleases.rss
       pager:
         type: some
         options:
-          items_per_page: 3
+          items_per_page: 10
           offset: 0
+      rendering_language: en
+      sitename_title: false
+      display_description: ''
+      title: 'NCI News Releases'
+      defaults:
+        title: false
+        sitename_title: false
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  pr_feed_es:
+    display_plugin: feed
+    id: pr_feed_es
+    display_title: 'Feed RSS-ES'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      row:
+        type: node_rss
+        options:
+          relationship: none
+          view_mode: rss
+      path: PublishedContent/RSS/syndication/rss/nci-noticias.rss
+      pager:
+        type: some
+        options:
+          items_per_page: 10
+          offset: 0
+      rendering_language: es
+      sitename_title: false
+      display_description: ''
+      title: 'Comunicados de prensa del Instituto Nacional del CÃ¡ncer'
+      defaults:
+        title: false
+        sitename_title: false
+    cache_metadata:
+      max-age: -1
+      contexts:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
