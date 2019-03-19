@@ -1,0 +1,17 @@
+<div>
+   <div class="managed list with-date">
+      <p id="Featured+Posts" tabindex="0" class="title">{% trans %}Featured Posts{% endtrans %}</p>
+      <ul>
+         {% for post in content['#featured'] %}
+            <li class="general-list-item general list-item">
+               <div class="title-and-desc title desc container">
+                  <a class="title" href="{{post['href']}}">{{post['title']}}</a>
+                  <div class="byline">
+                     <p>{% trans %}{{post['date']}}, by{% endtrans %} {{post['author']}}</p>
+                  </div>
+               </div>
+            </li>
+         {% endfor %}
+      </ul>
+   </div>
+</div>

@@ -67,9 +67,9 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    $markup = $this->drawBlogCategories();
+    $blog_categories = $this->drawBlogCategories();
     $build = [
-      '#markup' => $markup,
+      '#blog_categories' => $blog_categories,
     ];
     return $build;
   }
@@ -80,24 +80,15 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   private function drawBlogCategories() {
+    $catlist = [];
+
     // ToDO: Add null check.
     $categories = $this->blogManager->getSeriesCategories();
-
-    $list = '';
     foreach ($categories as $cat) {
-      $url = '#';
       $name = $cat->name;
-
-      $list .= '
-        <li class="general-list-item general list-item">
-          <div class="title-and-desc title desc container">
-            <a class="title" href="' . $url . '">' . $name . '
-            </a>
-          </div><!-- end title & desc container -->
-        </li>';
+      $catlist[$name] = strtolower($name);
     }
-
-    return $list;
+    return $catlist;
   }
 
 }
