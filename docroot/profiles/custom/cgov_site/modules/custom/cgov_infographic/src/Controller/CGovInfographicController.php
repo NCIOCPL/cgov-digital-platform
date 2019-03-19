@@ -3,7 +3,8 @@
 namespace Drupal\cgov_infographic\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Controller routines for cgov_infographic routes.
@@ -18,21 +19,40 @@ class CGovInfographicController extends ControllerBase {
   }
 
   /**
-   * Generates an infographic's long description.
+   * Return an infographic's long description in an HTTP Response.
    *
    * @param int $node
    *   Id of the infographic to render.
    */
   public function longDescription($node) {
-    // Make sure you don't trust the URL to be safe! Always check for exploits.
+
+    // Check for invalid inputs.
     if (!is_numeric($node)) {
-      // We will just show a standard "access denied" page in this case.
-      throw new AccessDeniedHttpException();
+      throw new NotFoundHttpException();
     }
 
-    return [
-      '#markup' => $this->t('<p>Hello.</p>'),
-    ];
+    // Load the entity, and verify that it's an infographic.
+    $infographic = $this->entityTypeManager()->getStorage('media')->load($node);
+    if ($infographic == NULL || $infographic->bundle() != 'cgov_infographic') {
+      throw new NotFoundHttpException();
+    }
+
+    // Only return a value if the field has a value. If it's missing or empty,
+    // fall through to a NotFoundException.
+    if (count($infographic->field_accessible_version > 0)) {
+
+      $field = $infographic->field_accessible_version[0];
+      $text = trim($field->getString());
+
+      if (strlen($text) > 0) {
+        $response = new Response();
+        $response->setContent($text);
+        return $response;
+      }
+    }
+
+    // Couldn't find a value to return.
+    throw new NotFoundHttpException();
   }
 
 }

@@ -4,7 +4,7 @@ namespace Drupal\Tests\pdq_core\Unit;
 
 use Drupal\Tests\UnitTestCase;
 use Drupal\cgov_infographic\Controller\CGovInfographicController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Test longDescription method for Infographic controller.
@@ -20,7 +20,7 @@ class ControllerLongDescription extends UnitTestCase {
    */
   public function testInvalidInputNull() {
 
-    $this->expectException(AccessDeniedHttpException::class);
+    $this->expectException(NotFoundHttpException::class);
 
     $controller = new CGovInfographicController();
     $controller->longDescription(NULL);
@@ -35,7 +35,7 @@ class ControllerLongDescription extends UnitTestCase {
    */
   public function testInvalidInputEmptyString() {
 
-    $this->expectException(AccessDeniedHttpException::class);
+    $this->expectException(NotFoundHttpException::class);
 
     $controller = new CGovInfographicController();
     $controller->longDescription('');
@@ -50,7 +50,7 @@ class ControllerLongDescription extends UnitTestCase {
    */
   public function testInvalidInputString() {
 
-    $this->expectException(AccessDeniedHttpException::class);
+    $this->expectException(NotFoundHttpException::class);
 
     $controller = new CGovInfographicController();
     $controller->longDescription('pony');
@@ -65,7 +65,7 @@ class ControllerLongDescription extends UnitTestCase {
    */
   public function testInvalidInputTrue() {
 
-    $this->expectException(AccessDeniedHttpException::class);
+    $this->expectException(NotFoundHttpException::class);
 
     $controller = new CGovInfographicController();
     $controller->longDescription(TRUE);
@@ -80,7 +80,7 @@ class ControllerLongDescription extends UnitTestCase {
    */
   public function testInvalidInputFalse() {
 
-    $this->expectException(AccessDeniedHttpException::class);
+    $this->expectException(NotFoundHttpException::class);
 
     $controller = new CGovInfographicController();
     $controller->longDescription(FALSE);
