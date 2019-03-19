@@ -3,6 +3,8 @@
 namespace Drupal\cgov_core;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\image\Entity\ImageStyle;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Extend Drupal's Twig_Extension class.
@@ -17,10 +19,18 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $entityTypeManager;
 
   /**
+   * The current Request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $requestStack;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, RequestStack $requestStack) {
     $this->entityTypeManager = $entityTypeManager;
+    $this->requestStack = $requestStack;
   }
 
   /**
@@ -51,28 +61,50 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   generated enclosure tag.
    */
   public function getEnclosure($nid) {
+    $thumbnail_image_style = 'cgov_thumbnail';
+
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     if (!$node) {
       return FALSE;
     }
 
     if ($node->hasField('field_image_article')) {
-      $media_field_article = $node->get('field_image_article')->entity;
-      $media_image_file = $media_field_article->get('field_media_image')->entity;
+      $displaying = 'article';
+      $media_field = $node->get('field_image_article')->entity;
+      $media_image_file = $media_field->get('field_media_image')->entity;
     }
 
     if ($node->hasField('field_image_promotional')) {
-      $media_field_promo = $node->get('field_image_article')->entity;
-      $media_image_file = $media_field_promo->get('field_media_image')->entity;
+      $displaying = 'promo';
+      $media_field = $node->get('field_image_article')->entity;
+      $media_image_file = $media_field->get('field_media_image')->entity;
     }
 
-    $file_mime_type = $media_image_file->getMimeType();
-    $file_size = $media_image_file->getSize();
+    // Get URI of media image file (eg: public://2019-03/image.jpg)
+    $image_uri = $media_image_file->getFileUri();
 
-    $image_uri = $media_image_file->uri->value;
-    $image_url = file_create_url($image_uri);
+    // Generate new derivative image from imagestyle.
+    /** @var \Drupal\image\Entity\ImageStyle $imagestyle */
+    $imagestyle = ImageStyle::load($thumbnail_image_style);
+    // Get thumbnail_uri
+    // (eg: public://styles/cgov_thumbail/public/2019-03/image.jpg).
+    $thumbnail_uri = $imagestyle->buildUri($image_uri);
+    // Create the styled image on the filesystem
+    // (needed to find final file size and mime type).
+    $imagestyle->createDerivative($image_uri, $thumbnail_uri);
+    // Convert 'public://path/image.jpg'
+    // to '/sites/default/files/path/image.jpg'.
+    $relative_imagestyle_uri = file_url_transform_relative(file_create_url($thumbnail_uri));
+    // Add HTTP scheme (HTTP[S]) and hostname.
+    $absolute_imagestyle_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() . base_path() . $relative_imagestyle_uri;
 
-    $enclosure = "<enclosure url='$image_url' length='$file_size' type='$file_mime_type' />";
+    // Get the filesystem path (not web path) to the imagestyle
+    // file so we can get filesize.
+    $imagestyle_filename = realpath(".") . $relative_imagestyle_uri;
+    $styled_file_size = filesize($imagestyle_filename);
+    $styled_mime_type = image_type_to_mime_type(exif_imagetype($imagestyle_filename));
+
+    $enclosure = "<enclosure url='$absolute_imagestyle_url' length='$styled_file_size' type='$styled_mime_type' data-imagetype='$displaying' />";
 
     return $enclosure;
   }
