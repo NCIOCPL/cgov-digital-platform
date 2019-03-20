@@ -32,6 +32,8 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
 
   // If accessible text is available, add a link to an alternate version of the
   // page containing only the accessible text.
+  // NOTE: $entity already reflects the current language, no need to switch
+  // to another translation.
   if ($build['#view_mode'] == 'full' && (count($entity->field_accessible_version) > 0)) {
 
     // Set the longdesc attribute to a URL pointing to the infographic module's
