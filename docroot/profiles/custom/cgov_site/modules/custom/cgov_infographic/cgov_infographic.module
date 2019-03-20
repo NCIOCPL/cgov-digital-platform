@@ -19,9 +19,20 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
     return;
   }
 
+  // Add enlarge_uri to the build array so it appears as a property on the
+  // content variable in the 'full' display twig template.
+  if ($build['#view_mode'] == 'full') {
+    $build['enlarge_uri'] = $build['field_infographic']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'cgov_enlarged',
+      ],
+    ]);
+  }
+
   // If accessible text is available, add a link to an alternate version of the
   // page containing only the accessible text.
-  if ($build['#view_mode'] == 'full' && isset($build['field_accessible_version'])) {
+  if ($build['#view_mode'] == 'full' && (count($entity->field_accessible_version) > 0)) {
 
     // Set the longdesc attribute to a URL pointing to the infographic module's
     // route for outputing the long description.

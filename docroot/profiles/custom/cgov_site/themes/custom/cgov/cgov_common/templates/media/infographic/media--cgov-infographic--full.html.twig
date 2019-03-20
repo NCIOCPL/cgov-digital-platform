@@ -1,5 +1,6 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
+{# {{ devel_breakpoint() }} #}
     <div class="resize-content">
         <h1>
           {{ name }}
@@ -11,7 +12,12 @@
           <figure class="image-center-full centered-set">
               <div class="centered-element">
                   {{ content.field_infographic }}
-                  <a class="article-image-enlarge no-resize" href="/PublishedContent/Images/about-nci/overview/nci-at-a-glance-enlarge.__v3000344589.gif" target="_blank">Enlarge</a>
+                  {% if content.enlarge_uri[0] %}
+                    <a  href="{{content.enlarge_uri[0]}}"
+                        target="_blank"
+                        class="article-image-enlarge no-resize"
+                    >{% trans %}Enlarge{% endtrans %}</a>
+                  {% endif %}
               </div>
           </figure>
 

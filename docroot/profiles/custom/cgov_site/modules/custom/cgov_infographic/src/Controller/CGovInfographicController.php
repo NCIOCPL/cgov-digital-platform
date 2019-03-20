@@ -39,15 +39,18 @@ class CGovInfographicController extends ControllerBase {
 
     // Only return a value if the field has a value. If it's missing or empty,
     // fall through to a NotFoundException.
-    if (count($infographic->field_accessible_version > 0)) {
+    if (count($infographic->field_accessible_version) > 0) {
 
       $field = $infographic->field_accessible_version[0];
-      $text = trim($field->getString());
+      if ($field != NULL) {
+        $text = trim($field->getString());
 
-      if (strlen($text) > 0) {
-        $response = new Response();
-        $response->setContent($text);
-        return $response;
+        if (strlen($text) > 0) {
+          $response = new Response();
+          $response->setContent($text);
+          $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
+          return $response;
+        }
       }
     }
 
