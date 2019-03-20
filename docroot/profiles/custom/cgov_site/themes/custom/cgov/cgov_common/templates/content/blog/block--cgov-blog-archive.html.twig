@@ -1,14 +1,16 @@
 <div class="contentid-1070863 slot-item last-SI">
-  <span>
-    <div class="desktop">
-      <div id="blog-archive-accordion">
-        <h3 id="archive" class="blog-archive-header" tabindex="0">Archive</h3>
-        <div id="blog-archive-accordion-year">
-          <ul>
-            {{ content }}
-          </ul>
-        </div>
+  <div class="desktop">
+    <div id="blog-archive-accordion">
+      <h3 id="archive" class="blog-archive-header" tabindex="0">{% trans %}Archive{% endtrans %}</h3>
+      <div id="blog-archive-accordion-year">
+        <ul>
+          {% for year, count in content['#archive_years'] %}
+            <li class="year">
+              <a class="" href="?filter[year]={{year}}">{{year}}</a> {{count}}
+            </li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
-  </span>
+  </div>
 </div>
