@@ -119,7 +119,17 @@ source:
          selector: para_ids/para_ids
 
 
+        -
+         name: citation_id
+         label: citation_id
+         selector: citation_id/citation_id
 
+
+
+        -
+         name: citation_ids
+         label: citation_ids
+         selector: citation_ids/citation_ids
 
 
   ids:
@@ -260,6 +270,48 @@ process:
       plugin: extract
       index:
         - 1
+
+
+
+
+
+  temp_text2:
+    plugin: migration_lookup
+    migration: citation_migration
+    no_stub: true
+    source: citation_ids
+
+  field_citation:
+    plugin: iterator
+    source: '@temp_text2'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+
+  field_citation/target_id:
+    -
+      plugin: migration_lookup
+      migration: citation_migration
+      no_stub: true
+      source: citation_id
+    -
+      plugin: extract
+      index:
+        - '0'
+
+  field_citation/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: citation_migration
+      no_stub: true
+      source: citation_id
+    -
+      plugin: extract
+      index:
+        - 1
+
+
 
 
   path:
