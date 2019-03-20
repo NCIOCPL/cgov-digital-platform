@@ -38,6 +38,11 @@ class RolesTest extends EntityKernelTestBase {
     'entity_browser',
     'entity_reference_revisions',
     'paragraphs',
+    'block',
+    'block_content',
+    'token',
+    'token_filter',
+    'editor',
   ];
 
   /**
@@ -45,6 +50,7 @@ class RolesTest extends EntityKernelTestBase {
    */
   public function setUp() {
     parent::setup();
+    $this->installEntitySchema('block_content');
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('node');
     $this->installEntitySchema('taxonomy_term');
@@ -68,6 +74,11 @@ class RolesTest extends EntityKernelTestBase {
       'content_translation',
       'cgov_core',
       'taxonomy',
+      'block',
+      'block_content',
+      'token',
+      'token_filter',
+      'editor',
     ]);
   }
 
