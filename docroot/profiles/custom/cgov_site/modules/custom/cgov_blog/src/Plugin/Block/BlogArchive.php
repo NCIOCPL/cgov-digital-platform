@@ -101,10 +101,10 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * @param string $content_type
    *   The content type machine name.
    */
-  private function getMonthsYears($cid, $content_type) {
+  private function getMonthsAndYears($cid, $content_type) {
 
     // Get all available Blog Posts in current language.
-    $entity_ids = $this->blogManager->getNodesByPostedDateDesc($content_type, '');
+    $post_nids = $this->blogManager->getNodesByPostedDateDesc($content_type, '');
 
     // Get current series ID.
     $filter_series = $this->blogManager->getSeriesId();
@@ -113,21 +113,21 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
      * Build associative array. Iterate through each Blog Post node and push
      * those where field_blog_series matches the filter series.
      */
-    foreach ($entity_ids as $entid) {
-      $node = $this->blogManager->getNodeStorage()->load($entid);
-      $node_series = $node->field_blog_series->target_id;
+    foreach ($post_nids as $post_nid) {
+      $post_node = $this->blogManager->getNodeStorage()->load($post_nid);
+      $field_blog_series = $post_node->field_blog_series->target_id;
 
-      if ($node_series == $filter_series) {
-        $date = $node->field_date_posted->value;
+      // Get the date posted field, then split for the link values.
+      if ($field_blog_series == $filter_series) {
+        $date = $post_node->field_date_posted->value;
         $date = explode('-', $date);
-
-        $blog_links[] = [
+        $dates[] = [
           'year' => $date[0],
           'month' => $date[1],
         ];
       }
     }
-    return $blog_links;
+    return $dates;
   }
 
   /**
@@ -142,7 +142,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     $archive = [];
 
     // Get an array of blog field collections to populate links.
-    $blog_links = $this->getMonthsYears($cid, $content_type);
+    $blog_links = $this->getMonthsAndYears($cid, $content_type);
     foreach ($blog_links as $link) {
       $years[] = $link['year'];
     }
