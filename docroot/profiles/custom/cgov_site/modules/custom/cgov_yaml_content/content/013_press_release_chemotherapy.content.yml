@@ -137,11 +137,9 @@
             args:
               - 'node'
               - type: 'cgov_article'
-                title: 'Feelings and Cancer'
+                title: 'Sexual Health Issues in Men with Cancer'
     - entity: 'paragraph'
       type: "cgov_internal_link"
-      field_override_title:
-        - value: 'Overridden Title'
       field_internal_link:
         - target_type: 'node'
           '#process':
@@ -149,7 +147,13 @@
             args:
               - 'node'
               - type: 'cgov_article'
-                title: 'Learning to Relax'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
     - entity: 'paragraph'
       type: "cgov_external_link"
       field_override_title:
@@ -159,12 +163,27 @@
     - entity: 'paragraph'
       type: "cgov_external_link"
       field_override_title:
-        - value: 'Google.com'
-      field_external_link:
-        - uri: 'http://www.google.com/'
-    - entity: 'paragraph'
-      type: "cgov_external_link"
-      field_override_title:
         - value: 'Yahoo.com'
       field_external_link:
         - uri: 'http://www.yahoo.com/'
+  field_related_resources_ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
