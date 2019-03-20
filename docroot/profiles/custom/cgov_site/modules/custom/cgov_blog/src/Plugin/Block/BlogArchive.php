@@ -152,6 +152,11 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       }
     }
 
+    /*
+     * TODO: Filter by language.
+     * Clean up method names.
+     * Pass in 'years-back' arg.
+     */
     return $archive;
   }
 

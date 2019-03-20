@@ -151,6 +151,7 @@ class BlogManager implements BlogManagerInterface {
     $query = $this->entityQuery->get('node');
     $query->condition('status', 1);
     $query->condition('type', $type);
+    // Squery->condition('langcode', 'en');.
     $query->sort('field_date_posted', 'DESC');
     $nids = $query->execute();
     return $nids;
