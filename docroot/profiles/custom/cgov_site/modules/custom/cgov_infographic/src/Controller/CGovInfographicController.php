@@ -37,19 +37,25 @@ class CGovInfographicController extends ControllerBase {
       throw new NotFoundHttpException();
     }
 
-    // Only return a value if the field has a value. If it's missing or empty,
-    // fall through to a NotFoundException.
-    if (count($infographic->field_accessible_version) > 0) {
+    // Only retrieve the field if it's available in the current language.
+    $language = $this->languageManager()->getCurrentLanguage()->getId();
+    if ($infographic->hasTranslation($language)) {
+      $infographic = $infographic->getTranslation($language);
 
-      $field = $infographic->field_accessible_version[0];
-      if ($field != NULL) {
-        $text = trim($field->getString());
+      // Only return a value if the field has a value. If it's missing or empty,
+      // fall through to a NotFoundException.
+      if (count($infographic->field_accessible_version) > 0) {
 
-        if (strlen($text) > 0) {
-          $response = new Response();
-          $response->setContent($text);
-          $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
-          return $response;
+        $field = $infographic->field_accessible_version[0];
+        if ($field != NULL) {
+          $text = trim($field->getString());
+
+          if (strlen($text) > 0) {
+            $response = new Response();
+            $response->setContent($text);
+            $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
+            return $response;
+          }
         }
       }
     }
