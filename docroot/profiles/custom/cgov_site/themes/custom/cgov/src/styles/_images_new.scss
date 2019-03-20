@@ -1,0 +1,45 @@
+/**********    New Drupal Styles to be refactored.    ************/
+/***** This is meant to come after _images.scss in common.css ****/
+
+
+div.embedded-entity {
+  /** Positioning Items **/
+  &.align-right {
+    float: right; // this comes from align already
+    margin: 0 0 2.5em 2.5em;
+  }
+
+  &.align-left {
+    float: left; // this comes from align already
+    margin: 0 2.5em 2.5em 0;
+  }
+
+  &.align-center {
+    margin: 2.5em auto; // left/right auto comes from align already, not top/bottom
+
+    // This needs to be only for article images.
+    figure img{
+			margin: 0 auto;
+		}
+  }
+
+  /** Image Template Styling **/
+  // This is dirty.
+  &[data-entity-embed-display="view_mode:media.image_display_article_small"] {
+    width: 25%;
+  }
+
+  &[data-entity-embed-display="view_mode:media.image_display_article_medium"] {
+    width: 40%;
+  }
+
+  &[data-entity-embed-display="view_mode:media.image_display_article_large"] {
+    width: 75%;
+  }
+
+  &[data-entity-embed-display="view_mode:media.image_display_article_full"] {
+    width: 100%;
+  }
+}
+
+// I IGNORED MOBILE BREAKPOINTS
