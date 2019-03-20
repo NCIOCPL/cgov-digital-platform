@@ -45,6 +45,8 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
     onShow: dialogSetup,
     onOk: saveGlossificationChoices,
     resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
+    // Otherwise the default height is too big
+    height: 200,
     contents: [
       {
         id: 'tab_1',
