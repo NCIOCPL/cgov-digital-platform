@@ -19,6 +19,12 @@ source:
          label: name
          selector: name
 
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
         -
          name: field_owner_blog
          label: field_owner_blog
@@ -37,10 +43,14 @@ source:
 process:
   tid: term_id
   name: name
+  langcode: langcode
 
   field_owner_blog:
     plugin: migration_lookup
-    migration: blogseries_en_migration
+    migration:
+      - blogseries_en_migration
+      - blogseries_es_migration
+
     source: field_owner_blog
     no_stub: true
 
@@ -58,3 +68,4 @@ destination:
 migration_dependencies:
   required:
     - blogseries_en_migration
+    - blogseries_es_migration

@@ -45,6 +45,15 @@ source:
          selector: '@field_short_title'
 
 
+        -
+         name: field_browser_title
+         label: field_browser_title
+         selector: '@field_browser_title'
+
+        -
+         name: field_card_title
+         label: field_card_title
+         selector: '@field_card_title'
 
         -
          name: field_page_description
@@ -135,6 +144,9 @@ process:
   langcode: langcode
 
   field_short_title: field_short_title
+  field_browser_title: field_browser_title
+  field_card_title: field_card_title
+
   field_page_description: field_page_description
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
@@ -264,5 +276,3 @@ migration_dependencies:
     - sitesectionsql_migration
     - article_en_migration
     - paragraph_es_migration
-    - internallinksql_migration
-    - externallinksql_migration
