@@ -1,10 +1,4 @@
 CKEDITOR.dialog.add('glossifyDialog', function(editor) {
-  // console.log(editor)
-  // console.log(CKEDITOR)
-  // if (typeof editor.config.contentsCss === 'object') {
-  //   editor.config.contentsCss.push(CKEDITOR.getUrl('/profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/dialogs/reference/old.css'));
-  // }
-  // editor.addContentsCss('/profiles/custom/cgov_site/modules/custom/cgov_ckeditor/js/plugins/cgov_glossifier/dialogs/reference/old.css')
   return {
     title: 'Glossify Page',
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
@@ -27,7 +21,6 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
             type: 'html',
             label: 'Select Elements to Glossify',
             html: '<div class="glossify-dialog-container"><div class="spinner">Loading...</div></div>',
-            style: 'width: 75vw; height: 75vh;'
           }
         ],
       }
@@ -70,9 +63,9 @@ function arrayifyNodelist(nodeList){
 function requestGlossification() {
   // This is how we blow away the reset CSS
   // But we'll need to recreate a lot of it to retain the drupal UI look.
-  // this.getElement().removeClass('cke_reset_all');
-  // This should eventually allow us to hook in and override. Still not working.
-  // this.getElement().addClass("glossify-dialog-container")
+  this.getElement().removeClass('cke_reset_all');
+  // This should eventually allow us to hook in and override.
+  this.getElement().addClass("cgov_reset_all")
 
   // ### This gets us the html content of the editor that called the dialog.
   const rawBody = this.getParentEditor().getData();
