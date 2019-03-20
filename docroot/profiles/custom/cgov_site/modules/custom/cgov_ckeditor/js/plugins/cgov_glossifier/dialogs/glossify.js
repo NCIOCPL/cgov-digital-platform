@@ -1,4 +1,3 @@
-
 // #################################################
 // ############ dIE dIE dIE my dar11ing ############
 // #################################################
@@ -352,14 +351,14 @@ function createGlossificationTermOptionElementString(termText, termId, termLangu
   // Then when I strip the checkboxes I can build the anchor tag.
   // This is because, even on percussion now, clicking the links causes you to be
   // directed to an error page. That would avoid the issue.
-  const firstStyles = isFirstOccurenceOfTerm ? "background-color: #ffff00;" : "";
-  const labelStyle = "display: inline-block;" + firstStyles;
+  const firstOccurenceClassName = isFirstOccurenceOfTerm ? "glossify-dialog__term--first" : "";
+  const classlist = "glossify-dialog__term " + firstOccurenceClassName
   const wrappedTerm =
     "<label "
     + "data-term-id='" + termId + "' "
     + "data-language='" + termLanguage + "' "
-    + "style='"
-    + labelStyle
+    + "class='"
+    + classlist
     + "' data-glossify-label>"
     + termText
     + "<input type='checkbox'"

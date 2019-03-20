@@ -72,12 +72,7 @@
   padding-left: 10px;
   padding-right: 0;
 }
-.cgov_reset_all .cke_dialog_body label {
-  display: table;
-  margin: 0 0 0.1em;
-  padding: 0;
-  font-weight: bold;
-}
+
 .cgov_reset_all .cke_dialog_body .cke_dialog_ui_input_text,
 .cgov_reset_all .cke_dialog_body .cke_dialog_ui_input_textarea,
 .cgov_reset_all .cke_dialog_body div.cke_dialog_ui_input_select {
@@ -242,9 +237,9 @@
   text-shadow: 0 1px hsla(0, 0%, 0%, 0.5);
 }
 
-.cgov_reset_all table {
-  width: inherit;
-  width: 90vw;
+.cgov_reset_all table.cke_dialog {
+  width: 80vw;
+  max-width: 900px;
 }
 
 .cgov_reset_all tr {
@@ -259,17 +254,34 @@
   padding: 0;
 }
 
-.cgov_reset_all .cke_dialog_body label {
-  cursor: pointer;
-}
-
 .cgov_reset_all .cke_dialog_body label input[type=checkbox] {
-  margin: 0 3px;
+  margin-left: 5px;
 }
 
 .glossify-dialog-container {
   padding: 0 1em;
   max-height: 70vh;
   overflow-y: scroll;
-  /* max-width: 85vw; */
 }
+
+.cke_dialog_body .glossify-dialog__term {
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 0 5px;
+  transition: 150ms;
+}
+
+.cke_dialog_body .glossify-dialog__term:hover, .cke_dialog_body .glossify-dialog__term:focus {
+  background: rgba(0,0,0,0.1);
+}
+
+.cke_dialog_body .glossify-dialog__term--first {
+  background: #d7ecff;
+}
+
+.cke_dialog_body .glossify-dialog__term--first:hover, .cke_dialog_body .glossify-dialog__term--first:focus {
+  background: #a5d5ff;
+}
+
+/* TODO: Keyboard accessibliity and focus */
