@@ -67,7 +67,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();
-      $content_type = $curr_entity->bundle();
       $series = $this->blogManager->getSeriesEntity();
       $archive_opts['group_by'] = $series->field_archive_group_by->getValue()['0']['value'];
       $archive_opts['years_back'] = $series->field_archive_back_years->getValue()['0']['value'];
@@ -78,10 +77,10 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Set return values by Archive field selection.
     if ($archive_opts['group_by'] == '1') {
-      $archive = $this->drawArchiveByMonth($content_id, $content_type);
+      $archive = $this->drawArchiveByMonth($content_id, 'cgov_blog_post');
     }
     elseif ($archive_opts['group_by'] == '0') {
-      $archive = $this->drawArchiveByYear($content_id, $content_type);
+      $archive = $this->drawArchiveByYear($content_id, 'cgov_blog_post');
     }
     else {
       return [];
@@ -103,14 +102,17 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The content type machine name.
    */
   private function getMonthsYears($cid, $content_type) {
-    // Query to retrieve available nodes.
+
+    // Get all available Blog Posts in current language.
     $entity_ids = $this->blogManager->getNodesByPostedDateDesc($content_type, '');
 
-    // Create series filter.
-    $filter_node = $this->blogManager->getNodeStorage()->load($cid);
-    $filter_series = $filter_node->field_blog_series->target_id;
+    // Get current series ID.
+    $filter_series = $this->blogManager->getSeriesId();
 
-    // Build associative array.
+    /*
+     * Build associative array. Iterate through each Blog Post node and push
+     * those where field_blog_series matches the filter series.
+     */
     foreach ($entity_ids as $entid) {
       $node = $this->blogManager->getNodeStorage()->load($entid);
       $node_series = $node->field_blog_series->target_id;
@@ -169,22 +171,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The content type machine name.
    */
   private function drawArchiveByMonth($cid, $content_type) {
-    $archive = [];
-
-    // Get an array of blog field collections to populate links.
-    $blog_links = $this->getMonthsYears($cid, $content_type);
-    foreach ($blog_links as $link) {
-      $years[] = $link['year'];
-    }
-
-    // Get counts and values for each available year.
-    if (isset($years) && $years[0]) {
-      foreach (array_count_values($years) as $year => $count) {
-        $archive[$year] = strval($count) . 'MONTH_PH';
-      }
-    }
-
-    return $archive;
+    return $this->drawArchiveByYear($cid, $content_type);
   }
 
 }
