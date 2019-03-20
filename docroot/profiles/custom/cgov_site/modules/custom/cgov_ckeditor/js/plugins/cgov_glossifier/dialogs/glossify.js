@@ -42,7 +42,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   return {
     title: 'Glossify Page',
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
-    onShow: requestGlossification,
+    onShow: dialogSetup,
     onOk: saveGlossificationChoices,
     resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
     contents: [
@@ -64,26 +64,30 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   };
 })
 
-function requestGlossification() {
-  // This is how we blow away the bulk of the seven/ckeditor reset CSS
-  this.getElement().removeClass('cke_reset_all');
-  // But we'll need to recreate a lot of it to retain the drupal UI look.
-  // This allows us to replicate the ckeditor-dialog.css file but with changes.
-  this.getElement().addClass("cgov_reset_all")
+function dialogSetup(){
+  // 'this' refers to CKEDITOR.dialog;
+  // https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dialog.html
+  uiSetup(this);
+  requestGlossification(this);
+}
 
+/**
+ *
+ * @param {CKEDITOR.dialog} dialog
+ */
+function requestGlossification(dialog) {
   // This gets us the html content of the editor that called the dialog.
-  const rawBody = this.getParentEditor().getData();
+  const rawBody = dialog.getParentEditor().getData();
   const preparedBody = prepareEditorBodyForGlossificationRequest(rawBody);
 
   // We have to nest our request in a preliminary request so that we can first
   // retrieve the necessary csrf token to make an authenticated request to the api.
   // NOTE: Nested jquery calls make it rough to main the this context for using getElement later
-  const this_editor = this;
   jQuery.get(Drupal.url('session/token'))
     .done(function (data) {
       const csrfToken = data;
       jQuery.ajax({
-        context: this_editor,
+        context: dialog,
         url: '/pdq/api/glossifier',
         method: 'POST',
         headers: {
@@ -102,7 +106,7 @@ function requestGlossification() {
         }),
       })
       .done(function(data) {
-        handleGlossifierResponse.call(this, preparedBody, data)
+        handleGlossifierResponse.call(dialog, preparedBody, data);
       })
       // TODO: Error Handling for non 200
     });
@@ -130,6 +134,55 @@ function saveGlossificationChoices() {
   // Note: editor.insertHtml does not clear previous contents of editor. This does.
   currentEditor.setData(htmlArea);
 }
+
+// #########################################
+// ############# UI Helpers ################
+// #########################################
+
+/**
+ *
+ * @param {CKEDITOR.dialog} dialog
+ */
+function uiSetup(dialog){
+  overrideDialogResetClass(dialog);
+  resetDialogPositionToCenter(dialog);
+}
+
+/**
+ * The base core/seven underlying cgov_admin has a few different
+ * stylesheets reseting the properties of CKEDITOR dialogs. This
+ * hack let's us disable the bulk of them and add our own
+ * customizations in instead.
+ *
+ * @param {CKEDITOR.dialog} dialog
+ */
+function overrideDialogResetClass(dialog){
+  // This is how we blow away the bulk of the seven/ckeditor reset CSS
+  dialog.getElement().removeClass('cke_reset_all');
+  // But we'll need to recreate a lot of it to retain the drupal UI look.
+  // This allows us to replicate the ckeditor-dialog.css file but with changes.
+  dialog.getElement().addClass("cgov_reset_all")
+}
+
+/**
+ * Dialog positioning is quite wonky and we need to manually set it.
+ *
+ * @param {CKEDITOR.dialog} dialog
+ */
+function resetDialogPositionToCenter(dialog){
+  // NOTE: window.innerWidth would include scrollbar.
+  const windowWidth = document.body.clientWidth;
+  const windowHeight = window.innerHeight;
+
+  const dialogWidth = dialog.getSize().width;
+  const dialogHeight = dialog.getSize().height;
+
+  const xPos = (windowWidth - dialogWidth) / 2;
+  const yPos = (windowHeight - dialogHeight) / 2;
+
+  dialog.move(xPos, yPos);
+}
+
 
 // #########################################
 // ######### Pre-Request Helpers ###########
@@ -293,7 +346,9 @@ function handleGlossifierResponse(preparedBody, responseArray) {
     const inputTag = labelTag.querySelector('input');
     inputTag.checked = true;
     span.replaceWith(labelTag);
-  })
+  });
+  // Since the dialog can expand after loading the contents, we need to fix the positioning so it's not pushed down off the page.
+  resetDialogPositionToCenter(this);
 }
 
 /**
