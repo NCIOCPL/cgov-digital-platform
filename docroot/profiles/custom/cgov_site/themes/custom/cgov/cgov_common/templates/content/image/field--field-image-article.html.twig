@@ -1,4 +1,6 @@
 {% for item in items %}
-  {# This should realy control the right alignment #}
-  {{item.content}}
+  {# Fake an entity embed #}
+  <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
+    {{item.content}}
+  </div>
 {% endfor %}
