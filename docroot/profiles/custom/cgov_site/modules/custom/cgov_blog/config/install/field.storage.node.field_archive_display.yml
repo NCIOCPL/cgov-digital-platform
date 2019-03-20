@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_archive_display
+field_name: field_archive_display
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Month
+      label: Month
+    -
+      value: Year
+      label: Year
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 2
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

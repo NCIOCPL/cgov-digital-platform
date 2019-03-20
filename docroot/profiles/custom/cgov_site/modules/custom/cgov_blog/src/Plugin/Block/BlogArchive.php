@@ -68,18 +68,28 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();
       $content_type = $curr_entity->bundle();
+      $series = $this->blogManager->getSeriesEntity();
+      $archive_display = $series->field_archive_display->getValue()['0']['value'];
+    }
+    else {
+      return [];
     }
 
-    // TODO: Add check for year vs. month vs. none.
-    $archive_years = $this->drawArchiveByYear($content_id, $content_type);
-    $build = [
-      '#archive_years' => $archive_years,
-    ];
+    // Set return values by Archive field selection.
+    if ($archive_display == 'Month') {
+      $my_archive = $this->drawArchiveByMonth($content_id, $content_type);
+    }
+    elseif ($archive_display == 'Year') {
+      $my_archive = $this->drawArchiveByYear($content_id, $content_type);
+    }
+    else {
+      return [];
+    }
 
-    /*
-    1. Count totals for each year
-    2. Further sort all Blog Posts by month (if flag is set)
-     */
+    // Return our archive link array.
+    $build = [
+      '#archive_years' => $my_archive,
+    ];
     return $build;
   }
 
@@ -138,6 +148,33 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     if (isset($years) && $years[0]) {
       foreach (array_count_values($years) as $year => $count) {
         $archive[$year] = strval($count);
+      }
+    }
+
+    return $archive;
+  }
+
+  /**
+   * Get a collection of years and months. TODO: Replace dummy content.
+   *
+   * @param string $cid
+   *   The nid of the current content item.
+   * @param string $content_type
+   *   The content type machine name.
+   */
+  private function drawArchiveByMonth($cid, $content_type) {
+    $archive = [];
+
+    // Get an array of blog field collections to populate links.
+    $blog_links = $this->getMonthsYears($cid, $content_type);
+    foreach ($blog_links as $link) {
+      $years[] = $link['year'];
+    }
+
+    // Get counts and values for each available year.
+    if (isset($years) && $years[0]) {
+      foreach (array_count_values($years) as $year => $count) {
+        $archive[$year] = strval($count) . 'MONTH_PH';
       }
     }
 
