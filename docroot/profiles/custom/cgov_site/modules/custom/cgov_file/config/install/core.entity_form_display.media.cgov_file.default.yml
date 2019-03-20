@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.media.cgov_file.field_browser_title
     - field.field.media.cgov_file.field_card_title
     - field.field.media.cgov_file.field_date_display_mode
@@ -9,6 +10,7 @@ dependencies:
     - field.field.media.cgov_file.field_date_reviewed
     - field.field.media.cgov_file.field_date_updated
     - field.field.media.cgov_file.field_feature_card_description
+    - field.field.media.cgov_file.field_file_attachment_size
     - field.field.media.cgov_file.field_list_description
     - field.field.media.cgov_file.field_media_file
     - field.field.media.cgov_file.field_pretty_url
@@ -19,6 +21,7 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - entity_browser
     - file
     - path
 id: media.cgov_file.default
@@ -114,11 +117,16 @@ content:
   field_site_section:
     weight: 1
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   langcode:
     type: language_select
@@ -163,4 +171,5 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_file_attachment_size: true
