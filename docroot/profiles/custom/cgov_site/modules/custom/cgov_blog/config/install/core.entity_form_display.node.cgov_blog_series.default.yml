@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
-    - field.field.node.cgov_blog_series.body
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
@@ -13,7 +12,6 @@ dependencies:
     - field.field.node.cgov_blog_series.field_feature_card_description
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
-    - field.field.node.cgov_blog_series.field_intro_text
     - field.field.node.cgov_blog_series.field_list_description
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
@@ -22,6 +20,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_recommended_content_header
     - field.field.node.cgov_blog_series.field_search_engine_restrictions
     - field.field.node.cgov_blog_series.field_short_title
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
     - field.field.node.cgov_blog_series.field_site_section
     - image.style.thumbnail
     - node.type.cgov_blog_series
@@ -53,7 +52,7 @@ content:
     type: options_select
     region: content
   field_banner_image:
-    weight: 16
+    weight: 17
     settings:
       preview_image_style: thumbnail
       progress_indicator: throbber
@@ -93,7 +92,7 @@ content:
     type: string_textfield
     region: content
   field_feedburner_url:
-    weight: 14
+    weight: 15
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -101,7 +100,7 @@ content:
     type: link_default
     region: content
   field_image_promotional:
-    weight: 17
+    weight: 18
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
@@ -139,7 +138,7 @@ content:
     type: string_textfield
     region: content
   field_pretty_url:
-    weight: 2
+    weight: 14
     settings:
       size: 60
       placeholder: ''
@@ -147,13 +146,13 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_recommended_content_header:
-    weight: 15
+    weight: 16
     settings:
       size: 60
       placeholder: ''
@@ -161,7 +160,7 @@ content:
     type: string_textfield
     region: content
   field_search_engine_restrictions:
-    weight: 19
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -173,6 +172,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_show_list_thumbnails:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_site_section:
     weight: 1
@@ -189,13 +194,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 20
+    weight: 21
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 21
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -208,9 +213,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  body: true
   created: true
-  field_intro_text: true
   promote: true
   status: true
   sticky: true
