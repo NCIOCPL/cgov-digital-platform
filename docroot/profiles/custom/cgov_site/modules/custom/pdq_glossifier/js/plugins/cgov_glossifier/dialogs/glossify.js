@@ -195,27 +195,27 @@ function resetDialogPositionToCenter(dialog){
  */
 function prepareEditorBodyForGlossificationRequest(data) {
   // DEPRECATED? TODO: Determine if this needs to be kept.
-  // /**
-  // * Replace Spanish-character entities with literal values
-  // */
-  // function fixSpanish(editorContent) {
-  //   var fixedSpanish = editorContent;
-  //   fixedSpanish = fixedSpanish.split('&Aacute;').join('Á');
-  //   fixedSpanish = fixedSpanish.split('&aacute;').join('á');
-  //   fixedSpanish = fixedSpanish.split('&Eacute;').join('É');
-  //   fixedSpanish = fixedSpanish.split('&eacute;').join('é');
-  //   fixedSpanish = fixedSpanish.split('&Iacute;').join('Í');
-  //   fixedSpanish = fixedSpanish.split('&iacute;').join('í');
-  //   fixedSpanish = fixedSpanish.split('&Oacute;').join('Ó');
-  //   fixedSpanish = fixedSpanish.split('&oacute;').join('ó');
-  //   fixedSpanish = fixedSpanish.split('&Uacute;').join('Ú');
-  //   fixedSpanish = fixedSpanish.split('&uacute;').join('ú');
-  //   fixedSpanish = fixedSpanish.split('&Yacute;').join('Ý');
-  //   fixedSpanish = fixedSpanish.split('&yacute;').join('ý');
-  //   fixedSpanish = fixedSpanish.split('&Ntilde;').join('Ñ');
-  //   fixedSpanish = fixedSpanish.split('&ntilde;').join('ñ');
-  //   return fixedSpanish;
-  // }
+  /**
+  * Replace Spanish-character entities with literal values
+  */
+  function fixSpanish(editorContent) {
+    var fixedSpanish = editorContent;
+    fixedSpanish = fixedSpanish.split('&Aacute;').join('Á');
+    fixedSpanish = fixedSpanish.split('&aacute;').join('á');
+    fixedSpanish = fixedSpanish.split('&Eacute;').join('É');
+    fixedSpanish = fixedSpanish.split('&eacute;').join('é');
+    fixedSpanish = fixedSpanish.split('&Iacute;').join('Í');
+    fixedSpanish = fixedSpanish.split('&iacute;').join('í');
+    fixedSpanish = fixedSpanish.split('&Oacute;').join('Ó');
+    fixedSpanish = fixedSpanish.split('&oacute;').join('ó');
+    fixedSpanish = fixedSpanish.split('&Uacute;').join('Ú');
+    fixedSpanish = fixedSpanish.split('&uacute;').join('ú');
+    fixedSpanish = fixedSpanish.split('&Yacute;').join('Ý');
+    fixedSpanish = fixedSpanish.split('&yacute;').join('ý');
+    fixedSpanish = fixedSpanish.split('&Ntilde;').join('Ñ');
+    fixedSpanish = fixedSpanish.split('&ntilde;').join('ñ');
+    return fixedSpanish;
+  }
 
 	let tempData = data;
   let result = "";
@@ -249,7 +249,8 @@ function prepareEditorBodyForGlossificationRequest(data) {
 		else {
 			result += c;
 		}
-	}
+  }
+  result = fixSpanish(result);
 	return result;
 }
 
