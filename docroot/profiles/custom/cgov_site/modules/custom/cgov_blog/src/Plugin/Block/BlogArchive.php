@@ -69,18 +69,19 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       $content_id = $curr_entity->id();
       $content_type = $curr_entity->bundle();
       $series = $this->blogManager->getSeriesEntity();
-      $archive_display = $series->field_archive_display->getValue()['0']['value'];
+      $archive_opts['group_by'] = $series->field_archive_group_by->getValue()['0']['value'];
+      $archive_opts['years_back'] = $series->field_archive_back_years->getValue()['0']['value'];
     }
     else {
       return [];
     }
 
     // Set return values by Archive field selection.
-    if ($archive_display == 'Month') {
-      $my_archive = $this->drawArchiveByMonth($content_id, $content_type);
+    if ($archive_opts['group_by'] == '1') {
+      $archive = $this->drawArchiveByMonth($content_id, $content_type);
     }
-    elseif ($archive_display == 'Year') {
-      $my_archive = $this->drawArchiveByYear($content_id, $content_type);
+    elseif ($archive_opts['group_by'] == '0') {
+      $archive = $this->drawArchiveByYear($content_id, $content_type);
     }
     else {
       return [];
@@ -88,7 +89,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Return our archive link array.
     $build = [
-      '#archive_years' => $my_archive,
+      '#archive_years' => $archive,
     ];
     return $build;
   }

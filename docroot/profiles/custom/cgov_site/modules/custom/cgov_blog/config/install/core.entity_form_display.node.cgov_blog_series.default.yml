@@ -5,7 +5,8 @@ dependencies:
     - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
-    - field.field.node.cgov_blog_series.field_archive_display
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
@@ -52,8 +53,15 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_archive_display:
-    weight: 27
+  field_archive_back_years:
+    weight: 29
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_archive_group_by:
+    weight: 28
     settings: {  }
     third_party_settings: {  }
     type: options_select

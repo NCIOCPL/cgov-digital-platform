@@ -4,22 +4,22 @@ dependencies:
   module:
     - node
     - options
-id: node.field_archive_display
-field_name: field_archive_display
+id: node.field_archive_group_by
+field_name: field_archive_group_by
 entity_type: node
-type: list_string
+type: list_integer
 settings:
   allowed_values:
     -
-      value: Month
-      label: Month
-    -
-      value: Year
+      value: 0
       label: Year
+    -
+      value: 1
+      label: Month
   allowed_values_function: ''
 module: options
 locked: false
-cardinality: 2
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
