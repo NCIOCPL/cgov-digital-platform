@@ -1,0 +1,22 @@
+/* list styling shim to handle the different permutations of managed list styles */
+.list {
+  &.managed {
+    /* replaces compact list */
+    .title-only {
+      margin: 1em 0 1em 2em;
+
+      &:before {
+        content: "\2022";
+        display: inline;
+        position: relative;
+        float: left;
+        left: -0.5em;
+        top: 0.25em;
+        margin: 0 -0.2em;
+        font-size: 1.1em;
+        line-height: 0.90909em;
+        color: #2e2e2e;
+      }
+    }
+  }
+}
