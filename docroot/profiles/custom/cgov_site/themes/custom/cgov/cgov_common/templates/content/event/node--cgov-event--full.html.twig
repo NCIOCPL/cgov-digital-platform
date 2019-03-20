@@ -3,7 +3,7 @@
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
   <div class="resize-content">
-    
+
     <h1 class="event-title">{{ node.label }}</h1>
     {{ drupal_block('page_options') }}
 
@@ -14,7 +14,11 @@
     <p class="event-date-time">
       {# TODO: Update this with a better way to print dates! #}
       {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
-        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+        {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y') %}
+          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+        {% else %}
+          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+        {% endif %}
       {% else %}
         {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
         {% if content.field_all_day_event[0]['#markup'] == "Off" %}
@@ -29,11 +33,11 @@
         {% if content.field_venue|field_value %}
           <span class="event-location-venue">{{ content.field_venue }}</span>
         {% endif %}
-        {% if content.field_city_state|field_value %}
-          <span class="event-location-city-state">{{ content.field_city_state }}</span>
-        {% endif %}
         {% if content.field_room|field_value %}
           <span class="event-location-room">{{ content.field_room }}</span>
+        {% endif %}
+        {% if content.field_city_state|field_value %}
+          <span class="event-location-city-state">{{ content.field_city_state }}</span>
         {% endif %}
       </p>
     {% endif %}
@@ -41,7 +45,7 @@
     {# TODO: .ics link creation
       <p>Add to Outlook Calendar</p>
     #}
-    
+
       {{ content.body }}
     </div>
 
