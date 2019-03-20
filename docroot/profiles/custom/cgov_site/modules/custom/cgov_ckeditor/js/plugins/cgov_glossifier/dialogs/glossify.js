@@ -58,7 +58,7 @@ CKEDITOR.dialog.add('glossifyDialog', function(editor) {
             id: 'html',
             type: 'html',
             label: 'Select Elements to Glossify',
-            html: '<div class="glossify-dialog-container"><div class="spinner">Loading...</div></div>',
+            html: '<div class="glossify-dialog-container"><div class="glossify-dialog__spinner-outer"><div class="glossify-dialog__spinner-inner"></div></div></div>',
           }
         ],
       }
