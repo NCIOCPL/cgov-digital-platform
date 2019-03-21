@@ -294,7 +294,7 @@ function wrapTermToSaveState(match, firstCaptureGroup) {
   const wrappedTerm =
     "<span rel='glossified' data-id='" + id
     + "' data-language='" + language
-    + "' data-term='" + termMatch + "'/>";
+    + "' data-term='" + termMatch + "'></span>";
 	return wrappedTerm;
 }
 
