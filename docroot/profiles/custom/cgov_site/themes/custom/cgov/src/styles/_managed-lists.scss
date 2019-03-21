@@ -3,7 +3,7 @@
   &.managed {
     li {
       &.media {
-        margin: 2em mq-px2em(-15px);
+        margin: 2em 0;
 
         &:first-child {
           margin-top: 1em;
@@ -11,6 +11,7 @@
 
         @include break(small) {
           display: flex;
+          width: 100%;
         }
 
         > .container {
@@ -26,9 +27,10 @@
         .list-item-image {
           display: none;
           margin: 0;
-
+          
           @include break(medium) {
             display: block;
+            flex: 0 0 auto;
             width: 16.7%;
           }
         }

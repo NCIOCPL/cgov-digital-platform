@@ -594,6 +594,23 @@ parent accordion in all breakpoints. */
 	}
 }
 
+.list {
+	&.managed {
+		@extend .row;
+		max-width: 62.5em;
+		margin: 0 auto;
+		
+		@include break(xlarge) {
+			max-width: 1200px;
+		}
+
+		ul{
+			@extend .card-thumbnail;
+			padding: 1em 0;
+		}
+	}
+}
+
 
 /********************* END Home Page Styles ******************************************/
 
