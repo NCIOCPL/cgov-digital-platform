@@ -143,7 +143,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Get an array of years and months.
     $arch_dates = $this->getMonthsAndYears($cid);
-    $min_date = intval(date('Y') - $years_back);
+    $min_year = intval(date('Y') - $years_back);
     $archive = [];
 
     // Add each year value to an array.
@@ -154,7 +154,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     // Get counts and values for each available year.
     if (isset($years) && $years[0]) {
       foreach (array_count_values($years) as $year => $count) {
-        if (intval($year) > $min_date) {
+        if (intval($year) > $min_year) {
           $archive[$year] = strval($count);
         }
       }
@@ -174,7 +174,25 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     /*
      * TODO: Filter by language.
      */
-    return $this->drawArchiveByYear($cid);
+    // Get an array of years and months.
+    $arch_dates = $this->getMonthsAndYears($cid);
+    $min_year = intval(date('Y') - $years_back);
+    $archive = [];
+
+    // Add each year value to an array.
+    foreach ($arch_dates as $arch_date) {
+      $monthyears[] = $arch_date['year'] . $arch_date['month'] . ' (debug)';
+    }
+
+    // Get counts and values for each available year.
+    if (isset($monthyears) && $monthyears[0]) {
+      foreach (array_count_values($monthyears) as $monthyear => $count) {
+        if (intval(substr($monthyear, 0, 4)) > $min_year) {
+          $archive[$monthyear] = strval($count);
+        }
+      }
+    }
+    return $archive;
   }
 
 }
