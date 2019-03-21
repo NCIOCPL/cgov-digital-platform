@@ -85,7 +85,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Return our archive link array.
     $build = [
-      '#archive_years' => $archive,
+      '#archive_data' => $archive,
       '#archive_granularity' => $group_by,
     ];
     return $build;

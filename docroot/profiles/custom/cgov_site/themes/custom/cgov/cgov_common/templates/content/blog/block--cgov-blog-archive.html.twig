@@ -4,7 +4,7 @@
    </h3>
    <div id="blog-archive-accordion-year" class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion ui-widget accordion-content-active" aria-labelledby="archive" role="tablist" aria-hidden="true" style="">
       <ul>
-         {% for year, count in content['#archive_years'] %}
+         {% for year, count in content['#archive_data'] %}
             <li class="year">
                <a class="" href="?filter[year]={{year}}">{{year}}</a> {{count}}
             </li>
