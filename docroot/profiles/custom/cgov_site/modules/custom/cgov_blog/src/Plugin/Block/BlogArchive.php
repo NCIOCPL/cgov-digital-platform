@@ -75,15 +75,9 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       return [];
     }
 
-    // Set years_back to default of '5' if not set.
-    $years_back = isset($years_back) ? intval($years_back) : 5;
-
     // Set return values by Archive field selection.
-    if ($group_by == '1') {
-      $archive = $this->drawArchiveByMonth($content_id, $years_back);
-    }
-    elseif ($group_by == '0') {
-      $archive = $this->drawArchiveByYear($content_id, $years_back);
+    if (isset($group_by) && isset($years_back)) {
+      $archive = $this->drawArchiveData($content_id, $years_back);
     }
     else {
       return [];
@@ -92,6 +86,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     // Return our archive link array.
     $build = [
       '#archive_years' => $archive,
+      '#archive_granularity' => $group_by,
     ];
     return $build;
   }
@@ -132,37 +127,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get a collection of years.
-   *
-   * @param string $cid
-   *   The node id of the current content item.
-   * @param string $years_back
-   *   The number of archive years to show.
-   */
-  private function drawArchiveByYear($cid, $years_back) {
-
-    // Get an array of years and months.
-    $arch_dates = $this->getMonthsAndYears($cid);
-    $min_year = intval(date('Y') - $years_back);
-    $archive = [];
-
-    // Add each year value to an array.
-    foreach ($arch_dates as $arch_date) {
-      $years[] = $arch_date['year'];
-    }
-
-    // Get counts and values for each available year.
-    if (isset($years) && $years[0]) {
-      foreach (array_count_values($years) as $year => $count) {
-        if (intval($year) > $min_year) {
-          $archive[$year] = strval($count);
-        }
-      }
-    }
-    return $archive;
-  }
-
-  /**
    * Get a collection of years and months. TODO: Replace dummy content.
    *
    * @param string $cid
@@ -170,7 +134,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * @param string $years_back
    *   The number of archive years to show.
    */
-  private function drawArchiveByMonth($cid, $years_back) {
+  private function drawArchiveData($cid, $years_back) {
     /*
      * TODO: Filter by language.
      */
@@ -181,7 +145,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Add each year value to an array.
     foreach ($arch_dates as $arch_date) {
-      $monthyears[] = $arch_date['year'] . $arch_date['month'] . ' (debug)';
+      $monthyears[] = $arch_date['year'] . '-' . $arch_date['month'];
     }
 
     // Get counts and values for each available year.
