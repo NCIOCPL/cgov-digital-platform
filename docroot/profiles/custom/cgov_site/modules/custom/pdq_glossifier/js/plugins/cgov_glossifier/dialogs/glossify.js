@@ -110,9 +110,15 @@ function requestGlossification(dialog) {
       .done(function(data) {
         handleGlossifierResponse.call(dialog, preparedBody, data);
       })
-      // TODO: Error Handling for non 200
-    });
-    // TODO: Error handling for non 200
+      .fail(function(jqXHR, textStatus, errorText){
+        const errorMessage = 'Glossifier request failed: \'' + jqXHR.status + ' ' + errorText + '\'';
+        handleFailedGlossifierRequest.call(dialog, errorMessage)
+      })
+    })
+    .fail(function(jqXHR, textStatus, errorText){
+      const errorMessage = 'Unable to retrieve session token: \'' + jqXHR.status + ' ' + errorText + '\'';;
+      handleFailedGlossifierRequest.call(dialog, errorMessage)
+    })
 }
 
 function saveGlossificationChoices() {
@@ -352,6 +358,25 @@ function handleGlossifierResponse(preparedBody, responseArray) {
   });
   // Since the dialog can expand after loading the contents, we need to fix the positioning so it's not pushed down off the page.
   resetDialogPositionToCenter(this);
+}
+
+/**
+ * In cases where we fail to get a response, we want to display the error message
+ * and disable the OK button (to prevent it overriding the editor body with the error message itself).
+ *
+ * Removing the OK button wholesale is a cheap way to accomplish the task. The alternative
+ * would be retasking the ok button to replicating the cancel button and then removing the cancel
+ * button instead.
+ *
+ * @param {string} errorMessage
+ */
+function handleFailedGlossifierRequest(errorMessage){
+  this.getButton('ok').getElement().$.remove();
+
+  // TODO Add in gif of spinning siren a la 1998!
+  const htmlArea = this.getElement().$.querySelector('.glossify-dialog-container');
+  htmlArea.innerHTML = "<p class='glossify-dialog__error'>" + errorMessage + "</p>";
+
 }
 
 /**
