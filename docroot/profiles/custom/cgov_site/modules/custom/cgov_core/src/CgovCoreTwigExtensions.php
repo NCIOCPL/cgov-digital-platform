@@ -3,6 +3,7 @@
 namespace Drupal\cgov_core;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\image\Entity\ImageStyle;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -19,6 +20,13 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $entityTypeManager;
 
   /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * The current Request object.
    *
    * @var \Symfony\Component\HttpFoundation\Request
@@ -28,8 +36,9 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   /**
    * Constructs a new CgovNavigationManager class.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, RequestStack $requestStack) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RequestStack $requestStack) {
     $this->entityTypeManager = $entityTypeManager;
+    $this->languageManager = $languageManager;
     $this->requestStack = $requestStack;
   }
 
@@ -47,6 +56,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     return [
       new \Twig_SimpleFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
+      new \Twig_SimpleFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
     ];
   }
 
@@ -165,6 +175,48 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       $description = $node->field_list_description->value;
     }
     return $description;
+  }
+
+  /**
+   * Get the translated path to the node.
+   *
+   * Call this function with {{ get_translated_path(nid) }}.
+   * This is a workaround to the many Core issues about views not returning the
+   * proper path for translations:
+   * https://www.drupal.org/project/drupal/issues/2877994
+   * https://www.drupal.org/project/drupal/issues/2957917
+   * https://www.drupal.org/project/drupal/issues/2862511
+   * https://www.drupal.org/project/drupal/issues/2802311
+   * etc.
+   *
+   * @param int $nid
+   *   Node ID to load description from.
+   *
+   * @return string
+   *   Path to node.
+   */
+  public function getTranslatedAbsolutePath($nid) {
+    // Get current language.
+    $current_language = $this->languageManager->getCurrentLanguage()->getID();
+
+    // Load the node's translation, if available.
+    $node = $this->entityTypeManager->getStorage('node')->load($nid);
+    if ($node->hasTranslation($current_language)) {
+      $node = $node->getTranslation($current_language);
+    }
+    else {
+      return FALSE;
+    }
+
+    // Verify node was found.
+    if (!$node) {
+      return FALSE;
+    }
+
+    // Get translated absolute link.
+    $link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
+
+    return $link;
   }
 
 }

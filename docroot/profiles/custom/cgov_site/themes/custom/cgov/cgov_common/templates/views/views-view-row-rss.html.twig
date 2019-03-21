@@ -27,6 +27,8 @@
   {%- set elements = elements|merge({ (item.key) : {'value' : (item.value|trim), 'attributes' : (item.attributes) } } ) -%}
 {%- endfor -%}
 {%- set nid = elements['guid'].value -%}
+{#- Get proper translated path - views has Core issues that return wrong path for translations -#}
+{%- set link = get_translated_absolute_path(nid) -%}
 <item>
   <title>{{ title }}</title>
   <link>{{ link }}</link>
