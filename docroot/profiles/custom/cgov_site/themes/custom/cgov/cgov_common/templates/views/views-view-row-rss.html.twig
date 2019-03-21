@@ -33,6 +33,6 @@
   <pubDate {{ elements['pubDate'].attributes }}>{{ elements['pubDate'].value }}</pubDate>
   <dc:creator>admin@cancer.gov</dc:creator>
   <guid isPermaLink="true">{{ link }}</guid>
-  <description>{{ description }}</description>
+  <description>{{ get_list_description(nid) }}</description>
   {{ get_enclosure(nid) }}
 </item>

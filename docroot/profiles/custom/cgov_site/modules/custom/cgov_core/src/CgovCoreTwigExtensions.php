@@ -46,6 +46,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   public function getFunctions() {
     return [
       new \Twig_SimpleFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
+      new \Twig_SimpleFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
     ];
   }
 
@@ -136,6 +137,36 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     }
 
     return $enclosure;
+  }
+
+  /**
+   * Generate <enclosure url='x' length='9' type='mime/type' /> tag from NID.
+   *
+   * Call this function with {{ get_enclosure(node.nid)|raw }}
+   *
+   * @param int $nid
+   *   Node ID to create enclosure tag from.
+   *
+   * @return string
+   *   generated enclosure tag.
+   */
+  public function getListDescription($nid) {
+    // Load the current node.
+    $node = $this->entityTypeManager->getStorage('node')->load($nid);
+    if (!$node) {
+      return FALSE;
+    }
+
+    // Check for available images to display.
+    if ($node->hasField('field_page_description')) {
+      $description = $node->field_page_description->value;
+    }
+    if ($node->hasField('field_list_description') && !$node->field_list_description->isEmpty()) {
+      $description = $node->field_list_description->value;
+    }
+
+    return $description;
+
   }
 
 }
