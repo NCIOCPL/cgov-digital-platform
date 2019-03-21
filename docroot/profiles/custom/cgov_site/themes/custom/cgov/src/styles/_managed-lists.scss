@@ -1,30 +1,76 @@
 /* list styling shim to handle the different permutations of managed list styles */
 .list {
   &.managed {
+    li {
+      &.media {
+        margin: 2em mq-px2em(-15px);
+
+        &:first-child {
+          margin-top: 1em;
+        }
+
+        @include break(small) {
+          display: flex;
+        }
+
+        > .container {
+          padding: 0 mq-px2em(15px);
+
+          + .container {
+            margin: 0;
+            padding: 0 mq-px2em(15px);
+            width: auto;
+          }
+        }
+
+        .list-item-image {
+          display: none;
+          margin: 0;
+
+          @include break(medium) {
+            display: block;
+            width: 16.7%;
+          }
+        }
+
+        .title-and-desc {
+          flex: 1 1 auto;
+          margin: 0;
+          width: auto;
+
+          h3 {
+            font-size: mq-px2em(16px);
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
     /* replaces compact list */
     .title-only {
       margin: 1em 0 1em 2em;
 
       &:before {
+        color: #2e2e2e;
         content: "\2022";
         display: inline;
-        position: relative;
         float: left;
-        left: -0.5em;
-        top: 0.25em;
-        margin: 0 -0.2em;
         font-size: 1.1em;
+        position: relative;
+        left: -0.5em;
         line-height: 0.90909em;
-        color: #2e2e2e;
+        margin: 0 -0.2em;
+        top: 0.25em;
       }
     }
 
     .title-desc {
-        h3 {
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: mq-px2em(16px);
-        }
+      h3 {
+        font-size: mq-px2em(16px);
+        margin-bottom: 0;
+        margin-top: 0;
+      }
     }
   }
 }
