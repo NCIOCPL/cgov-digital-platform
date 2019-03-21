@@ -53,6 +53,8 @@ class BlogManager implements BlogManagerInterface {
     $this->routeMatcher = $route_matcher;
   }
 
+  /* ======= BEGIN concrete methods ======= */
+
   /**
    * {@inheritdoc}
    */
@@ -94,28 +96,9 @@ class BlogManager implements BlogManagerInterface {
     return $seriesNode;
   }
 
-  /**
-   * Get the Blog Series ID.
-   */
-  public function getSeriesId() {
-    $series = $this->getSeriesEntity();
-    return $series->id();
-  }
+  /* ======= END concrete methods ======= */
 
-  /**
-   * Get the Blog Series ID.
-   */
-  public function getSeriesCategories() {
-    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
-    return $taxonomy;
-  }
-
-  /**
-   * Get the Blog Featured content.
-   */
-  public function getBlogFeaturedContent() {
-    return '';
-  }
+  /* ======= BEGIN utility methods ======= */
 
   /**
    * Create a new node storage instance.
@@ -140,21 +123,69 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesId() {
+    $series = $this->getSeriesEntity();
+    return $series->id();
+  }
+
+  /* ======= END utility methods ======= */
+
+  /* ======= BEGIN Blog Series field methods ======= */
+
+  /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesCategories() {
+    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
+    return $taxonomy;
+  }
+
+  /**
+   * Get the Blog Featured content.
+   */
+  public function getSeriesFeaturedContent() {
+    return '';
+  }
+
+  /* ======= BEGIN Blog Post field methods ======= */
+
+  /* ======= BEGIN data methods ======= */
+
+  /**
    * Return query results based on date posted.
+   *
+   * @param string $type
+   *   Content type or bundle.
+   */
+  public function getNodesByPostedDateDesc($type) {
+    $query = $this->entityQuery->get('node');
+    $query->condition('status', 1);
+    $query->condition('type', $type);
+    $query->sort('field_date_posted', 'DESC');
+    $nids = $query->execute();
+    return $nids;
+  }
+
+  /**
+   * Return query results based on date posted and language.
    *
    * @param string $type
    *   Content type or bundle.
    * @param string $lang
    *   Language of current node.
    */
-  public function getNodesByPostedDateDesc($type, $lang) {
+  public function getNodesByPostedDateLangDesc($type, $lang) {
     $query = $this->entityQuery->get('node');
     $query->condition('status', 1);
     $query->condition('type', $type);
-    // Squery->condition('langcode', 'en');.
+    $query->condition('langcode', $lang);
     $query->sort('field_date_posted', 'DESC');
     $nids = $query->execute();
     return $nids;
   }
+
+  /* ======= END data methods ======= */
 
 }

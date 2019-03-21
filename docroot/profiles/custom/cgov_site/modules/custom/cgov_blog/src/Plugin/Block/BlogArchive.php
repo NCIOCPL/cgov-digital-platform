@@ -126,6 +126,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
      * TODO: Filter by language.
      */
     // Get all available Blog Posts in current language.
+    $dates = [];
     $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
 
     // Get current series ID.
@@ -149,6 +150,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
         ];
       }
     }
+
     return $dates;
   }
 
