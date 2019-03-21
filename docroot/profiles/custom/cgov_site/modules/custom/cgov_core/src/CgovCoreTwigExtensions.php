@@ -53,7 +53,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   /**
    * Generate <enclosure url='x' length='9' type='mime/type' /> tag from NID.
    *
-   * Call this function with {{ get_enclosure(node.nid)|raw }}
+   * Call this function with {{ get_enclosure(nid) }}
    *
    * @param int $nid
    *   Node ID to create enclosure tag from.
@@ -68,7 +68,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     // Image style to use when rendering images.
     $thumbnail_image_style = 'cgov_thumbnail';
 
-    // Load the current node.
+    // Load the node.
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     if (!$node) {
       return FALSE;
@@ -140,33 +140,31 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   }
 
   /**
-   * Generate <enclosure url='x' length='9' type='mime/type' /> tag from NID.
+   * Select either the List Description or the Page/Meta Description.
    *
-   * Call this function with {{ get_enclosure(node.nid)|raw }}
+   * Call this function with {{ get_list_description (nid) }}
    *
    * @param int $nid
-   *   Node ID to create enclosure tag from.
+   *   Node ID to load description from.
    *
    * @return string
-   *   generated enclosure tag.
+   *   selected description.
    */
   public function getListDescription($nid) {
-    // Load the current node.
+    // Load the node.
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
     if (!$node) {
       return FALSE;
     }
 
-    // Check for available images to display.
+    // Check for available descriptions to display.
     if ($node->hasField('field_page_description')) {
       $description = $node->field_page_description->value;
     }
     if ($node->hasField('field_list_description') && !$node->field_list_description->isEmpty()) {
       $description = $node->field_list_description->value;
     }
-
     return $description;
-
   }
 
 }
