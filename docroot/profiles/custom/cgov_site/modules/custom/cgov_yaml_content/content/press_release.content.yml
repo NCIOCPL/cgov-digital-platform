@@ -195,16 +195,17 @@
 - entity: "node"
   type: "cgov_press_release"
   title: "BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk"
-  field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-        - 'media'
-        - bundle: 'cgov_image'
-          name: 'The BRCA Exchange graphic'
   langcode: en
   status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2019'
+  field_pretty_url:
+    value: 'BRCA-exchange'
   moderation_state:
     value: 'published'
   field_browser_title:
@@ -215,8 +216,6 @@
     value: "Press Release Title English"
   field_press_release_type:
     value: 'NCI Press Release'
-  field_press_release_type__ES:
-    value: 'Comunicado de prensa del NCI'
   field_date_display_mode:
     - value: 'posted'
     - value: 'reviewed'
@@ -233,6 +232,14 @@
     value: "Short Title English"
   field_date_updated:
     value: "2019-01-09"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'The BRCA Exchange graphic'
   body:
   - format: "full_html"
     value: |
@@ -537,18 +544,24 @@
     value: "This is a feature card description"
   field_card_title:
     value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
   field_date_display_mode:
     - value: 'posted'
     - value: 'reviewed'
     - value: 'updated'
   field_list_description:
+    value: "List Description overriding meta description"
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
   field_short_title:
     value: "Short Title English"
-  field_date_posted: "2018-12-20"
-  field_date_reviewed: "2018-12-19"
-  field_date_updated: "2018-12-18"
+  field_date_posted:
+    value: "2018-12-20"
+  field_date_reviewed:
+    value: "2018-12-19"
+  field_date_updated:
+    value: "2018-12-18"
   field_image_article:
     - target_type: 'media'
       '#process':
