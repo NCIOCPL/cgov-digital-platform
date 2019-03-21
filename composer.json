@@ -54,6 +54,7 @@
         "drupal/redirect": "1.x-dev",
         "drupal/seckit": "^1.1",
         "drupal/shield": "^1.2",
+        "drupal/simplesamlphp_auth": "3.0",
         "drupal/token": "^1.5",
         "drupal/token_filter": "^1.1",
         "drupal/twig_field_value": "^1.2",
@@ -67,8 +68,7 @@
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },
-    "require-dev": {
-    },
+    "require-dev": {},
     "conflict": {
         "drupal/drupal": "*"
     },
@@ -118,6 +118,9 @@
         "cgov-clean": [
             "CGovPlatform\\composer\\Hoover::clean",
             "@composer clearcache --ansi"
+        ],
+        "post-drupal-scaffold-cmd": [
+            "cd docroot && patch -p1 <../patches/htaccess-saml.patch"
         ]
     },
     "scripts-descriptions": {
@@ -187,14 +190,17 @@
             "acquia/blt": {
                 "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
             },
-            "drupal/pathauto":{
-                "3003373 : Wrong verbose messenger method" : "https://www.drupal.org/files/issues/2018-09-30/3003373-2.patch"
+            "drupal/pathauto": {
+                "3003373 : Wrong verbose messenger method": "https://www.drupal.org/files/issues/2018-09-30/3003373-2.patch"
             },
-            "drupal/address":{
+            "drupal/address": {
                 "2856797: Missing theme suggestions for address_plain": "https://www.drupal.org/files/issues/2018-04-10/address-missing_theme_suggestions_for_address_plain-2856797-10.patch"
             },
-            "drupal/token_filter":{
+            "drupal/token_filter": {
                 "3036541: Missing token_filter schema file": "https://www.drupal.org/files/issues/2019-03-04/3036541-2-token_filter_schema.patch"
+            },
+            "drupal/simplesamlphp_auth": {
+                "2907182: Admin UI Pages not Accessible via Permission": "https://www.drupal.org/files/issues/simplesamlphp_auth-admin_ui_pages-2907182-30.patch"
             }
         },
         "drupal-scaffold": {

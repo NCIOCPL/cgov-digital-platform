@@ -278,6 +278,15 @@ class CgovUserCommands extends DrushCommands {
 
     $account->save();
 
+    // If external authentication is available, set the user up to use it.
+    if (\Drupal::hasService('externalauth.externalauth') &&
+        \Drupal::moduleHandler()->moduleExists('simplesamlphp_auth')) {
+      $externalauth = \Drupal::service('externalauth.externalauth');
+      $authname = $account->getAccountName();
+      \Drupal::modulehandler()->alter('simplesamlphp_auth_account_authname', $authname, $account);
+      $externalauth->linkExistingAccount($authname, 'simplesamlphp_auth', $account);
+    }
+
     if ($isNew) {
       $this->logger()->success(dt(
         'Created a new user !name with uid !uid',
