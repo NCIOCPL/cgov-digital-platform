@@ -77,18 +77,42 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Set return values by Archive field selection.
     if (isset($group_by) && isset($years_back)) {
-      $archive = $this->drawArchiveData($content_id, $years_back);
+      $archive = $this->drawArchiveData($content_id, $years_back, $group_by);
+      $build = [
+        '#archive_data' => $archive,
+        '#archive_granularity' => $group_by,
+      ];
     }
     else {
-      return [];
+      $build = [];
     }
 
-    // Return our archive link array.
-    $build = [
-      '#archive_data' => $archive,
-      '#archive_granularity' => $group_by,
-    ];
     return $build;
+  }
+
+  /**
+   * Get a collection of years and months. TODO: Replace dummy content.
+   *
+   * @param string $cid
+   *   The node id of the current content item.
+   * @param string $years_back
+   *   The number of archive years to show.
+   * @param string $group_by
+   *   Archive granularity (years vs. months).
+   */
+  private function drawArchiveData($cid, $years_back, $group_by) {
+    // Get an array of years and months.
+    $archive_dates = $this->getMonthsAndYears($cid);
+    $min_year = intval(date('Y') - $years_back);
+
+    // Get data based on group_by setting.
+    if ($group_by == 'month') {
+      $archive = $this->getByMonth($archive_dates, $min_year);
+    }
+    else {
+      $archive = $this->getByYear($archive_dates, $min_year);
+    }
+    return $archive;
   }
 
   /**
@@ -98,7 +122,9 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The node id of the current content item.
    */
   private function getMonthsAndYears($cid) {
-
+    /*
+     * TODO: Filter by language.
+     */
     // Get all available Blog Posts in current language.
     $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
 
@@ -127,34 +153,63 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get a collection of years and months. TODO: Replace dummy content.
+   * Get a collection of years.
    *
-   * @param string $cid
-   *   The node id of the current content item.
-   * @param string $years_back
-   *   The number of archive years to show.
+   * @param array $arch_dates
+   *   Collection of blog post dates for archive.
+   * @param string $min_year
+   *   The earliest archive year to show.
    */
-  private function drawArchiveData($cid, $years_back) {
-    /*
-     * TODO: Filter by language.
-     */
-    // Get an array of years and months.
-    $arch_dates = $this->getMonthsAndYears($cid);
-    $min_year = intval(date('Y') - $years_back);
+  private function getByYear(array $arch_dates, $min_year) {
     $archive = [];
 
     // Add each year value to an array.
     foreach ($arch_dates as $arch_date) {
-      $monthyears[] = $arch_date['year'] . '-' . $arch_date['month'];
+      $years[] = $arch_date['year'];
     }
 
     // Get counts and values for each available year.
-    if (isset($monthyears) && $monthyears[0]) {
-      foreach (array_count_values($monthyears) as $monthyear => $count) {
-        if (intval(substr($monthyear, 0, 4)) > $min_year) {
-          $archive[$monthyear] = strval($count);
+    if (isset($years) && $years[0]) {
+      foreach (array_count_values($years) as $year => $count) {
+        if (intval($year) > $min_year) {
+          $archive[$year] = strval($count);
         }
       }
+    }
+    return $archive;
+  }
+
+  /**
+   * Get a collection of months.
+   *
+   * @param array $arch_dates
+   *   Collection of blog post dates for archive.
+   * @param string $min_year
+   *   The earliest archive year to show.
+   */
+  private function getByMonth(array $arch_dates, $min_year) {
+    $archive = [];
+
+    // Add each year-month value to an array.
+    foreach ($arch_dates as $arch_date) {
+      // To use array_count_values, year and month must be a single string.
+      $yearmonths[] = $arch_date['year'] . '-' . $arch_date['month'];
+    }
+
+    // Get values and count of each available year-month combination.
+    if (isset($yearmonths) && $yearmonths[0]) {
+      foreach (array_count_values($yearmonths) as $yearmonth => $count) {
+        $yyyy_mm = explode('-', $yearmonth);
+        $year = $yyyy_mm[0];
+        $month = $yyyy_mm[1];
+
+        // Only add items up to the selected years_back.
+        if (intval($year) > $min_year) {
+          $archive[$year]['#month'][] = $month;
+          $archive[$year]['#count'][] = $count;
+        }
+      }
+
     }
     return $archive;
   }
