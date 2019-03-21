@@ -68,19 +68,22 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();
       $series = $this->blogManager->getSeriesEntity();
-      $archive_opts['group_by'] = $series->field_archive_group_by->getValue()['0']['value'];
-      $archive_opts['years_back'] = $series->field_archive_back_years->getValue()['0']['value'];
+      $group_by = $series->field_archive_group_by->getValue()['0']['value'];
+      $years_back = $series->field_archive_back_years->getValue()['0']['value'];
     }
     else {
       return [];
     }
 
+    // Set years_back to default of '5' if not set.
+    $years_back = isset($years_back) ? intval($years_back) : 5;
+
     // Set return values by Archive field selection.
-    if ($archive_opts['group_by'] == '1') {
-      $archive = $this->drawArchiveByMonth($content_id, 'cgov_blog_post');
+    if ($group_by == '1') {
+      $archive = $this->drawArchiveByMonth($content_id, $years_back);
     }
-    elseif ($archive_opts['group_by'] == '0') {
-      $archive = $this->drawArchiveByYear($content_id, 'cgov_blog_post');
+    elseif ($group_by == '0') {
+      $archive = $this->drawArchiveByYear($content_id, $years_back);
     }
     else {
       return [];
@@ -94,17 +97,15 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get a collection of years.
+   * Get a collection of years and months.
    *
    * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   *   The node id of the current content item.
    */
-  private function getMonthsAndYears($cid, $content_type) {
+  private function getMonthsAndYears($cid) {
 
     // Get all available Blog Posts in current language.
-    $post_nids = $this->blogManager->getNodesByPostedDateDesc($content_type, '');
+    $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
 
     // Get current series ID.
     $filter_series = $this->blogManager->getSeriesId();
@@ -134,31 +135,30 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * Get a collection of years.
    *
    * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   *   The node id of the current content item.
+   * @param string $years_back
+   *   The number of archive years to show.
    */
-  private function drawArchiveByYear($cid, $content_type) {
+  private function drawArchiveByYear($cid, $years_back) {
+
+    // Get an array of years and months.
+    $arch_dates = $this->getMonthsAndYears($cid);
+    $min_date = intval(date('Y') - $years_back);
     $archive = [];
 
-    // Get an array of blog field collections to populate links.
-    $blog_links = $this->getMonthsAndYears($cid, $content_type);
-    foreach ($blog_links as $link) {
-      $years[] = $link['year'];
+    // Add each year value to an array.
+    foreach ($arch_dates as $arch_date) {
+      $years[] = $arch_date['year'];
     }
 
     // Get counts and values for each available year.
     if (isset($years) && $years[0]) {
       foreach (array_count_values($years) as $year => $count) {
-        $archive[$year] = strval($count);
+        if (intval($year) > $min_date) {
+          $archive[$year] = strval($count);
+        }
       }
     }
-
-    /*
-     * TODO: Filter by language.
-     * Clean up method names.
-     * Pass in 'years-back' arg.
-     */
     return $archive;
   }
 
@@ -166,12 +166,15 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * Get a collection of years and months. TODO: Replace dummy content.
    *
    * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   *   The node id of the current content item.
+   * @param string $years_back
+   *   The number of archive years to show.
    */
-  private function drawArchiveByMonth($cid, $content_type) {
-    return $this->drawArchiveByYear($cid, $content_type);
+  private function drawArchiveByMonth($cid, $years_back) {
+    /*
+     * TODO: Filter by language.
+     */
+    return $this->drawArchiveByYear($cid);
   }
 
 }
