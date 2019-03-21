@@ -22,11 +22,11 @@
  *
  */
 #}
-{% set elements = [] %}
-{% for item in item_elements -%}
-  {% set elements = elements|merge({ (item.key) : {'value' : (item.value|trim), 'attributes' : (item.attributes) } } ) %}
-{% endfor %}
-{% set nid = elements['guid'].value %}
+{%- set elements = [] -%}
+{%- for item in item_elements -%}
+  {%- set elements = elements|merge({ (item.key) : {'value' : (item.value|trim), 'attributes' : (item.attributes) } } ) -%}
+{%- endfor -%}
+{%- set nid = elements['guid'].value -%}
 <item>
   <title>{{ title }}</title>
   <link>{{ link }}</link>
