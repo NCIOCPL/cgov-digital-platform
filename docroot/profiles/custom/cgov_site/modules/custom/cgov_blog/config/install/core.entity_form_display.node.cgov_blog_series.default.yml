@@ -5,6 +5,8 @@ dependencies:
     - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
@@ -51,6 +53,19 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_archive_back_years:
+    weight: 25
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_archive_group_by:
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_banner_image:
     weight: 17
     settings:
@@ -68,7 +83,7 @@ content:
     type: string_textfield
     region: content
   field_browser_title:
-    weight: 4
+    weight: 3
     settings:
       size: 60
       placeholder: ''
@@ -76,7 +91,7 @@ content:
     type: string_textfield
     region: content
   field_card_title:
-    weight: 6
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -84,7 +99,7 @@ content:
     type: string_textfield
     region: content
   field_feature_card_description:
-    weight: 9
+    weight: 8
     settings:
       size: 60
       placeholder: ''
@@ -115,7 +130,7 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_list_description:
-    weight: 8
+    weight: 7
     settings:
       size: 60
       placeholder: ''
@@ -130,7 +145,7 @@ content:
     type: number
     region: content
   field_page_description:
-    weight: 7
+    weight: 6
     settings:
       size: 60
       placeholder: ''
@@ -166,7 +181,7 @@ content:
     type: options_select
     region: content
   field_short_title:
-    weight: 5
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -174,7 +189,7 @@ content:
     type: string_textfield
     region: content
   field_show_list_thumbnails:
-    weight: 26
+    weight: 23
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -206,11 +221,16 @@ content:
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 3
+    weight: 2
     region: content
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 9
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

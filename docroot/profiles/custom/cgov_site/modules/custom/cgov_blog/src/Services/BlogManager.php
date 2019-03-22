@@ -4,19 +4,14 @@ namespace Drupal\cgov_blog\Services;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Blog Manager Service.
  */
 class BlogManager implements BlogManagerInterface {
-
-  /**
-   * The route matcher.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatcher;
 
   /**
    * An entity query.
@@ -33,19 +28,44 @@ class BlogManager implements BlogManagerInterface {
   protected $entityTypeManager;
 
   /**
+   * The route matcher.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatcher;
+
+  /**
+   * The path alias manager.
+   *
+   * @var \Drupal\Core\Path\AliasManagerInterface
+   */
+  protected $aliasManager;
+
+  /**
    * Constructor for BlogManager object.
    *
+   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
+   *   An entity query.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
+   *   The entity type manager service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
    *   The route matcher.
+   * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
+   *   The path alias manager.
    */
   public function __construct(
+    QueryFactory $entity_query,
     EntityTypeManagerInterface $entity_type_manager,
-    RouteMatchInterface $route_matcher) {
+    RouteMatchInterface $route_matcher,
+    AliasManagerInterface $alias_manager
+  ) {
+    $this->entityQuery = $entity_query;
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
+    $this->aliasManager = $alias_manager;
   }
+
+  /* ======= BEGIN concrete methods ======= */
 
   /**
    * {@inheritdoc}
@@ -88,28 +108,9 @@ class BlogManager implements BlogManagerInterface {
     return $seriesNode;
   }
 
-  /**
-   * Get the Blog Series ID.
-   */
-  public function getSeriesId() {
-    $series = $this->getSeriesEntity();
-    return $series->id();
-  }
+  /* ======= END concrete methods ======= */
 
-  /**
-   * Get the Blog Series ID.
-   */
-  public function getSeriesCategories() {
-    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
-    return $taxonomy;
-  }
-
-  /**
-   * Get the Blog Featured content.
-   */
-  public function getBlogFeaturedContent() {
-    return '';
-  }
+  /* ======= BEGIN utility methods ======= */
 
   /**
    * Create a new node storage instance.
@@ -132,5 +133,80 @@ class BlogManager implements BlogManagerInterface {
     $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
     return isset($taxonomy_storage) ? $taxonomy_storage : NULL;
   }
+
+  /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesId() {
+    $series = $this->getSeriesEntity();
+    return $series->id();
+  }
+
+  /* ======= END utility methods ======= */
+
+  /* ======= BEGIN Blog Series field methods ======= */
+
+  /**
+   * The the URL path for the blog series.
+   */
+  public function getSeriesPath() {
+    $nid = $this->getSeriesId();
+    $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
+    return $path;
+  }
+
+  /**
+   * Get the Blog Series ID.
+   */
+  public function getSeriesCategories() {
+    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
+    return $taxonomy;
+  }
+
+  /**
+   * Get the Blog Featured content.
+   */
+  public function getSeriesFeaturedContent() {
+    return '';
+  }
+
+  /* ======= BEGIN Blog Post field methods ======= */
+
+  /* ======= BEGIN data methods ======= */
+
+  /**
+   * Return query results based on date posted.
+   *
+   * @param string $type
+   *   Content type or bundle.
+   */
+  public function getNodesByPostedDateDesc($type) {
+    $query = $this->entityQuery->get('node');
+    $query->condition('status', 1);
+    $query->condition('type', $type);
+    $query->sort('field_date_posted', 'DESC');
+    $nids = $query->execute();
+    return $nids;
+  }
+
+  /**
+   * Return query results based on date posted and language.
+   *
+   * @param string $type
+   *   Content type or bundle.
+   * @param string $lang
+   *   Language of current node.
+   */
+  public function getNodesByPostedDateLangDesc($type, $lang) {
+    $query = $this->entityQuery->get('node');
+    $query->condition('status', 1);
+    $query->condition('type', $type);
+    $query->condition('langcode', $lang);
+    $query->sort('field_date_posted', 'DESC');
+    $nids = $query->execute();
+    return $nids;
+  }
+
+  /* ======= END data methods ======= */
 
 }
