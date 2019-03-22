@@ -25,12 +25,12 @@ if (file_exists($secrets_file)) {
 
 // Set some security and other configs that are set above, however we
 // overwrite them here to keep all changes in one area.
-$config['technicalcontact_name'] = "Your Name";
-$config['technicalcontact_email'] = "your_email@yourdomain.com";
+$config['technicalcontact_name'] = SamlSecrets::TECH_CONTACT_NAME;
+$config['technicalcontact_email'] = SamlSecrets::TECH_CONTACT_EMAIL;
 
 // Change these for your installation.
-$config['secretsalt'] = 'y0h9d13pki9qdhfm3l5nws4jjn55j6hj';
-$config['auth.adminpassword'] = 'mysupersecret';
+$config['secretsalt'] = SamlSecrets::SECRET_SALT;
+$config['auth.adminpassword'] = SamlSecrets::AUTH_ADMIN_PASSWORD;
 
 /**
  * Support SSL Redirects to SAML login pages.
