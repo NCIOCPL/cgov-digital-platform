@@ -5,8 +5,8 @@
  * Contains cgov_blog.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_form_alter().
@@ -46,10 +46,16 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 }
 
 /**
- * Implements hook_entity_presave().
+ * Implements hook_views_pre_view().
  */
-function cgov_blog_entity_presave(EntityInterface $entity) {
-  // TODO: validate selected Blog Topics before saving.
+function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  // If this is a list in a Blog Series, use 'items per page' field.
+  if ($display_id == 'block_bp_list' || $display_id == 'block_bp_list_th') {
+    $node = Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
+    if ($node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
+      $view->setItemsPerPage($node->field_num_display_posts->value);
+    }
+  }
 }
 
 /**
