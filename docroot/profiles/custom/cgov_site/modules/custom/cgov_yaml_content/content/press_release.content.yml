@@ -195,16 +195,17 @@
 - entity: "node"
   type: "cgov_press_release"
   title: "BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk"
-  field_image_article:
-  - target_type: 'media'
-    '#process':
-      callback: 'reference'
-      args:
-        - 'media'
-        - bundle: 'cgov_image'
-          name: 'The BRCA Exchange graphic'
   langcode: en
   status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2019'
+  field_pretty_url:
+    value: 'BRCA-exchange'
   moderation_state:
     value: 'published'
   field_browser_title:
@@ -215,8 +216,6 @@
     value: "Press Release Title English"
   field_press_release_type:
     value: 'NCI Press Release'
-  field_press_release_type__ES:
-    value: 'Comunicado de prensa del NCI'
   field_date_display_mode:
     - value: 'posted'
     - value: 'reviewed'
@@ -233,6 +232,14 @@
     value: "Short Title English"
   field_date_updated:
     value: "2019-01-09"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'The BRCA Exchange graphic'
   body:
   - format: "full_html"
     value: |
@@ -254,124 +261,6 @@
       <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s contact center,&nbsp;the Cancer Information Service, at 1-800-4-CANCER (1-800-422-6237).</p>
       <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
       <p></p>
-
-# https://www.cancer.gov/news-events/press-releases/2018/tMDS-AML-risk-chemo, EN & ES
-- entity: "media"
-  bundle: "cgov_image"
-  name: "tMDS-AML graphic"
-  name__ES:
-    value: "tMDS-AML graphic-ES"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_media_image:
-    - '#process':
-        callback: 'file'
-        args:
-          - 'image'
-          - type: 'module'
-            filename: 'chemo-patient-with-male-friend-article.__v10092281.jpg'
-      alt: 'tMDS-AML graphic ALT'
-      alt__ES: 'tMDS-AML graphic ALT - ES'
-  field_credit: "iStock"
-  field_credit__ES:
-    value: "iStock - ES"
-
-- entity: "node"
-  type: "cgov_press_release"
-  langcode: en
-  title: "Study finds elevated risk of certain rare blood cancers after chemotherapy for most solid tumors"
-  title__ES:
-    value: "Estudio encuentra elevado riesgo de algunos raros cánceres de la sangre después de quimioterapia para la mayoría de los tumores sólidos"
-  status: 1
-  field_site_section:
-  - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Press Releases 2018'
-  field_site_section__ES:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Comunicados de Prensa 2018'
-  field_pretty_url:
-    value: 'tMDS-AML-risk-chemo'
-  field_pretty_url__ES:
-    value: 'tMDS-AML-riesgo-quimio'
-  moderation_state:
-    value: 'published'
-  field_browser_title: "This is the Cgov Browser Title"
-  field_browser_title__ES:
-    value: "This is the Cgov Browser Title - ES"
-  field_feature_card_description:
-    value: "This is a feature card description"
-  field_feature_card_description__ES:
-    value: "This is a feature card description - ES"
-  field_card_title:
-    value: "Press Release Title English"
-  field_card_title__ES:
-    value: "Press Release Title Spanish"
-  field_press_release_type:
-    value: 'NCI Press Release'
-  field_press_release_type__ES:
-    value: 'Comunicado de prensa del NCI'
-  field_date_display_mode:
-    - value: 'posted'
-  field_list_description:
-  field_page_description:
-    value: "This is the Meta Description AKA Page Description"
-  field_page_description__ES:
-    value: "This is the Meta Description AKA Page Description - ES"
-  field_short_title:
-    value: "Short Title English"
-  field_short_title__ES:
-    value: "Short Title Spanish"
-  field_date_posted: "2018-12-20"
-  field_date_reviewed: "2018-12-19"
-  field_date_updated: "2018-12-18"
-  field_image_article:
-    - target_type: 'media'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'media'
-          - bundle: 'cgov_image'
-            name: 'tMDS-AML graphic'
-  body:
-    - format: "full_html"
-      value: |
-        <p>Findings from a new study by researchers at the National Cancer Institute (NCI) show that patients treated with chemotherapy for most solid tumors during 2000–2014 experienced an increased risk of therapy-related myelodysplastic syndrome/acute myeloid leukemia (tMDS/AML). The study, which used U.S. population-based cancer registry data from NCI’s Surveillance, Epidemiology, and End Results (SEER) program and treatment information from the SEER–Medicare database, was published December 20, 2018, in <em>JAMA Oncology</em>. NCI is part of the National Institutes of Health.</p>
-        <p>Advances in treatment over the last several decades have resulted in improved survival for patients with many types of cancer. However, survivors may be at increased risk of developing a subsequent treatment-related cancer. In this study, researchers aimed to quantify the risk of developing tMDS/AML, a rare but often fatal blood cancer, in patients treated with chemotherapy.</p>
-        <p>“We’ve known for a long time that the development of myeloid leukemia is a very rare adverse effect of some types of cancer treatments that damage cells,” said Lindsay Morton, Ph.D., lead author of the study and a senior investigator in NCI’s Division of Cancer Epidemiology and Genetics. “There have been many changes in cancer treatment over time, including the introduction of new chemotherapy drugs and drug combinations, but we didn’t know what the risk of therapy-related leukemia looked like for patients since these changes were made.”</p>
-        <p>Because tMDS/AML is rare, most data on the disease have come from case series, case–control studies, and clinical trials, which often include a relatively small number of tMDS/AML cases. In this study, investigators brought a population-based data approach to the research, with a much larger sample size and prospective data from long-term patient follow-up.</p>
-        <p>To this end, they analyzed SEER registry data on more than 700,000 patients age 20–84 in the United States with solid tumors who were diagnosed and treated with initial chemotherapy during 2000–2013 and survived at least one year after diagnosis. Of these patients, 1,619 developed tMDS/AML through 2014. When the researchers analyzed the risk of tMDS/AML by original cancer type, they found that risk was increased by 1.5-fold to more than 10-fold for 22 of the 23 solid cancer types investigated (all except colon cancer).</p>
-        <p>These findings expand the groups of survivors at risk of tMDS/AML following treatment with chemotherapy because, in the past, excess risks were established only after chemotherapy for cancers of the lung, ovary, breast, soft tissue, testis, and brain/central nervous system. In the present analysis, cumulative incidence of tMDS/AML was less than 1 percent at 10 years after chemotherapy for most solid cancer types. However, prognosis following tMDS/AML diagnosis was very poor.</p>
-        <p>Because information on the specific chemotherapy agents was not available in the SEER registry data, the researchers used the SEER–Medicare linked database to examine the patterns of use of specific chemotherapy agents during the same time period. Among 165,000 patients in the SEER–Medicare database who received initial chemotherapy for a first primary solid cancer during the study period, 2000–2013, there was a substantial rise in use of platinum-based chemotherapy agents, from 57 percent of patients in 2000–2001, to 81 percent of patients in 2012–2013. Platinum-based chemotherapy agents are known to increase risk of tMDS/AML.</p>
-        <p>“The most important message from this study is that, while advances in cancer treatment approaches have improved the prognosis for many types of cancer, the number of patients at risk of developing rare, therapy-related leukemia after cancer chemotherapy in the modern treatment era has markedly expanded,” Dr. Morton said. “Assessments of treatment risks and benefits should balance these risks and other adverse effects of chemotherapy against potential gains in survival following treatment for the initial solid cancer.”</p>
-        <p>The researchers wrote that their study shows that continued efforts to minimize exposure to leukemia-causing chemotherapy agents and to develop effective and less toxic chemotherapeutic approaches are critical going forward.</p>
-        <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
-        <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
-
-  body__ES:
-    - format: "full_html"
-      value: |
-        <p>Resultados de un nuevo estudio por investigadores del Instituto Nacional del Cáncer (NCI) muestran que los pacientes tratados con quimioterapia para la mayoría de los tumores sólidos de 2000 a 2014 experimentaron un riesgo mayor de síndrome mielodisplásico y leucemia mieloide aguda (tMDS/AML) relacionados con la terapia. El estudio, que usó datos del registro de cáncer basado en la población de los Estados Unidos del programa de Vigilancia, Epidemiología y Resultados Finales (SEER) del NCI e información de tratamientos de la base de datos de SEER-Medicare, fue publicado el 20 de diciembre de 2018 en <em>JAMA Oncology</em>. El NCI es un componente de los Institutos Nacionales de la Salud.</p>
-        <p>Los avances en tratamiento en las últimas décadas han dado como resultado mejor supervivencia para pacientes con muchos tipos de cáncer. Sin embargo, los supervivientes pueden tener un riesgo mayor de padecer un cáncer subsiguiente relacionado con el tratamiento. En este estudio, los investigadores trataron de cuantificar el riesgo de padecer tMDS/AML, un cáncer raro de la sangre pero fatal con frecuencia, en pacientes tratados con quimioterapia.</p>
-        <p>“Por mucho tiempo hemos sabido que la formación de leucemia mieloide es un efecto adverso muy raro de algunos tipos de tratamientos para el cáncer que dañan las células”, dijo la doctora Lindsay Morton, autora principal del estudio e investigadora superior de la División de Epidemiología y Genética del Cáncer. “Con el pasar del tiempo ha habido muchos cambios en el tratamiento del cáncer, incluida la introducción de nuevos fármacos de quimioterapia y de combinaciones de fármacos, pero no sabíamos cuál era el riesgo de la leucemia relacionada con la terapia para los pacientes desde que se hicieron esos cambios”.</p>
-        <p>Puesto que la tMDS/AML es rara, la mayoría de los datos sobre esta enfermedad provienen de series de casos, de estudios de casos y controles, y de estudios clínicos, los cuales incluyen con frecuencia un número relativamente pequeño de casos de tMDS/AML.&nbsp;En este estudio, los investigadores aportaron un planteamiento de datos demográficos a la investigación, con el tamaño de la muestra mucho más grande y datos prospectivos de seguimiento a pacientes por más tiempo.</p>
-        <p>Con este fin, ellos analizaron los datos del registro de SEER en más de 700&nbsp;000 pacientes de 20 a 84 años de edad en los Estados Unidos con tumores sólidos que habían sido diagnosticados y tratados con quimioterapia inicial durante el período de 2000 a 2013 y sobrevivieron al menos un año después del diagnóstico. De estos pacientes, 1619 presentaron tMDS/AML durante 2014. Cuando los investigadores analizaron el riesgo de tMDS/AML según el tipo original de cáncer, encontraron que el riesgo se incrementó 1,5 veces a más de 10 veces para 22 de los 23 tipos sólidos de cáncer en investigación (todos con excepción de cáncer de colon).</p>
-        <p>Estos resultados se extienden a los grupos de supervivientes con riesgo de tMDS/AML después de tratamiento con quimioterapia porque, en el pasado, los riesgos excedentes se establecieron solo después de la quimioterapia para cánceres de pulmón, ovario, seno, tejido blando, testículo y cerebro o sistema nervioso central. En el presente análisis, la incidencia acumulada de tMDS/AML fue inferior a 1&nbsp;% en 10 años después de la quimioterapia para la mayoría de los tipos sólidos de cáncer. No obstante, el pronóstico después del diagnóstico de tMDS/AML fue muy precario.</p>
-        <p>Dado que no había información en cuanto a los fármacos específicos de quimioterapia en los datos del registro de SEER, los investigadores usaron la base de datos de SEER-Medicare para examinar los patrones de uso de sustancias específicas de quimioterapia durante el mismo período de tiempo. De los 165&nbsp;000 pacientes en la base de datos SEER-Medicare que recibieron quimioterapia inicial para un primer cáncer primario sólido durante el período de estudio, 2000 a 2013, hubo un aumento sustancial en el uso de sustancias de quimioterapia a base de platino, de 57&nbsp;% de pacientes en 2000 a 2001, a 81&nbsp;% de pacientes en 2012 a 2013. Los fármacos de quimioterapia a base de platino se sabe que aumentan el riesgo de tMDS/AML.</p>
-        <p>“El mensaje más importante de este estudio es que, mientras los avances en planteamientos de tratamiento de cáncer han mejorado el pronóstico para muchos tipos de cáncer, el número de pacientes con riesgo de presentar una leucemia rara relacionada con la terapia después de quimioterapia para cáncer en la era moderna de tratamientos se ha extendido en forma destacada”, dijo la doctora Morton. “Evaluaciones de los riesgos y beneficios del tratamiento deberán equilibrar estos riesgos y otros efectos adversos de la quimioterapia contra aumentos posibles en la supervivencia después de tratamiento para el cáncer sólido inicial”.</p>
-        <p>Los investigadores escribieron que su estudio muestra que los continuos esfuerzos para reducir al mínimo la exposición a las sustancias de quimioterapia que causan leucemia y para formular planteamientos quimioterapéuticos eficaces y menos tóxicos son críticos de ahora en adelante.</p>
-        <p><strong>Acerca del Instituto Nacional del Cáncer (NCI):</strong>&nbsp;El Instituto Nacional del Cáncer, NCI, dirige el Programa Nacional de Cáncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir drásticamente la frecuencia del cáncer y mejorar las vidas de los pacientes con cáncer y de sus familias, por medio de la investigación acerca de la prevención y la biología del cáncer, la creación de nuevas intervenciones y la capacitación y el acceso a mentores de nuevos investigadores. Para obtener más información sobre el cáncer, visite, por favor, el sitio web del NCI en <a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Información sobre el Cáncer) al 1-800-422-6237 (1-800-4-CANCER).</p>
-        <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigación médica del país, están compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE. UU. &nbsp;NIH es la principal dependencia federal que lleva a cabo y apoya la investigación básica, clínica y médica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener más información sobre los NIH y sus programas, <br> visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
-
 
 # https://www.cancer.gov/news-events/press-releases/2018/cll-ibrutinib-trial, EN & ES
 - entity: "media"
@@ -405,11 +294,11 @@
   status: 1
   field_site_section:
     - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Press Releases 2018'
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2018'
   field_site_section__ES:
     - '#process':
         callback: 'reference'
@@ -443,6 +332,7 @@
     - value: 'reviewed'
     - value: 'updated'
   field_list_description:
+    value: "List Description overriding meta description"
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
   field_page_description__ES:
@@ -451,9 +341,12 @@
     value: "Short Title English"
   field_short_title__ES:
     value: "Short Title Spanish"
-  field_date_posted: "2018-12-14"
-  field_date_reviewed: "2018-12-13"
-  field_date_updated: "2018-12-12"
+  field_date_posted:
+    value: "2018-12-14"
+  field_date_reviewed:
+    value: "2018-12-13"
+  field_date_updated:
+    value: "2018-12-12"
   field_image_article:
     - target_type: 'media'
       '#process':
@@ -523,11 +416,11 @@
   status: 1
   field_site_section:
     - '#process':
-      callback: 'reference'
-      args:
-        - 'taxonomy_term'
-        - vid: 'cgov_site_sections'
-          name: 'Press Releases 2017'
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2017'
   field_pretty_url:
     value: 'sharpless-nci-director'
   moderation_state:
@@ -537,18 +430,24 @@
     value: "This is a feature card description"
   field_card_title:
     value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
   field_date_display_mode:
     - value: 'posted'
     - value: 'reviewed'
     - value: 'updated'
   field_list_description:
+    value: "List Description overriding meta description"
   field_page_description:
     value: "This is the Meta Description AKA Page Description"
   field_short_title:
     value: "Short Title English"
-  field_date_posted: "2018-12-20"
-  field_date_reviewed: "2018-12-19"
-  field_date_updated: "2018-12-18"
+  field_date_posted:
+    value: "2018-12-20"
+  field_date_reviewed:
+    value: "2018-12-19"
+  field_date_updated:
+    value: "2018-12-18"
   field_image_article:
     - target_type: 'media'
       '#process':
@@ -625,9 +524,9 @@
           - vid: 'cgov_site_sections'
             name: 'Comunicados de Prensa 2019'
   field_pretty_url:
-    value: 'deep-learning-cervical-cancer-screening'
+    value: 'annual-report-nation-2018'
   field_pretty_url__ES:
-    value: 'aprendizaje-profundo-cancer-cuello-uterino-examenes-de-deteccion'
+    value: 'informe-anual-a-la-nacion-1975-2014'
   moderation_state:
     value: 'published'
   field_browser_title: "This is the Cgov Browser Title"
