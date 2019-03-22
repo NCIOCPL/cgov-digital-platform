@@ -13,7 +13,7 @@ $config = [
 
     // An authentication source which can authenticate against both SAML 2.0
     // and Shibboleth 1.3 IdPs.
-    'default-sp' => [
+    'cancergov-sp' => [
         'saml:SP',
 
         // The entity ID of this SP.
@@ -27,6 +27,11 @@ $config = [
         // The URL to the discovery service.
         // Can be NULL/unset, in which case a builtin discovery service will be used.
         'discoURL' => null,
+
+        // The private key and certificate for signing the SAML XML data.
+        'privatekey' => 'saml.pem',
+        'certificate' => 'saml.crt',
+        'signature.algorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
 
         /*
          * The attributes parameter must contain an array of desired attributes by the SP.

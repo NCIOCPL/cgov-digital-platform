@@ -35,6 +35,9 @@ modules:
   dev:
     enable: [acquia_connector, shield]
     uninstall: {  }
+  int:
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config]
+    uninstall: {  }
   test:
     enable: [acquia_connector, shield]
     uninstall: [devel, views_ui]

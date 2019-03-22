@@ -25,12 +25,12 @@ if (file_exists($secrets_file)) {
 
 // Set some security and other configs that are set above, however we
 // overwrite them here to keep all changes in one area.
-$config['technicalcontact_name'] = "Your Name";
-$config['technicalcontact_email'] = "your_email@yourdomain.com";
+$config['technicalcontact_name'] = SamlSecrets::TECH_CONTACT_NAME;
+$config['technicalcontact_email'] = SamlSecrets::TECH_CONTACT_EMAIL;
 
 // Change these for your installation.
-$config['secretsalt'] = 'y0h9d13pki9qdhfm3l5nws4jjn55j6hj';
-$config['auth.adminpassword'] = 'mysupersecret';
+$config['secretsalt'] = SamlSecrets::SECRET_SALT;
+$config['auth.adminpassword'] = SamlSecrets::AUTH_ADMIN_PASSWORD;
 
 /**
  * Support SSL Redirects to SAML login pages.
@@ -43,10 +43,10 @@ $config['auth.adminpassword'] = 'mysupersecret';
  * @link https://github.com/simplesamlphp/simplesamlphp/issues/450
  *
  */
-/* $_SERVER['SERVER_PORT'] = 443;
+$_SERVER['SERVER_PORT'] = 443;
 $_SERVER['HTTPS'] = 'true';
 $protocol = 'https://';
-$port = ':' . $_SERVER['SERVER_PORT'];*/
+$port = ':' . $_SERVER['SERVER_PORT'];
 
 /**
  * Support multi-site and single site installations at different base URLs.
@@ -90,7 +90,7 @@ if (!getenv('AH_SITE_ENVIRONMENT')) {
 }
 elseif (getenv('AH_SITE_ENVIRONMENT')) {
   // Set  ACE ad ACSF sites based on hosting database and site name.
-  $config['certdir'] = "/mnt/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/simplesamlphp/cert/";
+  $config['certdir'] = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/saml-certificate/";
   $config['metadatadir'] = "/mnt/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/simplesamlphp/metadata";
   $config['baseurlpath'] = 'simplesaml/';
   // Setup basic logging.

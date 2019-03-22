@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install file for cgov_saml_auth_config.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function cgov_saml_auth_config_install() {
+
+  // Copy SAML settings from cgov_simplesamlphp_auth.settings.yml into
+  // the simplesamlphp_auth module.
+  //
+  // Get the custom config.
+  $override = \Drupal::configFactory()->getEditable('cgov_saml_auth_config.settings');
+  $saml_config = \Drupal::configFactory()->getEditable('simplesamlphp_auth.settings');
+
+  // Override all data that can be overridden.
+  $saml_config->setData($override->get())->save();
+  // Custom config object is no longer needed.
+  $override->delete();
+}
