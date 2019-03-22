@@ -84,7 +84,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       ];
     }
 
-    kint($build);
     return $build;
   }
 
