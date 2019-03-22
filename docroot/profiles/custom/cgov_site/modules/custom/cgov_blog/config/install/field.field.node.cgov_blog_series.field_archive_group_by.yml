@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_archive_group_by
+    - node.type.cgov_blog_series
+  module:
+    - options
+id: node.cgov_blog_series.field_archive_group_by
+field_name: field_archive_group_by
+entity_type: node
+bundle: cgov_blog_series
+label: 'Archive Group By'
+description: 'Select a display option for the Blog Archive block. The archive may be grouped by years or subdivided into months.'
+required: true
+translatable: true
+default_value:
+  -
+    value: year
+default_value_callback: ''
+settings: {  }
+field_type: list_string

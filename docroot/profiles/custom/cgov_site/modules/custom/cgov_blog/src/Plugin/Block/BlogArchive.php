@@ -4,7 +4,6 @@ namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,13 +26,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   public $blogManager;
 
   /**
-   * An entity query.
-   *
-   * @var Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entityQuery;
-
-  /**
    * Constructs a blog entity object.
    *
    * @param array $configuration
@@ -44,19 +36,15 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin implementation definition.
    * @param \Drupal\cgov_blog\Services\BlogManagerInterface $blog_manager
    *   A blog manager object.
-   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
-   *   An entity query.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    BlogManagerInterface $blog_manager,
-    QueryFactory $entity_query
+    BlogManagerInterface $blog_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->blogManager = $blog_manager;
-    $this->entityQuery = $entity_query;
   }
 
   /**
@@ -67,8 +55,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('cgov_blog.blog_manager'),
-      $container->get('entity.query')
+      $container->get('cgov_blog.blog_manager')
     );
   }
 
@@ -76,88 +63,153 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    $build = [];
 
     // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();
-      $content_type = $curr_entity->bundle();
+      $series = $this->blogManager->getSeriesEntity();
+      $group_by = $series->field_archive_group_by->getValue()['0']['value'];
+      $years_back = $series->field_archive_back_years->getValue()['0']['value'];
     }
 
-    // TODO: Add check for year vs. month vs. none.
-    $archive_years = $this->drawArchiveByYear($content_id, $content_type);
-    $build = [
-      '#archive_years' => $archive_years,
-    ];
+    // Set return values by Archive field selection.
+    if (isset($group_by) && isset($years_back)) {
+      $archive = $this->drawArchiveData($content_id, $years_back, $group_by);
+      $path = $this->blogManager->getSeriesPath();
+      $build = [
+        '#archive_data' => $archive,
+        '#archive_granularity' => $group_by,
+        '#archive_path' => $path,
+      ];
+    }
 
-    /*
-    1. Count totals for each year
-    2. Further sort all Blog Posts by month (if flag is set)
-     */
+    kint($build);
     return $build;
   }
 
   /**
-   * Get a collection of years.
+   * Get a collection of years and months. TODO: Replace dummy content.
    *
    * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   *   The node id of the current content item.
+   * @param string $years_back
+   *   The number of archive years to show.
+   * @param string $group_by
+   *   Archive granularity (years vs. months).
    */
-  private function getMonthsYears($cid, $content_type) {
-    // Build our query object.
-    $query = $this->entityQuery->get('node');
-    $query->condition('status', 1);
-    $query->condition('type', $content_type);
-    $query->sort('field_date_posted', 'DESC');
-    $entity_ids = $query->execute();
+  private function drawArchiveData($cid, $years_back, $group_by) {
+    // Get an array of years and months.
+    $archive_dates = $this->getMonthsAndYears($cid);
+    $min_year = intval(date('Y') - $years_back);
 
-    // Create series filter.
-    $filter_node = $this->blogManager->getNodeStorage()->load($cid);
-    $filter_series = $filter_node->field_blog_series->target_id;
+    // Get data based on group_by setting.
+    if ($group_by == 'month') {
+      $archive = $this->getByMonth($archive_dates, $min_year);
+    }
+    else {
+      $archive = $this->getByYear($archive_dates, $min_year);
+    }
+    return $archive;
+  }
 
-    // Build associative array.
-    foreach ($entity_ids as $entid) {
-      $node = $this->blogManager->getNodeStorage()->load($entid);
-      $node_series = $node->field_blog_series->target_id;
+  /**
+   * Get a collection of years and months.
+   *
+   * @param string $cid
+   *   The node id of the current content item.
+   */
+  private function getMonthsAndYears($cid) {
+    /*
+     * TODO: Filter by language.
+     */
+    // Get all available Blog Posts in current language.
+    $dates = [];
+    $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
 
-      if ($node_series == $filter_series) {
-        $date = $node->field_date_posted->value;
+    // Get current series ID.
+    $filter_series = $this->blogManager->getSeriesId();
+
+    /*
+     * Build associative array. Iterate through each Blog Post node and push
+     * those where field_blog_series matches the filter series.
+     */
+    foreach ($post_nids as $post_nid) {
+      $post_node = $this->blogManager->getNodeStorage()->load($post_nid);
+      $field_blog_series = $post_node->field_blog_series->target_id;
+
+      // Get the date posted field, then split for the link values.
+      if ($field_blog_series == $filter_series) {
+        $date = $post_node->field_date_posted->value;
         $date = explode('-', $date);
-
-        $blog_links[] = [
+        $dates[] = [
           'year' => $date[0],
           'month' => $date[1],
         ];
       }
     }
-    return $blog_links;
+
+    return $dates;
   }
 
   /**
    * Get a collection of years.
    *
-   * @param string $cid
-   *   The nid of the current content item.
-   * @param string $content_type
-   *   The content type machine name.
+   * @param array $arch_dates
+   *   Collection of blog post dates for archive.
+   * @param string $min_year
+   *   The earliest archive year to show.
    */
-  private function drawArchiveByYear($cid, $content_type) {
+  private function getByYear(array $arch_dates, $min_year) {
     $archive = [];
 
-    // Get an array of blog field collections to populate links.
-    $blog_links = $this->getMonthsYears($cid, $content_type);
-    foreach ($blog_links as $link) {
-      $years[] = $link['year'];
+    // Add each year value to an array.
+    foreach ($arch_dates as $arch_date) {
+      $years[] = $arch_date['year'];
     }
 
     // Get counts and values for each available year.
     if (isset($years) && $years[0]) {
       foreach (array_count_values($years) as $year => $count) {
-        $archive[$year] = strval($count);
+        if (intval($year) > $min_year) {
+          $archive[$year] = strval($count);
+        }
       }
     }
+    return $archive;
+  }
 
+  /**
+   * Get a collection of months.
+   *
+   * @param array $arch_dates
+   *   Collection of blog post dates for archive.
+   * @param string $min_year
+   *   The earliest archive year to show.
+   */
+  private function getByMonth(array $arch_dates, $min_year) {
+    $archive = [];
+
+    // Add each year-month value to an array.
+    foreach ($arch_dates as $arch_date) {
+      // To use array_count_values, year and month must be a single string.
+      $yearmonths[] = $arch_date['year'] . '-' . $arch_date['month'];
+    }
+
+    // Get values and count of each available year-month combination.
+    if (isset($yearmonths) && $yearmonths[0]) {
+      foreach (array_count_values($yearmonths) as $yearmonth => $count) {
+        $yyyy_mm = explode('-', $yearmonth);
+        $year = $yyyy_mm[0];
+        $month = $yyyy_mm[1];
+
+        // Only add items up to the selected years_back.
+        if (intval($year) > $min_year) {
+          $archive[$year][$month] = $count;
+        }
+      }
+
+    }
     return $archive;
   }
 
