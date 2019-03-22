@@ -34,12 +34,21 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $requestStack;
 
   /**
+   * The current language ID.
+   *
+   * @var string
+   */
+  protected $langid;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
   public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RequestStack $requestStack) {
     $this->entityTypeManager = $entityTypeManager;
     $this->languageManager = $languageManager;
     $this->requestStack = $requestStack;
+    // Get current language.
+    $this->langid = $this->languageManager->getCurrentLanguage()->getID();
   }
 
   /**
@@ -75,43 +84,76 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     // Set $debug=TRUE to show displayed image source in comments.
     $debug = FALSE;
 
+    // Strip any theme debugging and cast to numeric.
+    $nid = (int) strip_tags($nid);
+
     // Image style to use when rendering images.
     $thumbnail_image_style = 'cgov_thumbnail';
 
-    // Load the node.
+    // Load the node's translation, if available.
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    if (!$node) {
+    if ($node->hasTranslation($this->langid)) {
+      $node = $node->getTranslation($this->langid);
+    }
+    else {
+      // No translation for this node, don't display it.
       return FALSE;
     }
 
     // Check for available images to display.
+    $media_image_file = NULL;
+
+    // Check if there is a lead image specified, if so use it.
     if ($node->hasField('field_image_article')) {
-      $displaying = 'article';
-      $media_field = $node->get('field_image_article')->entity;
-      $media_image_file = $media_field->get('field_media_image')->entity;
-      // Check for overridden thumbnail image.
-      $media_image_thumbnail_file = $media_field->get('field_override_img_thumbnail')->entity;
-      if ($media_image_thumbnail_file) {
-        $displaying = 'article thumbnail override';
-        $media_image_file = $media_image_thumbnail_file;
+      $lead_media_field = $this->getTranslationIfExists($node->get('field_image_article')->entity);
+      // Check if promo image is present.
+      if ($lead_media_field) {
+        $media_image_file = $this->getTranslationIfExists($lead_media_field->get('field_media_image')->entity);
+        $displaying = 'article image';
+        $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
+        $displaying .= '/' . $lead_media_field->language()->getID();
+        $displaying .= '/' . $media_image_file->language()->getID();
+
+        // Check for overridden thumbnail image.
+        $media_image_thumbnail_file = $this->getTranslationIfExists($lead_media_field->get('field_override_img_thumbnail')->entity);
+        if ($media_image_thumbnail_file) {
+          $media_image_file = $media_image_thumbnail_file;
+          $displaying = 'lead thumbnail override image';
+          $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
+          $displaying .= '/:' . $lead_media_field->language()->getID();
+          $displaying .= '/' . $media_image_file->language()->getID();
+        }
       }
     }
 
     // Check if there is a promotional image specified, if so use it.
     if ($node->hasField('field_image_promotional')) {
-      $promo_media_field = $node->get('field_image_promotional')->entity;
+      $promo_media_field = $this->getTranslationIfExists($node->get('field_image_promotional')->entity);
       // Check if promo image is present.
       if ($promo_media_field) {
-        $displaying = 'promo';
-        $media_image_file = $promo_media_field->get('field_media_image')->entity;
+        $media_image_file = $this->getTranslationIfExists($promo_media_field->get('field_media_image')->entity);
+        $displaying = 'promo image';
+        $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
+        $displaying .= '/' . $promo_media_field->language()->getID();
+        $displaying .= '/' . $media_image_file->language()->getID();
 
         // Check for overridden thumbnail image.
-        $media_image_thumbnail_file = $promo_media_field->get('field_override_img_thumbnail')->entity;
+        $media_image_thumbnail_file = $this->getTranslationIfExists($promo_media_field->get('field_override_img_thumbnail')->entity);
         if ($media_image_thumbnail_file) {
-          $displaying = 'promo thumbnail override';
           $media_image_file = $media_image_thumbnail_file;
+          $displaying = 'promo thumbnail override image';
+          $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
+          $displaying .= '/' . $lead_media_field->language()->getID();
+          $displaying .= '/' . $media_image_file->language()->getID();
         }
       }
+    }
+
+    if (!$media_image_file) {
+      if ($debug) {
+        $displaying = 'NO IMAGE';
+      }
+      return FALSE;
     }
 
     // Get URI of media image file (eg: public://2019-03/image.jpg).
@@ -161,9 +203,15 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   selected description.
    */
   public function getListDescription($nid) {
-    // Load the node.
+    // Strip any theme debugging and cast to numeric.
+    $nid = (int) strip_tags($nid);
+
+    // Load the node's translation, if available.
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    if (!$node) {
+    if ($node->hasTranslation($this->langid)) {
+      $node = $node->getTranslation($this->langid);
+    }
+    else {
       return FALSE;
     }
 
@@ -196,13 +244,13 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   Path to node.
    */
   public function getTranslatedAbsolutePath($nid) {
-    // Get current language.
-    $current_language = $this->languageManager->getCurrentLanguage()->getID();
+    // Strip any theme debugging and cast to numeric.
+    $nid = (int) strip_tags($nid);
 
     // Load the node's translation, if available.
-    $node = $this->entityTypeManager->getStorage('node')->load($nid);
-    if ($node->hasTranslation($current_language)) {
-      $node = $node->getTranslation($current_language);
+    $node = $this->getTranslationIfExists($this->entityTypeManager->getStorage('node')->load($nid));
+    if ($node->hasTranslation($this->langid)) {
+      $node = $node->getTranslation($this->langid);
     }
     else {
       return FALSE;
@@ -217,6 +265,16 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
 
     return $link;
+  }
+
+  /**
+   * Get the translated version of entity, if available.
+   */
+  private function getTranslationIfExists($entity) {
+    if ($entity && $entity->hasTranslation($this->langid)) {
+      $entity = $entity->getTranslation($this->langid);
+    }
+    return $entity;
   }
 
 }
