@@ -15,23 +15,23 @@
         }
 
         > .container {
-          padding: 0 mq-px2em(15px);
+          padding: 0 mq-px2em(15px) 0 0;
 
           + .container {
             margin: 0;
-            padding: 0 mq-px2em(15px);
             width: auto;
+            padding: 0 mq-px2em(15px);
           }
         }
 
         .list-item-image {
           display: none;
           margin: 0;
-          
+
           @include break(medium) {
             display: block;
             flex: 0 0 auto;
-            width: 16.7%;
+            width: 25%;
           }
         }
 
@@ -40,30 +40,16 @@
           margin: 0;
           width: auto;
 
-          h3 {
-            font-size: mq-px2em(16px);
+           h3 {
             margin-top: 0;
-            margin-bottom: 0;
+            font-size: mq-px2em(20px);
+
+            a {
+              font-size: 1em;
+            }
+
           }
         }
-      }
-    }
-
-    /* replaces compact list */
-    .title-only {
-      margin: 1em 0 1em 2em;
-
-      &:before {
-        color: #2e2e2e;
-        content: "\2022";
-        display: inline;
-        float: left;
-        font-size: 1.1em;
-        position: relative;
-        left: -0.5em;
-        line-height: 0.90909em;
-        margin: 0 -0.2em;
-        top: 0.25em;
       }
     }
 
@@ -72,6 +58,27 @@
         font-size: mq-px2em(16px);
         margin-bottom: 0;
         margin-top: 0;
+      }
+    }
+
+    /* replaces compact list */
+    .title-only {
+      margin: 1em 0 1em 2em;
+
+      &::before {
+        color: #2e2e2e;
+        content: "\2022";
+        display: inline-block;
+        font-size: 1.1em;
+        position: relative;
+        left: -0.5em;
+        line-height: 0.90909em;
+        margin: 0 -0.2em;
+        top: 0.25em;
+      }
+
+      h3 {
+        font-size: mq-px2em(18px);
       }
     }
   }
