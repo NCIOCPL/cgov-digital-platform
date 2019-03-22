@@ -168,10 +168,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_site_section:
-    type: options_select
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    type: entity_browser_entity_reference
     weight: 1
     region: content
-    settings: { }
     third_party_settings: {  }
   langcode:
     type: language_select
