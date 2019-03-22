@@ -27,6 +27,9 @@
         {% endif %}
       {% endif %}
     </p>
+    <p>
+      <a href="/node/{{ node.id }}/icalendar">Add to outlook calendar</a>
+    </p>
 
     {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
       <p class="event-location">

@@ -1,0 +1,9 @@
+cgov_event.icalendar:
+  path: '/node/{nid}/icalendar'
+  defaults:
+    _controller: '\Drupal\cgov_event\Controller\ICalendarController::download'
+    _title: 'iCalendar file route'
+  methods: [GET]
+  requirements:
+    access: 'TRUE'
+    nid: '[0-9]+'
