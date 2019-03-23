@@ -118,9 +118,7 @@
 {% macro _output_list_image(image, url) %}
     {% if image %}
       <div class="list-item-image image container">
-				<a class="item-image image" href="{{ url }}">
-          {{ image }}
-			  </a>
+        <a class="item-image image" href="{{ url }}">{{- image -}}</a>
       </div>
     {% endif %}
 {% endmacro %}
