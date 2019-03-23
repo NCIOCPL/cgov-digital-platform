@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.media.cgov_video.body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
@@ -21,6 +22,7 @@ dependencies:
   module:
     - content_moderation
     - datetime
+    - entity_browser
     - media
     - text
 id: media.cgov_video.default
@@ -28,20 +30,21 @@ targetEntityType: media
 bundle: cgov_video
 mode: default
 content:
+  body:
+    weight: 10
+    settings:
+      rows: 5
+      placeholder: ''
+      summary_rows: 3
+    third_party_settings: {  }
+    type: text_textarea_with_summary
+    region: content
   created:
     type: datetime_timestamp
     weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
-  body:
-    weight: 10
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_browser_title:
     weight: 5
     settings:
@@ -132,9 +135,17 @@ content:
     region: content
   field_site_section:
     weight: 2
-    settings: {  }
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   langcode:
     type: language_select
@@ -166,9 +177,9 @@ content:
     third_party_settings: {  }
   translation:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   uid:
     type: entity_reference_autocomplete
     weight: 17
