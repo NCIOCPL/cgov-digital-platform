@@ -3,6 +3,16 @@
 // @codingStandardsIgnoreFile
 
 /**
+ * Include our ACSF settings if we are on an ACSF environment.
+ */
+if (!empty($_ENV['AH_SITE_ENVIRONMENT']) &&
+  function_exists('gardens_site_data_get_filepath')) {
+  // ===== Added by acsf-init, please do not delete. Section start. =====
+  include dirname(__FILE__) . '/acsf.settings.php';
+  // ===== Added by acsf-init, please do not delete. Section end. =====
+}
+
+/**
  * @file
  * Drupal site-specific configuration file.
  *
