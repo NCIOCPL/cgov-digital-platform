@@ -8,14 +8,6 @@
  * This happens on staging, not on site duplication.
  */
 
- /*
-  * Check to see if we are running in the ncigov application, i.e. ACSF
-  */
-if (empty($_ENV['AH_SITE_GROUP']) || $_ENV['AH_SITE_GROUP'] != 'ncigov') {
-  exit(0);
-}
-
-
 if (empty($argv[3])) {
   echo "Error: Not enough arguments.\n";
   exit(1);

@@ -32,6 +32,7 @@ class CgovCoreTools {
     'delete own [content_type] media',
     'edit any [content_type] media',
     'edit own [content_type] media',
+    'translate [content_type] media',
   ];
 
   /**
