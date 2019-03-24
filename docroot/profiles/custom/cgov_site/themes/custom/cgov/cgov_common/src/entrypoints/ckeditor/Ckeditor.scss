@@ -1,4 +1,16 @@
 @charset "utf-8";
+/*************************************************************
+This file is used by CKEditor in order to display CGov Styles and Embedded components.
+Items should be added or removed based on if it would be used in the WYSIWYG. This was
+created as a copy paste from Common.scss.
+
+Additional items may be found at the end when we need to override styles from our
+CSS modules.
+**************************************************************/
+
+// Noto is pulled into the front-end via a tag in the head block. So we need to include
+// it here for editing.
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i);
 @import "~Core/styles/environments/percussion";
 @import "~Core/styles/variables";
 @import "~Core/styles/mixins";
@@ -221,4 +233,13 @@ table.table-default tfoot td {
 	display: none;
 	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
 	// @see all.js
+}
+
+/*********************************************************************************
+            Overrides for CKEditor
+**********************************************************************************/
+
+body {
+  background-color: #f9f9f8;
+  padding: 0 0 0 20px;
 }
