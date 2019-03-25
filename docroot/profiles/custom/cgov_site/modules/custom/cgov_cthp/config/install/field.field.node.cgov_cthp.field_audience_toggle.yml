@@ -4,19 +4,23 @@ dependencies:
   config:
     - field.storage.node.field_audience_toggle
     - node.type.cgov_cthp
-  module:
-    - options
 id: node.cgov_cthp.field_audience_toggle
 field_name: field_audience_toggle
 entity_type: node
 bundle: cgov_cthp
-label: 'Audience Toggle'
-description: ''
+label: 'Audience Toggle Link'
+description: 'Select the Cancer Type Home Page to which the current page should toggle.'
 required: true
-translatable: true
-default_value:
-  -
-    value: patient
+translatable: false
+default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: list_string
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      cgov_cthp: cgov_cthp
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

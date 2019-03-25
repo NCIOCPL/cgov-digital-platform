@@ -21,6 +21,15 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/types/breast'
+  field_audience:
+    value: "patient"
+  field_audience_toggle:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_article'
+            title: 'Learning to Relax'
 ######## BEGIN CTHP CARDS ########
   field_cthp_cards:
     - entity: 'paragraph'

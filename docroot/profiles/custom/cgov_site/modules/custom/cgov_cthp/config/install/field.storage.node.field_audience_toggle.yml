@@ -3,21 +3,13 @@ status: true
 dependencies:
   module:
     - node
-    - options
-id: node.field_audience_toggle
+id: paragraph.field_audience_toggle
 field_name: field_audience_toggle
 entity_type: node
-type: list_string
+type: entity_reference
 settings:
-  allowed_values:
-    -
-      value: patient
-      label: Patient
-    -
-      value: health_professional
-      label: 'Health Professional'
-  allowed_values_function: ''
-module: options
+  target_type: node
+module: core
 locked: false
 cardinality: 1
 translatable: true
