@@ -20,6 +20,11 @@ function cgov_site_section_token_info() {
     'description' => t('The computed path of the term..'),
   ];
 
+  $info['tokens']['cgov_tokens']['blog-post-path'] = [
+    'name' => t('Blog Post Path'),
+    'description' => t('The computed path of a Blog Post.'),
+  ];
+
   return $info;
 }
 
@@ -53,7 +58,27 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
           }
           break;
         }
+
+      case 'blog-post-path':
+
+        if (!empty($data['node'])) {
+          /* @var \Drupal\node\NodeInterface $node */
+          $node = $data['node'];
+          if (!empty($node->get('field_blog_series')->first())) {
+            try {
+              $nid = $node->get('field_blog_series')->first()->getValue()['target_id'];
+              $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+              $replacements[$original] = $alias;
+            }
+            catch (Exception $e) {
+              \Drupal::logger('cgov_site_section')
+                ->notice('Could not retrieve computed path for tid: ' . $nid);
+            }
+          }
+          break;
+        }
     }
+
   }
   return $replacements;
 }

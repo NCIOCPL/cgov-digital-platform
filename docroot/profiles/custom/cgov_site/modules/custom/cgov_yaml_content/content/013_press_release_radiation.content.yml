@@ -1,0 +1,200 @@
+
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "oropharynx"
+  name__ES:
+    value: "oropharynx"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'oropharynx-medical-illustration-article.jpg'
+      alt: 'Anatomical illustration of the oropharynx.'
+  field_caption: "Anatomical illustration of the oropharynx."
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'oropharynx-medical-illustration-spanish-article.jpg'
+      alt: 'Ilustración anatómica de la orofaringe'
+  field_caption__ES: "Ilustración anatómica de la orofaringe"
+  field_credit: "National Cancer Institute"
+  field_credit__ES:
+    value: "Instituto Nacional del Cáncer"
+- entity: "node"
+  type: "cgov_press_release"
+  langcode: en
+  title: "Cetuximab with radiation found to be inferior to standard treatment in HPV-positive oropharyngeal cancer"
+  title__ES:
+    value: "Se encuentra que cetuximab con radiación es inferior al tratamiento convencional en cáncer de orofaringe por VPH"
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2018'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2018'
+  field_pretty_url:
+    value: 'oropharyngeal-hpv-cisplatin'
+  field_pretty_url__ES:
+    value: 'oropharyngeal-hpv-cisplatin'
+  moderation_state:
+    value: 'published'
+  field_browser_title: "Cetuximab inferior to standard treatment for HPV+ oropharyngeal cancer"
+  field_browser_title__ES:
+    value: "Cetuximab inferior to standard treatment for HPV+ oropharyngeal cancer"
+  field_feature_card_description:
+    value: "RStudy shows cisplatin with radiation remains standard of care."
+  field_feature_card_description__ES:
+    value: "Study shows cisplatin with radiation remains standard of care."
+  field_card_title:
+    value: "Results from HPV+ Oropharyngeal Cancer Trial"
+  field_card_title__ES:
+    value: "Results from HPV+ Oropharyngeal Cancer Trial"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
+  field_list_description:
+  field_page_description:
+    value: "Results from a randomized clinical trial show patients with HPV-positive oropharyngeal cancer treated with radiation and cetuximab had inferior survival compared to the current standard treatment with radiation and cisplatin. The trial’s goal was to find a less toxic treatment approach without compromising survival."
+  field_page_description__ES:
+    value: "This is the Meta Description AKA Page Description - ES"
+  field_short_title:
+    value: "Cetuximab inferior to standard treatment for HPV+ oropharyngeal cancer"
+  field_short_title__ES:
+    value: "Cetuximab inferior to standard treatment for HPV+ oropharyngeal cancer"
+  field_date_posted: "2018-08-14"
+  field_date_reviewed: "2018-08-13"
+  field_date_updated: "2018-08-13"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+  body:
+    - format: "full_html"
+      value: |
+        <p>An interim analysis of data from a randomized clinical trial of patients with human papillomavirus (HPV)-positive oropharyngeal cancer found that treatment with radiation therapy and cetuximab is associated with worse overall and progression-free survival compared to the current standard treatment with radiation and cisplatin. The trial was designed to see if cetuximab with radiation would be less toxic than cisplatin with radiation without compromising survival for patients with the disease.</p>
+        <p>The phase 3 trial, which closed enrollment in 2014, was funded by the National Cancer Institute (NCI), part of the National Institutes of Health, and led by NRG Oncology, part of NCI&rsquo;s National Clinical Trials Network. The data monitoring committee overseeing the trial recommended releasing the data after an interim data analysis showed that cetuximab with radiation was associated with inferior overall and progression-free survival, compared to cisplatin and radiation. The U.S. Food and Drug Administration has previously approved cetuximab with radiation for patients with head and neck cancer, including oropharyngeal cancer. Cetuximab with radiation is an accepted standard of care, especially for patients who cannot tolerate cisplatin.&nbsp;</p>
+        <p>&ldquo;The goal of this trial was to find an alternative to cisplatin that would be as effective at controlling the cancer, but with fewer side effects,&rdquo; said Andy Trotti, M.D., of the Moffitt Cancer Center in Tampa, Florida, a lead investigator of the trial. &ldquo;We were surprised by the loss of tumor control with cetuximab.&rdquo;&nbsp;</p>
+        <p>There has been a lot of recent interest in the cancer clinical research community in evaluating the &ldquo;de-escalation&rdquo; of therapies for cancers that have a good prognosis, such as HPV-positive cancer of the oropharynx (the part of the throat at the back of the mouth, including the soft palate, the base of the tongue, and the tonsils). The goal is to improve patients&rsquo; quality of life and reduce long-term toxic effects without compromising treatment efficacy. HPV-positive oropharyngeal cancer is frequently diagnosed in individuals in their 50s and 60s, and is associated with high survival rates, providing the incentive for this trial. Moreover, the incidence of this type of cancer has <a href="https://www.cancer.gov/news-events/cancer-currents-blog/2017/hpv-vaccine-oral-infection">increased rapidly</a> in recent years in the United States.&nbsp;</p>
+        <p>&ldquo;Clinical trials designed to test less toxic treatment strategies for patients without compromising clinical benefit are a very important area of interest for NCI and the cancer research community,&rdquo; said Shakun Malik, M.D., of NCI&rsquo;s Division of Cancer Treatment and Diagnosis.&nbsp;</p>
+        <p>This trial&rsquo;s primary objective was to determine whether the substitution of cetuximab for cisplatin with radiation would result in comparable overall survival while reducing toxic side effects with improved long-term quality of life. The trial enrolled 849 patients with HPV-positive oropharyngeal cancer who were randomly assigned to receive either cetuximab or cisplatin with radiation. The study had three planned interim analyses.&nbsp;</p>
+        <p>The third and final interim analysis, done after a median follow-up of 4.5 years, found that overall survival on the cetuximab arm was significantly inferior to the cisplatin arm. Overall rates of serious (grade 3-5) adverse events were similar for patients in both groups. However, as the researchers expected, toxic side effects were different, with adverse events of renal toxicity, hearing loss, and bone marrow suppression more common in patients in the cisplatin arm, while body rash was more common in the cetuximab arm. <span>All patients in this trial had completed therapy at the time of this analysis.</span></p>
+        <p>&ldquo;This trial is the first randomized clinical trial specifically designed for patients with HPV-positive oropharyngeal cancer, and it establishes cisplatin with radiation as the standard of care,&rdquo; said Maura Gillison, M.D, Ph.D., of the University of Texas MD Anderson Cancer Center in Houston, the other lead investigator of the trial.</p>
+        <p>Full study details will be presented in the plenary session at the American Society for Radiation Oncology (ASTRO) <a href="http://www.astro.org/annualmeeting">Annual Meeting</a> in San Antonio, Texas on Oct. 22 at 2:15 pm CT. Findings from the trial will later be published in a peer-reviewed journal.&nbsp;</p>
+        <p><strong>For more information on the trial:</strong> <a href="https://clinicaltrials.gov/ct2/show/NCT01302834">https://clinicaltrials.gov/ct2/show/NCT01302834&nbsp;<strong><strong></strong></strong></a></p>
+        <p><strong><strong>About the National Cancer Institute (NCI):</strong>&nbsp;</strong>NCI&nbsp;leads the National Cancer Program and NIH&rsquo;s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI&rsquo;s Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
+        <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
+        <p><strong>About NRG Oncology:</strong> NRG Oncology conducts practice-changing, multi-institutional clinical and translational research to improve the lives of patients with cancer. Founded in 2012, NRG Oncology is a Pennsylvania-based nonprofit corporation that integrates the research of the NSABP Foundation, the Radiation Therapy Oncology Group (RTOG), and the Gynecologic Oncology Group (GOG). The research network seeks to carry out clinical trials with emphases on gender-specific malignancies, including gynecologic, breast, and prostate cancers, and on localized or locally advanced cancers of all types. NRG Oncology&rsquo;s extensive research organization comprises multidisciplinary investigators, including medical oncologists, radiation oncologists, surgeons, physicists, pathologists, and statisticians, and encompasses more than 1,300 research sites located world-wide with predominance in the United States and Canada. NRG Oncology is supported primarily through grants from the National Cancer Institute (NCI) and is one of five research groups in NCI&rsquo;s National Clinical Trials Network. <a href="http://www.nrgoncology.org/">www.nrgoncology.org&nbsp;</a></p>
+  body__ES:
+    - format: "full_html"
+      value: |
+        <p>Un an&aacute;lisis provisional de los datos de un estudio cl&iacute;nico aleatorizado de pacientes con c&aacute;ncer de orofaringe por virus del papiloma humano (VPH) encontr&oacute; que el tratamiento con radioterapia y cetuximab est&aacute; asociado con peor supervivencia en general sin avance en comparaci&oacute;n con el tratamiento convencional con radiaci&oacute;n y cisplatino. El estudio fue dise&ntilde;ado para ver si cetuximab con radiaci&oacute;n ser&iacute;a menos t&oacute;xico que el cisplatino con radiaci&oacute;n sin comprometer la supervivencia de los pacientes con este c&aacute;ncer.</p>
+        <p>El estudio en fase 3, que termin&oacute; la inscripci&oacute;n en 2015, fue financiado por el Instituto Nacional del C&aacute;ncer (NCI), parte de los Institutos Nacionales de la Salud, y dirigido por NRG Oncology, parte de la Red Nacional de Estudios Cl&iacute;nicos del NCI.&nbsp; El comit&eacute; de seguimiento de datos que supervis&oacute; el estudio recomend&oacute; publicar los datos despu&eacute;s de que un an&aacute;lisis provisional de datos mostr&oacute; que cetuximab con radiaci&oacute;n estaba asociado con una supervivencia inferior en general sin avance, en comparaci&oacute;n con cisplatino y radiaci&oacute;n. La Administraci&oacute;n de Alimentos y Medicamentos de EE. UU. ha aprobado cetuximab previamente con radiaci&oacute;n para pacientes con c&aacute;ncer de cabeza y cuello, incluyendo c&aacute;ncer de orofaringe.&nbsp; Cetuximab con radiaci&oacute;n es aceptado como tratamiento convencional, especialmente para pacientes que no pueden tolerar el cisplatino.&nbsp;</p>
+        <p>&ldquo;El objetivo de este estudio fue encontrar una alternativa al cisplatino que fuera tan efectiva en controlar el c&aacute;ncer, pero con menos efectos secundarios", dijo el doctor Andy Trotti, del Centro Oncol&oacute;gico Moffitt en Tampa, Florida, un investigador principal del estudio. &ldquo;Nos sorprendi&oacute; la falta de control del tumor con cetuximab&rdquo;.&nbsp;</p>
+        <p>Ha habido mucho inter&eacute;s reciente en la comunidad de investigaci&oacute;n cl&iacute;nica de c&aacute;ncer en la evaluaci&oacute;n de la "des-intensificaci&oacute;n" de terapias para c&aacute;nceres que tienen un buen pron&oacute;stico, como el c&aacute;ncer de orofaringe (la parte de la garganta en la parte posterior de la boca, incluyendo el paladar blando, la base de la lengua y las am&iacute;gdalas) por VPH. El objetivo es mejorar la calidad de vida de los pacientes y reducir los efectos t&oacute;xicos a largo plazo sin comprometer la eficacia del tratamiento. El c&aacute;ncer de orofaringe por VPH es diagnosticado frecuentemente en individuos en los 50 y 60 a&ntilde;os, y est&aacute; asociado con &iacute;ndices altos de supervivencia, lo que proporcion&oacute; el incentivo para este estudio. Adem&aacute;s, la inicdencia de este tipo de c&aacute;ncer ha <a href="/espanol/noticias/temas-y-relatos-blog/2017/vph-vacuna-infeccion-oral" title="">aumentado r&aacute;pidamente</a> en a&ntilde;os recientes en los Estados Unidos. &nbsp;</p>
+        <p>&ldquo;Estudios cl&iacute;nicos dise&ntilde;ados para probar estrategias menos t&oacute;xicas de tratamiento para los pacientes sin comprometer los beneficios cl&iacute;nicos son un &aacute;rea muy importante de inter&eacute;s para la investigaci&oacute;n del NCI y la comunidad de investigaci&oacute;n oncol&oacute;gica", dijo la doctora Shakun Malik, de la Divisi&oacute;n de Tratamiento y Diagn&oacute;stico del C&aacute;ncer del NCI.&nbsp;</p>
+        <p>El principal objetivo de este estudio fue determinar si la sustituci&oacute;n de cetuximab en vez de cisplatino con radiaci&oacute;n resultar&iacute;a en una supervivencia comparable en general mientras se reduc&iacute;an los efectos secundarios t&oacute;xicos con una mejor calidad de vida a largo plazo. El estudio inscribi&oacute; a 849 pacientes con c&aacute;ncer de orofaringe por VPH que fueron asignados aleatoriamente a recibir cetuximab o cisplatino con radiaci&oacute;n. El estudio tuvo tres an&aacute;lisis planeados.&nbsp;</p>
+        <p>El tercer y &uacute;ltimo an&aacute;lisis, hecho despu&eacute;s de una mediana de seguimiento de 4,5 a&ntilde;os, encontr&oacute; que la supervivencia en general en el grupo de cetuximab fue significativamente inferior al grupo de cisplatino.&nbsp; En general, los &iacute;ndices de sucesos adversos graves (grado de 3-5) fueron similares para los pacientes de ambos grupos. Sin embargo, como lo esperaban los investigadores, los efectos secundarios t&oacute;xicos fueron diferentes, con sucesos adversos de toxicidad renal, sordera parcial y supresi&oacute;n de la m&eacute;dula &oacute;sea m&aacute;s com&uacute;n en los pacientes del grupo de cisplatino, mientras que la erupci&oacute;n fue m&aacute;s frecuente en el grupo de cetuximab.&nbsp;Todos los pacientes en este estudio hab&iacute;an completado la terapia en el tiempo de este an&aacute;lisis.</p>
+        <p>&ldquo;Este estudio es el primer estudio cl&iacute;nico aleatorizado, dise&ntilde;ado espec&iacute;ficamente para pacientes con c&aacute;ncer de orofaringe por VPH, y establece al cisplatino con radiaci&oacute;n como norma de tratamiento", dijo la doctora Maura Gillison, del Centro oncol&oacute;gico MD Anderson de la Universidad de Texas en Houston, la otra investigadora principal del estudio.</p>
+        <p>Los detalles completos del estudio se presentar&aacute;n en la sesi&oacute;n plenaria de la Sociedad Americana de Oncolog&iacute;a de Radiaci&oacute;n (ASTRO) en la <a href="http://www.astro.org/annualmeeting">Reuni&oacute;n Anual</a> en San Antonio, Texas, el 22 de octubre a las 2:15 p. m. CT. Los resultados del estudio ser&aacute;n publicados m&aacute;s tarde en una revista evaluada por colegas.&nbsp;</p>
+        <p><strong>Para m&aacute;s informaci&oacute;n acerca del estudio</strong>:&nbsp;<a href="https://clinicaltrials.gov/ct2/show/NCT01302834">https://clinicaltrials.gov/ct2/show/NCT01302834</a></p>
+        <p><strong>Acerca del Instituto Nacional del C&aacute;ncer (NCI):</strong>&nbsp;El Instituto Nacional del C&aacute;ncer, NCI, dirige el Programa Nacional de C&aacute;ncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir dr&aacute;sticamente la frecuencia del c&aacute;ncer y mejorar las vidas de los pacientes con c&aacute;ncer y de sus familias, por medio de la investigaci&oacute;n acerca de la prevenci&oacute;n y la biolog&iacute;a del c&aacute;ncer, la creaci&oacute;n de nuevas intervenciones y la capacitaci&oacute;n y el acceso a mentores de nuevos investigadores. Para obtener m&aacute;s informaci&oacute;n sobre el c&aacute;ncer, visite, por favor, el sitio web del NCI en <a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Informaci&oacute;n sobre el C&aacute;ncer) al 1-800-422-6237 (1-800-4-CANCER).</p>
+        <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigaci&oacute;n m&eacute;dica del pa&iacute;s, est&aacute;n compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE. UU.&nbsp; NIH es la principal dependencia federal que lleva a cabo y apoya la investigaci&oacute;n b&aacute;sica, cl&iacute;nica y m&eacute;dica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp;Para obtener m&aacute;s informaci&oacute;n sobre los NIH y sus programas,&nbsp;visite <a href="https://salud.nih.gov/">salud.nih.gov</a>.</p>
+        <p><strong>Acerca de NRG Oncology:</strong>&nbsp;NRG Oncology realiza investigaci&oacute;n que transforma la pr&aacute;ctica, investigaci&oacute;n cl&iacute;nica multi-institucional e investigaci&oacute;n de transferencia para mejorar las vidas de pacientes con c&aacute;ncer. Fundada en 2012, NRG Oncology es una corporaci&oacute;n sin fines de lucro con sede en Pensilvania que integra la investigaci&oacute;n de la fundaci&oacute;n NSABP, del Grupo de Oncolog&iacute;a de Radioterapia (RTOG) y del Gynecologic Oncology Group (GOG). La red de investigaci&oacute;n busca llevar a cabo estudios cl&iacute;nicos con &eacute;nfasis en malignidades especificas al g&eacute;nero, incluyendo c&aacute;nceres ginecol&oacute;gicos, de seno y pr&oacute;stata, y en c&aacute;nceres avanzados de todos los tipos, localizados o locales. La extensa organizaci&oacute;n de investigaci&oacute;n de la NRG Oncology comprende investigadores multidisciplinarios, incluyendo m&eacute;dicos onc&oacute;logos, onc&oacute;logos radi&oacute;logos, cirujanos, f&iacute;sicos, pat&oacute;logos y estad&iacute;sticos, y comprende m&aacute;s de 1300 sitios de investigaci&oacute;n ubicados en todo el mundo, predominantemente en los Estados Unidos y Canad&aacute;. La NRG Oncology recibe su financiamiento principalmente de subvenciones del Instituto Nacional del C&aacute;ncer (NCI) y es uno de los cinco grupos de investigaci&oacute;n en la Red Nacional de Estudios Cl&iacute;nicos del NCI. &nbsp;<a href="http://www.nrgoncology.org">www.nrgoncology.org</a></p>
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'

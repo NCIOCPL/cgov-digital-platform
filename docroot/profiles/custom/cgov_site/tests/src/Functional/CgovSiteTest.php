@@ -33,10 +33,12 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertArrayHasKey('anonymous', $roles, 'Anonymous role exists.');
     $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
     $this->assertArrayHasKey('administrator', $roles, 'Administrator role exists.');
+    $this->assertArrayHasKey('admin_ui', $roles, 'Admin UI role exists.');
 
     // Create admin user and login.
     $this->adminUser = $this->drupalCreateUser();
     $this->adminUser->addRole('administrator');
+    $this->adminUser->addRole('admin_ui');
     $this->adminUser->save();
     $this->drupalLogin($this->adminUser);
 

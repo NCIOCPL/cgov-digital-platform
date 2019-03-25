@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_site_section_browser
+    - entity_browser.browser.cgov_image_browser
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_blog_series
@@ -23,7 +23,6 @@ dependencies:
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
-    - field.field.node.cgov_blog_post.field_site_section
     - node.type.cgov_blog_post
     - workflows.workflow.editorial_workflow
   module:
@@ -214,20 +213,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_site_section:
-    weight: 1
-    settings:
-      entity_browser: cgov_site_section_browser
-      field_widget_display: label
-      field_widget_remove: true
-      selection_mode: selection_append
-      field_widget_edit: false
-      field_widget_replace: false
-      open: false
-      field_widget_display_settings: {  }
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
     region: content
   langcode:
     type: language_select

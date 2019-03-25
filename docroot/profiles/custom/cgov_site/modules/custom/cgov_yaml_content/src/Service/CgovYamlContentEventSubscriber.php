@@ -350,7 +350,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function addFileToCrop(EntityPreSaveEvent $event) {
     $entity = $event->getEntity();
 
-    if ($entity->bundle() != 'cgov_image') {
+    if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
       return;
     }
 

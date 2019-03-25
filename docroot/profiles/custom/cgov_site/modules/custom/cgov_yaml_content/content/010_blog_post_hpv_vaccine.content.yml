@@ -27,8 +27,6 @@
 - entity: "node"
   type: "cgov_blog_post"
   title: "The HPV Vaccine: Increasing the Use of an Important Cancer Prevention Tool"
-  title:
-    value: "The HPV Vaccine: Increasing the Use of an Important Cancer Prevention Tool"
   langcode: en
   status: 1
   moderation_state:
@@ -113,10 +111,39 @@
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Blog post short title"
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
+  field_related_resources:
+
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_override_title:
+        - value: 'Overridden Title'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.gov/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Google.com'
+      field_external_link:
+        - uri: 'http://www.google.com/'
