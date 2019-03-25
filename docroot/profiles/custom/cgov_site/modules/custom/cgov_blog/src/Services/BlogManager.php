@@ -65,8 +65,6 @@ class BlogManager implements BlogManagerInterface {
     $this->aliasManager = $alias_manager;
   }
 
-  /* ======= BEGIN concrete methods ======= */
-
   /**
    * {@inheritdoc}
    */
@@ -108,10 +106,6 @@ class BlogManager implements BlogManagerInterface {
     return $seriesNode;
   }
 
-  /* ======= END concrete methods ======= */
-
-  /* ======= BEGIN utility methods ======= */
-
   /**
    * Create a new node storage instance.
    *
@@ -124,7 +118,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Create a new node storage instance.
+   * Create a new taxonomy storage instance.
    *
    * @return Drupal\Core\Entity\EntityStorageInterface
    *   The taxonomy storage or NULL.
@@ -142,10 +136,6 @@ class BlogManager implements BlogManagerInterface {
     return $series->id();
   }
 
-  /* ======= END utility methods ======= */
-
-  /* ======= BEGIN Blog Series field methods ======= */
-
   /**
    * The the URL path for the blog series.
    */
@@ -156,7 +146,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get the Blog Series ID.
+   * Get Blog Series categories (topics). TODO: filter by series.
    */
   public function getSeriesCategories() {
     $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
@@ -164,15 +154,23 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get the Blog Featured content.
+   * Get the Blog Featured content nodes.
    */
-  public function getSeriesFeaturedContent() {
-    return '';
+  public function getSeriesFeaturedPosts() {
+    $series = $this->getSeriesEntity();
+    return $series->field_featured_posts->referencedEntities();
   }
 
-  /* ======= BEGIN Blog Post field methods ======= */
-
-  /* ======= BEGIN data methods ======= */
+  /**
+   * The the URL path for a node based on NID.
+   *
+   * @param string $nid
+   *   Node ID of content item.
+   */
+  public function getBlogPathFromNid($nid) {
+    $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
+    return $path;
+  }
 
   /**
    * Return query results based on date posted.
@@ -206,7 +204,5 @@ class BlogManager implements BlogManagerInterface {
     $nids = $query->execute();
     return $nids;
   }
-
-  /* ======= END data methods ======= */
 
 }

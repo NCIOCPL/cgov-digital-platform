@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -57,7 +58,7 @@ content:
     region: content
   field_archive_back_years:
     type: number_integer
-    weight: 22
+    weight: 23
     region: content
     label: hidden
     settings:
@@ -66,7 +67,7 @@ content:
     third_party_settings: {  }
   field_archive_group_by:
     type: list_default
-    weight: 21
+    weight: 22
     region: content
     label: hidden
     settings: {  }
@@ -112,6 +113,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_featured_posts:
+    type: entity_reference_label
+    weight: 21
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
   field_feedburner_url:
     weight: 15
     label: hidden
