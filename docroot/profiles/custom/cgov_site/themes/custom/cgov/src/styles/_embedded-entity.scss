@@ -1,0 +1,39 @@
+.embedded-entity {
+  margin-bottom: 2.5em;
+  
+  &.align-right {
+    margin: 0 0 2.5em 2.5em;
+  }
+
+  &.align-left {
+    margin: 0 2.5em 2.5em 0;
+  }
+
+  &.align-center {
+    margin: 2.5em auto;
+
+    figure {
+      img {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &[data-entity-embed-display] {
+    width: 100%;
+  }
+
+  @include break(medium) {
+    &[data-entity-embed-display*="_small"] {
+      width: 25%;
+    }
+
+    &[data-entity-embed-display*="_medium"] {
+      width: 40%;
+    }
+
+    &[data-entity-embed-display*="_large"] {
+      width: 75%;
+    }
+  }
+}
