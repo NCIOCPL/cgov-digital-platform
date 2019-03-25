@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
     "Common": path.resolve(__dirname, "src/entrypoints/global/Common.js"),
+    "Ckeditor": path.resolve(__dirname, "src/entrypoints/ckeditor/Ckeditor.js"),
     "Article": path.resolve(__dirname, "src/entrypoints/article/Article.js"),
     "Homelanding": path.resolve(__dirname, "src/entrypoints/homelanding/Homelanding.js"),
     "Minilanding": path.resolve(__dirname, "src/entrypoints/minilanding/Minilanding.js"),
