@@ -81,6 +81,7 @@ function requestGlossification(dialog) {
   // This gets us the html content of the editor that called the dialog.
   const rawBody = dialog.getParentEditor().getData();
   const preparedBody = prepareEditorBodyForGlossificationRequest(rawBody);
+  const language = dialog.getParentEditor().langCode;
 
   // We have to nest our request in a preliminary request so that we can first
   // retrieve the necessary csrf token to make an authenticated request to the api.
@@ -100,7 +101,7 @@ function requestGlossification(dialog) {
         data: JSON.stringify({
           'fragment': preparedBody,
           'languages': [
-            'en'
+            language,
           ],
           'dictionaries': [
             'Cancer.gov'
@@ -108,7 +109,7 @@ function requestGlossification(dialog) {
         }),
       })
       .done(function(data) {
-        handleGlossifierResponse.call(dialog, preparedBody, data);
+        handleGlossifierResponse.call(dialog, preparedBody, data, language);
       })
       .fail(function(jqXHR, textStatus, errorText){
         const errorMessage = 'Glossifier request failed: \'' + jqXHR.status + ' ' + errorText + '\'';
@@ -323,11 +324,11 @@ function wrapTermToSaveState(match, firstCaptureGroup) {
  *
  * @param {string} preparedBody
  * @param {Object[]} responseArray
+ * @param {string} language
  */
-function handleGlossifierResponse(preparedBody, responseArray) {
+function handleGlossifierResponse(preparedBody, responseArray, language) {
   // TODO: Confirm whether getting the langcode from the editor instance is sufficient.
   // https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-langCode
-  const language = this.getParentEditor().langCode;
   const dialogBody = createDialogBodyHtml(preparedBody, responseArray, language);
   // Each CKEditor instance builds its own dialog element at the bottom of the page.
   // There is no standard way of targeting them for reuse.
