@@ -7,41 +7,31 @@
   status: 1
   moderation_state:
     value: 'published'
-  title: "Breast Cancer—Patient Version"
+  title: "Breast Cancer—Health Professional Version"
   field_page_description:
-    value: "Breast cancer is the second most common cancer in women after skin cancer. Mammograms can detect breast cancer early, possibly before it has spread. Start here to find information on breast cancer treatment, causes and prevention, screening, research, and statistics."
+    value: "The most common type of breast cancer is ductal carcinoma, which begins in the cells of the ducts. Breast cancer can also begin in the cells of a lobule and in other tissues of the breast. Find evidence-based information on breast cancer treatment, causes and prevention, genetics, screening, research, and statistics."
   field_short_title:
     value: "Breast Cancer"
   field_browser_title:
-    value: "Breast Cancer—Patient Version"
+    value: "Breast Cancer—Health Professional Version"
   field_site_section:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            computed_path: '/types/breast'
+            computed_path: '/types/breast/hp'
   field_audience:
-    value: "patient"
+    value: "health_professional"
   field_audience_toggle:
     - '#process':
         callback: 'reference'
         args:
           - 'node'
           - type: 'cgov_cthp'
-            title: 'Breast Cancer—Health Professional Version'
+            title: 'Breast Cancer—Patient Version'
 ######## BEGIN CTHP CARDS ########
   field_cthp_cards:
-    - entity: 'paragraph'
-      type: "cgov_cthp_overview_card"
-      field_cthp_card_title:
-        - value: 'Overview'
-      field_cthp_card_theme:
-        - value: 'cthp-overview'
-      field_cthp_overview_card_text:
-        - format: "full_html"
-          value: |
-            <p>Breast cancer is the second most common cancer in women after skin cancer. Mammograms can detect breast cancer early, possibly before it has spread. Explore the links on this page to learn more about breast cancer prevention, screening, treatment, statistics, research, clinical trials, and more.</p>
     - entity: 'paragraph'
       type: "cgov_cthp_guide_card"
       field_cthp_card_title:
@@ -49,14 +39,14 @@
       field_cthp_card_theme:
         - value: 'cthp-treatment'
       field_cthp_pdq_link_heading:
-        - value: "PDQ Treatment Information for Patients"
+        - value: "PDQ Treatment Information for Health Professionals"
       field_cthp_pdq_links:
         - '#process':
             callback: 'reference'
             args:
               - 'node'
               - type: 'pdq_cancer_information_summary'
-                title: 'Breast Cancer Treatment (PDQ®)–Patient Version'
+                title: 'Breast Cancer Treatment (PDQ®)–Health Professional Version'
         - '#process':
             callback: 'reference'
             args:
@@ -70,14 +60,14 @@
       field_cthp_card_theme:
         - value: 'cthp-causes'
       field_cthp_pdq_link_heading:
-        - value: "PDQ Prevention Information for Patients"
+        - value: "PDQ Prevention Information for Health Professionals"
       field_cthp_pdq_links:
         - '#process':
             callback: 'reference'
             args:
               - 'node'
               - type: 'pdq_cancer_information_summary'
-                title: 'Breast Cancer Prevention (PDQ®)–Patient Version'
+                title: 'Breast Cancer Prevention (PDQ®)–Health Professional Version'
         - '#process':
             callback: 'reference'
             args:
@@ -95,14 +85,14 @@
           value: |
             <p>NCI has only limited information about breast cancer screening for patients.</p>
       field_cthp_pdq_link_heading:
-        - value: "PDQ Screening Information for Patients"
+        - value: "PDQ Screening Information for Health Professionals"
       field_cthp_pdq_links:
         - '#process':
             callback: 'reference'
             args:
               - 'node'
               - type: 'pdq_cancer_information_summary'
-                title: 'Breast Cancer Screening (PDQ®)–Patient Version'
+                title: 'Breast Cancer Screening (PDQ®)–Health Professional Version'
       field_cthp_view_more_info:
         - entity: 'paragraph'
           type: "cgov_internal_link"

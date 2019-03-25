@@ -1,5 +1,5 @@
 {# Page Content #}
-{% set isPatient = (content.field_audience|field_value|render|render is same as('Patient')) %}
+{% set isPatient = (content.field_audience|field_value|render|render is same as('patient')) %}
 {% set toggleTarget = (isPatient)? 'Health Professional' : 'Patient' %}
 {% set url = path('entity.node.canonical', {'node':  content.field_audience_toggle[0]["#node"].nid[0].value}) %}
 
@@ -8,7 +8,7 @@
     <div class="large-12 columns resize-content cthp-padding">
 
       <!-- PAGE TITLE -->
-      <h1>{{ node.label }}—{{ content.field_audience }} Version <br /> {{ content.field_pretty_url }}</h1>
+      <h1>{{ node.label }}</h1>
       <!-- END PAGE TITLE -->
       {{ drupal_block('page_options') }}
       <div id="nvcgSlCTHPIntro">
