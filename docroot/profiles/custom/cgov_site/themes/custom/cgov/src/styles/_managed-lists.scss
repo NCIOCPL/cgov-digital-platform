@@ -11,7 +11,7 @@
               opacity: 0.8;
             }
           }
-          
+
           .title-and-desc {
             a {
               color: $lcranberry;
@@ -34,7 +34,12 @@
           + .container {
             margin: 0;
             width: auto;
-            padding: 0 mq-px2em(15px);
+            padding: 0;
+
+            @include break(medium) {
+              padding: 0 mq-px2em(15px);
+            }
+
           }
         }
 
@@ -46,6 +51,10 @@
             display: block;
             flex: 0 0 auto;
             width: 25%;
+
+            + .title-and-desc {
+              margin-left: 0;
+            }
           }
 
           a {
@@ -59,12 +68,16 @@
           img {
             width: 100%;
           }
+
+          
         }
 
         .title-and-desc {
-          flex: 1 1 auto;
-          margin: 0;
-          width: auto;
+          @include break(medium) {
+            flex: 1 1 auto;
+            margin-left: 25%;
+            padding-left: 15px;
+          }
 
           h3 {
             margin-top: 0;
@@ -79,6 +92,10 @@
     }
 
     .title-desc {
+      margin-left: 0;
+      padding-left: 0;
+      width: auto;
+      
       h3 {
         font-size: mq-px2em(16px);
         margin-bottom: 0;
