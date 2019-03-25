@@ -1,0 +1,9 @@
+{% import '@cgov_common/content/image/image_macros.twig' as imageMacros %}
+
+{% set classes = "image-full" %}
+
+{% if content.enlarge_uri[0] %}
+  {% set enlarge_uri = content.enlarge_uri[0] %}
+{% endif %}
+
+{{ imageMacros.articleImage(classes, content.field_media_image, enlarge_uri, content.field_credit|field_value, content.field_caption ) }}

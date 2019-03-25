@@ -8,7 +8,9 @@
     {{ drupal_block('page_options') }}
 
     <div id="cgvBody">
-    {{ content.field_image_article }}
+    <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
+      {{ content.field_image_article }}
+    </div>
     {{ content.field_event_series }}
 
     <p class="event-date-time">
