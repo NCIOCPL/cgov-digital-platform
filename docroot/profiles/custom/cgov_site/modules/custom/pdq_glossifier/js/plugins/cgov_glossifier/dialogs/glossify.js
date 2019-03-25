@@ -158,7 +158,7 @@ function uiSetup(dialog){
 
 /**
  * The base core/seven underlying cgov_admin has a few different
- * stylesheets reseting the properties of CKEDITOR dialogs. This
+ * stylesheets resetting the properties of CKEDITOR dialogs. This
  * hack let's us disable the bulk of them and add our own
  * customizations in instead.
  *
@@ -459,13 +459,11 @@ function glossifyTermFromLabel(label){
   const language = label.dataset.language;
   const paramString = id + "&version=Patient&language=" + language;
   const href = "/Common/PopUps/popDefinition.aspx?id=" + paramString;
-  const onClickHandler = function() {
-    window.popWindow('defbyid', paramString);
-    return false;
-  };
 
   const anchor = document.createElement('a');
-  anchor.onclick = onClickHandler;
+  // The glossary popups shim on the FE will use this ID to generate a click handler
+  // that works with the current paradigm.
+  anchor.dataset.glossaryId = id;
   anchor.className = 'definition';
   anchor.href = href;
   anchor.textContent = originalText;
