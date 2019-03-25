@@ -214,7 +214,7 @@ class PDQResource extends ResourceBase {
     $node = Node::load($nid);
 
     // Apply deletion logic based on language.
-    if ($langcode === 'es') {
+    if ($langcode === 'es' && $id > 0) {
       $node->removeTranslation('es');
       $node->save();
       $args = ['%cdrid' => $id, '%nid' => $node->id()];
@@ -222,7 +222,7 @@ class PDQResource extends ResourceBase {
       $this->logger->notice($msg, $args);
     }
     else {
-      if ($node->hasTranslation('es')) {
+      if ($node->hasTranslation('es') && $id > 0) {
         throw new BadRequestHttpException(t('Spanish translation exists'));
       }
       $node->delete();
