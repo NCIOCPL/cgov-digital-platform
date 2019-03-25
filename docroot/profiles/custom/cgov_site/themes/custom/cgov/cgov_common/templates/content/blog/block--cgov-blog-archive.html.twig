@@ -3,28 +3,30 @@
 {% set archive_path = content['#archive_path'] %}
 {% set granularity = content['#archive_granularity'] %}
 
-<div id="blog-archive-accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
-   <h3 id="archive" class="blog-archive-header ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-state-default ui-accordion-icons accordion-header-active ui-state-active" role="tab" aria-controls="blog-archive-accordion-year" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon toggle"></span>
-      {% trans %}Archive{% endtrans %}
-   </h3>
-   <div id="blog-archive-accordion-year" class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion ui-widget" aria-labelledby="archive" role="tablist">
+{% if (archive_data is defined) and (archive_path is defined) %}
+   <div id="blog-archive-accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+      <h3 id="archive" class="blog-archive-header ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-state-default ui-accordion-icons accordion-header-active ui-state-active" role="tab" aria-controls="blog-archive-accordion-year" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon toggle"></span>
+         {% trans %}Archive{% endtrans %}
+      </h3>
+      <div id="blog-archive-accordion-year" class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion ui-widget" aria-labelledby="archive" role="tablist">
 
-      {% if granularity == 'month' %}
-         {% for year, month in archive_data %}
-            <h4 class="ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-corner-all ui-state-default ui-accordion-icons">
-               <span class="ui-accordion-header-icon ui-icon toggle"></span>{{ year }}
-            </h4>
-            <ul class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content" role="tabpanel">
-               {{ blogMacros.getMonthLinks(month, year, archive_path) }}
+         {% if granularity == 'month' %}
+            {% for year, month in archive_data %}
+               <h4 class="ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-corner-all ui-state-default ui-accordion-icons">
+                  <span class="ui-accordion-header-icon ui-icon toggle"></span>{{ year }}
+               </h4>
+               <ul class="ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content" role="tabpanel">
+                  {{ blogMacros.getMonthLinks(month, year, archive_path) }}
+               </ul>
+            {% endfor %}
+         {% endif %}
+
+         {% if granularity == 'year' %}
+            <ul>
+               {{ blogMacros.getYearLinks(archive_data, archive_path) }}
             </ul>
-         {% endfor %}
-      {% endif %}
+         {% endif %}
 
-      {% if granularity == 'year' %}
-         <ul>
-            {{ blogMacros.getYearLinks(archive_data, archive_path) }}
-         </ul>
-      {% endif %}
-
+      </div>
    </div>
-</div>
+{% endif %}

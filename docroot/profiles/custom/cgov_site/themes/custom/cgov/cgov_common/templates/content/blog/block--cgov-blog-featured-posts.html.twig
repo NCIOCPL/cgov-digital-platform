@@ -1,17 +1,25 @@
-<div>
-   <div class="managed list with-date">
-      <p id="Featured+Posts" tabindex="0" class="title">{% trans %}Featured Posts{% endtrans %}</p>
-      <ul>
-         {% for post in content['#featured'] %}
-            <li class="general-list-item general list-item">
-               <div class="title-and-desc title desc container">
-                  <a class="title" href="{{post['href']}}">{{post['title']}}</a>
-                  <div class="byline">
-                     <p>{% trans %}{{post['date']}}, by{% endtrans %} {{post['author']}}</p>
+{% if content['#featured']|length > 0 %}
+   <div>
+      <div class="managed list with-date">
+         <p id="Featured+Posts" tabindex="0" class="title">{% trans %}Featured Posts{% endtrans %}</p>
+         <ul>
+            {% for post in content['#featured'] %}
+               <li class="general-list-item general list-item">
+                  <div class="title-and-desc title desc container">
+                     <a class="title" href="{{post['href']}}">{{post['title']}}</a>
+                     <div class="byline">
+                        <p>{% trans %}{{post['date']}}, by{% endtrans %} 
+                           {% if post['author']|length > 0 %}
+                              {{post['author']}}
+                           {% else %}
+                              {% trans with {'context': 'CGov Blog' } %}NCI Staff{% endtrans %}
+                           {% endif %}
+                        </p>
+                     </div>
                   </div>
-               </div>
-            </li>
-         {% endfor %}
-      </ul>
+               </li>
+            {% endfor %}
+         </ul>
+      </div>
    </div>
-</div>
+{% endif %}
