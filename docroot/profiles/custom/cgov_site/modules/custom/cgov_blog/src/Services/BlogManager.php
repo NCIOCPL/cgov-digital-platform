@@ -146,19 +146,33 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series categories (topics). TODO: filter by series.
-   */
-  public function getSeriesCategories() {
-    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
-    return $taxonomy;
-  }
-
-  /**
    * Get the Blog Featured content nodes.
    */
   public function getSeriesFeaturedPosts() {
     $series = $this->getSeriesEntity();
     return $series->field_featured_posts->referencedEntities();
+  }
+
+  /**
+   * Get Blog Series categories (topics). TODO: filter by series.
+   */
+  public function getSeriesCategories() {
+    $categories = [];
+    $curr_nid = $this->getSeriesId();
+    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
+
+    // Create an array of categories that match the owner Blog Series.
+    if (count($taxonomy) > 0) {
+      foreach ($taxonomy as $taxon) {
+        $tid = $taxon->tid;
+        $owner_nid = $this->getTaxonomyStorage()->load($tid)->get('field_owner_blog')->target_id;
+        if ($curr_nid === $owner_nid) {
+          $categories[] = $taxon;
+        }
+      }
+    }
+
+    return $categories;
   }
 
   /**
