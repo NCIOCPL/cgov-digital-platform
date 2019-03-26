@@ -626,10 +626,6 @@ parent accordion in all breakpoints. */
   }
 
   .container {
-    &.image {
-      width: 25%;
-    }
-
     .body {
       margin: 0.5em 0;
     }
@@ -637,6 +633,24 @@ parent accordion in all breakpoints. */
 }
 
 .list {
+  // News & Events press releases listing
+  &.dynamic {
+    li {
+      &.has-media {
+        .list-item-image {
+          @include break(medium) {
+            padding-right: 0;
+            
+            + .title-and-desc {
+              padding-left: 20px;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
   &.managed {
     @extend .row;
     max-width: 62.5em;
@@ -651,7 +665,7 @@ parent accordion in all breakpoints. */
       padding: 1em 0;
 
       li {
-        &.media {
+        &.has-media {
           > .container {
             padding: 0 mq-px2em(15px);
           }

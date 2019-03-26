@@ -3,8 +3,7 @@
   &.managed,
   &.dynamic {
     li {
-      &.media,
-      &.press-listing {
+      &.has-media {
         margin: 2em 0;
 
         &:first-child {
@@ -17,7 +16,7 @@
         }
 
         > .container {
-          padding: 0 mq-px2em(15px);
+          padding: 0 mq-px2em(15px) 0 0;
 
           + .container {
             margin: 0;
@@ -124,15 +123,17 @@
     li {
       .list-item-image {
         padding: 0;
-      }
 
-      .title-and-desc {
-        padding-left: 0;
-
-        @include break(medium) {
-          padding-left: 20px;
+        + .title-and-desc {
+          padding-left: 0;
+  
+          @include break(medium) {
+            padding-left: 20px;
+          }
         }
       }
+
+      
     }
   }
 }
