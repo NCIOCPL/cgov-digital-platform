@@ -1,4 +1,4 @@
-import "./BlogPost.scss";
+import "./BlogSeries.scss";
 import { doAccordion } from 'Core/libraries/accordion/accordion';
 
 const initializeAccordions = () => {

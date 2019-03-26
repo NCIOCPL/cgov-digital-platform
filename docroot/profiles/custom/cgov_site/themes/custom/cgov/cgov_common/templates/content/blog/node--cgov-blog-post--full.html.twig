@@ -15,24 +15,27 @@
         {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
         {{ blogMacros.getAuthor(content) }}
       </p>
+      {% if content.field_image_article[0] %}
       <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
         {{ content.field_image_article }}
       </div>
+      {% endif %}
       {{ content.field_intro_text }}
       {{ content.body }}
-      {% if content.field_recommended_content[0] %}
-        <div id="recommended-content-cards">
-          <h4>{{ node.field_blog_series.entity.field_recommended_content_header.value }}</h4>
-          {{ content.field_recommended_content }}
-        <div>
-      {% endif %}
-      <i>Debug content.field_blog_series: {{ content.field_blog_series }}</i><br/>
+      {# <i>Debug content.field_blog_series: {{ content.field_blog_series }}</i><br/> #}
     </div>
-
   </div>
 
   <footer class="article-footer">
     {{ content.field_related_resources }}
+    {% if content.field_recommended_content[0] %}
+      <div id="blog-cards">
+        <h4>{{ node.field_blog_series.entity.field_recommended_content_header.value }}</h4>
+        <div id="nvcgSlLayoutFeatureA" class="row flex-columns">
+          {{ content.field_recommended_content }}
+        </div>
+      <div>
+    {% endif %}
     {#{{ content.field_public_use }}#}
   </footer>
 </article>

@@ -1,34 +1,36 @@
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
-  <div class="resize-content">
+  <div id="cgvBodyHeader" class="row banner-slot">
     <div class="slot-item only-SI large-12 columns body-banner">
       <a name="NCI+Update+Blog+Banner"></a>
       <div class="blog body-banner">{{ content.field_banner_image }}</div>
     </div>
+  </div>
+  
+  <div class="resize-content">
     <h1>
       {{ node.label }}
     </h1>
     <div id="nvcgSubTitle">
-      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a>
-      </div>
+      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a></div>
     </div>
 
     <div id="cgvBody">
       <div class="slot-item first-SI">
-		    <div>
+        <div>
           {{ field_about_blog }}
         </div>
-	    </div>
-      {{ content.field_image_article }}
-      {{ content.field_intro_text }}
+        {{ content.field_image_article }}
+        {{ content.field_intro_text }}
+      </div>
+      <div class="slot-item last-SI">
+        <div class="dynamic list">
+          <ul>
+            {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <div class="dynamic list">
-      <ul>
-        {{ drupal_view('cgov_block_blog_posts','block_bp_list',node.id) }}
-      </ul>
-    </div>
-
   </div>
 
   <footer class="article-footer">
