@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_site_section
+    - media.type.cgov_file
+    - taxonomy.vocabulary.cgov_site_sections
+id: media.cgov_file.field_site_section
+field_name: field_site_section
+entity_type: media
+bundle: cgov_file
+label: 'Site Section'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cgov_site_sections: cgov_site_sections
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
