@@ -16,19 +16,6 @@
           width: 100%;
         }
 
-        &.hover {
-          .list-item-image {
-            img {
-              opacity: 0.8;
-            }
-          }
-          .title-and-desc {
-            a {
-              color: $lcranberry;
-            }
-          }
-        }
-
         > .container {
           padding: 0 mq-px2em(15px);
 
@@ -63,11 +50,6 @@
           &:hover {
             img {
               opacity: 0.8;
-            }
-            + .title-and-desc {
-              a {
-                color: $lcranberry;
-              }
             }
           }
 
@@ -135,8 +117,8 @@
 
   &.dynamic {
     h2 {
-      margin-top: 0;
       margin-bottom: 34px;
+      margin-top: 0;
     }
 
     li {
@@ -158,8 +140,8 @@
 // Need to override the specificity of one particular rule from _lists
 @include bp(small) {
   .large-8 .list.dynamic .container.image + .container.title {
-    width: 100%;
     padding-left: 0;
+    width: 100%;
   }
 
   .large-8 .list.dynamic .container.title {
