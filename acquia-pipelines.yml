@@ -40,10 +40,8 @@ events:
       - deploy:
           script:
             - pipelines-deploy
-            - source ${SOURCE_DIR}/scripts/pipelines/post_deploy
   pr-closed:
     steps:
       - deploy:
           script:
             - pipelines-deploy
-            - source ${SOURCE_DIR}/scripts/pipelines/post_deploy
