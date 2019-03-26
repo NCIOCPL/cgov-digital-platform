@@ -52,7 +52,7 @@
   (Replaces old "Thumbnail Card" as well)
 #}
 {% macro list_item_title_desc_image(title, description, image, url, has_title_heading) %}
-  <li class="general-list-item general list-item media">
+  <li class="general-list-item general list-item has-media">
     {{ _self._output_list_image(image, url) }}
     <div class="title-and-desc title desc container">
       {{ _self._output_list_title(title, url, has_title_heading) }}
@@ -98,7 +98,7 @@
     * News & Events Press Release Listing View
 #}
 {% macro list_item_title_date_desc_image(title, date, description, image, url, has_title_heading) %}
-  <li class="general-list-item general list-item">
+  <li class="general-list-item general list-item has-media">
     {{ _self._output_list_image(image, url) }}
     <div class="title-and-desc title desc container">
       {{ _self._output_list_title(title, url, has_title_heading) }}

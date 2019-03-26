@@ -1,23 +1,10 @@
 /* list styling shim to handle the different permutations of managed list styles */
 .list {
-  &.managed {
+  &.managed,
+  &.dynamic {
     li {
-      &.media {
+      &.has-media {
         margin: 2em 0;
-
-        &:hover {
-          .list-item-image {
-            img {
-              opacity: 0.8;
-            }
-          }
-
-          .title-and-desc {
-            a {
-              color: $lcranberry;
-            }
-          }
-        }
 
         &:first-child {
           margin-top: 1em;
@@ -34,12 +21,7 @@
           + .container {
             margin: 0;
             width: auto;
-            padding: 0;
-
-            @include break(medium) {
-              padding: 0 mq-px2em(15px);
-            }
-
+            padding: 0 mq-px2em(15px);
           }
         }
 
@@ -61,15 +43,18 @@
             &:not(:empty) {
               background: $black;
               display: block;
-              height: 100%;
+            }
+          }
+
+          &:hover {
+            img {
+              opacity: 0.8;
             }
           }
 
           img {
             width: 100%;
           }
-
-          
         }
 
         .title-and-desc {
@@ -85,6 +70,10 @@
 
             a {
               font-size: 1em;
+
+              &:hover {
+                color: $lcranberry;
+              }
             }
           }
         }
@@ -95,7 +84,7 @@
       margin-left: 0;
       padding-left: 0;
       width: auto;
-      
+
       h3 {
         font-size: mq-px2em(16px);
         margin-bottom: 0;
@@ -123,5 +112,40 @@
         font-size: mq-px2em(18px);
       }
     }
+  }
+
+  &.dynamic {
+    h2 {
+      margin-bottom: 34px;
+      margin-top: 0;
+    }
+
+    li {
+      .list-item-image {
+        padding: 0;
+
+        + .title-and-desc {
+          padding-left: 0;
+  
+          @include break(medium) {
+            padding-left: 20px;
+          }
+        }
+      }
+
+      
+    }
+  }
+}
+
+// Need to override the specificity of one particular rule from _lists
+@include bp(small) {
+  .large-8 .list.dynamic .container.image + .container.title {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .large-8 .list.dynamic .container.title {
+    padding-left: 0;
   }
 }
