@@ -119,9 +119,6 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *   The node id of the current content item.
    */
   private function getMonthsAndYears($cid) {
-    /*
-     * TODO: Filter by language.
-     */
     // Get all available Blog Posts in current language.
     $dates = [];
     $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
