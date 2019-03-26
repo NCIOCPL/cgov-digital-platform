@@ -1,46 +1,7 @@
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog Pager 1"
-  title:
-    value: "Blog Pager 1"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-1"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2014-05-28"
 
 - entity: "node"
   type: "cgov_blog_post"
-  title: "Blog pager 3"
-  title:
-    value: "Blog pager 3"
+  title: "muh title"
   langcode: en
   status: 1
   moderation_state:
@@ -53,140 +14,37 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "muh title"
+  field_author:
+    value: 'muh author'
   body:
     - format: "full_html"
       value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        /a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
   field_page_description:
-    value: 'meta blog post'
+    value: 'muh desc'
+  field_feature_card_description:
+    value: 'muh desc'
+  field_list_description:
+    value: 'muh desc'
   field_pretty_url:
-    value: "blog-pager-2"
+    value: "muh url"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
-    value: "2015-03-03"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog Pager 3"
-  title:
-    value: "Blog pager 3"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
+    value: "2020-01-01"
+  field_image_article:
+    - target_type: 'media'
       '#process':
         callback: 'reference'
         args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-3"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2015-06-05"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 4"
-  title:
-    value: "Blog pager 4"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-4"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2016-02-01"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 5"
-  title:
-    value: "Blog pager 5"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-5"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2016-04-12"
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -212,17 +70,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-6"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2016-10-20"
 
@@ -250,17 +105,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-7"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2016-12-18"
 
@@ -288,17 +140,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-8"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-01-01"
 
@@ -326,17 +175,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-9"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-01-30"
 
@@ -364,17 +210,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-10"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-04-20"
 
@@ -402,17 +245,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-11"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-05-05"
 
@@ -440,17 +280,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-12"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2018-07-04"
 
@@ -478,17 +315,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-13"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-07-07"
 
@@ -516,17 +350,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-14"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-08-08"
 
@@ -554,19 +385,24 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-15"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2017-10-10"
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -592,17 +428,14 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-16"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2018-11-05"
 
@@ -630,19 +463,32 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-17"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2018-11-12"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -668,19 +514,32 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-18"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2018-12-31"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -706,206 +565,13 @@
             <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
   field_page_description:
     value: 'meta blog post'
+  field_feature_card_description:
+    value: 'Artisan activated charcoal organic, raclette normcore palo santo stumptown drinking vinegar live-edge banjo freegan. Narwhal occupy hammock ramps you probably havent heard of them tofu.'
+  field_list_description:
+    value: 'Food truck next level cronut normcore fashion axe intelligentsia. Ethical yr subway tile irony flexitarian leggings cronut banjo snackwave polaroid.'
   field_pretty_url:
     value: "blog-pager-19"
   field_public_use: 1
   field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
   field_date_posted:
     value: "2019-01-01"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 20"
-  title:
-    value: "Blog pager 20"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-1"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2019-02-01"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 21"
-  title:
-    value: "Blog pager 21"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-21"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2019-03-01"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "April Fools!"
-  title:
-    value: "April Fools!"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-22"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2019-04-01"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 23"
-  title:
-    value: "Blog pager 23"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-23"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2019-10-31"
-
-- entity: "node"
-  type: "cgov_blog_post"
-  title: "Blog pager 24"
-  title:
-    value: "Blog pager 24"
-  langcode: en
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_blog_series:
-    - target_type: 'node'
-      '#process':
-        callback: 'reference'
-        args:
-          - 'node'
-          - type: 'cgov_blog_series'
-            title: 'Cancer Currents Blog'
-  body:
-    - format: "full_html"
-      value: |
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae ipsum eu justo iaculis dapibus. Nam eu eros eget odio sagittis posuere. Curabitur eu turpis ornare justo ultricies porttitor vel placerat risus. Nullam sed condimentum elit, id dapibus erat. Phasellus tortor urna, iaculis sed efficitur fermentum, ornare vitae leo. Quisque commodo suscipit feugiat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec congue convallis pellentesque. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc porttitor volutpat dui nec rhoncus.</p>
-            <p>Nam nec massa erat. Nullam egestas egestas erat nec commodo. Nulla sagittis, metus ut faucibus pellentesque, sem orci rhoncus enim, id blandit lorem velit ac elit. Aliquam lacinia vitae lectus et dapibus. Proin augue ante, sollicitudin sed dictum in, varius ac lacus. Nunc et lectus euismod, dignissim odio sit amet, posuere elit. Duis suscipit mauris mauris, a tempor sapien semper sit amet. Maecenas blandit odio fermentum nulla dictum, et tempus orci ultrices. Aenean ullamcorper nisi eros, ut dapibus dui egestas a. Donec pharetra pharetra lobortis. Pellentesque efficitur ultrices mi, quis efficitur eros viverra eu. Praesent ultricies orci sed mauris lobortis efficitur. In magna libero, fermentum et nulla nec, fringilla mattis magna. Quisque dignissim massa ut odio convallis, eu dapibus libero scelerisque. Cras auctor fringilla mi non dictum.</p>
-  field_page_description:
-    value: 'meta blog post'
-  field_pretty_url:
-    value: "blog-pager-24"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'News & Events'
-  field_date_posted:
-    value: "2020-01-01"
