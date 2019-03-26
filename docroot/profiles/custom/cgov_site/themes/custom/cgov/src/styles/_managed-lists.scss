@@ -66,10 +66,9 @@
 
           h3 {
             margin-top: 0;
-            font-size: mq-px2em(20px);
 
             a {
-              font-size: 1em;
+              font-size: inherit;
 
               &:hover {
                 color: $lcranberry;
@@ -80,15 +79,30 @@
       }
     }
 
+    .title-and-desc {
+      h3 {
+        a {
+          font-size: inherit;
+        }
+      }
+
+      a {
+        font-size: mq-px2em(20px);
+      }
+    }
+
     .title-desc {
       margin-left: 0;
       padding-left: 0;
       width: auto;
 
       h3 {
-        font-size: mq-px2em(16px);
         margin-bottom: 0;
         margin-top: 0;
+
+        a {
+          font-size: inherit;
+        }
       }
     }
 
@@ -108,8 +122,12 @@
         top: 0.25em;
       }
 
-      h3 {
+      a {
+        font-family: $montserrat-font-stack;
         font-size: mq-px2em(18px);
+        font-style: normal;
+        font-weight: bold;
+        text-rendering: optimizeLegibility;
       }
     }
   }
@@ -126,14 +144,12 @@
 
         + .title-and-desc {
           padding-left: 0;
-  
+
           @include break(medium) {
             padding-left: 20px;
           }
         }
       }
-
-      
     }
   }
 }
