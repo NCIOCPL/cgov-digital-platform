@@ -40,7 +40,7 @@
 {% macro getMonthLinks(monthInfo, year, path) %}
   {% for month, count in monthInfo %}
     <li class="month">
-      <a href="{{path}}?filter[year]={{year}}&filter[month]={{month}}">
+      <a href="{{path}}?year={{year}}&month={{month}}">
         {{ _self.transformMonthName(month) }}
       </a> ({{ count }})
     </li>
@@ -54,7 +54,7 @@
 {% macro getYearLinks(yearInfo, path) %}
   {% for year, count in yearInfo %}
       <li class="year">
-        <a href="{{path}}?filter[year]={{year}}">{{year}}</a> ({{count}})
+        <a href="{{path}}?year={{year}}">{{year}}</a> ({{count}})
       </li>
   {% endfor %}
 {% endmacro %}
