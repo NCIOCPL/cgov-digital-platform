@@ -8,6 +8,19 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function pdq_cancer_information_summary_field_widget_form_alter(
+  &$element,
+  FormStateInterface $form_state,
+  $context) {
+  $map = ['field_pdq_section_html' => ['raw_html']];
+  $form_helper = \Drupal::service('cgov_util.form_tools');
+  $form_helper->allowTextFormats($map, $element, $context);
+}
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
