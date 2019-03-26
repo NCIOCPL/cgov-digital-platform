@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.cgov_cthp.field_audience
     - field.field.node.cgov_cthp.field_audience_toggle
     - field.field.node.cgov_cthp.field_browser_title
     - field.field.node.cgov_cthp.field_card_title
@@ -34,13 +35,22 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_audience_toggle:
+  field_audience:
     type: list_default
     weight: 11
     region: content
     label: above
     settings: {  }
     third_party_settings: {  }
+  field_audience_toggle:
+    weight: 11
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
   field_browser_title:
     weight: 4
     label: above

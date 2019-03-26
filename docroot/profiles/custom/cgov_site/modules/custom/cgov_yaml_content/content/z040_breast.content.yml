@@ -7,7 +7,7 @@
   status: 1
   moderation_state:
     value: 'published'
-  title: "Breast Cancer"
+  title: "Breast Cancer—Patient Version"
   field_page_description:
     value: "Breast cancer is the second most common cancer in women after skin cancer. Mammograms can detect breast cancer early, possibly before it has spread. Start here to find information on breast cancer treatment, causes and prevention, screening, research, and statistics."
   field_short_title:
@@ -21,6 +21,15 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/types/breast'
+  field_audience:
+    value: "patient"
+  field_audience_toggle:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Breast Cancer—Health Professional Version'
 ######## BEGIN CTHP CARDS ########
   field_cthp_cards:
     - entity: 'paragraph'
