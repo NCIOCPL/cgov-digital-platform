@@ -2,9 +2,6 @@
 {% set style = paragraph.field_list_item_style.value %}
 {% set attr = create_attribute() %}
 {% set attr = attr.addClass('managed list') %}
-{% if 'image' in style %}
-  {% set attr = attr.addClass('has-images') %}
-{% endif %}
 
 <!-- List Style: {{- style -}} -->
 <div{{ attr }}>
