@@ -28,6 +28,11 @@ $config = [
         // Can be NULL/unset, in which case a builtin discovery service will be used.
         'discoURL' => null,
 
+        // The private key and certificate for signing the SAML XML data.
+        'privatekey' => 'saml.pem',
+        'certificate' => 'saml.crt',
+        'signature.algorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
+
         /*
          * The attributes parameter must contain an array of desired attributes by the SP.
          * The attributes can be expressed as an array of names or as an associative array
