@@ -169,7 +169,7 @@ process:
 
   field_blog_series:
     plugin: migration_lookup
-    migration: blogseries_en_migration
+    migration: blogseries_es_migration
     source: field_blog_series
     no_stub: true
 
@@ -244,6 +244,4 @@ destination:
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - internallinksql_migration
-    - externallinksql_migration
     - blogseries_es_migration

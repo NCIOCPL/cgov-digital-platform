@@ -32,7 +32,7 @@ source:
         -
          name: field_blog_topics
          label: field_blog_topics
-         selector: 'field_blog_topics/field_blog_topics'
+         selector: 'field_blog_topics/id'
         -
          name: field_search_engine_restrictions
          label: field_search_engine_restrictions
@@ -176,7 +176,9 @@ process:
 
   field_blog_series:
     plugin: migration_lookup
-    migration: blogseries_en_migration
+    migration:
+      - blogseries_en_migration
+      - blogseries_es_migration
     source: field_blog_series
     no_stub: true
 
