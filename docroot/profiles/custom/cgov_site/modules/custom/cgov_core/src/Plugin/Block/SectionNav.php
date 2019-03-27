@@ -91,6 +91,29 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Generic sorting function to sort by Term weight.
+   *
+   * It's equivalent to reverse sort, since higher weights should
+   * appear first.
+   *
+   * @param \Drupal\cgov_core\NavItem $firstItem
+   *   Nav item.
+   * @param \Drupal\cgov_core\NavItem $secondItem
+   *   Nav item.
+   *
+   * @return int
+   *   Sort result.
+   */
+  public function sortItemsByWeight(NavItem $firstItem, NavItem $secondItem) {
+    $firstWeight = $firstItem->getWeight();
+    $secondWeight = $secondItem->getWeight();
+    if ($firstWeight === $secondWeight) {
+      return 0;
+    }
+    return ($firstWeight < $secondWeight) ? -1 : 1;
+  }
+
+  /**
    * Create render tree of NavItems.
    *
    * @param \Drupal\cgov_core\NavItem $navItem
@@ -124,6 +147,9 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     $hasChildren = count($childList) > 0;
     $children = [];
     if ($renderDepth > 1 && $hasChildren) {
+      // Give the array a quick shuffle to respect term weights
+      // of children before proceeding with recursive rendering.
+      usort($childList, [$this, "sortItemsByWeight"]);
       $children = array_map(function ($child) use ($renderDepth, $currentLevel) {
         $currentLevel++;
         return $this->renderNavElement($child, $renderDepth - 1, $currentLevel);
