@@ -8,12 +8,20 @@
   moderation_state:
     value: 'published'
   title: "Breast Cancer—Health Professional Version"
+  title__ES:
+    value: "Cáncer de seno (mama)—Versión para profesionales de salud"
   field_page_description:
     value: "The most common type of breast cancer is ductal carcinoma, which begins in the cells of the ducts. Breast cancer can also begin in the cells of a lobule and in other tissues of the breast. Find evidence-based information on breast cancer treatment, causes and prevention, genetics, screening, research, and statistics."
+  field_page_description__ES:
+    value: "El tipo más común de cáncer de mama es el carcinoma ductal, que empieza en las células de los conductos. El cáncer de mama a veces se forma en células de los lóbulos y otros tejidos de la mama. Encuentre información basada en datos probatorios sobre tratamiento, causas, prevención, investigación y estadísticas."
   field_short_title:
     value: "Breast Cancer"
+  field_short_title__ES:
+    value: "Cáncer de seno (mama)"
   field_browser_title:
     value: "Breast Cancer—Health Professional Version"
+  field_browser_title__ES:
+    value: "Cáncer de seno (mama)—Versión para profesionales de salud"
   field_site_section:
     - '#process':
         callback: 'reference'
@@ -21,7 +29,16 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/types/breast/hp'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/tipos/seno/pro'
   field_audience:
+    value: "health_professional"
+  field_audience__ES:
     value: "health_professional"
   field_audience_toggle:
     - '#process':
@@ -30,6 +47,13 @@
           - 'node'
           - type: 'cgov_cthp'
             title: 'Breast Cancer—Patient Version'
+  field_audience_toggle__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Cáncer de seno (mama)—Versión para pacientes'
 ######## BEGIN CTHP CARDS ########
   field_cthp_cards:
     - entity: 'paragraph'
@@ -53,6 +77,17 @@
               - 'node'
               - type: 'pdq_cancer_information_summary'
                 title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'pdq_cancer_information_summary'
+                    title: 'Breast Cancer Treatment (PDQ®)–Patient Version'
     - entity: 'paragraph'
       type: "cgov_cthp_guide_card"
       field_cthp_card_title:
@@ -77,13 +112,28 @@
     - entity: 'paragraph'
       type: "cgov_cthp_guide_card"
       field_cthp_card_title:
+        - value: 'Genetics'
+      field_cthp_card_theme:
+        - value: 'cthp-genetics'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Genetics Information for Health Professionals"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
         - value: 'Screening'
       field_cthp_card_theme:
         - value: 'cthp-screening'
       field_cthp_guide_card_description:
         - format: "full_html"
           value: |
-            <p>NCI has only limited information about breast cancer screening for patients.</p>
+            <p>NCI has only limited information about breast cancer screening for health professionals.</p>
       field_cthp_pdq_link_heading:
         - value: "PDQ Screening Information for Health Professionals"
       field_cthp_pdq_links:
@@ -103,7 +153,7 @@
                 args:
                   - 'node'
                   - type: 'pdq_cancer_information_summary'
-                    title: 'Breast Cancer Treatment (PDQ®)–Health Professional Version'
+                    title: 'Breast Cancer Screening (PDQ®)–Patient Version'
         - entity: 'paragraph'
           type: "cgov_internal_link"
           field_internal_link:
@@ -121,7 +171,7 @@
       field_cthp_card_theme:
         - value: 'cthp-survival'
       field_cthp_override_description:
-        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+        - value: "Breast cancer statistics based on data from large groups of patients to be used as a general guide."
       field_cthp_video:
         - target_type: 'media'
           '#process':
@@ -144,49 +194,16 @@
     - entity: 'paragraph'
       type: "cgov_cthp_block_card"
       field_cthp_card_title:
-        - value: 'Coping with Cancer'
+        - value: 'Supportive & Palliative Care'
       field_cthp_card_theme:
         - value: 'cthp-general'
       field_cthp_block_card_content:
-        - entity: "block_content"
-          type: "content_block"
-          info: "Coping With Cancer CTHP Block Card - English"
-          info__ES:
-            value: "Coping With Cancer CTHP Block Card - Spanish"
-          langcode: en
-          status: 1
-          body:
-            - format: "full_html"
-              value: |
-                <div>
-                  <div class="rawHtml">
-                    <div class="cardBody">
-                      <p>The information in this section is meant to help you cope with the many issues and concerns that occur when you have cancer.</p>
-                      <a class="arrow-link" href="/about-cancer/coping/feelings">Feelings and Cancer</a>
-                      <a class="arrow-link" href="/about-cancer/coping/adjusting-to-cancer">Adjusting to Cancer</a>
-                      <a class="arrow-link" href="/about-cancer/coping/caregiver-support">Support for Caregivers</a>
-                      <a class="arrow-link" href="/about-cancer/coping/survivorship">Survivorship</a>
-                      <a class="arrow-link" href="/about-cancer/advanced-cancer">Advanced Cancer</a>
-                      <a class="arrow-link" href="/about-cancer/managing-care">Managing Cancer Care</a>
-                    </div>
-                  </div>
-                </div>
-          body__ES:
-            - format: "full_html"
-              value: |
-                <div>
-                  <div class="rawHtml">
-                    <div class="cardBody">
-                      <p>Esta sección tiene información para ayudarle a superar los problemas y preocupaciones que suceden cuando se tiene cáncer.</p>
-                      <a class="arrow-link" href="/espanol/cancer/sobrellevar/sentimientos">Los sentimientos y el cáncer</a>
-                      <a class="arrow-link" href="/espanol/cancer/sobrellevar/adaptacion-al-cancer">La adaptación al cáncer</a>
-                      <a class="arrow-link" href="/espanol/cancer/sobrellevar/apoyo-a-quien-cuida">Apoyo para quienes cuidan a pacientes con cáncer</a>
-                      <a class="arrow-link" href="/espanol/cancer/sobrellevar/supervivencia">Supervivencia</a>
-                      <a class="arrow-link" href="/espanol/cancer/cancer-avanzado">Cáncer avanzado</a>
-                      <a class="arrow-link" href="/espanol/cancer/manejo-del-cancer">Manejo de la atención del cáncer</a>
-                    </div>
-                  </div>
-                </div>
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'block_content'
+              - type: 'content_block'
+                info: 'Supportive & Palliative Care CTHP Block Card - English'
     - entity: 'paragraph'
       type: "cgov_cthp_feature_card"
       field_cthp_card_title:
@@ -203,27 +220,60 @@
               - 'node'
               - type: 'cgov_article'
                 title: 'Breast Reconstruction After Mastectomy'
+######## End English CTHP Cards ##############
+######## BEGIN SPANISH CTHP CARDS ########
+  field_cthp_cards__ES:
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Tratamiento'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para profesionales de la salud sobre tratamiento"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Causas y prevención'
+      field_cthp_card_theme:
+        - value: 'cthp-causes'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para profesionales de la salud sobre prevención"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Genética'
+      field_cthp_card_theme:
+        - value: 'cthp-genetics'
+      field_cthp_guide_card_desc:
+        - value: "El NCI no cuenta con información en el PDQ sobre datos probatorios relacionados con la genética del cáncer de seno (mama)."
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Exámenes de detección'
+      field_cthp_card_theme:
+        - value: 'cthp-screening'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para profesionales de la salud sobre exámenes de detección"
     - entity: 'paragraph'
       type: "cgov_cthp_video_card"
       field_cthp_card_title:
-        - value: 'After Treatment Ends'
+        - value: 'Estadísticas'
       field_cthp_card_theme:
-        - value: 'cthp-pink-feature'
+        - value: 'cthp-survival'
       field_cthp_override_description:
-        - value: "An introduction to breast cancer survivors and the issues they face after treatment ends."
-      field_cthp_video:
-        - target_type: 'media'
-          '#process':
+        - value: "Estadísticas del cáncer de seno (mama) basadas en datos de grupos grandes de pacientes que se usarán como guía general (solo disponibles en inglés)."
+    - entity: 'paragraph'
+      type: "cgov_cthp_block_card"
+      field_cthp_card_title:
+        - value: 'Cuidados médicos de apoyo'
+      field_cthp_card_theme:
+        - value: 'cthp-general'
+      field_cthp_block_card_content:
+        - '#process':
             callback: 'reference'
             args:
-              - 'media'
-              - bundle: 'cgov_video'
-                name: 'Hedge Maze'
-      field_cthp_target_link:
-        - entity: 'paragraph'
-          type: "cgov_external_link"
-          field_override_title:
-            - value: 'External Link Title'
-          field_external_link:
-            - uri: 'https://www.google.com'
-    ######## End Thumbnail Row ##############
+              - 'block_content'
+              - type: 'content_block'
+                info: 'Supportive & Palliative Care CTHP Block Card - Spanish'
+######## End Spanish CTHP Cards ##############
