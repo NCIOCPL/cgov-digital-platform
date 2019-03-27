@@ -6,9 +6,15 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Render\Element;
 
 /**
- * Implements hook_FORM_ID_alter().
+ * Implements hook_form_alter().
+ *
+ * This handles all block_content forms, which each have a unique
+ * ID based on the bundle name. Some logic borrowed from entity_redirect.
  */
 function cgov_embedded_block_form_alter(
   &$form,
@@ -24,37 +30,14 @@ function cgov_embedded_block_form_alter(
   // The following should pass if we are a block_content form.
   /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
   $form_object = $form_state->getFormObject();
-  if (!is_a($form_object, '\Drupal\Core\Entity\EntityFormInterface')) {
+  if (!is_a($form_object, '\Drupal\block_content\BlockContentForm')) {
     return;
   }
 
   $entity = $form_object->getEntity();
 
-  // If somehow this entity is not a content entity, bail.
-  if (!is_a($entity, '\Drupal\Core\Entity\ContentEntityBase')) {
-    return;
-  }
-
-  /** @var \Drupal\Core\Entity\ContentEntityBase $entity */
-  if (!$bundle_type = $entity->getEntityType()->getBundleEntityType()) {
-    return;
-  }
-  /** @var \Drupal\Core\Config\Entity\ConfigEntityBundleBase $bundle */
-  $bundle = \Drupal::entityTypeManager()->getStorage($bundle_type)->load($entity->bundle());
-  /*
-   * // This should check out own third party setting if the block_content
-   * // type should not create blocks.
-   * if (!$bundle->getThirdPartySetting('entity_redirect', 'redirect')) {
-   *   return;
-   * }
-   */
-
-  // Placeholder linting tricker. Remove when the third party setting check is
-  // implamented.
-  if (!$bundle) {
-    return;
-  }
-
+  // You can always create a new block config by adding it to block layout,
+  // so for our system, we will never create the block after the fact.
   if ($entity->isNew()) {
     $form['actions']['submit']['#submit'][] = '_cgov_embedded_block_handle_new';
   }
@@ -67,6 +50,88 @@ function cgov_embedded_block_form_alter(
 function _cgov_embedded_block_handle_new($form, FormStateInterface $form_state) {
   $form_object = $form_state->getFormObject();
   $entity = $form_object->getEntity();
-  // We should not add the block.
+  // We should not add the block, instead go to listing page.
   $form_state->setRedirectUrl($entity->toUrl('collection'));
+}
+
+/*--------------------------------------------------
+ * Add theming hints to block_content entities.
+ *
+ * Borrowed from
+ * https://github.com/swentel/block_content_template.
+ *---------------------------------------------------*/
+
+/**
+ * Implements hook_theme().
+ *
+ * Registers the missing theme implementation for block_content.
+ * This indicates how the build element should be rendered.
+ */
+function cgov_embedded_block_theme() {
+  return [
+    'block_content' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter() for block_content.
+ */
+function cgov_embedded_block_block_content_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  // Let's always add our theme implementation to a block_content build object.
+  $build['#theme'] = 'block_content';
+}
+
+/**
+ * Preprocess function for block content template.
+ */
+function template_preprocess_block_content(&$variables) {
+  $variables['content'] = [];
+  $content = [];
+
+  // Element::children will throw errors if it encounters items that
+  // are not expected. Removing those elements that do not match that
+  // basic condition. I do not want to copy the entire logic though,
+  // so we will continue to pass a subset to Element::children.
+  // See core/lib/Drupal/Core/Render/Element.php.
+  $good_elements = [];
+  foreach ($variables as $key => $value) {
+    // Condensed test from Element.php.
+    $isBadElem = (
+      ($key === '' || $key[0] !== '#') &&
+      (!is_array($value) && isset($value))
+    );
+
+    if (!$isBadElem) {
+      $good_elements[$key] = $value;
+    }
+  }
+
+  // Copy out the render elements into the context object.
+  foreach (Element::children($good_elements) as $key) {
+    $content[] = $good_elements[$key];
+  }
+  $variables['content'] = $content;
+
+  // Remove quick edit as it doesn't make sense here. It also points to the view
+  // for instance, which doesn't make sense at all.
+  if (isset($variables['attributes']['data-quickedit-entity-id'])) {
+    unset($variables['attributes']['data-quickedit-entity-id']);
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * Provide suggestions on how to render the block_content.
+ */
+function cgov_embedded_block_theme_suggestions_block_content(array $variables) {
+  $suggestions = [];
+  $block_content = $variables['elements']['#block_content'];
+
+  $suggestions[] = 'block_content__' . $block_content->bundle();
+  $suggestions[] = 'block_content__' . $block_content->id();
+
+  return $suggestions;
 }
