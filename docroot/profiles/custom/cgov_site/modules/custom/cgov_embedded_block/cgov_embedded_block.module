@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_embedded_block.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_FORM_ID_alter().
+ */
+function cgov_embedded_block_form_alter(
+  &$form,
+  FormStateInterface $form_state,
+  $form_id
+) {
+  // Make sure we are a block content form.
+  $isMatch = preg_match('/^block_content_/', $form_id, $match);
+  if (!$isMatch) {
+    return;
+  }
+
+  // The following should pass if we are a block_content form.
+  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+  $form_object = $form_state->getFormObject();
+  if (!is_a($form_object, '\Drupal\Core\Entity\EntityFormInterface')) {
+    return;
+  }
+
+  $entity = $form_object->getEntity();
+
+  // If somehow this entity is not a content entity, bail.
+  if (!is_a($entity, '\Drupal\Core\Entity\ContentEntityBase')) {
+    return;
+  }
+
+  /** @var \Drupal\Core\Entity\ContentEntityBase $entity */
+  if (!$bundle_type = $entity->getEntityType()->getBundleEntityType()) {
+    return;
+  }
+  /** @var \Drupal\Core\Config\Entity\ConfigEntityBundleBase $bundle */
+  $bundle = \Drupal::entityTypeManager()->getStorage($bundle_type)->load($entity->bundle());
+  /*
+   * // This should check out own third party setting if the block_content
+   * // type should not create blocks.
+   * if (!$bundle->getThirdPartySetting('entity_redirect', 'redirect')) {
+   *   return;
+   * }
+   */
+
+  // Placeholder linting tricker. Remove when the third party setting check is
+  // implamented.
+  if (!$bundle) {
+    return;
+  }
+
+  if ($entity->isNew()) {
+    $form['actions']['submit']['#submit'][] = '_cgov_embedded_block_handle_new';
+  }
+
+}
+
+/**
+ * Submit function to handle the redirection per entity create/edit action.
+ */
+function _cgov_embedded_block_handle_new($form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  $entity = $form_object->getEntity();
+  // We should not add the block.
+  $form_state->setRedirectUrl($entity->toUrl('collection'));
+}
