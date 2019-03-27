@@ -1,0 +1,276 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_site_section_browser
+    - field.field.node.cgov_event.body
+    - field.field.node.cgov_event.field_all_day_event
+    - field.field.node.cgov_event.field_browser_title
+    - field.field.node.cgov_event.field_card_title
+    - field.field.node.cgov_event.field_city_state
+    - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_series
+    - field.field.node.cgov_event.field_event_start_date
+    - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_article
+    - field.field.node.cgov_event.field_image_promotional
+    - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_page_description
+    - field.field.node.cgov_event.field_pretty_url
+    - field.field.node.cgov_event.field_related_resources
+    - field.field.node.cgov_event.field_room
+    - field.field.node.cgov_event.field_search_engine_restrictions
+    - field.field.node.cgov_event.field_short_title
+    - field.field.node.cgov_event.field_site_section
+    - field.field.node.cgov_event.field_venue
+    - node.type.cgov_event
+    - workflows.workflow.editorial_workflow
+  module:
+    - content_moderation
+    - datetime
+    - entity_browser
+    - paragraphs_asymmetric_translation_widgets
+    - path
+    - text
+id: node.cgov_event.default
+targetEntityType: node
+bundle: cgov_event
+mode: default
+content:
+  body:
+    weight: 17
+    type: text_textarea_with_summary
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  created:
+    type: datetime_timestamp
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_all_day_event:
+    weight: 13
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_browser_title:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_card_title:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_city_state:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_event_end_date:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_event_series:
+    weight: 10
+    settings:
+      match_operator: CONTAINS
+      size: 255
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+    region: content
+  field_event_start_date:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_image_article:
+    weight: 18
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_image_promotional:
+    weight: 19
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_list_description:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_page_description:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_related_resources:
+    type: paragraphs_classic_asymmetric
+    weight: 20
+    region: content
+    settings:
+      title: 'Related Resource'
+      title_plural: 'Related Resources'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+  field_room:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_search_engine_restrictions:
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_short_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_site_section:
+    weight: 1
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_venue:
+    weight: 14
+    settings:
+      match_operator: CONTAINS
+      size: 255
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+    region: content
+  langcode:
+    type: language_select
+    weight: 0
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 26
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 22
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 27
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 25
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 23
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  promote: true
+  sticky: true

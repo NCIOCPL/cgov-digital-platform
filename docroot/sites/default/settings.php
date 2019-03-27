@@ -3,6 +3,16 @@
 // @codingStandardsIgnoreFile
 
 /**
+ * Include our ACSF settings if we are on an ACSF environment.
+ */
+if (!empty($_ENV['AH_SITE_ENVIRONMENT']) &&
+  function_exists('gardens_site_data_get_filepath')) {
+  // ===== Added by acsf-init, please do not delete. Section start. =====
+  include dirname(__FILE__) . '/acsf.settings.php';
+  // ===== Added by acsf-init, please do not delete. Section end. =====
+}
+
+/**
  * @file
  * Drupal site-specific configuration file.
  *
@@ -641,6 +651,18 @@ if ($settings['hash_salt']) {
 # $config['system.site']['name'] = 'My Drupal site';
 # $config['system.theme']['default'] = 'stark';
 # $config['user.settings']['anonymous'] = 'Visitor';
+/*
+ * Set the translation path to allow for easy management of third-party
+ * translation files. The installer ignores the path for the initial install,
+ * but it will honor the use source. (It is here as configs will not be set
+ * before the installation starts.)
+ *
+ * There is a known issue where the installer will not honor the override for the
+ * path because it is hardcoded in the installer code.
+ * https://www.drupal.org/project/drupal/issues/2689305
+ */
+$config['locale.settings']['translation']['use_source'] = 'local';
+$config['locale.settings']['translation']['path'] = DRUPAL_ROOT . '/translations';
 
 /**
  * Fast 404 pages:

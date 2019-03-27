@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: event_url
+label: 'Event URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  ef804804-ab78-4ada-918b-5df04f096255:
+    id: node_type
+    bundles:
+      cgov_event: cgov_event
+    negate: false
+    context_mapping:
+      node: node
+    uuid: ef804804-ab78-4ada-918b-5df04f096255
+selection_logic: and
+weight: -5
+relationships: {  }

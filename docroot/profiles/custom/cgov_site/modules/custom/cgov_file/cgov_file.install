@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_video.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_file_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  $siteHelper->addMediaTypePermissions('cgov_file', ['content_author']);
+  $siteHelper->attachMediaTypeToWorkflow('cgov_file', 'editorial_workflow');
+}
