@@ -1,3 +1,5 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
 {# {{ devel_breakpoint() }} #}
@@ -21,6 +23,7 @@
               </div>
           </figure>
 
+          {{ contentPageMacros.displayDates(node,content) }}
         </div>
     </div>
 </article>
