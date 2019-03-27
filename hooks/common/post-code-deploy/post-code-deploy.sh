@@ -33,4 +33,7 @@ blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt cgov:locales:translate
 blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
 
+echo 'Where am I?'
+pwd
+
 set +v
