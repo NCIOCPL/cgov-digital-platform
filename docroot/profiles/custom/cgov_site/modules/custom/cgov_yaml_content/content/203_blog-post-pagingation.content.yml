@@ -1,0 +1,1512 @@
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Snuggles"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_snugs_article.jpg'
+      alt: 'Snuggles'
+  field_override_img_featured:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_snugs_featured.jpg'
+      alt: 'Snuggles'
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_snugs_thumb.jpg'
+      alt: 'Snuggles'
+  field_caption:
+    value: 'Snuggles: King of the Chubs.'
+  field_credit:
+    value: "Dion D."
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Cat-Cat"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_smoo_article.jpg'
+      alt: "Cat-Cat"
+  field_override_img_featured:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_smoo_featured.jpg'
+      alt: "Cat-Cat"
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_smoo_thumb.jpg'
+      alt: "Cat-Cat"
+  field_caption:
+    value: 'Cat-Cat: The Wet Bandit.'
+  field_credit:
+    value: "Dion D."
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Minnie"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_mm_article.jpg'
+      alt: 'Minnie'
+  field_override_img_featured:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_mm_featured.jpg'
+      alt: 'Minnie'
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pet_mm_thumb.jpg'
+      alt: 'Minnie'
+  field_caption:
+    value: 'Minnie: Fuzzy Pumpkin, Lap Aficionado.'
+  field_credit:
+    value: "Dion D."
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Nature’s Bounty: Revitalizing the Discovery of New Cancer Drugs from Natural Products"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Biology'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'
+  field_short_title:
+    value: "Nature’s Bounty: Revitalizing the Discovery of New Cancer Drugs from Natural Products"
+  body:
+    - format: "full_html"
+      value: |
+        <p>Most people wouldn’t expect to find a meat grinder in a research laboratory. But, according to Tanja Grkovic, Ph.D., it’s the perfect tool for grinding up frozen marine organisms.</p>
+        <p>“It really does the job!” she said.</p>
+        <p>Dr. Grkovic, a Croatian-born chemist, should know. As a senior scientist in the Natural Products Support Group, she has spent the last several years intimately involved in improving processes for analyzing products of nature—from marine creatures to soil-dwelling <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044571&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044571&amp;version=Patient&amp;language=English">fungi</a> to plant leaves—to see whether chemical <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000422394&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000422394&amp;version=Patient&amp;language=English">compounds</a> within them might be starting blocks for new cancer drugs. (The Natural Products Support Group is part of the Frederick National Laboratory for Cancer Research, an NCI-sponsored contractor-operated facility.)</p>
+        <p>The work has been part of an ambitious, <u><a href="https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative">Cancer Moonshot<sup>SM</sup></a></u>-funded initiative, called the NCI Program for Natural Products Discovery (NPNPD), to make it easier for other researchers to <a href="https://www.ncbi.nlm.nih.gov/pubmed/29812901">mine nature for leads on new cancer drugs</a>.</p>
+        <p>A big part of that story has taken place in the well-worn home of NCI’s <span><a href="https://dtp.cancer.gov/organization/npb/default.htm">Natural Products Branch</a></span>, on the NCI campus in Frederick, MD.</p>
+        <p>On a tour of the building, Dr. Grkovic showed off freezer rooms filled with samples of natural products collected from across the globe, all the while explaining the highly complex process of converting those samples from their original states to a few grams of material in bar-coded test tubes.</p>
+        <p>Natural products have been a bedrock of drug discovery for many decades, she said. It’s estimated that more than half of all cancer drugs and antibiotics originated from a chemical compound discovered in a natural product.</p>
+        <p><span><a href="/about-cancer/treatment/drugs/paclitaxel" title="">Paclitaxel (Taxol)</a></span>, for example, one of the most commonly used chemotherapy drugs, was derived from the bark of the Pacific yew tree; <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045296&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045296&amp;version=Patient&amp;language=English">penicillin</a>, one of the first antibiotics, from a mold; and drugs to lower cholesterol from compounds found in fungi.</p>
+        <p>However, Barry O’Keefe, Ph.D., who heads the Natural Products Branch, explained that, despite this impressive track record, natural products have fallen out of favor as a source for new drug discovery. That’s largely because of the extensive time and effort needed to go from a bit of algae or sliver of tree bark to a compound that can be tested for its ability to kill cancer cells.</p>
+        <figure class="image-right-medium centered-set">
+          <div class="centered-element">
+            <img src="/PublishedContent/Images/research/key-initiatives/ras/Streptomyces-peucetius-Article.__v100679178.jpg" alt="Image of the Streptomyces peucetius bacterium"><!--Comment-->
+          </div>
+          <figcaption>
+            <div class="caption-container no-resize">
+              <p><span>Streptomyces peucetius, a bacterium from which the chemotherapy drug daunorubicin is derived.</span></p>
+              <div class="image-photo-credit">Credit: National Cancer Institute</div>
+            </div>
+          </figcaption>
+        </figure>
+        <p>“Most people just don’t want to work with natural products anymore; it’s too challenging,” Dr. O’Keefe said. Instead, many researchers and pharmaceutical companies now rely primarily on large “libraries” of man-made, chemically synthesized compounds for cancer drug discovery.</p>
+        <p>But given the great potential and unmatched chemical diversity found in nature, in 2015, NCI leadership decided that the institute should launch an effort to encourage the research community to rediscover natural products. The NPNPD was established not long after.</p>
+        <p>“We knew it would be a big undertaking,” Dr. O’Keefe said. “But if we did it, we thought, it could change everything.”</p>
+        <h2 id="ui-id-2">A National Treasure</h2>
+        <p>Beginning in the mid-1980s, the Natural Products Branch—housed on the grounds of NCI’s campus at Fort Detrick, an active military base in Frederick—collected more than 100,000 samples of plants and marine organisms from 25 tropical and subtropical countries across the globe, from the forests of Madagascar to the coastal waters of Thailand.</p>
+        <p>“The idea was to capture a great diversity of species,” Dr. Grkovic said.</p>
+        <p>The samples were collected via contractual arrangements, typically with organizations that study and preserve the natural world, such as international and state botanical gardens and marine science institutes.</p>
+        <p>Those collections were all performed under legal agreements that ensured that any given country’s natural resources would not be depleted or damaged in any way. The agreements also stipulated that, should the products lead to any marketable discoveries—namely, a new drug—the country from which the original product came would share in any profits.</p>
+        <p>But what makes natural products such a promising avenue of drug discovery in the first place?</p>
+        <p>One particularly enticing feature of natural products is their ability to produce molecules that can have a biological effect on other organisms, said Susan Mooberry, Ph.D., a professor of pharmacology at UT Health San Antonio, who specializes in drug discovery using natural products.</p>
+        <p>Take self-defense, for example.</p>
+        <p>“Plants can’t move. Sponges can’t move. So they have to develop mechanisms to protect themselves,” Dr. Mooberry said. Marine organisms known as tunicates (also called sea squirts), for instance, which spend much of their life anchored to rocks and docks, produce an arsenal of toxins to ward off predators.</p>
+        <p>Such chemical compounds are “information rich,” said Daniel Romo, Ph.D., of Baylor University,&nbsp;who specializes in chemically&nbsp;synthesizing potential drug leads derived from natural products. For example, Dr. Romo continued, “they can interact with cellular proteins in new and interesting ways, and that’s often what can lead to the development of new drug targets and drugs.”</p>
+        <p>But even as NCI and other organizations and companies have continued to make samples of natural products available to the research community—in the form of minimally processed materials known as crude extracts—their use in drug discovery has declined dramatically.</p>
+        <p>The chief reason? Unlike crude extracts from natural products, libraries of human-created synthesized compounds are tailor-made for high-throughput screening: highly automated systems for rapidly testing the effects of chemical compounds on biological material.</p>
+        <p>To be suitable for high-throughput screening, on the other hand, natural product extracts must undergo a process known as fractionation, whereby they are transformed into a more purified state that allows for the compounds within them to be more easily isolated.</p>
+        <p>Think of individual crude extracts as a forest full of trees, said Dr. Grkovic.</p>
+        <p>“The fractions from those extracts are like single trees in that forest,” she continued. “A pure compound [in a fraction] is like a single leaf from one of the trees.”</p>
+        <p>The fractionation process also helps to weed out what are often called “nuisance compounds” and other molecules that can make the results from high-throughput screening unreliable, Dr. Mooberry said.</p>
+        <p>Few labs have the ability or resources to fractionate crude extracts, she noted. So over time, researchers and drug companies instead turned to the more economical libraries of human-synthesized compounds.</p>
+        <p>Recognizing this trend, shortly after Dr. O’Keefe became chief of NCI’s natural products program in 2015, he proposed a way to reinvigorate the use of nature’s bounty for drug discovery: do the up-front work for researchers by prefractionating NCI’s treasure trove of natural product crude extracts. Those fractions would then be made available to anybody with a viable research plan to mine them for potentially promising compounds.</p>
+        <p>“Now the research community is going to have access to more chemical diversity than has ever been available in history,” he said. “And it’s free.”</p>
+        <h2 id="ui-id-3">From Months and Months to Weeks</h2>
+        <p>A short walk from the original Natural Products Branch labs, the new NPNPD facility is the antithesis of the old labs: high ceilings, bright lights, loads of stainless steel, and a host of high-tech machines and devices (robots abound) for transforming crude extracts into fractions and preparing those fractions for high-throughput screening.</p>
+        <figure class="image-center centered-set">
+          <div class="centered-element">
+            <img src="/PublishedContent/Images/research/key-initiatives/ras/Tecan-wide_FNL3525-Article.__v200285234.jpg" alt="A Tecan device used to fractionate crude extracts"><!--Comment-->
+          </div>
+          <figcaption>
+            <div class="caption-container no-resize">
+              <p><span>A Tecan Freedom Evo 200, which is used to perform the fractionation of crude extracts from natural products</span></p>
+              <div class="image-photo-credit">Credit: National Cancer Institute</div>
+            </div>
+          </figcaption>
+        </figure>
+        <p></p>
+        <p></p>
+        <p>The lab’s centerpiece is a massive vault-like storage room that will eventually house more than 1 million bar-coded test tubes containing fractions from more than 140,000 crude extracts in NCI’s collection.</p>
+        <p>Within the temperature-controlled vault is a large robotic arm that can travel the 40-foot length and 15-foot height of the room, quickly pulling tubes from thousands of custom-designed racks stacked in shelves from floor to ceiling.</p>
+        <p>The facility is the proving ground for the processes NPNPD staff have developed and refined for fractionating natural product crude extracts, Dr. O’Keefe said. That work has reduced what used to be a months-long, largely manual process to something that is now highly automated and can be completed in a few weeks.</p>
+        <p>“We worked through methods for dealing with each type of source material—marine, plant, microbial—how best to go about purification of this material, and how best to automate that process,” he said.</p>
+        <p>That effort extended to the process for preparing fractions in the test tubes to be sent out for screening. In a matter of days, the samples in those tubes can undergo additional processing (more robots), eventually winding up on tiny plates with hundreds of dimples, or wells—each with a few milliliters of different fractions—and then delivered to a requesting lab, ready for testing.</p>
+        <p>In late January, NPNPD fulfilled the first order for prefractionated samples from its library.</p>
+        <p>“We’ve had interest from large academic labs and researchers from around the world,” Dr. O’Keefe said.</p>
+        <h2 id="ui-id-4">More Than Just a Supply House</h2>
+        <p>As efficient as NPNPD’s prefractionation process is, the fractions still have some complexity about them. Based on testing done at NPNPD, Dr. Grkovic explained, on average, the prefractionated samples contain approximately 20 active chemical compounds.</p>
+        <p>So if a high-throughput screen does show that a fraction being tested kills, say, breast cancer or leukemia cells, it can take a few more rounds of testing to isolate the compound responsible for the cell-killing activity.</p>
+        <p>The NPNPD has the capacity and expertise to conduct those additional analyses, Dr. O’Keefe said, and can work with researchers to perform them.</p>
+        <p>Using technologies like liquid <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000655048&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000655048&amp;version=Patient&amp;language=English">chromatography</a>–mass spectrometry and nuclear <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000269422&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000269422&amp;version=Patient&amp;language=English">magnetic resonance spectroscopy</a>, NPNPD scientists can take an active compound identified by a screening lab and, in a matter of weeks, determine its precise chemical structure. That information is important if a researcher wants to understand how the compound kills cancer cells or wants to modify, or optimize, the compound for further studies and drug development.</p>
+        <p>“So, because we have the capacity and we have the throughput, we now have information on [a compound’s] chemical structure only two steps removed from a crude extract,” Dr. Grkovic said.</p>
+        <h2 id="ui-id-5">Backyard Citizen Science</h2>
+        <p>An area of focus moving forward for the NPNPD is hunting for cancer-killing compounds produced by microbes and fungi found in soil.</p>
+        <p>That decision was borne out of a social media post that went viral. In March 2015, a user on the popular social media site Reddit posted about the University of Oklahoma’s Citizen Science Soil Collection Program and its goal of using a “scoop of dirt” from backyards across the country to discover new drugs. The post caught fire, and in the ensuing weeks and months the program was flooded with backyard soil samples from across the United States.</p>
+        <figure class="image-right-medium centered-set">
+          <div class="centered-element">
+            <img src="/PublishedContent/Images/research/key-initiatives/ras/fungi-cheerios-Article.__v200374365.jpg" alt="A test tube of fungi being cultured on Cheerios"><!--Comment-->
+          </div>
+          <figcaption>
+            <div class="caption-container no-resize">
+              <p><span>The University of Oklahoma’s Citizen Science Soil Collection Program grows, or cultures, fungi using Cheerios breakfast cereal.</span></p>
+              <div class="image-photo-credit">Credit: Used with permission from Robert Cichewicz, Ph.D</div>
+            </div>
+          </figcaption>
+        </figure>
+        <p>Faced with more samples than he knew what to do with, the program’s leader, Robert H. Cichewicz, Ph.D., connected with Dr. O’Keefe to see if NCI was interested in taking advantage of this abundance of dirt. Fast forward a few years, and one part of the new NPNPD laboratory is dedicated to prefractionation of crude extracts from soil microbes.</p>
+        <p>Dr. Mooberry’s work is an example of soil’s potential to generate leads for cancer drugs. Several years ago, her lab tested a compound from a fungus in a soil sample submitted to the Oklahoma program from a person in Alaska. It showed <span><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4958493/">an impressive ability to kill one type of triple-negative breast cancer cells</a></span>.</p>
+        <p>Although that particular compound is not moving forward into further studies, more recently&nbsp;her lab showed&nbsp;that a different compound isolated from a soil-derived fungi from the Oklahoma program could specifically kill&nbsp;<a href="/types/bone/patient/ewing-treatment-pdq" title="">Ewing sarcoma</a> cells. A rare and hard-to-treat cancer, Ewing sarcoma is most commonly diagnosed in children and young adults.</p>
+        <p>Results from the studies have yet to be published, Dr. Mooberry noted, but she’s hopeful that the compound may help researchers identify a vulnerability in Ewing sarcoma cells against which new targeted therapies can be developed.</p>
+        <h2 id="ui-id-6">A New Opportunity</h2>
+        <p>The timing of the NPNPD’s launch is good, Dr. Romo said. Libraries of synthesized compounds have not been as successful at producing new drugs as many had hoped, he noted. And <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000462950&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000462950&amp;version=Patient&amp;language=English">synthetic</a> chemists have become much more adept at creating new, highly complex chemical compounds based on promising leads generated from natural products.</p>
+        <p>“We’re getting better at making more and more complex molecules,” he said.</p>
+        <p>Of course, there’s no certainty that any compound, even one that shows great promise in lab studies, will prove to be effective at treating cancer in humans, Dr. Mooberry stressed. But the history of success with drugs derived from natural products cannot be discounted, she continued.</p>
+        <p>And now, with the NPNPD, she said, “we have a new opportunity to make a difference if more people start screening these fractions.”</p>
+        <p>The younger generation of researchers may take up that challenge, Dr. O’Keefe said. Over the past year, he has given presentations on the NPNPD around the country. Almost uniformly, he continued, the most excited response has come from young investigators.</p>
+        <p>As he explained: “Young researchers keep coming up to me, saying ‘Thank you so much because nobody was going to give me funding to go out into the field to do collections or to conduct extractions. Now that I have this resource, I can just start my research.’”</p>
+  field_page_description:
+    value: 'natures bounty'
+  field_feature_card_description:
+    value: 'NCI has launched an ambitious initiative, called the NCI Program for Natural Products Discovery (NPNPD) and funded by the Cancer Moonshot℠, to make it easier for researchers to mine nature for leads on new cancer drugs.'
+  field_list_description:
+    value: 'NCI has launched an ambitious initiative, called the NCI Program for Natural Products Discovery (NPNPD) and funded by the Cancer Moonshot℠, to make it easier for researchers to mine nature for leads on new cancer drugs.'
+  field_pretty_url:
+    value: "cancer-drugs-natural-products-nci-program"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-03-22"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Partnering with Small Business to Advance Innovation in Cancer Research and Care"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Partnering with Small Business to Advance Innovation in Cancer Research and Care"
+  field_author:
+    value: 'Norman E. Sharpless, M.D.'
+  body:
+    - format: "full_html"
+      value: |
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        <p>NCI’s <span><a href="https://sbir.cancer.gov/">Small Business Innovation Research (SBIR) and Small Business Technology Transfer (STTR)</a></span>&nbsp;programs have been in existence for several decades. The programs provide seed funds to encourage small, innovative companies to participate in research and development activities that have the potential for private-sector commercialization and public benefit.</p>
+        <p>Last week marked two important moments for NCI’s SBIR/STTR programs. One was the presentation of a report from a working group, convened under the <a href="https://deainfo.nci.nih.gov/advisory/ncab/ncab.htm">National Cancer Advisory Board</a> (NCAB), with recommendations on how to improve and strengthen the programs. And the second was the release of a study, commissioned by NCI, to help&nbsp;<span><a href="https://sbir.cancer.gov/sites/default/files/documents/NCI_SBIR_ImpactStudy_FullReport.pdf">evaluate the economic impact of these programs</a></span>.</p>
+        <p>The report and study provide insight into a strong set of NCI programs that many in the cancer community may not be familiar with.</p>
+        <h2 id="ui-id-2">My Personal Experience with SBIR</h2>
+        <p>All federal agencies that provide at least $100 million in funding for research and development are required by law to set aside a portion of their extramural research budget for SBIR and STTR programs. In fiscal year (FY) 2019, the SBIR/STTR set-aside is 3.65% of NCI’s extramural budget, that is, approximately $160 million for commercialization activities. This policy makes these&nbsp;programs one of the largest sources of financing for early-stage cancer biotechnology in the United States.</p>
+        <p>Before becoming NCI director, I was able to experience firsthand just how invaluable these startup funds can be for getting novel ideas off the ground.</p>
+        <p>When I was at the University of North Carolina Lineberger Comprehensive Cancer Center, we were studying compounds that inhibit <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046081&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046081&amp;version=Patient&amp;language=English">enzymes</a> involved in cell division. Not only did these compounds cause healthy <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045622&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045622&amp;version=Patient&amp;language=English">bone marrow cells</a> to stop dividing temporarily, which we called “pharmacological quiescence,” but they also made them resistant to DNA-damaging agents like radiation and chemotherapy.</p>
+        <p>Although radiation and chemotherapy are important cornerstones of cancer therapy, as anybody who has ever received them can tell you, they can do more than just kill tumor cells. Both also damage healthy cells, particularly dividing cells in the bone marrow. This bone marrow damage leads to many of the most common and most important toxicities of cytotoxic chemotherapy: anemia, susceptibility to infection, and increased bleeding risk.</p>
+        <p>The results of our work suggested that the compounds we were studying might prevent or limit the damage to bone marrow caused by standard cancer therapies, like radiation and cytotoxic chemotherapy.</p>
+        <p>Hoping to advance this approach toward clinical trials and ultimately develop a nontoxic drug that could prevent the damaging side effects of radiation, I applied for a basic research R01 grant from the <span>National Institute for Allergy and Infectious Diseases (NIAID)</span>. While waiting for&nbsp;NIAID to decide&nbsp;whether to fund the proposal, I was told by a NIAID program officer that, while they liked my proposal, they thought it represented a commercial opportunity and therefore was better suited for an SBIR award.</p>
+        <p>This was the first I had heard of these commercialization awards and I recall my exact words during that phone call: “What’s an SBIR?”</p>
+        <p>After learning more about these programs, it became clear this would be a good approach to develop our ideas. In 2008, I joined with several colleagues to launch a startup company that applied for <span><a href="https://www.niaid.nih.gov/grants-contracts/small-businesses">NIAID SBIR</a></span> funds. We received our first SBIR award in 2009 and, over the next few years, received approximately $5 million in additional SBIR funds from NIAID, NCI, and the <span><a href="https://www.niddk.nih.gov/research-funding/research-programs/small-business">National Institute of Diabetes and Digestive and Kidney Diseases</a></span> to advance our research.</p>
+        <p>This early SBIR funding allowed our early-stage research to grow rapidly and achieve important scientific milestones, enabling it to subsequently garner venture capital backing from the private sector. Although the amount of funds eventually raised privately for this effort was many times larger than the SBIR support, it is important to note that the early support from the SBIR program made the later success possible.</p>
+        <p>Fast forward to the present and the company is now a publicly traded company, has conducted successful <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045831&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045831&amp;version=Patient&amp;language=English">phase II clinical trials</a> in small cell lung cancer and triple-negative breast cancer, and is currently testing three clinical-stage compounds for use in cancer patients.</p>
+        <p>It is still unclear whether this line of studies will lead to a new FDA-approved therapy for patients with cancer or other indications (the vast majority of efforts to develop oncologic therapeutics from scratch ultimately fail), but the results thus far have exceeded my own expectations.&nbsp;</p>
+        <h2 id="ui-id-3">How SBIR/STTR Programs Are Helping the Broader Community</h2>
+        <p>Based on these experiences, I have been enthusiastic about the NIH SBIR/STTR programs for many years and consider them to be true “engines of innovation” for biotech companies.</p>
+        <div class="callout-box-right">
+            <h3>Success Stories</h3>
+            <p>Learn how NCI’s SBIR/STTR programs have helped <a href="https://sbir.cancer.gov/about/successstories">some small businesses advance their products and technologies</a>.</p>
+        </div>
+        <p>Once I became NCI director (which required divesting from all industry relationships to enter federal service), I came to learn about the exciting technologies and therapies NCI’s SBIR/STTR programs are supporting.</p>
+        <p>These programs are an integral component of our mission to bring cancer medicine and technology to patients as quickly and effectively as possible. And, having had a positive personal experience with NIH SBIR/STTR programs, I wanted to better understand how NCI’s SBIR/STTR programs were helping the broader community and whether we might be able to strengthen the programs.</p>
+        <p>Toward that end, we took on an assessment of the NCI SBIR/STTR programs’ overall contribution to cancer research and the national economy. NCI commissioned an economic impact study last year that looked at how NCI SBIR/STTR investments from 1998–2010 translated into economic and scientific impact today. Although I encourage you to read the full report, here are some of the study’s highlights:</p>
+        <ul>
+            <li>Between 1998 and 2010, NCI’s investment of $787 million in SBIR/STTR funds in 444 companies led to 247 technologies and agents that are commercially available today, including 71 FDA-approved products.</li>
+            <li>NCI's SBIR/STTR programs led to an estimated $26.1 billion in total economic output nationwide, including product sales, tax revenue, and job creation. That’s a 33:1 return on investment.</li>
+            <li>During the period 1998 through 2010, more than 400 (65%) of the surveyed technologies supported by the SBIR/STTR programs were developing a treatment option for a subgroup of patients who previously lacked options.</li>
+        </ul>
+        <figure class="image-center centered-set">
+            <div class="centered-element"> <img src="/PublishedContent/Images/news-events/cancer-currents-blog/2019/sbir-working-group-report-article.__v20089209.jpg" alt="">
+                <!--Comment-->
+            </div>
+        </figure>
+        <p>One example of a product developed with support from NCI’s SBIR/STTR program is the Infinium assay for genotyping, which is being used in the <span><a href="https://allofus.nih.gov/">NIH All of Us Research Program</a></span>, in other basic and clinical research, as well as by commercial companies like 23andMe and <a class="vglnk" href="http://Ancestry.com" rel="nofollow"><span>Ancestry</span><span>.</span><span>com</span></a>. The NCI SBIR/STTR grantee, Illumina, developed the base technology for this assay.</p>
+        <p>The array of technologies and therapies, from advanced imaging approaches to cutting-edge immunotherapies, that SBIR/STTR programs support is impressive. And the economic impact study’s findings reveal the compelling story behind these efforts, one that supports continued investment in small businesses’ early-stage development of new cancer-related technologies and therapies. &nbsp;</p>
+        <h2 id="ui-id-4">Working Group Recommendations</h2>
+        <p>In the spirit of continuous improvement, I asked the NCAB to convene a working group of NCAB members, along with individuals with expertise in small business, technology development, and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000561724&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561724&amp;version=Patient&amp;language=English">translational research</a>, to advise NCI on several strategic questions related to the SBIR/STTR programs. Examining such questions in a focused way would yield a fresh perspective and constructive suggestions on how to make a good program even better. &nbsp;</p>
+        <p>Last week, at a regularly scheduled <span><a href="https://videocast.nih.gov/summary.asp?live=30342&amp;bhcp=1">NCAB meeting</a></span>, the <span><a href="https://deainfo.nci.nih.gov/advisory/ncab/0219/Jaffee.pdf">working group presented its findings</a></span>. Their recommendations to strengthen the SBIR/STTR programs included increasing award size, broadening diversity of participants and peer reviewers, enhancing assistance to grantees, improving metrics for continuous evaluation, and expanding awareness of the programs. NCI leadership embraces the working group’s report and will work toward implementing its&nbsp;recommendations.</p>
+        <p>We encourage small biotech businesses to learn more about the <span><a href="https://sbir.cancer.gov/about">SBIR/STTR programs at NCI</a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
+  field_page_description:
+    value: 'natures bounty'
+  field_feature_card_description:
+    value: 'NCI Director Dr. Norman Sharpless describes how NCI’s Small Business Innovation Research and Small Business Technology Transfer Programs act as “engines of innovation” and shares recommendations from a federal working group for strengthening the programs.'
+  field_list_description:
+    value: 'NCI Director Dr. Norman Sharpless describes how NCI’s Small Business Innovation Research and Small Business Technology Transfer Programs act as “engines of innovation” and shares recommendations from a federal working group for strengthening the programs.'
+  field_pretty_url:
+    value: "nci-sbir-working-with-small-business"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-02-21"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Darolutamide Delays the Spread of Some Prostate Cancers"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Darolutamide Delays the Spread of Some Prostate Cancers"
+  body:
+    - format: "full_html"
+      value: |
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        <p>NCI’s <span><a href="https://sbir.cancer.gov/">Small Business Innovation Research (SBIR) and Small Business Technology Transfer (STTR)</a></span>&nbsp;programs have been in existence for several decades. The programs provide seed funds to encourage small, innovative companies to participate in research and development activities that have the potential for private-sector commercialization and public benefit.</p>
+        <p>Last week marked two important moments for NCI’s SBIR/STTR programs. One was the presentation of a report from a working group, convened under the <a href="https://deainfo.nci.nih.gov/advisory/ncab/ncab.htm">National Cancer Advisory Board</a> (NCAB), with recommendations on how to improve and strengthen the programs. And the second was the release of a study, commissioned by NCI, to help&nbsp;<span><a href="https://sbir.cancer.gov/sites/default/files/documents/NCI_SBIR_ImpactStudy_FullReport.pdf">evaluate the economic impact of these programs</a></span>.</p>
+        <p>The report and study provide insight into a strong set of NCI programs that many in the cancer community may not be familiar with.</p>
+        <h2 id="ui-id-2">My Personal Experience with SBIR</h2>
+        <p>All federal agencies that provide at least $100 million in funding for research and development are required by law to set aside a portion of their extramural research budget for SBIR and STTR programs. In fiscal year (FY) 2019, the SBIR/STTR set-aside is 3.65% of NCI’s extramural budget, that is, approximately $160 million for commercialization activities. This policy makes these&nbsp;programs one of the largest sources of financing for early-stage cancer biotechnology in the United States.</p>
+        <p>Before becoming NCI director, I was able to experience firsthand just how invaluable these startup funds can be for getting novel ideas off the ground.</p>
+        <p>When I was at the University of North Carolina Lineberger Comprehensive Cancer Center, we were studying compounds that inhibit <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046081&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046081&amp;version=Patient&amp;language=English">enzymes</a> involved in cell division. Not only did these compounds cause healthy <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045622&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045622&amp;version=Patient&amp;language=English">bone marrow cells</a> to stop dividing temporarily, which we called “pharmacological quiescence,” but they also made them resistant to DNA-damaging agents like radiation and chemotherapy.</p>
+        <p>Although radiation and chemotherapy are important cornerstones of cancer therapy, as anybody who has ever received them can tell you, they can do more than just kill tumor cells. Both also damage healthy cells, particularly dividing cells in the bone marrow. This bone marrow damage leads to many of the most common and most important toxicities of cytotoxic chemotherapy: anemia, susceptibility to infection, and increased bleeding risk.</p>
+        <p>The results of our work suggested that the compounds we were studying might prevent or limit the damage to bone marrow caused by standard cancer therapies, like radiation and cytotoxic chemotherapy.</p>
+        <p>Hoping to advance this approach toward clinical trials and ultimately develop a nontoxic drug that could prevent the damaging side effects of radiation, I applied for a basic research R01 grant from the <span>National Institute for Allergy and Infectious Diseases (NIAID)</span>. While waiting for&nbsp;NIAID to decide&nbsp;whether to fund the proposal, I was told by a NIAID program officer that, while they liked my proposal, they thought it represented a commercial opportunity and therefore was better suited for an SBIR award.</p>
+        <p>This was the first I had heard of these commercialization awards and I recall my exact words during that phone call: “What’s an SBIR?”</p>
+        <p>After learning more about these programs, it became clear this would be a good approach to develop our ideas. In 2008, I joined with several colleagues to launch a startup company that applied for <span><a href="https://www.niaid.nih.gov/grants-contracts/small-businesses">NIAID SBIR</a></span> funds. We received our first SBIR award in 2009 and, over the next few years, received approximately $5 million in additional SBIR funds from NIAID, NCI, and the <span><a href="https://www.niddk.nih.gov/research-funding/research-programs/small-business">National Institute of Diabetes and Digestive and Kidney Diseases</a></span> to advance our research.</p>
+        <p>This early SBIR funding allowed our early-stage research to grow rapidly and achieve important scientific milestones, enabling it to subsequently garner venture capital backing from the private sector. Although the amount of funds eventually raised privately for this effort was many times larger than the SBIR support, it is important to note that the early support from the SBIR program made the later success possible.</p>
+        <p>Fast forward to the present and the company is now a publicly traded company, has conducted successful <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045831&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045831&amp;version=Patient&amp;language=English">phase II clinical trials</a> in small cell lung cancer and triple-negative breast cancer, and is currently testing three clinical-stage compounds for use in cancer patients.</p>
+        <p>It is still unclear whether this line of studies will lead to a new FDA-approved therapy for patients with cancer or other indications (the vast majority of efforts to develop oncologic therapeutics from scratch ultimately fail), but the results thus far have exceeded my own expectations.&nbsp;</p>
+        <h2 id="ui-id-3">How SBIR/STTR Programs Are Helping the Broader Community</h2>
+        <p>Based on these experiences, I have been enthusiastic about the NIH SBIR/STTR programs for many years and consider them to be true “engines of innovation” for biotech companies.</p>
+        <div class="callout-box-right">
+            <h3>Success Stories</h3>
+            <p>Learn how NCI’s SBIR/STTR programs have helped <a href="https://sbir.cancer.gov/about/successstories">some small businesses advance their products and technologies</a>.</p>
+        </div>
+        <p>Once I became NCI director (which required divesting from all industry relationships to enter federal service), I came to learn about the exciting technologies and therapies NCI’s SBIR/STTR programs are supporting.</p>
+        <p>These programs are an integral component of our mission to bring cancer medicine and technology to patients as quickly and effectively as possible. And, having had a positive personal experience with NIH SBIR/STTR programs, I wanted to better understand how NCI’s SBIR/STTR programs were helping the broader community and whether we might be able to strengthen the programs.</p>
+        <p>Toward that end, we took on an assessment of the NCI SBIR/STTR programs’ overall contribution to cancer research and the national economy. NCI commissioned an economic impact study last year that looked at how NCI SBIR/STTR investments from 1998–2010 translated into economic and scientific impact today. Although I encourage you to read the full report, here are some of the study’s highlights:</p>
+        <ul>
+            <li>Between 1998 and 2010, NCI’s investment of $787 million in SBIR/STTR funds in 444 companies led to 247 technologies and agents that are commercially available today, including 71 FDA-approved products.</li>
+            <li>NCI's SBIR/STTR programs led to an estimated $26.1 billion in total economic output nationwide, including product sales, tax revenue, and job creation. That’s a 33:1 return on investment.</li>
+            <li>During the period 1998 through 2010, more than 400 (65%) of the surveyed technologies supported by the SBIR/STTR programs were developing a treatment option for a subgroup of patients who previously lacked options.</li>
+        </ul>
+        <figure class="image-center centered-set">
+            <div class="centered-element"> <img src="/PublishedContent/Images/news-events/cancer-currents-blog/2019/sbir-working-group-report-article.__v20089209.jpg" alt="">
+                <!--Comment-->
+            </div>
+        </figure>
+        <p>One example of a product developed with support from NCI’s SBIR/STTR program is the Infinium assay for genotyping, which is being used in the <span><a href="https://allofus.nih.gov/">NIH All of Us Research Program</a></span>, in other basic and clinical research, as well as by commercial companies like 23andMe and <a class="vglnk" href="http://Ancestry.com" rel="nofollow"><span>Ancestry</span><span>.</span><span>com</span></a>. The NCI SBIR/STTR grantee, Illumina, developed the base technology for this assay.</p>
+        <p>The array of technologies and therapies, from advanced imaging approaches to cutting-edge immunotherapies, that SBIR/STTR programs support is impressive. And the economic impact study’s findings reveal the compelling story behind these efforts, one that supports continued investment in small businesses’ early-stage development of new cancer-related technologies and therapies. &nbsp;</p>
+        <h2 id="ui-id-4">Working Group Recommendations</h2>
+        <p>In the spirit of continuous improvement, I asked the NCAB to convene a working group of NCAB members, along with individuals with expertise in small business, technology development, and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000561724&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561724&amp;version=Patient&amp;language=English">translational research</a>, to advise NCI on several strategic questions related to the SBIR/STTR programs. Examining such questions in a focused way would yield a fresh perspective and constructive suggestions on how to make a good program even better. &nbsp;</p>
+        <p>Last week, at a regularly scheduled <span><a href="https://videocast.nih.gov/summary.asp?live=30342&amp;bhcp=1">NCAB meeting</a></span>, the <span><a href="https://deainfo.nci.nih.gov/advisory/ncab/0219/Jaffee.pdf">working group presented its findings</a></span>. Their recommendations to strengthen the SBIR/STTR programs included increasing award size, broadening diversity of participants and peer reviewers, enhancing assistance to grantees, improving metrics for continuous evaluation, and expanding awareness of the programs. NCI leadership embraces the working group’s report and will work toward implementing its&nbsp;recommendations.</p>
+        <p>We encourage small biotech businesses to learn more about the <span><a href="https://sbir.cancer.gov/about">SBIR/STTR programs at NCI</a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
+  field_page_description:
+    value: 'natures bounty'
+  field_feature_card_description:
+    value: 'The investigational drug darolutamide can help delay the spread of prostate cancer in some men with the disease, a recent clinical trial shows. In addition, the drug caused fewer side effects than similar prostate cancer drugs.'
+  field_list_description:
+    value: 'The investigational drug darolutamide can help delay the spread of prostate cancer in some men with the disease, a recent clinical trial shows. In addition, the drug caused fewer side effects than similar prostate cancer drugs.'
+  field_pretty_url:
+    value: "darolutamide-delays-prostate-cancer-spread"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-03-15"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "An Important Moment in Tobacco Control"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "An Important Moment in Tobacco Control"
+  field_author:
+    value: 'Robert Croyle, Ph.D., Michele Bloch, M.D., Ph.D.'
+  body:
+    - format: "full_html"
+      value: |
+          <p>This past Sunday, November 26, 2017, marked a unique moment in the history of public health in the United States. On this day, in major newspapers (online and print), the three major US tobacco companies issued the first in what will be a series of <a href="https://www.tobaccofreekids.org/assets/content/what_we_do/industry_watch/doj/corrective_statements/2017_10_corrective_statements.pdf">five "corrective statements" about their products</a>.</p>
+          <p>Over the next year, the same statements will also run as TV spots during prime-time viewing hours.</p>
+          <p>Stemming from a 17-year legal battle, these <a href="https://www.justice.gov/opa/pr/tobacco-companies-begin-issuing-court-ordered-statements-tobacco-racketeering-suit">court-ordered statements</a>&mdash;which cover five different topic areas&mdash;will explain in plain language the reality of the harms inflicted by tobacco products and address many common misconceptions about cigarettes.</p>
+          <p>The corrective statements are the result of a federal racketeering lawsuit brought against the tobacco companies in 1999 by the Department of Justice (DOJ). The companies were initially ordered to publish corrective statements in 2006, but they have been delayed for more than a decade by legal appeals.</p>
+          <p>With the appeals finally resolved for the time being, the statements have now begun to appear.</p>
+          <p>And it's safe to say that, as one of the largest supporters of research on the harm of tobacco products as well as on ways to prevent and control tobacco use, NCI made important contributions to this case.</p>
+          <h2>'Decades of Deliberate Deception'</h2>
+          <p>The court-ordered corrective statements are just one component of a judgment entered against the tobacco companies&mdash;Altria; its subsidiary Philip Morris USA; R.J. Reynolds Tobacco; and Lorillard, whose brands are now sold by R.J. Reynolds and by ITG Brands.</p>
+          <div class="callout-box">
+          <h3>Areas Covered by Corrective Statements</h3>
+          <ul>
+          <li>Adverse health effects of cigarette smoking</li>
+          <li>Addictiveness of cigarette smoking and nicotine</li>
+          <li>No health benefit from smoking "low tar," "light," "ultra light," "mild," and "natural" cigarettes</li>
+          <li>Tobacco companies&rsquo; manipulation of cigarette design and composition to enhance nicotine delivery</li>
+          <li>Adverse health effects of exposure to secondhand smoke.</li>
+          </ul>
+          </div>
+          <p>Six public-health organizations were allowed by the court to join the lawsuit against the tobacco companies as "intervenors." The intervenor groups include the American Cancer Society, the American Lung Association, the American Heart Association, Tobacco-Free Kids Action Fund, Americans for Nonsmokers' Rights, and the National African American Tobacco Prevention Network.</p>
+          <p>The corrective statements are one of four legal remedies included in the judgment to "prevent and restrain" the tobacco companies from continuing their long-standing actions to obscure the truth about the health effects and addictive nature of their products.</p>
+          <p>As the judge overseeing the case, Gladys Kessler, wrote in her nearly 1,700-page opinion, "Defendants have known many of these facts for at least 50 years or more. Despite that knowledge, they have consistently, repeatedly, and with enormous skill and sophistication, denied these facts to the public, to the Government, and to the public health community."</p>
+          <p>Under the court's judgment, the companies must: 1) publish the corrective statements as full-page ads in at least 50 newspapers across the country, in five issues appearing from late November to early March; and 2) once a week for one year, broadcast them as 30- and 45-second prime-time spots on the major television networks.</p>
+          <h2>Supporting Tobacco Research, Providing Solid Evidence</h2>
+          <p>As a research agency, NCI did not have a direct role in this lawsuit. However, NCI-funded research was cited often in the case and many NCI-funded researchers were asked to testify about their research findings.</p>
+          <p>This research included findings on tobacco's harmful health effects, how the tobacco companies manipulate their products to make them more addictive and use marketing and other means to target teens, and on the deadly impact of secondhand smoke exposure.</p>
+          <p>For example, as Judge Kessler found, over the decades, the tobacco companies crafted and implemented "a broad strategy to undermine and distort the evidence" of secondhand smoke as a health hazard in order "to deceive the public, distort the scientific record, avoid adverse findings by government agencies, and forestall indoor air restrictions."</p>
+          <p>An NCI tobacco control monograph used during the trial, however, showed that <a href="https://cancercontrol.cancer.gov/brp/tcrb/monographs/10/index.html">exposure of nonsmokers to secondhand smoke</a> is associated with serious health problems, including respiratory and cardiovascular conditions, cancer, and developmental effects in babies.</p>
+          <p>The tobacco companies also have marketed cigarettes with health descriptors such as "light" and "low-tar," among others, to discourage smokers from quitting, by suggesting that they were safer than conventional cigarettes. NCI-supported research, however, firmly established that using these cigarettes <a href="https://cancercontrol.cancer.gov/brp/tcrb/monographs/13/index.html">is indeed just as toxic and dangerous as using conventional cigarettes</a>, and Judge Kessler found that, "[as] the National Cancer Institute concluded in Monograph 13, [health] descriptors are inherently deceptive."</p>
+          <p>As part of the case, DOJ also asked NCI to evaluate potential wording for the corrective statements, to help provide the court with a scientific foundation for determining how the proposed statements would affect consumers. The research would also determine whether the statements that were tested could have potential unintended consequences, such as "boomerang effects," which occur when a campaign has the opposite of its intended effect.</p>
+          <p>The analysis was led by Kelly Blake, Sc.D., of the Division of Cancer Control and Population Sciences' Behavioral Research Program, and was conducted in 2010-2011 and filed as an Expert Report in the case. Although the court did not rely on Dr. Blake's report, the research provides a foundation for NCI and extramural researchers to consider how the court-ordered statements will be received by the public.</p>
+          <h2>An Ongoing Challenge</h2>
+          <figure class="image-right-small centered-set"><div class="centered-element"><img src="/PublishedContent/Images/images/nci/people/bob-croyle-michele-bloch-article.__v30027872.jpg" alt=""><!--Comment--></img></div>
+          <figcaption>
+          <div class="caption-container no-resize">
+          <p>Robert Croyle, Ph.D., Director, NCI Division of Cancer Control and Population Sciences, and&nbsp;Michele Bloch, M.D., Ph.D., Chief, NCI Tobacco Control Research Branch</p></div>
+          </figcaption>
+          </figure>
+          <p>NCI's role in this lawsuit is just one small part of our larger and sustained commitment to reducing smoking rates in the United States and beyond.</p>
+          <p>For example, we are funding research to address the continued high tobacco use rates among people of lower socioeconomic status and certain racial/ethnic groups. This is important because, as explained in the recently published NCI Tobacco Control Monograph, <em><a href="https://cancercontrol.cancer.gov/brp/tcrb/monographs/22/index.html">A Socioecological Approach to Addressing Tobacco-Related Health Disparities</a></em>, research to understand and address tobacco-related health disparities is of increasing importance to reducing the cancer burden in the United States.</p>
+          <p>We have also launched a new initiative <a href="https://www.cancer.gov/news-events/cancer-currents-blog/2017/smoking-cessation-nci-cancer-centers">to help smokers who are diagnosed with cancer quit</a>, which studies have shown can improve their outcomes. And we continue to add new resources and tools to our comprehensive smoking cessation website, <a href="http://www.smokefree.gov/">www.smokefree.gov</a>.</p>
+          <p>These are just some examples of the work we're doing to drive down rates of tobacco use among youth and adults. And that's important, because despite our success in dramatically reducing smoking rates over the past several decades, we can't afford to become complacent: In 2015, <a href="https://www.cdc.gov/mmwr/volumes/66/wr/mm6644a2.htm">36.5 million American adults (15.1%) smoked cigarettes</a>, and so are at high risk of developing cancer and other serious diseases.</p>
+          <p>As we have seen, tobacco use is an ongoing challenge, but it's one we're committed to addressing now and well into the future.</p>
+  field_page_description:
+    value: 'tobacco control'
+  field_feature_card_description:
+    value: 'November 26, 2017, marked a unique moment in US public health history, with the major US tobacco companies issuing the first in a series of court-ordered "corrective statements" about their products.'
+  field_list_description:
+    value: 'November 26, 2017, marked a unique moment in US public health history, with the major US tobacco companies issuing the first in a series of court-ordered "corrective statements" about their products.'
+  field_pretty_url:
+    value: "tobacco-corrective-statements"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2017-11-28"
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Dabrafenib–Trametinib Combination Approved for Melanoma, Anaplastic Thyroid Cancer"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Dabrafenib–Trametinib Combination Approved for Melanoma, Anaplastic Thyroid Cancer"
+  body:
+    - format: "full_html"
+      value: |
+          <p>The Food and Drug Administration (FDA) recently approved the combination of two targeted drugs, <a href="/about-cancer/treatment/drugs/dabrafenib" title="">dabrafenib (Tafinlar)</a> and <a href="/about-cancer/treatment/drugs/trametinib" title="">trametinib (Mekinist)</a>, for the treatment of two different types of cancer.</p>
+          <p>The first approval, announced on April 30, covers the use of the two-drug combination in some patients with advanced melanoma. The second approval, announced on May 4, covers a subset of patients with a rare and aggressive form of thyroid cancer called <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044541&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044541&amp;version=Patient&amp;language=English">anaplastic thyroid cancer</a>. The approval is the first time a therapy has been approved specifically for the treatment of anaplastic thyroid cancer.</p>
+          <p>For patients to be able to receive the dabrafenib–trametinib combination for either type of cancer, their tumors must have a specific mutation in a gene called <em>BRAF</em>. This mutation, called <em>BRAF </em>V600, can increase the growth and spread of cancer cells.</p>
+          <p>Both drugs play a specific, well-understood role in attacking tumors, explained Larissa Korde, M.D.,&nbsp;of&nbsp;NCI's <a href="https://ctep.cancer.gov/">Cancer Therapy Evaluation Program</a>.</p>
+          <p>"Dabrafenib inhibits the enzyme produced by the <em>BRAF</em> gene, which is 'turned on' in tumors that harbor mutations in the gene. But tumors can develop resistance to this drug by turning on other cell <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000561720&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561720&amp;version=Patient&amp;language=English">signaling pathways</a>," Dr. Korde said. "The addition of trametinib blocks one of these pathways of resistance, leading to better activity."</p>
+          <h2 id="ui-id-2">Using Combination Therapy Earlier in Melanoma Treatment</h2>
+          <p>FDA had previously approved the dabrafenib–trametinib combination for the treatment of <em>BRAF</em> mutation–positive <a href="/news-events/cancer-currents-blog/2017/fda-trametinib-dabrafenib-lung-cancer" title="">non-small cell lung cancer</a> and <a href="/news-events/cancer-currents-blog/2017/melanoma-adjuvant-immunotherapy-targeted-therapy" title="">melanoma</a> that has spread elsewhere in the body (metastasized) or that cannot be removed by surgery.</p>
+          <p>The new approval for melanoma expands the use of the drug combination as a post-surgical, or adjuvant, treatment in patients who have cancer cells found in lymph nodes near a surgically removed tumor.</p>
+          <p>In the clinical trial on which the new melanoma approval was based, which was funded by Novartis Pharmaceuticals, almost 60% of patients given the drug combination after surgery remained disease-free after 3 years, compared with about 40% of those who received a placebo combination.</p>
+          <p>The combination also appeared to be safer, at least in one way, than dabrafenib alone: compared with what had been seen in earlier trials of the single drug, in this trial a smaller percentage of patients who took the combination developed a <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046658&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046658&amp;version=Patient&amp;language=English">second cancer</a> due to therapy.</p>
+          <p>The second cancers seen in earlier trials of dabrafenib alone may be driven by the same pathway that trametinib blocks, said Dr. Korde. Therefore, adding trametinib could reduce the risk of this side effect, she explained.</p>
+          <p>The most common side effects from the two-drug combination are fever, fatigue, and nausea.</p>
+          <h2 id="ui-id-3">A Meaningful Treatment Option for a Rare Cancer</h2>
+          <p>The approval for anaplastic thyroid cancer was based on results from a clinical trial that enrolled patients with any one of nine types of cancer with a <em>BRAF </em>V600 mutation. Out of 23 patients with anaplastic thyroid cancer enrolled in that trial, which was also funded by Novartis, 57% had at least some reduction in the size of their tumors during treatment, and&nbsp;4% saw their tumors disappear completely.</p>
+          <p>So-called basket trials, such as <a href="/about-cancer/treatment/clinical-trials/nci-supported/nci-match" title="">NCI-MATCH</a>, which recruit patients based on the molecular makeup of their tumors instead of where in the body the cancer arose, are growing more common in the era of targeted therapies.</p>
+          <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5791845/">In a paper published in the <em>Journal of Clinical Oncology</em> before the FDA approval</a>, the study authors estimated that 80% of patients who received dabrafenib and trametinib would be alive a year after treatment started. In comparison, only about 20% to 40% of patients with anaplastic thyroid cancer live for a year after diagnosis when given other therapies, such as radiation or chemotherapy. The researchers will keep following the trial participants to measure survival rates at 1 year and beyond.</p>
+          <p>"A significant subpopulation of patients with anaplastic thyroid cancer now have a very meaningful treatment option, and for us that is a really big deal, because this disease has a grim prognosis," commented Barbara Murphy, M.D., director of Head and Neck Oncology at Vanderbilt-Ingram Cancer Center, who was not involved in the trial.</p>
+          <p>About one in four anaplastic thyroid cancers carry a <em>BRAF </em>V600 mutation, she said, and testing for this mutation will rapidly become part of standard care for patients with this cancer.</p>
+          <h2 id="ui-id-4">A Molecular Approach to Trial Design</h2>
+          <p>The trial that led to the approval for anaplastic thyroid cancer "is a really phenomenal example of how these rare tumors are well-served by a rational approach to therapeutic investigation," in which drugs are tested based on the knowledge of specific molecular pathways that can drive cancer, said Dr. Murphy.</p>
+          <p>"For uncommon tumors, you're never going to be able to accrue enough patients for a large randomized phase 3 trial. But basket trials serve these patients with rare cancers well," she added.</p>
+          <p>Dr. Murphy is hopeful that as more basket trials are conducted, oncologists in the community will be more willing to suggest them to their patients with rare cancers. These patients have had few opportunities to join trials in the past, and it’s important that oncologists refer these patients to the hospitals running such studies, she continued.</p>
+          <p>"Basket trials can identify therapies for rare tumors, but patients have to be referred to studies to allow those results to accumulate," said Dr. Murphy</p>
+          <p>Results from ongoing clinical trials may also answer questions about targeting BRAF and associated pathways in melanoma, Dr. Korde said. For example, <a href="/about-cancer/treatment/drugs/nivolumab" title="">nivolumab (Opdivo)</a>, a type of immunotherapy called an <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000772606&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000772606&amp;version=Patient&amp;language=English">immune checkpoint inhibitor</a>, received FDA approval in December 2017 for use as an <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045587&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045587&amp;version=Patient&amp;language=English">adjuvant therapy</a> in melanoma.</p>
+          <p>Both nivolumab and the dabrafenib–trametinib combination are effective therapies in melanoma, she continued, "[but] for patients with a <em>BRAF</em> mutation, we don’t know whether it is better to start with one or the other of these treatments," said Dr. Korde.</p>
+          <p>Researchers are also looking into launching trials targeting other mechanisms of drug resistance in these <em>BRAF</em> mutant tumors, which can arise even with the addition of trametinib.</p>
+          <p>"As we learn more about what specific gene alterations or characteristics drive cancers to grow, we will likely see more drug approvals based on molecular traits," concluded Dr. Korde.</p>
+  field_page_description:
+    value: 'FDA recently approved the targeted-drug combination to treat patients with advanced melanoma and a subset of patients with a rare and aggressive form of thyroid cancer whose tumors have a specific mutation in the BRAF gene.'
+  field_feature_card_description:
+    value: 'FDA recently approved the targeted-drug combination to treat patients with advanced melanoma and a subset of patients with a rare and aggressive form of thyroid cancer whose tumors have a specific mutation in the BRAF gene.'
+  field_list_description:
+    value: 'FDA recently approved the targeted-drug combination to treat patients with advanced melanoma and a subset of patients with a rare and aggressive form of thyroid cancer whose tumors have a specific mutation in the BRAF gene.'
+  field_pretty_url:
+    value: "fda-combo"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-05-25"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Developing Biomarkers for Immunotherapy: A Conversation with Drs. Magdalena Thurin and Helen Chen"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Developing Biomarkers for Immunotherapy: A Conversation with Drs. Magdalena Thurin and Helen Chen"
+  body:
+    - format: "full_html"
+      value: |
+        <p><strong>What is the goal of the research network?</strong></p>
+        <p><strong>Dr. Thurin:</strong> The long-term goal is to identify molecular signatures or biomarkers that, in the future, doctors can use to identify patients with cancer who are likely to respond to immunotherapy.</p>
+        <p><strong>Dr. Chen:</strong> Biomarkers identified as a result of this project could also be used to help investigate mechanisms of resistance to immunotherapy, which may guide the development of combination therapies that may overcome this resistance. In addition, biomarkers could be identified that help to monitor patients&rsquo; responses to treatment.&nbsp;&nbsp;</p>
+        <p><strong>How will the new network of laboratory centers and the data center achieve this goal?</strong></p>
+        <p><strong>Dr. Thurin:</strong> The four centers, or CIMACs, will use state-of-the-art technologies to perform a range of molecular and cell-based testing on biospecimens&mdash;such as blood and tumor samples<span>&mdash;</span>from patients enrolled in early-phase immunotherapy clinical trials&mdash;phase 1 and phase 2&mdash;that are funded by NCI. These test results and clinical information about patients will be stored in the CIDC, which researchers can then use in follow-up studies to identify potential biomarkers.</p>
+        <p><strong>Dr. Chen:</strong> The four CIMACs will use standardized assays for analyzing biospecimens collected from these immunotherapy clinical trials. That will ensure that there is a uniformity in their work and the results they produce, and it will give us more statistical power and provide greater confidence in any potential biomarkers that are identified.</p>
+        <p><strong>Can you explain how the CIMACs are set up?</strong></p>
+        <p><strong>Dr. Chen:</strong> Each of the four CIMACs&mdash;Dana-Farber Cancer Institute, Stanford University, MD Anderson Cancer Center, and Icahn School of Medicine at Mount Sinai&mdash;has a multidisciplinary team with expertise in immunology, clinical investigation, pathology, bioassays, and bioinformatics.</p>
+        <p>These teams will work closely with the clinical investigators who are leading the early-stage immunotherapy trials to design their biomarker studies, apply different assays for identifying potential biomarkers, and analyze the results.</p>
+        <p><strong>Why are biomarkers of response to immunotherapy needed?</strong></p>
+        <p><strong>Dr. Chen:</strong> Currently, a minority of patients with cancer benefit from immunotherapies. But we don&rsquo;t know why only some patients respond to immunotherapy, and we cannot reliably predict which patients will benefit from the therapy. Validated biomarkers could help guide treatment decisions for patients and doctors who are considering immunotherapy.</p>
+        <p><strong>Dr. Thurin:</strong> In addition, to improve the effectiveness of immunotherapies, we need to develop a better understanding of how the immune system interacts with tumors, which can help us&nbsp;develop tools for selecting the appropriate patients for a specific immunotherapy or combination therapy.</p>
+        <p><strong>Do any biomarkers exist that can help guide treatment decisions about immunotherapy?</strong></p>
+        <p><strong>Dr. Chen:</strong> In recent years, several potential biomarkers have emerged, such as levels of a protein called <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000777027&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000777027&amp;version=Patient&amp;language=English">PD-L1</a> expressed on tumor cells and immune cells in the tumor microenvironment. Another biomarker is tumor mutational burden, which is an assessment of the number of genetic mutations in a tumor. But we still need biomarkers that are more precise.</p>
+        <p><strong>What is the CIDC&rsquo;s role?</strong></p>
+        <p><strong>Dr. Thurin:</strong> The CIDC is hosted at Dana-Farber Cancer Institute and has multiple functions. But its primary role is to collect the biomarker data generated at the four CIMACs and to provide a platform for&nbsp;integrating&nbsp;patients&rsquo; clinical data&mdash;such as age, prior treatments, response to treatment, side effects&mdash;with data on the biospecimens. Having all of this information in the CIDC will help other researchers explore the data for biomarkers.</p>
+        <p>The CIDC&nbsp;will also provide some of the informatics tools for the analyses of the data. In the future, the CIDC is expected to serve the cancer research community in a manner similar to NCI&rsquo;s <a href="https://gdc.cancer.gov/">Genomic Data Commons</a>.</p>
+  field_page_description:
+    value: 'NCI is supporting a new research network to develop biomarkers for cancer immunotherapy. In this interview, NCI’s Dr. Helen Chen and Magdalena Thurin explain the networks’ structure and its goals.'
+  field_feature_card_description:
+    value: 'NCI is supporting a new research network to develop biomarkers for cancer immunotherapy. In this interview, NCI’s Dr. Helen Chen and Magdalena Thurin explain the networks’ structure and its goals.'
+  field_list_description:
+    value: 'NCI is supporting a new research network to develop biomarkers for cancer immunotherapy. In this interview, NCI’s Dr. Helen Chen and Magdalena Thurin explain the networks’ structure and its goals.'
+  field_pretty_url:
+    value: "immunotherapy-biomarkers-research-network"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-07-27"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Symposium Brings Rising Global Cancer Burden into Focus"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Symposium Brings Rising Global Cancer Burden into Focus"
+  body:
+    - format: "full_html"
+      value: |
+        <p><span>Experts gathered last month to discuss a topic that is garnering greater attention and interest by world health groups and within the cancer community: the expanding global burden of cancer, particularly in low- and middle-income countries (LMICs).</span></p>
+        <p><span>Until recently, cancer in many of these countries has been a secondary health concern, with public health efforts focused more on communicable diseases like malaria or HIV.</span></p>
+        <p><span>But as the research presented at the NCI Global Cancer Research Symposium in Rockville, MD, made clear, that can no longer be the case. By 2030,&nbsp;the global number of cancer deaths is expected to skyrocket, increasing by 80% compared with recent levels. Many of these deaths will occur in LMICs.</span></p>
+        <p><span>Attendees at the meeting called for concerted action to tackle this problem head on.</span></p>
+        <p><span>“The United States has an obligation, as part of the community of man, to help other countries in their cancer control efforts,” said Barry Kramer, M.D., director of NCI’s </span><a href="https://prevention.cancer.gov/">Division of Cancer Prevention</a><span>, during the symposium's keynote address.</span></p>
+        <h2 id="ui-id-2">The Tobacco Threat</h2>
+        <p><span>The aim of the event, hosted by NCI’s <a href="/about-nci/organization/cgh" title="">Center for Global Health (CGH)</a></span><span>, was to increase opportunities for new research collaborations and strengthen existing collaborations, with a focus on cancer prevention and screening.</span></p>
+        <p><span>One area where collaborative efforts are already taking shape is tobacco control. Use of cigarettes and other tobacco products is booming in many countries. Worldwide, nearly 20% of cancer deaths and about 70% of lung cancer deaths are attributable to tobacco use, Dr. Kramer stressed. And unless this trend is reversed, he continued, cancer incidence and mortality rates in many countries will continue to rise.</span></p>
+        <p><span>Tobacco’s impact is being felt especially acutely in China, the world’s most populous country. In 2013, the average smoker in China smoked 22 cigarettes a day, a nearly 50% increase from 1980. Indeed, people in China smoked about a trillion cigarettes in 1980 and that number is now approaching 2.5 trillion.</span></p>
+        <p><span>In addition to finding ways to deter people from using tobacco products, researchers are trying to develop approaches for early cancer detection that can help reduce deaths from tobacco-related cancers. </span></p>
+        <p><span>Dr. Kramer, for example, described a collaboration in which NCI is working with Chinese health officials to conduct the ongoing China Cancer Screening Feasibility Study. A follow-up to the U.S.&nbsp;</span><a href="/types/lung/research/nlst" title="">National Lung Screening Trial</a><span></span><span>—which showed a 20% decrease in the risk of death from lung cancer with <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044983&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000044983&amp;version=Patient&amp;language=English'); return false;">spiral CT</a> screening compared to x-rays for heavy smokers—this study is designed to&nbsp;obtain the information needed for Chinese investigators to design a large screening trial in their country for lung as well as colorectal cancer, Dr. Kramer explained.&nbsp;</span></p>
+        <h2 id="ui-id-3">Large Role for Vaccines</h2>
+        <p><span>Another major area of focus in reducing the global cancer burden has been increasing the use and uptake of cancer prevention vaccines. At the forefront of these efforts is expanding the availability of <a href="/about-cancer/causes-prevention/risk/infectious-agents/hpv-vaccine-fact-sheet" title="">HPV vaccines</a> in many LMICs, particularly those with high cervical cancer rates.</span></p>
+        <p><span>John Schiller, M.D., of NCI’s </span><a href="https://ccr.cancer.gov/">Center for Cancer Research</a><span>, discussed follow-up studies from the&nbsp;NCI </span><a href="http://dceg.cancer.gov/research/who-we-study/cohorts/costa-rica-vaccine-trial"><span>HPV Vaccine Trial in Costa Rica</span></a><span>, which helped to establish both the safety and efficacy of HPV vaccination in preventing cervical cancer caused by several strains of HPV.</span></p>
+        <p><span>Ongoing studies, including those conducted and supported by NCI’s </span><a href="https://dceg.cancer.gov/">Division of Cancer Epidemiology and Genetics</a><span>, have shown that two doses—and possibly just a single dose—of the vaccine appear to be as effective as three doses.</span></p>
+        <p><span>In fact, just weeks after this symposium, the Centers for Disease Control and Prevention’s Advisory Committee on Immunization Practices </span><a href="https://www.cdc.gov/media/releases/2016/p1020-hpv-shots.html">altered its recommendation</a><span> on HPV vaccination, saying that only two doses are needed for those younger than age 15. Many European Union countries, as well as Mexico and Canada, also currently recommend using just two doses in this age group.</span></p>
+        <p><span>As a&nbsp;</span><a href="https://deainfo.nci.nih.gov/advisory/pcp/annualReports/HPV/index.htm"><span>recent report from the President’s Cancer Panel</span></a><span>&nbsp;stressed, decreasing the number of HPV vaccine doses and the cost of the vaccine could be particularly beneficial in many LMICs, where limited financial resources and public health infrastructure have proven to be major barriers to administering three doses.</span></p>
+        <p><span>Dr. Schiller noted that the biological basis for vaccine efficacy is also being studied to better understand the results from some studies that have found that a single dose could be as effective as three doses. </span></p>
+  field_page_description:
+    value: 'An NCI Cancer Currents blog post about the NCI Global Cancer Research Symposium, which examined ways of increasing research collaboration, particularly in cancer prevention and screening, to reduce the cancer burden.'
+  field_feature_card_description:
+    value: 'An NCI Cancer Currents blog post about the NCI Global Cancer Research Symposium, which examined ways of increasing research collaboration, particularly in cancer prevention and screening, to reduce the cancer burden.'
+  field_list_description:
+    value: 'An NCI Cancer Currents blog post about the NCI Global Cancer Research Symposium, which examined ways of increasing research collaboration, particularly in cancer prevention and screening, to reduce the cancer burden.'
+  field_pretty_url:
+    value: "global-cancer-symposium"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2016-11-09"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Targeted Therapy–Immunotherapy Combinations Effective for Advanced Kidney Cancer"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Targeted Therapy–Immunotherapy Combinations Effective for Advanced Kidney Cancer"
+  body:
+    - format: "full_html"
+      value: |
+        <p>Results from two large clinical trials are expected to change the initial treatment for many people with newly diagnosed advanced kidney cancer.</p>
+        <p>The Food and Drug Administration (FDA) <a href="/news-events/cancer-currents-blog/2018/kidney-cancer-fda-nivolumab-ipilimumab-first-line" title="">has <span>already approved one immunotherapy combination</span></a><span></span> as an initial, or first-line, treatment for people with advanced kidney cancer. And, based on these new data, several experts on the disease said further approvals for these patients are likely to be forthcoming.</p>
+        <p>“There’s a lot of exciting data. The treatment landscape is changing quickly,” said David McDermott, M.D., chief of medical oncology at Beth Israel Deaconess Medical Center, who has been involved in kidney cancer immunotherapy studies.</p>
+        <h2 id="ui-id-2">Evolving Treatment Strategies for Advanced Renal-Cell Cancer</h2>
+        <p>In the last 12 years, the treatment of metastatic renal-cell cancer “has been revolutionized twice,” wrote&nbsp;Bernard Escudier, M.D., of the Gustave Roussy Cancer Campus in France, in <a href="https://www.ncbi.nlm.nih.gov/pubmed/30779526">an editorial accompanying the two papers</a> in <em>NEJM.</em></p>
+        <p>The first big change occurred more than a decade ago with the advent of targeted therapy. Sunitinib and, later, axitinib and similar drugs were developed that block a protein called the vascular endothelial growth factor receptor (VEGFR), which plays an important role&nbsp;in kidney&nbsp;cancer.</p>
+        <p>These targeted treatments were shown to be more effective than what was then the first-line treatment, interferon alpha, a treatment that worked only in a small number of patients and had serious side effects.</p>
+        <p>A second big change came in 2015, Dr. Escudier wrote, when the immune checkpoint inhibitor <span><a href="/about-cancer/treatment/drugs/nivolumab" title="">nivolumab (Opdivo)</a></span> was <span><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5719487/">shown to be effective in patients with advanced kidney cancer</a></span> that had progressed after their initial treatment, soon after becoming the standard of care for these patients.</p>
+        <p>In 2018, FDA approved the combination of nivolumab and <a href="/about-cancer/treatment/drugs/ipilimumab" title="">ipilimumab (Yervoy)</a>, two immune checkpoint inhibitors, as an initial treatment for the disease, after <span>a large clinical trial showed that the approach led to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5972549/">better survival compared with patients treated with sunitinib</a></span>.</p>
+        <h2 id="ui-id-3">Combining Targeted Therapy and Immunotherapy</h2>
+        <p>The new trials took a different approach, combining the two strategies—a VEGFR inhibitor (axitinib) and an immune checkpoint inhibitor—that have been effective in treating kidney cancer on their own. &nbsp;</p>
+        <p>The studies used different immunotherapy agents but were otherwise very similar. Both trials enrolled more than 800 patients with previously untreated advanced clear-cell renal-cell carcinoma.</p>
+        <p>Earlier, smaller studies had shown that axitinib could be combined with either avelumab or pembrolizumab, all at full dose without causing unacceptable levels of toxicity in the liver. In contrast, combining sunitinib with an immune checkpoint inhibitor caused severe side effects, Dr. Choueiri said.</p>
+        <p>Axitinib targets VEGFR more specifically than sunitinib does, explained Brian Rini, M.D., of the Cleveland Clinic, a lead investigator on the pembrolizumab–axitinib study. “Axitinib is more potent and better tolerated, and made a better combination partner,” Dr. Rini said.</p>
+        <p>But some of “the most impressive data to date” for treating advanced kidney cancer are from the pembrolizumab–axitinib study, Dr. McDermott said.&nbsp;</p>
+        <p>Follow-up of patients in both studies will continue to monitor&nbsp;survival and long-term side effects, investigators from both trials said. Rates of side effects were high in all treatment groups in both trials, with high blood pressure and diarrhea being among the most common side effects.</p>
+        <h2 id="ui-id-4">The Shifting Treatment Landscape for Kidney Cancer</h2>
+        <p>Combination treatments have “essentially been proven” to be superior to VEGFR inhibition alone as first-line therapy, Dr. McDermott said. Combination treatments have clear benefits, although they are more costly and cause more side effects, he added.</p>
+        <p>As for which combination treatment will be the best for which patients, that’s still unclear, Dr. Rini said. “There are subtleties. We don’t know the right answer yet,” Dr. Rini said. “We hope to sort this out over the next several years.”</p>
+        <p>Before the advent of drugs like sunitinib, kidney cancer had a poor prognosis, with a median overall survival of less than a year, Dr. Motzer noted. With the use of VEGFR inhibitors, median survival improved to about 30 months.</p>
+        <p>And now immunotherapies are helping extend survival beyond 3 years, he said.</p>
+        <p>Treatments will continue to be given in sequence, he explained, as the existing treatments eventually&nbsp;stop working for most patients with advanced kidney cancer and their&nbsp;disease progresses.</p>
+        <p>In addition to studying different treatment sequences, researchers are also investigating whether they can identify features of tumors, or <span>biomarkers</span>, that can help predict which therapy might work better in different individuals, Dr. Motzer said.</p>
+        <p>“Ultimately, what’s most important to patients is the impact of these new approaches on long-term survival. How many patients have remissions? Are any patients actually cured of their kidney cancer?” Dr. McDermott said. “It’s going to take some time to figure those things out.”</p>
+        <p>The adjuvant trials are currently enrolling patients, Dr. McDermott said, and he encouraged physicians and patients to consider joining the available&nbsp;trials.</p>
+  field_page_description:
+    value: 'In two clinical trials, combination treatments immune checkpoint inhibitor and axitinib outcomes for patients with advanced kidney cancer than treatment with sunitinib'
+  field_feature_card_description:
+    value: 'In two clinical trials, combination treatments that included an immune checkpoint inhibitor and axitinib (Inlyta) led to better outcomes for patients with advanced kidney cancer than treatment with sunitinib (Sutent), the standard initial therapy.'
+  field_list_description:
+    value: 'In two clinical trials, combination treatments that included an immune checkpoint inhibitor and axitinib (Inlyta) led to better outcomes for patients with advanced kidney cancer than treatment with sunitinib (Sutent), the standard initial therapy.'
+  field_pretty_url:
+    value: "cancer-immunotherapy-targeted-therapy-combination"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-03-19"
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Making Cancer Clinical Trials Available to More Patients"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Making Cancer Clinical Trials Available to More Patients"
+  field_author:
+    value: 'P. Ivy, A. Denicoff, G. Mishkin & F. Arnaldez'
+  body:
+    - format: "full_html"
+      value: |
+        <p>With so many new and promising cancer treatments being developed, the need for clinical trials to efficiently and effectively test them has never been greater.</p>
+        <p>Maximizing the number of patients who are eligible for clinical trials, while still maintaining an appropriate level of safety, is a top priority for NCI leadership, given the challenges of enrolling enough patients in clinical trials. <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000346518&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000346518&amp;version=Patient&amp;language=English">Eligibility criteria</a>—the requirements that must be met before a person can enroll in a trial—have not kept pace with the modernization of clinical trials. Restrictive criteria have not only been a significant hurdle for many patients who have wanted to participate in trials, but they have also limited the generalizability of study findings.</p>
+        <p>Over the past several years, NCI has made efforts to address the issue of trial eligibility by working to broaden the criteria for some NCI-funded trials. For example, researchers are encouraged to relax the use of upper age limits in adult trials and <a href="/news-events/cancer-currents-blog/2017/immunotherapy-cancer-HIV" title="">allow people with cancer who are HIV+ to enroll in trials</a>, as appropriate.</p>
+        <p>Beginning in 2016, the American Society of Clinical Oncology (ASCO) and the advocacy organization Friends of Cancer Research (Friends) launched an effort to further expand eligibility criteria for cancer clinical trials in the hope that more patients will be able to join trials, leading to more rapid advances in cancer treatment.</p>
+        <p>NCI and Food and Drug Administration (FDA) staff have been key contributors to the ongoing effort. The project has led to new and expanded eligibility recommendations, which NCI translated into language that can be used more easily in clinical trial protocols. This new language is now being used by the NCI-sponsored <a href="/research/areas/clinical-trials/nctn" title="">National Clinical Trials Network (NCTN)</a> and <a href="https://ctep.cancer.gov/initiativesprograms/etctn.htm">Experimental Therapeutics Clinical Trials Network (ETCTN)</a>.</p>
+        <h2 id="ui-id-2"><strong>Why Are Eligibility Criteria Necessary?</strong></h2>
+        <p>Eligibility criteria are an important part of clinical trials. They help ensure that participants in a trial are alike&nbsp;in terms of specific factors, such as type and stage of cancer, general health, and previous treatment received. When all participants meet the same eligibility criteria, it is more likely that the trial’s outcomes are the result of the intervention being tested than of other factors, such as health conditions or chance. Eligibility requirements are also important for patient safety. They decrease the chances that patients who might experience dangerous side effects from a study drug are enrolled in the trial.</p>
+        <p>In 2016, ASCO–Friends assembled four working groups to develop new recommendations for expanding eligibility criteria. Each group focused on one of four variables that most often exclude a patient’s participation in a trial: brain metastases, HIV/AIDS, organ dysfunction and prior and concurrent cancers, and minimum age for enrollment.</p>
+        <p>Working group members, which included scientists, regulators, patient advocates, and industry representatives, used an extensive review process that&nbsp;included an&nbsp;examination of the scientific literature and available clinical results. They analyzed variables such as the number of potential patients who were excluded from enrolling in trials and whether trials that had less restrictive eligibility criteria had higher rates of serious adverse events.</p>
+        <p>Members developed recommendations for new eligibility criteria that would be appropriate for both early- and late-phase trials. However, some differences in the criteria for trials of different phases were unavoidable. For example, in early-phase trials, because less is known about the drugs being tested, stricter eligibility criteria are necessary to help ensure that patients are not put at undue risk.</p>
+        <p>Once the ASCO–Friends working groups’ recommendations were agreed upon, NCI compiled them into a final document that outlined new <a href="https://ctep.cancer.gov/protocolDevelopment/docs/NCI_ASCO_Friends_Eligibility_Criteria.pdf">inclusion/exclusion criteria required for&nbsp;NCTN and ETCTN clinical trials</a>. These criteria were implemented in November 2018.</p>
+        <p>In developing the final document, NCI also broadened the focus. For instance, the NCI language addresses eligibility of not only patients with HIV but also patients with other viral infections, including hepatitis B and C. All ETCTN and NCTN trials must follow the new eligibility criteria unless researchers provide strong scientific rationale not to do so.</p>
+        <p>Patients in clinical trials that are now following the new inclusion criteria will be more representative of the real-world patient population, thus translating into trial results that are more applicable and meaningful to patients treated in everyday practice.</p>
+        <h2 id="ui-id-3"><strong>Other Barriers to Clinical Trial Enrollment</strong></h2>
+        <p>Although restrictive eligibility criteria can exclude patients from participating in clinical trials, there are many other barriers to participation.</p>
+        <p>Health care providers may not&nbsp;offer their patients the opportunity to participate in a trial for many reasons. For example, patients may have comorbidities—other medical conditions—that may make it difficult for them to tolerate aggressive therapy.</p>
+        <p>And some clinicians may not offer a clinical trial to a patient based on assumptions about the patient. For instance, a provider may assume that a patient lives too far away from the trial location and would have trouble making it&nbsp;to the clinic for trial visits. Or a provider might assume that a patient does not have the social support to adhere to the treatment regimen or would have trouble understanding a very complex trial protocol and be unable to decide whether to participate.</p>
+        <p>NCI encourages health care providers to question these assumptions. We believe that clinicians should present the option to participate in clinical trials to their patients so that they can make informed decisions about trial participation together. Clinicians should not make this decision for their patients.</p>
+        <p>Educating and raising clinicians’ awareness are essential to promoting clinical trial enrollment. To this end,&nbsp;NCI and many other organizations provide educational opportunities to enhance clinicians’ understanding of clinical trials and patient enrollment. It is important that health care providers be aware of available clinical trials and talk to their patients when a clinical trial might be an appropriate option for them. Patients themselves can <a href="/about-cancer/treatment/clinical-trials" title="">learn more about clinical trials</a> and how to ask their providers about participation.</p>
+        <h2 id="ui-id-4"><strong>Expanding Criteria while Ensuring Patient Safety: Finding the Right Balance</strong></h2>
+        <p>Because the new NCI eligibility criteria were just implemented, it will take some time before we can evaluate the impact of these specific changes. And other changes to the inclusion criteria may be on the way, given that ASCO–Friends are convening additional meetings to address eligibility criteria that were not the focus of the initial effort. These include how much treatment patients may have had before entering a trial and what medications a patient might be using to treat other health conditions.</p>
+        <p>Clinical trial enrollment is a complex issue and ongoing critical assessment of clinical trial eligibility criteria is essential to achieve the right balance between expanding criteria while ensuring patient safety. With less restrictive criteria translating into study conclusions that are more relevant to the broader patient population, we can make faster progress in the discovery of new targeted cancer treatments and immunotherapies that will benefit more people.</p>
+  field_page_description:
+    value: 'NCI is expanding eligibility criteria for its cancer clinical trials in the hope that more patients will join, leading to more rapid advances. The goal is to maximize the number of patients who are eligible to enroll while maintaining their safety.'
+  field_feature_card_description:
+    value: 'NCI is expanding eligibility criteria for its cancer clinical trials in the hope that more patients will join, leading to more rapid advances. The goal is to maximize the number of patients who are eligible to enroll while maintaining their safety.'
+  field_list_description:
+    value: 'NCI is expanding eligibility criteria for its cancer clinical trials in the hope that more patients will join, leading to more rapid advances. The goal is to maximize the number of patients who are eligible to enroll while maintaining their safety.'
+  field_pretty_url:
+    value: "expanding-clinical-trial-eligibility-criteria"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-03-07"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Enhancements to NCI’s SEER Program Creating New Research Opportunities"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>When we set about to enhance SEER, we worked with and sought feedback from many groups and experts. This outreach allowed us to better understand the cancer research community’s needs and the opportunities that could be created through strategic, targeted enhancements to SEER.</p>
+        <p>In those discussions and forums, the main data needs that were identified included those that cover:</p>
+        <ul>
+        <li>All treatments received by individual patients from diagnosis until their death</li>
+        <li>Outcomes other than incidence and mortality<span>—</span>in particular, recurrences</li>
+        <li>The genomic composition of patients’ tumors</li>
+        </ul>
+        <p>As might be expected, enabling SEER to collect these data is complicated. Doing so requires capturing information over an extended time period from a massive, fragmented US health care system that relies on a wide variety of records systems that are not designed for easy information sharing.</p>
+        <p>Take, for example, a woman with early-stage breast cancer diagnosed and successfully treated in 2010 but who then had a recurrence in 2015. Ideally, we want to capture data concerning her primary treatment (e.g., surgery, radiation); any prescribed adjuvant treatments (e.g., chemotherapy, hormonal therapy) and whether they were actually administered; important clinical factors (e.g., non-cancer health problems, age, race/ethnicity); where in the body her recurrence occurred and how it was diagnosed; the outcomes of germline and tumor genomic tests done at the time of recurrence; and what treatments she received for that recurrence.</p>
+        <p>Some of these data may be in free-form notes (general notes for which there are no specific data fields) in an electronic record. Some may be in pharmacy records, or a primary care physician’s notes, or insurance records. &nbsp;And if the woman moved to a different state during this period, that presents a whole new layer of challenges.</p>
+        <p>Trying to collect such data, and ensure that they are accurate, is an extremely complex undertaking. It’s because of that great complexity that we are moving forward with these enhancements in a thoughtful and systematic way—one that we believe will lay the foundation for successfully integrating them into the broader SEER program.</p>
+        <h2 id="ui-id-3">More Cases, More Diversity</h2>
+        <p>Among the most important enhancements to the SEER program is the expansion of the size and diversity of the population it covers.</p>
+        <p>SEER now covers 34% of the US population, covering 19 different geographic areas. With this expansion, SEER is&nbsp;collecting data on approximately 550,000 new individual cancer cases (without any personally identifying information) each year.</p>
+        <p>This expansion was implemented with a strategic focus: adding <a href="https://seer.cancer.gov/registries/cancer_registry/cancer_registry.html">US cancer registries</a> that include more underserved and ethnic/racial minorities. That means SEER is capturing data on cancer that more fully represents the US population.</p>
+        <p>Of course, it’s always good to have more data to work from. In practice, the expanded population covered by SEER means that researchers will be able to perform better studies—those that allow us to more completely understand how cancer affects different patient subgroups and inform the development of interventions intended to address the shortcomings and disparities that we know exist in the current system of cancer care.</p>
+        <h2 id="ui-id-4">Pilot Studies and a Virtual Biorepository</h2>
+        <p>Unfortunately, we can’t immediately start collecting every type of data we’d like SEER-wide. That is why we have launched a series of pilot studies that can help us better understand the barriers and challenges to collecting these new types of data.</p>
+        <p>Take, for example, the aforementioned supercomputers. They are part of a pilot effort being conducted in collaboration with the US Department of Energy (DOE).</p>
+        <p>Under this partnership, we are working with DOE scientists to develop tools that will allow SEER to collect the data elements it has traditionally captured (e.g., cancer type and grade) as well as new data elements (e.g., biomarkers, recurrences) from patient medical records. Compared with the manual collection that is often used now, automated data collection would be far more reliable and rapid, even if some cases still require manual coding.</p>
+        <p>This pilot with the DOE will allow us to assess the feasibility of this automated data collection and refine these new data collection tools, ensuring, for example, that they are accurately capturing the data we’re looking for.</p>
+        <p>Another SEER pilot study is focusing on collecting data on the use of oral cancer drugs. Such data have traditionally been difficult to amass because these treatments are not given at hospitals or at doctors’ offices but are obtained through pharmacies and taken by patients at home. Little is known about the use of these drugs and adherence to prescribed regimens in a real-world population<span>—</span>that is, outside of a clinical trial setting.</p>
+        <p>In one such pilot study being conducted with the SEER registry in Georgia, linkages have been established between the registry and all Walgreens and CVS pharmacies in the state. These linkages connect a patient's information in&nbsp;the pharmacy's records to the same patient in the SEER registry, allowing for the real-time collection of data on filled prescriptions for oral cancer therapies.</p>
+        <p>Having these types of real-world data readily available would be invaluable. From them, researchers could glean important insights into usage patterns that, for example, can identify whether certain subgroups of patients are not getting the therapies they need.</p>
+        <p>Similar pilot efforts are creating linkages between SEER registries and health insurance claims data from some of the largest health insurance companies in the country. These linkages are similar to those that enable the <a href="https://healthcaredelivery.cancer.gov/seermedicare/">SEER–Medicare Linked Database</a>, which was established in the early 1990s. This database has been the primary data source for more than 1,600 published studies, including those that have provided information on <a href="/news-events/cancer-currents-blog/2017/young-adult-colorectal-incidence-increasing" title="">important new cancer incidence<span> trends</span></a><span></span> and <a href="/news-events/cancer-currents-blog/2016/cancer-silver-tsunami" title="">long-term survivorship issues</a>.</p>
+        <p>Creating these linkages with commercial health insurance claims will allow SEER to capture much more information on people diagnosed with cancer who are under the age of 65 (i.e., not yet in Medicare), including critical data on treatments that patients receive over time. Such information can offer a window into real-world clinical practice and its potential implications for patients and the health care system at large.</p>
+        <p>Other pilot linkage efforts underway involve collecting data on the results of genomic tests, including multigene panels like the Oncotype DX test <a href="/news-events/press-releases/2018/tailorx-breast-cancer-chemotherapy" title="">used in the TAILORx breast cancer trial</a>. As oncology continues on the road to precision medicine, the ability to systematically collect these data would go a long way toward informing this movement.</p>
+        <p>Although these linkage pilots are noteworthy, another exciting enhancement to SEER under active evaluation is on the other end of the research spectrum: the development of a “virtual <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561323&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000561323&amp;version=Patient&amp;language=English'); return false;">biorepository</a>.”</p>
+        <p>The aim of this repository is to provide information on tumor samples stored at institutions across the country. This will allow investigators to search for samples from patients with certain demographic or clinical characteristics or certain outcomes, and then request those samples (including all related clinical data on that patient) via an honest broker for use in their research.</p>
+        <p>Currently, six SEER registries are participating in a pilot study of the virtual biorepository, focusing on specific survivor groups for breast and pancreatic cancer. The lessons learned from this pilot will inform our efforts to eventually scale up to a larger virtual biorepository.</p>
+        <h2 id="ui-id-5">New Data, Important Opportunities</h2>
+        <p>The enhancements planned for SEER are exciting and much needed.</p>
+        <p>Of course, patience will be an important ally moving forward. It will take time to implement these ambitious plans, and there is always the possibility that—given the scale of these efforts—they won’t always go according to plan. In fact, performing these activities using small pilots allows us to understand where the barriers and challenges might be and to realistically assess whether they can move past the pilot phase.</p>
+        <p>That said, we are taking the necessary steps to eventually make these new tools and resources integral parts of SEER. In so doing, we will be opening up new doors to cancer researchers and greatly expanding the value of this unique and needed program.</p>
+        <p>Over the coming decade, stay tuned to hear more about a remarkable array of new scientific opportunities. As always, we welcome ideas and feedback from the cancer community about ways to strengthen the utility and usability of SEER data for both cancer research and cancer control planning.</p>
+  field_page_description:
+    value: 'meta nci seer'
+  field_feature_card_description:
+    value: 'NCI’s SEER program is expanding in size and operating a series of innovative pilot studies.'
+  field_list_description:
+    value: 'NCI’s SEER program is expanding in size and operating a series of innovative pilot studies.'
+  field_pretty_url:
+    value: "nci-seer-enhancements-creating-opportunities"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-08-23"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Study Provides Closer Look at Postmenopausal Bleeding and Endometrial Cancer"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Study Provides Closer Look at Postmenopausal Bleeding and Endometrial Cancer"
+  body:
+    - format: "full_html"
+      value: |
+        <p>In the largest analysis to date looking at the extent to which vaginal bleeding is associated with endometrial cancer in women who have gone through <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046296&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046296&amp;version=Patient&amp;language=English'); return false;">menopause</a>, 90% of women diagnosed with endometrial cancer reported bleeding before their cancer diagnosis. Approximately 9% of <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045269&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045269&amp;version=Patient&amp;language=English'); return false;">postmenopausal</a> women who saw a doctor for bleeding later received a diagnosis of endometrial cancer.</p>
+        <p>Unlike many other cancer types, the rate of endometrial cancer has increased in recent years and is expected to continue rising worldwide over the coming decade. This rise is thought to be largely due to factors that affect <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045713&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045713&amp;version=Patient&amp;language=English'); return false;">hormones</a>, such as rising obesity rates and changes in how many children women are likely to have.</p>
+        <p>If endometrial cancer is found early, a woman has a 95% chance of surviving the&nbsp;cancer for at least 5 years. By contrast, for women diagnosed after their cancer has spread outside the <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046645&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046645&amp;version=Patient&amp;language=English'); return false;">uterus</a>,&nbsp;the chance of surviving for at least 5 years is much lower, ranging from 16–45%.</p>
+        <p>In most cancers, by the time a person develops symptoms, their disease is usually advanced and harder to treat, explained Megan Clarke, Ph.D., of NCI’s <a href="https://dceg.cancer.gov/">Division of Cancer Epidemiology and Genetics (DCEG)</a><span>, who led the analysis.</span> "With endometrial cancer it's quite different, and [recognizing symptoms] gives us an opportunity to intervene" and improve the odds of long-term survival, she added.</p>
+        <p>Typically, postmenopausal women who experience bleeding are referred for further testing to either rule out or diagnose endometrial cancer. While vaginal bleeding has&nbsp;been known to be a symptom of&nbsp;endometrial cancer, this large study confirms the practice of referring women for further testing, explained Christina Chu, M.D., of Fox Chase Cancer Center, who was not involved with the research.</p>
+        <p>“If you have bleeding after menopause, you should call your doctor and let them know,” said Dr. Chu. “For the majority of women, it's a benign problem, but there are simple things that can be done to rule out endometrial cancer.”</p>
+        <h2 id="ui-id-2">Examining Endometrial Cancer Worldwide</h2>
+        <p>To get a comprehensive picture of the relationship between endometrial cancer and postmenopausal vaginal bleeding, researchers led by DCEG’s Dr. Clarke and Nicolas Wentzensen, M.D., Ph.D., performed a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000691484&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000691484&amp;version=Patient&amp;language=English'); return false;">meta-analysis</a> of 129 studies, which included more than 40,000 women. Data for the studies—which were conducted in Europe, North America, and Asia—were collected between 1977 and 2017.</p>
+        <p>The researchers <span>estimated the overall </span><a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000789737&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000789737&amp;version=Patient&amp;language=English'); return false;">prevalence</a><span> of endometrial cancer </span><a href="https://www.ncbi.nlm.nih.gov/pubmed/30083701">among women with postmenopausal bleeding across all the studies combined</a> and within different regions of the world. They also examined whether factors such as use of <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046127&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046127&amp;version=Patient&amp;language=English'); return false;">hormone replacement therapy</a> affect the prevalence of endometrial cancer.</p>
+        <p>Overall, the analysis showed that, consistent with what had been seen in earlier studies, 90% of women diagnosed with endometrial cancer had experienced postmenopausal bleeding.</p>
+        <p>The number of women with postmenopausal bleeding who were diagnosed with endometrial cancer varied around the globe. While the rate was 9% overall, it ranged from 5% in North America to 13% in Western Europe.</p>
+        <p>Among the studies included in the analysis, the risk of endometrial cancer in women with postmenopausal bleeding was lower in studies that included women using hormone replacement therapy. This may be due, in part, to the fact that hormone replacement therapy itself can cause bleeding, especially during the first 6 months of use, explained Dr. Clarke.</p>
+        <p>“It's only if there's persistent bleeding after the initial 6 months of [hormone replacement] that it may be more concerning” and should trigger testing for endometrial cancer, she said.</p>
+        <h2 id="ui-id-3">Current Testing Practices Supported</h2>
+        <p>Currently, testing for endometrial cancer in women experiencing abnormal vaginal bleeding consists of <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046633&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046633&amp;version=Patient&amp;language=English'); return false;">transvaginal ultrasound</a> imaging, <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045164&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045164&amp;version=Patient&amp;language=English'); return false;">biopsy</a>, or both.</p>
+  field_page_description:
+    value: 'A new study has found that 90% of postmenopausal women diagnosed with endometrial cancer reported vaginal bleeding before their diagnosis.'
+  field_feature_card_description:
+    value: 'A new study has found that 90% of postmenopausal women diagnosed with endometrial cancer reported vaginal bleeding before their diagnosis.'
+  field_list_description:
+    value: 'A new study has found that 90% of postmenopausal women diagnosed with endometrial cancer reported vaginal bleeding before their diagnosis.'
+  field_pretty_url:
+    value: "endometrial-cancer-bleeding-common-symptom"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-08-29"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Approval of Osimertinib and Necitumumab Increases Lung Cancer Treatment Options"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Approval of Osimertinib and Necitumumab Increases Lung Cancer Treatment Options"
+  body:
+    - format: "full_html"
+      value: |
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        /a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
+  field_page_description:
+    value: 'FDA has approved two targeted therapies, osimertinib and necitumumab for the treatment of some patients with advanced lung cancer.'
+  field_feature_card_description:
+    value: 'The FDA has approved two targeted therapies, osimertinib (Tagrisso™) and necitumumab (Portrazza™), for the treatment of some patients with advanced lung cancer.'
+  field_list_description:
+    value: 'The FDA has approved two targeted therapies, osimertinib (Tagrisso™) and necitumumab (Portrazza™), for the treatment of some patients with advanced lung cancer.'
+  field_pretty_url:
+    value: "fda-osimertinib-necitumumab"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-12-28"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Human Papillomavirus (HPV) Vaccines: An Interview with Douglas R. Lowy, M.D."
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Human Papillomavirus (HPV) Vaccines: An Interview with Douglas R. Lowy, M.D."
+  body:
+    - format: "full_html"
+      value: |
+        <p>Douglas R. Lowy, M.D., heads the Laboratory of Cellular Oncology in NCI&rsquo;s Center for Cancer Research. He and John Schiller, Ph.D., also of the Laboratory of Cellular Oncology, are recipients of the 2014 National Medal of Technology and Innovation&mdash;the nation&rsquo;s highest honor for technological achievement&mdash;for discoveries that enabled the development of vaccines against infection by human papillomaviruses.</p>
+        <p><b>What are human papillomaviruses?</b></p>
+        <p><a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045714&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045714&amp;version=Patient&amp;language=English">Human papillomaviruses</a> (HPVs) are a group of more than 150 related viruses. They are called papillomaviruses because certain types cause <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046652&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046652&amp;version=Patient&amp;language=English">warts</a>, or papillomas, which are <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045614&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045614&amp;version=Patient&amp;language=English">benign</a> (noncancerous) growths. Some types of HPV are associated with certain types of <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045333&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045333&amp;version=Patient&amp;language=English">cancer</a>. These are called &ldquo;high-risk,&rdquo; oncogenic, or carcinogenic HPVs.</p>
+        <p>More than 40 types of HPV, including all 12-15 oncogenic types, can be passed from one person to another through sexual contact. Transmission can occur in the genital, anal, and oral regions. About 14 million new genital HPV infections occur each year in the United States. In fact, most sexually active men and women will be infected with at least one type of HPV at some point in their lives. Most HPV infections occur without any <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045022&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045022&amp;version=Patient&amp;language=English">symptoms</a> and go away without any treatment over the course of months to a few years. However, infections with oncogenic HPV types that persist for many years can cause <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046476&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046476&amp;version=Patient&amp;language=English">cell</a> <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044636&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044636&amp;version=Patient&amp;language=English">abnormal</a> ities that may lead to cancer.</p>
+        <p><b>Which kinds of cancer are related to infection by human papillomaviruses (HPV)?</b></p>
+        <p>Infection by oncogenic HPV types, especially HPV16 and HPV18, is responsible for virtually all cases of cervical cancer, as well as a substantial proportion of cancers of the anus, vulva, vagina, penis, and oropharynx (throat). In the United States, there are about 25,000 HPV-associated cancers each year. &nbsp;&nbsp;</p>
+        <p><b>Are there vaccines to prevent HPV infection?</b></p>
+        <p>There are two FDA-approved HPV vaccines. The <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000752982&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000752982&amp;version=Patient&amp;language=English">quadrivalent vaccine</a> (Gardasil) was approved for females in 2006 and for males in 2009. The <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000752980&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000752980&amp;version=Patient&amp;language=English">bivalent vaccine</a> (Cervarix) was approved for females in 2009. <a title="Schiller, 2012 #2728" href="#_ENREF_3"></a>Both vaccines are non-infectious subunit virus-like particle (VLP) vaccines composed of the main protein that forms the outer shell of the virus.</p>
+        <p><b>Which types of HPV are targeted by the vaccines?</b></p>
+        <p>Both vaccines target HPV16 and HPV18, which are responsible for about 70 percent of cervical cancers and an even higher percentage of the HPV-associated non-cervical cancers. In addition, the quadrivalent vaccine targets HPV6 and HPV11, two sexually transmitted HPV types that do not cause cervical cancer but that are responsible for about 90 percent of genital warts.</p>
+        <p><b>What is known about the protection offered by HPV vaccines?</b></p>
+        <p>The clinical efficacy trials that led to initial FDA approvals were conducted in females 16-23 years old. Among this group, systemic immunization with the vaccines conferred close to 100 percent protection against new infection and disease caused by the HPV types targeted by the vaccines during the 4 years of the trials. The high vaccine efficacy is probably due to several factors, including the strong immunogenicity of the VLPs, the induction of neutralizing antibodies by the vaccine, the exudation of neutralizing antibodies from the tissue to the potential sites of infection, and the high sensitivity of the virus to neutralizing antibodies.</p>
+        <p>There was also some cross-protection in the trials against infection and disease caused by non-vaccine types. The bivalent vaccine induced more cross-protection against the non-vaccine types than the quadrivalent vaccine, perhaps because the bivalent vaccine is more immunogenic.&nbsp;</p>
+        <p><b>Who is the main target group for HPV vaccination?</b></p>
+        <p>Although the vaccines induce strong protection against new infection and disease, they are not effective at treating established HPV infection or disease. Because individuals are at high risk of developing HPV infections soon after initiating sexual activity, the main target group for the HPV vaccine is young adolescents. Recommendations from the US Centers for Disease Control and Prevention (CDC) are that all boys and girls ages 11 or 12 years old get vaccinated. Catch-up vaccination is recommended for males through age 21 and for females through age 26, if they did not get vaccinated when they were younger.</p>
+        <p><b>How widely are the HPV vaccines used in the United States?</b></p>
+        <p>A variety of issues have led to a lower uptake of the HPV vaccines in the United States than in some other developed nations. This has prompted the CDC to identify barriers to increased uptake and to promote increased uptake. The President&rsquo;s Cancer Panel has made several recommendations to accomplish this goal. Despite the low uptake in the United States, there has been a reduction in the prevalence of HPV vaccine types.</p>
+        <p><b>How long does the protection from HPV vaccines last?</b></p>
+        <p>Long-term studies of vaccine efficacy are still in progress. To date, no waning of protection against the targeted HPV types has been seen for either vaccine; thus far, strong protection has been shown to last at least 8 years with the quadrivalent vaccine and at least 9 years with the bivalent vaccine.</p>
+        <p><b>Can the vaccines protect against other types of disease caused by HPV infection?</b></p>
+        <p>In post-approval studies, the bivalent vaccine has been found to reduce the incidence of cervical dysplasia as well as the prevalence of the HPV types targeted by the vaccine and those non-vaccine types for which some cross-protection was seen in the clinical efficacy trials. In addition, the quadrivalent vaccine reduced the incidence of cervical dysplasia and genital warts and the prevalence of the targeted HPV types. In Australia, where there has been high uptake of the vaccine, the incidence of genital warts was also decreased among young males who were not vaccinated, a reflection of herd immunity induced by the vaccine.</p>
+        <p><b>What is known about the safety of HPV vaccines?</b></p>
+        <p>Post-licensure safety monitoring of the two vaccines has shown their safety profiles to be similar to those of other licensed vaccines. The vaccines have been used in millions of people in the United States and many other countries. The most common problems have been brief soreness and other local symptoms at the injection site. There are also rare allergic reactions. These problems are similar to those commonly experienced with other vaccines. The vaccines have not been sufficiently tested during pregnancy and, therefore, should not be used by pregnant women.</p>
+        <p><b>Are additional HPV vaccines in development?</b></p>
+        <p>There has been clinical progress in the development of a second-generation vaccine. Merck has reported at meetings the results of an efficacy trial of an experimental &ldquo;9-valent&rdquo; (nonavalent) vaccine, which targets HPV16 and HPV18 (the HPV types responsible for most cases of cervical and other HPV-caused cancers), plus five additional oncogenic HPV types, plus HPV6 and HPV11. Together, the seven oncogenic HPV types targeted by the vaccine are found in almost 90 percent of cervical cancers. In this trial, the quadrivalent vaccine was used as the control. Compared with the quadrivalent vaccine, the 9-valent vaccine was highly (close to 97 percent) effective at preventing disease and persistent infections caused by the five oncogenic types not included in the quadrivalent vaccine. The 9-valent vaccine was also not inferior to the quadrivalent vaccine in terms of protection against the four HPV types in the quadrivalent vaccine. The FDA is currently considering whether to license this experimental vaccine.</p>
+        <p><b>For the approved vaccines, how many doses are given?</b></p>
+        <p>In the clinical efficacy trials that led to approval, individuals were given three vaccine doses over a 6-month period, so the regulatory approval was for three doses. However, the immune response in young adolescents (9-14 years old) was sufficiently stronger than that of the women in the efficacy trials that two doses, separated by 6 months, in young adolescents produced an immune response that was comparable to that of three doses in 16-25-year-olds.&nbsp;Post-hoc analysis of the data from one efficacy trial of the bivalent vaccine also indicated that even one or two doses were as effective as three doses at conferring protection throughout the 4-year trial period. These data recently led the European Medicines Agency (the &ldquo;European FDA&rdquo;) to approve the vaccines for two doses in young adolescents and the adoption of this standard by the World Health Organization. However, the current recommendations in the U.S. remain at 3 doses, even for young adolescents.</p>
+        <p><b>What is known about the effects of a single dose of the vaccines?</b></p>
+        <p>The ability of even a single dose of the bivalent vaccine to confer 4 years of strong protection has been correlated with stable HPV antibody levels during years 1-4. Such stable antibody levels are without precedent in a subunit protein vaccine, such as the HPV vaccine. The findings, which are probably related to the structure of the VLPs, raise the possibility that even a single dose of the current vaccine might be able to confer long-term protection. It would probably be necessary to undertake a clinical efficacy trial of one dose before it might be adopted as standard of care for young adolescents. Reducing the number of vaccine doses would simplify the logistics and costs of vaccination, which could have a major impact on uptake of the HPV vaccine in the developing world, where 85 percent of cervical cancers occur as well as 88 percent of deaths from the disease.</p>
+        <p>Thank you, Dr. Lowy, and congratulations on your award!</p>
+  field_page_description:
+    value: 'NCI’s Dr. Doug Lowy discusses HPV vaccines, including their efficacy, safety, and the development of next-generation vaccines.'
+  field_feature_card_description:
+    value: 'NCI’s Dr. Doug Lowy discusses HPV vaccines, including their efficacy, safety, and the development of next-generation vaccines.'
+  field_list_description:
+    value: 'NCI’s Dr. Doug Lowy discusses HPV vaccines, including their efficacy, safety, and the development of next-generation vaccines.'
+  field_pretty_url:
+    value: "hpv-vaccines-lowy"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2014-11-20"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Stimulating the Immune System Shrinks Some Slow-Growing Lymphomas"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Stimulating the Immune System Shrinks Some Slow-Growing Lymphomas"
+  body:
+    - format: "full_html"
+      value: |
+        <p>In a small clinical trial, the combination of low-dose radiation and a compound that stimulates the immune system shrank tumors in most patients with slow-growing (indolent) B-cell lymphomas.
+        Even though the compound, called SD-101, was injected directly into a single tumor (a procedure called in situ vaccination), tumors elsewhere in the body frequently shrank as well, indicating that the immune-stimulating compound helped to induce a body-wide, or systemic, immune response.
+        The findings were published August 28 in Cancer Discovery.</p>
+        <h2>In a small trial involving patients with slow-growing B-cell lymphoma</n2>
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        /a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
+  field_page_description:
+    value: 'In a small trial involving patients with slow-growing B-cell lymphoma'
+  field_feature_card_description:
+    value: 'In a small trial involving patients with slow-growing B-cell lymphoma, injecting the compound SD-101 directly into tumors (in situ vaccination) and giving low-dose radiation shrank the injected tumors'
+  field_list_description:
+    value: 'In a small trial involving patients with slow-growing B-cell lymphoma, injecting the compound SD-101 directly into tumors (in situ vaccination) and giving low-dose radiation shrank the injected tumors'
+  field_pretty_url:
+    value: "lymphoma-sd-101-in-situ-vaccine"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-09-26"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Immunotherapy COGT-Interferon Bleaching"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Immunotherapy COGT-Interferon Bleaching"
+  body:
+    - format: "full_html"
+      value: |
+        <p>NCI is the federal government's principal agency for cancer research. To advance that mission, NCI leads many highly visible activities related to basic research, clinical trials, training, and coordination of a national cancer plan.</p>
+        <p>Perhaps less well-known are robust NCI programs specifically set up to help small businesses develop and commercialize innovative devices, diagnostics, algorithms, and therapeutics to improve cancer research, prevention, detection, and care. Early in my career as an independent scientist, I remember being surprised not only by the existence of these programs, but also by their scale. I then very quickly came to learn, through personal experience, of their importance.</p>
+        /a></span> and join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development innovative ideas.</p>
+        <p>We believe these efforts to commercialize cutting-edge cancer science are economically significant, but most importantly, these programs demonstrably provide a means of getting novel technologies from the bench into broad clinical use in a way that will directly help patients with cancer.</p>
+  field_page_description:
+    value: 'join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development'
+  field_feature_card_description:
+    value: 'Join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development.'
+  field_list_description:
+    value: 'Join the many companies that have already experienced the benefits of SBIR/STTR funding to advance their early-in-development.'
+  field_pretty_url:
+    value: "interferon"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-04-01"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Charting a Course toward Precision Cancer Prevention"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "Charting a Course toward Precision Cancer Prevention"
+  field_author:
+    value: 'Stephen J. Chanock, M.D.'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Currently, standard epidemiologic risk factors are used to assess the risk of some common cancers. But the risk categories (e.g., high or low) tend to be broad, and our confidence in the statistical accuracy for any one individual could be limited. Genetic information could potentially allow us to refine the risk categories and increase our confidence in risk assessments.</p>
+        <p>As this work moves forward, a challenge will be to describe the mechanisms by which genetic variants contribute to cancer initiation. For example, we have discovered that many variants associated with cancer risk reside in regions of the genome that do not code for proteins but could regulate gene activity. The fruits of the GWAS in cancer have pointed us towards investigation of how and in what small perturbations of the regulation of key <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000561720&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561720&amp;version=Patient&amp;language=English">signaling pathways</a> could influence cancer risk. We are just beginning to layer environmental exposures on top of these regions to better understand how individuals could differ in their response to environmental stimuli.</p>
+        <p>Some researchers have begun to ask whether risk variants could also influence the progression of different types of cancer. The answers to this and other questions will be critical for advancing our understanding of the biology of cancer and potentially for developing new approaches for prevention, early detection, and treatment.</p>
+        <h2 id="ui-id-3">From Germline to Tumor Genetics</h2>
+        <p>In parallel, there have been major strides in our understanding of the genomic changes characteristic of different cancers. <a href="http://cancergenome.nih.gov/">The Cancer Genome Atlas</a> (TCGA) has enabled the community to look for profiles of the tumors that could be important for new cancer classifications as well as the identification of shared mechanisms or mutations across cancers. That knowledge, in turn, could widen the opportunities for new and old drugs for treatment.</p>
+        <figure class="image-right-small centered-set"><div class="centered-element"><img src="/PublishedContent/Images/images/nci/people/stephen-chanock-article.__v30044255.jpg" alt=""><!--Comment-->
+        </div>
+        <figcaption>
+        <div class="caption-container no-resize">
+        <p>Stephen J. Chanock, M.D.<br>Director, NCI Division of Cancer Epidemiology and Genetics</p>
+        <div class="image-photo-credit">Credit: National Cancer Institute</div></div>
+        </figcaption>
+        </figure>
+        <p>By studying variation in DNA within individual cancer patients—looking both at their germline and tumor genomes—we could learn additional clues about the evolution of genetic mutations that drive specific cancers.</p>
+  field_page_description:
+    value: 'Cancer researchers are increasingly exploring how cancer risk is influenced by genetic predisposition to cancer and the effects of environmental exposures, and what this means for cancer prevention.'
+  field_feature_card_description:
+    value: 'Cancer researchers are increasingly exploring how cancer risk is influenced by genetic predisposition to cancer and the effects of environmental exposures, and what this means for cancer prevention.'
+  field_list_description:
+    value: 'Cancer researchers are increasingly exploring how cancer risk is influenced by genetic predisposition to cancer and the effects of environmental exposures, and what this means for cancer prevention.'
+  field_pretty_url:
+    value: "precision-prevention-chanock"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2016-05-26"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "For Early-Stage Lung Cancer, Study Identifies Potential New Biomarker, Treatment Target"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "For Early-Stage Lung Cancer, Study Identifies Potential New Biomarker, Treatment Target"
+  body:
+    - format: "full_html"
+      value: |
+        <p>A new study has identified a potential biomarker of early-stage non–small cell lung cancer (NSCLC). The <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045618&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045618&amp;version=Patient&amp;language=English'); return false;">biomarker</a> could help diagnose <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046220&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046220&amp;version=Patient&amp;language=English'); return false;">precancerous</a> lung growths (called <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044502&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000044502&amp;version=Patient&amp;language=English'); return false;">nodules</a> or lesions) and early-stage lung cancers noninvasively and distinguish them from lung nodules that are not cancer (<a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045614&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045614&amp;version=Patient&amp;language=English'); return false;">benign</a>), the study investigators said.</p>
+        <p>The potential new biomarker is a protein called SGLT2, which is used to transport glucose into some cells. The study authors also found that, in mice, they could use PET scans <a href="https://www.ncbi.nlm.nih.gov/pubmed/30429355">to detect early-stage lung lesions that use SGLT2</a> to transport glucose.</p>
+        <p>“This study is a critical first step in characterizing precancerous and early-stage lung cancer lesions, which could lead to their better clinical management,” said Sudhir Srivastava, Ph.D., M.P.H., who heads the <a href="https://edrn.nci.nih.gov/">Early Detection Research Network</a> in NCI’s <a href="https://prevention.cancer.gov/">Division of Cancer Prevention</a> and was not involved in the study.</p>
+        <p>However, Dr. Srivastava and the study authors noted, the study was done primarily in mice and findings will need to be replicated in human studies before they can be applied in everyday clinical practice.</p>
+        <p>Published November 14 in <em>Science Translational Medicine</em>, the study “provides clues that could potentially help doctors sort out which lung nodules detected on <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046033&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046033&amp;version=Patient&amp;language=English'); return false;">CT scans</a> are more likely to go on to be <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045772&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045772&amp;version=Patient&amp;language=English'); return false;">malignant</a> lesions and which ones don’t need any further follow-up,” said Bruce Johnson, M.D., a lung cancer specialist at the Dana-Farber Cancer Institute, who was not involved in the research.</p>
+        <p>Evidence from the study also suggests that SGLT2 may be a new target for treatments that could prevent precancerous growths or early-stage NSCLCs from progressing, said lead author Claudio Scafoglio, M.D., Ph.D., of the Jonsson Comprehensive Cancer Center and the David Geffen School of Medicine at UCLA.</p>
+        <h2 id="ui-id-2">Challenges of Early Diagnosis</h2>
+        <p>Finding and treating <a href="https://www.cancer.gov/types/lung/">lung cancer</a> early, before it has spread, markedly increases a person’s chances of survival. But <span>early diagnosis of lung cancer has proved challenging</span>, even in people at high risk of the disease, such as current or former heavy smokers.</p>
+        <p>One major challenge is that <a href="https://www.cancer.gov/types/lung/patient/lung-screening-pdq">lung cancer screening</a> with low-dose CT&nbsp;scans often detects small lung nodules, or lesions, that cannot be diagnosed as clearly benign or clearly cancerous. These lesions, known as indeterminate nodules, typically require follow-up with repeated CT scans, a biopsy, or even surgery.</p>
+        <p>Although most of these nodules turn out to be benign, no standard guidelines exist for monitoring them, said Dr. Srivastava.</p>
+        <p>To develop better ways of monitoring such nodules, researchers look for differences that distinguish normal cells from tumor cells—ideally, differences that could be detected noninvasively, such as through a blood test or imaging procedure.&nbsp;</p>
+        <h2 id="ui-id-3">Lung Tumor Cells Can Take up Glucose Two Ways</h2>
+        <p>Tumor cells take up more glucose than normal cells because they need more sugar to fuel their rapid growth. This greater uptake of glucose by tumor cells, in fact, forms the basis for using imaging with PET scans as a standard approach to help assign a stage to lung cancer and some other cancers.</p>
+        <p>For a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046140&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046140&amp;version=Patient&amp;language=English'); return false;">PET scan</a>, a small amount of a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045857&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045857&amp;version=Patient&amp;language=English'); return false;">radiolabeled</a> tracer substance—a radioactive form of glucose called FDG—is injected into a vein. Malignant tumor cells show up bright in PET scan images because they take up more of the labeled sugar than normal cells.</p>
+        <p>Glucose uptake occurs primarily through a family of glucose transport molecules known as GLUTs, which are often found at much higher levels in cancer cells than in normal cells. But more recent work by Dr. Scafoglio and his UCLA colleagues showed that tumor cells in some cancers, including human pancreatic and prostate cancers, <a href="https://www.ncbi.nlm.nih.gov/pubmed/26170283">also contain, or express, SGLT2</a>—which is normally found only in the kidney—and they use it to take up glucose.</p>
+        <p>“The current way that we use PET imaging to detect glucose uptake by tumor cells does not detect SGLT2,” Dr. Scafoglio said. That’s because FDG is taken up by GLUTs but not by SGLTs.</p>
+        <p>However, in their studies in mice, he continued, “if we use a different tracer to do PET imaging—a radiolabeled sugar called Me4FDG that is specifically taken up by SGLT2—then we’re able to detect glucose uptake in lung nodules containing this alternative sugar transport molecule.”</p>
+        <h2 id="ui-id-4">SGLT2 as a Marker of Early-Stage NSCLC</h2>
+        <p>The UCLA team first studied the expression of SGLT2 and GLUT1 in patient tissue samples from lung nodules that had been detected during lung cancer screening or incidentally during other screening exams or procedures.</p>
+        <p>The team found unusually high levels of SGLT2 in nodules that turned out to be precancerous and in early-stage lung <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046216&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046216&amp;version=Patient&amp;language=English'); return false;">adenocarcinoma</a>, which is the predominant form of NSCLC. Patient tissue from more advanced NSCLCs contained a mixture of SGLT2 and GLUT1. By contrast, the team detected neither SGLT2 nor GLUT1 in tissue samples of normal <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046209&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046209&amp;version=Patient&amp;language=English'); return false;">alveoli</a>—tiny air sacs in the lung where lung adenocarcinoma originates.</p>
+        <p>Next, the researchers used a combination of <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000653117&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000653117&amp;version=Patient&amp;language=English'); return false;">immunohistochemistry</a> and PET scans with either FDG or Me4FDG as the tracer to study how GLUT1 and SGLT2 expression and activity changed over time in mice that were genetically engineered to develop lung adenocarcinomas.</p>
+        <p>In this <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000561606&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000561606&amp;version=Patient&amp;language=English'); return false;">mouse model</a> of NSCLC, “we found that the early-stage cancers and precancers express only one glucose transporter, SGLT2,” Dr. Scafoglio said. “Then, when the tumors progress, they tend to reduce expression of SGLT2 and increase expression of the more well-known glucose transporter, GLUT1.”</p>
+        <h2 id="ui-id-5">Using a Diabetes Drug to Target SGLT2</h2>
+        <p>Because SGLT2 appeared to play a central role in glucose uptake only in premalignant lung nodules and early-stage tumors, the researchers speculated that SGLT2 may be required for tumor growth in the early stages of lung cancer development.</p>
+        <p>They tested the effects of blocking SGLT2 in several mouse models of lung cancer by using the drug <a href="https://medlineplus.gov/druginfo/meds/a613033.html">canagliflozin (Invokana)</a>, which targets SGLT2 and was recently approved by the Food and Drug Administration to treat type 2 diabetes.</p>
+        <p>Treatment with canagliflozin reduced tumor growth and modestly prolonged survival both in the genetically engineered mouse model and in a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000784119&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000784119&amp;version=Patient&amp;language=English'); return false;">PDX</a> mouse model, a mouse model more relevant to human cancers, in which tumor tissue taken from patients with NSCLC is implanted into the animals. In addition, PET imaging of the PDX mice suggested that Me4FDG may be used as a tracer for imaging to evaluate the response to drugs that inhibit SGLT2.</p>
+        <p>On the basis of these mouse studies, “We think that drugs that block glucose uptake by inhibiting SGLT2 could be used to treat early-stage lung cancer or even to prevent premalignant lesions from developing into cancer,” Dr. Scafoglio said.</p>
+        <p>However, Dr. Johnson cautioned, the effects of canagliflozin treatment on tumor growth and survival in the mice were modest. And although the mouse findings are interesting and encouraging, they are still “a long way from being applied to altering the growth of human lung cancers,” he said.</p>
+        <h2 id="ui-id-6">Moving to Studies in Patients</h2>
+        <p>Progress in the prevention and treatment of early-stage lung cancer “has been fairly dismal in the last 15–20 years,” said senior study author David Shackelford, Ph.D., also of UCLA. He, Dr. Scafoglio, and their colleagues hope that their ongoing studies can help to buck that trend.</p>
+        <p>“Most of the convincing data in this study comes from mouse models,” so it will be important to show the expression pattern of SGLT2 over time in people with NSCLC, Dr. Srivastava said.</p>
+        <p>He added that as part of the <a href="/research/key-initiatives/moonshot-cancer-initiative/implementation/human-tumor-atlas" title="">Human Tumor Atlas Network</a>, a new NCI-funded program, researchers including Steven Dubinett, M.D., of UCLA, an author on the SGLT2 study, will document the change in cellular, structural, and molecular characteristics that occur over time in human cancers, including lung cancer.</p>
+        <p>To learn more about the role of SGLT2 in cancer, Dr. Scafoglio and his colleagues are using a genetic mouse model of lung cancer that allows them to knock out SGLT2 function to see whether the transporter is absolutely required for tumor development. “We also want to know why the tumors change the way they transport glucose as the cancer progresses,” Dr. Scafoglio said.</p>
+        <p>Finally, he continued, to pursue the possibility of using SGLT2 as a diagnostic marker of early-stage NSCLC in people, “we are starting a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045838&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000045838&amp;version=Patient&amp;language=English'); return false;">pilot study</a> of 30 patients with lung nodules to test the possibility of using this new tracer (Me4FDG) to do imaging in humans.”</p>
+  field_page_description:
+    value: 'A new study has identified a potential biomarker of early-stage non–small cell lung cancer (NSCLC).'
+  field_feature_card_description:
+    value: 'A new study has identified a potential biomarker of early-stage non–small cell lung cancer (NSCLC).'
+  field_list_description:
+    value: 'A new study has identified a potential biomarker of early-stage non–small cell lung cancer (NSCLC).'
+  field_pretty_url:
+    value: "early-stage-lung-cancer-biomarker"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-01-03"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "New on NCI Websites for December 2018"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "New on NCI Websites for December 2018"
+  field_author:
+    value: ''
+  body:
+    - format: "full_html"
+      value: |
+        <p><strong>Fiscal Year 2018 NCI Budget Fact Book</strong></p>
+        <p>The latest <a href="/about-nci/budget/fact-book" title="">Budget Fact Book</a> provides a summary of the distribution of NCI’s fiscal year 2018 budget among the institute’s research programs and funding mechanisms, as well as an explanation of NCI funding policies related to research grant awards.</p>
+        <p><strong>President’s Cancer Panel Report</strong></p>
+        <p>The President’s Cancer Panel concluded in its <a href="https://deainfo.nci.nih.gov/advisory/pcp/annualReports/HPV/index.htm">2012–2013 report</a> that underuse of human papillomavirus (HPV) vaccines is a serious but correctable threat to progress against cancer. In its new report, published in November, the <a href="https://prescancerpanel.cancer.gov/report/hpvupdate/">panel provides an overview of progress in vaccine uptake over the past 5 years</a> and presents priorities and strategies to accelerate vaccine uptake and eliminate the unnecessary burden of preventable HPV-related cancers.</p>
+        <p><strong>Twitter Live—What's Next in Liver Cancer Research </strong></p>
+        <p>NCI hosted its first Twitter Live event on October 30. NCI experts Anuradha S. Budhu, Ph.D., and Tim Greten, M.D., of NCI's&nbsp;<a href="https://ccr.cancer.gov/">Center for Cancer Research (CCR)</a>, joined Katherine McGlynn, Ph.D., of NCI's&nbsp;<a href="https://dceg.cancer.gov/">Division of Cancer Epidemiology and Genetics (DCEG)</a>, to discuss <a href="https://youtu.be/Ah7dF20upJY">recent developments in research on liver cancer</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> causes and prevention.</p>
+        <p><strong>Video—The Role of Immunotherapy in Childhood Cancer Treatment</strong></p>
+        <p>In a Facebook Live event held on October 25, NCI’s Nirali Shah, M.D., and Carlos Sandi of the St. Baldrick's Foundation <a href="/types/childhood-cancers/immunotherapy-pediatric-treatment-facebook-live-video" title="">discussed the role of immunotherapy in childhood cancers</a> such as leukemia.</p>
+        <p><strong>Redesigned Risk Assessment Tools</strong></p>
+        <p>NCI’s <a href="https://ccrisktool.cancer.gov/">Colorectal Cancer Risk Assessment Tool</a> and <a href="https://mrisktool.cancer.gov/index.html">Melanoma Risk Assessment Tool</a> have been redesigned with usability-tested user interfaces and results pages, enhanced security features, and more accessible designs.</p>
+        <p><strong>Latest Issue of the <em>OCG e-Newsletter</em></strong></p>
+        <p>The <a href="https://ocg.cancer.gov/">Office of Cancer Genomics (OCG)</a> published <a href="https://ocg.cancer.gov/news-publications/e-newsletter-issue/issue-20">issue 20 of their e-News</a>&nbsp;in November. The articles provide program highlights and guest editorials, discuss data sharing facilitated by OCG’s Data Coordinating Center, and include a perspective piece from OCG staff member Eva Tonsing-Carter, Ph.D., on transitioning from the laboratory to program management.</p>
+        <p><strong>CAR T-Cell Therapy Infographic</strong></p>
+        <p>This illustration shows the <a href="/about-cancer/treatment/research/car-t-cell-therapy-infographic" title="">steps for creating CAR T-cell therapies</a>, a type of treatment in which a patient's T cells are changed in the laboratory so they will attack cancer cells. T cells are part of the immune system. To date, two CAR T-cell therapies have been approved by the Food and Drug Administration, to treat some forms of leukemia and lymphoma.</p>
+        <p><strong>Cancer Center Cessation Initiative Video</strong></p>
+        <p>A new video shows how NCI is working with cancer centers to build and implement programs to help people being treated for cancer quit tobacco. <a href="https://cancercontrol.cancer.gov/brp/tcrb/cessation-initiative.html">NCI’s Cancer Center Cessation Initiative</a>, launched in 2017 as part of the Cancer Moonshot℠, aims to advance tobacco cessation efforts in cancer centers across the country.</p>
+        <p><strong>New CCR Publication: <em>Horizons</em></strong></p>
+        <p>CCR has launched <a href="https://ccr.cancer.gov/news/horizons">a new publication called <em>Horizons</em></a> to highlight areas of investigation likely to shape future research conducted by the center. The inaugural issue includes reports on new avenues for research on natural products, clinical trial design, and the study of rare tumors.</p>
+        <p><strong>Fall Issue of <em>Linkage</em> Newsletter</strong></p>
+        <p>DCEG has published the <a href="https://dceg.cancer.gov/news-events/linkage-newsletter/2018-11">latest issue of its <em>Linkage</em> newsletter</a>. The issue features an article on the emerging field of metabolomics and a profile of Britton Trabert, Ph.D., a DCEG researcher who studies the epidemiology of ovarian cancer and the hormonal causes of gynecologic cancers. The issue also includes highlights on the latest scientific publications and updates on staff achievements.</p>
+        <p><strong>DCTD November Newsletter</strong></p>
+        <p>NCI’s <a href="https://dctd.cancer.gov">Division of Cancer Treatment and Diagnosis (DCTD)</a> has published the <a href="https://dctd.cancer.gov/NewsEvents/newsletter.htm">November issue of its quarterly newsletter</a>. This issue includes a profile of Jeff Abrams, M.D., recently retired associate director for the Cancer Therapy Evaluation Program, spotlights on the Cancer Diagnosis Program and Patient-Derived Models Repository, and recent news about DCTD programs and activities.</p>
+        <p><strong>New Trichloroethylene Page </strong></p>
+        <p>A new page on the NCI website explains <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/trichloroethylene">what the chemical trichloroethylene (TCE) is</a>, how people may become exposed to it, and what cancers are associated with TCE exposure. The TCE page is part of NCI's collection of pages about <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances">cancer-causing substances in the environment</a>.</p>
+        <p><strong><em>Chemotherapy and You </em></strong></p>
+        <p>The popular patient education publication&nbsp;<em></em><a href="/publications/patient-education/chemotherapy-and-you.pdf" title=""><em></em></a><em></em><em></em><a href="/publications/patient-education/chemo-and-you" title=""><em>Chemotherapy and You: Support for People with Cancer</em></a>&nbsp;has been updated with a new look and refreshed content, including information about precautions patients receiving chemotherapy should take at home.</p>
+        <p><strong>Revised NCI Fact Sheets</strong></p>
+        <p>The recently updated fact sheet on <a href="/about-cancer/causes-prevention/risk/hormones/mht-fact-sheet" title="">Menopausal Hormone Therapy and Cancer</a> covers new research results on menopausal hormone therapy and includes information about benefits, risks, and how it affects the body.</p>
+        <p>The <a href="/types/bone/bone-fact-sheet" title="">Primary Bone Cancer fact sheet</a> was comprehensively revised. It addresses bone cancer statistics, the main types of primary bone cancer, possible causes, treatment, and the side effects of treatment.</p>
+        <p>NCI’s fact sheet on <a href="/types/childhood-cancers/child-adolescent-cancers-fact-sheet" title="">Cancer in Children and Adolescents</a> now includes updated statistics, along with descriptions of the types, causes, and treatment of childhood cancers in the United States.</p>
+        <p>The <a href="/about-cancer/causes-prevention/risk/tobacco/second-hand-smoke-fact-sheet" title="">Secondhand Smoke and Cancer fact sheet</a> has been revised to make it easier to read and to include updated statistics and references.</p>
+        <p><strong><em>Taking Time</em></strong></p>
+        <p>The patient education booklet <em></em><a href="/publications/patient-education/taking-time" title=""><em>Taking Time: Support for People With Cancer</em></a> has been revised with new content, updated contact information, and a new design.</p>
+        <p><strong>PDQ Summary Updates</strong></p>
+        <p>All sections of the <a href="/types/breast/patient/breast-screening-pdq" title="">breast cancer screening PDQ summary</a> have been revised to reflect recent research results and to clarify information about newer screening methods.</p>
+        <p>The <a href="/types/testicular/patient/testicular-treatment-pdq" title="">PDQ summary on testicular cancer treatment</a> has been revised with updated descriptions of the different stages of this disease.</p>
+  field_page_description:
+    value: 'NCI’s collection of cancer information products is constantly growing, so periodically we provide updates on new and updated content of interest to the cancer community.'
+  field_feature_card_description:
+    value: 'NCI’s collection of cancer information products is constantly growing, so periodically we provide updates on new and updated content of interest to the cancer community.'
+  field_list_description:
+    value: 'NCI’s collection of cancer information products is constantly growing, so periodically we provide updates on new and updated content of interest to the cancer community.'
+  field_pretty_url:
+    value: "new-december-2018"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2018-12-28"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: 'Studying “Total Diet” and Its Impact on Health, Including Cancer Risk'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: 'Studying “Total Diet” and Its Impact on Health, Including Cancer Risk'
+  field_author:
+    value: 'Jill Reedy, Ph.D., M.P.H., R.D.'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Does what we eat and drink affect our risk of developing cancer?</p>
+        <p>Many studies have asked this question, but answering it is challenging. Foods and beverages, as well as the nutrients and dietary constituents they contain, are consumed together, never in isolation of one another.</p>
+        <p>To account for this, and to improve the quality of research related to the connection between diet and disease, the research community is shifting how we look at the health impact of diet, and how we assess diet and cancer risk. We’re taking a more holistic approach and looking at dietary patterns versus individual foods or nutrients across the lifespan, and we are developing tools that can incorporate dietary patterns to reflect this shift.</p>
+        <p>In other words, we’re interested in assessing what eating broccoli or a cheeseburger means for your health—but in the context of a larger dietary pattern and overall diet quality that includes the what, where, when, why, and how we eat.</p>
+        <h2 id="ui-id-2">Expanding the Approach to Diet Research</h2>
+        <p>Research on diet and cancer risk has often taken a reductionist approach, focusing on specific dietary components. That approach, however, assumes that a food or nutrient alone, without consideration of other accompanying foods or nutrients, can induce a specific biological effect that can fuel the formation and growth of cancer cells.</p>
+        <p>But there are limitations—and unanticipated findings—when only using this approach. For example, in the late 1980s, the Alpha-Tocopherol, Beta-Carotene Cancer Prevention Study was initiated after some studies found that <em>diets</em> high in certain vitamins were associated with a reduced risk of lung cancer. However, taking these vitamins as pills (and not packaged in foods) did not reduce the incidence of lung cancer among smokers, and may actually have caused some harm.</p>
+        <p>These apparently paradoxical findings might be explained by recognizing that nutrient and food consumption is closely connected, making it difficult to examine associations between any one dietary factor and chronic disease. Dramatically increasing intake of one nutrient by taking a supplement could have unanticipated effects, such as decreasing the absorption or circulating concentrations of other beneficial nutrients.&nbsp;</p>
+        <p>There are also likely interactive or synergistic effects among foods and nutrients, such that the totality of diet may have cumulative effects. This may be one of the reasons the NIH-funded <a href="https://www.nejm.org/doi/10.1056/NEJM199704173361601">Dietary Approaches to Stop Hypertension study</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>, a clinical trial that examined the effect of changing an overall dietary pattern rather than a single food or nutrient, showed positive health outcomes.</p>
+        <p>By looking at total diet quality, we can try to fit the different puzzle pieces together. We can look beyond a certain food or nutrient and learn how that food was consumed and what other issues might be at play, such as the timing of meals and circadian rhythms. NCI is already funding research investigating these and other factors that can define a total diet.</p>
+        <h2 id="ui-id-3">How NCI is Working to Improve Dietary Patterns Research</h2>
+        <p>Every 5 years, the US Department of Agriculture (USDA) and NCI collaborate to update a dietary tool called the <a href="https://epi.grants.cancer.gov/hei/">Healthy Eating Index (HEI)</a>. This tool is used to assess how closely an eating pattern, or any set of foods in the food supply chain, aligns with the most recent Dietary Guidelines for Americans.</p>
+        <p><a href="https://epi.grants.cancer.gov/hei/publications.html">The HEI has been applied by researchers</a> to describe diet quality among the US population. It has also been used to evaluate the quality of foods you’d find in different environments: for example, in a fast food restaurant, a federal food distribution program, a food bank, or a school cafeteria.</p>
+        <p><a href="https://health.gov/dietaryguidelines/2015/">The most recent Dietary Guidelines (for 2015–2020)</a> reflect this shift toward focusing on total diet. For example, the guidelines now stress an overarching approach to diet, such as following a healthy eating pattern across the lifespan; eating a variety of foods, with a focus on nutrient density and amount; and limiting calories from added sugars and saturated fats and reducing sodium intake.</p>
+        <p>Our most recent updates to the HEI, described in <a href="https://epi.grants.cancer.gov/hei/publications.html">three articles</a> in the <em>Journal of the Academy of Nutrition and Dietetics</em>, also reflect this emphasis on total diet.</p>
+        <p>The fact that tools like the HEI can now be applied to any set of foods in the food supply chain is important because large segments of the population don’t have access to, or can’t afford, healthy food. If we assess how well a set of foods—for example, those provided by a food bank—align with dietary guidance focused on total diet, we can then work toward improving that set of foods to minimize the risk of cancer and other health conditions.</p>
+        <p>In an <a href="https://jandonline.org/article/S2212-2672(18)30511-2/fulltext">editorial</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> accompanying our articles on the HEI, Barbara Millen, Dr.P.H., R.D., chair of the 2015 Dietary Guidelines Advisory Committee, wrote that “the evidence base is stronger than ever before linking the total diet—its dietary patterns, nutrient density, and overall quality—to health promotion and disease prevention across the human life span.”</p>
+  field_page_description:
+    value: 'Researchers are shifting how they assess diet and cancer risk, looking beyond the impact of individual foods or nutrients on health, and taking a more holistic approach, considering dietary patterns across the lifespan.'
+  field_feature_card_description:
+    value: 'Researchers are shifting how they assess diet and cancer risk, looking beyond the impact of individual foods or nutrients on health, and taking a more holistic approach, considering dietary patterns across the lifespan.'
+  field_list_description:
+    value: 'Researchers are shifting how they assess diet and cancer risk, looking beyond the impact of individual foods or nutrients on health, and taking a more holistic approach, considering dietary patterns across the lifespan.'
+  field_pretty_url:
+    value: "cancer-risk-total-diet"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2020-01-01"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Cat-Cat'
+
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_short_title:
+    value: "FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer"
+  body:
+    - format: "full_html"
+      value: |
+        <p>The Food and Drug Administration (FDA) has approved lenvatinib (Lenvima) to treat some patients with the most common type of <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000445091&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000445091&amp;version=Patient&amp;language=English">thyroid cancer</a>, differentiated thyroid cancer (DTC). The approval is for patients with DTC whose disease has progressed following <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045855&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045855&amp;version=Patient&amp;language=English">radioactive iodine</a> therapy (radioactive iodine-refractory disease).</p>
+        <p>Although the incidence of thyroid cancer has increased slowly over the past two decades, mortality rates have been relatively steady. In 2014, an estimated 62,980 Americans were diagnosed with thyroid cancer and 1,890 died from the disease.</p>
+        <p>Lenvatinib inhibits several growth factor receptors. It works by inhibiting tumor blood vessel development and blocking specific proteins from signaling cancer cells to grow and divide.&nbsp;The drug was reviewed under the FDA’s <a href="http://www.fda.gov/ForPatients/Approvals/Fast/ucm405405.htm">priority review program</a>, which provides for an expedited review of drugs that, if approved, would provide significant improvement in safety or effectiveness in the treatment of a serious condition.</p>
+        <p>The approval was based on the results of a phase III randomized clinical trial involving nearly 400 patients with progressive, radioactive iodine-refractory DTC. Lenvatinib-treated participants lived a median of 18.3 months without their disease progressing, compared with a median of 3.6 months for participants who received a placebo. Additionally, 65 percent of lenvatinib-treated patients saw a reduction in tumor size, compared with 2 percent of participants who received a placebo.</p>
+        <p>Treatment-related side effects were common in patients who received lenvatinib, the most common of which were high blood pressure, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000321374&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000321374&amp;version=Patient&amp;language=English">fatigue</a>, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000306496&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000306496&amp;version=Patient&amp;language=English">diarrhea</a>, decreased appetite, and decreased weight.</p>
+        <p>Side effects led to treatment discontinuation in approximately 14 percent of patients who received lenvatinib, and 6 of 20 deaths that occurred in the lenvatinib arm during the treatment period were considered to be drug-related.</p>
+        <p>Complete <a href="http://www.ncbi.nlm.nih.gov/pubmed/25671254">results</a> from the trial—which was funded by lenvatinib’s manufacturer, Eisai— were reported February 12 in the <i>New England Journal of Medicine</i>.</p>
+        <p>With very few treatment options for patients with well-differentiated thyroid cancer once their tumor becomes&nbsp;refractory to radioactive-iodine therapy, the “approval of lenvatinib gives a new treatment option to these patients with this rare cancer,” said Shakun Malik, M.D., of NCI’s <a href="http://dctd.cancer.gov/">Division of Cancer Treatment and Diagnosis</a>.</p>
+        <p>Because lenvatinib is an oral agent, it’s easier to administer the drug to patients, Dr. Malik continued. But she cautioned that patients need to be carefully monitored for the drug-related toxicities that were noted in clinical trials involving lenvatinib.</p>
+        <p>More information on thyroid cancer therapies and recent clinical trial results are available on NCI’s <a href="/types/thyroid" title="">Thyroid Cancer</a> page.</p><div></div>
+  field_page_description:
+    value: 'The FDA has approved lenvatinib (Lenvima) to treat some patients with the most common type of thyroid cancer.'
+  field_feature_card_description:
+    value: 'The FDA has approved lenvatinib (Lenvima) to treat some patients with the most common type of thyroid cancer.'
+  field_list_description:
+    value: 'The FDA has approved lenvatinib (Lenvima) to treat some patients with the most common type of thyroid cancer.'
+  field_pretty_url:
+    value: "fda-lenvatinib"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2015-03-02"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Minnie'
