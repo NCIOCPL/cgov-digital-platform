@@ -131,6 +131,7 @@ function cgov_embedded_block_theme_suggestions_block_content(array $variables) {
   $block_content = $variables['elements']['#block_content'];
 
   $suggestions[] = 'block_content__' . $block_content->bundle();
+  $suggestions[] = 'block_content__' . $block_content->bundle() . '__' . $variables['elements']['#view_mode'];
   $suggestions[] = 'block_content__' . $block_content->id();
 
   return $suggestions;
