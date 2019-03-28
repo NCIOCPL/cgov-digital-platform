@@ -732,6 +732,13 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Cancer Susceptibilities'
   field_short_title:
     value: "Targeted Therapy–Immunotherapy Combinations Effective for Advanced Kidney Cancer"
   body:
@@ -1414,6 +1421,25 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Cancer Susceptibilities'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Global Health'
   field_short_title:
     value: 'Studying “Total Diet” and Its Impact on Health, Including Cancer Risk'
   field_author:
