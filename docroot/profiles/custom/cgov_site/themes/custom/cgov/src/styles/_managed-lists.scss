@@ -1,0 +1,165 @@
+/* list styling shim to handle the different permutations of managed list styles */
+.list {
+  &.managed,
+  &.dynamic {
+    li {
+      &.has-media {
+        margin: 2em 0;
+
+        &:first-child {
+          margin-top: 1em;
+        }
+
+        @include break(small) {
+          display: flex;
+          width: 100%;
+        }
+
+        > .container {
+          padding: 0 mq-px2em(15px) 0 0;
+
+          + .container {
+            margin: 0;
+            width: auto;
+            padding: 0 mq-px2em(15px);
+          }
+        }
+
+        .list-item-image {
+          display: none;
+          margin: 0;
+
+          @include break(medium) {
+            display: block;
+            flex: 0 0 auto;
+            width: 25%;
+
+            + .title-and-desc {
+              margin-left: 0;
+            }
+          }
+
+          a {
+            &:not(:empty) {
+              background: $black;
+              display: block;
+            }
+          }
+
+          &:hover {
+            img {
+              opacity: 0.8;
+            }
+          }
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .title-and-desc {
+          @include break(medium) {
+            flex: 1 1 auto;
+            margin-left: 25%;
+            padding-left: 15px;
+          }
+
+          h3 {
+            margin-top: 0;
+
+            a {
+              font-size: inherit;
+
+              &:hover {
+                color: $lcranberry;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .title-and-desc {
+      h3 {
+        a {
+          font-size: inherit;
+        }
+      }
+
+      a {
+        font-size: mq-px2em(20px);
+      }
+    }
+
+    .title-desc {
+      margin-left: 0;
+      padding-left: 0;
+      width: auto;
+
+      h3 {
+        margin-bottom: 0;
+        margin-top: 0;
+
+        a {
+          font-size: inherit;
+        }
+      }
+    }
+
+    /* replaces compact list */
+    .title-only {
+      margin: 1em 0 1em 2em;
+
+      &::before {
+        color: #2e2e2e;
+        content: "\2022";
+        display: inline-block;
+        font-size: 1.1em;
+        position: relative;
+        left: -0.5em;
+        line-height: 0.90909em;
+        margin: 0 -0.2em;
+        top: 0.25em;
+      }
+
+      a {
+        font-family: $montserrat-font-stack;
+        font-size: mq-px2em(18px);
+        text-rendering: optimizeLegibility;
+      }
+    }
+  }
+
+  &.dynamic {
+    h2 {
+      margin-bottom: 34px;
+      margin-top: 0;
+    }
+
+    li {
+      .list-item-image {
+        padding: 0;
+
+        + .title-and-desc {
+          padding-left: 0;
+
+          @include break(medium) {
+            padding-left: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Need to override the specificity of one particular rule from _lists
+@include bp(small) {
+  .large-8 .list.dynamic .container.image + .container.title {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .large-8 .list.dynamic .container.title {
+    padding-left: 0;
+  }
+}

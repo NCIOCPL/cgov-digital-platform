@@ -1,1 +1,1 @@
-import './Homelanding.scss';
+import "./Homelanding.scss";
