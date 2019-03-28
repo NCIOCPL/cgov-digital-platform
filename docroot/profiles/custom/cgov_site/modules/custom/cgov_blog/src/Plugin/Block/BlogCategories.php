@@ -80,15 +80,17 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   private function drawBlogCategories() {
-    $catlist = [];
+    $category_links = [];
+    $path = $this->blogManager->getSeriesPath();
 
-    // ToDO: Add null check.
+    // Get all of the associated categories and path for this series.
     $categories = $this->blogManager->getSeriesCategories();
     foreach ($categories as $cat) {
       $name = $cat->name;
-      $catlist[$name] = strtolower($name);
+      // S$pretty_url = $cat->field_pretty_url->value;.
+      $category_links[$name] = $path . '/' . $name;
     }
-    return $catlist;
+    return $category_links;
   }
 
 }
