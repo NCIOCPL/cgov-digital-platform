@@ -1,0 +1,1 @@
+import './Ckeditor.scss';

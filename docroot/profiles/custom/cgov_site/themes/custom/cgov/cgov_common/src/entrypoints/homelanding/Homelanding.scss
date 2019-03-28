@@ -1,7 +1,7 @@
 @import "~Core/styles/environments/percussion";
 @import "~Core/styles/variables";
 @import "~Core/styles/mixins";
-@import '~Core/styles/breakpoints';
+@import "~Core/styles/breakpoints";
 @import "~Core/styles/placeholders";
 @import "~Styles/sprites/svg-sprite";
 @import "~Core/styles/nci-foundation_mixins";
@@ -10,184 +10,195 @@
 @import "~Core/styles/hero";
 @import "~Core/styles/cards";
 
-
 /********************* BEGIN Home Page Styles ******************************************/
 // overriding default spacing for p tags for the home/landing pages
 // The top margin for the p-tag causes extra spacing above the carousel
 // and has been excluded from this rule (VE, WCMSFEQ-390)
-.ncilandingpage p, .ncihome p:not(.site-name):not(.site-link) {
-	margin: 0.5em 0;
+.ncilandingpage p,
+.ncihome p:not(.site-name):not(.site-link) {
+  margin: 0.5em 0;
 }
 
 // override default top margin for h1 elements on home/landing pages
-.ncilandingpage h1{
-	margin-top: .58em;
+.ncilandingpage h1 {
+  margin-top: 0.58em;
 }
 
 // Creates a flex wrapper for elements with equalheight class to hook on
 #content .flex-columns {
-    display: flex;
-	float: none;
+  display: flex;
+  float: none;
 
-    @include bp('(max-width: 765px)') {
-        &.guide-card {
-            display: inherit;
-        }
+  @include bp("(max-width: 765px)") {
+    &.guide-card {
+      display: inherit;
     }
+  }
 
-    @include bp(small) {
-        &:not(.multimedia) {
-            display: inherit;
-        }
+  @include bp(small) {
+    &:not(.multimedia) {
+      display: inherit;
     }
+  }
 }
-
 
 /* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
-.feature-primary .rawHtml, .feature-primary .rawHtml .featured-text {
-	height: 100%;
+.feature-primary .rawHtml,
+.feature-primary .rawHtml .featured-text {
+  height: 100%;
 }
 .feature-primary {
-	margin-bottom: 1em;
-	
-	a {
-		&, h3 {
-			color: $white;
-		}
-	}
-	h3 {
-		font-weight: normal;
-		color: $white;
-		font-size: 1.375em;
-		line-height: 1.272;
-	}
-	p {
-		margin-bottom: 0;
-		font-size: em-calc(18px);
-		line-height: 1.167em;
-	}
-	.card {
-		background: $dteal;
-	}
-	.featured-text {
-		// featured-text is used for the funding opportunities box
-		padding: 15px;
-		background: $white;
-		color: $color-link !important;
-		// this is needed to overcome padding that was put in cards anchor tag
-		a {
-			padding: 0 !important; //needed to overcome specificity
-			color: $color-link;
-			@extend %card-link-hover;
-		}
-		h3 {
-			color: $header-font-color;
-		}
-		p {
-			margin-top: 1em;
-			margin-bottom: 0.5em;
-		}
-	}
-	@include card-clickable;
+  margin-bottom: 1em;
+
+  a {
+    &,
+    h3 {
+      color: $white;
+    }
+  }
+  h3 {
+    font-weight: normal;
+    color: $white;
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+  p {
+    margin-bottom: 0;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+  .card {
+    background: $dteal;
+  }
+  .featured-text {
+    // featured-text is used for the funding opportunities box
+    padding: 15px;
+    background: $white;
+    color: $color-link !important;
+    // this is needed to overcome padding that was put in cards anchor tag
+    a {
+      padding: 0 !important; //needed to overcome specificity
+      color: $color-link;
+      @extend %card-link-hover;
+    }
+    h3 {
+      color: $header-font-color;
+    }
+    p {
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+  }
+  @include card-clickable;
 }
 
 @include bp(medium-down) {
-	.feature-primary-title {
-		background: #14819b;
-	}
-/* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
-	.row.feature-primary {
-		max-width: 64.5em;
-		background: $dteal;
-	}
-	.feature-primary-title h3 {
-		font-size: 1.375em;
-		color: white;
-		padding: 0.625em 30px;
-		margin: 0em;
-	}
+  .feature-primary-title {
+    background: #14819b;
+  }
+  /* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
+  .row.feature-primary {
+    max-width: 64.5em;
+    background: $dteal;
+  }
+  .feature-primary-title h3 {
+    font-size: 1.375em;
+    color: white;
+    padding: 0.625em 30px;
+    margin: 0em;
+  }
 }
-@include bp(large-up){
-	.feature-primary a:hover h3 {
-		color: white;
-	}
-	.feature-primary-title {
-		display: none;
-	}
+@include bp(large-up) {
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+  .feature-primary-title {
+    display: none;
+  }
 }
 
 .feature-secondary {
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 
-	.card {
-		background: $white;
-	}
-	h3 {
-		font-size: 1.375em;
-		line-height: 1.272;
-	}
-	a {
-		h3 {
-			font-weight: normal;
-			color: $color-link;
-		}
-		&:hover, &:focus {
-			h3 {
-				color: $lcranberry;
-			}
-		}
-		@extend %card-link-hover;
-	}
-	p {
-		margin-bottom: 0;
-		color: $body-font-color;
-		font-size: em-calc(18px);
-		line-height: 1.167em;
-	}
-	@include card-clickable;
+  .card {
+    background: $white;
+  }
+  h3 {
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+  a {
+    h3 {
+      font-weight: normal;
+      color: $color-link;
+    }
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+    @extend %card-link-hover;
+  }
+  p {
+    margin-bottom: 0;
+    color: $body-font-color;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+  @include card-clickable;
 }
 
 @include bp(small) {
-	.feature-primary {
-		margin-bottom: 0;
-	}
-	.feature-primary .card {
-		background: #14819b;
-	}
-	.feature-primary .columns a, .feature-secondary .columns a {
-		padding-bottom: 15px;
-		padding-top: 15px;
-		overflow: auto;
-	}
-	.feature-primary .image-hover, .feature-secondary .image-hover {
-		float: left;
-		width: 30%;
-	}
-	.feature-primary h3, .feature-secondary h3 {
-		margin-top: 0;
-		float: right;
-		width: 70%;
-		font-size: 1.13em;
-		line-height: 1.111em;
-	}
+  .feature-primary {
+    margin-bottom: 0;
+  }
+  .feature-primary .card {
+    background: #14819b;
+  }
+  .feature-primary .columns a,
+  .feature-secondary .columns a {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    overflow: auto;
+  }
+  .feature-primary .image-hover,
+  .feature-secondary .image-hover {
+    float: left;
+    width: 30%;
+  }
+  .feature-primary h3,
+  .feature-secondary h3 {
+    margin-top: 0;
+    float: right;
+    width: 70%;
+    font-size: 1.13em;
+    line-height: 1.111em;
+  }
 
-	.feature-primary a:hover h3,
-	.feature-primary a:hover h3 {
-		color: white;
-	}
-	.feature-primary p, .feature-secondary p, .card-thumbnail img {
-		display: none;
-	}
-	/* the portal pages needed these items to not hit the edge of screen on mobile only */
-	.feature-primary h3, .feature-primary p,
-	.feature-secondary h3, .feature-secondary p,
-	.other-sites-carousel h3,
-	.row.card-thumbnail h4, .row.card-thumbnail h3, .row.card-thumbnail p {
-		padding-left: 15px;
-	}
-	.feature-primary .featured-text {
-		display: none;
-	}
+  .feature-primary a:hover h3,
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+  .feature-primary p,
+  .feature-secondary p,
+  .card-thumbnail img {
+    display: none;
+  }
+  /* the portal pages needed these items to not hit the edge of screen on mobile only */
+  .feature-primary h3,
+  .feature-primary p,
+  .feature-secondary h3,
+  .feature-secondary p,
+  .other-sites-carousel h3,
+  .row.card-thumbnail h4,
+  .row.card-thumbnail h3,
+  .row.card-thumbnail p {
+    padding-left: 15px;
+  }
+  .feature-primary .featured-text {
+    display: none;
+  }
 }
 /* END FEATURE AND SECONDARY PRIMARY CARDS ROW */
 
@@ -195,143 +206,149 @@
 
 @import "~Core/styles/topicFeature";
 
-.blog-feature{
-	a {
-		&:hover, &:focus{
-			h3{
-				color:$lcranberry;
-			}
-		}
-	}
+.blog-feature {
+  a {
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
 }
 /* END SLOTTED AND INLINE FEATURE CARDS */
 
 /* BEGIN GUIDE CARDS ROW */
 .guide-card {
-	margin-bottom: 1em;
-	.card {
-		padding: em-calc(38px 32px);
+  margin-bottom: 1em;
+  .card {
+    padding: em-calc(38px 32px);
 
-		ul {
-			margin-bottom: 0;
-		}
-		h2 {
-			margin-top: 0;
-			font-size: 1.5em;
-		}
-		a {
-			font-size: em-calc(18px);
-			line-height: em-calc(22px, 18px);
-		}
-		li {
-			margin-top: 0.25em;
-			margin-bottom: 0.25em;
-			
-		}
+    ul {
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.5em;
+    }
+    a {
+      font-size: em-calc(18px);
+      line-height: em-calc(22px, 18px);
+    }
+    li {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
 
-        ul.cancer-types li {
-            background: none;
-            float: left;
-            width: 2.5em;
-            padding-right: 0;
-            margin: 0;
+    ul.cancer-types li {
+      background: none;
+      float: left;
+      width: 2.5em;
+      padding-right: 0;
+      margin: 0;
 
-            a { @extend %card-link-hover; }
-            a, span {
-                line-height: 2.046;// line height needs to be 45px
-                font-size: 22px;   // for browsers that don't know 'rem'
-                font-size: 1.375rem; }
-        }
-		// this was done because the columns were becoming too narrow in tablet and had to stack before they reached mobile.
-		 @include bp('(max-width: 765px)') {
-			width: 100%;
-		}
-	}
+      a {
+        @extend %card-link-hover;
+      }
+      a,
+      span {
+        line-height: 2.046; // line height needs to be 45px
+        font-size: 22px; // for browsers that don't know 'rem'
+        font-size: 1.375rem;
+      }
+    }
+    // this was done because the columns were becoming too narrow in tablet and had to stack before they reached mobile.
+    @include bp("(max-width: 765px)") {
+      width: 100%;
+    }
+  }
 }
-	@include bp(small) {
-		.guide-card {
-			margin-bottom: 0;
-			margin-top: 0;
-			padding: 0;
+@include bp(small) {
+  .guide-card {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
 
-			.card {
-				background: #1d5e86;
-				padding-top: 0;
-				padding-bottom: 0;
-				margin: 0;
+    .card {
+      background: #1d5e86;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin: 0;
 
-				h2 {
-					line-height: 1.111em;
-					font-size: 1.125em;
-				}
-			}
-		}
-	}
+      h2 {
+        line-height: 1.111em;
+        font-size: 1.125em;
+      }
+    }
+  }
+}
 
 @import "~Core/styles/arrowLinks";
 
-
 a.learn-more {
-	margin-top: 1em;
-	/* adding padding per #OCECREATIV-783 --sjc */
+  margin-top: 1em;
+  /* adding padding per #OCECREATIV-783 --sjc */
 }
 
 /* Class previously used to target homepage only with blue tint on 'Resources for' */
 .guide-card--home {
-	.card {
-		display: flex;
-		flex-direction: column;
-	}
-	ul {
-		margin-bottom: 0;
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-		justify-content: flex-start;
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+  ul {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
 
-		a.arrow-link-white { /* targets 'Resources For' guide card to match 'About Cancer' li styling */
-		&::before {
-			@include svg-sprite(chevron-circle-lt-blue, $rotate:right);
-			}
-		&:hover::before {
-			@include svg-sprite(chevron-circle-red, $rotate:right);
-			  }
-		}
-		.card__view-more { /* targets last li to separate list from 'learn/view more' links  */
-			
-			padding: 3em 0 .5em; 
-			margin-bottom: 0;
+    a.arrow-link-white {
+      /* targets 'Resources For' guide card to match 'About Cancer' li styling */
+      &::before {
+        @include svg-sprite(chevron-circle-lt-blue, $rotate: right);
+      }
+      &:hover::before {
+        @include svg-sprite(chevron-circle-red, $rotate: right);
+      }
+    }
+    .card__view-more {
+      /* targets last li to separate list from 'learn/view more' links  */
 
-			a.arrow-link-white, a.arrow-link { /* targets last li item and adds dk blue chevron */
-				&::before {
-					@include svg-sprite(chevron-circle-dk-blue, $rotate:right);
-				}
-				&:hover::before {
-					@include svg-sprite(chevron-circle-red, $rotate:right);
-				}
-			}
-			@include break(medium) {
-				padding: 2em 0 0;
-				margin-top: auto; /* align links to bottom */
-			}
-			@include break(tablet-ls) {
-				margin-top: auto;
-			}
-		
-		}
-	}
+      padding: 3em 0 0.5em;
+      margin-bottom: 0;
+
+      a.arrow-link-white,
+      a.arrow-link {
+        /* targets last li item and adds dk blue chevron */
+        &::before {
+          @include svg-sprite(chevron-circle-dk-blue, $rotate: right);
+        }
+        &:hover::before {
+          @include svg-sprite(chevron-circle-red, $rotate: right);
+        }
+      }
+      @include break(medium) {
+        padding: 2em 0 0;
+        margin-top: auto; /* align links to bottom */
+      }
+      @include break(tablet-ls) {
+        margin-top: auto;
+      }
+    }
+  }
 }
 
 /* Upon resizing the browser window up from the mobile (accordion) view, 
 a div with a clearfix class is added that wraps around the ul of each card. 
 A height of 100% is added to force this clearfix div to be same height as 
 parent accordion in all breakpoints. */
-.guide-card--home .clearfix { 
-	flex-grow: 1;
-	height: 100%; /* forces entire clearfix div to be 100%  */
-	ul {
-		height: 100%;/* forces ul to be same height as parent clearfix inserted by jquery-ui accordion  */
-	}
+.guide-card--home .clearfix {
+  flex-grow: 1;
+  height: 100%; /* forces entire clearfix div to be 100%  */
+  ul {
+    height: 100%; /* forces ul to be same height as parent clearfix inserted by jquery-ui accordion  */
+  }
 }
 /* END GUIDE CARDS ROW */
 
@@ -341,237 +358,340 @@ parent accordion in all breakpoints. */
 //targets multimedia row when there is no thumbnail content
 .nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child, 
 .nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
-{margin-bottom:0;}
+ {
+  margin-bottom: 0;
+}
 
 .multimedia-slot {
-	background: #099;
-	margin-bottom: 1em;
-	padding: 1em 0;
+  background: #099;
+  margin-bottom: 1em;
+  padding: 1em 0;
 
-	a {
-			&:hover, &:focus {
-				h3 {
-				color: $lcranberry;
-				}
-			}
-	}
-	.feature-card {
-		background: $white;
-		padding-bottom: 1em;
+  a {
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
+  .feature-card {
+    background: $white;
+    padding-bottom: 1em;
 
-		h3, p, ul { padding: 0 15px; }
-		h3 {
-			font-size: 1.375em;
-			font-weight: normal;
-			line-height: 1.272;
-			color: $color-link;
-		}
+    h3,
+    p,
+    ul {
+      padding: 0 15px;
+    }
+    h3 {
+      font-size: 1.375em;
+      font-weight: normal;
+      line-height: 1.272;
+      color: $color-link;
+    }
 
-
-		@extend %card-link-hover;
-		}
-	
+    @extend %card-link-hover;
+  }
 }
 @include bp(small) {
-	.multimedia-slot {
-		p,ul {
-			display:none;
-		}
-		.equalheight {
-			.slot-item {
-				margin-right:15px;
-
-			}
-			&:last-child .slot-item{
-				margin-right:0;
-			}
-		}
-	}
+  .multimedia-slot {
+    p,
+    ul {
+      display: none;
+    }
+    .equalheight {
+      .slot-item {
+        margin-right: 15px;
+      }
+      &:last-child .slot-item {
+        margin-right: 0;
+      }
+    }
+  }
 }
 @include bp(medium-down) {
-	.multimedia-slot {
-		padding: 1em;
-	}
+  .multimedia-slot {
+    padding: 1em;
+  }
 }
 
-@include bp(large-up){
-	/* equal height cards for desktop, visually push a div to the bottom of it's container */
-	.equalheight {
-		overflow: hidden;
-	}
-	.equalheight .push-to-bottom-desktop {
-		height: 100%;
-	}
+@include bp(large-up) {
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+  }
 
-	// Pushing the last element to the bottom of the card using margin-top: auto in a flex container
-	// had a bug in Firefox only when overflow was hidden. This fixes it.
-	.guide-card--home {
-		.equalheight {
-			overflow: inherit;
-		}
-	}
+  // Pushing the last element to the bottom of the card using margin-top: auto in a flex container
+  // had a bug in Firefox only when overflow was hidden. This fixes it.
+  .guide-card--home {
+    .equalheight {
+      overflow: inherit;
+    }
+  }
 }
 
 .multimedia {
-	.card {
-		background: none;
-		opacity: 1;
-		padding-left: 0;
+  .card {
+    background: none;
+    opacity: 1;
+    padding-left: 0;
 
-		a {
-			color: $body-font-color;
-		}
-		&:hover {
-			h3 { color: $lcranberry; }
-		}
-	}
+    a {
+      color: $body-font-color;
+    }
+    &:hover {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
 
-	// The last of the feature guide cards needs to right align to the edge of the container, mirroring the
-	// left side.
-	.card:last-of-type {
-		padding-right: 0;
-	}
-	
-	h3 a {
-		@extend %card-link-hover;
-	}
+  // The last of the feature guide cards needs to right align to the edge of the container, mirroring the
+  // left side.
+  .card:last-of-type {
+    padding-right: 0;
+  }
+
+  h3 a {
+    @extend %card-link-hover;
+  }
 }
 
-@include bp(medium-down){
-	/* Multimedia row does need padding in tablet */
-	.multimedia h3,
-	.multimedia p {
-		 padding-left: 15px;
-	}
+@include bp(medium-down) {
+  /* Multimedia row does need padding in tablet */
+  .multimedia h3,
+  .multimedia p {
+    padding-left: 15px;
+  }
 }
 
 .multimedia-feature-card {
-	background: $white;
-	padding-bottom: 1em;
-	position: relative;
+  background: $white;
+  padding-bottom: 1em;
+  position: relative;
 
-	a {
-		color: $body-font-color;
+  a {
+    color: $body-font-color;
 
-		&:before { @include call-to-action-corner(); }
-	}
-	h3 {
-		font-size: 1.375em;
-		font-weight: normal;
-		line-height: 1.272;
-		color: $color-link;
-	}
-	h3, p, ul { padding: 0 15px; }
+    &:before {
+      @include call-to-action-corner();
+    }
+  }
+  h3 {
+    font-size: 1.375em;
+    font-weight: normal;
+    line-height: 1.272;
+    color: $color-link;
+  }
+  h3,
+  p,
+  ul {
+    padding: 0 15px;
+  }
 
-	&.cgvInfographic.non-playable {
-		a:before { content: "Infographic";
-			html[lang="es"] & { content: "Infograf\00ed a" }
-		}
-	}
-	&.gloVideo.non-playable {
-		a:before { content: "Video";
-			html[lang="es"] & { content: "Video" }
-		}
-	}
+  &.cgvInfographic.non-playable {
+    a:before {
+      content: "Infographic";
+      html[lang="es"] & {
+        content: "Infograf\00ed a";
+      }
+    }
+  }
+  &.gloVideo.non-playable {
+    a:before {
+      content: "Video";
+      html[lang="es"] & {
+        content: "Video";
+      }
+    }
+  }
 
-	&.gloVideoCarousel.non-playable {
-		a:before { content: "Video Playlist";
-			html[lang="es"] & {
-				content: "Lista de reproducci\00f3 n de videos" }
-		}
-	}
-	&.non-playable {
-		a.mm-additional-info:before { content: none;
-			html[lang="es"] & {
-				content: none; }
-		}
-	}
+  &.gloVideoCarousel.non-playable {
+    a:before {
+      content: "Video Playlist";
+      html[lang="es"] & {
+        content: "Lista de reproducci\00f3 n de videos";
+      }
+    }
+  }
+  &.non-playable {
+    a.mm-additional-info:before {
+      content: none;
+      html[lang="es"] & {
+        content: none;
+      }
+    }
+  }
 }
 @include bp(small) {
-	.multimedia-feature-card h3, .multimedia-slot .feature-card h3 {
-		font-size: 1em;
-		line-height: 1.125em;
-		word-wrap: break-word;
-	}
+  .multimedia-feature-card h3,
+  .multimedia-slot .feature-card h3 {
+    font-size: 1em;
+    line-height: 1.125em;
+    word-wrap: break-word;
+  }
 }
 // these rules are to fix the autoheight problems in multimedia row
 %autoheight-fix {
-	height: 100%;
+  height: 100%;
 }
-.multimedia-feature-card, .multimedia .feature-card {
-	//@extend %autoheight-fix;
-	a {
-		display: block;
-		//height: 100%;
-	}
+.multimedia-feature-card,
+.multimedia .feature-card {
+  //@extend %autoheight-fix;
+  a {
+    display: block;
+    //height: 100%;
+  }
 }
 //.row:not(.flex-columns) .card > .slot-item {
 .card > .slot-item {
-	@extend %autoheight-fix;
+  @extend %autoheight-fix;
 }
 .multimedia-slot .equalheight .slot-item {
-	background-color:$white;
+  background-color: $white;
 }
 /* END MULIMEDIA ROW */
 
 /* BEGIN Director's Row */
 
 .directors-row {
-	h3 {
-		color: $white;
-	}
+  h3 {
+    color: $white;
+  }
 }
 .infographic {
-	position: relative;
-	/* allows for appearance of equal height cards on home page */
-	background: $white;
-	figcaption {
-		padding: 0.5em 1em;
-	}
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+  figcaption {
+    padding: 0.5em 1em;
+  }
 }
 .infographic-enlarge {
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: $white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
 
-	a {
-		position: relative;
-		color: $white;
-		padding: 1em 2em 1em 1em;
-		display: block;
-		/* TODO: add this image to the sprite */
-		background-color: #403f3f;
-		@extend %card-link-hover;
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
 
-		&::before {
-			@include svg-sprite(chevron-white);
-			content: "";
-			position: absolute;
-			top: 50%;
-			right: .6em;
-			transform: translateY(-50%) rotate(90deg);
-		}
-	}
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0.6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
 }
 .home-director-stories {
-	background: $white;
-	padding: 0.5em 1em 0.2em;
-	margin-top: -10px;
+  background: $white;
+  padding: 0.5em 1em 0.2em;
+  margin-top: -10px;
 }
-@include bp(medium-down){
-	.home-director-stories,
-	.infographic {
-		background: none
-	}
+@include bp(medium-down) {
+  .home-director-stories,
+  .infographic {
+    background: none;
+  }
 }
 /* END Director's Row */
 // adding a position relative to feature card images so exit disclaimer notification icon can be positioned to its bottom right
 .feature-card {
-	.image-hover {
-		position: relative;
-	}
+  .image-hover {
+    position: relative;
+  }
+}
+
+/* News & events Item list */
+.press-releases-list {
+  .list-item {
+    margin: 2.5em 0;
+
+    &:first-child {
+      margin-top: 1.875em;
+    }
+  }
+
+  .container {
+    .body {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+.list {
+  // News & Events press releases listing
+  &.dynamic {
+    li {
+      &.has-media {
+        .list-item-image {
+          @include break(medium) {
+            padding-right: 0;
+
+            + .title-and-desc {
+              padding-left: 20px;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.managed {
+    @extend .row;
+    max-width: 62.5em;
+    margin: 0 auto;
+
+    @include break(xlarge) {
+      max-width: 1200px;
+    }
+
+    h2 {
+      margin-left: 15px;
+    }
+
+    ul {
+      @extend .card-thumbnail;
+      padding: 1em 0;
+
+      li {
+        &.has-media {
+          > .container {
+            padding: 0 mq-px2em(15px);
+          }
+
+          .list-item-image {
+            @include break(medium) {
+              width: 16.7%;
+            }
+          }
+
+          .title-and-desc {
+            margin-left: 0;
+            padding-left: 15px;
+
+            @include break(medium) {
+              margin-left: 16.7%;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 /********************* END Home Page Styles ******************************************/
-

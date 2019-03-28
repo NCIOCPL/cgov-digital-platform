@@ -1,0 +1,94 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "News & Events"
+  title__ES:
+      value: "Nuestro instituto"
+  field_page_description:
+    value: "The latest cancer news from the U.S. government's principal agency for cancer research, plus resources designed for science writers and reporters."
+  field_page_description__ES:
+    value: "Las últimas noticias de la principal dependencia del gobierno de los Estados Unidos dedicada a la investigación del cáncer, así como recursos para reporteros y escritores científicos."
+  field_short_title:
+    value: "News & Events"
+  field_short_title__ES:
+    value: "Noticias"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Featured Content"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ## Cards here
+    ######## End Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_column_two"
+      field_main_contents:
+        - entity: 'paragraph'
+          type: "cgov_dynamic_list"
+          field_list_title:
+            value: "Recent Press Releases"
+          field_source_view:
+            - target_id: press_releases
+              display_id: pr_home_block
+              ### the options are serialized. So set this through the UI and find what it put in the DB.
+              data: |
+                a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
