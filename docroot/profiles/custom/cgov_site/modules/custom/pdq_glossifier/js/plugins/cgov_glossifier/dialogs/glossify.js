@@ -204,7 +204,8 @@ function resetDialogPositionToCenter(dialog){
  * than as a translation, the user has to select spanish from
  * a dropdown. However, this has no immediate effect on anything. Drupal
  * does not acknowledge this until the first save when an entity is being created
- * from the fields. First, we need to check drupalSettings.path.currentPath and see if it starts
+ * from the fields.
+ * Because of this, first we need to check drupalSettings.path.currentPath and see if it starts
  * with "node/add" to determine if a new node is being created.
  * If a new node is being created we need to use javascript
  * to sniff the current state of the dropdown.
