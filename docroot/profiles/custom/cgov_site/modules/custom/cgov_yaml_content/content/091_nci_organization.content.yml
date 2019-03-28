@@ -95,15 +95,17 @@
     #  type: "cgov_two_item_feature_row"
     #  field_two_item_row_cards:
     ########    End Card Row    ###############
-    ######## Begin Thumbnail Row ##############
+    ######## Begin Thumbnail List ##############
     - entity: 'paragraph'
-      type: "cgov_thumbnail_row"
-      field_container_heading:
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_title:
         value: "NCI Office of the Director"
-      field_unlimited_row_cards:
+      field_list_items:
         - entity: 'paragraph'
-          type: "cgov_card_external"
-          field_override_card_title:
+          type: "cgov_external_link"
+          field_override_title:
             - value: "Center for Biomedical Informatics and Information Technology (CBIIT)"
           field_override_list_description:
             - value: "Collaborates across NCI to plan, provide, and coordinate technology, standards, and scientific computing in support of the NCI mission to speed discovery, facilitate open science, and progress towards precision treatment in cancer care and a learning healthcare system."
@@ -115,11 +117,11 @@
                   - 'media'
                   - bundle: 'cgov_image'
                     name: 'CBIIT'
-          field_featured_url:
+          field_external_link:
             - uri: 'http://cbiit.nci.nih.gov/'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_featured_item:
+          type: "cgov_internal_link"
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'
@@ -127,7 +129,7 @@
                   - 'node'
                   - type: 'cgov_mini_landing'
                     title: 'Coordinating Center for Clinical Trials (CCCT)'
-    ######## End Thumbnail Row ##############
+    ######## End Thumbnail List ##############
   ### Spanish Contents
   field_landing_contents__ES:
     ######## Begin intro content ###########

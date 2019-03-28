@@ -159,10 +159,12 @@
     ########    End Card Row    ###############
     ######## Begin Thumbnail Row ##############
     - entity: 'paragraph'
-      type: "cgov_thumbnail_row"
-      field_container_heading:
+      type: "cgov_list"
+      field_list_title:
         value: "Dogs"
-      field_unlimited_row_cards:
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_items:
         # - entity: 'paragraph'
         #   type: "cgov_card_external"
         #   field_override_card_title:
@@ -180,8 +182,8 @@
         #   field_featured_url:
         #     - uri: 'http://cbiit.nci.nih.gov/'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_featured_item:
+          type: "cgov_internal_link"
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'
@@ -190,8 +192,8 @@
                   - type: 'cgov_article'
                     title: 'Frisco - The Roo Roo Kid'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_featured_item:
+          type: "cgov_internal_link"
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'

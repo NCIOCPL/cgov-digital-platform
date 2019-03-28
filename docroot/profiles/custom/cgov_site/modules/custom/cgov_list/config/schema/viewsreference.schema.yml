@@ -1,0 +1,17 @@
+############## HACK! HACK! HACK! ############
+## Views Reference field does not supply a schema, and even then,
+## it stores the values in such a way as to not allow for validation.
+## So we will ignore their configuration for schema validation.
+
+field.storage_settings.viewsreference:
+  type: ignore
+
+field.field_settings.viewsreference:
+  type: ignore
+  label: 'Views reference field settings'
+
+field.formatter.settings.viewsreference_formatter:
+  type: mapping
+  mapping:
+    plugin_types:
+      type: ignore
