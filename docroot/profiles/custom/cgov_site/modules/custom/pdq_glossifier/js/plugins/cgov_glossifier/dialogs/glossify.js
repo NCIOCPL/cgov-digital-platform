@@ -81,7 +81,7 @@ function requestGlossification(dialog) {
   // This gets us the html content of the editor that called the dialog.
   const rawBody = dialog.getParentEditor().getData();
   const preparedBody = prepareEditorBodyForGlossificationRequest(rawBody);
-  const language = dialog.getParentEditor().langCode;
+  const language = getContentLanguage();
 
   // We have to nest our request in a preliminary request so that we can first
   // retrieve the necessary csrf token to make an authenticated request to the api.
@@ -196,6 +196,45 @@ function resetDialogPositionToCenter(dialog){
 // #########################################
 // ######### Pre-Request Helpers ###########
 // #########################################
+
+/**
+ * There are a few gotchas to determining the correct language to
+ * specify in requests to the glossifier service.
+ * When a new piece of spanish content is created directly, rather
+ * than as a translation, the user has to select spanish from
+ * a dropdown. However, this has no immediate effect on anything. Drupal
+ * does not acknowledge this until the first save when an entity is being created
+ * from the fields. First, we need to check drupalSettings.path.currentPath and see if it starts
+ * with "node/add" to determine if a new node is being created.
+ * If a new node is being created we need to use javascript
+ * to sniff the current state of the dropdown.
+ *
+ * If the user is not creating a new node, we can use the drupalSetting.path.currentLanguage
+ * setting instead.
+ *
+ * However, it should be noted, a second edge case presents itself when adding a translation. It is possible
+ * to add a translation using a route that does not include /espanol, which would
+ * also lead to drupalSetting.path.currentLanguage showing 'en' for a spanish translation. We aren't
+ * handling this at the moment. But it might be possible by sniffing the path again, this time to determine
+ * if it uses "/translations/add/en/es" (until drupal changes the API of course.)
+ *
+ * @return {string}
+ */
+function getContentLanguage() {
+  const path = window.drupalSettings.path;
+  const currentPath = path.currentPath;
+  const testForAddNewContentPagePath = /^node\/add\/.+/i;
+  const isAddNewContentPage = testForAddNewContentPagePath.test(currentPath);
+  let language;
+  if(isAddNewContentPage) {
+    const languageSelectElement = document.getElementById('edit-langcode-0-value');
+    language = languageSelectElement.value;
+  }
+  else {
+    language = path.currentLanguage;
+  }
+  return language;
+}
 
 /**
  * Prepare the data for sending to glossifier service.
