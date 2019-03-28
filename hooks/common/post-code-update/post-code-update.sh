@@ -35,4 +35,9 @@ blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt cgov:locales:translate
 blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
 
+# Copy certificate for SAML signing.
+mkdir -p "$repo_root/simplesamlphp/cert"
+cp "$HOME/saml-certificate/saml.crt" "$repo_root/simplesamlphp/cert"
+cp "$HOME/saml-certificate/saml.pem" "$repo_root/simplesamlphp/cert"
+
 set +v
