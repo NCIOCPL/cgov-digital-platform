@@ -16,9 +16,7 @@
     </div>
     <div id="cgvBody">
       <p class="blog-post-publishing-info">
-        {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
-        {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
-        {{ blogMacros.getAuthor(content) }}
+        {{ blogMacros.getByline(content) }}
       </p>
       {% if content.field_image_article[0] %}
       <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
