@@ -90,7 +90,7 @@ if (!getenv('AH_SITE_ENVIRONMENT')) {
 }
 elseif (getenv('AH_SITE_ENVIRONMENT')) {
   // Set  ACE ad ACSF sites based on hosting database and site name.
-  $config['certdir'] = "/mnt/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/simplesamlphp/cert/";
+  $config['certdir'] = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/saml-certificate/";
   $config['metadatadir'] = "/mnt/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/simplesamlphp/metadata";
   $config['baseurlpath'] = 'simplesaml/';
   // Setup basic logging.
