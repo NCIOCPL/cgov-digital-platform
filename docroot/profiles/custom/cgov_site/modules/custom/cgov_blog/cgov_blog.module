@@ -5,8 +5,8 @@
  * Contains cgov_blog.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_form_alter().
@@ -46,10 +46,16 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 }
 
 /**
- * Implements hook_entity_presave().
+ * Implements hook_views_pre_view().
  */
-function cgov_blog_entity_presave(EntityInterface $entity) {
-  // TODO: validate selected Blog Topics before saving.
+function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  // If this is a list in a Blog Series, use 'items per page' field.
+  if ($display_id == 'block_bp_list' || $display_id == 'block_bp_list_th') {
+    $node = Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
+    if ($node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
+      $view->setItemsPerPage($node->field_num_display_posts->value);
+    }
+  }
 }
 
 /**
@@ -58,9 +64,8 @@ function cgov_blog_entity_presave(EntityInterface $entity) {
 function get_id_pairs(array $form) {
 
   // Get the list of topics (categories) from the vocabulary ID.
-  // TODO: refactor / clean up.
   $vid = 'cgov_blog_topics';
-  $topics = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadTree($vid);
+  $topics = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
 
   // Return Blog Topic IDs and associated node IDs as an array.
   $id_pairs = [];
@@ -78,7 +83,7 @@ function get_id_pairs(array $form) {
 function is_selectable(array $form) {
   // Check for the draft state.
   $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
-  $selectable = ($curr_state == 'draft') ? TRUE : FALSE;
+  $selectable = ($curr_state == 'draft' || $curr_state == 'review') ? TRUE : FALSE;
 
   // Check for user role.
   $curr_roles = \Drupal::currentUser()->getRoles();
