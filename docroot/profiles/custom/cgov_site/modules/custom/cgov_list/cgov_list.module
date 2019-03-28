@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_list.module.
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Set allowed values for the list item styling.
+ *
+ * @param \Drupal\field\Entity\FieldStorageConfig $definition
+ *   The field definition.
+ * @param \Drupal\Core\Entity\ContentEntityInterface|null $entity
+ *   The entity being created if applicable.
+ * @param bool $cacheable
+ *   Boolean indicating if the results are cacheable.
+ *
+ * @return array
+ *   An array of possible key and value options.
+ *
+ * @see options_allowed_values()
+ */
+function cgov_list_allowed_values_function(
+  FieldStorageConfig $definition,
+  ContentEntityInterface $entity = NULL,
+  $cacheable
+) {
+  // This initially queried the view modes for paragraphs; however,
+  // managed lists should only use a subset of the list item display
+  // modes. So we are keeping it like this if the future requires it,
+  // also it is much easier to change post go-live.
+  $options = [
+    'list_item_title' => 'Compact',
+    'list_item_title_desc' => 'Title and Description',
+    'list_item_title_desc_image' => 'Title, Description, and Image',
+  ];
+
+  return $options;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * This replaces the field_list_items build entry with one that uses
+ * the field_list_item_style setting. This allows editors to select
+ * which style of rendering as content.
+ *
+ * This may be better as a field formatter.
+ */
+function cgov_list_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->bundle() != 'cgov_list') {
+    return;
+  }
+
+  $list_item_mode = $entity->field_list_item_style->value;
+
+  $build['field_list_items'] = $build['field_list_items']['#items']->view([
+    'type' => 'entity_reference_revisions_entity_view',
+    'settings' => [
+      'view_mode' => $list_item_mode,
+    ],
+  ]);
+}
