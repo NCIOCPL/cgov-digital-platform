@@ -3,6 +3,7 @@
 set -ev
 
 export PATH=${COMPOSER_BIN}:$PATH
+export PHANTOMJS_CDNURL=https://cnpmjs.org/mirrors/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2
 
 blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
 
