@@ -185,17 +185,19 @@
 
     ######## MULTIMEDIA HERE TBD ##############
 
-    ######## Begin Thumbnail Row ##############
+    ######## Begin Thumbnail List ##############
     - entity: 'paragraph'
-      type: "cgov_thumbnail_row"
-      field_unlimited_row_cards:
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_items:
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_override_card_title:
+          type: "cgov_internal_link"
+          field_override_title:
             - value: 'Overridden Title'
           field_override_list_description:
             - value: 'Overridden description'
-          field_featured_item:
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'
@@ -204,8 +206,8 @@
                   - type: 'cgov_article'
                     title: 'Feelings and Cancer'
         - entity: 'paragraph'
-          type: "cgov_card_external"
-          field_override_card_title:
+          type: "cgov_external_link"
+          field_override_title:
             - value: 'External Card Title'
           field_override_list_description:
             - value: 'External Card Description'
@@ -217,11 +219,11 @@
                   - 'media'
                   - bundle: 'cgov_image'
                     name: 'Find a Clinical Trial'
-          field_featured_url:
+          field_external_link:
             - uri: 'https://www.google.com'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_featured_item:
+          type: "cgov_internal_link"
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'
@@ -230,12 +232,12 @@
                   - type: 'cgov_article'
                     title: 'Feelings and Cancer'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_override_card_title:
+          type: "cgov_internal_link"
+          field_override_title:
             - value: 'Overridden Title'
           field_override_list_description:
             - value: 'Overridden description'
-          field_featured_item:
+          field_internal_link:
             - target_type: 'node'
               '#process':
                 callback: 'reference'
@@ -243,7 +245,7 @@
                   - 'node'
                   - type: 'cgov_article'
                     title: 'Feelings and Cancer'
-    ######## End Thumbnail Row ##############
+    ######## End Thumbnail List ##############
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Begin Feature Row ###########
