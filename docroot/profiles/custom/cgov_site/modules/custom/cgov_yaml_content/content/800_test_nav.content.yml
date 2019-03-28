@@ -1,0 +1,73 @@
+## Sections for test content
+
+## Test
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Test Content"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "test"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## Mini Landing Test
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Mini Landing Test"
+  field_pretty_url:
+    value: "mini-landing"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
+
+## Spanish Test
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Test Content - ES"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "test-es"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Español Home"
+
+## Mini Landing Test
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Mini Landing Test - ES"
+  field_pretty_url:
+    value: "mini-landing-es"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test-es"

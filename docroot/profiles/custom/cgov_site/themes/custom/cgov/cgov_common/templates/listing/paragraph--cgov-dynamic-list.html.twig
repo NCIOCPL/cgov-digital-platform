@@ -1,0 +1,19 @@
+{#
+  For anyone wondering why this is here and not just a rendering of the
+  field_source_view, views currently do not allow translations of their
+  things like the view more link. Title can be translated in the view
+  configuration, but it is a pain to manage. So if we have to handle
+  other fields, we might as well handle the title as well.
+#}
+
+{# Setup the classes for the div wrapper #}
+{% set style = paragraph.field_list_item_style.value %}
+{% set attr = create_attribute() %}
+{% set attr = attr.addClass('dynamic list') %}
+
+<!-- List Style: {{- style -}} -->
+<div{{ attr }}>
+  {{ content.field_list_title }}
+  {{ content.field_source_view }}
+  {# The view more link is TBD for now as the news-events page has a custom content block instead of the view more link #}
+</div>

@@ -62,17 +62,17 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
       case 'blog-post-path':
 
         if (!empty($data['node'])) {
-          /* @var \Drupal\node\NodeInterface $node */
           $node = $data['node'];
           if (!empty($node->get('field_blog_series')->first())) {
             try {
               $nid = $node->get('field_blog_series')->first()->getValue()['target_id'];
               $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
-              $replacements[$original] = $alias;
+              $year = substr($node->field_date_posted->value, 0, 4);
+              $replacements[$original] = $alias . '/' . $year;
             }
             catch (Exception $e) {
               \Drupal::logger('cgov_site_section')
-                ->notice('Could not retrieve computed path for tid: ' . $nid);
+                ->notice('Could not retrieve computed path for blog series nid: ' . $nid);
             }
           }
           break;

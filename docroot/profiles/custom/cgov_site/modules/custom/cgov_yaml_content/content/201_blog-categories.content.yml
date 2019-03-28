@@ -1,6 +1,8 @@
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
   name: "Biology"
+  description: 
+    value: 'Cancer biology research news, with context from experts at NCI and elsewhere. Topics include cancer metastasis, the tumor microenvironment, and new targets for cancer therapies.'
   field_pretty_url:
     value: "biology"
   field_owner_blog:
@@ -14,7 +16,57 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
+  name: "Cancer Risk"
+  description: 
+    value: 'News about research on factors that affect cancer risk, including inherited genetic mutations, smoking/tobacco use, obesity, and infectious agents like HPV.'
+  field_pretty_url:
+    value: "cancer-risk"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Childhood Cancer"
+  description: 
+    value: 'News about childhood cancer research, with context from leading experts. Topics include new treatments, issues facing childhood cancer survivors, and findings on the biology of cancer in children.'
+  field_pretty_url:
+    value: "childhood-cancer"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Clinical Trial Results"
+  description: 
+    value: 'Reports on findings from cancer clinical trials, with commentary from leading researchers on how the trial results will affect patient care.'
+  field_pretty_url:
+    value: "clinical-trial-results"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
   name: "Disparities"
+  description: 
+    value: 'News and commentaries about cancer-related racial/ethnic and socioeconomic disparities. Includes stories on factors that influence disparities and efforts to address them.'
   field_pretty_url:
     value: "disparities"
   field_owner_blog:
@@ -28,7 +80,25 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
+  name: "FDA Approvals"
+  description: 
+    value: 'News on recent approvals of cancer therapies by the Food and Drug Administration. Includes expert comments on how the approval will influence patient care and future research.'
+  field_pretty_url:
+    value: "fda-approvals"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
   name: "Global Health"
+  description: 
+    value: 'News and expert commentaries about the impact of cancer around the world and efforts to improve global health, including new initiatives and research findings.'
   field_pretty_url:
     value: "global-health"
   field_owner_blog:
@@ -42,7 +112,89 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
+  name: "Leadership & Expert Views"
+  description: 
+    value: 'Commentaries from scientific leaders at NCI and other institutions about cancer research topics, programs, and initiatives.'
+  field_pretty_url:
+    value: "leadership-expert-views"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Prevention"
+  description: 
+    value: 'Cancer prevention news, with comments from leading scientists. Topics include preventive interventions for those at increased risk of cancer, protective behaviors, and more.'
+  field_pretty_url:
+    value: "prevention"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Prognosis"
+  description: 
+    value: 'Reports on cancer prognosis-related research, including articles on doctor–patient communication and approaches to determine patient prognosis more accurately, among others.'
+  field_pretty_url:
+    value: "prognosis"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Screening & Early Detection"
+  description: 
+    value: 'News about research on cancer screening and early detection. Includes stories on the impact of screening, new technologies, and approaches to improving the safety and efficacy of screening.'
+  field_pretty_url:
+    value: "screening-early-detection"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Survivorship & Supportive Care"
+  description: 
+    value: 'News on research that affect cancer patients and survivors. Topics include managing treatment side effects, fertility preservation, and cancer’s long-term effects.'
+  field_pretty_url:
+    value: "survivorship-supportive-care"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
   name: "Technology"
+  description: 
+    value: 'News and commentaries on technology used to conduct cancer research, deliver cancer treatment, improve patient care, and screen for cancer, as well as other topics.'
   field_pretty_url:
     value: "technology"
   field_owner_blog:
@@ -56,7 +208,23 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
-  name: "Conversations in Immuno-Oncology"
+  name: "Treatment"
+  description: 
+    value: 'Cancer treatment related news, with context from leading experts. Includes articles on new therapies, treatment side effects, and important trends in treatment-related research.'
+  field_pretty_url:
+    value: "treatment"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "RAS Conversations: Immuno-Oncology"
   field_pretty_url:
     value: "immuno-oncology"
   field_owner_blog:
@@ -70,9 +238,37 @@
 
 - entity: "taxonomy_term"
   vid: "cgov_blog_topics"
-  name: "Conversations with Elizabeth Jaffee"
+  name: "RAS Conversations: Elizabeth Jaffee"
   field_pretty_url:
     value: "elizabeth-jaffee"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "KRAS"
+  field_pretty_url:
+    value: "kras"
+  field_owner_blog:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'RAS Dialogue Blog'
+
+- entity: "taxonomy_term"
+  vid: "cgov_blog_topics"
+  name: "Cancer Susceptibilities"
+  field_pretty_url:
+    value: "cancer-susceptibilities"
   field_owner_blog:
     - target_type: 'node'
       '#process':
