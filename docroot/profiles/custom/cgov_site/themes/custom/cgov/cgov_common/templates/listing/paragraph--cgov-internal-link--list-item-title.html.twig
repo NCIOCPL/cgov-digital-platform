@@ -3,18 +3,15 @@
 {% if content.field_internal_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title|field_value %}
   {% else %}
-    {% set title = content.field_internal_link[0]["#node"].title.value %}
+    {% set title = content.field_internal_link[0]["#node"].field_short_title.value %}
   {% endif %}
 
   {# ###### Setup the URL ###### #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {# ###### Setup View Mode ######## #}
-  {% set view_mode = _context.view_mode %}
-
-  {{ listItemMacros.listItem(title, null, null, null, url, view_mode) }}
+  {{ listItemMacros.list_item_title(title, url, false) }}
 
 {% endif %}

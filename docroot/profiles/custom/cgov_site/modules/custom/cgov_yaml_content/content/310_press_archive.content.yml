@@ -1,0 +1,219 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "2019 Press Releases"
+  title__ES:
+    value: "Comunicados de prensa de 2019"
+  field_short_title:
+    value: "2019 Press Releases"
+  field_short_title__ES:
+    value: "Comunicados de prensa de 2019"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/press-releases/2019'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/comunicados-de-prensa/2019'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="slot-item first-SI">
+              <p>2019 | <a href="/news-events/press-releases/2018" title="">2018</a> | <a href="/news-events/press-releases/2017" title="">2017</a> | <a href="/news-events/press-releases/2016" title="">2016</a> | <a href="/news-events/press-releases/2015" title="">2015</a> | <a href="/news-events/press-releases/2014" title="">2014</a></p>
+              <a name="GovDelivery+Call+out+full+width"></a>
+              <div class="callout-box-full">
+                <h3>Get Email Updates From NCI</h3>
+                <a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new" onclick="s.linkTrackVars='prop4,prop5'; s.prop4='GovDelivery'; s.prop5='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','GovDelivery')">Get email updates from NCI on cancer health information, news, and other topics</a>
+              </div>
+            </div>
+    ######## End intro content ###########
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:4:"2019";s:5:"limit";s:2:"20";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+  ### Spanish Contents
+  field_landing_contents__ES:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="slot-item first-SI">
+              <p>2019 | <a href="/espanol/noticias/comunicados-de-prensa/2018" title="">2018</a> | <a href="/espanol/noticias/comunicados-de-prensa/2017" title="">2017</a> | <a href="/espanol/noticias/comunicados-de-prensa/2016" title="">2016</a> | <a href="/espanol/noticias/comunicados-de-prensa/2015" title="">2015</a> | <a href="/espanol/noticias/comunicados-de-prensa/2014" title="">2014</a></p>
+              <div class="callout-box-full">
+                <h3>Suscríbase al correo electrónico de actualizaciones del NCI</h3>
+                <a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new">Reciba actualizaciones por correo electrónico del NCI con información médica sobre el cáncer, noticias y otros temas</a>.
+              </div>
+            </div>
+  ######## End intro content ###########
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:4:"2019";s:5:"limit";s:2:"20";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "2018 Press Releases"
+  title__ES:
+    value: "Comunicados de prensa de 2018"
+  field_short_title:
+    value: "2018 Press Releases"
+  field_short_title__ES:
+    value: "Comunicados de prensa de 2018"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/press-releases/2018'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/comunicados-de-prensa/2018'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="slot-item first-SI">
+              <p><a href="/news-events/press-releases/2019" title="">2019</a> | 2018 | <a href="/news-events/press-releases/2017" title="">2017</a> | <a href="/news-events/press-releases/2016" title="">2016</a> | <a href="/news-events/press-releases/2015" title="">2015</a> | <a href="/news-events/press-releases/2014" title="">2014</a></p>
+              <a name="GovDelivery+Call+out+full+width"></a>
+              <div class="callout-box-full">
+                <h3>Get Email Updates From NCI</h3>
+                <a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new" onclick="s.linkTrackVars='prop4,prop5'; s.prop4='GovDelivery'; s.prop5='www.cancer.gov' + location.pathname.toLowerCase(); s.tl(this,'o','GovDelivery')">Get email updates from NCI on cancer health information, news, and other topics</a>
+              </div>
+            </div>
+    ######## End intro content ###########
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:4:"2018";s:5:"limit";s:2:"20";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+  ### Spanish Contents
+  field_landing_contents__ES:
+    ######## Begin intro content ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="slot-item first-SI">
+              <p><a href="/espanol/noticias/comunicados-de-prensa/2019" title="">2019</a> | 2018 | <a href="/espanol/noticias/comunicados-de-prensa/2017" title="">2017</a> | <a href="/espanol/noticias/comunicados-de-prensa/2016" title="">2016</a> | <a href="/espanol/noticias/comunicados-de-prensa/2015" title="">2015</a> | <a href="/espanol/noticias/comunicados-de-prensa/2014" title="">2014</a></p>
+              <div class="callout-box-full">
+                <h3>Suscríbase al correo electrónico de actualizaciones del NCI</h3>
+                <a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new">Reciba actualizaciones por correo electrónico del NCI con información médica sobre el cáncer, noticias y otros temas</a>.
+              </div>
+            </div>
+  ######## End intro content ###########
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:4:"2018";s:5:"limit";s:2:"20";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "TEST PAGING Press Releases"
+  title__ES:
+    value: "TEST PAGING Press Releases - ES"
+  field_short_title:
+    value: "TEST PAGING Press Releases"
+  field_short_title__ES:
+    value: "TEST PAGING Press Releases - ES"
+  field_pretty_url:
+    value: "test-paging"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/press-releases'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/comunicados-de-prensa'
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_list_title:
+        value: "Test Of Paging"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:4:"full";s:8:"argument";s:4:"2018";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+  ### Spanish Contents
+  field_landing_contents__ES:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_list_title:
+        value: "Test Of Paging"
+      field_source_view:
+        - target_id: press_releases
+          display_id: pr_archive_block
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:4:"full";s:8:"argument";s:4:"2018";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
