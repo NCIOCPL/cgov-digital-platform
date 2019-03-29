@@ -18,7 +18,7 @@ id: blog_rss
 label: 'Blog RSS'
 module: views
 description: ''
-tag: ''
+tag: 'contextual_filter_rewrites, templates'
 base_table: node_field_data
 base_field: nid
 core: 8.x
@@ -1427,6 +1427,11 @@ display:
       defaults:
         arguments: false
       rendering_language: '***LANGUAGE_language_interface***'
+      style:
+        type: rss
+        options:
+          grouping: {  }
+          description: 'News and research updates from the National Cancer Institute'
     cache_metadata:
       max-age: -1
       contexts:
@@ -1502,6 +1507,11 @@ display:
       defaults:
         arguments: false
       rendering_language: '***LANGUAGE_language_interface***'
+      style:
+        type: rss
+        options:
+          grouping: {  }
+          description: 'News and research updates from the National Cancer Institute'
     cache_metadata:
       max-age: -1
       contexts:
@@ -1538,6 +1548,11 @@ display:
       display_description: ''
       path: PublishedContent/RSS/syndication/rss/blog-series-topic.rss
       rendering_language: '***LANGUAGE_language_interface***'
+      style:
+        type: rss
+        options:
+          grouping: {  }
+          description: 'News and research updates from the National Cancer Institute'
     cache_metadata:
       max-age: -1
       contexts:
