@@ -261,6 +261,9 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   Array containing information for the <channel><title>/<description> tags.
    */
   public function getBlogInfo(ViewExecutable $view) {
+    $base_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() .
+        ltrim(base_path(), '/');
+
     list($series_nid, $topic_tid) = $view->args;
 
     if ($series_nid) {
@@ -272,6 +275,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       }
       $series_name = $node->label();;
       $series_desc = $node->field_about_blog->value;
+      $series_link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
     }
 
     if ($topic_tid) {
@@ -286,21 +290,25 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       // All posts for all blogs.
       $title = 'NCI Blogs';
       $desc = 'All NCI Blog Posts';
+      $link = $base_url;
     }
     elseif ($series_nid && !$topic_tid) {
       // All posts for a blog, all topics.
       $title = $series_name;
       $desc = $series_desc;
+      $link = $series_link;
     }
     elseif (!$series_nid && $topic_tid) {
       // All blog posts across all blogs for a Topic.
       $title = "All blogs on $topic_name";
       $desc = "Posts on $topic_desc across all NCI blogs";
+      $link = $base_url;
     }
     else {
       // All posts from a Single blog on a Single Topic.
       $title = "$series_name posts on $topic_name";
       $desc = $series_name;
+      $link = $series_link;
     }
 
     // Return metadata.
@@ -310,6 +318,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $result['topic_desc'] = $topic_desc;
     $result['title'] = $title;
     $result['desc'] = $desc;
+    $result['link'] = $link;
 
     return $result;
   }
