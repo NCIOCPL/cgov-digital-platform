@@ -271,7 +271,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
         return NULL;
       }
       $series_name = $node->label();;
-      $series_desc = "SERIESDESC:" . $node->field_about_blog->value;
+      $series_desc = $node->field_about_blog->value;
     }
 
     if ($topic_tid) {
