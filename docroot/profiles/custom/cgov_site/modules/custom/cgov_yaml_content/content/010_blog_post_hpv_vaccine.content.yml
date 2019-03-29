@@ -34,7 +34,13 @@
   field_author:
     value: 'NCI Staff'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
   body:
     - format: "full_html"
       value: |
