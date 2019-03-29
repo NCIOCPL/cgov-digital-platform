@@ -1,17 +1,18 @@
 {# Page Content #}
-{% set isPatient = (content.field_audience_toggle|field_value|render|render is same as('Patient')) %}
+{% set isPatient = (content.field_audience|field_value|render|render is same as('patient')) %}
 {% set toggleTarget = (isPatient)? 'Health Professional' : 'Patient' %}
+{% set url = path('entity.node.canonical', {'node':  content.field_audience_toggle[0]["#node"].nid[0].value}) %}
 
 <div class="cthp-content {{ (isPatient)? 'cthp-patient-content': 'cthp-hp-content'}}">
   <div class="row">
     <div class="large-12 columns resize-content cthp-padding">
       <!-- PAGE TITLE -->
-      <h1>{{ node.label }}—{{ content.field_audience_toggle }} Version</h1>
+      <h1>{{ node.label }}</h1>
       <!-- END PAGE TITLE -->
       {{ drupal_block('page_options') }}
       <div id="nvcgSlCTHPIntro">
         <div class="cthp-version-toggle no-resize">
-          <a class="toggle-arrow-link" href="/types/breast/hp">{{ toggleTarget }} Version</a>
+          <a class="toggle-arrow-link" href="{{ url }}">{{ toggleTarget }} Version</a>
         </div>
       </div>
       {{ content.field_cthp_cards }}

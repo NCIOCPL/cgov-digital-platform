@@ -1,17 +1,17 @@
 #!/bin/sh
+## Please run this file from your root directory. You should execute
+## the command "./acsf-convert/convert-ace-acsf.sh"
 
-## Copy in ./files/factory-hooks folder
-## Remove existing root/hooks folder
-## Copy in .files/hooks folder
+## Remove ACE Hooks
+rm -rf hooks
 
-## Something with sites
-##    Clean up multisite
-## Copy in ./files/docroot/sites/g
-## Replace  ./files/docroot/sites/sites.php
-## Copy ./files/docroot/sites/default/acsf.settings.php
-## Copy ./files/docroot/sites/default/settings.php
-##    THIS depends on what we do with settings.php. if for some
-##    reason we modify it, then we need to keep both in sync. or
-##    we modify settings.php to add the acsf-settings include.
+## Setup Factory Hooks
+cp -R acsf-convert/files/factory-hooks/ ./factory-hooks
+cp -R acsf-convert/files/hooks/ ./hooks
 
-## Do something with blt.yml
+## Copy in ACSF Management Site
+cp -R acsf-convert/files/docroot/sites/g ./docroot/sites/
+
+## Copy new Sites Folder
+cp acsf-convert/files/docroot/sites/sites.php ./docroot/sites/sites.php
+cp acsf-convert/files/docroot/sites/default/acsf.settings.php ./docroot/sites/default/acsf.settings.php

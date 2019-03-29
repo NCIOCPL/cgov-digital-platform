@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.cgov_cthp.field_audience
     - field.field.node.cgov_cthp.field_audience_toggle
     - field.field.node.cgov_cthp.field_browser_title
     - field.field.node.cgov_cthp.field_card_title
@@ -32,13 +33,22 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_audience_toggle:
-    type: list_default
+  field_audience:
+    type: list_key
     weight: 8
     region: content
     label: above
     settings: {  }
     third_party_settings: {  }
+  field_audience_toggle:
+    weight: 9
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
   field_browser_title:
     weight: 4
     label: hidden
@@ -57,7 +67,7 @@ content:
     region: content
   field_cthp_cards:
     type: entity_reference_revisions_entity_view
-    weight: 9
+    weight: 10
     region: content
     label: above
     settings:
@@ -74,7 +84,7 @@ content:
     region: content
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 10
+    weight: 11
     region: content
     label: hidden
     settings:

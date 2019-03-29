@@ -1,0 +1,332 @@
+# Image
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Circos plot shows data from The Cancer Genome Atlas (TCGA)"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'genome-map-article.jpg'
+      alt: 'Circos plot shows data from The Cancer Genome Atlas (TCGA)'
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'genome-map-article.jpg'
+      alt: 'El diagrama de Circos visualiza datos del Atlas del Genoma de Cáncer (TCGA)'
+  field_credit:
+    value: 'National Cancer Institute'
+  field_credit__ES:
+    value: 'Instituto Nacional del Cáncer'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        This Circos plot visualizes data from The Cancer Genome Atlas (TCGA) and allows scientists to explore the interrelationships among different data points.
+  field_caption__ES:
+    - format: "streamlined"
+      value: |
+        El diagrama de Circos visualiza datos del Atlas del Genoma de Cáncer (TCGA) y permite a los científicos explorar las interrelaciones entre los puntos diferentes de datos.
+
+
+
+## Begin the actual article.
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Genomics Research"
+  title__ES:
+      value: "Investigación de genómica del cáncer"
+  field_page_description:
+    value: "Cancer Genomics Research"
+  field_page_description__ES:
+    value: "Cancer Genomics Research"
+  field_short_title:
+    value: "Cancer Genomics Research"
+  field_short_title__ES:
+    value: "Cancer Genomics Research"
+  field_browser_title:
+    value: "Research Areas: Cancer Genomics"
+  field_browser_title_ES:
+    value: "Research Areas: Cancer Genomics"
+  field_pretty_url:
+    value: 'research-areas-genomics'
+  field_pretty_url__ES:
+    value: 'espanol-investigacion-areas-genomica'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/areas/'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/investigacion/areas/'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Circos plot shows data from The Cancer Genome Atlas (TCGA)'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Circos plot shows data from The Cancer Genome Atlas (TCGA)'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Why Genomics Research Is Critical to Progress against Cancer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>The study of cancer genomes has revealed abnormalities in genes that drive the development and growth of many types of cancer. This knowledge has improved our understanding of the biology of cancer and led to new methods of diagnosing and treating the disease.</p>
+            <p>For example, the discovery of cancer-causing genetic and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000717443&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000717443&amp;version=Patient&amp;language=English">epigenetic</a> changes in tumors has enabled the development of therapies that target these changes as well as diagnostic tests that identify patients who may benefit from these therapies. One such targeted drug is vemurafenib (Zelboraf), which was approved by the Food and Drug Administration (FDA) in 2011 for the treatment of some patients with melanoma who have a specific <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046063&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046063&amp;version=Patient&amp;language=English">mutation</a> in the <i>BRAF</i> gene as detected by an FDA-approved test.</p>
+            <p>Over the past decade, large-scale research projects have begun to survey and catalog the genomic changes associated with a number of types of cancer. These efforts have revealed unexpected genetic similarities across different types of tumors. For instance, mutations in the <i>HER2</i> gene (distinct from amplifications of this gene, for which therapies have been developed for breast, esophageal, and gastric cancers) have been found in a number of cancers, including breast, bladder, pancreatic, and ovarian.&nbsp;</p>
+            <p>Researchers have also shown that a given type of cancer, such as breast, lung, and stomach, may have several molecular subtypes. For some types of cancer, the existence of certain subtypes had not been known until researchers began to profile the genomes of tumor cells.</p>
+            <p>The results of these projects illustrate the diverse landscape of genetic alterations in cancer and provide a foundation for understanding the molecular basis of this group of diseases.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Opportunities in Cancer Genomics Research"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Although a large number of genetic alterations that drive the development and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044078&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044078&amp;version=Patient&amp;language=English">progression</a> of many types of cancer have been identified through large-scale research studies, some tumor types have not been deeply characterized. New technologies and the knowledge gained from previous genomic studies could be used to define the full set of driver mutations and other alterations to DNA and RNA in many cancers. Studies that compare genomic information from tumors and normal tissue from the same patient allow researchers to discover genomic changes that may drive cancer.</p>
+            <p>Another opportunity is to expand the current use of genomic methods to investigate the molecular basis of clinical phenotypes. This approach could help researchers identify genetic changes that may distinguish aggressive cancers from <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046355&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046355&amp;version=Patient&amp;language=English">indolent</a> ones, for example. Similar approaches could be used to study the molecular basis of response to a given therapy, as well as mechanisms of resistance to treatment.</p>
+            <p>The wealth of data emerging from cancer <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044593&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044593&amp;version=Patient&amp;language=English">genome</a> studies increasingly will be integrated with patients&rsquo; medical histories and clinical data. These integrated results could be used to develop more tailored approaches to cancer diagnosis and treatment, as well as to improve methods of predicting cancer risk, prognosis, and response to treatment.</p>
+            <p>Genomic tools will also be essential for analyzing results from <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000741769&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000741769&amp;version=Patient&amp;language=English">precision medicine</a> clinical trials, such as those being conducted by NCI's <a href="/research/areas/clinical-trials/nctn" title="">National Clinical Trials Network</a>.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Challenges in Cancer Genomics Research"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Comprehensive analysis of cancer genomes has revealed a great deal of diversity in the genetic abnormalities found within cancers of a single type. Moreover, recurrent genetic alterations within these cancers are often involved in only a small percentage of cases. Identifying which genetic changes initiate cancer development and discovering rare genetic alterations that drive cancers are therefore challenges for the field.&nbsp;</p>
+            <p>Another challenge is acquiring high-quality biological samples needed for genomic studies, particularly for tumor types that are uncommon or rare, or those not treated primarily by surgery.</p>
+            <p>Developing <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000044016&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000044016&amp;version=Patient&amp;language=English">cell lines</a> and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000043996&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000043996&amp;version=Patient&amp;language=English">animal models</a> that capture the diversity of human cancer is also an unmet need. Models of rare cancer subtypes may be nonexistent or underrepresented, and there are no models for many recurrent genetic lesions in human cancer.</p>
+            <p><a href="/research/nci-role/bioinformatics" title="">Managing and analyzing the vast amounts of data</a> involved in genomic studies are additional challenges for the field. This area of research requires an efficient <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000523430&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000523430&amp;version=Patient&amp;language=English">bioinformatics</a> infrastructure and increasingly involves contributions of data and expertise from cross-disciplinary teams.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "NCI’s Role in Cancer Genomics Research"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Pursuing the genetic foundations of cancer is a vital part of NCI&rsquo;s research efforts.&nbsp;NCI's&nbsp;<a href="/about-nci/organization/ccg" title="">Center for Cancer Genomics (CCG)</a>&nbsp;focuses on the study of how altered genes promote cancer. CCG uses high-throughput techniques to identify and study mutations, large rearrangements of the genome, increases and decreases in DNA copy number, chemical modifications to DNA, and changes in the expression of RNA and proteins.&nbsp;NCI supports diverse cancer genomics research and related efforts to translate these findings into clinical advances for patients.</p>
+            <p>The institute also encourages collaborations to advance cancer genomics research and discussion about opportunities and research priorities that could lead to new insights into <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046410&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046410&amp;version=Patient&amp;language=English">etiology</a>, outcomes, and risk factors for cancer. In October 2018, for example, NCI convened a meeting of experts to discuss <a href="https://dceg.cancer.gov/research/how-we-study/Tumor-Profiling/Tumor-Signatures-Exec-Summary">future directions in the characterization of mutational signatures in cancer research</a>.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Characterizing Cancer Genomes"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>NCI investigators analyze the DNA and RNA of cancer cells using advanced technologies such as next-generation <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000753867&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000753867&amp;version=Patient&amp;language=English">DNA sequencing</a> to map the landscape of the cancer genome and discover new changes linked to disease. NCI studies commonly use multiple genomic techniques. Integrating the results from several analyses helps scientists gain a better understanding of cancer, much like combining magenta, cyan, and yellow inks can generate vibrant color prints.</p>
+            <ul>
+            <li><a href="https://cancergenome.nih.gov/">The Cancer Genome Atlas</a> (TCGA), a collaboration between NCI and the <a href="https://www.genome.gov/">National Human Genome Research Institute</a> (NHGRI), and <a href="https://ocg.cancer.gov/programs/target">Therapeutically Applicable Research to Generate Effective Treatments (TARGET)</a> have characterized thousands of genomes and matched normal samples. This large number is important for discovering DNA, RNA, and protein abnormalities that are responsible for cancers in small numbers of patients.</li>
+            <li>The <a href="https://ocg.cancer.gov/programs/cgci">Cancer Genome Characterization Initiative</a> (CGCI) also studies cancer genomes, including cancers associated with HIV infection.</li>
+            <li>CCG characterizes cancer genomes through its <a href="/about-nci/organization/ccg/research/genomic-pipeline" title="">Genome Characterization Pipeline</a>, which converts tissue samples donated by patients into high quality, publicly available genomic data.</li>
+            <li>TCGA and TARGET taught the research community the importance of combining patients&rsquo; medical data with cancer genomics data, leading to NCI programs that integrate rich genomic and clinical datasets.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Analyzing Standard of Care and Novel Treatments at a Molecular Level"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Collaborative programs within and outside of NCI are collecting genomic data from patients receiving standard cancer treatments and patients receiving investigational treatments in clinical trials. These research collaborations have the power to answer questions critical to improving cancer outcomes, such as how tumors develop drug resistance, and what treatments are most effective against particular genomic traits.</p>
+            <ul>
+            <li>The <a href="/about-nci/organization/ccg/research/structural-genomics/clinical-trial-sequencing" title="">Clinical Trials Sequencing Project (CTSP)</a>, a collaboration between CCG and NCI&rsquo;s Division of Cancer Treatment and Diagnosis, and the <span></span><a href="/about-nci/organization/ccg/research/structural-genomics/driver-discovery" title=""><span>Cancer Driver Discovery Program (CDDP)</span></a>, characterize tissue samples from patients who have undergone standard-of-care or investigational treatments. These programs seek to understand the genomic basis of cancer development, metastasis, and drug resistance.</li>
+            <li>The <a href="https://dctd.cancer.gov/majorinitiatives/NCI-sponsored_trials_in_precision_medicine.htm#h06">Exceptional Responders (ER) Initiative</a> analyzes the genetic basis of exceptional responses to therapy. In some cases, a trial of a new drug fails to help most patients, but one or two people treated with the drug benefit. ER investigates the reason for exceptional responses to help assign the right treatments to the right patients in the future.</li>
+            <li><a href="/types/lung/research/alchemist" title="">ALCHEMIST</a>, a set of precision medicine lung cancer trials, screens participants&rsquo; genomes for molecular targets of currently available targeted therapies. By analyzing patients&rsquo; tumors over the course of their treatment, ALCHEMIST aims to uncover how different cancers respond to targeted drugs and how tumors evolve during treatment.</li>
+            </ul>
+            <h3>Modelling the Activity of Cancer Genes</h3>
+            <p>To translate genomic insights to the clinic, the activity of potential cancer genes that have been identified must be tested in models of cancer. These models can be cancer cell lines, organoid tissues, mice, or other model organisms. NCI supports research that helps bridge the gap between initial genomic discoveries and translation.</p>
+            <ul>
+            <li>The <a href="https://ocg.cancer.gov/programs/ctd2">Cancer Treatment Discovery and Development Program (CTD<sup>2</sup>)</a> is a network of scientific laboratories devoted to translating genomics into clinical benefit. CTD<sup>2 </sup>researchers study how genes linked to cancer work in cells and explore opportunities to target vulnerabilities with new therapies.</li>
+            <li>The <a href="https://ocg.cancer.gov/programs/HCMI">Human Models Cancer Initiative (HCMI)</a> is generating new cancer models using cutting-edge technologies. These models will provide researchers with more accurate representations of a wide variety of cancers, and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000772565&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000772565&amp;version=Patient&amp;language=English">genomic characterization</a> of the models may reveal links between genomic traits and how cells behave.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Relating Inherited Risk Factors to Cancer Genomics"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Researchers in NCI&rsquo;s <a href="https://dceg.cancer.gov/">Division of Cancer Epidemiology and Genetics (DCEG)</a> integrate <a href="http://dceg.cancer.gov/research/how-we-study/Tumor-Profiling" title="">tissue profiling into studies examining the causes of cancer</a> to better understand the process by which normal cells are transformed into cancer cells (carcinogenesis) and to pinpoint factors associated with risk for developing specific molecular or genomic subtypes. DCEG investigators are also working to identify novel molecular and genomic signatures in tumors that are&nbsp;linked to germline genetic variants and environmental exposures, such as cigarette smoking and <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000430698&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000430698&amp;version=Patient&amp;language=English">ionizing radiation</a>. This approach will help identify new risk factors and yield novel insights into biological mechanisms of carcinogenesis.</p>
+            <ul>
+            <li>The DCEG <a href="https://dceg.cancer.gov/about/organization/programs-hgp/ltg">Laboratory of Translational Genomics</a> investigates the biology underlying the association between common and inherited genetic variants and cancer susceptibility with the goal of understanding how genetic variation contributes to cancer etiology and outcomes.</li>
+            <li>The DCEG <a href="http://dceg.cancer.gov/about/organization/programs-hgp/cgr" title="">Cancer Genomics Research Laboratory</a> supports epidemiologic research by processing, characterizing, and analyzing tissue collections and other samples using genome-wide association studies, DNA sequencing, and candidate gene studies.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Data Sharing"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>NCI has spearheaded genomic data sharing practices since the inception of TCGA. NCI&rsquo;s support for cancer genomic data sharing continues by making all the data as open and accessible as possible while protecting patient privacy.</p>
+            <div class="topic-feature large-4 columns card right">
+            <div class="feature-card cgvPressRelease">
+              <a href="/news-events/press-releases/2019/BRCA-exchange">
+                                    <div class="image-hover">
+                        <img src="/PublishedContent/Images/images/pressreleases/BRCA-exchange-feature-card.__v100158467.jpg" alt="">
+                      </div>
+                                            <h3>BRCA Exchange: A Global Resource on Gene Variants</h3>
+                                                  <p>The large data sharing project will inform understanding of cancer risk.</p>
+                                </a>
+              </div>
+            </div>
+            <p></p>
+            <p></p>
+            <ul>
+            <li>The <a href="/about-nci/organization/ccg/research/computational-genomics/gdc" title="">NCI Genomic Data Commons</a> is a data sharing platform that harmonizes diverse datasets and provides streamlined access for the research community. The GDC contains NCI-generated genomic datasets such as TCGA and TARGET, and continually expands its catalog by incorporating data submissions from research organizations, advocacy foundations, and industry. By standardizing patient medical information and raw genomic data using the latest bioinformatics pipelines, the GDC provides high quality processed data.</li>
+            <li>The <a href="https://datascience.cancer.gov/data-commons/cloud-resources">Cancer Genomics Cloud Pilots</a> facilitate large-scale computing on NCI genomic data by making them accessible through commercial cloud providers. The Cloud Pilots can reduce costs and increase efficiency for big data analyses.</li>
+            </ul>
+            <p>&nbsp;</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Por qué es crítica la investigación de genómica para el progreso contra el cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>El estudio de los genomas del c&aacute;ncer ha revelado anomal&iacute;as en los genes que impulsan la formaci&oacute;n y el crecimiento de muchos tipos de c&aacute;ncer. Este conocimiento ha mejorado nuestro entendimiento de la biolog&iacute;a del c&aacute;ncer y nos ha llevado a nuevos m&eacute;todos de diagnosticar y tratar la enfermedad.</p>
+            <p>Por ejemplo, el descubrimiento de cambios gen&eacute;ticos y epigen&eacute;ticos que causan c&aacute;ncer en los tumores ha permitido la formulaci&oacute;n de terapias que se dirigen a estos cambios as&iacute; como de ex&aacute;menes de diagn&oacute;stico que identifican a pacientes que pueden beneficiarse con estas terapias. Uno de estos f&aacute;rmacos dirigidos es el vemurafenib (ZELBORAF&reg;), el cual fue aprobado por la Administraci&oacute;n de Alimentos y Medicamentos (FDA) en 2011 para el tratamiento de algunos pacientes con melanoma que tienen una mutaci&oacute;n espec&iacute;fica en el gen <em>BRAF</em> despu&eacute;s de ser detectado por una prueba aprobada por la FDA.</p>
+            <p>En la &uacute;ltima d&eacute;cada, proyectos de investigaci&oacute;n a gran escala empezaron a revisar y a catalogar los cambios gen&oacute;micos asociados con un n&uacute;mero de tipos de c&aacute;ncer.&nbsp; Estos programas han revelado semejanzas gen&eacute;ticas inesperadas a trav&eacute;s de diferentes tipos de tumores. Por ejemplo, las mutaciones en el gen <em>HER2 </em>(distintas de las amplificaciones de este gen, para las que se han formulado terapias para los c&aacute;nceres de seno, de es&oacute;fago y de est&oacute;mago) se han&nbsp;encontrado en algunos&nbsp;c&aacute;nceres, incluso de seno, de vejiga, de p&aacute;ncreas y de ovario. &nbsp;</p>
+            <p>Investigadores han indicado tambi&eacute;n que un cierto tipo de c&aacute;ncer, como de seno, de pulm&oacute;n y de est&oacute;mago puede tener varios subtipos moleculares. En algunos tipos de c&aacute;ncer, la existencia de ciertos subtipos no se hab&iacute;a conocido hasta que los investigadores empezaron a perfilar los genomas de las c&eacute;lulas tumorales.</p>
+            <p>Los resultados de estos proyectos ilustran el panorama diverso de alteraciones gen&eacute;ticas en el c&aacute;ncer y proporcionan un fundamento para entender la base molecular de este grupo de enfermedades.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Oportunidades en la investigación de la genómica del cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Aunque se han identificado por medio de estudios de investigaci&oacute;n un gran n&uacute;mero de alteraciones gen&eacute;ticas que impulsan la formaci&oacute;n y el avance de muchos tipos de c&aacute;ncer, no se han caracterizado con profundidad algunos tipos de tumores. Se podr&iacute;an usar nuevas tecnolog&iacute;as y conocimientos obtenidos de estudios gen&oacute;micos previos para definir el conjunto completo de mutaciones impulsoras y otras alteraciones al ADN y al ARN en muchos c&aacute;nceres. Estudios que comparan la informaci&oacute;n gen&oacute;mica de tumores y de tejido normal del mismo paciente permiten a los investigadores descubrir cambios gen&oacute;micos&nbsp;que pueden impulsar el c&aacute;ncer.</p>
+            <p>Otra oportunidad es extender el uso actual de los m&eacute;todos gen&oacute;micos para investigar la base molecular de fenotipos cl&iacute;nicos. Este m&eacute;todo podr&iacute;a ayudar a los investigadores a identificar los cambios gen&eacute;ticos que pueden distinguir a los c&aacute;nceres agresivos de los de crecimiento lento, por ejemplo. M&eacute;todos semejantes podr&iacute;an usarse para estudiar la base molecular de reacci&oacute;n a una determinada terapia, as&iacute; como mecanismos de resistencia a tratamiento.</p>
+            <p>La riqueza de datos que emergen de los estudios del genoma de c&aacute;ncer se integrar&aacute;n cada vez m&aacute;s con los historiales m&eacute;dicos y datos cl&iacute;nicos de pacientes. Estos resultados integrados podr&iacute;an usarse para formular m&eacute;todos m&aacute;s afines para el diagn&oacute;stico y tratamiento del c&aacute;ncer, as&iacute; como para mejorar los m&eacute;todos de predicci&oacute;n de riesgo de c&aacute;ncer, pron&oacute;stico y reacci&oacute;n al tratamiento.</p>
+            <p>Las herramientas gen&oacute;micas ser&aacute;n tambi&eacute;n esenciales para analizar resultados de estudios cl&iacute;nicos de medicina de precisi&oacute;n, como los que se llevan a cabo por la <a href="/espanol/investigacion/areas/estudios-clinicos/nctn" title="">Red Nacional de Estudios Cl&iacute;nicos&nbsp;del NCI</a>.</p>
+
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Desafíos en la investigación de genómica del cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Un an&aacute;lisis completo de los genomas del c&aacute;ncer ha revelado mucha diversidad en las anomal&iacute;as gen&eacute;ticas entre los c&aacute;nceres de un solo tipo. M&aacute;s a&uacute;n, las alteraciones gen&eacute;ticas recurrentes dentro de esos c&aacute;nceres est&aacute;n incluidas en solo un peque&ntilde;o porcentaje de casos. La identificaci&oacute;n de los&nbsp;cambios gen&eacute;ticos que&nbsp;inician la formaci&oacute;n de c&aacute;ncer y el descubrimiento de alteraciones gen&eacute;ticas&nbsp;raras que impulsan los c&aacute;nceres son, por lo tanto,&nbsp;un reto para el campo.&nbsp;</p>
+            <p>Otro reto es la adquisici&oacute;n de muestras biol&oacute;gicas de alta calidad necesarias para estudios gen&oacute;micos, en particular para tipos de tumores que son poco comunes o raros, o los que no son tratados principalmente con cirug&iacute;a.</p>
+            <p>La preparaci&oacute;n de estirpes celulares y de modelos animales que captan la diversidad del c&aacute;ncer humano es una necesidad insatisfecha. Los modelos de subtipos raros de c&aacute;ncer pueden no existir o tener muy poca representaci&oacute;n, y no&nbsp; hay modelos para muchas lesiones gen&eacute;ticas recurrentes en el c&aacute;ncer humano.</p>
+            <p>El manejo y an&aacute;lisis de grandes cantidades de datos que comprenden los estudios gen&oacute;micos son desaf&iacute;os adicionales para el campo. Esta &aacute;rea de investigaci&oacute;n requiere una eficiente infraestructura de&nbsp;bioinform&aacute;tica e implica cada vez m&aacute;s contribuciones de datos y pericia de equipos interdisciplinarios.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Papel del NCI en la investigación de la genómica del cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>La búsqueda de los fundamentos genéticos del cáncer es una parte vital de los programas de investigación del NCI. En 2012, el NCI estableció un nuevo Centro para Genómica del Cáncer (CCG) para centrarse en el estudio de cómo los genes alterados promueven el cáncer. El CCG usa técnicas de alto rendimiento para identificar y estudiar mutaciones, grandes reordenaciones del genoma, aumentos y disminuciones en el número de copias del ADN, modificaciones químicas del ADN, así como cambios en la expresión de ARN y proteínas. El NCI apoya varios programas de investigación de genómica de cáncer y programas relacionados para traducir esos resultados en avances clínicos para pacientes.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Caracterización de los genomas de cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los investigadores del NCI analizan el ADN y ARN de c&eacute;lulas cancerosas usando tecnolog&iacute;as avanzadas como secuenciaci&oacute;n del ADN de pr&oacute;xima generaci&oacute;n para trazar el panorama del genoma de c&aacute;ncer y descubrir nuevos cambios relacionados con el c&aacute;ncer. Los estudios del NCI usan com&uacute;nmente muchas t&eacute;cnicas gen&oacute;micas. La integraci&oacute;n de los resultados de varios an&aacute;lisis ayuda a los cient&iacute;ficos a obtener un mejor entendimiento del c&aacute;ncer, en forma parecida a la combinaci&oacute;n de las tintas de color magenta, azul y amarillo pueden generar impresos de colores vibrantes.</p>
+            <ul>
+            <li>El <a href="/espanol/investigacion/areas/genomica/atlas-genoma-cancer-antecedentes" title="">Atlas del Genoma de C&aacute;ncer (TCGA)</a>, una colaboraci&oacute;n entre el NCI y el&nbsp;<a href="https://www.genome.gov/">Instituto Nacional de Investigaci&oacute;n del Genoma Humano (NHGRI)</a> y la&nbsp;<a href="https://ocg.cancer.gov/programs/target">Investigaci&oacute;n Aplicable Terap&eacute;uticamente para Generar Tratamientos Efectivos (TARGET)</a>&nbsp;han caracterizado miles de genomas y encontrado la afinidad de muestras normales. Este n&uacute;mero grande es importante para el descubrimiento de las anormalidades del ADN, del ARN y de&nbsp;prote&iacute;nas que son responsables de c&aacute;nceres en n&uacute;meros peque&ntilde;os de pacientes.</li>
+            <li>&nbsp;La <a href="/research/areas/genomics" title="">Iniciativa de Caracterizaci&oacute;n del Genoma de C&aacute;ncer (CGCI)</a>&nbsp;estudia tambi&eacute;n los genomas del c&aacute;ncer, incluyendo c&aacute;nceres asociados con la infecci&oacute;n por el VIH.</li>
+            <li>El Centro para Gen&oacute;mica del C&aacute;ncer caracteriza los genomas del c&aacute;ncer por medio de su <a href="/about-nci/organization/ccg/research/genomic-pipeline" title="">Flujo de Caracterizaci&oacute;n del Genoma</a>, el cual convierte las muestras de tejido donadas por los pacientes en datos gen&oacute;micos de alta calidad para disposici&oacute;n p&uacute;blica.</li>
+            <li>El TCGA y TARGET ense&ntilde;aron a la comunidad de investigaci&oacute;n la importancia de combinar los datos m&eacute;dicos de pacientes con los datos gen&oacute;micos del c&aacute;ncer, lo que condujo a programas del NCI que integran&nbsp;conjuntos abundantes&nbsp;de datos gen&oacute;micos y cl&iacute;nicos.</li>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Análisis de normas de la atención y de tratamientos novedosos a nivel molecular"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los programas de colaboraci&oacute;n dentro y fuera del NCI est&aacute;n recolectando datos gen&oacute;micos de pacientes que reciben tratamientos convencionales para c&aacute;ncer y de pacientes que reciben tratamientos en&nbsp;investigaci&oacute;n en estudios cl&iacute;nicos. Estas colaboraciones de investigaci&oacute;n tienen el poder de responder a cuestiones cr&iacute;ticas para mejorar los resultados del c&aacute;ncer, tales como en qu&eacute; forma los tumores se hacen resistentes a los f&aacute;rmacos y cu&aacute;les tratamientos son m&aacute;s eficaces contra rasgos gen&oacute;micos espec&iacute;ficos.</p>
+            <ul>
+            <li>El <a href="/about-nci/organization/ccg/research/structural-genomics/clinical-trial-sequencing" title="">Proyecto de Secuenciaci&oacute;n de Estudios Cl&iacute;nicos (CTSP), </a>una colaboraci&oacute;n entre el CCG y la Divisi&oacute;n de Tratamiento y Diagn&oacute;stico del C&aacute;ncer del NCI, y el <a href="https://www.cancer.gov/about-nci/organization/ccg/programs#ui-id-3">Programa de Descubrimiento de Impulsores del C&aacute;ncer (CDDP)</a>, caracteriza muestras de tejidos de pacientes que han recibido tratamientos convencionales o en investigaci&oacute;n. Estos programas buscan entender la base gen&oacute;mica de la formaci&oacute;n, met&aacute;stasis y resistencia a f&aacute;rmacos del c&aacute;ncer.</li>
+            <li>La <a href="https://dctd.cancer.gov/majorinitiatives/NCI-sponsored_trials_in_precision_medicine.htm#h06">Iniciativa de Pacientes con Reacci&oacute;n Excepcional</a>&nbsp;analiza la base gen&eacute;tica de respuestas excepcionales a terapias. En algunos casos, un estudio de un f&aacute;rmaco nuevo falla en ayudar a la mayor&iacute;a de los pacientes, pero una o dos personas tratadas con el f&aacute;rmaco se benefician. Esta iniciativa investiga la raz&oacute;n de las respuestas excepcionales para ayudar a asignar los tratamientos correctos a los pacientes correctos en el futuro.</li>
+            <li><a href="/espanol/tipos/pulmon/investigacion/lanzamiento-alchemist-preguntas-respuestas" title="">ALCHEMIST</a>, un conjunto de estudios de medicina de precisi&oacute;n para c&aacute;ncer de pulm&oacute;n, examina los genomas de los participantes para blancos moleculares de terapias dirigidas disponibles en la actualidad. Al analizar los tumores de pacientes en el curso de su tratamiento, ALCHEMIST trata de descubrir c&oacute;mo c&aacute;nceres diferentes responden a f&aacute;rmacos dirigidos y c&oacute;mo los tumores evolucionan durante el tratamiento.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Modelado de la actividad de los genes de c&aacute;ncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Para traducir las ideas gen&oacute;micas a la cl&iacute;nica, la actividad de posibles genes de c&aacute;ncer que hayan sido identificados debe ser evaluada en modelos de c&aacute;ncer. Estos modelos pueden ser estirpes celulares de c&aacute;ncer, tejidos organoides, ratones o algunos otros organismos modelo. El NCI apoya la investigaci&oacute;n que ayuda a llenar la brecha entre los descubrimientos gen&oacute;micos iniciales y la aplicac&igrave;&oacute;n.</p>
+            <ul>
+            <li>La <a href="https://ocg.cancer.gov/programs/ctd2">Red de Descubrimiento y Formulaci&oacute;n de Blancos de C&aacute;ncer (CTD<sup><span style="font-size: small;" size="2">2</span></sup>)</a>&nbsp;es una red de laboratorios cient&iacute;ficos dedicada a traducir la gen&oacute;mica en un beneficio cl&iacute;nico. Los investigadores de la CTD<sup>2 </sup>estudian c&oacute;mo los<sup> &nbsp;</sup>genes asociados con el c&aacute;ncer funcionan en las c&eacute;lulas y exploran las oportunidades para atacar las vulnerabilidades con nuevas terapias.</li>
+            <li>La&nbsp;<a href="https://ocg.cancer.gov/programs/HCMI">Iniciativa de Modelos Humanos del C&aacute;ncer (HCMI)</a> est&aacute; generando nuevos modelos de c&aacute;ncer mediante el uso de tecnolog&iacute;as&nbsp;avanzadas. Estos modelos proveer&aacute;n a los investigadores representaciones m&aacute;s exactas de una gran variedad de c&aacute;nceres, y la caracterizaci&oacute;n gen&oacute;mica de los modelos podr&aacute; revelar enlaces entre los rasgos gen&oacute;micos y&nbsp;el comportamiento de las c&eacute;lulas.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Relación de factores de riesgo heredados con la genómica del cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los investigadores de la <a href="https://dceg.cancer.gov/">Divisi&oacute;n de Epidemiolog&iacute;a y Gen&eacute;tica del C&aacute;ncer (DCEG)</a> del NCI integran <a href="https://dceg.cancer.gov/research/how-we-study/Tumor-Profiling">perfiles de tejidos con estudios que examinan las causas del c&aacute;ncer</a>&nbsp;para comprender mejor el proceso por el que las c&eacute;lulas normales se transforman en c&eacute;lulas cancerosas (carcinog&eacute;nesis) y para destacar los factores asociados con el riesgo de que se presenten subtipos moleculares espec&iacute;ficos o gen&oacute;micos. Los investigadores de la DCEG est&aacute;n trabajando tambi&eacute;n en la identificaci&oacute;n de firmas moleculares novedosas y gen&oacute;micas en tumores que est&aacute;n relacionados con variantes gen&eacute;ticas de l&iacute;nea germinal&nbsp;y exposiciones ambientales, como fumar cigarrillos y radiaci&oacute;n ionizante. Este planteamiento ayudar&aacute; a identificar nuevos factores de riesgo y a proveer ideas novedosas de los mecanismos biol&oacute;gicos de la carcinog&eacute;nesis.</p>
+            <ul>
+            <li>El <a href="https://dceg.cancer.gov/about/organization/programs-hgp/ltg">Laboratorio de Gen&oacute;mica de Transferencia</a>&nbsp;de la DCEG investiga la biolog&iacute;a en la que se basa la asociaci&oacute;n entre las variantes gen&eacute;ticas heredadas y las comunes y la susceptibilidad al c&aacute;ncer con el fin de entender c&oacute;mo la variaci&oacute;n gen&eacute;tica contribuye a la etiolog&iacute;a y a los resultados del c&aacute;ncer.&nbsp;</li>
+            <li>El <a href="https://dceg.cancer.gov/about/organization/programs-hgp/cgr">Laboratorio de Investigaci&oacute;n de Gen&oacute;mica del C&aacute;ncer</a> de la DCEG&nbsp;apoya la investigaci&oacute;n epidemiol&oacute;gica al procesar, caracterizar y analizar las colecciones de tejidos y de otras muestras mediante el uso de estudios de asociaci&oacute;n de todo el genoma, de secuenciaci&oacute;n del ADN y estudios de genes candidatos.</li>
+            </ul>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Participación de datos"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>El NCI ha encabezado las pr&aacute;cticas de&nbsp;participaci&oacute;n de datos gen&oacute;micos desde el inicio del TCGA. El apoyo del NCI para la participaci&oacute;n de datos gen&oacute;micos de c&aacute;ncer contin&uacute;a al hacer que todos los datos est&eacute;n tan abiertos y accesibles como sea posible al mismo tiempo que se protege la confidencialidad del paciente.</p>
+            <ul>
+            <li>&nbsp;Los <a href="/news-events/press-releases/2014/GenomicDataCommonsNewsNote" title="">Datos Comunes&nbsp;Gen&oacute;micos del NCI (GDC)</a>&nbsp;es una plataforma de participaci&oacute;n de datos que compagina diversos conjuntos de datos y provee la facilidad de&nbsp;acceso para la comunidad de investigaci&oacute;n. El GDC contiene conjuntos de datos gen&oacute;micos generados por el NCI como del TCGA y del TARGET, y expande continuamente su cat&aacute;logo al incorporar sumisiones de datos de organizaciones de investigaci&oacute;n, fundaciones de defensa y de la industria. Al regularizar la informaci&oacute;n m&eacute;dica de pacientes y datos gen&oacute;micos crudos mediante el uso de flujos m&aacute;s avanzados de bioinform&aacute;tica, el GDC provee datos procesados de alta calidad.</li>
+            <li>Los <a href="https://cbiit.nci.nih.gov/ncip/nci-cancer-genomics-cloud-pilots/nci-cloud-initiative">Pilotos de la Nube de Gen&oacute;mica del C&aacute;ncer</a> facilitan la computaci&oacute;n a gran escala en los datos gen&oacute;micos del NCI al&nbsp;hacerlos accesibles por medio de proveedores comerciales en la&nbsp;nube. Los Pilotos de la Nube pueden reducir costos y mejorar la eficacia de an&aacute;lisis grandes de datos.</li>
+            </ul>
+  field_date_posted:
+    value: "2018-11-20"
+  field_date_reviewed:
+    value: "2018-11-20"
+  field_date_updated:
+    value: "2018-11-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
