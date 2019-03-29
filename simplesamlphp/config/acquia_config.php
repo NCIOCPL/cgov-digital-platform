@@ -43,10 +43,10 @@ $config['auth.adminpassword'] = SamlSecrets::AUTH_ADMIN_PASSWORD;
  * @link https://github.com/simplesamlphp/simplesamlphp/issues/450
  *
  */
-/* $_SERVER['SERVER_PORT'] = 443;
+$_SERVER['SERVER_PORT'] = 443;
 $_SERVER['HTTPS'] = 'true';
 $protocol = 'https://';
-$port = ':' . $_SERVER['SERVER_PORT'];*/
+$port = ':' . $_SERVER['SERVER_PORT'];
 
 /**
  * Support multi-site and single site installations at different base URLs.
