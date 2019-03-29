@@ -28,7 +28,6 @@ dependencies:
     - node.type.cgov_blog_series
   module:
     - image
-    - link
     - options
     - text
     - user
@@ -122,17 +121,13 @@ content:
       link: true
     third_party_settings: {  }
   field_feedburner_url:
+    type: string
     weight: 15
+    region: content
     label: hidden
     settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+      link_to_entity: false
     third_party_settings: {  }
-    type: link
-    region: content
   field_image_promotional:
     weight: 13
     label: hidden

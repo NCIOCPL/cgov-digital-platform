@@ -12,9 +12,14 @@
       {{ node.label }}
     </h1>
     <div id="nvcgSubTitle">
-      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a></div>
-    </div>
 
+      {% if node.field_feedburner_url.value|length > 0 %}
+        <div class="subscribeRSS">
+          <a class="blogRSS" href="my-series-url"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+        </div>
+      {% endif %}
+
+    </div>
     <div id="cgvBody">
       <div class="slot-item first-SI">
         <div>
