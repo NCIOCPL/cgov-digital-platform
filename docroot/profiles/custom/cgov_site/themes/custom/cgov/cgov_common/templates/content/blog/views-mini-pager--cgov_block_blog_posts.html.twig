@@ -1,0 +1,8 @@
+<div class="blog-pager clearfix">
+  {% if(items.next)%}
+    <a class="older" href="{{ items.next.href}}">{{ items.next.text }}</a>
+  {% endif %}
+  {% if(items.previous)%}
+    <a class="newer" href="{{ items.previous.href}}">{{ items.previous.text }}</a>
+  {% endif %}
+</div>
