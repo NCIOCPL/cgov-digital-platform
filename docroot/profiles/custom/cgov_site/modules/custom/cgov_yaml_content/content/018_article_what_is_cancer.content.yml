@@ -1,0 +1,343 @@
+#tests for Public use, image and related resurces
+# Image
+- entity: "media"
+  bundle: "cgov_image"
+  name: "A dividing breast cancer cell"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'dividing-breast-cancer-cell-article.jpg'
+      alt: 'A dividing breast cancer cell.'
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'dividing-breast-cancer-cell-article.jpg'
+      alt: 'A dividing breast cancer cell.'
+  field_credit:
+    value: 'National Cancer Institute'
+  field_credit__ES:
+    value: 'Instituto Nacional del Cáncer'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        A dividing breast cancer cell.
+  field_caption__ES:
+    - format: "streamlined"
+      value: |
+        Célula de cáncer de seno en proceso de división celular.
+## Begin the actual article.
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "What Is Cancer?"
+  title__ES:
+      value: "¿Qué es el cáncer?"
+  field_page_description:
+    value: "What Is Cancer?"
+  field_page_description__ES:
+    value: "¿Qué es el cáncer?"
+  field_short_title:
+    value: "What Is Cancer?"
+  field_short_title__ES:
+    value: "¿Qué es el cáncer?"
+  field_browser_title:
+    value: "What Is Cancer?"
+  field_browser_title_ES:
+    value: "¿Qué es el cáncer?"
+  field_feature_card_description:
+    value: "Understand how cancer cells differ from normal cells and why they grow and spread"
+  field_pretty_url:
+    value: 'what-is-cancer'
+  field_pretty_url__ES:
+    value: 'que-es'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/understanding/'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/cancer/naturaleza/'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'A dividing breast cancer cell'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Célula de cáncer de seno en proceso de división celular.'
+# field_intro_text:
+#  - format: "full_html"
+#     value: |
+# field_intro_text__ES:
+#  - format: "full_html"
+#     value: |
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "A Collection of Related Diseases"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cancer is the name given to a collection of related diseases. In all types of cancer, some of the body&rsquo;s cells begin to divide without stopping and spread into surrounding tissues.</p>
+            <p>Cancer can start almost anywhere in the human body, which is made up of trillions of cells. Normally, human cells grow and divide to form new cells as the body needs them. When cells grow old or become damaged, they die, and new cells take their place.</p>
+            <p>When cancer develops, however, this orderly process breaks down. As cells become more and more abnormal, old or damaged cells survive when they should die, and new cells form when they are not needed. These extra cells can divide without stopping and may form growths called tumors.</p>
+            <p>Many cancers form solid tumors, which are masses of tissue. Cancers of the blood, such as leukemias, generally do not form solid tumors.</p>
+            <p>Cancerous tumors are malignant, which means they can spread into, or invade, nearby tissues. In addition, as these tumors grow, some cancer cells can break off and travel to distant places in the body through the blood or the lymph system and form new tumors far from the original tumor.</p>
+            <p>Unlike malignant tumors, benign tumors do not spread into, or invade, nearby tissues. Benign tumors can sometimes be quite large, however. When removed, they usually don&rsquo;t grow back, whereas malignant tumors sometimes do. Unlike most benign tumors elsewhere in the body, benign brain tumors can be life threatening.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Differences between Cancer Cells and Normal Cells"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cancer cells differ from normal cells in many ways that allow them to grow out of control and become invasive. One important difference is that cancer cells are less specialized than normal cells. That is, whereas normal cells mature into very distinct cell types with specific functions, cancer cells do not. This is one reason that, unlike normal cells, cancer cells continue to divide without stopping.</p>
+            <p>In addition, cancer cells are able to ignore signals that normally tell cells to stop dividing or that begin a process known as programmed cell death, or apoptosis, which the body uses to get rid of unneeded cells.</p>
+            <p>Cancer cells may be able to influence the normal cells, molecules, and blood vessels that surround and feed a tumor&mdash;an area known as the microenvironment. For instance, cancer cells can induce nearby normal cells to form blood vessels that supply tumors with oxygen and nutrients, which they need to grow. These blood vessels also remove waste products from tumors.</p>
+            <p>Cancer cells are also often able to evade the immune system, a network of organs, tissues, and specialized cells that protects the body from infections and other conditions. Although the immune system normally removes damaged or abnormal cells from the body, some cancer cells are able to &ldquo;hide&rdquo; from the immune system.</p>
+            <p>Tumors can also use the immune system to stay alive and grow. For example, with the help of certain immune system cells that normally prevent a runaway <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045722&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045722&amp;version=Patient&amp;language=English">immune response</a>, cancer cells can actually keep the immune system from killing cancer cells.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How Cancer Arises"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cancer is a genetic disease&mdash;that is, it is caused by changes to genes that control the way our cells function, especially how they grow and divide.</p>
+            <p>Genetic changes that cause cancer can be inherited from our parents. They can also arise during a person&rsquo;s lifetime as a result of errors that occur as cells divide or because of damage to <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045671&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045671&amp;version=Patient&amp;language=English">DNA</a> caused by certain environmental exposures. Cancer-causing environmental exposures include substances, such as the chemicals in tobacco smoke, and radiation, such as ultraviolet rays from the sun. (Our <a href="/about-cancer/causes-prevention" title="">Cancer Causes and Prevention</a> section has more information.)</p>
+            <p>Each person&rsquo;s cancer has a unique combination of genetic changes. As the cancer continues to grow, additional changes will occur. Even within the same tumor, different cells may have different genetic changes.</p>
+            <p>In general, cancer cells have more genetic changes, such as <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046063&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046063&amp;version=Patient&amp;language=English">mutations</a> in DNA, than normal cells. Some of these changes may have nothing to do with the cancer; they may be the result of the cancer, rather than its cause.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: '"Drivers" of Cancer'
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>The genetic changes that contribute to cancer tend to affect three main types of genes&mdash;<a class="definition" onclick="javascript:popWindow('defbyid','CDR0000641134&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000641134&amp;version=Patient&amp;language=English">proto-oncogenes</a>, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046657&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046657&amp;version=Patient&amp;language=English">tumor suppressor genes</a>, and DNA repair genes. These changes are sometimes called &ldquo;drivers&rdquo; of cancer.</p>
+            <p>Proto-oncogenes are involved in normal cell growth and division. However, when these genes are altered in certain ways or are more active than normal, they may become cancer-causing genes (or oncogenes), allowing cells to grow and survive when they should not.</p>
+            <p>Tumor suppressor genes are also involved in controlling cell growth and division. Cells with certain alterations in tumor suppressor genes may divide in an uncontrolled manner.</p>
+            <p>DNA repair genes are involved in fixing damaged DNA. Cells with mutations in these genes tend to develop additional mutations in other genes. Together, these mutations may cause the cells to become cancerous.</p>
+            <p>As scientists have learned more about the molecular changes that lead to cancer, they have found that certain mutations commonly occur in many types of cancer. Because of this, cancers are sometimes characterized by the types of genetic alterations that are believed to be driving them, not just by where they develop in the body and how the cancer cells look under the microscope.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "When Cancer Spreads"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>A cancer that has spread from the place where it first started to another place in the body is called metastatic cancer. The process by which cancer cells spread to other parts of the body is called metastasis.</p>
+            <p>Metastatic cancer has the same name and the same type of cancer cells as the original, or primary, cancer. For example, breast cancer that spreads to and forms a metastatic tumor in the lung is metastatic breast cancer, not lung cancer.</p>
+            <p>Under a microscope, metastatic cancer cells generally look the same as cells of the original cancer. Moreover, metastatic cancer cells and cells of the original cancer usually have some molecular features in common, such as the presence of specific <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046470&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046470&amp;version=Patient&amp;language=English">chromosome</a> changes.</p>
+            <p>Treatment may help prolong the lives of some people with metastatic cancer. In general, though, the primary goal of treatments for metastatic cancer is to control the growth of the cancer or to relieve symptoms caused by it. Metastatic tumors can cause severe damage to how the body functions, and most people who die of cancer die of metastatic disease. &nbsp;</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Tissue Changes that Are Not Cancer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Not every change in the body&rsquo;s tissues is cancer. Some tissue changes may develop into cancer if they are not treated, however. Here are some examples of tissue changes that are not cancer but, in some cases, are monitored:</p>
+            <p>Hyperplasia occurs when cells within a tissue divide faster than normal and extra cells build up, or proliferate. However, the cells and the way the tissue is organized look normal under a microscope. Hyperplasia can be caused by several factors or conditions, including chronic irritation.</p>
+            <p>Dysplasia is a more serious condition than hyperplasia. In dysplasia, there is also a buildup of extra cells. But the cells look abnormal and there are changes in how the tissue is organized. In general, the more abnormal the cells and tissue look, the greater the chance that cancer will form.</p>
+            <p>Some types of dysplasia may need to be monitored or treated. An example of dysplasia is an abnormal mole (called a dysplastic nevus) that forms on the skin. A dysplastic nevus can turn into melanoma, although most do not.</p>
+            <p>An even more serious condition is carcinoma in situ. Although it is sometimes called cancer, carcinoma in situ is not cancer because the abnormal cells do not spread beyond the original tissue. That is, they do not invade nearby tissue the way that cancer cells do. But, because some carcinomas in situ may become cancer, they are usually treated.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Types of Cancer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>There are more than 100 types of cancer. Types of cancer are usually named for the organs or tissues where the cancers form. For example, lung cancer starts in cells of the lung, and brain cancer starts in cells of the brain. Cancers also may be described by the type of cell that formed them, such as an epithelial cell or a squamous cell.</p>
+            <p>You can search NCI&rsquo;s website for information on specific types of cancer based on the cancer&rsquo;s <a href="/types/by-body-location" title="">location in the body</a> or by using our <a href="/types" title="">A to Z List of Cancers</a>. We also have collections of information on <a href="/types/childhood-cancers" title="">childhood cancers</a> and <a href="/types/aya" title="">cancers in adolescents and young adults</a>.</p>
+            <p>Here are some categories of cancers that begin in specific types of cells:</p>
+  ## spanish content
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Conjunto de enfermedades relacionadas"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>C&aacute;ncer es el nombre que se da a un conjunto de enfermedades relacionadas. En todos los tipos de c&aacute;ncer, algunas de las c&eacute;lulas del cuerpo empiezan a dividirse sin detenerse y se diseminan a los tejidos del derredor.</p>
+            <p>El c&aacute;ncer puede empezar casi en cualquier lugar del cuerpo humano, el cual est&aacute; formado de trillones de c&eacute;lulas. Normalmente, las c&eacute;lulas humanas crecen y se dividen para formar nuevas c&eacute;lulas a medida que el cuerpo las necesita. Cuando las c&eacute;lulas normales envejecen o se da&ntilde;an, mueren, y c&eacute;lulas nuevas las remplazan.</p>
+            <p>Sin embargo, en el c&aacute;ncer, este proceso ordenado se descontrola. A medida que las c&eacute;lulas se hacen m&aacute;s y m&aacute;s anormales, las c&eacute;lulas viejas o da&ntilde;adas sobreviven cuando deber&iacute;an morir, y c&eacute;lulas nuevas se forman cuando no son necesarias. Estas c&eacute;lulas adicionales pueden dividirse sin interrupci&oacute;n y pueden formar masas que se llaman tumores.</p>
+            <p>Muchos c&aacute;nceres forman tumores s&oacute;lidos, los cuales son masas de tejido. Los c&aacute;nceres de la sangre, como las leucemias, en general no forman tumores s&oacute;lidos.</p>
+            <p>Los tumores cancerosos son malignos, lo que significa que se pueden extender a los tejidos cercanos o los pueden invadir. Adem&aacute;s, al crecer estos tumores, algunas c&eacute;lulas cancerosas pueden desprenderse y moverse a lugares distantes del cuerpo por medio del sistema circulatorio o del sistema linf&aacute;tico y formar nuevos tumores lejos del tumor original.</p>
+            <p>Al contrario de los tumores malignos, los tumores benignos no se extienden a los tejidos cercanos y no los invaden. Sin embargo, a veces los tumores benignos pueden ser bastante grandes. Al extirparse, generalmente no vuelven a crecer, mientras que los tumores malignos s&iacute; vuelven a crecer algunas veces. Al contrario de la mayor&iacute;a de los tumores benignos en otras partes del cuerpo, los tumores benignos de cerebro pueden poner la vida en peligro.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  "Diferencias entre las células cancerosas y las células normales"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Las c&eacute;lulas cancerosas difieren de las c&eacute;lulas normales de muchas maneras que les permiten crecer sin control y se vuelven invasivas. Una diferencia importante es que las c&eacute;lulas cancerosas son menos especializadas que las c&eacute;lulas normales. Esto quiere decir que, mientras las c&eacute;lulas normales maduran en tipos celulares muy distintos con funciones espec&iacute;ficas, las c&eacute;lulas cancerosas no lo hacen. Esta es una raz&oacute;n por la que, al contrario de las c&eacute;lulas normales, las c&eacute;lulas cancerosas siguen dividi&eacute;ndose sin detenerse.</p>
+            <p>Adem&aacute;s, las c&eacute;lulas cancerosas pueden ignorar las se&ntilde;ales que normalmente dicen a las c&eacute;lulas que dejen de dividirse o que empiecen un proceso que se conoce como muerte celular programada, o apoptosis, el cual usa el cuerpo para deshacerse de las c&eacute;lulas que no son necesarias.</p>
+            <p>Las c&eacute;lulas cancerosas pueden tener la capacidad para influir en las c&eacute;lulas normales, en las mol&eacute;culas y en los vasos sangu&iacute;neos que rodean y alimentan las c&eacute;lulas de un tumor&mdash; una zona que se conoce como el microambiente. Por ejemplo, las c&eacute;lulas cancerosas pueden inducir a las c&eacute;lulas normales cercanas a que formen vasos sangu&iacute;neos que suministren ox&iacute;geno y nutrientes, necesarios para que crezcan los tumores. Estos vasos sangu&iacute;neos tambi&eacute;n retiran los productos de deshecho de los tumores.</p>
+            <p>Las c&eacute;lulas cancerosas, con frecuencia, son tambi&eacute;n capaces de evadir el sistema inmunitario, una red de &oacute;rganos, tejidos y c&eacute;lulas especializadas que protege al cuerpo contra infecciones y otras enfermedades. Aunque ordinariamente el sistema inmunitario elimina del cuerpo las c&eacute;lulas da&ntilde;adas o anormales, algunas c&eacute;lulas cancerosas son capaces de "esconderse" del sistema inmunitario.</p>
+            <p>Los tumores pueden tambi&eacute;n usar el sistema inmunitario para seguir vivos y crecer. Por ejemplo, con la ayuda de algunas c&eacute;lulas del sistema inmunitario que impide ordinariamente una <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045722&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045722&amp;version=Patient&amp;language=Spanish">respuesta inmunitaria</a> descontrolada, las c&eacute;lulas cancerosas pueden de hecho hacer que el sistema inmunitario no destruya las c&eacute;lulas cancerosas.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  "Cómo aparece el cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>El c&aacute;ncer es una enfermedad gen&eacute;tica&mdash; es decir, es causado por cambios en los genes que controlan la forma como funcionan nuestras c&eacute;lulas, especialmente la forma como crecen y se dividen.</p>
+            <p>Los cambios gen&eacute;ticos que causan c&aacute;ncer pueden heredarse de los padres. Pueden suceder tambi&eacute;n en la vida de una persona como resultado de errores que ocurren al dividirse las c&eacute;lulas o por el da&ntilde;o del <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000045671&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045671&amp;version=Patient&amp;language=Spanish">ADN</a> causado por algunas exposiciones del ambiente. Las exposiciones ambientales que causan c&aacute;ncer son las sustancias, como los compuestos qu&iacute;micos en el humo de tabaco y la radiaci&oacute;n, como los rayos ultravioleta del sol. (Nuestra p&aacute;gina de <a href="/espanol/cancer/causas-prevencion" title="">Causas y prevenci&oacute;n del c&aacute;ncer</a> tiene m&aacute;s informaci&oacute;n).</p>
+            <p>El c&aacute;ncer de cada persona tiene una combinaci&oacute;n &uacute;nica de cambios gen&eacute;ticos. Conforme sigue creciendo el c&aacute;ncer, ocurrir&aacute;n cambios adicionales. Aun dentro de cada tumor, c&eacute;lulas diferentes pueden tener cambios gen&eacute;ticos diferentes.</p>
+            <p>En general, las c&eacute;lulas cancerosas tienen m&aacute;s cambios gen&eacute;ticos, como <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046063&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046063&amp;version=Patient&amp;language=Spanish">mutaciones</a> en el ADN, que las c&eacute;lulas normales. Algunos de estos cambios pueden no estar relacionados con el c&aacute;ncer; pueden ser el resultado del c&aacute;ncer y no su causa.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  '"Causantes" de cáncer'
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los cambios gen&eacute;ticos que contribuyen al c&aacute;ncer tienden a afectar tres tipos principales de genes &mdash; <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000641134&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000641134&amp;version=Patient&amp;language=Spanish">proto-oncogenes</a>, <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046657&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046657&amp;version=Patient&amp;language=Spanish">genes supresores de tumores</a> y genes reparadores del ADN. Estos cambios se llaman a veces "causantes" de c&aacute;ncer.</p>
+            <p>Los proto-oncogenes se dedican al crecimiento y divisi&oacute;n celular normal. Sin embargo, cuando estos genes se alteran en ciertas maneras o son m&aacute;s activos de lo normal, ellos pueden convertirse en genes causantes de c&aacute;ncer (u oncogenes), al permitir a las c&eacute;lulas que crezcan y sobrevivan cuando no deber&iacute;an.</p>
+            <p>Los genes supresores de tumores se dedican tambi&eacute;n a controlar el crecimiento y la divisi&oacute;n celular. Las c&eacute;lulas con algunas alteraciones en los genes supresores de tumores pueden dividirse en una forma sin control.</p>
+            <p>Los genes reparadores del ADN se dedican a arreglar un ADN da&ntilde;ado. Las c&eacute;lulas con mutaciones en estos genes tienden a formar mutaciones adicionales en otros genes. Juntas, estas mutaciones pueden causar que las c&eacute;lulas se hagan cancerosas.</p>
+            <p>Conforme los cient&iacute;ficos han aprendido m&aacute;s acerca de los cambios moleculares que resultan en c&aacute;ncer, ciertas mutaciones se han encontrado juntas en muchos tipos de c&aacute;ncer. A causa de esto, los c&aacute;nceres se caracterizan a veces seg&uacute;n los tipos de alteraciones gen&eacute;ticas que se cree son causantes, no solo por el sitio del cuerpo en donde se forman y por la forma como se ven las c&eacute;lulas cancerosas al microscopio.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  "Cuando el cáncer se disemina"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Un c&aacute;ncer que se ha diseminado desde el lugar en donde empez&oacute; primero a otras partes del cuerpo se llama c&aacute;ncer metast&aacute;tico. El proceso por el cual las c&eacute;lulas del c&aacute;ncer se diseminan a otras partes del cuerpo se llama met&aacute;stasis.</p>
+            <p>El c&aacute;ncer metast&aacute;tico tiene el mismo nombre y el mismo tipo de c&eacute;lulas cancerosas que el c&aacute;ncer original o primario. Por ejemplo, el c&aacute;ncer de seno, o mama, que se disemina a los pulmones y forma un tumor metast&aacute;tico se llama c&aacute;ncer metast&aacute;tico de seno y no c&aacute;ncer de pulm&oacute;n.</p>
+            <p>Al observarlas al microscopio, las c&eacute;lulas del c&aacute;ncer metast&aacute;tico tienen en general el mismo aspecto que las c&eacute;lulas del c&aacute;ncer original. Adem&aacute;s, las c&eacute;lulas del c&aacute;ncer metast&aacute;tico y las c&eacute;lulas del c&aacute;ncer original tienen de ordinario algunas caracter&iacute;sticas moleculares en com&uacute;n, como la presencia de cambios espec&iacute;ficos en el <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000046470&amp;version=Patient&amp;language=Spanish'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046470&amp;version=Patient&amp;language=Spanish">cromosoma</a>.</p>
+            <p>El tratamiento puede ayudar a prolongar las vidas de algunas personas con c&aacute;ncer metast&aacute;tico. Aunque, en general, el objetivo principal de los tratamientos para c&aacute;ncer metast&aacute;tico es controlar el crecimiento del c&aacute;ncer o aliviar los s&iacute;ntomas que causa. Los tumores metast&aacute;ticos pueden causar un grave da&ntilde;o al funcionamiento del cuerpo, y la mayor&iacute;a de la gente que muere por c&aacute;ncer muere por enfermedad metast&aacute;tica.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  "Cambios no cancerosos en los tejidos"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>No todo cambio en los tejidos del cuerpo es canceroso. Sin embargo, algunos cambios pueden hacerse cancerosos si no reciben tratamiento. Estos son algunos ejemplos de cambios en los tejidos que no son cancerosos pero, en algunos casos, necesitan vigilarse.</p>
+            <p>La hiperplasia ocurre cuando las c&eacute;lulas en un tejido se dividen m&aacute;s r&aacute;pido de lo normal y las c&eacute;lulas adicionales se acumulan o proliferan. Sin embargo, las c&eacute;lulas y la forma como est&aacute; organizado el tejido se ven normales al microscopio. La hiperplasia puede ser causada por varios factores o situaciones, incluso por la irritaci&oacute;n cr&oacute;nica.</p>
+            <p>La displasia es un estado m&aacute;s grave que la hiperplasia. En la displasia hay tambi&eacute;n una acumulaci&oacute;n de c&eacute;lulas adicionales. Pero las c&eacute;lulas se ven anormales y hay cambios en la forma como est&aacute; organizado el tejido. En general, en cuanto m&aacute;s anormales se ven las c&eacute;lulas y el tejido, mayor es la posibilidad de que se forme c&aacute;ncer.</p>
+            <p>Algunos tipos de displasia pueden necesitar que se vigilen o que se traten. Un ejemplo de displasia es un lunar anormal (llamado nevo displ&aacute;sico) que se forma en la piel. Un nevo displ&aacute;sico puede convertirse en melanoma, aunque la mayor&iacute;a no lo hacen.</p>
+            <p>Un estado a&uacute;n m&aacute;s grave es un carcinoma in situ. Aunque a veces se llama c&aacute;ncer, el carcinoma in situ no es c&aacute;ncer porque las c&eacute;lulas anormales no se extienden m&aacute;s all&aacute; del tejido original. Es decir, no invaden tejido del derredor como lo hacen las c&eacute;lulas cancerosas. Pero, ya que algunos carcinomas in situ se convierten en c&aacute;ncer, de ordinario reciben tratamiento.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value:  "Tipos de cáncer"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Hay m&aacute;s de 100 tipos de c&aacute;ncer. Los tipos de c&aacute;ncer reciben, en general, el nombre de los &oacute;rganos o tejidos en donde se forman los c&aacute;nceres. Por ejemplo, el c&aacute;ncer de pulm&oacute;n empieza en las c&eacute;lulas del pulm&oacute;n, y el c&aacute;ncer de cerebro empieza en las c&eacute;lulas del cerebro. Los c&aacute;nceres pueden tambi&eacute;n describirse seg&uacute;n el tipo de c&eacute;lula que los forma, como c&eacute;lula epitelial o c&eacute;lula escamosa.</p>
+            <p>Se puede buscar en el sitio web del Instituto Nacional del C&aacute;ncer informaci&oacute;n sobre los tipos espec&iacute;ficos de c&aacute;ncer bas&aacute;ndose en <a href="/espanol/tipos/por-partes-cuerpo" title="">la ubicaci&oacute;n en el cuerpo</a> o al usar nuestra <a href="/espanol/tipos" title="">lista de c&aacute;nceres de la A a la Z</a>. Tambi&eacute;n tenemos informaci&oacute;n agrupada sobre <a href="/espanol/tipos/infantil">c&aacute;nceres en la ni&ntilde;ez</a> y <a href="/espanol/tipos/adolescentes-adultos-jovenes" title="">c&aacute;nceres en adolescentes y adultos j&oacute;venes</a>.</p>
+            <p>Estas son algunas categor&iacute;as de c&aacute;nceres que empiezan en tipos espec&iacute;ficos de c&eacute;lulas:</p>
+  field_date_posted:
+    value: "2007-09-17"
+  field_date_reviewed:
+    value: "2015-02-15"
+  field_date_updated:
+    value: "2007-03-28"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
+  field_public_use: 1
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
