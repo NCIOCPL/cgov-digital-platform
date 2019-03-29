@@ -11,21 +11,20 @@
  * Prior to saving a node, updates per node metatag values.
  */
 function cgov_metatag_node_presave($entity) {
+  if ($entity->hasField('field_search_engine_restrictions')) {
 
-  $seo_restrictions = $entity->get('field_search_engine_restrictions');
-//
-//  // e.g 'robots' => 'noindex, nofollow, noarchive, nosnippet, noodp'.
-//  if (!empty($seo_restrictions)) {
-//    $restriction = $seo_restrictions->getValue();
-//    if ($restriction[0]['value'] == 'IncludeSearch') {
-//      $entity->set('field_meta_tags', serialize([
-//        'robots' => 'index',
-//      ]));
-//    }
-//    elseif ($restriction[0]['value'] == 'ExcludeSearch') {
-//      $entity->set('field_meta_tags', serialize([
-//        'robots' => 'noindex',
-//      ]));
-//    }
-//  }
+    $restriction = $entity->get('field_search_engine_restrictions')->getValue();
+
+    if ($restriction[0]['value'] == 'IncludeSearch') {
+      // e.g 'robots' => 'noindex, nofollow, noarchive, nosnippet, noodp'.
+      $entity->set('field_meta_tags', serialize([
+        'robots' => 'index',
+      ]));
+    }
+    elseif ($restriction[0]['value'] == 'ExcludeSearch') {
+      $entity->set('field_meta_tags', serialize([
+        'robots' => 'noindex',
+      ]));
+    }
+  }
 }
