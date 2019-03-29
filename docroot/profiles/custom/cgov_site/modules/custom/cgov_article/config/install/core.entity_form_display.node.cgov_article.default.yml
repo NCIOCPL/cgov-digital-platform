@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
@@ -24,12 +25,10 @@ dependencies:
     - field.field.node.cgov_article.field_short_title
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
-    - workflows.workflow.editorial_workflow
   enforced:
     module:
       - cgov_core
   module:
-    - content_moderation
     - datetime
     - entity_browser
     - paragraphs_asymmetric_translation_widgets
@@ -42,7 +41,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 22
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -76,7 +75,7 @@ content:
     region: content
   field_citation:
     type: paragraphs_classic_asymmetric
-    weight: 18
+    weight: 19
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -181,14 +180,14 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 19
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_related_resources:
     type: paragraphs_classic_asymmetric
-    weight: 17
+    weight: 18
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -199,7 +198,7 @@ content:
     third_party_settings: {  }
     region: content
   field_search_engine_restrictions:
-    weight: 20
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -235,13 +234,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 26
+    weight: 27
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 23
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -249,7 +248,7 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 24
+    weight: 25
     region: content
     third_party_settings: {  }
   title:
@@ -261,13 +260,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   translation:
-    weight: 25
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 21
+    weight: 22
     settings:
       match_operator: CONTAINS
       size: 60
@@ -275,5 +274,6 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_meta_tags: true
   promote: true
   sticky: true

@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.pdq_drug_information_summary.body
     - field.field.node.pdq_drug_information_summary.field_date_posted
     - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_meta_tags
     - field.field.node.pdq_drug_information_summary.field_page_description
     - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
     - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
@@ -27,7 +28,7 @@ bundle: pdq_drug_information_summary
 mode: default
 content:
   body:
-    weight: 120
+    weight: 14
     settings:
       rows: 9
       summary_rows: 3
@@ -42,19 +43,19 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
-    weight: 102
+    weight: 10
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 103
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_page_description:
-    weight: 110
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -62,21 +63,21 @@ content:
     type: string_textfield
     region: content
   field_pdq_audio_id:
-    weight: 131
+    weight: 16
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
     region: content
   field_pdq_cdr_id:
-    weight: 106
+    weight: 12
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
     region: content
   field_pdq_pronunciation_key:
-    weight: 132
+    weight: 17
     settings:
       size: 60
       placeholder: ''
@@ -84,7 +85,7 @@ content:
     type: string_textfield
     region: content
   field_pdq_url:
-    weight: 133
+    weight: 18
     settings:
       size: 60
       placeholder: ''
@@ -92,11 +93,10 @@ content:
     type: string_textfield
     region: content
   field_public_use:
-    weight: 130
-    settings:
-      display_label: true
+    weight: 15
+    settings: {  }
     third_party_settings: {  }
-    type: boolean_checkbox
+    type: options_buttons
     region: content
   langcode:
     type: language_select
@@ -160,4 +160,5 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_meta_tags: true

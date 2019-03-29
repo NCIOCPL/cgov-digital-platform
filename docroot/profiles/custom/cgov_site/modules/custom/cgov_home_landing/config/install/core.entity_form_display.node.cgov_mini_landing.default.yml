@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
     - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_mini_landing.field_banner_image
     - field.field.node.cgov_mini_landing.field_browser_title
@@ -15,6 +14,7 @@ dependencies:
     - field.field.node.cgov_mini_landing.field_image_promotional
     - field.field.node.cgov_mini_landing.field_landing_contents
     - field.field.node.cgov_mini_landing.field_list_description
+    - field.field.node.cgov_mini_landing.field_meta_tags
     - field.field.node.cgov_mini_landing.field_page_description
     - field.field.node.cgov_mini_landing.field_pretty_url
     - field.field.node.cgov_mini_landing.field_search_engine_restrictions
@@ -225,5 +225,6 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_meta_tags: true
   promote: true
   sticky: true

@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_blog_series
@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_blog_post.field_image_promotional
     - field.field.node.cgov_blog_post.field_intro_text
     - field.field.node.cgov_blog_post.field_list_description
+    - field.field.node.cgov_blog_post.field_meta_tags
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
@@ -245,6 +246,7 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_meta_tags: true
   promote: true
   status: true
   sticky: true
