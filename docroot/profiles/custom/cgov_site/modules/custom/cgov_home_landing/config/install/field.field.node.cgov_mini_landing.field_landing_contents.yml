@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_landing_contents
     - node.type.cgov_mini_landing
-    - paragraphs.paragraphs_type.cgov_thumbnail_row
+    - paragraphs.paragraphs_type.cgov_list
   module:
     - entity_reference_revisions
 id: node.cgov_mini_landing.field_landing_contents
@@ -23,8 +23,9 @@ settings:
     negate: 0
     target_bundles:
       cgov_two_item_feature_row: cgov_two_item_feature_row
-      cgov_thumbnail_row: cgov_thumbnail_row
+      cgov_list: cgov_list
       cgov_content_block: cgov_content_block
+      cgov_dynamic_list: cgov_dynamic_list
     target_bundles_drag_drop:
       cgov_content_block:
         enabled: true
@@ -41,7 +42,7 @@ settings:
       cgov_secondary_feature_row:
         enabled: false
         weight: -19
-      cgov_thumbnail_row:
+      cgov_list:
         enabled: true
         weight: -18
       cgov_column_one:
@@ -62,4 +63,7 @@ settings:
       cgov_card_raw_html:
         weight: -12
         enabled: false
+      cgov_dynamic_list:
+        enabled: true
+        weight: 24
 field_type: entity_reference_revisions

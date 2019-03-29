@@ -3,17 +3,10 @@
 {% if content.field_external_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
-  {# {% else %}
-    {% set title = content.field_external_link[0]["#node"].title.value %} #}
-  {% endif %}
+  {% set title = content.field_override_title|field_value %}
 
   {# ###### Setup the URL ###### #}
   {% set url = content.field_external_link[0]['#url'] %}
 
-  {# ###### Setup View Mode ######## #}
-  {% set view_mode = _context.view_mode %}
-
-  {{ listItemMacros.listItem(title, null, null, null, url, view_mode) }}
+  {{ listItemMacros.list_item_title(title, url, false) }}
 {% endif %}
