@@ -3,28 +3,19 @@
 {% if content.field_external_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
-  {# {% else %}
-    {% set title = content.field_external_link[0]["#node"].title.value %} #}
-  {% endif %}
+  {% set title = content.field_override_title|field_value %}
 
   {# ###### Setup Description ####### #}
-  {% if content.field_override_list_description[0] %}
-    {% set description = content.field_override_list_description[0] %}
-  {% endif %}
+  {% set description = content.field_override_list_description|field_value %}
 
   {# ###### Setup Img ######## #}
-  {% if content.field_override_promotional_image[0] %}
-    {% set description = content.override_promotional_image %}
+  {% if content.field_override_image_promotional[0] %}
+    {% set image = content.field_override_image_promotional %}
   {% endif %}
 
   {# ###### Setup the URL ###### #}
   {% set url = content.field_external_link[0]['#url'] %}
 
-  {# ###### Setup View Mode ######## #}
-  {% set view_mode = _context.view_mode %}
-
   {## Render List Item ##}
-  {{ listItemMacros.listItem(title, null, description, image, url, view_mode) }}
+  {{ listItemMacros.list_item_title_desc_image(title, description, image, url, true) }}
 {% endif %}

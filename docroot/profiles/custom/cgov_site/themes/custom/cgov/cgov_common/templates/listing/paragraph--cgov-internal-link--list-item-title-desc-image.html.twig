@@ -3,15 +3,15 @@
 {% if content.field_internal_link[0] %}
 
   {# ###### Setup Title ####### #}
-  {% if content.field_override_title[0] %}
-    {% set title = content.field_override_title[0] %}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title|field_value %}
   {% else %}
     {% set title = content.field_internal_link[0]["#node"].title.value %}
   {% endif %}
 
   {# ###### Setup Description ####### #}
-  {% if content.field_override_list_description[0] %}
-    {% set description = content.field_override_list_description[0] %}
+  {% if content.field_override_list_description|field_value %}
+    {% set description = content.field_override_list_description|field_value %}
   {% elseif content.field_internal_link[0]["#node"].field_list_description[0] %}
     {% set description = content.field_internal_link[0]["#node"].field_list_description[0].value %}
   {% elseif content.field_internal_link[0]["#node"].field_page_description[0] %}
@@ -30,9 +30,6 @@
   {# ###### Setup URL ######## #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {# ###### Setup View Mode ######## #}
-  {% set view_mode = _context.view_mode %}
-
   {## Render List Item ##}
-  {{ listItemMacros.listItem(title, null, description, image, url, view_mode) }}
+  {{ listItemMacros.list_item_title_desc_image(title, description, image, url, true) }}
 {% endif %}
