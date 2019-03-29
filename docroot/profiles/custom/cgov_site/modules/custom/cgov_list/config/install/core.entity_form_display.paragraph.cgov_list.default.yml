@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_list.field_list_item_style
+    - field.field.paragraph.cgov_list.field_list_items
+    - field.field.paragraph.cgov_list.field_list_title
+    - paragraphs.paragraphs_type.cgov_list
+  module:
+    - paragraphs
+id: paragraph.cgov_list.default
+targetEntityType: paragraph
+bundle: cgov_list
+mode: default
+content:
+  field_list_item_style:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_list_items:
+    weight: 2
+    settings:
+      title: 'List Item'
+      title_plural: 'List Items'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: cgov_internal_link
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
+    region: content
+  field_list_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

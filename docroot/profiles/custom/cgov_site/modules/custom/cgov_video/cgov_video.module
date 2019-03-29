@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_video.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cgov_video_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // The OEmbed video field attaches it's own label dynamically.
+  // This lets us override that.
+  if ($form_id == 'media_cgov_video_add_form') {
+    // We extract the description made in the UI and override what is generated
+    // by OembedWidget.
+    $userCreatedDescription = $form['field_media_oembed_video']['widget']['#description'];
+    $form['field_media_oembed_video']['widget'][0]['value']['#description'] = $userCreatedDescription;
+  }
+
+}
