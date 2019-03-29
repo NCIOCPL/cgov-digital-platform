@@ -24,7 +24,9 @@ dependencies:
     - image.style.thumbnail
     - media.type.cgov_infographic
   module:
+    - cgov_core
     - image
+    - options
     - text
     - user
 id: media.cgov_infographic.full
@@ -34,20 +36,20 @@ mode: full
 content:
   body:
     type: text_default
-    weight: 0
+    weight: 3
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   content_moderation_control:
-    weight: -20
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   created:
     label: hidden
     type: timestamp
-    weight: 0
+    weight: 2
     region: content
     settings:
       date_format: medium
@@ -56,16 +58,53 @@ content:
     third_party_settings: {  }
   field_accessible_version:
     type: basic_string
-    weight: 0
+    weight: 4
     region: content
     label: hidden
     settings: {  }
+    third_party_settings: {  }
+  field_date_display_mode:
+    type: list_default
+    weight: 10
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_date_posted:
+    type: cgov_date_formatter
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+  field_date_reviewed:
+    type: cgov_date_formatter
+    weight: 8
+    region: content
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+  field_date_updated:
+    type: cgov_date_formatter
+    weight: 7
+    region: content
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
     third_party_settings: {  }
   field_infographic:
     weight: 6
     label: hidden
     settings:
-      image_style: 'cgov_article'
+      image_style: cgov_article
       image_link: ''
     third_party_settings: {  }
     type: image
@@ -82,17 +121,13 @@ content:
   uid:
     label: hidden
     type: author
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   field_browser_title: true
   field_card_title: true
-  field_date_display_mode: true
-  field_date_posted: true
-  field_date_reviewed: true
-  field_date_updated: true
   field_feature_card_description: true
   field_image_promotional: true
   field_list_description: true
