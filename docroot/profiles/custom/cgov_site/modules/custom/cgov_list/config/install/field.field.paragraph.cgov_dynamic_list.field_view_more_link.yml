@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_view_more_link
+    - paragraphs.paragraphs_type.cgov_dynamic_list
+id: paragraph.cgov_dynamic_list.field_view_more_link
+field_name: field_view_more_link
+entity_type: paragraph
+bundle: cgov_dynamic_list
+label: 'View More Link'
+description: 'The page containing the full listing of items.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
