@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
@@ -69,7 +70,7 @@ content:
     region: content
   field_citation:
     type: entity_reference_revisions_entity_view
-    weight: 16
+    weight: 17
     region: content
     label: above
     settings:
@@ -77,7 +78,7 @@ content:
       link: ''
     third_party_settings: {  }
   field_date_display_mode:
-    weight: 13
+    weight: 14
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -159,7 +160,7 @@ content:
     type: string
     region: content
   field_public_use:
-    weight: 17
+    weight: 18
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -167,7 +168,7 @@ content:
     region: content
   field_related_resources:
     type: entity_reference_revisions_entity_view
-    weight: 18
+    weight: 20
     label: above
     settings:
       view_mode: default
@@ -175,7 +176,7 @@ content:
     third_party_settings: {  }
     region: content
   field_search_engine_restrictions:
-    weight: 14
+    weight: 15
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -190,7 +191,7 @@ content:
     type: string
     region: content
   field_site_section:
-    weight: 17
+    weight: 19
     label: hidden
     settings:
       link: true
@@ -204,5 +205,5 @@ content:
     third_party_settings: {  }
 hidden:
   field_image_promotional: true
-  field_public_use: true
+  field_meta_tags: true
   langcode: true
