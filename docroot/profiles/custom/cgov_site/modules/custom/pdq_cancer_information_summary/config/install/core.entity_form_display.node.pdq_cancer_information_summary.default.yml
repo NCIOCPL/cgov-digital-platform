@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_meta_tags
     - field.field.node.pdq_cancer_information_summary.field_page_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
@@ -73,7 +74,7 @@ content:
     type: options_select
     region: content
   field_pdq_url:
-    weight: 27
+    weight: 19
     settings:
       size: 60
       placeholder: ''
@@ -82,10 +83,9 @@ content:
     region: content
   field_public_use:
     weight: 17
-    settings:
-      display_label: true
+    settings: {  }
     third_party_settings: {  }
-    type: boolean_checkbox
+    type: options_buttons
     region: content
   field_short_title:
     weight: 10
@@ -97,7 +97,7 @@ content:
     region: content
   field_summary_sections:
     type: paragraphs_classic_asymmetric
-    weight: 26
+    weight: 18
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -106,6 +106,7 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+    region: content
   langcode:
     type: language_select
     weight: 1
@@ -168,4 +169,5 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_meta_tags: true

@@ -45,6 +45,7 @@ class CGovFieldStorageTest extends KernelTestBase {
     'entity_reference_revisions',
     'paragraphs',
     'editor',
+    'metatag',
   ];
 
   /**
