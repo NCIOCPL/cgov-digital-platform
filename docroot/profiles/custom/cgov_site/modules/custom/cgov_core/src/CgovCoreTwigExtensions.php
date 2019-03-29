@@ -267,15 +267,22 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     list($series_nid, $topic_tid) = $view->args;
 
     if ($series_nid) {
-      // Get Blog Series Name.
-      $node = $this->getTranslatedNodeById($series_nid);
-      if (!$node) {
-        print "<!-- ERROR: No NID $series_nid with '{$this->langid}' Translation -->";
-        return NULL;
+      if ($series_nid == 'all') {
+        $series_name = 'All NCI Blogs';
+        $series_desc = 'All NCI Blog Posts';
+        $series_link = $base_url;
       }
-      $series_name = $node->label();;
-      $series_desc = $node->field_about_blog->value;
-      $series_link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
+      else {
+        // Get Blog Series Name.
+        $node = $this->getTranslatedNodeById($series_nid);
+        if (!$node) {
+          print "<!-- ERROR: No NID $series_nid with '{$this->langid}' Translation -->";
+          return NULL;
+        }
+        $series_name = $node->label();;
+        $series_desc = $node->field_about_blog->value;
+        $series_link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
+      }
     }
 
     if ($topic_tid) {
@@ -298,15 +305,15 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       $desc = $series_desc;
       $link = $series_link;
     }
-    elseif (!$series_nid && $topic_tid) {
+    elseif ((!$series_nid or $series_nid = 'all') && $topic_tid) {
       // All blog posts across all blogs for a Topic.
-      $title = "All blogs on $topic_name";
-      $desc = "Posts on $topic_desc across all NCI blogs";
+      $title = "All blogs on '$topic_name'";
+      $desc = "Posts on '$topic_desc'' across all NCI blogs";
       $link = $base_url;
     }
     else {
       // All posts from a Single blog on a Single Topic.
-      $title = "$series_name posts on $topic_name";
+      $title = "$series_name posts on '$topic_name'";
       $desc = $series_name;
       $link = $series_link;
     }

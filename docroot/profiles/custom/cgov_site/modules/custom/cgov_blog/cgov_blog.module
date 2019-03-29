@@ -64,7 +64,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     $topic = \Drupal::request()->query->get('topic');
 
     // Convert BlogSeries.Shortname to ID.
-    if ($series && !is_numeric($series)) {
+    if ($series && !is_numeric($series) && $series != 'all') {
       $nodes = \Drupal::entityTypeManager()
         ->getStorage('node')
         ->loadByProperties(
@@ -78,7 +78,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     }
 
     // Convert BlogTopic.PrettyUrl to ID.
-    if ($topic && !is_numeric($topic)) {
+    if ($topic && !is_numeric($topic) && $topic != 'all') {
       $terms = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties(
