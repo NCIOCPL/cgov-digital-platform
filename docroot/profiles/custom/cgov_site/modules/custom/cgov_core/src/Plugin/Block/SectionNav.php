@@ -82,12 +82,35 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
   public function getSectionNav() {
     $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
     if ($navRoot) {
-      // TODO: REQUIREMENTS QUESTION
-      // What is the default render depth? I'm just making this up.
+      // The fallback render depth should match the default set by the field
+      // for levels to display on site section Terms.
       $renderDepth = $navRoot->getRenderDepth() ? intval($navRoot->getRenderDepth()) : 5;
       $renderTree = $this->renderNavElement($navRoot, $renderDepth);
       return $renderTree;
     }
+  }
+
+  /**
+   * Generic sorting function to sort by Term weight.
+   *
+   * It's equivalent to reverse sort, since higher weights should
+   * appear first.
+   *
+   * @param \Drupal\cgov_core\NavItem $firstItem
+   *   Nav item.
+   * @param \Drupal\cgov_core\NavItem $secondItem
+   *   Nav item.
+   *
+   * @return int
+   *   Sort result.
+   */
+  public function sortItemsByWeight(NavItem $firstItem, NavItem $secondItem) {
+    $firstWeight = $firstItem->getWeight();
+    $secondWeight = $secondItem->getWeight();
+    if ($firstWeight === $secondWeight) {
+      return 0;
+    }
+    return ($firstWeight < $secondWeight) ? -1 : 1;
   }
 
   /**
@@ -124,6 +147,9 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     $hasChildren = count($childList) > 0;
     $children = [];
     if ($renderDepth > 1 && $hasChildren) {
+      // Give the array a quick shuffle to respect term weights
+      // of children before proceeding with recursive rendering.
+      usort($childList, [$this, "sortItemsByWeight"]);
       $children = array_map(function ($child) use ($renderDepth, $currentLevel) {
         $currentLevel++;
         return $this->renderNavElement($child, $renderDepth - 1, $currentLevel);
