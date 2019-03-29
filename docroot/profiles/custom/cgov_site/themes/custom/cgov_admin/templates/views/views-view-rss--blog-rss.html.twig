@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default template for feed displays that use the RSS style.
+ * Template for use with Blog RSS feeds.
  *
  * Available variables:
  * - link: The link to the feed (the view path).
@@ -17,18 +17,15 @@
  * @ingroup themeable
  */
 #}
-{% set node = get_blog_info(view) %}
-
+{%- set blog_info = get_blog_info(view) -%}
 <?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xml:base="{{ link }}"{{ namespaces }}>
   <channel>
-    <title>{{ title }}</title>
+    <title>{{ blog_info['title'] }}</title>
     <link>{{ link }}</link>
-    <description>{{ description }}</description>
+    <description>{{ blog_info['desc'] }}</description>
     <language>{{ langcode }}</language>
     {{ channel_elements }}
     {{ items }}
   </channel>
 </rss>
-
-{#{{ devel_breakpoint() }}#}
