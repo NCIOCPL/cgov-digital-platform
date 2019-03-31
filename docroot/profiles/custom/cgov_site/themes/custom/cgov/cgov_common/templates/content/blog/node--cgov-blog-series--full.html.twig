@@ -15,7 +15,7 @@
 
       {% if node.field_feedburner_url.value|length > 0 %}
         <div class="subscribeRSS">
-          <a class="blogRSS" href="my-series-url"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+          <a class="blogRSS" href="{{node.field_feedburner_url.value}}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
         </div>
       {% endif %}
 

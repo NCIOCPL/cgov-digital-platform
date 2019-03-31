@@ -1,0 +1,31 @@
+{# Set URL #}
+{% set url = path('entity.node.canonical', {'node':  content.field_featured_item[0]["#node"].nid[0].value}) %}
+
+{# Set image #}
+{% if content.field_override_image_promotional[0] %}
+  {% set img = content.field_override_image_promotional %}
+{% elseif content.field_featured_item[0]["#node"].field_image_promotional[0] %}
+  {% set img = content.field_featured_item[0]["#node"].field_image_promotional.value %}
+{% elseif content.field_featured_item[0]["#node"].field_image_article[0] %}
+  {% set img = content.field_featured_item[0]["#node"].field_image_article.value %}
+{% endif %}
+
+{# Set title #}
+{% if content.field_override_card_title[0] %}
+  {% set title = content.field_override_card_title[0] %}
+{% elseif content.field_featured_item[0]["#node"].field_card_title[0] %}
+  {% set title = content.field_featured_item[0]["#node"].field_card_title[0].value %}
+{% else %}
+  {% set title = content.field_featured_item[0]["#node"].field_short_title[0].value %}
+{% endif %}
+
+<div class="slot-item equalheight large-4 columns card gutter">
+  <div class="feature-card">
+    <a href="{{url}}">
+      <div class="image-hover">
+        {{img}}
+      </div>
+      <h3>{{title}}</h3>
+    </a>
+  </div>
+</div>
