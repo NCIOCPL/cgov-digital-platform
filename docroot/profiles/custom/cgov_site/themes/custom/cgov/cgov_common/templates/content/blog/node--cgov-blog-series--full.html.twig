@@ -1,3 +1,5 @@
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
   {% if not (get.year or get.month) %}
@@ -11,16 +13,22 @@
 
   <div class="resize-content">
     <h1>
-      {{ node.label }}
+      {% if (get.month and get.year) %}
+        {{ blogMacros.transformMonthName(get.month) }}
+      {% endif %}
+      {% if get.year %}
+        {{ get.year }} - 
+      {% endif %}
+      {% if node.label %}
+        {{ node.label }}
+      {% endif %}
     </h1>
     <div id="nvcgSubTitle">
-
       {% if node.field_feedburner_url.value|length > 0 %}
         <div class="subscribeRSS">
           <a class="blogRSS" href="{{node.field_feedburner_url.value}}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
         </div>
       {% endif %}
-
     </div>
     <div id="cgvBody">
       <div class="slot-item first-SI">
