@@ -25,6 +25,7 @@
       {% endif %}
       {{ content.field_intro_text }}
       {{ content.body }}
+      {{ drupal_block('cgov_blog_pager', {label: ''}) }}
     </div>
   </div>
 
@@ -33,9 +34,7 @@
     {% if content.field_recommended_content[0] %}
       <div id="blog-cards">
         <h4>{{ series.field_recommended_content_header.value }}</h4>
-        <div id="nvcgSlLayoutFeatureA" class="row flex-columns">
-          {{ content.field_recommended_content }}
-        </div>
+        {{ content.field_recommended_content }}
       <div>
     {% endif %}
     {% if content.field_public_use %}
