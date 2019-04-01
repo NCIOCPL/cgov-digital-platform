@@ -11,13 +11,135 @@
 // @import "~Core/styles/hero";
 // @import "~Core/styles/cards";
 
+.clearfix {
+  zoom: 1;
+  &:after {
+    clear: both;
+  }
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+}
+
 // Creates a flex wrapper for elements with equalheight class to hook on
 #content .flex-columns {
   display: flex;
   float: none;
 }
 
+.card {
+  padding: .9375em;
+  margin-bottom: 1em;
+  border: 1px solid $yetAnotherGrey;
+  background-color: $white;
+  box-shadow: 0 0 9px 1px rgba($black,.15);
+}
+
+.feature-primary {
+  .card {
+    padding: 0;
+  }
+}
+
+.feature-card {
+
+  h3 {
+    margin-top: 0;
+    font-weight: normal;
+    color: #2b7bba;
+    font-size: 1.2em;
+    line-height: 1.2;
+  }
+  div {
+    margin-bottom: 1em;
+  }
+  a {
+    padding: 1.875em;
+    display: block;
+    @extend .clearfix;
+
+    &:hover {
+      text-decoration: none;
+      .image-hover img {
+        opacity: .8;
+      }
+    }
+  }
+  p {
+    line-height: 1.375;
+    font-size: 0.9em;
+    color: #757575;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .image-hover {
+		position: relative;
+	}
+
+}
+
+.infographic {
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+
+  figcaption {
+    padding: 0.5em 1em;
+  }
+}
+
+.infographic-enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
+
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
+
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: .6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+}
+
 @include bp(small) {
+  .feature-primary {
+    flex-direction: column;
+    .card {
+      margin: 1.25em 0;
+    }
+  }
+  .feature-card {
+
+    a {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .image-hover {
+      float: left;
+      width: 30%;
+    }
+    h3, p {
+      float: right;
+      width: 68%;
+    }
+  }
   .card-thumbnail img {
     display: none;
   }
@@ -65,40 +187,6 @@
   }
 }
 
-.infographic {
-  position: relative;
-  /* allows for appearance of equal height cards on home page */
-  background: $white;
 
-  figcaption {
-    padding: 0.5em 1em;
-  }
-}
-
-.infographic-enlarge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: $white;
-
-  a {
-    position: relative;
-    color: $white;
-    padding: 1em 2em 1em 1em;
-    display: block;
-    /* TODO: add this image to the sprite */
-    background-color: #403f3f;
-    @extend %card-link-hover;
-
-    &::before {
-      @include svg-sprite(chevron-white);
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: .6em;
-      transform: translateY(-50%) rotate(90deg);
-    }
-  }
-}
 
 /********************* END Mini Landing Page Styles ******************************************/
