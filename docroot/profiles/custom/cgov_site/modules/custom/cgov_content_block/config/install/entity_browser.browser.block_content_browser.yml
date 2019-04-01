@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.block_content_browser
+  module:
+    - views
+name: block_content_browser
+label: 'Block Content Browser'
+display: iframe
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: true
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  4f8eb783-493e-4905-9ea7-c829d5a2640f:
+    settings:
+      view: block_content_browser
+      view_display: entity_browser_1
+      submit_text: 'Select block'
+      auto_select: false
+    uuid: 4f8eb783-493e-4905-9ea7-c829d5a2640f
+    weight: 1
+    label: Select
+    id: view
