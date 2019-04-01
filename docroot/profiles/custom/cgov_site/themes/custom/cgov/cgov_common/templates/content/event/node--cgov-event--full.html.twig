@@ -8,41 +8,45 @@
     {{ drupal_block('page_options') }}
 
     <div id="cgvBody">
-    <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
-      {{ content.field_image_article }}
-    </div>
-    {{ content.field_event_series }}
+      <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
+        {{ content.field_image_article }}
+      </div>
+      {{ content.field_event_series }}
 
-    <p class="event-date-time">
-      {# TODO: Update this with a better way to print dates! #}
-      {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
-        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
-      {% else %}
-        {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
-        {% if content.field_all_day_event[0]['#markup'] == "Off" %}
-          <br/>
-          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('h:i A') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('h:i A') }}
-        {% endif %}
-      {% endif %}
-    </p>
-
-    {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
-      <p class="event-location">
-        {% if content.field_venue|field_value %}
-          <span class="event-location-venue">{{ content.field_venue }}</span>
-        {% endif %}
-        {% if content.field_city_state|field_value %}
-          <span class="event-location-city-state">{{ content.field_city_state }}</span>
-        {% endif %}
-        {% if content.field_room|field_value %}
-          <span class="event-location-room">{{ content.field_room }}</span>
+      <p class="event-date-time">
+        {# TODO: Update this with a better way to print dates! #}
+        {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
+          {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y') %}
+            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+          {% else %}
+            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+          {% endif %}
+        {% else %}
+          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
+          {% if content.field_all_day_event[0]['#markup'] == "Off" %}
+            <br/>
+            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('h:i A') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('h:i A') }}
+          {% endif %}
         {% endif %}
       </p>
-    {% endif %}
 
-    {# TODO: .ics link creation
-      <p>Add to Outlook Calendar</p>
-    #}
+      {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
+        <p class="event-location">
+          {% if content.field_venue|field_value %}
+            <span class="event-location-venue">{{ content.field_venue }}</span>
+          {% endif %}
+          {% if content.field_room|field_value %}
+            <span class="event-location-room">{{ content.field_room }}</span>
+          {% endif %}
+          {% if content.field_city_state|field_value %}
+            <span class="event-location-city-state">{{ content.field_city_state }}</span>
+          {% endif %}
+        </p>
+      {% endif %}
+
+      <p>
+        <a href="/node/{{ node.id }}/icalendar">Add to Outlook Calendar</a>
+      </p>
 
       {{ content.body }}
     </div>

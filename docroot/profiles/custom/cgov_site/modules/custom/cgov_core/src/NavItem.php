@@ -202,6 +202,16 @@ class NavItem {
   }
 
   /**
+   * Retrieve Term weight.
+   *
+   * @return int
+   *   Term weight.
+   */
+  public function getWeight() {
+    return $this->term->getWeight();
+  }
+
+  /**
    * Retrieve raw megamenu html markup.
    *
    * The markup for megamenus are stored in content
