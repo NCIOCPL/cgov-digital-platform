@@ -3,21 +3,12 @@ status: true
 dependencies:
   config:
     - block_content.type.cgov_video_carousel
-    - field.field.block_content.cgov_video_carousel.field_cgov_video_carousel_title
     - field.field.block_content.cgov_video_carousel.field_youtube_playlist_id
 id: block_content.cgov_video_carousel.default
 targetEntityType: block_content
 bundle: cgov_video_carousel
 mode: default
 content:
-  field_cgov_video_carousel_title:
-    weight: 0
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_youtube_playlist_id:
     weight: 1
     label: hidden
