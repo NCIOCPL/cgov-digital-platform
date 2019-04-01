@@ -56,6 +56,42 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
       $view->setItemsPerPage($node->field_num_display_posts->value);
     }
   }
+
+  // Allow replacement of contextual filters arguments.
+  // Can use ?series=cancer-currents&topic=clinical-trial-results .
+  if ($view->id() == 'blog_rss') {
+    $series = \Drupal::request()->query->get('series');
+    $topic = \Drupal::request()->query->get('topic');
+
+    // Convert BlogSeries.Shortname to ID.
+    if ($series && !is_numeric($series) && $series != 'all') {
+      $nodes = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->loadByProperties(
+            ['field_blog_series_shortname' => $series]
+        );
+      // Get first array key.
+      reset($nodes);
+      $nid = key($nodes);
+      // Store NID as the first contextual filter argument.
+      $view->args[0] = (int) $nid;
+    }
+
+    // Convert BlogTopic.PrettyUrl to ID.
+    if ($topic && !is_numeric($topic) && $topic != 'all') {
+      $terms = \Drupal::entityTypeManager()
+        ->getStorage('taxonomy_term')
+        ->loadByProperties(
+            ['field_pretty_url' => $topic]
+        );
+      // Get first array key.
+      reset($terms);
+      $tid = key($terms);
+      // Store NID as the first contextual filter argument.
+      $view->args[1] = (int) $tid;
+    }
+
+  }
 }
 
 /**
