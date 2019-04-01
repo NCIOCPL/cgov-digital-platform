@@ -2,14 +2,14 @@
 
   {% if content['#prev_nid'] is not empty %}
     <div class='blog-post-older'>
-      <a href="{{ content['#prev_link'] }}">&lt; {% trans %}Previous post{% endtrans %}</a>
+      <a href="{{ content['#prev_link'] }}">&lt; {% trans %}Older Post{% endtrans %}</a>
       <p><i>{{ content['#prev_title'] }}</i></p>
     </div>
   {% endif %}
 
   {% if content['#next_nid'] is not empty %}
     <div class='blog-post-newer'>
-      <a href="{{ content['#next_link'] }}">{% trans %}Next Post{% endtrans %} &gt;</a>
+      <a href="{{ content['#next_link'] }}">{% trans %}Newer Post{% endtrans %} &gt;</a>
       <p><i>{{ content['#next_title'] }}</i></p>
     </div>
   {% endif %}

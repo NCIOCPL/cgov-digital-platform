@@ -1,5 +1,7 @@
-<div id="nvcgSlLayoutFeatureA" class="row flex-columns">
-  {% for item in items %}
-    {{ item.content }}
-  {% endfor %}
-</div>
+{% if items|length > 0 %}
+  <div id="nvcgSlLayoutFeatureA" class="row flex-columns">
+    {% for item in items %}
+      {{ item.content }}
+    {% endfor %}
+  </div>
+{% endif %}
