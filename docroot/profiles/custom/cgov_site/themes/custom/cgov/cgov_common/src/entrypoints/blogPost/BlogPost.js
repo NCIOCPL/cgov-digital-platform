@@ -1,4 +1,5 @@
 import "./BlogPost.scss";
+import $ from 'jquery';
 import { doAccordion } from 'Core/libraries/accordion/accordion';
 
 const initializeAccordions = () => {
