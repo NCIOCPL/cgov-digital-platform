@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.embedded_feature_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
+    - entity_browser.browser.cgov_embedded_content_browser
+  module:
+    - entity_embed
+    - node
+label: 'Insert Featured Content'
+id: cgov_featured_content_button
+type_id: entity
+type_settings:
+  entity_type: node
+  bundles: {  }
+  display_plugins:
+    - 'view_mode:node.embedded_feature_card'
+    - 'view_mode:node.embedded_feature_card_no_image'
+  entity_browser: cgov_embedded_content_browser
+  entity_browser_settings:
+    display_review: false
+icon_uuid: null
