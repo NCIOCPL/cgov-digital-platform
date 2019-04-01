@@ -9,11 +9,13 @@
 # Get the content author or default to 'NCI Staff' if none found.
 # @param content
 #}
-{% macro getAuthor(content) %}
+{% macro getByline(content) %}
   {% if content.field_author and content.field_author|length > 2 %}
+    {% spaceless %}{{content.field_date_posted}}{% endspaceless %},
+    {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
     {{content.field_author}}
   {% else %}
-    {% trans with {'context': 'CGov Blog' } %}NCI Staff{% endtrans %}
+    {{content.field_date_posted}}
   {% endif %}
 {% endmacro %}
 

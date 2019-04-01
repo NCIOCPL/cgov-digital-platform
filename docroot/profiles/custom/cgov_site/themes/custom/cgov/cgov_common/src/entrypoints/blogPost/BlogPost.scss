@@ -2,3 +2,65 @@
 @import "~Core/styles/mixins";
 @import "~Core/styles/breakpoints";
 @import "~Core/styles/blogs";
+
+.card {
+  padding: .9375em;
+  margin-bottom: 1em;
+  border: 1px solid $yetAnotherGrey;
+  background-color: $white;
+  box-shadow: 0 0 9px 1px rgba($black,.15);
+}
+
+.feature-card {
+
+  h3 {
+    margin-top: 0;
+    font-weight: normal;
+    color: #2b7bba;
+    font-size: 0.95em;
+    line-height: 1.272;
+  }
+  div {
+    margin-bottom: 1em;
+  }
+  a {
+    display: inline-block;
+
+    &:hover {
+      text-decoration: none;
+      .image-hover img {
+        opacity: .8;
+      }
+    }
+  }
+  p {
+    line-height: 1.375;
+    font-size: 0.9em;
+    color: #757575;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .image-hover {
+		position: relative;
+	}
+  
+}
+
+@include bp(large-up){
+	.row.hero-slot {
+		max-width: 1350px;
+	}
+	.row .large-4.gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 2%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+	}
+}
