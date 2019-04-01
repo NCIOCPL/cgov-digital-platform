@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.feature_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
@@ -27,10 +27,10 @@ dependencies:
     - cgov_core
     - options
     - user
-id: node.cgov_article.feature_card
+id: node.cgov_article.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_article
-mode: feature_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
     weight: 2
@@ -48,24 +48,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 1
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
   field_short_title:
     weight: 3
     label: hidden
@@ -83,6 +65,8 @@ hidden:
   field_date_posted: true
   field_date_reviewed: true
   field_date_updated: true
+  field_image_article: true
+  field_image_promotional: true
   field_intro_text: true
   field_list_description: true
   field_page_description: true
