@@ -1,4 +1,6 @@
 {% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+{% set series = node.field_blog_series.entity %}
+
 <!-- ********************************* BEGIN Blog Post Page Full Content ********************************** -->
 <article>
   <div class="resize-content">
@@ -6,14 +8,15 @@
       {{ node.label }}
     </h1>
     <div id="nvcgSubTitle">
-      <div class="subscribeRSS"><a class="blogRSS" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"><span>Subscribe</span></a></div>
+      {% if series.field_feedburner_url.value %}
+        <div class="subscribeRSS">
+          <a class="blogRSS" href="{{ series.field_feedburner_url.value }}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+        </div>
+      {% endif %}
     </div>
-
     <div id="cgvBody">
       <p class="blog-post-publishing-info">
-        {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
-        {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
-        {{ blogMacros.getAuthor(content) }}
+        {{ blogMacros.getByline(content) }}
       </p>
       {% if content.field_image_article[0] %}
       <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
@@ -22,7 +25,7 @@
       {% endif %}
       {{ content.field_intro_text }}
       {{ content.body }}
-      {# <i>Debug content.field_blog_series: {{ content.field_blog_series }}</i><br/> #}
+      {{ drupal_block('cgov_blog_pager', {label: ''}) }}
     </div>
   </div>
 
@@ -30,13 +33,13 @@
     {{ content.field_related_resources }}
     {% if content.field_recommended_content[0] %}
       <div id="blog-cards">
-        <h4>{{ node.field_blog_series.entity.field_recommended_content_header.value }}</h4>
-        <div id="nvcgSlLayoutFeatureA" class="row flex-columns">
-          {{ content.field_recommended_content }}
-        </div>
+        <h4>{{ series.field_recommended_content_header.value }}</h4>
+        {{ content.field_recommended_content }}
       <div>
     {% endif %}
-    {#{{ content.field_public_use }}#}
+    {% if content.field_public_use %}
+      {{ content.field_public_use }}
+    {% endif %}
   </footer>
 </article>
 <!-- ********************************* END Blog Post Page Full Content ********************************** -->

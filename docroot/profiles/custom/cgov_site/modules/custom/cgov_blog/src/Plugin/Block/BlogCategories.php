@@ -75,20 +75,31 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   }
 
   /**
-   * Draw categories.
+   * Draw category (topic) links.
    *
    * {@inheritdoc}
    */
   private function drawBlogCategories() {
-    $catlist = [];
-
-    // ToDO: Add null check.
+    $category_links = [];
+    // Get all of the associated categories and build URL paths for this series.
     $categories = $this->blogManager->getSeriesCategories();
     foreach ($categories as $cat) {
-      $name = $cat->name;
-      $catlist[$name] = strtolower($name);
+      $pretty_url = $this->getCategoryUrl($cat->tid);
+      $category_links[$cat->name] = $pretty_url;
     }
-    return $catlist;
+    return $category_links;
+  }
+
+  /**
+   * Get the pretty URL for a single taxonomy term.
+   *
+   * @param string $tid
+   *   A taxonomy ID.
+   */
+  private function getCategoryUrl($tid) {
+    $path = $this->blogManager->getSeriesPath();
+    $pretty_url = $this->blogManager->getTaxonomyStorage()->load($tid)->get('field_pretty_url')->value;
+    return $path . '/' . $pretty_url;
   }
 
 }

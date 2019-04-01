@@ -83,7 +83,7 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
         $featured[$i] = [
           'title' => $node->title->value,
           'href' => $this->blogManager->getBlogPathFromNid($node->id()),
-          'date' => $node->field_date_posted->value,
+          'date' => $node->field_date_posted->date->format('F j, Y'),
           'author' => $node->field_author->value,
         ];
         $i++;

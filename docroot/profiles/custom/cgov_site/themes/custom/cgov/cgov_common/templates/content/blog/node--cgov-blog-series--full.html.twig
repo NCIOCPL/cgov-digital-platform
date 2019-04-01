@@ -1,20 +1,35 @@
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
-  <div id="cgvBodyHeader" class="row banner-slot">
-    <div class="slot-item only-SI large-12 columns body-banner">
-      <a name="NCI+Update+Blog+Banner"></a>
-      <div class="blog body-banner">{{ content.field_banner_image }}</div>
+  {% if not (get.year or get.month) %}
+    <div id="cgvBodyHeader" class="row banner-slot">
+      <div class="slot-item only-SI large-12 columns body-banner">
+        <a name="NCI+Update+Blog+Banner"></a>
+        <div class="blog body-banner">{{ content.field_banner_image }}</div>
+      </div>
     </div>
-  </div>
-  
+  {% endif %}
+
   <div class="resize-content">
     <h1>
-      {{ node.label }}
+      {% if (get.month and get.year) %}
+        {{ blogMacros.transformMonthName(get.month) }}
+      {% endif %}
+      {% if get.year %}
+        {{ get.year }} - 
+      {% endif %}
+      {% if node.label %}
+        {{ node.label }}
+      {% endif %}
     </h1>
     <div id="nvcgSubTitle">
-      <div class="subscribeRSS"><a class="blogRSS" href="#subscribe"><span>Subscribe</span></a></div>
+      {% if node.field_feedburner_url.value|length > 0 %}
+        <div class="subscribeRSS">
+          <a class="blogRSS" href="{{node.field_feedburner_url.value}}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+        </div>
+      {% endif %}
     </div>
-
     <div id="cgvBody">
       <div class="slot-item first-SI">
         <div>
@@ -35,9 +50,7 @@
 
   <footer class="article-footer">
     {{ content.field_related_resources }}
-    {% if node.field_public_use.value == '1' %}
-      {{ drupal_region('public_use') }}
-    {% endif %}
+    {#{ drupal_region('public_use') }#}
   </footer>
 </article>
 <!-- ********************************* END Series Page Full Content ********************************** -->
