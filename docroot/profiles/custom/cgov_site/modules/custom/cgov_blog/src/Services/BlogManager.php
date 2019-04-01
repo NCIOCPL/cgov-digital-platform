@@ -133,7 +133,8 @@ class BlogManager implements BlogManagerInterface {
    */
   public function getSeriesId() {
     $series = $this->getSeriesEntity();
-    return $series->id();
+    $series_id = (!empty($series->id())) ? $series->id() : '';
+    return $series_id;
   }
 
   /**
@@ -149,8 +150,12 @@ class BlogManager implements BlogManagerInterface {
    * Get the Blog Featured content nodes.
    */
   public function getSeriesFeaturedPosts() {
+    $featured_posts = [];
     $series = $this->getSeriesEntity();
-    return $series->field_featured_posts->referencedEntities();
+    if (!empty($series->field_featured_posts)) {
+      $featured_posts = $series->field_featured_posts->referencedEntities();
+    }
+    return $featured_posts;
   }
 
   /**

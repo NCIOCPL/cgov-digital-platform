@@ -30,3 +30,19 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     $suggestions[] = 'page__' . $content_type;
   }
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function cgov_common_preprocess_node(&$variables) {
+  // URL query parameters.
+  $params = [
+    'month',
+    'year',
+  ];
+
+  // Add any parameter values to the $variables get property.
+  foreach ($params as $param) {
+    $variables['get'][$param] = isset($_GET[$param]) ? $_GET[$param] : '';
+  }
+}
