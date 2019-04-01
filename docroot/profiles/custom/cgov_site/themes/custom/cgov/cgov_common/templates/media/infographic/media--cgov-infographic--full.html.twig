@@ -1,26 +1,34 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-{# {{ devel_breakpoint() }} #}
-    <div class="resize-content">
-        <h1>
-          {{ name }}
-        </h1>
-        {{ drupal_block('page_options') }}
-        <div id="cgvBody">
-          {{ content.body }}
+  <div class="resize-content">
+    <h1>{{ name }}</h1>
+    {{ drupal_block('page_options') }}
+    
+    <div id="cgvBody">
+      {{ content.body }}
 
-          <figure class="image-center-full centered-set">
-              <div class="centered-element">
-                  {{ content.field_infographic }}
-                  {% if content.enlarge_uri[0] %}
-                    <a  href="{{content.enlarge_uri[0]}}"
-                        target="_blank"
-                        class="article-image-enlarge no-resize"
-                    >{% trans %}Enlarge{% endtrans %}</a>
-                  {% endif %}
-              </div>
-          </figure>
-
+      <figure class="image-center-full centered-set">
+        <div class="centered-element">
+          {{ content.field_infographic }}
+            {% if content.enlarge_uri|field_value %}
+              <a
+                href="{{- content.enlarge_uri|field_value -}}"
+                target="_blank"
+                class="article-image-enlarge no-resize">
+                {% trans %}Enlarge{% endtrans %}
+              </a>
+            {% endif %}
         </div>
+      </figure>
+
+      <footer>
+        {{ contentPageMacros.displayDates(media,content) }}
+        {% if node.field_public_use.value == '1' %}
+          {{ drupal_region('public_use') }}
+        {% endif %}
+      </footer>
     </div>
+  </div>
 </article>
