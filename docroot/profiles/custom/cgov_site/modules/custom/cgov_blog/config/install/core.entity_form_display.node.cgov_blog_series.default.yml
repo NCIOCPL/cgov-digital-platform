@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_content_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_archive_back_years
@@ -116,6 +116,7 @@ content:
       field_widget_edit: false
       field_widget_replace: false
       open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
@@ -210,7 +211,7 @@ content:
   field_site_section:
     weight: 1
     settings:
-      entity_browser: cgov_content_browser
+      entity_browser: cgov_site_section_browser
       field_widget_display: label
       field_widget_edit: true
       field_widget_remove: true
