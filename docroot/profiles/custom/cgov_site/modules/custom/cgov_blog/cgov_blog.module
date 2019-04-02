@@ -22,12 +22,12 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 
     // Add Drupal JS settings.
     // TODO: Add selector settings.
-    $id_pairs = get_id_pairs($form);
+    $id_pairs = _get_id_pairs($form);
     $form['#attached']['drupalSettings']['adminJS']['idPairs'] = $id_pairs;
-    $form['#attached']['drupalSettings']['adminJS']['selectable'] = is_selectable($form);
+    $form['#attached']['drupalSettings']['adminJS']['selectable'] = _is_selectable($form);
 
     // If this is a draft or administrator role, fire off ajax function.
-    if (is_selectable($form)) {
+    if (_is_selectable($form)) {
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
     }
     else {
@@ -49,8 +49,9 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
  * Implements hook_views_pre_view().
  */
 function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+
   // If this is a list in a Blog Series, use 'items per page' field.
-  if ($display_id == 'block_bp_list' || $display_id == 'block_bp_list_th') {
+  if ($view->id() == 'cgov_block_blog_posts') {
     $node = Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
     if ($node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
       $view->setItemsPerPage($node->field_num_display_posts->value);
@@ -59,7 +60,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
 
   // Allow replacement of contextual filters arguments.
   // Can use ?series=cancer-currents&topic=clinical-trial-results .
-  if ($view->id() == 'blog_rss') {
+  if ($view->id() == 'blog_rss' || $view->id() == 'cgov_block_blog_posts') {
     $series = \Drupal::request()->query->get('series');
     $topic = \Drupal::request()->query->get('topic');
 
@@ -97,7 +98,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
 /**
  * Get an array of all taxonomy/owner blog pairs.
  */
-function get_id_pairs(array $form) {
+function _get_id_pairs(array $form) {
 
   // Get the list of topics (categories) from the vocabulary ID.
   $vid = 'cgov_blog_topics';
@@ -114,17 +115,10 @@ function get_id_pairs(array $form) {
 }
 
 /**
- * Set change rules for Blog Series dropdown.
+ * Check if the current form is in the draft or review state.
  */
-function is_selectable(array $form) {
-  // Check for the draft state.
+function _is_selectable(array $form) {
   $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
   $selectable = ($curr_state == 'draft' || $curr_state == 'review') ? TRUE : FALSE;
-
-  // Check for user role.
-  $curr_roles = \Drupal::currentUser()->getRoles();
-  if (in_array('advanced_editor', $curr_roles) || in_array('site_admin', $curr_roles)) {
-    $selectable = TRUE;
-  }
   return $selectable;
 }
