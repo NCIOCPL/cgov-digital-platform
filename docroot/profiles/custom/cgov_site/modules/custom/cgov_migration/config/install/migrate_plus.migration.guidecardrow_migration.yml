@@ -23,10 +23,14 @@ source:
          selector: field_content_heading
 
         -
+         name: field_guide_card
+         label: field_guide_card
+         selector: field_guide_card
+
+        -
          name: field_guide_cards
          label: field_guide_cards
          selector: field_guide_cards
-
 
 
   ids:
@@ -42,17 +46,39 @@ process:
  temp_text:
     plugin: migration_lookup
     migration: rawhtml_migration
-
     no_stub: true
     source: field_guide_cards
 
- field_row_cards:
+ field_guide_cards:
     plugin: iterator
     source: '@temp_text'
 
     process:
       target_id: '0'
       target_revision_id: '1'
+
+
+ field_guide_cards/target_id:
+    -
+      plugin: migration_lookup
+      migration: rawhtml_migration
+      no_stub: true
+      source: field_guide_card
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_guide_cards/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: rawhtml_migration
+      no_stub: true
+      source: field_guide_card
+    -
+      plugin: extract
+      index:
+        - 1
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'
