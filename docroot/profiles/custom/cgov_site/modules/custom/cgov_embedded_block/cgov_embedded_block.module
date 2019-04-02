@@ -87,32 +87,20 @@ function cgov_embedded_block_block_content_view_alter(array &$build, EntityInter
  * Preprocess function for block content template.
  */
 function template_preprocess_block_content(&$variables) {
-  $variables['content'] = [];
   $content = [];
 
-  // Element::children will throw errors if it encounters items that
-  // are not expected. Removing those elements that do not match that
-  // basic condition. I do not want to copy the entire logic though,
-  // so we will continue to pass a subset to Element::children.
-  // See core/lib/Drupal/Core/Render/Element.php.
-  $good_elements = [];
-  foreach ($variables as $key => $value) {
-    // Condensed test from Element.php.
-    $isBadElem = (
-      ($key === '' || $key[0] !== '#') &&
-      (!is_array($value) && isset($value))
-    );
-
-    if (!$isBadElem) {
-      $good_elements[$key] = $value;
-    }
-  }
-
   // Copy out the render elements into the context object.
-  foreach (Element::children($good_elements) as $key) {
-    $content[] = $good_elements[$key];
+  $elements = $variables['elements'];
+  foreach (Element::children($elements) as $key) {
+    $content[$key] = $elements[$key];
   }
   $variables['content'] = $content;
+
+  // Make the block_description optionally available as {{ block_description }}
+  // in templates.
+  $block = $variables['elements']['#block_content'];
+  $block_description = $block->label();
+  $variables['block_description'] = $block_description;
 
   // Remove quick edit as it doesn't make sense here. It also points to the view
   // for instance, which doesn't make sense at all.
