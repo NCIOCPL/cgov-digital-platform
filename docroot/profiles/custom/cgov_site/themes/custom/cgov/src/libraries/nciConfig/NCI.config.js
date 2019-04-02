@@ -77,3 +77,5 @@ export const CDN = {
   jquery: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js',
   select2: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js'
 }
+
+export const GoogleAPIKey = 'AIzaSyB0DtmqLHmCLjAMjGfNh9myktZYz2-yIfg';
