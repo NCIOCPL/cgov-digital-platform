@@ -78,4 +78,4 @@ export const CDN = {
   select2: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js'
 }
 
-export const GoogleAPIKey = 'AIzaSyB0DtmqLHmCLjAMjGfNh9myktZYz2-yIfg';
+export const GoogleAPIKey = 'AIzaSyDsdm3m4gU9wYhjE0zlW8Drok_8daXv7ic';
