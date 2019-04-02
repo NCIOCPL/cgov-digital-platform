@@ -61,7 +61,7 @@
   </div><!-- END Global nav/utility bar/language -->
 
     <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content" id="content" tabindex="0">
+  <div class="main-content {{ (node.field_audience.value == "patient")? 'cthp-patient-content' : 'cthp-hp-content' }}" id="content" tabindex="0">
     <div class="row">
         <div class="large-12 columns">
         {{ page.breadcrumb }}
