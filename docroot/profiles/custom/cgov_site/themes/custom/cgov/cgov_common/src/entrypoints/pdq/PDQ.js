@@ -19,8 +19,11 @@ document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
 /* TODO: create a field in the content type for 'hp-patient-toggle-link' */
 const moveToggle = () => {
   const toggle = document.querySelector('.pdq-hp-patient-toggle', '#cgvBody');
-  const pageTitle = document.querySelector('h1', '#main');
-  pageTitle.insertAdjacentElement('afterend',toggle);
+  if(toggle) {
+    const pageTitle = document.querySelector('h1', '#main');
+    pageTitle.insertAdjacentElement('afterend',toggle);
+
+  }
 };
 
 /* TODO: create an object or field on the content type that holds In This Section link structure */
