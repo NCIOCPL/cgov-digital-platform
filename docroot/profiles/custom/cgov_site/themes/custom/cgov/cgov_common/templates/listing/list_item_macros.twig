@@ -2,34 +2,148 @@
 /**
  * @file
  * Theme macros for displaying list items.
+ *
+ * Trying to account for all the various stylings of list items is
+ * challenging. So this macros file does not attempts to unify the
+ * each style into one method, but provides a method for each style
+ * so that nodes, internal, & external paragraph links can generate
+ * the same markup, and at least reduce duplication for the same
+ * style. (In a perfect world, and we will try, Views should call
+ * this as well.)
  */
 #}
 
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{#
+  Title only lists.
 
-{% macro listItem(title, date, description, image, url, view_mode) %}
-  <li class="general-list-item general list-item">
-    {% if 'image' in view_mode %}
-      <div class="list-item-image image container">
-				<a class="item-image image" href="{{ url }}">
-          {{ image }}
-			  </a>
-      </div>
-    {% endif %}
+  Used in:
+    * Managed Lists
+    * Related Resources
+    * CTHP Guide Card More Information
+    * CTHP Cancer Research Card
+#}
+{% macro list_item_title(title, url, has_title_heading) %}
+  <li class="general-list-item general list-item title-only">
+    {{ _self._output_list_title(title, url, has_title_heading) }}
+  </li>
+{% endmacro %}
+
+{#
+  Title and Description.
+
+  Used in:
+    * Managed Lists
+#}
+{% macro list_item_title_desc(title, description, url, has_title_heading) %}
+  <li class="general-list-item general list-item title-desc">
     <div class="title-and-desc title desc container">
-      <a class="title" href="{{ url }}">
-        {{ title }}, {{ view_mode }}
-      </a>
-      {% if 'desc' in view_mode or 'date' in view_mode and (description or date) %}
-      <div class="description">
-        {% if 'date' in view_mode and date %}
-          <div class="date">{{ date }}</div>
-        {% endif %}
-        {% if description %}
-          <p class="body"> {{ description }}</p>
-        {% endif %}
-      </div>
-      {% endif %}
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(description, null) }}
     </div>
   </li>
+{% endmacro %}
+
+{#
+  Title, description, and image.
+
+  Used in:
+    * Managed Lists
+
+  (Replaces old "Thumbnail Card" as well)
+#}
+{% macro list_item_title_desc_image(title, description, image, url, has_title_heading) %}
+  <li class="general-list-item general list-item has-media">
+    {{ _self._output_list_image(image, url) }}
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(description, null) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title and date.
+
+  Used in:
+    * Press Release Archive View
+#}
+{% macro list_item_title_date(title, date, url, has_title_heading) %}
+  <li class="general-list-item general list-item title-desc">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(null, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title, date, and description.
+
+  Used in:
+    * Cancer Research Pages
+#}
+{% macro list_item_title_date_desc(title, date, description, url, has_title_heading) %}
+  <li class="general-list-item general list-item title-desc">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(description, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title, description, and image.
+
+  Used in:
+    * News & Events Press Release Listing View
+#}
+{% macro list_item_title_date_desc_image(title, date, description, image, url, has_title_heading) %}
+  <li class="general-list-item general list-item has-media">
+    {{ _self._output_list_image(image, url) }}
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(description, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+
+{############################
+         Components
+#############################}
+
+{#
+  Outputs the list item's image
+ #}
+{% macro _output_list_image(image, url) %}
+    {% if image %}
+      <div class="list-item-image image container">
+        <a class="item-image image" href="{{ url }}">{{- image -}}</a>
+      </div>
+    {% endif %}
+{% endmacro %}
+
+{#
+  Outputs the list item's title
+ #}
+{% macro _output_list_title(title, url, has_title_heading) %}
+  {% if has_title_heading %}<h3>{% endif %}
+  <a class="title" href="{{ url }}">
+    {{- title -}}
+  </a>
+  {% if has_title_heading %}</h3>{% endif %}
+{% endmacro %}
+
+{#
+  Outputs the list item's description and/or date.
+ #}
+{% macro _output_list_desc_date(description, date) %}
+  <div class="description">
+    {% if date %}
+      <div class="date">{{ date }}</div>
+    {% endif %}
+    {% if description %}
+      <p class="body">{{ description }}</p>
+    {% endif %}
+  </div>
 {% endmacro %}
