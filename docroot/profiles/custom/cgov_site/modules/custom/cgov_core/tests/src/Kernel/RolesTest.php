@@ -3,6 +3,7 @@
 namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests the my custom service.
@@ -43,12 +44,14 @@ class RolesTest extends EntityKernelTestBase {
     'token',
     'token_filter',
     'editor',
+    'metatag',
   ];
 
   /**
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setup();
     $this->installEntitySchema('block_content');
     $this->installEntitySchema('content_moderation_state');
@@ -79,6 +82,7 @@ class RolesTest extends EntityKernelTestBase {
       'token',
       'token_filter',
       'editor',
+      'metatag',
     ]);
   }
 

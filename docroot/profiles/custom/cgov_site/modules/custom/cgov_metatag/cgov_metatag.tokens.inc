@@ -12,7 +12,14 @@ use Drupal\Core\Render\BubbleableMetadata;
  */
 function cgov_metatag_token_info() {
   $info = [];
-  $info['tokens']['cgov_tokens']['cgov:title'][] = 'A token to determine and  extract the Cgov meta title. ';
+  $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
+
+  $info['tokens']['cgov_tokens']['cgov:title'] =
+    [
+      'name' => t('Cgov Title Meta Tag'),
+      'description' => t('The value to user for the title meta tag.'),
+    ];
+
   return $info;
 }
 
@@ -37,22 +44,16 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, Bubble
  * Retrieves the desired metatag title.
  */
 function get_meta_title_token(array $data) {
-
   $titleToken = "";
-
   if (!empty($data['node'])) {
     /* @var \Drupal\node\NodeInterface $node */
     $node = $data['node'];
-
     if ($node->hasField('field_browser_title')) {
-      $browserTitle = $node->get('field_browser_title')->getValue()[0]['value'];
+      $titleToken = $node->get('field_browser_title')->getValue()[0]['value'];
     }
-
-    if ($node->hasField('field_short_title')) {
-      $shortTitle = $node->get('field_short_title')->getValue()[0]['value'];
+    elseif ($node->hasField('field_short_title')) {
+      $titleToken = $node->get('field_short_title')->getValue()[0]['value'];
     }
-
-    $titleToken = (!empty($browserTitle) ? $browserTitle : $shortTitle);
   }
   return $titleToken;
 }
