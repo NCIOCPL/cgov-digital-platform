@@ -291,24 +291,6 @@
     color: $body-font-color;
     padding: 0.625em 3.6em 0.625em 0.7em;
 
-    /* Need to modify the text for the version toggle */
-    /* The text-transform and the first-letter        */
-    /* style in addition to the following two rules   */
-    /* are achieving the text changes                 */
-    /* Also need to pay attention to proper case in ES*/
-    html[lang="es"] & {
-      text-transform: lowercase;
-
-      &::first-letter {
-        text-transform: uppercase;
-      }
-    }
-    html[lang="en"] &::before {
-      content: "Go to ";
-    }
-    html[lang="es"] &::before {
-      content: "Vaya a la ";
-    }
     /**** Sprite is now drawn in _arrowLinks.scss ****/
     /**** TODO: get svg-sprite() to work outside of StyleSheets/ folder path ****/
     &:hover,
