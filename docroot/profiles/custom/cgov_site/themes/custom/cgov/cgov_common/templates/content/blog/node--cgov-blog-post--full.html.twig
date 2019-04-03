@@ -37,8 +37,8 @@
         {{ content.field_recommended_content }}
       <div>
     {% endif %}
-    {% if content.field_public_use %}
-      {{ content.field_public_use }}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
     {% endif %}
   </footer>
 </article>
