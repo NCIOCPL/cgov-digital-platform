@@ -4,6 +4,7 @@ namespace Drupal\Tests\pdq_glossifier\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify correct behavior of the PDQ Glossifier service.
@@ -196,6 +197,7 @@ class ApiTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
     // Build the URL for the API requests.

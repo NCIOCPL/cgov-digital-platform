@@ -5,6 +5,7 @@ namespace Drupal\Tests\node\Functional;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 use Drupal\Tests\system\Functional\Cache\AssertPageCacheContextsAndTagsTrait;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Ensures the PDQ content types are correctly configured.
@@ -43,6 +44,14 @@ class PdqNodeTypeTest extends NodeTestBase {
   private $contentTypes = [
     'pdq_cancer_information_summary',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
+    parent::setUp();
+  }
 
   /**
    * Ensures that node type functions (node_type_get_*) work correctly.
