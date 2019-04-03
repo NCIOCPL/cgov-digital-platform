@@ -1,9 +1,9 @@
 langcode: en
 default_langcode: en
 activate: false
-mail_attr: mail
-unique_id: eduPersonPrincipalName
-user_name: eduPersonPrincipalName
+mail_attr: https://federation.nih.gov/person/Mail
+unique_id: https://federation.nih.gov/person/SamAccountName
+user_name: https://federation.nih.gov/person/SamAccountName
 auth_source: cancergov-sp
 login_link_display_name: 'NIH Login'
 header_no_cache: true
@@ -15,7 +15,7 @@ allow:
   set_drupal_pwd: false
   default_login: true
   default_login_roles:
-    site_admin: site_admin
+    site_admin: '0'
     content_author: '0'
     content_editor: '0'
     image_manager: '0'
@@ -23,7 +23,7 @@ allow:
     layout_manager: '0'
     pdq_importer: '0'
     authenticated: '0'
-    administrator: '0'
+    administrator: administrator
     admin_ui: '0'
   default_login_users: '1'
 logout_goto_url: ''
