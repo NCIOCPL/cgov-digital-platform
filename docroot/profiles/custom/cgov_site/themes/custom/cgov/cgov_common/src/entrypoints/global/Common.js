@@ -47,6 +47,9 @@ import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
+import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
+import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
+import glossaryPopups from 'Libraries/popups/glossaryPopups';
 
 DeepLinkPatch();
 
@@ -99,7 +102,9 @@ const onDOMContentLoaded = () => {
 	/*** BEGIN video embedding
 	 * This enables the embedding of YouTube videos and playlists as iframes.
 	 ***/
-	flexVideo();
+  flexVideo();
+
+  videoCarousel.apiInit(GoogleAPIKey);
 
 	/*** BEGIN form controls ***/
 	formControls();
@@ -145,7 +150,10 @@ const onDOMContentLoaded = () => {
 	$('[data-prevent-enter="true"]').NCI_prevent_enter();
 
 	// // Proactive Live Help for CTS
-	proactiveLiveHelp();
+  proactiveLiveHelp();
+
+  // Shim for handling drupal glossified terms
+  glossaryPopups();
 
 };// END: DOM Ready event
 
