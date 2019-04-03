@@ -47,6 +47,7 @@ import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
+import glossaryPopups from 'Libraries/popups/glossaryPopups';
 
 DeepLinkPatch();
 
@@ -145,7 +146,10 @@ const onDOMContentLoaded = () => {
 	$('[data-prevent-enter="true"]').NCI_prevent_enter();
 
 	// // Proactive Live Help for CTS
-	proactiveLiveHelp();
+  proactiveLiveHelp();
+
+  // Shim for handling drupal glossified terms
+  glossaryPopups();
 
 };// END: DOM Ready event
 
