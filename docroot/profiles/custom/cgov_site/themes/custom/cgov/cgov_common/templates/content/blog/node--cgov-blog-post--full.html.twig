@@ -7,6 +7,7 @@
     <h1>
       {{ node.label }}
     </h1>
+    {{ drupal_block('page_options') }}
     <div id="nvcgSubTitle">
       {% if series.field_feedburner_url.value %}
         <div class="subscribeRSS">
@@ -37,8 +38,8 @@
         {{ content.field_recommended_content }}
       <div>
     {% endif %}
-    {% if content.field_public_use %}
-      {{ content.field_public_use }}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
     {% endif %}
   </footer>
 </article>
