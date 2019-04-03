@@ -62,6 +62,21 @@
   margin-top: 3em;
 }
 
+.embedded-entity[data-entity-embed-display*="_medium"] figure.image-medium {
+  padding-left: 2.5em;
+  background-color: transparent;
+}
+
+@include bp(medium-up) {
+	// set width of blog intro text for tablet and desktop, depending on size of image
+	.embedded-entity[data-entity-embed-display*="_medium"] + .blog-intro-text { 
+		width: 60%;
+	}
+	.embedded-entity[data-entity-embed-display*="_small"] + .blog-intro-text {
+		width: 75%;
+	}
+}
+
 @include bp(large-up){
 	.row.hero-slot {
 		max-width: 1350px;
@@ -76,5 +91,17 @@
 	}
 	.row .gutter:first-child {
 		margin-left: 0;
+	}
+}
+
+@include bp(small) {
+	// remove extra padding (used for intro text on desktop/tablet only)
+	.embedded-entity[data-entity-embed-display*="_medium"] {
+    float: none;
+    margin: 0;
+		figure.image-medium {
+			padding-left: 0;
+			margin-left: 0;
+		}
 	}
 }
