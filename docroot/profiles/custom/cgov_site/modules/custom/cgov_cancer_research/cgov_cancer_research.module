@@ -4,3 +4,91 @@
  * @file
  * Contains cgov_cancer_research.module.
  */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * This function sets up the dates to display for internal links added to
+ * Cancer Research Page lists. If the node is a blog post, it always displays
+ * the posted date. Otherwise, it selects the most recent of posted, reviewed,
+ * and updated dates from whichever are selected for Date Display Mode. It
+ * also sets the label for the date in the list.
+ */
+function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->bundle() !== "cgov_internal_link" || $view_mode !== "cancer_research_list_item") {
+    return;
+  }
+
+  $date_to_display = NULL;
+
+  $node = $build['field_internal_link']['#items']->entity;
+
+  if ($node->bundle() === "cgov_blog_post") {
+    $date_to_display = $node->field_date_posted->view([
+      'type' => 'datetime_default',
+      'settings' => [
+        'timezone_override' => '',
+        'format_type' => 'cgov_display_date',
+      ],
+    ]);
+    $date_to_display['#title'] = t('Posted', [], ['context' => 'CGov UI']);
+  }
+  elseif ($node->field_date_display_mode !== NULL) {
+    $date_posted = $node->field_date_posted;
+    if ($date_posted !== NULL) {
+      $date_posted = $node->field_date_posted->view([
+        'type' => 'cgov_date_formatter',
+        'settings' => [
+          'timezone_override' => '',
+          'format_type' => 'cgov_display_date',
+          'display_strategy' => 'latest',
+        ],
+      ]);
+    }
+
+    $date_reviewed = $node->field_date_reviewed;
+    if ($date_reviewed !== NULL) {
+      $date_reviewed = $node->field_date_reviewed->view([
+        'type' => 'cgov_date_formatter',
+        'settings' => [
+          'timezone_override' => '',
+          'format_type' => 'cgov_display_date',
+          'display_strategy' => 'latest',
+        ],
+      ]);
+    }
+
+    $date_updated = $node->field_date_updated;
+    if ($date_updated !== NULL) {
+      $date_updated = $node->field_date_updated->view([
+        'type' => 'cgov_date_formatter',
+        'settings' => [
+          'timezone_override' => '',
+          'format_type' => 'cgov_display_date',
+          'display_strategy' => 'latest',
+        ],
+      ]);
+    }
+
+    if (array_key_exists('#field_name', $date_posted)) {
+      $date_to_display = $date_posted;
+      $date_to_display['#title'] = t('Posted', [], ['context' => 'CGov UI']);
+    }
+    elseif (array_key_exists('#field_name', $date_reviewed)) {
+      $date_to_display = $date_reviewed;
+      $date_to_display['#title'] = t('Reviewed', [], ['context' => 'CGov UI']);
+    }
+    elseif (array_key_exists('#field_name', $date_updated)) {
+      $date_to_display = $date_updated;
+      $date_to_display['#title'] = t('Updated', [], ['context' => 'CGov UI']);
+    }
+  }
+
+  if ($date_to_display !== NULL) {
+    $date_to_display['#field_name'] = 'field_display_date';
+    $build['field_display_date'] = $date_to_display;
+  }
+}
