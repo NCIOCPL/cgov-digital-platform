@@ -15,8 +15,6 @@ function cgov_article_field_widget_form_alter(&$element, $form_state, $context) 
   $map = [
     'field_body_section_heading' => ['simple'],
     'field_body_section_content' => ['full_html'],
-    'field_citation_content'  => ['streamlined'],
-    'field_intro_text' => ['streamlined'],
   ];
   $formHelper = \Drupal::service('cgov_util.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
