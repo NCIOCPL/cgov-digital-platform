@@ -5,5 +5,6 @@
  */
 
 module.exports = [
-    'cgov_common',
+  'cgov_common',
+  'cgov_purple',
 ];
