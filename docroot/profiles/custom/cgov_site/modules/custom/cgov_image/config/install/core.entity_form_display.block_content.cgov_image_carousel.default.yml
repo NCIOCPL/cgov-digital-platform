@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - block_content.type.cgov_image_carousel
-    - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_image_carousel_image_browser
     - field.field.block_content.cgov_image_carousel.field_carousel_image_title
     - field.field.block_content.cgov_image_carousel.field_carousel_images
   module:
@@ -24,12 +24,12 @@ content:
   field_carousel_images:
     weight: 2
     settings:
-      entity_browser: cgov_image_browser
+      entity_browser: cgov_image_carousel_image_browser
       field_widget_display: rendered_entity
       field_widget_remove: true
       selection_mode: selection_append
       field_widget_display_settings:
-        view_mode: image_crop_article
+        view_mode: image_reference_field_form
       field_widget_edit: false
       field_widget_replace: false
       open: false
