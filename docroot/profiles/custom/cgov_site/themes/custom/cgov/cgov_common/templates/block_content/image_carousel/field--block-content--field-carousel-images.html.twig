@@ -4,8 +4,12 @@
   {% for entity in items %}
     {% set image = entity.content %}
     {% set caption = entity.content['#media'].field_caption.value %}
+    {% set credit = entity.content['#media'].field_credit.value %}
     <div>
       {{ entity.content }}
+      {% if credit %}
+        <div class="ic-credit">Credit: {{ credit }}</div>
+      {% endif %}
       {% if caption %}
         <div class="ic-caption">
           <p>{{ caption }}</p>
