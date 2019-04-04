@@ -141,14 +141,18 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_presave().
+ * Implements hook_entity_presave().
  *
  * Prior to saving a node, formats the field..
  */
-function cgov_site_section_node_presave($entity) {
-  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
-    $field_pretty_url = $entity->get('field_pretty_url')->value;
-    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+function cgov_site_section_entity_presave($entity) {
+  $entityType = $entity->getEntityType()->id();
+  if ($entityType == 'node'|| $entityType == 'media') {
+
+    if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+      $field_pretty_url = $entity->get('field_pretty_url')->value;
+      $entity->set('field_pretty_url', strtolower($field_pretty_url));
+    }
   }
 }
 
@@ -161,6 +165,7 @@ function cgov_site_section_node_presave($entity) {
 function cgov_site_section_entity_type_build(array &$entity_types) {
   // Add our custom validation to the node entity.
   $entity_types['node']->addConstraint('UniqueCgovUrl');
+  $entity_types['media']->addConstraint('UniqueCgovUrl');
 }
 
 /**
@@ -170,7 +175,7 @@ function cgov_site_section_entity_type_build(array &$entity_types) {
  * matches the required pattern.
  */
 function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
-  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node') && !empty($fields['field_pretty_url'])) {
+  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node' || $entity_type->id() == 'media') && !empty($fields['field_pretty_url'])) {
     $fields['field_pretty_url']->setPropertyConstraints('value', [
       'Regex' => [
         'pattern' => '/^[a-zA-Z0-9-]*$/',
