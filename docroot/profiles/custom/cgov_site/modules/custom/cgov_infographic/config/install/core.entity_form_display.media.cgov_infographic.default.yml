@@ -44,12 +44,6 @@ content:
       summary_rows: 3
       placeholder: ''
     third_party_settings: {  }
-  created:
-    type: datetime_timestamp
-    weight: 21
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_accessible_version:
     type: string_textarea
     weight: 11
@@ -208,12 +202,6 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 22
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
@@ -226,13 +214,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  uid:
-    type: entity_reference_autocomplete
-    weight: 20
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    region: content
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  created: true
+  path: true
+  uid: true
