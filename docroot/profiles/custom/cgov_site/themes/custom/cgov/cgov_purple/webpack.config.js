@@ -13,7 +13,6 @@ const themeConfig = {
       "Polyfills": path.resolve(__dirname, '..', 'src', 'polyfills'),
       "Styles": path.resolve(__dirname, 'src', 'styles'),
       "Libraries": path.resolve(__dirname, 'src', 'libraries'),
-      "Sprites": path.resolve(__dirname, 'dist', 'images', 'sprites'),
     }
   },
   output: {

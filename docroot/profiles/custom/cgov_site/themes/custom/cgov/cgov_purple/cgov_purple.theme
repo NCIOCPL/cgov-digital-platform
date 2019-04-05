@@ -15,7 +15,7 @@ use Drupal\node\Entity\Node;
  * @param array $variables
  *   Collection of variables.
  */
-function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+function cgov_purple_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
 
     // If $node is the NID instead of Node object, get Node object.
@@ -29,4 +29,23 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
   }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for blocks.
+ */
+function cgov_purple_theme_suggestions_block_alter(&$suggestions, $variables) {
+
+  // Load theme suggestions for blocks from parent theme.
+  foreach ($suggestions as &$suggestion) {
+    $suggestion = str_replace('cgov_purple_', 'cgov_common_', $suggestion);
+  }
+}
+
+/**
+ * Add sub-theme assets to all pages.
+ */
+function cgov_purple_preprocess_page(&$variables) {
+  $variables['#attached']['library'][] = 'cgov_purple/global-styling-purple';
+  $variables['#attached']['library'][] = 'cgov_purple/global-scripts-purple';
 }
