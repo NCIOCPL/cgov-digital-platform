@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded',onDOMContentLoaded);
 
 /* TODO: create a field in the content type for 'hp-patient-toggle-link' */
 const moveToggle = () => {
-  const toggle = document.querySelector('.pdq-hp-patient-toggle', '#cgvBody');
+  const toggle = document.querySelector('.pdq-hp-patient-toggle, #cgvBody');
   if(toggle) {
-    const pageTitle = document.querySelector('h1', '#main');
+    const pageTitle = document.querySelector('h1, #main');
     pageTitle.insertAdjacentElement('afterend',toggle);
 
   }
