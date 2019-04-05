@@ -1,5 +1,4 @@
 const path = require('path');
-const async = require('async');
 const gulp = require('gulp');
 const svgSprite = require('gulp-svg-sprite');
 const merge = require('merge-stream');
