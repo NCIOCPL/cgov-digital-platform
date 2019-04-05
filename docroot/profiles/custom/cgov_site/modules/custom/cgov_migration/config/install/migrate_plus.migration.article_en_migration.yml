@@ -54,17 +54,31 @@ source:
          label: field_card_title
          selector: '@field_card_title'
 
-
         -
          name: field_page_description
          label: field_page_description
          selector: '@field_page_description'
 
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
 
         -
          name: field_date_posted
          label: field_date_posted
          selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
         -
          name: field_date_reviewed
          label: field_date_reviewid
@@ -74,7 +88,6 @@ source:
          name: term_id
          label: term_id
          selector: '@term_id'
-
 
         -
          name: para_id
@@ -91,27 +104,20 @@ source:
          label: field_date_display_mode
          selector: '@field_date_display_mode'
 
-
         -
          name: related_resource_id
          label: related_resource_id
          selector: related_resource_id/related_resource_id
-
-
 
         -
          name: related_resource_ids
          label: related_resource_ids
          selector: related_resource_ids/related_resource_ids
 
-
-
         -
          name: para_id
          label: para_id
          selector: para_id/para_id
-
-
 
         -
          name: para_ids
@@ -122,8 +128,6 @@ source:
          name: citation_id
          label: citation_id
          selector: citation_id/citation_id
-
-
 
         -
          name: citation_ids
@@ -157,6 +161,8 @@ process:
   field_card_title: field_card_title
 
   field_page_description: field_page_description
+  field_list_description: field_list_description
+  field_feature_card_description: field_feature_card_description
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
   field_date_updated: field_date_updated

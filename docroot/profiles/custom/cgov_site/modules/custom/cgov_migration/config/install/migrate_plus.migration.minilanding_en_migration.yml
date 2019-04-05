@@ -158,59 +158,6 @@ process:
   field_pretty_url: field_pretty_url
 
 
-  temp_text:
-    plugin: migration_lookup
-    migration:
-      -
-        internallinksql_migration
-      -
-        externallinksql_migration
-
-    no_stub: true
-    source: related_resource_ids
-
-  field_related_resources:
-    plugin: iterator
-    source: '@temp_text'
-
-    process:
-      target_id: '0'
-      target_revision_id: '1'
-
-
-  field_related_resources/target_id:
-    -
-      plugin: migration_lookup
-      migration:
-        -
-          internallinksql_migration
-        -
-          externallinksql_migration
-
-      no_stub: true
-      source: related_resource_id
-    -
-      plugin: extract
-      index:
-        - '0'
-
-  field_related_resources/target_revision_id:
-    -
-      plugin: migration_lookup
-      migration:
-        -
-          internallinksql_migration
-        -
-          externallinksql_migration
-
-      no_stub: true
-      source: related_resource_id
-    -
-      plugin: extract
-      index:
-        - 1
-
-
 
   temp_text1:
     plugin: migration_lookup
