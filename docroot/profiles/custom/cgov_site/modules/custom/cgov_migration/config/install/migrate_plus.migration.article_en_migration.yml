@@ -100,9 +100,9 @@ source:
          selector: '@field_pretty_url'
 
         -
-         name: field_date_display_mode
-         label: field_date_display_mode
-         selector: '@field_date_display_mode'
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
 
         -
          name: related_resource_id
@@ -166,12 +166,14 @@ process:
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
   field_date_updated: field_date_updated
+  field_date_display_mode: date_display_mode
+
   field_search_engine_restrictions: field_search_engine_restrictions
   field_public_use: field_public_use
   field_intro_text/value: field_intro_text
   field_intro_text/format:
    plugin: default_value
-   default_value: full_html
+   default_value: streamlined_html
 
 
   field_site_section:

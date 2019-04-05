@@ -50,14 +50,37 @@ source:
          selector: 'field_page_description'
 
 
+
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
+
         -
          name: field_date_posted
          label: field_date_posted
-         selector: 'field_date_posted'
+         selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
         -
          name: field_date_reviewed
          label: field_date_reviewid
-         selector: 'field_date_reviewed'
+         selector: '@field_date_reviewed'
+
+        -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
 
         -
          name: term_id
@@ -69,11 +92,6 @@ source:
          name: field_pretty_url
          label: field_pretty_url
          selector: 'field_pretty_url'
-
-        -
-         name: field_date_display_mode
-         label: field_date_display_mode
-         selector: 'field_date_display_mode'
 
         -
          name: field_landing_contents
@@ -111,9 +129,15 @@ process:
   field_card_title: field_card_title
 
   field_page_description: field_page_description
+  field_list_description: field_list_description
+  field_feature_card_description: field_feature_card_description
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
   field_date_updated: field_date_updated
+  field_date_display_mode: date_display_mode
+
+
+
   field_search_engine_restrictions: field_search_engine_restrictions
 
   field_site_section:
