@@ -192,7 +192,7 @@ function appendDummyThumbnails($this, $total) {
     var $dummyBlob = '<div class="ytc-thumb-container ytc-dummy" />';
     var $spacesToDraw = thumbsToShow - ($total % thumbsToShow);
     if($spacesToDraw != thumbsToShow) {
-        for (i = 0; i < $spacesToDraw; i++) {
+        for (let i = 0; i < $spacesToDraw; i++) {
             $thumbSelector.after($dummyBlob);
         }
     }
