@@ -1,0 +1,230 @@
+
+## Create Test Content to be Used in Lists
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[No IMG] Title"
+  title__ES:
+      value: "[No IMG] Title - ES"
+  field_page_description:
+    value: "[No IMG] Page Description"
+  field_page_description__ES:
+    value: "[No IMG] Page Descriptiomn - ES"
+  field_list_description:
+    value: "[No IMG] List Description"
+  field_list_description__ES:
+    value: "[No IMG] List Descriptiomn - ES"
+  field_short_title:
+    value: "[No IMG] Short Title"
+  field_short_title__ES:
+    value: "[No IMG] Short Title - ES"
+  field_browser_title:
+    value: "[No IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[No IMG] Browser Title - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "no-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "no-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[No Lead IMG] Title"
+  title__ES:
+      value: "[No Lead IMG] Title - ES"
+  field_page_description:
+    value: "[No Lead IMG] Page Description"
+  field_page_description__ES:
+    value: "[No Lead IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[No Lead IMG] Short Title"
+  field_short_title__ES:
+    value: "[No Lead IMG] Short Title - ES"
+  field_browser_title:
+    value: "[No Lead IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[No Lead IMG] Browser Title - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "no-lead-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_pretty_url__ES:
+    value: "no-lead-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[Lead IMG] Title"
+  title__ES:
+      value: "[Lead IMG] Title - ES"
+  field_page_description:
+    value: "[Lead IMG] Page Description"
+  field_page_description__ES:
+    value: "[Lead IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[Lead IMG] Short Title"
+  field_short_title__ES:
+    value: "[Lead IMG] Short Title - ES"
+  field_browser_title:
+    value: "[Lead IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[Lead IMG] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "lead-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "lead-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[Lead Promo IMG] Title"
+  title__ES:
+      value: "[Lead Promo IMG] Title - ES"
+  field_page_description:
+    value: "[Lead Promo IMG] Page Description"
+  field_page_description__ES:
+    value: "[Lead Promo IMG] Page Descriptiomn - ES"
+  field_short_title:
+    value: "[Lead Promo IMG] Short Title"
+  field_short_title__ES:
+    value: "[Lead Promo IMG] Short Title - ES"
+  field_browser_title:
+    value: "[Lead Promo IMG] Browser Title"
+  field_browser_title_ES:
+    value: "[Lead Promo IMG] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "lead-promo-img"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "lead-promo-img"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'

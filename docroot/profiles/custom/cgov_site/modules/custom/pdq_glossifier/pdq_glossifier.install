@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Install pdq_glossifier module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Database\Schema;
+
+/**
+ * Implements hook_install().
+ *
+ * Control access to glossifier APIs.
+ */
+function pdq_glossifier_install() {
+
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add API permissions.
+  $update_glossifier = 'restful post pdq_glossary_refresh_api';
+  $access_glossifier = 'restful post pdq_glossifier_api';
+  $siteHelper->addRolePermissions(['pdq_importer' => [$update_glossifier]]);
+  $siteHelper->addRolePermissions(['anonymous' => [$access_glossifier]]);
+
+  // Add the glossifier table.
+  $pdq_glossary = [
+
+    // MEDIUMTEXT hold 16MB, which is 16 times more space than we
+    // currently use.
+    'description' => 'Glossary term info for creating dictionary links.',
+    'fields' => [
+      'terms' => [
+        'description' => 'JSON-encoded term information.',
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => TRUE,
+      ],
+
+      // YYYY-MM-DD HH:MM:SS, so 19 characters:
+      // 1234567890123456789.
+      'updated' => [
+        'description' => 'When the data was most recently refreshed.',
+        'type' => 'varchar_ascii',
+        'length' => 19,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+  ];
+  $conn = Database::getConnection();
+  $schema = $conn->schema();
+  if ($schema->tableExists('pdq_glossary')) {
+    $schema->dropTable('pdq_glossary');
+  }
+  $schema->createTable('pdq_glossary', $pdq_glossary);
+  $insert = $conn->insert('pdq_glossary');
+  $insert->fields(['terms' => '{}'])->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pdq_glossifier_uninstall() {
+  $schema = Database::getConnection()->schema();
+  if ($schema->tableExists('pdq_glossary')) {
+    $schema->dropTable('pdq_glossary');
+  }
+}
