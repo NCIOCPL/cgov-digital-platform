@@ -15,7 +15,7 @@ the fridge or has it finally become punishable by death? */
 /* ****************************************** */
 
 /* We want the images to appear closer to full width row cards. */
-#edit-field-carousel-images-current.entities-list .rendered-entity {
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity {
   display: flex;
   align-items: center;
   width: 100%;
@@ -23,13 +23,27 @@ the fridge or has it finally become punishable by death? */
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
-#edit-field-carousel-images-current.entities-list .rendered-entity > div,
-#edit-field-carousel-images-current.entities-list .rendered-entity > input {
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > div,
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > input {
   margin: 15px;
   width: 25%;
 }
 
-#edit-field-carousel-images-current.entities-list .rendered-entity > input {
+/* Contextual images are a different shape and the article nests the other fields (except the input)
+Barring new templates, we need to drill a bit deeper. */
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > article {
+  display: flex;
+  align-items: center;
+  width: 75%;
+}
+
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > article > div {
+  margin: 15px;
+  width: 33%;
+}
+
+
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > input {
   margin-left: auto;
   width: 100px;
 }
