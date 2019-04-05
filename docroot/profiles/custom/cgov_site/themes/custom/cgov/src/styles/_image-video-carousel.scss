@@ -4,7 +4,13 @@
 
 	.row:nth-child(2) {
 		padding-bottom: 2px;
-	}
+  }
+
+  // A previously unnoticed bug meant vertically aligned
+  // images were getting stretched.
+  .slick-slide img {
+    width: auto;
+  }
 
 	@include bp(large-up){
 		margin-left: 18%;
@@ -99,7 +105,7 @@
 	padding-left: 1px;
 	@include bp(small) {
 		margin-bottom: 10px;
-	}	
+	}
 }
 
 .pagingInfo {
@@ -157,7 +163,7 @@ span.ic-arrow-button {
 	margin-top: 30px;
 	@include bp(small) {
 		width: 100%;
-	} 
+	}
 }
 
 .ytc-thumb-container {
@@ -166,7 +172,7 @@ span.ic-arrow-button {
 	padding-top: 10px;
 	padding-right: 10px;
 	span {
-		display: block;		
+		display: block;
 		font-size: 13px;
 		line-height: 1.334;
 		padding-left: 4px;
@@ -186,7 +192,7 @@ span.ic-arrow-button {
 .yt-carousel-arrows {
 	margin-top: 35px;
 	padding: 0px 10px;
-	text-align: center;	
+	text-align: center;
 	@include bp(xtra-large) {
 		button.previous {
 			margin-right: 7px;
@@ -197,7 +203,7 @@ span.ic-arrow-button {
 	}
 	@include bp(xtra-large) {
 		margin-top: 50px;
-	} 
+	}
 }
 
 .yt-carousel-m-arrows {
@@ -208,7 +214,7 @@ span.ic-arrow-button {
 	}
 }
 
-.yt-carousel-arrows button,	
+.yt-carousel-arrows button,
 .yt-carousel-m-arrows button {
 	background-color: transparent;
     border: 0 none;
@@ -227,7 +233,7 @@ span.ic-arrow-button {
 }
 .yt-carousel-arrows .next,
 .yt-carousel-m-arrows .m-next {
-	@include svg-sprite(chevron-dkblue);	
+	@include svg-sprite(chevron-dkblue);
 	font-size: 1.875em;
     transform: rotate(90deg);
 }
@@ -262,7 +268,7 @@ button.next.ytc-hidden {
 
 /** Custom breakpoints for desktop/tablet slick transition **/
 @media only screen and (min-width: 770px) and (max-width: 1024px) {
-	.yt-carousel {		
+	.yt-carousel {
 		width: 80%;
 	}
 }
@@ -288,7 +294,7 @@ button.next.ytc-hidden {
 		.m-next {
 			margin-right: 1px;
 		}
-	}	
+	}
 }
 
 /****************** END VIDEO CAROUSEL STYLES ******************/

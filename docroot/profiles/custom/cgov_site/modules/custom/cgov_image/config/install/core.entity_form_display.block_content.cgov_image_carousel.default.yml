@@ -1,0 +1,59 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.cgov_image_carousel
+    - entity_browser.browser.cgov_image_carousel_image_browser
+    - field.field.block_content.cgov_image_carousel.field_carousel_image_title
+    - field.field.block_content.cgov_image_carousel.field_carousel_images
+  module:
+    - entity_browser
+id: block_content.cgov_image_carousel.default
+targetEntityType: block_content
+bundle: cgov_image_carousel
+mode: default
+content:
+  field_carousel_image_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_carousel_images:
+    weight: 2
+    settings:
+      entity_browser: cgov_image_carousel_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 3
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  translation:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
