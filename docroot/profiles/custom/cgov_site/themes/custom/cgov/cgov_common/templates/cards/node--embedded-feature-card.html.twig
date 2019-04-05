@@ -8,13 +8,14 @@
 {% endif %}
 
 {# ####### Set description ###### #}
-{% set description = content.field_card_description|field_value %}
+{% set description = content.field_feature_card_description|field_value %}
 
 {# ####### Set Image ######## #}
 {% if content.field_image_promotional|field_value %}
-  {% set image = content.field_image_promotional %}
+  {% set image = content.field_image_promotional|field_value %}
 {% elseif content.field_image_article|field_value %}
-  {% set image = content.field_image_article %}
+  {% set image = content.field_image_article|field_value %}
 {% endif %}
+
 
 {{ cardMacros.featureCard(title, description, image, url) }}

@@ -1,6 +1,6 @@
 .embedded-entity {
   margin-bottom: 2.5em;
-  
+
   &.align-right {
     margin: 0 0 2.5em 2.5em;
   }
@@ -23,6 +23,75 @@
     width: 100%;
   }
 
+  &[data-entity-embed-display*="_feature_card"] {
+    border: 1px solid $yetAnotherGrey;
+    background-color: $white;
+    box-shadow: 0 0 9px 1px rgba($black, 0.15);
+
+    &.align-right {
+      margin: 0 0 1em 1em;
+    }
+  
+    &.align-left {
+      margin: 0 1em 1em 0;
+    }
+  
+    &.align-center {
+      margin:  0 auto 1em;
+    }
+
+    h3 {
+      font-size: 1.375em;
+      line-height: 1.272;
+    }
+
+    a {
+      padding: 1.875em;
+      display: block;
+
+      h3 {
+        font-weight: normal;
+        color: $color-link;
+      }
+
+      &:hover,
+      &:focus {
+        h3 {
+          color: $lcranberry;
+        }
+      }
+
+      @extend %card-link-hover;
+    }
+
+    p {
+      margin-bottom: 0;
+      color: $body-font-color;
+      font-size: em-calc(16px);
+      line-height: 1.167em;
+    }
+
+    @include card-clickable;
+
+    .feature-card {
+      div {
+        margin-bottom: 1em;
+      }
+
+      h3 {
+        margin-top: 0;
+        font-size: 1.2em;
+        line-height: 1.2;
+      }
+
+      p {
+        line-height: 1.375;
+        font-size: 0.9em;
+        color: #757575;
+      }
+    }
+  }
+
   @include break(medium) {
     &[data-entity-embed-display*="_small"] {
       width: 25%;
@@ -34,6 +103,69 @@
 
     &[data-entity-embed-display*="_large"] {
       width: 75%;
+    }
+
+    &[data-entity-embed-display*="_feature_card"] {
+      width: 33.333%;
+      border: 1px solid #ccc;
+      .feature-card {
+        > a {
+          display: block;
+          padding: 1.875em;
+        }
+
+        h3 {
+          font-weight: normal;
+          color: $color-link;
+        }
+
+        &:hover,
+        &:focus {
+          h3 {
+            color: $lcranberry;
+          }
+        }
+      }
+
+      @include bp(small) {
+        margin: 1.25em 0;
+
+        a:hover {
+          color: white;
+        }
+
+        &.columns a {
+          padding-bottom: 15px;
+          padding-top: 15px;
+          overflow: auto;
+        }
+
+        &.card {
+          &.left,
+          &.right {
+            float: none !important;
+            margin: 1.25em 0;
+          }
+        }
+
+        .image-hover {
+          float: left;
+          width: 30%;
+        }
+
+        &:not(.no-image) .feature-card {
+          h3,
+          p {
+            float: right;
+            width: 68%;
+          }
+          h3 {
+            margin-top: 0;
+            font-size: 1.13em;
+            line-height: 1.111em;
+          }
+        }
+      }
     }
   }
 }
