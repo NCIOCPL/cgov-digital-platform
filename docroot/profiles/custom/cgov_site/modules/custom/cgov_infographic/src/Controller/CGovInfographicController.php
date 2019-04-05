@@ -3,6 +3,7 @@
 namespace Drupal\cgov_infographic\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\media\Entity\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,31 +22,26 @@ class CGovInfographicController extends ControllerBase {
   /**
    * Return an infographic's long description in an HTTP Response.
    *
-   * @param int $mediaID
+   * @param Drupal\media\Entity\Media $media
    *   Id of the infographic to render.
    */
-  public function longDescription($mediaID) {
-    // Check for invalid inputs.
-    if (!is_numeric($mediaID)) {
-      throw new NotFoundHttpException();
-    }
+  public function longDescription(Media $media) {
 
-    // Load the entity, and verify that it's an infographic.
-    $infographic = $this->entityTypeManager()->getStorage('media')->load($mediaID);
-    if ($infographic == NULL || $infographic->bundle() != 'cgov_infographic') {
+    // Verify the entity is an infographic.
+    if ($media == NULL || $media->bundle() != 'cgov_infographic') {
       throw new NotFoundHttpException();
     }
 
     // Only retrieve the field if it's available in the current language.
     $language = $this->languageManager()->getCurrentLanguage()->getId();
-    if ($infographic->hasTranslation($language)) {
-      $infographic = $infographic->getTranslation($language);
+    if ($media->hasTranslation($language)) {
+      $media = $media->getTranslation($language);
 
       // Only return a value if the field has a value. If it's missing or empty,
       // fall through to a NotFoundException.
-      if (count($infographic->field_accessible_version) > 0) {
+      if (count($media->field_accessible_version) > 0) {
 
-        $field = $infographic->field_accessible_version[0];
+        $field = $media->field_accessible_version[0];
         if ($field != NULL) {
           $text = trim($field->getString());
 
