@@ -21,18 +21,17 @@ class CGovInfographicController extends ControllerBase {
   /**
    * Return an infographic's long description in an HTTP Response.
    *
-   * @param int $node
+   * @param int $mediaID
    *   Id of the infographic to render.
    */
-  public function longDescription($node) {
-
+  public function longDescription($mediaID) {
     // Check for invalid inputs.
-    if (!is_numeric($node)) {
+    if (!is_numeric($mediaID)) {
       throw new NotFoundHttpException();
     }
 
     // Load the entity, and verify that it's an infographic.
-    $infographic = $this->entityTypeManager()->getStorage('media')->load($node);
+    $infographic = $this->entityTypeManager()->getStorage('media')->load($mediaID);
     if ($infographic == NULL || $infographic->bundle() != 'cgov_infographic') {
       throw new NotFoundHttpException();
     }
