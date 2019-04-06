@@ -1,0 +1,20 @@
+{% if items | length > 1%}
+  {# We need to iterate over the entity references to pull out the
+  image src and caption (if it exists) #}
+  {% for entity in items %}
+    {% set image = entity.content %}
+    {% set caption = entity.content['#media'].field_caption.value %}
+    {% set credit = entity.content['#media'].field_credit.value %}
+    <div>
+      {{ entity.content }}
+      {% if credit %}
+        <div class="ic-credit">Credit: {{ credit }}</div>
+      {% endif %}
+      {% if caption %}
+        <div class="ic-caption">
+          <p>{{ caption }}</p>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endif %}
