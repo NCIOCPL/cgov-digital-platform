@@ -1480,7 +1480,7 @@
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_date_posted:
-    value: "2020-01-01"
+    value: "2019-01-01"
   field_image_article:
     - target_type: 'media'
       '#process':
@@ -1489,7 +1489,6 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Cat-Cat'
-
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -1541,3 +1540,117 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Minnie'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: 'Researchers Discover Potential Way to Hit Elusive Target in Pancreatic Cancer'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Cancer Susceptibilities'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'
+  field_short_title:
+    value: Researchers Discover Potential Way to Hit Elusive Target in Pancreatic Cancer'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Does what we eat and drink affect our risk of developing cancer?</p>
+        <p>Many studies have asked this question, but answering it is challenging. Foods and beverages, as well as the nutrients and dietary constituents they contain, are consumed together, never in isolation of one another.</p>
+        <p>To account for this, and to improve the quality of research related to the connection between diet and disease, the research community is shifting how we look at the health impact of diet, and how we assess diet and cancer risk. We’re taking a more holistic approach and looking at dietary patterns versus individual foods or nutrients across the lifespan, and we are developing tools that can incorporate dietary patterns to reflect this shift.</p>
+        <p>In other words, we’re interested in assessing what eating broccoli or a cheeseburger means for your health—but in the context of a larger dietary pattern and overall diet quality that includes the what, where, when, why, and how we eat.</p>
+        <h2 id="ui-id-2">Expanding the Approach to Diet Research</h2>
+        <p>Research on diet and cancer risk has often taken a reductionist approach, focusing on specific dietary components. That approach, however, assumes that a food or nutrient alone, without consideration of other accompanying foods or nutrients, can induce a specific biological effect that can fuel the formation and growth of cancer cells.</p>
+        <p>But there are limitations—and unanticipated findings—when only using this approach. For example, in the late 1980s, the Alpha-Tocopherol, Beta-Carotene Cancer Prevention Study was initiated after some studies found that <em>diets</em> high in certain vitamins were associated with a reduced risk of lung cancer. However, taking these vitamins as pills (and not packaged in foods) did not reduce the incidence of lung cancer among smokers, and may actually have caused some harm.</p>
+        <p>These apparently paradoxical findings might be explained by recognizing that nutrient and food consumption is closely connected, making it difficult to examine associations between any one dietary factor and chronic disease. Dramatically increasing intake of one nutrient by taking a supplement could have unanticipated effects, such as decreasing the absorption or circulating concentrations of other beneficial nutrients.&nbsp;</p>
+        <p>There are also likely interactive or synergistic effects among foods and nutrients, such that the totality of diet may have cumulative effects. This may be one of the reasons the NIH-funded <a href="https://www.nejm.org/doi/10.1056/NEJM199704173361601">Dietary Approaches to Stop Hypertension study</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a>, a clinical trial that examined the effect of changing an overall dietary pattern rather than a single food or nutrient, showed positive health outcomes.</p>
+        <p>By looking at total diet quality, we can try to fit the different puzzle pieces together. We can look beyond a certain food or nutrient and learn how that food was consumed and what other issues might be at play, such as the timing of meals and circadian rhythms. NCI is already funding research investigating these and other factors that can define a total diet.</p>
+        <h2 id="ui-id-3">How NCI is Working to Improve Dietary Patterns Research</h2>
+        <p>Every 5 years, the US Department of Agriculture (USDA) and NCI collaborate to update a dietary tool called the <a href="https://epi.grants.cancer.gov/hei/">Healthy Eating Index (HEI)</a>. This tool is used to assess how closely an eating pattern, or any set of foods in the food supply chain, aligns with the most recent Dietary Guidelines for Americans.</p>
+        <p><a href="https://epi.grants.cancer.gov/hei/publications.html">The HEI has been applied by researchers</a> to describe diet quality among the US population. It has also been used to evaluate the quality of foods you’d find in different environments: for example, in a fast food restaurant, a federal food distribution program, a food bank, or a school cafeteria.</p>
+        <p><a href="https://health.gov/dietaryguidelines/2015/">The most recent Dietary Guidelines (for 2015–2020)</a> reflect this shift toward focusing on total diet. For example, the guidelines now stress an overarching approach to diet, such as following a healthy eating pattern across the lifespan; eating a variety of foods, with a focus on nutrient density and amount; and limiting calories from added sugars and saturated fats and reducing sodium intake.</p>
+        <p>Our most recent updates to the HEI, described in <a href="https://epi.grants.cancer.gov/hei/publications.html">three articles</a> in the <em>Journal of the Academy of Nutrition and Dietetics</em>, also reflect this emphasis on total diet.</p>
+        <p>The fact that tools like the HEI can now be applied to any set of foods in the food supply chain is important because large segments of the population don’t have access to, or can’t afford, healthy food. If we assess how well a set of foods—for example, those provided by a food bank—align with dietary guidance focused on total diet, we can then work toward improving that set of foods to minimize the risk of cancer and other health conditions.</p>
+        <p>In an <a href="https://jandonline.org/article/S2212-2672(18)30511-2/fulltext">editorial</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> accompanying our articles on the HEI, Barbara Millen, Dr.P.H., R.D., chair of the 2015 Dietary Guidelines Advisory Committee, wrote that “the evidence base is stronger than ever before linking the total diet—its dietary patterns, nutrient density, and overall quality—to health promotion and disease prevention across the human life span.”</p>
+  field_page_description:
+    value: 'Three research groups have found a potential way to kill cancer cells in pancreatic tumors by simultaneously blocking the activity of proteins that interact with KRAS proteins and disrupting an energy-creating process called autophagy.'
+  field_feature_card_description:
+    value: 'Three research groups have found a potential way to kill cancer cells in pancreatic tumors by simultaneously blocking the activity of proteins that interact with KRAS proteins and disrupting an energy-creating process called autophagy.'
+  field_list_description:
+    value: 'Three research groups have found a potential way to kill cancer cells in pancreatic tumors by simultaneously blocking the activity of proteins that interact with KRAS proteins and disrupting an energy-creating process called autophagy.'
+  field_pretty_url:
+    value: "pancreatic-cancer-targeting-kras-indirectly"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_date_posted:
+    value: "2019-06-05"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Snuggles'
+  field_recommended_content:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_blog_post'
+                    title: 'FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_blog_post'
+                    title: 'FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Cat-Cat'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'Pubs Locator'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://pubs.cancer.gov'
