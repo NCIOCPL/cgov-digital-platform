@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_infographic\Controller;
+namespace Drupal\cgov_media\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\media\Entity\Media;
@@ -8,15 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Controller routines for cgov_infographic routes.
+ * Controller routines for cgov_media routes.
  */
-class CGovInfographicController extends ControllerBase {
+class CGovMediaController extends ControllerBase {
 
   /**
    * {@inheritdoc}
    */
   protected function getModuleName() {
-    return 'cgov_infographic';
+    return 'cgov_media';
   }
 
   /**
@@ -27,8 +27,7 @@ class CGovInfographicController extends ControllerBase {
    */
   public function longDescription(Media $media) {
 
-    // Verify the entity is an infographic.
-    if ($media == NULL || $media->bundle() != 'cgov_infographic') {
+    if ($media == NULL) {
       throw new NotFoundHttpException();
     }
 
