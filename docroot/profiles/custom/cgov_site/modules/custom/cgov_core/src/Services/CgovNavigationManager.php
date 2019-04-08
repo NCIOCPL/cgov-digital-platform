@@ -114,7 +114,6 @@ class CgovNavigationManager {
     if ($this->initialized) {
       return;
     }
-    $this->logger->notice('Cgov Navigation Manager initialized.');
     $this->initialized = TRUE;
     $this->currentPathAlias = $this->getCurrentPathAlias();
     $this->closestSiteSection = $this->getClosestSiteSection();
@@ -123,9 +122,6 @@ class CgovNavigationManager {
     // vocabulary.
     if ($this->closestSiteSection) {
       $this->fullAncestry = $this->getTermAncestry($this->closestSiteSection);
-      $this->logger->notice("NavMgr: Full Ancestry = " . implode(", ", array_map(function ($el) {
-        return "(" . strval($el->id()) . ": '" . $el->computed_path->value . "')";
-      }, $this->fullAncestry)));
     }
   }
 
@@ -315,7 +311,6 @@ class CgovNavigationManager {
         $isNavRoot = $term->{$testFieldName}->value;
         if ($isNavRoot) {
           $navItem = $this->newNavItem($term);
-          $this->logger->notice("NavMgr: (NavItem created) href= '{$navItem->getHref()}', id= @id", ["@id" => strval($term->id())]);
           return $navItem;
         }
       }

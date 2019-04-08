@@ -229,7 +229,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Field.
    */
   public function processFile(array $processConfig, FileFieldItemList $field) {
-    var_dump(get_class($field));
     $entity_type = $processConfig['#process']['args'][0];
     $filename = $processConfig['#process']['args'][1]['filename'];
     unset($processConfig['#process']);
