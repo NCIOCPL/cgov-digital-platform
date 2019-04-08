@@ -41,13 +41,17 @@
   {% set url = path('entity.node.canonical', {'node' : nid}) %}
 
   {# ###### Setup Image ######## #}
+  {% set image = content.field_featured_item %}  
+  {% if cardType is same as('recommended_content_card') %}
+    {% if featured_item_node.field_image_promotional[0] %}
+      {% set image = drupal_field('field_image_promotional', 'node', nid) %}
+    {% elseif featured_item_node.field_image_article[0] %}
+      {% set image = drupal_field('field_image_article', 'node', nid) %}
+    {% endif %}
+  {% endif %}
   {% if content.field_override_image_promotional[0] %}
     {% set image = content.field_override_image_promotional %}
-  {% elseif featured_item_node.field_image_promotional[0] %}
-    {% set image = drupal_field('field_image_promotional', 'node', nid) %}
-  {% elseif featured_item_node.field_image_article[0] %}
-    {% set image = drupal_field('field_image_article', 'node', nid) %}
-  {% endif %}
+  {% endif %}  
 
   {# # Render Card # #}
   {% if cardType is same as('feature_card') %}
