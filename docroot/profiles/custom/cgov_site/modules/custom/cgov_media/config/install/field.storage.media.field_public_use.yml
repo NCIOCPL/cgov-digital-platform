@@ -6,26 +6,23 @@ dependencies:
     - options
   enforced:
     module:
-    - cgov_media
-id: media.field_date_display_mode
-field_name: field_date_display_mode
+      - cgov_media
+id: media.field_public_use
+field_name: field_public_use
 entity_type: media
-type: list_string
+type: list_integer
 settings:
   allowed_values:
     -
-      value: posted
-      label: 'Posted Date'
+      value: 1
+      label: 'Display'
     -
-      value: reviewed
-      label: 'Reviewed Date'
-    -
-      value: updated
-      label: 'Updated Date'
+      value: 0
+      label: 'Do Not Display'
   allowed_values_function: ''
 module: options
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: true
