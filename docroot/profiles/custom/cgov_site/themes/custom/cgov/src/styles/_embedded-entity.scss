@@ -24,20 +24,14 @@
   }
 
   &[data-entity-embed-display*="_feature_card"] {
-    border: 1px solid $yetAnotherGrey;
     background-color: $white;
+    border: 1px solid $yetAnotherGrey;
     box-shadow: 0 0 9px 1px rgba($black, 0.15);
 
+    &.align-center,
+    &.align-left,
     &.align-right {
-      margin: 0 0 1em 1em;
-    }
-  
-    &.align-left {
-      margin: 0 1em 1em 0;
-    }
-  
-    &.align-center {
-      margin:  0 auto 1em;
+      margin: 1.25em 0;
     }
 
     h3 {
@@ -46,7 +40,8 @@
     }
 
     a {
-      padding: 1.875em;
+      @extend .clearfix;
+      padding: 15px 1.875em;
       display: block;
 
       h3 {
@@ -65,29 +60,86 @@
     }
 
     p {
-      margin-bottom: 0;
       color: $body-font-color;
       font-size: em-calc(16px);
       line-height: 1.167em;
+      margin-bottom: 0;
     }
 
     @include card-clickable;
 
     .feature-card {
-      div {
-        margin-bottom: 1em;
-      }
-
       h3 {
-        margin-top: 0;
+        color: $color-link;
         font-size: 1.2em;
+        font-weight: normal;
         line-height: 1.2;
+        margin-top: 0;
       }
 
       p {
-        line-height: 1.375;
-        font-size: 0.9em;
         color: #757575;
+        font-size: 0.9em;
+        line-height: 1.375;
+      }
+
+      //mobile styling
+      h3,
+      p {
+        float: none;
+        width: auto;
+      }
+
+      .image-hover {
+        float: left;
+        margin-bottom: 1em;
+        width: 30%;
+
+        ~ h3,
+        ~ p {
+          float: right;
+          width: 68%;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        h3 {
+          color: $lcranberry;
+        }
+      }
+    }
+
+    @include break(medium) {
+      border: 1px solid #ccc;
+      width: 33.333%;
+
+      &.align-right {
+        margin: 0 0 1em 1em;
+      }
+
+      &.align-left {
+        margin: 0 1em 1em 0;
+      }
+
+      &.align-center {
+        margin: 0 auto 1em;
+      }
+
+      .feature-card {
+        > a {
+          padding: 1.875em;
+        }
+
+        .image-hover {
+          float: none;
+          width: 100%;
+          ~ h3,
+          ~ p {
+            float: none;
+            width: 100%;
+          }
+        }
       }
     }
   }
@@ -103,69 +155,6 @@
 
     &[data-entity-embed-display*="_large"] {
       width: 75%;
-    }
-
-    &[data-entity-embed-display*="_feature_card"] {
-      width: 33.333%;
-      border: 1px solid #ccc;
-      .feature-card {
-        > a {
-          display: block;
-          padding: 1.875em;
-        }
-
-        h3 {
-          font-weight: normal;
-          color: $color-link;
-        }
-
-        &:hover,
-        &:focus {
-          h3 {
-            color: $lcranberry;
-          }
-        }
-      }
-
-      @include bp(small) {
-        margin: 1.25em 0;
-
-        a:hover {
-          color: white;
-        }
-
-        &.columns a {
-          padding-bottom: 15px;
-          padding-top: 15px;
-          overflow: auto;
-        }
-
-        &.card {
-          &.left,
-          &.right {
-            float: none !important;
-            margin: 1.25em 0;
-          }
-        }
-
-        .image-hover {
-          float: left;
-          width: 30%;
-        }
-
-        &:not(.no-image) .feature-card {
-          h3,
-          p {
-            float: right;
-            width: 68%;
-          }
-          h3 {
-            margin-top: 0;
-            font-size: 1.13em;
-            line-height: 1.111em;
-          }
-        }
-      }
     }
   }
 }
