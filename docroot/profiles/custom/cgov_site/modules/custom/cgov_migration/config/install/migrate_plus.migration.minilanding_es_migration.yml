@@ -191,6 +191,7 @@ process:
     plugin: migration_lookup
     migration:
        - list_migration
+       - contentblock_migration
     no_stub: true
     source: field_landing_contents
 
@@ -208,7 +209,7 @@ process:
       plugin: migration_lookup
       migration:
         - list_migration
-
+        - contentblock_migration
       no_stub: true
       source: field_landing_content
     -
@@ -221,7 +222,7 @@ process:
       plugin: migration_lookup
       migration:
         - list_migration
-
+        - contentblock_migration
       no_stub: true
       source: field_landing_content
     -
@@ -234,6 +235,7 @@ process:
 destination:
   plugin: entity:node
   default_bundle: cgov_mini_landing
+  translations: true
 
 migration_dependencies:
   required:
