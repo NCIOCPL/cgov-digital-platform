@@ -1,0 +1,5 @@
+services:
+  cgov_cache.overrider:
+    class: \Drupal\cgov_cache\CgovCacheConfigOverride
+    tags:
+      - {name: config.factory.override, priority: 5}

@@ -1,0 +1,5 @@
+services:
+  cgov_article.overrider:
+    class: \Drupal\cgov_article\CgovArticleConfigOverride
+    tags:
+      - {name: config.factory.override, priority: 5}

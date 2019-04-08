@@ -1,0 +1,6 @@
+services:
+  cgov_site.commands:
+    class: \Drupal\cgov_site\Commands\CgovSiteCommands
+    arguments: ['@config_split.cli', "@config.manager", "@config.storage", "@config.storage.sync"]
+    tags:
+      - { name: drush.command }

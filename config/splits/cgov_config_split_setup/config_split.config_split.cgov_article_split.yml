@@ -1,0 +1,27 @@
+uuid: 7bf92bab-8a3a-4e62-aea3-bcc2e587ee66
+langcode: en
+status: false
+dependencies: {  }
+id: cgov_article_split
+label: 'CGov Article Split'
+description: 'Defines configuration required for CGov Article.'
+folder: ./profiles/custom/cgov_site/modules/custom/cgov_article/config/install
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist:
+  - field.storage.node.field_article_body
+  - field.storage.paragraph.field_body_section_content
+  - field.storage.paragraph.field_body_section_heading
+  - language.content_settings.node.cgov_article
+  - node.type.cgov_article
+  - paragraphs.paragraphs_type.body_section
+  - pathauto.pattern.article_url
+  - node.type.cgov_article
+  - '*.cgov_article.*'
+  - 'core.entity_form_display.paragraph.body_section.*'
+  - 'core.entity_view_display.paragraph.body_section.*'
+  - 'field.field.paragraph.body_section.*'
+graylist_dependents: false
+graylist_skip_equal: false
+weight: 0
