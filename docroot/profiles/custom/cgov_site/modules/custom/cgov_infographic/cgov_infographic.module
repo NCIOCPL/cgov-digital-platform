@@ -79,6 +79,6 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
     // route for outputing the long description.
     $args = ['media' => $entity->id()];
     $build['field_infographic'][0]['#item_attributes']['longdesc'] =
-      Url::fromRoute('cgov_infographic.long_description', $args)->toString();
+      Url::fromRoute('cgov_media.long_description', $args)->toString();
   }
 }
