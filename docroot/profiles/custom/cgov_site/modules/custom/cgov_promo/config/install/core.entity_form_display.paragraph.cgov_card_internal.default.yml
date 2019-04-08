@@ -16,16 +16,21 @@ bundle: cgov_card_internal
 mode: default
 content:
   field_featured_item:
-    weight: 2
+    weight: 0
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      entity_browser: cgov_content_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: entity_browser_entity_reference
     region: content
   field_override_card_description:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -33,7 +38,7 @@ content:
     type: string_textfield
     region: content
   field_override_card_title:
-    weight: 0
+    weight: 1
     settings:
       size: 60
       placeholder: ''
@@ -41,7 +46,7 @@ content:
     type: string_textfield
     region: content
   field_override_image_promotional:
-    weight: 4
+    weight: 3
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
