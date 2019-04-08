@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Controller routines for cgov_media routes.
  */
-class CGovMediaController extends ControllerBase {
+class CgovMediaController extends ControllerBase {
 
   /**
    * {@inheritdoc}
