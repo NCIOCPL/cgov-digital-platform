@@ -121,7 +121,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   private function getMonthsAndYears($cid) {
     // Get all available Blog Posts in current language.
     $dates = [];
-    $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post', '');
+    $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post');
 
     // Get current series ID.
     $filter_series = $this->blogManager->getSeriesId();

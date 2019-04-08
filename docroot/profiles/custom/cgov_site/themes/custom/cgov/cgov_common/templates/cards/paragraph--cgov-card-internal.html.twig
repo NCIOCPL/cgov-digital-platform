@@ -6,47 +6,47 @@
  # we will duplicate it.
  #}
 {% if content.field_featured_item[0] %}
-
   {% set cardType = _context.view_mode %}
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
+  {% set nid = featured_item_node.id %}
 
   {# ###### Setup Title ####### #}
   {% if content.field_override_card_title[0] %}
     {% set title = content.field_override_card_title[0] %}
-  {% elseif content.field_featured_item[0]["#node"].field_card_title[0] %}
-    {% set title = content.field_featured_item[0]["#node"].field_card_title[0].value %}
+  {% elseif featured_item_node.field_card_title[0] %}
+    {% set title = featured_item_node.field_card_title[0].value %}
   {% else %}
-    {% set title = content.field_featured_item[0]["#node"].field_short_title[0].value %}
+    {% set title = featured_item_node.field_short_title[0].value %}
   {% endif %}
 
   {# ###### Setup Description ####### #}
   {% if cardType is same as('feature_card') %}
     {% if content.field_override_card_description[0] %}
       {% set description = content.field_override_card_description[0] %}
-    {% elseif content.field_featured_item[0]["#node"].field_feature_card_description[0] %}
-      {% set description = content.field_featured_item[0]["#node"].field_feature_card_description[0].value %}
+    {% elseif featured_item_node.field_feature_card_description[0] %}
+      {% set description = featured_item_node.field_feature_card_description[0].value %}
     {% endif %}
   {% elseif cardType is same as('thumbnail_card') %}
     {% if content.field_override_list_description[0] %}
       {% set description = content.field_override_list_description[0] %}
-    {% elseif content.field_featured_item[0]["#node"].field_list_description[0] %}
-      {% set description = content.field_featured_item[0]["#node"].field_list_description[0].value %}
-    {% elseif content.field_featured_item[0]["#node"].field_page_description[0] %}
-      {% set description = content.field_featured_item[0]["#node"].field_page_description[0].value %}
+    {% elseif featured_item_node.field_list_description[0] %}
+      {% set description = featured_item_node.field_list_description[0].value %}
+    {% elseif featured_item_node.field_page_description[0] %}
+      {% set description = featured_item_node.field_page_description[0].value %}
     {% endif %}
   {# Else no description #}
   {% endif %}
 
   {# ###### Setup URL ######## #}
-  {# TODO: See if there is a cleaner way from the entity ref to the nid #}
-  {% set url = path('entity.node.canonical', {'node':  content.field_featured_item[0]["#node"].nid[0].value}) %}
+  {% set url = path('entity.node.canonical', {'node' : nid}) %}
 
-  {# ###### Setup Img ######## #}
-  {# TODO: Setup image #}
-  {% set image = content.field_featured_item %}
-
-  {# ###### Setup Override Img ######## #}
+  {# ###### Setup Image ######## #}
   {% if content.field_override_image_promotional[0] %}
     {% set image = content.field_override_image_promotional %}
+  {% elseif featured_item_node.field_image_promotional[0] %}
+    {% set image = drupal_field('field_image_promotional', 'node', nid) %}
+  {% elseif featured_item_node.field_image_article[0] %}
+    {% set image = drupal_field('field_image_article', 'node', nid) %}
   {% endif %}
 
   {# # Render Card # #}
@@ -54,5 +54,7 @@
     {{ cardMacros.featureCard(title, description, image, url) }}
   {% elseif cardType is same as('thumbnail_card') %}
     {{ cardMacros.thumbnailCard(title, description, image, url) }}
+  {% elseif cardType is same as('recommended_content_card') %}
+    {{ cardMacros.recommendedContentCard(title, url, image) }}    
   {% endif %}
 {% endif %}

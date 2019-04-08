@@ -442,6 +442,8 @@
 - entity: "node"
   type: "cgov_blog_post"
   title: "An Important Moment in Tobacco Control"
+  title__ES: 
+    value: "Tabaco"
   langcode: en
   status: 1
   moderation_state:
@@ -454,6 +456,14 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_series__ES:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Temas y relatos blog'
   field_short_title:
     value: "An Important Moment in Tobacco Control"
   field_author:
@@ -511,6 +521,8 @@
     value: 'November 26, 2017, marked a unique moment in US public health history, with the major US tobacco companies issuing the first in a series of court-ordered "corrective statements" about their products.'
   field_pretty_url:
     value: "tobacco-corrective-statements"
+  field_pretty_url__ES:
+    value: "tobacco-corrective-es"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_date_posted:
@@ -527,6 +539,8 @@
 - entity: "node"
   type: "cgov_blog_post"
   title: "Dabrafenib–Trametinib Combination Approved for Melanoma, Anaplastic Thyroid Cancer"
+  title__ES:
+    value: "Combinación de dabrafenib y trametinib aprobada para melanoma y cáncer de tiroides"
   langcode: en
   status: 1
   moderation_state:
@@ -539,6 +553,14 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_series__ES:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Temas y relatos blog'
   field_short_title:
     value: "Dabrafenib–Trametinib Combination Approved for Melanoma, Anaplastic Thyroid Cancer"
   body:
@@ -579,6 +601,8 @@
     value: 'FDA recently approved the targeted-drug combination to treat patients with advanced melanoma and a subset of patients with a rare and aggressive form of thyroid cancer whose tumors have a specific mutation in the BRAF gene.'
   field_pretty_url:
     value: "fda-combo"
+  field_pretty_url__ES:
+    value: "fda-combo-es"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_date_posted:

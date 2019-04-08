@@ -107,6 +107,14 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getCurrentLang() {
+    $currentLang = $this->getCurrentEntity()->language()->getId();
+    return $currentLang;
+  }
+
+  /**
    * Create a new node storage instance.
    *
    * @return Drupal\Core\Entity\EntityStorageInterface
@@ -159,7 +167,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series categories (topics). TODO: filter by series.
+   * Get Blog Series categories (topics).
    */
   public function getSeriesCategories() {
     $categories = [];
@@ -176,8 +184,24 @@ class BlogManager implements BlogManagerInterface {
         }
       }
     }
-
     return $categories;
+  }
+
+  /**
+   * Get Blog Series category (topic) descriptions.
+   */
+  public function getSeriesCategoryDescription() {
+    $categories = $this->getSeriesCategories();
+    $descriptions = [];
+
+    // Create an array of categories that match the owner Blog Series.
+    foreach ($categories as $cat) {
+      $tid = $cat->tid;
+      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
+      $desc = $this->getTaxonomyStorage()->load($tid)->description->value;
+      $descriptions[$url] = $desc;
+    }
+    return $descriptions;
   }
 
   /**
@@ -185,10 +209,33 @@ class BlogManager implements BlogManagerInterface {
    *
    * @param string $nid
    *   Node ID of content item.
+   * @param string $lang
+   *   Optional langcode.
    */
-  public function getBlogPathFromNid($nid) {
-    $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
+  public function getBlogPathFromNid($nid, $lang = NULL) {
+    if (isset($lang)) {
+      $path = $this->aliasManager->getAliasByPath('/node/' . $nid, $lang);
+    }
+    else {
+      $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
+    }
     return $path;
+  }
+
+  /**
+   * Return query results based on date posted.
+   *
+   * @param string $type
+   *   Content type or bundle.
+   */
+  public function getNodesByPostedDateAsc($type) {
+    $query = $this->entityQuery->get('node');
+    $query->condition('status', 1);
+    $query->condition('type', $type);
+    $query->condition('langcode', $this->getCurrentLang());
+    $query->sort('field_date_posted');
+    $nids = $query->execute();
+    return $nids;
   }
 
   /**
@@ -201,24 +248,7 @@ class BlogManager implements BlogManagerInterface {
     $query = $this->entityQuery->get('node');
     $query->condition('status', 1);
     $query->condition('type', $type);
-    $query->sort('field_date_posted', 'DESC');
-    $nids = $query->execute();
-    return $nids;
-  }
-
-  /**
-   * Return query results based on date posted and language.
-   *
-   * @param string $type
-   *   Content type or bundle.
-   * @param string $lang
-   *   Language of current node.
-   */
-  public function getNodesByPostedDateLangDesc($type, $lang) {
-    $query = $this->entityQuery->get('node');
-    $query->condition('status', 1);
-    $query->condition('type', $type);
-    $query->condition('langcode', $lang);
+    $query->condition('langcode', $this->getCurrentLang());
     $query->sort('field_date_posted', 'DESC');
     $nids = $query->execute();
     return $nids;

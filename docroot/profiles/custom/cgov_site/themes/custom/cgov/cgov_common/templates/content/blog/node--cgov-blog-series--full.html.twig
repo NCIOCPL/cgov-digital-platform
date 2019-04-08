@@ -32,12 +32,17 @@
     </div>
     <div id="cgvBody">
       <div class="slot-item first-SI">
-        <div>
-          {{ content.field_about_blog }}
-        </div>
-        {{ content.field_image_article }}
-        {{ content.field_intro_text }}
-      </div>
+        {% if not (get.topic or get.year) %}
+          <div>
+            {{ content.field_about_blog }}
+          </div>
+          {{ content.field_image_article }}
+          {{ content.field_intro_text }}
+        {% endif %}
+        {% if (get.topic) %}
+          {{ drupal_block('cgov_blog_topic_intro', {label: get.topic}) }}
+        {% endif %}
+	    </div>
       <div class="slot-item last-SI">
         <div class="dynamic list has-images">
           <ul>

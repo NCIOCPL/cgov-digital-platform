@@ -106,6 +106,8 @@
   type: "cgov_blog_post"
   title:
     value: "HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies"
+  title_ES:
+    value: "HTAN: espanol"
   langcode: en
   status: 1
   moderation_state:
@@ -120,6 +122,14 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_series__ES:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Temas y relatos blog'
   body:
     - format: "full_html"
       value: |
