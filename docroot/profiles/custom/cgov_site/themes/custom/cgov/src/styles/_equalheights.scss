@@ -1,24 +1,37 @@
 .flex-columns {
-    display: flex;
-	float: none;
+  display: flex;
+  float: none;
 
-    @include bp(small) {
-        &:not(.multimedia) {
-            display: inherit;
-        }
+  @include bp("(max-width: 765px)") {
+    &.guide-card {
+      display: inherit;
     }
+  }
+
+  @include bp(small) {
+    &:not(.multimedia) {
+      display: inherit;
+    }
+  }
+
 }
 
-@include bp(large-up){
-	.row .large-4.gutter {
-		width: 32%;
-		margin-left: 2%;
-	}
-	.row .large-6.gutter {
-		width: 48.5%;
-		margin-left: 2%;
-	}
-	.row .gutter:first-child {
-		margin-left: 0;
-	}
+@include bp(large-up) {
+  .row {
+    .gutter {
+      margin-left: 2%;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &.large-6 {
+        width: 48.5%;
+      }
+
+      &.large-4 {
+        width: 32%;
+      }
+    }
+  }
 }
