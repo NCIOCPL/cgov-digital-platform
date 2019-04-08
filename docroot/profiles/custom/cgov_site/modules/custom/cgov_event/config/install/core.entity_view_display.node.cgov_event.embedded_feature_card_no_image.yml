@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.thumbnail_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_event.body
     - field.field.node.cgov_event.field_all_day_event
     - field.field.node.cgov_event.field_browser_title
@@ -26,13 +26,13 @@ dependencies:
     - node.type.cgov_event
   module:
     - user
-id: node.cgov_event.thumbnail_card
+id: node.cgov_event.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_event
-mode: thumbnail_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
@@ -40,32 +40,6 @@ content:
     type: string
     region: content
   field_feature_card_description:
-    type: string
-    weight: 4
-    region: content
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 1
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-  field_list_description:
     weight: 5
     label: hidden
     settings:
@@ -74,7 +48,7 @@ content:
     type: string
     region: content
   field_short_title:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -83,12 +57,16 @@ content:
     region: content
 hidden:
   body: true
+  content_moderation_control: true
   field_all_day_event: true
   field_browser_title: true
   field_city_state: true
   field_event_end_date: true
   field_event_series: true
   field_event_start_date: true
+  field_image_article: true
+  field_image_promotional: true
+  field_list_description: true
   field_page_description: true
   field_pretty_url: true
   field_related_resources: true

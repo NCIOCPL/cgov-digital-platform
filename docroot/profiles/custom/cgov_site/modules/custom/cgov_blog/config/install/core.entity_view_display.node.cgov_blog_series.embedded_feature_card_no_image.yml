@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.feature_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
     - field.field.node.cgov_blog_series.field_banner_image
@@ -25,20 +25,12 @@ dependencies:
     - node.type.cgov_blog_series
   module:
     - user
-id: node.cgov_blog_series.feature_card
+id: node.cgov_blog_series.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_blog_series
-mode: feature_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_feature_card_description:
     weight: 3
     label: hidden
     settings:
@@ -46,8 +38,8 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_list_description:
-    weight: 4
+  field_feature_card_description:
+    weight: 5
     label: hidden
     settings:
       link_to_entity: false
@@ -55,18 +47,13 @@ content:
     type: string
     region: content
   field_short_title:
-    weight: 1
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
-  links:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   content_moderation_control: true
   field_about_blog: true
@@ -76,6 +63,7 @@ hidden:
   field_browser_title: true
   field_feedburner_url: true
   field_image_promotional: true
+  field_list_description: true
   field_num_display_posts: true
   field_page_description: true
   field_pretty_url: true
@@ -85,3 +73,4 @@ hidden:
   field_show_list_thumbnails: true
   field_site_section: true
   langcode: true
+  links: true

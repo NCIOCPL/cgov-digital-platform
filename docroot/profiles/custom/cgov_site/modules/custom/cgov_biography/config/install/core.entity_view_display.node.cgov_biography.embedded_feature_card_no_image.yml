@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.thumbnail_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_biography.body
     - field.field.node.cgov_biography.field_browser_title
     - field.field.node.cgov_biography.field_campus
@@ -20,6 +20,7 @@ dependencies:
     - field.field.node.cgov_biography.field_linkedin_handle
     - field.field.node.cgov_biography.field_list_description
     - field.field.node.cgov_biography.field_middle_name
+    - field.field.node.cgov_biography.field_office_location
     - field.field.node.cgov_biography.field_org_name_1
     - field.field.node.cgov_biography.field_org_name_2
     - field.field.node.cgov_biography.field_org_url_1
@@ -28,7 +29,7 @@ dependencies:
     - field.field.node.cgov_biography.field_phone_number
     - field.field.node.cgov_biography.field_prefix
     - field.field.node.cgov_biography.field_pretty_url
-    - field.field.node.cgov_biography.field_office_location
+    - field.field.node.cgov_biography.field_related_resources
     - field.field.node.cgov_biography.field_scientific_publications
     - field.field.node.cgov_biography.field_search_engine_restrictions
     - field.field.node.cgov_biography.field_short_title
@@ -38,13 +39,11 @@ dependencies:
     - field.field.node.cgov_biography.field_twitter_handle
     - node.type.cgov_biography
   module:
-    - cgov_core
-    - options
     - user
-id: node.cgov_biography.thumbnail_card
+id: node.cgov_biography.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_biography
-mode: thumbnail_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
     weight: 2
@@ -54,23 +53,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_list_description:
-    weight: 5
+  field_feature_card_description:
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
   field_short_title:
     weight: 3
     label: hidden
@@ -81,6 +71,7 @@ content:
     region: content
 hidden:
   body: true
+  content_moderation_control: true
   field_browser_title: true
   field_campus: true
   field_date_display_mode: true
@@ -89,13 +80,13 @@ hidden:
   field_date_updated: true
   field_display_bio_press_info: true
   field_email_address: true
-  field_feature_card_description: true
   field_first_name: true
-  field_image_article: true
   field_image_promotional: true
   field_last_name: true
   field_linkedin_handle: true
+  field_list_description: true
   field_middle_name: true
+  field_office_location: true
   field_org_name_1: true
   field_org_name_2: true
   field_org_url_1: true
@@ -104,10 +95,9 @@ hidden:
   field_phone_number: true
   field_prefix: true
   field_pretty_url: true
-  field_office_location: true
+  field_related_resources: true
   field_scientific_publications: true
   field_search_engine_restrictions: true
-  field_short_title: true
   field_site_section: true
   field_suffix: true
   field_title: true
