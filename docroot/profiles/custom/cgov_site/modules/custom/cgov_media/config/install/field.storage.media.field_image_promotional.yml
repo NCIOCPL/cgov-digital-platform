@@ -3,13 +3,16 @@ status: true
 dependencies:
   module:
     - media
-id: media.field_list_description
-field_name: field_list_description
+    - node
+  enforced:
+    module:
+      - cgov_media
+id: node.field_image_promotional
+field_name: field_image_promotional
 entity_type: media
-type: string_long
+type: entity_reference
 settings:
-  is_ascii: false
-  case_sensitive: false
+  target_type: media
 module: core
 locked: false
 cardinality: 1
