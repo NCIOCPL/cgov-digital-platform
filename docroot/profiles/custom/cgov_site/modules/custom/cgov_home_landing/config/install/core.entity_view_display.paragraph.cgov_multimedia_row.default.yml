@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_multimedia_row.field_mm_feature_card
+    - field.field.paragraph.cgov_multimedia_row.field_mm_media_item
+    - paragraphs.paragraphs_type.cgov_multimedia_row
+  module:
+    - entity_reference_revisions
+id: paragraph.cgov_multimedia_row.default
+targetEntityType: paragraph
+bundle: cgov_multimedia_row
+mode: default
+content:
+  field_mm_feature_card:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: feature_card
+      link: ''
+    third_party_settings: {  }
+  field_mm_media_item:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: multimedia_card
+      link: false
+    third_party_settings: {  }
+hidden: {  }
