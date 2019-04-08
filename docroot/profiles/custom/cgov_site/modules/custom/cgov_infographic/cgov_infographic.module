@@ -5,7 +5,6 @@
  * Contains cgov_infographic custom logic.
  */
 
-use Drupal\Core\Url;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
@@ -67,18 +66,5 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
         'image_style' => 'cgov_enlarged',
       ],
     ]);
-  }
-
-  // If accessible text is available, add a link to an alternate version of the
-  // page containing only the accessible text.
-  // NOTE: $entity already reflects the current language, no need to switch
-  // to another translation.
-  if ($build['#view_mode'] == 'full' && (count($entity->field_accessible_version) > 0)) {
-
-    // Set the longdesc attribute to a URL pointing to the infographic module's
-    // route for outputing the long description.
-    $args = ['media' => $entity->id()];
-    $build['field_infographic'][0]['#item_attributes']['longdesc'] =
-      Url::fromRoute('cgov_media.long_description', $args)->toString();
   }
 }
