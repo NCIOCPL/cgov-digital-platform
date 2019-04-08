@@ -24,6 +24,7 @@ dependencies:
     - datetime
     - entity_browser
     - media
+    - path
     - text
 id: media.cgov_video.default
 targetEntityType: media
@@ -31,7 +32,7 @@ bundle: cgov_video
 mode: default
 content:
   body:
-    weight: 10
+    weight: 11
     settings:
       rows: 5
       placeholder: ''
@@ -54,7 +55,7 @@ content:
     type: string_textfield
     region: content
   field_caption:
-    weight: 11
+    weight: 12
     settings:
       rows: 5
       placeholder: ''
@@ -73,7 +74,7 @@ content:
     weight: 16
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: options_buttons
     region: content
   field_date_posted:
     weight: 13
@@ -168,6 +169,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
@@ -189,5 +196,4 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden:
-  path: true
+hidden: {  }
