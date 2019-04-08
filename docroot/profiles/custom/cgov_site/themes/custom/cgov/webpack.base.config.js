@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WatcherPlugin = require('./watcherPlugin');
 
 const config = {
   target: 'web',
@@ -50,7 +49,6 @@ const config = {
 		new MiniCssExtractPlugin({
 			filename: "../css/[name].css",
     }),
-    new WatcherPlugin()
   ],
   watchOptions: {
     aggregateTimeout: 1000,
