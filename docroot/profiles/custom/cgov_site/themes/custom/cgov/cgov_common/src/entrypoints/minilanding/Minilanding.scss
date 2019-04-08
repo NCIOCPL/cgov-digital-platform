@@ -9,14 +9,6 @@
 @import "~Core/styles/nci-foundation_variables";
 @import "~Core/styles/thumbnailcards";
 
-.card {
-  padding: .9375em;
-  margin-bottom: 1em;
-  border: 1px solid $yetAnotherGrey;
-  background-color: $white;
-  box-shadow: 0 0 9px 1px rgba($black,.15);
-}
-
 .feature-primary {
   .card {
     padding: 0;
@@ -24,32 +16,17 @@
 }
 
 .feature-card {
-
-  h3 {
-    margin-top: 0;
-    font-weight: normal;
-    color: #2b7bba;
-    font-size: 1.2em;
-    line-height: 1.2;
-  }
   div {
     margin-bottom: 1em;
   }
-  a {
-    padding: 1.875em;
-    display: block;
 
+  a {
     &:hover {
       text-decoration: none;
-      h3 {
-        color: $lcranberry;
-      }
     }
   }
+
   p {
-    line-height: 1.375;
-    font-size: 0.9em;
-    color: #757575;
     &:last-child {
       margin-bottom: 0;
     }
@@ -156,16 +133,20 @@
     height: 100%;
 	}
 	
-	.row .large-4.gutter {
-		width: 32%;
-		margin-left: 2%;
-	}
-	.row .large-6.gutter {
-		width: 48.5%;
-		margin-left: 3%;
-	}
-	.row .gutter:first-child {
-		margin-left: 0;
+  .row {
+    .gutter {
+      &.large-4 {
+        width: 32%;
+        margin-left: 2%;
+      }
+      &.large-6{
+        width: 48.5%;
+        margin-left: 3%;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 }
 
