@@ -190,6 +190,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     // Open Blog Post pagination div.
     $markup = "<div id='cgov-blog-post-pagination>";
 
+    // DEBUG ENVIRONMENT - DO NOT KEEP.
+    $my_environment = 'nothing registered';
+    if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+      $my_environment = $_ENV['AH_SITE_ENVIRONMENT'];
+    }
+    $markup .= "<b>DEBUG ENVIRONMENT VAR:" . $my_environment . "</b><br/>";
+
     // Draw our prev/next links.
     // TODO: hook up translation.
     foreach ($blog_links as $index => $blog_link) {
