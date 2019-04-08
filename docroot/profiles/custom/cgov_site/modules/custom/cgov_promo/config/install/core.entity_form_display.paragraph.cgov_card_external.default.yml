@@ -4,9 +4,9 @@ dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
     - field.field.paragraph.cgov_card_external.field_featured_url
-    - field.field.paragraph.cgov_card_external.field_override_image_promotional
     - field.field.paragraph.cgov_card_external.field_override_card_description
     - field.field.paragraph.cgov_card_external.field_override_card_title
+    - field.field.paragraph.cgov_card_external.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_card_external
   module:
     - entity_browser
@@ -17,7 +17,7 @@ bundle: cgov_card_external
 mode: default
 content:
   field_featured_url:
-    weight: 3
+    weight: 0
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -25,7 +25,7 @@ content:
     type: link_default
     region: content
   field_override_card_description:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -33,7 +33,7 @@ content:
     type: string_textfield
     region: content
   field_override_card_title:
-    weight: 0
+    weight: 1
     settings:
       size: 60
       placeholder: ''
@@ -41,7 +41,7 @@ content:
     type: string_textfield
     region: content
   field_override_image_promotional:
-    weight: 2
+    weight: 3
     settings:
       entity_browser: cgov_image_browser
       field_widget_display: rendered_entity
