@@ -116,11 +116,15 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
     }
 
     // If 'Allow Comments' is selected, output the Disqus snippet data.
-    // TODO: Remove "always true" condition.
     if ($series_node && $series_node->get('field_allow_comments')->value) {
-      // IMPORTANT -- ALL THE SHORTNAMES ARE BEING SET TO DEV FOR NOW.
-      // TODO: GET THE ENVIRONMENT VARIABLE FOR PROD VS DEV AND CHECK HERE.
-      $tier = (1 == 2) ? 'prod' : 'dev';
+
+      // TODO: GET THE CORRECT ENVIRONMENT VARIABLE FOR PROD.
+      $tier = 'dev';
+      if (isset($_ENV['AH_SITE_ENVIRONMENT']) && $_ENV['AH_SITE_ENVIRONMENT'] = 'ncigovcdstg.prod') {
+        $tier = 'prod';
+      }
+
+      // Build up the shortname url; set to 'dev' if not populated.
       $shortname = $series_node->get('field_blog_series_shortname')->value;
       $shortname = (strlen($shortname) > 0) ? $shortname . '-' . $tier : 'dev';
       $build = [

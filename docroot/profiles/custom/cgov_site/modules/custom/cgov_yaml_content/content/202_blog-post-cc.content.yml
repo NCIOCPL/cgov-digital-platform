@@ -1,4 +1,4 @@
-## Cancer Currents Blog Post pages
+## Image for Cancer Currents Blog Post pages
 - entity: "media"
   bundle: "cgov_image"
   name: "Alveolar Soft-Part Aarcoma In a Femur"
@@ -24,6 +24,8 @@
   field_caption: 'A CT scan of a tumor in the right femur of a woman with alveolar soft part sarcoma.'
   field_caption__ES:
     value: 'Una tomografía computarizada de un tumor en el fémur derecho de una mujer con sarcoma de la parte blanda alveolar.'
+
+## Cancer Currents Blog Post pages
 - entity: "node"
   type: "cgov_blog_post"
   title:
@@ -226,3 +228,78 @@
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "HTAN"
+
+## Rebuild the series with Featured Posts now that posts exist.
+- entity: "node"
+  type: "cgov_blog_series"
+  title: 'Cancer Currents Blog'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_page_description:
+    value: 'cancer currents, blog'
+  field_browser_title:
+    value: 'Cancer Currents: An NCI Cancer Research Blog'
+  field_card_title:
+    value: 'Cancer Currents'
+  field_feature_card_description:
+    value: 'Cancer Currents Blog'
+  field_pretty_url:
+    value: "cancer-currents-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "Cancer Currents"
+  field_about_blog:
+    value: 'A blog featuring news and research updates from the National Cancer Institute.'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+  field_banner_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nci-update-blog-banner.__v40051732.jpg'
+      alt: 'Doctor pointing to medical display screen with stylus'
+  field_allow_comments: 1
+  field_blog_series_shortname:
+    - value: 'cancer-currents'
+  field_archive_group_by:
+    - value: 'month'
+  field_archive_back_years:
+    - value: '7'
+  field_num_display_posts:
+    - value: '15'
+  field_recommended_content_header:
+    - value: 'Recommended Content'
+  field_feedburner_url:
+    - value: 'https://feedburner-test.cancer.gov/cancercurrents'
+  field_featured_posts:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'

@@ -88,7 +88,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Get a collection of years and months. TODO: Replace dummy content.
+   * Get a collection of years and months.
    *
    * @param string $cid
    *   The node id of the current content item.
