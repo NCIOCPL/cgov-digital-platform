@@ -25,90 +25,49 @@ dependencies:
     - field.field.node.cgov_blog_post.field_short_title
     - node.type.cgov_blog_post
   module:
-    - text
     - user
 id: node.cgov_blog_post.feature_card_image
 targetEntityType: node
 bundle: cgov_blog_post
 mode: feature_card_image
 content:
-  body:
-    label: hidden
-    type: text_default
-    weight: 101
-    settings: {  }
-    third_party_settings: {  }
+  field_image_article:
+    type: entity_reference_entity_view
+    weight: 1
     region: content
-  content_moderation_control:
-    weight: -20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_browser_title:
-    weight: 104
     label: hidden
     settings:
-      link_to_entity: false
+      view_mode: image_crop_featured
+      link: false
     third_party_settings: {  }
-    type: string
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
     region: content
-  field_card_title:
-    weight: 103
     label: hidden
     settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_feature_card_description:
-    weight: 107
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_list_description:
-    weight: 106
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_page_description:
-    weight: 105
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_short_title:
-    weight: 102
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  links:
-    weight: 100
-    region: content
-    settings: {  }
+      view_mode: image_crop_featured
+      link: false
     third_party_settings: {  }
 hidden:
+  body: true
+  content_moderation_control: true
   field_author: true
   field_blog_series: true
   field_blog_topics: true
+  field_browser_title: true
+  field_card_title: true
   field_citation: true
   field_date_posted: true
-  field_image_article: true
-  field_image_promotional: true
+  field_feature_card_description: true
   field_intro_text: true
+  field_list_description: true
+  field_page_description: true
   field_pretty_url: true
   field_public_use: true
   field_recommended_content: true
   field_related_resources: true
   field_search_engine_restrictions: true
+  field_short_title: true
   langcode: true
+  links: true
