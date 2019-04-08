@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - media
+id: file_url_pattern
+label: 'File URL Pattern'
+type: 'canonical_entities:media'
+pattern: '/[cgov_tokens:cgov-computed-path]/[media:field_pretty_url:value]'
+selection_criteria:
+  de1ac848-37c0-470c-8549-0e4c00cbd918:
+    id: 'entity_bundle:media'
+    bundles:
+      cgov_file: cgov_file
+    negate: false
+    context_mapping:
+      media: media
+    uuid: de1ac848-37c0-470c-8549-0e4c00cbd918
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -5,12 +5,14 @@ dependencies:
     - media
   enforced:
     module:
-      - cgov_image
-id: media.field_accessible_version
-field_name: field_accessible_version
+      - cgov_media
+id: media.field_meta_description
+field_name: field_meta_description
 entity_type: media
-type: string_long
+type: string
 settings:
+  max_length: 320
+  is_ascii: false
   case_sensitive: false
 module: core
 locked: false
