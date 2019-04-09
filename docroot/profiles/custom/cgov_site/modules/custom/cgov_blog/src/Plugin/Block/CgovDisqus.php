@@ -117,21 +117,32 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
 
     // If 'Allow Comments' is selected, output the Disqus snippet data.
     if ($series_node && $series_node->get('field_allow_comments')->value) {
-
-      // TODO: GET THE CORRECT ENVIRONMENT VARIABLE FOR PROD.
-      $tier = 'dev';
-      if (isset($_ENV['AH_SITE_ENVIRONMENT']) && $_ENV['AH_SITE_ENVIRONMENT'] = 'ncigovcdstg.prod') {
-        $tier = 'prod';
-      }
-
-      // Build up the shortname url; set to 'dev' if not populated.
+      // Build up the shortname if the field value is set.
       $shortname = $series_node->get('field_blog_series_shortname')->value;
-      $shortname = (strlen($shortname) > 0) ? $shortname . '-' . $tier : 'dev';
-      $build = [
-        '#markup' => 'https://' . $shortname . '.disqus.com/embed.js',
-      ];
+      if (strlen($shortname) > 0) {
+        $tier = $this->isProd() ? 'prod' : 'dev';
+        $build = [
+          '#markup' => 'https://' . $shortname . '-' . $tier . '.disqus.com/embed.js',
+        ];
+      }
     }
     return $build;
+  }
+
+  /**
+   * Check if this is a production environment.
+   *
+   * @return bool
+   *   TRUE if matches prod environment, FALSE otherwise.
+   */
+  private function isProd() {
+    // Check the Acquia Cloud environment.
+    if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+      if ($_ENV['AH_SITE_ENVIRONMENT'] == 'prod') {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
 }
