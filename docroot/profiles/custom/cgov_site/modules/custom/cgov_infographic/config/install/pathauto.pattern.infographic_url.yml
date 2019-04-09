@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - media
+id: infographic_url
+label: 'Infographic URL'
+type: 'canonical_entities:media'
+pattern: '/[cgov_tokens:cgov-computed-path]/[media:field_pretty_url:value]'
+selection_criteria:
+  29eb38e4-4cf4-449c-8c4b-04ea04f58fd7:
+    id: 'entity_bundle:media'
+    bundles:
+      cgov_infographic: cgov_infographic
+    negate: false
+    context_mapping:
+      media: media
+    uuid: 29eb38e4-4cf4-449c-8c4b-04ea04f58fd7
+selection_logic: and
+weight: -5
+relationships: {  }

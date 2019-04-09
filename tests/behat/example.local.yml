@@ -47,6 +47,8 @@ local:
         default:
           chrome:
             api_url: "http://localhost:9222"
+            # Set the optimal Socket Timeout to avoid client-server connection problems in behat scripts.
+            socket_timeout: 10
     Drupal\DrupalExtension:
       drupal:
         # This must be an absolute path.

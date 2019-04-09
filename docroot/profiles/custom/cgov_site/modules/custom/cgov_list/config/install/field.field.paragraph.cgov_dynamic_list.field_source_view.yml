@@ -1,0 +1,54 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_source_view
+    - paragraphs.paragraphs_type.cgov_dynamic_list
+  module:
+    - viewsreference
+id: paragraph.cgov_dynamic_list.field_source_view
+field_name: field_source_view
+entity_type: paragraph
+bundle: cgov_dynamic_list
+label: 'Source View'
+description: 'The source Drupal View for the items to display.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:view'
+  handler_settings:
+    target_bundles: null
+    auto_create: 0
+  plugin_types:
+    block: block
+    default: 0
+    page: 0
+    entity_browser: 0
+    feed: 0
+  preselect_views:
+    block_content: 0
+    cgov_block_blog_posts: 0
+    cgov_content_browser: 0
+    cgov_image_media_browser: 0
+    content: 0
+    content_recent: 0
+    files: 0
+    frontpage: 0
+    media: 0
+    moderated_content: 0
+    press_releases: 0
+    site_section_browser: 0
+    taxonomy_term: 0
+    user_admin_people: 0
+    watchdog: 0
+    who_s_new: 0
+    who_s_online: 0
+  enabled_settings:
+    pager: pager
+    argument: argument
+    limit: limit
+    offset: 0
+    title: title
+field_type: viewsreference

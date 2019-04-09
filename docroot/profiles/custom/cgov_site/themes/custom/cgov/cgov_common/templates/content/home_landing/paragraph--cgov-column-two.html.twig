@@ -1,5 +1,8 @@
 <div class="row paragraph-col-two flex-columns">
-  {% for item in content  %}
-    <div class="large-6 columns">{{ item }}</div>
-  {% endfor %}
+    <div class="large-8 columns card gutter">
+      {{ content.field_main_contents }}
+    </div>
+    <div class="large-4 columns gutter accordion">
+      {{ content.field_secondary_contents }}
+    </div>
 </div>
