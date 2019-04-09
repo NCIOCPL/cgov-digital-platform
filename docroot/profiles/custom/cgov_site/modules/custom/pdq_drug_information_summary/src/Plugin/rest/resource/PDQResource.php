@@ -173,7 +173,7 @@ class PDQResource extends ResourceBase {
     $today = date('Y-m-d');
     $node->setTitle(($drug['title']));
     $node->setOwnerId($this->currentUser->id());
-    $node->set('body', ['value' => $drug['body'], 'format' => 'full_html']);
+    $node->set('body', ['value' => $drug['body'], 'format' => 'raw_html']);
     $node->set('field_pdq_url', $drug['url']);
     $node->set('field_pdq_cdr_id', $drug['cdr_id']);
     $node->set('field_date_posted', $drug['posted_date'] ?? $today);
