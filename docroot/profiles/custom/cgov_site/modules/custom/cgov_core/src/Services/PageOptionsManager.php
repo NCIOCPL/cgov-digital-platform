@@ -3,12 +3,19 @@
 namespace Drupal\cgov_core\Services;
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Page Options Manager Service.
  */
 class PageOptionsManager implements PageOptionsManagerInterface {
+
+  /**
+   * The route matcher.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatcher;
 
   protected $pageOptionsConfig = [];
 
@@ -57,6 +64,13 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'cgov_infographic' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
     'cgov_cthp' => [
       'print',
       'email',
@@ -82,12 +96,29 @@ class PageOptionsManager implements PageOptionsManagerInterface {
    *   The route match.
    */
   public function __construct(RouteMatchInterface $route_match) {
-    $currentNode = $route_match->getParameter('node');
-    if ($currentNode instanceof NodeInterface) {
-      $currentNodeType = $currentNode->getType();
-      $this->pageOptionsConfig = self::getPageOptionsForPageType($currentNodeType);
+    $this->routeMatcher = $route_match;
+    $currentEntity = $this->getCurrEntity();
+    if ($currentEntity) {
+      $bundleType = $currentEntity->bundle();
+      $this->pageOptionsConfig = self::getPageOptionsForPageType($bundleType);
     }
+  }
 
+  /**
+   * Gets the current entity if there is one.
+   *
+   * @return Drupal\Core\Entity\ContentEntityInterface
+   *   The retrieved entity, or FALSE if none found.
+   */
+  private function getCurrEntity() {
+    $params = $this->routeMatcher->getParameters()->all();
+    foreach ($params as $param) {
+      if ($param instanceof ContentEntityInterface) {
+        // If you find a ContentEntityInterface stop iterating and return it.
+        return $param;
+      }
+    }
+    return FALSE;
   }
 
   /**

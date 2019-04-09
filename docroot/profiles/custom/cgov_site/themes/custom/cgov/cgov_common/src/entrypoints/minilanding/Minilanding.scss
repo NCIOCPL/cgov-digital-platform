@@ -8,61 +8,37 @@
 @import "~Core/styles/nci-foundation_mixins";
 @import "~Core/styles/nci-foundation_variables";
 @import "~Core/styles/thumbnailcards";
-// @import "~Core/styles/hero";
-// @import "~Core/styles/cards";
 
-// Creates a flex wrapper for elements with equalheight class to hook on
-#content .flex-columns {
-  display: flex;
-  float: none;
-}
-
-@include bp(small) {
-  .card-thumbnail img {
-    display: none;
+.feature-primary {
+  .card {
+    padding: 0;
   }
 }
 
-@include bp(medium-up) {
-  // moved over from _hacks.scss
-  .card-thumbnail .small-2 {
-		width: 25%;
-	}
-	.card-thumbnail .small-10 {
-		width: 75%;
-  }
-  
-  // moved over from TopicPage.scss
-  .card-thumbnail-image {
-    padding-left: 0;
-  }
-  .card-thumbnail .small-10.card-thumbnail-text > h3 {
-    margin-top: .5em;
-  }
-}
-
-@include bp(large-up) {
-
-  /* equal height cards for desktop, visually push a div to the bottom of it's container */
-  .equalheight {
-    overflow: hidden;
+.feature-card {
+  div {
+    margin-bottom: 1em;
   }
 
-  .equalheight .push-to-bottom-desktop {
-    height: 100%;
-	}
-	
-	.row .large-4.gutter {
-		width: 32%;
-		margin-left: 2%;
-	}
-	.row .large-6.gutter {
-		width: 48.5%;
-		margin-left: 3%;
-	}
-	.row .gutter:first-child {
-		margin-left: 0;
+  a {
+    &:hover {
+      text-decoration: none;
+    }
   }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .image-hover {
+    position: relative;
+    img {
+      width: 100%;
+    }
+	}
+
 }
 
 .infographic {
@@ -100,5 +76,81 @@
     }
   }
 }
+
+@include bp(small) {
+  .feature-primary {
+    flex-direction: column;
+    .card {
+      margin: 1.25em 0;
+      background: $white;
+    }
+  }
+  .feature-card {
+
+    a {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .image-hover {
+      float: left;
+      width: 30%;
+    }
+    h3, p {
+      float: right;
+      width: 68%;
+    }
+  }
+  .card-thumbnail img {
+    display: none;
+  }
+}
+
+@include bp(medium-up) {
+  // moved over from _hacks.scss
+  .card-thumbnail .small-2 {
+		width: 25%;
+	}
+	.card-thumbnail .small-10 {
+		width: 75%;
+  }
+  
+  // moved over from TopicPage.scss
+  .card-thumbnail-image {
+    padding-left: 0;
+  }
+  .card-thumbnail .small-10.card-thumbnail-text > h3 {
+    margin-top: .5em;
+  }
+}
+
+@include bp(large-up) {
+
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+	}
+	
+  .row {
+    .gutter {
+      &.large-4 {
+        width: 32%;
+        margin-left: 2%;
+      }
+      &.large-6{
+        width: 48.5%;
+        margin-left: 3%;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
 
 /********************* END Mini Landing Page Styles ******************************************/

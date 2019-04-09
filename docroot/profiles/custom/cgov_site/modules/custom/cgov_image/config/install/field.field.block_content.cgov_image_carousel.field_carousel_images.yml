@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.cgov_image_carousel
+    - field.storage.block_content.field_carousel_images
+    - media.type.cgov_contextual_image
+    - media.type.cgov_image
+id: block_content.cgov_image_carousel.field_carousel_images
+field_name: field_carousel_images
+entity_type: block_content
+bundle: cgov_image_carousel
+label: Images
+description: "Select the images to include in the Image Carousel.\r\n"
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_contextual_image: cgov_contextual_image
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: cgov_contextual_image
+field_type: entity_reference
