@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_infographic custom logic.
+ */
+
+use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_entity_view_alter().
+ *
+ * Adds attributes to certain fields.
+ */
+function cgov_infographic_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if ($entity == NULL || $entity->bundle() != 'cgov_infographic') {
+    return;
+  }
+
+  // Add enlarge_uri to the build array so it appears as a property on the
+  // content variable in the 'full' display twig template.
+  if ($build['#view_mode'] == 'full') {
+    $build['enlarge_uri'] = $build['field_infographic']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'cgov_enlarged',
+      ],
+    ]);
+  }
+
+  // If accessible text is available, add a link to an alternate version of the
+  // page containing only the accessible text.
+  // NOTE: $entity already reflects the current language, no need to switch
+  // to another translation.
+  if ($build['#view_mode'] == 'full' && (count($entity->field_accessible_version) > 0)) {
+
+    // Set the longdesc attribute to a URL pointing to the infographic module's
+    // route for outputing the long description.
+    $args = ['media' => $entity->id()];
+    $build['field_infographic'][0]['#item_attributes']['longdesc'] =
+      Url::fromRoute('cgov_infographic.long_description', $args)->toString();
+  }
+}
