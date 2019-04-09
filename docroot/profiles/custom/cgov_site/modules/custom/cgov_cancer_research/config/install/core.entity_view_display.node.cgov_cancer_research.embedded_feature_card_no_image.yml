@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.thumbnail_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_cancer_research.body
     - field.field.node.cgov_cancer_research.field_browser_title
     - field.field.node.cgov_cancer_research.field_card_title
@@ -23,10 +23,10 @@ dependencies:
     - node.type.cgov_cancer_research
   module:
     - user
-id: node.cgov_cancer_research.thumbnail_card
+id: node.cgov_cancer_research.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_cancer_research
-mode: thumbnail_card
+mode: feature_card
 content:
   field_card_title:
     type: string
@@ -36,25 +36,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  field_image_article:
-    weight: 1
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_entity_view
-    region: content
-  field_image_promotional:
-    weight: 0
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-    type: entity_reference_entity_view
-    region: content
-  field_list_description:
+  field_feature_card_description:
     type: string
     weight: 4
     region: content
@@ -78,7 +60,9 @@ hidden:
   field_date_posted: true
   field_date_reviewed: true
   field_date_updated: true
-  field_feature_card_description: true
+  field_image_article: true
+  field_image_promotional: true
+  field_list_description: true
   field_page_description: true
   field_pretty_url: true
   field_search_engine_restrictions: true

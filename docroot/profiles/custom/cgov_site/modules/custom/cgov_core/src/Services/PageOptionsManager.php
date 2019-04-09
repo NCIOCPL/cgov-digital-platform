@@ -98,6 +98,13 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'cgov_cancer_research' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
   ];
 
   private static $optionConfigs = [
