@@ -27,9 +27,18 @@
     </ul>
   </nav>
 {% endif %}
+{# Paragraphs with only one section will not be wrapped in sections and not draw OTP. #}
+{# However, in the course of migrating, there may be instances where a single paragraph has a full article body with
+multiple sections expecting OTP to be drawn by the javascript method. The legacy method is still supported with OTP in
+Common.js #}
 {% for item in items %}
-  {# The Paragraphs template renders the <section> tag. #}
-  {{ item.content }}
+  {% if items | length > 1 %}
+    <section>
+  {% endif %}
+    {{ item.content }}
+  {% if items | length > 1 %}
+    </section>
+  {% endif %}
 {% endfor %}
 {% if items | length > 1 %}
   </div>

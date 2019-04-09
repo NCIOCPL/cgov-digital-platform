@@ -2,14 +2,14 @@
 
 namespace Drupal\Tests\cgov_core\Kernel;
 
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Tests the my custom service.
  *
  * @group my_custom_module
  */
-class RolesTest extends EntityKernelTestBase {
+class RolesTest extends KernelTestBase {
 
   /**
    * Modules to install.
@@ -35,6 +35,8 @@ class RolesTest extends EntityKernelTestBase {
     'cgov_core',
     'taxonomy',
     'views',
+    'embed',
+    'entity_embed',
     'entity_browser',
     'entity_reference_revisions',
     'paragraphs',
@@ -68,6 +70,8 @@ class RolesTest extends EntityKernelTestBase {
       'content_moderation',
       'language',
       'views',
+      'embed',
+      'entity_embed',
       'entity_browser',
       'entity_reference_revisions',
       'paragraphs',

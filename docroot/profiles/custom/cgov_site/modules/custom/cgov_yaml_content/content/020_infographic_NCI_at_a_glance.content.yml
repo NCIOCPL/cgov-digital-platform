@@ -1,0 +1,85 @@
+### TESTS:
+# Has body
+# Has accessible text
+# Has Spanish and English translations
+
+- entity: media
+  langcode: en
+  bundle: cgov_infographic
+  status: 1
+  moderation_state: published
+  name: 'NCI at a Glance Infographic'
+  name__ES:
+      value: 'Instituto Nacional del Cáncer Panorama'
+  field_meta_description: 'NCI at a Glance Infographic'
+  field_meta_description__ES:
+      value: ''
+  field_short_title: 'NCI at a Glance'
+  field_short_title__ES:
+      value: 'Instituto Nacional del Cáncer Panorama'
+  field_browser_title: 'NCI At A Glance Infographic'
+  field_browser_title__ES:
+      value: ''
+  field_card_title: ''
+  field_card_title__ES:
+      value: ''
+  field_list_description: 'This infographic provides a high-level overview of NCI''s historical milestones, funding process, the NCI-designated cancer centers, and training numbers for fiscal year (FY) 2017. The work we do includes genomics, public health, clinical trials, surveillance, scientific review, basic research, funding, drug development, cancer research, survivorship research, and more. Funds available to the NCI in FY 2018 totaled $5.67 billion which reflects an increase of $254 million from the previous fiscal year. In FY 2017, NCI supported 3,795 emerging cancer researchers through training and career development grants and intramural research experiences (not including students and postdoctoral fellows supported by NCI research project grants, cancer center grants, and other non-training mechanisms).'
+  field_list_description__ES:
+      value: 'La infografía "Instituto Nacional del Cáncer Panorama" permite conocer más acerca del Instituto Nacional del Cáncer y las actividades que realiza en la investigación del cáncer.'
+  field_feature_card_description: 'Discover more about what NCI does, what we fund, and some highlights from our long history in leading cancer research in this infographic.'
+  field_feature_card_description__ES:
+      value: 'La infografía "Instituto Nacional del Cáncer Panorama" permite conocer más acerca del Instituto Nacional del Cáncer.'
+  body:
+    - format: full_html
+      value: |
+        <p>The National Cancer Institute (NCI) leads the cancer research community toward accelerating the rate of scientific discovery and reducing the burden of cancer in the United States and around the world. NCI is the federal government's principal agency for cancer research and training. Our scope of work spans a wide range of research disciplines—from basic science to epidemiology to clinical trials. Most of NCI’s budget is used to fund research at universities and research centers across the country.
+        <br><br>Explore the NCI at a Glance infographic to learn more about who we are and what we do.</p>
+  body__ES:
+    - format: full_html
+      value: |
+        <p>El Instituto Nacional del Cáncer (NCI) lidera la comunidad de investigación oncológica con el objetivo de acelerar el progreso de los descubrimientos científicos y la reducción de la carga que representa el cáncer en Estados Unidos y el mundo entero. El NCI es la principal dependencia del gobierno federal dedicada a la investigación del cáncer y a la capacitación en esta área. Nuestro trabajo abarca una amplia variedad de disciplinas de investigación, que incluyen desde las ciencias básicas hasta la epidemiología y los estudios clínicos. La mayor parte del presupuesto del NCI está destinado a financiar investigaciones en universidades y centros de investigación en todo el país.&nbsp;</p>
+        <p>Vea en detalle la infografía "Instituto Nacional del Cáncer Panorama" para conocer más sobre quiénes somos y qué hacemos.</p>
+  field_accessible_version:
+    - value: |
+        This infographic provides a high-level overview of NCI's historical milestones, funding process, the NCI-designated cancer centers, and training numbers for fiscal year (FY) 2017. The work we do includes genomics, public health, clinical trials, surveillance, scientific review, basic research, funding, drug development, cancer research, survivorship research, and more. Funds available to the NCI in FY 2018 totaled $5.67 billion which reflects an increase of $254 million from the previous fiscal year. In FY 2017, NCI supported 3,795 emerging cancer researchers through training and career development grants and intramural research experiences (not including students and postdoctoral fellows supported by NCI research project grants, cancer center grants, and other non-training mechanisms).
+  field_accessible_version__ES:
+    - value: |
+        Este infográfico provee una vista general de alto nivel de acontecimientos históricos del NCI, del proceso de financiamiento, de los centros oncológicos designados por el NCI y las cifras de capacitación para el año fiscal 2015. El trabajo que nos ocupa incluye genómica, salud pública, vigilancia, revisión científica, investigación básica, financiamiento, creación de medicamentos, investigación oncológica, investigación de supervivencia, y otras cosas. Los fondos disponibles para el NCI en 2015 fueron de un total de USD 5210 mil millones lo cual refleja un aumento de 2,9% o USD 143 millones del año fiscal anterior. En 2015, el NCI financió a 3613 investigadores oncológicos emergentes por medio de capacitación y de subvenciones para desarrollo profesional y experiencias de investigación de intramuros (lo cual no incluye a estudiantes y becarios posdoctorales financiados por subvenciones de proyectos de investigación del NCI, subvenciones de centros oncológicos y otros mecanismos fuera de capacitación).
+  field_infographic:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nci-at-a-glance-enlarge.gif'
+  field_infographic__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'espanol-nci-at-a-glance-infographic.gif'
+  field_image_promotional:
+  field_image_promotional__ES:
+      value:
+  field_date_posted: '2014-12-15'
+  field_date_updated: '2014-12-15'
+  field_date_reviewed: '2015-12-15'
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_pretty_url: 'nci-at-a-glance'
+  field_pretty_url__ES: 'infografia-nci'
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - taxonomy_term
+        - vid: 'cgov_site_sections'
+          computed_path: '/about-nci/organization'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/organizacion'
