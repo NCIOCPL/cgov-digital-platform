@@ -36,21 +36,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_date_posted:
-    weight: 102
-    label: above
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
   field_date_updated:
     weight: 103
     label: above
     settings:
       format_type: medium
       timezone_override: ''
+      format_type: cgov_display_date
     third_party_settings: {  }
     type: datetime_default
     region: content
@@ -112,4 +104,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_date_posted: true
   langcode: true

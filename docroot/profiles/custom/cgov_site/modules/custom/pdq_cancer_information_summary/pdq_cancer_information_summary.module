@@ -7,6 +7,20 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function pdq_cancer_information_summary_field_widget_form_alter(
+  &$element,
+  FormStateInterface $form_state,
+  $context) {
+  $map = ['field_pdq_section_html' => ['raw_html']];
+  $form_helper = \Drupal::service('cgov_util.form_tools');
+  $form_helper->allowTextFormats($map, $element, $context);
+}
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
@@ -131,6 +145,31 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
 
     // Prepare for the next iteration of the loop, if any.
     $section = $child;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * This is for adding in the On This Page view of the sections for templates.
+ */
+function pdq_cancer_information_summary_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // We should only do this for summaries in the full display mode.
+  if ($entity->bundle() != 'pdq_cancer_information_summary' || ($view_mode != 'full' && $view_mode != 'default')) {
+    return;
+  }
+
+  if (isset($build['field_summary_sections'])) {
+    // Copy summary sections into a new "field" using TOC display.
+    $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
+      'type' => 'entity_reference_revisions_entity_view',
+      'settings' => [
+        'view_mode' => 'otp_toc',
+        'link' => 'link',
+      ],
+    ]);
+    $build['otp_toc']['#theme'] = 'field__otp_toc';
   }
 }
 

@@ -3,6 +3,7 @@
 namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests node body field storage.
@@ -24,6 +25,7 @@ class TestKernelTest extends KernelTestBase {
    * Sets up the test environment.
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.
