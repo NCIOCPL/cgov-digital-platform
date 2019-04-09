@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.feature_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_blog_series
@@ -26,10 +26,10 @@ dependencies:
     - node.type.cgov_blog_post
   module:
     - user
-id: node.cgov_blog_post.feature_card
+id: node.cgov_blog_post.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_blog_post
-mode: feature_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
     weight: 2
@@ -39,7 +39,25 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_feature_card_description:
+  field_image_article:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
+  field_list_description:
     weight: 4
     label: hidden
     settings:
@@ -47,24 +65,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 1
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_featured
-      link: false
-    third_party_settings: {  }
   field_short_title:
     weight: 3
     label: hidden
@@ -82,6 +82,7 @@ hidden:
   field_browser_title: true
   field_citation: true
   field_date_posted: true
+  field_feature_card_description: true
   field_intro_text: true
   field_list_description: true
   field_page_description: true
@@ -90,5 +91,6 @@ hidden:
   field_recommended_content: true
   field_related_resources: true
   field_search_engine_restrictions: true
+  field_site_section: true
   langcode: true
   links: true
