@@ -24,11 +24,6 @@ source:
          selector: '@langcode'
 
         -
-         name: field_blog_series
-         label: field_blog_series
-         selector: '@field_blog_series'
-
-        -
          name: field_search_engine_restrictions
          label: field_search_engine_restrictions
          selector: '@field_search_engine_restrictions'
@@ -37,16 +32,6 @@ source:
          name: field_public_use
          label: field_public_use
          selector: '@field_public_use'
-
-        -
-         name: field_intro_text
-         label: field_intro_text
-         selector: 'intro'
-
-        -
-         name: body
-         label: body
-         selector: 'body'
 
         -
          name: field_short_title
@@ -113,16 +98,6 @@ source:
          selector: '@field_pretty_url'
 
         -
-         name: related_resource_id
-         label: related_resource_id
-         selector: related_resource_id
-
-        -
-         name: related_resource_ids
-         label: related_resource_ids
-         selector: related_resource_ids
-
-        -
          name: field_landing_contents
          label: field_landing_contents
          selector: field_landing_contents/field_landing_contents
@@ -155,14 +130,6 @@ process:
 
   langcode: langcode
 
-  field_author: author
-
-  body/value: body
-  body/format:
-   plugin: default_value
-   default_value: full_html
-
-
   field_short_title: field_short_title
   field_browser_title: field_browser_title
   field_card_title: field_card_title
@@ -175,14 +142,8 @@ process:
   field_date_display_mode: date_display_mode
 
 
-
-
   field_search_engine_restrictions: field_search_engine_restrictions
   field_public_use: field_public_use
-  field_intro_text/value: field_intro_text
-  field_intro_text/format:
-   plugin: default_value
-   default_value: streamlined_html
 
 
   field_site_section:
@@ -195,12 +156,12 @@ process:
   field_pretty_url: field_pretty_url
 
 
-
   temp_text1:
     plugin: migration_lookup
     migration:
        - list_migration
        - contentblock_migration
+       - twoitemfeaturecardrow_migration
 
     no_stub: true
     source: field_landing_contents
@@ -220,6 +181,7 @@ process:
       migration:
         - list_migration
         - contentblock_migration
+        - twoitemfeaturecardrow_migration
 
       no_stub: true
       source: field_landing_content
@@ -234,6 +196,7 @@ process:
       migration:
         - list_migration
         - contentblock_migration
+        - twoitemfeaturecardrow_migration
 
       no_stub: true
       source: field_landing_content
