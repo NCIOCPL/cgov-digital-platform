@@ -37,21 +37,16 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 1
-    region: content
+  field_feature_card_description:
+    weight: 107
     label: hidden
     settings:
-      view_mode: image_crop_thumbnail
-      link: false
+      link_to_entity: false
     third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 0
+    type: string
     region: content
   field_short_title:
-    weight: 3
+    weight: 102
     label: hidden
     settings:
       link_to_entity: false
@@ -65,7 +60,8 @@ hidden:
   field_browser_title: true
   field_citation: true
   field_date_posted: true
-  field_intro_text: true
+  field_image_article: true
+  field_image_promotional: true
   field_intro_text: true
   field_list_description: true
   field_page_description: true
