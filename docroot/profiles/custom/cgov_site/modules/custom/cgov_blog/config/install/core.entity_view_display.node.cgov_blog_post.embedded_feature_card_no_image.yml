@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.thumbnail_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_browser_title
@@ -24,31 +24,11 @@ dependencies:
   module:
     - text
     - user
-id: node.cgov_blog_post.thumbnail_card
+id: node.cgov_blog_post.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_blog_post
-mode: thumbnail_card
+mode: embedded_feature_card_no_image
 content:
-  body:
-    label: hidden
-    type: text_default
-    weight: 101
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  content_moderation_control:
-    weight: -20
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_browser_title:
-    weight: 104
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_card_title:
     weight: 103
     label: hidden
@@ -65,22 +45,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_list_description:
-    weight: 106
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_page_description:
-    weight: 105
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_short_title:
     weight: 102
     label: hidden
@@ -89,27 +53,21 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_site_section:
-    weight: 108
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  links:
-    weight: 100
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  body: true
+  content_moderation_control: true
   field_author: true
+  field_browser_title: true
   field_citation: true
   field_date_posted: true
   field_image_article: true
   field_image_promotional: true
   field_intro_text: true
+  field_list_description: true
+  field_page_description: true
   field_pretty_url: true
   field_public_use: true
   field_search_engine_restrictions: true
+  field_site_section: true
   langcode: true
+  links: true

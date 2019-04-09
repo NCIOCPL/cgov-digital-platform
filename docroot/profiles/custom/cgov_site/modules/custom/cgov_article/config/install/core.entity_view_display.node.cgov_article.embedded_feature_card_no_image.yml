@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.thumbnail_card
+    - core.entity_view_mode.node.embedded_feature_card_no_image
     - field.field.node.cgov_article.field_article_body
     - field.field.node.cgov_article.field_browser_title
     - field.field.node.cgov_article.field_card_title
@@ -18,18 +18,19 @@ dependencies:
     - field.field.node.cgov_article.field_list_description
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
-    - field.field.node.cgov_article.field_public_use
     - field.field.node.cgov_article.field_related_resources
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_short_title
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
   module:
+    - cgov_core
+    - options
     - user
-id: node.cgov_article.thumbnail_card
+id: node.cgov_article.embedded_feature_card_no_image
 targetEntityType: node
 bundle: cgov_article
-mode: thumbnail_card
+mode: embedded_feature_card_no_image
 content:
   field_card_title:
     weight: 2
@@ -39,25 +40,7 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_image_article:
-    type: entity_reference_entity_view
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-  field_image_promotional:
-    type: entity_reference_entity_view
-    weight: 1
-    region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
-  field_list_description:
+  field_feature_card_description:
     weight: 4
     label: hidden
     settings:
@@ -82,8 +65,10 @@ hidden:
   field_date_posted: true
   field_date_reviewed: true
   field_date_updated: true
-  field_feature_card_description: true
+  field_image_article: true
+  field_image_promotional: true
   field_intro_text: true
+  field_list_description: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true

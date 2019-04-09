@@ -24,24 +24,6 @@
   margin-top: 0.58em;
 }
 
-// Creates a flex wrapper for elements with equalheight class to hook on
-#content .flex-columns {
-  display: flex;
-  float: none;
-
-  @include bp("(max-width: 765px)") {
-    &.guide-card {
-      display: inherit;
-    }
-  }
-
-  @include bp(small) {
-    &:not(.multimedia) {
-      display: inherit;
-    }
-  }
-}
-
 /* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
 .feature-primary .rawHtml,
 .feature-primary .rawHtml .featured-text {
@@ -547,7 +529,7 @@ parent accordion in all breakpoints. */
     //height: 100%;
   }
 }
-//.row:not(.flex-columns) .card > .slot-item {
+
 .card > .slot-item {
   @extend %autoheight-fix;
 }
