@@ -4,6 +4,7 @@ namespace Drupal\Tests\pdq_drug_information_summary\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify publication of PDQ Drug Information Summaries.
@@ -77,6 +78,7 @@ class ApiTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
     // Build the URLs for the API requests.

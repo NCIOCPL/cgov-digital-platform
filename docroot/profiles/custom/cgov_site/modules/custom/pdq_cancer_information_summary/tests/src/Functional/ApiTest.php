@@ -5,6 +5,7 @@ namespace Drupal\Tests\pdq_cancer_information_summary\Functional;
 use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify publication of PDQ Cancer Information Summaries.
@@ -116,6 +117,7 @@ class ApiTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
     // Build the URLs for the API requests.
