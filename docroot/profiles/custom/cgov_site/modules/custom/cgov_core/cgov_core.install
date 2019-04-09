@@ -9,6 +9,21 @@ use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 
 /**
+ * Implements hook_install().
+ *
+ * Set up cgov_core module.
+ *
+ * @see system_install()
+ */
+function cgov_core_install() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Set the DTM config for this environment.
+  $siteHelper->installDtmEnvironment();
+}
+
+/**
  * Implements hook_themes_installed().
  *
  * Perform actions to set up the site for this profile.

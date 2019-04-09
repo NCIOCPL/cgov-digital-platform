@@ -367,4 +367,32 @@ class CgovCoreTools {
     return $permissions;
   }
 
+  /**
+   * Installs the DTM configuration based on environment variable.
+   */
+  public function installDtmEnvironment() {
+    if (!$this->isProd()) {
+      $dtmSettings = $this->configFactory->getEditable('adobe_dtm.settings');
+      $dtmSettings->set('environment', 'dev')->save();
+    }
+  }
+
+  /**
+   * Check if this is a production Acquia Cloud machine.
+   *
+   * @return bool
+   *   TRUE if matches prod environment, FALSE otherwise.
+   */
+  private function isProd() {
+    $is_prod = FALSE;
+
+    // TODO: get the correct prod environment variable name.
+    if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+      if ($_ENV['AH_SITE_ENVIRONMENT'] == 'prod') {
+        $is_prod = TRUE;
+      }
+    }
+    return $is_prod;
+  }
+
 }
