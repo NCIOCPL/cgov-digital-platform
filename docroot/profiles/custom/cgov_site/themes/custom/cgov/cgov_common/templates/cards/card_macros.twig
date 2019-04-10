@@ -38,3 +38,16 @@
     </div>
   </div>
 {% endmacro %}
+
+{% macro recommendedContentCard(title, url, img) %}
+  <div class="slot-item equalheight large-4 columns card gutter blog-feature">
+    <div class="feature-card cgvBlogPost">
+      <a href="{{url}}">
+        <div class="image-hover">
+          {{img}}
+        </div>
+        <h3>{{title}}</h3>
+      </a>
+    </div>
+  </div>
+{% endmacro %}

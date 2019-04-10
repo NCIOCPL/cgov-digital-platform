@@ -3,6 +3,7 @@
 namespace Drupal\Tests\cgov_core\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests the my custom service.
@@ -51,6 +52,7 @@ class RolesTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setup();
     $this->installEntitySchema('block_content');
     $this->installEntitySchema('content_moderation_state');

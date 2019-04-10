@@ -19,10 +19,10 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_recommended_content
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
-    - field.field.node.cgov_blog_post.field_site_section
     - node.type.cgov_blog_post
   module:
     - datetime
@@ -57,7 +57,7 @@ content:
     region: content
   field_blog_series:
     type: entity_reference_label
-    weight: 9
+    weight: 10
     region: content
     label: hidden
     settings:
@@ -65,7 +65,7 @@ content:
     third_party_settings: {  }
   field_blog_topics:
     type: entity_reference_label
-    weight: 10
+    weight: 11
     region: content
     label: hidden
     settings:
@@ -97,12 +97,21 @@ content:
     type: text_default
     region: content
   field_public_use:
-    weight: 9
+    weight: 8
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
+  field_recommended_content:
+    type: entity_reference_revisions_entity_view
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      view_mode: recommended_content_card
+      link: ''
+    third_party_settings: {  }
   field_related_resources:
     type: entity_reference_revisions_entity_view
     weight: 7
@@ -120,6 +129,7 @@ content:
 hidden:
   field_browser_title: true
   field_card_title: true
+  field_citation: true
   field_feature_card_description: true
   field_image_promotional: true
   field_list_description: true
@@ -127,5 +137,4 @@ hidden:
   field_pretty_url: true
   field_search_engine_restrictions: true
   field_short_title: true
-  field_site_section: true
   langcode: true

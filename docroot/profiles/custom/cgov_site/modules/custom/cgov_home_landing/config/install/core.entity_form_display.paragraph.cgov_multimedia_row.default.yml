@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_media_browser
+    - field.field.paragraph.cgov_multimedia_row.field_mm_feature_card
+    - field.field.paragraph.cgov_multimedia_row.field_mm_media_item
+    - paragraphs.paragraphs_type.cgov_multimedia_row
+  module:
+    - entity_browser
+    - paragraphs
+id: paragraph.cgov_multimedia_row.default
+targetEntityType: paragraph
+bundle: cgov_multimedia_row
+mode: default
+content:
+  field_mm_feature_card:
+    type: entity_reference_paragraphs
+    weight: 1
+    region: content
+    settings:
+      title: 'Feature Card'
+      title_plural: 'Feature Cards'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+  field_mm_media_item:
+    type: entity_browser_entity_reference
+    weight: 0
+    region: content
+    settings:
+      entity_browser: cgov_media_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: entity_browser_selected_entity
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true
