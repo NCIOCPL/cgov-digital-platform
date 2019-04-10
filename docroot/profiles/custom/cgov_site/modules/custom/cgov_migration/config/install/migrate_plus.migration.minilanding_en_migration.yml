@@ -97,6 +97,12 @@ source:
          label: field_pretty_url
          selector: '@field_pretty_url'
 
+
+        -
+         name: field_banner_image
+         label: field_banner_image
+         selector: '@field_banner_image'
+
         -
          name: field_landing_contents
          label: field_landing_contents
@@ -154,6 +160,13 @@ process:
 
 
   field_pretty_url: field_pretty_url
+
+  field_banner_image:
+    plugin: image_import
+    source: field_banner_image
+    skip_on_missing_source: true
+    skip_on_error: true
+
 
 
   temp_text1:

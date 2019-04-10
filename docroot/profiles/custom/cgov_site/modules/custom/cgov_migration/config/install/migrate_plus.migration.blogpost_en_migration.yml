@@ -117,12 +117,10 @@ source:
          label: field_pretty_url
          selector: '@field_pretty_url'
 
-
         -
          name: related_resource_id
          label: related_resource_id
          selector: related_resource_id
-
 
 
         -
@@ -141,12 +139,15 @@ source:
          selector: citation_id/citation_id
 
 
-
         -
          name: citation_ids
          label: citation_ids
          selector: citation_ids/citation_ids
 
+        -
+         name: field_recommended_content
+         label: field_recommended_content
+         selector: field_recommended_content/field_recommended_content
 
 
   ids:
@@ -202,6 +203,21 @@ process:
     source: term_id
     no_stub: true
 
+
+  temp_text3:
+    plugin: migration_lookup
+    migration:
+      - promocard_migration
+      - externalpromocard_migration
+    no_stub: true
+    source: field_recommended_content
+
+  field_recommended_content:
+    plugin: iterator
+    source: '@temp_text3'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
 
   field_blog_series:
@@ -309,6 +325,7 @@ process:
       plugin: extract
       index:
         - 1
+
 
 
 destination:
