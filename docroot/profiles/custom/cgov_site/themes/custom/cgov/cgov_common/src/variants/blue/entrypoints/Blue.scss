@@ -1,0 +1,585 @@
+@import '~Core/styles/breakpoints';
+@import '~Core/styles/colors';
+@import '~Core/styles/variables';
+@import '../styles/sprites/svg-sprite';
+
+// theme color palette
+$denim: #00527d;
+$jewel: #008e9a;
+$cobalt: #4659a5;
+$puff: #85c8f8;
+$icicle: #ebf6f2;
+$cocoa: #6c5037;
+$slate: #606060;
+$clementine: #f9a921;
+$key-lime: #9ee237;
+$marshmallow: #fffaf4;
+$aegean: #2f779d;
+
+// utility shades
+$eggshell: #f2f0ef;
+$graphite: #4d4d4d;
+$storm: #666;
+$asphalt: #2e2e2e;
+$aqua: #c7eae8;
+$jade: #97ccc6;
+$freeze: #c2e4e0;
+$space: #023c5a;
+$bronze: #c78005;
+$white: #fff;
+
+// theme assignments
+$default-link-color: $denim;
+$default-link-hover: $bronze;
+$site-logo-width: initial;
+$site-logo-height: 66px;
+$site-logo-height-desktop: 67px;
+$site-logo-min-width: unset;
+$site-logo-max-width: 98%;
+$utility-text: $white;
+$utility-background-color: $cobalt;
+$main-menu-link-color: $graphite;
+$main-menu-background-color: $eggshell;
+$main-menu-items-width-mobile: 28%;
+$main-search-background-color: $white;
+$main-search-text-desktop: #2e2e2e;
+$mega-menu-current-page-background: $denim;
+$mega-menu-current-page-active-expanded-color: $space;
+$mega-menu-current-page-active-expanded-background: $white;
+$mega-menu-current-page-active-not-expanded-color: $white;
+$mega-menu-current-page-active-not-expanded-background: $space;
+$mega-menu-border-bottom-desktop: $denim;
+$mega-menu-group-header-desktop-color: $denim;
+$mega-menu-group-header-desktop-color-hover: $slate;
+$menu-bar-expanded-true-background-mobile: $space;
+$menu-active-link-background-mobile: $bronze;
+$menu-parent-of-current-page-color-mobile: $denim;
+$menu-current-page-color-mobile: $white;
+$menu-contains-current-color-mobile: $denim;
+$nav-search-float-tablet-down: right;  // necessary if mobile menu items decrease from the default 4 items
+$section-navigation-current-page-arrow-desktop: $denim;
+$section-navigation-top-level-background-desktop: $aegean;
+$section-navigation-level-1-background-desktop: $icicle;
+$section-navigation-is-current-page-color-desktop: $white;
+$section-navigation-is-current-page-background: $denim;
+$section-navigation-contains-current-page-color-desktop: $denim;
+$section-nav-tongue-top-background-mobile: $denim;
+$section-nav-family-background: $icicle;
+$section-nav-plus-background: $space;
+$section-nav-minus-color: $space;
+$main-content-background: $white;
+$page-options-icons-background-mobile: $jewel;
+$page-options-icons-background-hover-mobile: $clementine;
+$page-options-icons-background-desktop: transparent;
+$site-footer-background: url(/publishedcontent/images/images/design-elements/background-graphics/hexagon_molecular_structure_footer.png) no-repeat 130% 00px, linear-gradient(45deg, $cobalt, $aegean);
+$buttons-background: $cobalt;
+$buttons-hover-background: $clementine;
+$hero-text-background-tablet:rgba(2,53,76,.8); // #02354c;
+$feature-card-background-color: $puff;
+$feature-card-link-color: $denim;
+$guide-card-background: $marshmallow;
+$guide-card-arrow-link: $graphite;
+$guide-card-arrow-link-hover: $bronze;
+$multimedia-slot-background: url(/publishedcontent/images/images/design-elements/background-graphics/multimedia-background-blue.jpg) repeat;
+$pullquote-left-border: $slate;
+$footer-icons-hover-opacity: 1;
+$accordion-odd-rows-background: $freeze;
+$accordion-toggle-odd-rows-background: $jade;
+$accordion-even-rows-background: $icicle;
+$accordion-toggle-even-rows-background: $aqua;
+$accordion-toggle-minus-odd-color: $jade;
+$accordion-toggle-minus-even-color: $aqua;
+$svg-menu-hamburger-mobile: menu-blue-palette;
+$svg-menu-info-mobile: info-blue-palette;
+$svg-menu-search-mobile: search-large-blue-palette;
+$svg-menu-dictionary-mobile: book-blue-palette;
+$svg-guide-card-circle-arrow: chevron-circle-blue-palette;
+$svg-guide-card-circle-arrow-hover: chevron-circle-hover-blue-palette;
+$svg-twitter: twitter-blue-palette;
+$svg-twitter-hover: twitter-hover-blue-palette;
+$svg-gov-delivery: gov-delivery-blue-palette;
+$svg-gov-delivery-hover: gov-delivery-hover-blue-palette;
+$svg-facebook: facebook-blue-palette;
+$svg-facebook-hover: facebook-hover-blue-palette;
+$svg-instagram: instagram-blue-palette;
+$svg-instagram-hover: instagram-hover-blue-palette;
+$svg-linkedin: linkedin-blue-palette;
+$svg-linkedin-hover: linkedin-hover-blue-palette;
+$svg-rss: rss-blue-palette;
+$svg-rss-hover: rss-hover-blue-palette;
+$svg-pinterest: pinterest-blue-palette;
+$svg-pinterest-hover: pinterest-hover-blue-palette;
+$svg-youtube: youtube-blue-palette;
+$svg-youtube-hover: youtube-hover-blue-palette;
+$svg-external-link: external-link-blue-palette;
+$svg-main-search-magnifying-glass-desktop: search-blue-palette;
+$svg-page-options-font-size-desktop: font-size-blue-palette;
+$svg-page-options-print-desktop: printer-blue-palette;
+$svg-page-options-email-desktop: mail-envelope-closed-blue-palette;
+$svg-page-options-facebook-desktop: facebook-blue-palette;
+$svg-page-options-twitter-desktop: twitter-blue-palette;
+$svg-page-options-pinterest-desktop: pinterest-blue-palette;
+
+// default theme link color
+.main-content a,
+.main-content .feature-card a,
+.feature-card.cgvArticle a h3,
+ul.breadcrumbs > * a,
+.topic-feature .cgvBlogPost a h3,
+.pullquote,
+.desktop #blog-archive-accordion .ui-accordion-header .toggle,
+.desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
+.multimedia .feature-card a h3,
+.multimedia .multimedia-feature-card a h3 {
+  color: $default-link-color;
+}
+
+// default theme link hover/active color
+.main-content p a:hover,
+a .feature-card.cgvArticle a:hover h3,
+.main-content a.title:hover,
+.card-thumbnail h3 a:focus,
+.card-thumbnail h3 a:hover,
+.topic-feature a:focus,
+.topic-feature a:hover,
+.list .title a.title:focus,
+.list .title a.title:hover,
+.list .title a:focus,
+.list .title a:hover,
+.feature-card.cgvArticle a:hover h3,
+.topic-feature .cgvBlogPost a:hover h3,
+.sub-nav-group a.sub-nav-group-header:hover,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.multimedia-slot .feature-card:hover,
+.multimedia-slot .feature-card:focus,
+.multimedia-slot a:focus h3,
+.multimedia-slot a:hover h3,
+.multimedia .card:hover h3,
+.multimedia .card:focus h3 {
+  color: $default-link-hover;
+}
+
+// header
+.nci-logo-pages img {
+  width: $site-logo-width;
+  height: $site-logo-height;
+  min-width: $site-logo-min-width;
+  max-width: $site-logo-max-width;
+}
+
+// main content background
+.main-content {
+  background: $main-content-background;
+}
+
+// language bar
+.columns.utility,
+.language-bar {
+  display: none;
+}
+
+// utility bar
+// style changes because its being treated as the section title rather than utility bar
+#microsite-a {
+  padding: 10px 0;
+  font-family: $montserrat-font-stack;
+  font-size: 20px;
+}
+
+.utility {
+  text-align: left;
+  color: $utility-text;
+}
+
+.utility-background {
+  background-color: $utility-background-color;
+}
+
+// overcoming foundation class that hides utility bar for mobile
+.utility-background.micro-a {
+  display: block !important;
+}
+
+// menu bar
+.menu.nav-menu > .nav-item > .nav-item-title > a.active,
+.menu.nav-menu > .nav-item > .nav-item-title > a.open,
+.menu.nav-menu > .nav-item > .nav-item-title > a:focus,
+.menu.nav-menu > .nav-item > .nav-item-title > a,
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a,
+.mobile-menu-bar > a,
+.mobile-menu-bar > button,
+.mobile-menu-bar > a:focus,
+.mobile-menu-bar > a:hover,
+.mobile-menu-bar > button:focus,
+.mobile-menu-bar > button:hover {
+  color: $main-menu-link-color;
+}
+
+.nav-search-bar {
+  background: $main-menu-background-color;
+}
+
+// mobile menu
+// due to changing number of items in mobile main menu on microsites
+.mobile-menu-bar > a,
+.mobile-menu-bar > button {
+  width: $main-menu-items-width-mobile;
+  margin-left: 0;
+}
+
+.nav-header.menu-btn::before {
+  @include svg-sprite($svg-menu-hamburger-mobile);
+}
+
+a.nav-contact::before {
+  @include svg-sprite($svg-menu-info-mobile);
+}
+
+button.nav-search::before {
+  @include svg-sprite($svg-menu-search-mobile);
+}
+
+button.nav-dictionary::before {
+  @include svg-sprite($svg-menu-dictionary-mobile);
+}
+
+#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+#mega-nav li.contains-current > div.nav-item-title > a,
+.section-nav .level-1.contains-current.has-children > div a {
+  color: $menu-parent-of-current-page-color-mobile;
+}
+
+.section-nav .level-1.contains-current.has-children div.current-page a {
+  color: $menu-current-page-color-mobile;
+}
+
+.section-nav li.contains-current > div:not(.current-page) > a {
+  color: $menu-contains-current-color-mobile;
+}
+
+#mega-nav .toggle[aria-expanded="true"],
+#mega-nav[aria-expanded="true"] .toggle {
+  color: $menu-bar-expanded-true-background-mobile;
+}
+
+// section navigation mobile (tongue)
+.section-nav div.current-page {
+  background: $section-nav-tongue-top-background-mobile;
+}
+
+.section-nav .level-1.contains-current {
+  background: $section-nav-family-background;
+}
+
+.section-nav .level-1.contains-current .toggle[aria-expanded="false"],
+.section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
+  background-color: $section-nav-plus-background;
+}
+
+.section-nav .level-1.contains-current .toggle[aria-expanded="true"],
+.section-nav .level-1.contains-current[aria-expanded="true"] .toggle {
+  color: $section-nav-minus-color;
+}
+
+// mega menu
+#mega-nav .current-page {
+  background-color: $mega-menu-current-page-background;
+}
+
+#mega-nav .current-page > div .toggle[aria-expanded="true"],
+#mega-nav .current-page > div[aria-expanded="true"] .toggle {
+  background-color: $mega-menu-current-page-active-expanded-background;
+  color: $mega-menu-current-page-active-expanded-color;
+}
+
+#mega-nav .current-page > div .toggle[aria-expanded="false"],
+#mega-nav .current-page > div[aria-expanded="false"] .toggle {
+  background-color: $mega-menu-current-page-active-not-expanded-background;
+  color: $mega-menu-current-page-active-not-expanded-color;
+}
+
+.nav-menu a:active {
+  background-color: $menu-active-link-background-mobile;
+}
+
+// page options
+.page-options li {
+  background-color: $page-options-icons-background-mobile;
+}
+
+.page-options li:hover {
+  background-color: $page-options-icons-background-hover-mobile;
+}
+
+// content styles
+.guide-card .card {
+  background: $guide-card-background;
+}
+a.arrow-link-white:before,
+a.arrow-link:before {
+  @include svg-sprite($svg-guide-card-circle-arrow);
+}
+
+a.arrow-link-white:hover:before,
+a.arrow-link:hover:before {
+  @include svg-sprite($svg-guide-card-circle-arrow-hover);
+}
+
+.pullquote {
+  border-left-color: $pullquote-left-border;
+}
+
+a.infographic-view-full,
+a.video-view-full,
+figure a.article-image-enlarge {
+  background-color: $buttons-background;
+}
+
+a.infographic-view-full:focus,
+a.infographic-view-full:hover,
+a.video-view-full:focus,
+a.video-view-full:hover,
+figure a.article-image-enlarge:focus,
+figure a.article-image-enlarge:hover {
+  background-color: $buttons-hover-background;
+}
+
+.feature-primary .feature-card,
+.feature-primary .card {
+  background-color: $feature-card-background-color;
+}
+
+.feature-primary .feature-card.cgvArticle a h3,
+.feature-primary .feature-card.cgvArticle a:hover h3,
+.main-content .feature-card a {
+  color: $feature-card-link-color;
+}
+
+.main-content .guide-card a.arrow-link,
+.main-content .guide-card a.arrow-link-white,
+.main-content a.definition,
+.multimedia .feature-card a,
+.search,
+.utility-background {
+  color: $guide-card-arrow-link;
+}
+
+.main-content .guide-card a.arrow-link:hover {
+  color: $guide-card-arrow-link-hover;
+}
+
+.multimedia-slot {
+  background: $multimedia-slot-background;
+}
+
+.icon-exit-notification {
+  @include svg-sprite($svg-external-link);
+}
+
+// accordion
+.ui-accordion-header.odd,
+.ui-accordion-header.odd.ui-state-active {
+  background: $accordion-odd-rows-background;
+}
+.ui-accordion-header.even,
+.ui-accordion-header.even.ui-state-active {
+  background: $accordion-even-rows-background;
+}
+.ui-accordion-header.odd .toggle[aria-expanded="false"],
+.ui-accordion-header.odd[aria-expanded="false"] .toggle {
+  background: $accordion-toggle-odd-rows-background;
+}
+.ui-accordion-header.even .toggle[aria-expanded="false"],
+.ui-accordion-header.even[aria-expanded="false"] .toggle {
+  background: $accordion-toggle-even-rows-background;
+}
+.ui-accordion-header.odd .toggle[aria-expanded="true"],
+.ui-accordion-header.odd[aria-expanded="true"] .toggle {
+  color: $accordion-toggle-minus-odd-color;
+}
+.ui-accordion-header.even .toggle[aria-expanded="true"],
+.ui-accordion-header.even[aria-expanded="true"] .toggle {
+  color: $accordion-toggle-minus-even-color;
+}
+
+// footer
+.site-footer {
+  background: $site-footer-background;
+}
+.site-footer__icons li:hover {
+  opacity: $footer-icons-hover-opacity;
+}
+.site-footer__icons .icon.twitter {
+  @include svg-sprite($svg-twitter);
+}
+.site-footer__icons .icon.twitter:hover {
+  @include svg-sprite($svg-twitter-hover);
+}
+
+.site-footer__icons .icon.govdelivery {
+  @include svg-sprite($svg-gov-delivery);
+}
+.site-footer__icons .icon.govdelivery:hover {
+  @include svg-sprite($svg-gov-delivery-hover);
+}
+
+.site-footer__icons .icon.facebook {
+  @include svg-sprite($svg-facebook);
+}
+.site-footer__icons .icon.facebook:hover {
+  @include svg-sprite($svg-facebook-hover);
+}
+
+.site-footer__icons .icon.instagram {
+  @include svg-sprite($svg-instagram);
+}
+.site-footer__icons .icon.instagram:hover {
+  @include svg-sprite($svg-instagram-hover);
+}
+
+.site-footer__icons .icon.linkedin {
+  @include svg-sprite($svg-linkedin);
+}
+.site-footer__icons .icon.linkedin:hover {
+  @include svg-sprite($svg-linkedin-hover);
+}
+
+.site-footer__icons .icon.rss {
+  @include svg-sprite($svg-rss);
+}
+.site-footer__icons .icon.rss:hover {
+  @include svg-sprite($svg-rss-hover);
+}
+
+.site-footer__icons .icon.youtube {
+  @include svg-sprite($svg-youtube);
+}
+.site-footer__icons .icon.youtube:hover {
+  @include svg-sprite($svg-youtube-hover);
+}
+
+@include break(large) {
+  // header
+  .nci-logo-pages {
+    img {
+      width: $site-logo-width;
+      height: $site-logo-height-desktop;
+    }
+  }
+
+  // because the language bar is turned off, there needs to be space between the utility bar and logo
+  .micro-a {
+    margin-top: 20px;
+  }
+
+  // utility
+  #microsite-a .utility span {
+    display: none;
+  }
+
+  //  main navigation and search
+  #swKeyword,
+  .search {
+    background-color: $main-search-background-color;
+  }
+
+  #sitesearch {
+    @include svg-sprite($svg-main-search-magnifying-glass-desktop, mq);
+  }
+
+  #mega-nav .nav-item.contains-current > .nav-item-title > a,
+  #mega-nav .nav-item.current-page > .nav-item-title > a {
+    border-bottom-color: $mega-menu-border-bottom-desktop;
+  }
+
+  a.sub-nav-group-header {
+    color: $mega-menu-group-header-desktop-color;
+  }
+
+  a.sub-nav-group-header:focus,
+  a.sub-nav-group-header:hover {
+    color: $mega-menu-group-header-desktop-color-hover;
+  }
+
+  // Left navigation
+  .section-nav {
+    .current-page:after {
+      border-left-color: $section-navigation-current-page-arrow-desktop;
+    }
+
+    .level-0 > div {
+      background-color: $section-navigation-top-level-background-desktop;
+    }
+
+    .level-1.contains-current {
+      background-color: $section-navigation-level-1-background-desktop;
+    }
+
+    div.current-page {
+      background-color: $section-navigation-is-current-page-background;
+    }
+    .contains-current.has-children {
+      > div a {
+        color: $section-navigation-contains-current-page-color-desktop;
+      }
+      > div.current-page a {
+        color: $section-navigation-is-current-page-color-desktop;
+      }
+    }
+  }
+
+  .page-options li,
+  .page-options li:hover {
+    background-color: $page-options-icons-background-desktop;
+  }
+
+  .page-options .page-options--resize a:before {
+    @include svg-sprite($svg-page-options-font-size-desktop, mq);
+  }
+
+  // desktop theme images
+  .page-options .page-options--print a:before {
+    @include svg-sprite($svg-page-options-print-desktop, mq);
+  }
+
+  .page-options .page-options--email a:before {
+    @include svg-sprite($svg-page-options-email-desktop, mq);
+  }
+
+  .page-options .social-share--facebook a:before {
+    @include svg-sprite($svg-page-options-facebook-desktop, mq);
+  }
+
+  .page-options .social-share--twitter a:before {
+    @include svg-sprite($svg-page-options-twitter-desktop, mq);
+  }
+
+  .page-options .social-share--pinterest a:before {
+    @include svg-sprite($svg-page-options-pinterest-desktop, mq);
+  }
+
+  // desktop main menu
+  #nvcgSlMainNav #swKeyword {
+    color: $main-search-text-desktop;
+  }
+}
+
+@include bp(medium-down) {
+  .nav-search {
+    float: $nav-search-float-tablet-down;
+  }
+}
+
+@include bp(medium) {
+  .nci-logo-pages img {
+    width: $site-logo-width;
+  }
+
+  .ncilandingpage #PageOptionsControl1 ul {
+    float: left;
+  }
+  .hero-text {
+    background: $hero-text-background-tablet;
+  }
+}

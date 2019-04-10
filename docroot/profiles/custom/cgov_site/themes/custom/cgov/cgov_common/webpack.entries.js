@@ -9,5 +9,7 @@ module.exports = {
     "CancerCenters": path.resolve(__dirname, "src/entrypoints/cancerCenters/CancerCenters.js"),
     "BlogPost": path.resolve(__dirname, "src/entrypoints/blogPost/BlogPost.js"),
     "Biography": path.resolve(__dirname, "src/entrypoints/biography/Biography.js"),
-    "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js")
+    "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js"),
+    "Purple": path.resolve(__dirname, "src/variants/purple/entrypoints/Purple.js"),
+    "Blue": path.resolve(__dirname, "src/variants/blue/entrypoints/Blue.js")
 }
