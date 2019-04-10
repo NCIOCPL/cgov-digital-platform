@@ -1,0 +1,8 @@
+{% import '@cgov_common/content/image/image_macros.twig' as imageMacros %}
+
+{% set classes = "medium" %}
+
+{# Get the aliased path for the infographic #}
+{% set enlarge_uri = media.path.0.alias %}
+
+{{ imageMacros.articleImage(classes, content.field_image_promotional, enlarge_uri, content.credit, content.caption, "View Infographic") }}
