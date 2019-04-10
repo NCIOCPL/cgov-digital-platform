@@ -1,4 +1,4 @@
-import './blue.scss';
+import './Blue.scss';
 import $ from 'jquery';
 
 const onDOMContentLoaded = () => {
