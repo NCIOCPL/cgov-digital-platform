@@ -1,0 +1,46 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_mm_feature_card
+    - paragraphs.paragraphs_type.cgov_card_external
+    - paragraphs.paragraphs_type.cgov_card_internal
+    - paragraphs.paragraphs_type.cgov_card_raw_html
+    - paragraphs.paragraphs_type.cgov_multimedia_row
+  module:
+    - entity_reference_revisions
+id: paragraph.cgov_multimedia_row.field_mm_feature_card
+field_name: field_mm_feature_card
+entity_type: paragraph
+bundle: cgov_multimedia_row
+label: Feature Card
+description: 'The feature card for the multimedia row.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_card_internal: cgov_card_internal
+      cgov_card_external: cgov_card_external
+      cgov_card_raw_html: cgov_card_raw_html
+    target_bundles_drag_drop:
+      cgov_card_internal:
+        enabled: true
+        weight: -11
+      cgov_card_external:
+        enabled: true
+        weight: -10
+      cgov_card_raw_html:
+        enabled: true
+        weight: -9
+      cgov_primary_feature_row:
+        weight: -8
+        enabled: false
+      body_section:
+        weight: -7
+        enabled: false
+field_type: entity_reference_revisions

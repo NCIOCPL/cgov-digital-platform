@@ -36,7 +36,21 @@
   field_author:
     value: 'NCI Staff'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  field_blog_series__ES:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Temas y relatos blog'
   body:
     - format: "full_html"
       value: |
@@ -95,13 +109,6 @@
     - value: "Vitamin D Supplements Don’t Reduce Cancer Incidence"
   field_short_title__ES:
     - value: "vitamina D no reducen la incidencia de cáncer"
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
   field_related_resources:
     - entity: 'paragraph'
       type: "cgov_internal_link"

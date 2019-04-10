@@ -29,11 +29,18 @@ targetEntityType: media
 bundle: cgov_video
 mode: default
 content:
-  content_moderation_control:
-    weight: -20
+  body:
+    weight: 16
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    type: text_default
     region: content
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   created:
     label: hidden
     type: timestamp
@@ -44,13 +51,6 @@ content:
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
-  body:
-    weight: 16
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: content
   field_browser_title:
     weight: 9
     label: hidden

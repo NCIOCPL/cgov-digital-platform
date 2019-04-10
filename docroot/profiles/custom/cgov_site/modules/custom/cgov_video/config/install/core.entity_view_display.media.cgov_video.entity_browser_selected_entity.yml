@@ -1,0 +1,71 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.entity_browser_selected_entity
+    - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_browser_title
+    - field.field.media.cgov_video.field_caption
+    - field.field.media.cgov_video.field_card_title
+    - field.field.media.cgov_video.field_date_display_mode
+    - field.field.media.cgov_video.field_date_posted
+    - field.field.media.cgov_video.field_date_reviewed
+    - field.field.media.cgov_video.field_date_updated
+    - field.field.media.cgov_video.field_feature_card_description
+    - field.field.media.cgov_video.field_list_description
+    - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_short_title
+    - field.field.media.cgov_video.field_site_section
+    - image.style.thumbnail
+    - media.type.cgov_video
+  module:
+    - image
+id: media.cgov_video.entity_browser_selected_entity
+targetEntityType: media
+bundle: cgov_video
+mode: entity_browser_selected_entity
+content:
+  field_media_oembed_video:
+    type: string
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+  name:
+    type: string
+    weight: 1
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  thumbnail:
+    type: image
+    weight: 2
+    label: hidden
+    settings:
+      image_style: thumbnail
+      image_link: ''
+    region: content
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  created: true
+  field_browser_title: true
+  field_caption: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_list_description: true
+  field_pretty_url: true
+  field_short_title: true
+  field_site_section: true
+  langcode: true
+  uid: true

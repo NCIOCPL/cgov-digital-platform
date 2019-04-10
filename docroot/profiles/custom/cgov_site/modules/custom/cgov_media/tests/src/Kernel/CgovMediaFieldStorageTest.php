@@ -22,7 +22,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     'user', 'system', 'file', 'field', 'image', 'media', 'text', 'filter',
     'datetime', 'options', 'workflows', 'content_moderation', 'language',
     'content_translation', 'media_test_source', 'cgov_media', 'taxonomy',
-    'pathauto', 'token', 'ctools',
+    'views', 'entity_browser', 'pathauto', 'token', 'ctools',
   ];
 
   /**
@@ -60,7 +60,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     $this->installEntitySchema('content_moderation_state');
     $this->installConfig([
       'field', 'media', 'file', 'language', 'content_translation',
-      'media_test_source', 'cgov_media', 'pathauto',
+      'views', 'entity_browser', 'media_test_source', 'cgov_media', 'pathauto',
     ]);
   }
 

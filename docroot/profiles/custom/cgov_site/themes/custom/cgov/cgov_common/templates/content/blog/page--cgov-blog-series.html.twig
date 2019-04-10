@@ -1,8 +1,9 @@
+{{ attach_library('cgov_common/blogSeries') }}
 {{ page.notification_banner }}
 
 <header class="push" role="banner">
   <div id="nvcgSlSiteBanner" class="row">
-     {{ page.site_banner }}
+    {{ page.site_banner }}
   </div>
 </header>
 
@@ -50,9 +51,7 @@
     <div class="row general-page-body-container collapse">
       <div class="large-12 columns">
         <div class="row">
-          <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
-            {{ page.breadcrumb }}
-          </div>
+          {{ page.breadcrumb }}
           {{ drupal_block('page_options') }}
         </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
