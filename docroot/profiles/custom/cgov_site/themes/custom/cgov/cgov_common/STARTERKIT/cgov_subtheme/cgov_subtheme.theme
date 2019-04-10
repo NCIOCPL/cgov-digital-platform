@@ -15,7 +15,7 @@ use Drupal\node\Entity\Node;
  * @param array $variables
  *   Collection of variables.
  */
-function cgov_themename_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+function cgov_subtheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
 
     // If $node is the NID instead of Node object, get Node object.
@@ -34,18 +34,32 @@ function cgov_themename_theme_suggestions_page_alter(array &$suggestions, array 
 /**
  * Implements hook_theme_suggestions_HOOK_alter() for blocks.
  */
-function cgov_themename_theme_suggestions_block_alter(&$suggestions, $variables) {
+function cgov_subtheme_theme_suggestions_block_alter(&$suggestions, $variables) {
 
   // Load theme suggestions for blocks from parent theme.
   foreach ($suggestions as &$suggestion) {
-    $suggestion = str_replace('cgov_themename_', 'cgov_common_', $suggestion);
+    $suggestion = str_replace('cgov_subtheme_', 'cgov_common_', $suggestion);
   }
+}
+
+/**
+ * Add theme variant class name to page body for CSS and JS entrypoint.
+ */
+function cgov_purple_preprocess_html(&$variables) {
+  $colorTheme = theme_get_setting('color_theme');
+  $variables['attributes']['class'][] = $colorTheme . '-theme';
 }
 
 /**
  * Add sub-theme assets to all pages.
  */
-function cgov_themename_preprocess_page(&$variables) {
-  $variables['#attached']['library'][] = 'cgov_themename/global-styling-themename';
-  $variables['#attached']['library'][] = 'cgov_themename/global-scripts-themename';
+function cgov_subtheme_preprocess_page(&$variables) {
+  $variables['#attached']['library'][] = 'cgov_subtheme/global-styling-subtheme';
+  $variables['#attached']['library'][] = 'cgov_subtheme/global-scripts-subtheme';
+
+  $colorTheme = theme_get_setting('color_theme');
+
+  if ($colorTheme != 'none') {
+    $variables['#attached']['library'][] = 'cgov_subtheme/' . $colorTheme . '-theme';
+  }
 }

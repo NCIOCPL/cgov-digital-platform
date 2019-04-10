@@ -1,1 +1,0 @@
-import "./Themename.scss";
