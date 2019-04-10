@@ -64,6 +64,17 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'cgov_blog_post' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_blog_series' => [
+      'resize',
+    ],
     'cgov_infographic' => [
       'print',
       'email',
@@ -71,7 +82,24 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'pdq_cancer_information_summary' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'pdq_drug_information_summary' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
     'cgov_cthp' => [
+      'resize',
       'print',
       'email',
       'facebook',

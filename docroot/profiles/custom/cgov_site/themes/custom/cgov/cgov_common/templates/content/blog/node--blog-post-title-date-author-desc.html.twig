@@ -6,9 +6,7 @@
         <a class="title" href="{{ url }}" onclick="">{{ label }}</a>
         <div class="description">
           <div class="date-author">
-            {% spaceless %}{{ content.field_date_posted }}{% endspaceless %},
-            {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
-            {{ blogMacros.getAuthor(content) }}
+            {{ blogMacros.getByline(content) }}
           </div>
           <p>{{ content.field_list_description }}</p>
           <p><a href="{{ url }}">{% trans with {'context':'CGov Blog'} %}Continue Reading{% endtrans %} &gt;</a></p>

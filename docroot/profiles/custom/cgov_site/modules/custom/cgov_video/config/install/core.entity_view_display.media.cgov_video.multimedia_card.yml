@@ -1,0 +1,180 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.multimedia_card
+    - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_browser_title
+    - field.field.media.cgov_video.field_caption
+    - field.field.media.cgov_video.field_card_title
+    - field.field.media.cgov_video.field_date_display_mode
+    - field.field.media.cgov_video.field_date_posted
+    - field.field.media.cgov_video.field_date_reviewed
+    - field.field.media.cgov_video.field_date_updated
+    - field.field.media.cgov_video.field_feature_card_description
+    - field.field.media.cgov_video.field_list_description
+    - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_short_title
+    - field.field.media.cgov_video.field_site_section
+    - media.type.cgov_video
+  module:
+    - cgov_core
+    - image
+    - media
+    - options
+    - text
+    - user
+id: media.cgov_video.multimedia_card
+targetEntityType: media
+bundle: cgov_video
+mode: multimedia_card
+content:
+  body:
+    weight: 16
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  created:
+    label: hidden
+    type: timestamp
+    weight: 0
+    region: content
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+  field_browser_title:
+    weight: 9
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_caption:
+    weight: 13
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_card_title:
+    weight: 10
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_date_display_mode:
+    weight: 21
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_date_posted:
+    weight: 17
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_reviewed:
+    weight: 19
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_updated:
+    weight: 20
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_feature_card_description:
+    weight: 11
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_list_description:
+    weight: 22
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_media_oembed_video:
+    type: oembed
+    weight: 6
+    label: hidden
+    settings:
+      max_width: 0
+      max_height: 0
+    third_party_settings: {  }
+    region: content
+  field_pretty_url:
+    weight: 12
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_short_title:
+    weight: 8
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_site_section:
+    weight: 15
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  thumbnail:
+    type: image
+    weight: 5
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    region: content
+    third_party_settings: {  }
+  uid:
+    label: hidden
+    type: author
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  name: true

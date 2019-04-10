@@ -1,0 +1,36 @@
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+{% set archive_data = content['#archive_data'] %}
+{% set archive_path = content['#archive_path'] %}
+{% set granularity = content['#archive_granularity'] %}
+
+{% if (archive_data is defined) and (archive_path is defined) %}
+  <div class="slot-item">
+    <div class="desktop">
+      <div id="blog-archive-accordion">
+        <h3 id="archive" class="blog-archive-header">
+          {% trans %}Archive{% endtrans %}
+        </h3>
+        <div id="blog-archive-accordion-year">
+
+          {% if granularity == 'month' %}
+            {% for year, month in archive_data %}
+            <h4>
+              {{ year }}
+            </h4>
+            <ul>
+              {{ blogMacros.getMonthLinks(month, year, archive_path) }}
+            </ul>
+            {% endfor %}
+          {% endif %}
+
+          {% if granularity == 'year' %}
+            <ul>
+              {{ blogMacros.getYearLinks(archive_data, archive_path) }}
+            </ul>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
