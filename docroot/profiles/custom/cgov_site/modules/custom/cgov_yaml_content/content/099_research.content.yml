@@ -147,7 +147,29 @@
                 </div>
     ######## End Guide Row ###########
 
-    ######## MULTIMEDIA HERE TBD ##############
+    ######## MULTIMEDIA Row ##############
+    - entity: 'paragraph'
+      type: "cgov_multimedia_row"
+      field_mm_media_item:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_infographic'
+                name: 'NCI at a Glance Infographic'
+      field_mm_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######### End MM Row ##############
 
     ######## Begin Thumbnail Row ##############
     - entity: 'paragraph'

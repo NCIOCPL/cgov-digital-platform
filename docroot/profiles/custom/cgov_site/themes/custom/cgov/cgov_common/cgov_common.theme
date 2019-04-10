@@ -37,6 +37,8 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
 }
 
 /**
+ * Implements hook_preprocess_html().
+ *
  * Add theme variant class name to page body for CSS and JS entrypoint.
  */
 function cgov_common_preprocess_html(&$variables) {
@@ -45,6 +47,8 @@ function cgov_common_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_page().
+ *
  * Add theme variant assets to all pages.
  */
 function cgov_common_preprocess_page(&$variables) {
@@ -52,5 +56,22 @@ function cgov_common_preprocess_page(&$variables) {
 
   if ($colorTheme != 'none') {
     $variables['#attached']['library'][] = 'cgov_common/' . $colorTheme . '-theme';
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function cgov_common_preprocess_node(&$variables) {
+  // URL query parameters.
+  $params = [
+    'month',
+    'topic',
+    'year',
+  ];
+
+  // Add any parameter values to the $variables get property.
+  foreach ($params as $param) {
+    $variables['get'][$param] = isset($_GET[$param]) ? $_GET[$param] : '';
   }
 }

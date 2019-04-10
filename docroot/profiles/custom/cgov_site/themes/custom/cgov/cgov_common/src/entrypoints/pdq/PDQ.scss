@@ -1,0 +1,298 @@
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import "~Core/styles/breakpoints";
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+
+/*** BEGIN PDQ Styles ***/
+
+.toptoc {
+	font-family: $montserrat-font-stack;
+	width: 24%;
+	float: right;
+	margin: 0 -1.2em 10px 2em;
+	border-bottom: 12px solid #1c5e86;
+	font-size: 0.8em;
+	margin-bottom: 3em;
+
+	h3 {
+		background-color: #1c5e86;
+		color: white;
+		font-size: 1em;
+		margin: 0;
+		padding: 10px 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	ul {
+		margin-bottom: 0;
+		line-height: 1.2em;
+	}
+	li {
+		z-index: 1;
+		list-style-type: none;
+		background: none;
+		margin: 0;
+		border-bottom: 1px solid #d5d5d2;
+
+		&:before {
+			// removes the bullets for toptoc li menu items
+			content: none;
+			display: none;
+		}
+		&.selected {
+			/* Convert this to a border style */
+			//background: url($backgrounds + "toptoc-active.gif") 0 0 repeat-y;
+			font-weight: bold;
+			> a {
+				padding: 0.5em 1em 0.5em calc(1em - 5px);
+				border-left: 5px solid #14819b;
+			}
+		}
+
+		> a {
+			display: block;
+			padding: 0.5em 1em;
+		    color: #000000;
+		}
+		&.viewall > a {
+			padding: 0.825em 1em 0.825em 2.5em;
+			position: relative;
+			&::before {
+				content:'';
+				position: absolute;
+				@include svg-sprite(document-search-blue);
+				@include vCenter;
+				left: .8em;
+				font-size:1.2em;
+
+			}
+		}
+	}
+	.enlarge-link {
+		display: none;
+	}
+}
+
+// Add top margin to all "On This Page" sections except the first [WCMSFEQ-1345]
+.accordion > section:not(:first-of-type) {
+	margin-top: 70px;
+}
+
+// Lingering clearfix spacing removal [WCMSFEQ-1344]
+@include bp(medium-up){
+	.clearfix::after, .clearfix::before, .pullquote-left::after, .pullquote-left::before, .pullquote-right::after, .pullquote-right::before, .pullquote::after, .pullquote::before
+	{
+		content: none; // setting content to none to be double-safe that a content with an empty string does not get generated
+		display: none;
+	}
+}
+
+@include bp(small){
+	/* Hide 'On This Page' section on PDQ & factsheet pages */
+	#pdq-toc-article nav.on-this-page, 
+	body.cgvfactsheet nav.on-this-page, 
+	.summary-sections .on-this-page {
+		display: none;
+	}
+	.accordion > section:not(:first-of-type) {
+		margin-top: auto;
+	}
+	.summary-sections .in-this-section {
+		// hide 'In This Section' navigation on mobile
+		display: none;
+	}
+}
+
+@include bp(medium-down) {
+	// show the full-page (all sections) OTP
+	#pdq-toc-article > .on-this-page {
+		display: block;
+	}
+	// hide the individual sections' OTP
+	// .pdq-sections .on-this-page {
+	// 	display: none;
+	// }
+	
+	/*** BEGIN PDQ Styles ***/
+	.toptoc {
+		display: none;
+	}
+	div#_toc_article {
+		display: none;
+	}
+	section.hide {
+		display: block;
+	}
+	/*** END PDQ Styles ***/
+}
+
+@include bp(large-up){
+	.toptoc {
+		margin-right: -3.90625em;
+	}
+	
+	/** BEGIN PDQ Styles **/
+	section.hide, div.hide,
+	// {
+	// 	display: none;
+	// }
+	section.show, div.show {
+		display: block;
+	}
+	/** END PDQ Styles **/
+}
+
+.next-link {
+	text-align: right;
+}
+.previous-next-links {
+	clear: both;
+}
+.enlarge-link {
+	display: block;
+	color: #9c3303;
+	text-align: right;
+	text-decoration: underline;
+}
+.large {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	right: 0;
+}
+.pdq-link-enlarge {
+	color: #9c3303;
+	display: block;
+	margin: 20px 0 -10px;
+	text-align: right;
+	text-decoration: underline;
+}
+table .pdq-link-enlarge {
+	margin: 0;
+}
+.pdq-image-table-enlarge {
+	background: none repeat scroll 0 0 #fff;
+	@include box-shadow(0 0 5px 5px #808080);
+	left: 10px;
+	margin-top: 20px;
+	position: absolute;
+	right: 10px;
+}
+.pdq-image-table-enlarge table caption {
+	padding: 20px 0 10px 10px;
+}
+table.table-default {
+	border-collapse: collapse;
+	margin: 15px 0;
+}
+tfoot.pdq-footer {
+	margin: 0;
+	padding: 10px;
+}
+tfoot.pdq-footer td {
+	background: none repeat scroll 0 0;
+	background-color: $caption-background;
+	font-size: 14px;
+	font-family: $montserrat-font-stack;
+	line-height: 1.5em;
+	border: medium none;
+	font-style: italic;
+	padding: 5px;
+}
+table tfoot {
+	font-weight: normal;
+	background-color: $caption-background;
+	font-size: 14px;
+	line-height: 1.5em;
+	font-family: $montserrat-font-stack;
+}
+
+/* removing padding for nested ul elements inside an accordion */
+
+#accordion li > ul,
+.accordion li > ul,
+.key-points li > ul {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+/* per ticket OCECREATIV-905 */
+
+/* following two classes are for lists */
+.pdq-content-list {
+
+}
+.pdq-list-title {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.pdq-hp-patient-toggle {
+
+      /* margin-top: -10px; -->  half the icon height */
+      & a:after {
+          content: "";
+		  @include svg-sprite(chevron-circle-dk-blue,$rotate:right);
+          margin-left: 10px;
+		  vertical-align: bottom;
+      }
+
+      & a:hover:after, & a:focus:after {
+		  @include svg-sprite(chevron-circle-red);
+      }
+      & a:hover, & a:focus {
+          color: $lcranberry;
+      }
+}
+
+
+ul.pdq-address-block {
+
+}
+ul.pdq-address-block li {
+	background: none;
+	list-style-type: none;
+	padding: 0;
+	margin-bottom: 0;
+}
+.contentzone ul.pdq-address-block > li:before {
+	content: none;
+}
+
+
+
+/* Protocol search results */
+.study-site-city {
+	margin-left: 15px;
+}
+.study-site-name {
+	font-weight: bold;
+}
+/* end Protocol search results */
+
+ul.collaborators {
+	@extend %no-bullets;
+}
+ul.collaborators li {
+	margin-left: 0;
+}
+
+// Visibility for sections/tables/images
+// See OCEPROJECT-3361
+[data-display-excludedevice~="screen"] {
+	// hide for tablet and desktop (yes, "screen" means "tablet and desktop" here)
+	@include bp(medium-up) {
+		display: none !important;
+	}
+}
+[data-display-excludedevice~="mobile"] {
+	// hide for smartphone
+	@include bp(small) {
+		display: none !important;
+	}
+}
+
+/*** END PDQ Styles ***/

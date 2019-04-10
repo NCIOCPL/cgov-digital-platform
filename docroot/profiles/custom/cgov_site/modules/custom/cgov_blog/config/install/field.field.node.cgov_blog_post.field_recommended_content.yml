@@ -1,0 +1,75 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recommended_content
+    - node.type.cgov_blog_post
+  module:
+    - entity_reference_revisions
+id: node.cgov_blog_post.field_recommended_content
+field_name: field_recommended_content
+entity_type: node
+bundle: cgov_blog_post
+label: 'Recommended Content'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_card_internal: cgov_card_internal
+      cgov_card_external: cgov_card_external
+    target_bundles_drag_drop:
+      cgov_card_internal:
+        enabled: true
+        weight: 0
+      cgov_card_external:
+        enabled: true
+        weight: 1
+      body_section:
+        weight: 19
+        enabled: false
+      cgov_card_raw_html:
+        weight: 20
+        enabled: false
+      cgov_citation:
+        weight: 21
+        enabled: false
+      cgov_column_one:
+        weight: 22
+        enabled: false
+      cgov_column_two:
+        weight: 23
+        enabled: false
+      cgov_content_block:
+        weight: 24
+        enabled: false
+      cgov_external_link:
+        weight: 25
+        enabled: false
+      cgov_guide_row:
+        weight: 26
+        enabled: false
+      cgov_internal_link:
+        weight: 27
+        enabled: false
+      cgov_primary_feature_row:
+        weight: 28
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: 29
+        enabled: false
+      cgov_thumbnail_row:
+        weight: 30
+        enabled: false
+      cgov_two_item_feature_row:
+        weight: 31
+        enabled: false
+      pdq_summary_section:
+        weight: 32
+        enabled: false
+field_type: entity_reference_revisions

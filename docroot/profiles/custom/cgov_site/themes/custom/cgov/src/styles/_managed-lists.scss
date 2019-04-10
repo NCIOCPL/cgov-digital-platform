@@ -1,4 +1,5 @@
 /* list styling shim to handle the different permutations of managed list styles */
+/* TODO: fix overly deep nesting */
 .list {
   &.managed,
   &.dynamic {
@@ -46,12 +47,6 @@
             }
           }
 
-          &:hover {
-            img {
-              opacity: 0.8;
-            }
-          }
-
           img {
             width: 100%;
           }
@@ -66,14 +61,15 @@
 
           h3 {
             margin-top: 0;
-
-            a {
-              font-size: inherit;
-
-              &:hover {
-                color: $lcranberry;
-              }
-            }
+          }
+        }
+        &:hover {
+          cursor: pointer;
+          img {
+            opacity: 0.8;
+          }
+          a {
+            color: $lcranberry;
           }
         }
       }
@@ -87,7 +83,7 @@
       }
 
       a {
-        font-size: mq-px2em(20px);
+        font-size: mq-px2em(20px); // this needs to be 16px for blogs but it's set to 20px for somewhere else
       }
     }
 

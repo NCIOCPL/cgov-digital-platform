@@ -18,10 +18,10 @@ dependencies:
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_recommended_content
     - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - field.field.node.cgov_blog_post.field_short_title
-    - field.field.node.cgov_blog_post.field_site_section
     - node.type.cgov_blog_post
   module:
     - datetime
@@ -88,7 +88,7 @@ content:
     region: content
   field_citation:
     weight: 20
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -168,6 +168,15 @@ content:
     third_party_settings: {  }
     type: list_default
     region: content
+  field_recommended_content:
+    weight: 27
+    label: hidden
+    settings:
+      view_mode: recommended_content_card
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
   field_related_resources:
     type: entity_reference_revisions_entity_view
     weight: 19
@@ -191,14 +200,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_site_section:
-    weight: 9
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
   langcode:
     type: language

@@ -2,3 +2,104 @@
 @import "~Core/styles/mixins";
 @import "~Core/styles/breakpoints";
 @import "~Core/styles/blogs";
+@import "~Core/styles/equalheights";
+
+.card {
+  padding: .9375em;
+  margin-bottom: 1em;
+  border: 1px solid $yetAnotherGrey;
+  background-color: $white;
+  box-shadow: 0 0 9px 1px rgba($black,.15);
+}
+
+.feature-card {
+
+  h3 {
+    margin-top: 0;
+    font-weight: normal;
+    color: #2b7bba;
+    font-size: 0.95em;
+    line-height: 1.272;
+  }
+  div {
+    margin-bottom: 1em;
+  }
+  a {
+    display: inline-block;
+
+    &:hover {
+      text-decoration: none;
+      .image-hover img {
+        opacity: .8;
+      }
+    }
+  }
+  p {
+    line-height: 1.375;
+    font-size: 0.9em;
+    color: #757575;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .image-hover {
+		position: relative;
+	}
+  
+}
+
+#main {
+  padding-left: 1.6em !important;
+}
+
+#cgov-blog-post-pagination {
+  margin-top: 3em;
+}
+
+.embedded-entity[data-entity-embed-display*="_medium"] figure.image-medium {
+  padding-left: 2.5em;
+  background-color: transparent;
+}
+
+@include bp(medium-up) {
+	// set width of blog intro text for tablet and desktop, depending on size of image
+	.embedded-entity[data-entity-embed-display*="_medium"] + .blog-intro-text { 
+		width: 60%;
+	}
+	.embedded-entity[data-entity-embed-display*="_small"] + .blog-intro-text {
+		width: 75%;
+	}
+}
+
+@include bp(large-up){
+	.row.hero-slot {
+		max-width: 1350px;
+	}
+	.row .large-4.gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 2%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+  }
+  #PageOptionsControl1 {
+    right: calc(-25% - 3.125em);
+  }
+}
+
+@include bp(small) {
+	// remove extra padding (used for intro text on desktop/tablet only)
+	.embedded-entity[data-entity-embed-display*="_medium"] {
+    float: none;
+    margin: 0;
+		figure.image-medium {
+			padding-left: 0;
+			margin-left: 0;
+		}
+	}
+}

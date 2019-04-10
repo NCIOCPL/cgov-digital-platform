@@ -60,8 +60,21 @@
           - type: 'module'
             filename: 'espanol-nci-at-a-glance-infographic.gif'
   field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
   field_image_promotional__ES:
-      value:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
   field_date_posted: '2014-12-15'
   field_date_updated: '2014-12-15'
   field_date_reviewed: '2015-12-15'
