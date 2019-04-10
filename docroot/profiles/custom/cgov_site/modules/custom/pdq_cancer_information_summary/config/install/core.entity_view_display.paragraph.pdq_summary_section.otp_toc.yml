@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.otp_toc
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_html
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_id
+    - field.field.paragraph.pdq_summary_section.field_pdq_section_title
+    - paragraphs.paragraphs_type.pdq_summary_section
+  module:
+    - text
+id: paragraph.pdq_summary_section.otp_toc
+targetEntityType: paragraph
+bundle: pdq_summary_section
+mode: otp_toc
+content:
+  field_pdq_section_id:
+    weight: 0
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pdq_section_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_pdq_section_html: true

@@ -12,6 +12,7 @@ global-scripts:
     - core/jquery
     - core/jquery.ui
     - core/jquery.ui.accordion
+    - core/jquery.ui.dialog
     - core/jquery.ui.menu
     - core/jquery.ui.selectmenu
     - core/jquery.ui.autocomplete
@@ -35,6 +36,17 @@ homelanding:
       dist/css/Homelanding.css: { preprocess: false }
   js:
     dist/js/Homelanding.js: { preprocess: false }
+  dependencies:
+    - core/jquery
+    - core/jquery.ui
+
+pdq:
+  version: 1.x
+  css:
+    theme:
+      dist/css/PDQ.css: { preprocess: false }
+  js:
+    dist/js/PDQ.js: { preprocess: false }
   dependencies:
     - core/jquery
     - core/jquery.ui
@@ -84,3 +96,16 @@ blogPost:
   dependencies:
     - core/jquery
     - core/jquery.ui
+    - core/jquery.ui.accordion
+
+blogSeries:
+  version: 1.x
+  css:
+    theme:
+      dist/css/BlogSeries.css: { preprocess: false }
+  js:
+    dist/js/BlogSeries.js: { preprocess: false }
+  dependencies:
+    - core/jquery
+    - core/jquery.ui
+    - core/jquery.ui.accordion

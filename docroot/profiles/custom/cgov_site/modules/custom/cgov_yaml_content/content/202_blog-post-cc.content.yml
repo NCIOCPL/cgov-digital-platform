@@ -1,4 +1,4 @@
-## Cancer Currents Blog Post pages
+## Image for Cancer Currents Blog Post pages
 - entity: "media"
   bundle: "cgov_image"
   name: "Alveolar Soft-Part Aarcoma In a Femur"
@@ -24,9 +24,10 @@
   field_caption: 'A CT scan of a tumor in the right femur of a woman with alveolar soft part sarcoma.'
   field_caption__ES:
     value: 'Una tomografía computarizada de un tumor en el fémur derecho de una mujer con sarcoma de la parte blanda alveolar.'
+
+## Cancer Currents Blog Post pages
 - entity: "node"
   type: "cgov_blog_post"
-  title: "Immunotherapy Effective in Alveolar Soft Part Sarcoma"
   title:
     value: "Immunotherapy Effective in Alveolar Soft Part Sarcoma"
   langcode: en
@@ -46,7 +47,7 @@
   body:
     - format: "full_html"
       value: |
-            <p>The trial results were presented November 16 at the <a href="https://www.ctos.org/Meeting/2018AnnualMeeting.aspx">2018 annual meeting of the Connective Tissue Oncology Society</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a><span> (CTOS)</span>.</p>
+            <p>The trial results were presented November 16 at the <a href="https://www.ctos.org/Meeting/2018AnnualMeeting.aspx">2018 annual meeting of the Connective Tissue Oncology Society</a><span> (CTOS)</span>.</p>
             <h2 id="ui-id-2">Striking People in their Prime</h2>
             <p>ASPS is extremely rare, with fewer than 100 cases diagnosed each year in the United States. It starts in soft-tissue cells, such as muscle or fat. Unlike most other cancer types, it usually affects younger people: women and men in their 20s, 30s, and 40s, explained Dr. Schuetze.</p>
             <p>The mainstay treatment for ASPS is surgery, sometimes combined with radiation therapy. But ASPS usually spreads to other parts of the body early in its course. Metastatic ASPS tumors, most often found in the lung or brain, tend to be slow-growing (<a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000046355&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000046355&amp;version=Patient&amp;language=English'); return false;">indolent</a>) but eventually start to cause symptoms. Metastatic ASPS is always fatal, said the trial’s co-leader, Alice Chen, M.D., head of the Developmental Therapeutics Clinic in NCI’s <a href="https://dctd.cancer.gov/">Division of Cancer Treatment and Diagnosis (DCTD)</a>.</p>
@@ -65,11 +66,11 @@
             <p>In the future, “these results may encourage investigators to consider [patients with] ASPS for other immunotherapy trials. And I think it will also lead to more trials [just] in this rare tumor subtype,” said Dr. O’Sullivan Coyne, who received the CTOS Young Investigator Award for her work on the study.</p>
             <p>At the CTOS meeting, researchers from several different countries expressed interest in testing atezolizumab to treat ASPS, including in combination with other therapies as well as in different sequences of administration, Dr. Chen noted.</p>
   field_browser_title:
-    value: 'Blog Post Browser title'
+    value: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'
   field_card_title:
-    value: 'Blog Post Card title'
+    value: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'
   field_feature_card_description:
-    value: 'Blog Post feature card desc'
+    value: 'The ETCTN was created by NCI to speed clinical trials of investigational drugs in rare cancer types.'
   field_intro_text:
     - format: "streamlined"
       value: |
@@ -105,9 +106,10 @@
 
 - entity: "node"
   type: "cgov_blog_post"
-  title: "HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies"
   title:
     value: "HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies"
+  title_ES:
+    value: "HTAN: espanol"
   langcode: en
   status: 1
   moderation_state:
@@ -122,6 +124,14 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
+  field_blog_series__ES:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Temas y relatos blog'
   body:
     - format: "full_html"
       value: |
@@ -192,7 +202,7 @@
             <p>The team is also using MxIF to study microorganisms, because certain bacterial species in the gut are linked to the development and progression of colon cancer.</p>
             <p>“The <a class="definition" onclick="javascript:popWindow('defbyid','CDR0000738008&amp;version=Patient&amp;language=English'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000738008&amp;version=Patient&amp;language=English">microbiome</a> organizes into structures called biofilms,” Dr. Lau explained. “It’s very important to look at how these biofilms are spatially organized and where exactly the different microbes are,” he said. For instance, he said, microbes can sit on top of a colon tumor or they can invade into the tumor, and that can change how the tumor behaves.</p>
             <h2 id="ui-id-6">Collaborating to Address New Challenges</h2>
-            <p>The <a href="https://twitter.com/ncihtan">HTAN project</a><a class="icon-exit-notification" title="Exit Disclaimer" href="/policies/linking"><span class="hidden">Exit Disclaimer</span></a> is a large undertaking and the first 3-dimensional atlas project to focus solely on tumors, Dr. Lively noted. That means there will be a lot of kinks to work out, many of which the HTAN scientists discussed at the kickoff meeting.</p>
+            <p>The <a href="https://twitter.com/ncihtan">HTAN project</a> is a large undertaking and the first 3-dimensional atlas project to focus solely on tumors, Dr. Lively noted. That means there will be a lot of kinks to work out, many of which the HTAN scientists discussed at the kickoff meeting.</p>
             <p>One challenge will be isolating enough single cells for single-cell assays, Dr. Adey said. Sometimes large parts of a tumor sample have died and broken open, making it difficult to isolate single cells, he explained.</p>
             <p>And even once that challenge is met, some of the newer technologies still need improvements, said Dr. Pe’er. At the meeting, the HTAN researchers agreed on the need to optimize each assay or test before it can be used on large sets of samples.</p>
             <p>Computation and interpretation of large data sets is another big bottleneck, Dr. Pe’er said. Part of the issue is not having enough computational biologists, she noted.</p>
@@ -207,14 +217,89 @@
   field_feature_card_description:
     value: 'HTAN'
   field_list_description:
-    value: 'HTAN: list desc'
+    value: 'The Human Tumor Atlas Network initiative will create maps of human tumors, including their surrounding environment.'
   field_page_description:
-    value: 'HTAN: page desc'
+    value: 'The Human Tumor Atlas Network initiative will create maps of human tumors, including their surrounding environment.'
   field_date_posted:
     value: "2019-02-15"
   field_pretty_url:
-    value: 'news-events/cancer-currents-blog/2019/human-tumor-atlas-network-cancer-maps'
+    value: 'human-tumor-atlas-network-cancer-maps'
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "HTAN"
+
+## Rebuild the series with Featured Posts now that posts exist.
+- entity: "node"
+  type: "cgov_blog_series"
+  title: 'Cancer Currents Blog'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_page_description:
+    value: 'cancer currents, blog'
+  field_browser_title:
+    value: 'Cancer Currents: An NCI Cancer Research Blog'
+  field_card_title:
+    value: 'Cancer Currents'
+  field_feature_card_description:
+    value: 'Cancer Currents Blog'
+  field_pretty_url:
+    value: "cancer-currents-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "Cancer Currents"
+  field_about_blog:
+    value: 'A blog featuring news and research updates from the National Cancer Institute.'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+  field_banner_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nci-update-blog-banner.__v40051732.jpg'
+      alt: 'Doctor pointing to medical display screen with stylus'
+  field_allow_comments: 1
+  field_blog_series_shortname:
+    - value: 'cancer-currents'
+  field_archive_group_by:
+    - value: 'month'
+  field_archive_back_years:
+    - value: '7'
+  field_num_display_posts:
+    - value: '15'
+  field_recommended_content_header:
+    - value: 'Recommended Content'
+  field_feedburner_url:
+    - value: 'https://feedburner-test.cancer.gov/cancercurrents'
+  field_featured_posts:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'HTAN: Mapping Tumors across Space and Time Using Cutting-Edge Technologies'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_post'
+            title: 'Immunotherapy Effective in Alveolar Soft Part Sarcoma'

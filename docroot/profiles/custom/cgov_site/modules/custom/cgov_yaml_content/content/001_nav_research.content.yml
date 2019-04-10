@@ -13,3 +13,33 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/research'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Progress"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "progress"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research'
+
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Stories of Discovery"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "discovery"
+  parent:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/progress'

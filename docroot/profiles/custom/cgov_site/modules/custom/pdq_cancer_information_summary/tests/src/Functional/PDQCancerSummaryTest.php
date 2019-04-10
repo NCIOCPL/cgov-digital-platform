@@ -4,6 +4,7 @@ namespace Drupal\Tests\cgov_site\Functional;
 
 use Drupal\Tests\SchemaCheckTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests Functionality of the PDQ Cancer Information Summary content type.
@@ -49,6 +50,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
     // Create admin user and login.

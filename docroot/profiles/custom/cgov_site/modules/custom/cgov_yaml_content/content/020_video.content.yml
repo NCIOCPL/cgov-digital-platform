@@ -1,0 +1,26 @@
+- entity: "media"
+  bundle: "cgov_video"
+  name: "Colorectal Cancer Screening: What to Expect"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "gutcheck-intro-video"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/progress/discovery'
+  body:
+    - format: "full_html"
+      value: |
+        <p><span>An <a href="https://youtu.be/9pnREEtPWVY">audio-described version of this video</a> is also&nbsp;</span><span>available.</span></p>
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Everyone over the age of 50 should be screened for colorectal cancer. Learn about the three screening methods that work to reduce the chance of death from colorectal cancer: colonoscopy, sigmoidoscopy, and home stool test. Also hear personal stories from people who have gone through colorectal cancer screening.
+  field_page_description: "Everyone over the age of 50 should be screened for colorectal cancer. Learn about the three screening methods that work to reduce the chance of death from colorectal cancer: colonoscopy, sigmoidoscopy, and home stool test. Also hear personal stories from people who have gone through colorectal cancer screening."
+  field_short_title: "Colorectal Cancer Screening: What to Expect"
+  field_media_oembed_video: "https://www.youtube.com/watch?v=zXE7rexUCeI"

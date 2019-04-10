@@ -5,11 +5,14 @@ dependencies:
     - core.entity_view_mode.node.feature_card_image
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -30,58 +33,37 @@ targetEntityType: node
 bundle: cgov_blog_series
 mode: feature_card_image
 content:
-  field_card_title:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_feature_card_description:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_list_description:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_short_title:
-    weight: 1
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  links:
+  field_image_promotional:
+    type: entity_reference_entity_view
     weight: 0
     region: content
-    settings: {  }
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
     third_party_settings: {  }
 hidden:
   content_moderation_control: true
   field_about_blog: true
   field_allow_comments: true
+  field_archive_back_years: true
+  field_archive_group_by: true
   field_banner_image: true
   field_blog_series_shortname: true
   field_browser_title: true
+  field_card_title: true
+  field_feature_card_description: true
+  field_featured_posts: true
   field_feedburner_url: true
-  field_image_promotional: true
+  field_list_description: true
   field_num_display_posts: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true
   field_recommended_content_header: true
   field_search_engine_restrictions: true
+  field_short_title: true
   field_show_list_thumbnails: true
   field_site_section: true
   langcode: true
+  links: true

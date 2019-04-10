@@ -7,6 +7,7 @@ use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Ensure that cgov_site workflows conform to requirements.
@@ -38,6 +39,10 @@ class WorkflowTest extends KernelTestBase {
     'system',
     'taxonomy',
     'views',
+    'embed',
+    'entity_embed',
+    'embed',
+    'entity_embed',
     'entity_browser',
     'entity_reference_revisions',
     'paragraphs',
@@ -69,6 +74,7 @@ class WorkflowTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('node');
