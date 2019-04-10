@@ -4,7 +4,16 @@
  * 
  */
 
-module.exports = [
-  'cgov_common',
-  'cgov_purple',
-];
+module.exports = {
+  cgov_common: {
+    variants: [
+      'purple',
+      'blue'
+    ]
+  }
+  // Add additional sub-themes here
+  // ,
+  // cgov_purple: {
+  //   variants: []
+  // }
+};

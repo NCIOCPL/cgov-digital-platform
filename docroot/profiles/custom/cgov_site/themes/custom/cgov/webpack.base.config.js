@@ -37,6 +37,8 @@ const config = {
 					{
             loader: 'file-loader',
             options: {
+              outputPath: '../images/sprites',
+							name: '[name].[ext]',
               emitFile: false
             }
 					}
