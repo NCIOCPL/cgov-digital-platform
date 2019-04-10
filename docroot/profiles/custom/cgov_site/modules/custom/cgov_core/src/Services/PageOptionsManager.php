@@ -64,6 +64,17 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'cgov_blog_post' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_blog_series' => [
+      'resize',
+    ],
     'cgov_infographic' => [
       'print',
       'email',

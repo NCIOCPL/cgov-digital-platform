@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - taxonomy
+id: cgov_blog_topics
+label: 'Blog Topic URL'
+type: 'canonical_entities:taxonomy_term'
+pattern: '/[cgov_tokens:blog-topic-path]'
+selection_criteria:
+  958b582f-4029-42c8-a4f8-2d169cee6100:
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      cgov_blog_topics: cgov_blog_topics
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    uuid: 958b582f-4029-42c8-a4f8-2d169cee6100
+selection_logic: and
+weight: -5
+relationships: {  }

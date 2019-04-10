@@ -1,9 +1,8 @@
 ## Cancer Currents Blog
+## TODO: Fix translation
 - entity: "node"
   type: "cgov_blog_series"
   title: 'Cancer Currents Blog'
-  title__ES:
-    value: 'Temas y relatos blog'
   langcode: en
   status: 1
   moderation_state:
@@ -12,30 +11,18 @@
     value: 'cancer currents, blog'
   field_browser_title:
     value: 'Cancer Currents: An NCI Cancer Research Blog'
-  field_browser_title__ES:
-    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
   field_card_title:
     value: 'Cancer Currents'
-  field_card_title__ES:
-    value: 'Temas y relatos blog'
   field_feature_card_description:
     value: 'Cancer Currents Blog'
-  field_feature_card_description__ES:
-    value: 'Temas y relatos blog'
   field_pretty_url:
     value: "cancer-currents-blog"
-  field_pretty_url__ES:
-    value: "temas-y-relatos-blog"
   field_public_use: 1
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Cancer Currents"
-  field_short_title__ES:
-    - value: "emas y relatos"
   field_about_blog:
     value: 'A blog featuring news and research updates from the National Cancer Institute.'
-  field_about_blog__ES:
-    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
   field_site_section:
     - '#process':
         callback: 'reference'
@@ -43,13 +30,6 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             name: 'News & Events'
-  field_site_section__ES:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Noticias'
   field_banner_image:
     - '#process':
         callback: 'file'
@@ -58,6 +38,19 @@
           - type: 'module'
             filename: 'nci-update-blog-banner.__v40051732.jpg'
       alt: 'Doctor pointing to medical display screen with stylus'
+  field_allow_comments: 1
+  field_blog_series_shortname:
+    - value: 'cancer-currents'
+  field_archive_group_by:
+    - value: 'month'
+  field_archive_back_years:
+    - value: '7'
+  field_num_display_posts:
+    - value: '15'
+  field_recommended_content_header:
+    - value: 'Recommended Content'
+  field_feedburner_url:
+    - value: 'https://feedburner-test.cancer.gov/cancercurrents'
 
 ## RAS Dialogue Blog
 - entity: "node"
@@ -91,6 +84,41 @@
             name: 'RAS Central'
   field_about_blog: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
   field_banner_image:
+  field_allow_comments: 1
+  field_blog_series_shortname:
+    - value: 'cgv-ras'
+  field_archive_group_by:
+    - value: 'year'
+
+## Cancer Currents Blog Espanol
+- entity: "node"
+  type: "cgov_blog_series"
+  title:
+    value: 'Temas y relatos blog'
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
+  field_card_title:
+    value: 'Temas y relatos blog'
+  field_feature_card_description:
+    value: 'Temas y relatos blog'
+  field_pretty_url:
+    value: "temas-y-relatos-blog"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "emas y relatos"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Noticias'
+  field_banner_image:
     - '#process':
         callback: 'file'
         args:
@@ -98,3 +126,11 @@
           - type: 'module'
             filename: 'ras-blog-banner.__v400106190.jpg'
       alt: 'Join the Discussion text with image of gears'
+  field_about_blog: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
+  field_allow_comments: 0
+  field_archive_group_by:
+    - value: 'month'
+  field_feedburner_url:
+    - value: 'https://feedburner-test.cancer.gov/cancercurrents?lang=es'
+  field_blog_series_shortname:
+    - value: 'temas-y-relatos'

@@ -166,6 +166,24 @@
           - vid: "cgov_site_sections"
             name: "Press Releases"
 
+## News & Events > Cancer Currents Blog
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Cancer Currents Blog"
+  field_mega_menu_content:
+    - format: "full_html"
+      value: |
+        Cancer Currents Blog
+  field_pretty_url:
+    value: "cancer-currents-blog"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "News & Events"
+
 ######## ESPANOL ###################
 ## Noticias > Comunicados de Prensa
 - entity: "taxonomy_term"

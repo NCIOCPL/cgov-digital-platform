@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.cgov_card_internal.field_featured_item
     - field.field.paragraph.cgov_card_internal.field_override_card_description
     - field.field.paragraph.cgov_card_internal.field_override_card_title
+    - field.field.paragraph.cgov_card_internal.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_card_internal
 id: paragraph.cgov_card_internal.recommended_content_card
 targetEntityType: paragraph
@@ -16,7 +17,7 @@ content:
     weight: 2
     label: hidden
     settings:
-      view_mode: feature_card
+      view_mode: feature_card_image
       link: false
     third_party_settings: {  }
     type: entity_reference_entity_view
@@ -36,5 +37,21 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_override_image_promotional:
+    type: entity_reference_entity_view
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
+    third_party_settings: {  }
+  field_override_list_description:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
     region: content
 hidden: {  }

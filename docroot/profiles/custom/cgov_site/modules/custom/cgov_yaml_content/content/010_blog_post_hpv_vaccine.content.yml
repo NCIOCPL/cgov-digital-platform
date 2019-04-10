@@ -34,7 +34,13 @@
   field_author:
     value: 'NCI Staff'
   field_blog_series:
-    value: 'Cancer Currents'
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
   body:
     - format: "full_html"
       value: |
@@ -111,13 +117,6 @@
   field_search_engine_restrictions: 0
   field_short_title:
     - value: "Blog post short title"
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Learning to Relax'
   field_related_resources:
 
     - entity: 'paragraph'

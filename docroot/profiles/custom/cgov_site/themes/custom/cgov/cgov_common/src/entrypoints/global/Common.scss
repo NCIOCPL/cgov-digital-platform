@@ -226,3 +226,13 @@ table.table-default tfoot td {
 	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
 	// @see all.js
 }
+
+@include bp(small) {
+	figure {
+		&.image-small, &.image-medium, &.image-center {
+      float: none;
+			width: 100%;
+			margin: 0 0 1em 0;
+		}	
+	}
+}
