@@ -1,7 +1,8 @@
 langcode: en
-status: true
+status: false
 dependencies:
   config:
+    - core.entity_view_mode.media.image_reference_field_form
     - field.field.media.cgov_video.body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
@@ -24,10 +25,10 @@ dependencies:
     - options
     - text
     - user
-id: media.cgov_video.default
+id: media.cgov_video.image_reference_field_form
 targetEntityType: media
 bundle: cgov_video
-mode: default
+mode: image_reference_field_form
 content:
   body:
     weight: 16
@@ -38,9 +39,9 @@ content:
     region: content
   content_moderation_control:
     weight: -20
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
   created:
     label: hidden
     type: timestamp
