@@ -1,0 +1,13 @@
+<div class="ic-carousel" style="background-color: #d6e6f1; border: 1px #555 solid;">
+  <div class="row" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <h3>Image Carousel</h3>
+    <div style="width: 50%; height: 1px; background: #555;"></div>
+    <div class="ic-carousel-title">
+      {% if content.field_carousel_image_title|field_value %}
+        <h4>{{ content.field_carousel_image_title }}</h4>
+      {% else %}
+        <h4>Untitled</h4>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.cgov_image_media_browser
+  module:
+    - views
+name: cgov_image_carousel_image_browser
+label: 'Image Carousel Image Browser'
+display: modal
+display_configuration:
+  width: ''
+  height: ''
+  link_text: 'Select images'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: { }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  8a244739-8ca2-4dd0-887b-0eb362e05ee3:
+    settings:
+      view: cgov_image_media_browser
+      view_display: image_carousel_browser
+      submit_text: 'Select Images'
+      auto_select: false
+    uuid: 8a244739-8ca2-4dd0-887b-0eb362e05ee3
+    weight: 1
+    label: Select
+    id: view

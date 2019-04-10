@@ -27,6 +27,8 @@ CSS modules.
 /****************** NCI UTILITIES ********************/
 @import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
 
+@import "~Core/styles/equalheights"; //added flexbox height support
+
 @import "~Core/styles/nci-foundation";
 /* @import "grid"; */ /* using this for override of foundation media screen if necessary */
 /***  END FOUNDATION STYLES ***/
@@ -81,6 +83,8 @@ CSS modules.
 @import "~Core/styles/ebookButtons";
 @import "~Core/styles/materials_to_share";
 @import "~Core/styles/lists";
+@import "~Core/styles/managed-lists";
+@import "~Core/styles/topicFeature";
 @import "~Core/styles/videos";
 @import "~Core/libraries/tooltips/referenceTooltip";
 @import "~Core/styles/errorPage";
@@ -242,4 +246,14 @@ table.table-default tfoot td {
 body {
   background-color: #f9f9f8;
   padding: 0 0 0 20px;
+}
+
+// Override the override that doesn't render Lists with bulletting.
+ul {
+  list-style: inherit;
+}
+
+li {
+  // 28px is one of two default bullet left margin standards on cgov.
+  margin-left: 28px;
 }

@@ -1,0 +1,22 @@
+{{ attach_library('cgov_common/pdq') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<article>
+{# {{kint(_context)}} #}
+  <div class="resize-content">
+    <h1>{{- node.label -}}</h1>
+    {{ drupal_block('page_options') }}
+    <div id="cgvBody">
+      {{ content.body }}
+    </div>
+  </div>
+
+  {# TODO: Article footer stuff has to go somewhere. TBD. #}
+  <footer class="article-footer">
+    {{- contentPageMacros.displayDates(node, content) -}}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>
