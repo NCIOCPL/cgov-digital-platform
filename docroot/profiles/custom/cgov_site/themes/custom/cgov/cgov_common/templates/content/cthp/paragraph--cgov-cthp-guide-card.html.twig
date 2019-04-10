@@ -1,13 +1,18 @@
 <div class="equalheight bgWhite {{ content.field_cthp_card_theme|field_value }}">
   <h2 style="">{{ content.field_cthp_card_title}}</h2>
   <div class="cardBody">
-    {% if content.field_cthp_guide_card_desc|field_value %}
+    {# Card description should only appear in absence of PDQ links below #}
+    {% if content.field_cthp_pdq_links["#items"] is not defined %}
       {{ content.field_cthp_guide_card_desc }}
     {% endif %}
-    {% if content.field_cthp_pdq_link_heading|field_value %}
+
+    {% if content.field_cthp_pdq_link_heading|field_value or content.field_cthp_pdq_links["#items"] %}
       <h4 class="cthp-pdq-label">
         {{ content.field_cthp_pdq_link_heading }}
       </h4>
+    {% endif %}
+
+    {% if content.field_cthp_pdq_links["#items"] %}
       <ul>
         {{ content.field_cthp_pdq_links }}
       </ul>
