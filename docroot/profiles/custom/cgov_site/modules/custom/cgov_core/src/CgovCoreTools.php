@@ -367,4 +367,25 @@ class CgovCoreTools {
     return $permissions;
   }
 
+  /**
+   * Installs the DTM configuration based on environment variable.
+   */
+  public function installDtmEnvironment() {
+    if ($this->cloudEnvironment() != 'prod') {
+      $dtmSettings = $this->configFactory->getEditable('adobe_dtm.settings');
+      $dtmSettings->set('environment', 'staging')->save();
+    }
+  }
+
+  /**
+   * Check if this is a production environment.
+   *
+   * @return string
+   *   The name of the environment, 'dev' by default.
+   */
+  public function cloudEnvironment() {
+    $environment = isset($_ENV['AH_SITE_ENVIRONMENT']) ? $_ENV['AH_SITE_ENVIRONMENT'] : 'dev';
+    return $environment;
+  }
+
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace Drupal\cgov_blog\Plugin\Block;
+namespace Drupal\cgov_core\Plugin\Block;
 
+use Drupal\cgov_core\CgovCoreTools;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -19,6 +20,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
+  /**
+   * Cgov core site helper tools.
+   *
+   * @var Drupal\cgov_core\CgovCoreTools
+   */
+  protected $cgovCoreTools;
 
   /**
    * The route matcher.
@@ -47,17 +54,21 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
    *   The route matcher.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param Drupal\cgov_core\CgovCoreTools $cgov_core_tools
+   *   Cgov core site helper tools.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     RouteMatchInterface $route_matcher,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
+    CgovCoreTools $cgov_core_tools
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatcher = $route_matcher;
     $this->entityTypeManager = $entity_type_manager;
+    $this->cgovCoreTools = $cgov_core_tools;
   }
 
   /**
@@ -69,7 +80,8 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
       $plugin_id,
       $plugin_definition,
       $container->get('current_route_match'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('cgov_core.tools')
     );
   }
 
@@ -109,21 +121,37 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
   public function build() {
     $build = [];
 
-    // Verify the entity object and parent series.
-    if ($post_node = $this->getCurrEntity()) {
-      $series_nid = $post_node->get('field_blog_series')->target_id;
-      $series_node = $this->getNodeStorage()->load($series_nid);
+    // Get entity object.
+    if ($current = $this->getCurrEntity()) {
+      $content_type = $current->bundle();
     }
 
-    // If 'Allow Comments' is selected, output the Disqus snippet data.
-    if ($series_node && $series_node->get('field_allow_comments')->value) {
-      // Build up the shortname if the field value is set.
-      $shortname = $series_node->get('field_blog_series_shortname')->value;
-      if (strlen($shortname) > 0) {
-        $tier = $this->isProd() ? 'prod' : 'dev';
-        $build = [
-          '#markup' => 'https://' . $shortname . '-' . $tier . '.disqus.com/embed.js',
-        ];
+    // Draw the Disqus block for a given content type.
+    if (isset($content_type)) {
+      switch ($content_type) {
+
+        // Disqus settings for a Blog Post.
+        case 'cgov_blog_post':
+          $series_nid = $current->get('field_blog_series')->target_id;
+          $series_node = $this->getNodeStorage()->load($series_nid);
+          if ($series_node) {
+            // Check that "Allow comments" is true.
+            if (intval($series_node->get('field_allow_comments')->value) == 1) {
+              // Check that the Series Shortname field has a value.
+              $shortname = $series_node->get('field_blog_series_shortname')->value;
+              if (strlen($shortname) > 0) {
+                $tier = $this->isProd() ? 'prod' : 'dev';
+                $build = [
+                  '#markup' => 'https://' . $shortname . '-' . $tier . '.disqus.com/embed.js',
+                ];
+              }
+            }
+          }
+          break;
+
+        // No other Disqus content types atm.
+        default:
+          break;
       }
     }
     return $build;
@@ -136,13 +164,7 @@ class CgovDisqus extends BlockBase implements ContainerFactoryPluginInterface {
    *   TRUE if matches prod environment, FALSE otherwise.
    */
   private function isProd() {
-    // Check the Acquia Cloud environment.
-    if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-      if ($_ENV['AH_SITE_ENVIRONMENT'] == 'prod') {
-        return TRUE;
-      }
-    }
-    return FALSE;
+    return $this->cgovCoreTools->cloudEnvironment() == 'prod';
   }
 
 }
