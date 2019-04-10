@@ -7,7 +7,7 @@
 
 
 {# Renders an article image  #}
-{% macro articleImage(classes, image, enlarge_uri, credit, caption) %}
+{% macro articleImage(classes, image, enlarge_uri, credit, caption, link_text = 'Enlarge') %}
 
   {# Set up the classes for the figure #}
   {% set attr = create_attribute() %}
@@ -21,7 +21,7 @@
           <a href="{{enlarge_uri}}"
             target="_blank"
             class="article-image-enlarge no-resize"
-          >{% trans %}Enlarge{% endtrans %}</a>
+          >{{ link_text|trans }}</a>
         {% endif %}
       </div>
       {# TODO: Handle empty captions, even when the captions are full of empty tags #}
