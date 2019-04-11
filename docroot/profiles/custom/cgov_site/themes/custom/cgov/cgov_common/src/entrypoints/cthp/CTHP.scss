@@ -534,4 +534,38 @@ figure.cthp-mm-video-playlist {
     margin-top: 0;
   }
 }
+
+// Need to override CTHP dropdown library styling for external links so that external link icon doesn't repeat
+@include bp(large-up) {
+  .cthp-card-container {
+    .cthp-dropdown {
+      &.more-info {
+        ul {
+          li {
+            align-items: center;
+            display: flex;
+            
+            a {
+              flex: 1 1 auto;
+              width: auto;
+
+              &.icon-exit-notification {
+                background-repeat: no-repeat;
+                flex: none;
+                vertical-align: middle;
+                width: 30px;
+              }
+            }
+            &:hover {
+              a {
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /********** END Cancer Type Home Page Styles ******************************************/
