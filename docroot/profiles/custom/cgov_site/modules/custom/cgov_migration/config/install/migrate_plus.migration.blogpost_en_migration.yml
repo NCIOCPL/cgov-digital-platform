@@ -149,6 +149,11 @@ source:
          label: field_recommended_content
          selector: field_recommended_content/field_recommended_content
 
+        -
+         name: field_recommended_contents
+         label: field_recommended_contents
+         selector: field_recommended_contents/field_recommended_contents
+
 
   ids:
     id:
@@ -210,7 +215,7 @@ process:
       - promocard_migration
       - externalpromocard_migration
     no_stub: true
-    source: field_recommended_content
+    source: field_recommended_contents
 
   field_recommended_content:
     plugin: iterator
@@ -218,6 +223,35 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
+
+  field_recommended_content/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+         - promocard_migration
+         - externalpromocard_migration
+      no_stub: true
+      source: field_recommended_content
+    -
+      plugin: extract
+      index:
+        - '0'
+
+  field_recommended_content/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_recommended_content
+    -
+      plugin: extract
+      index:
+        - 1
+
+
 
 
   field_blog_series:

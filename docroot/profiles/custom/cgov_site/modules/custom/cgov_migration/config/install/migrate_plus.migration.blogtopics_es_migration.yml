@@ -41,7 +41,11 @@ source:
       type: integer
 
 process:
-  tid: term_id
+  tid:
+    plugin: migration_lookup
+    source: term_id
+    migration: blogtopics_migration
+
   name: name
   langcode: langcode
 
@@ -66,3 +70,4 @@ destination:
 migration_dependencies:
   required:
     - blogseries_es_migration
+    - blogtopics_migratio
