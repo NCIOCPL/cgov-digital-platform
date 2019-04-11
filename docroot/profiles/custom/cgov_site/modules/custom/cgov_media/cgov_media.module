@@ -46,8 +46,8 @@ function cgov_media_entity_view_alter(array &$build, EntityInterface $entity, En
     // route for outputing the long description.
     $args = ['media' => $entity->id()];
 
-    // Find any field with a type of 'image' and add the longdesc property to
-    // its attribute list.
+    // Find any field with a type of 'image' with the 'article' crop applied
+    // and add the longdesc property to its attribute list.
     foreach ($build as $key => $properties) {
       if (substr($key, 0, 6) == 'field_' &&
         array_key_exists('#field_type', $properties)) {
@@ -55,7 +55,7 @@ function cgov_media_entity_view_alter(array &$build, EntityInterface $entity, En
         // Added if to prevent attempt at accessing the #field-type property if
         // it doesn't exist. (For whatever reason, evaluation doesn't seem to be
         // short-circuted when the other conditions are false.)
-        if ($properties['#field_type'] == 'image') {
+        if ($properties['#field_type'] == 'image' && $properties[0]["#image_style"] == 'cgov_article') {
           $build[$key][0]['#item_attributes']['longdesc'] =
             Url::fromRoute('cgov_media.long_description', $args)->toString();
         }
