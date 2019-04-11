@@ -5,4 +5,5 @@
 {# Get the aliased path for the infographic #}
 {% set infographic_uri = media.path.0.alias %}
 
-{{ imageMacros.articleImage(classes, content.field_image_promotional, infographic_uri, content.credit, content.caption, "View Infographic") }}
+{# We pass null because embedded infographics swhould not show the promotional image credit. #}
+{{ imageMacros.articleImage(classes, content.field_image_promotional, infographic_uri, null, content.caption, "View Infographic") }}
