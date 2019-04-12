@@ -15,6 +15,8 @@
 /****************** NCI UTILITIES ********************/
 @import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
 
+@import "~Core/styles/equalheights"; //added flexbox height support
+
 @import "~Core/styles/nci-foundation";
 /* @import "grid"; */ /* using this for override of foundation media screen if necessary */
 /***  END FOUNDATION STYLES ***/
@@ -60,6 +62,7 @@
 @import "~Core/libraries/accordion/accordion";
 @import "~Core/styles/tables";
 @import "~Core/styles/font_resizer";
+@import "~Core/libraries/modal/modal";
 @import "~Core/libraries/carousel/carousel";
 @import "~Core/libraries/backToTop/backToTop";
 @import "~Core/styles/contentTemplate";
@@ -70,6 +73,7 @@
 @import "~Core/styles/materials_to_share";
 @import "~Core/styles/lists";
 @import "~Core/styles/managed-lists";
+@import "~Core/styles/topicFeature";
 @import "~Core/styles/videos";
 @import "~Core/libraries/tooltips/referenceTooltip";
 @import "~Core/styles/errorPage";
@@ -86,7 +90,6 @@
 @import '~Core/styles/tableSort';
 
 // @import "~Core/styles/spinner";
-@import "~Core/libraries/modal/modal";
 
 /****************** NCI ENHANCEMENTS SECTION ********************/
 @import "~Core/libraries/liveHelpPopup/popupPartial";
@@ -222,4 +225,14 @@ table.table-default tfoot td {
 	display: none;
 	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
 	// @see all.js
+}
+
+@include bp(small) {
+	figure {
+		&.image-small, &.image-medium, &.image-center {
+      float: none;
+			width: 100%;
+			margin: 0 0 1em 0;
+		}	
+	}
 }

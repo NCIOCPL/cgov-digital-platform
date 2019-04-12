@@ -4,11 +4,14 @@ dependencies:
   config:
     - field.field.node.cgov_blog_series.field_about_blog
     - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
     - field.field.node.cgov_blog_series.field_banner_image
     - field.field.node.cgov_blog_series.field_blog_series_shortname
     - field.field.node.cgov_blog_series.field_browser_title
     - field.field.node.cgov_blog_series.field_card_title
     - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
@@ -24,7 +27,6 @@ dependencies:
     - node.type.cgov_blog_series
   module:
     - image
-    - link
     - options
     - text
     - user
@@ -39,21 +41,37 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_about_blog:
-    weight: 21
+    weight: 20
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_allow_comments:
-    weight: 22
+    weight: 19
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_archive_back_years:
+    weight: 24
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_archive_group_by:
+    weight: 23
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_banner_image:
-    weight: 14
+    weight: 13
     label: hidden
     settings:
       image_style: ''
@@ -62,7 +80,7 @@ content:
     type: image
     region: content
   field_blog_series_shortname:
-    weight: 16
+    weight: 15
     label: hidden
     settings:
       link_to_entity: false
@@ -93,25 +111,30 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_feedburner_url:
-    weight: 17
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    type: link
-    region: content
-  field_image_promotional:
-    weight: 15
+  field_featured_posts:
+    weight: 22
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_feedburner_url:
+    weight: 16
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_image_promotional:
+    weight: 14
+    label: hidden
+    settings:
+      view_mode: image_crop_featured
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
     region: content
   field_list_description:
     weight: 6
@@ -122,7 +145,7 @@ content:
     type: string
     region: content
   field_num_display_posts:
-    weight: 19
+    weight: 18
     label: hidden
     settings:
       thousand_separator: ''
@@ -147,14 +170,14 @@ content:
     type: string
     region: content
   field_public_use:
-    weight: 12
+    weight: 11
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_recommended_content_header:
-    weight: 18
+    weight: 17
     label: hidden
     settings:
       link_to_entity: false
@@ -162,7 +185,7 @@ content:
     type: string
     region: content
   field_search_engine_restrictions:
-    weight: 13
+    weight: 12
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -177,7 +200,7 @@ content:
     type: string
     region: content
   field_show_list_thumbnails:
-    weight: 23
+    weight: 21
     label: hidden
     settings: {  }
     third_party_settings: {  }

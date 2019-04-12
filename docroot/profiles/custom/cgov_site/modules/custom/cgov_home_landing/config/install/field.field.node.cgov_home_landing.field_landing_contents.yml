@@ -4,12 +4,15 @@ dependencies:
   config:
     - field.storage.node.field_landing_contents
     - node.type.cgov_home_landing
+    - paragraphs.paragraphs_type.cgov_card_raw_html
     - paragraphs.paragraphs_type.cgov_column_one
     - paragraphs.paragraphs_type.cgov_column_two
+    - paragraphs.paragraphs_type.cgov_content_block
     - paragraphs.paragraphs_type.cgov_guide_row
+    - paragraphs.paragraphs_type.cgov_list
+    - paragraphs.paragraphs_type.cgov_multimedia_row
     - paragraphs.paragraphs_type.cgov_primary_feature_row
     - paragraphs.paragraphs_type.cgov_secondary_feature_row
-    - paragraphs.paragraphs_type.cgov_list
   module:
     - entity_reference_revisions
 id: node.cgov_home_landing.field_landing_contents
@@ -35,6 +38,7 @@ settings:
       cgov_card_raw_html: cgov_card_raw_html
       cgov_column_one: cgov_column_one
       cgov_column_two: cgov_column_two
+      cgov_multimedia_row: cgov_multimedia_row
     target_bundles_drag_drop:
       cgov_primary_feature_row:
         enabled: true
@@ -65,5 +69,29 @@ settings:
         enabled: false
       cgov_card_raw_html:
         weight: -12
+        enabled: false
+      cgov_citation:
+        weight: 23
+        enabled: false
+      cgov_content_block:
+        weight: 26
+        enabled: false
+      cgov_dynamic_list:
+        weight: 27
+        enabled: false
+      cgov_external_link:
+        weight: 28
+        enabled: false
+      cgov_internal_link:
+        weight: 30
+        enabled: false
+      cgov_multimedia_row:
+        enabled: true
+        weight: 32
+      cgov_two_item_feature_row:
+        weight: 35
+        enabled: false
+      pdq_summary_section:
+        weight: 36
         enabled: false
 field_type: entity_reference_revisions

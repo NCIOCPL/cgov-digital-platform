@@ -337,10 +337,16 @@ hr.ps-divider {
 .cgvpressrelease hr.ps-divider {
 	display: none;
 }
+
 .public-use {
 	padding: 0;
 	font-style: italic;
-	clear: both; }
+	clear: both; 
+
+	@include bp(medium-down){
+		font-size: .875em;
+	}
+}
 
 .public-use, .syndication p {
 	margin-top: 0;

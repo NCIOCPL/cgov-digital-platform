@@ -8,13 +8,11 @@
  * nav displays - based on the wrapping container.
  */
 #}
-<section>
-  {% if content.field_body_section_heading['#items'].getValue() %}
-    {# TODO: Determine how to deal with headings that are H3s #}
-    {# Set the id to a clean version of the section heading for OTP links. #}
-    <h2 id="{{ content.field_body_section_heading['#items'][0].value | clean_id }}">
-      {{- content.field_body_section_heading -}}
-    </h2>
-  {% endif %}
-  {{ content.field_body_section_content }}
-</section>
+{% if content.field_body_section_heading['#items'].getValue() %}
+  {# TODO: Determine how to deal with headings that are H3s #}
+  {# Set the id to a clean version of the section heading for OTP links. #}
+  <h2 id="{{ content.field_body_section_heading['#items'][0].value | clean_id }}">
+    {{- content.field_body_section_heading -}}
+  </h2>
+{% endif %}
+{{ content.field_body_section_content }}

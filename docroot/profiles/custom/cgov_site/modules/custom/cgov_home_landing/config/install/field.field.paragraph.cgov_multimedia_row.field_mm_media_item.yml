@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_mm_media_item
+    - paragraphs.paragraphs_type.cgov_multimedia_row
+id: paragraph.cgov_multimedia_row.field_mm_media_item
+field_name: field_mm_media_item
+entity_type: paragraph
+bundle: cgov_multimedia_row
+label: Multimedia Card
+description: 'The multimedia card for the multimedia row.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

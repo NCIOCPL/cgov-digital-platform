@@ -27,7 +27,9 @@
 			content: '';
 		}
 	}
-
+  .page-options--resize a::before {
+    @include svg-sprite(font-size-blue);
+  }
 	.page-options--print a::before {
 		@include svg-sprite(printer-blue);
 	}
@@ -99,10 +101,6 @@ a.social-share--custom-tweet {
 
 		li {
 			margin: 0 0 0 0.675em;
-		}
-
-		.page-options--resize a::before {
-			@include svg-sprite(font-size-blue, mq);
 		}
 	}
 
