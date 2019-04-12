@@ -32,6 +32,9 @@ $config['technicalcontact_email'] = SamlSecrets::TECH_CONTACT_EMAIL;
 $config['secretsalt'] = SamlSecrets::SECRET_SALT;
 $config['auth.adminpassword'] = SamlSecrets::AUTH_ADMIN_PASSWORD;
 
+// Protect the main SAML admin page.
+$config['admin.protectindexpage'] = true;
+
 /**
  * Support SSL Redirects to SAML login pages.
  *

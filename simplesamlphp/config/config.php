@@ -1,7 +1,7 @@
 <?php
 /*
  * The configuration of SimpleSAMLphp
- *
+ * DO NOT MODIFY THIS FILE — modify acquia_config.php instead.
  */
 
 $config = [
