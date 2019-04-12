@@ -2,10 +2,12 @@
 <div class="slot-item first-SI">
   <div class="navigation">
     <div class="mobile-menu-bar">
+    {% spaceless %}
       <button type="button" class="open-panel nav-header menu-btn">{% trans %}Menu{% endtrans %}</button>
       <a href="/global/contact" class="nav-contact">{% trans %}Contact{% endtrans %}</a>
       <a href="/publications/dictionaries/cancer-terms" class="nav-dictionary">{% trans %}Dictionary{% endtrans %}</a>
       <button type="button" class="nav-search">{% trans %}Search{% endtrans %}</button>
+    {% endspaceless %}
     </div>
     {% if content %}
       {{ content }}
