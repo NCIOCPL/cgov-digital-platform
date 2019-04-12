@@ -1,14 +1,3 @@
-# Creating a CGOV Sub Theme
-
-A sub theme should be created when a microsite/multisite needs to alter the layout (twig templates) provided by `cgov_common`.
-
-1. Copy the `cgov_subtheme` folder into the `themes/custom/cgov` folder
-2. Rename all instances of `subtheme` with your new theme name using the proper letter casing and underscores for spaces (where necessary). This applies to file names and to the code within the files.
-3. Add the new theme to the exported array in `themes/custom/cgov/themes.config.js`. This will add the sub theme to the front-end build.
-4. Run `npm run watch` in the command line to ensure all themes are being built properly and assets are generated in a local `dist` folder
-5. Replace the `screenshot.png` and `logo.svg` with appropriate images
-
-
 # Creating a CGOV color variant
 
 Color variants are used to override the default CGOV color theme without making major layout changes. A color variant specific class name is added to the `<body>` class attribute for hooking in CSS or JS as necessary/needed.
