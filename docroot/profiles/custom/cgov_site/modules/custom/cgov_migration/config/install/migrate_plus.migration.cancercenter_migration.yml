@@ -19,6 +19,12 @@ source:
          selector: '@title'
 
         -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+
+        -
          name: body
          label: body
          selector: 'body'
@@ -270,6 +276,12 @@ process:
     plugin: migration_lookup
     migration: region_migration
     source: field_region
+    no_stub: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
     no_stub: true
 
   field_institution_type:
