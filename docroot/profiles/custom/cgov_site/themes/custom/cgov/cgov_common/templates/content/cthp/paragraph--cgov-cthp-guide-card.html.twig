@@ -6,11 +6,12 @@
       {{ content.field_cthp_guide_card_desc }}
     {% endif %}
 
-    {% if content.field_cthp_pdq_link_heading|field_value %}
+    {% if content.field_cthp_pdq_link_heading|field_value and content.field_cthp_pdq_links["#items"] %}
       <h4 class="cthp-pdq-label">
         {{ content.field_cthp_pdq_link_heading }}
       </h4>
     {% endif %}
+
     {% if content.field_cthp_pdq_links["#items"] %}
       <ul>
         {{ content.field_cthp_pdq_links }}
