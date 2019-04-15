@@ -113,6 +113,7 @@ class PDQResource extends ResourceBase {
     $fields = [
       'nid' => $node->id(),
       'created' => date('c', $node->getCreatedTime()),
+      'keywords' => $node->field_hhs_syndication->keywords,
     ];
     foreach (['en', 'es'] as $code) {
       if ($node->hasTranslation($code)) {
@@ -135,11 +136,6 @@ class PDQResource extends ResourceBase {
           'updated_date' => $translation->field_date_updated->value,
           'short_title' => $translation->field_browser_title->value,
           'description' => $translation->field_page_description->value,
-
-          // This field will probably not be retained for the intitial
-          // release.
-          // 'keywords' => $translation->field_syndication_keywords->value,
-          // End of suppressed field.
           'public_use' => $translation->field_public_use->value,
           'url' => $translation->field_pdq_url->value,
           'published' => $translation->status->value,
@@ -248,12 +244,14 @@ class PDQResource extends ResourceBase {
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
     $node->set('field_browser_title', $summary['short_title']);
     $node->set('field_page_description', $summary['description']);
-
-    // Field suppressed for now.
-    // $node->set('field_syndication_keywords', $summary['keywords']);
-    // End of suppressed field.
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', 1);
+
+    // The syndication field is not translatable.
+    if ($language == 'en') {
+      $syndication = ['syndicate' => 1, 'keywords' => $summary['keywords'] ?? ''];
+      $node->set('field_hhs_syndication', $syndication);
+    }
 
     // Store the summary, leaving it unpublished. We'll make all of the
     // summaries published in a separate pass after they've all been
