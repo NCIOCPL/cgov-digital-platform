@@ -1,0 +1,13 @@
+# Set up route for serving up a content item for HHS
+cgov_syndication.content_item:
+  path: '/node/{node}/syndication'
+  defaults:
+    _controller: '\Drupal\cgov_syndication\Controller\CgovSyndicationController::publish'
+    _title: 'HHS Syndication'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      node:
+        type: entity:node

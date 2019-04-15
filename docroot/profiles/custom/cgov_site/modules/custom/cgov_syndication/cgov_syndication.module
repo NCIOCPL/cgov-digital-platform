@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for content syndication.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function cgov_syndication_preprocess_html(&$variables) {
+
+  // Add the `meta` information we need for syndicated content.
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (!empty($node) && $node instanceof Node) {
+    if ($node->hasField('field_hhs_syndication')) {
+      $tools = \Drupal::service('cgov_core.tools');
+      $canonical = $node->toUrl('canonical')->toString();
+      $prod_url = \rtrim($tools->getProdUrl(), '/');
+      $variables['syndication_canonical'] = "$prod_url$canonical";
+      $keywords = $node->field_hhs_syndication->keywords;
+      $variables['syndication_keywords'] = $keywords;
+      $description = $node->field_page_description->value;
+      $variables['syndication_description'] = $description;
+    }
+  }
+}
