@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Theme override for HHS Syndication of Cancer Information Summaries.
+ *
+ * This is a stripped-down version of the body, restricted to the
+ * information in the summary. The bundle and theme names are embedded
+ * in the template's file name to ensure that this overriding template
+ * is selected.
+ */
+#}
+<h1>{{- node.label -}}</h1>
+<div id="cgvBody">
+  <div class="summary-sections">
+    {{ content.field_summary_sections }}
+  </div>
+</div>
