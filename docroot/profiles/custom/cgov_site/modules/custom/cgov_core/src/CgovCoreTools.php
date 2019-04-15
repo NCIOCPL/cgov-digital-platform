@@ -510,4 +510,13 @@ class CgovCoreTools {
     return $new_res;
   }
 
+  /**
+   * Get the base URL for the active site's production tier.
+   *
+   * @todo Add support for other sites.
+   */
+  public function getProdUrl() {
+    return 'https://www.cancer.gov';
+  }
+
 }
