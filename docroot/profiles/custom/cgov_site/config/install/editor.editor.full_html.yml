@@ -14,43 +14,42 @@ settings:
         -
           name: Formatting
           items:
+            - Undo
+            - Redo
+            - Format
+            - Styles
             - Bold
             - Italic
-            - Strike
-            - Superscript
-            - Subscript
             - '-'
             - RemoveFormat
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+            - Indent
+            - Outdent
         -
           name: Linking
           items:
             - DrupalLink
             - DrupalUnlink
         -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
           name: Media
           items:
             - Table
             - cgov_image_button
-            - cgov_featured_content_button
             - cgov_infographic_button
-        -
-          name: 'Block Formatting'
-          items:
-            - Format
+            - insert_block_content
+            - cgov_featured_content_button
         -
           name: Tools
           items:
-            - Source
-            - insert_block_content
             - Cgov_glossifier
+            - Source
   plugins:
     stylescombo:
-      styles: ''
+      styles: "strong|Bold\r\nem|Italics\r\ns|Strikethrough\r\nsub|Subscript\r\nsup|Superscript"
     drupallink:
       linkit_enabled: true
       linkit_profile: cgov_inline_links
