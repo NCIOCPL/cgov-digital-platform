@@ -19,4 +19,7 @@ function cgov_site_install() {
   // Install proper language negotiation even if English only.
   $siteHelper->installLanguageNegotiation();
 
+  // Import split of splits  after install is complete.
+  drush_invoke_process('@self', 'csim', ['cgov_config_split_setup']);
+
 }
