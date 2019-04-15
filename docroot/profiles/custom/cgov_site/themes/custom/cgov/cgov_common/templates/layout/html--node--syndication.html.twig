@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <meta charset="utf-8">
+    {% if syndication_keywords %}
+      <meta name="keywords" content="{{ syndication_keywords }}">
+    {% endif %}
+    {% if syndication_description %}
+      <meta name="description" content="{{ syndication_description }}">
+    {% endif %}
+    <link rel="canonical" href="{{ syndication_canonical }}">
+  </head>
+  <body>
+    <div class="syndicate">
+      {{ page.content }}
+    </div>
+  </body>
+</html>
