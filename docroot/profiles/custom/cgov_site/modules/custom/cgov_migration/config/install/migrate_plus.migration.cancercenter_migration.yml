@@ -23,6 +23,10 @@ source:
          label: field_image_promotional
          selector: field_image_promotional
 
+        -
+         name: field_image_articile
+         label: field_image_article
+         selector: field_image_article
 
         -
          name: body
@@ -278,11 +282,6 @@ process:
     source: field_region
     no_stub: true
 
-  field_image_promotional:
-    plugin: migration_lookup
-    migration: cgovimage_migration
-    source: field_image_promotional
-    no_stub: true
 
   field_institution_type:
     plugin: migration_lookup
@@ -295,6 +294,21 @@ process:
     migration: sitesectionsql_migration
     source: term_id
     no_stub: true
+
+
+
+  field_image_article:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_article
+    no_stub: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
+
 
   field_pretty_url: field_pretty_url
 
