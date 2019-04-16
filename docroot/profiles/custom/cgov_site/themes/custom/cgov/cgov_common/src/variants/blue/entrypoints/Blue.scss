@@ -48,8 +48,8 @@ $main-menu-desktop-active-item-border-bottom: $denim;
 $main-menu-desktop-svg-search-magnifying-glass: search-blue-theme;
 $main-menu-desktop-search-background: $white;
 $main-menu-desktop-search-color: $graphite;
-$main-menu-mobile-tablet-items-width: 28%;
-$main-menu-mobile-tablet-nav-search-float-tablet-down: right;  // necessary if mobile menu items decrease from the default 4 items
+$main-menu-mobile-tablet-items-width: 19%;
+$main-menu-mobile-tablet-nav-search-float-tablet-down: right; // necessary if mobile menu items decrease from the default 4 items
 $main-menu-mobile-tablet-svg-hamburger: menu-blue-theme;
 $main-menu-mobile-tablet-svg-info: info-blue-theme;
 $main-menu-mobile-tablet-svg-search: search-large-blue-theme;
@@ -78,7 +78,7 @@ $section-menu-mobile-tablet-current-page-plus-background: $space;
 $section-menu-mobile-tablet-current-page-plus-color: $white;
 $section-menu-mobile-tablet-current-page-minus-color: $space;
 $section-menu-mobile-tablet-current-page-minus-background: $white;
-$section-menu-mobile-tablet-not-current-page-plus-background: $space;  // this is not a valid css value, but will produce bad css rule and will result in defaulting to cancer.gov style
+$section-menu-mobile-tablet-not-current-page-plus-background: $space; // this is not a valid css value, but will produce bad css rule and will result in defaulting to cancer.gov style
 $section-menu-mobile-tablet-not-current-page-plus-color: $white;
 $section-menu-mobile-tablet-not-current-page-minus-color: $space;
 $section-menu-mobile-tablet-not-current-page-minus-background: $white;
@@ -119,7 +119,8 @@ $content-table-header-background: $icicle;
 $content-svg-guide-card-circle-arrow: chevron-circle-blue-theme;
 $content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-blue-theme;
 $content-svg-external-link: external-link-blue-theme;
-$footer-background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px, linear-gradient(45deg, $cobalt, $aegean);
+$footer-background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px,
+linear-gradient(45deg, $cobalt, $aegean);
 $footer-icons-hover-opacity: 1;
 $footer-svg-twitter: twitter-blue-theme;
 $footer-svg-twitter-hover: twitter-hover-blue-theme;
@@ -142,13 +143,21 @@ $footer-svg-youtube-hover: youtube-hover-blue-theme;
 
 // default theme link color
 .main-content a,
-#cgvBody h2 a, #cgvBody h3 a, #cgvBody h4 a, #cgvBody h5 a, #cgvBody h6 a,
-.contentzone h2 a, .contentzone  h3 a, .contentzone  h4 a, .contentzone  h5 a, .contentzone  h6 a,
+#cgvBody h2 a,
+#cgvBody h3 a,
+#cgvBody h4 a,
+#cgvBody h5 a,
+#cgvBody h6 a,
+.contentzone h2 a,
+.contentzone h3 a,
+.contentzone h4 a,
+.contentzone h5 a,
+.contentzone h6 a,
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
-.section-nav .contains-current > div a,
+.section-nav .contains-current>div a,
 .feature-primary a h3,
-ul.breadcrumbs > * a,
+ul.breadcrumbs>* a,
 .topic-feature .cgvBlogPost a h3,
 .topic-feature a h3,
 .pullquote,
@@ -162,36 +171,79 @@ li a {
 }
 
 // default theme link hover/active color (for items that change color rather than get underlined)
-#cgvBody h2 a:focus, #cgvBody h2 a:hover, #cgvBody h3 a:focus, #cgvBody h3 a:hover, #cgvBody h4 a:focus, #cgvBody h4 a:hover, #cgvBody h5 a:focus, #cgvBody h5 a:hover, #cgvBody h6 a:focus, #cgvBody h6 a:hover,
-.contentzone h2 a:focus, .contentzone h2 a:hover, .contentzone h3 a:focus, .contentzone h3 a:hover, .contentzone h4 a:focus, .contentzone h4 a:hover, .contentzoneh5 a:focus, .contentzone h5 a:hover, .contentzone h6 a:focus, .contentzone h6 a:hover,
+#cgvBody h2 a:focus,
+#cgvBody h2 a:hover,
+#cgvBody h3 a:focus,
+#cgvBody h3 a:hover,
+#cgvBody h4 a:focus,
+#cgvBody h4 a:hover,
+#cgvBody h5 a:focus,
+#cgvBody h5 a:hover,
+#cgvBody h6 a:focus,
+#cgvBody h6 a:hover,
+.contentzone h2 a:focus,
+.contentzone h2 a:hover,
+.contentzone h3 a:focus,
+.contentzone h3 a:hover,
+.contentzone h4 a:focus,
+.contentzone h4 a:hover,
+.contentzoneh5 a:focus,
+.contentzone h5 a:hover,
+.contentzone h6 a:focus,
+.contentzone h6 a:hover,
 a .feature-card.cgvArticle a:hover h3,
 .main-content a.title:hover,
-.card-thumbnail .card-thumbnail:hover a, .card-thumbnail .card-thumbnail:focus a,
-.topic-feature a:hover, .topic-feature a:focus,
-.list .title a.title:hover, .list .title a.title:focus,
-.list .title a:hover, .list .title a:focus,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.topic-feature a:hover,
+.topic-feature a:focus,
+.list .title a.title:hover,
+.list .title a.title:focus,
+.list .title a:hover,
+.list .title a:focus,
 .feature-card.cgvArticle a:hover h3,
-.sub-nav-group a.sub-nav-group-header:hover, .sub-nav-group a.sub-nav-group-header:focus,
-.card-thumbnail .card-thumbnail:hover a, .card-thumbnail .card-thumbnail:focus a,
-.multimedia-slot .feature-card:hover, .multimedia-slot .feature-card:focus,
-.multimedia-slot a:hover h3, .multimedia-slot a:focus h3,
-.multimedia .card:hover h3, .multimedia .card:focus h3,
-.topic-feature a:hover, .topic-feature a:focus,
-.topic-feature a:hover h3, .topic-feature a:focus h3,
+.sub-nav-group a.sub-nav-group-header:hover,
+.sub-nav-group a.sub-nav-group-header:focus,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.multimedia-slot .feature-card:hover,
+.multimedia-slot .feature-card:focus,
+.multimedia-slot a:hover h3,
+.multimedia-slot a:focus h3,
+.multimedia .card:hover h3,
+.multimedia .card:focus h3,
+.topic-feature a:hover,
+.topic-feature a:focus,
+.topic-feature a:hover h3,
+.topic-feature a:focus h3,
 #cgvBody h3 a:hover,
 #cgvBody h2 a:hover,
-.post-title a:hover, .post-title a:focus,
-.feature-secondary a:hover, .feature-secondary a:focus,
-.blog-feature a:hover h3, .blog-feature a:focus h3,
-.landing-thumb-text h3 a:hover, .landing-thumb-text h3 a:focus,
-.title a.title:hover, .title a.title:focus, .title a:hover, .title a:focus,
-.page-options li a:hover, .page-options li a:focus,
-.contentzone table tbody tr td a:hover, .contentzone table tbody tr td a:focus {
+.post-title a:hover,
+.post-title a:focus,
+.feature-secondary a:hover,
+.feature-secondary a:focus,
+.blog-feature a:hover h3,
+.blog-feature a:focus h3,
+.landing-thumb-text h3 a:hover,
+.landing-thumb-text h3 a:focus,
+.title a.title:hover,
+.title a.title:focus,
+.title a:hover,
+.title a:focus,
+.page-options li a:hover,
+.page-options li a:focus,
+.contentzone table tbody tr td a:hover,
+.contentzone table tbody tr td a:focus {
   color: $default-link-color-hover;
 }
 
 // default header colors
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $storm;
 }
 
@@ -237,17 +289,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // menu bar
-.menu.nav-menu > .nav-item > .nav-item-title > a.active,
-.menu.nav-menu > .nav-item > .nav-item-title > a.open,
-.menu.nav-menu > .nav-item > .nav-item-title > a:focus,
-.menu.nav-menu > .nav-item > .nav-item-title > a,
-#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a,
-.mobile-menu-bar > a,
-.mobile-menu-bar > button,
-.mobile-menu-bar > a:focus,
-.mobile-menu-bar > a:hover,
-.mobile-menu-bar > button:focus,
-.mobile-menu-bar > button:hover {
+.menu.nav-menu>.nav-item>.nav-item-title>a.active,
+.menu.nav-menu>.nav-item>.nav-item-title>a.open,
+.menu.nav-menu>.nav-item>.nav-item-title>a:focus,
+.menu.nav-menu>.nav-item>.nav-item-title>a,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
+.mobile-menu-bar>a,
+.mobile-menu-bar>button,
+.mobile-menu-bar>a:focus,
+.mobile-menu-bar>a:hover,
+.mobile-menu-bar>button:focus,
+.mobile-menu-bar>button:hover {
   color: $main-menu-link-color;
 }
 
@@ -259,8 +311,8 @@ h1, h2, h3, h4, h5, h6 {
 
 // mobile menu
 // due to changing number of items in mobile main menu on microsites
-.mobile-menu-bar > a,
-.mobile-menu-bar > button {
+.mobile-menu-bar>a,
+.mobile-menu-bar>button {
   width: $main-menu-mobile-tablet-items-width;
   margin-left: 0;
 }
@@ -281,9 +333,9 @@ button.nav-dictionary::before {
   @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
 }
 
-#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
-#mega-nav li.contains-current > div.nav-item-title > a,
-.section-nav .level-1.contains-current.has-children > div a {
+#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+#mega-nav li.contains-current>div.nav-item-title>a,
+.section-nav .level-1.contains-current.has-children>div a {
   color: $hamburger-section-menu-parent-item-link-color;
 }
 
@@ -317,14 +369,14 @@ button.nav-dictionary::before {
   background-color: $hamburger-menu-mobile-tablet-current-page-background;
 }
 
-#mega-nav .current-page > div .toggle[aria-expanded="true"],
-#mega-nav .current-page > div[aria-expanded="true"] .toggle {
+#mega-nav .current-page>div .toggle[aria-expanded="true"],
+#mega-nav .current-page>div[aria-expanded="true"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
   color: $hamburger-menu-mobile-tablet-current-page-minus-color;
 }
 
-#mega-nav .current-page > div .toggle[aria-expanded="false"],
-#mega-nav .current-page > div[aria-expanded="false"] .toggle {
+#mega-nav .current-page>div .toggle[aria-expanded="false"],
+#mega-nav .current-page>div[aria-expanded="false"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
   color: $hamburger-menu-mobile-tablet-current-page-plus-color;
 }
@@ -342,6 +394,7 @@ button.nav-dictionary::before {
 .guide-card .card {
   background: $landing-page-guide-card-background;
 }
+
 a.arrow-link-white:before,
 a.arrow-link:before {
   @include svg-sprite($content-svg-guide-card-circle-arrow);
@@ -355,9 +408,11 @@ a.arrow-link:hover:before {
 .pullquote {
   border-left-color: $content-pullquote-left-border;
 }
+
 table.table-default th {
   background: $content-table-header-background;
 }
+
 a.infographic-view-full,
 a.video-view-full,
 figure a.article-image-enlarge {
@@ -413,20 +468,36 @@ figure a.article-image-enlarge:hover {
 .radio input[type=radio]+label:before {
   border-color: $content-form-radio-border;
 }
+
 .ui-selectmenu-button span.ui-icon {
   background-color: $content-form-select-box-dropdown-color;
 }
-.ui-selectmenu-button:focus span.ui-icon, .ui-selectmenu-button:hover span.ui-icon {
+
+.ui-selectmenu-button:focus span.ui-icon,
+.ui-selectmenu-button:hover span.ui-icon {
   background-color: $content-form-select-box-dropdown-hover-color;
 }
+
 .ui-selectmenu-menu .ui-state-focus {
   background: $content-form-select-box-list-item-hover-background;
 }
-.button.submit, .button[type=submit], form button.submit, form button[type=submit] {
+
+.button.submit,
+.button[type=submit],
+form button.submit,
+form button[type=submit] {
   background-color: $content-form-submit-button-background;
   border-color: $content-form-submit-button-border;
 }
-.button.submit:focus, .button.submit:hover, .button[type=submit]:focus, .button[type=submit]:hover, form button.submit:focus, form button.submit:hover, form button[type=submit]:focus, form button[type=submit]:hover {
+
+.button.submit:focus,
+.button.submit:hover,
+.button[type=submit]:focus,
+.button[type=submit]:hover,
+form button.submit:focus,
+form button.submit:hover,
+form button[type=submit]:focus,
+form button[type=submit]:hover {
   background-color: $content-form-submit-button-hover-background;
 }
 
@@ -435,22 +506,27 @@ figure a.article-image-enlarge:hover {
 .ui-accordion-header.odd.ui-state-active {
   background: $content-accordion-odd-rows-background;
 }
+
 .ui-accordion-header.even,
 .ui-accordion-header.even.ui-state-active {
   background: $content-accordion-even-rows-background;
 }
+
 .ui-accordion-header.odd .toggle[aria-expanded="false"],
 .ui-accordion-header.odd[aria-expanded="false"] .toggle {
   background: $content-accordion-odd-rows-plus-background;
 }
+
 .ui-accordion-header.even .toggle[aria-expanded="false"],
 .ui-accordion-header.even[aria-expanded="false"] .toggle {
   background: $content-accordion-even-rows-plus-background;
 }
+
 .ui-accordion-header.odd .toggle[aria-expanded="true"],
 .ui-accordion-header.odd[aria-expanded="true"] .toggle {
   color: $content-accordion-odd-rows-minus-background;
 }
+
 .ui-accordion-header.even .toggle[aria-expanded="true"],
 .ui-accordion-header.even[aria-expanded="true"] .toggle {
   color: $content-accordion-even-rows-minus-background;
@@ -460,12 +536,15 @@ figure a.article-image-enlarge:hover {
 .site-footer {
   background: $footer-background;
 }
+
 .site-footer__icons li:hover {
   opacity: $footer-icons-hover-opacity;
 }
+
 .site-footer__icons .icon.twitter {
   @include svg-sprite($footer-svg-twitter);
 }
+
 .site-footer__icons .icon.twitter:hover {
   @include svg-sprite($footer-svg-twitter-hover);
 }
@@ -473,6 +552,7 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.govdelivery {
   @include svg-sprite($footer-svg-gov-delivery);
 }
+
 .site-footer__icons .icon.govdelivery:hover {
   @include svg-sprite($footer-svg-gov-delivery-hover);
 }
@@ -480,6 +560,7 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.facebook {
   @include svg-sprite($footer-svg-facebook);
 }
+
 .site-footer__icons .icon.facebook:hover {
   @include svg-sprite($footer-svg-facebook-hover);
 }
@@ -487,6 +568,7 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.instagram {
   @include svg-sprite($footer-svg-instagram);
 }
+
 .site-footer__icons .icon.instagram:hover {
   @include svg-sprite($footer-svg-instagram-hover);
 }
@@ -494,6 +576,7 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.linkedin {
   @include svg-sprite($footer-svg-linkedin);
 }
+
 .site-footer__icons .icon.linkedin:hover {
   @include svg-sprite($footer-svg-linkedin-hover);
 }
@@ -501,6 +584,7 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.rss {
   @include svg-sprite($footer-svg-rss);
 }
+
 .site-footer__icons .icon.rss:hover {
   @include svg-sprite($footer-svg-rss-hover);
 }
@@ -508,14 +592,15 @@ figure a.article-image-enlarge:hover {
 .site-footer__icons .icon.youtube {
   @include svg-sprite($footer-svg-youtube);
 }
+
 .site-footer__icons .icon.youtube:hover {
   @include svg-sprite($footer-svg-youtube-hover);
 }
 
 @include break(large) {
 
-  
-  
+
+
   // header
   .nci-logo-pages {
     img {
@@ -544,8 +629,8 @@ figure a.article-image-enlarge:hover {
     @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
   }
 
-  #mega-nav .nav-item.contains-current > .nav-item-title > a,
-  #mega-nav .nav-item.current-page > .nav-item-title > a {
+  #mega-nav .nav-item.contains-current>.nav-item-title>a,
+  #mega-nav .nav-item.current-page>.nav-item-title>a {
     border-bottom-color: $main-menu-desktop-active-item-border-bottom;
   }
 
@@ -553,16 +638,16 @@ figure a.article-image-enlarge:hover {
     color: $mega-menu-desktop-group-header-color;
   }
 
-#mega-nav,
-#mega-nav li {
-  background: none;
-}
+  #mega-nav,
+  #mega-nav li {
+    background: none;
+  }
 
-// overwriting hamburger menu style rules
-#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
-#mega-nav li.contains-current > div.nav-item-title > a {
-  color: initial;
-}
+  // overwriting hamburger menu style rules
+  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+  #mega-nav li.contains-current>div.nav-item-title>a {
+    color: initial;
+  }
 
   // Left navigation
   .section-nav {
@@ -570,7 +655,7 @@ figure a.article-image-enlarge:hover {
       border-left-color: $section-navigation-desktop-active-item-triangle;
     }
 
-    .level-0 > div {
+    .level-0>div {
       background-color: $section-navigation-desktop-header-background;
     }
 
@@ -581,12 +666,16 @@ figure a.article-image-enlarge:hover {
     div.current-page {
       background-color: $section-navigation-desktop-active-background;
     }
-    
+
     .has-children .contains-current {
-      > div.current-page a {
+      >div.current-page a {
         color: $section-navigation-desktop-active-color;
       }
     }
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
   }
 
   .page-options li,
@@ -629,42 +718,50 @@ figure a.article-image-enlarge:hover {
   .nav-search {
     float: $main-menu-mobile-tablet-nav-search-float-tablet-down;
   }
+
   .nav-menu a:active {
     background-color: $hamburger-active-link-background;
   }
+
   // section navigation mobile (tongue)
   #section-menu-button {
-   background-color: $aegean;
+    background-color: $aegean;
   }
+
   .section-nav .level-0>div {
     background: $aegean;
   }
-.section-nav div.current-page {
-  background: $section-menu-mobile-tablet-current-page-background;
-}
 
-.section-nav .level-1.contains-current {
-  background: $section-menu-mobile-tablet-family-background;
-}
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .section-nav div.current-page {
+    background: $section-menu-mobile-tablet-current-page-background;
+  }
+
+  .section-nav .level-1.contains-current {
+    background: $section-menu-mobile-tablet-family-background;
+  }
 
 
-.section-nav .level-1.contains-current .toggle[aria-expanded="false"],
-.section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
-  background: $section-menu-mobile-tablet-current-page-plus-background;
-  color: $section-menu-mobile-tablet-current-page-plus-color;
-}
+  .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
+  .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-current-page-plus-background;
+    color: $section-menu-mobile-tablet-current-page-plus-color;
+  }
 
-.section-nav .level-1.contains-current .toggle[aria-expanded="true"],
-.section-nav .level-1.contains-current[aria-expanded="true"] .toggle {
-  color: $section-menu-mobile-tablet-current-page-minus-color;
-  background: $section-menu-mobile-tablet-current-page-minus-background;
-}
+  .section-nav .level-1.contains-current .toggle[aria-expanded="true"],
+  .section-nav .level-1.contains-current[aria-expanded="true"] .toggle {
+    color: $section-menu-mobile-tablet-current-page-minus-color;
+    background: $section-menu-mobile-tablet-current-page-minus-background;
+  }
 
-.section-nav .level-1 .toggle[aria-expanded="false"],
-.section-nav .level-1[aria-expanded="false"] .toggle {
-  background: $section-menu-mobile-tablet-not-current-page-plus-background;
-  color: $section-menu-mobile-tablet-not-current-page-plus-color;
-}
+  .section-nav .level-1 .toggle[aria-expanded="false"],
+  .section-nav .level-1[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-not-current-page-plus-background;
+    color: $section-menu-mobile-tablet-not-current-page-plus-color;
+  }
 }
 
 @include bp(medium) {
@@ -675,8 +772,9 @@ figure a.article-image-enlarge:hover {
   .hero-text {
     background: $landing-page-hero-text-tablet-background;
   }
+
   // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
-  .row > .page-options-container .page-options ul {
+  .row>.page-options-container .page-options ul {
     float: left !important;
   }
 }

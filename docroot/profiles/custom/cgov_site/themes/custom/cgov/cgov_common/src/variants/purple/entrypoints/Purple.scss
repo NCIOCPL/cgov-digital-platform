@@ -32,11 +32,19 @@ $bronze: #c78005;
 
 // default theme link color
 .main-content a,
-#cgvBody h2 a, #cgvBody h3 a, #cgvBody h4 a, #cgvBody h5 a, #cgvBody h6 a,
-.contentzone h2 a, .contentzone  h3 a, .contentzone  h4 a, .contentzone  h5 a, .contentzone  h6 a,
+#cgvBody h2 a,
+#cgvBody h3 a,
+#cgvBody h4 a,
+#cgvBody h5 a,
+#cgvBody h6 a,
+.contentzone h2 a,
+.contentzone h3 a,
+.contentzone h4 a,
+.contentzone h5 a,
+.contentzone h6 a,
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
-ul.breadcrumbs > * a,
+ul.breadcrumbs>* a,
 .pullquote,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
 .desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
@@ -48,30 +56,65 @@ li a {
 }
 
 // default theme link hover/active color (for items that change color rather than get underlined)
-#cgvBody h2 a:focus, #cgvBody h2 a:hover, #cgvBody h3 a:focus, #cgvBody h3 a:hover, #cgvBody h4 a:focus, #cgvBody h4 a:hover, #cgvBody h5 a:focus, #cgvBody h5 a:hover, #cgvBody h6 a:focus, #cgvBody h6 a:hover,
-.contentzone h2 a:focus, .contentzone h2 a:hover, .contentzone h3 a:focus, .contentzone h3 a:hover, .contentzone h4 a:focus, .contentzone h4 a:hover, .contentzoneh5 a:focus, .contentzone h5 a:hover, .contentzone h6 a:focus, .contentzone h6 a:hover,
+#cgvBody h2 a:focus,
+#cgvBody h2 a:hover,
+#cgvBody h3 a:focus,
+#cgvBody h3 a:hover,
+#cgvBody h4 a:focus,
+#cgvBody h4 a:hover,
+#cgvBody h5 a:focus,
+#cgvBody h5 a:hover,
+#cgvBody h6 a:focus,
+#cgvBody h6 a:hover,
+.contentzone h2 a:focus,
+.contentzone h2 a:hover,
+.contentzone h3 a:focus,
+.contentzone h3 a:hover,
+.contentzone h4 a:focus,
+.contentzone h4 a:hover,
+.contentzoneh5 a:focus,
+.contentzone h5 a:hover,
+.contentzone h6 a:focus,
+.contentzone h6 a:hover,
 a .feature-card.cgvArticle a:hover h3,
 .main-content a.title:hover,
-.card-thumbnail h3 a:hover, .card-thumbnail h3 a:focus,
-.topic-feature a:hover, .topic-feature a:focus,
-.list .title a.title:hover, .list .title a.title:focus,
-.list .title a:hover, .list .title a:focus,
+.card-thumbnail h3 a:hover,
+.card-thumbnail h3 a:focus,
+.topic-feature a:hover,
+.topic-feature a:focus,
+.list .title a.title:hover,
+.list .title a.title:focus,
+.list .title a:hover,
+.list .title a:focus,
 .feature-card.cgvArticle a:hover h3,
-.sub-nav-group a.sub-nav-group-header:hover, .sub-nav-group a.sub-nav-group-header:focus,
+.sub-nav-group a.sub-nav-group-header:hover,
+.sub-nav-group a.sub-nav-group-header:focus,
 .main-content .guide-card a.arrow-link:hover,
 .main-content .guide-card a.arrow-link:focus,
 .topic-feature .cgvBlogPost a:hover h3,
 .topic-feature a:hover h3,
-.post-title a:hover, .post-title a:focus,
-.feature-secondary a:hover, .feature-secondary a:focus,
-.blog-feature a:hover h3, .blog-feature a:focus h3,
-.multimedia-slot a:hover h3, .multimedia-slot a:focus h3,
-.multimedia .card:hover h3, .multimedia .card:focus h3,
-.landing-thumb-text h3 a:hover, .landing-thumb-text h3 a:focus,
-.title a.title:hover, .title a.title:focus, .title a:hover, .title a:focus,
-.page-options li a:hover, .page-options li a:focus,
-.card-thumbnail .card-thumbnail:hover a, .card-thumbnail .card-thumbnail:focus a,
-.contentzone table tbody tr td a:hover, .contentzone table tbody tr td a:focus  {
+.post-title a:hover,
+.post-title a:focus,
+.feature-secondary a:hover,
+.feature-secondary a:focus,
+.blog-feature a:hover h3,
+.blog-feature a:focus h3,
+.multimedia-slot a:hover h3,
+.multimedia-slot a:focus h3,
+.multimedia .card:hover h3,
+.multimedia .card:focus h3,
+.landing-thumb-text h3 a:hover,
+.landing-thumb-text h3 a:focus,
+.title a.title:hover,
+.title a.title:focus,
+.title a:hover,
+.title a:focus,
+.page-options li a:hover,
+.page-options li a:focus,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.contentzone table tbody tr td a:hover,
+.contentzone table tbody tr td a:focus {
   color: $sangria;
 }
 
@@ -89,6 +132,7 @@ a .feature-card.cgvArticle a:hover h3,
 #microsite-a {
   padding: 10px 0;
   margin: 0;
+
   .nsdb-title {
     font-family: $montserrat-font-stack;
     font-size: 20px;
@@ -106,11 +150,12 @@ a .feature-card.cgvArticle a:hover h3,
 // mobile menu
 .mobile-menu-bar {
 
-  > a,
-  > button {
-    width: 28%;
+  >a,
+  >button {
+    width: 19%;
     margin-left: 0;
   }
+
   .nav-search {
     float: right;
   }
@@ -118,21 +163,23 @@ a .feature-card.cgvArticle a:hover h3,
 
 // mega menu
 #mega-nav {
-  .nav-item.current-page > .nav-item-title > a,
-  .nav-item.contains-current > .nav-item-title > a {
+
+  .nav-item.current-page>.nav-item-title>a,
+  .nav-item.contains-current>.nav-item-title>a {
     border-bottom-color: $ultra-violet;
   }
+
   .current-page {
     background-color: $ultra-violet;
 
-    > div .toggle[aria-expanded="true"],
-    > div[aria-expanded="true"] .toggle {
+    >div .toggle[aria-expanded="true"],
+    >div[aria-expanded="true"] .toggle {
       background-color: $white;
       color: $electric-lilac;
     }
 
-    > div .toggle[aria-expanded="false"],
-    > div[aria-expanded="false"] .toggle {
+    >div .toggle[aria-expanded="false"],
+    >div[aria-expanded="false"] .toggle {
       background-color: $plum;
       color: $white;
     }
@@ -143,6 +190,7 @@ a .feature-card.cgvArticle a:hover h3,
 .page-options {
   li {
     background-color: $electric-lilac;
+
     &:hover {
       background-color: $sangria;
     }
@@ -154,28 +202,31 @@ a .feature-card.cgvArticle a:hover h3,
   background-image: none;
   background-color: #fff;
 }
+
 a.arrow-link-white:hover:before,
 a.arrow-link:hover:before {
   @include svg-sprite(chevron-circle-purple);
 }
+
 a.arrow-link-white:hover:before,
 a.arrow-link:hover:before {
   @include svg-sprite(chevron-circle-purple-hover);
 }
+
 .pullquote {
   border-left-color: $ultra-violet;
 }
+
 .floating-delighter__link:hover,
 .floating-deligher:hover a {
   color: #fff !important;
 }
 
-.micro-a {
-  &.feature-primary {
-    .card {
-      background-color: $ultra-violet;
-    }
+.feature-primary {
+  .card {
+    background-color: $ultra-violet;
   }
+
   &.multimedia-slot {
     background-color: $electric-lilac;
   }
@@ -186,18 +237,20 @@ a.arrow-link:hover:before {
     color: $white;
   }
 }
+
 .guide-card .card {
   background: #f5f0fd;
 }
+
 .multimedia-slot {
-  background: url($cgov_path + "images/multimedia-background-purple.jpg")
-    repeat;
+  background: url($cgov_path + "images/multimedia-background-purple.jpg") repeat;
 }
 
 figure a.article-image-enlarge {
   background-color: $azure;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: $sangria;
     color: #fff;
   }
@@ -207,14 +260,17 @@ figure a.article-image-enlarge {
 .ui-accordion-header.even.ui-state-active {
   background-color: #d4efff;
 }
+
 .ui-accordion-header.odd,
 .ui-accordion-header.odd.ui-state-active {
   background-color: #bddeff;
 }
+
 .ui-accordion-header.odd .toggle[aria-expanded="false"],
 .ui-accordion-header.odd[aria-expanded="false"] .toggle {
   background-color: #77bcff;
 }
+
 .ui-accordion-header.even .toggle[aria-expanded="false"],
 .ui-accordion-header.even[aria-expanded="false"] .toggle {
   background-color: #afddf8;
@@ -229,19 +285,23 @@ figure a.article-image-enlarge {
 }
 
 // form elements
-.radio input[type="radio"]:checked + label:before {
+.radio input[type="radio"]:checked+label:before {
   background-color: $electric-lilac;
 }
 
-.radio input[type="radio"] + label:before {
+.radio input[type="radio"]+label:before {
   border-color: $electric-lilac;
 }
+
 .ui-selectmenu-button span.ui-icon {
   background-color: $electric-lilac;
 }
-.ui-selectmenu-button:focus span.ui-icon, .ui-selectmenu-button:hover span.ui-icon {
-  background-color: #586fbf	;
+
+.ui-selectmenu-button:focus span.ui-icon,
+.ui-selectmenu-button:hover span.ui-icon {
+  background-color: #586fbf;
 }
+
 .ui-selectmenu-menu .ui-state-focus {
   background: $sangria;
 }
@@ -253,6 +313,7 @@ form button[type="submit"] {
   background-color: $sangria;
   border-color: $plum;
 }
+
 .button.submit:focus,
 .button.submit:hover,
 .button[type="submit"]:focus,
@@ -266,8 +327,7 @@ form button[type="submit"]:hover {
 
 // footer
 .site-footer {
-  background: url($backgrounds + "hexagon_molecular_structure_footer.png")
-      no-repeat 130% 00px,
+  background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px,
     linear-gradient(45deg, $ultra-violet, #6251c0);
 }
 
@@ -276,19 +336,23 @@ form button[type="submit"]:hover {
   .icon {
     transform: translateX(1px) translateY(1px);
   }
+
   .icon.twitter {
     @include svg-sprite(twitter-purple);
   }
-  
+
   .icon.govdelivery {
     @include svg-sprite(gov-delivery-purple);
   }
+
   li:hover {
     opacity: 1;
   }
+
   .twitter:hover {
     @include svg-sprite(twitter-purple-hover);
   }
+
   .icon.govdelivery:hover {
     @include svg-sprite(gov-delivery-purple-hover);
   }
@@ -320,67 +384,80 @@ form button[type="submit"]:hover {
   #section-menu-button {
     background-color: $iris;
   }
+
   #mega-nav li.contains-current>div.nav-item-title>a {
     color: $iris;
-}
+  }
 
-#mega-nav .toggle[aria-expanded=false], 
-#mega-nav[aria-expanded=false] .toggle,
-.section-nav .has-children>.current-page .toggle[aria-expanded=false],
-.section-nav .level-1.contains-current .toggle[aria-expanded=false],
-.section-nav .toggle[aria-expanded=false], .section-nav[aria-expanded=false] .toggle {
-  background-color: $plum;
-}
-#mega-nav .toggle[aria-expanded=true], 
-#mega-nav[aria-expanded=true] .toggle, 
-.section-nav .has-children>.current-page .toggle[aria-expanded=true],
-.section-nav .level-1.contains-current .toggle[aria-expanded=true],
-.section-nav .toggle[aria-expanded=true], .section-nav[aria-expanded=true] .toggle {
-  color: $electric-lilac;
-}
-#mega-nav,
-#mega-nav li {
-  background-color: $eggshell;
-}
-.nav-menu a:active {
-  background-color: $sangria;
-}
-.section-nav {
-  background: $eggshell;
+  #mega-nav .toggle[aria-expanded=false],
+  #mega-nav[aria-expanded=false] .toggle,
+  .section-nav .has-children>.current-page .toggle[aria-expanded=false],
+  .section-nav .level-1.contains-current .toggle[aria-expanded=false],
+  .section-nav .toggle[aria-expanded=false],
+  .section-nav[aria-expanded=false] .toggle {
+    background-color: $plum;
+  }
 
-  .level-1.contains-current {
-    background: $thistle;
-  
-    .current-page {
-      background: $ultra-violet;
+  #mega-nav .toggle[aria-expanded=true],
+  #mega-nav[aria-expanded=true] .toggle,
+  .section-nav .has-children>.current-page .toggle[aria-expanded=true],
+  .section-nav .level-1.contains-current .toggle[aria-expanded=true],
+  .section-nav .toggle[aria-expanded=true],
+  .section-nav[aria-expanded=true] .toggle {
+    color: $electric-lilac;
+  }
+
+  #mega-nav,
+  #mega-nav li {
+    background-color: $eggshell;
+  }
+
+  .nav-menu a:active {
+    background-color: $sangria;
+  }
+
+  .section-nav {
+    background: $eggshell;
+
+    .level-1.contains-current {
+      background: $thistle;
+
+      .current-page {
+        background: $ultra-violet;
+      }
     }
   }
-}
 
-.section-nav .level-0>div {
-  background-color: $iris;
-}
-.section-nav div.current-page {
-  background: $ultra-violet;
-}
+  .section-nav .level-0>div {
+    background-color: $iris;
+  }
+
+  .section-nav div.current-page {
+    background: $ultra-violet;
+  }
 
 
 
-.section-nav .contains-current>div a {
-  color: $iris;
-}
+  .section-nav .contains-current>div a {
+    color: $iris;
+  }
+  
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
 
-.section-nav div.current-page>a {
-  color: #fff;
-}
+  .section-nav div.current-page>a {
+    color: #fff;
+  }
 
-.hero-text {
-  background: #32115b;
-}
+  .hero-text {
+    background: #32115b;
+  }
 
 }
 
 @include break(large) {
+
   // header
   header {
     padding-bottom: 1.5em;
@@ -403,15 +480,18 @@ form button[type="submit"]:hover {
   }
 
   .section-nav {
-    .level-0 > div {
+    .level-0>div {
       background-color: $iris;
     }
+
     div.current-page {
       background-color: $ultra-violet;
+
       &:after {
         border-left-color: $ultra-violet;
       }
     }
+
     .level-1.contains-current {
       background: $thistle;
 
@@ -422,6 +502,7 @@ form button[type="submit"]:hover {
   }
 
   .page-options {
+
     li,
     li:hover {
       background-color: transparent;
@@ -451,10 +532,16 @@ form button[type="submit"]:hover {
       @include svg-sprite(pinterest-purple, mq);
     }
   }
+
   .section-nav .contains-current>div a {
     color: $iris;
-}
-.section-nav div.current-page>a {
-  color: #fff;
-}
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .section-nav div.current-page>a {
+    color: #fff;
+  }
 }
