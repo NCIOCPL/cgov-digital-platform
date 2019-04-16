@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.cgov_home_landing.field_date_reviewed
     - field.field.node.cgov_home_landing.field_date_updated
     - field.field.node.cgov_home_landing.field_feature_card_description
+    - field.field.node.cgov_home_landing.field_hero_banner
     - field.field.node.cgov_home_landing.field_image_promotional
     - field.field.node.cgov_home_landing.field_landing_contents
     - field.field.node.cgov_home_landing.field_list_description
@@ -90,6 +91,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_hero_banner:
+    type: entity_reference_revisions_entity_view
+    weight: 115
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
     region: content
   field_image_promotional:
     weight: 114
