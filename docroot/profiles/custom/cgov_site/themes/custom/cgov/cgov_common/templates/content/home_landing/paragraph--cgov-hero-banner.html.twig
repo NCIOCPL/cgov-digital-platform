@@ -1,0 +1,15 @@
+{% set tabletSrc = file_url(content.field_tablet_hero['#items'].entity.uri.value) %}
+
+<div class="slot-item only-SI large-12 columns hero">
+  <div class="rawHtml">
+    <div class="row">
+      <div class="hero-text columns large-12">
+        <p>{{ content.field_tagline }}</p>
+      </div>
+    </div>
+    <picture>
+      <source media="(max-width: 1024px)" srcset="{{ tabletSrc }}">
+      {{ content.field_desktop_hero }}
+    </picture>
+  </div>
+</div>

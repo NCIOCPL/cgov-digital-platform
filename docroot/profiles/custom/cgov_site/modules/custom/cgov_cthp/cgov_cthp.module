@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_cthp.module.
+ */
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Limits allowed text formats using the cgov_util form_tools service.
+ */
+function cgov_cthp_field_widget_form_alter(&$element, $form_state, $context) {
+  // Maps field names to an array containing a single format.
+  $map = [
+    'field_cthp_overview_card_text' => ['streamlined'],
+    'field_cthp_guide_card_desc' => ['streamlined'],
+  ];
+  $formHelper = \Drupal::service('cgov_util.form_tools');
+  $formHelper->allowTextFormats($map, $element, $context);
+}

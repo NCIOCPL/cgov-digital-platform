@@ -43,8 +43,11 @@
     {% if locality %}
     {{ locality|trim }}
     {% endif %}
+    {% if locality and administrative_area.code %}
+    ,
+    {% endif %}
     {% if administrative_area.code %}
-    , {{ administrative_area.code }}
+    {{ administrative_area.code }}
     {% endif %}
     {% if postal_code %}
     {{ postal_code }}
