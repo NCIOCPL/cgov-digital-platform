@@ -1,0 +1,279 @@
+## TESTS:
+### CTHP
+
+- entity: "node"
+  type: "cgov_cthp"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Breast Cancer—Patient Version"
+  title__ES:
+    value: "Cáncer de seno (mama)—Versión para pacientes"
+  field_page_description:
+    value: "Breast cancer is the second most common cancer in women after skin cancer. Mammograms can detect breast cancer early, possibly before it has spread. Start here to find information on breast cancer treatment, causes and prevention, screening, research, and statistics."
+  field_page_description__ES:
+    value: "En las mujeres, el cáncer de mama es el segundo tipo de cáncer más común, seguido por el cáncer de piel. Las mamografías pueden detectar el cáncer de mama temprano. Comience aquí su búsqueda de información sobre tratamiento, causas y prevención, investigación y estadísticas relacionados con el cáncer de mama."
+  field_short_title:
+    value: "Breast Cancer"
+  field_short_title__ES:
+    value: "Cáncer de seno (mama)"
+  field_browser_title:
+    value: "Breast Cancer—Patient Version"
+  field_browser_title__ES:
+    value: "Cáncer de seno (mama)—Versión para pacientes"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/types/breast'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/tipos/seno'
+  field_audience:
+    value: "patient"
+  field_audience__ES:
+    value: "patient"
+  field_audience_toggle:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Breast Cancer—Health Professional Version'
+  field_audience_toggle__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Breast Cancer—Health Professional Version'
+######## BEGIN ENGLISH CTHP CARDS ########
+  field_cthp_cards:
+    - entity: 'paragraph'
+      type: "cgov_cthp_overview_card"
+      field_cthp_card_title:
+        - value: 'Overview'
+      field_cthp_card_theme:
+        - value: 'cthp-overview'
+      field_cthp_overview_card_text:
+        - format: "streamlined"
+          value: |
+            <p>Breast cancer is the second most common cancer in women after skin cancer. Mammograms can detect breast cancer early, possibly before it has spread. Explore the links on this page to learn more about breast cancer prevention, screening, treatment, statistics, research, clinical trials, and more.</p>
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Treatment'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Treatment Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Treatment (PDQ®)–Patient Version'
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'pdq_cancer_information_summary'
+                    title: 'Breast Cancer Treatment (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Causes & Prevention'
+      field_cthp_card_theme:
+        - value: 'cthp-causes'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Prevention Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Prevention (PDQ®)–Patient Version'
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Screening'
+      field_cthp_card_theme:
+        - value: 'cthp-screening'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Screening Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Breast Cancer Screening (PDQ®)–Patient Version'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'pdq_cancer_information_summary'
+                    title: 'Breast Cancer Screening (PDQ®)–Health Professional Version'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'pdq_cancer_information_summary'
+                    title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Statistics'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_home_landing'
+                    title: 'Cancer Types'
+    - entity: 'paragraph'
+      type: "cgov_cthp_block_card"
+      field_cthp_card_title:
+        - value: 'Coping with Cancer'
+      field_cthp_card_theme:
+        - value: 'cthp-general'
+      field_cthp_block_card_content:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'block_content'
+              - type: 'content_block'
+                info: 'Coping With Cancer CTHP Block Card - English'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'After Treatment Ends'
+      field_cthp_card_theme:
+        - value: 'cthp-pink-feature'
+      field_cthp_override_description:
+        - value: "An introduction to breast cancer survivors and the issues they face after treatment ends."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Title'
+          field_external_link:
+            - uri: 'https://www.google.com'
+######## End English CTHP Cards ##############
+######## BEGIN SPANISH CTHP CARDS ########
+  field_cthp_cards__ES:
+    - entity: 'paragraph'
+      type: "cgov_cthp_overview_card"
+      field_cthp_card_title:
+        - value: 'Aspectos generales'
+      field_cthp_card_theme:
+        - value: 'cthp-overview'
+      field_cthp_overview_card_text:
+        - format: "streamlined"
+          value: |
+            <p>En las mujeres, el cáncer de mama es el segundo tipo de cáncer más común, seguido por el cáncer de piel. Las mamografías pueden detectar el cáncer de mama temprano, tal vez antes de que se disemine. Para obtener más información sobre prevención, exámenes de detección, tratamiento, estadísticas, investigación, ensayos clínicos y otros temas relacionados con el cáncer de mama, consulte los enlaces en esta página.</p>
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Tratamiento'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre tratamiento"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Causas y prevención'
+      field_cthp_card_theme:
+        - value: 'cthp-causes'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre prevención"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Exámenes de detección'
+      field_cthp_card_theme:
+        - value: 'cthp-screening'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre exámenes de detección"
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Estadísticas'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Estadísticas del cáncer de seno (mama) basadas en datos de grupos grandes de pacientes que se usarán como guía general (solo disponibles en inglés)."
+    - entity: 'paragraph'
+      type: "cgov_cthp_block_card"
+      field_cthp_card_title:
+        - value: 'Cómo hacer frente al cáncer'
+      field_cthp_card_theme:
+        - value: 'cthp-general'
+      field_cthp_block_card_content:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'block_content'
+              - type: 'content_block'
+                info: 'Coping With Cancer CTHP Block Card - Spanish'
+######## End Spanish CTHP Cards ##############

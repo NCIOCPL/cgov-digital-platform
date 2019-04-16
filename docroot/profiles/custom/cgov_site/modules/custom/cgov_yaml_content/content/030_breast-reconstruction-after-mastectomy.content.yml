@@ -1,0 +1,303 @@
+#######
+# TESTS:
+# Single content block
+# Image with translation for article image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Reconstruction Panoramic"
+  name__ES:
+    value: "Reconstruction Panoramic - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Reconstruction-panoramic.jpg'
+      alt: 'Reconstruction'
+  field_override_img_panoramic:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Reconstruction-panoramic.jpg'
+      alt: 'Reconstruction'
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Reconstruction-panoramic.jpg'
+      alt: 'Reconstrucción'
+  field_override_img_panoramic__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Reconstruction-panoramic.jpg'
+      alt: 'Reconstrucción'
+  field_credit:
+    value: ""
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Breast Reconstruction After Mastectomy"
+  title__ES:
+    value: "Reconstrucción del seno después de una mastectomía"
+  field_page_description:
+    value: "A fact sheet that describes breast reconstruction after mastectomy, including surgical options, follow-up care, and breast cancer screening after reconstruction."
+  field_page_description__ES:
+    value: "Hoja informativa que describe la reconstrucción del seno (mama) después de una mastectomía. Contiene información sobre las opciones quirúrgicas, los cuidados de seguimiento y los exámenes de detección del cáncer de seno después de la reconstrucción."
+  field_short_title:
+    value: "Breast Reconstruction After Mastectomy"
+  field_short_title__ES:
+    value: "Reconstrucción del seno después de una mastectomía"
+  field_browser_title:
+    value: "Breast Reconstruction After Mastectomy"
+  field_browser_title__ES:
+    value: "Reconstrucción del seno después de una mastectomía"
+  field_pretty_url:
+    value: "reconstruction-fact-sheet"
+  field_pretty_url__ES:
+    value: "hoja-informativa-reconstruccion"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/types/breast'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/tipos/seno'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reconstruction Panoramic'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "What is breast reconstruction?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many women who have a mastectomy—surgery to remove an entire breast to treat or prevent breast cancer—have the option of having the shape of the removed breast rebuilt.</p>
+            <p>Women who choose to have their breasts rebuilt have several options for how it can be done. Breasts can be rebuilt using implants (saline or silicone). They can also be rebuilt using autologous tissue (that is, tissue from elsewhere in the body). Sometimes both implants and autologous tissue are used to rebuild the breast.</p>
+            <p>Surgery to reconstruct the breasts can be done (or started) at the time of the mastectomy (which is called immediate reconstruction) or it can be done after the mastectomy incisions have healed and breast cancer therapy has been completed (which is called delayed reconstruction). Delayed reconstruction can happen months or even years after the mastectomy.</p>
+            <p>In a final stage of breast reconstruction, a nipple and areola may be re-created on the reconstructed breast, if these were not preserved during the mastectomy.</p>
+            <p>Sometimes breast reconstruction surgery includes surgery on the other, or contralateral, breast so that the two breasts will match in size and shape.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use implants to reconstruct a woman’s breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Implants are inserted underneath the skin or chest muscle following the mastectomy. (Most mastectomies are performed using a technique called skin-sparing mastectomy, in which much of the breast skin is saved for use in reconstructing the breast.)</p>
+            <p>Implants are usually placed as part of a two-stage procedure.</p>
+            <ul>
+              <li>In the first stage, the surgeon places a device, called a tissue expander, under the skin that is left after the mastectomy or under the chest muscle (1,2). The expander is slowly filled with saline during periodic visits to the doctor after surgery.</li>
+              <li>In the second stage, after the chest tissue has relaxed and healed enough, the expander is removed and replaced with an implant. The chest tissue is usually ready for the implant 2 to 6 months after mastectomy.</li>
+              <li>In some cases, the implant can be placed in the breast during the same surgery as the mastectomy—that is, a tissue expander is not used to prepare for the implant (3).</li>
+            </ul>
+            <p>Surgeons are increasingly using material called acellular dermal matrix as a kind of scaffold or “sling” to support tissue expanders and implants. Acellular dermal matrix is a kind of mesh that is made from donated human or pig skin that has been sterilized and processed to remove all cells to eliminate the risks of rejection and infection.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use tissue from a woman’s own body to reconstruct the breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>In autologous tissue reconstruction, a piece of tissue containing skin, fat, blood vessels, and sometimes muscle is taken from elsewhere in a woman’s body and used to rebuild the breast. This piece of tissue is called a flap.</p>
+            <p>Different sites in the body can provide flaps for breast reconstruction. Flaps used for breast reconstruction most often come from the abdomen or back. However, they can also be taken from the thigh or buttocks.</p>
+            <p>Depending on their source, flaps can be pedicled or free.</p>
+            <ul>
+              <li>With a pedicled flap, the tissue and attached blood vessels are moved together through the body to the breast area. Because the blood supply to the tissue used for reconstruction is left intact, blood vessels do not need to be reconnected once the tissue is moved.</li>
+              <li>With free flaps, the tissue is cut free from its blood supply. It must be attached to new blood vessels in the breast area, using a technique called microsurgery. This gives the reconstructed breast a blood supply.</li>
+            </ul>
+            <p>Abdominal and back flaps include:</p>
+            <ul>
+              <li>DIEP flap: Tissue comes from the abdomen and contains only skin, blood vessels, and fat, without the underlying muscle. This type of flap is a free flap.</li>
+              <li>Latissimus dorsi (LD) flap: Tissue comes from the middle and side of the back. This type of flap is pedicled when used for breast reconstruction. (LD flaps can be used for other types of reconstruction as well.)</li>
+              <li>SIEA flap (also called SIEP flap): Tissue comes from the abdomen as in a DIEP flap but includes a different set of blood vessels. It also does not involve cutting of the abdominal muscle and is a free flap. This type of flap is not an option for many women because the necessary blood vessels are not adequate or do not exist.</li>
+              <li>TRAM flap: Tissue comes from the lower abdomen as in a DIEP flap but includes muscle. It can be either pedicled or free.</li>
+            </ul>
+            <p>Flaps taken from the thigh or buttocks are used for women who have had previous major abdominal surgery or who don’t have enough abdominal tissue to reconstruct a breast. These types of flaps are free flaps. With these flaps an implant is often used as well to provide sufficient breast volume.</p>
+            <ul>
+              <li>IGAP flap: Tissue comes from the buttocks and contains only skin, blood vessels, and fat.</li>
+              <li>PAP flap: Tissue, without muscle, that comes from the upper inner thigh.</li>
+              <li>SGAP flap: Tissue comes from the buttocks as in an IGAP flap, but includes a different set of blood vessels and contains only skin, blood vessels, and fat.</li>
+              <li>TUG flap: Tissue, including muscle, that comes from the upper inner thigh.</li>
+            </ul>
+            <p>In some cases, an implant and autologous tissue are used together. For example, autologous tissue may be used to cover an implant when there isn’t enough skin and muscle left after mastectomy to allow for expansion and use of an implant (1,2).</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "¿Qué es la reconstrucción del seno?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Muchas mujeres que han tenido una mastectomía— una operación quirúrgica para extirpar todo el seno con el fin de tratar o prevenir el cáncer de seno— tienen la opción de hacerse reconstruir la forma del seno que fue extirpado.</p>
+            <p>Las mujeres que eligen reconstruirse los senos tienen varias opciones de la forma como se puede hacer. Los senos pueden reconstruirse usando implantes de (solución salina o de silicona). Pueden también reconstruirse usando tejido autógeno (es decir, el tejido de otros lugares del cuerpo). Algunas veces se usan tanto los implantes como el tejido autógeno para reconstruir el seno.</p>
+            <p>La cirugía para reconstruir los senos puede hacerse (o empezarse) al momento de la mastectomía (lo que se llama reconstrucción inmediata) o se puede hacer después de que las incisiones de la mastectomía hayan cicatrizado y la terapia del cáncer de seno se haya completado (lo que se llama reconstrucción retardada). La reconstrucción retardada puede ocurrir meses o incluso años después de la mastectomía.</p>
+            <p>En una etapa final de la reconstrucción del seno se pueden volver a crear un pezón y una aréola en el seno reconstruido, si no se conservaron durante la mastectomía.</p>
+            <p>Algunas veces la cirugía de reconstrucción del seno incluye cirugía en el otro seno, o seno contralateral, para que los dos senos sean parejos en tamaño y forma.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "¿Cómo usan los cirujanos implantes para reconstruir el seno de una mujer?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los implantes se insertan debajo de la piel o del músculo del pecho después de la mastectomía. (La mayoría de las mastectomías se efectúan usando una técnica llamada mastectomía con preservación de piel, en la que se conserva la mayor parte de la piel del seno para usarla en la reconstrucción del mismo).</p>
+            <p>Los implantes se colocan de ordinario como parte de un procedimiento en dos etapas.</p>
+            <ul>
+              <li>En la primera etapa, el cirujano coloca un aparato, llamado expansor de tejido, debajo de la piel que quedó después de la mastectomía o debajo del músculo del pecho (1,2). El extensor se llena lentamente con solución salina en visitas periódicas al doctor después de la operación.</li>
+              <li>En la segunda etapa, después de que el tejido del pecho se ha relajado y ha sanado lo suficiente, se quita el expansor y se remplaza con un implante. En general, el tejido del pecho está listo para el implante de 2 a 6 meses después de la mastectomía.</li>
+              <li>En algunos casos, el implante puede ser colocado en el seno durante la misma operación de la mastectomía— es decir, no se usa un expansor para preparar el tejido para el implante (3).</li>
+            </ul>
+            <p>Los cirujanos están usando cada vez más un material llamado matriz dérmica acelular a manera de andamio o “cabestrillo” para sostener los expansores de tejido y los implantes. La matriz dérmica acelular es una especie de malla hecha de piel humana donada o de cerdo que ha sido esterilizada y procesada para eliminar todas las células y así excluir todo riesgo de rechazo y de infección.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "¿Cómo usan los cirujanos el tejido del cuerpo mismo de la mujer para reconstruir su seno?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>En la reconstrucción con tejido autógeno, se usa un trozo de tejido que contenga piel, grasa, vasos sanguíneos y algunas veces músculo de algún otro lugar del cuerpo de la mujer y se usa para reconstruir el seno. Este pedazo de tejido se llama colgajo.</p>
+            <p>Sitios diferentes del cuerpo pueden proveer colgajos para la reconstrucción del seno. Los colgajos que se usan para la reconstrucción del seno provienen con más frecuencia del abdomen o de la espalda. Sin embargo, también pueden obtenerse del muslo o de los glúteos.</p>
+            <p>Dependiendo del lugar de donde proceden, los colgajos pueden ser pediculados o libres.</p>
+            <ul>
+              <li>Con un colgajo pediculado, el tejido y los vasos sanguíneos adyacentes se trasladan juntos del cuerpo hasta el área del seno. Puesto que el suministro de sangre al tejido que se usa para la reconstrucción se deja intacto, los vasos sanguíneos no necesitan volverse a conectar cuando se mueve el tejido.</li>
+              <li>Con colgajos libres, el tejido se corta de su suministro de sangre. Necesita conectarse a nuevos vasos sanguíneos en el área del seno, usando una técnica llamada microcirugía. Esto suministra la sangre al seno reconstruido.</li>
+            </ul>
+            <p>Colgajos abdominales y de espalda son:</p>
+            <ul>
+              <li>Colgajo DIEP (Deep Inferior Epigastric Perforator): El tejido procede del abdomen y contiene solo piel, vasos sanguíneos y grasa, sin los músculos subyacentes. Este tipo de colgajo es un colgajo libre.</li>
+              <li>Colgajo Latissimus dorsi (LD): Se trata de tejido que procede de la parte media y del costado de la espalda. Este tipo de colgajo es pediculado cuando se usa para reconstrucción del seno. (Los colgajos LD pueden usarse también para otros tipos de reconstrucción).</li>
+              <li>Colgajo SIEA (llamado también colgajo SIEP): El tejido procede del abdomen como en un colgajo DIEP pero incluye un conjunto diferente de vasos sanguíneos. También no implica que se corte el músculo abdominal y es un colgajo libre. Este tipo de colgajo no es una opción para muchas mujeres porque los vasos sanguíneos necesarios no son adecuados o no existen.</li>
+              <li>Colgajo TRAM: El tejido procede de la parte inferior del abdomen, como en un colgajo DIEP, pero incluye músculo. Puede ser pediculado o libre.</li>
+            </ul>
+            <p>Los colgajos que se toman del muslo o de los glúteos son usados para mujeres de quienes no se puede tomar tejido de su abdomen debido a cirugía abdominal mayor o que no tienen suficiente tejido abdominal para reconstruir un seno. Estos tipos de colgajos son colgajos libres. Con estos colgajos se usa con frecuencia también un implante para proporcionar suficiente volumen al seno.</p>
+            <ul>
+              <li>Colgajo IGAP: El tejido procede de los glúteos y solo contiene piel, vasos sanguíneos y grasa.</li>
+              <li>Colgajo PAP: Tejido, sin músculo, que procede de la parte interna superior del muslo.</li>
+              <li>Colgajo SGAP: Tejido que procede de los glúteos como en un colgajo IGAP, pero incluye un conjunto diferente de vasos sanguíneos y contiene solo piel, vasos sanguíneos y grasa.</li>
+              <li>Colgajo TUG: Tejido, con músculo, que procede de la parte interna superior del muslo.</li>
+            </ul>
+            <p>En algunos casos, se usan juntos un implante y tejido autógeno. Por ejemplo, el tejido autógeno puede usarse para cubrir un implante cuando no quedó suficiente piel y músculo después de la mastectomía para permitir la expansión y usar un implante (1,2).</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Mehrara BJ, Ho AY. Breast Reconstruction. In: Harris JR, Lippman ME, Morrow M, Osborne CK, eds. <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Cordeiro PG. Breast reconstruction after surgery for breast cancer. <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_citation__ES:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Mehrara BJ, Ho AY. Breast Reconstruction. In: Harris JR, Lippman ME, Morrow M, Osborne CK, eds. <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Cordeiro PG. Breast reconstruction after surgery for breast cancer. <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Coping with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Self-Image and Sexuality'
+  field_related_resources_ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Cómo hacer frente al cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Su imagen propia y su sexualidad'
+  field_date_posted:
+    value: "2016-03-12"
+  field_date_reviewed:
+    value: "2016-03-12"
+  field_date_updated:
+    value: "2016-03-12"
+  field_date_display_mode:
+    - value: 'reviewed'

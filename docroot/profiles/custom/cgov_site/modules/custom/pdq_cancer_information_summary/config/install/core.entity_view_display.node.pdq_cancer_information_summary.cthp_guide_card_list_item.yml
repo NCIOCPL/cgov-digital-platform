@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.cthp_guide_card_list_item
+    - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_page_description
+    - field.field.node.pdq_cancer_information_summary.field_pdq_audience
+    - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_public_use
+    - field.field.node.pdq_cancer_information_summary.field_short_title
+    - node.type.pdq_cancer_information_summary
+  module:
+    - user
+id: node.pdq_cancer_information_summary.cthp_guide_card_list_item
+targetEntityType: node
+bundle: pdq_cancer_information_summary
+mode: cthp_guide_card_list_item
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_short_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_date_posted: true
+  field_date_updated: true
+  field_page_description: true
+  field_pdq_audience: true
+  field_pdq_cdr_id: true
+  field_pdq_summary_type: true
+  field_public_use: true
+  langcode: true

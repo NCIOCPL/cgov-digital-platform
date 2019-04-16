@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_cthp_raw_html_card.field_cthp_card_theme
+    - field.field.paragraph.cgov_cthp_raw_html_card.field_cthp_card_title
+    - field.field.paragraph.cgov_cthp_raw_html_card.field_html_content
+    - paragraphs.paragraphs_type.cgov_cthp_raw_html_card
+  module:
+    - options
+    - text
+id: paragraph.cgov_cthp_raw_html_card.default
+targetEntityType: paragraph
+bundle: cgov_cthp_raw_html_card
+mode: default
+content:
+  field_cthp_card_theme:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
+    region: content
+  field_cthp_card_title:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_html_content:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

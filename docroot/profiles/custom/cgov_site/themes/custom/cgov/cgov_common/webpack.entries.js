@@ -11,5 +11,6 @@ module.exports = {
     "BlogPost": path.resolve(__dirname, "src/entrypoints/blogPost/BlogPost.js"),
     "BlogSeries": path.resolve(__dirname, "src/entrypoints/blogSeries/BlogSeries.js"),
     "Biography": path.resolve(__dirname, "src/entrypoints/biography/Biography.js"),
+    "CTHP": path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
     "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js")
 }
