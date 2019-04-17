@@ -53,6 +53,7 @@ class WorkflowTest extends KernelTestBase {
     'token',
     'token_filter',
     'editor',
+    'metatag',
   ];
 
   /**
@@ -100,6 +101,7 @@ class WorkflowTest extends KernelTestBase {
       'token',
       'token_filter',
       'editor',
+      'metatag',
     ]);
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
