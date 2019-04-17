@@ -19,11 +19,7 @@
       <p class="blog-post-publishing-info">
         {{ blogMacros.getByline(content) }}
       </p>
-      {% if content.field_image_article[0] %}
-      <div data-entity-embed-display="view_mode:media.image_display_article_medium" class="embedded-entity align-right">
-        {{ content.field_image_article }}
-      </div>
-      {% endif %}
+      {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
       {{ drupal_block('cgov_blog_pager', {label: ''}) }}
