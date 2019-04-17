@@ -7,6 +7,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeTypeInterface;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.
@@ -23,7 +24,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
     'crop', 'image_widget_crop', 'workflows', 'content_moderation', 'entity_browser', 'embed',
     'entity_embed', 'paragraphs', 'taxonomy', 'language', 'content_translation', 'media',
     'image', 'views', 'cgov_media', 'cgov_image', 'block_content', 'paragraphs',
-    'entity_reference_revisions',
+    'entity_reference_revisions', 'metatag',
   ];
 
   /**
@@ -74,6 +75,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
    * Sets up the test environment.
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.

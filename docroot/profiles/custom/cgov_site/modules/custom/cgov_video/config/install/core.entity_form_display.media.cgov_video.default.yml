@@ -15,13 +15,14 @@ dependencies:
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
     - field.field.media.cgov_video.field_meta_description
+    - field.field.media.cgov_video.field_meta_tags
     - field.field.media.cgov_video.field_pretty_url
     - field.field.media.cgov_video.field_related_resources
     - field.field.media.cgov_video.field_search_engine_restrictions
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
     - media.type.cgov_video
-    - workflows.workflow.editorial_workflow
+    - workflows.workflow.image_workflow
   module:
     - content_moderation
     - datetime
@@ -226,4 +227,5 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_meta_tags: true

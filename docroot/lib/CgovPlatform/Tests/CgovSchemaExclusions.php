@@ -12,6 +12,9 @@ class CgovSchemaExclusions {
    *
    * @var string[]
    */
-  public static $configSchemaCheckerExclusions = [];
+  public static $configSchemaCheckerExclusions = [
+    'metatag.metatag_defaults.global',
+    'metatag.metatag_defaults.node',
+  ];
 
 }

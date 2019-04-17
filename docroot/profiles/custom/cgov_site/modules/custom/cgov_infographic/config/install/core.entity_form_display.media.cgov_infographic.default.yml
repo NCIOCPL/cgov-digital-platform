@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.media.cgov_infographic.body
     - field.field.media.cgov_infographic.field_accessible_version
     - field.field.media.cgov_infographic.field_browser_title
@@ -15,6 +16,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_infographic
     - field.field.media.cgov_infographic.field_list_description
     - field.field.media.cgov_infographic.field_meta_description
+    - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_pretty_url
     - field.field.media.cgov_infographic.field_public_use
     - field.field.media.cgov_infographic.field_search_engine_restrictions
@@ -28,7 +30,6 @@ dependencies:
     - datetime
     - entity_browser
     - image
-    - path
     - text
 id: media.cgov_infographic.default
 targetEntityType: media
@@ -93,12 +94,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_feature_card_description:
-    type: string_textarea
+    type: string_textfield
     weight: 9
     region: content
     settings:
-      rows: 5
       placeholder: ''
+      size: 60
     third_party_settings: {  }
   field_image_promotional:
     type: entity_browser_entity_reference
@@ -190,7 +191,7 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 25
+    weight: 22
     settings: {  }
     region: content
     third_party_settings: {  }
@@ -206,15 +207,16 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 24
+    weight: 21
     region: content
     third_party_settings: {  }
   translation:
-    weight: 23
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
+  field_meta_tags: true
   path: true
   uid: true

@@ -54,6 +54,7 @@ class WorkflowTest extends KernelTestBase {
     'block',
     'block_content',
     'editor',
+    'metatag',
   ];
 
   /**
@@ -107,6 +108,7 @@ class WorkflowTest extends KernelTestBase {
       'block',
       'block_content',
       'editor',
+      'metatag',
     ]);
     $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
