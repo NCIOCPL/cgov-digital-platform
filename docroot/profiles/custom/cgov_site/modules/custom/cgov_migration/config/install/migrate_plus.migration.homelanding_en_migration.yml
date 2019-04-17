@@ -101,6 +101,10 @@ source:
          selector: field_landing_content
 
 
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
 
 
   ids:
@@ -206,6 +210,14 @@ process:
       plugin: extract
       index:
         - 1
+
+
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
 
 
 destination:

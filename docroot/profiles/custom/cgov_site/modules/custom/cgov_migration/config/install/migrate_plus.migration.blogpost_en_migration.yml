@@ -40,6 +40,18 @@ source:
 
 
         -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+        -
+         name: field_image_article
+         label: field_image_article
+         selector: field_image_article
+
+
+
+        -
          name: field_public_use
          label: field_public_use
          selector: '@field_public_use'
@@ -207,6 +219,20 @@ process:
     migration: sitesectionsql_migration
     source: term_id
     no_stub: true
+
+  field_image_article:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_article
+    no_stub: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
+
+
 
 
   temp_text3:

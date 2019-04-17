@@ -46,6 +46,11 @@ source:
          selector: name
 
         -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+        -
          name: field_media_image
          label: field_media_image
          selector: field_media_image
@@ -82,7 +87,13 @@ source:
 process:
   mid: id
   name: name
-  field_caption: field_caption
+  langcode: langcode
+
+  field_caption/value: field_caption
+  field_caption/format:
+     plugin: default_value
+     default_value: simple
+
   field_accessible_version: field_accessible_version
   field_display_enlarge: field_display_enlarge
   field_original_source: field_original_source

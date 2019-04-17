@@ -33,6 +33,10 @@ source:
          label: field_override_list_description
          selector: field_override_list_description
 
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
 
 
   ids:
@@ -46,6 +50,12 @@ process:
  field_override_list_description: field_override_list_description
  id: externallink_id
  langcode: langcode
+ field_override_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_override_image_promotional
+    no_stub: true
+
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'

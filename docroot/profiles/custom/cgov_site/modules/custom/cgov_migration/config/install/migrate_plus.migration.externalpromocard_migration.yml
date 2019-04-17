@@ -28,6 +28,10 @@ source:
          label: field_override_card_title
          selector: field_override_card_title
 
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
 
 
   ids:
@@ -41,6 +45,12 @@ process:
 
  id: externalpromocard_id
  langcode: langcode
+
+ field_override_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_override_image_promotional
+    no_stub: true
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'

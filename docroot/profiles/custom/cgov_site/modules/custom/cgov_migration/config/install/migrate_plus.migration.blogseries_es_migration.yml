@@ -24,9 +24,15 @@ source:
          selector: 'field_about_blog'
 
         -
+         name: field_banner_image
+         label: field_banner_image
+         selector: 'field_banner_image'
+
+        -
          name: field_image_promotional
          label: field_image_promotional
          selector: field_image_promotional
+
 
 
         -
@@ -195,6 +201,18 @@ process:
     plugin: migration_lookup
     migration: sitesectionsql_migration
     source: term_id
+    no_stub: true
+
+  field_banner_image:
+    plugin: image_import
+    source: field_banner_image
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
     no_stub: true
 
   field_pretty_url: field_pretty_url
