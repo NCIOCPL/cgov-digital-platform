@@ -1,0 +1,25 @@
+{% import '@cgov_common/listing/list_item_macros.twig' as listItemMacros %}
+{% if content.field_media_link|field_value %}
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_title|field_value %}
+    {% set title = content.field_override_title[0]['#context']['value'] %}
+  {% else %}
+    {% set title = content.field_media_link[0]["#media"].name.value %}
+  {% endif %}
+
+  {# ###### Setup the URL ###### #}
+  {% set url = path('entity.media.canonical', {'media': content.field_media_link[0]["#media"].mid[0].value }) %}
+
+  {% set media_type = content.media_link_type['#plain_text'] %}
+
+  {% if media_type == 'File' %}
+    {% set file_type = content.media_link_file_type['#plain_text']%}
+    {% set file_size = content.media_link_file_size['#plain_text'] %}
+    {% set file_ext = content.media_link_file_extension['#plain_text'] %}
+    {{ listItemMacros.list_item_title(title, url, media_type, file_type, file_size, file_ext) }}
+
+  {% else %}
+    {{ listItemMacros.list_item_title(title, url, media_type) }}
+  {% endif %}
+
+{% endif %}

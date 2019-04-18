@@ -1,0 +1,74 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.link
+    - field.field.media.cgov_infographic.body
+    - field.field.media.cgov_infographic.field_accessible_version
+    - field.field.media.cgov_infographic.field_browser_title
+    - field.field.media.cgov_infographic.field_card_title
+    - field.field.media.cgov_infographic.field_date_display_mode
+    - field.field.media.cgov_infographic.field_date_posted
+    - field.field.media.cgov_infographic.field_date_reviewed
+    - field.field.media.cgov_infographic.field_date_updated
+    - field.field.media.cgov_infographic.field_feature_card_description
+    - field.field.media.cgov_infographic.field_image_promotional
+    - field.field.media.cgov_infographic.field_infographic
+    - field.field.media.cgov_infographic.field_list_description
+    - field.field.media.cgov_infographic.field_meta_description
+    - field.field.media.cgov_infographic.field_pretty_url
+    - field.field.media.cgov_infographic.field_public_use
+    - field.field.media.cgov_infographic.field_search_engine_restrictions
+    - field.field.media.cgov_infographic.field_short_title
+    - field.field.media.cgov_infographic.field_site_section
+    - media.type.cgov_infographic
+id: media.cgov_infographic.link
+targetEntityType: media
+bundle: cgov_infographic
+mode: link
+content:
+  field_list_description:
+    type: basic_string
+    weight: 1
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_short_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  name:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  created: true
+  field_accessible_version: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_image_promotional: true
+  field_infographic: true
+  field_meta_description: true
+  field_pretty_url: true
+  field_public_use: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  thumbnail: true
+  uid: true
