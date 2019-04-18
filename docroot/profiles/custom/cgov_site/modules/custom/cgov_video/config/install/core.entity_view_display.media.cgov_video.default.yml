@@ -13,7 +13,10 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_meta_description
     - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_related_resources
+    - field.field.media.cgov_video.field_search_engine_restrictions
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
     - media.type.cgov_video
@@ -134,6 +137,14 @@ content:
       max_height: 0
     third_party_settings: {  }
     region: content
+  field_meta_description:
+    weight: 23
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_pretty_url:
     weight: 12
     label: hidden
@@ -141,6 +152,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_search_engine_restrictions:
+    weight: 24
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_short_title:
     weight: 8
@@ -175,5 +193,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_related_resources: true
   langcode: true
   name: true
