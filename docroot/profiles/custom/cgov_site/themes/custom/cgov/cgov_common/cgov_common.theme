@@ -7,6 +7,11 @@
 
 use Drupal\node\Entity\Node;
 
+// Global variables for later use.
+global $_theme_name, $_path_to_cgov_common;
+$_theme_name = \Drupal::theme()->getActiveTheme()->getName();
+$_path_to_cgov_common = drupal_get_path('theme', 'cgov_common');
+
 /**
  * Allows us to have node based page templates.
  *
@@ -28,6 +33,29 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     // Add theme suggestion of 'page__article', 'page__biography', etc.
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
+  }
+}
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Add theme variant class name to page body for CSS and JS entrypoint.
+ */
+function cgov_common_preprocess_html(&$variables) {
+  $colorTheme = theme_get_setting('color_theme');
+  $variables['attributes']['class'][] = $colorTheme . '-theme';
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Add theme variant assets to all pages.
+ */
+function cgov_common_preprocess_page(&$variables) {
+  $colorTheme = theme_get_setting('color_theme');
+
+  if ($colorTheme != 'none') {
+    $variables['#attached']['library'][] = 'cgov_common/' . $colorTheme . '-theme';
   }
 }
 
