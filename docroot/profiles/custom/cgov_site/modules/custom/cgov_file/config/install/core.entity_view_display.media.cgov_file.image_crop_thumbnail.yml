@@ -1,0 +1,56 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.media.image_crop_thumbnail
+    - field.field.media.cgov_file.field_browser_title
+    - field.field.media.cgov_file.field_card_title
+    - field.field.media.cgov_file.field_date_display_mode
+    - field.field.media.cgov_file.field_date_posted
+    - field.field.media.cgov_file.field_date_reviewed
+    - field.field.media.cgov_file.field_date_updated
+    - field.field.media.cgov_file.field_feature_card_description
+    - field.field.media.cgov_file.field_file_attachment_size
+    - field.field.media.cgov_file.field_image_promotional
+    - field.field.media.cgov_file.field_list_description
+    - field.field.media.cgov_file.field_media_file
+    - field.field.media.cgov_file.field_pretty_url
+    - field.field.media.cgov_file.field_search_engine_restrictions
+    - field.field.media.cgov_file.field_short_title
+    - field.field.media.cgov_file.field_site_section
+    - media.type.cgov_file
+id: media.cgov_file.image_crop_thumbnail
+targetEntityType: media
+bundle: cgov_file
+mode: image_crop_thumbnail
+content:
+  field_image_promotional:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+hidden:
+  content_moderation_control: true
+  created: true
+  field_browser_title: true
+  field_card_title: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_feature_card_description: true
+  field_file_attachment_size: true
+  field_list_description: true
+  field_media_file: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_short_title: true
+  field_site_section: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

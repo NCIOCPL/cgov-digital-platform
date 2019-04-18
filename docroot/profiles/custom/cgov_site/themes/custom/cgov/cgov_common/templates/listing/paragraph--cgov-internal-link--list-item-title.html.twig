@@ -12,6 +12,6 @@
   {# ###### Setup the URL ###### #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {{ listItemMacros.list_item_title(title, url, false) }}
+  {{ listItemMacros.list_item_title(title, url) }}
 
 {% endif %}
