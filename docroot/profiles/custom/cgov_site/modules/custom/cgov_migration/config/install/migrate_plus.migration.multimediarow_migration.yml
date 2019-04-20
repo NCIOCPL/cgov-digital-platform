@@ -28,9 +28,6 @@ source:
          selector: field_mm_media_item
 
 
-
-
-
   ids:
     row_rid:
       type: integer
@@ -40,6 +37,16 @@ process:
  id: row_rid
  langcode: langcode
 
+ field_mm_media_item:
+    plugin: migration_lookup
+    migration:
+      - infographic_en_migration
+      - infographic_es_migration
+      - video_en_migration
+      - video_es_migration
+
+    source: field_mm_media_item
+    no_stub: true
 
 
  field_mm_feature_card/target_id:
