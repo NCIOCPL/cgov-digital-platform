@@ -1,4 +1,4 @@
-uuid: f8a36c79-a87a-4e3d-9f43-a477c4811aa1
+uuid: abeaadad-9beb-4af4-8e29-76a372e2a1ba
 langcode: en
 status: true
 dependencies: {  }
@@ -6,7 +6,7 @@ _core:
   default_config_hash: Eu8CvZYqHh4Zx02qu1Xf9a7QC3JnDQTOZmSWkD8h4ic
 name: 'Cgov Bundle'
 machine_name: cgov
-description: 'Cgov Profile Features'
+description: 'Auto-generated bundle from package Cgov Bundle'
 assignments:
   alter:
     core: true
@@ -34,7 +34,7 @@ assignments:
         responsive_image_style: responsive_image_style
         user_role: user_role
         entity_view_mode: entity_view_mode
-    enabled: true
+    enabled: false
     weight: 5
   dependency:
     enabled: true
@@ -63,7 +63,7 @@ assignments:
   optional:
     types:
       config: {  }
-    enabled: true
+    enabled: false
     weight: 0
   packages:
     enabled: true
@@ -81,7 +81,7 @@ assignments:
         migration: migration
         shortcut_set: shortcut_set
         tour: tour
-    enabled: true
+    enabled: false
     weight: 10
   site:
     types:
@@ -94,7 +94,11 @@ assignments:
         taxonomy_vocabulary: taxonomy_vocabulary
         editor: editor
         filter_format: filter_format
-    enabled: true
+    enabled: false
     weight: 7
-profile_name: cgov_site
-is_profile: true
+  cgov_alter:
+    enabled: true
+    weight: 0
+    workflow: true
+profile_name: ''
+is_profile: false
