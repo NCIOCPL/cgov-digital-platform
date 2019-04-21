@@ -80,6 +80,7 @@ class WorkflowTest extends KernelTestBase {
     $this->users['advanced']->addRole('content_author');
     $this->users['advanced']->addRole('content_editor');
     $this->users['advanced']->addRole('advanced_editor');
+
   }
 
   /**
