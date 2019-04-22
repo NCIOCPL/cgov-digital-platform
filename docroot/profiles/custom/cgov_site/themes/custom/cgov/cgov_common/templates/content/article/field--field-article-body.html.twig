@@ -19,8 +19,9 @@
       {% for item in items %}
         {% if item.content['#paragraph'].field_body_section_heading.value %}
         <li>
-          <a href="#{{ item.content['#paragraph'].field_body_section_heading.value | clean_id }}">
-            {{- item.content['#paragraph'].field_body_section_heading.value -}}</a>
+          <a href="#{{ item.content['#paragraph'].field_body_section_heading.value | striptags | clean_id }}">
+            {# We have to apply the raw filter in order to render what is a simple format field as actual markup #}
+            {{- item.content['#paragraph'].field_body_section_heading.value|raw -}}</a>
         </li>
         {% endif %}
       {% endfor %}
