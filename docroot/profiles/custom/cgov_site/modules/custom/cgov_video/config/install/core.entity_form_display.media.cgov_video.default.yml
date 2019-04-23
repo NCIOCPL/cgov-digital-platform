@@ -14,7 +14,10 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_meta_description
     - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_related_resources
+    - field.field.media.cgov_video.field_search_engine_restrictions
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
     - media.type.cgov_video
@@ -24,6 +27,7 @@ dependencies:
     - datetime
     - entity_browser
     - media
+    - paragraphs
     - path
     - text
 id: media.cgov_video.default
@@ -32,7 +36,7 @@ bundle: cgov_video
 mode: default
 content:
   body:
-    weight: 11
+    weight: 12
     settings:
       rows: 5
       placeholder: ''
@@ -42,7 +46,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 18
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -55,7 +59,7 @@ content:
     type: string_textfield
     region: content
   field_caption:
-    weight: 12
+    weight: 13
     settings:
       rows: 5
       placeholder: ''
@@ -71,36 +75,36 @@ content:
     type: string_textfield
     region: content
   field_date_display_mode:
-    weight: 16
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
     region: content
   field_date_posted:
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
-    weight: 15
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
     weight: 14
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_feature_card_description:
-    weight: 7
-    settings:
-      rows: 5
-      placeholder: ''
+  field_date_reviewed:
+    weight: 16
+    settings: {  }
     third_party_settings: {  }
-    type: string_textarea
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
+    weight: 9
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+    type: string_textfield
     region: content
   field_list_description:
     weight: 8
@@ -112,19 +116,45 @@ content:
     region: content
   field_media_oembed_video:
     type: oembed_textfield
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     region: content
-  field_pretty_url:
-    weight: 3
+  field_meta_description:
+    weight: 7
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_related_resources:
+    type: entity_reference_paragraphs
+    weight: 18
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_search_engine_restrictions:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_short_title:
     weight: 4
@@ -135,7 +165,7 @@ content:
     type: string_textfield
     region: content
   field_site_section:
-    weight: 2
+    weight: 1
     settings:
       entity_browser: cgov_site_section_browser
       field_widget_display: label
@@ -157,13 +187,13 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 19
+    weight: 22
     settings: {  }
     region: content
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: 1
+    weight: 3
     region: content
     settings:
       size: 60
@@ -171,7 +201,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 21
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -179,17 +209,17 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 20
+    weight: 23
     region: content
     third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 17
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60

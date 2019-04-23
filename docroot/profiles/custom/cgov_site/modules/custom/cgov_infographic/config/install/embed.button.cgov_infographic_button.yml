@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.infographic_display_article_large
+    - core.entity_view_mode.media.infographic_display_article_medium
+    - entity_browser.browser.cgov_embedded_infographic_browser
+    - media.type.cgov_infographic
+  module:
+    - entity_embed
+    - media
+label: 'Insert Infographic'
+id: cgov_infographic_button
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles:
+    - cgov_infographic
+  display_plugins:
+    - 'view_mode:media.infographic_display_article_large'
+    - 'view_mode:media.infographic_display_article_medium'
+  entity_browser: cgov_embedded_infographic_browser
+  entity_browser_settings:
+    display_review: false
+icon_uuid: null

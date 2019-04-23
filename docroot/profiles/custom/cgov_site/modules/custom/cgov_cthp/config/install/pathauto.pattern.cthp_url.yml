@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: cthp_url
+label: 'Cancer Type Homepage URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  606e7ad8-0c32-4b96-a141-ac0850ea3302:
+    id: node_type
+    bundles:
+      cgov_cthp: cgov_cthp
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 606e7ad8-0c32-4b96-a141-ac0850ea3302
+selection_logic: and
+weight: -5
+relationships: {  }

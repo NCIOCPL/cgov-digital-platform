@@ -199,7 +199,20 @@ function cgov_core_field_widget_form_alter(&$element, $form_state, $context) {
   $map = [
     'field_citation_content' => ['streamlined'],
     'field_intro_text' => ['streamlined'],
+    'body' => ['full_html'],
   ];
   $formHelper = \Drupal::service('cgov_util.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * When a user is initially created, default the preferred
+ * language for the UI pages to English.
+ */
+function cgov_core_user_presave(EntityInterface $entity) {
+  if ($entity->isNew()) {
+    $entity->set('preferred_admin_langcode', 'en');
+  }
 }

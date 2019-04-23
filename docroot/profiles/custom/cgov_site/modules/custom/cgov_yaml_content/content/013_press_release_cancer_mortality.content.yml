@@ -1,0 +1,198 @@
+
+## Press release
+- entity: "media"
+  bundle: "cgov_image"
+  name: "prostate cancer mortality"
+  name__ES:
+    value: "la mortalidad por cáncer"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'cancer-death-rates-declined-article.jpg'
+      alt: ''
+  field_caption: ""
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'cancer-death-rates-declined-article.jpg'
+      alt: ''
+  field_caption__ES: ""
+  field_credit: ""
+  field_credit__ES:
+    value: ""
+- entity: "node"
+  type: "cgov_press_release"
+  langcode: en
+  title: "Annual Report to the Nation: overall cancer mortality continues to decline, prostate cancer mortality has stabilized"
+  title__ES:
+    value: "Informe Anual a la Nación: la mortalidad por cáncer en general sigue descendiendo, la mortalidad por cáncer de próstata se ha estabilizado"
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Press Releases 2018'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Comunicados de Prensa 2018'
+  field_pretty_url:
+    value: 'annual-report-nation-2018'
+  field_pretty_url__ES:
+    value: 'informe-anual-al-pais-2018'
+  moderation_state:
+    value: 'published'
+  field_browser_title: "Annual Report to the Nation: Overall cancer mortality declines"
+  field_browser_title__ES:
+    value: "Informe Anual a la Nación encuentra que, en general, desciende la mortalidad por cáncer"
+  field_feature_card_description:
+    value: "prostate cancer mortality - card desc."
+  field_feature_card_description__ES:
+    value: "la mortalidad por cáncer - card desc."
+  field_card_title:
+    value: "prostate cancer mortality - card title."
+  field_card_title__ES:
+    value: "la mortalidad por cáncer - card title."
+  field_date_display_mode:
+    - value: 'updated'
+  field_list_description:
+  field_page_description:
+    value: "prostate cancer mortality - Page desc."
+  field_page_description__ES:
+    value: "la mortalidad por cáncer - Page desc."
+  field_short_title:
+    value: "prostate cancer mortality - short title."
+  field_short_title__ES:
+    value: "la mortalidad por cáncer - short desc."
+  field_date_posted: "2018-08-14"
+  field_date_reviewed: "2018-08-13"
+  field_date_updated: "2018-08-13"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'prostate cancer mortality'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'la mortalidad por cáncer'
+  body:
+    - format: "full_html"
+      value: |
+        <p>The latest Annual Report to the Nation on the Status of Cancer finds that overall cancer death rates continue to decline in men, women, and children in the United States in all major racial and ethnic groups. Overall cancer incidence, or rates of new cancers, decreased in men and were stable in women from 1999 to 2014. In a companion study, researchers reported that there has been an increase in incidence of late-stage prostate cancer and that after decades of decline, prostate cancer mortality has stabilized.</p>
+          <p>The annual report is a collaborative effort between the National Cancer Institute (NCI), part of the National Institutes of Health; the Centers for Disease Control and Prevention (CDC); the American Cancer Society; and the North American Association of Central Cancer Registries (NAACCR). The studies appeared online in <em>Cancer</em> on May 22, 2018.</p>
+          <p>&ldquo;This year&rsquo;s report is an encouraging indicator of progress we&rsquo;re making in cancer research. As overall death rates continue to decline for all major racial and ethnic groups in the United States, it&rsquo;s clear that interventions are having an impact,&rdquo; said NCI Director Ned Sharpless, M.D. &ldquo;The report also highlights areas where more work is needed. With steadfast commitment to patients and their families, we will be able to lower the mortality rates faster and improve the lives of those affected by cancer.&rdquo;</p>
+          <p>The report includes mortality data through 2015. It shows that, from 1999 to 2015, overall cancer death rates decreased by 1.8 percent per year among men and by 1.4 percent per year among women. From 2011 to 2015, death rates decreased for 11 of the 18 most common cancer types in men and for 14 of the 20 most common cancer types in women. Over the same period, death rates for cancers of the liver, pancreas, and brain and other nervous system increased in both men and women; death rates for cancer of the uterus increased in women; and death rates for cancers of the oral cavity and pharynx and soft tissue increased in men. From 2010 to 2014, incidence rates decreased for 7 of the 17 most common cancer types among men and for 7 of the 18 most common cancer types among women.</p>
+          <p>In the companion study, researchers explored prostate cancer trends in more detail. They found that overall prostate cancer incidence rates declined an average of 6.5 percent each year between 2007 and 2014, from a rate of 163 new cases per 100,000 men in the population in 2007 to 104 new cases per 100,000 in 2014. However, incidence of distant disease&mdash;that is, of cancer that has spread from the original tumor to other parts of the body&mdash;increased from a low rate of 7.8 new cases per 100,000 in 2010 to 9.2 new cases per 100,000 in 2014. Furthermore, after two decades of decline between 1993 and 2013, prostate cancer mortality leveled off between 2013 and 2015. Although rates of distant disease increased in recent years, there was no increase in the rates of cases with aggressive histologic grade (Gleason score of 9-10).</p>
+          <p>This study also reports a decline in recent prostate-specific antigen (PSA) screening in the population based on a series of national surveys. The reported decline in screening occurred between the 2010 and 2013 surveys, for men between 50 and 74 years of age, and after the 2008 survey, for men age 75 and older.</p>
+          <p>&ldquo;The increase in late-stage disease and the flattening of the mortality trend occurred contemporaneously with the observed decrease in PSA screening in the population,&rdquo; said Serban Negoita, M.D., Dr.P.H., of NCI&rsquo;s Surveillance Research Program and lead author of the prostate cancer report. &ldquo;Although suggestive, this observation does not demonstrate that one caused the other, as there are many factors that contribute to incidence and mortality, such as improvements in staging and treating cancer. Additional research is needed to get a more comprehensive understanding of the recent trends and the&nbsp;possible&nbsp;relationship with PSA screening, as well as the relationship with other factors that may be associated with these trends.&rdquo;</p>
+          <p>Findings in the first part of the report show that incidence and death rates for all types of cancer combined were higher in men than in women in every racial and ethnic group. For all cancer sites combined, black men and white women had the highest incidence rates compared to other racial groups, and black men and black women had the highest death rates compared to other racial groups. Non-Hispanic men and women had higher incidence and death rates than those of Hispanic ethnicity.</p>
+          <p>&ldquo;There continue to be significant declines in the cancer death rate with significant differences in rate by sex, race, and ethnicity,&rdquo; said Otis W. Brawley, M.D., chief medical officer for ACS. &ldquo;We need to continue working to understand the reasons for the disparities and how to most efficiently continue supporting and, if possible, accelerate these declines.&rdquo;</p>
+          <p>The report also describes five-year survival during 2007-2013 by cancer stage at diagnosis for four of the most common cancers&mdash;female breast cancer, colorectal cancer, lung and bronchus cancer, and melanoma of the skin. While five-year survival is high for early-stage disease for breast cancer, colorectal cancer, and melanoma, survival remains low for all stages of lung cancer, ranging from 55 percent for Stage I to 4 percent for Stage IV.</p>
+          <p>&ldquo;This report underscores that if cancer is caught early, when it has the best chance of being treated, patients can live longer,&rdquo; said CDC Director Robert R. Redfield, M.D. &ldquo;Early detection and timely, quality treatment are keys to saving lives.&rdquo;</p>
+          <p>&nbsp;Increases in death rates for several cancers continue to cause concern. Researchers suggest that the increase in liver cancer death rates is related to the high prevalence of hepatitis C virus infection among Baby Boomers, as well as to the high prevalence of obesity in the United States. Obesity is also thought to have contributed to the increase in death rates from cancers of the uterus and pancreas. The recent increase in oral cavity and pharynx cancer death rates among white men is thought to be associated with human papillomavirus infection.</p>
+          <p>&ldquo;It&rsquo;s encouraging to see progress in decreasing death rates for many types of cancer,&rdquo; said Betsy A. Kohler, executive director, NAACCR. &ldquo;Yet the fact that death rates from several cancers are still on the rise means we need to keep working to find strategies to encourage prevention and continue to make improvements in screening and treatment.&rdquo;</p>
+  body__ES:
+    - format: "full_html"
+      value: |
+        <p>El &uacute;ltimo Informe Anual a la Naci&oacute;n sobre el Estado del C&aacute;ncer indica que, en general, los &iacute;ndices de mortalidad siguen descendiendo en hombres, mujeres y ni&ntilde;os en los Estados Unidos en todos los grupos principales raciales y &eacute;tnicos. En general, la incidencia de c&aacute;ncer, o los &iacute;ndices de nuevos c&aacute;nceres, disminuy&oacute; en los hombres y se mantuvo estable en las mujeres de 1999 a 2014. En un estudio complementario, los investigadores informaron que ha habido un aumento en la incidencia de c&aacute;ncer de pr&oacute;stata en estadio avanzado y que, despu&eacute;s de d&eacute;cadas de descenso, la mortalidad por c&aacute;ncer de pr&oacute;stata se ha estabilizado.</p>
+        <p>El informe anual es un proyecto de colaboraci&oacute;n entre el Instituto Nacional del C&aacute;ncer (NCI), que forma parte de los Institutos Nacionales de la Salud; los Centros para el Control y la Prevenci&oacute;n de Enfermedades (CDC); la Sociedad Americana contra el C&aacute;ncer (ACS); y la Asociaci&oacute;n Norteamericana de Registros Centrales del C&aacute;ncer (NAACCR). Los estudios aparecieron en Internet en <em>Cancer</em> el 22 de mayo de 2018.</p>
+        <p>&ldquo;El informe de este a&ntilde;o es un indicador alentador del progreso que estamos haciendo en investigaci&oacute;n oncol&oacute;gica. Conforme los &iacute;ndices de mortalidad, en general, siguen bajando para todos los grupos principales raciales y &eacute;tnicos en los Estados Unidos, es obvio que las intervenciones han tenido un impacto en esto&rdquo;, dijo el director del NCI, doctor Ned Sharpless. &ldquo;El informe destaca tambi&eacute;n las &aacute;reas en donde es necesario un mayor esfuerzo. Con un empe&ntilde;o firme en favor de los pacientes y sus familias, podremos hacer que disminuyan los &iacute;ndices de mortalidad con m&aacute;s rapidez y mejorar las vidas de quienes se ven afectados por el c&aacute;ncer&rdquo;.</p>
+        <p>El informe incluye datos de mortalidad hasta 2015. Indica que, del a&ntilde;o 1999 al 2015, los &iacute;ndices de mortalidad por c&aacute;ncer en general disminuyeron 1,8 % al a&ntilde;o entre los hombres y 1,4 % al a&ntilde;o entre las mujeres. De 2011 a 2015, los &iacute;ndices de mortalidad disminuyeron en 11 de los 18 tipos de c&aacute;ncer m&aacute;s comunes en los hombres y en 14 de los 20 tipos de c&aacute;ncer m&aacute;s comunes en las mujeres. Durante el mismo per&iacute;odo, los &iacute;ndices de mortalidad por c&aacute;nceres de h&iacute;gado, p&aacute;ncreas y enc&eacute;falo y otros c&aacute;nceres del sistema nervioso aumentaron tanto en los hombres como en las mujeres; los &iacute;ndices de mortalidad por c&aacute;ncer de &uacute;tero aumentaron en las mujeres; y los &iacute;ndices de mortalidad en los c&aacute;nceres de la cavidad oral y faringe, as&iacute; como de tejido blando aumentaron en los hombres. De 2010 a 2014, los &iacute;ndices de incidencia disminuyeron en 7 de los 17 tipos m&aacute;s comunes de c&aacute;ncer en los hombres y en 7 de los 18 tipos m&aacute;s comunes de c&aacute;ncer en las mujeres.</p>
+        <p>En el estudio complementario, los investigadores exploraron las tendencias del c&aacute;ncer de pr&oacute;stata con m&aacute;s detalle. Encontraron que los &iacute;ndices generales de incidencia de c&aacute;ncer de pr&oacute;stata disminuyeron en promedio 6,5 % cada a&ntilde;o entre 2007 y 2014, de un &iacute;ndice de 163 casos nuevos por cada 100 000 hombres de la poblaci&oacute;n en 2007 a 104 casos nuevos por cada 100 000 hombres en 2014. Sin embargo, la incidencia de enfermedades distantes, es decir, de c&aacute;ncer que se ha extendido desde el tumor original a otras partes del cuerpo aument&oacute; desde un bajo &iacute;ndice de 7,8 casos nuevos por cada 100 000 en 2010 a 9,2 casos nuevos por cada 100 000 en 2014. &nbsp;Adem&aacute;s, despu&eacute;s de dos d&eacute;cadas de descenso entre 1993 y 2013, la mortalidad por c&aacute;ncer de pr&oacute;stata se estabiliz&oacute; entre 2013 y 2015. Aunque los &iacute;ndices de enfermedad distante aumentaron en a&ntilde;os recientes, no hubo un aumento en los &iacute;ndices de casos con un grado histol&oacute;gico agresivo (puntuaci&oacute;n de Gleason de 9 a 10).</p>
+        <p>Este estudio informa tambi&eacute;n de un descenso de ex&aacute;menes recientes de detecci&oacute;n del ant&iacute;geno prost&aacute;tico espec&iacute;fico, (PSA), en la poblaci&oacute;n seg&uacute;n una serie de encuestas nacionales. El descenso indicado en los ex&aacute;menes de detecci&oacute;n ocurri&oacute; entre las encuestas de 2010 y 2013, en hombres de 50 a 74 a&ntilde;os, y despu&eacute;s de la encuesta de 2008, en hombres de 75 a&ntilde;os y m&aacute;s.</p>
+        <p>&ldquo;El aumento de la enfermedad en estadio avanzado y la estabilizaci&oacute;n de la tendencia de mortalidad ocurrieron al mismo tiempo de la disminuci&oacute;n que se observ&oacute; en los ex&aacute;menes de detecci&oacute;n en la poblaci&oacute;n&rdquo;, dijo el doctor Serban Negoita, del Programa de Investigaci&oacute;n de Vigilancia del NCI y autor principal del informe del c&aacute;ncer de pr&oacute;stata. &ldquo;Aunque sugestiva, esta observaci&oacute;n no demuestra que uno caus&oacute; lo otro, ya que hay muchos factores que contribuyen a la incidencia y mortalidad, como los adelantos en la estadificaci&oacute;n y en el tratamiento del c&aacute;ncer. Es necesaria investigaci&oacute;n adicional para lograr un entendimiento m&aacute;s completo de las tendencias recientes y de la posible relaci&oacute;n con los ex&aacute;menes de detecci&oacute;n de PSA, as&iacute; como la relaci&oacute;n con otros factores que pueden estar asociados con estas tendencias&rdquo;.</p>
+        <p>Los hallazgos en la primera parte del informe muestran los &iacute;ndices de incidencia y de mortalidad en todos los tipos combinados de c&aacute;ncer fueron mayores en los hombres que en las mujeres en cada grupo racial y &eacute;tnico. En todos los sitios combinados de c&aacute;ncer, los hombres negros y las mujeres blancas tuvieron los &iacute;ndices m&aacute;s altos de incidencia en comparaci&oacute;n con otros grupos raciales, y los hombres negros y las mujeres negras tuvieron los &iacute;ndices m&aacute;s altos de mortalidad en comparaci&oacute;n con otros grupos raciales. Los hombres y mujeres no hispanos tuvieron &iacute;ndices m&aacute;s altos de incidencia y de mortalidad que los de hispanos.</p>
+        <p>&ldquo;Sigue habiendo disminuciones significativas en el &iacute;ndice de mortalidad por c&aacute;ncer con importantes diferencias en &iacute;ndice por sexo, raza y etnicidad&rdquo;, dijo el doctor Otis W. Brawley, director ejecutivo m&eacute;dico de ACS. &ldquo;Necesitamos seguir trabajando para entender las razones de las desigualdades y c&oacute;mo seguir apoyando con m&aacute;s eficacia y, si es posible, acelerar estas disminuciones&rdquo;.</p>
+        <p>El informe describe tambi&eacute;n la supervivencia a cinco a&ntilde;os durante 2007 a 2013 por estadio del c&aacute;ncer al momento del diagn&oacute;stico en cuatro de los c&aacute;nceres m&aacute;s comunes de c&aacute;ncer de seno femenino, c&aacute;ncer colorrectal, c&aacute;ncer de pulm&oacute;n y bronquios y melanoma de piel. Mientras la supervivencia a cinco a&ntilde;os es alta para enfermedad en estadio inicial de c&aacute;ncer de seno, de c&aacute;ncer colorrectal y de melanoma, la supervivencia se mantiene baja en todos los estadios de c&aacute;ncer de pulm&oacute;n, y va de 55 % para estadio 1 a 4 % para el estadio IV.</p>
+        <p>&ldquo;Este informe destaca que, si el c&aacute;ncer se descubre temprano, cuando tiene la mejor posibilidad de ser tratado, los pacientes pueden vivir m&aacute;s tiempo&rdquo;, dijo el doctor Robert R. Redﬁeld, director de CDC. &ldquo;La detecci&oacute;n temprana y un tratamiento oportuno y de calidad son clave para salvar vidas&rdquo;.</p>
+        <p>Los aumentos en los &iacute;ndices de mortalidad de varios c&aacute;nceres siguen siendo una preocupaci&oacute;n. Los investigadores sugieren que el aumento de los &iacute;ndices de mortalidad por c&aacute;ncer de h&iacute;gado se relaciona con la alta presencia de la infecci&oacute;n por el virus de la hepatitis C entre los nacidos en la posguerra, as&iacute; como a la alta presencia de obesidad en los Estados Unidos. La obesidad se piensa tambi&eacute;n que ha contribuido al aumento de los &iacute;ndices de mortalidad por c&aacute;nceres de &uacute;tero y de p&aacute;ncreas. El aumento reciente en los &iacute;ndices de mortalidad por c&aacute;ncer de la cavidad oral y faringe en los hombres blancos se piensa que est&aacute; asociado con la infecci&oacute;n por el virus del papiloma humano.</p>
+        <p>&ldquo;Es alentador ver el progreso en la disminuci&oacute;n de &iacute;ndices de mortalidad en muchos tipos de c&aacute;ncer&rdquo;, dijo la directora ejecutiva del NAACCR, Betsy A. Kohler. &ldquo;No obstante, el hecho que &iacute;ndices de mortalidad de varios c&aacute;nceres siguen en aumento significa que necesitamos seguir trabajando para encontrar las estrategias que impulsan a la prevenci&oacute;n y seguir mejorando en ex&aacute;menes de detecci&oacute;n y en tratamiento&rdquo;.</p>
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'CNN'
+      field_external_link:
+        - uri: 'http://www.cnn.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Fox5'
+      field_external_link:
+        - uri: 'http://www.fox5dc.com/'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'CNN Esp'
+      field_external_link:
+        - uri: 'https://cnnespanol.cnn.com/'

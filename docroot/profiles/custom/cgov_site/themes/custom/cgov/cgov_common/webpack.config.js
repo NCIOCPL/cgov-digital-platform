@@ -3,6 +3,7 @@ const baseConfig = require('../webpack.base.config.js');
 const themeEntries = require('./webpack.entries.js');
 
 const themeConfig = {
+  name: 'cgov_common',
   entry: themeEntries,
   resolve: {
     modules: [path.resolve(__dirname, '../src'), 'node_modules'],
@@ -19,4 +20,4 @@ const themeConfig = {
   },
 }
 
-module.exports = Object.assign(baseConfig, themeConfig);
+module.exports = Object.assign({}, baseConfig, themeConfig);

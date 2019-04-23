@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_hero_banner.field_desktop_hero
+    - field.field.paragraph.cgov_hero_banner.field_tablet_hero
+    - field.field.paragraph.cgov_hero_banner.field_tagline
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.cgov_hero_banner
+  module:
+    - image
+id: paragraph.cgov_hero_banner.default
+targetEntityType: paragraph
+bundle: cgov_hero_banner
+mode: default
+content:
+  field_desktop_hero:
+    weight: 0
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_tablet_hero:
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_tagline:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

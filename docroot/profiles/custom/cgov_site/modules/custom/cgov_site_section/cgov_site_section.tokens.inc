@@ -49,24 +49,27 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
       // Replace 'node/[nid]' with Site Section & Pretty URL.
       case 'cgov-computed-path':
         if (!empty($data['node'])) {
-          /* @var \Drupal\node\NodeInterface $node */
-          $node = $data['node'];
-          if (!empty($node->get('field_site_section')->first())) {
-            try {
-              $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
-              $term = Term::load($tid);;
-              $replacements[$original] = $term->get('computed_path')->value;
-            }
-            catch (Exception $e) {
-              \Drupal::logger('cgov_site_section')
-                ->notice('Could not retrieve computed path for tid: ' . $tid);
-            }
-          }
-          break;
+          $entity = $data['node'];
+        }
+        elseif (!empty($data['media'])) {
+          $entity = $data['media'];
         }
 
-        // Replace 'node/[nid]' with parent Site Section, year, and Pretty URL.
-        // TODO: Compress this mess down.
+        if (!empty($entity->get('field_site_section')->first())) {
+          try {
+            $tid = $entity->get('field_site_section')->first()->getValue()['target_id'];
+            $term = Term::load($tid);;
+            $replacements[$original] = $term->get('computed_path')->value;
+          }
+          catch (Exception $e) {
+            \Drupal::logger('cgov_site_section')
+              ->notice('Could not retrieve computed path for tid: ' . $tid);
+          }
+        }
+        break;
+
+      // Replace 'node/[nid]' with parent Site Section, year, and Pretty URL.
+      // TODO: Compress this mess down.
       case 'blog-post-path':
         if (!empty($data['node'])) {
           $node = $data['node'];
