@@ -87,9 +87,14 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         break;
 
       default:
-        $build['#markup'] = '';
         break;
     }
+
+    // Do not cache this render array. TODO: get getCacheMaxAge() to work.
+    $build['#cache'] = [
+      'max-age' => 0,
+    ];
+
     return $build;
   }
 
@@ -161,17 +166,8 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       }
     }
 
-    // Return HTML.
+    // Return properties that will be used to draw HTML.
     return $markup;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @todo Make cacheable in https://www.drupal.org/node/2232375.
-   */
-  public function getCacheMaxAge() {
-    return 0;
   }
 
 }

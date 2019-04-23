@@ -70,6 +70,9 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
     $topic_intros = $this->getTopicIntros();
     $build = [
       '#topic_intros' => $topic_intros,
+      '#cache' => [
+        'max-age' => 0,
+      ],
     ];
     return $build;
   }

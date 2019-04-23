@@ -81,6 +81,9 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
         '#archive_data' => $archive,
         '#archive_granularity' => $group_by,
         '#archive_path' => $path,
+        '#cache' => [
+          'max-age' => 0,
+        ],
       ];
     }
 
