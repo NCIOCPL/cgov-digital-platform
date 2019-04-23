@@ -11,12 +11,6 @@
 
   &.align-center {
     margin: 2.5em auto;
-
-    figure {
-      img {
-        margin: 0 auto;
-      }
-    }
   }
 
   &[data-entity-embed-display] {
@@ -144,6 +138,8 @@
     }
   }
 
+
+
   @include break(medium) {
     &[data-entity-embed-display*="_small"] {
       width: 25%;
@@ -155,6 +151,29 @@
 
     &[data-entity-embed-display*="_large"] {
       width: 75%;
+    }
+  }
+
+  /* https://github.com/NCIOCPL/cgov-digital-platform/issues/1575
+  This file should be refactored to scope all embedded entitiy rules to only the
+  appropriate entity types. Like so. */
+  &[data-entity-embed-display*="video"] {
+    @include break(medium) {
+      width: 100%;
+    }
+
+    @include break(large) {
+      &[data-entity-embed-display*="_small"] {
+        width: 45%;
+      }
+
+      &[data-entity-embed-display*="_medium"] {
+        width: 70%;
+      }
+
+      &[data-entity-embed-display*="_large"] {
+        width: 100%;
+      }
     }
   }
 }
