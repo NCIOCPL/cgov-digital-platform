@@ -3,8 +3,8 @@
 namespace Drupal\cgov_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\language\LanguageNegotiatorInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\language\LanguageNegotiatorInterface;
 
 /**
  * Helper service for various cgov installation tasks.
@@ -35,12 +35,12 @@ class CgovCoreTools {
     'translate [content_type] media',
   ];
 
-  const PROD_ENVIRONMENTS = [
+  const PROD_AH_SITE_ENVS = [
     '01live',
     'prod',
   ];
 
-  const TEST_ENVIRONMENTS = [
+  const TEST_AH_SITE_ENVS = [
     '01test',
     'test',
   ];
@@ -397,20 +397,20 @@ class CgovCoreTools {
     $site_env = strtolower($this->getAhSiteEnvironment());
 
     // Check if site_env matches a prod environment name...
-    if (in_array($site_env, self::PROD_ENVIRONMENTS)) {
-      return 'prod';
+    if (in_array($site_env, self::PROD_AH_SITE_ENVS)) {
+      return CgovEnvironments::PROD;
     }
     // Otherwise, check if site_env matches a test environment name...
-    elseif (in_array($site_env, self::TEST_ENVIRONMENTS)) {
-      return 'test';
+    elseif (in_array($site_env, self::TEST_AH_SITE_ENVS)) {
+      return CgovEnvironments::TEST;
     }
     // Otherwise, check if site_env matches the dev environment regex...
     elseif (preg_match('/^(\d*(int|dev)|(ode)\d*)$/', $site_env)) {
-      return 'dev';
+      return CgovEnvironments::DEV;
     }
     // Finally, return 'local' if the variable is unmatched or empty.
     else {
-      return 'local';
+      return CgovEnvironments::LOCAL;
     }
   }
 
