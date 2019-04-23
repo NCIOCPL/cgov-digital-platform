@@ -35,6 +35,16 @@ class CgovCoreTools {
     'translate [content_type] media',
   ];
 
+  const PROD_ENVIRONMENTS = [
+    '01live',
+    'prod',
+  ];
+
+  const TEST_ENVIRONMENTS = [
+    '01test',
+    'test',
+  ];
+
   /**
    * The config factory.
    *
@@ -365,6 +375,53 @@ class CgovCoreTools {
       $perm = str_replace('[content_type]', $content_type, $perm);
     }
     return $permissions;
+  }
+
+  /**
+   * Get the raw AH_SITE_ENVIRONMENT global variable.
+   *
+   * @return string
+   *   The name of the environment or empty string if variable is not set.
+   */
+  public function getAhSiteEnvironment() {
+    return $_ENV['AH_SITE_ENVIRONMENT'] ?? '';
+  }
+
+  /**
+   * Get one of our four tier values.
+   *
+   * @return string
+   *   Returns one of the following: 'prod', 'test', 'dev', 'local'.
+   */
+  public function getCloudEnvironment() {
+    $site_env = strtolower($this->getAhSiteEnvironment());
+
+    // Check if site_env matches a prod environment name...
+    if (in_array($site_env, self::PROD_ENVIRONMENTS)) {
+      return 'prod';
+    }
+    // Otherwise, check if site_env matches a test environment name...
+    elseif (in_array($site_env, self::TEST_ENVIRONMENTS)) {
+      return 'test';
+    }
+    // Otherwise, check if site_env matches the dev environment regex...
+    elseif (preg_match('/^(\d*(int|dev)|(ode)\d*)$/', $site_env)) {
+      return 'dev';
+    }
+    // Finally, return 'local' if the variable is unmatched or empty.
+    else {
+      return 'local';
+    }
+  }
+
+  /**
+   * Check if this is a production environment.
+   *
+   * @return bool
+   *   TRUE if matches prod environment, FALSE otherwise.
+   */
+  public function isProd() {
+    return $this->getCloudEnvironment() == 'prod';
   }
 
 }
