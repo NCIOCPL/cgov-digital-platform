@@ -5,7 +5,7 @@
  */
 #}
 
-{% macro video(name, content, additionalClasses = "", showCaption = true) %}
+{% macro video(name, content, showCaption = true, additionalClasses = "") %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
   {% if hasRequiredBaseFields %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
