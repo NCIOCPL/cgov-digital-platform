@@ -36,6 +36,7 @@ function cgov_common_form_system_theme_settings_alter(&$form) {
       'none' => t('-None-'),
       'purple' => t('Purple'),
       'blue' => t('Blue'),
+      'green' => t('Green'),
       // Add new theme names here. Value(key) should match folder name in /src/variants
     ],
   );
