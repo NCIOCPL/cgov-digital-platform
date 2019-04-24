@@ -26,31 +26,11 @@ class YamlContentCommand extends BltTasks {
    */
   public function installCgovYamlContentByModule($module) {
     $commands = [
-      'custom:enable_cgov_yaml_content' => ['module' => $module],
+      'cgov:install:site-sections' => [],
+      'cgov:enable-module' => ['moduleName' => $module],
       'custom:import_cgov_yaml_content' => ['module' => $module],
     ];
     $this->invokeCommands($commands);
-  }
-
-  /**
-   * Enable Cgov yaml content module.
-   *
-   * @param string $module
-   *   Name of module to enable.
-   *
-   * @command custom:enable_cgov_yaml_content
-   */
-  public function enableCgovYamlContent($module) {
-    $this->say("************************************************");
-    $this->say("***** Installing $module module! *****");
-    $this->say("************************************************");
-    /** @var \Acquia\Blt\Robo\Tasks\DrushTask $task */
-    $task = $this->taskDrush()
-      ->drush('en')
-      ->rawArg($module)
-      ->printOutput(TRUE);
-    $result = $task->interactive($this->input()->isInteractive())->run();
-    return $result;
   }
 
   /**

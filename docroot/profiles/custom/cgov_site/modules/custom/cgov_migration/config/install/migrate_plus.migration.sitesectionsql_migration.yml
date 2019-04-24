@@ -1,10 +1,11 @@
 id: sitesectionsql_migration
 label: 'taxonomy sitesection migration'
+migration_group: percussion
 source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/sitesectionsql.xml
+  urls: migration://migrations/private-files-mig/sitesectionsql.xml
   item_selector: /rows/row
 
 
@@ -83,6 +84,10 @@ source:
          selector: field_main_nav_root
 
 
+
+
+
+
   ids:
     term_id:
       type: integer
@@ -131,5 +136,7 @@ destination:
   overwrite_properties:
     - computed_path
 
-migration_tags: { }
-migration_dependencies: { }
+
+migration_dependencies:
+  required:
+    - rawhtmlblock_migration

@@ -1,12 +1,13 @@
 id: rawhtmlblock_migration
 label: 'Custom  raw html block migration'
+migration_group: percussion
 source:
 
 
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/rawhtmlblock.xml
+  urls: migration://migrations/private-files-mig/rawhtmlblock.xml
   item_selector: /rows/row
   fields:
         -
