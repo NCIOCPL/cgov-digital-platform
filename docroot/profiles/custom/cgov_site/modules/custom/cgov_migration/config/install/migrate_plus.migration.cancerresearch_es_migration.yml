@@ -1,4 +1,4 @@
-id: cancerresearch_en_migration
+id: cancerresearch_es_migration
 label: 'Custom article migration'
 source:
 
@@ -6,7 +6,7 @@ source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://migrations/private-files-mig/cancerresearch_en.xml
+  urls: migration://migrations/private-files-mig/cancerresearch_es.xml
   item_selector: /rows/row
   fields:
         -
@@ -116,7 +116,11 @@ source:
       type: integer
 
 process:
-  nid: id
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: cancerresearch_en_migration
+
   title: title
 
 
@@ -155,15 +159,14 @@ process:
 
   field_image_promotional:
     plugin: migration_lookup
-    migration: cgovimage_migration
+    migration:
+      - cgovimage_migration
+      - cgovimage_es_migration
+
     source: field_image_promotional
     no_stub: true
 
-
-
   field_pretty_url: field_pretty_url
-
-
 
   temp_text:
     plugin: migration_lookup
@@ -222,7 +225,9 @@ process:
 destination:
   plugin: entity:node
   default_bundle: cgov_cancer_research
+  translations: true
 
 migration_dependencies:
   required:
     - sitesectionsql_migration
+    - cancerresearch_en_migration

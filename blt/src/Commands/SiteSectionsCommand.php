@@ -30,7 +30,6 @@ class SiteSectionsCommand extends BltTasks {
     ];
     $this->invokeCommands($commands);
 
-
     $task = $this->taskDrush()
       ->drush('mim')
       ->rawArg('rawhtmlblock_migration')
