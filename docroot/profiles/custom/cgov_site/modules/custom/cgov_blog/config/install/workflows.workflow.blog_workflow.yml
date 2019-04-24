@@ -1,0 +1,131 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.cgov_blog_series
+  module:
+    - content_moderation
+id: blog_workflow
+label: 'Blog Workflow'
+type: content_moderation
+type_settings:
+  states:
+    archive_requested:
+      published: false
+      default_revision: false
+      label: 'Archive Requested'
+      weight: 4
+    archived:
+      published: false
+      default_revision: true
+      label: Archived
+      weight: 5
+    draft:
+      label: Draft
+      published: false
+      default_revision: false
+      weight: -1
+    editing:
+      published: false
+      default_revision: false
+      label: Editing
+      weight: 2
+    post_publication_review:
+      published: false
+      default_revision: false
+      label: 'Post-Publication Review'
+      weight: 3
+    published:
+      label: Published
+      published: true
+      default_revision: true
+      weight: 1
+    review:
+      published: false
+      default_revision: false
+      label: Review
+      weight: 0
+  transitions:
+    approve:
+      label: 'Approve Edits of Published Content'
+      from:
+        - post_publication_review
+      to: published
+      weight: 5
+    approve_archive:
+      label: 'Approve Archive Request'
+      from:
+        - archive_requested
+      to: archived
+      weight: 8
+    back_to_draft:
+      label: 'Back To Draft'
+      from:
+        - draft
+        - review
+      to: draft
+      weight: -2
+    back_to_editing:
+      label: 'Back To Editing'
+      from:
+        - editing
+        - post_publication_review
+      to: editing
+      weight: 4
+    publish:
+      label: Publish
+      from:
+        - review
+      to: published
+      weight: 0
+    quick_publish:
+      label: 'Quick Publish'
+      from:
+        - draft
+      to: published
+      weight: 1
+    quick_publish_replace:
+      label: 'Quick Publish (Replace Existing Published Revision)'
+      from:
+        - editing
+      to: published
+      weight: 6
+    reject_archive:
+      label: 'Reject Archive Request'
+      from:
+        - archive_requested
+      to: published
+      weight: 9
+    request_archive:
+      label: 'Request Archive'
+      from:
+        - published
+      to: archive_requested
+      weight: 7
+    request_review:
+      label: 'Request Review'
+      from:
+        - draft
+      to: review
+      weight: -1
+    request_review_pub:
+      label: 'Request Review of Published Content'
+      from:
+        - editing
+      to: post_publication_review
+      weight: 3
+    resurrect_archived_content:
+      label: 'Resurrect Archived Content'
+      from:
+        - archived
+      to: draft
+      weight: 10
+    revise:
+      label: 'Revise Published Content'
+      from:
+        - published
+      to: editing
+      weight: 2
+  entity_types:
+    node: {}
+  default_moderation_state: draft
