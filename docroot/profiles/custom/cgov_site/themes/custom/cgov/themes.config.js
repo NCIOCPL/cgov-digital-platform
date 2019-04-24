@@ -8,7 +8,8 @@ module.exports = {
   cgov_common: {
     variants: [
       'purple',
-      'blue'
+      'blue',
+      'green'
     ]
   }
   // Add additional sub-themes here

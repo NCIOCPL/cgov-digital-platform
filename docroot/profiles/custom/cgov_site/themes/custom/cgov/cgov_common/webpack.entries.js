@@ -13,6 +13,7 @@ module.exports = {
     "Biography": path.resolve(__dirname, "src/entrypoints/biography/Biography.js"),
     "Purple": path.resolve(__dirname, "src/variants/purple/entrypoints/Purple.js"),
     "Blue": path.resolve(__dirname, "src/variants/blue/entrypoints/Blue.js"),
+    "Green": path.resolve(__dirname, "src/variants/green/entrypoints/Green.js"),
     "CTHP": path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
     "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js")
 }
