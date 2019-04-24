@@ -12,17 +12,7 @@
   {% endif %}
 
   <div class="resize-content">
-    <h1>
-      {% if (get.month and get.year) %}
-        {{ blogMacros.transformMonthName(get.month) }}
-      {% endif %}
-      {% if get.year %}
-        {{ get.year }} - 
-      {% endif %}
-      {% if node.label %}
-        {{ node.label }}
-      {% endif %}
-    </h1>
+    {{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node.label) }}
     <div id="nvcgSubTitle">
       {% if node.field_feedburner_url.value|length > 0 %}
         <div class="subscribeRSS">
