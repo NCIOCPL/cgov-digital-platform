@@ -46,4 +46,21 @@ class SlevenCommand extends BltTasks {
     $this->invokeCommands($commands);
   }
 
+  /**
+   * Utility method to enable the named module.
+   *
+   * This is an alternative to duplicating the taskDrush() call.
+   *
+   * @command cgov:enable-module
+   */
+  public function enableModule($moduleName) {
+    $this->say("enabling $moduleName");
+    $task = $this->taskDrush()
+      ->drush('en')
+      ->rawArg($moduleName)
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
+  }
+
 }

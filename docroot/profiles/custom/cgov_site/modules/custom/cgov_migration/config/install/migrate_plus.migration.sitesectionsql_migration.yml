@@ -4,7 +4,7 @@ source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: /var/www/docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig/sitesectionsql.xml
+  urls: migration://migrations/private-files-mig/sitesectionsql.xml
   item_selector: /rows/row
 
 
@@ -22,6 +22,12 @@ source:
          name: computed_path
          label: computed_path
          selector: computed_path
+
+        -
+         name: weight
+         label: weight
+         selector: weight
+
         -
          name: parent
          label: parent
@@ -76,6 +82,11 @@ source:
          label: field_main_nav_root
          selector: field_main_nav_root
 
+
+
+
+
+
   ids:
     term_id:
       type: integer
@@ -84,6 +95,7 @@ process:
   tid: term_id
   name: name
   langcode: langcode
+  weight: weight
 
 
   vid:
@@ -108,11 +120,10 @@ process:
 
   computed_path: computed_path
 
+
+
 destination:
   plugin: entity:taxonomy_term
   default_bundle: cgov_site_sections
   overwrite_properties:
     - computed_path
-
-migration_tags: { }
-migration_dependencies: { }
