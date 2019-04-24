@@ -378,6 +378,16 @@ class CgovCoreTools {
   }
 
   /**
+   * Installs the DTM configuration based on environment.
+   */
+  public function installDtmEnvironment() {
+    if (!$this->isProd()) {
+      $dtmSettings = $this->configFactory->getEditable('adobe_dtm.settings');
+      $dtmSettings->set('environment', 'staging')->save();
+    }
+  }
+
+  /**
    * Get the raw AH_SITE_ENVIRONMENT global variable.
    *
    * @return string
