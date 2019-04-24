@@ -168,6 +168,8 @@ class BlogManager implements BlogManagerInterface {
 
   /**
    * Get Blog Series categories (topics).
+   *
+   * TODO: Rename *categories files & methods to *topics for consistency.
    */
   public function getSeriesCategories() {
     $categories = [];
@@ -188,20 +190,37 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series category (topic) descriptions.
+   * Get Blog Series topic (category) descriptions.
    */
-  public function getSeriesCategoryDescription() {
-    $categories = $this->getSeriesCategories();
+  public function getSeriesTopicDescription() {
+    $topics = $this->getSeriesCategories();
     $descriptions = [];
 
     // Create an array of categories that match the owner Blog Series.
-    foreach ($categories as $cat) {
-      $tid = $cat->tid;
+    foreach ($topics as $topic) {
+      $tid = $topic->tid;
       $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
       $desc = $this->getTaxonomyStorage()->load($tid)->description->value;
       $descriptions[$url] = $desc;
     }
     return $descriptions;
+  }
+
+  /**
+   * Get Blog Series topic (category) names.
+   */
+  public function getSeriesTopicTitle() {
+    $topics = $this->getSeriesCategories();
+    $names = [];
+
+    // Create an array of categories that match the owner Blog Series.
+    foreach ($topics as $topic) {
+      $tid = $topic->tid;
+      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
+      $name = $this->getTaxonomyStorage()->load($tid)->getName();
+      $names[$url] = $name;
+    }
+    return $names;
   }
 
   /**

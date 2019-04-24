@@ -11,12 +11,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides a Featured Posts Block.
  *
  * @Block(
- *   id = "cgov_blog_topic_intro",
- *   admin_label = @Translation("Cgov Blog Category About"),
+ *   id = "cgov_blog_topic_title",
+ *   admin_label = @Translation("Cgov Blog Topic Name"),
  *   category = @Translation("Cgov Digital Platform"),
  * )
  */
-class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterface {
+class BlogTopicTitle extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The BlogManager object.
@@ -67,9 +67,9 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    $topic_intros = $this->getTopicIntros();
+    $topic_titles = $this->getTopicTitles();
     $build = [
-      '#topic_intros' => $topic_intros,
+      '#topic_titles' => $topic_titles,
     ];
     return $build;
   }
@@ -79,10 +79,10 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    *
    * {@inheritdoc}
    */
-  private function getTopicIntros() {
+  private function getTopicTitles() {
     // Get all of the associated categories their description fields.
-    $intros = $this->blogManager->getSeriesTopicDescription();
-    return $intros;
+    $titles = $this->blogManager->getSeriesTopicTitle();
+    return $titles;
   }
 
 }

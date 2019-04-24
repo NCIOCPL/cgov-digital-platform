@@ -19,6 +19,9 @@
       {% if get.year %}
         {{ get.year }} - 
       {% endif %}
+      {% if get.topic %}
+        {{ drupal_block('cgov_blog_topic_title', {label: get.topic}) }} - 
+      {% endif %}
       {% if node.label %}
         {{ node.label }}
       {% endif %}
