@@ -63,13 +63,15 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
-
     // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();
       $series = $this->blogManager->getSeriesEntity();
     }
+
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
 
     // Set return values by Archive field selection.
     if (!empty($series)) {
@@ -207,6 +209,13 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
     }
     return $archive;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }

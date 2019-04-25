@@ -5,6 +5,7 @@ namespace Drupal\cgov_blog\Services;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
@@ -42,6 +43,13 @@ class BlogManager implements BlogManagerInterface {
   protected $aliasManager;
 
   /**
+   * A policy evaluating to static::DENY when triggered.
+   *
+   * @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch
+   */
+  protected $killSwitch;
+
+  /**
    * Constructor for BlogManager object.
    *
    * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
@@ -52,17 +60,21 @@ class BlogManager implements BlogManagerInterface {
    *   The route matcher.
    * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
    *   The path alias manager.
+   * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $kill_switch
+   *   A policy evaluating to static::DENY when triggered.
    */
   public function __construct(
     QueryFactory $entity_query,
     EntityTypeManagerInterface $entity_type_manager,
     RouteMatchInterface $route_matcher,
-    AliasManagerInterface $alias_manager
+    AliasManagerInterface $alias_manager,
+    KillSwitch $kill_switch
   ) {
     $this->entityQuery = $entity_query;
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
     $this->aliasManager = $alias_manager;
+    $this->killSwitch = $kill_switch;
   }
 
   /**
@@ -252,6 +264,21 @@ class BlogManager implements BlogManagerInterface {
     $query->sort('field_date_posted', 'DESC');
     $nids = $query->execute();
     return $nids;
+  }
+
+  /**
+   * Kill the wabbit.
+   *
+   * This is a workaround to address a Drupal bug in which the cache may not
+   * clear for anonymous users. See https://www.drupal.org/node/2835068.
+   * It calls the trigger() method in the page_cache_kill_switch Drupal core
+   * service tigger() method. This method, combined with setting
+   * ['#cache']['max-age'] = 0 in the render array, clears the cache on each
+   * request.
+   * See https://drupal.stackexchange.com/questions/237777/setting-cache-max-age-to-0-has-no-effect-on-block-built-using-blockbase.
+   */
+  public function killCache() {
+    $this->killSwitch->trigger();
   }
 
 }

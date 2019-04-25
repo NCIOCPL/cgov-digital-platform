@@ -67,6 +67,11 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
+
+    // Return blog topic intro elements. TODO: clean up twig.
     $topic_intros = $this->getTopicIntros();
     $build = [
       '#topic_intros' => $topic_intros,
@@ -83,6 +88,13 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
     // Get all of the associated categories their description fields.
     $intros = $this->blogManager->getSeriesCategoryDescription();
     return $intros;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }

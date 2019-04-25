@@ -67,6 +67,11 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
+
+    // Return blog category elements. TODO: clean up twig.
     $blog_categories = $this->drawBlogCategories();
     $build = [
       '#blog_categories' => $blog_categories,
@@ -100,6 +105,13 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
     $path = $this->blogManager->getSeriesPath();
     $pretty_url = $this->blogManager->getTaxonomyStorage()->load($tid)->get('field_pretty_url')->value;
     return $path . '?topic=' . $pretty_url;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }

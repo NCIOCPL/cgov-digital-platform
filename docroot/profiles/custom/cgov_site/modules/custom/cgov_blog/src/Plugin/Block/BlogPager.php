@@ -71,6 +71,10 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       $content_type = $curr_entity->bundle();
     }
 
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
+
     // Render our pager markup based on content type.
     // Note: wherever possible, we should use out-of-the box pagination from
     // the view. This plugin is currently being used by Blog Posts only.
@@ -78,16 +82,15 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       case 'cgov_blog_post':
         $markup = $this->drawBlogPostOlderNewer($content_id, $content_type);
         $langcode = $curr_entity->language()->getId();
-        $build['#prev_nid'] = $markup['prev_nid'] ?? '';
-        $build['#prev_title'] = $markup['prev_title'] ?? '';
-        $build['#prev_link'] = $this->blogManager->getBlogPathFromNid($build['#prev_nid'], $langcode);
-        $build['#next_nid'] = $markup['next_nid'] ?? '';
-        $build['#next_title'] = $markup['next_title'] ?? '';
-        $build['#next_link'] = $this->blogManager->getBlogPathFromNid($build['#next_nid'], $langcode);
+        $build['prev_nid'] = $markup['prev_nid'] ?? '';
+        $build['prev_title'] = $markup['prev_title'] ?? '';
+        $build['prev_link'] = $this->blogManager->getBlogPathFromNid($build['prev_nid'], $langcode);
+        $build['next_nid'] = $markup['next_nid'] ?? '';
+        $build['next_title'] = $markup['next_title'] ?? '';
+        $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
         break;
 
       default:
-        $build['#markup'] = '';
         break;
     }
     return $build;
@@ -161,14 +164,12 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       }
     }
 
-    // Return HTML.
+    // Return properties that will be used to draw HTML.
     return $markup;
   }
 
   /**
    * {@inheritdoc}
-   *
-   * @todo Make cacheable in https://www.drupal.org/node/2232375.
    */
   public function getCacheMaxAge() {
     return 0;
