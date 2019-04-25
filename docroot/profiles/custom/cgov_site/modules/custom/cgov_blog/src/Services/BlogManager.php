@@ -269,11 +269,13 @@ class BlogManager implements BlogManagerInterface {
   /**
    * Kill the wabbit.
    *
+   * This is a workaround to address a Drupal bug in which the cache may not
+   * clear for anonymous users. See https://www.drupal.org/node/2835068.
+   * It calls the trigger() method in the page_cache_kill_switch Drupal core
+   * service tigger() method. This method, combined with setting
+   * ['#cache']['max-age'] = 0 in the render array, clears the cache on each
+   * request.
    * See https://drupal.stackexchange.com/questions/237777/setting-cache-max-age-to-0-has-no-effect-on-block-built-using-blockbase.
-   *
-   * https://www.drupal.org/node/2835068.
-   *
-   * https://www.hashbangcode.com/article/drupal-8-how-avoid-block-caching.
    */
   public function killCache() {
     $this->killSwitch->trigger();
