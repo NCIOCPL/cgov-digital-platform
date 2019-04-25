@@ -78,12 +78,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       case 'cgov_blog_post':
         $markup = $this->drawBlogPostOlderNewer($content_id, $content_type);
         $langcode = $curr_entity->language()->getId();
-        $build['#prev_nid'] = $markup['prev_nid'] ?? '';
-        $build['#prev_title'] = $markup['prev_title'] ?? '';
-        $build['#prev_link'] = $this->blogManager->getBlogPathFromNid($build['#prev_nid'], $langcode);
-        $build['#next_nid'] = $markup['next_nid'] ?? '';
-        $build['#next_title'] = $markup['next_title'] ?? '';
-        $build['#next_link'] = $this->blogManager->getBlogPathFromNid($build['#next_nid'], $langcode);
+        $build['prev_nid'] = $markup['prev_nid'] ?? '';
+        $build['prev_title'] = $markup['prev_title'] ?? '';
+        $build['prev_link'] = $this->blogManager->getBlogPathFromNid($build['prev_nid'], $langcode);
+        $build['next_nid'] = $markup['next_nid'] ?? '';
+        $build['next_title'] = $markup['next_title'] ?? '';
+        $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
+        $build['#cache']['max-age'] = 0;
         break;
 
       default:
