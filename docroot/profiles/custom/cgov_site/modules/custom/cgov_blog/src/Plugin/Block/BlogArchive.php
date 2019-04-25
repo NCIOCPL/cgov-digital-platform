@@ -209,4 +209,11 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     return $archive;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
 }

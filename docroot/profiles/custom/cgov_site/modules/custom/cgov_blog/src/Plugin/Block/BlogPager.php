@@ -167,8 +167,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
-   *
-   * @todo Make cacheable in https://www.drupal.org/node/2232375.
    */
   public function getCacheMaxAge() {
     return 0;

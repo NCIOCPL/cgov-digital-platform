@@ -102,4 +102,11 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
     return $path . '?topic=' . $pretty_url;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
 }

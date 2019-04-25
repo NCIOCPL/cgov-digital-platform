@@ -96,4 +96,11 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
     return $build;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
 }

@@ -85,4 +85,11 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
     return $intros;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
 }
