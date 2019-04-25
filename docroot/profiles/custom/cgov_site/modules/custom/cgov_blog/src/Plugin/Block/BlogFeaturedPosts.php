@@ -65,7 +65,10 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function build() {
-    $build = $this->drawFeaturedPosts();
+    $featured = $this->drawFeaturedPosts();
+    $build = [
+      '#featured' => $featured,
+    ];
     return $build;
   }
 
@@ -89,11 +92,7 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
         $i++;
       }
     }
-
-    $build = [
-      '#featured' => $featured,
-    ];
-    return $build;
+    return $featured;
   }
 
   /**

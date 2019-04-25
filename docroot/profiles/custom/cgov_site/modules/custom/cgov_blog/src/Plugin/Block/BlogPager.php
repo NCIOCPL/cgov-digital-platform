@@ -87,7 +87,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         break;
 
       default:
-        $build['#markup'] = '';
         break;
     }
     return $build;
@@ -161,7 +160,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       }
     }
 
-    // Return HTML.
+    // Return properties that will be used to draw HTML.
     return $markup;
   }
 
