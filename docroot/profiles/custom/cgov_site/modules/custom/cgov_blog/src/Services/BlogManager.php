@@ -5,6 +5,7 @@ namespace Drupal\cgov_blog\Services;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
@@ -42,6 +43,13 @@ class BlogManager implements BlogManagerInterface {
   protected $aliasManager;
 
   /**
+   * A policy evaluating to static::DENY when triggered.
+   *
+   * @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch
+   */
+  protected $killSwitch;
+
+  /**
    * Constructor for BlogManager object.
    *
    * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
@@ -52,17 +60,21 @@ class BlogManager implements BlogManagerInterface {
    *   The route matcher.
    * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
    *   The path alias manager.
+   * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $kill_switch
+   *   A policy evaluating to static::DENY when triggered.
    */
   public function __construct(
     QueryFactory $entity_query,
     EntityTypeManagerInterface $entity_type_manager,
     RouteMatchInterface $route_matcher,
-    AliasManagerInterface $alias_manager
+    AliasManagerInterface $alias_manager,
+    KillSwitch $kill_switch
   ) {
     $this->entityQuery = $entity_query;
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
     $this->aliasManager = $alias_manager;
+    $this->killSwitch = $kill_switch;
   }
 
   /**
@@ -264,7 +276,7 @@ class BlogManager implements BlogManagerInterface {
    * https://www.hashbangcode.com/article/drupal-8-how-avoid-block-caching.
    */
   public function killCache() {
-    // \Drupal::service('page_cache_kill_switch')->trigger();
+    $this->killSwitch->trigger();
   }
 
 }
