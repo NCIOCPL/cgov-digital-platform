@@ -88,3 +88,15 @@ function cgov_common_preprocess_node(&$variables) {
     $variables['get'][$param] = isset($_GET[$param]) ? $_GET[$param] : '';
   }
 }
+
+/**
+ * Preprocess function for field templates.
+ */
+function cgov_common_preprocess_field(&$variables) {
+  // Check for selected research field.
+  if ($variables['element']['#field_name'] == 'field_selected_research') {
+    // Get the node ID for use in field templates.
+    $nid = $variables['element']['#object']->id();
+    $variables['node_id'] = $nid;
+  }
+}
