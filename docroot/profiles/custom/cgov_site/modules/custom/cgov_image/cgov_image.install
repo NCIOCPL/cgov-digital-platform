@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_image.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Attach our images types to the right workflow.
+ */
+function cgov_image_install() {
+  $tools = \Drupal::service('cgov_core.tools');
+  foreach (['cgov_image', 'cgov_contextual_image'] as $image_type) {
+    $tools->attachMediaTypeToWorkflow($image_type, 'image_workflow');
+  }
+}
