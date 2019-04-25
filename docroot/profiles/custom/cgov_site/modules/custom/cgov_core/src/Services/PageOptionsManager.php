@@ -28,13 +28,6 @@ class PageOptionsManager implements PageOptionsManagerInterface {
    * @var array
    */
   private static $nodeOptions = [
-    'cgov_home_landing' => [
-      'print',
-      'email',
-      'facebook',
-      'twitter',
-      'pinterest',
-    ],
     'cgov_article' => [
       'resize',
       'print',
@@ -44,6 +37,7 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_cancer_center' => [
+      'resize',
       'print',
       'email',
       'facebook',
@@ -51,13 +45,7 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_biography' => [
-      'print',
-      'email',
-      'facebook',
-      'twitter',
-      'pinterest',
-    ],
-    'cgov_event' => [
+      'resize',
       'print',
       'email',
       'facebook',
@@ -73,9 +61,65 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_blog_series' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_cancer_research' => [
       'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_cthp' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_event' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_home_landing' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
     ],
     'cgov_infographic' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_mini_landing' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_press_release' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_video' => [
       'print',
       'email',
       'facebook',
@@ -92,21 +136,6 @@ class PageOptionsManager implements PageOptionsManagerInterface {
     ],
     'pdq_drug_information_summary' => [
       'resize',
-      'print',
-      'email',
-      'facebook',
-      'twitter',
-      'pinterest',
-    ],
-    'cgov_cthp' => [
-      'resize',
-      'print',
-      'email',
-      'facebook',
-      'twitter',
-      'pinterest',
-    ],
-    'cgov_cancer_research' => [
       'print',
       'email',
       'facebook',
