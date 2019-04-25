@@ -254,4 +254,17 @@ class BlogManager implements BlogManagerInterface {
     return $nids;
   }
 
+  /**
+   * Kill the wabbit.
+   *
+   * See https://drupal.stackexchange.com/questions/237777/setting-cache-max-age-to-0-has-no-effect-on-block-built-using-blockbase.
+   *
+   * https://www.drupal.org/node/2835068.
+   *
+   * https://www.hashbangcode.com/article/drupal-8-how-avoid-block-caching.
+   */
+  public function killCache() {
+    // \Drupal::service('page_cache_kill_switch')->trigger();
+  }
+
 }

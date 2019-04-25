@@ -71,6 +71,10 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       $content_type = $curr_entity->bundle();
     }
 
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
+
     // Render our pager markup based on content type.
     // Note: wherever possible, we should use out-of-the box pagination from
     // the view. This plugin is currently being used by Blog Posts only.
@@ -84,7 +88,6 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         $build['next_nid'] = $markup['next_nid'] ?? '';
         $build['next_title'] = $markup['next_title'] ?? '';
         $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
-        $build['#cache']['max-age'] = 0;
         break;
 
       default:

@@ -65,6 +65,11 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function build() {
+    // Build empty, uncached build[] object.
+    $build['#cache']['max-age'] = 0;
+    $this->blogManager->killCache();
+
+    // Return blog featured post block elements. TODO: clean up twig.
     $featured = $this->drawFeaturedPosts();
     $build = [
       '#featured' => $featured,
