@@ -335,4 +335,64 @@
           - bundle: 'cgov_image'
             name: 'Reporter'
 
-## Event listing pages
+## Event Mini-Landing pages
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Upcoming Events"
+  field_short_title:
+    value: "Upcoming Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'past-events'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_future
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:1;}
+    ######## End Event View Block ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Previous Events"
+  field_short_title:
+    value: "Previous Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'past-events'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_past
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:1;}
+    ######## End Event View Block ##############
