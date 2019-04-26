@@ -6,7 +6,7 @@ source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://migrations/private-files-mig/cthp_en.xml
+  urls: migration://migrations/private-files-mig/cthp.xml
   item_selector: /rows/row
   fields:
         -
@@ -106,7 +106,7 @@ source:
         -
          name: field_cthp_cards
          label: field_cthp_cards
-         selector: field_cthp_cards
+         selector: field_cthp_cards/field_cthp_cards
 
         -
          name: field_landing_content
@@ -117,6 +117,9 @@ source:
          name: field_image_promotional
          label: field_image_promotional
          selector: field_image_promotional
+
+
+
 
 
   ids:
@@ -172,13 +175,11 @@ process:
   temp_text:
     plugin: migration_lookup
     migration:
-       - primaryfeaturecardrow_migration
-       - secondaryfeaturecardrow_migration
-       - guidecardrow_migration
-       - list_migration
-       - twocolumnrow_migration
-       - rawhtml_migration
-       - multimediarow_migration
+       - cthpvideocard_migration
+       - cthpoverviewcard_migration
+       - cthpresearchcard_migration
+       - cthpguidecard_migration
+       - cthpblockcontentcard_migration
 
     no_stub: true
     source: field_cthp_cards
@@ -190,46 +191,6 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
-
-
-  field_cthp_cards/target_id:
-    -
-      plugin: migration_lookup
-      migration:
-        - primaryfeaturecardrow_migration
-        - secondaryfeaturecardrow_migration
-        - guidecardrow_migration
-        - list_migration
-        - twocolumnrow_migration
-        - rawhtml_migration
-        - multimediarow_migration
-
-
-      no_stub: true
-      source: field_landing_content
-    -
-      plugin: extract
-      index:
-        - '0'
-
-  field_cthp_cards/target_revision_id:
-    -
-      plugin: migration_lookup
-      migration:
-        - primaryfeaturecardrow_migration
-        - secondaryfeaturecardrow_migration
-        - guidecardrow_migration
-        - list_migration
-        - twocolumnrow_migration
-        - rawhtml_migration
-        - multimediarow_migration
-
-      no_stub: true
-      source: field_landing_content
-    -
-      plugin: extract
-      index:
-        - 1
 
 
 

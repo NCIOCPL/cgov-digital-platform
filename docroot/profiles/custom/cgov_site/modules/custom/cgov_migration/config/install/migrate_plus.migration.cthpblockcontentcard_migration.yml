@@ -1,11 +1,11 @@
-id: cthpoverviewcard_migration
-label: 'Custom cthpoverviewcardmigration'
+id: cthpblockcontentcard_migration
+label: 'Custom cthpblockcontentcardmigration'
 
 source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://migrations/private-files-mig/cthpoverviewcard.xml
+  urls: migration://migrations/private-files-mig/cthpblockcontentcard.xml
   item_selector: /rows/row
   fields:
         -
@@ -19,9 +19,9 @@ source:
 
 
         -
-         name: field_cthp_overview_card_text
-         label: field_cthp_overview_card_text
-         selector: field_cthp_overview_card_text
+         name: field_cthp_block_card_content
+         label: field_cthp_block_card_content
+         selector: field_cthp_block_card_content
 
 
         -
@@ -42,18 +42,20 @@ source:
 
 
 process:
- field_cthp_overview_card_text/value: field_cthp_overview_card_text
- field_cthp_overview_card_text/format:
-    plugin: default_value
-    default_value: streamlined
+ field_cthp_block_card_content:
+    plugin: migration_lookup
+    migration: cthpcontentblock_migration
 
+    source: field_cthp_block_card_content
+    no_stub: true
 
  id: id
  langcode: langcode
  field_cthp_card_theme: field_cthp_card_theme
+
  field_cthp_card_title: field_cthp_card_title
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'
- default_bundle: cgov_cthp_overview_card
+ default_bundle: cgov_cthp_block_card
 migration_dependencies: {  }
