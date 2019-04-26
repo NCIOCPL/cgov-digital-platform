@@ -1,8 +1,8 @@
-# Set up route for retrieving an infographic's long description text.
-cgov_infographic.long_description:
+# Set up route for retrieving a media item's long description text.
+cgov_media.long_description:
   path: '/media/{media}/long-description'
   defaults:
-    _controller: '\Drupal\cgov_infographic\Controller\CGovInfographicController::longDescription'
+    _controller: '\Drupal\cgov_media\Controller\CgovMediaController::longDescription'
     _title: 'long description route'
   methods: [GET]
   requirements:
