@@ -1,0 +1,81 @@
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Learning to Relax'
+  title: "July Test Event"
+  field_short_title:
+    value: "July Test Event"
+  field_page_description:
+    value: "Information about the July Test Event event."
+  field_event_start_date:
+    value: '2019-07-11T12:30:00'
+  field_event_end_date:
+    value: '2019-07-11T21:30:00'
+  field_all_day_event: 1
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "2E032"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+        <h5>Background</h5>
+        <p>The DCP Organ Systems Research Groups develop, support and oversee clinical cancer prevention trials and promote participation by all populations. The trials are designed to evaluate the safety and efficacy of promising new preventive agents, the utility of novel biomarkers and the value of innovative technologies to identify premalignant lesions. The Consortia for Early Phase Prevention Trials program was created to facilitate the efficient implementation of these studies by teams of multidisciplinary investigators.</p>
+        <h5>Purpose</h5>
+        <ul>
+          <li>To stimulate information sharing and collaborations among DCP staff and consortia members including consortia coordinators and consortia investigators; and</li>
+          <li>To develop strategies to enhance the chemoprevention research program - both scientifically and operationally.</li>
+        </ul>
+        <h5>Attendees</h5>
+        <p>Consortia PI and Site Coordinators, DCP Staff, DCP Regulatory, Drug Repository and Contract Monitoring Staff, and Scientists presenting chemoprevention topics and guest speakers.</p>
+        <h5>Agenda</h5>
+        <ul>
+          <li>2019 I-SCORE Agenda — Coming soon</li>
+          <li>2019 I-SCORE Meeting at a Glance (PDF, 149KB)</li>
+        </ul>
+        <h5>Hotel</h5>
+        <p>A block of rooms has been reserved for April 10, 2019 – April 12, 2019 at the Hilton Garden Inn Rockville-Gaithersburg. A complimentary shuttle service to and from the I-SCORE meeting will be provided.</p>
+        <p>
+          <b>Hilton Garden Inn Rockville-Gaithersburg</b><br />
+          14975 Shady Grove Road<br />
+          Rockville, MD 20850<br />
+          Phone: (240) 507-1800
+        </p>
+        <h5>Airports and Ground Transportation Information</h5>
+        <p>This information in may be downloaded and viewed in Word Format (DOC, 30 KB).<p>
+        <h5>Contact</h5>
+        <p>Questions and late registration queries about the I-SCORE Workshop may be directed to Perquita Perry via emailing her at: perquita.perry@nih.gov.</p>
+  field_pretty_url:
+    value: "my-yml-event-1"
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Ocean Sunset View Mykonos'
+  field_browser_title:
+    - value: 'browser title'
+  field_card_title:
+    - value: 'card title'
+  field_feature_card_description:
+    - value: 'This is my card description'
+  field_list_description:
+    - value: 'This is my list description'
