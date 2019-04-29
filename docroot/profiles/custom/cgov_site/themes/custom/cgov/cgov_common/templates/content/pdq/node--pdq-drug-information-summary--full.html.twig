@@ -1,0 +1,34 @@
+{{ attach_library('cgov_common/pdq') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<article>
+  <div class="resize-content">
+    <h1>{{- node.label -}}</h1>
+    {{ drupal_block('page_options') }}
+    <div id="cgvBody">
+      
+        <div>
+            <a href="javascript:void(0)"
+                class="CDR_audiofile"
+                data-pathname="/PublishedContent/Media/CDR/Media/{{- content.field_pdq_audio_id -}}.mp3">
+                <span class="hidden">listen</span>
+            </a>
+            &nbsp;{{ content.field_pdq_pronunciation_key }}
+        </div>
+        <p>{{ content.field_page_description }}</p>
+
+        <div class="accordion">
+          {{ content.body }}
+        </div>
+
+    </div>
+  </div>
+
+  <footer class="article-footer">
+    {{- contentPageMacros.displayDates(node, content) -}}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>
