@@ -1,0 +1,398 @@
+## Image for Event pages
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Reporter"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'news-reporter-public-use-article.jpg'
+      alt: 'Reporter'
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'news-reporter-public-use-thumb.jpg'
+      alt: 'Reporter'
+  field_caption:
+    value: "Journalist with pipe"
+  field_credit:
+    value: "C.A.D. Schjelderup"
+
+## Upcoming event pages
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: "dceg-seminar-buman"
+  title: "Additive, Joint, or Synergistic Health Impact of Sleep and Physical Activity? Using Novel Methods to Understand How Distinct Behaviors Impact Health - Dr. Matt Buman"
+  field_short_title:
+    value: "Additive, Joint, or Synergistic Health Impact of Sleep and Physical Activity?"
+  field_browser_title:
+    - value: 'Additive, Joint, or Synergistic Health Impact of Sleep and Physical Activity?'
+  field_card_title:
+    - value: 'Additive, Joint, or Synergistic Health Impact of Sleep and Physical Activity?'
+  field_feature_card_description:
+    - value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
+  field_list_description:
+    - value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
+  field_page_description:
+    value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
+  field_event_start_date:
+    value: '2019-07-11T10:30:00'
+  field_event_end_date:
+    value: '2019-07-11T11:30:00'
+  field_all_day_event: 0
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "TE Seminar 110"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp; 
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p>&nbsp;</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)
+          <p>&nbsp;</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reporter'
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: "2019-radiation-course"
+  title: "Radiation Epidemiology & Dosimetry Course"
+  field_short_title:
+    value: "Radiation Epidemiology & Dosimetry Course"
+  field_browser_title:
+    - value: 'Radiation Epidemiology & Dosimetry Course'
+  field_card_title:
+    - value: 'Radiation Epidemiology & Dosimetry Course'
+  field_feature_card_description:
+    - value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
+  field_list_description:
+    - value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
+  field_page_description:
+    value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
+  field_event_start_date:
+    value: '2019-09-09T08:30:00'
+  field_event_end_date:
+    value: '2019-09-12T17:00:00'
+  field_all_day_event: 1
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_city_state:
+    value: "Rockville Maryland"
+  body:
+    - format: "full_html"
+      value: |
+        <h3>SAVE THE DATE</h3>
+        <p>The Radiation Epidemiology and Dosimetry Course is offered&nbsp;periodically by the Radiation Epidemiology Branch of the NCI Division of Cancer Epidemiology and Genetics (DCEG). This course is intended for people who are interested in learning about the health effects of radiation exposure (environmental, occupational, and medical) in relation to both cancer and non-cancer outcomes. The course will cover methodological tools used in radiation epidemiology; epidemiologic, statistical and dosimetric concepts; as well as key studies and new developments in the field.</p>
+        <p>Learn about the 2019 Radiation Epidemiology and Dosimetry Course&nbsp;<a href="https://dceg.cancer.gov/fellowship-training/training-resources-for-fellows-and-staff/2015-rad-epi-course">https://dceg.cancer.gov/fellowship-training/training-resources-for-fellows-and-staff/2015-rad-epi-course</a>]</p>
+        <p>To receive course details and registration information, <a href="mailto:NCIREBCourse@mail.nih.gov">send us your name and email address </a></p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reporter'
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'krispy-kreme'
+  title: 'Krispy Kreme Challenge'
+  field_short_title:
+    value: 'Krispy Kreme Challenge'
+  field_browser_title:
+    - value: 'Krispy Kreme Challenge'
+  field_card_title:
+    - value: 'Krispy Kreme Challenge'
+  field_feature_card_description:
+    - value: |
+        Become a part of our sustainable event and show your support for the UNC Children's Hospital by running the Krispy Kreme Challenge!
+  field_list_description:
+    - value: |
+        Become a part of our sustainable event and show your support for the UNC Children's Hospital by running the Krispy Kreme Challenge!
+  field_page_description:
+    - value: |
+        Become a part of our sustainable event and show your support for the UNC Children's Hospital by running the Krispy Kreme Challenge!
+  field_event_start_date:
+    value: '2020-04-12T06:30:00'
+  field_event_end_date:
+    value: '2020-04-12T14:35:00'
+  field_all_day_event: 1
+  field_city_state:
+    value: 'Raleigh, NC'
+  body:
+    - format: 'full_html'
+      value: |
+        <h4>WHAT IS THE KRISPY KREME CHALLENGE?</h4>
+        <p>2400 calories, 12 doughnuts, 5 miles, 1 hour.  The mantra of the Krispy Kreme Challenge epitomizes the test of physical fitness and gastrointestinal fortitude.  What started as a challenge among ten friends has transformed into a nationally publicized charity race, and the number one tradition to complete before graduating from North Carolina State University.</p>
+        <p>On February 3rd, 2018, we hosted 5,516 people for the 14th annual Krispy Kreme Challenge, where we donated $170,000 to the UNC Children's Hospital, bringing the cumulative donation to over an impressive $1.5 million. We are now UNC Children’s Hospital’s largest unrestricted donor.</p>
+        <p>Participants begin the Challenge at the Memorial Belltower on the campus of North Carolina State University in Raleigh, NC. Runners then travel 2.5 miles through historic downtown Raleigh to the Krispy Kreme located at the intersection of Peace and Person Streets, where they attempt to consume one dozen original glazed doughnuts. The hardest part of the Challenge awaits them as they run 2.5 miles back to the Memorial Belltower.</p>
+        <p>This is the Krispy Kreme Challenge.</p>
+        <h4>Get Involved!</h4>
+        <p>The Krispy Kreme Challenge has a spot for everyone. From runners to volunteers, find the level of involvement that is right for you.</p>
+        <p><a>Volunteer | Donate | Run</a></p>
+        <h4>About Us
+        <p>Find out more about the Krispy Kreme Challenge, our history, our inspiration, and the people behind it. A dramatic tale of fun, community, and heartburn.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reporter'
+
+## Past event pages
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'dceg-seminar-treon'
+  title: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia - Dr. Steven Treon, Dr. Zachary Hunter'
+  field_short_title:
+    value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_browser_title:
+    value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_card_title:
+    value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_feature_card_description:
+    - value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_list_description:
+    - value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_page_description:
+    value: 'Genomic-Based Treatment Advances in Waldenström’s Macroglobulinemia'
+  field_event_start_date:
+    value: '2019-04-16T11:00:00'
+  field_event_end_date:
+    value: '2019-04-16T12:00:00'
+  field_all_day_event: 1
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: 'TE406'
+  field_city_state:
+    value: 'Rockville, MD'
+  body:
+    - format: 'full_html'
+      value: |
+        <p><strong>Speakers</strong></p>
+        <figure class="image-center centered-set"><div class="centered-element"><img src="https://dceg.cancer.gov/PublishedContent/Images/news-events/events/2019/Treon-Hunter-web.__v20017457.jpg" alt="Treon and Hunter">
+        </div></figure>
+        <p>Dr. Steven Treon <br>Director, Bing Center for Waldenström’s Macroglobulinemia (WM)<br>at the Dana Farber Cancer Institute (DFCI), <br>Professor of Medicine, Harvard Medical School, <br>and Chair, WM Clinical Trials Group</p>
+        <p>Dr. Zachary Hunter <br>Director of Genomics, Bing Center for Waldenström’s <br>Macroglobulinemia at the Dana Farber Cancer Institute (DFCI),<br>Faculty member, Harvard Medical School</p>
+        <p><strong>Host</strong><br>Mary L. McMaster, Senior Clinical Specialist, <br>Clinical Genetics Branch, Division of Cancer Epidemiology &amp; Genetics,<br>National Cancer Institute</p>
+        <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+        <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+        <p>You can also dial 555-555-555 and enter your meeting number.</p>
+        <p>&nbsp;</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reporter'
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'schiffman-gordon-lecture'
+  title: 'The Changing Epidemiology of HPV and Cervical Cancer: From Etiology, to Validation of Prevention Methods, to Dissemination'
+  field_short_title:
+    value: 'The Changing Epidemiology of HPV and Cervical Cancer'
+  field_browser_title:
+    value: 'The Changing Epidemiology of HPV and Cervical Cancer'
+  field_card_title:
+    value: 'The Changing Epidemiology of HPV and Cervical Cancer'
+  field_feature_card_description:
+    - value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
+  field_list_description:
+    - value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
+  field_page_description:
+    value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
+  field_event_start_date:
+    value: '2017-05-03T13:00:00'
+  field_event_end_date:
+    value: '2017-05-03T14:00:00'
+  field_all_day_event: 0
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'Masur Auditorium'
+  field_city_state:
+    value: 'Bethesda, Maryland'
+  body:
+    - format: 'full_html'
+      value: |
+        <p><strong>2017 Robert S. Gordon, Jr. Award Lecture</strong></p>
+        <p><strong>Speaker</strong>: <a href="/about/staff-directory/biographies/K-N/schiffman-mark" title="">Mark Schiffman, M.D., M.P.H.</a>, senior investigator in the Clinical Genetics Branch, Division of Cancer Epidemiology &amp; Genetics</p>
+        <p><strong>Description</strong>: Dr. Schiffman plans and conducts long-term molecular epidemiologic studies of human papillomavirus (HPV) and cervical cancer, taking what he learned from years of studying HPV&nbsp;natural history and etiology studies and applying it to the development of prevention methods&nbsp;and clinical management.</p>
+        <p><strong>Background:</strong>&nbsp;The Robert S. Gordon, Jr. Lecture was established in 1995 in tribute to Dr. Gordon for his outstanding contributions to the field of epidemiology and for his distinguished service to the National Institutes of Health. The award is made annually to a scientist who has contributed significantly to the field of epidemiology or clinical trials research. The Lectureship is awarded by the NIH on the recommendation of the NIH Epidemiology and Clinical Trials Interest Group and is organized by the Office of Disease Prevention.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reporter'
+
+## Event Mini-Landing pages
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Upcoming Events"
+  field_short_title:
+    value: "Upcoming Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'future-events'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_future
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:1;}
+    ######## End Event View Block ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Previous Events"
+  field_short_title:
+    value: "Previous Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'past-events'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_past
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:1;}
+    ######## End Event View Block ##############
