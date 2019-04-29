@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.event_list_item
     - field.storage.node.field_event_end_date
     - field.storage.node.field_event_series
     - field.storage.node.field_event_start_date
@@ -60,7 +61,10 @@ display:
       style:
         type: html_list
       row:
-        type: fields
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: event_list_item
       fields:
         title:
           id: title
