@@ -36,7 +36,7 @@ blt cgov:locales:translate
 
 if [ $MIGRATION = 1 ]; then
     blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
-    cgov_migration_load.sh
+    ./scripts/utility/cgov_migration_load.sh
 else
     blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
 fi
