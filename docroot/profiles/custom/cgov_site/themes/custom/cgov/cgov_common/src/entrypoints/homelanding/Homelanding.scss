@@ -676,4 +676,17 @@ parent accordion in all breakpoints. */
   }
 }
 
+/* Ticket-#1538 Page options are not right aligned at tablet breakpoint and no margin \
+*  on the left of page options at mobile breakpoint
+*   TODO: In the case of the spanish HOME PAGE, the page options should be floated left
+*/
+@include bp(medium) {
+  #PageOptionsControl1 {
+    ul {
+      float: right;
+    }
+  }
+
+}
+
 /********************* END Home Page Styles ******************************************/

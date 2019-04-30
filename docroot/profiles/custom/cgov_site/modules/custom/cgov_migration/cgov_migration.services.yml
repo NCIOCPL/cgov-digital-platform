@@ -1,0 +1,5 @@
+services:
+  cgov_migration.migration_stream_wrapper:
+    class: Drupal\cgov_migration\StreamWrapper\CgovMigrationStreamWrapper
+    tags:
+      - { name: stream_wrapper, scheme: migration }

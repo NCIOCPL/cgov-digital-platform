@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.cthp_research_card_list_item
+    - field.field.paragraph.cgov_internal_link.field_internal_link
+    - field.field.paragraph.cgov_internal_link.field_override_image_promotional
+    - field.field.paragraph.cgov_internal_link.field_override_list_description
+    - field.field.paragraph.cgov_internal_link.field_override_title
+    - paragraphs.paragraphs_type.cgov_internal_link
+id: paragraph.cgov_internal_link.cthp_research_card_list_item
+targetEntityType: paragraph
+bundle: cgov_internal_link
+mode: cthp_research_card_list_item
+content:
+  field_internal_link:
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_override_list_description:
+    type: basic_string
+    weight: 2
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_override_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_override_image_promotional: true

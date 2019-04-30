@@ -46,6 +46,7 @@ class RolesTest extends KernelTestBase {
     'token',
     'token_filter',
     'editor',
+    'metatag',
   ];
 
   /**
@@ -85,6 +86,7 @@ class RolesTest extends KernelTestBase {
       'token',
       'token_filter',
       'editor',
+      'metatag',
     ]);
   }
 

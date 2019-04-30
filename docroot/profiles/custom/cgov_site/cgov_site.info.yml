@@ -33,18 +33,20 @@ install:
   - text
   - entity_embed
   - linkit
+  - redirect
   # from CGOV
   - cgov_core
   - cgov_embedded_block
-  - cgov_media
   - cgov_image
   - cgov_list
+  - cgov_media
   - cgov_promo
   - cgov_article
   - cgov_blog
   - cgov_file
   - cgov_home_landing
   - cgov_content_block
+  - cgov_metatag
   - cgov_press_release
   - cgov_site_section
   - cgov_video
@@ -57,7 +59,6 @@ install:
   - cgov_event
   - cgov_util
   - cgov_infographic
-  - cgov_migration
   - cgov_cancer_research
   # other Core
   - media
@@ -70,6 +71,7 @@ install:
   - admin_toolbar_tools
   - admin_toolbar_links_access_filter
   # other
+  - acquia_purge
   - yaml_content
   - twig_tweak
   - address
@@ -78,10 +80,19 @@ install:
   - pathauto
   - paragraphs
   - paragraphs_asymmetric_translation_widgets
+  - purge
+  - purge_drush
+  - purge_processor_cron
+  - purge_processor_lateruntime
+  - purge_queuer_coretags
+  - purge_ui
   - ctools
   - entity_browser
-  - migrate_plus
-  - migrate_tools
+  - adobe_dtm
+  - metatag_dc
+  - metatag_dc_advanced
+  - metatag_open_graph
+  - metatag_twitter_cards
 themes:
   - cgov_common
   - cgov_admin

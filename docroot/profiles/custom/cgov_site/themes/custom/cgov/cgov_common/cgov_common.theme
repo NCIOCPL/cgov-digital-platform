@@ -37,6 +37,19 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
 }
 
 /**
+ * Allows us to add the container's view mode to field suggestions.
+ *
+ * @param array $suggestions
+ *   The list of theme suggestions to augment.
+ * @param array $variables
+ *   Collection of variables.
+ */
+function cgov_common_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+  $element = $variables['element'];
+  $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
+}
+
+/**
  * Implements hook_preprocess_html().
  *
  * Add theme variant class name to page body for CSS and JS entrypoint.
@@ -73,5 +86,17 @@ function cgov_common_preprocess_node(&$variables) {
   // Add any parameter values to the $variables get property.
   foreach ($params as $param) {
     $variables['get'][$param] = isset($_GET[$param]) ? $_GET[$param] : '';
+  }
+}
+
+/**
+ * Preprocess function for field templates.
+ */
+function cgov_common_preprocess_field(&$variables) {
+  // Check for selected research field.
+  if ($variables['element']['#field_name'] == 'field_selected_research') {
+    // Get the node ID for use in field templates.
+    $nid = $variables['element']['#object']->id();
+    $variables['node_id'] = $nid;
   }
 }

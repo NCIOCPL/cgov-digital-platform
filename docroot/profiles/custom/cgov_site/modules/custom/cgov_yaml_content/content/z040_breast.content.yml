@@ -196,6 +196,20 @@
               - type: 'content_block'
                 info: 'Coping With Cancer CTHP Block Card - English'
     - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Research'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Breast Cancer Research'
+    - entity: 'paragraph'
       type: "cgov_cthp_video_card"
       field_cthp_card_title:
         - value: 'After Treatment Ends'
@@ -276,4 +290,10 @@
               - 'block_content'
               - type: 'content_block'
                 info: 'Coping With Cancer CTHP Block Card - Spanish'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Investigación'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
 ######## End Spanish CTHP Cards ##############

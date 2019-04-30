@@ -25,3 +25,27 @@
   }
 }
 
+#blogPageOptionsOuterContainer{
+  display:none;
+
+  @include bp(large-up) {
+    display:block;
+
+    .page-options-container {
+      top: 0;
+    }
+  }
+}
+
+#blogPageOptionsInnerContainer{
+  display:block;
+  
+  .page-options-container {
+    position: relative;
+    top: 0;
+  }
+
+  @include bp(large-up) {
+    display:none;
+  }
+}

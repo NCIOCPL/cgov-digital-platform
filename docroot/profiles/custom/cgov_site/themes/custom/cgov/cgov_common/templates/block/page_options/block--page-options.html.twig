@@ -1,7 +1,11 @@
 <div class="page-options-container">
   <!-- PAGE OPTIONS -->
-  {# TODO: Add back in support for home and landing "large-5 columns" #}
-  <div id="PageOptionsControl1" class="page-options no-resize">
+  {% set classlist = _context.configuration.additionalClasses 
+      ? "page-options no-resize #{_context.configuration.additionalClasses}" 
+      : "page-options no-resize" 
+  %}
+
+  <div id="PageOptionsControl1" class="{{ classlist }}">
       <ul>
         {% if content.options.resize %}
           <li class="page-options--resize">

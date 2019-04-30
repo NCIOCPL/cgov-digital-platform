@@ -74,6 +74,9 @@ $config['system.logging']['error_level'] = 'verbose';
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;
 
+# Disable HTTP Caching.
+$config['system.performance']['cache']['page']['max_age'] = 0;
+
 /**
  * Disable the render cache (this includes the page cache).
  *
