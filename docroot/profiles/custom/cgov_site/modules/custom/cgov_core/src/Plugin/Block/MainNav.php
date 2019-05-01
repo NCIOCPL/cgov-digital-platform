@@ -175,6 +175,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
       $containsCurrent = $mobileItem->getIsInCurrentPath();
       $isCurrent = $mobileItem->isCurrentSiteSection();
       $currentStatusClassname = "";
+      $hasChildrenClassname = "";
       if ($containsCurrent) {
         $currentStatusClassname = "contains-current";
       }
@@ -184,9 +185,10 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
       $children = "";
       if ($isNotLastLevel) {
         $children = $this->renderMobileNavLevel($mobileItem, $containsCurrent, $currentDepth + 1);
+        $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
       }
       $markup = "
-      <li class='lvl-$currentDepth $currentStatusClassname $isCurrent'>
+      <li class='lvl-$currentDepth $currentStatusClassname $isCurrent $hasChildrenClassname'>
         <div class='nav-item-title'>
           <a href='$href'>$label</a>
         </div>
