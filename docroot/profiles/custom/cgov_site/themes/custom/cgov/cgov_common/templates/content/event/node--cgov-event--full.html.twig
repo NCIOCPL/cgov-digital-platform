@@ -1,58 +1,67 @@
 {{ attach_library('cgov_common/event') }}
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
+{% set eventStart = content.field_event_start_date[0]['#attributes']["datetime"] %}
+{% set eventEnd = content.field_event_end_date[0]['#attributes']["datetime"] %}
+{% set isValidEventDate = eventStart|date('Y-m-d') < eventEnd|date('Y-m-d') %}
+{% set isMultiYearEvent = eventStart|date('Y') <  eventEnd|date('Y') %}
+
 <article>
-  <div class="resize-content">
+    <div class="resize-content">
 
-    <h1 class="event-title">{{ node.label }}</h1>
-    {{ drupal_block('page_options') }}
+        <h1 class="event-title">{{ node.label }}</h1>
+        {{ drupal_block('page_options') }}
 
-    <div id="cgvBody">
-      {{ content.field_image_article }}
-      {{ content.field_event_series }}
+        <div id="cgvBody">
+            {{ content.field_image_article }}
+            <h2 class="event-series">{{ content.field_event_series }}</h2>
 
-      <p class="event-date-time">
-        {# TODO: Update this with a better way to print dates! #}
-        {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y-m-d') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y-m-d') %}
-          {% if content.field_event_start_date[0]['#attributes']["datetime"]|date('Y') < content.field_event_end_date[0]['#attributes']["datetime"]|date('Y') %}
-            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
-          {% else %}
-            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('F d, Y') }}
-          {% endif %}
-        {% else %}
-          {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('F d, Y') }}
-          {% if content.field_all_day_event[0]['#markup'] == "Off" %}
-            <br/>
-            {{ content.field_event_start_date[0]['#attributes']["datetime"]|date('h:i A') }} - {{ content.field_event_end_date[0]['#attributes']["datetime"]|date('h:i A') }}
-          {% endif %}
-        {% endif %}
-      </p>
+            <p class="event-date-time">
+                {% if isValidEventDate %}
+                    {% if isMultiYearEvent %}
+                        {{ eventStart|date('F j, Y') }}
+                        &ndash;
+                        {{ eventEnd|date('F j, Y') }}
+                    {% else %}
+                        {{ eventStart|date('F j') }}
+                        &ndash;
+                        {{ eventEnd|date('F j, Y') }}
+                    {% endif %}
+                {% else %}
+                    {{ eventStart|date('F j, Y') }}
+                    {% if content.field_all_day_event[0]['#markup'] == "Off" %}
+                        {{ eventStart|date('g:i A') }}
+                        &ndash;
+                        {{ eventEnd|date('g:i A') }}
+                    {% endif %}
+                {% endif %}
+            </p>
 
-      {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
-        <p class="event-location">
-          {% if content.field_venue|field_value %}
-            <span class="event-location-venue">{{ content.field_venue }}</span>
-          {% endif %}
-          {% if content.field_room|field_value %}
-            <span class="event-location-room">{{ content.field_room }}</span>
-          {% endif %}
-          {% if content.field_city_state|field_value %}
-            <span class="event-location-city-state">{{ content.field_city_state }}</span>
-          {% endif %}
-        </p>
-      {% endif %}
+            {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
+                <p class="event-location">
+                    {% if content.field_venue|field_value %}
+                        <span class="event-location-venue">{{ content.field_venue }}</span>
+                    {% endif %}
+                    {% if content.field_room|field_value %}
+                        <span class="event-location-room">{{ content.field_room }}</span>
+                    {% endif %}
+                    {% if content.field_city_state|field_value %}
+                        <span class="event-location-city-state">{{ content.field_city_state }}</span>
+                    {% endif %}
+                </p>
+            {% endif %}
 
-      <p>
-        <a href="/node/{{ node.id }}/icalendar">Add to Outlook Calendar</a>
-      </p>
+            <p>
+                <a href="/node/{{ node.id }}/icalendar">Add to Outlook Calendar</a>
+            </p>
 
-      {{ content.body }}
+            {{ content.body }}
+        </div>
+
     </div>
 
-  </div>
-
-  <footer class="article-footer">
-    {{ content.field_related_resources }}
-    {{ contentPageMacros.displayDates(node, content) }}
-  </footer>
+    <footer class="article-footer">
+        {{ content.field_related_resources }}
+        {{ contentPageMacros.displayDates(node, content) }}
+    </footer>
 </article>
