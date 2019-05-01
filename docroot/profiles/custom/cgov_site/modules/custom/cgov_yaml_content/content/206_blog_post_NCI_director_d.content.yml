@@ -1,0 +1,139 @@
+#######
+# TESTS: https://github.com/NCIOCPL/cgov-digital-platform-qa/issues/60
+# Single content block
+# Image for Blog post, citation, related resources, dates and public use
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "NCI Director"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_original_source:
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Lowy-nci-vol-9958-Article.jpg'
+        alt: 'NCI Acting Director Douglas R. Lowy, M.D.'
+  field_credit: 'National Cancer Institute'
+  field_caption: 'NCI Acting Director Douglas R. Lowy, M.D..'
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Ensuring a Smooth Leadership Transition at NCI"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'NCI Staff'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+        <p>As his deputy, it was a pleasure to work closely with Ned, and I wish him the very best in his new role. I also feel the cancer research community owes him an enormous debt of gratitude for his exemplary leadership of NCI over the past year and a half, and for the course he&rsquo;s set during this time of extraordinary interest and progress in cancer research.</p>
+        <p>I agree with Ned that NCI&rsquo;s greatest strength is the passionate, talented people who work here. The challenges and opportunities before us are many, and I know I can count on NCI&rsquo;s exceptionally talented leaders and staff to continue their commitment and passion for our shared mission. In the months ahead, rest assured that I&mdash;and everyone at NCI&mdash;will remain focused on supporting the very best science in pursuit of better understanding the causes of cancer and its pathogenesis, and improving our ability to prevent, diagnose, and treat it.</p>
+        <p>Bipartisan support for biomedical research and substantial budget increases in each of the past 5 years have contributed to greater progress against cancer. However, there is still much to be done.</p>
+        <p>Last week, I had the opportunity to join with NIH Director Dr. Francis Collins and other NIH leaders in <span><a href="https://appropriations.house.gov/legislation/hearings/national-institutes-of-health-budget-request-for-fy-2020">representing NCI before the House subcommittee that oversees appropriations for NIH</a></span>. It was gratifying to speak with the committee about some of the research NCI is supporting, to hear from the committee members about their keen interest in the research that NIH funds in their communities and elsewhere, and to learn about their commitment to NIH.</p>
+        <p>I look forward to sharing with you, via this blog and other forums, more about how NCI is helping to shape and nurture a vibrant cancer research community to better prevent and treat cancer in service to patients everywhere.</p>
+  field_browser_title:
+    value: 'Ensuring a Smooth Leadership Transition at NCI'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'NCI Director'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "transition-lowy-nci-acting-director"
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_short_title:
+    - value: "Blog Post short title"
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'

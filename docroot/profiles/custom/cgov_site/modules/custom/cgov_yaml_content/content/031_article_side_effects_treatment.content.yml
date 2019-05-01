@@ -1,0 +1,268 @@
+#######
+# TESTS: https://github.com/NCIOCPL/cgov-digital-platform-qa/issues/56
+# Single content block
+# Image with translation for article image
+# Also uses citation, related resources, dates and public use
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Side Effects"
+  name__ES:
+    value: "Efectos secundarios"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'old-man-smiling-with-doctor-article.jpg'
+      alt: 'Reconstruction'
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'hispanic-doctor-mother-son-doctors-office-article.jpg'
+      alt: 'Reconstrucción'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Tell your doctor about side effects you are experiencing, so you get the care and treatment you need to manage these problems.
+  field_caption__ES:
+    - format: "streamlined"
+      value: |
+        Los implantes se insertan debajo de la piel o del músculo del pecho
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "Instituto Nacional del Cáncer"
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Side Effects of Cancer Treatment"
+  title__ES:
+    value: "Efectos secundarios"
+  field_page_description:
+    value: "Side Effects of Cancer Treatment -Page desc"
+  field_page_description__ES:
+    value:  "Efectos secundarios -Page desc"
+  field_short_title:
+    value: "Side Effects of Cancer Treatment - Short Title"
+  field_short_title__ES:
+    value: "Efectos secundarios - Short Title"
+  field_browser_title:
+    value: "Side Effects of Cancer Treatment - Browser Title"
+  field_browser_title__ES:
+    value: "Efectos secundarios - Browser Title"
+  field_pretty_url:
+    value: "side-effects"
+  field_pretty_url__ES:
+    value: "efectos-secundarios"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/cancer/tratamiento'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Side Effects'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Efectos secundarios'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "What is..."
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cancer treatments and cancer can cause side effects. Side effects are problems that occur when treatment affects healthy tissues or organs. Speak up about any side effects you have, or changes you notice, so your health care team can treat or help you to reduce&nbsp;these side effects.&nbsp;</p>
+            p>Learn about steps you can take to prevent or manage the side effects listed below:</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How to..."
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>In autologous tissue reconstruction, a piece of tissue containing skin, fat, blood vessels, and sometimes muscle is taken from elsewhere in a woman’s body and used to rebuild the breast. This piece of tissue is called a flap.</p>
+            <p>Different sites in the body can provide flaps for breast reconstruction. Flaps used for breast reconstruction most often come from the abdomen or back. However, they can also be taken from the thigh or buttocks.</p>
+            <p>Depending on their source, flaps can be pedicled or free.</p>
+            <ul>
+              <li>With a pedicled flap, the tissue and attached blood vessels are moved together through the body to the breast area. Because the blood supply to the tissue used for reconstruction is left intact, blood vessels do not need to be reconnected once the tissue is moved.</li>
+              <li>With free flaps, the tissue is cut free from its blood supply. It must be attached to new blood vessels in the breast area, using a technique called microsurgery. This gives the reconstructed breast a blood supply.</li>
+            </ul>
+            <p>Abdominal and back flaps include:</p>
+            <ul>
+              <li>DIEP flap: Tissue comes from the abdomen and contains only skin, blood vessels, and fat, without the underlying muscle. This type of flap is a free flap.</li>
+              <li>Latissimus dorsi (LD) flap: Tissue comes from the middle and side of the back. This type of flap is pedicled when used for breast reconstruction. (LD flaps can be used for other types of reconstruction as well.)</li>
+              <li>SIEA flap (also called SIEP flap): Tissue comes from the abdomen as in a DIEP flap but includes a different set of blood vessels. It also does not involve cutting of the abdominal muscle and is a free flap. This type of flap is not an option for many women because the necessary blood vessels are not adequate or do not exist.</li>
+              <li>TRAM flap: Tissue comes from the lower abdomen as in a DIEP flap but includes muscle. It can be either pedicled or free.</li>
+            </ul>
+            <p>Flaps taken from the thigh or buttocks are used for women who have had previous major abdominal surgery or who don’t have enough abdominal tissue to reconstruct a breast. These types of flaps are free flaps. With these flaps an implant is often used as well to provide sufficient breast volume.</p>
+            <ul>
+              <li>IGAP flap: Tissue comes from the buttocks and contains only skin, blood vessels, and fat.</li>
+              <li>PAP flap: Tissue, without muscle, that comes from the upper inner thigh.</li>
+              <li>SGAP flap: Tissue comes from the buttocks as in an IGAP flap, but includes a different set of blood vessels and contains only skin, blood vessels, and fat.</li>
+              <li>TUG flap: Tissue, including muscle, that comes from the upper inner thigh.</li>
+            </ul>
+            <p>In some cases, an implant and autologous tissue are used together. For example, autologous tissue may be used to cover an implant when there isn’t enough skin and muscle left after mastectomy to allow for expansion and use of an implant (1,2).</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "¿Qué es la...?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Los implantes se insertan debajo de la piel o del músculo del pecho después de la mastectomía. (La mayoría de las mastectomías se efectúan usando una técnica llamada mastectomía con preservación de piel, en la que se conserva la mayor parte de la piel del seno para usarla en la reconstrucción del mismo).</p>
+            <p>Los implantes se colocan de ordinario como parte de un procedimiento en dos etapas.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "¿Cómo usan....?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>En la reconstrucción con tejido autógeno, se usa un trozo de tejido que contenga piel, grasa, vasos sanguíneos y algunas veces músculo de algún otro lugar del cuerpo de la mujer y se usa para reconstruir el seno. Este pedazo de tejido se llama colgajo.</p>
+            <p>Sitios diferentes del cuerpo pueden proveer colgajos para la reconstrucción del seno. Los colgajos que se usan para la reconstrucción del seno provienen con más frecuencia del abdomen o de la espalda. Sin embargo, también pueden obtenerse del muslo o de los glúteos.</p>
+            <p>Dependiendo del lugar de donde proceden, los colgajos pueden ser pediculados o libres.</p>
+            <ul>
+              <li>Con un colgajo pediculado, el tejido y los vasos sanguíneos adyacentes se trasladan juntos del cuerpo hasta el área del seno. Puesto que el suministro de sangre al tejido que se usa para la reconstrucción se deja intacto, los vasos sanguíneos no necesitan volverse a conectar cuando se mueve el tejido.</li>
+              <li>Con colgajos libres, el tejido se corta de su suministro de sangre. Necesita conectarse a nuevos vasos sanguíneos en el área del seno, usando una técnica llamada microcirugía. Esto suministra la sangre al seno reconstruido.</li>
+            </ul>
+            <p>Colgajos abdominales y de espalda son:</p>
+            <ul>
+              <li>Colgajo DIEP (Deep Inferior Epigastric Perforator): El tejido procede del abdomen y contiene solo piel, vasos sanguíneos y grasa, sin los músculos subyacentes. Este tipo de colgajo es un colgajo libre.</li>
+              <li>Colgajo Latissimus dorsi (LD): Se trata de tejido que procede de la parte media y del costado de la espalda. Este tipo de colgajo es pediculado cuando se usa para reconstrucción del seno. (Los colgajos LD pueden usarse también para otros tipos de reconstrucción).</li>
+              <li>Colgajo SIEA (llamado también colgajo SIEP): El tejido procede del abdomen como en un colgajo DIEP pero incluye un conjunto diferente de vasos sanguíneos. También no implica que se corte el músculo abdominal y es un colgajo libre. Este tipo de colgajo no es una opción para muchas mujeres porque los vasos sanguíneos necesarios no son adecuados o no existen.</li>
+              <li>Colgajo TRAM: El tejido procede de la parte inferior del abdomen, como en un colgajo DIEP, pero incluye músculo. Puede ser pediculado o libre.</li>
+            </ul>
+            <p>Los colgajos que se toman del muslo o de los glúteos son usados para mujeres de quienes no se puede tomar tejido de su abdomen debido a cirugía abdominal mayor o que no tienen suficiente tejido abdominal para reconstruir un seno. Estos tipos de colgajos son colgajos libres. Con estos colgajos se usa con frecuencia también un implante para proporcionar suficiente volumen al seno.</p>
+            <ul>
+              <li>Colgajo IGAP: El tejido procede de los glúteos y solo contiene piel, vasos sanguíneos y grasa.</li>
+              <li>Colgajo PAP: Tejido, sin músculo, que procede de la parte interna superior del muslo.</li>
+              <li>Colgajo SGAP: Tejido que procede de los glúteos como en un colgajo IGAP, pero incluye un conjunto diferente de vasos sanguíneos y contiene solo piel, vasos sanguíneos y grasa.</li>
+              <li>Colgajo TUG: Tejido, con músculo, que procede de la parte interna superior del muslo.</li>
+            </ul>
+            <p>En algunos casos, se usan juntos un implante y tejido autógeno. Por ejemplo, el tejido autógeno puede usarse para cubrir un implante cuando no quedó suficiente piel y músculo después de la mastectomía para permitir la expansión y usar un implante (1,2).</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_citation__ES:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 2 - <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 3 - <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Coping with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Self-Image and Sexuality'
+  field_related_resources_ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Cómo hacer frente al cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Su imagen propia y su sexualidad'
+  field_date_posted:
+    value: "2019-04-30"
+  field_date_reviewed:
+    value: "2019-04-30"
+  field_date_updated:
+    value: "2019-04-30"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_public_use: 1

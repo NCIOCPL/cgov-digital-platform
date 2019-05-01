@@ -1,0 +1,158 @@
+### TESTS:
+# CGOV EVENT - with related resources
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "Image Placeholder for Event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo-placeholder-article.png'
+      alt: 'CGOV - promo image'
+      alt__ES:
+        value: 'CGOV - promo image'
+  field_credit:
+    value: "This Photo is NCI property"
+  field_credit__ES:
+    value: "NCI -ES"
+  field_caption:
+    - format: "streamlined"
+      value: |
+        Image Caption for Placeholder for Event
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping'
+  title: "2019 Event for NCI Workshop"
+  field_short_title:
+    value: "2019 NCI Workshop Title"
+  field_page_description:
+    value: " Workshop Description"
+  field_event_start_date:
+    value: '2019-04-11T12:30:00'
+  field_event_end_date:
+    value: '2019-04-11T21:30:00'
+  field_all_day_event: 1
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "2E626"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+        <h5>Background</h5>
+        <p>Certain popular ideas about how cancer starts and spreads—though scientifically wrong—can seem to make sense, especially when those ideas are rooted in old theories. But wrong ideas about cancer can lead to needless worry and even hinder good prevention and treatment decisions. This page provides the latest science-based information about some common cancer myths and misconceptions.</p>
+        <h5>Attendees</h5>
+        <p>Consortia PI and Site Coordinators, DCP Staff, DCP Regulatory, Drug Repository and Contract Monitoring Staff, and Scientists presenting chemoprevention topics and guest speakers.</p>
+        <h5>Agenda</h5>
+        <ul>
+          <li>2019 I-SCORE Agenda — Coming soon</li>
+          <li>2019 I-SCORE Meeting at a Glance (PDF, 149KB)</li>
+        </ul>
+        <h5>Hotel</h5>
+        <p>A block of rooms has been reserved for April 10, 2019 – April 12, 2019 at the Hilton Garden Inn Rockville-Gaithersburg. A complimentary shuttle service to and from the I-SCORE meeting will be provided.</p>
+        <p>
+          <b>Hilton Garden Inn Rockville-Gaithersburg</b><br />
+          14975 Shady Grove Road<br />
+          Rockville, MD 20850<br />
+          Phone: (240) 507-9999
+        </p>
+        <p>The special room rate will be available until March 27th or until the group block is sold-out, whichever comes first.</p>
+        <p><b>INDIVIDUAL RESERVATIONS:</b> Each individual guest must make their own reservations by calling 1-877-STAY-HGI (782-9444) by the cut-off date of the block, using the link below.</p>
+        <p>Link: <a href="https://hiltongardeninn.hilton.com/en/gi/groups/personalized/D/DCARVGI-SCORE-20190410/index.jhtml?WT.mc_id=POG">https://hiltongardeninn.hilton.com/en/gi/groups/personalized/D/DCARVGI-SCORE-20190410/index.jhtml?WT.mc_id=POG</a></p>
+        <h5>Shuttle Information Hilton Garden Inn Shuttle Schedule:</h5>
+        <p>
+          <i>April 30, 2019</i><br />
+          Hotel to NCI — 7:00 am and 7:15 am<br />
+          NCI to Hotel — 5:45 pm (Continuous runs)
+        </p>
+        <p>
+          <i>April 30, 2019</i><br />
+          Hotel to NCI — 7:15 am and 7:30 am
+        </p>
+        <h5>Airports and Ground Transportation Information</h5>
+        <p>This information in may be downloaded and viewed in Word Format (DOC, 30 KB).<p>
+        <h5>Contact</h5>
+        <p>Questions and late registration queries about the I-SCORE Workshop may be directed to Perquita Perry via emailing her at: perquita.perry@nih.gov.</p>
+  field_pretty_url:
+    value: "nci-workshop-event"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Image Placeholder for Event'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Image Placeholder for Event'
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_blog_post'
+                title: 'The HPV Vaccine: Increasing the Use of an Important Cancer Prevention Tool'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_override_title:
+        - value: 'Overridden Title'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[No Date] Article Title'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.gov/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'CNN.com'
+      field_external_link:
+        - uri: 'http://www.cnn.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Weather.com'
+      field_external_link:
+        - uri: 'http://www.weather.com/'
