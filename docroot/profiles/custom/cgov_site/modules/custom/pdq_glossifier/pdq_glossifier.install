@@ -23,6 +23,7 @@ function pdq_glossifier_install() {
   $access_glossifier = 'restful post pdq_glossifier_api';
   $siteHelper->addRolePermissions(['pdq_importer' => [$update_glossifier]]);
   $siteHelper->addRolePermissions(['anonymous' => [$access_glossifier]]);
+  $siteHelper->addRolePermissions(['authenticated' => [$access_glossifier]]);
 
   // Add the glossifier table.
   $pdq_glossary = [
