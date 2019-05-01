@@ -257,3 +257,23 @@ li {
   // 28px is one of two default bullet left margin standards on cgov.
   margin-left: 28px;
 }
+
+body.cke_editable {
+  .video-preview--container {
+    // https://github.com/NCIOCPL/cgov-digital-platform/issues/1586
+    // The img element is wrapped in another container in the ckeditor.
+    // Because the existing css uses a direct descendent selector, it is
+    // broken in CKEditor. This is not the ideal fix, but for the purposes
+    // of not touching existing code until after migration, I'm patching it here.
+    // Ideally we can test a cleaner selector in the flexVideoPreview.scss (using a nice
+    // BEM selector ideally) after migration.
+    .field--type-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      margin-top: -9.4%;
+    }
+  }
+}

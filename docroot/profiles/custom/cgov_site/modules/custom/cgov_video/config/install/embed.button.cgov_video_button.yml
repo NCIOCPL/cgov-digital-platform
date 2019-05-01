@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.video_display_large_no_title
+    - core.entity_view_mode.media.video_display_large_title
+    - core.entity_view_mode.media.video_display_medium_no_title
+    - core.entity_view_mode.media.video_display_medium_title
+    - core.entity_view_mode.media.video_display_small_no_title
+    - core.entity_view_mode.media.video_display_small_title
+    - entity_browser.browser.cgov_embedded_video_browser
+    - media.type.cgov_video
+  module:
+    - entity_embed
+    - media
+label: 'Insert Video'
+id: cgov_video_button
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles:
+    - cgov_video
+  display_plugins:
+    - 'view_mode:media.video_display_large_no_title'
+    - 'view_mode:media.video_display_large_title'
+    - 'view_mode:media.video_display_medium_no_title'
+    - 'view_mode:media.video_display_medium_title'
+    - 'view_mode:media.video_display_small_no_title'
+    - 'view_mode:media.video_display_small_title'
+  entity_browser: cgov_embedded_video_browser
+  entity_browser_settings:
+    display_review: false
+icon_uuid: null

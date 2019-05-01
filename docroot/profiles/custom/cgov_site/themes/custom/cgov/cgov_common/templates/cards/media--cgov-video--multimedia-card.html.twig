@@ -1,8 +1,6 @@
 {% import '@cgov_common/media/video/video_macros.twig' as videoMacros %}
 <div class="multimedia-feature-card">
-  {# video macro here #}
-  {# TODO: Add hasCaption once CTHP goes in #}
-  {{ videoMacros.video(name, content, '') }}
+  {{ videoMacros.video(name, content, false) }}
   <p class="mmfc-video-caption">
     {{content.field_caption}}
   </p>

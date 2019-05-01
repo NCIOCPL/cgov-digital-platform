@@ -178,7 +178,7 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
   if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node' || $entity_type->id() == 'media') && !empty($fields['field_pretty_url'])) {
     $fields['field_pretty_url']->setPropertyConstraints('value', [
       'Regex' => [
-        'pattern' => '/^[a-zA-Z0-9-]*$/',
+        'pattern' => '/^[\.a-zA-Z0-9-]*$/',
         'message' => 'The Pretty URL field only accepts letters, numbers, and dashes.',
       ],
     ]
