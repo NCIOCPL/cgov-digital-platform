@@ -30,6 +30,7 @@ function _initialize() {
       && this.href !== ""
       && this.href.indexOf(location.protocol + '//' + location.hostname) !== 0
       && !$(this).hasClass('add_this_btn')
+      && !$(this).hasClass('toolbar-item') // Drupal admin toolbar selector
       && !$(this).hasClass('no-exit-notification');
 	}).after($(
 		'<a class="icon-exit-notification" title="' + altText + '" href="' + path + '">' +
