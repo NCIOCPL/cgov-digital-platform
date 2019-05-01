@@ -1,0 +1,54 @@
+id: rawhtml_migration
+label: 'Custom raw html migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://migrations/private-files-mig/rawhtml.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+
+        -
+         name: field_html_content
+         label: field_html_content
+         selector: body
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+  field_raw_html/value: field_html_content
+
+  field_raw_html/format:
+   plugin: default_value
+   default_value: raw_html
+
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_card_raw_html
+migration_dependencies: {  }
