@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_media_link
+    - paragraphs.paragraphs_type.cgov_media_link
+id: paragraph.cgov_media_link.field_media_link
+field_name: field_media_link
+entity_type: paragraph
+bundle: cgov_media_link
+label: Link
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_file: cgov_file
+      cgov_infographic: cgov_infographic
+      cgov_video: cgov_video
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: cgov_file
+field_type: entity_reference

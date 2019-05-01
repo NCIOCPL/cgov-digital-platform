@@ -11,6 +11,30 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
 /**
+ * Format bytes string helper.
+ *
+ * From https://stackoverflow.com/a/2510459.
+ *
+ * @param int $bytes
+ *   Number of bytes.
+ * @param int $precision
+ *   Precision.
+ *
+ * @return string
+ *   Formatted string.
+ */
+function format_bytes(int $bytes, int $precision = 2) {
+  $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+  $bytes = max($bytes, 0);
+  $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+  $pow = min($pow, count($units) - 1);
+  $bytes /= pow(1024, $pow);
+
+  return round($bytes, $precision) . ' ' . $units[$pow];
+};
+
+/**
  * Set allowed values for the list item styling.
  *
  * @param \Drupal\field\Entity\FieldStorageConfig $definition
@@ -53,16 +77,81 @@ function cgov_list_allowed_values_function(
  * This may be better as a field formatter.
  */
 function cgov_list_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity->bundle() != 'cgov_list') {
-    return;
+  $bundle = $entity->bundle();
+  if ($bundle === 'cgov_list') {
+
+    $list_item_mode = $entity->field_list_item_style->value;
+
+    $build['field_list_items'] = $build['field_list_items']['#items']->view([
+      'type' => 'entity_reference_revisions_entity_view',
+      'settings' => [
+        'view_mode' => $list_item_mode,
+      ],
+    ]);
   }
 
-  $list_item_mode = $entity->field_list_item_style->value;
+  // Infographics, Files, and Videos are going to be allowed as list items
+  // throughout the site. In order to reuse the list_item macros and templates
+  // as much as possible, we are going to extract and flatten the pertinent data
+  // for conditional formatting here. Translations will be done in templates.
+  if ($bundle === 'cgov_media_link') {
+    $media = $entity->field_media_link->entity;
+    $mediaBundle = $media->bundle();
 
-  $build['field_list_items'] = $build['field_list_items']['#items']->view([
-    'type' => 'entity_reference_revisions_entity_view',
-    'settings' => [
-      'view_mode' => $list_item_mode,
-    ],
-  ]);
+    if ($mediaBundle === 'cgov_infographic') {
+      $build['media_link_type'] = [
+        '#plain_text' => 'Infographic',
+      ];
+    }
+
+    if ($mediaBundle === 'cgov_video') {
+      $build['media_link_type'] = [
+        '#plain_text' => 'Video',
+      ];
+    }
+
+    if ($mediaBundle === 'cgov_file') {
+      $build['media_link_type'] = [
+        '#plain_text' => 'File',
+      ];
+      $file = $media->field_media_file->entity;
+      // ##### Format file size.
+      $fileSize = (int) $file->getSize();
+      $formattedFileSize = format_bytes($fileSize, 0);
+      $build['media_link_file_size'] = [
+        '#plain_text' => $formattedFileSize,
+      ];
+
+      // ###### Add File Type Specific Classes.
+      // There is a method for getting the mimetype directly.
+      // However, to avoid potential issues with mimetypes being incorrect
+      // or granular requirements based on file extensions, we will manually
+      // sniff the extension type. This should be deterministic because the
+      // field has a validator that whitelists extensions explicitly.
+      // TODO: (Someday)Clean this crap up (better classnames and more standard
+      // (is it the extension or the type for example)).
+      $extensionsClassMap = [
+        'pdf' => 'pdf',
+        'doc' => 'word',
+        'docx' => 'word',
+        'xls' => 'excel',
+        'xlsx' => 'excel',
+        'ppt' => 'ppt',
+        'pptx' => 'ppt',
+        'mobi' => 'ebook',
+        'epub' => 'ebook',
+        'exe' => 'exe',
+        'txt' => 'txt',
+      ];
+      $fileName = $file->getFilename();
+      $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+      $extensionClass = $extensionsClassMap[$fileExtension] ?? 'unknown';
+      $build['media_link_file_type'] = [
+        '#plain_text' => $extensionClass,
+      ];
+      $build['media_link_file_extension'] = [
+        '#plain_text' => $fileExtension,
+      ];
+    }
+  }
 }

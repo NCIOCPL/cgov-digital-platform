@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_media_link.field_media_link
+    - field.field.paragraph.cgov_media_link.field_override_image_promotional
+    - field.field.paragraph.cgov_media_link.field_override_list_description
+    - field.field.paragraph.cgov_media_link.field_override_title
+    - paragraphs.paragraphs_type.cgov_media_link
+id: paragraph.cgov_media_link.default
+targetEntityType: paragraph
+bundle: cgov_media_link
+mode: default
+content:
+  field_media_link:
+    type: entity_reference_entity_view
+    weight: 4
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_override_image_promotional:
+    weight: 3
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_override_list_description:
+    type: basic_string
+    weight: 1
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_override_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

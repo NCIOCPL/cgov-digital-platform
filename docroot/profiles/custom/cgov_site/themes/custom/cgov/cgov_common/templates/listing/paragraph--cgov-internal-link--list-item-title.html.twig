@@ -6,12 +6,12 @@
   {% if content.field_override_title|field_value %}
     {% set title = content.field_override_title|field_value %}
   {% else %}
-    {% set title = content.field_internal_link[0]["#node"].field_short_title.value %}
+    {% set title = content.field_internal_link[0]["#node"].title.value %}
   {% endif %}
 
   {# ###### Setup the URL ###### #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {{ listItemMacros.list_item_title(title, url, false) }}
+  {{ listItemMacros.list_item_title(title, url) }}
 
 {% endif %}
