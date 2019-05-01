@@ -3,12 +3,14 @@
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
   {% if not (get.year or get.topic) %}
-    <div id="cgvBodyHeader" class="row banner-slot">
-      <div class="slot-item only-SI large-12 columns body-banner">
-        <a name="NCI+Update+Blog+Banner"></a>
-        <div class="blog body-banner">{{ content.field_banner_image }}</div>
+    {% if (content.field_banner_image[0]) %}
+      <div id="cgvBodyHeader" class="row banner-slot">
+        <div class="slot-item only-SI large-12 columns body-banner">
+          <a name="NCI+Update+Blog+Banner"></a>
+          <div class="blog body-banner">{{ content.field_banner_image }}</div>
+        </div>
       </div>
-    </div>
+    {% endif %}
   {% endif %}
 
   <div class="resize-content">
