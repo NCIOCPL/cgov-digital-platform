@@ -5,7 +5,7 @@
   <div class="resize-content">
     <h1>{{ name }}</h1>
     {{ drupal_block('page_options') }}
-    
+
     <div id="cgvBody">
       {{ content.body }}
 
@@ -25,7 +25,7 @@
 
       <footer>
         {{ contentPageMacros.displayDates(media,content) }}
-        {% if node.field_public_use.value == '1' %}
+        {% if media.field_public_use.value == '1' %}
           {{ drupal_region('public_use') }}
         {% endif %}
       </footer>
