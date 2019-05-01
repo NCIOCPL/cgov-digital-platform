@@ -9,6 +9,21 @@ use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 
 /**
+ * Implements hook_install().
+ *
+ * Set up cgov_core module.
+ *
+ * @see system_install()
+ */
+function cgov_core_install() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Set the DTM config for this environment.
+  $siteHelper->installDtmEnvironment();
+}
+
+/**
  * Implements hook_themes_installed().
  *
  * Perform actions to set up the site for this profile.
@@ -21,7 +36,7 @@ function cgov_core_themes_installed() {
   $block_region = 'public_use';
   $block_label = 'Public Use';
   $block_html = <<<EOMarkup
-<p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute”</em></p>
+<p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
 EOMarkup;
 
   // Create block content.

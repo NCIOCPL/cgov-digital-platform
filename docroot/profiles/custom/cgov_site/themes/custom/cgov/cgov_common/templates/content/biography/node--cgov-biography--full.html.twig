@@ -23,18 +23,22 @@
 
               {% if content.field_org_name_1|field_value or content.field_org_name_2|field_value %}
                 <div class="profile-orgs">
-                  {% if content.field_org_url_1|field_value %}
-                    <a href="{{- content.field_org_url_1|field_value -}}" class="profile-org">{{ content.field_org_name_1 }}</a>
-                  {% else %}
-                    <div class="profile-org">{{ content.field_org_name_1 }}</div>
-                  {% endif %}
+                  <div class="profile-org">
+                    {% if content.field_org_url_1|field_value %}
+                      <a href="{{- content.field_org_url_1|field_value -}}">{{ content.field_org_name_1 }}</a>
+                    {% else %}
+                      {{ content.field_org_name_1 }}
+                    {% endif %}
+                  </div>
 
                   {% if content.field_org_name_2|field_value %}
-                    {% if content.field_org_url_2|field_value %}
-                      <a href="{{- content.field_org_url_2|field_value -}}" class="profile-org">{{ content.field_org_name_2 }}</a>
-                    {% else %}
-                      <div class="profile-org">{{ content.field_org_name_2 }}</div>
-                    {% endif %}
+                    <div class="profile-org">
+                      {% if content.field_org_url_2|field_value %}
+                        <a href="{{- content.field_org_url_2|field_value -}}">{{ content.field_org_name_2 }}</a>
+                      {% else %}
+                        {{ content.field_org_name_2 }}
+                      {% endif %}
+                    </div>
                   {% endif %}
                 </div>
               {% endif %}

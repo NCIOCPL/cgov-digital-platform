@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * The cgov_metata.module.
+ */
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Prior to saving a node, updates per node metatag values.
+ */
+function cgov_metatag_entity_presave($entity) {
+  $entityType = $entity->getEntityType()->id();
+  if ($entityType == 'node'|| $entityType == 'media') {
+    if ($entity->hasField('field_search_engine_restrictions') && $entity->hasField('field_meta_tags')) {
+
+      $restriction = $entity->get('field_search_engine_restrictions')->getValue();
+
+      if ($restriction[0]['value'] == 'IncludeSearch') {
+        // e.g 'robots' => 'noindex, nofollow, noarchive, nosnippet, noodp'.
+        $entity->set('field_meta_tags', serialize([
+          'robots' => 'index',
+        ]));
+      }
+      elseif ($restriction[0]['value'] == 'ExcludeSearch') {
+        $entity->set('field_meta_tags', serialize([
+          'robots' => 'noindex',
+        ]));
+      }
+    }
+  }
+}

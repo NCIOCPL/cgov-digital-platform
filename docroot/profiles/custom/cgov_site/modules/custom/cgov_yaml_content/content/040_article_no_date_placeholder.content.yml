@@ -1,0 +1,239 @@
+# Placeholder article for no date display
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "[No Date] Article Title"
+  title__ES:
+      value: "[No Date] Article Title - ES"
+  field_page_description:
+    value: "This page is a placeholder."
+  field_page_description__ES:
+    value: "Esta página es un marcador de posición."
+  field_short_title:
+    value: "Article Short Title"
+  field_short_title__ES:
+    value: "Article Short Title - ES"
+  field_browser_title:
+    value: "Article Browser Title"
+  field_browser_title_ES:
+    value: "Article Browser Title - ES"
+  field_pretty_url:
+    value: 'article-no-date'
+  field_pretty_url__ES:
+    value: 'esparticle-no-date'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar'
+  field_intro_text:
+    - format: "full_html"
+      value: |
+            <p>Intro Text placeholder.</p>
+  field_intro_text__ES:
+    - format: "full_html"
+      value: |
+            <p>Intro Text ES posición.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Body Section heading Placeholder"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>This is body section content placeholder.</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Body Section heading ES posición"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>his is body section content ES posición.</p>
+  field_date_posted:
+    value: "2019-02-01"
+  field_date_reviewed:
+    value: "2019-03-01"
+  field_date_updated:
+    value: "2019-04-01"
+  field_date_display_mode:
+    #- value: 'updated'
+
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+    ## Media Links
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Colorectal Cancer Screening: What to Expect'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Colorectal Cancer Screening: What to Expect'
+      field_override_title:
+        - value: "Media Link Video Override Title"
+      field_override_list_description:
+        - value: "Media Link Video Override Description"
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Override Placeholder'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_infographic'
+                name: 'NCI at a Glance Infographic'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_infographic'
+                name: 'NCI at a Glance Infographic'
+      field_override_title:
+        - value: "Media Link Infographic Override Title"
+      field_override_list_description:
+        - value: "Media Link Infographic Override Description"
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Override Placeholder'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_file'
+                name: 'Test PDF File name'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_file'
+                name: 'Test PDF File name'
+      field_override_title:
+        - value: "Media Link File Override Title"
+      field_override_list_description:
+        - value: "Media Link File Override Description"
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Override Placeholder'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
