@@ -1,5 +1,6 @@
 
 # Placeholder Press Release for no date display
+# also added,  citation, related resources  and removed public use
 
 - entity: "media"
   bundle: "cgov_image"
@@ -44,18 +45,18 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Press Releases 2018'
+            computed_path: '/news-events/press-releases/2018'
   field_site_section__ES:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Comunicados de Prensa 2018'
+            computed_path: '/noticias/comunicados-de-prensa/2018'
   field_pretty_url:
-    value: 'press-releae-no-date'
+    value: 'press-release-no-date'
   field_pretty_url__ES:
-    value: 'esp-press-releae-no-date'
+    value: 'esp-press-release-no-date'
   moderation_state:
     value: 'published'
   field_browser_title:
@@ -112,7 +113,7 @@
       value: |
         <p>En el m&aacute;s grande estudio cl&iacute;nico aleatorizado de evaluaci&oacute;n de la vitamina D para prevenci&oacute;n del cancer, el complemento no redujo el riesgo de padecimiento de c&aacute;ncer.</p>
         <p>Un conjunto grande de investigaci&oacute;n epidemiol&oacute;gica ha sugerido que la gente con concentraciones sangu&iacute;neas m&aacute;s elevadas de vitamina D tiene un riesgo menor de c&aacute;ncer, dijo el doctor Barry Kramer, director de la&nbsp;<a href="https://prevention.cancer.gov/">Divisi&oacute;n de Prevenci&oacute;n de C&aacute;ncer</a> del NCI.</p>
-  field_public_use: 1
+  field_public_use: 0
   field_related_resources:
     - entity: 'paragraph'
       type: "cgov_internal_link"
@@ -179,3 +180,46 @@
         - value: 'Yahoo.com'
       field_external_link:
         - uri: 'http://www.yahoo.com/'
+
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_citation__ES:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 2 - <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 3 - <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
