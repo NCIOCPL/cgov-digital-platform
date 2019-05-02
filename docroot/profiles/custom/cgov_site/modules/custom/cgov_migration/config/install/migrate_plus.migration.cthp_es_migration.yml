@@ -1,77 +1,65 @@
-id: infographic_en_migration
-label: 'Custom infographic migration'
+id: cthp_es_migration
+label: 'Custom cthp migration'
 source:
 
 
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://migrations/private-files-mig/infographic_en.xml
+  urls: migration://migrations/private-files-mig/cthp_es.xml
   item_selector: /rows/row
   fields:
         -
          name: id
          label: id
-         selector: '@id'
+         selector: 'id'
         -
          name: title
          label: title
-         selector: '@title'
+         selector: 'title'
+
 
         -
-         name: body
-         label: body
-         selector: body
+         name: field_audience_toggle
+         label: field_audience_toggle
+         selector: field_audience_toggle
+
+
 
         -
-         name: field_image_promotional
-         label: field_image_promotional
-         selector: field_image_promotional
-
+         name: field_audience
+         label: field_audience
+         selector: 'field_audience'
 
         -
          name: langcode
          label: langcode
-         selector: '@langcode'
+         selector: 'langcode'
         -
          name: field_search_engine_restrictions
          label: field_search_engine_restrictions
-         selector: '@field_search_engine_restrictions'
-
-
-        -
-         name: field_public_use
-         label: field_public_use
-         selector: '@field_public_use'
+         selector: 'field_search_engine_restrictions'
 
 
         -
          name: field_short_title
          label: field_short_title
-         selector: '@field_short_title'
-
+         selector: 'field_short_title'
 
         -
          name: field_browser_title
          label: field_browser_title
-         selector: '@field_browser_title'
+         selector: 'field_browser_title'
 
         -
          name: field_card_title
          label: field_card_title
-         selector: '@field_card_title'
-
-        -
-         name: field_subtitle
-         label: field_subtitle
-         selector: '@field_subtitle'
-
+         selector: 'field_card_title'
 
         -
          name: field_page_description
          label: field_page_description
-         selector: '@field_page_description'
-
+         selector: 'field_page_description'
 
         -
          name: field_list_description
@@ -99,30 +87,38 @@ source:
          selector: '@field_date_reviewed'
 
         -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
+
+        -
          name: term_id
          label: term_id
-         selector: '@term_id'
+         selector: 'term_id'
 
 
         -
          name: field_pretty_url
          label: field_pretty_url
-         selector: '@field_pretty_url'
+         selector: 'field_pretty_url'
 
         -
-         name: date_display_mode
-         label: date_display_mode
-         selector: 'date_display_mode/date_display_mode'
+         name: field_cthp_cards
+         label: field_cthp_cards
+         selector: field_cthp_cards/field_cthp_cards
 
         -
-         name: field_infographic
-         label: field_infographic
-         selector: field_infographic
+         name: field_landing_content
+         label: field_landing_content
+         selector: field_landing_content
 
         -
-         name: field_accessible_version
-         label: field_accessible_version
-         selector: field_accessible_version
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+
 
 
 
@@ -131,14 +127,22 @@ source:
       type: integer
 
 process:
-  mid: id
-  name: title
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: cthp_en_migration
 
+  title: title
+  field_audience_toggle: field_audience_toggle
+
+
+
+
+  field_audience: field_audience
 
   uid:
    plugin: default_value
    default_value: 1
-
 
   status:
    plugin: default_value
@@ -148,26 +152,23 @@ process:
    plugin: default_value
    default_value: published
 
+  langcode: langcode
 
   field_short_title: field_short_title
   field_browser_title: field_browser_title
   field_card_title: field_card_title
-  field_press_release_type: field_press_release_type
-  field_subtitle: field_subtitle
 
   field_page_description: field_page_description
   field_list_description: field_list_description
   field_feature_card_description: field_feature_card_description
-
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
   field_date_updated: field_date_updated
   field_date_display_mode: date_display_mode
 
 
-  field_search_engine_restrictions: field_search_engine_restrictions
-  field_public_use: field_public_use
 
+  field_search_engine_restrictions: field_search_engine_restrictions
 
   field_site_section:
     plugin: migration_lookup
@@ -175,11 +176,29 @@ process:
     source: term_id
     no_stub: true
 
-  field_infographic:
-    plugin: image_import
-    source: field_infographic
-    skip_on_missing_source: true
-    skip_on_error: true
+  field_pretty_url: field_pretty_url
+
+  temp_text:
+    plugin: migration_lookup
+    migration:
+       - cthpvideocard_migration
+       - cthpoverviewcard_migration
+       - cthpresearchcard_migration
+       - cthpguidecard_migration
+       - cthpblockcontentcard_migration
+
+    no_stub: true
+    source: field_cthp_cards
+
+  field_cthp_cards:
+    plugin: iterator
+    source: '@temp_text'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+
 
   field_image_promotional:
     plugin: migration_lookup
@@ -187,20 +206,14 @@ process:
     source: field_image_promotional
     no_stub: true
 
-
-
-  field_pretty_url: field_pretty_url
-  field_accessible_version: field_accessible_version
-
-  body/value: body
-  body/format:
-   plugin: default_value
-   default_value: full_html
-
+  path:
+    plugin: default_value
+    default_value: ‘/mypath/’
 
 destination:
-  plugin: entity:media
-  default_bundle: cgov_infographic
+  plugin: entity:node
+  default_bundle: cgov_cthp
+  translations: true
 
 migration_dependencies:
   required:

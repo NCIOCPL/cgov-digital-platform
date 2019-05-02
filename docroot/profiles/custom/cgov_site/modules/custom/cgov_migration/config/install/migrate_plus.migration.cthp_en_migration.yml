@@ -129,11 +129,8 @@ source:
 process:
   nid: id
   title: title
-  field_audience_toggle:
-    plugin: migration_lookup
-    migration: cthp_en_migration
-    source: field_audience_toggle
-    no_stub: true
+  field_audience_toggle: field_audience_toggle
+
 
 
   field_audience: field_audience
@@ -145,6 +142,10 @@ process:
   status:
    plugin: default_value
    default_value: 1
+
+  moderation_state:
+   plugin: default_value
+   default_value: published
 
   langcode: langcode
 

@@ -24,6 +24,13 @@ source:
          label: langcode
          selector: '@langcode'
 
+        -
+         name: long_title
+         label: long_title
+         selector: '@long_title'
+
+
+
   ids:
     id:
       type: integer
@@ -31,10 +38,11 @@ source:
 process:
   id: id
   field_html_content/value: field_html_content
-
   field_html_content/format:
    plugin: default_value
    default_value: full_html
+
+  field_long_title: long_title
 
 
   uid:
