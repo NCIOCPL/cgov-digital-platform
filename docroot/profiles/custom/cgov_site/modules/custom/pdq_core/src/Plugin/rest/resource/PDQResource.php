@@ -201,10 +201,13 @@ class PDQResource extends ResourceBase {
     }
 
     // Make sure the CDR ID matches exactly one entity.
+    // 2019-05-03: Treat request to remove a PDQ item which is not present
+    // as a success, to avoid publishing job failures caused by shifting
+    // contents of rebuilt Drupal servers on the lower tiers (#1610).
     $matches = $this->lookupCdrId($id);
     if (count($matches) === 0) {
-      $msg = t('CDR ID @id not found', ['@id' => $id]);
-      throw new NotFoundHttpException($msg);
+      $this->logger->notice('DELETE: CDR ID @id not found', ['@id' => $id]);
+      return new ModifiedResourceResponse(NULL, 204);
     }
     if (count($matches) > 1) {
       $msg = t('Ambiguous CDR ID @id', ['@id' => $id]);
