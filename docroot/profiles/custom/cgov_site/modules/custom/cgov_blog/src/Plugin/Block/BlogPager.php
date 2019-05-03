@@ -81,12 +81,15 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       case 'cgov_blog_post':
         $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
         $langcode = $curr_entity->language()->getId();
+
+        // Build the render array & cache tags.
         $build['prev_nid'] = $post['prev_nid'] ?? '';
         $build['prev_title'] = $post['prev_title'] ?? '';
         $build['prev_link'] = $this->blogManager->getBlogPathFromNid($build['prev_nid'], $langcode);
         $build['next_nid'] = $post['next_nid'] ?? '';
         $build['next_title'] = $post['next_title'] ?? '';
         $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
+        $build['#cache'] = $post['#cache'];
         break;
 
       default:
@@ -151,6 +154,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
           $p = $blog_links[$index - 1];
           $post['prev_nid'] = $p['nid'];
           $post['prev_title'] = $p['title'];
+          $post['#cache']['tags'][] = 'node:' . $p['nid'];
         }
 
         // Link next post if exists.
@@ -158,6 +162,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
           $n = $blog_links[$index + 1];
           $post['next_nid'] = $n['nid'];
           $post['next_title'] = $n['title'];
+          $post['#cache']['tags'][] = 'node:' . $n['nid'];
         }
         break;
       }
