@@ -7,6 +7,7 @@
 
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\cgov_core\CgovCoreTools;
 
 /**
  * Implements hook_install().
@@ -21,6 +22,81 @@ function cgov_core_install() {
 
   // Set the DTM config for this environment.
   $siteHelper->installDtmEnvironment();
+
+  // Install permissions for this module.
+  _cgov_core_install_permissions($siteHelper);
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access administration pages',
+      'view the administration theme',
+      'access cgov_content_browser entity browser pages',
+      'access cgov_embedded_content_browser entity browser pages',
+      'access toolbar',
+      'link to any page',
+      'use text format full_html',
+      'use text format raw_html',
+      'use text format simple',
+      'use text format streamlined',
+    ],
+    'advanced_editor' => [
+      'access taxonomy overview',
+      'administer taxonomy',
+      'administer blocks',
+      'administer menu',
+      'delete content translations',
+      'use editorial_workflow transition quick_publish_replace',
+      'use editorial_workflow transition quick_publish',
+    ],
+    'authenticated' => [
+      'access content',
+    ],
+    'content_author' => [
+      'access content overview',
+      'create content translations',
+      'edit content translations',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition request_archive',
+      'use editorial_workflow transition request_review_pub',
+      'use editorial_workflow transition request_review',
+      'use editorial_workflow transition resurrect_archived_content',
+      'use editorial_workflow transition revise',
+      'view any unpublished content',
+      'view latest version',
+    ],
+    'content_editor' => [
+      'use editorial_workflow transition approve_archive',
+      'use editorial_workflow transition approve',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition publish',
+      'use editorial_workflow transition reject_archive',
+    ],
+    'site_admin' => [
+      // View Logs.
+      'access site reports',
+      // Manage Users.
+      'administer users',
+      'select account cancellation method',
+      'access user profiles',
+      'administer account settings',
+      // Set DTM tag after site provisioning.
+      'administer adobe dynamic tag management',
+      // Set microsite theme colors after provisioning.
+      'administer themes',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
 
 /**
