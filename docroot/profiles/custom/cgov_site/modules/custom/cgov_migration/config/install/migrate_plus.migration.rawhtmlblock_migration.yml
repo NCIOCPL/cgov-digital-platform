@@ -1,0 +1,59 @@
+id: rawhtmlblock_migration
+label: 'Custom  raw html block migration'
+migration_group: percussion
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://migrations/private-files-mig/rawhtmlblock.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+
+        -
+         name: info
+         label: info
+         selector: info
+        -
+         name: body
+         label: body
+         selector: body
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+  langcode: langcode
+  info: info
+
+  body/value: body
+  body/format:
+   plugin: default_value
+   default_value: full_html
+
+destination:
+  plugin: entity:block_content
+  default_bundle: raw_html_block
+
+migration_dependencies: { }

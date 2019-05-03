@@ -32,6 +32,12 @@ class SiteSectionsCommand extends BltTasks {
 
     $task = $this->taskDrush()
       ->drush('mim')
+      ->rawArg('rawhtmlblock_migration')
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+
+    $task = $this->taskDrush()
+      ->drush('mim')
       ->rawArg('sitesectionsql_migration')
       ->printOutput(TRUE);
     $result = $task->interactive($this->input()->isInteractive())->run();

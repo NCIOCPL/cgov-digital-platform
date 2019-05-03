@@ -1,5 +1,6 @@
 id: sitesectionsql_migration
 label: 'taxonomy sitesection migration'
+migration_group: percussion
 source:
   plugin: url
   data_fetcher_plugin: file
@@ -106,7 +107,6 @@ process:
   field_landing_page: field_landing_page
   field_levels_to_display: field_levels_to_display
   field_main_nav_root: field_main_nav_root
-  field_mega_menu_content: field_mega_menu_content
   field_navigation_label: field_navigation_label
   field_pretty_url: field_pretty_url
   field_section_nav_root: field_section_nav_root
@@ -118,6 +118,14 @@ process:
     source: parent
     no_stub: true
 
+  field_mega_menu_content:
+    plugin: migration_lookup
+    migration: rawhtmlblock_migration
+    source: field_mega_menu_content
+    no_stub: true
+
+
+
   computed_path: computed_path
 
 
@@ -127,3 +135,8 @@ destination:
   default_bundle: cgov_site_sections
   overwrite_properties:
     - computed_path
+
+
+migration_dependencies:
+  required:
+    - rawhtmlblock_migration
