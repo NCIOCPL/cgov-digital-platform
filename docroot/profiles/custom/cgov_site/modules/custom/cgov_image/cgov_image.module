@@ -161,7 +161,8 @@ function _cgov_image_filter_view_image(
 
   // TODO: Check the display interface to see which style.
   // Then we can find the manual crop for that style.
-  $crop = _cgov_image_find_crop_by_style($image_style);
+  $image_helper = \Drupal::service('cgov_image.image_tools');
+  $crop = $image_helper->findCropByStyle($image_style);
 
   if ($crop == NULL) {
     // We do not know what this crop is. For now it is because
@@ -190,35 +191,6 @@ function _cgov_image_filter_view_image(
     unset($build['field_media_image']);
     return;
   }
-}
-
-/**
- * Helper function to get the crop name from the image style.
- *
- * @param string $image_style
- *   The image_style to find the crop for.
- *
- * @return string
- *   NULL if the style does not have a crop, the name of the crop otherwise.
- */
-function _cgov_image_find_crop_by_style($image_style) {
-  // TODO: Actually find the crop from the style.
-  switch ($image_style) {
-    case "cgov_article":
-    case "cgov_enlarged":
-      return "freeform";
-
-    case "cgov_featured":
-    case "cgov_social_media":
-      return "4x3";
-
-    case "cgov_panoramic":
-      return "16x9";
-
-    case "cgov_thumbnail":
-      return "thumbnail";
-  }
-  return NULL;
 }
 
 /**
