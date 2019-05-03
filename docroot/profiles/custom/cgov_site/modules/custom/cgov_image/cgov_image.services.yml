@@ -9,3 +9,6 @@ services:
     arguments: ['@current_route_match']
     tags:
       - { name: path_processor_outbound, priority: 500 }
+ # Defines a service of which returns the associated crop for  given image style
+  cgov_image.image_tools:
+    class: Drupal\cgov_image\CgovImageTools
