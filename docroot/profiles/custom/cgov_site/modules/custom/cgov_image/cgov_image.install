@@ -5,6 +5,8 @@
  * Contains cgov_image.install.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
  * Implements hook_install().
  *
@@ -13,6 +15,32 @@
 function cgov_image_install() {
   $tools = \Drupal::service('cgov_core.tools');
   foreach (['cgov_image', 'cgov_contextual_image'] as $image_type) {
+    // Add content type permissions.
+    $tools->addMediaTypePermissions($image_type, 'image_manager');
     $tools->attachMediaTypeToWorkflow($image_type, 'image_workflow');
   }
+
+  // Install permissions for this module.
+  _cgov_image_install_permissions($tools);
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_embedded_image_browser entity browser pages',
+      'access cgov_image_browser entity browser pages',
+    ],
+    'image_manager' => [
+      'use image_workflow transition create_new_draft',
+      'use image_workflow transition publish',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains cgov_infographic.install.
+ * Contains cgov_embedded_block.install.
  */
 
 use Drupal\cgov_core\CgovCoreTools;
@@ -14,16 +14,12 @@ use Drupal\cgov_core\CgovCoreTools;
  *
  * @see system_install()
  */
-function cgov_infographic_install() {
+function cgov_embedded_block_install() {
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
-  // Add content type permissions.
-  $siteHelper->addMediaTypePermissions('cgov_infographic', ['content_author']);
-  $siteHelper->attachMediaTypeToWorkflow('cgov_infographic', 'editorial_workflow');
-
   // Install permissions for this module.
-  _cgov_infographic_install_permissions($siteHelper);
+  _cgov_embedded_block_install_permissions($siteHelper);
 
 }
 
@@ -33,10 +29,10 @@ function cgov_infographic_install() {
  * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
  *   Cgov tools service.
  */
-function _cgov_infographic_install_permissions(CgovCoreTools $siteHelper) {
+function _cgov_embedded_block_install_permissions(CgovCoreTools $siteHelper) {
   $perms = [
     'admin_ui' => [
-      'access cgov_embedded_infographic_browser entity browser pages',
+      'access block_content_browser entity browser pages',
     ],
   ];
 
