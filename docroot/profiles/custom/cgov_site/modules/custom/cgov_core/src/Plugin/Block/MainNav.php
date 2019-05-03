@@ -76,6 +76,29 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Generic sorting function to sort by Term weight.
+   *
+   * It's equivalent to reverse sort, since higher weights should
+   * appear first.
+   *
+   * @param \Drupal\cgov_core\NavItem $firstItem
+   *   Nav item.
+   * @param \Drupal\cgov_core\NavItem $secondItem
+   *   Nav item.
+   *
+   * @return int
+   *   Sort result.
+   */
+  public function sortItemsByWeight(NavItem $firstItem, NavItem $secondItem) {
+    $firstWeight = $firstItem->getWeight();
+    $secondWeight = $secondItem->getWeight();
+    if ($firstWeight === $secondWeight) {
+      return 0;
+    }
+    return ($firstWeight < $secondWeight) ? -1 : 1;
+  }
+
+  /**
    * Get Main Nav NavItems.
    *
    * @return array
@@ -106,6 +129,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
         $filteredMegaNavRootItems[] = $child;
       }
     }
+    usort($filteredMegaNavRootItems, [$this, "sortItemsByWeight"]);
     $renderedMegaNavTrees = [];
     for ($i = 0; $i < count($filteredMegaNavRootItems); $i++) {
       $rootItem = $filteredMegaNavRootItems[$i];
@@ -168,6 +192,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     if (!$hasItemsToRender) {
       return "";
     }
+    usort($filteredMobileItemsToRender, [$this, "sortItemsByWeight"]);
     $renderedMobileItems = [];
     foreach ($filteredMobileItemsToRender as $mobileItem) {
       $href = $mobileItem->getHref();
