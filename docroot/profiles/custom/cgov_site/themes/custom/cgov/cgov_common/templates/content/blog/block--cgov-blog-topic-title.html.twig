@@ -1,0 +1,7 @@
+{% if content['#topic_titles']|length > 0 %}
+  {% for url, title in content['#topic_titles'] %}
+    {% if (title|length > 0) and url == label %}
+      {{ title }}
+    {% endif %}
+  {% endfor %}
+{% endif %}

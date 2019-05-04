@@ -61,6 +61,35 @@
 {% endmacro %}
 
 {# 
+ # Draw the title for a given Blog Series. Prepend the month/year to the title if 
+ # this is a Blog Archive page. Prepend the category name if this is a Blog Category 
+ # page.
+ #
+ # @param string month (numerical value) 
+ # @param string year
+ # @param string topic
+ # @param string blog_name
+ #}
+{% macro drawBlogSeriesTitle(month, year, topic, blog_name) %}
+  <h1>
+    <span>
+      {% if (month and year) %}
+        {{ _self.transformMonthName(month) }}
+      {% endif %}
+      {% if year %}
+        {{ year }} - 
+      {% endif %}
+      {% if topic %}
+        {{ drupal_block('cgov_blog_topic_title', {label: topic}) }} - 
+      {% endif %}
+      {% if (blog_name) %}
+        {{ blog_name }}
+      {% endif %}
+    </span>
+  </h1>
+{% endmacro %}
+
+{# 
  # Get long month name.
  # @param string month
  #}
