@@ -1,5 +1,4 @@
 ## Cancer Currents Blog
-## TODO: Fix translation
 - entity: "node"
   type: "cgov_blog_series"
   title: 'Cancer Currents Blog'
@@ -51,6 +50,44 @@
     - value: 'Recommended Content'
   field_feedburner_url:
     - value: 'https://feedburner-test.cancer.gov/cancercurrents'
+  ## Cancer Currents Blog Español
+  title__ES:
+    value: 'Temas y relatos blog'
+  field_browser_title__ES:
+    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
+  field_card_title__ES:
+    value: 'Temas y relatos blog'
+  field_feature_card_description__ES:
+    value: 'Temas y relatos blog'
+  field_pretty_url__ES:
+    value: "temas-y-relatos-blog"
+  field_short_title__ES:
+    value: "temas y relatos"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Noticias'
+  field_banner_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'ras-blog-banner.__v400106190.jpg'
+      alt: 'Join the Discussion text with image of gears'
+  field_about_blog__ES:
+    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
+  field_allow_comments__ES: 
+    value: 0
+  field_archive_group_by__ES:
+    value: 'year'
+  field_feedburner_url__ES:
+    value: 'https://feedburner-test.cancer.gov/cancercurrents?lang=es'
+  field_blog_series_shortname__ES:
+    value: 'temas-y-relatos'
 
 ## RAS Dialogue Blog
 - entity: "node"
@@ -89,48 +126,3 @@
     - value: 'cgv-ras'
   field_archive_group_by:
     - value: 'year'
-
-## Cancer Currents Blog Espanol
-- entity: "node"
-  type: "cgov_blog_series"
-  title:
-    value: 'Temas y relatos blog'
-  langcode: es
-  status: 1
-  moderation_state:
-    value: 'published'
-  field_browser_title:
-    value: 'Temas y relatos: Un blog sobre la investigación del cáncer'
-  field_card_title:
-    value: 'Temas y relatos blog'
-  field_feature_card_description:
-    value: 'Temas y relatos blog'
-  field_pretty_url:
-    value: "temas-y-relatos-blog"
-  field_public_use: 1
-  field_search_engine_restrictions: 0
-  field_short_title:
-    - value: "emas y relatos"
-  field_site_section:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            name: 'Noticias'
-  field_banner_image:
-    - '#process':
-        callback: 'file'
-        args:
-          - 'image'
-          - type: 'module'
-            filename: 'ras-blog-banner.__v400106190.jpg'
-      alt: 'Join the Discussion text with image of gears'
-  field_about_blog: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
-  field_allow_comments: 0
-  field_archive_group_by:
-    - value: 'month'
-  field_feedburner_url:
-    - value: 'https://feedburner-test.cancer.gov/cancercurrents?lang=es'
-  field_blog_series_shortname:
-    - value: 'temas-y-relatos'
