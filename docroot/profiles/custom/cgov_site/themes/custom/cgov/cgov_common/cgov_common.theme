@@ -85,7 +85,7 @@ function cgov_common_preprocess_node(&$variables) {
 
   // Add any parameter values to the $variables get property.
   foreach ($params as $param) {
-    $variables['get'][$param] = isset($_GET[$param]) ? $_GET[$param] : '';
+    $variables['get'][$param] = $_GET[$param] ?? '';
   }
 }
 
