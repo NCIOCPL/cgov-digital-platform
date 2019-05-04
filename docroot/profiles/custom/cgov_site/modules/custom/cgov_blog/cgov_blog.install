@@ -5,6 +5,8 @@
  * Contains cgov_blog.install.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
  * Implements hook_install().
  *
@@ -18,7 +20,27 @@ function cgov_blog_install() {
 
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
-  $siteHelper->addContentTypePermissions('cgov_blog_series', ['content_author']);
+  $siteHelper->addContentTypePermissions('cgov_blog_series', ['blog_manager']);
   $siteHelper->attachContentTypeToWorkflow('cgov_blog_post', 'editorial_workflow');
   $siteHelper->attachContentTypeToWorkflow('cgov_blog_series', 'editorial_workflow');
+
+  // Install permissions for this module.
+  _cgov_blog_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_blog_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_blog_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
