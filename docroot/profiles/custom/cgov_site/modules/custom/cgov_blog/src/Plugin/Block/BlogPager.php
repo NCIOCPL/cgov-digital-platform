@@ -144,6 +144,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function drawBlogPostOlderNewer($cid, $content_type) {
     // Get an array of blog field collections to populate links.
+    $post = [];
     $blog_links = $this->getBlogPostPagerLinks($cid, $content_type);
 
     // Draw our prev/next links.
