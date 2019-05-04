@@ -71,23 +71,32 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
       $content_type = $curr_entity->bundle();
     }
 
+    // Build object.
+    $build = [];
+
     // Render our pager markup based on content type.
     // Note: wherever possible, we should use out-of-the box pagination from
     // the view. This plugin is currently being used by Blog Posts only.
     switch ($content_type) {
       case 'cgov_blog_post':
-        $markup = $this->drawBlogPostOlderNewer($content_id, $content_type);
+        $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
         $langcode = $curr_entity->language()->getId();
-        $build['#prev_nid'] = $markup['prev_nid'] ?? '';
-        $build['#prev_title'] = $markup['prev_title'] ?? '';
-        $build['#prev_link'] = $this->blogManager->getBlogPathFromNid($build['#prev_nid'], $langcode);
-        $build['#next_nid'] = $markup['next_nid'] ?? '';
-        $build['#next_title'] = $markup['next_title'] ?? '';
-        $build['#next_link'] = $this->blogManager->getBlogPathFromNid($build['#next_nid'], $langcode);
+
+        // Build the render array & cache tags.
+        $build['prev_nid'] = $post['prev_nid'] ?? '';
+        $build['prev_title'] = $post['prev_title'] ?? '';
+        $build['prev_link'] = $this->blogManager->getBlogPathFromNid($build['prev_nid'], $langcode);
+        $build['next_nid'] = $post['next_nid'] ?? '';
+        $build['next_title'] = $post['next_title'] ?? '';
+        $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
+        $build['#cache'] = [
+          'tags' => [
+            'node_list',
+          ],
+        ];
         break;
 
       default:
-        $build['#markup'] = '';
         break;
     }
     return $build;
@@ -135,7 +144,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function drawBlogPostOlderNewer($cid, $content_type) {
     // Get an array of blog field collections to populate links.
-    $markup = [];
+    $post = [];
     $blog_links = $this->getBlogPostPagerLinks($cid, $content_type);
 
     // Draw our prev/next links.
@@ -147,31 +156,23 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         // Link previous post if exists.
         if ($index > 0) {
           $p = $blog_links[$index - 1];
-          $markup['prev_nid'] = $p['nid'];
-          $markup['prev_title'] = $p['title'];
+          $post['prev_nid'] = $p['nid'];
+          $post['prev_title'] = $p['title'];
         }
 
         // Link next post if exists.
         if ($index < (count($blog_links) - 1)) {
           $n = $blog_links[$index + 1];
-          $markup['next_nid'] = $n['nid'];
-          $markup['next_title'] = $n['title'];
+          $post['next_nid'] = $n['nid'];
+          $post['next_title'] = $n['title'];
         }
         break;
       }
     }
 
-    // Return HTML.
-    return $markup;
-  }
+    // Return properties that will be used to draw HTML.
+    return $post;
 
-  /**
-   * {@inheritdoc}
-   *
-   * @todo Make cacheable in https://www.drupal.org/node/2232375.
-   */
-  public function getCacheMaxAge() {
-    return 0;
   }
 
 }
