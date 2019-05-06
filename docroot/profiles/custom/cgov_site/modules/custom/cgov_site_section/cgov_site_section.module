@@ -109,6 +109,16 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
+
+  // We only set the front page for English nodes without a parent.
+  // NOTE: this does not account for the case when the root becomes a
+  // child of another node. It is possible, but the amount of complexity
+  // that check would add is not worth it.
+  // NOTE2: target_id can be an int and it can be a string.
+  if ($entity->parent->target_id == 0 && $entity->langcode->value === 'en') {
+    _cgov_site_section_attempt_set_front_page($entity);
+  }
+
   // TODO: This comparison should be done somewhere else and less messy.
   // Do not do unnessesary updates, so only cascade if a change was
   // made to a significant field.
@@ -138,6 +148,39 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   // TODO: Figure out how to get pathauto to update all the aliases using
   // pathauto. To do it here is A) too slow, and B) fraught with
   // issue regarding workflow and the various entity types we would have to hit.
+}
+
+/**
+ * Set the front page if conditions are right.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $site_section
+ *   The site section.
+ */
+function _cgov_site_section_attempt_set_front_page(EntityInterface $site_section) {
+  /*
+   * If it has no landing page, then we need to exit.
+   *
+   * NOTE: We do not care about its published state as taxonomy does not have
+   * workflow yet. So when the landing page is set, then it updates the live
+   * site immediately. The assumption is that the home page will be published
+   * either before, or right after. If we checked the published state, and
+   * skipped updating it if the target was unpublished, then we would have to
+   * have an update hook for node checking if it is a landing then updating
+   * the section. That is too convoluted.
+   */
+  $home_page_id = $site_section->field_landing_page->target_id;
+  if ($home_page_id === NULL) {
+    return;
+  }
+
+  // Set the front page.
+  $config = \Drupal::configFactory()->getEditable('system.site');
+  $front_page = "/node/${home_page_id}";
+  // Only save if we need to change it.
+  if ($front_page !== $config->get('page.front')) {
+    $config->set('page.front', $front_page)->save();
+  }
+
 }
 
 /**
