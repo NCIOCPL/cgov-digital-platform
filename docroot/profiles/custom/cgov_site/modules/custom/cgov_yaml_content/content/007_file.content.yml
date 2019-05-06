@@ -1,0 +1,34 @@
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Test PDF File name"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "test-file-url"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/progress/discovery'
+  field_list_description: "File description. O, for a muse of fire that would ascend the brightest heaven of invention, a kingdom for a stage, princes to act, and monarchs to behold the swelling scene."
+  field_short_title: "File short title"
+  field_search_engine_restrictions: 0
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Find a Clinical Trial'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'drupal-config-schema.pdf'
+      alt: 'Test PDF File name'

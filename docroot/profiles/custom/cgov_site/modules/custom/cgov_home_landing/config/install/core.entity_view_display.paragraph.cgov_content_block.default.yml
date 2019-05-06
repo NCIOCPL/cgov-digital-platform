@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.cgov_content_block.field_content_heading
     - field.field.paragraph.cgov_content_block.field_html_content
     - paragraphs.paragraphs_type.cgov_content_block
   module:
@@ -11,8 +12,16 @@ targetEntityType: paragraph
 bundle: cgov_content_block
 mode: default
 content:
-  field_html_content:
+  field_content_heading:
     weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_html_content:
+    weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }

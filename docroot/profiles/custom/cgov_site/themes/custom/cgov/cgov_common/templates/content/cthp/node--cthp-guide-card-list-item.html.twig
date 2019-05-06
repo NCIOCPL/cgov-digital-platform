@@ -1,9 +1,3 @@
-{% if content.field_short_title|field_value %}
-    {% set title = content.field_short_title|field_value %}
-{% else %}
-  {% set title = node.label %}
-{% endif %}
-
 <li>
-  <a href="{{ url }}">{{ title }}</a>
+  <a href="{{ url }}">{{ node.label }}</a>
 </li>

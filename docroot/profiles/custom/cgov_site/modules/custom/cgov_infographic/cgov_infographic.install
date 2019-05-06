@@ -5,6 +5,8 @@
  * Contains cgov_infographic.install.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
  * Implements hook_install().
  *
@@ -20,4 +22,23 @@ function cgov_infographic_install() {
   $siteHelper->addMediaTypePermissions('cgov_infographic', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_infographic', 'editorial_workflow');
 
+  // Install permissions for this module.
+  _cgov_infographic_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_infographic_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_embedded_infographic_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }

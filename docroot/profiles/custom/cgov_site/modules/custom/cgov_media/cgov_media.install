@@ -5,7 +5,7 @@
  * Contains cgov_media.install.
  */
 
-use Drupal\user\Entity\Role;
+use Drupal\cgov_core\CgovCoreTools;
 
 /**
  * Implements hook_install().
@@ -15,19 +15,29 @@ use Drupal\user\Entity\Role;
  * @see system_install()
  */
 function cgov_media_install() {
-  // These are some core fundamental permissions that are needed
-  // by any user in the system. We are using author as that is
-  // our role of least privledge. This list should only contain
-  // those items that are common to *all* media.
-  $basic_perms = [
-    // TODO: Add in media browser role for media list items.
-    'access media overview',
+  $tools = \Drupal::service('cgov_core.tools');
+
+  // Install permissions for this module.
+  _cgov_media_install_permissions($tools);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_media_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access media overview',
+      'access cgov_media_browser entity browser pages',
+    ],
+    'authenticated' => [
+      'view media',
+    ],
   ];
 
-  $least_privileged_role = Role::load('content_author');
-  foreach ($basic_perms as $perm) {
-    $least_privileged_role->grantPermission($perm);
-  }
-  $least_privileged_role->save();
-
+  $siteHelper->addRolePermissions($perms);
 }

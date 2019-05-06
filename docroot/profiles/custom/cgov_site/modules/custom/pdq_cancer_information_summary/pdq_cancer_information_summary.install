@@ -20,11 +20,30 @@ function pdq_cancer_information_summary_install() {
   $siteHelper = \Drupal::service('cgov_core.tools');
 
   // Add content type permissions and assign to workflow.
-  $restfulPermissions = [
-    'restful get pdq_cis_api',
-    'restful post pdq_cis_api',
-  ];
   $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
-  $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
   $siteHelper->attachContentTypeToWorkflow('pdq_cancer_information_summary', 'pdq_workflow');
+
+  // Install permissions for this module.
+  pdq_cancer_information_summary_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function pdq_cancer_information_summary_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access pdq_cis_browser entity browser pages',
+    ],
+    'pdq_importer' => [
+      'restful get pdq_cis_api',
+      'restful post pdq_cis_api',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }

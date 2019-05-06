@@ -22,12 +22,13 @@
       {{ content.field_image_article }}
       {{ content.field_intro_text }}
       {{ content.body }}
-      {{ drupal_block('cgov_blog_pager', {label: ''}) }}
     </div>
   </div>
 
   <footer class="article-footer">
+    {{ content.field_citation }}
     {{ content.field_related_resources }}
+    {{ drupal_block('cgov_blog_pager', {label: ''}) }}
     {% if content.field_recommended_content[0] %}
       <div id="blog-cards">
         <h4>{{ series.field_recommended_content_header.value }}</h4>

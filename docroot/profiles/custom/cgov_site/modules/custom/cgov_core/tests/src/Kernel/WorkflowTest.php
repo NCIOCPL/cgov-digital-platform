@@ -24,37 +24,8 @@ class WorkflowTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
-    'cgov_core',
-    'content_moderation',
-    'content_translation',
-    'datetime',
-    'field',
-    'file',
-    'link',
-    'filter',
-    'image',
-    'language',
-    'node',
-    'options',
     'system',
-    'taxonomy',
-    'views',
-    'embed',
-    'entity_embed',
-    'embed',
-    'entity_embed',
-    'entity_browser',
-    'entity_reference_revisions',
-    'paragraphs',
-    'text',
     'user',
-    'workflows',
-    'token',
-    'token_filter',
-    'block',
-    'block_content',
-    'editor',
-    'metatag',
   ];
 
   /**
@@ -77,41 +48,17 @@ class WorkflowTest extends KernelTestBase {
   protected function setUp() {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
-    $this->installEntitySchema('content_moderation_state');
-    $this->installEntitySchema('node');
-    $this->installEntitySchema('taxonomy_term');
+
+    // These are special and cannot be installed as a dependency
+    // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
-    $this->installEntitySchema('block_content');
-    $this->installEntitySchema('workflow');
-    $this->installEntitySchema('paragraph');
-    $this->installConfig([
-      'field',
-      'cgov_core',
-      'content_moderation',
-      'content_translation',
-      'file',
-      'image',
-      'link',
-      'node',
-      'system',
-      'user',
-      'filter',
-      'language',
-      'taxonomy',
-      'views',
-      'entity_browser',
-      'entity_reference_revisions',
-      'paragraphs',
-      'workflows',
-      'token',
-      'token_filter',
-      'block',
-      'block_content',
-      'editor',
-      'metatag',
-    ]);
     $this->installSchema('system', ['sequences']);
-    $this->installSchema('node', ['node_access']);
+    $this->installConfig(['system', 'user']);
+
+    // Install core and its dependencies.
+    // This ensures that the install hook will fire, which sets up
+    // the permissions for the roles we are testing below.
+    \Drupal::service('module_installer')->install(['cgov_core']);
 
     $perms = [
       'access content',

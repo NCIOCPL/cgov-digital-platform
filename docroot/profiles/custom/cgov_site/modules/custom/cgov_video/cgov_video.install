@@ -5,6 +5,8 @@
  * Contains cgov_video.install.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
  * Implements hook_install().
  *
@@ -19,4 +21,25 @@ function cgov_video_install() {
   // Add content type permissions.
   $siteHelper->addMediaTypePermissions('cgov_video', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_video', 'editorial_workflow');
+
+  // Install permissions for this module.
+  _cgov_video_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_video_browser entity browser pages',
+      'access cgov_embedded_video_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
