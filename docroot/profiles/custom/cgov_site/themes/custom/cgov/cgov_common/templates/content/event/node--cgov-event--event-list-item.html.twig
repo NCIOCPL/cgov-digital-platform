@@ -14,7 +14,7 @@
     </h3>
 
     {# Series name #}
-    {% if content.field_list_description|field_value %}
+    {% if content.field_event_series|field_value %}
         <h4 class="event-series">{{ content.field_event_series }}</h4>
     {% endif %}
 
@@ -45,7 +45,7 @@
         </div>
 
         {# Location info #}
-        {% if content.field_venue|field_value or content.field_room|field_value or content.field_room|field_value %}
+        {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
             <div class="event-location">
                 {% if content.field_room|field_value %}
                     <span class="event-location-venue">{{ content.field_venue }}</span>
