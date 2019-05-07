@@ -1,0 +1,80 @@
+### INFOGRAPHIC TESTS for QA:
+
+# Has Spanish and English translations
+
+- entity: media
+  langcode: en
+  bundle: cgov_infographic
+  status: 1
+  moderation_state: published
+  name: 'Pediatric Infographic NCI'
+  name__ES:
+      value: 'Infantil Infographic NCI'
+  field_meta_description: 'Infographic Meta Description'
+  field_meta_description__ES:
+      value: 'Infografía sobre  Infantil de NCI.'
+  field_short_title: 'Pediatric Infographic NCI - Short Title'
+  field_short_title__ES:
+      value: 'Infantil Infografía NCI - Short Title ES'
+  field_browser_title:
+      value: "Pediatric Infographic NCI - Browser Title"
+  field_browser_title__ES:
+      value: "Infantil Infografía NCI - Browser Title ES"
+  field_card_title:
+      value: "Pediatric Infographic NCI - Card Title"
+  field_card_title__ES:
+    value: "Infantil Infografía NCI - Card Title ES"
+  field_list_description: 'Infographic explaining NCI-COG Pediatric MATCH, a cancer treatment clinical trial for children and adolescents, from 1 to 21 years of age, that is testing the use of precision medicine for pediatric cancers.'
+  field_list_description__ES:
+      value: 'Infografía sobre MATCH Infantil de NCI y COG, un estudio clínico de tratamiento del cáncer para niños y adolescentes, de 1 a 21 años de edad, que está evaluando el uso de la medicina de precisión para cánceres infantiles.'
+  field_feature_card_description: 'Infographic explaining Pediatric MATCH, which is a clinical treatment trial using precision medicine for pediatric cancers.'
+  field_feature_card_description__ES:
+      value: 'Infografía sobre MATCH Infantil, un estudio clínico de tratamiento del cáncer para niños y adolescentes que está evaluando el uso de la medicina de precisión para cánceres infantiles.'
+  body:
+  body__ES:
+  field_accessible_version:
+    - value: |
+        This infographic provides a high-level overview of NCI's historical milestones, funding process, the NCI-designated cancer centers, and training numbers for fiscal year (FY) 2017. The work we do includes genomics, public health, clinical trials, surveillance, scientific review, basic research, funding, drug development, cancer research, survivorship research, and more. Funds available to the NCI in FY 2018 totaled $5.67 billion which reflects an increase of $254 million from the previous fiscal year. In FY 2017, NCI supported 3,795 emerging cancer researchers through training and career development grants and intramural research experiences (not including students and postdoctoral fellows supported by NCI research project grants, cancer center grants, and other non-training mechanisms).
+  field_accessible_version__ES:
+    - value: |
+        Este infográfico provee una vista general de alto nivel de acontecimientos históricos del NCI, del proceso de financiamiento, de los centros oncológicos designados por el NCI y las cifras de capacitación para el año fiscal 2015. El trabajo que nos ocupa incluye genómica, salud pública, vigilancia, revisión científica, investigación básica, financiamiento, creación de medicamentos, investigación oncológica, investigación de supervivencia, y otras cosas. Los fondos disponibles para el NCI en 2015 fueron de un total de USD 5210 mil millones lo cual refleja un aumento de 2,9% o USD 143 millones del año fiscal anterior. En 2015, el NCI financió a 3613 investigadores oncológicos emergentes por medio de capacitación y de subvenciones para desarrollo profesional y experiencias de investigación de intramuros (lo cual no incluye a estudiantes y becarios posdoctorales financiados por subvenciones de proyectos de investigación del NCI, subvenciones de centros oncológicos y otros mecanismos fuera de capacitación).
+  field_infographic:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pediatric-nci.jpg'
+  field_infographic__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'pediatric-nci-esp.jpg'
+  field_image_promotional:
+  field_image_promotional__ES:
+      value:
+  field_date_posted: '2018-02-25'
+  field_date_updated: '2018-02-25'
+  field_date_reviewed: '2018-02-25'
+  field_date_display_mode:
+      value: 'reviewed'
+  field_public_use: 1
+  field_search_engine_restrictions: 0
+  field_pretty_url: 'infographic-nci'
+  field_pretty_url__ES: 'esp-infografia-nci'
+  field_site_section:
+  - '#process':
+      callback: 'reference'
+      args:
+        - taxonomy_term
+        - vid: 'cgov_site_sections'
+          computed_path: '/about-nci/organization'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/organizacion'

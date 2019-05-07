@@ -1,0 +1,96 @@
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Site Mobile Menu Nav- English"
+  info__ES:
+    value: "CGov Site Mobile Menu Nav - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "mobile_nav"
+  body:
+    - format: "raw_html"
+      value: |
+        <div class="mobile-menu-bar"><button type="button" class="open-panel nav-header menu-btn">Menu</button><a href="/global/contact" class="nav-contact">Contact</a><a href="/publications/dictionaries/cancer-terms" class="nav-dictionary">Dictionary</a><button type="button" class="nav-search">Search</button></div>
+  body__ES:
+    - format: "raw_html"
+      value: |
+        <div class="mobile-menu-bar"><button type="button" class="open-panel nav-header menu-btn">Menú</button><a href="/espanol/global/contactenos" class="nav-contact">Contacto</a><a href="/espanol/publicaciones/diccionario" class="nav-dictionary">Diccionario</a><button type="button" class="nav-search">Buscar</button></div>
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Site Search Bar- English"
+  info__ES:
+    value: "CGov Site Search Bar - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "search_bar"
+  body:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item last-SI">
+          <div class="rawHtml">
+            <div class="search" role="search">
+              <form
+                action="/search/results"
+                method="post"
+                id="siteSearchForm"
+                name="siteSearchForm"
+                onsubmit="NCIAnalytics.SiteWideSearch(this);"
+              >
+                <label class="hidden" for="swKeyword">Search</label>
+                <input
+                  placeholder="search"
+                  class="searchString ui-autocomplete-input"
+                  id="swKeyword"
+                  maxlength="255"
+                  name="swKeyword"
+                  onblur="bSearchBoxBool=false;"
+                  onfocus="bSearchBoxBool=true;"
+                  value=""
+                  autocomplete="off"
+                  type="text"
+                  aria-autocomplete="list"
+                  aria-haspopup="true"
+                >
+                <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                  <span class="hidden">Search</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+  body__ES:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item last-SI">
+          <div class="rawHtml">
+            <div class="search" role="search">
+              <form
+                action="/espanol/buscar/resultados"
+                method="post"
+                id="siteSearchForm"
+                name="siteSearchForm"
+                onsubmit="NCIAnalytics.SiteWideSearch(this);"
+              >
+                <label class="hidden" for="swKeyword">Buscar</label>
+                <input
+                  placeholder="buscar"
+                  class="searchString ui-autocomplete-input"
+                  id="swKeyword"
+                  maxlength="255"
+                  name="swKeyword"
+                  onblur="bSearchBoxBool=false;"
+                  onfocus="bSearchBoxBool=true;"
+                  value=""
+                  autocomplete="off"
+                  type="text"
+                  aria-autocomplete="list"
+                  aria-haspopup="true"
+                >
+                <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                  <span class="hidden">Buscar</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
