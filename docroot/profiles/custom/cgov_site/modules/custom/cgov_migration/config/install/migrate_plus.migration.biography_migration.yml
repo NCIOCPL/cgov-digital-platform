@@ -1,0 +1,212 @@
+id: biography_migration
+label: 'Custom minilanding migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://migrations/private-files-mig/biography.xml
+  item_selector: /rows/row
+  fields:
+
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: title
+         label: title
+         selector: '@title'
+
+        -
+         name: body
+         label: body
+         selector: body
+
+        -
+         name: field_first_name
+         label: field_first_name
+         selector: '@field_first_name'
+        -
+         name: field_last_name
+         label: field_last_name
+         selector: '@field_last_name'
+
+        -
+         name: field_office_location
+         label: field_office_location
+         selector: '@field_office_location'
+
+        -
+         name: field_email_address
+         label: field_email_address
+         selector: '@field_email_address'
+
+        -
+         name: field_org_name_1
+         label: field_org_name_1
+         selector: '@field_org_name_1'
+
+        -
+         name: field_org_name_2
+         label: field_org_name_2
+         selector: '@field_org_name_2'
+
+        -
+         name: field_phone_number
+         label: field_phone_number
+         selector: '@field_phone_number'
+
+
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: '@field_search_engine_restrictions'
+
+        -
+         name: field_short_title
+         label: field_short_title
+         selector: '@field_short_title'
+
+
+        -
+         name: field_browser_title
+         label: field_browser_title
+         selector: '@field_browser_title'
+
+        -
+         name: field_card_title
+         label: field_card_title
+         selector: '@field_card_title'
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: '@field_page_description'
+
+
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
+
+        -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+  title: title
+  body/value: body
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+  moderation_state:
+   plugin: default_value
+   default_value: published
+
+  body/format:
+   plugin: default_value
+   default_value: full_html
+
+
+  field_email_address: field_email_address
+  field_phone_number: field_phone_number
+  field_org_name_1: field_org_name_1
+  field_org_name_2: field_org_name_2
+  field_first_name: field_first_name
+  field_last_name: field_last_name
+  field_office_location: field_office_location
+
+  field_short_title: field_short_title
+  field_browser_title: field_browser_title
+  field_card_title: field_card_title
+  field_press_release_type: field_press_release_type
+  field_subtitle: field_subtitle
+
+  field_page_description: field_page_description
+  field_list_description: field_list_description
+  field_feature_card_description: field_feature_card_description
+
+  field_date_posted: field_date_posted
+  field_date_reviewed: field_date_reviewed
+  field_date_updated: field_date_updated
+  field_date_display_mode: date_display_mode
+
+
+  field_search_engine_restrictions: field_search_engine_restrictions
+
+  field_site_section:
+    plugin: migration_lookup
+    migration: sitesectionsql_migration
+    source: term_id
+    no_stub: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
+
+
+
+  field_pretty_url: field_pretty_url
+
+
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_biography
+
+migration_dependencies: { }
