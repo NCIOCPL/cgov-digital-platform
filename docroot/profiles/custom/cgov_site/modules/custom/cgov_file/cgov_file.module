@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Contains the cgov_file functions.
+ */
+
+use Drupal\file\FileInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cgov_file_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id != 'media_cgov_file_add_form' && $form_id != 'media_cgov_file_edit_form') {
+    return;
+  }
+
+  $form['field_media_file']['widget'][0]['#upload_validators']['file_validate_extensions'] = [NULL];
+  $form['field_media_file']['widget'][0]['#upload_validators']['_cgov_file_validate'] = [];
+}
+
+/**
+ * Validate the file against our own requirements.
+ *
+ * This should be used to do things like blacklisting files.
+ *
+ * @param \Drupal\file\FileInterface $file
+ *   A file entity.
+ *
+ * @return array
+ *   An empty array if the file is allowed or an array containing an
+ *   error message if it's not.
+ *
+ * @see hook_file_validate()
+ */
+function _cgov_file_validate(FileInterface $file) {
+  // TODO: Reject any files we do not like.
+  return [];
+}
