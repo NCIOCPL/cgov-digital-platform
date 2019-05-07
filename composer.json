@@ -120,7 +120,9 @@
             "@composer clearcache --ansi"
         ],
         "post-drupal-scaffold-cmd": [
-            "cd docroot && patch -p1 <../patches/htaccess-saml.patch"
+            "cd docroot && patch -p1 <../patches/htaccess/saml.patch",
+            "cd docroot && patch -p1 <../patches/htaccess/https.patch",
+            "cd docroot && patch -p1 <../patches/htaccess/hsts.patch"
         ]
     },
     "scripts-descriptions": {
