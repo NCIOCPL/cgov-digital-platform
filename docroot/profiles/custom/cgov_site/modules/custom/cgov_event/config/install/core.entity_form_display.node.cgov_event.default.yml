@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.cgov_image_browser
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.node.cgov_event.body
     - field.field.node.cgov_event.field_all_day_event
     - field.field.node.cgov_event.field_browser_title
@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.cgov_event.field_site_section
     - field.field.node.cgov_event.field_venue
     - node.type.cgov_event
+    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - datetime
@@ -144,10 +145,10 @@ content:
   field_list_description:
     weight: 8
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: string_textarea
     region: content
   field_page_description:
     weight: 7
@@ -201,9 +202,17 @@ content:
     region: content
   field_site_section:
     weight: 1
-    settings: {  }
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   field_venue:
     weight: 14

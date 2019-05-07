@@ -9,11 +9,13 @@
 # Get the content author or default to 'NCI Staff' if none found.
 # @param content
 #}
-{% macro getAuthor(content) %}
+{% macro getByline(content) %}
   {% if content.field_author and content.field_author|length > 2 %}
+    {% spaceless %}{{content.field_date_posted}}{% endspaceless %},
+    {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
     {{content.field_author}}
   {% else %}
-    {% trans with {'context': 'CGov Blog' } %}NCI Staff{% endtrans %}
+    {{content.field_date_posted}}
   {% endif %}
 {% endmacro %}
 
@@ -28,5 +30,64 @@
     {{content.field_image_article}}
   {% else %}
     {# TODO: Use old placeholder image. #}
+  {% endif %}
+{% endmacro %}
+
+{# 
+ # Draw archive list item for month type.
+ # @param array monthInfo
+ # @param string monthInfo
+ #}
+{% macro getMonthLinks(monthInfo, year, path) %}
+  {% for month, count in monthInfo %}
+    <li class="month">
+      <a href="{{path}}?year={{year}}&month={{month}}">
+        {{ _self.transformMonthName(month) }}
+      </a> ({{ count }})
+    </li>
+  {% endfor %}
+{% endmacro %}
+
+{# 
+ # Draw archive list item for year type.
+ # @param array yearInfo
+ #}
+{% macro getYearLinks(yearInfo, path) %}
+  {% for year, count in yearInfo %}
+      <li class="year">
+        <a href="{{path}}?year={{year}}">{{year}}</a> ({{count}})
+      </li>
+  {% endfor %}
+{% endmacro %}
+
+{# 
+ # Get long month name.
+ # @param string month
+ #}
+{% macro transformMonthName(month) %}
+  {% if month == '12' %}
+    {% trans with {'context':'Long month name'} %}December{% endtrans %}
+  {% elseif month == '11' %}
+    {% trans with {'context':'Long month name'} %}November{% endtrans %}    
+  {% elseif month == '10' %}
+    {% trans with {'context':'Long month name'} %}October{% endtrans %}
+  {% elseif month == '09' %}
+    {% trans with {'context':'Long month name'} %}September{% endtrans %}
+  {% elseif month == '08' %}
+    {% trans with {'context':'Long month name'} %}August{% endtrans %}
+  {% elseif month == '07' %}
+    {% trans with {'context':'Long month name'} %}July{% endtrans %}
+  {% elseif month == '06' %}
+    {% trans with {'context':'Long month name'} %}June{% endtrans %}
+  {% elseif month == '05' %}
+    {% trans with {'context':'Long month name'} %}May{% endtrans %}
+  {% elseif month == '04' %}
+    {% trans with {'context':'Long month name'} %}April{% endtrans %}
+  {% elseif month == '03' %}
+    {% trans with {'context':'Long month name'} %}March{% endtrans %}
+  {% elseif month == '02' %} 
+    {% trans with {'context':'Long month name'} %}February{% endtrans %}
+  {% else %}
+    {% trans with {'context':'Long month name'} %}January{% endtrans %}
   {% endif %}
 {% endmacro %}

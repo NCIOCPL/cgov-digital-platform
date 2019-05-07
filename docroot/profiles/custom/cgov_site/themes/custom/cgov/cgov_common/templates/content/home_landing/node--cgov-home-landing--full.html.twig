@@ -1,5 +1,5 @@
 <div id="nvcgSlHeroHeader" class="row hero-slot">
-  {# Hero Banner Here #}
+  {{ content.field_hero_banner }}
 </div>
 
 {# Title Row #}
@@ -10,7 +10,8 @@
     <h1>{{ node.label }}</h1>
     <!-- END PAGE TITLE -->
   </div>
-  {{ drupal_block('page_options') }}
+
+  {{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
 </div>
 {# End Title Row#}
 

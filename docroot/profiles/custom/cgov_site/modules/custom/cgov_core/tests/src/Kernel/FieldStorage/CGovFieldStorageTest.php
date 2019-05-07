@@ -41,10 +41,13 @@ class CGovFieldStorageTest extends KernelTestBase {
     'block_content',
     'token',
     'token_filter',
+    'embed',
+    'entity_embed',
     'entity_browser',
     'entity_reference_revisions',
     'paragraphs',
     'editor',
+    'metatag',
   ];
 
   /**
@@ -141,6 +144,8 @@ class CGovFieldStorageTest extends KernelTestBase {
       'language',
       'content_translation',
       'views',
+      'embed',
+      'entity_embed',
       'entity_browser',
       'entity_reference_revisions',
       'paragraphs',

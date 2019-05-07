@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_reviewed
+    - node.type.cgov_cancer_research
+  module:
+    - datetime
+id: node.cgov_cancer_research.field_date_reviewed
+field_name: field_date_reviewed
+entity_type: node
+bundle: cgov_cancer_research
+label: 'Reviewed Date'
+description: 'Date that the content was last reviewed by subject matter expert. Defaults to today''s date but can be overridden.'
+required: true
+translatable: true
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

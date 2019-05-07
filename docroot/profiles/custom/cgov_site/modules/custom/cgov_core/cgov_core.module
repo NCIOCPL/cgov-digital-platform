@@ -87,7 +87,7 @@ function cgov_core_block_build_alter(array &$build, BlockPluginInterface $block)
  */
 function cgov_core_configurable_language_insert($entity) {
   $public_use['es'] = <<<EOMarkup
-<em>Si desea copiar algo de este texto, vea <a href="/espanol/politicas/derechos-de-autor-y-uso">Derechos de autor y uso de imágenes y contenido</a> sobre instrucciones de derechos de autor y permisos. En caso de reproducción digital permitida, por favor, dé crédito al Instituto Nacional del Cáncer como su creador, y enlace al producto original del NCI usando el título original del producto; por ejemplo,  “[current-page:title].”</em>
+<p><em>Si desea copiar algo de este texto, vea <a href="/espanol/politicas/derechos-de-autor-y-uso">Derechos de autor y uso de imágenes y contenido</a> sobre instrucciones de derechos de autor y permisos. En caso de reproducción digital permitida, por favor, dé crédito al Instituto Nacional del Cáncer como su creador, y enlace al producto original del NCI usando el título original del producto; por ejemplo,  “[current-page:title] publicada originalmente por el Instituto Nacional del Cáncer.”</em></p>
 EOMarkup;
 
   $langcode = $entity->id();
@@ -186,5 +186,33 @@ function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
       ],
     ]
     );
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Limits allowed text formats using the cgov_util form_tools service.
+ */
+function cgov_core_field_widget_form_alter(&$element, $form_state, $context) {
+  // Maps field names to an array containing a single format.
+  $map = [
+    'field_citation_content' => ['streamlined'],
+    'field_intro_text' => ['streamlined'],
+    'body' => ['full_html'],
+  ];
+  $formHelper = \Drupal::service('cgov_util.form_tools');
+  $formHelper->allowTextFormats($map, $element, $context);
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * When a user is initially created, default the preferred
+ * language for the UI pages to English.
+ */
+function cgov_core_user_presave(EntityInterface $entity) {
+  if ($entity->isNew()) {
+    $entity->set('preferred_admin_langcode', 'en');
   }
 }

@@ -108,8 +108,9 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
         // Otherwise this is NULL and the while loop exits.
         if (count($filteredChildren)) {
           $child = $filteredChildren[0];
-          // Requirement: Do not include breadcrumb for active page.
-          if ($child && !$child->isCurrentSiteSection()) {
+          // Requirement: Do not include breadcrumb for active page if it is
+          // the landing page of the current site section.
+          if ($child && !$child->isCurrentSiteSectionLandingPage()) {
             $breadcrumbs[] = $child;
           }
         }

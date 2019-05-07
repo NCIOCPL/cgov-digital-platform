@@ -1,0 +1,248 @@
+#######
+# TESTS: https://github.com/NCIOCPL/cgov-digital-platform-qa/issues/58
+# Single content block
+# Image with translation for Press release, citation, related resources, dates and public use
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "leukemia"
+  name__ES:
+    value: "leukemia -ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'doctordrawingblood.jpg'
+      alt: 'patients with chronic leukemia'
+  field_caption: "Ibrutinib plus rituximab superior to standard treatment for some patients with chronic leukemia"
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'doctordrawingblood.jpg'
+      alt: 'Ibrutinib más rituximab fue superior al tratamiento'
+  field_caption__ES: "Ibrutinib más rituximab fue superior al tratamiento convencional para algunos pacientes con leucemia"
+  field_credit: "iStock"
+  field_credit__ES:
+    value: "iStock"
+- entity: "node"
+  type: "cgov_press_release"
+  langcode: en
+  title: "Leukemia - Ibrutinib plus rituximab superior to standard treatment for some patients with chronic leukemia"
+  title__ES:
+    value: "Leucemia - Ibrutinib más rituximab fue superior al tratamiento convencional para algunos pacientes con leucemia linfocítica crónica"
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/press-releases/2018'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/comunicados-de-prensa/2018'
+  field_pretty_url:
+    value: 'leukemia-cll-ibrutinib-trial'
+  field_pretty_url__ES:
+    value: 'leucemia-llc-ibrutinib-estudio'
+  moderation_state:
+    value: 'published'
+  field_browser_title: "Leukemia - Ibrutinib-based therapy superior in CLL trial"
+  field_browser_title__ES:
+    value: "Leucemia - Terapia basada en Ibrutinib fue superior al tratamiento convencional en un estudio de LLC"
+  field_feature_card_description:
+    value: "leukemia feature card description."
+  field_feature_card_description__ES:
+    value: "leukemia feature card description - es"
+  field_card_title:
+    value: "leukemia card title"
+  field_card_title__ES:
+    value: "leukemia card title - es"
+  field_list_description: "melanomas list description"
+  field_list_description__ES:
+    value: "melanomas list description - es"
+  field_page_description:
+    value: "leukemia page description."
+  field_page_description__ES:
+    value: "leukemia page description. - ES"
+  field_short_title:
+    value: "leukemia short title"
+  field_short_title__ES:
+    value: "leukemia short title - es"
+  field_date_posted: "2018-04-30"
+  field_date_reviewed: "2018-04-30"
+  field_date_updated: "2018-04-30"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'leukemia'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'leukemia -ES'
+  body:
+    - format: "full_html"
+      value: |
+        <p>An interim analysis of a large phase 3 clinical trial found that the combination of ibrutinib plus rituximab was superior to standard treatment for patients age 70 and younger with previously untreated chronic lymphocytic leukemia (CLL). The trial met its primary endpoint of an improvement in progression-free survival (the length of time patients live before their disease worsens). The combination also improved overall survival, the trial&rsquo;s secondary endpoint. In general, patients in the ibrutinib&ndash;rituximab arm were less likely to experience serious side effects than those in the standard treatment arm. Until now, the standard treatment for previously untreated CLL has been a six-month course of FCR, which combines the chemotherapy drugs fludarabine and cyclophosphamide with rituximab.</p>
+        <p>The data and safety monitoring board overseeing the trial, known as E1912, recommended that these results be released immediately given their significance to public health. The findings were presented as a late-breaking abstract at the American Society of Hematology (ASH) annual meeting on December 4, 2018. The trial was sponsored by the National Cancer Institute (NCI), part of the National Institutes of Health, and designed by researchers with the ECOG-ACRIN Cancer Research Group.</p>
+        <p>"These results are practice-changing and immediately establish ibrutinib and rituximab as the new standard of care for the initial treatment of CLL in patients age 70 and younger," said lead investigator Tait Shanafelt, M.D., a professor of hematology at the Stanford University School of Medicine in Palo Alto, California. "The E1912 trial showed that the combination of ibrutinib and rituximab not only provided better leukemia control, it also prolonged life and had fewer side effects."</p>
+        <p>"These definitive results show why large trials like this, that test new therapies in an effort to achieve clinically meaningful benefit for patients, are so important," said Richard F. Little, M.D., of the Cancer Therapy Evaluation Program at NCI.</p>
+        <p>The study was conducted through NCI&rsquo;s National Clinical Trials Network. Pharmacyclics LLC provided ibrutinib and clinical trial support funding under a cooperative research and development agreement with NCI and a separate agreement with ECOG-ACRIN.</p>
+        <p>CLL is one of the most common types of leukemia in adults. It typically occurs during or after middle age and rarely occurs in individuals under the age of 40. Ibrutinib and rituximab are targeted treatments. Ibrutinib interferes with the survival of lymphocytic leukemia cells, and rituximab enhances the ability of the body's immune system to destroy the cells. Ibrutinib is approved by the U.S. Food and Drug Administration for the treatment of some blood cancers, including CLL.</p>
+        <p>The trial enrolled 529 patients between January 2014 and June 2016. Those enrolled in the trial were adults age 70 and younger who had never received treatment for CLL and required treatment. Patients were randomly assigned to receive either the ibrutinib&ndash;rituximab combination or FCR.</p>
+        <p>The first planned interim analysis for progression-free survival was performed in September 2018. With a median follow-up of 33.4 months, the hazard ratio for progression-free survival favored the ibrutinib group over the FCR group (HR=0.352). This means that, at any given time, the risk of disease progression was reduced by about two-thirds (65 percent) for patients in the ibrutinib group compared with the FCR group. This observed improvement in progression-free survival exceeded the trial design target. Overall survival was also superior for patients in the ibrutinib arm.</p>
+        <p>According to the data and safety monitoring board's recommendation, the outcome has been disclosed to all patients participating in the study and their physicians. Patients who are receiving ibrutinib in the trial can continue therapy, as long as it remains effective. All patients assigned to FCR have completed treatment and are continuing to be monitored per standard of care. Quality of life was rigorously measured in both arms, and the data are awaiting analysis.</p>
+        <p>Findings from another NCI-supported trial on ibrutinib in patients with CLL were also presented at the ASH meeting and published in <em>The New England Journal of Medicine</em>. The A041202 trial&mdash;an international phase 3 clinical trial coordinated by the Alliance for Clinical Trials in Oncology&mdash;demonstrated that ibrutinib produces superior progression-free survival compared with standard chemoimmunotherapy (bendamustine plus rituximab) in previously untreated patients with CLL who are age 65 and older. The study found that adding rituximab to ibrutinib did not improve progression-free survival beyond ibrutinib alone.</p>
+        <p>"These two NCI-funded trials have collectively established ibrutinib-based therapy as the first line treatment for CLL patients of any age," Dr. Little said.</p>
+        <p><strong>About the ECOG-ACRIN Cancer Research Group (ECOG-ACRIN):</strong> ECOG-ACRIN is a membership-based scientific organization that designs and conducts cancer research involving adults who have or are at risk of developing cancer. Research personnel in nearly 1,200 member institutions are involved in Group science, which is organized into three programs: Cancer Control and Outcomes, Therapeutic Studies, and Biomarker Sciences. The Group's primary funding is from the National Cancer Institute (NCI). Visit <a href="http://www.ecog-acrin.org/">www.ecog-acrin.org</a>, follow on Twitter @eaonc, or call 215-789-3631.</p>
+        <p><strong>About the National Cancer Institute (NCI):</strong> NCI leads the National Cancer Program and NIH's efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at <a href="/" title="">cancer.gov</a> or call NCI's Contact Center (formerly known as the Cancer Information Service) at 1-800-4-CANCER (1-800-422-6237).</p>
+        <p><strong>About the National Institutes of Health (NIH):</strong> NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit <a href="https://www.nih.gov/">nih.gov</a>.</p>
+  body__ES:
+    - format: "full_html"
+      value: |
+        <p>Un an&aacute;lisis provisional de un estudio cl&iacute;nico grande en fase 3 encontr&oacute; que la combinaci&oacute;n de ibrutinib m&aacute;s rituximab fue superior al tratamiento convencional para pacientes de 70 a&ntilde;os y m&aacute;s j&oacute;venes con leucemia linfoc&iacute;tica cr&oacute;nica (LLC) sin tratamiento previo. El estudio satisfizo su objetivo principal de una mejor&iacute;a de la supervivencia sin avance (el tiempo&nbsp; que viven los pacientes antes de que empeore su enfermedad).&nbsp;La combinaci&oacute;n mejor&oacute; tambi&eacute;n la supervivencia en general, el segundo objetivo del estudio. En general, los pacientes del grupo de ibrutinib y rituximab tuvieron menos probabilidad de experimentar efectos secundarios graves que los del grupo de tratamiento convencional. Hasta ahora, el tratamiento convencional para LLC sin tratamiento previo ha sido un curso de seis meses de FCR, el cual combina los f&aacute;rmacos de quimioterapia fludarabina y ciclofosfamida con rituximab.</p>
+        <p>Los datos y el consejo de vigilancia que supervis&oacute; el estudio, conocido como E 1912, recomendaron que se difundieran estos resultados de inmediato dada su importancia para la salud p&uacute;blica. Los resultados fueron presentados como un resumen de &uacute;ltima hora en la reuni&oacute;n anual de la Sociedad Estadounidense de Hematolog&iacute;a (ASH) el 4 de diciembre de 2018. El estudio fue patrocinado por el Instituto Nacional del C&aacute;ncer (NCI), componente de los Institutos Nacionales de la Salud, y dise&ntilde;ado por investigadores del Grupo de Investigaci&oacute;n Oncol&oacute;gica ECOG-ACRIN.</p>
+        <p>&ldquo;Estos resultados est&aacute;n cambiando la practica y han establecido a ibrutinib y rituximab como la nueva norma de tratamiento inicial de la leucemia linfoc&iacute;tica cr&oacute;nica en pacientes de 70 a&ntilde;os y m&aacute;s j&oacute;venes&rdquo;, dijo el investigador principal doctor Tait Shanafelt, profesor de hematolog&iacute;a en la Facultad de Medicina de la Universidad de Stanford en Palo Alto, California. &ldquo;El estudio E1912 mostr&oacute; que la combinaci&oacute;n de ibrutinib y rituximab no solo proveyeron un mejor control de la leucemia, sino tambi&eacute;n prolongaron la vida y tuvieron menos efectos secundarios&rdquo;.</p>
+        <p>&ldquo;Estos resultados definitivos muestran por qu&eacute; grandes estudios como este, que eval&uacute;an nuevas terapias con el fin de lograr beneficios de mucha importancia cl&iacute;nica para los pacientes, son tan significativos&rdquo;, dijo el doctor Richard F. Little, del Programa de Evaluaci&oacute;n de Terapias Oncol&oacute;gicas en el NCI.</p>
+        <p>El estudio fue dirigido por la Red Nacional de Estudios Cl&iacute;nicos.&nbsp; La compa&ntilde;&iacute;a Pharmacyclics LLC provey&oacute; ibrutinib y el apoyo financiero para el estudio cl&iacute;nico de acuerdo a un convenio cooperativo de investigaci&oacute;n y desarrollo con NCI y un convenio separado con ECOG-ACRIN.</p>
+        <p>La LLC es uno de los tipos de leucemia m&aacute;s comunes en adultos. De ordinario ocurre durante o despu&eacute;s de la madurez de edad y raramente sucede en individuos menores de 40 a&ntilde;os de edad.&nbsp; El ibrutinib y rituximab son tratamientos dirigidos. Ibrutinib interfiere con la supervivencia de las c&eacute;lulas linfoc&iacute;ticas de leucemia, y el rituximab aumenta la capacidad del sistema inmunitario del cuerpo para destruir las c&eacute;lulas. Ibrutinib est&aacute; aprobado por la Administraci&oacute;n de Alimentos y Medicamentos de los Estados Unidos para el tratamiento de algunos c&aacute;nceres de la sangre, incluyendo la LLC.</p>
+        <p>El estudio inscribi&oacute; a 529 pacientes entre enero de 2014 y junio de 2016. Quienes se inscribieron en el estudio eran adultos de 70 a&ntilde;os de edad y m&aacute;s j&oacute;venes que nunca hab&iacute;an recibido tratamiento para LLC y requer&iacute;an tratamiento. Los pacientes fueron asignados al azar para recibir ya sea la combinaci&oacute;n de ibrutinib y rituximab o la combinaci&oacute;n de FCR.</p>
+        <p>El primer an&aacute;lisis provisional planeado para supervivencia sin avance de la enfermedad se efectu&oacute; en septiembre de 2018. Con una mediana de seguimiento de 33,4 meses, el cociente de riesgos instant&aacute;neos (HR) para la supervivencia sin avance favoreci&oacute; al grupo de ibrutinib sobre el grupo de FCR (HR=0,352).&nbsp; Esto significa que, a cualquier momento, se redujo el riesgo de avance del c&aacute;ncer cerca de dos tercios (65&nbsp;%) para los pacientes en el grupo de ibrutinib en comparaci&oacute;n con el grupo de FCR.&nbsp; Esta mejor&iacute;a que se observ&oacute; en la supervivencia sin avance excedi&oacute; la meta del dise&ntilde;o del estudio. En general, la supervivencia fue superior tambi&eacute;n para pacientes del grupo de ibrutinib.</p>
+        <p>De acuerdo con los datos y la recomendaci&oacute;n del consejo de vigilancia de la seguridad, el resultado ha sido dado a conocer a todos los pacientes participantes en el estudio y a sus m&eacute;dicos. Los pacientes que est&aacute;n recibiendo ibrutinib en el estudio pueden continuar la terapia, mientras siga siendo eficaz. Todos los pacientes asignados a FCR han completado el tratamiento y han seguido siendo observados de acuerdo a las normas de atenci&oacute;n.&nbsp; La calidad de vida fue medida rigurosamente en ambos grupos, y los datos est&aacute;n en espera de ser analizados.</p>
+        <p>Los resultados de otro estudio apoyado por el NCI de ibrutinib en pacientes con LLC se presentaron tambi&eacute;n en la reuni&oacute;n de la ASH y se publicaron en la revista <em>The New England Journal of Medicine</em>. El estudio A041202&mdash;un estudio cl&iacute;nico internacional en fase 3 coordinado por la Alianza para Estudios Cl&iacute;nicos en Oncolog&iacute;a&mdash;demostr&oacute; que ibrutinib produce superior supervivencia sin avance en comparaci&oacute;n con quimioinmunoterapia convencional (bendamustina m&aacute;s rituximab) en pacientes de 65 a&ntilde;os o m&aacute;s con LLC que no han tenido tratamiento previo.&nbsp;&nbsp; El estudio encontr&oacute; que la adici&oacute;n de rituximab a ibrutinib no mejor&oacute; la supervivencia sin avance m&aacute;s que ibrutinib solo.</p>
+        <p>&ldquo;Estos dos estudios financiados por el NCI han establecido colectivamente a la terapia a base de ibrutinib como primer l&iacute;nea de tratamiento para pacientes con LLC de cualquier edad,&rdquo; dijo el doctor Little.</p>
+        <p><strong>Acerca del Grupo de Investigaci&oacute;n Oncol&oacute;gica (ECOG-ACRIN): </strong>El Grupo de Investigaci&oacute;n Oncol&oacute;gica (ECOG-ACRIN) es una organizaci&oacute;n cient&iacute;fica de membres&iacute;a que dise&ntilde;a y lleva a cabo investigaciones oncol&oacute;gicas en adultos con c&aacute;ncer o que tienen riesgo de padecer c&aacute;ncer. Personal de investigaci&oacute;n en cerca de 1200 instituciones miembros participan en ciencia del Grupo, la cual est&aacute; organizada en tres programas: Control y resultados de c&aacute;ncer, Estudios terap&eacute;uticos y Ciencias de marcadores biol&oacute;gicos. El financiamiento principal del grupo proviene del Instituto Nacional del C&aacute;ncer (NCI). Visite <a href="https://ecog-acrin.org/">www.ecog-acrin.org</a>, s&iacute;galo en Twitter @eaonc, o llame al 215-789-3631.</p>
+        <p><strong>Acerca del Instituto Nacional del C&aacute;ncer (NCI):</strong>&nbsp;El Instituto Nacional del C&aacute;ncer, NCI, dirige el Programa Nacional de C&aacute;ncer y el esfuerzo de los Institutos Nacionales de la Salud para reducir dr&aacute;sticamente la frecuencia del c&aacute;ncer y mejorar las vidas de los pacientes con c&aacute;ncer y de sus familias, por medio de la investigaci&oacute;n acerca de la prevenci&oacute;n y la biolog&iacute;a del c&aacute;ncer, la creaci&oacute;n de nuevas intervenciones y la capacitaci&oacute;n y el acceso a mentores de nuevos investigadores. Para obtener m&aacute;s informaci&oacute;n sobre el c&aacute;ncer, visite, por favor, el sitio web del NCI en&nbsp;<a href="/espanol" title="">cancer.gov/espanol</a> o llame al Centro de Contacto del NCI (anteriormente conocido como Servicio de Informaci&oacute;n sobre el C&aacute;ncer) al 1-800-422-6237 (1-800-4-CANCER)</p>
+        <p><strong>Acerca de los Institutos Nacionales de la Salud (NIH):</strong>&nbsp;Los Institutos Nacionales de la Salud (NIH), la dependencia de investigaci&oacute;n m&eacute;dica del pa&iacute;s, est&aacute;n compuestos por 27 institutos y centros y forman parte del Departamento de Salud y Servicios Humanos de EE.&nbsp;UU.&nbsp; NIH es la principal dependencia federal que lleva a cabo y apoya la investigaci&oacute;n b&aacute;sica, cl&iacute;nica y m&eacute;dica aplicada e investiga las causas, tratamientos y curas tanto de enfermedades comunes como de enfermedades poco comunes.&nbsp; Para obtener m&aacute;s informaci&oacute;n sobre los NIH y sus programas, visite <a href="https://salud.nih.gov/">nih.gov</a>.</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_citation__ES:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 2 - <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 3 - <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_public_use: 1

@@ -1,0 +1,12 @@
+{# Setup the classes for the div wrapper #}
+{% set style = paragraph.field_list_item_style.value %}
+{% set attr = create_attribute() %}
+{% set attr = attr.addClass('managed list') %}
+
+<!-- List Style: {{- style -}} -->
+<div{{ attr }}>
+  {{ content.field_list_title }}
+  <ul>
+    {{ content.field_list_items }}
+  </ul>
+</div>

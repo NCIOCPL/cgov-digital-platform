@@ -174,6 +174,8 @@ class PDQResource extends ResourceBase {
         $errors[] = [$nid, $language, $message];
       }
     }
+    $args = ['%count' => count($summaries)];
+    $this->logger->notice('%count PDQ summaries set to published', $args);
     return new ModifiedResourceResponse(['errors' => $errors], 200);
   }
 
@@ -199,10 +201,13 @@ class PDQResource extends ResourceBase {
     }
 
     // Make sure the CDR ID matches exactly one entity.
+    // 2019-05-03: Treat request to remove a PDQ item which is not present
+    // as a success, to avoid publishing job failures caused by shifting
+    // contents of rebuilt Drupal servers on the lower tiers (#1610).
     $matches = $this->lookupCdrId($id);
     if (count($matches) === 0) {
-      $msg = t('CDR ID @id not found', ['@id' => $id]);
-      throw new NotFoundHttpException($msg);
+      $this->logger->notice('DELETE: CDR ID @id not found', ['@id' => $id]);
+      return new ModifiedResourceResponse(NULL, 204);
     }
     if (count($matches) > 1) {
       $msg = t('Ambiguous CDR ID @id', ['@id' => $id]);
@@ -212,15 +217,20 @@ class PDQResource extends ResourceBase {
     $node = Node::load($nid);
 
     // Apply deletion logic based on language.
-    if ($langcode === 'es') {
+    if ($langcode === 'es' && $id > 0) {
       $node->removeTranslation('es');
       $node->save();
+      $args = ['%cdrid' => $id, '%nid' => $node->id()];
+      $msg = 'Spanish translation for node %nid dropped for CDR ID %cdrid';
+      $this->logger->notice($msg, $args);
     }
     else {
-      if ($node->hasTranslation('es')) {
+      if ($node->hasTranslation('es') && $id > 0) {
         throw new BadRequestHttpException(t('Spanish translation exists'));
       }
       $node->delete();
+      $args = ['%cdrid' => $id, '%nid' => $node->id()];
+      $this->logger->notice('node %nid removed for CDR ID %cdrid', $args);
     }
     return new ModifiedResourceResponse(NULL, 204);
   }

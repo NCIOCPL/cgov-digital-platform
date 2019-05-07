@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
@@ -33,6 +34,7 @@ dependencies:
     - datetime
     - entity_browser
     - paragraphs_asymmetric_translation_widgets
+    - cgov_site_section
     - path
     - text
 id: node.cgov_article.default
@@ -159,10 +161,10 @@ content:
   field_list_description:
     weight: 8
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: string_textarea
     region: content
   field_page_description:
     weight: 7
@@ -275,5 +277,6 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_meta_tags: true
   promote: true
   sticky: true

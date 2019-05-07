@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.pdq_cis_browser
+  module:
+    - views
+name: pdq_cis_browser
+label: 'PDQ CIS Browser'
+display: modal
+display_configuration:
+  width: ''
+  height: ''
+  link_text: 'Select summary'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  74bbf32c-32eb-4892-9d67-c6534cf7257a:
+    settings:
+      view: pdq_cis_browser
+      view_display: entity_browser_1
+      submit_text: 'Select summary'
+      auto_select: false
+    uuid: 74bbf32c-32eb-4892-9d67-c6534cf7257a
+    weight: 1
+    label: Select
+    id: view

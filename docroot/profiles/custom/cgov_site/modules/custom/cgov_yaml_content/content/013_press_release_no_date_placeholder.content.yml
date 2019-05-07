@@ -1,0 +1,225 @@
+
+# Placeholder Press Release for no date display
+# also added,  citation, related resources  and removed public use
+
+- entity: "media"
+  bundle: "cgov_image"
+  name: "oropharynx image"
+  name__ES:
+    value: "oropharynx image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'oropharynx-medical-illustration-article.jpg'
+      alt: 'Anatomical illustration of the oropharynx.'
+  field_caption: "Anatomical illustration of the oropharynx."
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'oropharynx-medical-illustration-spanish-article.jpg'
+      alt: 'Ilustración anatómica de la orofaringe'
+  field_caption__ES: "Ilustración anatómica de la orofaringe"
+  field_credit: "National Cancer Institute"
+  field_credit__ES:
+    value: "Instituto Nacional del Cáncer"
+- entity: "node"
+  type: "cgov_press_release"
+  langcode: en
+  title: "[No Date] Press Release Title"
+  title__ES:
+    value: "[No Date] Press Release Title - ES"
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/press-releases/2018'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/comunicados-de-prensa/2018'
+  field_pretty_url:
+    value: 'press-release-no-date'
+  field_pretty_url__ES:
+    value: 'esp-press-release-no-date'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "Press Release Browser Title"
+  field_browser_title_ES:
+    value: "Press Release Browser Title - ES"
+  field_feature_card_description:
+    value: "Press Release future card."
+  field_feature_card_description__ES:
+    value: "Press Release future card - ES."
+  field_card_title:
+    value: "Press Release card title"
+  field_card_title__ES:
+    value: "Press Release card title - ES"
+  field_date_display_mode:
+    #- value: 'posted'
+    #- value: 'reviewed'
+    #- value: 'updated'
+  field_list_description:
+  field_page_description:
+    value: "Press Release Page description"
+  field_page_description__ES:
+    value: "Press Release Page description - ES"
+  field_short_title:
+    value: "Press Release short title"
+  field_short_title__ES:
+     value: "Press Release short title - ES"
+  field_date_posted: "2018-08-14"
+  field_date_reviewed: "2018-08-13"
+  field_date_updated: "2018-08-13"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx image'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx image'
+  body:
+    - format: "full_html"
+      value: |
+        <p>In the largest-ever randomized clinical trial testing vitamin D for cancer prevention, the supplement did not reduce the risk of developing cancer.</p>
+        <p>A large body of <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000257225&amp;version=Patient&amp;language=English" onclick="javascript:popWindow('defbyid','CDR0000257225&amp;version=Patient&amp;language=English'); return false;">epidemiology</a> research had suggested that people with higher blood levels of vitamin D have a lower risk of cancer, said Barry Kramer, M.D., director of NCI&rsquo;s <a href="https://prevention.cancer.gov/">Division of Cancer Prevention</a>.</p>
+  body__ES:
+    - format: "full_html"
+      value: |
+        <p>En el m&aacute;s grande estudio cl&iacute;nico aleatorizado de evaluaci&oacute;n de la vitamina D para prevenci&oacute;n del cancer, el complemento no redujo el riesgo de padecimiento de c&aacute;ncer.</p>
+        <p>Un conjunto grande de investigaci&oacute;n epidemiol&oacute;gica ha sugerido que la gente con concentraciones sangu&iacute;neas m&aacute;s elevadas de vitamina D tiene un riesgo menor de c&aacute;ncer, dijo el doctor Barry Kramer, director de la&nbsp;<a href="https://prevention.cancer.gov/">Divisi&oacute;n de Prevenci&oacute;n de C&aacute;ncer</a> del NCI.</p>
+  field_public_use: 0
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_related_resources__ES:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en mujeres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Problemas de salud sexual en hombres con cáncer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_citation__ES:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 2 - <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "full_html"
+          value: |
+            <p>Citation ES 3 - <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"

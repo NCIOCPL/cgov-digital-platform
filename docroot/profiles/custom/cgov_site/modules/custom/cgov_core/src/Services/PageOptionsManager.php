@@ -3,12 +3,19 @@
 namespace Drupal\cgov_core\Services;
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Page Options Manager Service.
  */
 class PageOptionsManager implements PageOptionsManagerInterface {
+
+  /**
+   * The route matcher.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatcher;
 
   protected $pageOptionsConfig = [];
 
@@ -21,13 +28,6 @@ class PageOptionsManager implements PageOptionsManagerInterface {
    * @var array
    */
   private static $nodeOptions = [
-    'cgov_home_landing' => [
-      'print',
-      'email',
-      'facebook',
-      'twitter',
-      'pinterest',
-    ],
     'cgov_article' => [
       'resize',
       'print',
@@ -37,6 +37,7 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_cancer_center' => [
+      'resize',
       'print',
       'email',
       'facebook',
@@ -44,6 +45,37 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_biography' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_blog_post' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_blog_series' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_cancer_research' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_cthp' => [
       'print',
       'email',
       'facebook',
@@ -51,6 +83,59 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'pinterest',
     ],
     'cgov_event' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_home_landing' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_infographic' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_mini_landing' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_press_release' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'cgov_video' => [
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'pdq_cancer_information_summary' => [
+      'resize',
+      'print',
+      'email',
+      'facebook',
+      'twitter',
+      'pinterest',
+    ],
+    'pdq_drug_information_summary' => [
+      'resize',
       'print',
       'email',
       'facebook',
@@ -75,12 +160,29 @@ class PageOptionsManager implements PageOptionsManagerInterface {
    *   The route match.
    */
   public function __construct(RouteMatchInterface $route_match) {
-    $currentNode = $route_match->getParameter('node');
-    if ($currentNode instanceof NodeInterface) {
-      $currentNodeType = $currentNode->getType();
-      $this->pageOptionsConfig = self::getPageOptionsForPageType($currentNodeType);
+    $this->routeMatcher = $route_match;
+    $currentEntity = $this->getCurrEntity();
+    if ($currentEntity) {
+      $bundleType = $currentEntity->bundle();
+      $this->pageOptionsConfig = self::getPageOptionsForPageType($bundleType);
     }
+  }
 
+  /**
+   * Gets the current entity if there is one.
+   *
+   * @return Drupal\Core\Entity\ContentEntityInterface
+   *   The retrieved entity, or FALSE if none found.
+   */
+  private function getCurrEntity() {
+    $params = $this->routeMatcher->getParameters()->all();
+    foreach ($params as $param) {
+      if ($param instanceof ContentEntityInterface) {
+        // If you find a ContentEntityInterface stop iterating and return it.
+        return $param;
+      }
+    }
+    return FALSE;
   }
 
   /**

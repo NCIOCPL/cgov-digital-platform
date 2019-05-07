@@ -32,23 +32,8 @@ install:
   - options
   - text
   - entity_embed
-  # from CGOV
-  - cgov_core
-  - cgov_media
-  - cgov_image
-  - cgov_list
-  - cgov_article
-  - cgov_blog
-  - cgov_home_landing
-  - cgov_content_block
-  - cgov_press_release
-  - cgov_site_section
-  - cgov_video
-  - pdq_cancer_information_summary
-  - pdq_drug_information_summary
-  - cgov_cancer_center
-  - cgov_biography
-  - cgov_event
+  - linkit
+  - redirect
   # other Core
   - media
   - workflows
@@ -60,6 +45,7 @@ install:
   - admin_toolbar_tools
   - admin_toolbar_links_access_filter
   # other
+  - acquia_purge
   - yaml_content
   - twig_tweak
   - address
@@ -67,8 +53,47 @@ install:
   - pathauto
   - paragraphs
   - paragraphs_asymmetric_translation_widgets
+  - purge
+  - purge_drush
+  - purge_processor_cron
+  - purge_processor_lateruntime
+  - purge_queuer_coretags
+  - purge_ui
   - ctools
   - entity_browser
+  - adobe_dtm
+  - metatag
+  - metatag_dc
+  - metatag_dc_advanced
+  - metatag_open_graph
+  - metatag_twitter_cards
+  # from CGOV
+  - cgov_util
+  - cgov_core
+  - cgov_site_section
+  - cgov_media
+  - cgov_embedded_block
+  - cgov_image
+  - cgov_list
+  - cgov_promo
+  - cgov_article
+  - cgov_blog
+  - cgov_file
+  - cgov_home_landing
+  - cgov_content_block
+  - cgov_metatag
+  - cgov_press_release
+  - cgov_video
+  - pdq_core
+  - pdq_cancer_information_summary
+  - pdq_drug_information_summary
+  - cgov_cancer_center
+  - cgov_biography
+  - cgov_cthp
+  - pdq_glossifier
+  - cgov_event
+  - cgov_infographic
+  - cgov_cancer_research
 themes:
   - cgov_common
   - cgov_admin

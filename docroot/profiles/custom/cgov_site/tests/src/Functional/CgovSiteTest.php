@@ -4,6 +4,7 @@ namespace Drupal\Tests\cgov_site\Functional;
 
 use Drupal\Tests\SchemaCheckTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests CGOV_SITE installation profile expectations are being met.
@@ -25,6 +26,14 @@ class CgovSiteTest extends BrowserTestBase {
   protected $adminUser;
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
+    parent::setUp();
+  }
+
+  /**
    * Tests cgov_site installation profile.
    */
   public function testCgovSiteProfile() {
@@ -32,11 +41,15 @@ class CgovSiteTest extends BrowserTestBase {
     $roles = user_roles();
     $this->assertArrayHasKey('anonymous', $roles, 'Anonymous role exists.');
     $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
-    $this->assertArrayHasKey('administrator', $roles, 'Administrator role exists.');
+    $this->assertArrayHasKey('admin_ui', $roles, 'Admin UI role exists.');
+    $this->assertArrayHasKey('content_author', $roles, 'Content Author role exists.');
+    $this->assertArrayHasKey('content_editor', $roles, 'Content Editor role exists.');
+    $this->assertArrayHasKey('site_admin', $roles, 'Site Admin role exists.');
 
     // Create admin user and login.
     $this->adminUser = $this->drupalCreateUser();
-    $this->adminUser->addRole('administrator');
+    $this->adminUser->addRole('admin_ui');
+    $this->adminUser->addRole('site_admin');
     $this->adminUser->save();
     $this->drupalLogin($this->adminUser);
 

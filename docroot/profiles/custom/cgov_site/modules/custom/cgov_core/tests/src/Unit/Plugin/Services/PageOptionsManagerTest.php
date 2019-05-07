@@ -5,7 +5,8 @@ namespace Drupal\Tests\cgov_core\Unit\Plugin\Services;
 use Drupal\Tests\UnitTestCase;
 use Drupal\cgov_core\Services\PageOptionsManager;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Tests Page Options Manager Service.
@@ -20,15 +21,18 @@ class PageOptionsManagerTest extends UnitTestCase {
    * @dataProvider dataForTests
    */
   public function testGetConfig($given, $expected) {
-    $mockNodeInterface = $this->getMock(NodeInterface::class);
-    $mockNodeInterface->expects($this->any())
-      ->method('getType')
+    $mockContentEntityInterface = $this->getMock(ContentEntityInterface::class);
+    $mockContentEntityInterface->expects($this->any())
+      ->method('bundle')
       ->willReturn($given);
     $mockRouteInterface = $this->getMock(RouteMatchInterface::class);
+    $mockParameterBag = $this->getMock(ParameterBagInterface::class);
+    $mockParameterBag->expects($this->any())
+      ->method('all')
+      ->willReturn([$given => $mockContentEntityInterface]);
     $mockRouteInterface->expects($this->any())
-      ->method('getParameter')
-      ->with('node')
-      ->willReturn($mockNodeInterface);
+      ->method('getParameters')
+      ->willReturn($mockParameterBag);
     $pageOptionsManager = new PageOptionsManager($mockRouteInterface);
     $pageOptionsConfig = $pageOptionsManager->getConfig();
     $this->assertArrayEquals($pageOptionsConfig, $expected);

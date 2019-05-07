@@ -14,28 +14,38 @@ settings:
         -
           name: Formatting
           items:
+            - Undo
+            - Redo
+            - Format
+            - Styles
             - Bold
             - Italic
-            - Format
+            - RemoveFormat
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+            - Indent
+            - Outdent
         -
           name: Links
           items:
             - DrupalLink
             - DrupalUnlink
         -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
           name: Source
           items:
+            - Cgov_glossifier
             - Source
   plugins:
+    stylescombo:
+      styles: "strong|Bold\r\nem|Italics\r\ns|Strikethrough\r\nsub|Subscript\r\nsup|Superscript"
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: cgov_inline_links
     language:
       language_list: un
-    stylescombo:
-      styles: ''
     tokenbrowser:
       token_types: {  }
 image_upload:

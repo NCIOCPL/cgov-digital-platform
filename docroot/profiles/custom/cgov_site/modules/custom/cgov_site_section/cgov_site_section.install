@@ -5,10 +5,15 @@
  * Install file for cgov_site_section.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
+
 /**
  * Implements hook_install().
  */
 function cgov_site_section_install() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
   $field_manager = \Drupal::service('entity_field.manager');
   $field_storage_manager = \Drupal::service('field_storage_definition.listener');
 
@@ -16,6 +21,26 @@ function cgov_site_section_install() {
   $definition = $field_manager->getFieldStorageDefinitions('taxonomy_term', 'cgov_site_sections')['computed_path'];
 
   $field_storage_manager->onFieldStorageDefinitionCreate($definition);
+
+  // Install permissions for this module.
+  _cgov_site_section_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_site_section_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_site_section_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
 
 /**

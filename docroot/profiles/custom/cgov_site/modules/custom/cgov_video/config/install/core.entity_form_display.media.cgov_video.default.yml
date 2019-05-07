@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_site_section_browser
     - field.field.media.cgov_video.body
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
@@ -13,35 +14,43 @@ dependencies:
     - field.field.media.cgov_video.field_feature_card_description
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
+    - field.field.media.cgov_video.field_meta_description
+    - field.field.media.cgov_video.field_meta_tags
     - field.field.media.cgov_video.field_pretty_url
+    - field.field.media.cgov_video.field_related_resources
+    - field.field.media.cgov_video.field_search_engine_restrictions
     - field.field.media.cgov_video.field_short_title
     - field.field.media.cgov_video.field_site_section
     - media.type.cgov_video
-    - workflows.workflow.editorial_workflow
+    - workflows.workflow.image_workflow
   module:
     - content_moderation
     - datetime
+    - entity_browser
     - media
+    - paragraphs
+    - path
     - text
 id: media.cgov_video.default
 targetEntityType: media
 bundle: cgov_video
 mode: default
 content:
-  created:
-    type: datetime_timestamp
-    weight: 18
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   body:
-    weight: 10
+    weight: 12
     settings:
       rows: 5
       placeholder: ''
+      summary_rows: 3
     third_party_settings: {  }
-    type: text_textarea
+    type: text_textarea_with_summary
     region: content
+  created:
+    type: datetime_timestamp
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_browser_title:
     weight: 5
     settings:
@@ -51,7 +60,7 @@ content:
     type: string_textfield
     region: content
   field_caption:
-    weight: 11
+    weight: 13
     settings:
       rows: 5
       placeholder: ''
@@ -67,36 +76,36 @@ content:
     type: string_textfield
     region: content
   field_date_display_mode:
-    weight: 16
+    weight: 17
     settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: options_buttons
     region: content
   field_date_posted:
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
-    weight: 15
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
     weight: 14
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_feature_card_description:
-    weight: 7
-    settings:
-      rows: 5
-      placeholder: ''
+  field_date_reviewed:
+    weight: 16
+    settings: {  }
     third_party_settings: {  }
-    type: string_textarea
+    type: datetime_default
+    region: content
+  field_date_updated:
+    weight: 15
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_feature_card_description:
+    weight: 9
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+    type: string_textfield
     region: content
   field_list_description:
     weight: 8
@@ -108,19 +117,45 @@ content:
     region: content
   field_media_oembed_video:
     type: oembed_textfield
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     region: content
-  field_pretty_url:
-    weight: 3
+  field_meta_description:
+    weight: 7
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_related_resources:
+    type: entity_reference_paragraphs
+    weight: 18
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_search_engine_restrictions:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_short_title:
     weight: 4
@@ -131,10 +166,18 @@ content:
     type: string_textfield
     region: content
   field_site_section:
-    weight: 2
-    settings: {  }
+    weight: 1
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
     third_party_settings: {  }
-    type: options_select
+    type: entity_browser_entity_reference
     region: content
   langcode:
     type: language_select
@@ -145,33 +188,39 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 19
+    weight: 22
     settings: {  }
     region: content
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: 1
+    weight: 3
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 20
+    weight: 23
     region: content
     third_party_settings: {  }
   translation:
-    weight: 10
+    weight: 11
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   uid:
     type: entity_reference_autocomplete
-    weight: 17
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60
@@ -179,4 +228,4 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
-  path: true
+  field_meta_tags: true

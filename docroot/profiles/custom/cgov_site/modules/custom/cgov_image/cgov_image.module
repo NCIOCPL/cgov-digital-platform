@@ -24,7 +24,7 @@ use Drupal\file\Entity\File;
  * We only do this for the Image Crop view modes. (image_crop_XXX)
  */
 function cgov_image_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity->bundle() != 'cgov_image') {
+  if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
     return;
   }
 
@@ -219,4 +219,18 @@ function _cgov_image_find_crop_by_style($image_style) {
       return "thumbnail";
   }
   return NULL;
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Limits allowed text formats using the cgov_util form_tools service.
+ */
+function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
+  // Maps field names to an array containing a single format.
+  $map = [
+    'field_caption' => ['simple'],
+  ];
+  $formHelper = \Drupal::service('cgov_util.form_tools');
+  $formHelper->allowTextFormats($map, $element, $context);
 }

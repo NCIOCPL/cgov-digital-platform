@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.cgov_video_media_browser
+  module:
+    - views
+name: cgov_video_browser
+label: 'Video Browser'
+display: modal
+display_configuration:
+  width: ''
+  height: ''
+  link_text: 'Select video'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  e551f6d7-4fe3-4032-8342-2365e6f8c2f5:
+    settings:
+      view: cgov_video_media_browser
+      view_display: video_browser
+      submit_text: 'Select video'
+      auto_select: false
+    uuid: e551f6d7-4fe3-4032-8342-2365e6f8c2f5
+    weight: 1
+    label: view
+    id: view

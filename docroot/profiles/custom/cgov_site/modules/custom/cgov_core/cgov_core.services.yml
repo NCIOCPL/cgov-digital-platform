@@ -14,3 +14,13 @@ services:
   cgov_core.cgov_navigation_manager:
     class: Drupal\cgov_core\Services\CgovNavigationManager
     arguments: ['@path.current', '@path.alias_manager', '@entity_type.manager', '@entity_field.manager', '@logger.channel.cgov_core']
+  cgov_core.twig_extensions:
+    class: Drupal\cgov_core\CgovCoreTwigExtensions
+    arguments: ['@entity_type.manager', '@language_manager', '@request_stack']
+    tags:
+      - { name: twig.extension }
+  cgov_core.translation_available:
+    class: Drupal\cgov_core\EventSubscriber\TranslationAvailableSubscriber
+    arguments: ['@current_user', '@current_route_match', '@language_manager']
+    tags:
+      - { name: event_subscriber }

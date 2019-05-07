@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_audience
+    - node.type.cgov_cthp
+  module:
+    - options
+id: node.cgov_cthp.field_audience
+field_name: field_audience
+entity_type: node
+bundle: cgov_cthp
+label: 'Current Page Audience'
+description: 'Select the audience for this page.'
+required: true
+translatable: true
+default_value:
+  -
+    value: patient
+default_value_callback: ''
+settings: {  }
+field_type: list_string

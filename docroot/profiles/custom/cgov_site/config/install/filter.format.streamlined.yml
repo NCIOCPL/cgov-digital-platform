@@ -3,6 +3,8 @@ status: true
 dependencies:
   module:
     - editor
+    - entity_embed
+    - linkit
     - token_filter
 name: Streamlined
 format: streamlined
@@ -12,64 +14,77 @@ filters:
     id: filter_html
     provider: filter
     status: true
-    weight: -49
+    weight: -47
     settings:
-      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p>'
+      allowed_html: '<em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <a href hreflang data-entity-substitution data-entity-type data-entity-uuid title> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <s> <sup> <sub> <h1>'
       filter_html_help: true
       filter_html_nofollow: false
   token_filter:
     id: token_filter
     provider: token_filter
     status: true
-    weight: -50
+    weight: -48
     settings:
       replace_empty: '0'
   editor_file_reference:
     id: editor_file_reference
     provider: editor
     status: false
-    weight: -47
+    weight: -45
     settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
     status: false
-    weight: -42
+    weight: -40
     settings: {  }
   filter_url:
     id: filter_url
     provider: filter
     status: false
-    weight: -43
+    weight: -41
     settings:
       filter_url_length: 72
   filter_autop:
     id: filter_autop
     provider: filter
     status: false
-    weight: -45
+    weight: -43
     settings: {  }
   filter_align:
     id: filter_align
     provider: filter
     status: false
-    weight: -46
+    weight: -44
     settings: {  }
   filter_caption:
     id: filter_caption
     provider: filter
     status: false
-    weight: -44
+    weight: -42
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: false
-    weight: -41
+    weight: -39
     settings: {  }
   filter_html_escape:
     id: filter_html_escape
     provider: filter
     status: false
-    weight: -48
+    weight: -46
     settings: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: -49
+    settings: {  }
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -50
+    settings:
+      title: false

@@ -1,0 +1,84 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hero_banner
+    - node.type.cgov_home_landing
+    - paragraphs.paragraphs_type.cgov_hero_banner
+  module:
+    - entity_reference_revisions
+id: node.cgov_home_landing.field_hero_banner
+field_name: field_hero_banner
+entity_type: node
+bundle: cgov_home_landing
+label: 'Hero Banner'
+description: "The Hero Banner for the Landing Page.\r\n"
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_hero_banner: cgov_hero_banner
+    target_bundles_drag_drop:
+      cgov_hero_banner:
+        enabled: true
+        weight: 20
+      body_section:
+        weight: 21
+        enabled: false
+      cgov_card_external:
+        weight: 22
+        enabled: false
+      cgov_card_internal:
+        weight: 23
+        enabled: false
+      cgov_card_raw_html:
+        weight: 24
+        enabled: false
+      cgov_citation:
+        weight: 25
+        enabled: false
+      cgov_column_one:
+        weight: 26
+        enabled: false
+      cgov_column_two:
+        weight: 27
+        enabled: false
+      cgov_content_block:
+        weight: 28
+        enabled: false
+      cgov_dynamic_list:
+        weight: 29
+        enabled: false
+      cgov_external_link:
+        weight: 30
+        enabled: false
+      cgov_guide_row:
+        weight: 31
+        enabled: false
+      cgov_internal_link:
+        weight: 32
+        enabled: false
+      cgov_list:
+        weight: 33
+        enabled: false
+      cgov_multimedia_row:
+        weight: 34
+        enabled: false
+      cgov_primary_feature_row:
+        weight: 35
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: 36
+        enabled: false
+      cgov_two_item_feature_row:
+        weight: 37
+        enabled: false
+      pdq_summary_section:
+        weight: 38
+        enabled: false
+field_type: entity_reference_revisions

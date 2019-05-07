@@ -1,8 +1,9 @@
+{{ attach_library('cgov_common/blogSeries') }}
 {{ page.notification_banner }}
 
 <header class="push" role="banner">
   <div id="nvcgSlSiteBanner" class="row">
-     {{ page.site_banner }}
+    {{ page.site_banner }}
   </div>
 </header>
 
@@ -16,33 +17,24 @@
         {{ page.utility_bar }}
       </div>
       <!-- END UTILITY NAV -->
-      <!-- BEGIN NAVIGATION -->
-      <!-- Begin nav-search bar -->
-      <div class="nav-search-bar gradient header">
-        <div id="nvcgSlMainNav" class="row">
-          {{ page.main_nav }}
-          <div class="contentid-911752 slot-item last-SI">
-            <div class="rawHtml">
-              <div class="search" role="search">
-                <form action="/search/results" method="post" id="siteSearchForm" name="siteSearchForm"
-                      onsubmit="NCIAnalytics.SiteWideSearch(this);">
-                  <label class="hidden" for="swKeyword">Search</label>
-                  <input placeholder="search" class="searchString ui-autocomplete-input" id="swKeyword" maxlength="255"
-                         name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value=""
-                         autocomplete="off" type="text" aria-autocomplete="list" aria-haspopup="true">
-                  <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
-                    <span class="hidden">Search</span>
-                  </button>
-                </form>
-              </div>
-            </div>
+    </div>
+    <!-- end "headroom-area" -->
+    <!-- BEGIN NAVIGATION -->
+    <!-- Begin nav-search bar -->
+    <div class="nav-search-bar gradient header">
+      <div id="nvcgSlMainNav" class="row">
+        <div class="slot-item first-SI">
+          <div class="navigation">
+            {{ page.mobile_nav }}
+            {{ page.main_nav }}
           </div>
         </div>
+        {{ page.search_bar }}
       </div>
-      <!-- End nav-search bar -->
-      <!-- END NAVIGATION -->
     </div>
-      <!-- end "headroom-area" -->
+  </div>
+  <!-- End nav-search bar -->
+  <!-- END NAVIGATION -->
   </div><!-- END Global nav/utility bar/language -->
 
   <!-- Begin MAIN CONTENT AREA -->
@@ -50,10 +42,10 @@
     <div class="row general-page-body-container collapse">
       <div class="large-12 columns">
         <div class="row">
-          <div id="cgvSlBreadcrumb" class="medium-8 columns bcrumbs">
-            {{ page.breadcrumb }}
+          {{ page.breadcrumb }}
+          <div id="blogPageOptionsOuterContainer">
+            {{ drupal_block('page_options') }}
           </div>
-          {{ drupal_block('page_options') }}
         </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
       <div class="row">
@@ -63,10 +55,4 @@
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div id="nvcgSlFooter">
-    {{ page.footer }}
-  </div>
-</footer>
-<!-- END FOOTER -->
+{{ page.footer }}

@@ -229,7 +229,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *   Field.
    */
   public function processFile(array $processConfig, FileFieldItemList $field) {
-    var_dump(get_class($field));
     $entity_type = $processConfig['#process']['args'][0];
     $filename = $processConfig['#process']['args'][1]['filename'];
     unset($processConfig['#process']);
@@ -350,7 +349,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function addFileToCrop(EntityPreSaveEvent $event) {
     $entity = $event->getEntity();
 
-    if ($entity->bundle() != 'cgov_image') {
+    if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
       return;
     }
 

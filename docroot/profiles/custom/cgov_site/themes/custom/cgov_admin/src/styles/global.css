@@ -1,0 +1,50 @@
+/* This is a hack file. If you are reading me in anticipation of having to add to me,
+leave your ego at the door and prepare to stoop to a level you always told yourself
+in coder's finishing school you never would.
+
+I am here because when I was created we had a need to override parts of the Drupal 8
+editor interface but couldn't justify a full blt -> webpack -> sass build system. Someday,
+that may change. Someday, the apes may rise up. Someday, all computers may be named after
+Old Spice anti-perspirant flavors.
+
+Dear future reader, I have just one question for you. Do people still keep peanut butter in
+the fridge or has it finally become punishable by death? */
+
+/* ****************************************** */
+/* CUSTOM BLOCK - IMAGE MEDIA CAROUSEL - FORM */
+/* ****************************************** */
+
+/* We want the images to appear closer to full width row cards. */
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #f3f5f6;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > div,
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > input {
+  margin: 15px;
+  width: 25%;
+}
+
+/* Contextual images are a different shape and the article nests the other fields (except the input)
+Barring new templates, we need to drill a bit deeper. */
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > article {
+  display: flex;
+  align-items: center;
+  width: 75%;
+}
+
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > article > div {
+  margin: 15px;
+  width: 33%;
+}
+
+
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > input,
+[data-drupal-selector="edit-field-carousel-images-current"].entities-list .rendered-entity > article > input {
+  margin-left: auto;
+  width: 100px;
+}

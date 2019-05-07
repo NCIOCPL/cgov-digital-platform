@@ -186,17 +186,19 @@ class PDQResource extends ResourceBase {
     // Extract the bits we'll use frequently.
     $nid = $summary['nid'];
     $language = $summary['language'];
+    $cdr_id = $summary['cdr_id'];
 
     // If the node doesn't already exist, create it. The English
-    // summary must be stored before its Spanish translation.
+    // summary must be stored before its Spanish translation,
+    // unless this is for publish preview (with negative CDR ID).
     if (empty($nid)) {
-      if ($language != 'en') {
+      if ($language != 'en' && $cdr_id > 0) {
         $msg = 'New summary node must be the English version';
         throw new BadRequestHttpException($msg);
       }
       $node = Node::create([
         'type' => 'pdq_cancer_information_summary',
-        'langcode' => 'en',
+        'langcode' => $language,
       ]);
     }
 
@@ -224,7 +226,7 @@ class PDQResource extends ResourceBase {
         ],
         'field_pdq_section_html' => [
           'value' => $section['html'],
-          'format' => 'full_html',
+          'format' => 'raw_html',
         ],
       ]);
       $paragraph->save();
@@ -239,7 +241,7 @@ class PDQResource extends ResourceBase {
     $node->setTitle(($summary['title']));
     $node->setOwnerId($this->currentUser->id());
     $node->set('field_pdq_url', $summary['url']);
-    $node->set('field_pdq_cdr_id', $summary['cdr_id']);
+    $node->set('field_pdq_cdr_id', $cdr_id);
     $node->set('field_pdq_audience', $summary['audience']);
     $node->set('field_pdq_summary_type', $summary['summary_type']);
     $node->set('field_date_posted', $summary['posted_date'] ?? $today);
