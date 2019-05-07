@@ -11,12 +11,7 @@
             </div>
             <div class="profile-panel-content">
               <h1>
-                  {{ content.field_prefix }}
-                  {{ content.field_first_name }}
-                  {{ content.field_middle_name }}
-                  {{ content.field_last_name|field_value -}}
-                  {{- (content.field_suffix|field_value) ? ', ' : '' }}
-                  {{ content.field_suffix -}}
+                  {{ node.label }}
               </h1>
 
               {{ content.field_title }}
