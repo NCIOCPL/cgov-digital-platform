@@ -24,8 +24,17 @@ settings:
   handler_settings:
     negate: 0
     target_bundles:
-      cgov_external_link: cgov_external_link
       cgov_internal_link: cgov_internal_link
+      cgov_external_link: cgov_external_link
       cgov_media_link: cgov_media_link
-    target_bundles_drag_drop: { }
+    target_bundles_drag_drop:
+      cgov_internal_link:
+        weight: 0
+        enabled: true
+      cgov_external_link:
+        weight: 1
+        enabled: true
+      cgov_media_link:
+        weight: 2
+        enabled: true
 field_type: entity_reference_revisions
