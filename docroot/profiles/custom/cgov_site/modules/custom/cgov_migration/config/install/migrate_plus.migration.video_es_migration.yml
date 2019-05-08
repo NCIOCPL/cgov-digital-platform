@@ -129,7 +129,10 @@ process:
 
   name: title
   field_media_oembed_video: field_media_oembed_video
-  field_caption: field_caption
+  field_caption/value: field_caption
+  field_caption/format:
+   plugin: default_value
+   default_value: simple
   langcode: langcode
 
 
@@ -183,6 +186,10 @@ process:
    plugin: default_value
    default_value: full_html
 
+
+  path:
+    plugin: default_value
+    default_value: ‘/mypath/’
 
 destination:
   plugin: entity:media
