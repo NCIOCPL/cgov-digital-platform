@@ -43,11 +43,11 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
           break;
 
         case 'cgov-analytics-channel':
-          $replacements[$original] = 'my WA channel';
+          $replacements[$original] = get_taxonomy_field_token($data, 'field_channel');
           break;
 
         case 'cgov-analytics-group':
-          $replacements[$original] = 'my WA content group';
+          $replacements[$original] = get_taxonomy_field_token($data, 'field_content_group');
           break;
       }
     }
@@ -79,4 +79,30 @@ function get_meta_title_token(array $data) {
     }
   }
   return $titleToken;
+}
+
+/**
+ * Get a given field value from taxonomy term.
+ *
+ * @param array $data
+ *   An associative array of data objects.
+ * @param string $fieldname
+ *   The name of the field.
+ *
+ * @return string
+ *   String value of the selected field.
+ */
+function get_taxonomy_field_token(array $data, $fieldname) {
+  $fieldToken = 'NCI';
+  $term = $data['term'] ?? NULL;
+
+  if (isset($term) && !empty($term)) {
+    if ($term->hasField($fieldname) && !$term->get($fieldname)->isEmpty()) {
+      $value = $term->get($fieldname)->getValue()[0]['value'];
+      $fieldToken = is_string($value) ? $value : $fieldToken;
+    }
+  }
+  // TODO: check parents if value not set.
+  // TODO: check for content items without site sections.
+  return $fieldToken;
 }
