@@ -3,6 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.cgov_site_sections.field_breadcrumb_root
+    - field.field.taxonomy_term.cgov_site_sections.field_channel
+    - field.field.taxonomy_term.cgov_site_sections.field_content_group
     - field.field.taxonomy_term.cgov_site_sections.field_landing_page
     - field.field.taxonomy_term.cgov_site_sections.field_levels_to_display
     - field.field.taxonomy_term.cgov_site_sections.field_main_nav_root
@@ -33,6 +35,22 @@ content:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
+    region: content
+  field_channel:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_content_group:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
     region: content
   field_landing_page:
     weight: 10
