@@ -3,26 +3,18 @@
 <!-- ********************************* BEGIN Series Page Full Content ********************************** -->
 <article>
   {% if not (get.year or get.topic) %}
-    <div id="cgvBodyHeader" class="row banner-slot">
-      <div class="slot-item only-SI large-12 columns body-banner">
-        <a name="NCI+Update+Blog+Banner"></a>
-        <div class="blog body-banner">{{ content.field_banner_image }}</div>
+    {% if (content.field_banner_image[0]) %}
+      <div id="cgvBodyHeader" class="row banner-slot">
+        <div class="slot-item only-SI large-12 columns body-banner">
+          <a name="NCI+Update+Blog+Banner"></a>
+          <div class="blog body-banner">{{ content.field_banner_image }}</div>
+        </div>
       </div>
-    </div>
+    {% endif %}
   {% endif %}
 
   <div class="resize-content">
-    <h1>
-      {% if (get.month and get.year) %}
-        {{ blogMacros.transformMonthName(get.month) }}
-      {% endif %}
-      {% if get.year %}
-        {{ get.year }} - 
-      {% endif %}
-      {% if node.label %}
-        {{ node.label }}
-      {% endif %}
-    </h1>
+    {{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node.label) }}
     <div id="nvcgSubTitle">
       {% if node.field_feedburner_url.value|length > 0 %}
         <div class="subscribeRSS">

@@ -1,0 +1,337 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Home Page"
+  title__ES:
+      value: "Spanish Home Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_short_title:
+    value: "Comprehensive Cancer Information"
+  field_short_title__ES:
+    value: "Cáncer en español"
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Featured Content"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ## Cards here
+    ######## End Feature Row ###########
+    ######## Begin Guide Row ###########
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Your Guide to Cancer"
+      field_guide_cards:
+        - entity: 'paragraph'
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "Cancer Basics"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <ul>
+                  <li><a class="arrow-link" href="/about-cancer/understanding/what-is-cancer" title="">What Is Cancer</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/causes-prevention" title="">Causes &#38; Prevention</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/causes-prevention/risk" title="">Risk Factors</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/screening" title="">Screening</a></li>
+                </ul>
+        - entity: 'paragraph'
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "Newly Diagnosed"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <ul>
+                  <li><a class="arrow-link" href="/about-cancer/diagnosis-staging" title="">Diagnosis &amp; Staging</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/diagnosis-staging/prognosis" title="">Prognosis</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/diagnosis-staging/symptoms" title="">Symptoms</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/coping" title="">Coping with Cancer</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/managing-care/services" title="">Find a Doctor or Treatment Facility</a></li>
+                </ul>
+        - entity: 'paragraph'
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "Treatment"
+          field_html_content:
+            - format: "full_html"
+              value: |
+                <ul>
+                  <li><a class="arrow-link" href="/about-cancer/treatment/types" title="">Types of Treatment</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/treatment/side-effects" title="">Side Effects</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/treatment/clinical-trials" title="">Clinical Trials Information for Patients and Caregivers</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/treatment/drugs" title="">Cancer Drugs</a></li>
+                  <li><a class="arrow-link" href="/about-cancer/treatment/cam" title="">Complementary &amp; Alternative Medicine</a></li>
+                </ul>
+                <p><a class="arrow-link" href="/about-cancer/treatment" title="">Learn more about treatment</a></p>
+    ######## End Guide Row ###########
+    ######## Begin Secondary Card Row ###########
+    - entity: 'paragraph'
+      type: "cgov_secondary_feature_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Secondary Card Row ###########
+
+    ######## MULTIMEDIA Row ##############
+    - entity: 'paragraph'
+      type: "cgov_multimedia_row"
+      field_mm_media_item:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Colorectal Cancer Screening: What to Expect'
+      field_mm_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######### End MM Row ##############
+    ######## Begin Thumbnail List ##############
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Overridden Title'
+          field_override_list_description:
+            - value: 'Overridden description'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######## End Thumbnail List ##############
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Contenido especial"
+      ## Cards here
+    ######## End Feature Row ###########
+    ######## Begin Guide Row ###########
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Su guía de información del cáncer"
+      field_guide_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="contentid-1100555 slot-item first-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Aspectos básicos del cáncer
+                  </h2>
+                  <ul>
+                  <li><a class="arrow-link" href="/espanol/cancer/naturaleza/que-es" title="">&iquest;Qu&eacute; es el c&aacute;ncer?</a></li>
+                  <li><a class="arrow-link" href="/espanol/cancer/causas-prevencion" title="">Causas y prevenci&oacute;n</a></li>
+                  <li><a class="arrow-link" href="/espanol/cancer/causas-prevencion/riesgo" title="">Factores de riesgo</a></li>
+                  <li><a class="arrow-link" href="/espanol/cancer/deteccion" title="">Detecci&oacute;n</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="contentid-1100554 slot-item equalheight large-4 columns card gutter">
+                  <h2>
+                    Recién diagnosticado
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion" title="">Diagn&oacute;stico y estadificaci&oacute;n</a></li>
+                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion/pronostico" title="">Pron&oacute;stico</a></li>
+                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion/sintomas" title="">S&iacute;ntomas</a></li>
+                    <li><a class="arrow-link" href="/espanol/cancer/sobrellevar" title="">C&oacute;mo hacer frente al c&aacute;ncer</a></li>
+                    <li><a class="arrow-link" href="/espanol/cancer/manejo-del-cancer/servicios" title="">Encuentre a un doctor o centro de tratamiento</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="contentid-936298 slot-item last-SI equalheight large-4 columns card gutter">
+                  <h2>
+                    Tratamiento
+                  </h2>
+                  <ul>
+                    <li><a class="arrow-link" href="/espanol/cancer/tratamiento/tipos" title="">Tipos de tratamiento</a></li>
+                    <li><a href="/espanol/cancer/tratamiento/efectos-secundarios" class="arrow-link" title="">Efectos secundarios</a></li>
+                    <li><a href="/espanol/cancer/tratamiento/estudios-clinicos" class="arrow-link" title="">Gu&iacute;a para entender y participar en estudios cl&iacute;nicos</a></li>
+                    <li><a href="/espanol/cancer/tratamiento/medicamentos" class="arrow-link" title="">Medicamentos para el c&aacute;ncer</a></li>
+                    <li><a href="/espanol/cancer/tratamiento/mca" class="arrow-link sys_folderid=" title="">Medicina complementaria y alternativa</a></li>
+                    <li><a href="/espanol/cancer/tratamiento" class="arrow-link" title="">Aprenda m&aacute;s sobre el tratamiento</a></li>
+                    </ul>
+                </div>
+    ######## End Guide Row ###########
+    ######## Begin Secondary Card Row ###########
+    - entity: 'paragraph'
+      type: "cgov_secondary_feature_row"
+    ######## End Secondary Card Row ###########

@@ -67,6 +67,10 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+    // Empty build object.
+    $build = [];
+
+    // Return collection of intros. TODO: clean up twig.
     $topic_intros = $this->getTopicIntros();
     $build = [
       '#topic_intros' => $topic_intros,
@@ -81,7 +85,7 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    */
   private function getTopicIntros() {
     // Get all of the associated categories their description fields.
-    $intros = $this->blogManager->getSeriesCategoryDescription();
+    $intros = $this->blogManager->getSeriesTopicDescription();
     return $intros;
   }
 

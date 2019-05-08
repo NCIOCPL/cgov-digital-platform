@@ -28,15 +28,18 @@ drush:
 modules:
   local:
     enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
-    uninstall: [acquia_connector, shield, acsf]
+    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config]
   ci:
     enable: {  }
-    uninstall: [acquia_connector, shield]
+    uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config]
   dev:
-    enable: [acquia_connector, shield]
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config]
+    uninstall: {  }
+  int:
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config]
     uninstall: {  }
   test:
-    enable: [acquia_connector, shield]
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config]
     uninstall: [devel, views_ui]
   prod:
     enable: [acquia_connector, shield]
@@ -72,5 +75,7 @@ command-hooks:
   post-deploy:
     dir: '${docroot}'
     command: null
+simplesamlphp: true
+## Cancer.gov Specific Settings
 cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
