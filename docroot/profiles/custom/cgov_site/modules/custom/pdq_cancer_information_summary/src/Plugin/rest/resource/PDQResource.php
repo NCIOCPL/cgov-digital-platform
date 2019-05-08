@@ -133,7 +133,7 @@ class PDQResource extends ResourceBase {
           'summary_type' => $translation->field_pdq_summary_type->value,
           'posted_date' => $translation->field_date_posted->value,
           'updated_date' => $translation->field_date_updated->value,
-          'short_title' => $translation->field_short_title->value,
+          'short_title' => $translation->field_browser_title->value,
           'description' => $translation->field_page_description->value,
 
           // This field will probably not be retained for the intitial
@@ -246,7 +246,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_pdq_summary_type', $summary['summary_type']);
     $node->set('field_date_posted', $summary['posted_date'] ?? $today);
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
-    $node->set('field_short_title', $summary['short_title']);
+    $node->set('field_browser_title', $summary['short_title']);
     $node->set('field_page_description', $summary['description']);
 
     // Field suppressed for now.

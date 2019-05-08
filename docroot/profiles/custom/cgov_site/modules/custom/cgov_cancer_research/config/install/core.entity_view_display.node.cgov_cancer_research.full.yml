@@ -18,7 +18,6 @@ dependencies:
     - field.field.node.cgov_cancer_research.field_pretty_url
     - field.field.node.cgov_cancer_research.field_search_engine_restrictions
     - field.field.node.cgov_cancer_research.field_selected_research
-    - field.field.node.cgov_cancer_research.field_short_title
     - field.field.node.cgov_cancer_research.field_site_section
     - node.type.cgov_cancer_research
   module:
@@ -46,14 +45,6 @@ content:
     third_party_settings: {  }
     type: entity_reference_revisions_entity_view
     region: content
-  field_short_title:
-    type: string
-    weight: 1
-    region: content
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
 hidden:
   content_moderation_control: true
   field_browser_title: true
@@ -69,7 +60,6 @@ hidden:
   field_page_description: true
   field_pretty_url: true
   field_search_engine_restrictions: true
-  field_short_title: true
   field_site_section: true
   langcode: true
   links: true
