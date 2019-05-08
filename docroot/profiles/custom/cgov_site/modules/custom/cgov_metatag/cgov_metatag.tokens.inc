@@ -12,11 +12,20 @@ function cgov_metatag_token_info() {
   $info = [];
   $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
 
-  $info['tokens']['cgov_tokens']['cgov-title'] =
-    [
+  $info['tokens']['cgov_tokens'] = [
+    'cgov-title' => [
       'name' => t('Cgov Title Meta Tag'),
       'description' => t('The value to user for the title meta tag.'),
-    ];
+    ],
+    'cgov-analytics-channel' => [
+      'name' => t('Cgov WA Channel'),
+      'description' => t('The channel field value.'),
+    ],
+    'cgov-analytics-group' => [
+      'name' => t('Cgov WA Group'),
+      'description' => t('The content group field value.'),
+    ],
+  ];
 
   return $info;
 }
@@ -31,6 +40,14 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
       switch ($name) {
         case 'cgov-title':
           $replacements[$original] = get_meta_title_token($data);
+          break;
+
+        case 'cgov-analytics-channel':
+          $replacements[$original] = 'my WA channel';
+          break;
+
+        case 'cgov-analytics-group':
+          $replacements[$original] = 'my WA content group';
           break;
       }
     }
