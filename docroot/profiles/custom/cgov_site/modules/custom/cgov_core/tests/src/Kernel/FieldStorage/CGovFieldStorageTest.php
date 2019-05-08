@@ -82,11 +82,6 @@ class CGovFieldStorageTest extends KernelTestBase {
       "type" => "plain_text",
     ],
     [
-      "name" => "field_short_title",
-      "label" => "Short Title",
-      "type" => "plain_text",
-    ],
-    [
       "name" => "field_intro_text",
       "label" => "Intro Text",
       "type" => "formatted_text",

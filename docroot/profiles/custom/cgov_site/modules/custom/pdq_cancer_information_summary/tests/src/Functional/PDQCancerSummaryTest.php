@@ -31,7 +31,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
   of the field's generated HTML, and are not the same as the machine_name.)
    */
   const PAGE_TITLE = 'edit-title-0-value';
-  const SHORT_TITLE = 'edit-field-short-title-0-value';
+  const BROWSER_TITLE = 'edit-field-browser-title-0-value';
   const CDR_ID = 'edit-field-pdq-cdr-id-0-value';
   const SUMMARY_TYPE = 'edit-field-pdq-summary-type';
   const POSTED_DATE_DATE = 'edit-field-date-posted-0-value-date';
@@ -72,7 +72,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
 
     // Verify fields exist.
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::PAGE_TITLE);
-    $this->assertSession()->fieldExists(PDQCancerSummaryTest::SHORT_TITLE);
+    $this->assertSession()->fieldExists(PDQCancerSummaryTest::BROWSER_TITLE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::CDR_ID);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::SUMMARY_TYPE);
     $this->assertSession()->fieldExists(PDQCancerSummaryTest::POSTED_DATE_DATE);
@@ -106,7 +106,7 @@ class PDQCancerSummaryTest extends BrowserTestBase {
     $this->getSession()->getPage()->
     -   fillField(PDQCancerSummaryTest::PAGE_TITLE, 'pony');
     $this->getSession()->getPage()->
-    -   fillField(PDQCancerSummaryTest::SHORT_TITLE, 'pony');
+    -   fillField(PDQCancerSummaryTest::BROWSER_TITLE, 'pony');
 
     // Submit the form and check for success.
     $this->getSession()->getPage()->pressButton(PDQCancerSummaryTest::SAVE_BUTTON);

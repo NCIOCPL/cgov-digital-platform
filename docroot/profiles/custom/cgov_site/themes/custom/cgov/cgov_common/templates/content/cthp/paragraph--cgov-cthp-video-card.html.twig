@@ -6,7 +6,7 @@
         ? content.field_cthp_override_description
         : (paragraph.field_cthp_target_link[0].entity.field_internal_link[0].entity.field_feature_card_description[0].value)
               ? paragraph.field_cthp_target_link[0].entity.field_internal_link[0].entity.field_feature_card_description[0].value
-              : paragraph.field_cthp_target_link[0].entity.field_internal_link[0].entity.field_short_title[0].value
+              : paragraph.field_cthp_target_link[0].entity.field_internal_link[0].entity.field_browser_title[0].value
     %}
   {% elseif nodeType is same as('cgov_external_link') %}
     {% set url = paragraph.field_cthp_target_link[0].entity.field_external_link[0].uri %}
