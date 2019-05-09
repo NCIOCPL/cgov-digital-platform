@@ -1,0 +1,11 @@
+services:
+  cgov_image.image_event:
+    class: Drupal\cgov_image\EventSubscriber\ImageEventSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }
+  cgov_image.image_redirect_path_processor:
+    class: Drupal\cgov_image\Plugin\PathProcessor\ImageRedirectProcessor
+    arguments: ['@current_route_match']
+    tags:
+      - { name: path_processor_outbound, priority: 500 }
