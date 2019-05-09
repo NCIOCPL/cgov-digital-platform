@@ -48,7 +48,9 @@ process:
 
  temp_text:
     plugin: migration_lookup
-    migration: rawhtml_migration
+    migration:
+      - rawhtml_migration
+      - contentblock_migration
     no_stub: true
     source: field_guide_cards
 
@@ -64,7 +66,9 @@ process:
  field_guide_cards/target_id:
     -
       plugin: migration_lookup
-      migration: rawhtml_migration
+      migration:
+        - rawhtml_migration
+        - contentblock_migration
       no_stub: true
       source: field_guide_card
     -
@@ -75,7 +79,9 @@ process:
  field_guide_cards/target_revision_id:
     -
       plugin: migration_lookup
-      migration: rawhtml_migration
+      migration:
+        - rawhtml_migration
+        - contentblock_migration
       no_stub: true
       source: field_guide_card
     -
