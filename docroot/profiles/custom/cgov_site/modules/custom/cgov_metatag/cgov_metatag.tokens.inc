@@ -5,6 +5,7 @@
  * Cgov metatag tokens.
  */
 
+use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
 /**
@@ -99,14 +100,15 @@ function get_taxonomy_field_token(array $data, $fieldname) {
   $node = $data['node'] ?? NULL;
 
   if (isset($node) && !empty($node)) {
+
     // Get the site section field for the current node.
-    if (!empty($node->get('field_site_section')->first())) {
+    if ($node->hasField('field_site_section') && !empty($node->get('field_site_section')->first())) {
+      /*
+       * Get the site section and its ancestors, then loop through
+       * until a valid string value is found or we run out of site
+       * section taxons.
+       */
       try {
-        /*
-         * Get the site section and its ancestors, then loop through
-         * until a valid string value is found or we run out of site
-         * section taxons.
-         */
         $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
         $sections = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($tid);
         foreach ($sections as $section) {
@@ -123,8 +125,27 @@ function get_taxonomy_field_token(array $data, $fieldname) {
         return $rtn;
       }
     }
+
+    /*
+     * If there is no site section, traverse through ancestor
+     * paths until one is found.
+     */
+    else {
+      // Get the parent path. TODO: get path.
+      $parentPath = '/news-events/cancer-currents-blog';
+      $parent['node'] = [];
+
+      // Get the "node/nid" path from the parent path alias.
+      $nodePath = \Drupal::service('path.alias_manager')->getPathByAlias($parentPath);
+      if (preg_match('/node\/(\d+)/', $nodePath, $matches)) {
+        $parent['node'] = Node::load($matches[1]);
+      }
+
+      // Recurse until a valid taxonomy field token is found.
+      $fieldToken = get_taxonomy_field_token($parent, $fieldname);
+      return $fieldToken;
+    }
   }
 
-  // TODO: check for content items without site sections.
   return $rtn;
 }
