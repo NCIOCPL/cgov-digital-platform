@@ -67,7 +67,7 @@ function _pdq_cis_needs_site_sections(EntityInterface $entity) {
     ->execute();
 
   // If so, and the label used for navigation is unchanged, we're done.
-  $short_title = $entity->get('field_short_title')->value;
+  $short_title = $entity->get('field_browser_title')->value;
   foreach ($tids as $tid) {
     $term = Term::load($tid);
     if ($term->getName() === $short_title) {
@@ -88,7 +88,7 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
   // Collect the values we need from the summary.
   $langcode = $entity->get('langcode')->value;
   $url = $entity->get('field_pdq_url')->value;
-  $nav_label = $entity->get('field_short_title')->value;
+  $nav_label = $entity->get('field_browser_title')->value;
 
   // Find the root of the navigation tree for this language.
   $section = _pdq_cis_load_site_section($langcode);

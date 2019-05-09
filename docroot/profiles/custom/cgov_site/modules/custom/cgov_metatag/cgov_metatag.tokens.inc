@@ -77,9 +77,6 @@ function get_meta_title_token(array $data) {
     if ($entity->hasField('field_browser_title') && !$entity->get('field_browser_title')->isEmpty()) {
       $titleToken = $entity->get('field_browser_title')->getValue()[0]['value'];
     }
-    elseif ($entity->hasField('field_short_title') && !$entity->get('field_short_title')->isEmpty()) {
-      $titleToken = $entity->get('field_short_title')->getValue()[0]['value'];
-    }
   }
   return $titleToken;
 }
