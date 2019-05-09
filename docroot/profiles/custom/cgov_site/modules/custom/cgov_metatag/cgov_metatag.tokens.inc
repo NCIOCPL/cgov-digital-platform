@@ -95,23 +95,36 @@ function get_meta_title_token(array $data) {
  *   String value of the selected field.
  */
 function get_taxonomy_field_token(array $data, $fieldname) {
-  $fieldToken = t('NCI');
+  $rtn = t('NCI');
   $node = $data['node'] ?? NULL;
 
   if (isset($node) && !empty($node)) {
+    // Get the site section field for the current node.
     if (!empty($node->get('field_site_section')->first())) {
       try {
+        /*
+         * Get the site section and its ancestors, then loop through
+         * until a valid string value is found or we run out of site
+         * section taxons.
+         */
         $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
-        $fieldToken = Term::load($tid)->get($fieldname)->value;
+        $sections = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($tid);
+        foreach ($sections as $section) {
+          $sid = $section->id();
+          $fieldToken = Term::load($sid)->get($fieldname)->value;
+          if (isset($fieldToken) && trim($fieldToken) !== '') {
+            return $fieldToken;
+          }
+        }
       }
       catch (Exception $e) {
         \Drupal::logger('cgov_site_section')
           ->notice('Could not retrieve taxonomy field value for tid: ' . $tid);
+        return $rtn;
       }
     }
   }
 
-  // TODO: check parents if value not set.
   // TODO: check for content items without site sections.
-  return $fieldToken;
+  return $rtn;
 }
