@@ -165,33 +165,6 @@
                   - type: 'pdq_cancer_information_summary'
                     title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
     - entity: 'paragraph'
-      type: "cgov_cthp_video_card"
-      field_cthp_card_title:
-        - value: 'Statistics'
-      field_cthp_card_theme:
-        - value: 'cthp-survival'
-      field_cthp_override_description:
-        - value: "Breast cancer statistics based on data from large groups of patients to be used as a general guide."
-      field_cthp_video:
-        - target_type: 'media'
-          '#process':
-            callback: 'reference'
-            args:
-              - 'media'
-              - bundle: 'cgov_video'
-                name: 'Hedge Maze'
-      field_cthp_target_link:
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_home_landing'
-                    title: 'Cancer Types'
-    - entity: 'paragraph'
       type: "cgov_cthp_block_card"
       field_cthp_card_title:
         - value: 'Supportive & Palliative Care'
@@ -219,7 +192,25 @@
               - type: 'cgov_cancer_research'
                 title: 'Breast Cancer Research'
     - entity: 'paragraph'
-      type: "cgov_cthp_feature_card"
+      type: "cgov_cthp_feature_card_external"
+      field_cthp_card_title:
+        - value: 'Statistics'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Breast cancer statistics based on data from large groups of patients to be used as a general guide."
+      field_cthp_featured_url:
+        - uri: 'https://seer.cancer.gov/statfacts/html/breast.html'
+      field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Lead Placeholder'
+    - entity: 'paragraph'
+      type: "cgov_cthp_feature_card_internal"
       field_cthp_card_title:
         - value: 'Breast Reconstruction Options'
       field_cthp_card_theme:
