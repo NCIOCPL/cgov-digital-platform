@@ -5,6 +5,8 @@
  * Cgov metatag tokens.
  */
 
+use Drupal\taxonomy\Entity\Term;
+
 /**
  * Implements hook_token_info().
  */
@@ -93,15 +95,22 @@ function get_meta_title_token(array $data) {
  *   String value of the selected field.
  */
 function get_taxonomy_field_token(array $data, $fieldname) {
-  $fieldToken = 'NCI';
-  $term = $data['term'] ?? NULL;
+  $fieldToken = t('NCI');
+  $node = $data['node'] ?? NULL;
 
-  if (isset($term) && !empty($term)) {
-    if ($term->hasField($fieldname) && !$term->get($fieldname)->isEmpty()) {
-      $value = $term->get($fieldname)->getValue()[0]['value'];
-      $fieldToken = is_string($value) ? $value : $fieldToken;
+  if (isset($node) && !empty($node)) {
+    if (!empty($node->get('field_site_section')->first())) {
+      try {
+        $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
+        $fieldToken = Term::load($tid)->get($fieldname)->value;
+      }
+      catch (Exception $e) {
+        \Drupal::logger('cgov_site_section')
+          ->notice('Could not retrieve taxonomy field value for tid: ' . $tid);
+      }
     }
   }
+
   // TODO: check parents if value not set.
   // TODO: check for content items without site sections.
   return $fieldToken;
