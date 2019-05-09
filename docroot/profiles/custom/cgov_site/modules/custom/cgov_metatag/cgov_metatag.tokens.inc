@@ -100,30 +100,21 @@ function get_taxonomy_field_token(array $data, $fieldname) {
   $node = $data['node'] ?? NULL;
 
   if (isset($node) && !empty($node)) {
-    $nid = $node->id();
 
-    // Get the site section field for the current node.
+    /*
+     * Get the site section and its ancestors, then loop through
+     * until a valid string value is found or we run out of site
+     * section taxons.
+     */
     if ($node->hasField('field_site_section') && !empty($node->get('field_site_section')->first())) {
-      /*
-       * Get the site section and its ancestors, then loop through
-       * until a valid string value is found or we run out of site
-       * section taxons.
-       */
-      try {
-        $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
-        $sections = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($tid);
-        foreach ($sections as $section) {
-          $sid = $section->id();
-          $fieldToken = Term::load($sid)->get($fieldname)->value;
-          if (isset($fieldToken) && trim($fieldToken) !== '') {
-            return $fieldToken;
-          }
+      $tid = $node->get('field_site_section')->first()->getValue()['target_id'];
+      $sections = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($tid);
+      foreach ($sections as $section) {
+        $sid = $section->id();
+        $fieldToken = Term::load($sid)->get($fieldname)->value;
+        if (isset($fieldToken) && trim($fieldToken) !== '') {
+          return $fieldToken;
         }
-      }
-      catch (Exception $e) {
-        \Drupal::logger('cgov_site_section')
-          ->notice('Could not retrieve taxonomy field value for tid: ' . $tid);
-        return $rtn;
       }
     }
 
@@ -132,23 +123,49 @@ function get_taxonomy_field_token(array $data, $fieldname) {
      * paths until one is found.
      */
     else {
-      // Get the parent path, e.g. /foo/bar/baz -> /foo/bar.
-      $currentPath = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
-      $parentPath = preg_replace('#\/[^/]*$#', '', $currentPath);
-      $parent['node'] = [];
+      $nid = $node->id();
+      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+      $parent['node'] = get_valid_parent($alias);
 
-      // Get the "node/nid" path from the parent path alias.
-      // TODO: move to next if no node match.
-      $nodePath = \Drupal::service('path.alias_manager')->getPathByAlias($parentPath);
-      if (preg_match('/node\/(\d+)/', $nodePath, $matches)) {
-        $parent['node'] = Node::load($matches[1]);
-      }
-
-      // Recurse until a valid taxonomy field token is found.
+      // Recurse through this method until a field value is found.
       $fieldToken = get_taxonomy_field_token($parent, $fieldname);
       return $fieldToken;
     }
   }
 
+  /*
+   * If we hit this, it means the taxonomy field is not set
+   * anywhere between here and the tree root.
+   */
   return $rtn;
+}
+
+/**
+ * Search for ancestor nodes by alias.
+ *
+ * @param string $alias
+ *   An associative array of data objects.
+ *
+ * @return \Drupal\node\Entity\Node
+ *   Node object.
+ */
+function get_valid_parent($alias) {
+  if (!isset($alias) || trim($alias) === '') {
+    return NULL;
+  }
+
+  // Trim the last section of the current alias and get the 'node/<nid>' path.
+  $parentAlias = preg_replace('#\/[^/]*$#', '', $alias);
+  $parentPath = \Drupal::service('path.alias_manager')->getPathByAlias($parentAlias);
+
+  // Return node if matches, otherwise run through this method again.
+  if (preg_match('/node\/(\d+)/', $parentPath, $matches)) {
+    $node = Node::load($matches[1]);
+    return $node;
+  }
+  else {
+    $node = get_valid_parent($parentAlias);
+    return $node;
+  }
+
 }
