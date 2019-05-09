@@ -100,6 +100,7 @@ function get_taxonomy_field_token(array $data, $fieldname) {
   $node = $data['node'] ?? NULL;
 
   if (isset($node) && !empty($node)) {
+    $nid = $node->id();
 
     // Get the site section field for the current node.
     if ($node->hasField('field_site_section') && !empty($node->get('field_site_section')->first())) {
@@ -131,11 +132,13 @@ function get_taxonomy_field_token(array $data, $fieldname) {
      * paths until one is found.
      */
     else {
-      // Get the parent path. TODO: get path.
-      $parentPath = '/news-events/cancer-currents-blog';
+      // Get the parent path, e.g. /foo/bar/baz -> /foo/bar.
+      $currentPath = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+      $parentPath = preg_replace('#\/[^/]*$#', '', $currentPath);
       $parent['node'] = [];
 
       // Get the "node/nid" path from the parent path alias.
+      // TODO: move to next if no node match.
       $nodePath = \Drupal::service('path.alias_manager')->getPathByAlias($parentPath);
       if (preg_match('/node\/(\d+)/', $nodePath, $matches)) {
         $parent['node'] = Node::load($matches[1]);
