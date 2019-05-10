@@ -1,0 +1,129 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.event_list_item
+    - field.field.node.cgov_event.body
+    - field.field.node.cgov_event.field_all_day_event
+    - field.field.node.cgov_event.field_browser_title
+    - field.field.node.cgov_event.field_card_title
+    - field.field.node.cgov_event.field_city_state
+    - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_series
+    - field.field.node.cgov_event.field_event_start_date
+    - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_article
+    - field.field.node.cgov_event.field_image_promotional
+    - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_page_description
+    - field.field.node.cgov_event.field_pretty_url
+    - field.field.node.cgov_event.field_related_resources
+    - field.field.node.cgov_event.field_room
+    - field.field.node.cgov_event.field_search_engine_restrictions
+    - field.field.node.cgov_event.field_site_section
+    - field.field.node.cgov_event.field_venue
+    - node.type.cgov_event
+  module:
+    - datetime
+    - user
+id: node.cgov_event.event_list_item
+targetEntityType: node
+bundle: cgov_event
+mode: event_list_item
+content:
+  field_all_day_event:
+    type: boolean
+    weight: 6
+    region: content
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+  field_city_state:
+    weight: 9
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_event_end_date:
+    type: datetime_default
+    weight: 5
+    region: content
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_event_series:
+    type: entity_reference_label
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+  field_event_start_date:
+    type: datetime_default
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_feature_card_description:
+    type: string
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_list_description:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_room:
+    weight: 8
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_browser_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_venue:
+    type: entity_reference_label
+    weight: 7
+    region: content
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_card_title: true
+  field_image_article: true
+  field_image_promotional: true
+  field_page_description: true
+  field_pretty_url: true
+  field_related_resources: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true

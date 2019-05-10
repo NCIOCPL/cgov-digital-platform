@@ -1,0 +1,132 @@
+## Event Mini-Landing pages
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Upcoming Events"
+  field_browser_title:
+    value: "Upcoming Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'future-events'
+  field_page_description:
+    value: 'future upcoming events landing page'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_list_title:
+          value: "Future NCI Events"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_future
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End Event View Block ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Previous Events"
+  field_browser_title:
+    value: "Previous Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'Events'
+  field_pretty_url:
+    value: 'past-events'
+  field_page_description:
+    value: 'past previous events landing page'
+  field_landing_contents:
+    ######## Event View Block ############
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_list_title:
+          value: "Past NCI Events"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_past
+          ### the options are serialized. So set this through the UI and find what it put in the database:
+          ### [paragraph__field_source_view]
+          data: |
+            a:5:{s:5:"pager";s:4:"none";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End Event View Block ##############
+
+## "Events" landing page
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Events"
+  field_browser_title:
+    value: "Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            name: 'News & Events'
+  field_page_description:
+    value: 'events landing page'
+  field_pretty_url:
+    value: 'events'
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_dynamic_list"
+      field_list_title:
+          value: "Upcoming NCI Events"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: block_events_future
+          data: |
+            a:5:{s:5:"pager";s:4:"some";s:8:"argument";s:0:"";s:5:"limit";s:1:"3";s:6:"offset";N;s:5:"title";i:0;}
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <!-- BEGIN faked raw HTML content -->
+            <div>
+              <a href="/news-events/events/future-events">View all upcoming events &gt;</a>
+            </div>
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2 id="ui-id-2">Past NCI Events</h2>
+            <p>See a listing of past meetings and events.</p>
+            <div><a href="/news-events/events/past-events">View all previous events &gt;</a></div>
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="callout-box-full">
+                <h2 id="ui-id-2">DCEG at Scientific Meetings</h2>
+                <p>DCEG sponsors lectures, seminars, and symposiums throughout the year. In addition, DCEG researchers participate in major conferences to share their findings.<br/>
+                <a href="">See list of upcoming meetings.</a></p>
+                <h2 id="ui-id-2">Biostatistics Branch Seminar Series</h2>
+                <p>The Biostatistics Branch (BB) hosts an ongoing seminar series.<br/>
+                <a href="">See list of upcoming meetings.</a></p>
+            </div>
+            <!-- END faked raw HTML content -->
