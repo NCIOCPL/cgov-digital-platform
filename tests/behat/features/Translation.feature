@@ -41,7 +41,7 @@ Feature: Perform tasks related to Content Translation
     And I wait for AJAX to finish
     And I switch to main window
     And I fill in "title[0][value]" with "Test123"
-    And I fill in "field_short_title[0][value]" with "Test123"
+    And I fill in "field_browser_title[0][value]" with "Test123"
     And I fill in "field_page_description[0][value]" with "Test123"
     And I press the "edit-submit" button
     Then I should see the text "ha sido actualizado."
