@@ -9,6 +9,8 @@ use Drupal\Core\Path\CurrentPathStack;
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\NavItem;
 use Psr\Log\LoggerInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 
 /**
  * Cgov Navigation Manager Service.
@@ -34,6 +36,13 @@ class CgovNavigationManager {
    * @var string
    */
   protected $currentPathAlias;
+
+  /**
+   * Interface Language.
+   *
+   * @var string
+   */
+  protected $interfaceLanguage;
 
   /**
    * Site Section closest to current request path.
@@ -91,6 +100,13 @@ class CgovNavigationManager {
   protected $logger;
 
   /**
+   * Language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
   public function __construct(
@@ -98,13 +114,15 @@ class CgovNavigationManager {
     AliasManagerInterface $pathAliasManager,
     EntityTypeManagerInterface $entityTypeManager,
     EntityFieldManagerInterface $entityFieldManager,
-    LoggerInterface $logger
+    LoggerInterface $logger,
+    LanguageManagerInterface $languageManager
     ) {
     $this->currentPath = $currentPath;
     $this->pathAliasManager = $pathAliasManager;
     $this->entityTypeManager = $entityTypeManager;
     $this->entityFieldManager = $entityFieldManager;
     $this->logger = $logger;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -115,6 +133,9 @@ class CgovNavigationManager {
       return;
     }
     $this->initialized = TRUE;
+    // We want to look up site sections by interface language, but
+    // we only need to do it once and cache the result locally.
+    $this->interfaceLanguage = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE);
     $this->currentPathAlias = $this->getCurrentPathAlias();
     $this->closestSiteSection = $this->getClosestSiteSection();
     // Guard against when this service is called inadvertantly by
@@ -183,7 +204,7 @@ class CgovNavigationManager {
     $this->initialize();
     /* @var \Drupal\taxonomy\TermStorageInterface */
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $queryResults = $termStorage->loadByProperties(['computed_path' => $path]);
+    $queryResults = $termStorage->loadByProperties(['computed_path' => $path, 'langcode' => $this->interfaceLanguage]);
     if (count($queryResults) === 0) {
       return;
     }
