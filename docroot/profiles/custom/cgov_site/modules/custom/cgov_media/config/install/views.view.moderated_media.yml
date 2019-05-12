@@ -6,7 +6,6 @@ dependencies:
     - workflows.workflow.editorial_workflow
     - workflows.workflow.simple_workflow
   module:
-    - content_moderation
     - image
     - media
     - user
@@ -927,8 +926,7 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }
   media_page_list:
     display_plugin: page
     id: media_page_list
@@ -955,5 +953,4 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }
