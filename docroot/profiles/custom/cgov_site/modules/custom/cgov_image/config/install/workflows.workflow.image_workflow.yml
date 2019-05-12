@@ -1,10 +1,13 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - media.type.cgov_contextual_image
+    - media.type.cgov_image
   module:
     - content_moderation
-id: simple_workflow
-label: 'Simple Workflow'
+id: image_workflow
+label: 'Image Workflow'
 type: content_moderation
 type_settings:
   states:
@@ -33,5 +36,8 @@ type_settings:
       from:
         - draft
         - published
-  entity_types: { }
+  entity_types:
+    media:
+      - cgov_contextual_image
+      - cgov_image
   default_moderation_state: published
