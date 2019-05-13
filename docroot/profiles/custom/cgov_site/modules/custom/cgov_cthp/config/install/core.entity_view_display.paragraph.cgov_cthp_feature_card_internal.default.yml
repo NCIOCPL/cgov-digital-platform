@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_featured_content
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_override_description
+    - field.field.paragraph.cgov_cthp_feature_card_external.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_cthp_feature_card_internal
   module:
     - options
@@ -46,4 +47,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_override_image_promotional:
+    type: entity_reference_entity_view
+    weight: 4
+    region: content
+    label: above
+    settings:
+      view_mode: image_crop_panoramic
+      link: false
+    third_party_settings: {  }
 hidden: {  }
