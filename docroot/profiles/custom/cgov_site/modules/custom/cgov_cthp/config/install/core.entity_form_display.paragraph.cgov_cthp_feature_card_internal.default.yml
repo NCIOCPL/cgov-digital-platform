@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_featured_content
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_override_description
+    - field.field.paragraph.cgov_cthp_feature_card_external.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_cthp_feature_card_internal
 id: paragraph.cgov_cthp_feature_card_internal.default
 targetEntityType: paragraph
@@ -27,7 +28,7 @@ content:
     type: string_textfield
     region: content
   field_cthp_featured_content:
-    weight: 3
+    weight: 2
     settings:
       entity_browser: cgov_content_browser
       field_widget_display: label
@@ -41,12 +42,27 @@ content:
     type: entity_browser_entity_reference
     region: content
   field_cthp_override_description:
-    weight: 2
+    weight: 3
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_override_image_promotional:
+    weight: 4
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      field_widget_replace: false
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
     region: content
 hidden:
   created: true
