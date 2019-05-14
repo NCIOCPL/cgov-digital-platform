@@ -46,6 +46,34 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
+field_related_resources/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_two_item_row_card
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_related_resources/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_two_item_row_card
+    -
+      plugin: extract
+      index:
+        - 1
+
 destination:
  plugin: 'entity_reference_revisions:paragraph'
  default_bundle: cgov_two_item_feature_row
