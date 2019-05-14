@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - block_content.type.raw_html_block
-    - field.field.block_content.raw_html_block.body
+    - field.field.block_content.raw_html_block.field_raw_html
   module:
     - text
 id: block_content.raw_html_block.default
@@ -11,14 +11,13 @@ targetEntityType: block_content
 bundle: raw_html_block
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
+  field_raw_html:
     weight: 101
     settings:
-      rows: 9
-      summary_rows: 3
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
+    type: text_textarea
     region: content
   info:
     type: string_textfield

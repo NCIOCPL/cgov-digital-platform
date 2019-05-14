@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - block_content.type.raw_html_block
-    - field.field.block_content.raw_html_block.body
+    - field.field.block_content.raw_html_block.field_raw_html
   module:
     - text
 id: block_content.raw_html_block.default
@@ -11,12 +11,12 @@ targetEntityType: block_content
 bundle: raw_html_block
 mode: default
 content:
-  body:
-    label: hidden
-    type: text_default
+  field_raw_html:
     weight: 0
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    type: text_default
     region: content
 hidden:
   langcode: true
