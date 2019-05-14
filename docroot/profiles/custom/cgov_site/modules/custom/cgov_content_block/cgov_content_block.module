@@ -4,3 +4,18 @@
  * @file
  * Contains cgov_content_block.module.
  */
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Limits allowed text formats using the cgov_util form_tools service.
+ */
+function cgov_content_block_field_widget_form_alter(&$element, $form_state, $context) {
+  // Maps field names to an array containing a single format.
+  $map = [
+    'body' => ['full_html'],
+    'field_raw_html' => ['raw_html'],
+  ];
+  $formHelper = \Drupal::service('cgov_util.form_tools');
+  $formHelper->allowTextFormats($map, $element, $context);
+}
