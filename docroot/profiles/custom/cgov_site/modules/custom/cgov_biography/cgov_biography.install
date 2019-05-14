@@ -59,7 +59,7 @@ EOMarkup;
   $block_content = BlockContent::create([
     'type' => 'raw_html_block',
     'info' => $block_label,
-    'body' => ['value' => $block_html, 'format' => 'full_html'],
+    'field_raw_html' => ['value' => $block_html, 'format' => 'raw_html'],
   ]);
   $block_content->save();
 

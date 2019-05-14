@@ -226,7 +226,7 @@ class NavItem {
     $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
     $hasMegamenu = count($referencedEntities) > 0;
     if ($hasMegamenu) {
-      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('body')->value;
+      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('field_raw_html')->value;
       $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
       return $megamenuMarkupDecoded;
     }

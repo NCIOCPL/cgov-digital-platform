@@ -25,8 +25,8 @@ source:
          label: info
          selector: info
         -
-         name: body
-         label: body
+         name: field_html_content
+         label: field_html_content
          selector: body
   ids:
     id:
@@ -47,10 +47,10 @@ process:
   langcode: langcode
   info: info
 
-  body/value: body
-  body/format:
+  field_raw_html/value: field_html_content
+  field_raw_html/format:
    plugin: default_value
-   default_value: full_html
+   default_value: raw_html
 
 destination:
   plugin: entity:block_content
