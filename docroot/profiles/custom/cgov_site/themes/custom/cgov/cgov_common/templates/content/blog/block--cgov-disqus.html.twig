@@ -27,10 +27,7 @@
 #}
 
 <p id="comment-policy" class="blog-comment-policy" style="display: block;">
-    {% trans %}We welcome your comments on this post. All comments must follow our{% endtrans %}
-    <a href="/policies/comments">
-        {% trans %}comment policy{% endtrans %}
-    </a>.
+  {% trans %}We welcome your comments on this post. All comments must follow our{% endtrans %} <a href="/policies/comments">{% trans %}comment policy{% endtrans %}</a>.
 </p>
 <div id="disqus_thread"></div>
 <script>
@@ -39,16 +36,16 @@
     var disqus_config = function () {
         this.page.url = location.protocol + "//" + location.hostname + location.pathname;
         this.page.identifier = "cgov-blog-post:" + location.pathname;
-    };              
+    };
     (function() {
         var d = document, s = d.createElement("script");
-        s.src = "{{ content }}";                
+        s.src = "{{ content }}";
         s.setAttribute("data-timestamp", +new Date());
         (d.head || d.body).appendChild(s);
     })();
 </script>
 
 <noscript>
-    Please enable JavaScript to view the 
+    Please enable JavaScript to view the
     <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
 </noscript>
