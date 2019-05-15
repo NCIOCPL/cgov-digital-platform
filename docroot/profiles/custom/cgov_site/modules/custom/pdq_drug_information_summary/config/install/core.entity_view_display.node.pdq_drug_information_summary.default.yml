@@ -3,8 +3,10 @@ status: true
 dependencies:
   config:
     - field.field.node.pdq_drug_information_summary.body
+    - field.field.node.pdq_drug_information_summary.field_browser_title
     - field.field.node.pdq_drug_information_summary.field_date_posted
     - field.field.node.pdq_drug_information_summary.field_date_updated
+    - field.field.node.pdq_drug_information_summary.field_meta_tags
     - field.field.node.pdq_drug_information_summary.field_page_description
     - field.field.node.pdq_drug_information_summary.field_pdq_audio_id
     - field.field.node.pdq_drug_information_summary.field_pdq_cdr_id
@@ -35,6 +37,14 @@ content:
     weight: -20
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_browser_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
   field_date_updated:
     weight: 103
