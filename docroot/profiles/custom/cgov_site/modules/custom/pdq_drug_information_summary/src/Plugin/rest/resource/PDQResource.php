@@ -111,6 +111,7 @@ class PDQResource extends ResourceBase {
       'created' => date('c', $node->getCreatedTime()),
       'cdr_id' => $node->field_pdq_cdr_id->value,
       'title' => $node->getTitle(),
+      'browser_title' => $node->field_browser_title->value,
       'body' => $node->body->value,
       'description' => $node->field_page_description->value,
       'posted_date' => $node->field_date_posted->value,
@@ -182,6 +183,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_pdq_audio_id', $drug['audio_id']);
     $node->set('field_pdq_pronunciation_key', $drug['pron']);
     $node->set('field_public_use', 0);
+    $node->set('field_browser_title', $drug['title']);
 
     // Store the node, leaving it unpublished. We'll make all of the
     // nodes published in a separate pass after they've all been
