@@ -3,7 +3,10 @@
 #
 set -ev
 
-if [ $MIGRATION = 1 ]; then
+
+
+case $MIGRATION in
+CGOV)
     drush mim summary_migration && drush mim summaryes_migration && drush mim dis_migration
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
     drush mim paragraph_en_migration; drush mim paragraph_es_migration
@@ -34,9 +37,39 @@ if [ $MIGRATION = 1 ]; then
 
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
+  ;;
+DCEG)
+    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
+    drush mim paragraph_en_migration; drush mim paragraph_es_migration
+    drush mim cgovimage_migration && drush mim cgovimage_es_migration
+    drush mim article_en_migration && drush mim article_es_migration
+    drush mim video_en_migration && drush mim video_es_migration
 
-else
-    echo 'MIGRATION NOT SET'
-fi
+    drush mim contextualimage_migration && drush mim contextualimage_es_migration
+    drush mim file_en_migration
+
+  ;;
+NANO)
+    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
+    drush mim paragraph_en_migration; drush mim paragraph_es_migration
+    drush mim cgovimage_migration && drush mim cgovimage_es_migration
+    drush mim article_en_migration && drush mim article_es_migration
+
+  ;;
+MYPART)
+    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
+    drush mim paragraph_en_migration; drush mim paragraph_es_migration
+    drush mim cgovimage_migration && drush mim cgovimage_es_migration
+    drush mim article_en_migration && drush mim article_es_migration
+
+    ;;
+NCICONNECTOR)
+  echo 'nciconnector'
+  ;;
+*)
+  echo 'MIGRATION NOT SET'
+  ;;
+esac
+
 
 set +v
