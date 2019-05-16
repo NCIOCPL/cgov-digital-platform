@@ -293,3 +293,168 @@
   field_date_display_mode:
     - value: 'posted'
     - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  status__ES:
+    - value: "0"
+  moderation_state:
+    value: 'published'
+  moderation_state__ES:
+    value: 'draft'
+  title: "Published English, Unpub Spanish"
+  title__ES:
+      value: "Published English, Unpub Spanish - ES"
+  field_page_description:
+    value: "Published English, Unpub Spanish Description"
+  field_page_description__ES:
+    value: "Published English, Unpub Spanish Description - ES"
+  field_card_title:
+    value: "Published English, Unpub Spanish Title"
+  field_card_title__ES:
+    value: "Published English, Unpub Spanish Title - ES"
+  field_browser_title:
+    value: "Published English, Unpub Spanish Browser Title"
+  field_browser_title_ES:
+    value: "Published English, Unpub Spanish Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "pub-en-unpub-es-page"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "pub-en-unpub-es-page"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: es
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Spanish Only Page"
+  field_page_description:
+    value: "Spanish Only Page Description"
+  field_card_title:
+    value: "Spanish Only Page Title"
+  field_browser_title:
+    value: "Spanish Only Page Browser Title"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url:
+    value: "spanish-only-page"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "English Only Page"
+  field_page_description:
+    value: "English Only Page Description"
+  field_card_title:
+    value: "English Only Page Title"
+  field_browser_title:
+    value: "English Only Page Browser Title"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "english-only-page"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'
