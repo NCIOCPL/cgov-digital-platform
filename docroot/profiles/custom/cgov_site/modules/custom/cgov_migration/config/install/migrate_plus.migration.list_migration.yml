@@ -1,0 +1,90 @@
+id: list_migration
+label: 'Custom list migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://migrations/private-files-mig/list.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: row_rid
+         label: row_rid
+         selector: row_rid
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_list_item
+         label: field_list_item
+         selector: field_list_item
+
+        -
+         name: field_list_items
+         label: field_list_items
+         selector: field_list_items
+
+        -
+         name: field_list_item_style
+         label: field_list_item_style
+         selector: field_list_item_style
+
+  ids:
+    row_rid:
+      type: integer
+
+
+process:
+ id: row_rid
+ langcode: langcode
+ field_list_item_style: field_list_item_style
+
+ temp_text:
+    plugin: migration_lookup
+    migration:
+        - internallinksql_migration
+        - externallinksql_migration
+    no_stub: true
+    source: field_list_items
+
+ field_list_items:
+    plugin: iterator
+    source: '@temp_text'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+
+ field_list_items/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - internallinksql_migration
+        - externallinksql_migration
+      no_stub: true
+      source: field_list_item
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_list_items/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - internallinksql_migration
+        - externallinksql_migration
+      no_stub: true
+      source: field_list_item
+    -
+      plugin: extract
+      index:
+        - 1
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_list
+migration_dependencies: {  }
