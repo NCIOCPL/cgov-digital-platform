@@ -20,6 +20,9 @@ function cgov_image_install() {
     $tools->attachMediaTypeToWorkflow($image_type, 'simple_workflow');
   }
 
+  // Attach image carousel to right workflow.
+  $tools->attachBlockContentTypeToWorkflow('cgov_image_carousel', 'simple_workflow');
+
   // Install permissions for this module.
   _cgov_image_install_permissions($tools);
 }
