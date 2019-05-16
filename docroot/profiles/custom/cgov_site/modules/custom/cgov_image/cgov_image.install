@@ -17,7 +17,7 @@ function cgov_image_install() {
   foreach (['cgov_image', 'cgov_contextual_image'] as $image_type) {
     // Add content type permissions.
     $tools->addMediaTypePermissions($image_type, 'image_manager');
-    $tools->attachMediaTypeToWorkflow($image_type, 'image_workflow');
+    $tools->attachMediaTypeToWorkflow($image_type, 'simple_workflow');
   }
 
   // Install permissions for this module.
@@ -37,8 +37,8 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
       'access cgov_image_browser entity browser pages',
     ],
     'image_manager' => [
-      'use image_workflow transition create_new_draft',
-      'use image_workflow transition publish',
+      'use simple_workflow transition create_new_draft',
+      'use simple_workflow transition publish',
     ],
   ];
 

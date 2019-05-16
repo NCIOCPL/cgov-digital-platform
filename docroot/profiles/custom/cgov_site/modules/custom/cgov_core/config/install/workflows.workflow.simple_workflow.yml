@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - content_moderation
-id: image_workflow
-label: 'Image Workflow'
+id: simple_workflow
+label: 'Simple Workflow'
 type: content_moderation
 type_settings:
   states:
@@ -33,6 +33,5 @@ type_settings:
       from:
         - draft
         - published
-  entity_types:
-    media: {}
+  entity_types: { }
   default_moderation_state: published

@@ -4,7 +4,7 @@ dependencies:
   config:
     - image.style.thumbnail
     - workflows.workflow.editorial_workflow
-    - workflows.workflow.image_workflow
+    - workflows.workflow.simple_workflow
   module:
     - content_moderation
     - image
@@ -779,7 +779,7 @@ display:
             editorial_workflow-post_publication_review: editorial_workflow-post_publication_review
             editorial_workflow-archive_requested: editorial_workflow-archive_requested
             editorial_workflow-archived: editorial_workflow-archived
-            image_workflow-draft: image_workflow-draft
+            simple_workflow-draft: simple_workflow-draft
           group: 1
           exposed: true
           expose:
@@ -829,7 +829,7 @@ display:
           operator: 'not in'
           value:
             editorial_workflow-published: editorial_workflow-published
-            image_workflow-published: image_workflow-published
+            simple_workflow-published: simple_workflow-published
           group: 1
           exposed: false
           expose:
