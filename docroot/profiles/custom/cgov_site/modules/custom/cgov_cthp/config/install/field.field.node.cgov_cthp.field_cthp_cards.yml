@@ -5,7 +5,7 @@ dependencies:
     - field.storage.node.field_cthp_cards
     - node.type.cgov_cthp
     - paragraphs.paragraphs_type.cgov_cthp_block_card
-    - paragraphs.paragraphs_type.cgov_cthp_feature_card
+    - paragraphs.paragraphs_type.cgov_cthp_feature_card_internal
     - paragraphs.paragraphs_type.cgov_cthp_guide_card
     - paragraphs.paragraphs_type.cgov_cthp_overview_card
     - paragraphs.paragraphs_type.cgov_cthp_raw_html_card
@@ -29,7 +29,8 @@ settings:
     negate: 0
     target_bundles:
       cgov_cthp_block_card: cgov_cthp_block_card
-      cgov_cthp_feature_card: cgov_cthp_feature_card
+      cgov_cthp_feature_card_external: cgov_cthp_feature_card_external
+      cgov_cthp_feature_card_internal: cgov_cthp_feature_card_internal
       cgov_cthp_guide_card: cgov_cthp_guide_card
       cgov_cthp_overview_card: cgov_cthp_overview_card
       cgov_cthp_raw_html_card: cgov_cthp_raw_html_card
@@ -59,8 +60,11 @@ settings:
         enabled: false
       cgov_cthp_block_card:
         enabled: true
-        weight: 35
-      cgov_cthp_feature_card:
+        weight: 36
+      cgov_cthp_feature_card_external:
+        enabled: true
+        weight: 33
+      cgov_cthp_feature_card_internal:
         enabled: true
         weight: 32
       cgov_cthp_guide_card:
@@ -71,35 +75,35 @@ settings:
         weight: 30
       cgov_cthp_raw_html_card:
         enabled: true
-        weight: 36
+        weight: 37
       cgov_cthp_research_card:
         enabled: true
-        weight: 34
+        weight: 35
       cgov_cthp_video_card:
         enabled: true
-        weight: 33
+        weight: 34
       cgov_external_link:
-        weight: 37
-        enabled: false
-      cgov_guide_row:
         weight: 38
         enabled: false
-      cgov_internal_link:
+      cgov_guide_row:
         weight: 39
         enabled: false
-      cgov_primary_feature_row:
+      cgov_internal_link:
         weight: 40
         enabled: false
-      cgov_secondary_feature_row:
+      cgov_primary_feature_row:
         weight: 41
         enabled: false
-      cgov_thumbnail_row:
+      cgov_secondary_feature_row:
         weight: 42
         enabled: false
-      cgov_two_item_feature_row:
+      cgov_thumbnail_row:
         weight: 43
         enabled: false
-      pdq_summary_section:
+      cgov_two_item_feature_row:
         weight: 44
+        enabled: false
+      pdq_summary_section:
+        weight: 45
         enabled: false
 field_type: entity_reference_revisions
