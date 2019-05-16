@@ -184,6 +184,18 @@ class CgovCoreTools {
   }
 
   /**
+   * Links a block content type to a workflow.
+   *
+   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/1732.
+   */
+  public function attachBlockContentTypeToWorkflow($type_name, $workflow_name) {
+    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
+    $workflow = $workflows[$workflow_name];
+    $workflow->getTypePlugin()->addEntityTypeAndBundle('block_content', $type_name);
+    $workflow->save(TRUE);
+  }
+
+  /**
    * Add Permissions to a role.
    *
    * @param array $rolePermissions

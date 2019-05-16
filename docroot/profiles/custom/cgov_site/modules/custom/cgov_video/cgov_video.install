@@ -22,9 +22,11 @@ function cgov_video_install() {
   $siteHelper->addMediaTypePermissions('cgov_video', ['content_author']);
   $siteHelper->attachMediaTypeToWorkflow('cgov_video', 'editorial_workflow');
 
+  // Attach video carousel to right workflow.
+  $siteHelper->attachBlockContentTypeToWorkflow('cgov_video_carousel', 'simple_workflow');
+
   // Install permissions for this module.
   _cgov_video_install_permissions($siteHelper);
-
 }
 
 /**
