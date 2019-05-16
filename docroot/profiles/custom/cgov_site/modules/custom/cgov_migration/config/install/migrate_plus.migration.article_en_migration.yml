@@ -95,11 +95,6 @@ source:
          selector: '@term_id'
 
         -
-         name: para_id
-         label: para_id
-         selector: para_id
-
-        -
          name: field_pretty_url
          label: field_pretty_url
          selector: '@field_pretty_url'
@@ -192,20 +187,20 @@ process:
     no_stub: true
 
 
-## Holding off on images until the image migration is complete
 
 
-#  field_image_article:
-#    plugin: migration_lookup
-#    migration: cgovimage_migration
-#    source: field_image_article
-#    no_stub: true
-#
-#  field_image_promotional:
-#    plugin: migration_lookup
-#    migration: cgovimage_migration
-#    source: field_image_promotional
-#    no_stub: true
+
+  field_image_article:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_article
+    no_stub: true
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
 
 
 
