@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_content_block.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_content_block_install() {
+  $tools = \Drupal::service('cgov_core.tools');
+  foreach ([
+    'content_block',
+    'raw_html_block',
+  ] as $block_type) {
+    // Add workflow.
+    $tools->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+  }
+}
