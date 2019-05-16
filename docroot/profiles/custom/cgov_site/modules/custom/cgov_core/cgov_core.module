@@ -338,3 +338,99 @@ function cgov_core_theme_suggestions_entity_embed_container(array $variables) {
 
   return $suggestions;
 }
+
+/**
+ * Implements hook_language_switch_links_alter().
+ *
+ * The default language switcher shows all links to content, including the
+ * current language. It also does not care if there is no translation and
+ * it does not care if the translated language has never been published.
+ * We fix this, but still leverage the OOB language block.
+ */
+function cgov_core_language_switch_links_alter(array &$links, $type, Url $url) {
+  $language_interface = \Drupal::languageManager()->getCurrentLanguage();
+
+  // First remove the current language no matter what. This applies to all
+  // links.
+  unset($links[$language_interface->getId()]);
+
+  // No links to check, we should exit.
+  if (count(array_keys($links)) == 0) {
+    return;
+  }
+
+  // Now is the current route a content entity?
+  $entity = _cgov_core_get_curr_entity();
+  if (!$entity) {
+    // If this is not a content entity, then just turn off the toggles.
+    $links = [];
+    return;
+  }
+
+  // Get the language where there is a translated revision.
+  // Note getTranslationLanguages returns interfaces and we
+  // need the 2 char strings.
+  $possible_langs = array_map(
+    function ($lang) {
+      return $lang->getId();
+    },
+    $entity->getTranslationLanguages(TRUE)
+  );
+
+  // There are no translations, remove links and exit.
+  if (count($possible_langs) == 0) {
+    $bad_langs = array_keys($links);
+    foreach ($bad_langs as $lang) {
+      unset($links[$lang]);
+    }
+    return;
+  }
+
+  // Get the list of languages that have not been translated at
+  // all and remove them from the links.
+  $proposed_langs = array_keys($links);
+  $untranslated_langs = array_diff($proposed_langs, $possible_langs);
+  foreach ($untranslated_langs as $lang) {
+    unset($links[$lang]);
+  }
+
+  // Now for the remaining links, we need to check if the translation
+  // has been published.
+  $remaining_langs = array_keys($links);
+
+  // There were no more links.
+  if (count($remaining_langs) == 0) {
+    return;
+  }
+
+  foreach ($remaining_langs as $lang) {
+    $translation = $entity->getTranslation($lang);
+    if (!$translation->isPublished()) {
+      unset($links[$lang]);
+    }
+  }
+
+}
+
+/**
+ * Gets the current entity if there is one.
+ *
+ * @return Drupal\Core\Entity\ContentEntityInterface
+ *   The retrieved entity, or FALSE if none found.
+ */
+function _cgov_core_get_curr_entity() {
+  $params = \Drupal::routeMatch()->getParameters()->all();
+  foreach ($params as $param) {
+    if (!is_object($param)) {
+      continue;
+    }
+
+    $class = new \ReflectionClass($param);
+
+    if (in_array('Drupal\Core\Entity\ContentEntityInterface', $class->getInterfaceNames())) {
+      // If you find a ContentEntityInterface stop iterating and return it.
+      return $param;
+    }
+  }
+  return FALSE;
+}

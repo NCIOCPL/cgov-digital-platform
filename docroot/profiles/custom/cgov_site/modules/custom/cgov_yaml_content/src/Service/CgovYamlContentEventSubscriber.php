@@ -473,7 +473,14 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     foreach ($translatedFields as $fieldName => $fieldValue) {
       $spanishTranslation->{$fieldName} = $fieldValue;
     }
-    $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+
+    // If the user has supplied a moderation_state for the translation,
+    // then it should have been set as part of the loop. Otherwise we
+    // need to set it the same as English for it to work because it
+    // is a special field and does not work the same way as others.
+    if (!array_key_exists('moderation_state', $translatedFields)) {
+      $spanishTranslation->{'moderation_state'} = $entity->{'moderation_state'};
+    }
 
     // Raise the preSave event so that other subscribers can modify
     // the entity before saving.
