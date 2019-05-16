@@ -40,12 +40,6 @@ function _initialize() {
 
 	// move the feature card exit notification within the dom to come right after the image in the feature card to meet design request, WCMSFEQ-282
 	$('.feature-card a.icon-exit-notification').insertAfter('.feature-card a:not([href^="/"]):not([href*=".gov"]) div img');
-
-	// Create a div around the CTHP card image so that we can position the exit disclaimer to it, then move the exit disclaimer inside the newly created div, WCMSFEQ-423
-	$('.cgvcancertypehome .cthpCard div h3 + div > a:not([class="icon-exit-notification"])')
-		.wrapInner("<div class='cthp-card-image'></div>");
-	$('.cgvcancertypehome .cthpCard div div a.icon-exit-notification').first()
-		.insertAfter('.cgvcancertypehome .cthpCard div div > a:not([href^="/"]):not([href*=".gov"]) div img');
 };
 
 let initialized = false;
