@@ -33,27 +33,22 @@ blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt cgov:locales:translate
 case $MIGRATION in
 CGOV)
-  mv docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-migcgov docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 DCEG)
-  mv docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-migdceg docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 NANO)
-  mv docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mignano docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 MYPART)
-  mv docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-migmypart docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 NCICONNECTOR)
-  mv docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mignciconnector docroot/profiles/custom/cgov_site/modules/custom/cgov_migration/migrations/private-files-mig
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;

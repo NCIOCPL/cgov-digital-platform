@@ -86,7 +86,17 @@ class CgovMigrationStreamWrapper extends LocalStream {
     // Get the path to this module.
     // Dependency injection does not work with stream wrappers.
     $module_handler = \Drupal::service('module_handler');
-    return $module_handler->getModuleDirectories()['cgov_migration'];
+    $modulePath = $module_handler->getModuleDirectories()['cgov_migration'];
+
+    if ($_ENV['MIGRATION'] == NULL) {
+      $siteDirectory = 'CGOV';
+    }
+    else {
+      $siteDirectory = trim($_ENV['MIGRATION']);
+    }
+
+    $path = rtrim($modulePath, '/') . '/migrations/' . $siteDirectory;
+    return $path;
   }
 
 }
