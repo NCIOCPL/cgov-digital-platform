@@ -295,4 +295,14 @@ ul.collaborators li {
 	}
 }
 
+// #1516 content is pulled in directly from CDR but does not include some divs(script and divs for audio) that were outputted in percussion.  
+// This overrides extra padding given the content pulled in
+@include bp(large-up){
+	.contentzone {
+		&:first-child {
+			padding-left: 0;
+		}
+	}
+}
+
 /*** END PDQ Styles ***/
