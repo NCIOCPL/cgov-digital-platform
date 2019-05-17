@@ -21,18 +21,18 @@ class ParatestCommand extends BltTasks {
   protected $reportsDir;
 
   /**
-   * The filename for PHPUnit report.
+   * The filename for Paratest report.
    *
    * @var string
    */
   protected $reportFile;
 
   /**
-   * An array that contains configuration to override customize phpunit command.
+   * An array that contains config to override customize paratest command.
    *
    * @var array
    */
-  protected $phpunitConfig;
+  protected $paratestConfig;
 
   /**
    * This hook will fire for all commands in this command file.
@@ -43,18 +43,24 @@ class ParatestCommand extends BltTasks {
     $this->reportsDir = $this->getConfigValue('reports.localDir') . '/phpunit';
     $this->reportFile = $this->reportsDir . '/results.xml';
     $this->testsDir = $this->getConfigValue('repo.root') . '/tests/phpunit';
-    $this->phpunitConfig = $this->getConfigValue('paratest');
+    $this->paratestConfig = $this->getConfigValue('paratest');
   }
 
   /**
    * Executes all Paratest (PHPUnit) tests.
+   *
+   * @usage
+   *   Executes all configured tests.
+   * @usage -D test.paths=${PWD}/tests/Functional/Examples.php
+   *   Executes scenarios in the Examples.feature file.
    *
    * @command custom:paratest:run
    * @aliases cpr paratest custom:paratest
    */
   public function testsParatest() {
     $this->createLogs();
-    foreach ($this->phpunitConfig as $test) {
+    $paratest_path = $this->getConfigValue('test.paths');
+    foreach ($this->paratestConfig as $test) {
       $task = $this->taskParatest()
         ->xml($this->reportFile)
         ->printOutput(TRUE)
@@ -67,7 +73,10 @@ class ParatestCommand extends BltTasks {
         }
       }
       else {
-        if (isset($test['path'])) {
+        if (is_string($paratest_path)) {
+          $task->arg($paratest_path);
+        }
+        elseif (isset($test['path'])) {
           $task->arg($test['path']);
         }
       }
@@ -95,13 +104,13 @@ class ParatestCommand extends BltTasks {
       $exit_code = $result->getExitCode();
 
       if ($exit_code) {
-        throw new BltException("PHPUnit tests failed.");
+        throw new BltException("Paratest tests failed.");
       }
     }
   }
 
   /**
-   * Creates empty log directory and log file for PHPUnit tests.
+   * Creates empty log directory and log file for Paratest (PHPUnit) tests.
    */
   protected function createLogs() {
     $this->taskFilesystemStack()
