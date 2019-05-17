@@ -46,7 +46,7 @@ Feature: Perform tasks related to PDQ Import
     Then I fill in "edit-field-date-posted-0-value-date" with "01/01/2019"
     Then I fill in "edit-field-date-updated-0-value-date" with "01/01/2019"
     Then I fill in "Meta Description" with "Test Description"
-    Then I fill in the "Body" WYSIWYG editor with "Lorem Ipsum"
+    Then I fill in "Body" with "Lorem Ipsum"
     Then I fill in "Pronunciation Audio ID" with "Audio ID"
     Then I fill in "Pronunciation Key" with "Audio Key"
     Then I fill in "Public Use" with "display"
