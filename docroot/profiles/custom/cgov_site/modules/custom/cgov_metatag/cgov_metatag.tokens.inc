@@ -139,6 +139,12 @@ function get_social_image_path_from_media($media_entity) {
     // Use the normal image if cropped with social media crop.
     else {
       $image_fid = $media_entity->field_media_image->target_id;
+
+      // If there is no target, then return nothing.
+      if (!$image_fid) {
+        \Drupal::logger('cgov_metatag')->warning("Media Entity is missing required field_media_image: " . $media_entity->id());
+        return NULL;
+      }
       $image_url_token = find_styled_image_url($image_fid, $social_img_style_name);
     }
 
@@ -171,6 +177,13 @@ function find_styled_image_url($image_fid, $social_img_style_name) {
 
     $file_storage = \Drupal::entityTypeManager()->getStorage('file');
     $file = $file_storage->load($image_fid);
+
+    // The file id points to a non-existant file entity.
+    if (!$file) {
+      \Drupal::logger('cgov_metatag')->notice("Unable to load social media file id: " . $image_fid);
+      return NULL;
+    }
+
     $file_uri = $file->getFileUri();
 
     // Find the Crop associated with this ImageStyle.
