@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.pdq_drug_information_summary.body
     - field.field.node.pdq_drug_information_summary.field_browser_title
+    - field.field.node.pdq_drug_information_summary.field_date_display_mode
     - field.field.node.pdq_drug_information_summary.field_date_posted
     - field.field.node.pdq_drug_information_summary.field_date_updated
     - field.field.node.pdq_drug_information_summary.field_meta_tags
@@ -51,14 +52,20 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_date_display_mode:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
   field_date_posted:
-    weight: 12
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_date_updated:
-    weight: 13
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -169,4 +176,10 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+  url_redirects:
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_meta_tags: true

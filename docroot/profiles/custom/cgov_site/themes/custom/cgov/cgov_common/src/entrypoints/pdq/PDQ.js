@@ -1,6 +1,7 @@
 // import $ from 'jquery';
 import { getNodeArray } from 'Core/utilities/domManipulation';
 import { lang } from 'Core/libraries/nciConfig/NCI.config';
+import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 import './PDQ.scss';
 
 const language = document.documentElement.lang;
@@ -10,6 +11,8 @@ const onDOMContentLoaded = () => {
   moveToggle();
 
   buildInThisSection(getNodeArray('#cgvBody .accordion > section'));
+
+  buildAudioLinks();
 
   citAnchorLinks();
 }
@@ -71,3 +74,19 @@ const citAnchorLinks = () => {
     }
   });
 };
+
+const buildAudioLinks = () => {
+  const audioEl = document.querySelectorAll('[templatename="pdqSnMediaAudioPlayer"]')[0];
+  const audioId = audioEl.getAttribute("objectid").substring(3).replace(/^0+/, '');
+  const audioPath = '/PublishedContent/Media/CDR/Media/' + audioId + '.mp3';
+  const audioPronunciation = audioEl.parentElement.textContent.replace('Placeholder slot\n', '');
+
+  if(audioId){
+    audioEl.parentElement.innerHTML = '<a href="' + audioPath + '" class="CDR_audiofile"><span class="hidden">listen</span></a>' + audioPronunciation;
+
+    // The audioplayer setup is called only once on page load, so we need to
+    // initialize it again for audiolinks added dynamically, but scoped to only the
+    // new element to avoid potential duplication on existing elements.
+    linkAudioPlayer(".pdqdruginfosummary .CDR_audiofile");
+  }
+}; 
