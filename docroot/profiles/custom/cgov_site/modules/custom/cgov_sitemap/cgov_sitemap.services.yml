@@ -1,0 +1,6 @@
+services:
+  cgov_sitemap.route_subscriber:
+    class: Drupal\cgov_sitemap\Routing\RouteSubscriber
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }

@@ -10,3 +10,15 @@ field.formatter.settings.cgov_date_formatter:
 ## core does, so we will inherit from that.
 entity_reference_selection.cgov_all_selection:
   type: entity_reference_selection.default
+
+## Capture information specific to each site.
+cgov_core.site_config:
+  type: config_object
+  label: 'Cancer.gov site-specific settings'
+  mapping:
+    site:
+      type: string
+      label: 'The site ID'
+    prod_base:
+      type: string
+      label: 'Production base URL'
