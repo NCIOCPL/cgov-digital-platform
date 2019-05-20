@@ -23,7 +23,7 @@
 
 {% import _self as macros %}
 <li class="{{ content.nav_tree.class }}">
-  <div>
+  <div class="{{ content.nav_tree.isCurrentSectionLandingPage ? 'current-page' : '' }}">
     <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
   </div>
   {% if content.nav_tree.children|length > 0 %}
