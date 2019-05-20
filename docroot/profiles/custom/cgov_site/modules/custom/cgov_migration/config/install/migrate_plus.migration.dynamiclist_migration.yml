@@ -1,0 +1,70 @@
+id: dynamiclist_migration
+label: 'Custom dynamic list migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://dynamiclist.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: 'id'
+
+        -
+         name: target_id
+         label: target_id
+         selector: target_id
+
+
+        -
+         name: display_id
+         label: display_id
+         selector: display_id
+
+        -
+         name: data
+         label: data
+         selector: data
+        -
+         name: langcode
+         label: langcode
+         selector: 'langcode'
+
+        -
+         name: field_list_title
+         label: field_list_title
+         selector: field_list_title
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+  field_source_view/target_id: target_id
+  field_source_view/display_id: display_id
+  field_source_view/data: data
+  field_list_title: field_list_title
+  langcode: langcode
+
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_dynamic_list
+migration_dependencies: {  }
