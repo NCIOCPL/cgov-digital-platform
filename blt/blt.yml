@@ -50,6 +50,13 @@ phpunit:
     path: '${docroot}/profiles/custom/cgov_site'
     class: null
     file: null
+paratest:
+  -
+    config: '${repo.root}/phpunit.xml'
+    path: '${docroot}/profiles/custom/cgov_site'
+    class: null
+    file: null
+    procs: 4
 command-hooks:
   frontend-reqs:
     dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
