@@ -24,13 +24,4 @@ function cgov_saml_auth_config_install() {
   // Custom config object is no longer needed.
   $customConfig->delete();
 
-  // Set up permissions for roles allowed to interact with SAML config.
-  $samlPermissions = [
-    'administer simplesamlphp authentication',
-    'change saml authentication setting',
-  ];
-  // Get our helper.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $siteHelper->addRolePermissions(['site_admin' => $samlPermissions]);
-
 }
