@@ -11,6 +11,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_entity_translation_create().
@@ -214,5 +215,19 @@ function cgov_core_field_widget_form_alter(&$element, $form_state, $context) {
 function cgov_core_user_presave(EntityInterface $entity) {
   if ($entity->isNew()) {
     $entity->set('preferred_admin_langcode', 'en');
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * We want to remove the 'Reset by Alphabetical'
+ * form button on taxonomy tree forms.
+ */
+function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'taxonomy_overview_terms') {
+    if (isset($form['actions']) && isset($form['actions']['reset_alphabetical'])) {
+      unset($form['actions']['reset_alphabetical']);
+    }
   }
 }
