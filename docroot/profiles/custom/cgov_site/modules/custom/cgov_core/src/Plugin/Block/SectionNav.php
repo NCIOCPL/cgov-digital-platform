@@ -180,11 +180,13 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     $navTree = $this->getSectionNav();
-    $build = [
-      '#type' => 'block',
-      'nav_tree' => $navTree,
-    ];
-    return $build;
+    if ($navTree) {
+      $build = [
+        '#type' => 'block',
+        'nav_tree' => $navTree,
+      ];
+      return $build;
+    }
   }
 
   /**
