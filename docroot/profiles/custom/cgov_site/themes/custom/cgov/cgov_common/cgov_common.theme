@@ -104,6 +104,17 @@ function cgov_common_preprocess_node(&$variables) {
   foreach ($params as $param) {
     $variables['get'][$param] = $_GET[$param] ?? '';
   }
+
+  // is_front is normally only available in page templates.
+  // This is to subvert that expectation.
+  // (NOTE: An exception might be thrown.)
+  try {
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  }
+  catch (Exception $e) {
+    // If the database is not yet available, set the default value.
+    $variables['is_front'] = FALSE;
+  }
 }
 
 /**
