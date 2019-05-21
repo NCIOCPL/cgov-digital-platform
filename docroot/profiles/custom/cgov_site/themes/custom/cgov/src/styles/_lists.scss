@@ -161,39 +161,37 @@ dl {
 	.infographic {
 		background: transparent;
 	}
+}
 
-	.file {
+// attaches a filetype icon to spans following media links like those used on CTHP Research cards or cthp-dropdown items
+.filetype {
+	position: relative;
+	top: 0.25em;
+	display: inline-block;
+	margin-left: 5px;
 
-		.filetype {
-			position: relative;
-			top: 0.25em;
-			display: inline-block;
-			margin-left: 5px;
-
-			&.pdf {
-				@include svg-sprite(file-pdf-gray-o-thick);
-			}
-			&.exe, &.txt {
-				@include svg-sprite(file-download-gray-o);
-			}
-			&.ebook {
-				@include svg-sprite(file-ebook-gray);
-			}
-			&.ppt {
-				@include svg-sprite(file-ppt-gray);
-			}
-			&.word {
-				@include svg-sprite(file-word-gray);
-			}
-			&.excel {
-				@include svg-sprite(file-excel-gray);
-			}
-			&.unknown {
-				top: 0;
-				height: auto;
-				background: none;
-			}
-		}
+	&.pdf {
+		@include svg-sprite(file-pdf-gray-o-thick);
+	}
+	&.exe, &.txt {
+		@include svg-sprite(file-download-gray-o);
+	}
+	&.ebook {
+		@include svg-sprite(file-ebook-gray);
+	}
+	&.ppt {
+		@include svg-sprite(file-ppt-gray);
+	}
+	&.word {
+		@include svg-sprite(file-word-gray);
+	}
+	&.excel {
+		@include svg-sprite(file-excel-gray);
+	}
+	&.unknown {
+		top: 0;
+		height: auto;
+		background: none;
 	}
 }
 
