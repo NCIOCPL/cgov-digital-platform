@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.pdq_drug_information_summary.body
     - field.field.node.pdq_drug_information_summary.field_browser_title
+    - field.field.node.pdq_drug_information_summary.field_date_display_mode
     - field.field.node.pdq_drug_information_summary.field_date_posted
     - field.field.node.pdq_drug_information_summary.field_date_updated
     - field.field.node.pdq_drug_information_summary.field_meta_tags
@@ -18,7 +19,8 @@ dependencies:
     module:
       - pdq_core
   module:
-    - datetime
+    - cgov_core
+    - options
     - text
     - user
 id: node.pdq_drug_information_summary.default
@@ -27,37 +29,54 @@ bundle: pdq_drug_information_summary
 mode: default
 content:
   body:
-    weight: 120
+    weight: 7
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   content_moderation_control:
-    weight: -20
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_browser_title:
-    weight: 3
+    weight: 1
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
-  field_date_updated:
-    weight: 103
+  field_date_display_mode:
+    type: list_default
+    weight: 12
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  field_date_posted:
+    type: cgov_date_formatter
+    weight: 4
+    region: content
     label: above
     settings:
-      format_type: medium
       timezone_override: ''
       format_type: cgov_display_date
+      display_strategy: all
     third_party_settings: {  }
-    type: datetime_default
+  field_date_updated:
+    weight: 3
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: all
+    third_party_settings: {  }
+    type: cgov_date_formatter
     region: content
   field_page_description:
-    weight: 110
+    weight: 6
     label: above
     settings:
       link_to_entity: false
@@ -65,7 +84,7 @@ content:
     type: string
     region: content
   field_pdq_audio_id:
-    weight: 131
+    weight: 9
     label: above
     settings:
       thousand_separator: ''
@@ -74,7 +93,7 @@ content:
     type: number_integer
     region: content
   field_pdq_cdr_id:
-    weight: 106
+    weight: 5
     label: above
     settings:
       thousand_separator: ''
@@ -83,7 +102,7 @@ content:
     type: number_integer
     region: content
   field_pdq_pronunciation_key:
-    weight: 132
+    weight: 10
     label: above
     settings:
       link_to_entity: false
@@ -91,7 +110,7 @@ content:
     type: string
     region: content
   field_pdq_url:
-    weight: 133
+    weight: 11
     label: above
     settings:
       link_to_entity: false
@@ -99,20 +118,17 @@ content:
     type: string
     region: content
   field_public_use:
-    weight: 130
+    weight: 8
     label: above
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    type: boolean
-    region: content
-  links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    type: list_key
     region: content
+  links:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
-  field_date_posted: true
+  field_meta_tags: true
   langcode: true

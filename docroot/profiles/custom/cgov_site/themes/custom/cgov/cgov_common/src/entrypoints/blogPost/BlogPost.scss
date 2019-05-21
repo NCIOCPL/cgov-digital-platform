@@ -57,10 +57,14 @@
   margin-top: 3em;
 }
 
-.embedded-entity[data-entity-embed-display*="_medium"] figure.image-medium {
-  padding-left: 2.5em;
-  background-color: transparent;
-}
+.embedded-entity[data-entity-embed-display*="_medium"]{
+  margin: 0;
+  figure.image-medium {
+    margin-left: 1em;
+    padding-left: 2.5em;
+    background-color: transparent;
+  }
+} 
 
 @include bp(medium-up) {
 	// set width of blog intro text for tablet and desktop, depending on size of image
@@ -89,6 +93,9 @@
   }
   #PageOptionsControl1 {
     right: calc(-25% - 3.125em);
+  }
+  .contentzone:last-child {
+    width:100%;
   }
 }
 

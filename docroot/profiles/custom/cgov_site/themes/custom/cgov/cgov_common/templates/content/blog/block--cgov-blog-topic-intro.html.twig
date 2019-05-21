@@ -2,7 +2,7 @@
   {% for title, desc in content['#topic_intros'] %}
     {% if title == label and desc|length > 0 %}
       <div class="blog-intro-text">
-        <p>{{desc}}</p>
+        {{desc|raw}}
       </div>
     {% endif %}
   {% endfor %}
