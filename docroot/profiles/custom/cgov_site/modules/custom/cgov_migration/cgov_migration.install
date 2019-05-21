@@ -23,3 +23,61 @@ function cgov_migration_uninstall() {
     \Drupal::configFactory()->getEditable($config_name->name)->delete();
   }
 }
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ */
+function cgov_migration_schema() {
+  $schema['cgov_migration_message_log'] = [
+    'description' => 'Stores example person entries for demonstration purposes.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique ID for this log message.',
+      ],
+      'pid' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "The incoming Percussion for this component..",
+      ],
+      'message' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The error message.',
+      ],
+      'severity' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The severity of the error message.',
+      ],
+      'category' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The category of the message.',
+      ],
+      'time' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The time of occurrence.',
+
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'id' => ['id'],
+    ],
+  ];
+
+  return $schema;
+}

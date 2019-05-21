@@ -1,15 +1,12 @@
 id: biography_migration
 label: 'Custom minilanding migration'
 source:
-
-
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
   urls: migration://biography.xml
   item_selector: /rows/row
   fields:
-
         -
          name: id
          label: id
@@ -133,7 +130,6 @@ source:
          label: date_display_mode
          selector: 'date_display_mode/date_display_mode'
 
-
   ids:
     id:
       type: integer
@@ -141,7 +137,10 @@ source:
 process:
   nid: id
   title: title
-  body/value: body
+  body/value:
+    -
+      plugin: remove_rx_wrapper
+      source: body
 
   uid:
    plugin: default_value
@@ -168,42 +167,30 @@ process:
   field_first_name: field_first_name
   field_last_name: field_last_name
   field_office_location: field_office_location
-
   field_short_title: field_short_title
   field_browser_title: field_browser_title
   field_card_title: field_card_title
   field_press_release_type: field_press_release_type
   field_subtitle: field_subtitle
-
   field_page_description: field_page_description
   field_list_description: field_list_description
   field_feature_card_description: field_feature_card_description
-
   field_date_posted: field_date_posted
   field_date_reviewed: field_date_reviewed
   field_date_updated: field_date_updated
   field_date_display_mode: date_display_mode
-
-
   field_search_engine_restrictions: field_search_engine_restrictions
-
   field_site_section:
     plugin: migration_lookup
     migration: sitesectionsql_migration
     source: term_id
     no_stub: true
-
   field_image_promotional:
     plugin: migration_lookup
     migration: cgovimage_migration
     source: field_image_promotional
     no_stub: true
-
-
-
   field_pretty_url: field_pretty_url
-
-
 
 destination:
   plugin: entity:node

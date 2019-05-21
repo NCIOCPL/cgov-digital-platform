@@ -232,7 +232,6 @@ source:
 process:
   nid: id
   title: title
-  body/value: body
 
   uid:
    plugin: default_value
@@ -247,6 +246,10 @@ process:
    plugin: default_value
    default_value: published
 
+  body/value:
+    -
+      plugin: remove_rx_wrapper
+      source: body
   body/format:
    plugin: default_value
    default_value: full_html

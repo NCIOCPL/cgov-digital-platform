@@ -166,6 +166,7 @@ process:
   field_author: author
 
   body/value: body
+
   body/format:
    plugin: default_value
    default_value: full_html
@@ -187,7 +188,11 @@ process:
 
   field_search_engine_restrictions: field_search_engine_restrictions
   field_public_use: field_public_use
-  field_intro_text/value: field_intro_text
+  field_intro_text/value:
+    -
+      plugin: remove_rx_wrapper
+      source: field_intro_text
+
   field_intro_text/format:
    plugin: default_value
    default_value: streamlined
