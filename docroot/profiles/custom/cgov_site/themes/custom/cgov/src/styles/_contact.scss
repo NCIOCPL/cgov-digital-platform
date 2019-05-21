@@ -6,65 +6,76 @@
 //}
 
 .contact-buttons {
-	overflow: auto;
-}
+  overflow: auto;
 
-.contact-buttons a {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	padding: 8px 15px 0;
-	text-decoration: none;
-	float: left;
-	margin-right: 15px;
-	margin-bottom: 15px;
-	display: block;
-	color: #fff;
-	line-height: 24px;
-	font-family: $montserrat-font-stack;
-	font-size: 13px;
+  @include break(medium) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  > div {
+    flex-basis: 30%;
+  }
+
+  a.icon {
+    justify-content: center;
+    color: white;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 8px 15px 0;
+    text-decoration: none;
+    color: #fff;
+    line-height: 24px;
+    font-family: $montserrat-font-stack;
+    font-size: 13px;
+  }
+
+  @include bp(small) {
+    margin: 0 20px;
+  }
 }
 
 .contact-buttons a:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .contact-buttons a.phone {
-	background-color: #82368c;
+  background-color: #82368c;
 }
 .contact-buttons a.chat {
-	background-color: #bb0e3d;
+  background-color: #bb0e3d;
 }
 .contact-buttons a.email {
-	background-color: #ff5f00;
+  background-color: #ff5f00;
 }
 
 .contact-buttons a.icon {
-	padding:8px 11px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+  padding: 8px 11px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .contact-buttons a.icon span {
-	padding-left: 11px;
-	vertical-align: top;
+  padding-left: 11px;
+  vertical-align: top;
 }
 
 .contact-buttons a.icon:before {
-	content: "";
-	font-size: 130%;
+  content: "";
+  font-size: 130%;
 }
 
 // these are used on Contact Us mobile page
 .contact-buttons .phone:before {
-	@include svg-sprite(phone-white)
+  @include svg-sprite(phone-white);
 }
 .contact-buttons .chat:before {
-	@include svg-sprite(comment-white)
+  @include svg-sprite(comment-white);
 }
 .contact-buttons .email:before {
-	@include svg-sprite(mail-envelope-closed-white)
+  @include svg-sprite(mail-envelope-closed-white);
 }
 
 /****************** END Contact Info styles ********************/
