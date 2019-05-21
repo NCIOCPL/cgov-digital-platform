@@ -1,9 +1,3 @@
-@include bp(small) {	
-	.section-nav {
-		top: 1.9375em;
-	}
-}
-
 #section-menu-button {
 	&::before {
 		content:'';
@@ -58,14 +52,14 @@
 		padding-left: 0;
 		padding-right: 38px;
 	}
-	
+
 	/* remove default margin to butt menu up against container */
 	.section-nav,
 	.section-nav ul,
 	.section-nav ul li {
 		margin-left: 0;
 	}
-	
+
 	.section-nav div {
 		position: relative;
 		font-size: 0.875em;
@@ -75,10 +69,10 @@
 	}
 	.section-nav .contains-current > div {
 		font-weight: bold;
-		
+
 		a {
 			color: $purple;
-		}	
+		}
 	}
 
 	.section-nav .current-page:after {
@@ -173,7 +167,7 @@
 		display: none;
 	}
 	/*** END desktop section nav ("left nav") styles ***/
-	
+
 	/*** BEGIN Megamenus/Search Styles ***/
 	/* hide mobile nav */
 	#mega-nav .mobile-item, .mobile-menu-bar, #searchclear {
@@ -230,7 +224,7 @@
 	}
 	.section-nav .contains-current > div {
 		font-weight: bold;
-		
+
 		a {
 			color: $purple;
 		}
@@ -348,7 +342,7 @@
 		background-color: black;
 		width: 100%;
 		z-index: 998;
-	}	
+	}
 
 	/*** BEGIN Megamenus/Search Styles ***/
 	#content {
@@ -361,7 +355,7 @@
 	}
 	html.nav-open {
 		overflow: hidden;
-		
+
 		#page {
 			left: 80%;
 		}
@@ -554,7 +548,7 @@
 				padding-right: 70px;
 				color: $header-font-color;
 			}
-			
+
 			&.contains-current > div.nav-item-title > a {
 				color: $purple;
 			}
@@ -664,6 +658,13 @@
 		overflow: hidden;
 	}
 	/*** END Megamenus/Search Styles ***/
+}
+
+// small
+@include bp(small) {
+	.section-nav {
+		top: 1.9375em;
+	}
 }
 
 // x-small
