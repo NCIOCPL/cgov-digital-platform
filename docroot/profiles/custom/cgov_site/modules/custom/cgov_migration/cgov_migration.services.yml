@@ -3,3 +3,6 @@ services:
     class: Drupal\cgov_migration\StreamWrapper\CgovMigrationStreamWrapper
     tags:
       - { name: stream_wrapper, scheme: migration }
+  cgov_migration.migration_logger:
+    class: Drupal\cgov_migration\Services\MigrationLogger
+    arguments: ['@database']

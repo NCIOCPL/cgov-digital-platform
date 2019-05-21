@@ -191,8 +191,10 @@ process:
 
   field_pretty_url: field_pretty_url
   field_accessible_version: field_accessible_version
-
-  body/value: body
+  body/value:
+    -
+      plugin: remove_rx_wrapper
+      source: body
   body/format:
    plugin: default_value
    default_value: full_html

@@ -42,7 +42,10 @@ source:
 
 
 process:
- field_cthp_overview_card_text/value: field_cthp_overview_card_text
+ field_cthp_overview_card_text/value:
+   -
+     plugin: remove_rx_wrapper
+     source: field_cthp_overview_card_text
  field_cthp_overview_card_text/format:
     plugin: default_value
     default_value: streamlined

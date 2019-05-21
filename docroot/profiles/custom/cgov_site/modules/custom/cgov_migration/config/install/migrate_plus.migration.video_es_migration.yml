@@ -129,7 +129,12 @@ process:
 
   name: title
   field_media_oembed_video: field_media_oembed_video
-  field_caption/value: field_caption
+
+  field_caption/value:
+    -
+      plugin: remove_rx_wrapper
+      source: field_caption
+
   field_caption/format:
    plugin: default_value
    default_value: simple
@@ -176,12 +181,9 @@ process:
     source: term_id
     no_stub: true
 
-
-
   field_pretty_url: field_pretty_url
-
-
   body/value: body
+
   body/format:
    plugin: default_value
    default_value: full_html

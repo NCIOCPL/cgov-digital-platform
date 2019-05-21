@@ -178,7 +178,10 @@ process:
   field_blog_series_shortname: field_blog_series_shortname
   field_recommended_content_header: field_recommended_content_header
 
-  field_about_blog/value: field_about_blog
+  field_about_blog/value:
+    -
+      plugin: remove_rx_wrapper
+      source: field_about_blog
   field_archive_back_years: field_archive_back_years
   field_archive_group_by: field_archive_group_by
 

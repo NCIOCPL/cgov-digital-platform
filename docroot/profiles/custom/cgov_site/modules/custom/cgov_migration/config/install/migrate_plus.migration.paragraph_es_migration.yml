@@ -34,7 +34,10 @@ source:
 
 
 process:
- field_body_section_content/value: field_body_section_content
+ field_body_section_content/value:
+   -
+    plugin: remove_rx_wrapper
+    source: field_body_section_content
  field_body_section_content/format:
    plugin: default_value
    default_value: full_html

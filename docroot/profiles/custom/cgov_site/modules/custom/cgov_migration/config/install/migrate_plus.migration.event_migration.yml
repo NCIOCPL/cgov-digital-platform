@@ -129,8 +129,10 @@ source:
 process:
   nid: id
   title: title
-  body/value: body
-
+  body/value:
+    -
+      plugin: remove_rx_wrapper
+      source: body
   uid:
    plugin: default_value
    default_value: 1

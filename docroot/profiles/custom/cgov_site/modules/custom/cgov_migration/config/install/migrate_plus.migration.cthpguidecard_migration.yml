@@ -53,7 +53,11 @@ process:
  id: id
  langcode: langcode
 
- field_cthp_guide_card_desc/value: field_cthp_guide_card_desc
+ field_cthp_guide_card_desc/value:
+   -
+     plugin: remove_rx_wrapper
+     source: field_cthp_guide_card_desc
+
  field_cthp_guide_card_desc/format:
      plugin: default_value
      default_value: streamlined

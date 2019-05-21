@@ -125,7 +125,11 @@ process:
   mid: id
   name: title
   field_media_oembed_video: field_media_oembed_video
-  field_caption/value: field_caption
+  field_caption/value:
+   -
+    plugin: remove_rx_wrapper
+    source: field_caption
+
   field_caption/format:
    plugin: default_value
    default_value: simple
