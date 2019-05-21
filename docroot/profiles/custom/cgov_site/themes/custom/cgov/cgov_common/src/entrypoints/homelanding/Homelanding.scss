@@ -14,16 +14,19 @@
 // overriding default spacing for p tags for the home/landing pages
 // The top margin for the p-tag causes extra spacing above the carousel
 // and has been excluded from this rule (VE, WCMSFEQ-390)
-.ncilandingpage p,
-.ncihome p:not(.site-name):not(.site-link) {
+h1, p:not(.site-name):not(.site-link) {
   margin: 0.5em 0;
 }
 
-// override default top margin for h1 elements on home/landing pages
-.ncilandingpage h1 {
-  margin-top: 0.58em;
+.ui-accordion .ui-accordion-header,
+.ui-accordion div.ui-accordion-content {
+  margin-left: -32px;
+  margin-right: -32px;
 }
 
+.ui-accordion div.ui-accordion-content {
+  padding: 10px 10px 10px 21px;
+}
 /* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
 .feature-primary .rawHtml,
 .feature-primary .rawHtml .featured-text {

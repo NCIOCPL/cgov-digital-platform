@@ -81,6 +81,10 @@
 	margin-top: 70px;
 }
 
+table thead tr th {
+  text-align: center;
+}
+
 // Lingering clearfix spacing removal [WCMSFEQ-1344]
 @include bp(medium-up){
 	.clearfix::after, .clearfix::before, .pullquote-left::after, .pullquote-left::before, .pullquote-right::after, .pullquote-right::before, .pullquote::after, .pullquote::before
@@ -292,6 +296,16 @@ ul.collaborators li {
 	// hide for smartphone
 	@include bp(small) {
 		display: none !important;
+	}
+}
+
+// #1516 content is pulled in directly from CDR but does not include some divs(script and divs for audio) that were outputted in percussion.  
+// This overrides extra padding given the content pulled in
+@include bp(large-up){
+	.contentzone {
+		&:first-child {
+			padding-left: 0;
+		}
 	}
 }
 
