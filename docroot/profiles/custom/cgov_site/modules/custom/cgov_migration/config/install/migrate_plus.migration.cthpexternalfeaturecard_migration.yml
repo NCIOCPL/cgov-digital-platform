@@ -1,11 +1,11 @@
-id: cthpfeaturecard_migration
-label: 'Custom cthpfeaturecardmigration'
+id: cthpexternalfeaturecard_migration
+label: 'Custom cthpexternalfeaturecardmigration'
 
 source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://cthpfeaturecard.xml
+  urls: migration://cthpexternalfeaturecard.xml
   item_selector: /rows/row
   fields:
         -
@@ -58,5 +58,5 @@ process:
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'
- default_bundle: cgov_cthp_feature_card_internal
+ default_bundle: cgov_cthp_feature_card_external
 migration_dependencies: {  }
