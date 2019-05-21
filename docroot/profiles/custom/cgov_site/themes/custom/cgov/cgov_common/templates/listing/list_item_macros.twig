@@ -130,6 +130,20 @@
   </li>
 {% endmacro %}
 
+
+{#
+  Title 
+  
+  Used in:
+    * CTHP Research Block
+#}
+{% macro list_item_cthp_research_media(title, date, url, has_title_heading, media_link_type, file_type, file_size, file_ext)%}
+  <p>
+    {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+  </p>
+{% endmacro %}
+
+
 {#
   Title, description, and image.
 
