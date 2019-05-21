@@ -2,7 +2,9 @@
 
 namespace Drupal\cgov_core;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\language\LanguageNegotiatorInterface;
 
@@ -432,6 +434,68 @@ class CgovCoreTools {
    */
   public function isProd() {
     return $this->getCloudEnvironment() == CgovEnvironments::PROD;
+  }
+
+  /**
+   * Returns an AccessResult for a Entity Reference Field for Filtering.
+   *
+   * We have a lot of paragraph entities that have an Entity Reference
+   * Field that points to a content item and some override fields
+   * (title, description, etc) to override the content item's fields
+   * when rendering. (e.g. List Items, Related resources, Cards, etc)
+   *
+   * The access checks will correctly filter out unpublished content
+   * items from displaying to anonymous users. However, for these paragraphs
+   * that just results in an empty element being displayed. In many cases
+   * the template for the paragraph does not generate any markup if there
+   * is no content item. However, this can still result in field labels
+   * and containers being displayed because the field containing the
+   * paragraphs still has entities to display, they are just empty.
+   *
+   * This helper function can be used within a hook_paragraph_access function
+   * to "bubble" up an AccessResult for the content item entity field.
+   *
+   * NOTE: This should only be done for "view" operations.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   The entity to check (should be the paragraph).
+   * @param string $field_name
+   *   The name of the field that contains the content item.
+   *
+   * @return \Drupal\Core\Access\AccessResult
+   *   The bubbled access.
+   */
+  public function filterAccessForDependantEntity(ContentEntityInterface $entity, $field_name) {
+    if (!$entity->hasField($field_name)) {
+      throw new Exception($field_name . " does not exist on entity");
+    }
+
+    $dependant = $entity->get($field_name)->entity;
+
+    // There is no entity in this field.
+    if (!$dependant) {
+      return AccessResult::forbidden("Non-existant dependant");
+    }
+
+    // Gets the dependant's AccessResult. This access check was lifted from
+    // EntityReferenceFormatterBase, and is the same check call that would
+    // hide the content item.
+    $access_result = $dependant->access('view', NULL, TRUE);
+
+    if ($access_result->isAllowed()) {
+      // If we are allowed to see the node, then we do not want to influence
+      // any access checks.
+      return AccessResult::neutral();
+    }
+
+    // Setup a forbidden result and copy over caching info for
+    // the links.
+    $new_res = AccessResult::forbidden("Forbidden list item");
+    $new_res->setCacheMaxAge($access_result->getCacheMaxAge());
+    $new_res->addCacheTags($access_result->getCacheTags());
+    $new_res->addCacheContexts($access_result->getCacheContexts());
+
+    return $new_res;
   }
 
 }
