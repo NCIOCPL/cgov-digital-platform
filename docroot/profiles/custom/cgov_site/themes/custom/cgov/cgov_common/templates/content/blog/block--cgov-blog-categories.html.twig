@@ -1,9 +1,9 @@
-{% if content['#blog_categories']|length > 0 %}
+{% if content.blog_categories|length > 0 %}
   <div class="slot-item">
     <div class="managed list without-date">
       <p id="Categories" tabindex="0" class="title">{% trans %}Categories{% endtrans %}</p>
       <ul>
-        {% for title, link in content['#blog_categories'] %}
+        {% for title, link in content.blog_categories %}
           <li class="general-list-item general list-item">
             <div class="title-and-desc title desc container">
               <a class="title" href="{{link}}">{{title}}</a>

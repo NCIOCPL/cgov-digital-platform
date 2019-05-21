@@ -199,7 +199,7 @@ class BlogManager implements BlogManagerInterface {
     // Create an array of categories that match the owner Blog Series.
     foreach ($topics as $topic) {
       $tid = $topic->tid;
-      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
+      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value ?? $tid;
       $desc = $this->getTaxonomyStorage()->load($tid)->description->value;
       $descriptions[$url] = $desc;
     }
@@ -216,7 +216,7 @@ class BlogManager implements BlogManagerInterface {
     // Create an array of categories that match the owner Blog Series.
     foreach ($topics as $topic) {
       $tid = $topic->tid;
-      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
+      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value ?? $tid;
       $name = $this->getTaxonomyStorage()->load($tid)->getName();
       $names[$url] = $name;
     }

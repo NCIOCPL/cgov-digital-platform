@@ -73,7 +73,7 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
     // Return collection of intros. TODO: clean up twig.
     $topic_intros = $this->getTopicIntros();
     $build = [
-      '#topic_intros' => $topic_intros,
+      'topic_intros' => $topic_intros,
     ];
     return $build;
   }
