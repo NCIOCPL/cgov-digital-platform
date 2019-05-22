@@ -12,7 +12,7 @@
     {% set url = paragraph.field_cthp_target_link[0].entity.field_external_link[0].uri %}
     {% set description = (content.field_cthp_override_description|field_value)
           ? content.field_cthp_override_description
-          : paragraph.field_cthp_target_link[0].entity.field_external_link[0].entity.field_override_title[0].value
+          : paragraph.field_cthp_target_link[0].entity.field_external_link[0].entity.field_override_list_description[0].value
     %}
   {% endif %}
 {% elseif content.field_cthp_video[0] %}
