@@ -1,0 +1,213 @@
+## A CTHP that has guide cards with the various bad link
+## tests.
+- entity: "node"
+  type: "cgov_cthp"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "CTHP List Test"
+  field_page_description:
+    value: "CTHP List Test Description"
+  field_card_title:
+    value: "CTHP List Test Title"
+  field_browser_title:
+    value: "CTHP List Test Browser"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cthp'
+  field_pretty_url:
+    value: 'bad-guide-card-lists'
+  field_audience:
+    value: "patient"
+  field_cthp_cards:
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'Unpub Page'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'Bad Page'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            value: 9999999
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'No Page'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'Unpub File'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Unpublished File'
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'Bad File'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+         - entity: 'paragraph'
+           type: "cgov_media_link"
+           field_media_link:
+             value: 9999999
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        value: 'No File'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_view_more_info:
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+
+## A CTHP that has cancer research cards with the various
+## bad test links
+- entity: "node"
+  type: "cgov_cthp"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "CTHP Research Card Test"
+  field_page_description:
+    value: "CTHP Research Card Test Description"
+  field_card_title:
+    value: "CTHP Research Card Test Title"
+  field_browser_title:
+    value: "CTHP Research Card Test Browser"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cthp'
+  field_pretty_url:
+    value: 'bad-research-cards'
+  field_audience:
+    value: "patient"
+  field_cthp_cards:
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Unpublish Page'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - Unpub page'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Bad Page'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - bad page'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'No Page'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - No page'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Unpublish File'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - Unpub file'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Bad File'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - Bad file'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'No File'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+      field_cthp_research_page:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cancer_research'
+                title: 'Cancer Research Test - no file'

@@ -5,10 +5,36 @@
  * Contains cgov_list.module.
  */
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * We need to filter out the paragraph list items that have no links.
+ * They can have no link because:
+ *   A) A content editor did not add a link to the list item.
+ *   B) An anon user is view the page and the link is unpublished.
+ *   C) Migrate entered a target_id, but it points to non-existant content.
+ */
+function cgov_list_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  $bundle = $entity->bundle();
+
+  if ($bundle === 'cgov_internal_link' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_internal_link');
+  }
+
+  if ($bundle === 'cgov_media_link' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_media_link');
+  }
+
+  // We have no skin in the game.
+  return AccessResult::neutral();
+}
 
 /**
  * Format bytes string helper.
@@ -82,12 +108,18 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
 
     $list_item_mode = $entity->field_list_item_style->value;
 
-    $build['field_list_items'] = $build['field_list_items']['#items']->view([
-      'type' => 'entity_reference_revisions_entity_view',
-      'settings' => [
-        'view_mode' => $list_item_mode,
-      ],
-    ]);
+    // Only rebuild the items if there are some.
+    if (
+      array_key_exists('#items', $build['field_list_items']) &&
+      (count($build['field_list_items']['#items']) > 0)
+    ) {
+      $build['field_list_items'] = $build['field_list_items']['#items']->view([
+        'type' => 'entity_reference_revisions_entity_view',
+        'settings' => [
+          'view_mode' => $list_item_mode,
+        ],
+      ]);
+    }
   }
 
   // Infographics, Files, and Videos are going to be allowed as list items

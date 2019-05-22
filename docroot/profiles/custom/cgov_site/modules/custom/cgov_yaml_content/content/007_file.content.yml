@@ -32,3 +32,39 @@
           - type: 'module'
             filename: 'drupal-config-schema.pdf'
       alt: 'Test PDF File name'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Unpublished File"
+  langcode: en
+  status: 0
+  moderation_state:
+    value: 'draft'
+  field_pretty_url: "unpublished-file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_list_description:
+    value: "Unpublished File list description"
+  field_browser_title:
+    value: "Unpublished File Browser title"
+  field_search_engine_restrictions: 0
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'drupal-config-schema.pdf'

@@ -1,0 +1,85 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Bad Lists"
+  title__ES:
+    value: "Test Bad Lists - ES"
+  field_browser_title:
+    value: "Test Bad Lists"
+  field_browser_title__ES:
+    value: "Test Bad Lists - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/mini-landing'
+  field_pretty_url:
+    value: "bad-lists"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es/mini-landing-es'
+  ### English Contents
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title
+      field_list_title:
+        value: "Unpublished List Item"
+      field_list_items:
+        ## Stock Items
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title
+      field_list_title:
+        value: "Unpublished Media Item"
+      field_list_items:
+        ## Stock Items
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Unpublished File'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title
+      field_list_title:
+        value: "Non-existing List Item"
+      field_list_items:
+        ## Stock Items
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            value: 999999
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title
+      field_list_title:
+        value: "No List Items"
