@@ -3,10 +3,16 @@
 {% set attr = create_attribute() %}
 {% set attr = attr.addClass('managed list') %}
 
-<!-- List Style: {{- style -}} -->
-<div{{ attr }}>
-  {{ content.field_list_title }}
-  <ul>
+{#
+  Do not use paragraph.field_list_items to get the length
+  as access filters are not applied.
+#}
+{% if (content.field_list_items['#items']|length > 0) %}
+  <!-- List Style: {{- style -}} -->
+  <div{{ attr }}>
+    {{ content.field_list_title }}
     {{ content.field_list_items }}
-  </ul>
-</div>
+  </div>
+{% else %}
+  <!-- Empty List Is Hidden -->
+{% endif %}

@@ -1,0 +1,170 @@
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - Unpub page"
+  field_browser_title:
+    value: "Cancer Research Test - Unpub page"
+  field_page_description:
+    value: "Cancer Research Test - Unpub page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "unpublished-page"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Unpublished Page'
+
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - bad page"
+  field_browser_title:
+    value: "Cancer Research Test - bad page"
+  field_page_description:
+    value: "Cancer Research Test - bad page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "bad-page"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        value: 9999999
+
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - No page"
+  field_browser_title:
+    value: "Cancer Research Test - No page"
+  field_page_description:
+    value: "Cancer Research Test - No page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "no-page"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+
+
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - Unpub file"
+  field_browser_title:
+    value: "Cancer Research Test - Unpub file"
+  field_page_description:
+    value: "Cancer Research Test - Unpub file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "unpublished-file"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_file'
+                name: 'Unpublished File'
+
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - Bad file"
+  field_browser_title:
+    value: "Cancer Research Test - Bad file"
+  field_page_description:
+    value: "Cancer Research Test - Bad file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "bad-file"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        value: 9999999
+
+- entity: "node"
+  type: "cgov_cancer_research"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Research Test - no file"
+  field_browser_title:
+    value: "Cancer Research Test - no file"
+  field_page_description:
+    value: "Cancer Research Test - no file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cancer-research'
+  field_pretty_url:
+    value: "no-file"
+  ### English Contents
+  field_selected_research:
+    - entity: 'paragraph'
+      type: "cgov_media_link"

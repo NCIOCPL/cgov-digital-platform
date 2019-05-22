@@ -1,0 +1,167 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - Unpub page"
+  field_browser_title:
+    value: "Related Resource Test - Unpub page"
+  field_page_description:
+    value: "Related Resource Test - Unpub page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "unpublished-page"
+  ### English Contents
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Unpublished Page'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - Bad page"
+  field_browser_title:
+    value: "Related Resource Test - Bad page"
+  field_page_description:
+    value: "Related Resource Test - Bad page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "bad-page"
+  ### English Contents
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        value: 9999999
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - No page"
+  field_browser_title:
+    value: "Related Resource Test - No page"
+  field_page_description:
+    value: "Related Resource Test - No page"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "no-page"
+  ### English Contents
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - Unpub file"
+  field_browser_title:
+    value: "Related Resource Test - Unpub file"
+  field_page_description:
+    value: "Related Resource Test - Unpub file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "unpublished-file"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_file'
+                name: 'Unpublished File'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - Bad file"
+  field_browser_title:
+    value: "Related Resource Test - Bad file"
+  field_page_description:
+    value: "Related Resource Test - Bad file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "bad-file"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        value: 9999999
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Related Resource Test - No file"
+  field_browser_title:
+    value: "Related Resource Test - No file"
+  field_page_description:
+    value: "Related Resource Test - No file"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/related-resources'
+  field_pretty_url:
+    value: "no-file"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_media_link"
