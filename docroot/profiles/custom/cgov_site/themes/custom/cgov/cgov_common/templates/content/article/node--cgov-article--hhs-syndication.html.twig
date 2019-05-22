@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Theme override for HHS Syndication of cancer.gov Articles.
+ *
+ * This is a stripped-down version of the body, restricted to the
+ * information in the article. The bundle and theme names are embedded
+ * in the template's file name to ensure that this overriding template
+ * is selected.
+ */
+#}
+<h1>{{ node.label }}</h1>
+<div id="cgvBody">
+  {{ content.field_image_article }}
+  {{ content.field_intro_text }}
+  {{ content.field_article_body }}
+</div>
