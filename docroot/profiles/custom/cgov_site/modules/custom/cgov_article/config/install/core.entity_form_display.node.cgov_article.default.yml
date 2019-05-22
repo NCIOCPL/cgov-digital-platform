@@ -23,12 +23,14 @@ dependencies:
     - field.field.node.cgov_article.field_related_resources
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
+    - field.field.node.cgov_article.field_hhs_syndication
     - node.type.cgov_article
     - workflows.workflow.editorial_workflow
   enforced:
     module:
       - cgov_core
   module:
+    - cgov_syndication
     - content_moderation
     - datetime
     - entity_browser
@@ -218,6 +220,12 @@ content:
       field_widget_display_settings: {  }
     third_party_settings: {  }
     type: entity_browser_entity_reference
+    region: content
+  field_hhs_syndication:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    type: cgov_syndication_widget
     region: content
   langcode:
     type: language_select
