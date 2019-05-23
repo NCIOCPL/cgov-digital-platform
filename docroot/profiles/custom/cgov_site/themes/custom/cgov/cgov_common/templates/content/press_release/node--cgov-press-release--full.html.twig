@@ -1,9 +1,14 @@
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
+  {% if content.field_press_release_type|field_value %}
+    <div id="cgvBodyHeader" class="row banner-slot">
+      <div class="slot-item only-SI large-12 columns body-banner">
+        <div class="news-type">{{ content.field_press_release_type }}</div>
+      </div>
+    </div>
+  {% endif %}
   <div class="resize-content">
-    {{ content.field_press_release_type }}
-
     <h1>
       {{ node.label }}
     </h1>

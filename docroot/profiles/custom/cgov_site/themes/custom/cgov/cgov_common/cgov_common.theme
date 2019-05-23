@@ -6,6 +6,7 @@
  */
 
 use Drupal\node\Entity\Node;
+use Drupal\Core\Language\LanguageInterface;
 
 // Global variables for later use.
 global $_theme_name, $_path_to_cgov_common;
@@ -33,6 +34,22 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     // Add theme suggestion of 'page__article', 'page__biography', etc.
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
+  }
+
+  // ADD SUGGESTIONS FOR CUSTOM 401/403/404 PAGE TEMPLATES.
+  // 1) Get Request Object.
+  $request = \Drupal::request();
+
+  // 2) If there is HTTP Exception..
+  if ($exception = $request->attributes->get('exception')) {
+    // 3) Get the status code.
+    $status_code = $exception->getStatusCode();
+    // 4) Get the current langauge.
+    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId();
+    if (in_array($status_code, [401, 403, 404])) {
+      $suggestions[] = 'page__' . $status_code;
+      $suggestions[] = 'page__' . $status_code . '_' . $language;
+    }
   }
 }
 
@@ -86,6 +103,17 @@ function cgov_common_preprocess_node(&$variables) {
   // Add any parameter values to the $variables get property.
   foreach ($params as $param) {
     $variables['get'][$param] = $_GET[$param] ?? '';
+  }
+
+  // is_front is normally only available in page templates.
+  // This is to subvert that expectation.
+  // (NOTE: An exception might be thrown.)
+  try {
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  }
+  catch (Exception $e) {
+    // If the database is not yet available, set the default value.
+    $variables['is_front'] = FALSE;
   }
 }
 

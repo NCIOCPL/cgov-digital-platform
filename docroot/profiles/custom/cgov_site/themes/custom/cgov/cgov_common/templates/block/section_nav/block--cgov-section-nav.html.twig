@@ -22,14 +22,24 @@
 {% endmacro %}
 
 {% import _self as macros %}
-<li class="{{ content.nav_tree.class }}">
-  <div>
-    <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
+{% if content.nav_tree.label %}
+  <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
+    <div class="slot-item only-SI">
+      <div class="section-nav">
+        <ul>
+          <li class="{{ content.nav_tree.class }}">
+            <div class="{{ content.nav_tree.isCurrentSectionLandingPage ? 'current-page' : '' }}">
+              <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
+            </div>
+            {% if content.nav_tree.children|length > 0 %}
+              <ul>
+                {{ macros.nav_level(content.nav_tree.children) }}
+              </ul>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  {% if content.nav_tree.children|length > 0 %}
-    <ul>
-      {{ macros.nav_level(content.nav_tree.children) }}
-    </ul>
-  {% endif %}
-</li>
+{% endif %}
 

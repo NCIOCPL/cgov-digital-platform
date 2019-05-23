@@ -4,12 +4,13 @@
 
 {# Title Row #}
 <div class="row">
-  {# TODO: Only print title if not homepage #}
-  <div class="large-7 columns">
+  {% if is_front == FALSE %}
     <!-- PAGE TITLE -->
-    <h1>{{ node.label }}</h1>
+    <div class="large-7 columns">
+      <h1>{{ node.label }}</h1>
+    </div>
     <!-- END PAGE TITLE -->
-  </div>
+  {% endif %}
 
   {{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
 </div>

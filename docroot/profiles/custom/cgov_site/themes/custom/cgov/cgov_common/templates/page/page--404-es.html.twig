@@ -1,0 +1,77 @@
+{{ page.notification_banner }}
+
+<header class="push" role="banner">
+  <div id="nvcgSlSiteBanner" class="row">
+     {{ page.site_banner }}
+  </div>
+</header>
+
+<div id="page">
+  <!-- Global nav/utility bar/language  -->
+  <div class="fixedtotop">
+    <div class="headroom-area">
+      {{ page.language_bar }}
+      <!-- UTILITY NAV -->
+      <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
+        {{ page.utility_bar }}
+      </div>
+      <!-- END UTILITY NAV -->
+    </div>
+    <!-- end "headroom-area" -->
+    <!-- BEGIN NAVIGATION -->
+    <!-- Begin nav-search bar -->
+    <div class="nav-search-bar gradient header">
+      <div id="nvcgSlMainNav" class="row">
+        <div class="slot-item first-SI">
+          <div class="navigation">
+            {{ page.mobile_nav }}
+            {{ page.main_nav }}
+          </div>
+        </div>
+        {{ page.search_bar }}
+      </div>
+    </div>
+    <!-- End nav-search bar -->
+    <!-- END NAVIGATION -->
+  </div><!-- END Global nav/utility bar/language -->
+
+  <!-- Begin MAIN CONTENT AREA -->
+  <div class="main-content" id="content" tabindex="0">
+    <div class="row general-page-body-container collapse">
+      <div class="large-12 columns">
+        <div class="row">
+          {{ page.breadcrumb }}
+        </div> <!-- END "row" -->
+      </div> <!-- END "large-12 columns" -->
+      <div class="row">
+        <!--    SECTION NAVIGATION -->
+        {% if page.section_nav %}
+            {{ page.section_nav }}
+        {% endif %}
+        <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
+          <div class="error-page">
+            <div class="error-content-spanish">
+              <h1>No se encontró la página</h1>
+              <p><span>No podemos encontrar la página que busca.</span></p>
+              <p><span>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos" title="">tipo de cáncer</a>,&nbsp;o use la casilla de búsqueda en la parte de abajo de esta página.</span></p>
+              <p><span>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</span></p>
+            </div>
+            <div class="error-searchbar">
+              <!-- Begin Search form -->
+              <div id="error-form">
+                <form action="/espanol/buscar/resultados" method="get" id="pageNotFoundSearchForm" name="pageNotFoundSearchForm" onsubmit="NCIAnalytics.PageNotFound(this);" data-language="es">
+                  <label class="hidden" for="nfKeyword">Buscar</label>
+                  <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+                  <button class="searchSubmit" id="nf-search__button" type="submit">Buscar<span class="hidden">Buscar</span></button>
+                </form>
+              </div>
+              <!-- End Search form -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ page.footer }}
