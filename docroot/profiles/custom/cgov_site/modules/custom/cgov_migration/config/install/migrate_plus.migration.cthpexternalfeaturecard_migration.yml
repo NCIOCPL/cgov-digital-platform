@@ -1,11 +1,11 @@
-id: cthpfeaturecard_migration
-label: 'Custom cthpfeaturecardmigration'
+id: cthpexternalfeaturecard_migration
+label: 'Custom cthpexternalfeaturecardmigration'
 
 source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration://cthpfeaturecard.xml
+  urls: migration://cthpexternalfeaturecard.xml
   item_selector: /rows/row
   fields:
         -
@@ -19,9 +19,9 @@ source:
 
 
         -
-         name: field_cthp_featured_content
-         label: field_cthp_featured_content
-         selector: field_cthp_featured_content
+         name: field_cthp_featured_url
+         label: field_cthp_featured_url
+         selector: field_cthp_featured_url
 
 
         -
@@ -36,10 +36,18 @@ source:
          selector: field_cthp_card_title
 
 
+
         -
-         name: field_image_promotional
-         label: field_image_promotional
-         selector: field_image_promotional
+         name: field_cthp_override_description
+         label: field_cthp_override_description
+         selector: field_cthp_override_description
+
+
+
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
 
 
   ids:
@@ -52,11 +60,12 @@ process:
  langcode: langcode
  field_cthp_card_theme: field_cthp_card_theme
 
+ field_cthp_override_description: field_cthp_override_description
  field_cthp_card_title: field_cthp_card_title
- field_cthp_featured_content: field_cthp_featured_content
- field_image_promotional: field_image_promotional
+ field_cthp_featured_url: field_cthp_featured_url
+ field_override_image_promotional: field_override_image_promotional
 
 destination:
  plugin: 'entity_reference_revisions:paragraph'
- default_bundle: cgov_cthp_feature_card_internal
+ default_bundle: cgov_cthp_feature_card_external
 migration_dependencies: {  }

@@ -226,6 +226,7 @@ process:
     migration:
        - list_migration
        - contentblock_migration
+       - dynamiclist_migration
     no_stub: true
     source: field_landing_contents
 
@@ -244,6 +245,7 @@ process:
       migration:
         - list_migration
         - contentblock_migration
+        - dynamiclist_migration
       no_stub: true
       source: field_landing_content
     -
@@ -257,6 +259,7 @@ process:
       migration:
         - list_migration
         - contentblock_migration
+        - dynamiclist_migration
       no_stub: true
       source: field_landing_content
     -
@@ -277,4 +280,3 @@ destination:
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - minilanding_en_migration
