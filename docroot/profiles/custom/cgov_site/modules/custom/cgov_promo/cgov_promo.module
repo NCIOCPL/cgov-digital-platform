@@ -4,3 +4,27 @@
  * @file
  * Contains cgov_promo.module.
  */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * We need to filter out the paragraph cards that have no links.
+ * They can have no link because:
+ *   A) A content editor did not add a featured item to the card.
+ *   B) An anon user is view the page and the item is unpublished.
+ *   C) Migrate entered a target_id, but it points to non-existant content.
+ */
+function cgov_promo_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  $bundle = $entity->bundle();
+
+  if ($bundle === 'cgov_card_internal' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
+  }
+
+  // We have no skin in the game.
+  return AccessResult::neutral();
+}

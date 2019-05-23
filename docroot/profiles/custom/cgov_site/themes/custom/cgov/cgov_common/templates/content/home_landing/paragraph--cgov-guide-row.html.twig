@@ -1,11 +1,12 @@
-
-<div class="row">
-    <div class="large-12 columns guide-title">
-        <h2>{{content.field_container_heading}}</h2>
-    </div>
-</div>
-<div class="accordion">
-  <div class="row guide-card flex-columns">
-    {{content.field_guide_cards}}
+{% if (content.field_guide_cards['#items']|length > 0) %}
+  <div class="row">
+      <div class="large-12 columns guide-title">
+          <h2>{{content.field_container_heading}}</h2>
+      </div>
   </div>
-</div>
+  <div class="accordion">
+    <div class="row guide-card flex-columns">
+      {{content.field_guide_cards}}
+    </div>
+  </div>
+{% endif %}

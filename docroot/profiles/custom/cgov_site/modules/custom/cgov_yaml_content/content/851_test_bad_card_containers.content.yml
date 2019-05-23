@@ -1,0 +1,185 @@
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Bad Two Column Container Test"
+  field_page_description:
+    value: "Two Column Container Test Description"
+  field_browser_title:
+    value: "Two Column Container Test Browser"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cards'
+  field_pretty_url:
+    value: "two-column"
+  ### English Contents
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Bad Card</h2>
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>No Cards</h2>
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Bad Landing Containers"
+  field_page_description:
+    value: "Bad Landing Containers Desc"
+  field_browser_title:
+    value: "Bad Landing Containers Browser"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cards'
+  field_pretty_url:
+    value: "landing-containers"
+  field_landing_contents:
+# Primary
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Primary Row, Unpublished</h2>
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Primary Row, Unpub"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Primary Row, No item</h2>
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Primary Row, No item"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+## Secondary
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Secondary Row, Unpublished</h2>
+    - entity: 'paragraph'
+      type: "cgov_secondary_feature_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Secondary Row, No item</h2>
+    - entity: 'paragraph'
+      type: "cgov_secondary_feature_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+# Guide row
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Empty Guide Row</h2>
+    - entity: 'paragraph'
+      type: "cgov_guide_row"
+      field_container_heading:
+        - value: "Empty Guide Row"
+# MM Row
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>MM Row, Both Unpub</h2>
+    - entity: 'paragraph'
+      type: "cgov_multimedia_row"
+      field_mm_media_item:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Unpublished Video'
+      field_mm_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>MM Row, Empty</h2>
+    - entity: 'paragraph'
+      type: "cgov_multimedia_row"

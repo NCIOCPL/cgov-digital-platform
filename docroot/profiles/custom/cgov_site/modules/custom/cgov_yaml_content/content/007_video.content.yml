@@ -25,3 +25,31 @@
   field_page_description: "META: Everyone over the age of 50 should be screened for colorectal cancer. Learn about the three screening methods that work to reduce the chance of death from colorectal cancer: colonoscopy, sigmoidoscopy, and home stool test. Also hear personal stories from people who have gone through colorectal cancer screening."
   field_browser_title: "Colorectal Cancer Screening: What to Expect"
   field_media_oembed_video: "https://www.youtube.com/watch?v=zXE7rexUCeI"
+
+- entity: "media"
+  bundle: "cgov_video"
+  name: "Unpublished Video"
+  langcode: en
+  status: 0
+  moderation_state:
+    value: 'draft'
+  field_pretty_url: "unpublished-video"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  body:
+    - format: "full_html"
+      value: |
+        Body content
+  field_caption:
+    - format: "simple"
+      value: |
+        Unpublished video caption
+  field_list_description: "LIST: Unpublished Video."
+  field_page_description: "META: Unpublished Video."
+  field_browser_title: "BROWSER: Unpublished Video."
+  field_media_oembed_video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"

@@ -1,4 +1,5 @@
-
-<div class="row feature-secondary flex-columns">
-  {{ content.field_row_cards }}
-</div>
+{% if (content.field_row_cards['#items']|length > 0) %}
+  <div class="row feature-secondary flex-columns">
+    {{ content.field_row_cards }}
+  </div>
+{% endif %}
