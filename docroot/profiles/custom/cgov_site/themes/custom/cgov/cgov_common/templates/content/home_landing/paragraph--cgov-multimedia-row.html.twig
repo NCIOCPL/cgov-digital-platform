@@ -1,5 +1,12 @@
-<div class="multimedia-slot">
-    <div class="row multimedia flex-columns">
-      {{content}}
-    </div>
-</div>
+{%
+  if (
+    (content.field_mm_media_item['#items']|length > 0) or
+    (content.field_mm_feature_card['#items']|length > 0)
+  )
+%}
+  <div class="multimedia-slot">
+      <div class="row multimedia flex-columns">
+        {{content}}
+      </div>
+  </div>
+{% endif %}

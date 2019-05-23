@@ -87,6 +87,23 @@
           - vid: "cgov_site_sections"
             computed_path: "/test"
 
+## Related Resources Test
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Card Tests"
+  field_pretty_url:
+    value: "cards"
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
+
 ## Spanish Test
 - entity: "taxonomy_term"
   vid: "cgov_site_sections"
