@@ -28,9 +28,6 @@ CGOV)
 
     drush mim twoitemfeaturecardrow_migration
 
-
-
-
     drush mim blogseries_en_migration && drush mim blogseries_es_migration && drush mim blogtopics_migration && drush mim blogtopics_es_migration
     drush mim blogpost_en_migration && drush mim blogpost_es_migration
 
@@ -38,8 +35,16 @@ CGOV)
 
     drush mim cancerresearch_en_migration && drush mim cancerresearch_es_migration
 
-    drush mim homelanding_en_migration && drush mim homelanding_es_migration
+    drush mim cthpblockcontentcard_migration
+    drush mim cthpguidecard_migration
+    drush mim cthpexternalfeaturecard_migration
+    drush mim cthpfeaturecard_migration
+    drush mim cthpresearchcard_migration
+    drush mim cthpvideocard_migration
+    drush mim cthpoverviewcard_migration
+    drush mim cthp_en_migration && drush mim cthp_es_migration
 
+    drush mim homelanding_en_migration && drush mim homelanding_es_migration
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
   ;;
