@@ -35,6 +35,7 @@ CGOV)
 
     drush mim cancerresearch_en_migration && drush mim cancerresearch_es_migration
 
+    drush mim cthpcontentblock_migration
     drush mim cthpblockcontentcard_migration
     drush mim cthpguidecard_migration
     drush mim cthpexternalfeaturecard_migration
