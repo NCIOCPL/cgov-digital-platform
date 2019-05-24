@@ -1,12 +1,12 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - cgov_core
   module:
     - node
     - options
-  enforced:
-    module:
-    - cgov_core
 id: node.field_date_display_mode
 field_name: field_date_display_mode
 entity_type: node
@@ -14,13 +14,13 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: 'posted'
+      value: posted
       label: 'Posted Date'
     -
-      value: 'reviewed'
+      value: reviewed
       label: 'Reviewed Date'
     -
-      value: 'updated'
+      value: updated
       label: 'Updated Date'
   allowed_values_function: ''
 module: options
