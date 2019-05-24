@@ -1,10 +1,7 @@
 langcode: en
 status: true
 dependencies:
-  config:
-    - workflows.workflow.editorial_workflow
   module:
-    - content_moderation
     - node
     - user
 id: moderated_content
@@ -881,8 +878,7 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }
   moderated_content:
     display_plugin: page
     id: moderated_content
@@ -901,5 +897,4 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }
