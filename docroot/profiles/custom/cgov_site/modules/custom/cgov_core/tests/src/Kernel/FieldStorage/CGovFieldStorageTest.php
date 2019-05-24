@@ -7,6 +7,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeTypeInterface;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.
@@ -14,40 +15,11 @@ use Drupal\node\NodeTypeInterface;
 class CGovFieldStorageTest extends KernelTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   public static $modules = [
-    'user',
     'system',
-    'file',
-    'image',
-    'link',
-    'field',
-    'views',
-    'node',
-    'text',
-    'filter',
-    'datetime',
-    'options',
-    'workflows',
-    'content_moderation',
-    'language',
-    'content_translation',
-    'cgov_core',
-    'taxonomy',
-    'block',
-    'block_content',
-    'token',
-    'token_filter',
-    'embed',
-    'entity_embed',
-    'entity_browser',
-    'entity_reference_revisions',
-    'paragraphs',
-    'editor',
-    'metatag',
+    'user',
   ];
 
   /**
@@ -117,40 +89,19 @@ class CGovFieldStorageTest extends KernelTestBase {
    * Sets up the test environment.
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
-    $this->installSchema('system', 'sequences');
-    // Necessary for module uninstall.
-    $this->installSchema('user', 'users_data');
+    // These are special and cannot be installed as a dependency
+    // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
-    $this->installEntitySchema('block_content');
-    $this->installEntitySchema('node');
-    $this->installEntitySchema('file');
-    $this->installEntitySchema('paragraph');
-    $this->installEntitySchema('workflow');
-    $this->installEntitySchema('content_moderation_state');
-    $this->installConfig([
-      'system',
-      'user',
-      'field',
-      'node',
-      'file',
-      'image',
-      'link',
-      'language',
-      'content_translation',
-      'views',
-      'embed',
-      'entity_embed',
-      'entity_browser',
-      'entity_reference_revisions',
-      'paragraphs',
-      'cgov_core',
-      'block',
-      'block_content',
-      'token',
-      'token_filter',
-      'editor',
-    ]);
+    $this->installSchema('user', ['users_data']);
+    $this->installSchema('system', ['sequences']);
+    $this->installConfig(['system', 'user']);
+
+    // Install core and its dependencies.
+    // This ensures that the install hook will fire, which sets up
+    // the permissions for the roles we are testing below.
+    \Drupal::service('module_installer')->install(['cgov_core']);
   }
 
   /**

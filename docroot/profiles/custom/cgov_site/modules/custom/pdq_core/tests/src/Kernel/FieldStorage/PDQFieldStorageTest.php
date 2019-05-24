@@ -7,6 +7,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeTypeInterface;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.
@@ -50,6 +51,7 @@ class PDQFieldStorageTest extends KernelTestBase {
    * Sets up the test environment.
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     $this->installSchema('system', 'sequences');
     // Necessary for module uninstall.

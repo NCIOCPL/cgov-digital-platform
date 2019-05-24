@@ -6,6 +6,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Ensure that PDQ workflows conform to requirements.
@@ -37,6 +38,7 @@ class WorkflowTest extends KernelTestBase {
    * {@inheritdoc}
    */
   protected function setUp() {
+    static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
     // These are special and cannot be installed as a dependency
