@@ -15,6 +15,7 @@ class CgovSchemaExclusions {
   public static $configSchemaCheckerExclusions = [
     'metatag.metatag_defaults.global',
     'metatag.metatag_defaults.node',
+    'metatag.metatag_defaults.media',
   ];
 
 }

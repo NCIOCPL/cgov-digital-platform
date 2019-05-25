@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_media\Controller;
+namespace Drupal\cgov_core\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\media\Entity\Media;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Controller routines for cgov_media routes.
+ * Controller routines for cgov_core routes.
  */
 class CgovMediaController extends ControllerBase {
 
@@ -16,7 +16,7 @@ class CgovMediaController extends ControllerBase {
    * {@inheritdoc}
    */
   protected function getModuleName() {
-    return 'cgov_media';
+    return 'cgov_core';
   }
 
   /**
