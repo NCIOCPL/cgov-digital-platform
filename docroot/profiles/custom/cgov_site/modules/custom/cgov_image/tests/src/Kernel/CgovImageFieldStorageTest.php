@@ -15,16 +15,11 @@ use CgovPlatform\Tests\CgovSchemaExclusions;
 class CgovImageFieldStorageTest extends KernelTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'node', 'text', 'filter', 'datetime', 'options',
-    'crop', 'image_widget_crop', 'workflows', 'content_moderation', 'entity_browser', 'embed',
-    'entity_embed', 'paragraphs', 'taxonomy', 'language', 'content_translation', 'media',
-    'image', 'views', 'cgov_media', 'cgov_image', 'block_content', 'paragraphs',
-    'entity_reference_revisions', 'metatag',
+    'system',
+    'user',
   ];
 
   /**
@@ -77,25 +72,17 @@ class CgovImageFieldStorageTest extends KernelTestBase {
   protected function setUp() {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
-    $this->installSchema('system', 'sequences');
-    // Necessary for module uninstall.
-    $this->installSchema('user', 'users_data');
-    $this->installEntitySchema('taxonomy_term');
+    // These are special and cannot be installed as a dependency
+    // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
-    $this->installEntitySchema('media');
-    $this->installEntitySchema('node');
-    $this->installEntitySchema('file');
-    $this->installEntitySchema('block_content');
-    $this->installEntitySchema('workflow');
-    $this->installEntitySchema('paragraph');
-    $this->installEntitySchema('content_moderation_state');
+    $this->installSchema('user', ['users_data']);
+    $this->installSchema('system', ['sequences']);
+    $this->installConfig(['system', 'user']);
 
-    $this->installConfig([
-      'field', 'node', 'media', 'file', 'image', 'crop', 'image_widget_crop',
-      'language', 'content_translation', 'views', 'paragraphs', 'taxonomy', 'block_content',
-      'cgov_media', 'entity_browser', 'embed', 'entity_embed', 'cgov_image', 'paragraphs',
-      'entity_reference_revisions',
-    ]);
+    // Install core and its dependencies.
+    // This ensures that the install hook will fire, which sets up
+    // the permissions for the roles we are testing below.
+    \Drupal::service('module_installer')->install(['cgov_image']);
   }
 
   /**

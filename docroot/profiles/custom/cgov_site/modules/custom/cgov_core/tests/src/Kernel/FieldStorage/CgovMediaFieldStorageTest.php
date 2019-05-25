@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\cgov_media\Kernel\FieldStorage;
+namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -15,16 +15,11 @@ use CgovPlatform\Tests\CgovSchemaExclusions;
 class CgovMediaFieldStorageTest extends KernelTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   public static $modules = [
-    'user', 'system', 'file', 'field', 'image', 'media', 'text', 'filter',
-    'datetime', 'options', 'workflows', 'content_moderation', 'language',
-    'content_translation', 'media_test_source', 'cgov_media', 'taxonomy',
-    'views', 'entity_browser', 'pathauto', 'token', 'ctools', 'paragraphs',
-    'entity_reference_revisions', 'metatag',
+    'system',
+    'user',
   ];
 
   /**
@@ -51,21 +46,18 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
   protected function setUp() {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
-    $this->installSchema('system', 'sequences');
-    // Necessary for module uninstall.
-    $this->installSchema('user', 'users_data');
-    $this->installEntitySchema('taxonomy_term');
+    // These are special and cannot be installed as a dependency
+    // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
-    $this->installEntitySchema('media');
-    $this->installEntitySchema('pathauto_pattern');
-    $this->installEntitySchema('file');
-    $this->installEntitySchema('workflow');
-    $this->installEntitySchema('content_moderation_state');
-    $this->installConfig([
-      'field', 'media', 'file', 'language', 'content_translation',
-      'views', 'entity_browser', 'media_test_source', 'cgov_media', 'pathauto',
-      'paragraphs', 'entity_reference_revisions', 'metatag',
-    ]);
+    $this->installSchema('user', ['users_data']);
+    $this->installSchema('system', ['sequences']);
+    $this->installConfig(['system', 'user']);
+
+    // Install core and its dependencies.
+    // This ensures that the install hook will fire, which sets up
+    // the permissions for the roles we are testing below.
+    \Drupal::service('module_installer')->install(['cgov_core']);
+    \Drupal::service('module_installer')->install(['media_test_source']);
   }
 
   /**
@@ -120,7 +112,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     }
 
     // Test uninstalling cgov_core removes the fields.
-    \Drupal::service('module_installer')->uninstall(['cgov_media']);
+    \Drupal::service('module_installer')->uninstall(['cgov_core']);
 
     foreach ($this->fieldsToTest as $fieldToTest) {
       $field_storage = FieldStorageConfig::loadByName('media', $fieldToTest["name"]);

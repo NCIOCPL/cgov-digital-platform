@@ -1,19 +1,17 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - media
   enforced:
     module:
-      - cgov_media
-id: media.field_original_source
-field_name: field_original_source
+      - cgov_core
+  module:
+    - media
+id: media.field_image_promotional
+field_name: field_image_promotional
 entity_type: media
-type: string
+type: entity_reference
 settings:
-  max_length: 250
-  is_ascii: false
-  case_sensitive: false
+  target_type: media
 module: core
 locked: false
 cardinality: 1

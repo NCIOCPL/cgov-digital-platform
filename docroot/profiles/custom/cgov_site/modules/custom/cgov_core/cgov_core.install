@@ -36,6 +36,8 @@ function cgov_core_install() {
 function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
   $perms = [
     'admin_ui' => [
+      'access media overview',
+      'access cgov_media_browser entity browser pages',
       'access administration pages',
       'view the administration theme',
       'access cgov_content_browser entity browser pages',
@@ -58,6 +60,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
     ],
     'authenticated' => [
       'access content',
+      'view media',
     ],
     'content_author' => [
       'access content overview',
