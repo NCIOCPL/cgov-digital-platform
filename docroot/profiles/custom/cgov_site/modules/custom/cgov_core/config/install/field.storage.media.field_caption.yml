@@ -1,19 +1,18 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - media
-    - node
   enforced:
     module:
-      - cgov_media
-id: node.field_image_promotional
-field_name: field_image_promotional
+      - cgov_core
+  module:
+    - media
+    - text
+id: media.field_caption
+field_name: field_caption
 entity_type: media
-type: entity_reference
-settings:
-  target_type: media
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true

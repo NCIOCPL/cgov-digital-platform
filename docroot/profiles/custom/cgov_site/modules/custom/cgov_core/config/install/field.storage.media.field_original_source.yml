@@ -1,19 +1,20 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - datetime
-    - media
   enforced:
     module:
-    - cgov_media
-id: media.field_date_posted
-field_name: field_date_posted
+      - cgov_core
+  module:
+    - media
+id: media.field_original_source
+field_name: field_original_source
 entity_type: media
-type: datetime
+type: string
 settings:
-  datetime_type: date
-module: datetime
+  max_length: 250
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true
