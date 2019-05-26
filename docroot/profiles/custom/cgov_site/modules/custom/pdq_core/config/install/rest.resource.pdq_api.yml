@@ -1,11 +1,13 @@
 langcode: en
-id: pdq_api
-plugin_id: pdq_api
 status: true
-granularity: resource
 dependencies:
   module:
+    - basic_auth
+    - pdq_core
     - serialization
+id: pdq_api
+plugin_id: pdq_api
+granularity: resource
 configuration:
   methods:
     - GET
