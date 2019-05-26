@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_press_release.field_image_article
     - field.field.node.cgov_press_release.field_image_promotional
     - field.field.node.cgov_press_release.field_list_description
+    - field.field.node.cgov_press_release.field_meta_tags
     - field.field.node.cgov_press_release.field_page_description
     - field.field.node.cgov_press_release.field_press_release_type
     - field.field.node.cgov_press_release.field_pretty_url
@@ -24,7 +25,7 @@ dependencies:
     - field.field.node.cgov_press_release.field_site_section
     - field.field.node.cgov_press_release.field_subtitle
     - node.type.cgov_press_release
-    - workflows.workflow.editorial_workflow
+    - workflows.workflow.pdq_workflow
   module:
     - content_moderation
     - datetime
@@ -52,6 +53,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_browser_title:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_card_title:
     weight: 9
     settings:
@@ -190,14 +199,6 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  field_browser_title:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_site_section:
     weight: 1
     settings:
@@ -282,4 +283,10 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_meta_tags: true
