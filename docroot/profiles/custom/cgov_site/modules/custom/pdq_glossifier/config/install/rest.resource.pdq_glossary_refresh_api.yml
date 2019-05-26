@@ -1,11 +1,13 @@
 langcode: en
-id: pdq_glossary_refresh_api
-plugin_id: pdq_glossary_refresh_api
 status: true
-granularity: resource
 dependencies:
   module:
+    - basic_auth
+    - pdq_glossifier
     - serialization
+id: pdq_glossary_refresh_api
+plugin_id: pdq_glossary_refresh_api
+granularity: resource
 configuration:
   methods:
     - POST
