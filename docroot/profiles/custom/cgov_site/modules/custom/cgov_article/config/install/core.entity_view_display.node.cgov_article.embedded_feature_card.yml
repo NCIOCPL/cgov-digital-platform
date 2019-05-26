@@ -12,10 +12,12 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_hhs_syndication
     - field.field.node.cgov_article.field_image_article
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
@@ -24,14 +26,20 @@ dependencies:
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
   module:
-    - cgov_core
-    - options
     - user
 id: node.cgov_article.embedded_feature_card
 targetEntityType: node
 bundle: cgov_article
 mode: embedded_feature_card
 content:
+  field_browser_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 2
     label: hidden
@@ -66,14 +74,6 @@ content:
       view_mode: image_crop_featured
       link: false
     third_party_settings: {  }
-  field_browser_title:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
 hidden:
   content_moderation_control: true
   field_article_body: true
@@ -82,8 +82,10 @@ hidden:
   field_date_posted: true
   field_date_reviewed: true
   field_date_updated: true
+  field_hhs_syndication: true
   field_intro_text: true
   field_list_description: true
+  field_meta_tags: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true
