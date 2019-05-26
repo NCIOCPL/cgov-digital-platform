@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.cgov_biography.field_last_name
     - field.field.node.cgov_biography.field_linkedin_handle
     - field.field.node.cgov_biography.field_list_description
+    - field.field.node.cgov_biography.field_meta_tags
     - field.field.node.cgov_biography.field_middle_name
     - field.field.node.cgov_biography.field_office_location
     - field.field.node.cgov_biography.field_org_name_1
@@ -44,6 +45,14 @@ targetEntityType: node
 bundle: cgov_biography
 mode: embedded_feature_card
 content:
+  field_browser_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 2
     label: hidden
@@ -69,14 +78,6 @@ content:
       view_mode: image_crop_featured
       link: false
     third_party_settings: {  }
-  field_browser_title:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
 hidden:
   body: true
   content_moderation_control: true
@@ -91,6 +92,7 @@ hidden:
   field_last_name: true
   field_linkedin_handle: true
   field_list_description: true
+  field_meta_tags: true
   field_middle_name: true
   field_office_location: true
   field_org_name_1: true
