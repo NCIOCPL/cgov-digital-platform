@@ -12,10 +12,12 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_hhs_syndication
     - field.field.node.cgov_article.field_image_article
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
     - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
     - field.field.node.cgov_article.field_page_description
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
@@ -33,6 +35,14 @@ targetEntityType: node
 bundle: cgov_article
 mode: link
 content:
+  field_browser_title:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_list_description:
     weight: 7
     label: above
@@ -42,14 +52,6 @@ content:
     region: content
   field_page_description:
     weight: 5
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_browser_title:
-    weight: 2
     label: above
     settings:
       link_to_entity: false
@@ -66,9 +68,11 @@ hidden:
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
+  field_hhs_syndication: true
   field_image_article: true
   field_image_promotional: true
   field_intro_text: true
+  field_meta_tags: true
   field_pretty_url: true
   field_public_use: true
   field_related_resources: true

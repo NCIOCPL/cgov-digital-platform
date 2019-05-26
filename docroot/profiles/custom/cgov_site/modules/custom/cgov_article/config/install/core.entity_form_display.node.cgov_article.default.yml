@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.cgov_article.field_date_reviewed
     - field.field.node.cgov_article.field_date_updated
     - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_hhs_syndication
     - field.field.node.cgov_article.field_image_article
     - field.field.node.cgov_article.field_image_promotional
     - field.field.node.cgov_article.field_intro_text
@@ -23,19 +24,15 @@ dependencies:
     - field.field.node.cgov_article.field_related_resources
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
-    - field.field.node.cgov_article.field_hhs_syndication
     - node.type.cgov_article
-    - workflows.workflow.editorial_workflow
   enforced:
     module:
       - cgov_core
   module:
     - cgov_syndication
-    - content_moderation
     - datetime
     - entity_browser
     - paragraphs_asymmetric_translation_widgets
-    - cgov_site_section
     - path
     - text
 id: node.cgov_article.default
@@ -120,6 +117,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_hhs_syndication:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    type: cgov_syndication_widget
     region: content
   field_image_article:
     weight: 12
@@ -221,12 +224,6 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
-  field_hhs_syndication:
-    weight: 100
-    settings: {  }
-    third_party_settings: {  }
-    type: cgov_syndication_widget
-    region: content
   langcode:
     type: language_select
     weight: 0
@@ -275,6 +272,11 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden:
   field_meta_tags: true
   promote: true
