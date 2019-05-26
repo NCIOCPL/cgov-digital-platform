@@ -23,6 +23,7 @@ dependencies:
     - media.type.cgov_video
   module:
     - cgov_core
+    - entity_reference_revisions
     - image
     - media
     - options
@@ -97,15 +98,6 @@ content:
       max_height: 0
     third_party_settings: {  }
     region: content
-  thumbnail:
-    type: image
-    weight: 0
-    label: hidden
-    settings:
-      image_style: ''
-      image_link: ''
-    region: content
-    third_party_settings: {  }
   field_related_resources:
     type: entity_reference_revisions_entity_view
     weight: 8
@@ -114,6 +106,15 @@ content:
     settings:
       view_mode: list_item_title
       link: ''
+    third_party_settings: {  }
+  thumbnail:
+    type: image
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    region: content
     third_party_settings: {  }
 hidden:
   created: true
