@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_event.field_image_article
     - field.field.node.cgov_event.field_image_promotional
     - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_meta_tags
     - field.field.node.cgov_event.field_page_description
     - field.field.node.cgov_event.field_pretty_url
     - field.field.node.cgov_event.field_related_resources
@@ -30,6 +31,14 @@ targetEntityType: node
 bundle: cgov_event
 mode: embedded_feature_card
 content:
+  field_browser_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 2
     label: hidden
@@ -64,14 +73,6 @@ content:
       view_mode: image_crop_featured
       link: false
     third_party_settings: {  }
-  field_browser_title:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
 hidden:
   body: true
   content_moderation_control: true
@@ -81,6 +82,7 @@ hidden:
   field_event_series: true
   field_event_start_date: true
   field_list_description: true
+  field_meta_tags: true
   field_page_description: true
   field_pretty_url: true
   field_related_resources: true
