@@ -18,7 +18,9 @@ dependencies:
     - field.field.node.cgov_biography.field_last_name
     - field.field.node.cgov_biography.field_linkedin_handle
     - field.field.node.cgov_biography.field_list_description
+    - field.field.node.cgov_biography.field_meta_tags
     - field.field.node.cgov_biography.field_middle_name
+    - field.field.node.cgov_biography.field_office_location
     - field.field.node.cgov_biography.field_org_name_1
     - field.field.node.cgov_biography.field_org_name_2
     - field.field.node.cgov_biography.field_org_url_1
@@ -28,7 +30,6 @@ dependencies:
     - field.field.node.cgov_biography.field_prefix
     - field.field.node.cgov_biography.field_pretty_url
     - field.field.node.cgov_biography.field_related_resources
-    - field.field.node.cgov_biography.field_office_location
     - field.field.node.cgov_biography.field_scientific_publications
     - field.field.node.cgov_biography.field_search_engine_restrictions
     - field.field.node.cgov_biography.field_site_section
@@ -59,6 +60,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_browser_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_campus:
     weight: 26
     label: hidden
@@ -179,6 +188,14 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_office_location:
+    weight: 27
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_org_name_1:
     weight: 22
     label: above
@@ -252,14 +269,6 @@ content:
       view_mode: list_item_title
       link: ''
     third_party_settings: {  }
-  field_office_location:
-    weight: 27
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_scientific_publications:
     weight: 32
     label: above
@@ -273,14 +282,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
-    region: content
-  field_browser_title:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
     region: content
   field_site_section:
     weight: 33
@@ -320,4 +321,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_meta_tags: true
   langcode: true
