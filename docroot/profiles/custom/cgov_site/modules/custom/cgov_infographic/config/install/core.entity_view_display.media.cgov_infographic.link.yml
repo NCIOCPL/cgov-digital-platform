@@ -15,6 +15,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_image_promotional
     - field.field.media.cgov_infographic.field_infographic
     - field.field.media.cgov_infographic.field_list_description
+    - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_page_description
     - field.field.media.cgov_infographic.field_pretty_url
     - field.field.media.cgov_infographic.field_public_use
@@ -26,13 +27,6 @@ targetEntityType: media
 bundle: cgov_infographic
 mode: link
 content:
-  field_list_description:
-    type: basic_string
-    weight: 1
-    region: content
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
   field_browser_title:
     type: string
     weight: 2
@@ -40,6 +34,13 @@ content:
     label: hidden
     settings:
       link_to_entity: false
+    third_party_settings: {  }
+  field_list_description:
+    type: basic_string
+    weight: 1
+    region: content
+    label: hidden
+    settings: {  }
     third_party_settings: {  }
   name:
     type: string
@@ -62,6 +63,7 @@ hidden:
   field_feature_card_description: true
   field_image_promotional: true
   field_infographic: true
+  field_meta_tags: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true
