@@ -18,7 +18,6 @@ dependencies:
     - field.field.media.cgov_file.field_search_engine_restrictions
     - field.field.media.cgov_file.field_site_section
     - media.type.cgov_file
-    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - datetime
@@ -36,6 +35,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_browser_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_card_title:
     weight: 6
     settings:
@@ -120,14 +127,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_browser_title:
-    weight: 4
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_site_section:
     weight: 1
     settings:
