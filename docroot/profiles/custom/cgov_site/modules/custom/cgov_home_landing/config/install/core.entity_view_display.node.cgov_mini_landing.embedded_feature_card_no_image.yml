@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.cgov_mini_landing.field_image_promotional
     - field.field.node.cgov_mini_landing.field_landing_contents
     - field.field.node.cgov_mini_landing.field_list_description
+    - field.field.node.cgov_mini_landing.field_meta_tags
     - field.field.node.cgov_mini_landing.field_page_description
     - field.field.node.cgov_mini_landing.field_pretty_url
     - field.field.node.cgov_mini_landing.field_search_engine_restrictions
@@ -26,6 +27,14 @@ targetEntityType: node
 bundle: cgov_mini_landing
 mode: embedded_feature_card_no_image
 content:
+  field_browser_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 3
     label: hidden
@@ -42,14 +51,6 @@ content:
     third_party_settings: {  }
     type: string
     region: content
-  field_browser_title:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
 hidden:
   content_moderation_control: true
   field_banner_image: true
@@ -60,6 +61,7 @@ hidden:
   field_image_promotional: true
   field_landing_contents: true
   field_list_description: true
+  field_meta_tags: true
   field_page_description: true
   field_pretty_url: true
   field_search_engine_restrictions: true

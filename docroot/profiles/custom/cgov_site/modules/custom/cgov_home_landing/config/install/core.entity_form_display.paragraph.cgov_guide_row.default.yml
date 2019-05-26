@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.cgov_guide_row.field_guide_cards
     - field.field.paragraph.cgov_guide_row.field_container_heading
+    - field.field.paragraph.cgov_guide_row.field_guide_cards
     - paragraphs.paragraphs_type.cgov_guide_row
   module:
     - paragraphs
@@ -12,6 +12,14 @@ targetEntityType: paragraph
 bundle: cgov_guide_row
 mode: default
 content:
+  field_container_heading:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_guide_cards:
     type: entity_reference_paragraphs
     weight: 1
@@ -23,14 +31,6 @@ content:
       form_display_mode: default
       default_paragraph_type: cgov_content_block
     third_party_settings: {  }
-    region: content
-  field_container_heading:
-    weight: 0
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
     region: content
 hidden:
   created: true
