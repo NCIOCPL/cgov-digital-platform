@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_cancer_center.field_image_promotional
     - field.field.node.cgov_cancer_center.field_institution_type
     - field.field.node.cgov_cancer_center.field_list_description
+    - field.field.node.cgov_cancer_center.field_meta_tags
     - field.field.node.cgov_cancer_center.field_org_head_name
     - field.field.node.cgov_cancer_center.field_org_head_title
     - field.field.node.cgov_cancer_center.field_page_description
@@ -39,6 +40,14 @@ targetEntityType: node
 bundle: cgov_cancer_center
 mode: embedded_feature_card_no_image
 content:
+  field_browser_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 3
     label: hidden
@@ -49,14 +58,6 @@ content:
     region: content
   field_feature_card_description:
     weight: 5
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_browser_title:
-    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -74,6 +75,7 @@ hidden:
   field_image_promotional: true
   field_institution_type: true
   field_list_description: true
+  field_meta_tags: true
   field_org_head_name: true
   field_org_head_title: true
   field_page_description: true
