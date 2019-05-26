@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.cgov_event.field_image_article
     - field.field.node.cgov_event.field_image_promotional
     - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_meta_tags
     - field.field.node.cgov_event.field_page_description
     - field.field.node.cgov_event.field_pretty_url
     - field.field.node.cgov_event.field_related_resources
@@ -24,7 +25,7 @@ dependencies:
     - field.field.node.cgov_event.field_venue
     - node.type.cgov_event
   module:
-    - cgov_core
+    - datetime
     - entity_reference_revisions
     - text
     - user
@@ -55,6 +56,14 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
+  field_browser_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 3
     label: hidden
@@ -146,14 +155,6 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  field_browser_title:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_venue:
     weight: 13
     label: hidden
@@ -169,6 +170,7 @@ content:
     third_party_settings: {  }
 hidden:
   field_image_promotional: true
+  field_meta_tags: true
   field_pretty_url: true
   field_search_engine_restrictions: true
   field_site_section: true
