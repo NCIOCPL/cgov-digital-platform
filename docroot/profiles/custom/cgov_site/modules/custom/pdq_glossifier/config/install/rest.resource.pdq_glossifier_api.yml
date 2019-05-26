@@ -1,11 +1,13 @@
 langcode: en
-id: pdq_glossifier_api
-plugin_id: pdq_glossifier_api
 status: true
-granularity: resource
 dependencies:
   module:
+    - pdq_glossifier
     - serialization
+    - user
+id: pdq_glossifier_api
+plugin_id: pdq_glossifier_api
+granularity: resource
 configuration:
   methods:
     - POST
