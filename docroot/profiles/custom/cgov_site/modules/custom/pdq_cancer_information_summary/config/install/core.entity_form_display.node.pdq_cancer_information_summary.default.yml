@@ -2,24 +2,26 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.pdq_cancer_information_summary.field_browser_title
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
+    - field.field.node.pdq_cancer_information_summary.field_meta_tags
     - field.field.node.pdq_cancer_information_summary.field_page_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
     - field.field.node.pdq_cancer_information_summary.field_pdq_url
     - field.field.node.pdq_cancer_information_summary.field_public_use
-    - field.field.node.pdq_cancer_information_summary.field_browser_title
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
-    - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
     - node.type.pdq_cancer_information_summary
-    - workflows.workflow.pdq_workflow
+    - workflows.workflow.editorial_workflow
   enforced:
     module:
       - cgov_syndication
       - pdq_core
   module:
+    - cgov_syndication
     - content_moderation
     - datetime
     - paragraphs_asymmetric_translation_widgets
@@ -35,6 +37,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_browser_title:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_date_posted:
     weight: 13
     settings: {  }
@@ -46,6 +56,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_hhs_syndication:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    type: cgov_syndication_widget
     region: content
   field_page_description:
     weight: 15
@@ -89,14 +105,6 @@ content:
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
-  field_browser_title:
-    weight: 10
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_summary_sections:
     type: paragraphs_classic_asymmetric
     weight: 26
@@ -108,11 +116,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-  field_hhs_syndication:
-    weight: 100
-    settings: {  }
-    third_party_settings: {  }
-    type: cgov_syndication_widget
     region: content
   langcode:
     type: language_select
@@ -176,4 +179,10 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_meta_tags: true

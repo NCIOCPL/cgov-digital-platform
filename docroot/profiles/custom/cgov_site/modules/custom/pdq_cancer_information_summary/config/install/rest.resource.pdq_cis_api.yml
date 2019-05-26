@@ -1,11 +1,13 @@
 langcode: en
-id: pdq_cis_api
-plugin_id: pdq_cis_api
 status: true
-granularity: resource
 dependencies:
   module:
+    - basic_auth
+    - pdq_cancer_information_summary
     - serialization
+id: pdq_cis_api
+plugin_id: pdq_cis_api
+granularity: resource
 configuration:
   methods:
     - GET
