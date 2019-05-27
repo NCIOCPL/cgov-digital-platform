@@ -4,24 +4,3 @@
  * @file
  * Install file for cgov_https_config.
  */
-
-/**
- * Implements hook_install().
- */
-function cgov_https_config_install() {
-
-  // Copy HTTPS enforcement settings from cgov_https_config.settings.yml into
-  // the Security Kit module.
-  //
-  // Get the custom config.
-  $customConfig = \Drupal::configFactory()->getEditable('cgov_https_config.settings');
-
-  // Get the default configuration.
-  $seckit = \Drupal::configFactory()->getEditable('seckit.settings');
-
-  // Replace default configuration with ours.
-  $seckit->setData($customConfig->get())->save();
-  // Custom config object is no longer needed.
-  $customConfig->delete();
-
-}
