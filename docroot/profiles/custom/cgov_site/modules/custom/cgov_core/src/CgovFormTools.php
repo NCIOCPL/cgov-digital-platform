@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\cgov_util;
+namespace Drupal\cgov_core;
 
 /**
  * A service which provides methods to alter and configure form elements.

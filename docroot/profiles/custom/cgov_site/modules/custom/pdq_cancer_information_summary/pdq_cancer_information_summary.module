@@ -18,7 +18,7 @@ function pdq_cancer_information_summary_field_widget_form_alter(
   FormStateInterface $form_state,
   $context) {
   $map = ['field_pdq_section_html' => ['raw_html']];
-  $form_helper = \Drupal::service('cgov_util.form_tools');
+  $form_helper = \Drupal::service('cgov_core.form_tools');
   $form_helper->allowTextFormats($map, $element, $context);
 }
 
