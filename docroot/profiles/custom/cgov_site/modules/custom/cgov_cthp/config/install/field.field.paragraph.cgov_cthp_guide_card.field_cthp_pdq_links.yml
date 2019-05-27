@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_cthp_pdq_links
+    - node.type.pdq_cancer_information_summary
     - paragraphs.paragraphs_type.cgov_cthp_guide_card
 id: paragraph.cgov_cthp_guide_card.field_cthp_pdq_links
 field_name: field_cthp_pdq_links
@@ -15,7 +16,7 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'cgov_all_selection'
+  handler: cgov_all_selection
   handler_settings:
     target_bundles:
       pdq_cancer_information_summary: pdq_cancer_information_summary
