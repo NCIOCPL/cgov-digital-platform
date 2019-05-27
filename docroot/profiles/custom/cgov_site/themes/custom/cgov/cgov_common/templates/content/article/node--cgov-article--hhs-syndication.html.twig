@@ -9,9 +9,18 @@
  * is selected.
  */
 #}
-<h1>{{ node.label }}</h1>
-<div id="cgvBody">
-  {{ content.field_image_article }}
-  {{ content.field_intro_text }}
-  {{ content.field_article_body }}
+
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<h1 id="bodyTitle">{{ node.label }}</h1>
+<div id="bodyContent">
+    {{ content.field_image_article }}
+    {{ content.field_intro_text }}
+    {{ content.field_article_body }}
+</div>
+<div id="footer">
+    {{ content.field_citation }}
+    {{ content.field_related_resources }}
+    {{ contentPageMacros.syndicationFooter(content) }}
 </div>
