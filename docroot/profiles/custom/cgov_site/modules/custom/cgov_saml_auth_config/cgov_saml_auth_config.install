@@ -10,20 +10,6 @@
  */
 function cgov_saml_auth_config_install() {
 
-  // Copy SAML settings from cgov_simplesamlphp_auth.settings.yml into
-  // the simplesamlphp_auth module.
-  //
-  // Get the custom config.
-  $customConfig = \Drupal::configFactory()->getEditable('cgov_saml_auth_config.settings');
-
-  // Get the default configuration.
-  $saml_config = \Drupal::configFactory()->getEditable('simplesamlphp_auth.settings');
-
-  // Replace default configuration with ours.
-  $saml_config->setData($customConfig->get())->save();
-  // Custom config object is no longer needed.
-  $customConfig->delete();
-
   // Set up permissions for roles allowed to interact with SAML config.
   $samlPermissions = [
     'administer simplesamlphp authentication',
