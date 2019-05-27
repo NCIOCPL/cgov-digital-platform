@@ -126,13 +126,13 @@ function _is_selectable(array $form) {
 /**
  * Implements hook_field_widget_form_alter().
  *
- * Limits allowed text formats using the cgov_util form_tools service.
+ * Limits allowed text formats using the cgov_core form_tools service.
  */
 function cgov_blog_field_widget_form_alter(&$element, $form_state, $context) {
   // Maps field names to an array containing a single format.
   $map = [
     'field_about_blog' => ['streamlined'],
   ];
-  $formHelper = \Drupal::service('cgov_util.form_tools');
+  $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
 }

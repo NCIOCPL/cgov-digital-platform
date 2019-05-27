@@ -11,6 +11,9 @@ services:
       - '@config.factory'
       - '@language_negotiator'
       - '@entity_type.manager'
+  # Defines a form service of which alters functionality and display of Cgov forms
+  cgov_core.form_tools:
+    class: Drupal\cgov_core\CgovFormTools
   cgov_core.cgov_navigation_manager:
     class: Drupal\cgov_core\Services\CgovNavigationManager
     arguments: ['@path.current', '@path.alias_manager', '@entity_type.manager', '@entity_field.manager', '@logger.channel.cgov_core', '@language_manager']
