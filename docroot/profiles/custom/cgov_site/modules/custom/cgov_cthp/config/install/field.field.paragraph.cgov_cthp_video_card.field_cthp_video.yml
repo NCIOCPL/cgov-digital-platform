@@ -3,20 +3,20 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_cthp_video
-    - paragraphs.paragraphs_type.cgov_cthp_video_card
     - media.type.cgov_video
+    - paragraphs.paragraphs_type.cgov_cthp_video_card
 id: paragraph.cgov_cthp_video_card.field_cthp_video
 field_name: field_cthp_video
 entity_type: paragraph
 bundle: cgov_cthp_video_card
-label: 'Video'
+label: Video
 description: ''
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'cgov_all_selection'
+  handler: cgov_all_selection
   handler_settings:
     target_bundles:
       cgov_video: cgov_video

@@ -2,12 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_video_browser
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_override_description
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_target_link
     - field.field.paragraph.cgov_cthp_video_card.field_cthp_video
     - paragraphs.paragraphs_type.cgov_cthp_video_card
+  module:
+    - entity_browser
+    - paragraphs_asymmetric_translation_widgets
 id: paragraph.cgov_cthp_video_card.default
 targetEntityType: paragraph
 bundle: cgov_cthp_video_card
@@ -56,7 +60,6 @@ content:
       field_widget_replace: false
       selection_mode: selection_append
       field_widget_edit: false
-      field_widget_replace: false
       open: false
       field_widget_display_settings: {  }
     third_party_settings: {  }
