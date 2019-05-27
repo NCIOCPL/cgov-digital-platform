@@ -6,36 +6,57 @@
 #}
 
 {% macro displayDates(node, content) %}
-  {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
-    {# The context used with trans is because some of the labels are translated differently
-        in core.
-    #}
+    {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
+        {# The context used with trans is because some of the labels are translated differently
+                in core.
+            #}
+        {% if node.getType == 'cgov_blog_post' %}
+            {# Do nothing if this is a Blog Post. Blog Post dates are a special case with different fields. #}
+        {% else %}
 
-    {% if node.getType == 'cgov_blog_post' %}
-      {# Do nothing if this is a Blog Post. Blog Post dates are a special case with different fields. #}
-    {% else %}
-      <div class="document-dates horizontal">
-        <ul class="clearfix">
-          {% if content.field_date_posted[0] %}
-            <li>
-              <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
-              {{ content.field_date_posted }}
-            </li>
-          {% endif %}
-          {% if content.field_date_updated[0] %}
-            <li>
-              <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
-              {{ content.field_date_updated }}
-            </li>
-          {% endif %}
-          {% if content.field_date_reviewed[0] %}
-            <li>
-              <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
-              {{ content.field_date_reviewed }}
-            </li>
-          {% endif %}
-        </ul>
-      </div>
+            <div class="document-dates horizontal">
+                <ul class="clearfix">
+                    {% if content.field_date_posted[0] %}
+                        <li>
+                            <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
+                            {{ content.field_date_posted }}
+                        </li>
+                    {% endif %}
+                    {% if content.field_date_updated[0] %}
+                        <li>
+                            <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
+                            {{ content.field_date_updated }}
+                        </li>
+                    {% endif %}
+                    {% if content.field_date_reviewed[0] %}
+                        <li>
+                            <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
+                            {{ content.field_date_reviewed }}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
     {% endif %}
-  {% endif %}
+{% endmacro %}
+
+
+{% macro syndicationFooter(content) %}
+    {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
+        <div class="document-dates">
+            {% if content.field_date_posted[0] %}
+                <p>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:
+                    {{ content.field_date_posted}}</p>
+            {% endif %}
+            {% if content.field_date_updated[0] %}
+                <p>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:
+                    {{ content.field_date_updated }}</p>
+            {% endif %}
+            {% if content.field_date_reviewed[0] %}
+                <p>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:
+                    {{ content.field_date_reviewed }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    <span id="nciLink">This content is provided by the National Cancer Institute (<a href="http://www.cancer.gov">www.cancer.gov</a>)</span>
 {% endmacro %}
