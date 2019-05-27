@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.pdq_cis_browser
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_guide_card_desc
@@ -10,7 +11,8 @@ dependencies:
     - field.field.paragraph.cgov_cthp_guide_card.field_cthp_view_more_info
     - paragraphs.paragraphs_type.cgov_cthp_guide_card
   module:
-    - paragraphs
+    - entity_browser
+    - paragraphs_asymmetric_translation_widgets
     - text
 id: paragraph.cgov_cthp_guide_card.default
 targetEntityType: paragraph

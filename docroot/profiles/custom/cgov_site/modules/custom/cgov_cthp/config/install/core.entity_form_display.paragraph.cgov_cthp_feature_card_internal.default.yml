@@ -2,12 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - entity_browser.browser.cgov_image_browser
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_card_theme
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_card_title
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_featured_content
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_cthp_override_description
     - field.field.paragraph.cgov_cthp_feature_card_internal.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_cthp_feature_card_internal
+  module:
+    - entity_browser
 id: paragraph.cgov_cthp_feature_card_internal.default
 targetEntityType: paragraph
 bundle: cgov_cthp_feature_card_internal
