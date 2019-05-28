@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_blog_series.field_feedburner_url
     - field.field.node.cgov_blog_series.field_image_promotional
     - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_meta_tags
     - field.field.node.cgov_blog_series.field_num_display_posts
     - field.field.node.cgov_blog_series.field_page_description
     - field.field.node.cgov_blog_series.field_pretty_url
@@ -32,6 +33,14 @@ targetEntityType: node
 bundle: cgov_blog_series
 mode: embedded_feature_card
 content:
+  field_browser_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_card_title:
     weight: 3
     label: hidden
@@ -57,14 +66,6 @@ content:
       view_mode: image_crop_featured
       link: false
     third_party_settings: {  }
-  field_browser_title:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
 hidden:
   content_moderation_control: true
   field_about_blog: true
@@ -76,6 +77,7 @@ hidden:
   field_featured_posts: true
   field_feedburner_url: true
   field_list_description: true
+  field_meta_tags: true
   field_num_display_posts: true
   field_page_description: true
   field_pretty_url: true

@@ -5,21 +5,26 @@ dependencies:
     - core.entity_view_mode.node.panoramic_image
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
+    - field.field.node.cgov_blog_post.field_blog_series
+    - field.field.node.cgov_blog_post.field_blog_topics
     - field.field.node.cgov_blog_post.field_browser_title
     - field.field.node.cgov_blog_post.field_card_title
+    - field.field.node.cgov_blog_post.field_citation
     - field.field.node.cgov_blog_post.field_date_posted
     - field.field.node.cgov_blog_post.field_feature_card_description
     - field.field.node.cgov_blog_post.field_image_article
     - field.field.node.cgov_blog_post.field_image_promotional
     - field.field.node.cgov_blog_post.field_intro_text
     - field.field.node.cgov_blog_post.field_list_description
+    - field.field.node.cgov_blog_post.field_meta_tags
     - field.field.node.cgov_blog_post.field_page_description
     - field.field.node.cgov_blog_post.field_pretty_url
     - field.field.node.cgov_blog_post.field_public_use
+    - field.field.node.cgov_blog_post.field_recommended_content
+    - field.field.node.cgov_blog_post.field_related_resources
     - field.field.node.cgov_blog_post.field_search_engine_restrictions
     - node.type.cgov_blog_post
   module:
-    - text
     - user
 id: node.cgov_blog_post.panoramic_image
 targetEntityType: node
@@ -48,15 +53,21 @@ hidden:
   body: true
   content_moderation_control: true
   field_author: true
+  field_blog_series: true
+  field_blog_topics: true
   field_browser_title: true
   field_card_title: true
+  field_citation: true
   field_date_posted: true
   field_feature_card_description: true
   field_intro_text: true
   field_list_description: true
+  field_meta_tags: true
   field_page_description: true
   field_pretty_url: true
   field_public_use: true
+  field_recommended_content: true
+  field_related_resources: true
   field_search_engine_restrictions: true
   langcode: true
   links: true
