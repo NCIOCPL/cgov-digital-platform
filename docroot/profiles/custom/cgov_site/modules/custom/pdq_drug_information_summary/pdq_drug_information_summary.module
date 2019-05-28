@@ -11,10 +11,18 @@
  * Limits allowed text formats using the cgov_core form_tools service.
  */
 function pdq_drug_information_summary_field_widget_form_alter(&$element, $form_state, $context) {
-  // Maps field names to an array containing a single format.
-  $map = [
-    'body' => ['raw_html'],
-  ];
-  $formHelper = \Drupal::service('cgov_core.form_tools');
-  $formHelper->allowTextFormats($map, $element, $context);
+  $buildInfo = $form_state->getBuildInfo();
+  $formID = $buildInfo['form_id'];
+
+  /* https://github.com/NCIOCPL/cgov-digital-platform/issues/1806
+  Only set the body field to raw_html if it's a PDQ DIS.
+  We will need to figure out what to do with reusing the body field. */
+  if ($formID == 'node_pdq_drug_information_summary_form' || $formID == "node_pdq_drug_information_summary_edit_form") {
+    // Maps field names to an array containing a single format.
+    $map = [
+      'body' => ['raw_html'],
+    ];
+    $formHelper = \Drupal::service('cgov_core.form_tools');
+    $formHelper->allowTextFormats($map, $element, $context);
+  }
 }
