@@ -12,3 +12,11 @@ cgov_core.long_description:
     parameters:
       media:
         type: entity:media
+
+cgov_core.frontend_globals_form:
+  path: '/cgov_core/form/frontend_globals'
+  defaults:
+    _form: '\Drupal\cgov_core\Form\FrontendGlobalsForm'
+    _title: 'FrontendGlobalsForm'
+  requirements:
+    _permission: 'administer frontend globals'

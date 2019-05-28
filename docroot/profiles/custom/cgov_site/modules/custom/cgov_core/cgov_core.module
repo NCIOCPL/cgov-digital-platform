@@ -16,6 +16,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_entity_translation_create().
@@ -299,4 +300,21 @@ function cgov_core_views_query_alter(ViewExecutable $view, QueryPluginBase $quer
       }
     }
   }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function cgov_core_page_attachments_alter(array &$attachments) {
+  $config = \Drupal::config('cgov_core.frontend_globals');
+  $settings = $config->get('config_object');
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'script',
+      '#value' => "window.CDEConfig = $settings;",
+    ],
+    'CDEConfig',
+  ];
+  $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
+  $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
 }
