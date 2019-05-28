@@ -33,6 +33,7 @@ users_file="$HOME/cgov-drupal-users.yml"
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
 blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
 blt cgov:locales:translate
+cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
 
 case $MIGRATION in
 CGOV)
