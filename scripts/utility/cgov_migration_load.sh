@@ -51,10 +51,10 @@ CGOV)
   ;;
 DCEG)
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
-    drush mim paragraph_en_migration; drush mim paragraph_es_migration
-    drush mim cgovimage_migration && drush mim cgovimage_es_migration
-    drush mim article_en_migration && drush mim article_es_migration
-    drush mim video_en_migration && drush mim video_es_migration
+    drush mim paragraph_en_migration
+    drush mim cgovimage_migration
+    drush mim article_en_migration
+    drush mim video_en_migration
 
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
@@ -62,16 +62,28 @@ DCEG)
   ;;
 NANO)
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
-    drush mim paragraph_en_migration; drush mim paragraph_es_migration
-    drush mim cgovimage_migration && drush mim cgovimage_es_migration
-    drush mim article_en_migration && drush mim article_es_migration
+    drush mim paragraph_en_migration
+    drush mim cgovimage_migration
+    drush mim article_en_migration
 
   ;;
 MYPART)
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
-    drush mim paragraph_en_migration; drush mim paragraph_es_migration
-    drush mim cgovimage_migration && drush mim cgovimage_es_migration
-    drush mim article_en_migration && drush mim article_es_migration
+    drush mim paragraph_en_migration
+    drush mim cgovimage_migration
+    drush mim article_en_migration
+    drush mim infographic_en_migration
+    drush mim video_en_migration
+    drush mim contentblock_migration
+    drush mim promocard_migration
+    drush mim list_migration
+    drush mim multimediarow_migration
+    drush mim primaryfeaturecardrow_migration
+    drush mim twoitemfeaturecardrow_migration
+    drush mim minilanding_en_migration
+    drush mim homelanding_en_migration
+
+    drush mim contextualimage_es_migration
 
     ;;
 NCICONNECTOR)
