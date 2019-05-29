@@ -36,6 +36,12 @@ source:
          selector: field_cthp_card_title
 
 
+        -
+         name: field_cthp_target_link
+         label: field_cthp_target_link
+         selector: field_cthp_target_link
+
+
   ids:
     id:
       type: integer
@@ -49,6 +55,41 @@ process:
       - video_es_migration
     source: field_cthp_video
     no_stub: true
+
+ field_cthp_target_link/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        -
+          internallinksql_migration
+        -
+          externallinksql_migration
+        -
+         medialink_migration
+      no_stub: true
+      source: field_cthp_target_link
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_cthp_target_link/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        -
+          internallinksql_migration
+        -
+          externallinksql_migration
+        -
+          medialink_migration
+
+      no_stub: true
+      source: field_cthp_target_link
+    -
+      plugin: extract
+      index:
+        - 1
 
  id: id
  langcode: langcode
