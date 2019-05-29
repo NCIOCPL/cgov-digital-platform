@@ -24,30 +24,12 @@ class RemoveRxWrapper extends CgovPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    // TODO: Extract out into a generic migration validator.
-    if ($row->hasSourceProperty('para_id')) {
-      $pid = $row->getSource()['para_id'];
-    }
-    elseif ($row->hasSourceProperty('id')) {
-      $pid = $row->getSource()['id'];
-    }
-    elseif ($row->hasSourceProperty('citation_id')) {
-      $pid = $row->getSource()['citation_id'];
-    }
-    elseif ($row->hasSourceProperty('row_rid')) {
-      $pid = $row->getSource()['row_rid'];
-    }
-    else {
-      $message = "Item skipped due to missing id or para_id.";
-      $this->migLog->logMessage(NULL, $message, E_ERROR);
-
-      throw new MigrateSkipRowException();
-    }
-
     // Exit early if the field not set.
     if (!isset($value)) {
       return NULL;
     }
+
+    $pid = $this->getPercID($row);
 
     // Load the incoming HTML.
     $this->doc->html($value);
@@ -75,7 +57,7 @@ class RemoveRxWrapper extends CgovPluginBase {
       $this->migLog->logMessage($pid, $message, E_ERROR);
       throw new MigrateSkipRowException();
     }
-    else {
+    elseif ($size > 0) {
       // Retrieve the content.
       $value = $elements->first()->html();
     }

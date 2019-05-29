@@ -57,7 +57,12 @@ process:
   name: name
   langcode: langcode
 
-  field_caption/value: field_caption
+  field_caption/value:
+    -
+      plugin: remove_rx_wrapper
+      source: field_caption
+    -
+      plugin: generate_placeholders
   field_caption/format:
      plugin: default_value
      default_value: simple

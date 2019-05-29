@@ -206,6 +206,8 @@ process:
     -
       plugin: remove_rx_wrapper
       source: body
+    -
+      plugin: generate_placeholders
   body/format:
    plugin: default_value
    default_value: full_html
@@ -229,6 +231,8 @@ process:
     -
       plugin: remove_rx_wrapper
       source: field_intro_text
+    -
+      plugin: generate_placeholders
   field_intro_text/format:
    plugin: default_value
    default_value: full_html
