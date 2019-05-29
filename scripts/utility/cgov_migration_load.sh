@@ -68,7 +68,7 @@ NANO)
 
   ;;
 MYPART)
-    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
+    drush mim externallinksql_migration; drush mim internallinksql_migration
     drush mim paragraph_en_migration
     drush mim cgovimage_migration
     drush mim article_en_migration
@@ -83,11 +83,26 @@ MYPART)
     drush mim minilanding_en_migration
     drush mim homelanding_en_migration
 
-    drush mim contextualimage_es_migration
+    drush mim contextualimage_en_migration
 
     ;;
 NCICONNECTOR)
-  echo 'nciconnector'
+    drush mim internallinksql_migration
+    drush mim paragraph_en_migration
+    drush mim cgovimage_migration
+    drush mim article_en_migration
+
+    drush mim video_en_migration
+    drush mim contentblock_migration
+    drush mim promocard_migration
+    drush mim list_migration
+    drush mim primaryfeaturecardrow_migration
+    drush mim twoitemfeaturecardrow_migration
+    drush mim minilanding_en_migration
+    drush mim homelanding_en_migration
+
+    drush mim file_en_migration
+    drush mim contextualimage_en_migration
   ;;
 *)
   echo 'MIGRATION NOT SET'
