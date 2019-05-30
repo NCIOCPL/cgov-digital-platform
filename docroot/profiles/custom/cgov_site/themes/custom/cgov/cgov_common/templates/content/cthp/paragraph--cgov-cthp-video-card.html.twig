@@ -28,7 +28,7 @@
   <h2>{{ content.field_cthp_card_title}}</h2>
   <div>
     {{ content.field_cthp_video }}
-    {% if description and (content.field_cthp_target_link|field_value or content.field_cthp_video[0])%}
+    {% if content.field_cthp_target_link|field_value or content.field_cthp_video[0] %}
       <div class="cardBody">
         <a href="{{ url }}" class="arrow-link cthp-mm-text-area">{{ description }}</a>
       </div>
