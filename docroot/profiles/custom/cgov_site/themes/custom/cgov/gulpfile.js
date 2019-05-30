@@ -52,7 +52,7 @@ gulp.task('variant_sprites', () => {
 
 // optimize and move raster images. Excluding .svg files for now. This would require a new glob pattern to include all
 // .svg files that are not within the 'sprites' folder.
-gulp.task('images', () => {
+gulp.task('images', (done) => {
   return Object.keys(themes).map(themePath => {
     return merge(themes[themePath].variants.map(variant => {
       return gulp.src(['**/*.{png,jpg,gif}'], { cwd: `${ themePath }/src/variants/${ variant }/assets/`})
@@ -69,6 +69,10 @@ gulp.task('images', () => {
             lossy: 80
           })
       ]))
+      .on('error', function(error) {
+        // we have an error
+        done(error); 
+      })
         .pipe(gulp.dest(`${ themePath }/dist/images`))
     }))
   })
