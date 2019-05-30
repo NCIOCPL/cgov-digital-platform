@@ -21,5 +21,8 @@
       {% if node.field_public_use.value == '1' %}
         {{ drupal_region('public_use') }}
       {% endif %}
+      {% if node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
+        {{ drupal_region('syndication') }}
+      {% endif %}
     </footer>
 </article>

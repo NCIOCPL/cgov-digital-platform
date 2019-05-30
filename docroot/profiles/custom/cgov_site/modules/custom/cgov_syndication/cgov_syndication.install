@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_syndication.install.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+
+/**
+ * Implements hook_themes_installed().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_themes_installed()
+ */
+function cgov_syndication_themes_installed() {
+  // Create Contact Us block for Press Releases.
+  $block_theme = \Drupal::config('system.theme')->get('default');
+  $block_region = 'syndication';
+  $block_label = 'Syndication Message';
+  $block_html = <<<EOMarkup
+  <div class="syndication">
+    <div>
+      <p>Want to use this content on your website or other digital platform? Our <a href="/syndication">syndication services page</a> shows you how.</p>
+    </div>
+  </div>
+EOMarkup;
+
+  // Create block content.
+  $block_content = BlockContent::create([
+    'id' => 'syndication_message',
+    'type' => 'raw_html_block',
+    'info' => $block_label,
+    'field_raw_html' => ['value' => $block_html, 'format' => 'raw_html'],
+  ]);
+  $block_content->save();
+
+  // Assign block to Region.
+  $data = [
+    'id' => 'syndication_message',
+    'plugin' => 'block_content:' . $block_content->uuid(),
+    'region' => $block_region,
+    'provider' => 'block_content',
+    'weight' => 0,
+    'theme' => $block_theme,
+    'settings' => [
+      'label' => $block_label,
+      'label_display' => '0',
+    ],
+  ];
+
+  $block = Block::create($data);
+  $block->save();
+
+}
