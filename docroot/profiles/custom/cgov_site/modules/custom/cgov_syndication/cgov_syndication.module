@@ -27,3 +27,51 @@ function cgov_syndication_preprocess_html(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_ENTITY_insert().
+ *
+ * Perform any actions that are required when adding a new language.
+ * During the install process, only EN is enabled, so use this hook
+ * to add any other translations or other things needed by a new
+ * language when it gets enabled.
+ *
+ * Adds new Syndication message translation when a new language is installed.
+ */
+function cgov_syndication_configurable_language_insert($entity) {
+  $syndication_message['es'] = <<<EOMarkup
+  <div class="syndication">
+    <div>
+      <p>¿Desea usar este contenido en su sitio web o en otra plataforma digital? En nuestra <a href="/espanol/sindicacion">página de sindicación de contenidos</a> le decimos cómo hacerlo.</p>
+    </div>
+  </div>
+EOMarkup;
+
+  $langcode = $entity->id();
+
+  // If no translation defined, exit hook.
+  if (!isset($syndication_message[$langcode])) {
+    return;
+  }
+
+  // Get the existing English Syndication message block to add the translation.
+  $query = \Drupal::entityQuery('block_content');
+  $query->condition('info', 'Syndication Message')
+    ->condition('langcode', 'en');
+  $result = $query->execute();
+  if (count($result)) {
+    $eid = array_shift($result);
+    $block = entity_load('block_content', $eid);
+    $title = $block->info->value . " - " . $langcode;
+    // Create translation if it doesn't already exist.
+    if (!$block->hasTranslation($langcode)) {
+      $block_translated = $block->addTranslation($langcode, [
+        'id' => "syndication_message__$langcode",
+        'info' => $title,
+        'field_raw_html' => ['value' => $syndication_message[$langcode], 'format' => 'raw_html'],
+      ]);
+      $block_translated->save();
+      drupal_set_message("Added Syndication Message block_content: $title");
+    }
+  }
+}
