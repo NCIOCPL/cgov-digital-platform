@@ -1,0 +1,30 @@
+{% import '@cgov_common/content/image/image_macros.twig' as imageMacros %}
+
+{% set classes = "large" %}
+
+{# Get the aliased path for the infographic #}
+{% set infographic_uri = media.path.0.alias %}
+
+{% if content.field_image_promotional[0] %}
+
+  {# We pass null because embedded infographics swhould not show the promotional image credit. #}
+  {{ imageMacros.articleImage(classes, content.field_image_promotional, infographic_uri, null, content.caption, "View Infographic") }}
+
+{% else %}
+
+  <figure class="centered-set large" style="background: fuscia;">
+      <div class="centered-element">
+        <h4>Infographic:</h4>
+        <p>DISPLAY ERROR: Missing Promotional Image</p>
+        <p>Please add a promotional image.</p>
+      </div>
+      {% if content.caption|render|striptags|trim %}
+        <figcaption>
+          <div class="caption-container no-resize">
+            <p>{{ content.caption }}</p>
+          </div>
+        </figcaption>
+      {% endif %}
+  </figure>
+
+{% endif %}
