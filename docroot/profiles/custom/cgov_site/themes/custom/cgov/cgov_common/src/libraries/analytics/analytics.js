@@ -535,7 +535,7 @@ $(window).on('load',function(){
         NCIAnalytics.BlogSubscribeClick(this, pageName);
     });
 
-    $('.cgvblogpost #cgvBody').on("click", "a:not(.definition)",  function(){
+    $('#cgvBody.cgvblogpost').on("click", "a:not(.definition)",  function(){
         var $this = $(this);
         var linkText = $this.text();
         NCIAnalytics.BlogBodyLinkClick(this, linkText, pageName);
@@ -543,7 +543,7 @@ $(window).on('load',function(){
 
     $('#cgvBody').on("click", ".definition",  function(){
         var linkText = this.innerText;
-        var blogLink = $('body').hasClass('cgvblogpost') ? true : false;
+        var blogLink = $('#cgvBody').hasClass('cgvblogpost') ? true : false;
         NCIAnalytics.glossifiedTerm(this, linkText, blogLink);
     });
 
