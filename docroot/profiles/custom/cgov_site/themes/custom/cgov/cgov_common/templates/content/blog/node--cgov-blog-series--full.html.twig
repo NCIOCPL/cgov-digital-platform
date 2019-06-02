@@ -26,7 +26,7 @@
       {{ drupal_block('page_options') }}
     </div>
     
-    <div id="cgvBody">
+    <div id="cgvBody" class="{{ get.topic ? 'cgvtopicpage' : 'cgvblogseries' }}">
       <div class="slot-item first-SI">
         {% if not (get.topic or get.year) %}
           <div>
