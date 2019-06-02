@@ -31,4 +31,9 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   $config['system.performance']['css']['gzip'] = TRUE;
   $config['system.performance']['js']['preprocess'] = TRUE;
   $config['system.performance']['js']['gzip'] = TRUE;
+
+  // Setup proper .edgerc path for Akamai module
+  $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
+  $config['akamai.settings']['edgerc_path'] = "/mnt/gfs/home/$ah_group/common/.edgerc";
+
 }

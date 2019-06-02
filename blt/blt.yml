@@ -28,22 +28,32 @@ drush:
 modules:
   local:
     enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
-    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_ace, acquia_purge]
+    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, acquia_purge]
   ci:
     enable: {  }
     uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
   dev:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
-    uninstall: {  }
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [cgov_caching_nocdn]
+  01dev:
+    enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [cgov_caching_nocdn]
   int:
     enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
     uninstall: {  }
   test:
     enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
     uninstall: [devel, views_ui]
+  01test:
+    enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [cgov_caching_nocdn]
   prod:
     enable: [acquia_connector, shield]
     uninstall: [devel, views_ui]
+  01live:
+    enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [cgov_caching_nocdn]
+
 phpunit:
   -
     config: '${repo.root}/phpunit.xml'
