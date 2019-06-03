@@ -3,10 +3,12 @@
 namespace Drupal\cgov_blog\Services;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\TypedData\TranslatableInterface;
 
 /**
  * Blog Manager Service.
@@ -19,6 +21,13 @@ class BlogManager implements BlogManagerInterface {
    * @var Drupal\Core\Entity\Query\QueryFactory
    */
   protected $entityQuery;
+
+  /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected $entityRepository;
 
   /**
    * The entity type manager.
@@ -46,6 +55,8 @@ class BlogManager implements BlogManagerInterface {
    *
    * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
    *   An entity query.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
@@ -55,11 +66,13 @@ class BlogManager implements BlogManagerInterface {
    */
   public function __construct(
     QueryFactory $entity_query,
+    EntityRepositoryInterface $entity_repository,
     EntityTypeManagerInterface $entity_type_manager,
     RouteMatchInterface $route_matcher,
     AliasManagerInterface $alias_manager
   ) {
     $this->entityQuery = $entity_query;
+    $this->entityRepository = $entity_repository;
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
     $this->aliasManager = $alias_manager;
@@ -84,26 +97,26 @@ class BlogManager implements BlogManagerInterface {
    * {@inheritdoc}
    */
   public function getSeriesEntity() {
+    $seriesEntity = [];
     $currEntity = $this->getCurrentEntity();
-    $currId = $currEntity->id();
     $currBundle = $currEntity->bundle();
 
     // If this is a series.
     switch ($currBundle) {
       case 'cgov_blog_series':
-        $seriesNode = $currEntity;
+        $seriesEntity = $currEntity;
         break;
 
       case 'cgov_blog_post':
-        $seriesNodeId = $this->getNodeStorage()->load($currId)->field_blog_series->target_id;
-        $seriesNode = $this->getNodeStorage()->load($seriesNodeId);
+        $seriesEntity = $currEntity->field_blog_series->entity;
+        $seriesEntity = $this->getCurrentTranslation($seriesEntity);
         break;
 
       default:
-        $seriesNode = NULL;
         break;
     }
-    return $seriesNode;
+
+    return $seriesEntity;
   }
 
   /**
@@ -115,25 +128,74 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Create a new node storage instance.
+   * Gets the entity translation to be used in the given context.
+   *
+   * This will check whether a translation for the desired language
+   * is available and if not, it will fall back to the most
+   * appropriate translation based on the provided context.
+   * Based on the implementation found in
+   * EntityReferenceFormatterBase->getEntitiesToView().
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   *   A referenced entity.
+   */
+  public function getCurrentTranslation($node) {
+    if ($node instanceof TranslatableInterface) {
+      $lang = $this->getCurrentLang();
+      $node = $this->entityRepository->getTranslationFromContext($node, $lang);
+    }
+    return $node;
+  }
+
+  /**
+   * Create a node object given an nid.
+   *
+   * @param string $nid
+   *   A node ID.
    *
    * @return Drupal\Core\Entity\EntityStorageInterface
    *   The node storage or NULL.
    */
-  public function getNodeStorage() {
-    $node_storage = $this->entityTypeManager->getStorage('node');
-    return isset($node_storage) ? $node_storage : NULL;
+  public function getNodeFromNid($nid) {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $nodeLoad = (isset($storage)) ? $storage->load($nid) : NULL;
+    $nodeLoad = $this->getCurrentTranslation($nodeLoad);
+    return $nodeLoad;
   }
 
   /**
-   * Create a new taxonomy storage instance.
+   * Get a single topic taxonomy object.
    *
-   * @return Drupal\Core\Entity\EntityStorageInterface
-   *   The taxonomy storage or NULL.
+   * @param string $tid
+   *   A taxonomy term ID.
    */
-  public function getTaxonomyStorage() {
+  public function loadBlogTopic($tid) {
     $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    return isset($taxonomy_storage) ? $taxonomy_storage : NULL;
+    $topic = $taxonomy_storage->load($tid) ?? NULL;
+
+    /*
+     * Retrieve the translated taxonomy term in specified
+     * language ($curr_langcode) with fallback to default
+     * language if translation not exists.
+     */
+    if ($topic != NULL) {
+      $lang = $this->getCurrentLang();
+      $topic = $this->entityRepository->getTranslationFromContext($topic, $lang);
+    }
+
+    return $topic;
+  }
+
+  /**
+   * Get all single topic taxonomy objects.
+   *
+   * @param string $vid
+   *   A vocabulary ID.
+   */
+  public function loadAllBlogTopics($vid) {
+    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $topics = $taxonomy_storage->loadTree($vid) ?? NULL;
+    return $topics;
   }
 
   /**
@@ -141,17 +203,23 @@ class BlogManager implements BlogManagerInterface {
    */
   public function getSeriesId() {
     $series = $this->getSeriesEntity();
-    $series_id = (!empty($series->id())) ? $series->id() : '';
-    return $series_id;
+    $sid = '';
+    if (isset($series)) {
+      $sid = $series->id();
+    }
+    return $sid;
   }
 
   /**
-   * The the URL path for the blog series.
+   * The URL path for the blog series.
+   *
+   * @param mixed $queryParams
+   *   An associative array of the URL query parameter.
    */
-  public function getSeriesPath() {
-    $nid = $this->getSeriesId();
-    $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
-    return $path;
+  public function getSeriesPath($queryParams = []) {
+    $series = $this->getSeriesEntity();
+    $path = $series->toUrl('canonical', ['query' => $queryParams]);
+    return $path->toString();
   }
 
   /**
@@ -167,40 +235,38 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series categories (topics).
-   *
-   * TODO: Rename *categories files & methods to *topics for consistency.
+   * Get Blog Series topics (cagtegories).
    */
-  public function getSeriesCategories() {
-    $categories = [];
+  public function getSeriesTopics() {
+    $topics = [];
     $curr_nid = $this->getSeriesId();
-    $taxonomy = $this->getTaxonomyStorage()->loadTree('cgov_blog_topics');
+    $taxonomy = $this->loadAllBlogTopics('cgov_blog_topics');
 
-    // Create an array of categories that match the owner Blog Series.
+    // Create an array of topics that match the owner Blog Series.
     if (count($taxonomy) > 0) {
       foreach ($taxonomy as $taxon) {
         $tid = $taxon->tid;
-        $owner_nid = $this->getTaxonomyStorage()->load($tid)->get('field_owner_blog')->target_id;
-        if ($curr_nid === $owner_nid) {
-          $categories[] = $taxon;
+        $owner_nid = $this->loadBlogTopic($tid)->get('field_owner_blog')->target_id;
+        if ($curr_nid == $owner_nid) {
+          $topics[] = $taxon;
         }
       }
     }
-    return $categories;
+    return $topics;
   }
 
   /**
    * Get Blog Series topic (category) descriptions.
    */
   public function getSeriesTopicDescription() {
-    $topics = $this->getSeriesCategories();
+    $topics = $this->getSeriesTopics();
     $descriptions = [];
 
-    // Create an array of categories that match the owner Blog Series.
+    // Create an array of topics that match the owner Blog Series.
     foreach ($topics as $topic) {
       $tid = $topic->tid;
-      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
-      $desc = $this->getTaxonomyStorage()->load($tid)->description->value;
+      $url = $this->loadBlogTopic($tid)->field_topic_pretty_url->value ?? $tid;
+      $desc = $this->loadBlogTopic($tid)->description->value;
       $descriptions[$url] = $desc;
     }
     return $descriptions;
@@ -210,16 +276,23 @@ class BlogManager implements BlogManagerInterface {
    * Get Blog Series topic (category) names.
    */
   public function getSeriesTopicTitle() {
-    $topics = $this->getSeriesCategories();
+    $topics = $this->getSeriesTopics();
     $names = [];
 
-    // Create an array of categories that match the owner Blog Series.
+    // Create an array of topics that match the owner Blog Series.
     foreach ($topics as $topic) {
+      // Build tid-based titles.
       $tid = $topic->tid;
-      $url = $this->getTaxonomyStorage()->load($tid)->field_pretty_url->value;
-      $name = $this->getTaxonomyStorage()->load($tid)->getName();
-      $names[$url] = $name;
+      $name = $this->loadBlogTopic($tid)->getName();
+      $names[$tid] = $name;
+
+      // Build url-based titles.
+      $url = $this->loadBlogTopic($tid)->field_topic_pretty_url->value ?? FALSE;
+      if ($url) {
+        $names[$url] = $name;
+      }
     }
+
     return $names;
   }
 
@@ -232,11 +305,13 @@ class BlogManager implements BlogManagerInterface {
    *   Optional langcode.
    */
   public function getBlogPathFromNid($nid, $lang = NULL) {
-    if (isset($lang)) {
-      $path = $this->aliasManager->getAliasByPath('/node/' . $nid, $lang);
-    }
-    else {
-      $path = $this->aliasManager->getAliasByPath('/node/' . $nid);
+    $node = $this->getNodeFromNid($nid);
+    $path = (isset($node)) ? $node->toUrl('canonical') : NULL;
+
+    // Use alias manager otherwise.
+    if (!isset($path)) {
+      $path = (isset($lang)) ? $this->aliasManager->getAliasByPath('/node/' . $nid, $lang) :
+        $this->aliasManager->getAliasByPath('/node/' . $nid);
     }
     return $path;
   }

@@ -3,6 +3,7 @@ services:
     class: Drupal\cgov_blog\Services\BlogManager
     arguments:
       - '@entity.query'
+      - '@entity.repository'
       - '@entity_type.manager'
       - '@current_route_match'
       - '@path.alias_manager'

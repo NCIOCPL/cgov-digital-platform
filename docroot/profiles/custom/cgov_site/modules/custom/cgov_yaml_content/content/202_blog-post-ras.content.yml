@@ -74,7 +74,19 @@
     value: "jaffee-immunotherapy"
   field_public_use: 1
   field_search_engine_restrictions: 0
-
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'RAS Conversations: Elizabeth Jaffee'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'RAS Conversations: Immuno-Oncology'
 - entity: "node"
   type: "cgov_blog_post"
   title: "Conversation with Dr. Shiva Malek and Dr. Christiaan Klijn"
@@ -164,6 +176,19 @@
     value: "shiva-malek"
   field_public_use: 1
   field_search_engine_restrictions: 0
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'RAS Conversations: Immuno-Oncology'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'KRAS'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -224,3 +249,10 @@
     value: "ras-dependent"
   field_public_use: 1
   field_search_engine_restrictions: 0
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Cancer Susceptibilities'
