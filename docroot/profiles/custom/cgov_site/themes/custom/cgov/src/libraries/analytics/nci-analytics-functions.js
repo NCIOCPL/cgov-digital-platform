@@ -1713,7 +1713,7 @@ var NCIAnalytics = {
         var year = urlParam('[year]');
         var month = urlParam('[month]');
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_Archive",
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_Archive",
             67: pageName,
             50: year + (month ? (":" + month) : "")
         };
@@ -1725,7 +1725,7 @@ var NCIAnalytics = {
         var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'BlogSubscribeClick');
 
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_Subscribe",
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_Subscribe",
             67: pageName
         };
 
@@ -1744,7 +1744,7 @@ var NCIAnalytics = {
         }
         
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + expandCollapse,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + expandCollapse,
             67: pageName
         };
         clickParams.LogToOmniture();
@@ -1756,7 +1756,7 @@ var NCIAnalytics = {
         var linkType = "_BodyLink";
         clickParams.Props = {
             50: linkText,
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + linkType,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + linkType,
             67: pageName
         };
 
@@ -1775,7 +1775,7 @@ var NCIAnalytics = {
         };
         
         if(blogLink) {
-            clickParams.Props[66] = "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + '_BodyGlossifiedTerm';
+            clickParams.Props[66] = "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + '_BodyGlossifiedTerm';
         }
 
         clickParams.Events = [56];
@@ -1788,11 +1788,11 @@ var NCIAnalytics = {
         var prop66_String = "";
         if(NCIAnalytics.blogLocation()){
             clickParams.Events = [57];
-            prop66_String = "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_RelatedResource:" + index;
+            prop66_String = "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_RelatedResource:" + index;
         }
         else{
             clickParams.Events = [59];
-            prop66_String = 's.prop44' + "_RelatedResource:" + index;
+            prop66_String = NCIAnalytics.contentGroup() + "_RelatedResource:" + index;
         }
         clickParams.Props = {
             66: prop66_String,
@@ -1808,7 +1808,7 @@ var NCIAnalytics = {
             'nciglobal', 'o', 'BlogFeatureCardClick');
 
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_BlogCard:" + containerIndex,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_BlogCard:" + containerIndex,
             67: pageName,
             50: linkText
         };
@@ -1822,7 +1822,7 @@ var NCIAnalytics = {
             'nciglobal', 'o', 'FeaturedPostsClick');
 
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_FeaturedPosts:" + containerIndex,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_FeaturedPosts:" + containerIndex,
             67: pageName,
             50: linkText
         };
@@ -1836,7 +1836,7 @@ var NCIAnalytics = {
             'nciglobal', 'o', 'CategoryClick');
 
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_Category:" + containerIndex,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_Category:" + containerIndex,
             67: pageName,
             50: linkText
         };
@@ -1850,7 +1850,7 @@ var NCIAnalytics = {
             'nciglobal', 'o', 'OlderNewerClick');
 
         clickParams.Props = {
-            66: "Blog_" + 's.prop44' + "_" + NCIAnalytics.blogLocation() + "_" + olderNewer,
+            66: "Blog_" + NCIAnalytics.contentGroup() + "_" + NCIAnalytics.blogLocation() + "_" + olderNewer,
             67: pageName
         };
 
@@ -1898,6 +1898,21 @@ NCIAnalytics.blogLocation = function() {
     } else if (document.querySelector('body.cgvtopicpage')) {
         return 'Category';
     } else return '';
+}
+
+/**
+ * Get the content group (currently used for prop44, prop66) fron the 
+ * 'isPartOf' metatag.
+ */
+NCIAnalytics.contentGroup = function() {
+    var metaSel = ('[name="dcterms.isPartOf"]');
+    var metaTag = document.head.querySelector(metaSel) || null;
+    if (metaTag) {
+        var metaVal = metaTag.content || '';
+        return metaVal;
+    } else {
+        return '';
+    }
 }
 
 /**
