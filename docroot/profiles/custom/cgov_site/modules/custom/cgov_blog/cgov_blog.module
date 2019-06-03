@@ -83,7 +83,7 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
       $terms = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties(
-            ['field_pretty_url' => $topic]
+            ['field_topic_pretty_url' => $topic]
         );
       // Get first array key.
       reset($terms);

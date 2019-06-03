@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.cgov_blog_topics.field_owner_blog
-    - field.field.taxonomy_term.cgov_blog_topics.field_pretty_url
+    - field.field.taxonomy_term.cgov_blog_topics.field_topic_pretty_url
     - taxonomy.vocabulary.cgov_blog_topics
   module:
     - text
@@ -21,15 +21,15 @@ content:
     third_party_settings: {  }
   field_owner_blog:
     weight: 2
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_pretty_url:
+  field_topic_pretty_url:
     weight: 1
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
