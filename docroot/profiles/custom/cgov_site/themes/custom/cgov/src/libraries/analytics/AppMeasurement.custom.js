@@ -15,7 +15,7 @@ var AppMeasurementCustom = {
      * Set configuration variable values for AppMeasurement. 
      * See https://marketing.adobe.com/resources/help/en_US/sc/implement/configuration-variables.html
      */
-    linkInternalFilters: 'javascript:,cancer.gov,localhost,www.devbox',
+    linkInternalFilters: 'javascript:,cancer.gov,localhost,www.devbox,ncigovcdode,cgov.ncigov',
     linkTrackEvents: 'none',
     linkTrackVars: 'none',
     trackInineStats: true,
