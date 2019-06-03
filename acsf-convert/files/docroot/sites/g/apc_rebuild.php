@@ -27,10 +27,15 @@ require_once dirname(__FILE__) . '/sites.inc';
 
 if (!empty($_GET['domains'])) {
   $domains = explode(',', $_GET['domains']);
+  // Refresh data for specified domains. If the domains are not found (which
+  // could be caused by the domain not being present or by a read failure of the
+  // sites.json file), that fact will be cached in APC for each domain passed.
   gardens_site_data_refresh_domains($domains);
   syslog(LOG_INFO, sprintf('Updated APC cache for [%s].', $_GET['domains']));
 }
 else {
+  // Refresh data for all domains present in sites.json. If there is a read
+  // failure, the cache will not be refreshed.
   gardens_site_data_refresh_all();
   syslog(LOG_INFO, 'Updated APC cache for all domains.');
 }

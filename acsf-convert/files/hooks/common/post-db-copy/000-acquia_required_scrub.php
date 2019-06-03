@@ -5,7 +5,8 @@
  * @file
  * Scrubs a site after its database has been copied.
  *
- * This happens on staging, not on site duplication.
+ * This happens on staging, not on site duplication; duplication does not call
+ * the 'db-copy' Acquia Hosting task which executes this hook.
  */
 
 if (empty($argv[3])) {
@@ -55,12 +56,15 @@ $docroot = sprintf('/var/www/html/%s.%s/docroot', $site, $env);
 $cache_directory = sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, md5($new_domain));
 shell_exec(sprintf('mkdir -p %s', escapeshellarg($cache_directory)));
 
-// Execute the scrub.
+// Execute the scrub. If we execute code on the update environment (as per
+// above), we must change AH_SITE_ENVIRONMENT to match the docroot during
+// execution; see sites.php.
 $command = sprintf(
-  'CACHE_PREFIX=%s \drush8 -r %s -l %s -y acsf-site-scrub',
+  'CACHE_PREFIX=%s AH_SITE_ENVIRONMENT=%s \drush8 -r %s -l %s -y acsf-site-scrub',
   escapeshellarg($cache_directory),
+  escapeshellarg($env),
   escapeshellarg($docroot),
-  escapeshellarg($new_domain)
+  escapeshellarg('https://' . $new_domain)
 );
 fwrite(STDERR, "Executing: $command;\n");
 
