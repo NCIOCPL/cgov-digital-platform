@@ -112,20 +112,20 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function getBlogPostPagerLinks($cid, $content_type) {
     // Get available Blog Post nids.
-    $entity_ids = $this->blogManager->getNodesByPostedDateAsc($content_type);
+    $blog_post_nids = $this->blogManager->getNodesByPostedDateAsc($content_type);
 
     // Create series filter.
-    $filter_node = $this->blogManager->getNodeStorage()->load($cid);
+    $filter_node = $this->blogManager->getNodeFromNid($cid);
     $filter_series = $filter_node->field_blog_series->target_id;
 
     // Build a collection of blog link objects.
-    foreach ($entity_ids as $entid) {
-      $node = $this->blogManager->getNodeStorage()->load($entid);
+    foreach ($blog_post_nids as $nid) {
+      $node = $this->blogManager->getNodeFromNid($nid);
       $node_series = $node->field_blog_series->target_id;
 
       if ($node_series == $filter_series) {
         $blog_links[] = [
-          'nid' => $entid,
+          'nid' => $nid,
           'date' => $node->field_date_posted->value,
           'title' => $node->title->value,
         ];

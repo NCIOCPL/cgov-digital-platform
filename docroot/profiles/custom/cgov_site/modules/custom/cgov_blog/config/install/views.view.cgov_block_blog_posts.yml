@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.blog_post_title_date_author_desc
     - core.entity_view_mode.node.blog_post_title_date_author_desc_img
     - field.storage.node.body
     - field.storage.node.field_date_posted
@@ -59,8 +60,8 @@ display:
           id: 0
           total_pages: null
           tags:
-            previous: 'Newer Posts >'
-            next: '< Older Posts'
+            previous: 'Newer Posts'
+            next: 'Older Posts'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -499,10 +500,27 @@ display:
     display_plugin: block
     id: block_bp_list
     display_title: List-No-Thumb
-    position: 1
+    position: 2
     display_options:
       display_extenders: {  }
       display_description: 'List of Blog Posts without thumbnails, filtered by series'
+      style:
+        type: html_list
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+          type: ul
+          wrapper_class: item-list
+          class: ''
+      defaults:
+        style: false
+        row: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: blog_post_title_date_author_desc
     cache_metadata:
       max-age: -1
       contexts:

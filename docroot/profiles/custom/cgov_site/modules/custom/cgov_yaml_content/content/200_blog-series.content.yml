@@ -24,7 +24,7 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Cancer Currents Blog'
+            computed_path: '/news-events/cancer-currents-blog'
   field_banner_image:
     - '#process':
         callback: 'file'
@@ -55,15 +55,13 @@
     value: 'Temas y relatos blog'
   field_feature_card_description__ES:
     value: 'Temas y relatos blog'
-  field_pretty_url__ES:
-    value: "temas-y-relatos-blog"
   field_site_section__ES:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'Noticias'
+            computed_path: '/noticias/temas-y-relatos-blog'
   field_banner_image__ES:
     - '#process':
         callback: 'file'
@@ -108,7 +106,7 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            name: 'RAS Dialogue'
+            computed_path: '/research/key-initiatives/ras/ras-central/blog'
   field_about_blog: 'Join the discussion! Post comments, ask questions, and share information with RAS experts. Subscribe to receive notifications when a new RAS Dialogue article is posted.'
   field_banner_image:
   field_allow_comments: 1
