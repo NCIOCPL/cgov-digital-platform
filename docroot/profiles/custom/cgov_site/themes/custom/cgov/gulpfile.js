@@ -26,7 +26,7 @@ gulp.task('sprites', () => {
 });
 
 // for sprites that exist within a color variant of a theme or subtheme
-gulp.task('variant_sprites', () => {
+gulp.task('variant_sprites', async () => {
   return Object.keys(themes).map(themePath => {
     return merge(themes[themePath].variants.map(variant => {
       // get a fresh config object on each iteration since svg-sprite causes it to mutate
@@ -52,7 +52,7 @@ gulp.task('variant_sprites', () => {
 
 // optimize and move raster images. Excluding .svg files for now. This would require a new glob pattern to include all
 // .svg files that are not within the 'sprites' folder.
-gulp.task('images', () => {
+gulp.task('images', async () => {
   return Object.keys(themes).map(themePath => {
     return merge(themes[themePath].variants.map(variant => {
       return gulp.src(['**/*.{png,jpg,gif}'], { cwd: `${ themePath }/src/variants/${ variant }/assets/`})
@@ -74,4 +74,12 @@ gulp.task('images', () => {
   })
 });
 
-gulp.task('default', ['sprites','variant_sprites','images']);
+gulp.task(
+  'default',
+  gulp.series(
+      'sprites',
+      'variant_sprites',
+      'images'
+
+  )
+);
