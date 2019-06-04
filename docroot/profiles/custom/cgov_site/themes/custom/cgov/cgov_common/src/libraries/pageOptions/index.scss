@@ -226,21 +226,9 @@ a.social-share--custom-tweet {
 			height: 48px;
 		}
 	}
-
 }
 
-/* TABLET page options */
-@include bp(medium) {
-    .ncilandingpage #PageOptionsControl1 ul {
-        float: right;
-    }
-    .espanol-home #PageOptionsControl1 ul {
-        float: left;
-    }
-}
-
-// HACK FOR WHEN PAGE OPTIONS IS NESTED IN THE PAGE AND NOT A TOP LEVEL ELEMENT
-// example /about-cancer/treatment/clinical-trials/disease/esophageal-cancer
+// font-resizer adds an extra element that creates an extra wrapper element that causes spacing issues
 .resize-content {
 	.page-options-container {
 		@include bp(small) {
@@ -249,6 +237,17 @@ a.social-share--custom-tweet {
 
 		@include bp(xtra-small) {
 			width: 100%;
+		}
+	}
+}
+
+// #1884 atone for the fact that .ncilandingpage and .ncihome landmarks are no longer here 
+@include bp(medium) {
+	.large-7 {
+		+ .page-options-container {
+			ul { 
+				float: right;
+			}
 		}
 	}
 }
