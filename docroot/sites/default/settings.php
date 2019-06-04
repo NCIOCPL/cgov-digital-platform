@@ -8,7 +8,10 @@
 if (!empty($_ENV['AH_SITE_ENVIRONMENT']) &&
   function_exists('gardens_site_data_get_filepath')) {
   // ===== Added by acsf-init, please do not delete. Section start. =====
-  include dirname(__FILE__) . '/acsf.settings.php';
+  $_acsf_infrastructure = include dirname(__FILE__) . '/acsf.settings.php';
+  if ($_acsf_infrastructure === 'acsf-infrastructure') {
+    return;
+  }
   // ===== Added by acsf-init, please do not delete. Section end. =====
 }
 
@@ -792,3 +795,4 @@ $settings['entity_update_batch_size'] = 50;
 # }
 $config_directories['sync'] = '../config/sync';
 require DRUPAL_ROOT . "/../vendor/acquia/blt/settings/blt.settings.php";
+require DRUPAL_ROOT . "/sites/default/settings/cache.settings.php";

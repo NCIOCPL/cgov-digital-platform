@@ -2,13 +2,20 @@
 
 /**
  * @file
- * Drupal site-specific configuration file.
+ * Drupal configuration file for sites on Acquia Cloud Site Factory.
+ *
+ * This file is included from the site specific settings.php file for any site
+ * registered with Site Factory. If no site is found, sites/default/settings.php
+ * is read instead of this file (in normal circumstances).
  */
 
 // Include custom settings.php code from factory-hooks/pre-settings-php.
 if (function_exists('acsf_hooks_includes')) {
-  foreach (acsf_hooks_includes('pre-settings-php') as $pre_hook) {
-    include $pre_hook;
+  foreach (acsf_hooks_includes('pre-settings-php') as $_acsf_include_file) {
+    // This should not use include_once / require_once. Some Drush versions do
+    // Drupal bootstrap multiple times, and include_once / require_once would
+    // make the hook modifications not be included on the second bootstrap.
+    include $_acsf_include_file;
   }
 }
 
@@ -80,31 +87,37 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  * Acquia Cloud Site Factory specific settings.
  */
 if (file_exists('/var/www/site-php')) {
-  // The DB role will be the same as the gardens site directory name.
-  $request = \Drupal::hasRequest() ? \Drupal::request() : \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-  $role = basename(\Drupal\Core\DrupalKernel::findSitePath($request));
-  // This global is set in sites.php. It's used to reference the
-  // live environment DB setting even when running on the update env.
-  $site_settings = !empty($GLOBALS['gardens_site_settings']) ? $GLOBALS['gardens_site_settings'] : array('site' => '', 'env' => '');
-  $site = $site_settings['site'];
+  // This global variable is set during the 'configuration' (sites.php)
+  // bootstrap phase. Notes:
+  // - The 'env' value contains the 'canonical environment' which (unlike
+  //   $_ENV['AH_SITE_ENVIRONMENT']) stays the same during code deployments
+  //   where sites are moved between two environments.
+  // - post-settings-php hooks should use $GLOBALS['gardens_site_settings']
+  //   rather than the below 'local' variables which are in principle not
+  //   guaranteed to stay defined. (We still define $env / $role for some
+  //   existing customers' post-settings-php hooks that already use them.)
+  $site_settings = !empty($GLOBALS['gardens_site_settings']) ? $GLOBALS['gardens_site_settings'] : ['site' => '', 'env' => '', 'conf' => ['acsf_db_name' => '']];
   $env = $site_settings['env'];
+  $role = $site_settings['conf']['acsf_db_name'];
 
-  $settings_inc = "/var/www/site-php/{$site}.{$env}/D8-{$env}-{$role}-settings.inc";
-  if (file_exists($settings_inc)) {
-    include $settings_inc;
+  $_acsf_include_file = "/var/www/site-php/{$site_settings['site']}.{$site_settings['env']}/D8-{$site_settings['env']}-{$site_settings['conf']['acsf_db_name']}-settings.inc";
+  if (file_exists($_acsf_include_file)) {
+    include $_acsf_include_file;
     // Overwrite trusted_host_patterns setting, remove unnecessary hosts.
     // Allowed hosts for D8: https://www.drupal.org/node/2410395.
     // The overwrite doesn't cause any security problem because the valid hosts
     // were checked before in our sites.json registry.
-    $str = "^" . str_replace('.', '\.', $_SERVER['HTTP_HOST']);
-    $trusted_host = str_replace('*', '.+', $str) . "\$";
-    $settings['trusted_host_patterns'] = array($trusted_host);
+    $settings['trusted_host_patterns'] = [
+      '^' . str_replace('*', '.+',
+        str_replace('.', '\.', $_SERVER['HTTP_HOST'])
+      ) . '$',
+    ];
   }
   elseif (PHP_SAPI === 'cli') {
-    throw new Exception('No database connection file was found for DB {$role}.');
+    throw new Exception("No database connection file was found for DB {$site_settings['conf']['acsf_db_name']}.");
   }
   else {
-    syslog(LOG_ERR, 'GardensError: AN-22471 - No database connection file was found for DB {$role}.');
+    syslog(LOG_ERR, "GardensError: AN-22471 - No database connection file was found for DB {$site_settings['conf']['acsf_db_name']}.");
     header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service unavailable');
     print 'The website encountered an unexpected error. Please try again later.';
     exit;
@@ -121,6 +134,9 @@ if (file_exists('/var/www/site-php')) {
   // We can't use an external cache if we are trying to invoke these hooks.
   $config['page_cache_invoke_hooks'] = FALSE;
 
+  // This section has been ported from D7 to D8 by mistake; the 'memcache_*'
+  // settings are not supposed to be set and the $config changes aren't generic.
+  // todo: reevaluate and possibly remove this.
   if (!empty($site_settings['flags']['memcache_enabled']) && !empty($site_settings['memcache_inc'])) {
     $config['cache_backends'][] = $site_settings['memcache_inc'];
     $config['cache_default_class'] = 'MemCacheDrupal';
@@ -135,9 +151,8 @@ if (file_exists('/var/www/site-php')) {
   // site, unless the site is being installed via install.php and the user has
   // the correct token to access it.
   if (PHP_SAPI !== 'cli' && !empty($site_settings['flags']['access_restricted']['enabled'])) {
-    $token_match = !empty($site_settings['flags']['access_restricted']['token']) && !empty($_GET['site_install_token']) && $_GET['site_install_token'] == $site_settings['flags']['access_restricted']['token'];
-    $path_match = $_SERVER['SCRIPT_NAME'] == $GLOBALS['base_path'] . 'install.php';
-    if (!$token_match || !$path_match) {
+    $_tmp = !empty($site_settings['flags']['access_restricted']['token']) && !empty($_GET['site_install_token']) && $_GET['site_install_token'] === $site_settings['flags']['access_restricted']['token'];
+    if (!$_tmp || $_SERVER['SCRIPT_NAME'] !== $GLOBALS['base_path'] . 'install.php') {
       header($_SERVER['SERVER_PROTOCOL'] . ' 503 Service unavailable');
       if (!empty($site_settings['flags']['access_restricted']['reason'])) {
         print $site_settings['flags']['access_restricted']['reason'];
@@ -160,10 +175,10 @@ if (file_exists('/var/www/site-php')) {
     $settings['file_private_path'] = $site_settings['file_private_path'];
   }
 
-  if (!empty($site_settings['conf'])) {
-    foreach ((array) $site_settings['conf'] as $key => $value) {
-      $config[$key] = $value;
-    }
+  // Propagate all configuration values in ACSF per-site storage into Drupal's
+  // configuration.
+  if (!empty($site_settings['conf']) && is_array($site_settings['conf'])) {
+    $config = $site_settings['conf'] + $config;
   }
 }
 
@@ -199,13 +214,13 @@ if (isset($config_directories['vcs'])) {
   // @see https://github.com/drush-ops/drush/pull/1711
   if (class_exists('\Drush\Drush') && \Drush\Drush::hasContainer()) {
     try {
-      $executed_command = \Drush\Drush::input()->getArgument('command');
+      $_tmp = \Drush\Drush::input()->getArgument('command');
     }
     catch (InvalidArgumentException $e) {
-      $executed_command = FALSE;
+      $_tmp = FALSE;
     }
 
-    if ($executed_command === 'site-install') {
+    if ($_tmp === 'site-install') {
       unset($config_directories['vcs']);
     }
   }
@@ -213,7 +228,7 @@ if (isset($config_directories['vcs'])) {
 
 // Include custom settings.php code from factory-hooks/post-settings-php.
 if (function_exists('acsf_hooks_includes')) {
-  foreach (acsf_hooks_includes('post-settings-php') as $post_hook) {
-    include $post_hook;
+  foreach (acsf_hooks_includes('post-settings-php') as $_acsf_include_file) {
+    include $_acsf_include_file;
   }
 }

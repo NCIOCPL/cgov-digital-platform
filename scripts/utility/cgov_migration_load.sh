@@ -98,6 +98,10 @@ NCICONNECTOR)
     drush mim list_migration
     drush mim primaryfeaturecardrow_migration
     drush mim twoitemfeaturecardrow_migration
+<<<<<<< HEAD
+=======
+    drush mim guidecardrow_migration
+>>>>>>> ticket/1764-reorder
     drush mim minilanding_en_migration
     drush mim homelanding_en_migration
 

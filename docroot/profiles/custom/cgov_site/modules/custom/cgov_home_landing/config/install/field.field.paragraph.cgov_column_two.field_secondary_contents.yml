@@ -5,6 +5,7 @@ dependencies:
     - field.storage.paragraph.field_secondary_contents
     - paragraphs.paragraphs_type.cgov_card_raw_html
     - paragraphs.paragraphs_type.cgov_column_two
+    - paragraphs.paragraphs_type.cgov_content_block
     - paragraphs.paragraphs_type.cgov_dynamic_list
     - paragraphs.paragraphs_type.cgov_list
   module:
@@ -31,29 +32,32 @@ settings:
     target_bundles_drag_drop:
       cgov_card_raw_html:
         enabled: true
-        weight: -19
-      cgov_column_two:
-        weight: -18
-        enabled: false
-      body_section:
-        weight: -17
-        enabled: false
-      cgov_card_external:
+        weight: 4
+      cgov_column_one:
         weight: -16
         enabled: false
-      cgov_card_internal:
+      body_section:
         weight: -15
         enabled: false
-      cgov_column_one:
+      cgov_card_external:
         weight: -14
         enabled: false
-      cgov_primary_feature_row:
+      cgov_card_internal:
         weight: -13
         enabled: false
-      cgov_secondary_feature_row:
+      cgov_primary_feature_row:
         weight: -12
         enabled: false
-      cgov_list:
+      cgov_secondary_feature_row:
         weight: -11
         enabled: false
+      cgov_list:
+        weight: 2
+        enabled: true
+      cgov_dynamic_list:
+        weight: 3
+        enabled: true
+      cgov_content_block:
+        weight: 1
+        enabled: true
 field_type: entity_reference_revisions

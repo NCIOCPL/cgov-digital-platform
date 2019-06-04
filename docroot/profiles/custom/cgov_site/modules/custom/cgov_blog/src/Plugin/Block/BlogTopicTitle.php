@@ -69,7 +69,7 @@ class BlogTopicTitle extends BlockBase implements ContainerFactoryPluginInterfac
   public function build() {
     $topic_titles = $this->getTopicTitles();
     $build = [
-      '#topic_titles' => $topic_titles,
+      'topic_titles' => $topic_titles,
     ];
     return $build;
   }

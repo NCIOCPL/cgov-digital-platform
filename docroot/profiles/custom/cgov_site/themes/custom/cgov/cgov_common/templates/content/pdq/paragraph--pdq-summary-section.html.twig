@@ -1,4 +1,23 @@
-<section id="{{- content.field_pdq_section_id[0] -}}">
-    <h2>{{- content.field_pdq_section_title -}}</h2>
-    {{ content.field_pdq_section_html }}
-</section>
+
+{#
+/**
+ * @file
+ * Theme override for HHS Syndication of cancer.gov Articles.
+ *
+ * 1804: Separated markup for syndication because it is syndication
+ * output needs to be matched to previous templates 
+ * 
+ */
+#}
+
+{% if '/syndication' in path('<current>')|render|render %}
+    <h3>{{- content.field_pdq_section_title -}}</h3>
+    <div id="{{- content.field_pdq_section_id[0] -}}" class="pdq-sections">
+        {{ content.field_pdq_section_html }}
+    </div>
+{% else %}
+    <section id="{{- content.field_pdq_section_id[0] -}}">
+        <h2>{{- content.field_pdq_section_title -}}</h2>
+        {{ content.field_pdq_section_html }}
+    </section>
+{% endif %}

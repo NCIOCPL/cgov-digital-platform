@@ -1,5 +1,10 @@
 import $ from 'jquery';
 import { registerCustomEventListener } from 'Core/libraries/customEventHandler';
+import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
+import { AppMeasurementCustom } from 'Core/libraries/analytics/AppMeasurement.custom';
+
+// Make our 's' object accessible on the window.
+window.AppMeasurementCustom = AppMeasurementCustom;
 
 //utility functions
 // treeText
@@ -530,7 +535,7 @@ $(window).on('load',function(){
         NCIAnalytics.BlogSubscribeClick(this, pageName);
     });
 
-    $('.cgvblogpost #cgvBody').on("click", "a:not(.definition)",  function(){
+    $('#cgvBody.cgvblogpost').on("click", "a:not(.definition)",  function(){
         var $this = $(this);
         var linkText = $this.text();
         NCIAnalytics.BlogBodyLinkClick(this, linkText, pageName);
@@ -538,7 +543,7 @@ $(window).on('load',function(){
 
     $('#cgvBody').on("click", ".definition",  function(){
         var linkText = this.innerText;
-        var blogLink = $('body').hasClass('cgvblogpost') ? true : false;
+        var blogLink = $('#cgvBody').hasClass('cgvblogpost') ? true : false;
         NCIAnalytics.glossifiedTerm(this, linkText, blogLink);
     });
 

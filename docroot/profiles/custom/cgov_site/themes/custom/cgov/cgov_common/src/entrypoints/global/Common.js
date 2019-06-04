@@ -13,8 +13,7 @@ import 'core-js/fn/string/starts-with';
 import initializeCustomEventHandler from 'Core/libraries/customEventHandler';
 initializeCustomEventHandler();
 
-// Disabled until NCIAnalytics is available.
-// import 'Libraries/analytics/analytics';
+import 'Libraries/analytics/analytics';
 import './Common.scss';
 
 import $ from 'jquery';

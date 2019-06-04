@@ -160,6 +160,10 @@
     &:last-child {
       margin-bottom: 1.25em;
     }
+
+    &.arrow-link {
+      min-height: 24px;
+    }
   }
 }
 
@@ -263,8 +267,13 @@
   br {
     display: none;
   }
-  a.arrow-link {
-    margin-top: 19px;
+
+  a{
+    &:not(.cthp-mm-text-area){
+    &.arrow-link {
+        margin-top: 19px;
+      }
+    }
   }
 }
 

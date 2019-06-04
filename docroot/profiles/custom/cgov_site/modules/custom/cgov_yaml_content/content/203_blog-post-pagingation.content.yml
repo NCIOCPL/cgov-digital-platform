@@ -119,19 +119,6 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
-  field_blog_topics:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Biology'
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Clinical Trial Results'
   field_browser_title:
     value: "Nature’s Bounty: Revitalizing the Discovery of New Cancer Drugs from Natural Products"
   body:
@@ -260,6 +247,25 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Cat-Cat'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Biology'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Treatment'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -756,13 +762,6 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
-  field_blog_topics:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Cancer Susceptibilities'
   field_browser_title:
     value: "Targeted Therapy–Immunotherapy Combinations Effective for Advanced Kidney Cancer"
   body:
@@ -1126,6 +1125,13 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Snuggles'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Technology'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -1178,6 +1184,13 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Minnie'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Prevention'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -1450,25 +1463,6 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
-  field_blog_topics:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Cancer Susceptibilities'
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Clinical Trial Results'
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Global Health'
   field_browser_title:
     value: 'Studying “Total Diet” and Its Impact on Health, Including Cancer Risk'
   field_author:
@@ -1513,6 +1507,19 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Cat-Cat'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Global Health'
 
 - entity: "node"
   type: "cgov_blog_post"
@@ -1580,19 +1587,6 @@
           - 'node'
           - type: 'cgov_blog_series'
             title: 'Cancer Currents Blog'
-  field_blog_topics:
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Cancer Susceptibilities'
-    - '#process':
-        callback: 'reference'
-        args:
-          - 'taxonomy_term'
-          - vid: 'cgov_blog_topics'
-            name: 'Clinical Trial Results'
   field_browser_title:
     value: Researchers Discover Potential Way to Hit Elusive Target in Pancreatic Cancer'
   body:
@@ -1678,3 +1672,10 @@
                     name: 'Find a Clinical Trial'
           field_featured_url:
             - uri: 'https://pubs.cancer.gov'
+  field_blog_topics:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_blog_topics'
+            name: 'Clinical Trial Results'

@@ -1,5 +1,5 @@
-{% if content['#topic_intros']|length > 0 %}
-  {% for title, desc in content['#topic_intros'] %}
+{% if content.topic_intros|length > 0 %}
+  {% for title, desc in content.topic_intros %}
     {% if title == label and desc|length > 0 %}
       <div class="blog-intro-text">
         {{desc|raw}}

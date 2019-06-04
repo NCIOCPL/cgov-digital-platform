@@ -1,7 +1,7 @@
 {% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
-{% set archive_data = content['#archive_data'] %}
-{% set archive_path = content['#archive_path'] %}
-{% set granularity = content['#archive_granularity'] %}
+{% set archive_data = content.archive_data %}
+{% set archive_path = content.archive_path %}
+{% set granularity = content.archive_granularity %}
 
 {% if (archive_data is defined) and (archive_path is defined) %}
   <div class="slot-item">
