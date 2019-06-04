@@ -1,3 +1,8 @@
 <div class="row paragraph-col-one">
-  <div class="large-12 columns">{{ content }}</div>
+  <div class="large-12 columns">
+    {% if content.field_container_heading|field_value %}
+      <h3>{{ content.field_container_heading }}</h3>
+    {% endif %}
+    {{ content.field_main_contents }}
+  </div>
 </div>
