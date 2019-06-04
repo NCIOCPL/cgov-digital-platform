@@ -5,11 +5,9 @@
 {# Title Row #}
 <div class="row">
   {% if is_front == FALSE %}
-    <!-- PAGE TITLE -->
     <div class="large-7 columns">
       <h1>{{ node.label }}</h1>
     </div>
-    <!-- END PAGE TITLE -->
   {% endif %}
 
   {{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
