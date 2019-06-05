@@ -69,7 +69,24 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       new \Twig_SimpleFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
+      new \Twig_SimpleFunction('strip_duplicate_leading_credit', [$this, 'stripDuplicateLeadingCredit'], ['is_safe' => ['html']]),
     ];
+  }
+
+  /**
+   * Strip migrated content of duplicate credit label.
+   *
+   * @param array $field_array
+   *   The unstripped string.
+   *
+   * @return array
+   *   The stripped string.
+   */
+  public function stripDuplicateLeadingCredit(array $field_array) {
+    $unsanitized_credit_string = $field_array[0]['#context']['value'];
+    $sanitized_credit_string = preg_replace('/^(Credit\:?\s?|Crédito\:?\s?)/i', '', $unsanitized_credit_string);
+    $field_array[0]['#context']['value'] = $sanitized_credit_string;
+    return $field_array;
   }
 
   /**
