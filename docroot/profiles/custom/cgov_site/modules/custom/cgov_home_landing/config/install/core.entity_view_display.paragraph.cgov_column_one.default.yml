@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.cgov_column_one.field_container_heading
     - field.field.paragraph.cgov_column_one.field_main_contents
     - paragraphs.paragraphs_type.cgov_column_one
   module:
@@ -11,6 +12,14 @@ targetEntityType: paragraph
 bundle: cgov_column_one
 mode: default
 content:
+  field_container_heading:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_main_contents:
     type: entity_reference_revisions_entity_view
     weight: 0
