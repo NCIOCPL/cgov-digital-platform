@@ -27,30 +27,35 @@ class ReplaceLinks extends CgovPluginBase {
     if (!isset($value)) {
       return NULL;
     }
-    //
-    //    $doc = $this->doc;
-    //
-    //    $pid = $this->getPercID($row);
-    //
-    //    $doc->html($value);
-    //    $allTags = $doc->getElementsByTagName('a');
-    //    for ($i = $allTags->length - 1; $i >= 0; $i--) {
-    //    $hrefID = NULL;
-    //    $anchor = $allTags->item($i);
-    //    if ($anchor instanceof DOMElement) {
-    //    $hrefID = $anchor->getAttribute('sys_contentid');
-    //    $content = $anchor->html();
-    //    if (!empty($hrefID)) {
-    //    TODO: If HREF ID is in non migrated microsite ID.
-    //    $replacementElement = $doc->createElement('a', $content);
-    //    $replacementElement->setAttribute('href', '/node/' . $hrefID);
-    //    $anchor->parentNode->replaceChild($replacementElement, $anchor);
-    //    $this->migLog->logMessage($pid, 'Link created to perc ID: '
-    //    . $hrefID, E_NOTICE, 'LINK REPLACEMENT');
-    //    }
-    //    }
-    //    }
-    //    $value = $doc->find('body')->html();
+
+    // Setup the document.
+    $doc = $this->doc;
+    $pid = $this->getPercID($row);
+    $doc->html($value);
+
+    // Loop through the anchor elements and search for ones with dependent ID's.
+    // Replace those anchors with the equivalent drupal '/node/id' URL.
+    $anchors = $doc->getElementsByTagName('a');
+    foreach ($anchors as $anchor) {
+
+      $hrefID = $anchor->getAttribute('sys_dependentid');
+      $content = $anchor->nodeValue;
+      if (!empty($hrefID)) {
+
+        $replacementElement = $doc->createElement('a', $content);
+        $replacementElement->setAttribute('href', '/node/' . $hrefID);
+        $anchor->parentNode->replaceChild($replacementElement, $anchor);
+        $this->migLog->logMessage($pid, 'Link created to perc ID: '
+              . $hrefID, E_NOTICE, 'LINK REPLACEMENT');
+      }
+    }
+    // Returned the processed document value.
+    $body = $doc->find('body');
+    $size = $body->count();
+    if ($size > 0) {
+      $value = $body->html();
+    }
+
     return $value;
   }
 

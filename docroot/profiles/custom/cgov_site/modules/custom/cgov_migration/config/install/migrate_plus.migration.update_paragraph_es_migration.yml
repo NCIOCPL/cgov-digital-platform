@@ -36,12 +36,12 @@ source:
 process:
  field_body_section_content/value:
    -
-    plugin: generate_placeholders
-    source: field_body_section_content
+     plugin: remove_rx_wrapper
+     source: field_body_section_content
    -
-    plugin: replace_embeds
+     plugin: replace_embeds
    -
-    plugin: replace_embeds
+     plugin: replace_links
  field_body_section_content/format:
    plugin: default_value
    default_value: full_html

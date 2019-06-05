@@ -205,11 +205,11 @@ process:
   body/value:
     -
       plugin: remove_rx_wrapper
-      source: body
-    -
-      plugin: generate_placeholders
+      source: field_body_section_content
     -
       plugin: replace_embeds
+    -
+      plugin: replace_links
   body/format:
    plugin: default_value
    default_value: full_html
