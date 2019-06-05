@@ -36,21 +36,23 @@
   {% if address_line1 %}
     {{ address_line1 }} <br>
   {% endif %}
+
   {% if address_line2 %}
     {{ address_line2 }} <br>
   {% endif %}
+
   {% if locality or postal_code or administrative_area.code %}
     {% if locality %}
-    {{ locality|trim }}
-    {% endif %}
-    {% if locality and administrative_area.code %}
-    ,
-    {% endif %}
+      {{ locality|trim -}}
+      {%- if administrative_area.code %}, {% endif %}
+    {%- endif -%}
+
     {% if administrative_area.code %}
-    {{ administrative_area.code }}
+      {{ administrative_area.name }}
     {% endif %}
+
     {% if postal_code %}
-    {{ postal_code }}
+      {{ postal_code }}
     {% endif %}
   {% endif %}
 </p>
