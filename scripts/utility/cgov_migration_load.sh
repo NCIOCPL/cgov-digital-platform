@@ -48,6 +48,21 @@ CGOV)
     drush mim homelanding_en_migration && drush mim homelanding_es_migration
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
+
+    # Migration Updates
+    drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
+    drush mim update_pressrelease_en_migration && drush mim update_paragraph_es_migration
+    drush mim update infographic_en_migration && drush mim update infographic_en_migration
+    drush mim update event_migration
+    drush mim update cthpcontentblock_migration
+    drush mim update_cthp_blockcontentcard_migration
+    drush mim update_contentblock_migration
+    drush mim update_citation_migration
+    drush mim update_cancercentertype_migration
+    drush mim update_cancercenter_migration
+    drush mim update_blogpost_en_migration && drush mim update_blogpost_es_migration
+
+
   ;;
 DCEG)
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
