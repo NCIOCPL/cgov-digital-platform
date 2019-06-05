@@ -4,9 +4,6 @@
 	margin-bottom: 10px;
 }
 
-.subscribeRSS a.blogRSS:before {
-}
-
 .subscribeRSS a.blogRSS span {
 	// padding-left: 5px;
 	display: inline-block;
@@ -280,10 +277,17 @@ p.blog-post-publishing-info {
 }
 
 @include bp(medium) {
-	#nvcgSlListBlogRTRail > div {
-		float: left; width: 30%; margin: 10px;
+	#nvcgSlListBlogRTRail {
+		.block-region-second {
+			> .slot-item {
+				float: left; 
+				width: 30%; 
+				margin: 10px;
+			}
+		}
 	}
 }
+
 .current-archive-link{
 	color: #2e2e2e !important;
 	border-left: 3px solid #82368d;
