@@ -29,19 +29,22 @@
               {%- endif -%}
             </p>
           {%- endif -%}
+          
           {% if content.field_address[0] %}
             {{ content.field_address }}
           {% endif %}
-          {% if content.field_phone_label_1[0] and content.field_phone_number_1[0] %}
-            <p>
-              {{- content.field_phone_label_1|field_value -}}: <a href="tel:{{- content.field_phone_number_1|field_value -}}" rel="nofollow">{{ content.field_phone_number_1 }}</a>
-            </p>
+
+          {% if content.field_phone_number_1[0] or content.field_phone_number_2[0]%}
+          <p>
+            {% if content.field_phone_label_1[0] and content.field_phone_number_1[0] %}
+                {{- content.field_phone_label_1|field_value -}}: <a href="tel:{{- content.field_phone_number_1|field_value -}}" rel="nofollow">{{ content.field_phone_number_1 }}</a><br />
+            {% endif %}
+            {% if content.field_phone_label_2[0] and content.field_phone_number_2[0] %}
+                {{ content.field_phone_label_2|field_value -}}: <a href="tel:{{- content.field_phone_number_2|field_value -}}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
+            {% endif %}
+          </p>
           {% endif %}
-          {% if content.field_phone_label_2[0] and content.field_phone_number_2[0] %}
-            <p>
-              {{- content.field_phone_label_2|field_value -}}: <a href="tel:{{- content.field_phone_number_2|field_value -}}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
-            </p>
-          {% endif %}
+
           {% if content.field_website_title[0] and content.field_website_url[0] %}
             <p>
               <a href="{{- content.field_website_url|field_value -}}">{{ content.field_website_title }}</a>
