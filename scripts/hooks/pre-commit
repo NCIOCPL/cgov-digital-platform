@@ -5,7 +5,7 @@ PASSED=1
 if [ "$STAGED" != "" ]
 then
     echo "Checking compliance with Drupal coding standards ..."
-    ./vendor/bin/phpcs $STAGED
+    ./vendor/bin/blt tests:phpcs:sniff:files "$STAGED"
     if [ $? != 0 ]
     then
         PASSED=0

@@ -88,13 +88,12 @@ class CgovMigrationStreamWrapper extends LocalStream {
     $module_handler = \Drupal::service('module_handler');
     $modulePath = $module_handler->getModuleDirectories()['cgov_migration'];
 
-    if ($_ENV['MIGRATION'] == NULL) {
+    $siteDirectory = getenv('MIGRATION');
+    if ($siteDirectory == NULL) {
       $siteDirectory = 'CGOV';
     }
-    else {
-      $siteDirectory = trim($_ENV['MIGRATION']);
-    }
 
+    $siteDirectory = trim($siteDirectory);
     $path = rtrim($modulePath, '/') . '/migrations/' . $siteDirectory;
     return $path;
   }
