@@ -1,4 +1,5 @@
 import $ from 'jquery';
+const CDEConfig = window.CDEConfig || {};
 /*** BEGIN Exit Disclaimer
  * This script looks for URLs where the href points to websites
  * not in the federal domain (.gov) and if it finds one, it appends
@@ -7,20 +8,10 @@ import $ from 'jquery';
  * Changed code to exclude the exit icon from images within the anchor tag.
  ***/
 function _initialize() {
-	var lang = $('html').attr('lang') || 'en',
-		path,
-		altText;
+  const lang = $('html').attr('lang') || 'en';
+  const path = CDEConfig.exitDisclaimerHref && CDEConfig.exitDisclaimerHref[lang];
+  const altText = lang === 'es' ? 'Notificaci\u00F3n de salida' : 'Exit Disclaimer';
 
-	switch (lang) {
-	case 'es':
-		path = $('meta[name="espanol-linking-policy"]').prop('content');
-		altText = 'Notificaci\u00F3n de salida';
-		break;
-	default:
-		path = $('meta[name="english-linking-policy"]').prop('content');
-		altText = 'Exit Disclaimer';
-		break;
-	}
 	// Looks for all non .gov links (that do not include an image immediately inside the anchor tag) and adds external link href aftr the link.
 	$("a[href]:not(:has(>img))").filter(function () {
     return /^https?\:\/\/([a-zA-Z0-9\-]+\.)+/i.test(this.href)

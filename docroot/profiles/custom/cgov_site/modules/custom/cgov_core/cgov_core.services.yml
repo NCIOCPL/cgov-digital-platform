@@ -27,3 +27,8 @@ services:
     arguments: ['@current_user', '@current_route_match', '@language_manager']
     tags:
       - { name: event_subscriber }
+  cgov_core.url_path_processor:
+    class: Drupal\cgov_core\Plugin\PathProcessor\UrlProcessor
+    arguments: ['@path.alias_manager', '@language_manager', '@service_container']
+    tags:
+      - { name: path_processor_outbound, priority: 600 }

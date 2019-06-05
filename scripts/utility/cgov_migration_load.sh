@@ -96,9 +96,9 @@ NCICONNECTOR)
     drush mim contentblock_migration
     drush mim promocard_migration
     drush mim list_migration
-    drush mim guidecardrow_migration
     drush mim primaryfeaturecardrow_migration
     drush mim twoitemfeaturecardrow_migration
+    drush mim guidecardrow_migration
     drush mim minilanding_en_migration
     drush mim homelanding_en_migration
 
