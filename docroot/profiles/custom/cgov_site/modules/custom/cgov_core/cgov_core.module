@@ -117,7 +117,7 @@ EOMarkup;
       $block_translated = $block->addTranslation($langcode, [
         'id' => "public_use__$langcode",
         'info' => $title,
-        'body' => ['value' => $public_use[$langcode], 'format' => 'streamlined'],
+        'body' => ['value' => $public_use[$langcode], 'format' => 'full_html'],
       ]);
       $block_translated->save();
       drupal_set_message("Added Public Use block_content: $title");
