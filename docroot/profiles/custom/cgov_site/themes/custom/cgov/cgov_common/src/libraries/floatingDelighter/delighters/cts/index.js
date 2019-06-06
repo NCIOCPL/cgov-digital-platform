@@ -1,4 +1,4 @@
-import './index.scss';
+import '../../cts.scss';
 
 export const cts = {
     href: '/about-cancer/treatment/clinical-trials/search',
