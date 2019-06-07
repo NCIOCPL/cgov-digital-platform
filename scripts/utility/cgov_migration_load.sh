@@ -56,7 +56,7 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim update_infographic_en_migration && drush mim update_infographic_en_migration
     drush mim update_event_migration
     drush mim update_cthpcontentblock_migration
-    drush mim update_cthp_blockcontentcard_migration
+
     drush mim update_contentblock_migration
     drush mim update_citation_migration
     drush mim update_cancercenter_migration
