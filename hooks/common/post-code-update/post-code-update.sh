@@ -30,26 +30,26 @@ cd $repo_root
 users_file="$HOME/cgov-drupal-users.yml"
 
 ## Perform a fresh install
-blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction
-blt cgov:user:load-all -D cgov.drupal_users_file=$users_file
-blt cgov:locales:translate
+blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
+blt cgov:user:load-all -D cgov.drupal_users_file=$users_file -D drush.ansi=false
+blt cgov:locales:translate -D drush.ansi=false
 cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
 
 case $MIGRATION in
 CGOV)
-  blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
+  blt cgov:install:site-sections --no-interaction -D drush.ansi=false  # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 DCEG)
-  blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
+  blt cgov:install:site-sections --no-interaction -D drush.ansi=false  # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 NANO)
-  blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
+  blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 MYPART)
-  blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
+  blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 NCICONNECT)
