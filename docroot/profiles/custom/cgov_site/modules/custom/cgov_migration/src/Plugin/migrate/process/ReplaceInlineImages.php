@@ -6,13 +6,13 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 
 /**
- * Replace percussion inline variants with Drupal embeds..
+ * Replace inline images..
  *
  * @MigrateProcessPlugin(
- *   id = "replace_embeds"
+ *   id = "replace_inline_images"
  * )
  */
-class ReplaceEmbeds extends CgovPluginBase {
+class ReplaceInlineImages extends CgovPluginBase {
 
   protected $migLog;
   protected $doc;
@@ -31,7 +31,7 @@ class ReplaceEmbeds extends CgovPluginBase {
     $pid = $this->getPercID($row);
 
     $doc->html($value);
-    $allDivs = $doc->getElementsByTagName('placeholder');
+    $allDivs = $doc->getElementsByTagName('img');
     for ($i = $allDivs->length - 1; $i >= 0; $i--) {
       $divNode = $allDivs->item($i);
       $sys_dependentvariantid = $divNode->getAttr('sys_dependentvariantid');
@@ -46,12 +46,12 @@ class ReplaceEmbeds extends CgovPluginBase {
         if (!empty($embedAttributes)) {
           $replacementEmbed = $this->createEmbedText($sys_dependentid, $embedAttributes);
           $divNode->parentNode->replaceChild($replacementEmbed, $divNode);
-          $this->migLog->logMessage($pid, 'Embed replaced for perc ID: ' . $sys_dependentid, E_NOTICE, $sys_dependentvariantid);
+          $this->migLog->logMessage($pid, 'INLINE IMAGE replaced for perc ID: ' . $sys_dependentid, E_NOTICE, $sys_dependentvariantid);
         }
         else {
           // Put a error placeholder.
           $this->migLog->logMessage($pid, 'No embed mapping found for:' . $sys_dependentvariantid . ' on PID ' . $pid, E_ERROR, $sys_dependentvariantid);
-          $replacementEmbed = $this->doc->createElement('drupal-entity', 'ERROR REPLACING ENTITY: ' . $sys_dependentid . ' With variant: ' . $sys_dependentvariantid);
+          $replacementEmbed = $this->doc->createElement('drupal-entity', 'ERROR REPLACING INLINE IMAGE: ' . $sys_dependentid . ' With variant: ' . $sys_dependentvariantid);
           $divNode->parentNode->replaceChild($replacementEmbed, $divNode);
 
         }
@@ -63,7 +63,6 @@ class ReplaceEmbeds extends CgovPluginBase {
     if ($size > 0) {
       $value = $body->html();
     }
-
     return $value;
   }
 
@@ -77,7 +76,6 @@ class ReplaceEmbeds extends CgovPluginBase {
 
     $entity_storage = \Drupal::entityTypeManager()->getStorage($values['data_entity_type']);
     $entity = $entity_storage->load($entity_id);
-
     $element = $this->doc->createElement('drupal-entity');
     if (!empty($entity)) {
       $view_mode = !empty($values['view_mode']) ? $values['view_mode'] : NULL;

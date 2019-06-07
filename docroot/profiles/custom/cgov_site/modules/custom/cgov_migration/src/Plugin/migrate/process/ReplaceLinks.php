@@ -38,9 +38,10 @@ class ReplaceLinks extends CgovPluginBase {
     foreach ($anchors as $anchor) {
 
       $sys_dependentid = $anchor->getAttribute('sys_dependentid');
+      $classes = $anchor->getAttribute('class');
       $content = $anchor->nodeValue;
       if (!empty($sys_dependentid)) {
-        $replacementElement = $this->createLinkitEmbed($sys_dependentid, $content);
+        $replacementElement = $this->createLinkitEmbed($sys_dependentid, $content, $classes);
 
         $anchor->parentNode->replaceChild($replacementElement, $anchor);
         $this->migLog->logMessage($pid, 'Link created to perc ID: '
@@ -63,7 +64,7 @@ class ReplaceLinks extends CgovPluginBase {
    * @return string
    *   Returns the linkit embed for this node.
    */
-  public function createLinkitEmbed($entity_id, $content) {
+  public function createLinkitEmbed($entity_id, $content, $classes) {
     $entity_type = 'node';
     $entity_storage = \Drupal::entityTypeManager()->getStorage('node');
     $entity = $entity_storage->load($entity_id);
@@ -77,6 +78,10 @@ class ReplaceLinks extends CgovPluginBase {
         'href' => '/node/' . $entity_id,
         'data-entity-uuid' => $entity->get('uuid')->value,
       ];
+
+      if (!empty($classes)) {
+        $attributes['class'] = $classes;
+      }
 
       foreach ($attributes as $key => $value) {
         $element->setAttribute($key, $value);
