@@ -185,6 +185,12 @@
             "ignore-duplicates": true
         },
         "patches": {
+            "acquia/blt": {
+                "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
+            },
+            "drupal/address": {
+                "2856797: Missing theme suggestions for address_plain": "https://www.drupal.org/files/issues/2018-04-10/address-missing_theme_suggestions_for_address_plain-2856797-10.patch"
+            },
             "drupal/core": {
                 "2952990 : Missing schema for display_options.defaults.sitename_title": "https://www.drupal.org/files/issues/2018-03-14/views-schema-2952990-2.patch",
                 "3029219 : State transition validation ignores language when determining \"first time moderation\"": "https://www.drupal.org/files/issues/2019-03-24/3029219-8.patch",
@@ -195,24 +201,21 @@
             "drupal/ctools": {
                 "2785499 : Entity Bundle Condition Plugin does not work in all situations": "https://www.drupal.org/files/issues/2019-03-01/ctools_fix_condition_plugin_entity_bundle-2785499-12.patch"
             },
+            "drupal/features": {
+                "2834130 : Updates Features Diff to Include Alters" : "https://www.drupal.org/files/issues/2019-06-09/features-detect-overrides-update-2834130-4-D8.patch"
+            },
             "drupal/page_manager": {
                 "2820218 : Page manager does not respect existing route defaults for title callbacks": "https://www.drupal.org/files/issues/2018-03-21/2820218-50.patch",
                 "2876880 : page_variant entity type does not exist when installing or enabling": "https://www.drupal.org/files/issues/2876880-page-varient-cache-2.patch"
             },
-            "acquia/blt": {
-                "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
-            },
             "drupal/pathauto": {
                 "3003373 : Wrong verbose messenger method": "https://www.drupal.org/files/issues/2018-09-30/3003373-2.patch"
             },
-            "drupal/address": {
-                "2856797: Missing theme suggestions for address_plain": "https://www.drupal.org/files/issues/2018-04-10/address-missing_theme_suggestions_for_address_plain-2856797-10.patch"
+            "drupal/simplesamlphp_auth": {
+                "2907182: Admin UI Pages not Accessible via Permission": "https://www.drupal.org/files/issues/simplesamlphp_auth-admin_ui_pages-2907182-30.patch"
             },
             "drupal/token_filter": {
                 "3036541: Missing token_filter schema file": "https://www.drupal.org/files/issues/2019-03-04/3036541-2-token_filter_schema.patch"
-            },
-            "drupal/simplesamlphp_auth": {
-                "2907182: Admin UI Pages not Accessible via Permission": "https://www.drupal.org/files/issues/simplesamlphp_auth-admin_ui_pages-2907182-30.patch"
             }
         },
         "drupal-scaffold": {
