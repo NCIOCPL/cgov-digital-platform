@@ -657,10 +657,23 @@ h6 {
   vertical-align: middle;
 }
 
-.cgh-staff figure.centered-set {
-  margin: 0;
-  text-align: left;
+// 1904: we now have embedded entities wrapping the figure that should be targeted
+// TODO: fix the content to be align-left instead of this hack for ceter aligned to appear on the left
+.cgh-staff {
+  .embedded-entity {
+    &.align-center {
+      margin: 0;
+      text-align: left;
+    }
+  }
+
+  // TODO: leaving this in JIC.  REMOVE ME when content is fixed up
+  figure.centered-set {
+    margin: 0;
+    text-align: left;
+  }
 }
+
 /* Begin Body by Location top Navigation */
 .body-location-content-nav {
   width: 100%;
