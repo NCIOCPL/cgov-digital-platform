@@ -25,6 +25,13 @@ source:
          label: langcode
          selector: langcode
 
+
+        -
+         name: description
+         label: description
+         selector: description
+
+
         -
          name: field_owner_blog
          label: field_owner_blog
@@ -45,6 +52,10 @@ process:
   name: name
   langcode: langcode
   field_pretty_url: field_pretty_url
+  description/value: description
+  description/format:
+    plugin: default_value
+    default_value: simple
 
   field_owner_blog:
     plugin: migration_lookup
