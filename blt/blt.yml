@@ -17,8 +17,6 @@ git:
 deploy:
   tag_source: true
   exclude_file: '${repo.root}/scripts/blt/deploy/deploy-exclude.txt'
-cm:
-  strategy: core-only
 drush:
   aliases:
     remote: '${project.machine_name}.test'
@@ -35,25 +33,30 @@ modules:
   dev:
     enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
     uninstall: [cgov_caching_nocdn]
+  test:
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
+    uninstall: [devel, views_ui]
+  prod:
+    enable: [acquia_connector, shield]
+    uninstall: [devel, views_ui]
   01dev:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
     uninstall: [cgov_caching_nocdn]
   int:
     enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
     uninstall: {  }
-  test:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
-    uninstall: [devel, views_ui]
   01test:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
     uninstall: [cgov_caching_nocdn]
-  prod:
-    enable: [acquia_connector, shield]
-    uninstall: [devel, views_ui]
   01live:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
     uninstall: [cgov_caching_nocdn]
-
+cm:
+  strategy: features
+  allow-overrides: true
+  features:
+    allow-overrides: false
+    bundle: [default]
 phpunit:
   -
     config: '${repo.root}/phpunit.xml'
@@ -93,6 +96,5 @@ command-hooks:
     dir: '${docroot}'
     command: null
 simplesamlphp: true
-## Cancer.gov Specific Settings
 cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
