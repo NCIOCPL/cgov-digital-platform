@@ -52,7 +52,7 @@ MYPART)
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
-NCICONNECTOR)
+NCICONNECT)
   blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;

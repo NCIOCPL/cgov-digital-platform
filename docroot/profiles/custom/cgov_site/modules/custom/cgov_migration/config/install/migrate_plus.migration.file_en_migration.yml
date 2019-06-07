@@ -13,7 +13,7 @@ source:
         -
          name: title
          label: title
-         selector: title
+         selector: '@title'
 
         -
          name: langcode
@@ -113,7 +113,7 @@ source:
 
 process:
   mid: id
-  name: title
+
   langcode: langcode
 
   uid:
@@ -134,6 +134,9 @@ process:
     skip_on_missing_source: true
     skip_on_error: true
 
+
+
+  name: title
 
   field_short_title: field_short_title
   field_browser_title: field_browser_title
