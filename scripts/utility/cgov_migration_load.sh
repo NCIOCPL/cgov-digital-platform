@@ -63,6 +63,8 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim update_blogpost_en_migration && drush mim update_blogpost_es_migration
 
 
+    drush ms --format=csv
+
   ;;
 DCEG)
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
@@ -74,6 +76,7 @@ DCEG)
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
 
+    drush ms --format=csv
   ;;
 *)
   echo 'MIGRATION NOT SET'
