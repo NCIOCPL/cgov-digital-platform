@@ -30,12 +30,7 @@ source:
 
 process:
   id: id
-  field_raw_html/value:
-    -
-      plugin: remove_rx_wrapper
-      source: field_html_content
-    -
-      plugin: generate_placeholders
+  field_raw_html/value: field_html_content
   field_raw_html/format:
    plugin: default_value
    default_value: raw_html
