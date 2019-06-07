@@ -13,8 +13,6 @@ use Drupal\migrate\Row;
  * )
  */
 class GeneratePlaceholders extends CgovPluginBase {
-
-
   protected $migLog;
   protected $doc;
 
@@ -33,18 +31,32 @@ class GeneratePlaceholders extends CgovPluginBase {
     $pid = $this->getPercID($row);
 
     $doc->html($value);
+
+    // Generate EMBED Placeholders.
     $allDivs = $doc->getElementsByTagName('div');
     for ($i = $allDivs->length - 1; $i >= 0; $i--) {
       $divNode = $allDivs->item($i);
 
-      $src = $divNode->getAttr('sys_relationshipid');
-      if (!empty($src)) {
-        $replacementDiv = $doc->createElement('div', 'CONTENT HERE - ' . $src);
+      $sys_relationshipid = $divNode->getAttr('sys_relationshipid');
+      if (!empty($sys_relationshipid)) {
+
+        // The variant ID.
+        $sys_dependentvariantid = $divNode->getAttr('sys_dependentvariantid');
+
+        // The embedded items ID.
+        $sys_dependentid = $divNode->getAttr('sys_dependentid');
+
+        $replacementDiv = $doc->createElement('placeholder', 'EMBEDDED PLACEHOLDER  - ' . $sys_dependentid);
+        $replacementDiv->setAttribute('sys_dependentid', $sys_dependentid);
+        $replacementDiv->setAttribute('sys_dependentvariantid', $sys_dependentvariantid);
+
         $divNode->parentNode->replaceChild($replacementDiv, $divNode);
-        $this->migLog->logMessage($pid, 'Placeholder created for perc ID: ' . $src, E_NOTICE, 'PLACEHOLDER');
+        $this->migLog->logMessage($pid, 'Placeholder created for perc ID: ' . $sys_dependentid, E_NOTICE, 'EMBEDDED PLACEHOLDER');
       }
     }
 
+    // Generate LINK Placeholders
+    // Generate INLINE IMAGE Placeholders.
     $body = $doc->find('body');
     $size = $body->count();
     if ($size > 0) {

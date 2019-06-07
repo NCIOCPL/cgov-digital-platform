@@ -1,0 +1,64 @@
+id: update_contentblock_migration
+label: 'Custom content blcok migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://contentblock.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+
+        -
+         name: field_html_content
+         label: field_html_content
+         selector: body
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+
+        -
+         name: long_title
+         label: long_title
+         selector: '@long_title'
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+  field_html_content/value:
+    -
+      plugin: generate_placeholders
+      source: field_html_content
+    -
+      plugin: replace_embeds
+    -
+      plugin: replace_links
+    -
+      plugin: replace_inline_images
+    -
+      plugin: remove_rx_wrapper
+  field_html_content/format:
+   plugin: default_value
+   default_value: full_html
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_content_block
+migration_dependencies: {  }

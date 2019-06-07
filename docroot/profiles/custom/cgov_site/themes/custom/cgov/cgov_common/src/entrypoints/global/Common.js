@@ -50,6 +50,7 @@ import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
 import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
 import glossaryPopups from 'Libraries/popups/glossaryPopups';
 import imageCarousel from 'Core/libraries/imageCarousel/image-carousel';
+import floatingDelighter from 'Libraries/floatingDelighter';
 
 DeepLinkPatch();
 
@@ -156,6 +157,8 @@ const onDOMContentLoaded = () => {
   glossaryPopups();
 
   imageCarousel();
+
+  floatingDelighter();
 
 };
 

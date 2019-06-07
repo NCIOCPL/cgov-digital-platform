@@ -1,0 +1,58 @@
+id: update_citation_migration
+label: 'Custom citation migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://citation.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: citation_id
+         label: citation_id
+         selector: '@citation_id'
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+        -
+         name: field_citation_content
+         label: field_citation_content
+         selector: '.'
+
+        -
+         name: field_pubmed_id
+         label: field_pubmed_id
+         selector: '@field_pubmed_id'
+  ids:
+    citation_id:
+      type: integer
+
+
+process:
+ field_citation_content/value:
+   -
+     plugin: generate_placeholders
+     source: field_citation_content
+   -
+     plugin: replace_embeds
+   -
+     plugin: replace_links
+   -
+     plugin: replace_inline_images
+   -
+     plugin: remove_rx_wrapper
+ field_citation_content/format:
+    plugin: default_value
+    default_value: full_html
+
+ id: citation_id
+ langcode: langcode
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_citation
+migration_dependencies: {  }

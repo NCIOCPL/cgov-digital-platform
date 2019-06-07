@@ -11,10 +11,14 @@
 @import "~Core/styles/cards";
 
 /********************* BEGIN Home Page Styles ******************************************/
+h1 {
+  margin-top: .58em;
+}
+
 // overriding default spacing for p tags for the home/landing pages
 // The top margin for the p-tag causes extra spacing above the carousel
 // and has been excluded from this rule (VE, WCMSFEQ-390)
-h1, p:not(.site-name):not(.site-link) {
+p:not(.site-name):not(.site-link) {
   margin: 0.5em 0;
 }
 
@@ -677,19 +681,6 @@ parent accordion in all breakpoints. */
       }
     }
   }
-}
-
-/* Ticket-#1538 Page options are not right aligned at tablet breakpoint and no margin \
-*  on the left of page options at mobile breakpoint
-*   TODO: In the case of the spanish HOME PAGE, the page options should be floated left
-*/
-@include bp(medium) {
-  #PageOptionsControl1 {
-    ul {
-      float: right;
-    }
-  }
-
 }
 
 /********************* END Home Page Styles ******************************************/

@@ -10,7 +10,7 @@ let isInitialized = false;
 /**
  * Add a floating delighter anchor element to the DOM in the event that the current path matches
  * a rule specifying a specific delighter element.
- * 
+ *
  * @param {String} [containerSelector = '.page-options-container'] Valid DOM selector.
  */
 const init = (containerSelector = '.page-options-container') => {

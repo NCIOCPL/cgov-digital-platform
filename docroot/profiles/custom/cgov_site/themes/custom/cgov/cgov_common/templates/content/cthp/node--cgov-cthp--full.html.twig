@@ -5,6 +5,7 @@
   {% set showToggle = true %}
   {% set url = path('entity.node.canonical', {'node':  content.field_audience_toggle[0]["#node"].nid[0].value}) %}
 {% endif %}
+{% set toggleText = (isPatient ? 'Go to Health Professional Version' : 'Go to Patient Version')|trans %}
 
 <div class="cthp-content">
   <div class="row">
@@ -16,13 +17,7 @@
       <div id="nvcgSlCTHPIntro">
         {% if showToggle %}
           <div class="cthp-version-toggle no-resize">
-            <a class="toggle-arrow-link" href="{{ url }}">
-              {% if isPatient %}
-                {% trans %}Go to Health Professional Version{% endtrans %}
-              {% else %}
-                {% trans %}Go to Patient Version{% endtrans %}
-              {% endif %}
-              </a>
+            <a class="toggle-arrow-link" href="{{ url }}">{{ toggleText }}</a>
           </div>
         {% endif %}
       </div>

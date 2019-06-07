@@ -2,7 +2,6 @@
 
 namespace Drupal\cgov_migration\Plugin\migrate\process;
 
-use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 
@@ -34,34 +33,31 @@ class RemoveRxWrapper extends CgovPluginBase {
     // Load the incoming HTML.
     $this->doc->html($value);
 
-    // Log a warning if the rxbody div isn't the first element.
-    $root = $this->doc->find('html');
-    $children = $root->find('body')->children();
-
-    if ($children->count() > 0) {
-      $isFirstRx = $children->first()->hasClass('rxbodyfield');
-
-      if (!$isFirstRx) {
-        $message = 'RxBodyfield is not the first element.';
-        $this->migLog->logMessage($pid, $message, E_WARNING);
-      }
-    }
-
     // Find elements with the class.
-    $elements = $this->doc->find('.rxbodyfield');
-    $size = $elements->count();
+    $rxBodyFieldElement = $this->doc->find('.rxbodyfield');
+    $size = $rxBodyFieldElement->count();
 
     // Log an throw an error if there is more than one.
     if ($size > 1) {
       $message = 'The incoming item has ' . $size . ' .rxbodyfield items.';
-      $this->migLog->logMessage($pid, $message, E_ERROR);
+      $this->migLog->logMessage($pid, $message, E_ERROR, 'RXBODY');
       throw new MigrateSkipRowException();
     }
-    elseif ($size > 0) {
+    elseif ($size == 1) {
       // Retrieve the content.
-      $value = $elements->first()->html();
-    }
+      $body = $this->doc->find('body')->html();
 
+      preg_match('/<div\s+class="rxbodyfield"\s?+>\s?</', $body, $matches);
+
+      if (empty($matches)) {
+        $cleanBody = preg_replace('/ class="rxbodyfield"/', '', $body);
+        $value = $cleanBody;
+      }
+      else {
+        preg_match('/<div\s+class="rxbodyfield">(.*)<\/div>/s', $body, $strippedMatches);
+        $value = $strippedMatches[1];
+      }
+    }
     return $value;
   }
 

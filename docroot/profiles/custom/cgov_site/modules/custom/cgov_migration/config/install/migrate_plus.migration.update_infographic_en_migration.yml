@@ -1,0 +1,170 @@
+id: update_infographic_en_migration
+label: 'Custom infographic migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://infographic_en.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: title
+         label: title
+         selector: '@title'
+
+        -
+         name: body
+         label: body
+         selector: body
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: '@field_search_engine_restrictions'
+
+
+        -
+         name: field_public_use
+         label: field_public_use
+         selector: '@field_public_use'
+
+
+        -
+         name: field_short_title
+         label: field_short_title
+         selector: '@field_short_title'
+
+
+        -
+         name: field_browser_title
+         label: field_browser_title
+         selector: '@field_browser_title'
+
+        -
+         name: field_card_title
+         label: field_card_title
+         selector: '@field_card_title'
+
+        -
+         name: field_subtitle
+         label: field_subtitle
+         selector: '@field_subtitle'
+
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: '@field_page_description'
+
+
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
+
+        -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
+        -
+         name: field_infographic
+         label: field_infographic
+         selector: field_infographic
+
+        -
+         name: field_accessible_version
+         label: field_accessible_version
+         selector: field_accessible_version
+
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  mid: id
+  name: title
+  uid:
+   plugin: default_value
+   default_value: 1
+  status:
+   plugin: default_value
+   default_value: 1
+  moderation_state:
+   plugin: default_value
+   default_value: published
+
+  field_accessible_version: field_accessible_version
+  body/value:
+    -
+      plugin: generate_placeholders
+      source: body
+    -
+      plugin: replace_embeds
+    -
+      plugin: replace_links
+    -
+      plugin: replace_inline_images
+    -
+      plugin: remove_rx_wrapper
+  body/format:
+   plugin: default_value
+   default_value: full_html
+
+
+destination:
+  plugin: entity:media
+  default_bundle: cgov_infographic
+
+migration_dependencies:
+  required:
+    - sitesectionsql_migration

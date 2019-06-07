@@ -1,0 +1,165 @@
+id: update_event_migration
+label: 'Custom event migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://event.xml
+  item_selector: /rows/row
+  fields:
+
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: title
+         label: title
+         selector: '@title'
+
+        -
+         name: body
+         label: body
+         selector: body
+
+        -
+         name: field_event_end_date
+         label: field_event_end_date
+         selector: '@field_event_end_date'
+        -
+         name: field_event_start_date
+         label: field_event_start_date
+         selector: '@field_event_start_date'
+
+        -
+         name: field_city_state
+         label: field_city_state
+         selector: '@field_city_state'
+
+        -
+         name: field_venue
+         label: field_venue
+         selector: '@field_venue'
+
+        -
+         name: field_all_day_event
+         label: field_all_day_event
+         selector: '@field_all_day_event'
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: '@field_search_engine_restrictions'
+
+        -
+         name: field_short_title
+         label: field_short_title
+         selector: '@field_short_title'
+
+
+        -
+         name: field_browser_title
+         label: field_browser_title
+         selector: '@field_browser_title'
+
+        -
+         name: field_card_title
+         label: field_card_title
+         selector: '@field_card_title'
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: '@field_page_description'
+
+
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
+
+        -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+  title: title
+  body/value:
+    -
+      plugin: generate_placeholders
+      source: body
+    -
+      plugin: replace_embeds
+    -
+      plugin: replace_links
+    -
+      plugin: replace_inline_images
+    -
+      plugin: remove_rx_wrapper
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+  moderation_state:
+   plugin: default_value
+   default_value: published
+
+  body/format:
+   plugin: default_value
+   default_value: full_html
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_event
+
+migration_dependencies: { }
