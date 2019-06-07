@@ -6,6 +6,11 @@ export PATH=${COMPOSER_BIN}:${PATH}
 
 # Generate artifact in a separate directory.
 export NEW_BUILD_DIR=/tmp/artifact
+
+## The dirty check was a new addition for 9.2.8. However, it is flagging items
+## as dirty that should not be. So we are going to leave this uncommented.
+## blt deploy:check-dirty --ansi --verbose
+
 blt artifact:build -D deploy.dir=${NEW_BUILD_DIR} --ansi --verbose
 # Move git history to artifact directory. Required for pipelines to commit and push.
 mv ${SOURCE_DIR}/.git ${NEW_BUILD_DIR}/
