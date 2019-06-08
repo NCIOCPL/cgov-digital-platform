@@ -187,3 +187,16 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
     }
   }
 }
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function cgov_list_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (
+    array_key_exists('#paragraph_type', $element) &&
+    $element['#paragraph_type'] == 'cgov_external_link'
+  ) {
+    // Make the autocomplete do nothing.
+    $element['subform']['field_external_link']['widget'][0]['uri']['#process'] = NULL;
+  }
+}

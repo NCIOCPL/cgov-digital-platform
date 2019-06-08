@@ -11,6 +11,16 @@
  * Limits allowed text formats using the cgov_core form_tools service.
  */
 function cgov_cthp_field_widget_form_alter(&$element, $form_state, $context) {
+
+  // Remove autocomplete from external links.
+  if (
+    array_key_exists('#paragraph_type', $element) &&
+    $element['#paragraph_type'] == 'cgov_cthp_feature_card_external'
+  ) {
+    // Make the autocomplete do nothing.
+    $element['subform']['field_cthp_featured_url']['widget'][0]['uri']['#process'] = NULL;
+  }
+
   // Maps field names to an array containing a single format.
   $map = [
     'field_cthp_overview_card_text' => ['streamlined'],

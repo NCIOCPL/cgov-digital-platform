@@ -28,3 +28,16 @@ function cgov_promo_paragraph_access(EntityInterface $entity, $operation, Accoun
   // We have no skin in the game.
   return AccessResult::neutral();
 }
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function cgov_promo_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (
+    array_key_exists('#paragraph_type', $element) &&
+    $element['#paragraph_type'] == 'cgov_card_external'
+  ) {
+    // Make the autocomplete do nothing.
+    $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;
+  }
+}

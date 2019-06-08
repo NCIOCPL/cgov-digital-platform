@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_promo.module.
+ */
+
+use Drupal\Core\Url;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Row;
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_externalpromocard_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_featured_url');
+}
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_externallinksql_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_external_link');
+}
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_cthpexternalfeaturecard_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_cthp_featured_url');
+}
+
+/**
+ * Makes sure Link URIs have a scheme in source data.
+ *
+ * Drupal link fields require a scheme for the URI portion of the Link. For any
+ * internal links, we need to add internal: to the beginning of the URL.
+ *
+ * @param \Drupal\migrate\Row $row
+ *   The row to process.
+ * @param string $link_prop_name
+ *   The name of the source property that holds the url.
+ */
+function _cgov_migration_ensure_scheme_for_link(Row $row, $link_prop_name) {
+  $url = $row->getSourceProperty($link_prop_name);
+  try {
+    Url::fromUri($url);
+  }
+  catch (Exception $e) {
+    // If this is an error, let's assume it just needs to be internal:
+    $row->setSourceProperty($link_prop_name, 'internal:' . $url);
+  }
+}
