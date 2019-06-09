@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\MigrateSourceInterface;
 use Drupal\migrate\Row;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_migrate_MIGRATION_ID_prepare_row().
@@ -50,5 +51,39 @@ function _cgov_migration_ensure_scheme_for_link(Row $row, $link_prop_name) {
   catch (Exception $e) {
     // If this is an error, let's assume it just needs to be internal:
     $row->setSourceProperty($link_prop_name, 'internal:' . $url);
+  }
+}
+
+/**
+ * Implements hook_migrate_prepare_row().
+ */
+function cgov_migration_migrate_prepare_row($row, $source, $migration) {
+  // Decode HTL entities for the following fields.
+  $encoded_fields = [
+    'field_feature_card_description',
+    'field_card_title',
+    'field_intro_text',
+    'field_browser_title',
+    'field_list_description',
+    'field_page_description',
+    'field_navigation_label',
+    'title',
+    'field_short_title',
+    'field_phone_label_1',
+    'field_phone_label_2',
+    'field_website_title',
+    'field_org_head_title',
+    'address_line1',
+    'field_org_head_name',
+    'field_caption',
+    'field_override_title',
+    'field_navigation_label',
+    'name',
+  ];
+
+  foreach ($encoded_fields as $field) {
+    if ($row->hasSourceProperty($field)) {
+      $row->setSourceProperty($field, Html::decodeEntities($row->getSourceProperty($field)));
+    }
   }
 }
