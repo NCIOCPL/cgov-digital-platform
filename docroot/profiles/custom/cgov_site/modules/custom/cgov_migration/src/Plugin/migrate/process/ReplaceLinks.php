@@ -69,7 +69,8 @@ class ReplaceLinks extends CgovPluginBase {
     $entity_storage = \Drupal::entityTypeManager()->getStorage('node');
     $entity = $entity_storage->load($entity_id);
 
-    $element = $this->doc->createElement('a', $content);
+    $element = $this->doc->createElement('a');
+    $element->appendChild($this->doc->createTextNode($content));
 
     if (!empty($entity)) {
       $attributes = [
