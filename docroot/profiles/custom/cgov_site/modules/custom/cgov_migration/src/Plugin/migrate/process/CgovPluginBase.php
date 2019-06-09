@@ -237,7 +237,7 @@ abstract class CgovPluginBase extends ProcessPluginBase {
       // INLINE IMAGES.
       // gloBnUtilityImage    B - Utility Image.
       case '2254':
-        $values['view_mode'] = 'view_mode:media.image_display_article_medium';
+        $values['view_mode'] = 'view_mode:media.image_display_inline';
         $values['data_align'] = '';
         $values['data_embed_button'] = 'cgov_image_button';
         $values['data_entity_type'] = 'media';
@@ -246,7 +246,7 @@ abstract class CgovPluginBase extends ProcessPluginBase {
       // gloBnImage    B - Image1.
       case '1482':
 
-        $values['view_mode'] = 'view_mode:media.image_display_article_medium';
+        $values['view_mode'] = 'view_mode:media.image_display_inline';
         $values['data_align'] = '';
         $values['data_embed_button'] = 'cgov_image_button';
         $values['data_entity_type'] = 'media';
@@ -255,7 +255,7 @@ abstract class CgovPluginBase extends ProcessPluginBase {
       // nciBnImage    B - NCI Image .
       case '917':
 
-        $values['view_mode'] = 'view_mode:media.image_display_article_medium';
+        $values['view_mode'] = 'view_mode:media.image_display_inline';
         $values['data_align'] = '';
         $values['data_embed_button'] = 'cgov_image_button';
         $values['data_entity_type'] = 'media';

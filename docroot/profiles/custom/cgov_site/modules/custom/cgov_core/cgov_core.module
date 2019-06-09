@@ -318,3 +318,23 @@ function cgov_core_page_attachments_alter(array &$attachments) {
   $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
   $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * The entity embed module does not allow suggestions for the various display
+ * modes. This has been ok, except for the fact that with inline images we
+ * really do not want the container wrapper rendered.
+ */
+function cgov_core_theme_suggestions_entity_embed_container(array $variables) {
+  $suggestions = [];
+
+  $original_hook = $variables['theme_hook_original'];
+  $display = $variables['element']['#attributes']['data-entity-embed-display'];
+  if ($display) {
+    $sugg = str_replace("view_mode:", "", $display);
+    $suggestions[] = $original_hook . '__' . $sugg;
+  }
+
+  return $suggestions;
+}
