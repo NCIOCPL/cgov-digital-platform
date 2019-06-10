@@ -98,11 +98,10 @@ class ReplaceEmbeds extends CgovPluginBase {
 
       foreach ($attributes as $key => $value) {
         $element->setAttribute($key, $value);
-
       }
     }
     else {
-      $element = $this->doc->createElement('drupal-entity', 'ERROR REPLACING ENTITY: ' . $entity_id);
+      $element = $this->doc->createElement('drupal-entity', 'WARNING: UNABLE TO AUTOMATICALLY REPLACE ENTITY: ' . $entity_id);
     }
     return $element;
   }

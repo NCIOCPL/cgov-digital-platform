@@ -43,6 +43,9 @@ class MigrationLogger {
   public function logMessage($pid, $message, $severity = E_NOTICE, $category = '') {
     $now = time();
 
+    // Trim the message.
+    $message = mb_strimwidth($message, 0, 100);
+
     $this->database->insert('cgov_migration_message_log')
       ->fields([
         'pid' => $pid,
