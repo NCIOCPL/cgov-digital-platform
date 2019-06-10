@@ -328,9 +328,9 @@ a.learn-more {
   }
 }
 
-/* Upon resizing the browser window up from the mobile (accordion) view, 
-a div with a clearfix class is added that wraps around the ul of each card. 
-A height of 100% is added to force this clearfix div to be same height as 
+/* Upon resizing the browser window up from the mobile (accordion) view,
+a div with a clearfix class is added that wraps around the ul of each card.
+A height of 100% is added to force this clearfix div to be same height as
 parent accordion in all breakpoints. */
 .guide-card--home .clearfix {
   flex-grow: 1;
@@ -345,7 +345,7 @@ parent accordion in all breakpoints. */
 
 //removes spacing at the end of the card row (the color from card row should flow directly into the color of the footer), but keeps spacing between card rows
 //targets multimedia row when there is no thumbnail content
-.nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child, 
+.nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child,
 .nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
  {
   margin-bottom: 0;
@@ -684,3 +684,186 @@ parent accordion in all breakpoints. */
 }
 
 /********************* END Home Page Styles ******************************************/
+
+/* BEGIN Social Media section */
+.row.social-media-title {
+	margin-left: auto;
+	margin-right: auto;
+}
+.social-media-row {
+	display: flex;
+	margin-bottom: 2em;
+	&:before, &after {
+		display:none;
+	}
+}
+.social-media-card {
+	flex-grow: 1;
+	flex-basis: 23%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: 2%;
+	background: white;
+
+	.social-media-text h3 {
+		text-align: center;
+	}
+
+}
+.social-media-card:last-child {
+	margin-right: 0;
+}
+
+.social-media-card .social-media-icon {
+	width: 80%;
+	margin-top: 30px;
+}
+
+.social-media-card .social-media-text {
+	width: 80%;
+	margin-bottom: 30px;
+}
+
+.social-media-card .social-media-icon img {
+	display: block;
+	margin: 0 auto;
+}
+
+
+.social-media-row .icon-exit-notification {
+	font-size: 15px;
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1024px) {
+	.row.social-media-title {
+		padding-left: 33px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.row.social-media-title {
+		background: white;
+		padding-left: 33px;
+		margin-bottom: 0;
+	}
+
+	.social-media-row {
+		flex-direction: column;
+		margin-bottom: 0;
+	}
+
+	.social-media-card {
+		flex-grow: 0;
+		flex-basis: auto;
+		width: 100%;
+		margin: 0;
+		padding: 15px 0;
+		flex-direction: row;
+		align-items: stretch;
+
+		&:first-child {
+			padding-top: 30px;
+		}
+
+		&:last-child {
+			padding-bottom: 30px;
+		}
+	}
+
+	.social-media-card .social-media-icon {
+		margin-top: 0;
+		width: 180px;
+
+		a img {
+			width: 104px;
+			height: auto;
+		}
+
+	}
+	.social-media-card .social-media-text {
+		margin-bottom: 0;
+		flex-grow: 1;
+		padding-right: 30px;
+	}
+	.social-media-card .social-media-text h3 {
+		margin-top: 0;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.social-media-card {
+		padding: 0;
+		margin: 15px 0;
+
+		&:first-child {
+			padding-top: 0;
+		}
+	}
+
+	.social-media-card .social-media-icon {
+		align-self: flex-start;
+
+		a img {
+			height: 85px;
+			width: auto;
+		}
+	}
+}
+
+@media only screen and (max-width: 460px) {
+	.social-media-row {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.social-media-card {
+		flex: 0 1 auto;
+		width: 50%;
+		flex-direction: column;
+		margin-top: 0;
+		margin-bottom: 25px;
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
+	.social-media-card .social-media-icon {
+		align-self: inherit;
+		width: 100%;
+
+		a img {
+			max-width: none;
+			height: 100px;
+			width: auto;
+		}
+	}
+	.social-media-card .social-media-text {
+		padding-right: 0;
+		width: 100%;
+	}
+	.social-media-card .social-media-text h3 {
+		margin-top: 20px;
+	}
+	.social-media-card .social-media-text p {
+		display: none;
+	}
+	.row.social-media-title {
+		padding-left: 0;
+		margin: 25px 0;
+	}
+	.social-media-title h2 {
+		text-align: center;
+		margin: 0;
+	}
+
+}
+
+@media only screen and (min-width: 461px) and (max-width: 900px) {
+	.social-media-card .social-media-text h3 {
+		margin-top: 20px;
+		text-align: left;
+	}
+}
+/* END Social Media section */
