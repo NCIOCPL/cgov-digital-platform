@@ -113,7 +113,7 @@
 	.card-thumbnail .small-10 {
 		width: 75%;
   }
-  
+
   // moved over from TopicPage.scss
   .card-thumbnail-image {
     padding-left: 0;
@@ -133,7 +133,7 @@
   .equalheight .push-to-bottom-desktop {
     height: 100%;
 	}
-	
+
   .row {
     .gutter {
       &.large-4 {
@@ -191,4 +191,41 @@
   }
 }
 
+// controls spacing of images on the nci organization page. Mark Cramer [OCEPROJECT-3322]
+.nci-organization {
+  .large-5 figure {
+    margin: 1.25em auto;
+  }
+
+  .nci-organization__pattern {
+    display: flex;
+    height: 230px;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+    }
+
+    span {
+      margin: 20px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      line-height: 1.3em;
+      color: #fff;
+      font-family: Montserrat,Avant Garde,Arial,sans-serif;
+    }
+
+    @include bp(small) {
+      span {
+        font-size: 2.1em;
+      }
+    }
+
+    @include bp(xtra-small) {
+
+      span {
+        font-size: 8vw;
+      }
+    }
+  }
+}
 /********************* END Mini Landing Page Styles ******************************************/
