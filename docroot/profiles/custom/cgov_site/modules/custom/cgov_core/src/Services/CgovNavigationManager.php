@@ -438,16 +438,17 @@ class CgovNavigationManager {
     // We want a simple list instead of id keyed assoc array.
     $childrenList = [];
     foreach ($childrenMap as $childTerm) {
-      // While skipping nav sections without landing pages
-      // can be ok in nav root discovery, it always represents
-      // a terminus point in building any kind of nav tree.
-      // The one exception is the root, but because it is the
-      // root it will never be validated in a getChildren function.
-      // @var [ [ 'target_id' => int ]]
-      $landingPageFieldValue = $childTerm->field_landing_page->getValue();
-      $hasLandingPage = count($landingPageFieldValue) > 0 && $landingPageFieldValue[0]['target_id'];
-      if ($hasLandingPage) {
-        $childrenList[] = $childTerm;
+      // Only site sections with landing pages can have a link.
+      // Nav plugins should never be calling getHref on NavItems without landing
+      // pages (since those are filtered ).
+      // By calling entity we ensure we're not trying to build a navitem
+      // from an invalid or non-existent entity reference.
+      $landingPage = $childTerm->field_landing_page->entity;
+      if ($landingPage) {
+        $access = $landingPage->access('view', NULL, TRUE);
+        if ($access->isAllowed()) {
+          $childrenList[] = $childTerm;
+        }
       }
     }
     return $childrenList;
