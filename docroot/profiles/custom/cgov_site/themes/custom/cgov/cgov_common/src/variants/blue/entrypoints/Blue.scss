@@ -215,10 +215,6 @@ a .feature-card.cgvArticle a:hover h3,
 .multimedia-slot a:focus h3,
 .multimedia .card:hover h3,
 .multimedia .card:focus h3,
-.topic-feature a:hover,
-.topic-feature a:focus,
-.topic-feature a:hover h3,
-.topic-feature a:focus h3,
 #cgvBody h3 a:hover,
 #cgvBody h2 a:hover,
 .post-title a:hover,
@@ -243,6 +239,18 @@ a.arrow-link:hover,
 a.arrow-link:focus
 {
   color: $default-link-color-hover;
+}
+
+.embedded-entity[data-entity-embed-display*="_feature_card"] {
+  .feature-card {
+    a {
+      &:hover {
+        h3 {
+          color: $default-link-color-hover;
+        }
+      }
+    }
+  }
 }
 
 // default header colors
@@ -454,6 +462,10 @@ figure a.article-image-enlarge:hover {
 
 .multimedia-slot {
   background: $landing-page-multimedia-background;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .icon-exit-notification {
@@ -599,9 +611,9 @@ form button[type=submit]:hover {
 
 @include break(large) {
 
-  // header
+  //  changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
   header {
-    padding-bottom: 1.5em;
+    margin-bottom: 20px;
   }
 
   // header
@@ -610,11 +622,6 @@ form button[type=submit]:hover {
       width: $site-logo-width;
       height: $site-logo-height-desktop;
     }
-  }
-
-  // because the language bar is turned off, there needs to be space between the utility bar and logo
-  .micro-a {
-    margin-top: 20px;
   }
 
   // utility
