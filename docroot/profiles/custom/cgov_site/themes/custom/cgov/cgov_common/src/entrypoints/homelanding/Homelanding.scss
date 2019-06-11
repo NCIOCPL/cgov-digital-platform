@@ -345,11 +345,13 @@ parent accordion in all breakpoints. */
 
 //removes spacing at the end of the card row (the color from card row should flow directly into the color of the footer), but keeps spacing between card rows
 //targets multimedia row when there is no thumbnail content
+//TODO: div:last-of-type is the slot-item, but not all the slot-items have been preserved with the migration
 .nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child,
 .nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
- {
+{
   margin-bottom: 0;
 }
+
 
 .multimedia-slot {
   background: #099;
