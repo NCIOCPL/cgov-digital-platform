@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains cdn_caching_nocdn.install.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function cgov_caching_nocdn_install() {
+  \Drupal::service('module_installer')->uninstall(['cgov_caching_cdn']);
+  $service = \Drupal::service('features.manager');
+  $service->import(['cgov_caching_nocdn']);
+}
