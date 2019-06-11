@@ -38,6 +38,14 @@ fi
 ## Perform a fresh install.
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
 
+## Development/Integration only -- turn on administrator access
+echo "Target: ${target_env}"
+case $target_env in
+test | int)
+  drush config:set --yes simplesamlphp_auth.settings allow.default_login_users '1'
+;;
+esac
+
 ## Load our test users.
 blt cgov:user:load-all -D cgov.drupal_users_file=$users_file -D drush.ansi=false
 

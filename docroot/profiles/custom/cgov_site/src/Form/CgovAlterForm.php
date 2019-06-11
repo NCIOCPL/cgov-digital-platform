@@ -35,6 +35,13 @@ class CgovAlterForm extends AssignmentFormBase {
       '#description' => $this->t('Select this option to remove the <em>_dependencies and type_settings</em> configuration property on export.'),
     ];
 
+    $form['saml'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Remove local login users'),
+      '#default_value' => $workflow_settings,
+      '#description' => $this->t('If active,  the list of users allowed to login with local accounts will be ignored.'),
+    ];
+
     $this->setActions($form, self::METHOD_ID);
 
     return $form;
