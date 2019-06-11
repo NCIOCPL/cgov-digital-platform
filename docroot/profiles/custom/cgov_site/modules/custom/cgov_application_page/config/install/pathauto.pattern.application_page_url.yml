@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: application_page_url
+label: 'Application Page URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  9078cc95-999d-470e-b9ae-420ce30fbfa5:
+    id: node_type
+    bundles:
+      cgov_application_page: cgov_application_page
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 9078cc95-999d-470e-b9ae-420ce30fbfa5
+selection_logic: and
+weight: -5
+relationships: {  }
