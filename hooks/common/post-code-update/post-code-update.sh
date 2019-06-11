@@ -29,19 +29,32 @@ cd $repo_root
 
 users_file="$HOME/cgov-drupal-users.yml"
 
-## Perform a fresh install
+## If this is an ODE we would like things like toggle:modules to work. So we will
+## pass in the target env as 'ode'. Then in blt.yml we can have an "ode" environment.
+if [[ $target_env =~ ^ode\d* ]]; then
+  target_env="ode";
+fi
+
+## Perform a fresh install.
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
+
+## Load our test users.
 blt cgov:user:load-all -D cgov.drupal_users_file=$users_file -D drush.ansi=false
+
+## Reload translation pack.
 blt cgov:locales:translate -D drush.ansi=false
+
+## Setup some default JS globals.
 cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
 
+## Execute a migration.
 case $MIGRATION in
 CGOV)
   blt cgov:install:site-sections --no-interaction -D drush.ansi=false  # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 DCEG)
-  blt cgov:install:site-sections --no-interaction -D drush.ansi=false  # This (of course) loads the site sections and megamenus.
+  blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
   ./scripts/utility/cgov_migration_load.sh
   ;;
 NANO)
@@ -57,8 +70,7 @@ NCICONNECT)
   ./scripts/utility/cgov_migration_load.sh
   ;;
 *)
-  blt custom:install_cgov_yaml_content_by_module cgov_yaml_content
+  blt custom:install_cgov_yaml_content_by_module cgov_yaml_content -D drush.ansi=false
   ;;
 esac
-
 set +v
