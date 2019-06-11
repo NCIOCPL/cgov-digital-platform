@@ -26,31 +26,32 @@ drush:
 modules:
   local:
     enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
-    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, acquia_purge]
+    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge]
   ci:
     enable: {  }
     uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
+  ode:
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [cgov_caching_nocdn]
   dev:
     enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
     uninstall: [cgov_caching_nocdn]
+  int:
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: {  }
   test:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
-    uninstall: [devel, views_ui]
-  prod:
-    enable: [acquia_connector, shield]
-    uninstall: [devel, views_ui]
+    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [devel, views_ui, cgov_caching_cdn]
+  ## We have no prod in ACE.
   01dev:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: [cgov_caching_nocdn]
-  int:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
     uninstall: {  }
   01test:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: [cgov_caching_nocdn]
+    uninstall: {  }
   01live:
     enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: [cgov_caching_nocdn]
+    uninstall: {  }
 cm:
   strategy: features
   allow-overrides: true
