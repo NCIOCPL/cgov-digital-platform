@@ -233,6 +233,23 @@ table.table-default tfoot td {
       float: none;
 			width: 100%;
 			margin: 0 0 1em 0;
-		}	
+		}
 	}
+}
+
+
+// Overrides for the Moderation Sidebar module.
+body {
+  .ui-dialog.ui-dialog-off-canvas #drupal-off-canvas {
+    z-index: 10000;
+  }
+
+  .ui-dialog-off-canvas #drupal-off-canvas .button,
+  .ui-dialog-off-canvas #drupal-off-canvas  button {
+    min-height: 0;
+  }
+
+  .ui-dialog-off-canvas {
+    box-sizing: border-box;
+  }
 }

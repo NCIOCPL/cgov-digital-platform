@@ -45,7 +45,7 @@ type_settings:
       weight: -3
   transitions:
     approve:
-      label: 'Approve Edits of Published Content'
+      label: 'Publish'
       from:
         - post_publication_review
       to: published
@@ -83,7 +83,7 @@ type_settings:
       to: published
       weight: 1
     quick_publish_replace:
-      label: 'Quick Publish (Replace Existing Published Revision)'
+      label: 'Quick Publish'
       from:
         - editing
       to: published
@@ -101,13 +101,13 @@ type_settings:
       to: archive_requested
       weight: 7
     request_review:
-      label: 'Request Review'
+      label: 'Submit for Review'
       from:
         - draft
       to: review
       weight: -1
     request_review_pub:
-      label: 'Request Review of Published Content'
+      label: 'Submit for Review'
       from:
         - editing
       to: post_publication_review
