@@ -5,6 +5,7 @@ namespace Drupal\cgov_core\Services;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityRepository;
 use Drupal\Core\Path\CurrentPathStack;
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\NavItem;
@@ -107,6 +108,13 @@ class CgovNavigationManager {
   protected $languageManager;
 
   /**
+   * Entity Repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepository
+   */
+  protected $entityRepository;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
   public function __construct(
@@ -115,7 +123,8 @@ class CgovNavigationManager {
     EntityTypeManagerInterface $entityTypeManager,
     EntityFieldManagerInterface $entityFieldManager,
     LoggerInterface $logger,
-    LanguageManagerInterface $languageManager
+    LanguageManagerInterface $languageManager,
+    EntityRepository $entityRepository
     ) {
     $this->currentPath = $currentPath;
     $this->pathAliasManager = $pathAliasManager;
@@ -123,6 +132,7 @@ class CgovNavigationManager {
     $this->entityFieldManager = $entityFieldManager;
     $this->logger = $logger;
     $this->languageManager = $languageManager;
+    $this->entityRepository = $entityRepository;
   }
 
   /**
@@ -438,20 +448,72 @@ class CgovNavigationManager {
     // We want a simple list instead of id keyed assoc array.
     $childrenList = [];
     foreach ($childrenMap as $childTerm) {
-      // Only site sections with landing pages can have a link.
-      // Nav plugins should never be calling getHref on NavItems without landing
-      // pages (since those are filtered ).
-      // By calling entity we ensure we're not trying to build a navitem
-      // from an invalid or non-existent entity reference.
-      $landingPage = $childTerm->field_landing_page->entity;
-      if ($landingPage) {
-        $access = $landingPage->access('view', NULL, TRUE);
-        if ($access->isAllowed()) {
-          $childrenList[] = $childTerm;
-        }
+      /*
+       * Only site sections with landing pages can have a link.
+       * Nav plugins should never be calling getHref on NavItems without landing
+       * pages (since those are filtered ).
+       * By calling entity we ensure we're not trying to build a navitem
+       * from an invalid or non-existent entity reference.
+       *
+       * NOTE: This is kind of a hack. There is a lot of logic for determining
+       * what to get the URL for. So we in essence have to do this twice, once
+       * to determine if we have a proper URL, and once in NavItem when setting
+       * the URL.
+       */
+
+      $landingUrl = $this->getUrlForLanding($childTerm);
+
+      if ($landingUrl) {
+        $childrenList[] = $childTerm;
       }
     }
     return $childrenList;
+  }
+
+  /**
+   * Get the URL of a Terms Landing Page.
+   *
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   The term to get the URL for.
+   *
+   * @return \Drupal\Core\Url
+   *   The Url for the landing page of the term. NULL if it is not acccessible.
+   */
+  public function getUrlForLanding(TermInterface $term) {
+
+    $landingPage = $term->field_landing_page->entity;
+    if ($landingPage) {
+      // Set the entity in the correct language for display.
+      if ($this->isTranslatableInterface($landingPage)) {
+        $landingPage = $this->entityRepository->getTranslationFromContext($landingPage, $this->interfaceLanguage->getId());
+      }
+      $access = $landingPage->access('view', NULL, TRUE);
+      if ($access->isAllowed()) {
+        return $landingPage->toUrl();
+      }
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Checks if an entity implements TranslatableInterface.
+   *
+   * Why, oh, why does instanceof not work correctly?
+   *
+   * @param object $entity
+   *   The entity to test.
+   *
+   * @return bool
+   *   TRUE if it implements the interface, false if not.
+   */
+  private function isTranslatableInterface($entity) {
+    $class = new \ReflectionClass($entity);
+    if (in_array('Drupal\Core\TypedData\TranslatableInterface', $class->getInterfaceNames())) {
+      // If you find a ContentEntityInterface stop iterating and return it.
+      return TRUE;
+    }
+    return FALSE;
   }
 
 }
