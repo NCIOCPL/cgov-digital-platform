@@ -148,10 +148,7 @@ class NavItem {
     $this->term = $term;
     $this->termId = $this->term->id();
 
-    $landingPage = $this->term->field_landing_page->entity;
-    if ($landingPage) {
-      $this->href = $landingPage->toUrl();
-    }
+    $this->href = $this->navMgr->getUrlForLanding($this->term);
 
     $this->isBreadcrumbRoot = $this->term->field_breadcrumb_root->value;
     $this->isSectionNavRoot = $this->term->field_section_nav_root->value;
