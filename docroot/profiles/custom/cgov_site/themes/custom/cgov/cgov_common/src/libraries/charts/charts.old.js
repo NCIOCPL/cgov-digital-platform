@@ -1,3 +1,6 @@
+// I'm leaving this in the repo for at least one more rounds of refactors as a point of reference for whichever poor dev
+// has to wrangle the black box of configuring a 3rd party library.
+
 define(function(require) {
 // Module Constructor - matching Highcarts' arguments of target, options
     var Chart = function (target, options) {
@@ -108,7 +111,7 @@ define(function(require) {
                     console.log("rendering custom chart:", module.settings.chart.type);
                     module[module.settings.chart.type].call(module);
                 } else {
-                    
+
                     if(module.settings.chart.type == 'map'){
                         console.log("rendering highmap:", module.settings.chart.type);
                         console.time("Highmaps Load Time");
