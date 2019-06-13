@@ -12,4 +12,13 @@ function cgov_caching_cdn_install() {
   \Drupal::service('module_installer')->uninstall(['cgov_caching_nocdn']);
   $service = \Drupal::service('features.manager');
   $service->import(['cgov_caching_cdn']);
+
+  // Setup permissions for site_admin.
+  $permissions = [
+    'purge akamai cache',
+    'Akamai Purge Status',
+  ];
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $siteHelper->addRolePermissions(['site_admin' => $permissions]);
 }
