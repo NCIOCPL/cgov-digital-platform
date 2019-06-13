@@ -7,6 +7,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\file\Entity\File;
 use Drupal\views\ViewExecutable;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\Component\Utility\Html;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -70,7 +71,29 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       new \Twig_SimpleFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('strip_duplicate_leading_credit', [$this, 'stripDuplicateLeadingCredit'], ['is_safe' => ['html']]),
+      new \Twig_SimpleFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
     ];
+  }
+
+  /**
+   * Determine whether any real text content exists.
+   *
+   * @param array $field_array
+   *   The field array.
+   *
+   * @return bool
+   *   Field has text content.
+   */
+  public function hasContent(array $field_array) {
+    $content = $field_array[0]['#text'];
+    $contentWithoutSpaces = str_replace("&nbsp;", "", $content);
+    $doc = Html::load($contentWithoutSpaces);
+    $nodeList = $doc->getElementsByTagName('body');
+    $elem = $nodeList[0];
+    $textContent = $elem->textContent;
+    $trimmed = trim($textContent);
+    $hasContent = strlen($trimmed) > 0;
+    return $hasContent;
   }
 
   /**
