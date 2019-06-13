@@ -654,18 +654,6 @@ if ($settings['hash_salt']) {
 # $config['system.site']['name'] = 'My Drupal site';
 # $config['system.theme']['default'] = 'stark';
 # $config['user.settings']['anonymous'] = 'Visitor';
-/*
- * Set the translation path to allow for easy management of third-party
- * translation files. The installer ignores the path for the initial install,
- * but it will honor the use source. (It is here as configs will not be set
- * before the installation starts.)
- *
- * There is a known issue where the installer will not honor the override for the
- * path because it is hardcoded in the installer code.
- * https://www.drupal.org/project/drupal/issues/2689305
- */
-$config['locale.settings']['translation']['use_source'] = 'local';
-$config['locale.settings']['translation']['path'] = DRUPAL_ROOT . '/translations';
 
 /**
  * Fast 404 pages:
@@ -795,4 +783,11 @@ $settings['entity_update_batch_size'] = 50;
 # }
 $config_directories['sync'] = '../config/sync';
 require DRUPAL_ROOT . "/../vendor/acquia/blt/settings/blt.settings.php";
-require DRUPAL_ROOT . "/sites/default/settings/cgov_caching.settings.php";
+/**
+ * IMPORTANT.
+ *
+ * Do not include additional settings here. Instead, add them to settings
+ * included by `blt.settings.php`. See BLT's documentation for more detail.
+ *
+ * @link http://blt.readthedocs.io
+ */
