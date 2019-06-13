@@ -30,6 +30,11 @@ source:
          label: field_main_contents
          selector: field_main_contents
 
+        -
+         name: field_main_content
+         label: field_main_content
+         selector: field_main_content
+
   ids:
     row_rid:
       type: integer
@@ -77,12 +82,30 @@ process:
         - 1
 
 
+ temp_text1:
+    plugin: migration_lookup
+    migration:
+      - rawhtml_migration
+      - dynamiclist_migration
+    no_stub: true
+    source: field_main_contents
+
+ field_main_contents:
+    plugin: iterator
+    source: '@temp_text1'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
  field_main_contents/target_id:
     -
       plugin: migration_lookup
-      migration: dynamiclist_migration
+      migration:
+        - dynamiclist_migration
+        - rawhtml_migration
       no_stub: true
-      source: field_main_contents
+      source: field_main_content
     -
       plugin: extract
       index:
@@ -91,9 +114,11 @@ process:
  field_main_contents/target_revision_id:
     -
       plugin: migration_lookup
-      migration: dynamiclist_migration
+      migration:
+         - dynamiclist_migration
+         - rawhtml_migration
       no_stub: true
-      source: field_main_contents
+      source: field_main_content
     -
       plugin: extract
       index:
