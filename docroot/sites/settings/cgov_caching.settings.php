@@ -11,7 +11,17 @@
 if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   // Alter '01dev,' '01test', and '01live' to match
   // your website's environment names.
-  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+  $env = $_ENV['AH_SITE_ENVIRONMENT'];
+  if (preg_match('/^ode\d*$/', $env)) {
+    $env = 'ode';
+  }
+
+  $config['system.performance']['css']['preprocess'] = TRUE;
+  $config['system.performance']['css']['gzip'] = TRUE;
+  $config['system.performance']['js']['preprocess'] = TRUE;
+  $config['system.performance']['js']['gzip'] = TRUE;
+
+  switch ($env) {
     case '01dev':
     case 'dev':
       // Disable aggregation of CSS and JS on dev.
@@ -22,15 +32,11 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
     case '01test':
     case 'test':
     case '01live':
+    case 'ode':
       // Cache settings.
       $config['system.performance']['cache']['page']['max_age'] = 16588800;
       break;
   }
-
-  $config['system.performance']['css']['preprocess'] = TRUE;
-  $config['system.performance']['css']['gzip'] = TRUE;
-  $config['system.performance']['js']['preprocess'] = TRUE;
-  $config['system.performance']['js']['gzip'] = TRUE;
 
   // Setup proper .edgerc path for Akamai module
   $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;

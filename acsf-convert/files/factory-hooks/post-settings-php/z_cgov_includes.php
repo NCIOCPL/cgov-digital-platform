@@ -4,4 +4,15 @@
  * @file
  * Implements includes for cgov.
  */
-require DRUPAL_ROOT . '/sites/default/settings/cgov_caching.settings.php';
+
+// Add cgov configs from global settings.
+$additionalSettingsFiles = [
+  ( DRUPAL_ROOT . '/sites/settings/cgov_caching.settings.php' ),
+  ( DRUPAL_ROOT . '/sites/settings/cgov_core.settings.php' ),
+];
+
+foreach ($additionalSettingsFiles as $settingsFile) {
+  if (file_exists($settingsFile)) {
+    require $settingsFile;
+  }
+}
