@@ -4,6 +4,7 @@ namespace Drupal\cgov_migration\Plugin\migrate\process;
 
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
+use Drupal\migrate\MigrateSkipRowException;
 
 /**
  * Remove the rxbodyfield wrapper..
