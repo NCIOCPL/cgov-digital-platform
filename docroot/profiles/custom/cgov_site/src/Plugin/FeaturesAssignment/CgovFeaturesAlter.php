@@ -41,6 +41,12 @@ class CgovFeaturesAlter extends FeaturesAssignmentMethodBase {
           unset($data['dependencies']['config']);
           unset($data['type_settings']['entity_types']);
         }
+
+        // Remove workflow config from all dependencies.
+        if ($config->getType() == 'entity_form_display') {
+          $data['dependencies']['config'] = $this->removeDependencyMatch($data['dependencies']['config'], 'workflows');
+        }
+
         $config->setData($data);
       }
       // Clean up the $config pass by reference.
@@ -50,6 +56,33 @@ class CgovFeaturesAlter extends FeaturesAssignmentMethodBase {
       $this->featuresManager->setConfigCollection($config_collection);
     }
 
+  }
+
+  /**
+   * Helper function to remove dependencies from configs based on a match.
+   *
+   * @param array $dependencies
+   *   Array of dependencies 'config' or 'module'.
+   * @param string $toRemove
+   *   String to match dependencies on. Checks for instances of string anywhere
+   *   in config.
+   *
+   * @return array
+   *   Returns altered list of dependencies.
+   */
+  protected function removeDependencyMatch(array $dependencies, $toRemove) {
+    if (empty($dependencies)) {
+      return $dependencies;
+    }
+    $alteredDependencies = $dependencies;
+
+    foreach ($dependencies as $key => $value) {
+      if (strpos($value, $toRemove) !== FALSE) {
+        unset($alteredDependencies[$key]);
+      }
+    }
+
+    return $alteredDependencies;
   }
 
 }
