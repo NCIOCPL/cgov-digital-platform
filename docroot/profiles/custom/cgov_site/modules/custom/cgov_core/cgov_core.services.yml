@@ -39,3 +39,7 @@ services:
     arguments: ['@path.alias_manager', '@language_manager', '@service_container']
     tags:
       - { name: path_processor_outbound, priority: 600 }
+  cgov_core.config_overrider:
+    class: Drupal\cgov_core\CgovConfigOverrider
+    tags:
+      - {name: config.factory.override, priority: 5}
