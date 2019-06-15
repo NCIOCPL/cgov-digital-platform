@@ -25,7 +25,6 @@ dependencies:
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
-    - workflows.workflow.editorial_workflow
   enforced:
     module:
       - cgov_core
@@ -276,9 +275,9 @@ content:
     third_party_settings: {  }
   url_redirects:
     weight: 50
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   field_meta_tags: true
   promote: true
