@@ -44,6 +44,6 @@ echo "Running BLT update locales on $uri domain in $env environment on the $site
 ### ----------- Cgov Specific Tasks Here ------------- ###
 ###       Differences from db-update start here.       ###
 ##########################################################
-DRUSH_PATHS_CACHE_DIRECTORY=$cacheDir $blt cgov:locales:translate --environment=$env --site=${name[0]} --define drush.uri=$domain --verbose --yes --no-interaction -D drush.ansi=false
+DRUSH_PATHS_CACHE_DIRECTORY=$cacheDir $blt cgov:acsf:db-update --environment=$env --site=${name[0]} --define drush.uri=$domain --verbose --yes --no-interaction -D drush.ansi=false
 
 set +v
