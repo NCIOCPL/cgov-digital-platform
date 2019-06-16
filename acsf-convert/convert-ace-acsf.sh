@@ -15,3 +15,6 @@ cp -R acsf-convert/files/docroot/sites/g ./docroot/sites/
 ## Copy new Sites Folder
 cp acsf-convert/files/docroot/sites/sites.php ./docroot/sites/sites.php
 cp acsf-convert/files/docroot/sites/default/acsf.settings.php ./docroot/sites/default/acsf.settings.php
+
+## Copy drupal users seed
+cp acsf-convert/files/cgov-drupal-users.yml ./cgov-drupal-users.yml

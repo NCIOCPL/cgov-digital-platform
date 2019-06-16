@@ -59,6 +59,31 @@ class CgovUserCommands extends DrushCommands {
   }
 
   /**
+   * Block Admin User.
+   *
+   * No matter what the user 1 name is, it will
+   * be blocked.
+   *
+   * @command cgov:block-admin-user
+   * @aliases block-admin-user, blkadm
+   * @usage drush cgov:block-admin-user
+   *   Block the admin user (user 1).
+   * @bootstrap full
+   */
+  public function blockAdminUser() {
+
+    /** @var \Drupal\user\Entity\User $account */
+    if ($account = User::load(1)) {
+      $account->block();
+      $account->save();
+    }
+    else {
+      throw new \Exception(dt('Unable to load user 1.'));
+    }
+
+  }
+
+  /**
    * Checks if the admin block is valid.
    *
    * @param mixed $admin
@@ -208,11 +233,10 @@ class CgovUserCommands extends DrushCommands {
     $isValid = TRUE;
 
     // TODO: This should be more robust and check bad chars.
+    // Password is optional, so not going to check it.
     $isValid = (
       array_key_exists('username', $user) &&
       $user['username'] != '' &&
-      array_key_exists('password', $user) &&
-      $user['password'] != '' &&
       array_key_exists('roles', $user) &&
       count($user['roles']) > 0
     );
@@ -245,7 +269,14 @@ class CgovUserCommands extends DrushCommands {
    */
   protected function loadAdditionalUser($user) {
     $name = $user['username'];
-    $pwd = $user['password'];
+
+    // ACSF users should only use SSO, no passwords.
+    if (array_key_exists('password', $user)) {
+      $pwd = $user['password'];
+    }
+    else {
+      $pwd = NULL;
+    }
 
     $account = user_load_by_name($name);
 
