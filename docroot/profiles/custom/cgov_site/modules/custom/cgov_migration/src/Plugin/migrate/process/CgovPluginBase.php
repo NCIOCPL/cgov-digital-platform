@@ -122,7 +122,7 @@ abstract class CgovPluginBase extends ProcessPluginBase {
       // gloDsHighlightCenter.
       case '2238':
 
-        $values['style'] = 'view_mode:media.infographic_display_article_large';
+        $values['view_mode'] = 'view_mode:media.infographic_display_article_large';
         $values['data_align'] = 'center';
         $values['data_embed_button'] = 'cgov_infographic_button';
         $values['data_entity_type'] = 'media';
@@ -168,7 +168,7 @@ abstract class CgovPluginBase extends ProcessPluginBase {
       // gloSnVideo50TitleRight.
       case '1833':
 
-        $values['style'] = 'view_mode:media.video_display_small_title';
+        $values['view_mode'] = 'view_mode:media.video_display_small_title';
         $values['data_align'] = 'right';
         $values['data_embed_button'] = 'cgov_video_button';
         $values['data_entity_type'] = 'media';
