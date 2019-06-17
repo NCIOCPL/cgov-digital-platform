@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Block\BlockPluginInterface;
@@ -17,6 +18,7 @@ use Drupal\Core\Url;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Implements hook_entity_translation_create().
@@ -433,4 +435,133 @@ function _cgov_core_get_curr_entity() {
     }
   }
   return FALSE;
+}
+
+/**
+ * Implements hook_moderation_sidebar_alter().
+ *
+ * We have strong opinions on what the sidebar should display and how it
+ * should display them.
+ * - This should never offer two ways to edit
+ * - It should never show delete buttons.
+ * - Workflow tasks should come first.
+ * - Creating a new revision should take you to the admin edit screen.
+ */
+function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $entity) {
+
+  // No actions, it is useless. We need to bail.
+  if (empty($build['actions'])) {
+    return;
+  }
+
+  // Remove delete button.
+  if (array_key_exists('delete', $build['actions'])) {
+    unset($build['actions']['delete']);
+  }
+
+  // Rename edit button in published state.
+  if (!empty($build['actions']['edit'])) {
+    if (
+      (!empty($build['actions']['edit']['#title'])) &&
+      ($build['actions']['edit']['#title']->getUntranslatedString() == 'Edit content')
+    ) {
+      $build['actions']['edit']['#title'] = new TranslatableMarkup("View in edit form");
+    }
+  }
+
+  // Now set weights to height numbers, and we can then reorder.
+  // We use Element::children to ensure we only get back render
+  // elements.
+  $tmp_weight = 0;
+  foreach (Element::children($build['actions']) as $element) {
+    $build['actions'][$element]['#weight'] = $tmp_weight + 100;
+    $tmp_weight++;
+  }
+
+  $build['actions']['title'] = [
+    '#markup' => t('<h3>Other Actions</h3>'),
+    '#weight' => 1,
+  ];
+
+  // The workflow options should come first.
+  if (!empty($build['actions']['quick_draft_form'])) {
+    $build['actions']['quick_draft_form']['#weight'] = 1;
+  }
+
+  // Force the renderer to use weights instead of the order.
+  $build['actions']['#sorted'] = FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Support for cgov_core_moderation_sidebar_alter to handle components
+ * of the moderation bits.
+ */
+function cgov_core_form_moderation_sidebar_quick_transition_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Remove Discard Draft Button.
+  if (!empty($form['discard_draft'])) {
+    unset($form['discard_draft']);
+  }
+
+  // Reorder a few elements.
+  $tmp_weight = 0;
+  foreach (Element::children($form) as $element) {
+    $form[$element]['#weight'] = $tmp_weight + 100;
+    $tmp_weight++;
+  }
+
+  $form['title'] = [
+    '#markup' => t('<h3>Workflow Actions</h3>'),
+    '#weight' => 1,
+  ];
+
+  // Move the comment checkbox and textbox above the buttons.
+  if (!empty($form['revision_log_toggle'])) {
+    $form['revision_log_toggle']['#weight'] = 2;
+    $form['revision_log_toggle']['#title'] = new TranslatableMarkup("Add Workflow Comment");
+  }
+  if (!empty($form['revision_log'])) {
+    $form['revision_log']['#weight'] = 3;
+  }
+
+  $form['#submit'][] = '_cgov_core_form_moderation_sidebar_quick_transition_form_submit';
+}
+
+/**
+ * Submit handler for moderation_sidebar workflow actions.
+ *
+ * @param array $form
+ *   The form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The state of the form.
+ */
+function _cgov_core_form_moderation_sidebar_quick_transition_form_submit(array $form, FormStateInterface $form_state) {
+
+  // List of transition IDs that cause a redirect to the edit form.
+  $edit_form_transitions = [
+    'revise',
+    'create_new_draft',
+    'back_to_draft',
+    'back_to_editing',
+  ];
+
+  $triggering_elem = $form_state->getTriggeringElement();
+
+  // If there was no triggering element, then we need to exit.
+  if ($triggering_elem == NULL) {
+    return;
+  }
+
+  if (!in_array($triggering_elem['#id'], $edit_form_transitions)) {
+    return;
+  }
+
+  // This is how moderation_sidebar does it, and it created the form_state.
+  // So we should trust this will always be here when handing that quick
+  // transiton submit.
+  /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+  $entity = $form_state->get('entity');
+
+  $form_state->setRedirectUrl($entity->toUrl('edit-form'));
 }
