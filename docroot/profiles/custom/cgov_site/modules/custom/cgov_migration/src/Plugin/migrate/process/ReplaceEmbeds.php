@@ -49,8 +49,15 @@ class ReplaceEmbeds extends CgovPluginBase {
           $this->migLog->logMessage($pid, 'Embed replaced for perc ID: ' . $sys_dependentid, E_NOTICE, $sys_dependentvariantid);
         }
         else {
-          // Put a error placeholder.
-          $this->migLog->logMessage($pid, 'No embed mapping found for:' . $sys_dependentvariantid . ' on PID ' . $pid, E_ERROR, $sys_dependentvariantid);
+          // Put an error placeholder.
+          if (in_array($sys_dependentvariantid, $this->skippedVariants)) {
+            $variantMessage = " Variant: {$sys_dependentvariantid} Template: {$this->skippedVariants[$sys_dependentvariantid]}  ";
+          }
+          else {
+            $variantMessage = '';
+          }
+
+          $this->migLog->logMessage($pid, 'No embed mapping found for:' . $sys_dependentvariantid . ' on PID ' . $pid . $variantMessage, E_ERROR, $sys_dependentvariantid);
           $replacementEmbed = $this->doc->createElement('drupal-entity', 'ERROR REPLACING ENTITY: ' . $sys_dependentid . ' With variant: ' . $sys_dependentvariantid);
           $divNode->parentNode->replaceChild($replacementEmbed, $divNode);
 
@@ -101,6 +108,7 @@ class ReplaceEmbeds extends CgovPluginBase {
       }
     }
     else {
+
       $element = $this->doc->createElement('drupal-entity', 'WARNING: UNABLE TO AUTOMATICALLY REPLACE ENTITY: ' . $entity_id);
     }
     return $element;
