@@ -1,0 +1,61 @@
+id: eventseries_migration
+label: 'taxonomy event series migration'
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://eventseries.xml
+  item_selector: /rows/row
+
+
+  fields:
+        -
+         name: term_id
+         label: term_id
+         selector: term_id
+
+        -
+         name: name
+         label: name
+         selector: name
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+
+        -
+         name: description
+         label: description
+         selector: description
+
+
+
+  ids:
+    term_id:
+      type: integer
+
+process:
+  tid: term_id
+  name: name
+  langcode: langcode
+
+  description/value: description
+  description/format:
+    plugin: default_value
+    default_value: simple
+
+
+  vid:
+   plugin: default_value
+   default_value: cgov_event_series
+
+
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: cgov_event_series
+
+migration_dependencies: { }

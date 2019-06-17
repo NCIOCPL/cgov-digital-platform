@@ -37,15 +37,6 @@ source:
          label: field_image_article
          selector: field_image_article
 
-        -
-         name: syndicate
-         label: syndicate
-         selector: syndicate
-
-        -
-         name: meta_keywords
-         label: meta_keywords
-         selector: meta_keywords
 
         -
          name: field_public_use
@@ -213,9 +204,6 @@ process:
     migration: sitesectionsql_migration
     source: term_id
     no_stub: true
-
-  field_hhs_syndication/syndicate: syndicate
-  field_hhs_syndication/keywords: meta_keywords
 
   field_image_article:
     plugin: migration_lookup
