@@ -24,12 +24,6 @@
   }
 }
 
-//[data-cde-pagetemplate^="NVCGCancerTypeHomePageTemplatePatient"] {
-//	.main-content {
-//		background: #f7f8f3 url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 110% 350px;
-//	}
-//}
-
 .cthp-intro-multimedia {
   background: white;
 
@@ -238,17 +232,23 @@
   }
 }
 
-.cthpCard .cardBody {
+.cthpCard .rawHtml .cardBody {
   p {
     margin-top: 2px;
-  }
-  a.arrow-link {
-    margin-top: 8px;
   }
   a:last-child {
     margin-bottom: 20px;
   }
 }
+
+
+// In any case (raw blocks or not) where multiple arrow-link stack.
+.cthpCard .cardBody {
+  a.arrow-link + .arrow-link {
+    margin-top: 8px;
+  }
+}
+
 
 .cthp-overview .ui-accordion-content .cardBody p:last-child {
   margin-bottom: 20px;
@@ -258,7 +258,7 @@
   p {
     margin-top: 2px;
     margin-bottom: 2px;
-    
+
     a {
       display: inline-block;
       padding-left: 0.9375em;
@@ -572,7 +572,7 @@ figure.cthp-mm-video-playlist {
           li {
             align-items: center;
             display: flex;
-            
+
             a {
               flex: 1 1 auto;
               width: auto;
