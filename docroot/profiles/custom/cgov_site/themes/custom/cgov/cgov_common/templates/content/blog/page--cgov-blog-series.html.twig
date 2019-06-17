@@ -49,6 +49,9 @@
         </div> <!-- END "row" -->
       </div> <!-- END "large-12 columns" -->
       <div class="row">
+        {% if page.section_nav %}
+          {{ page.section_nav }}
+        {% endif %}
         {{ page.content }}
       </div>
     </div>
