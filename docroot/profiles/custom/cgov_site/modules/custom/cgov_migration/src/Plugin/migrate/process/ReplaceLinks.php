@@ -105,7 +105,9 @@ class ReplaceLinks extends CgovPluginBase {
       $url = $translationList[$entity_id]['url'];
       // See if it has an English translation.
       $translationid = $translationList[$entity_id]['translationid'];
-      if (!empty($translationid)) {
+
+      // Empty arrays have non-strict comparison, check is_null also.
+      if ($translationid != 'NULL' && !empty($translationid) && !is_null($translationid)) {
         // It has an english translation; verify it was loaded into the system.
         $englishEntity = $this->getEntityOfUnknownType($translationid);
 
@@ -126,7 +128,6 @@ class ReplaceLinks extends CgovPluginBase {
         $attributes = [
           'href' => $url,
         ];
-
       }
     }
     elseif (array_key_exists($entity_id, $dcegList)) {
@@ -138,7 +139,6 @@ class ReplaceLinks extends CgovPluginBase {
       $attributes = [
         'href' => $url,
       ];
-
       $this->migLog->logMessage('0', 'DCEG WARNING: ' . $entity_id .
         'Link replacement for DCEG link. THe URL was: ' . $url, E_WARNING, 'POSSIBLE DCEG FAILURE - REPLACE LINKS - SITE ID: ' . $sys_siteid);
     }
@@ -206,27 +206,6 @@ class ReplaceLinks extends CgovPluginBase {
 
     return $id_array;
 
-  }
-
-  /**
-   * Returns and entity of an unknown type.
-   *
-   * Percussion items have a one to one mapping to Drupal so there should be no
-   * overlap in terms of node and media entity_ids. We are assuming
-   * the incoming ID belongs to one entity type and not both.
-   */
-  private function getEntityOfUnknownType($entity_id) {
-
-    $entity_storage = \Drupal::entityTypeManager()->getStorage('node');
-    $entity = $entity_storage->load($entity_id);
-
-    // Try to load the id as a media item otherwise.
-    if (empty($entity)) {
-      $entity_storage = \Drupal::entityTypeManager()->getStorage('media');
-      $entity = $entity_storage->load($entity_id);
-    }
-
-    return $entity;
   }
 
   /**

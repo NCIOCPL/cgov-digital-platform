@@ -14,6 +14,12 @@ abstract class CgovPluginBase extends ProcessPluginBase {
   protected $migLog;
   protected $doc;
 
+  protected $skippedVariants = [
+    2487 => 'cgvDsListNoTitleDescriptionImage',
+    2489 => 'cgvDsListNoTitleDescriptionNoImage',
+    2539 => 'nvcgSnImageCarouselCenter',
+  ];
+
   /**
    * {@inheritdoc}
    */
@@ -264,6 +270,27 @@ abstract class CgovPluginBase extends ProcessPluginBase {
     }
 
     return $values;
+  }
+
+  /**
+   * Returns and entity of an unknown type.
+   *
+   * Percussion items have a one to one mapping to Drupal so there should be no
+   * overlap in terms of node and media entity_ids. We are assuming
+   * the incoming ID belongs to one entity type and not both.
+   */
+  protected function getEntityOfUnknownType($entity_id) {
+
+    $entity_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $entity = $entity_storage->load($entity_id);
+
+    // Try to load the id as a media item otherwise.
+    if (empty($entity)) {
+      $entity_storage = \Drupal::entityTypeManager()->getStorage('media');
+      $entity = $entity_storage->load($entity_id);
+    }
+
+    return $entity;
   }
 
 }
