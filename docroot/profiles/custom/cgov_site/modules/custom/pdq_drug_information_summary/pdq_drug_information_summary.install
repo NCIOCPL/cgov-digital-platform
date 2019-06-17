@@ -26,5 +26,4 @@ function pdq_drug_information_summary_install() {
   ];
   $siteHelper->addContentTypePermissions('pdq_drug_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
   $siteHelper->addRolePermissions(['pdq_importer' => $restfulPermissions]);
-  $siteHelper->attachContentTypeToWorkflow('pdq_drug_information_summary', 'pdq_workflow');
 }

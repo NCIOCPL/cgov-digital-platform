@@ -5,7 +5,7 @@
  * Contains cgov_cancer_center.install.
  */
 
- use Drupal\taxonomy\Entity\Term;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_install().
@@ -20,7 +20,6 @@ function cgov_cancer_center_install() {
 
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_cancer_center', ['content_author']);
-  $siteHelper->attachContentTypeToWorkflow('cgov_cancer_center', 'editorial_workflow');
 
   $typeItems = [
     'Cancer Center',
