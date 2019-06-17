@@ -64,18 +64,13 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     $build = [];
-
-    // If our entity exists, get the nid (content id) and bundle (content type).
-    if ($curr_entity = $this->blogManager->getCurrentEntity()) {
-      $content_id = $curr_entity->id();
-      $series = $this->blogManager->getSeriesEntity();
-    }
+    $series = $this->blogManager->getSeriesEntity();
 
     // Set return values by Archive field selection.
     if (!empty($series)) {
       $group_by = $series->field_archive_group_by->getValue()['0']['value'];
       $years_back = $series->field_archive_back_years->getValue()['0']['value'];
-      $archive = $this->drawArchiveData($content_id, $years_back, $group_by);
+      $archive = $this->drawArchiveData($years_back, $group_by);
       $path = $this->blogManager->getSeriesPath();
       $build = [
         'archive_data' => $archive,
@@ -95,16 +90,14 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Get a collection of years and months.
    *
-   * @param string $cid
-   *   The node id of the current content item.
    * @param string $years_back
    *   The number of archive years to show.
    * @param string $group_by
    *   Archive granularity (years vs. months).
    */
-  private function drawArchiveData($cid, $years_back, $group_by) {
+  private function drawArchiveData($years_back, $group_by) {
     // Get an array of years and months.
-    $archive_dates = $this->getMonthsAndYears($cid);
+    $archive_dates = $this->getMonthsAndYears();
     $min_year = intval(date('Y') - $years_back);
 
     // Get data based on group_by setting.
@@ -119,37 +112,52 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * Get a collection of years and months.
-   *
-   * @param string $cid
-   *   The node id of the current content item.
    */
-  private function getMonthsAndYears($cid) {
+  private function getMonthsAndYears() {
     // Get all available Blog Posts in current language.
+    $dates_raw = $this->getSortedDates();
     $dates = [];
-    $post_nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post');
+
+    /*
+     * Build associative array. Iterate through each date and
+     * format as date[year] => [month].
+     */
+    foreach ($dates_raw as $date) {
+      $date = explode('-', $date);
+      $dates[] = [
+        'year' => $date[0],
+        'month' => $date[1],
+      ];
+    }
+    return $dates;
+  }
+
+  /**
+   * Get a descending array of Blog Post dates.
+   */
+  private function getSortedDates() {
+    // Get all available Blog Posts in current language.
+    $nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post');
+    $dates = [];
 
     // Get current series ID.
     $filter_series = $this->blogManager->getSeriesId();
 
     /*
-     * Build associative array. Iterate through each Blog Post node and push
-     * those where field_blog_series matches the filter series.
+     * Get node dates where field_blog_series matches the filter series.
      */
-    foreach ($post_nids as $post_nid) {
-      $post_node = $this->blogManager->getNodeFromNid($post_nid);
-      $field_blog_series = $post_node->field_blog_series->target_id;
+    foreach ($nids as $nid) {
+      $node = $this->blogManager->getNodeFromNid($nid);
+      $field_blog_series = $node->field_blog_series->target_id;
 
       // Get the date posted field, then split for the link values.
       if ($field_blog_series == $filter_series) {
-        $date = $post_node->field_date_posted->value;
-        $date = explode('-', $date);
-        $dates[] = [
-          'year' => $date[0],
-          'month' => $date[1],
-        ];
+        $dates[] = $node->field_date_posted->value;
       }
     }
 
+    // Do rsort() to handle improperly sorted dates from query.
+    rsort($dates);
     return $dates;
   }
 
