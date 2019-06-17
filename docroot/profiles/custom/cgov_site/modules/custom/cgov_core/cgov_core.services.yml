@@ -34,6 +34,11 @@ services:
     arguments: ['@current_user', '@current_route_match', '@language_manager']
     tags:
       - { name: event_subscriber }
+  cgov_core.cms_protection:
+    class: Drupal\cgov_core\EventSubscriber\CmsProtectionSubscriber
+    arguments: ['@current_user', '@current_route_match', '@url_generator', '@module_handler']
+    tags:
+      - { name: event_subscriber }
   cgov_core.url_path_processor:
     class: Drupal\cgov_core\Plugin\PathProcessor\UrlProcessor
     arguments: ['@path.alias_manager', '@language_manager', '@service_container']
