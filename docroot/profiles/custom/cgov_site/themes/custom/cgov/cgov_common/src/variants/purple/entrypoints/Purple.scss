@@ -42,8 +42,7 @@ $bronze: #c78005;
 .contentzone h4 a,
 .contentzone h5 a,
 .contentzone h6 a,
-.main-content .feature-card a,
-.feature-card.cgvArticle a h3,
+.main-content .feature-card a, 
 ul.breadcrumbs>* a,
 .pullquote,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
@@ -76,7 +75,6 @@ li a {
 .contentzone h5 a:hover,
 .contentzone h6 a:focus,
 .contentzone h6 a:hover,
-a .feature-card.cgvArticle a:hover h3,
 .main-content a.title:hover,
 .card-thumbnail h3 a:hover,
 .card-thumbnail h3 a:focus,
@@ -88,15 +86,12 @@ a .feature-card.cgvArticle a:hover h3,
 .list.managed li.has-media:focus a,
 .list.dynamic li.has-media:hover a,
 .list.dynamic li.has-media:focus a,
-.feature-card.cgvArticle a:hover h3,
 .sub-nav-group a.sub-nav-group-header:hover,
 .sub-nav-group a.sub-nav-group-header:focus,
 .main-content .guide-card a.arrow-link:hover,
 .main-content .guide-card a.arrow-link:focus,
 .feature-card a:hover,
 .feature-card a:focus,
-.feature-card a:hover h3,
-.feature-card a:focus h3,
 .post-title a:hover,
 .post-title a:focus,
 .feature-secondary a:hover,
@@ -122,7 +117,9 @@ a .feature-card.cgvArticle a:hover h3,
 .contentzone table tbody tr td a:hover,
 .contentzone table tbody tr td a:focus,
 a.arrow-link:hover,
-a.arrow-link:focus
+a.arrow-link:focus,
+.topic-feature a:hover h3,
+.topic-feature a:focus h3
 {
   color: $sangria;
 }
@@ -235,7 +232,9 @@ a.arrow-link:hover:before {
 
 .feature-primary {
   .card {
-    background-color: $ultra-violet;
+    &:not(.topic-feature){
+      background-color: $ultra-violet;
+    }
   }
 
   &.multimedia-slot {
@@ -396,6 +395,20 @@ form button[type="submit"]:hover {
 }
 
 @include bp(medium-down) {
+
+  .mobile-menu-bar {
+    a,
+    button {
+      width: 28%;
+      margin-left: 0;
+    }
+
+    .nav-search {
+      float: right;
+    }
+  }
+
+
   #section-menu-button {
     background-color: $iris;
   }
