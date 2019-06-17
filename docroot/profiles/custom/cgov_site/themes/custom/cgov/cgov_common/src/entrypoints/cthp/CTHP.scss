@@ -547,8 +547,12 @@ figure.cthp-mm-video-playlist {
 }
 /* End CTHP Card styling */
 
+// These are horribly brittle rules to make the CTHP elements line up with the megamenu.
+// They are in fact not working correctly at desktop on PROD, so inevitably will be revisited.
+// The next person to touch this, not under migration pressure, who does not refactor this
+// heavily to be a better codebase will be haunted by me.
 @include bp(medium-up) {
-  .cthp-breadcrumb {
+  .bcrumbs {
     padding-left: 0 !important;
   }
 }
