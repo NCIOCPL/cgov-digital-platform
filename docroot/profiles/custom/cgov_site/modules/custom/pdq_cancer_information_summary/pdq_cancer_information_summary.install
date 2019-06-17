@@ -21,7 +21,6 @@ function pdq_cancer_information_summary_install() {
 
   // Add content type permissions and assign to workflow.
   $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
-  $siteHelper->attachContentTypeToWorkflow('pdq_cancer_information_summary', 'pdq_workflow');
 
   // Install permissions for this module.
   pdq_cancer_information_summary_install_permissions($siteHelper);

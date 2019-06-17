@@ -162,18 +162,6 @@ class CgovCoreTools {
   }
 
   /**
-   * Links a content type to a workflow.
-   *
-   * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.
-   */
-  public function attachContentTypeToWorkflow($type_name, $workflow_name) {
-    $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
-    $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
-    $workflow->save(TRUE);
-  }
-
-  /**
    * Links a media type to a workflow.
    *
    * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.

@@ -7,6 +7,7 @@ use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\Tests\cgov_core\Traits;
 
 /**
  * Ensure that PDQ workflows conform to requirements.
@@ -16,6 +17,7 @@ use CgovPlatform\Tests\CgovSchemaExclusions;
  */
 class WorkflowTest extends KernelTestBase {
 
+  use Traits\CGovWorkflowAttachmentTrait;
   use NodeCreationTrait;
   use UserCreationTrait;
 
@@ -52,12 +54,11 @@ class WorkflowTest extends KernelTestBase {
     // the permissions for the roles we are testing below.
     \Drupal::service('module_installer')->install(['pdq_core']);
 
-    $tools = $this->container->get('cgov_core.tools');
     $node_type = NodeType::create(['type' => 'pony']);
     $node_type->save();
     $node_type = NodeType::create(['type' => 'unicorn']);
     $node_type->save();
-    $tools->attachContentTypeToWorkflow('unicorn', 'pdq_workflow');
+    $this->attachContentTypeToWorkflow('unicorn', 'pdq_workflow');
   }
 
   /**

@@ -8,6 +8,7 @@ use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\Tests\cgov_core\Traits;
 
 /**
  * Ensure that cgov_site workflows conform to requirements.
@@ -17,6 +18,7 @@ use CgovPlatform\Tests\CgovSchemaExclusions;
  */
 class WorkflowTest extends KernelTestBase {
 
+  use Traits\CGovWorkflowAttachmentTrait;
   use NodeCreationTrait;
   use UserCreationTrait;
 
@@ -66,10 +68,9 @@ class WorkflowTest extends KernelTestBase {
       'delete any pony content',
       'edit any pony content',
     ];
-    $tools = $this->container->get('cgov_core.tools');
     $node_type = NodeType::create(['type' => 'pony', 'label' => 'Pony']);
     $node_type->save();
-    $tools->attachContentTypeToWorkflow('pony', 'editorial_workflow');
+    $this->attachContentTypeToWorkflow('pony', 'editorial_workflow');
     $this->users['admin'] = $this->createUser([], NULL, TRUE);
     $this->users['author'] = $this->createUser($perms);
     $this->users['author']->addRole('content_author');
