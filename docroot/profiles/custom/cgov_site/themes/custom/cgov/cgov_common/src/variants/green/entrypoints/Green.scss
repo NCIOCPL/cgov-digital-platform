@@ -452,9 +452,12 @@ figure a.article-image-enlarge:hover {
   background-color: $content-view-button-hover-background;
 }
 
-.feature-primary .feature-card,
-.feature-primary .card {
-  background-color: $landing-page-feature-card-background;
+.feature-primary {
+  .card {
+    &:not(.topic-feature){
+      background-color: $landing-page-feature-card-background;
+    }
+  }
 }
 
 .feature-primary .feature-card a h3,
