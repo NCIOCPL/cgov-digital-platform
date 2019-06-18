@@ -1,25 +1,22 @@
-@smoke @regression @pdq
+@smoke @regression @pdq @javascript @api
 Feature: Perform tasks related to PDQ Import
   In order to utilize the PDQ importer
   the system must allow PDQ items to be created and translated
   so that the migration system can import PDQ elements.
 
-  Background:
-    Given I am logged in as a user with the "pdq_importer,admin_ui" role
-
-
-  @javascript @api @todo
   Scenario Outline: Ability to Translate Content
+    Given I am logged in as a user with the "<Roles>" roles
     Given I should be able to edit a "<Content Type>"
-    Then I fill in the text "Translate"
+    And I should see "Draft" in the "#edit-moderation-state-0-state" element
+    And I should see "Published" in the "#edit-moderation-state-0-state" element
 
     Examples:
-      | Content Type                   |
-      | pdq_cancer_information_summary |
-      | pdq_drug_information_summary   |
+      | Content Type                   | Roles  |
+      | pdq_cancer_information_summary | pdq_importer,admin_ui |
+      | pdq_drug_information_summary   | pdq_importer,admin_ui |
 
-  @javascript @api @errors
   Scenario: Validate fields on PDQ Cancer Summary
+    Given I am logged in as a user with the "pdq_importer,admin_ui" role
     Given I should be able to edit a "pdq_cancer_information_summary"
     Then I fill in "Title" with "Test Title"
     Then I fill in "Browser Title" with "Test Browser Title"
@@ -38,8 +35,8 @@ Feature: Perform tasks related to PDQ Import
     Then I fill in "PDQ Summary URL" with "/pdq/testpage"
     Then press "Save"
 
-  @javascript @api @errors
   Scenario: Validate fields on PDQ Drug Information Summary
+    Given I am logged in as a user with the "pdq_importer,admin_ui" role
     Given I should be able to edit a "pdq_drug_information_summary"
     Then I fill in "Title" with "Test Title"
     Then I fill in "CDR ID" with "1234"
@@ -53,7 +50,3 @@ Feature: Perform tasks related to PDQ Import
     Then I fill in "PDQ Summary URL" with "/pdq/testpage"
     Then press "Save"
 
-  @javascript @api @errors @todo
-  Scenario: Ability to move an item through all workflow states
-    # PDQ Items have unique workdlows. Test it here.
-    # TODO: Implement for PDQ Summary.
