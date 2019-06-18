@@ -17,7 +17,7 @@ class ReplaceLinks extends CgovPluginBase {
   protected $migLog;
   protected $doc;
 
-  private $attributeType = [
+  private $attributeTypes = [
     'class',
     'id',
     'style',
@@ -27,10 +27,33 @@ class ReplaceLinks extends CgovPluginBase {
     'rel',
   ];
 
+  private $knownAttributeTypes = [
+    'class',
+    'id',
+    'style',
+    'target',
+    'a',
+    'onclick',
+    'rel',
+    'href',
+    'sys_dependentvariantid',
+    'sys_dependentid',
+    'inlinetype',
+    'rxinlineslot',
+    'sys_siteid',
+    'sys_folderid',
+    'sys_relationshipid',
+    'sys_contentid',
+    'sys_variantid',
+  ];
+
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value,
+  MigrateExecutableInterface $migrate_executable,
+                            Row $row,
+  $destination_property) {
 
     // Exit early if the field not set.
     if (!isset($value)) {
@@ -46,20 +69,21 @@ class ReplaceLinks extends CgovPluginBase {
     // Replace those anchors with the equivalent drupal '/node/id' URL.
     // If a dependent ID belongs to a microsite, transorms to the static URL.
     $anchors = $doc->getElementsByTagName('a');
+
     foreach ($anchors as $anchor) {
       $sys_dependentid = $anchor->getAttribute('sys_dependentid');
       $sys_siteid = $anchor->getAttribute('sys_siteid');
-      $content = $anchor->nodeValue;
-      if (!empty($sys_dependentid)) {
-        // LOG THE ENCOUNTERED ATTRIBUTES.
-        if ($anchor->hasAttributes()) {
-          foreach ($anchor->attributes as $attr) {
-            $name = $attr->nodeName;
-            $this->migLog->logMessage($pid, "Attribute '$name' :: '$value'", E_WARNING, 'ATTRIBUTES:' . $sys_dependentid);
-          }
-        }
+      $content = $anchor->childNodes;
 
-        $replacementElement = $this->createLinkitEmbed($sys_dependentid, $sys_siteid, $content, $anchor);
+      if (!empty($sys_dependentid)) {
+        // Log the encoountered attributes.
+        $this->logAttributes($pid, $anchor);
+
+        // Create the replacement DOM anchor node.
+        $replacementElement = $this->createLinkitEmbed($pid, $sys_dependentid,
+          $sys_siteid, $content, $anchor);
+
+        // Replace the dom node.
         $anchor->parentNode->replaceChild($replacementElement, $anchor);
 
         $this->migLog->logMessage($pid, 'Link created to perc ID: '
@@ -68,12 +92,25 @@ class ReplaceLinks extends CgovPluginBase {
     }
     // Returned the processed document value.
     $body = $doc->find('body');
-    $size = $body->count();
-    if ($size > 0) {
+    if ($body->count() > 0) {
       $value = $body->html();
     }
-
     return $value;
+  }
+
+  /**
+   * Log new attributes to migration log.
+   */
+  public function logAttributes($pid, $anchor) {
+    if ($anchor->hasAttributes()) {
+      foreach ($anchor->attributes as $attr) {
+        $name = $attr->nodeName;
+        if (!in_array($name, $this->knownAttributeTypes)) {
+          $this->migLog->logMessage($pid, "Attribute '$name' ", E_ERROR,
+            'NEW ATTRIBUTES');
+        }
+      }
+    }
   }
 
   /**
@@ -82,10 +119,12 @@ class ReplaceLinks extends CgovPluginBase {
    * @return string
    *   Returns the linkit embed for this node.
    */
-  public function createLinkitEmbed($entity_id, $sys_siteid, $content, $anchor) {
+  public function createLinkitEmbed($pid, $entity_id, $sys_siteid, $content, $anchor) {
 
-    $translationList = $this->getContentIdArray('translationid.json', 'ID');
-    $dcegList = $this->getContentIdArray('cross-site-links-dceg.json', 'CONTENTID');
+    $translationList = $this->getContentIdArray('translationid.json',
+      'ID');
+    $dcegList = $this->getContentIdArray('cross-site-links-dceg.json',
+      'CONTENTID');
 
     // Grab the Entity, either a file or node.
     $entity = $this->getEntityOfUnknownType($entity_id);
@@ -96,13 +135,13 @@ class ReplaceLinks extends CgovPluginBase {
       // The linked to item has been loaded into this instance as a node or
       // media item.
       // Set the required drupal attributes.
-      $attributes = $this->generateAttributes($entity);
+      $attributes = $this->generateLinkAttributes($entity);
     }
     elseif (array_key_exists($entity_id, $translationList)) {
       // The entity id doesn't live on this Drupal instance but is in the
       // reference list of items.
       // Check to see if it's been imported as a translation.
-      $url = $translationList[$entity_id]['url'];
+      $url = 'https://' . $translationList[$entity_id]['url'];
       // See if it has an English translation.
       $translationid = $translationList[$entity_id]['translationid'];
 
@@ -113,17 +152,23 @@ class ReplaceLinks extends CgovPluginBase {
 
         if (!empty($englishEntity)) {
           // The item was loaded into the system, generate the spanish url.
-          $attributes = $this->generateAttributes($englishEntity, 'espanol');
-          $this->migLog->logMessage('0', 'Replacing  spanish link which has entity ID ' . $entity_id .
-            ' and link text: ' . $content . 'to english id' . $translationid, E_NOTICE, 'REPLACE LINKS');
+          $attributes = $this->generateLinkAttributes($englishEntity, 'espanol');
+          $this->migLog->logMessage($pid, 'Replacing  spanish link which has entity ID ' .
+            $entity_id .
+            'to english id' . $translationid, E_NOTICE, 'REPLACE TRANSLATION');
         }
+
+        $this->migLog->logMessage($pid, 'ERROR: ' . $entity_id .
+          'THe item has a translation ID but the translation entity was not loaded ' .
+          $url, E_ERROR, 'POSSIBLE FAILURE - REPLACE LINKS');
       }
       else {
         // The item was in the list but has no translation.
         // MEANING:It is either a cross-site link, a non-accounted for item,
         // or a failed Drupal Item.
-        $this->migLog->logMessage('0', 'WARNING: ' . $entity_id .
-           ' is either non-loaded or missing. THe URL was: ' . $url, E_WARNING, 'POSSIBLE FAILURE - REPLACE LINKS - SITE ID :' . $sys_siteid);
+        $this->migLog->logMessage($pid, 'WARNING: ' . $entity_id .
+          ' is either non-loaded or missing. THe URL was: ' . $url, E_WARNING,
+          'POSSIBLE FAILURE - REPLACE LINKS - SITE ID :' . $sys_siteid);
 
         $attributes = [
           'href' => $url,
@@ -135,24 +180,43 @@ class ReplaceLinks extends CgovPluginBase {
       // is part of DCEG. If so create a static link.
       // Note: If the migration being run IS DCEG and the item failed or
       // is unaccounted for this may bas it. Log a warning.
-      $url = $dcegList[$entity_id]['URL'];
+      $url = 'https://' . $dcegList[$entity_id]['URL'];
       $attributes = [
         'href' => $url,
       ];
-      $this->migLog->logMessage('0', 'DCEG WARNING: ' . $entity_id .
-        'Link replacement for DCEG link. THe URL was: ' . $url, E_WARNING, 'POSSIBLE DCEG FAILURE - REPLACE LINKS - SITE ID: ' . $sys_siteid);
+      $this->migLog->logMessage($pid, 'DCEG WARNING: ' . $entity_id .
+        'Link replacement for DCEG link. THe URL was: ' . $url, E_WARNING,
+        'POSSIBLE DCEG FAILURE - REPLACE LINKS - SITE ID: ' . $sys_siteid);
     }
     else {
-      $this->migLog->logMessage('0', 'ERROR: ' . $entity_id .
-        ' is missing from the system and reference list. Site ID: ' . $sys_siteid, E_ERROR, 'FAILURE - Site ID:' . $sys_siteid);
+      $this->migLog->logMessage($pid, 'ERROR: ' . $entity_id .
+        ' is missing from the system and reference list. Site ID: ' .
+        $sys_siteid, E_ERROR, 'FAILURE - Site ID:' . $sys_siteid);
     }
 
     // Create the new element.
     $element = $this->doc->createElement('a');
-    $element->appendChild($this->doc->createTextNode($content));
 
+    // Create a document fragment to append child nodes to.
+    $frag = $this->doc->createDocumentFragment();
+
+    // For each child DOM node of the anchor, if it's a text code append the
+    // text content, otherwise append the DOM node .
+    foreach ($content as $node) {
+      if ($node->nodeType == XML_TEXT_NODE) {
+        $frag->appendChild($this->doc->createTextNode($anchor->nodeValue));
+      }
+      else {
+        $frag->appendChild($node);
+      }
+    }
+
+    // If it's not empty append the children to the new anchor element.
+    if (($frag->hasChildNodes())) {
+      $element->appendChild($frag);
+    }
     // Set the following pre-existing attributes from the incoming link.
-    foreach ($this->attributeType as $type) {
+    foreach ($this->attributeTypes as $type) {
       $attrValue = $anchor->getAttribute($type);
       if (!empty($attrValue)) {
         $attributes[$type] = $attrValue;
@@ -169,7 +233,7 @@ class ReplaceLinks extends CgovPluginBase {
   /**
    * Generate link attributes given an entity on indiscriminate type.
    */
-  private function generateAttributes($entity, $language = NULL) {
+  private function generateLinkAttributes($entity, $language = NULL) {
 
     if (!empty($language)) {
       $href = '/' . $language . '/' . $entity->getEntityTypeId() . '/' . $entity->id();
@@ -186,60 +250,6 @@ class ReplaceLinks extends CgovPluginBase {
     ];
 
     return $attributes;
-  }
-
-  /**
-   * Helper function. Group array data, then flatten, by key.
-   */
-  private function getContentIdArray($filename, $key) {
-    // The entity doesn't live on this Drupal instance.
-    // Check to see if it's a cross site link. If so, create a static link.
-    // Parse the json.
-    $module_handler = \Drupal::service('module_handler');
-    $module_path = $module_handler->getModule('cgov_migration')->getPath();
-
-    $json = file_get_contents($module_path . '/migrations/' . $filename);
-
-    // Format the data to a more manageable array.
-    $link_array = json_decode($json, TRUE);
-    $id_array = $this->groupAndFlattenArray($link_array, $key);
-
-    return $id_array;
-
-  }
-
-  /**
-   * Helper function. Group array data, then flatten, by key.
-   */
-  private function groupAndFlattenArray($arr, $group, $preserveGroupKey = FALSE, $preserveSubArrays = FALSE) {
-    $temp = [];
-
-    if (!empty($arr)) {
-      foreach ($arr as $key => $value) {
-        $groupValue = $value[$group];
-        if (!$preserveGroupKey) {
-          unset($arr[$key][$group]);
-        }
-        if (!array_key_exists($groupValue, $temp)) {
-          $temp[$groupValue] = [];
-        }
-
-        if (!$preserveSubArrays) {
-          $data = count($arr[$key]) == 1 ? array_pop($arr[$key]) : $arr[$key];
-        }
-        else {
-          $data = $arr[$key];
-        }
-        $temp[$groupValue][] = $data;
-      }
-
-      // Flatten the grouped array.
-      foreach ($temp as &$tempKey) {
-        $tempKey = $tempKey[0];
-      }
-    }
-
-    return $temp;
   }
 
 }
