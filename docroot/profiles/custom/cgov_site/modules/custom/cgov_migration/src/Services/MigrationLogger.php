@@ -44,7 +44,7 @@ class MigrationLogger {
     $now = time();
 
     // Trim the message.
-    $message = mb_strimwidth($message, 0, 100);
+    $message = mb_strimwidth($message, 0, 150);
 
     $this->database->insert('cgov_migration_message_log')
       ->fields([

@@ -20,98 +20,33 @@ class ReplaceEmbeds extends CgovPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value,
+  MigrateExecutableInterface $migrate_executable,
+                            Row $row,
+  $destination_property) {
 
     // Exit early if the field not set.
     if (!isset($value)) {
       return NULL;
     }
 
+    // Setup the DomDocument.
     $doc = $this->doc;
     $pid = $this->getPercID($row);
-
     $doc->html($value);
+
+    // Find the elements to process.
     $allDivs = $doc->getElementsByTagName('placeholder');
-    for ($i = $allDivs->length - 1; $i >= 0; $i--) {
-      $divNode = $allDivs->item($i);
-      $sys_dependentvariantid = $divNode->getAttr('sys_dependentvariantid');
 
-      // The embedded items ID.
-      $sys_dependentid = $divNode->getAttr('sys_dependentid');
+    $this->processEmbeds($pid, $allDivs, 'EMBED');
 
-      if (!empty($sys_dependentvariantid)) {
-        // Populate the attributes for the Drupal embed.
-        $embedAttributes = $this->getEmbedAttributes($sys_dependentvariantid);
-
-        if (!empty($embedAttributes)) {
-          $replacementEmbed = $this->createEmbedText($sys_dependentid, $embedAttributes);
-          $divNode->parentNode->replaceChild($replacementEmbed, $divNode);
-          $this->migLog->logMessage($pid, 'Embed replaced for perc ID: ' . $sys_dependentid, E_NOTICE, $sys_dependentvariantid);
-        }
-        else {
-          // Put an error placeholder.
-          if (in_array($sys_dependentvariantid, $this->skippedVariants)) {
-            $variantMessage = " Variant: {$sys_dependentvariantid} Template: {$this->skippedVariants[$sys_dependentvariantid]}  ";
-          }
-          else {
-            $variantMessage = '';
-          }
-
-          $this->migLog->logMessage($pid, 'No embed mapping found for:' . $sys_dependentvariantid . ' on PID ' . $pid . $variantMessage, E_ERROR, $sys_dependentvariantid);
-          $replacementEmbed = $this->doc->createElement('drupal-entity', 'ERROR REPLACING ENTITY: ' . $sys_dependentid . ' With variant: ' . $sys_dependentvariantid);
-          $divNode->parentNode->replaceChild($replacementEmbed, $divNode);
-
-        }
-      }
-    }
-
+    // Return the value.
     $body = $doc->find('body');
-    $size = $body->count();
-    if ($size > 0) {
+    if ($body->count() > 0) {
       $value = $body->html();
     }
 
     return $value;
-  }
-
-  /**
-   * Create a embed item to insert into text.
-   *
-   * @return string
-   *   Returns the embed item for this entity.
-   */
-  public function createEmbedText($entity_id, $values) {
-
-    $entity_storage = \Drupal::entityTypeManager()->getStorage($values['data_entity_type']);
-    $entity = $entity_storage->load($entity_id);
-
-    $element = $this->doc->createElement('drupal-entity');
-    if (!empty($entity)) {
-      $view_mode = !empty($values['view_mode']) ? $values['view_mode'] : NULL;
-      $data_align = !empty($values['data_align']) ? $values['data_align'] : NULL;
-      $data_caption = !empty($values['data_caption']) ? $values['data_caption'] : NULL;
-      $data_embed_button = !empty($values['data_embed_button']) ? $values['data_embed_button'] : NULL;
-      $data_entity_type = !empty($values['data_entity_type']) ? $values['data_entity_type'] : NULL;
-      $attributes = [
-        'data-embed-button' => $data_embed_button,
-        'data-entity-embed-display' => $view_mode,
-        'data-entity-type' => $data_entity_type,
-        'data-entity-uuid' => $entity->get('uuid')->value,
-      ];
-      if (!empty($data_align)) {
-        $attributes['data-align'] = $data_align;
-      }
-      $attributes['data-caption'] = $data_caption;
-
-      foreach ($attributes as $key => $value) {
-        $element->setAttribute($key, $value);
-      }
-    }
-    else {
-
-      $element = $this->doc->createElement('drupal-entity', 'WARNING: UNABLE TO AUTOMATICALLY REPLACE ENTITY: ' . $entity_id);
-    }
-    return $element;
   }
 
 }
