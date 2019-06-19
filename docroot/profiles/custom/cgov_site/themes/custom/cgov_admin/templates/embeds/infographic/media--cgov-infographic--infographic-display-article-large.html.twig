@@ -3,7 +3,7 @@
 {% set classes = "large" %}
 
 {# Get the aliased path for the infographic #}
-{% set infographic_uri = media.path.0.alias %}
+{% set infographic_uri = path('entity.media.canonical', {'media': media.mid[0].value }) %}
 
 {% if content.field_image_promotional[0] %}
 
