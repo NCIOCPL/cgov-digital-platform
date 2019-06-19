@@ -18,3 +18,12 @@ cgov_core.frontend_globals:
     config_object:
       type: string
       label: 'Frontend Globals JSON Config Object'
+
+# Missing from the crop module. Without this, the unit tests fail.
+media.type.*.third_party.crop:
+  type: mapping
+  label: 'Crop settings'
+  mapping:
+    image_field:
+      type: string
+      label: 'Field storing image to be cropped'
