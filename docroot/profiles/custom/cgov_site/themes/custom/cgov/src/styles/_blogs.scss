@@ -47,7 +47,7 @@ p.blog-post-publishing-info {
 	.post-info .post-title > a {
 		display: block;
 		float: right;
-		
+
 		// @TODO: Remove once IntenseDebate has been correctly implemented to replace Disqus
 		.blog-list & {
 			display: none;
@@ -55,7 +55,7 @@ p.blog-post-publishing-info {
 	}
 	// this was done to override the padding that foundation rows get. The requirement was no left padding for the images on the blog results page, ie /news-events/cancer-currents-blog
 	.post-thumb {
-		padding-left: 0;	
+		padding-left: 0;
 	}
 	.post-thumb img {
 		max-width: 100%;
@@ -65,14 +65,14 @@ p.blog-post-publishing-info {
 .cgvblogseries {
 	.list {
 		a.title {
-			font-size: 1.5em;	
+			font-size: 1.5em;
 		}
 	}
 }
 
 @include bp(small) {
 	.post-thumb {
-		display: none;	
+		display: none;
 	}
 }
 
@@ -216,7 +216,7 @@ p.blog-post-publishing-info {
 
 @include bp(medium-up) {
 	// set width of blog intro text for tablet and desktop, depending on size of image
-	figure.image-right-medium + .blog-intro-text { 
+	figure.image-right-medium + .blog-intro-text {
 		width: 60%;
 	}
 	figure.image-right-small + .blog-intro-text {
@@ -234,22 +234,20 @@ p.blog-post-publishing-info {
 }
 
 @include bp(large-up) {
-	.blog-post {
-		// hide the left nav from view on large-up for blog posts
-		#nvcgSlSectionNav {
-			display: none !important;
-		}
-		
-		// correct the contentzone padding, as the nav is hidden
-		.contentzone {
-			padding-left: 1.6em !important;
-			
-			// if the right rail is missing, set the contentzone width to 100
-			&:last-child {
-				width:100%;
-			}
-		}
-	}
+  // hide the left nav from view on large-up for blog posts
+  #nvcgSlSectionNav {
+    display: none !important;
+  }
+
+  // correct the contentzone padding, as the nav is hidden
+  .contentzone {
+    padding-left: 1.6em !important;
+
+    // if the right rail is missing, set the contentzone width to 100
+    &:last-child {
+      width:100%;
+    }
+  }
 }
 
 @include bp(small) {
@@ -265,7 +263,7 @@ p.blog-post-publishing-info {
 #blog-cards {
 	.columns {
 		// overwrite foundation default behavior of floating last column to the right, WCMSFEQ-506
-		float: left !important;	
+		float: left !important;
 	}
 }
 
@@ -280,8 +278,8 @@ p.blog-post-publishing-info {
 	#nvcgSlListBlogRTRail {
 		.block-region-second {
 			> .slot-item {
-				float: left; 
-				width: 30%; 
+				float: left;
+				width: 30%;
 				margin: 10px;
 			}
 		}
