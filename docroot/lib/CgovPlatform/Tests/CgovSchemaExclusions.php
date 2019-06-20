@@ -16,6 +16,8 @@ class CgovSchemaExclusions {
     'metatag.metatag_defaults.global',
     'metatag.metatag_defaults.node',
     'metatag.metatag_defaults.media',
+    'metatag.metatag_defaults.403',
+    'metatag.metatag_defaults.404',
   ];
 
 }
