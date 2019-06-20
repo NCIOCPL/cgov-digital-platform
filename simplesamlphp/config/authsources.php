@@ -1,5 +1,23 @@
 <?php
 
+// Determine which IDP to use in this environment.
+$idp = 'not set!';
+switch ( $_ENV['AH_SITE_ENVIRONMENT'] ) {
+  case '01live':
+  case '01update':
+    $idp = 'https://auth.nih.gov/IDP';
+    break;
+
+  case '01test':
+  case '01testup':
+    // This may not be correct.
+    $idp = 'https://authtest.nih.gov/SAML2/IDP';
+    break;
+
+  default:
+    $idp = 'https://authdev.nih.gov/SAML2/IDP';
+}
+
 $config = [
 
     // This is a authentication source which handles admin authentication.
@@ -22,7 +40,7 @@ $config = [
 
         // The entity ID of the IdP this SP should contact.
         // Can be NULL/unset, in which case the user will be shown a list of available IdPs.
-        'idp' => 'https://authdev.nih.gov/SAML2/IDP',
+        'idp' => $idp,
 
         // The URL to the discovery service.
         // Can be NULL/unset, in which case a builtin discovery service will be used.
