@@ -11,6 +11,7 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim cgovimage_migration && drush mim cgovimage_es_migration
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration; drush mim medialink_migration
     drush mim paragraph_en_migration; drush mim paragraph_es_migration
+    drush mim appmodulepage_en_migration && drush mim appmodulepage_es_migration
 
     drush mim pressrelease_en_migration && drush mim pressrelease_es_migration
     drush mim article_en_migration && drush mim article_es_migration
