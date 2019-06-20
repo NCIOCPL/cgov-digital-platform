@@ -2,6 +2,11 @@
 
 set -ev
 
+# Create and preserve build.json for tracking which commit was deployed.
+echo -e "{\n\t\"git-commit\": \"${PIPELINE_GIT_HEAD_REF}\",\n\t\"pipeline-job\": \"${PIPELINE_JOB_ID}\"\n}" > build.json
+git add build.json
+git commit -m "Generate build.json."
+
 export PATH=${COMPOSER_BIN}:$PATH
 export PHANTOMJS_CDNURL=https://cnpmjs.org/mirrors/phantomjs/
 
