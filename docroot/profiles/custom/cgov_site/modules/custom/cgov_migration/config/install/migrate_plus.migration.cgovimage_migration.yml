@@ -119,32 +119,38 @@ process:
   field_media_image:
     plugin: image_import
     source: field_media_image
+    destination: _file_destination
     skip_on_missing_source: true
     skip_on_error: true
 
   field_override_img_thumbnail:
     plugin: image_import
     source: field_override_img_thumbnail
+    destination: _thumbnail_file_destination
     skip_on_missing_source: true
     skip_on_error: true
 
   field_override_img_featured:
     plugin: image_import
     source: field_override_img_featured
+    destination: _featured_file_destination
     skip_on_missing_source: true
     skip_on_error: true
 
   field_override_img_panoramic:
     plugin: image_import
     source: field_override_img_panoramic
+    destination: _panoramic_file_destination
     skip_on_missing_source: true
     skip_on_error: true
 
   field_override_img_social_media:
     plugin: image_import
     source: field_override_img_social_media
+    destination: _social_file_destination
     skip_on_missing_source: true
     skip_on_error: true
+
 
 
 
