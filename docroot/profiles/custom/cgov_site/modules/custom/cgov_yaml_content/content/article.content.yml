@@ -176,3 +176,173 @@
     value: "2012-12-10"
   field_date_updated:
     value: "2018-02-10"
+
+## Article page with clickable testing elements:
+## Sortable table
+## Video carousel
+- entity: 'node'
+  type: 'cgov_article'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title:
+    value: 'Clickable Content'
+  field_page_description:
+    value: 'An article with clickable content for testing'
+  field_browser_title:
+    value: 'Clickable Content'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/pets'
+  field_pretty_url:
+    value: 'test-content'
+  field_article_body:
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Funding Opportunity Announcements (FOA)'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>CGH has partnered with the NCI, Office of Cancer Centers to design a two-year administrative supplement to promote the development of new, or strengthen ongoing, partnerships between investigators at NCI-designated cancer centers and foreign institutions in low- and middle-income countries (LMICs). In addition, the supplements seek to support teams of researchers gathered to address the CPC needs of LMIC populations, while facilitating knowledge sharing between US and foreign investigators.</p>
+            <div style="height: 1px;"></div><figure class="table"><div class=""><div><table class="table-default complex-table" data-sortable="">
+            <thead>
+            <tr>
+            <th scope="col" tabindex="0" data-sorted="false">Title</th>
+            <th scope="col" tabindex="0" data-sorted="false">Announcement Number</th>
+            <th scope="col" data-sortable-type="date" tabindex="0" data-sorted="false">Opening Date</th>
+            <th scope="col" data-sortable-type="date" tabindex="0" data-sorted="false">Expiration Date</th>
+            <th scope="col" tabindex="0" data-sorted="false">Activity Code</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>Microbial-based Cancer Therapy - Bugs as Drugs (R01 Clinical Trial Not Allowed)</td>
+            <td><a title="PAR-19-193" href="https://grants.nih.gov/grants/guide/pa-files/par-19-193.html" target="_blank" rel="noopener noreferrer">PAR-19-193</a></td>
+            <td>05/05/2019</td>
+            <td>05/08/2022</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Modulating Intestinal Microbiota to Enhance Protective Immune Responses against Cancer (R21 Clinical Trial Not Allowed)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-19-199.html">PAR-19-199</a></td>
+            <td>05/10/2019</td>
+            <td>11/09/2021</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>Advancing Cancer Immunotherapy by Mitigating Immune-Related Adverse Events (irAE) (U01 Clinical Trial Not Allowed)</td>
+            <td><a title="RFA-CA-19-044" href="https://grants.nih.gov/grants/guide/rfa-files/RFA-CA-19-044.html" target="_blank" rel="noopener noreferrer">RFA-CA-19-044</a></td>
+            <td>03/25/2019</td>
+            <td>04/26/2019</td>
+            <td>U01</td>
+            </tr>
+            <tr>
+            <td>Pilot and Feasibility Studies Evaluating the Role of RNA Modifications (the 'epitranscriptome') in Cancer Biology (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-177.html">PAR-16-177</a></td>
+            <td>09/16/2016</td>
+            <td>07/17/2019</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>Collaborative Research Projects to Enhance Applicability of Mammalian Models for Translational Research (Collaborative R01)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-17-244.html">PAR-17-244</a></td>
+            <td>05/05/2017</td>
+            <td>05/08/2020</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Research Projects to Enhance Applicability of Mammalian Models for Translational Research (R01)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-17-245.html" target="_blank" rel="noopener noreferrer">PAR-17-245</a></td>
+            <td>05/05/2017</td>
+            <td>05/08/2020</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Gene Fusions in Pediatric Sarcomas (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-252.html">PA-16-252</a></td>
+            <td>09/05/2016</td>
+            <td>05/08/2019</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>"High" or "Medium" Priority AIDS Research on Non-AIDS-defining or AIDS-defining Cancers (R01)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-426.html">PA-16-426</a></td>
+            <td>12/07/2016</td>
+            <td>09/08/2019</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Metabolic Reprogramming to Improve Immunotherapy (R01)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PAR-16-228.html">PAR-16-228</a></td>
+            <td>09/05/2016</td>
+            <td>09/08/2019</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Neural Regulation of Cancer (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PAR-16-246.html">PAR-16-246</a></td>
+            <td>09/26/2016</td>
+            <td>06/28/2019</td>
+            <td>R21</td>
+            </tr>
+            </tbody>
+            </table></div></div></figure>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'The SEER "Did You Know?" video series'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>SEER has developed  <i>Did You Know?</i> video series, in collaboration with NCI's Office of Communications & Public Liaison, to highlight key topics and trends in cancer statistics. Many of the statistics presented in the videos are available in the annual SEER Cancer Statistics Review (CSR). This video series explores three cancer patients&rsquo; and their doctor&rsquo;s thoughts and feelings about prognosis.&nbsp;</span>The videos explain key points about prognosis and how doctors and patients can talk about it in a clear and supportive way. Two viewer guides are also available: for <a href="/about-cancer/diagnosis-staging/prognosis/patient-viewer-guide.pdf" title="">patients</a> (PDF-210KB) and for <a href="/about-cancer/diagnosis-staging/prognosis/provider-viewer-guide.pdf" title="">provider</a> care teams (PDF-210KB).</p>
+            <section id="video-series">
+              <h2>Video Series</h2>
+              <div class="yt-carousel" data-playlist-id="PLYKy4VbxNln5BPBg2OxeXLUo3mi7SYGJv">
+              <div class="row">
+              <div class="columns small-12">
+              <h4>Understanding Cancer Prognosis Video Series</h4>
+              <figure class="yt-carousel-selected video center">
+              <div id="ytplayer" class="flex-video widescreen" data-video-id="" data-video-title="" ytc-index="0">
+              <noscript> <p><a href="" target="_blank" title="">Please enable JavaScript to view this content</a></p> </noscript> </div>
+              </figure>
+              </div></div></div>
+            </section>
+  field_related_resources:
+    - entity: 'paragraph'
+      type: 'cgov_internal_link'
+      field_override_title:
+        - value: 'Override: Feelings and Cancer'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Feelings and Cancer'
+    - entity: 'paragraph'
+      type: 'cgov_internal_link'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_blog_series'
+                title: 'Cancer Currents Blog'
+  field_date_posted:
+    value: '2019-06-19'
+  field_date_reviewed:
+    value: '2019-06-19'
+  field_date_updated:
+    value: '2019-06-19'
+  field_date_display_mode:
+    value: 'reviewed'

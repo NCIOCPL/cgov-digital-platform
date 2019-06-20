@@ -124,6 +124,7 @@ var AppMeasurementCustom = {
             let fullURL = document.URL.toLowerCase();
             s.prop1 = fullURL.substring(0,100);
             s.prop2 = (fullURL.length > 100) ? fullURL.substring(100) : null;
+            s.prop3 = window.location.pathname;
 
             // Set language tracking values.
             s.prop8 = s.getNciPageLang();

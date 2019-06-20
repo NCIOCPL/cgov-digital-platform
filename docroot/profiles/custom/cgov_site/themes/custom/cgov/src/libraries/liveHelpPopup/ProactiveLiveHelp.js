@@ -1,5 +1,6 @@
 import CookieManager from 'js-cookie';
 import LiveChat from 'Core/libraries/liveChat/LiveChat';
+import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
 
 export default class ProactiveLiveHelp {
     constructor(options) {

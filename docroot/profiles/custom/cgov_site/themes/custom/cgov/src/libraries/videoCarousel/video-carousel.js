@@ -2,6 +2,7 @@ import $ from 'jquery';
 import FlexVideoAPI from './flex-video-api';
 import 'slick-carousel';
 import 'Core/libraries/carousel/slick-patch';
+import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
 
 // Number of thumbnails to show in the carousel
 var thumbsToShow = 3;

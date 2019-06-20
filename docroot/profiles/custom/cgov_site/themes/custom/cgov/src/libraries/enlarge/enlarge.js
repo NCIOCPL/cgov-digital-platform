@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'jquery-ui';
+import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
 
 // Function to create an "Enlarge" button to click in order to
 // display a table or image using the entire window area
