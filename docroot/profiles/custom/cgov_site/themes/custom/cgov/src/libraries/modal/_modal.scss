@@ -78,15 +78,19 @@
 }
 
 .modal__btn-close {
-  @include svg-sprite(close-gray);
-  cursor: pointer;
-  font-size: .778em;
   background-color: transparent;
   border: none;
-  min-height: 28px;
+
+  &::before {
+    @include svg-sprite(close-gray);
+    content: '';
+    cursor: pointer;
+  }
+
   &:first-child {
     margin-bottom: 10px;
   }
+
   &:last-child {
     margin-top: 10px;
   }
