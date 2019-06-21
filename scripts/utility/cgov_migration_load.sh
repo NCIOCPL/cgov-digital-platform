@@ -52,6 +52,7 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim file_en_migration
 
     # Migration Updates
+    drush mim update_article_en_migration && drush mim update_article_es_migration
     drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
     drush mim update_pressrelease_en_migration && drush mim update_paragraph_es_migration
     drush mim update_infographic_en_migration && drush mim update_infographic_en_migration
@@ -76,6 +77,10 @@ DCEG)
 
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
+
+    # Migration Updates
+    drush mim update_article_en_migration && drush mim update_article_es_migration
+    drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
 
     drush ms --format=csv
   ;;

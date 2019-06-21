@@ -185,6 +185,8 @@ process:
    default_value: published
   langcode: langcode
 
+
+
   body/value:
     -
       plugin: generate_placeholders
@@ -201,42 +203,16 @@ process:
    plugin: default_value
    default_value: full_html
 
-  temp_text2:
-    plugin: migration_lookup
-    migration: citation_migration
-    no_stub: true
-    source: citation_ids
-
-  field_citation:
-    plugin: iterator
-    source: '@temp_text2'
-    process:
-      target_id: '0'
-      target_revision_id: '1'
-
-
-  field_citation/target_id:
+  field_intro_text/value:
     -
-      plugin: migration_lookup
-      migration: citation_migration
-      no_stub: true
-      source: citation_id
+      plugin: replace_links
+      source: field_intro_text
     -
-      plugin: extract
-      index:
-        - '0'
+      plugin: remove_rx_wrapper
 
-  field_citation/target_revision_id:
-    -
-      plugin: migration_lookup
-      migration: citation_migration
-      no_stub: true
-      source: citation_id
-    -
-      plugin: extract
-      index:
-        - 1
-
+  field_intro_text/format:
+    plugin: default_value
+    default_value: streamlined
 
 
 destination:
