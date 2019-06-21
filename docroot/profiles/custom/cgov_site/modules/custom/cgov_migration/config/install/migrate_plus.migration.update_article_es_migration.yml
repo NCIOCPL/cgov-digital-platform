@@ -1,12 +1,12 @@
-id: update_blogpost_es_migration
-label: 'Custom blogpost Spanish  migration'
+id: update_article_es_migration
+label: 'Custom article migration'
 source:
 
 
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: xml
-  urls: migration:///blogpost_es.xml
+  urls: migration://article_es.xml
   item_selector: /rows/row
   fields:
         -
@@ -22,26 +22,10 @@ source:
          name: langcode
          label: langcode
          selector: '@langcode'
-
-
-
-        -
-         name: field_blog_series
-         label: field_blog_series
-         selector: '@field_blog_series'
-
-
-        -
-         name: field_blog_topics
-         label: field_blog_topics
-         selector: 'field_blog_topics/id'
-
         -
          name: field_search_engine_restrictions
          label: field_search_engine_restrictions
          selector: '@field_search_engine_restrictions'
-
-
 
         -
          name: field_image_promotional
@@ -64,16 +48,6 @@ source:
          label: field_intro_text
          selector: 'intro'
 
-        -
-         name: body
-         label: body
-         selector: 'body'
-
-        -
-         name: field_short_title
-         label: field_short_title
-         selector: '@field_short_title'
-
 
         -
          name: field_browser_title
@@ -85,12 +59,11 @@ source:
          label: field_card_title
          selector: '@field_card_title'
 
-
-
         -
          name: field_page_description
          label: field_page_description
          selector: '@field_page_description'
+
 
         -
          name: field_list_description
@@ -111,11 +84,26 @@ source:
          name: field_date_updated
          label: field_date_updated
          selector: '@field_date_updated'
-
         -
          name: field_date_reviewed
          label: field_date_reviewid
          selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+
+        -
+         name: para_id
+         label: para_id
+         selector: para_id
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
 
         -
          name: date_display_mode
@@ -124,32 +112,31 @@ source:
 
 
         -
-         name: term_id
-         label: term_id
-         selector: '@term_id'
-
-        -
-         name: field_pretty_url
-         label: field_pretty_url
-         selector: '@field_pretty_url'
-
-        -
          name: related_resource_id
          label: related_resource_id
-         selector: related_resource_id
+         selector: related_resource_id/related_resource_id
 
 
 
         -
          name: related_resource_ids
          label: related_resource_ids
-         selector: related_resource_ids
+         selector: related_resource_ids/related_resource_ids
+
 
 
         -
-         name: author
-         label: author
-         selector: '@author'
+         name: para_id
+         label: para_id
+         selector: para_id/para_id
+
+
+
+        -
+         name: para_ids
+         label: para_ids
+         selector: para_ids/para_ids
+
 
         -
          name: citation_id
@@ -157,20 +144,11 @@ source:
          selector: citation_id/citation_id
 
 
+
         -
          name: citation_ids
          label: citation_ids
          selector: citation_ids/citation_ids
-
-        -
-         name: field_recommended_content
-         label: field_recommended_content
-         selector: field_recommended_content/field_recommended_content
-
-        -
-         name: field_recommended_content
-         label: field_recommended_content
-         selector: field_recommended_contents/field_recommended_contents
 
 
   ids:
@@ -181,15 +159,12 @@ process:
   nid:
     plugin: migration_lookup
     source: id
-    migration: blogpost_en_migration
+    migration: article_en_migration
 
   title: title
-
-
   uid:
    plugin: default_value
    default_value: 1
-
 
   status:
    plugin: default_value
@@ -200,7 +175,6 @@ process:
    default_value: published
 
   langcode: langcode
-  field_author: author
 
 
   field_intro_text/value:
@@ -210,34 +184,17 @@ process:
     -
       plugin: remove_rx_wrapper
 
-
   field_intro_text/format:
     plugin: default_value
     default_value: streamlined
 
-  body/value:
-    -
-      plugin: generate_placeholders
-      source: body
-    -
-      plugin: replace_embeds
-    -
-      plugin: replace_inline_images
-    -
-      plugin: replace_links
-    -
-      plugin: remove_rx_wrapper
-  body/format:
-   plugin: default_value
-   default_value: full_html
 
 
 destination:
   plugin: entity:node
-  default_bundle: cgov_blog_post
+  default_bundle: cgov_article
   translations: true
 
 migration_dependencies:
   required:
     - sitesectionsql_migration
-    - blogseries_es_migration
