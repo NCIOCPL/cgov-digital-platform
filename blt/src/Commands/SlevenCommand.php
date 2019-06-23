@@ -63,4 +63,18 @@ class SlevenCommand extends BltTasks {
     return $result;
   }
 
+  /**
+   * Rebuild Drupal Cache.
+   *
+   * @command cgov:cache-rebuild
+   */
+  public function cacheRebuild() {
+    $this->say("Clearing Cache");
+    $task = $this->taskDrush()
+      ->drush('cr')
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
+  }
+
 }
