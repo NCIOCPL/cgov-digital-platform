@@ -32,6 +32,12 @@ if [[ $target_env =~ ^ode\d* ]]; then
   target_env="ode";
 fi
 
+## Clear Drupal Cache to get around Memcache issues? (A CR before an install does
+## not throw errors. BUt without an install is unsuccessful.) (Possibly because
+## the cached items are not longer installed in the database that gets dropped
+## before the installation.)
+blt cgov:rebuild-cache --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
+
 ## Perform a fresh install.
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
 
