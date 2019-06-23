@@ -32,11 +32,11 @@ if [[ $target_env =~ ^ode\d* ]]; then
   target_env="ode";
 fi
 
-## Clear Drupal Cache to get around Memcache issues? (A CR before an install does
-## not throw errors. BUt without an install is unsuccessful.) (Possibly because
-## the cached items are not longer installed in the database that gets dropped
-## before the installation.)
-blt cgov:cache-rebuild --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
+## Clear last install out of Memcache.
+## Drush CR will not work on a non-existant site. Drush CC will not find the memcached
+## backed bins if the site is not installed. So we made our own to work with empty sites
+## to clean out memcache. (DB backing stores disappear as soon as the DB is dropped.)
+drush cgov:destroy-cache
 
 ## Perform a fresh install.
 blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
