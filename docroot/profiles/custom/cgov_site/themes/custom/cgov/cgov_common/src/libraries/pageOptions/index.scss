@@ -58,7 +58,7 @@ a.social-share--custom-tweet {
 
 	&::after {
 		content: '';
-		@include svg-sprite(tweet-this, mq);
+		@include svg-sprite(tweet-this);
 	}
 }
 
@@ -241,11 +241,11 @@ a.social-share--custom-tweet {
 	}
 }
 
-// #1884 atone for the fact that .ncilandingpage and .ncihome landmarks are no longer here 
+// #1884 atone for the fact that .ncilandingpage and .ncihome landmarks are no longer here
 @include bp(medium) {
 	.large-7 {
 		+ .page-options-container {
-			ul { 
+			ul {
 				float: right;
 			}
 		}
