@@ -131,7 +131,28 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
         ];
       }
     }
+
+    // Run through sorting function to handle date wierdness.
+    $blog_links = $this->sortByField($blog_links, 'date');
     return $blog_links;
+  }
+
+  /**
+   * Sort links by a given field.
+   *
+   * @param array $links
+   *   Array of link objects.
+   * @param string $field
+   *   Field to sort by.
+   */
+  private function sortByField(array $links, $field) {
+    if (count($links) > 1) {
+      // Usort callback function.
+      usort($links, function ($a, $b) use ($field) {
+        return strcmp($a[$field], $b[$field]);
+      });
+    }
+    return $links;
   }
 
   /**
