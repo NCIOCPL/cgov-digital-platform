@@ -4,7 +4,7 @@
 {% else %}
   {% set title = content.field_browser_title|field_value %}
 {% endif %}
-{% set infographic_url = media.path.0.alias %}
+{% set infographic_url = path('entity.media.canonical', {'media': media.mid[0].value }) %}
 
 <div class="multimedia-feature-card cgvInfographic non-playable">
   <a href="{{ infographic_url }}">
