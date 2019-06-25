@@ -565,3 +565,19 @@ function _cgov_core_form_moderation_sidebar_quick_transition_form_submit(array $
 
   $form_state->setRedirectUrl($entity->toUrl('edit-form'));
 }
+
+/**
+ * Implements hook_toolbar_alter().
+ *
+ * Unset the acquia_connector toolbar for non-site-admins.
+ */
+function cgov_core_toolbar_alter(&$items) {
+
+  $user_roles = \Drupal::currentUser()->getRoles();
+  // We can assume that only administrator should see the status message.
+  if (!empty($user_roles) && !in_array("site_admin", $user_roles)) {
+
+    unset($items['acquia_connector']);
+  }
+
+}
