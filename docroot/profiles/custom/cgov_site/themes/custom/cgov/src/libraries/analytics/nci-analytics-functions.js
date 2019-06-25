@@ -751,7 +751,7 @@ var NCIAnalytics = {
         };            
         
         clickParams.Evars = {
-            62: 'Clinical Trials: Print Results Page',
+            62: 'Clinical Trials: Print Results Page'
         };
         if(linkVal == "Email" || linkVal == "Print Page"){
             clickParams.Events = [17];
@@ -896,13 +896,12 @@ var NCIAnalytics = {
 
     //******************************************************************************************************
     CustomLink: function(sender, linkData) {
-        let name = linkData.split('|');
-        let label = '';
-        let linkName = linkData;
-        if(name[1] !== 'undefined') {
-            linkName = name[0];
-            label = name[1];
+        if (linkData == null || typeof(linkData) === 'undefined') {
+            linkData = '';
         }
+        let data = linkData.split('|');
+        let linkName = data[0] || 'CustomLink';
+        let label = data[1] || '';
         NCIAnalytics.GenericLinkTrack(sender, label, linkName);
     },
 
@@ -911,11 +910,11 @@ var NCIAnalytics = {
         let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'GovDelivery');
         clickParams.Props = {
             4: label,
-            5: pageName,
+            5: pageName
         };
         clickParams.LogToOmniture();
     },
-    
+
     //******************************************************************************************************
     /**
      * Generic / global link tracking method
@@ -1174,7 +1173,7 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    ContainerItemClick: function(sender, title, text, linkName, index) {
+    CustomIndexedItemClick: function(sender, title, text, linkName, index) {
         NCIAnalytics.IndexedItemClick(sender, title, text, linkName, index, linkName);
     },
 
@@ -1481,8 +1480,12 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    CalloutBoxClick: function(sender, value, linkName) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', linkName);
+    CalloutBoxLinkTrack: function(sender, label, linkName) {
+        let callOut = 'CallOut';
+        let link = linkName + callOut;
+        let value = [linkName, callOut, label].join('_');
+        let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', link);
+
         clickParams.Props = {
             66: value
         };
@@ -1803,7 +1806,7 @@ var NCIAnalytics = {
     TableSortHeaderClick: function(sender) {
         let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'SortTableHeaderClick');
         clickParams.Props = {
-            5: 'table_sort',
+            5: 'table_sort'
         };
         clickParams.LogToOmniture();
     },

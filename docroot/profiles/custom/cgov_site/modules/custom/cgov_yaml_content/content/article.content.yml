@@ -201,7 +201,50 @@
             computed_path: '/pets'
   field_pretty_url:
     value: 'test-content'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>Click links on this page to test custom analytics data attributes. Use of a multipronged approach within hospitals, including community centers, not only eliminated treatment disparities among black and white patients with early-stage lung cancer, it also improved treatment rates for all patients.</p>
   field_article_body:
+    ### Data attributes / custom links
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Common cancer types: custom links'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>There are several main <a href="/types" data-custom-link="CustomLinksTest|Cancer Types">types of cancer</a>. Carcinoma is a cancer that begins in the skin or in tissues that line or cover internal organs. Sarcoma is a cancer that begins in bone, cartilage, fat, muscle, blood vessels, or other connective or supportive tissue. Leukemia is a cancer that starts in blood-forming tissue, such as the bone marrow, and causes large numbers of abnormal blood cells to be produced and enter the blood. Lymphoma and multiple myeloma are cancers that begin in the cells of the immune system. Central nervous system cancers are cancers that begin in the tissues of the brain and spinal cord. Also called malignancy.</p>
+            <div class="callout-box-right"> 
+              <h3>Common Cancer Types</h3>
+              <p><a href="/types/bladder">Bladder Cancer</a><br>
+              <a href="/types/breast">Breast Cancer</a><br>
+              <a href="/types/colorectal">Colon and Rectal Cancer</a><br>
+              <a href="/types/uterine">Endometrial Cancer</a><br>
+              <a href="/types/kidney">Kidney Cancer</a><br>
+              <a href="/types/leukemia">Leukemia</a><br>
+              <a href="/types/liver">Liver Cancer</a><br>
+            </div>
+            <p>Cancer <a href="/about-cancer" data-custom-link="PreventionLink_Test|Prevention">prevention</a> is a critical component of our effort to reduce the burden of cancer in the United States and globally. As a measure of its importance, cancer prevention has the potential, in the long run, to save even more lives than treatment.
+            <p>“It is <a href="#" data-custom-link>important</a> to recognize that cancer mortality rates are declining in the 20-to-49-year-old age group, and that the rates of decline among women in this age group are faster than those in older women,” said Douglas R. Lowy, M.D., acting director of NCI.
+            The authors also reported in the special section that the incidence rates of in situ breast cancer and nonmalignant central nervous system tumors among women and men ages 20 to 49 are substantial. They wrote that some of the most frequent malignant and nonmalignant tumors that occur in this age group may be associated with considerable long-term and late effects related to the disease or its treatment. The authors conclude that access to timely and high-quality treatment and survivorship care is important to improve health outcomes and quality of life for younger adults diagnosed with cancer.</p>
+            <p>Effective <a href="https://prevention.cancer.gov" data-custom-link="CustomLinksTest">prevention</a> will also reduce cancer incidence and morbidity, meaning fewer people will have to face the physical, financial, social, and psychological harms of a cancer diagnosis and treatment.</p>
+            <p><a href="/grants-training/apply-grant" data-custom-link="Grants_Process">Apply for a Grant</a></p>
+            <h5>Indexed links to common cancer types</h5>
+            <div>Select a <a href="/types" data-custom-link>type of cancer</a> to learn about treatment, causes and prevention, screening, and the latest research.</div>
+            <ul>
+              <li><a href="/types/lung" data-indexed-link="Cancer Type Links List|PetCTList|1">Lung Cancer</a></li>
+              <li><a href="/types/skin" data-indexed-link="Cancer Type Links List|PetCTList|2">Melanoma</a></li>
+              <li><a href="/types/lymphoma" data-indexed-link="Cancer Type Links List|PetCTList|3">Lymphoma</a></li>
+              <li><a href="/types/pancreatic" data-indexed-link="Cancer Type Links List|PetCTList|4">Pancreatic Cancer</a></li>
+              <li><a href="/types/prostate" data-indexed-link="Cancer Type Links List|PetCTList|5">Prostate Cancer</a></li>
+              <li><a href="/types/thyroid" data-indexed-link="Cancer Type Links List|PetCTList|6">Thyroid Cancer</a></li>
+              <li><a href="/types/recurrent-cancer" data-indexed-link="Cancer Type Links List|PetCTList">Recurrent Cancer</a></li>
+              <li><a href="/types/metastatic-cancer" data-indexed-link="Cancer Type Links List|PetCTList">Metastatic Cancer</a></li>
+            </ul>
+            <p>One approach to cancer prevention is reducing or eliminating exposures to cancer-causing substances in the environment, such as asbestos, tobacco smoke, and radon gas. Another approach is to protect the body against such exposures or reduce their effect. For example, using sun screen to protect the skin against ultraviolet radiation and getting vaccinated against cancer-causing viruses, including certain types of human papillomavirus (HPV) that cause cervical and several other types of cancer, can protect against processes that can eventually lead to cancer. In addition, some cancer screening tests, such as the Pap smear for cervical cancer and colonoscopy for colorectal cancer, can aid in cancer prevention. These tests detect premalignant lesions that can be removed or destroyed before they progress to cancer.</p>
+    ### Sortable table
     - entity: 'paragraph'
       type: 'body_section'
       field_body_section_heading:
@@ -294,6 +337,7 @@
             </tr>
             </tbody>
             </table></div></div></figure>
+    ### Video carousel
     - entity: 'paragraph'
       type: 'body_section'
       field_body_section_heading:
