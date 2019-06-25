@@ -14,7 +14,7 @@
   {% endif %}
 
   <div class="resize-content">
-    {{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node.label) }}
+    {{ blogMacros.drawBlogSeriesTitle(get.month, get.year, get.topic, node) }}
     <div id="nvcgSubTitle">
       {% if node.field_feedburner_url.value|length > 0 %}
         <div class="subscribeRSS">
