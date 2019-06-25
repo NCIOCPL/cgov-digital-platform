@@ -453,9 +453,8 @@ $(document).ready(function() {
         NCIAnalytics.FooterLink($this, $text);
     });
 
-    /** Data attribute tracking to replace hardcoded values.  */
     // Track GovDelivery links. Look for data attribute only, no value needed.
-    $('#content a[href*="govdelivery.com"], a[data-gov-delivery]').on('click.analytics', function() {
+    $('#content a[href*="govdelivery.com"], a.news-govdelivery, a.blogRSS').on('click.analytics', function() {
         let $this = $(this);
         let $name = 'GovDelivery';
         if ($this.find('img, figure').length) {
@@ -467,24 +466,26 @@ $(document).ready(function() {
         NCIAnalytics.GovDelivery($this, $name);
     });
 
-    // Track callout box links. Attribute values: [text]|[linkName].
-    $('a[data-callout-link]').on('click.analyica', function() {
+    // Track callout box links if not GovDelivery.
+    $('[class*="callout-box"]').on('click.analyics', 'a', function() {
         let $this = $(this);
-        let $data = $this.data('callout-link').split('|');
-        let $text = $data[0] || '';
-        let $linkName = $data[1] || '';
-        NCIAnalytics.CalloutBoxClick($this, $text, $linkName);
+        if (!$this[0].href.includes('govdelivery.com')) {
+            let $title = $('h1').first().text().replace(/\s/g, '');
+            let $text = $this.text().replace(/\s/g, '');
+            NCIAnalytics.CalloutBoxLinkTrack($this, $text, $title);
+        }
     });
 
+    /** Data attribute tracking to replace hardcoded values.  */
     // Track misc container or raw HTML links. Attribute values: [title]|[linkName|[index].
     $('a[data-indexed-link]').on('click.analytics', function() {
         let $this = $(this);
         let $text = $this.text().trim();
         let $data = $this.data('indexed-link').split('|');
         let $title = $data[0] || '';
-        let $linkName = $data[1] || '';
-        let $index = $data[2] || '';
-        NCIAnalytics.ContainerItemClick($this, $title, $text, $linkName, $index);
+        let $linkName = $data[1] || 'CustomIndexedItemClick';
+        let $index = $data[2] || 'none';
+        NCIAnalytics.CustomIndexedItemClick($this, $title, $text, $linkName, $index);
     });
 
     // Track generic custom links. Attribute value: [text].
