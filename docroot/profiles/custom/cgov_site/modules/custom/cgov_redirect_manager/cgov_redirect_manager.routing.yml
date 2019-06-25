@@ -1,0 +1,9 @@
+cgov_redirect_manager.redirect_import:
+  path: '/admin/config/search/cgov-redirect-manager'
+  defaults:
+    _form: '\Drupal\cgov_redirect_manager\Form\RedirectImport'
+    _title: 'Redirect Import Manager'
+  requirements:
+    _permission: 'administer redirects'
+  options:
+    _admin_route: TRUE

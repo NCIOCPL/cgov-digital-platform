@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_redirect_manager.module.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function cgov_redirect_manager_cron() {
+
+  // This takes too long to run in the web interface.
+  // Only run in drush.
+  $isDrush = (PHP_SAPI == 'cli' && function_exists('drush_main'));
+  if (!$isDrush) {
+    return;
+  }
+
+  // Throttle redirect imports to happen at most once ever minute.
+  $tooSoon = (\Drupal::time()->getRequestTime() >= \Drupal::state()->get('system.cron_last') + 60);
+  if (!$tooSoon) {
+    return FALSE;
+  }
+
+  /** @var QueueFactory $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  /** @var QueueWorkerManager $queue_manager */
+  $queue_manager = \Drupal::service('plugin.manager.queue_worker');
+
+  $queue = $queue_factory->get('cgov_redirect_manager_queue_worker');
+  $queue_worker = $queue_manager->createInstance('cgov_redirect_manager_queue_worker');
+
+  $time_limit = 1200;
+  $end = time() + $time_limit;
+
+  // Process all cgov_redirect_manager_queue_worker in the given time.
+  while ((!$time_limit || time() < $end) && ($item = $queue->claimItem())) {
+    try {
+      $queue_worker->processItem($item->data);
+      $queue->deleteItem($item);
+    }
+    catch (RequeueException $e) {
+      // The worker requested the task to be immediately requeued.
+      $queue->releaseItem($item);
+    }
+    catch (SuspendQueueException $e) {
+      // If the worker indicates there is a problem with the whole queue,
+      // release the item.
+      $queue->releaseItem($item);
+      throw new \Exception($e->getMessage());
+    }
+  }
+}
