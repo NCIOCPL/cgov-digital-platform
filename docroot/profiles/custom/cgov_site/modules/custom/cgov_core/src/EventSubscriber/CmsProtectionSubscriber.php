@@ -143,10 +143,13 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
    *   TRUE if it is a login route, FALSE if not.
    */
   private function isLoginRoute() {
-    return (
-      $this->currentRoute->getRouteName() == 'user.login' ||
-      $this->currentRoute->getRouteName() == 'simplesamlphp_auth.saml_login'
-    );
+    $route_name = $this->currentRoute->getRouteName();
+    $login_routes = [
+      'user.login',
+      'user.login.http',
+      'simplesamlphp_auth.saml_login',
+    ];
+    return in_array($route_name, $login_routes);
   }
 
   /**
