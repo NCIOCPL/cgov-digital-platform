@@ -97,10 +97,19 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
     $full_host_arr = explode('.', $full_host);
     $shortname = $full_host_arr[0];
 
-    if (preg_match('/.*-cms(-.*|)$/i', $shortname)) {
-      /* This is a CMS host to be protected */
-      $this->redirectToLogin($event);
+    if (!preg_match('/.*-cms(-.*|)$/i', $shortname)) {
+      return;
     }
+
+    // Get the path and if PDQ API return.
+    $path = $request->getPathInfo();
+    if (preg_match('/^\/pdq\/api/i', $path)) {
+      return;
+    }
+
+    /* This is a CMS host to be protected */
+    $this->redirectToLogin($event);
+
   }
 
   /**
