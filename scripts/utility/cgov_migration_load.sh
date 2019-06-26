@@ -6,7 +6,7 @@ set -ev
 
 
 case $MIGRATION in
-CGOV | NANO | MYPART | NCICONNECT)
+CGOV | NANO | MYPART | NCICONNECT | DCEG)
     drush mim summary_migration && drush mim summaryes_migration && drush mim dis_migration
     drush mim cgovimage_migration && drush mim cgovimage_es_migration
     drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration; drush mim medialink_migration
@@ -47,6 +47,9 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim cthpoverviewcard_migration
     drush mim cthp_en_migration && drush mim cthp_es_migration
 
+    drush mim biography_migration
+    drush mim event_migration
+
     drush mim homelanding_en_migration && drush mim homelanding_es_migration
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
     drush mim file_en_migration
@@ -56,7 +59,10 @@ CGOV | NANO | MYPART | NCICONNECT)
     drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
     drush mim update_pressrelease_en_migration && drush mim update_pressrelease_es_migration
     drush mim update_infographic_en_migration && drush mim update_infographic_es_migration
+
+    drush mim update_biography_migration
     drush mim update_event_migration
+
     drush mim update_cthpcontentblock_migration
 
     drush mim update_contentblock_migration
@@ -67,22 +73,6 @@ CGOV | NANO | MYPART | NCICONNECT)
 
     drush ms --format=csv
 
-  ;;
-DCEG)
-    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration
-    drush mim paragraph_en_migration
-    drush mim cgovimage_migration
-    drush mim article_en_migration
-    drush mim video_en_migration
-
-    drush mim contextualimage_migration && drush mim contextualimage_es_migration
-    drush mim file_en_migration
-
-    # Migration Updates
-    drush mim update_article_en_migration && drush mim update_article_es_migration
-    drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
-
-    drush ms --format=csv
   ;;
 *)
   echo 'MIGRATION NOT SET'
