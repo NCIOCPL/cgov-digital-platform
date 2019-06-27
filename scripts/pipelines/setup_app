@@ -8,7 +8,7 @@ git add build.json
 git commit -m "Generate build.json."
 
 export PATH=${COMPOSER_BIN}:$PATH
-export PHANTOMJS_CDNURL=https://cnpmjs.org/mirrors/phantomjs/
+export PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs
 
 blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
 
