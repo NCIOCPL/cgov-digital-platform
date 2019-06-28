@@ -2,6 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.block_content.embedded_feature_card
+    - core.entity_view_mode.block_content.embedded_feature_card_no_image
     - core.entity_view_mode.block_content.full
     - entity_browser.browser.block_content_browser
   module:
@@ -14,6 +16,8 @@ type_settings:
   entity_type: block_content
   bundles: {  }
   display_plugins:
+    - 'view_mode:block_content.embedded_feature_card'
+    - 'view_mode:block_content.embedded_feature_card_no_image'
     - 'view_mode:block_content.full'
   entity_browser: block_content_browser
   entity_browser_settings:

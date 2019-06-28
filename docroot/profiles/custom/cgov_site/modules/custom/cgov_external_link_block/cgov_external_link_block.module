@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_external_link_block.module.
+ */
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function cgov_external_link_block_field_widget_form_alter(&$element, &$form_state, $context) {
+
+  if (
+    $form_state->getBuildInfo()['form_id'] !== "block_content_cgov_external_link_block_edit_form" &&
+    $form_state->getBuildInfo()['form_id'] !== "block_content_cgov_external_link_block_form" &&
+    $form_state->getBuildInfo()['form_id'] !== "block_content_cgov_external_link_block_add_form"
+  ) {
+    return;
+  }
+
+  if (array_key_exists("#title", $element) && $element['#title'] == "Featured Item Url") {
+    $element['uri']['#process'] = NULL;
+  }
+}
