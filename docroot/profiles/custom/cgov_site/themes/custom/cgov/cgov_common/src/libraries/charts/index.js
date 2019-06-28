@@ -1,12 +1,14 @@
 import Chart from './Chart';
 import rules from './rules';
+import charts from './library';
 import { getShouldLoadChartWrapper } from './utilities';
 
 let isInitialized = false;
 
 /**
- * Add the Chart class to the window in the event that we are on a whitelisted page (where
- * calls to the library will be made by inlined scripts).
+ * We want to spare DOM crawling as much as possible. We'll first test whether the route matches one
+ * that could contain a high chart. Following that, we'll then check the DOM for IDs on elements that match
+ * stored charts.
  *
  */
 const init = () => {
@@ -18,27 +20,16 @@ const init = () => {
   }
 
   const pathName = location.pathname.toLowerCase();
-  const shouldLoadChartWrapper = getShouldLoadChartWrapper(pathName, rules);
+  const shouldCheckForChartHooks = getShouldLoadChartWrapper(pathName, rules);
 
-  if(shouldLoadChartWrapper) {
-    console.log('Chart now available on the window.')
-    window.Chart = Chart;
-    // Broadcast an event saying the chart wrapper has loaded for inline scripts to listen to.
-    /**
-     * Script blocks calling Chart should be wrapped as such:
-     *
-     * ```
-     * const onChartLoaded = () => {
-     *  const $ = window.jQuery; // If the script block uses $
-     *
-     *  // Custom Chart code goes here...
-     *
-     * }
-     * window.addEventListener('NCI.Chart.load', onChartLoaded);
-     * ```
-     */
-
-    window.dispatchEvent(new CustomEvent('NCI.Chart.load'));
+  if(shouldCheckForChartHooks) {
+    for(let i = 0; i < charts.length; i++){
+      const { id, initChart } = charts[i];
+      const el = document.getElementById(id);
+      if(el){
+        initChart(Chart);
+      }
+    }
   }
 }
 
