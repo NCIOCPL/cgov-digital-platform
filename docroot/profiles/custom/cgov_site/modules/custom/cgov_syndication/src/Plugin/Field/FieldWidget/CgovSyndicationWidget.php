@@ -59,6 +59,7 @@ class CgovSyndicationWidget extends WidgetBase implements ContainerFactoryPlugin
     ];
     $element['keywords'] = [
       '#type' => 'textfield',
+      '#maxlength' => 300,
       '#default_value' => $item->keywords ?? '',
       '#title' => 'Keywords',
       '#description' => $this->t('Separate keywords with commas'),
