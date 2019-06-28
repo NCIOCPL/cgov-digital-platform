@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_external_link_block.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_external_link_block_install() {
+  $tools = \Drupal::service('cgov_core.tools');
+  foreach ([
+    'cgov_external_link_block',
+  ] as $block_type) {
+    // Add workflow.
+    $tools->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+  }
+}
