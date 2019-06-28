@@ -1,7 +1,7 @@
 project:
   machine_name: microsite
   prefix: NCIOCPL
-  human_name: 'Cancer.gov Digital Platform Microsite'
+  human_name: 'National Cancer Institute'
   profile:
     name: cgov_site
   local:
@@ -26,32 +26,32 @@ drush:
 modules:
   local:
     enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
-    uninstall: [acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge]
+    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge]
   ci:
     enable: {  }
     uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
   ode:
-    enable: [acquia_connector, shield, cgov_caching_nocdn]
-    uninstall: [cgov_caching_nocdn]
+    enable: [dblog, acquia_connector, shield, cgov_caching_nocdn]
+    uninstall: [syslog, cgov_caching_cdn]
   dev:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
-    uninstall: [cgov_caching_nocdn]
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [syslog, cgov_caching_nocdn]
   int:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
-    uninstall: {  }
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [syslog, cgov_caching_cdn]
   test:
-    enable: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
-    uninstall: [devel, views_ui, cgov_caching_cdn]
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [syslog, devel, views_ui, cgov_caching_cdn]
   ## We have no prod in ACE.
   01dev:
-    enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: {  }
+    enable: [dblog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ ]
   01test:
-    enable: [acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: {  }
+    enable: [syslog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ dblog ]
   01live:
-    enable: [acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
-    uninstall: {  }
+    enable: [syslog, acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ dblog ]
 cm:
   strategy: features
   allow-overrides: true
