@@ -1,0 +1,68 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+  module:
+    - ckeditor
+format: full_html
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Undo
+            - Redo
+            - Format
+            - Styles
+            - Bold
+            - Italic
+            - '-'
+            - RemoveFormat
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+            - Indent
+            - Outdent
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Media
+          items:
+            - Table
+            - cgov_image_button
+            - cgov_infographic_button
+            - cgov_video_button
+            - insert_block_content
+            - cgov_featured_content_button
+        -
+          name: Tools
+          items:
+            - Cgov_glossifier
+            - Source
+  plugins:
+    stylescombo:
+      styles: "strong|Bold\r\nem|Italics\r\ns|Strikethrough\r\nsub|Subscript\r\nsup|Superscript"
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: cgov_inline_links
+    language:
+      language_list: un
+    tokenbrowser:
+      token_types: {  }
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

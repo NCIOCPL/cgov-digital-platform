@@ -1,0 +1,24 @@
+<div id="cgvCitationSl">
+	<div>
+    <h6>
+      {% if items|length == 1 %}
+        {% trans with {'context': 'CGov Press Release' } %}
+          Reference
+        {% endtrans %}
+      {% else %}
+        {% trans with {'context': 'CGov Press Release' } %}
+          References
+        {% endtrans %}
+      {% endif %}
+    </h6>
+    <ol class="article-citation">
+      {#} {% set citation_list_number = 1 %}#}
+      {% for item in items %}
+        <li id="r{{ loop.index }}">
+          {{ item.content }}
+          {#{% set citation_list_number = citation_list_number + 1 %}#}
+        </li>
+      {% endfor %}
+    </ol>
+	</div>
+</div>

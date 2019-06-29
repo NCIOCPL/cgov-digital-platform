@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.site_section_browser
+  module:
+    - views
+name: cgov_site_section_browser
+label: 'Site Section Browser'
+display: modal
+display_configuration:
+  width: ''
+  height: '500'
+  link_text: 'Select Site Section'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  ec852b7f-4dca-4125-a9a2-b258ce5cdfbd:
+    settings:
+      view: site_section_browser
+      view_display: entity_browser_1
+      submit_text: 'Select Site Section'
+      auto_select: false
+    uuid: ec852b7f-4dca-4125-a9a2-b258ce5cdfbd
+    weight: 1
+    label: 'Select Site Section'
+    id: view

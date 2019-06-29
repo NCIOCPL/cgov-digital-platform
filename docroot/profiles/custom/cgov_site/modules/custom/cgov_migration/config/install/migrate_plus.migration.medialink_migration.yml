@@ -1,0 +1,61 @@
+id: medialink_migration
+label: 'Custom medialink migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://medialink.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: medialink_id
+         label: medialink_id
+         selector: medialink_id
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_media_link
+         label: field_media_link
+         selector: field_media_link
+
+        -
+         name: field_override_title
+         label: field_override_title
+         selector: field_override_title
+
+
+        -
+         name: field_override_list_description
+         label: field_override_list_description
+         selector: field_override_list_description
+
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
+
+
+  ids:
+    medialink_id:
+      type: integer
+
+
+process:
+ id: medialink_id
+ langcode: langcode
+
+ field_override_title: field_override_title
+ field_override_image_promotional: field_override_image_promotional
+ field_media_link: field_media_link
+ field_override_list_description: field_override_list_description
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_media_link
+migration_dependencies: {  }

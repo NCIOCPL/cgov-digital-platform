@@ -1,0 +1,133 @@
+/* Begin Ebooks */
+div.ebook-info {
+	clear: left;
+	margin-left: 0;
+	margin-bottom: 2em;
+	margin-top: 2em;
+}
+div.ebook-cover {
+	float: left;
+	margin: 0 0 10px 0;
+
+	img {
+		margin-bottom: 10px;
+	}
+}
+div.ebook-title {
+	margin-left: 103px;
+
+	h4 {
+		margin-top: 0;
+	}
+}
+/* End Ebooks */
+
+// Used in the /publications/patient-education section of site
+/* Begin eBook buttons */
+.pub-buttons {
+	overflow: auto;
+	font-family: $montserrat-font-stack;
+	a {
+		min-width: 130px;
+		padding: 6px 15px;
+		text-decoration: none;
+		float: left;
+		margin-right: 15px;
+		margin-bottom: 15px;
+		//display: block;
+		color: #fff;
+		//line-height: 24px;
+		//font-size: 13px;
+		//font-weight: bold;
+		//box-shadow: inset 0 2px 15px 0 rgba(0, 0, 0, 0.2);
+		box-shadow: inset 0 2px 4px 0 rgba(0,0,0,.05);
+
+		&.icon {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: nowrap;
+			float: left;
+			min-height: 37px;
+			padding:5px 18px;
+			border-radius: 3px;
+			color:#fff;
+			font: normal 14px $montserrat-font-stack;
+			margin: 10px 10px 0 0;
+
+			&::before {
+				content: "";
+				margin-right:11px;
+				font-size: 115%;
+				//display: inline-block;
+			}
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
+		&.lector {
+			line-height: 12px;
+			padding-bottom: 4px;
+		}
+		&.html {
+			background-color: #82368c;
+
+			&::before {
+				@include svg-sprite(embed-white);
+			}
+		}
+		&.pdf {
+			background-color: #bb0e3d;
+
+			&:hover {
+				background-color: darken(#bb0e3d, 10%);
+			}
+
+			&::before {
+				@include svg-sprite(file-pdf-white-o-thick);
+			}
+		}
+		&.kindle {
+			background-color: #ff5f00;
+
+			&:hover {
+				background-color: darken(#ff5f00, 10%);
+			}
+
+			&::before {
+				@include svg-sprite(amazon-white);
+				font-size: 103%;
+			}
+		}
+		&.epub,&.lector {
+			background-color: #2a72a5;
+			&:hover {
+				background-color: darken(#2a72a5, 10%);
+			}
+			&::before {
+				@include svg-sprite(epub-white);
+			}
+		}
+		&.free {
+			background-color: #2dc799;
+
+			&:hover {
+				background-color: darken(#2dc799, 10%);
+			}
+			&::before {
+				@include svg-sprite(newspaper-white);
+			}
+		}
+	}
+}
+
+// IE11 hack since flexbox align-items ignores max-height setting
+@media all and (-ms-high-contrast:none) {
+	.pub-buttons a.icon {
+		height: 37px;
+	}
+}
+
+/* End eBook buttons */

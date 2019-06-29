@@ -1,0 +1,22 @@
+# Set up route for retrieving a media item's long description text.
+cgov_core.long_description:
+  path: '/media/{media}/long-description'
+  defaults:
+    _controller: '\Drupal\cgov_core\Controller\CgovMediaController::longDescription'
+    _title: 'long description route'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+    mediaID: \d+
+  options:
+    parameters:
+      media:
+        type: entity:media
+
+cgov_core.frontend_globals_form:
+  path: '/cgov_core/form/frontend_globals'
+  defaults:
+    _form: '\Drupal\cgov_core\Form\FrontendGlobalsForm'
+    _title: 'FrontendGlobalsForm'
+  requirements:
+    _permission: 'administer frontend globals'

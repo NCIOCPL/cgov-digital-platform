@@ -1,0 +1,112 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.pdq_cancer_information_summary.field_browser_title
+    - field.field.node.pdq_cancer_information_summary.field_date_posted
+    - field.field.node.pdq_cancer_information_summary.field_date_updated
+    - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
+    - field.field.node.pdq_cancer_information_summary.field_meta_tags
+    - field.field.node.pdq_cancer_information_summary.field_page_description
+    - field.field.node.pdq_cancer_information_summary.field_pdq_audience
+    - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_pdq_url
+    - field.field.node.pdq_cancer_information_summary.field_public_use
+    - field.field.node.pdq_cancer_information_summary.field_summary_sections
+    - node.type.pdq_cancer_information_summary
+  enforced:
+    module:
+      - pdq_core
+  module:
+    - datetime
+    - entity_reference_revisions
+    - options
+    - user
+id: node.pdq_cancer_information_summary.full
+targetEntityType: node
+bundle: pdq_cancer_information_summary
+mode: full
+content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_browser_title:
+    weight: 101
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_date_updated:
+    weight: 103
+    label: above
+    settings:
+      format_type: cgov_display_date
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_page_description:
+    weight: 104
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pdq_audience:
+    weight: 108
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_pdq_cdr_id:
+    weight: 106
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_pdq_summary_type:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_pdq_url:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_summary_sections:
+    type: entity_reference_revisions_entity_view
+    weight: 109
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_date_posted: true
+  field_hhs_syndication: true
+  field_meta_tags: true
+  field_public_use: true
+  langcode: true

@@ -1,0 +1,38 @@
+## This file is for local development only and is removed by the
+## artifact builder. If you need this in other environments, then
+## you need to use the -D cgov.drupal_users_file=XXX option to BLT.
+admin:
+  username: 'admin'
+  password: 'password123'
+additional_users:
+  - username: 'author'
+    password: 'password123'
+    roles:
+      - 'content_author'
+      - 'image_manager'
+      - 'admin_ui'
+  - username: 'editor'
+    password: 'password123'
+    roles:
+      - 'content_author'
+      - 'content_editor'
+      - 'image_manager'
+      - 'admin_ui'
+  - username: 'adveditor'
+    password: 'password123'
+    roles:
+      - 'content_author'
+      - 'content_editor'
+      - 'advanced_editor'
+      - 'image_manager'
+      - 'admin_ui'
+  - username: 'siteadmin'
+    password: 'password123'
+    roles:
+      - 'content_author'
+      - 'content_editor'
+      - 'advanced_editor'
+      - 'site_admin'
+      - 'image_manager'
+      - 'admin_ui'
+      - 'blog_manager'

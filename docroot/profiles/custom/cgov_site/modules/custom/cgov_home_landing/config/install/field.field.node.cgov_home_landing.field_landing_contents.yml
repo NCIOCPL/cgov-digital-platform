@@ -1,0 +1,97 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_landing_contents
+    - node.type.cgov_home_landing
+    - paragraphs.paragraphs_type.cgov_card_raw_html
+    - paragraphs.paragraphs_type.cgov_column_one
+    - paragraphs.paragraphs_type.cgov_column_two
+    - paragraphs.paragraphs_type.cgov_content_block
+    - paragraphs.paragraphs_type.cgov_guide_row
+    - paragraphs.paragraphs_type.cgov_list
+    - paragraphs.paragraphs_type.cgov_multimedia_row
+    - paragraphs.paragraphs_type.cgov_primary_feature_row
+    - paragraphs.paragraphs_type.cgov_secondary_feature_row
+  module:
+    - entity_reference_revisions
+id: node.cgov_home_landing.field_landing_contents
+field_name: field_landing_contents
+entity_type: node
+bundle: cgov_home_landing
+label: Contents
+description: 'Contents of the Landing Page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_primary_feature_row: cgov_primary_feature_row
+      cgov_guide_row: cgov_guide_row
+      cgov_secondary_feature_row: cgov_secondary_feature_row
+      cgov_list: cgov_list
+      cgov_content_block: cgov_content_block
+      cgov_card_raw_html: cgov_card_raw_html
+      cgov_column_one: cgov_column_one
+      cgov_column_two: cgov_column_two
+      cgov_multimedia_row: cgov_multimedia_row
+    target_bundles_drag_drop:
+      cgov_primary_feature_row:
+        enabled: true
+        weight: 0
+      cgov_guide_row:
+        enabled: true
+        weight: 1
+      cgov_secondary_feature_row:
+        enabled: true
+        weight: 2
+      cgov_list:
+        enabled: true
+        weight: 4
+      cgov_column_one:
+        enabled: true
+        weight: 5
+      cgov_column_two:
+        enabled: true
+        weight: 6
+      body_section:
+        weight: -15
+        enabled: false
+      cgov_card_external:
+        weight: -14
+        enabled: false
+      cgov_card_internal:
+        weight: -13
+        enabled: false
+      cgov_card_raw_html:
+        weight: 7
+        enabled: true
+      cgov_citation:
+        weight: 23
+        enabled: false
+      cgov_content_block:
+        weight: 8
+        enabled: true
+      cgov_dynamic_list:
+        weight: 27
+        enabled: false
+      cgov_external_link:
+        weight: 28
+        enabled: false
+      cgov_internal_link:
+        weight: 30
+        enabled: false
+      cgov_multimedia_row:
+        enabled: true
+        weight: 3
+      cgov_two_item_feature_row:
+        weight: 35
+        enabled: false
+      pdq_summary_section:
+        weight: 36
+        enabled: false
+field_type: entity_reference_revisions

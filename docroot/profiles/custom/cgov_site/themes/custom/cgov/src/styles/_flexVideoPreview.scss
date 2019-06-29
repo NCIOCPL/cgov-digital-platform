@@ -1,0 +1,54 @@
+.video-preview--container {
+
+    &:hover, &:focus {
+        cursor: pointer;
+
+        .play-button--bg {
+            fill: $youtubeRed;
+            fill-opacity: 1;
+            transition: all 100ms cubic-bezier(0.0,0.0,0.2,1);
+        }
+    }
+
+    &::before {
+        z-index: 1;
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: linear-gradient(rgba($black, 0.6) 0%, rgba($black, 0.2) 60%, rgba($black, 0) 100%);
+    }
+
+    p {
+        position: absolute;
+        color: $white;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        z-index: 10;
+        width: 95%;
+        margin: 0.5em 0;
+        padding: 0 15px;
+    }
+
+    // Easier than adding the previously used class back onto the element
+    // Just change the selector.
+    > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      margin-top: -9.4%;
+    }
+}
+
+.video-preview--play-button {
+    position: absolute;
+    top: calc(50% - 24px);
+    left: calc(50% - 34px);
+    width: 68px;
+    height: 48px;
+}

@@ -1,0 +1,77 @@
+# Placeholder article for related resource link target in 011_article_coping_self_image
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Sexual Health Issues in Women with Cancer"
+  title__ES:
+      value: "Problemas de salud sexual en mujeres con cáncer"
+  field_page_description:
+    value: "This page is a placeholder."
+  field_page_description__ES:
+    value: "Esta página es un marcador de posición."
+  field_card_title:
+    value: Sexual Health Issues in Women with Cancer"
+  field_card_title__ES:
+    value: "Problemas de salud sexual en mujeres con cáncer"
+  field_browser_title:
+    value: "Placeholder"
+  field_browser_title_ES:
+    value: "Hacer frente - Marcador de posición"
+  field_pretty_url:
+    value: 'placeholder-women'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/coping'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/sobrellevar'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>This page is a placeholder.</p>
+  field_intro_text__ES:
+    - format: "streamlined"
+      value: |
+        <p>Esta página es un marcador de posición.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Placeholder"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>This page is a placeholder.</p>
+
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Marcador de posición"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Esta página es un marcador de posición.</p>
+
+  field_date_posted:
+    value: "2019-04-01"
+  field_date_reviewed:
+    value: "2019-04-01"
+  field_date_updated:
+    value: "2019-04-01"
+  field_date_display_mode:
+    - value: 'updated'

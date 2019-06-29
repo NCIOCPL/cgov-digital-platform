@@ -1,0 +1,259 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_site_section_browser
+    - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
+    - field.field.node.cgov_blog_series.field_banner_image
+    - field.field.node.cgov_blog_series.field_blog_series_shortname
+    - field.field.node.cgov_blog_series.field_browser_title
+    - field.field.node.cgov_blog_series.field_card_title
+    - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
+    - field.field.node.cgov_blog_series.field_feedburner_url
+    - field.field.node.cgov_blog_series.field_image_promotional
+    - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_meta_tags
+    - field.field.node.cgov_blog_series.field_num_display_posts
+    - field.field.node.cgov_blog_series.field_page_description
+    - field.field.node.cgov_blog_series.field_pretty_url
+    - field.field.node.cgov_blog_series.field_public_use
+    - field.field.node.cgov_blog_series.field_recommended_content_header
+    - field.field.node.cgov_blog_series.field_search_engine_restrictions
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
+    - field.field.node.cgov_blog_series.field_site_section
+    - image.style.thumbnail
+    - node.type.cgov_blog_series
+  module:
+    - content_moderation
+    - entity_browser
+    - image
+    - path
+    - text
+id: node.cgov_blog_series.default
+targetEntityType: node
+bundle: cgov_blog_series
+mode: default
+content:
+  field_about_blog:
+    weight: 13
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_allow_comments:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_archive_back_years:
+    weight: 25
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_archive_group_by:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_banner_image:
+    weight: 18
+    settings:
+      preview_image_style: thumbnail
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_blog_series_shortname:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_browser_title:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_card_title:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_feature_card_description:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_featured_posts:
+    weight: 16
+    settings:
+      entity_browser: cgov_blog_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_feedburner_url:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_image_promotional:
+    weight: 19
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  field_list_description:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_num_display_posts:
+    weight: 11
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_page_description:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_public_use:
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_recommended_content_header:
+    weight: 17
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_search_engine_restrictions:
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_show_list_thumbnails:
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_site_section:
+    weight: 0
+    settings:
+      entity_browser: cgov_site_section_browser
+      field_widget_display: label
+      field_widget_remove: true
+      selection_mode: selection_append
+      field_widget_edit: false
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+    third_party_settings: {  }
+    type: entity_browser_entity_reference
+    region: content
+  langcode:
+    type: language_select
+    weight: -1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 22
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 23
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_meta_tags: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_home_landing.install.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_home_landing_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  // Home and Landing.
+  $siteHelper->addContentTypePermissions('cgov_home_landing', ['content_author']);
+
+  // Mini Landing.
+  $siteHelper->addContentTypePermissions('cgov_mini_landing', ['content_author']);
+
+}

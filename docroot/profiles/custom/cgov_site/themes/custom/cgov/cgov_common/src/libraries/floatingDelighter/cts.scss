@@ -1,0 +1,32 @@
+@import '~Core/styles/variables';
+@import '~Core/styles/breakpoints';
+@import '~Styles/sprites/svg-sprite';
+
+.floating-delighter--cts {
+
+    .floating-delighter__link {
+      background-color: #82368c;
+
+      &:hover, &:focus, &:active {
+        background-color: #3f0557;
+        text-decoration: none;
+      }
+    }
+
+    .floating-delighter__icon {
+
+      &::after {
+        content: '';
+        @include svg-sprite(search-large);
+        font-size: 1.1em;
+
+        @include bp(small) {
+          font-size: .7em;
+        }
+      }
+    }
+
+    .floating-delighter__label {
+
+    }
+  }

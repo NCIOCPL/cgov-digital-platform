@@ -1,0 +1,43 @@
+<div class="page-options-container">
+  <!-- PAGE OPTIONS -->
+  {% set classlist = _context.configuration.additionalClasses 
+      ? "page-options no-resize #{_context.configuration.additionalClasses}" 
+      : "page-options no-resize" 
+  %}
+
+  <div id="PageOptionsControl1" class="{{ classlist }}">
+      <ul>
+        {% if content.options.resize %}
+          <li class="page-options--resize">
+            <a title="Resize font" aria-label="Resize font" href="#"></a>
+          </li>
+        {% endif %}
+        {% if content.options.print %}
+          <li class="page-options--print">
+            <a title="Print" aria-label="Print" href="#"></a>
+          </li>
+        {% endif %}
+        {% if content.options.email %}
+          <li class="page-options--email">
+            <a title="Email" aria-label="Email" href="#"></a>
+          </li>
+        {% endif %}
+        {% if content.options.facebook %}
+          <li class="social-share social-share--facebook">
+            <a title="Facebook" aria-label="Facebook" href="#"></a>
+          </li>
+        {% endif %}
+        {% if content.options.twitter %}
+          <li class="social-share social-share--twitter">
+            <a title="Twitter" aria-label="Twitter" href="#"></a>
+          </li>
+        {% endif %}
+        {% if content.options.pinterest %}
+          <li class="social-share social-share--pinterest">
+            <a title="Pinterest" aria-label="Pinterest" href="#"></a>
+          </li>
+        {% endif %}
+      </ul>
+  </div>
+  <!-- END PAGE OPTIONS -->
+</div>

@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image_article
+    - media.type.cgov_image
+    - node.type.cgov_event
+id: node.cgov_event.field_image_article
+field_name: field_image_article
+entity_type: node
+bundle: cgov_event
+label: 'Lead Image'
+description: 'Displays in top right position on the page. Used for lists, cards, and social media sharing, unless Promotional Image is selected.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

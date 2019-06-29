@@ -1,0 +1,33 @@
+id: article_update_migration
+label: 'Custom article migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://article_updatetest_internallink.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+        -
+         name: status
+         label: status
+         selector: status
+  ids:
+    id:
+      type: integer
+
+process:
+  nid: id
+
+  status: status
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_article
+
+migration_dependencies: { }

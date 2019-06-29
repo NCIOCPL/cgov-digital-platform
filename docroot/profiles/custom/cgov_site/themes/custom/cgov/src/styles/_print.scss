@@ -1,0 +1,96 @@
+@media print {
+  html {
+	font-size: 14px;
+  }
+	
+	// fixes problem where text wasn't taking full width on print page
+	.row, nav .sub-nav-group-wrapper {
+    max-width: 2800px;
+}
+	.general-page-body-container, header {
+		background: none;	
+	}
+
+  nav, .navigation, .nav, .language-bar, .nav-search-bar, .fixedtotop, .fixedtotop-spacer, .breadcrumbs, .bcrumbs, .page-options, .local-navigation, #section-menu-button, .site-footer, #nvcgSlNotificationArea, .toptoc, .pagination, .syndication, .article-image-enlarge, .previous-next-links, .general-page-body-container > div.large-12, .cthp-version-toggle, .hero, .carousel-title, .other-nci-sites, .icon-exit-notification, .accordion-controls {
+    display: none !important; // important used because in some places foundation classes are overwriting
+	}
+	a {
+		text-decoration: none !important;
+		border-bottom: none !important;
+	}
+	.contentzone {
+		width: 100%;
+		padding-right: 0;
+	}
+	.main-content, .nci-logo, .cthp-content {
+		background: none;
+	}
+	.nci-logo-pages {
+		font-size: 32px;
+	}
+	.nci-logo a, .columns.contentzone, .cthp-content .columns {
+		padding-left: 0;
+	}
+	.nci-logo {background: none;}
+	.nci-logo a span {
+		display: block;
+		position: relative;
+		left: 0;
+	}
+	#nvcgSlCTHPIntro .row, .cthp-card-container {
+		margin-left: 0 !important; margin-right: 0 !important;
+	}
+	.general-page-body-container {
+		@include box-shadow(none);
+	}
+	.cthp-content h1 {
+		color: inherit;
+	}
+
+	.ui-accordion {
+		.location-filter, .location-link {
+			display: none;
+		}
+
+		h2 {
+			font-size: 1.75em !important;
+			margin: 1.0em 0 0.5em 0 !important;
+			line-height: 1.215em !important;
+			border: none !important;
+			padding: 0 !important;
+			background-color: rgba(0, 0, 0, 0) !important;
+			min-height: 0 !important;
+		}
+
+		.ui-accordion-content {
+			padding: 5px 0 !important;
+			display: block !important;
+			overflow: auto;
+		}
+
+		.ui-accordion-header-icon {
+			display: none !important;
+		}
+	}
+
+	.delighter-rail, .ProactiveLiveHelpPrompt {
+		display: none !important;
+	}
+
+ /* Need these styles to overwrite right-aligned labels in print view */
+ .columns.legend {
+	 text-align: left;
+	 padding-left: 0.9375em;
+	 padding-right: 0.9375em;
+	 margin-bottom: 15px;
+ }
+ /* Type/Stage are label elements; need to be left aligned in print view */
+ /* Same for checkbox on results page */
+ fieldset label.field, .cts-results-container .row .checkbox {
+  float: none;
+ }
+ /* Styling for PDQ small screen printing */
+    .cis-mobile-print {
+        display: block;
+    } 
+}

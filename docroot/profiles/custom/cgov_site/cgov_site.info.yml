@@ -1,0 +1,99 @@
+name: CGov Site
+type: profile
+description: 'Minimal CGov site configuration.'
+package: 'CGov Digital Platform'
+version: 1.0.1
+core: 8.x
+install:
+  # from Minimal
+  - node
+  - block
+  - dblog
+  - page_cache
+  - dynamic_page_cache
+  # from Standard
+  - toolbar
+  - block_content
+  - config
+  - ckeditor
+  - help
+  - taxonomy
+  - views_ui
+  - field_ui
+  - user
+  - path
+  - datetime
+  - datetime_range
+  - editor
+  - filter
+  - file
+  - image
+  - link
+  - options
+  - text
+  - entity_embed
+  - linkit
+  - redirect
+  # other Core
+  - media
+  - workflows
+  - content_moderation
+  - language
+  - locale
+  - content_translation
+  - admin_toolbar
+  - admin_toolbar_tools
+  - admin_toolbar_links_access_filter
+  # other
+  - features
+  - features_ui
+  - yaml_content
+  - twig_tweak
+  - address
+  - twig_field_value
+  - pathauto
+  - paragraphs
+  - paragraphs_asymmetric_translation_widgets
+  - ctools
+  - entity_browser
+  - adobe_dtm
+  - metatag
+  - metatag_dc
+  - metatag_dc_advanced
+  - metatag_open_graph
+  - metatag_twitter_cards
+  - moderation_sidebar
+  - role_delegation
+  # from CGOV
+  - cgov_core
+  - cgov_site_section
+  - cgov_embedded_block
+  - cgov_external_link_block
+  - cgov_image
+  - cgov_list
+  - cgov_promo
+  - cgov_application_page
+  - cgov_article
+  - cgov_blog
+  - cgov_file
+  - cgov_home_landing
+  - cgov_content_block
+  - cgov_metatag
+  - cgov_press_release
+  - cgov_video
+  - pdq_core
+  - pdq_cancer_information_summary
+  - pdq_drug_information_summary
+  - cgov_cancer_center
+  - cgov_biography
+  - cgov_cthp
+  - pdq_glossifier
+  - cgov_event
+  - cgov_infographic
+  - cgov_cancer_research
+  - cgov_redirect_manager
+themes:
+  - cgov_common
+  - cgov_admin
+'interface translation project': cgov_site
+'interface translation server pattern': profiles/custom/cgov_site/translations/%project.%language.po

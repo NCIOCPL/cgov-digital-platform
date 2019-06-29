@@ -1,0 +1,218 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
+    - field.field.node.cgov_blog_series.field_banner_image
+    - field.field.node.cgov_blog_series.field_blog_series_shortname
+    - field.field.node.cgov_blog_series.field_browser_title
+    - field.field.node.cgov_blog_series.field_card_title
+    - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
+    - field.field.node.cgov_blog_series.field_feedburner_url
+    - field.field.node.cgov_blog_series.field_image_promotional
+    - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_meta_tags
+    - field.field.node.cgov_blog_series.field_num_display_posts
+    - field.field.node.cgov_blog_series.field_page_description
+    - field.field.node.cgov_blog_series.field_pretty_url
+    - field.field.node.cgov_blog_series.field_public_use
+    - field.field.node.cgov_blog_series.field_recommended_content_header
+    - field.field.node.cgov_blog_series.field_search_engine_restrictions
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
+    - field.field.node.cgov_blog_series.field_site_section
+    - node.type.cgov_blog_series
+  module:
+    - image
+    - options
+    - text
+    - user
+id: node.cgov_blog_series.full
+targetEntityType: node
+bundle: cgov_blog_series
+mode: full
+content:
+  content_moderation_control:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_about_blog:
+    weight: 19
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_allow_comments:
+    weight: 18
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_archive_back_years:
+    type: number_integer
+    weight: 23
+    region: content
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_archive_group_by:
+    type: list_default
+    weight: 22
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_banner_image:
+    weight: 12
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_blog_series_shortname:
+    weight: 14
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_browser_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_card_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_feature_card_description:
+    weight: 7
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_featured_posts:
+    type: entity_reference_label
+    weight: 21
+    region: content
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_feedburner_url:
+    type: string
+    weight: 15
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_image_promotional:
+    weight: 13
+    label: hidden
+    settings:
+      view_mode: image_display_article_medium
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_list_description:
+    weight: 6
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_num_display_posts:
+    weight: 17
+    label: hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_page_description:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_pretty_url:
+    weight: 10
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_public_use:
+    type: list_default
+    weight: 20
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_recommended_content_header:
+    weight: 16
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_search_engine_restrictions:
+    weight: 11
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_site_section:
+    weight: 8
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  langcode:
+    type: language
+    weight: 9
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+      native_language: false
+    third_party_settings: {  }
+  links:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_meta_tags: true
+  field_show_list_thumbnails: true

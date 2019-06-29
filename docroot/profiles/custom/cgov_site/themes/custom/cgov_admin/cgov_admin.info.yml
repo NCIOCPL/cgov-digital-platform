@@ -1,0 +1,23 @@
+name: CGov Admin
+description: 'CGov Admin Theme'
+type: theme
+base theme: seven
+package: CGov Digital Platform
+core: 8.x
+libraries:
+  - cgov_admin/global-styling
+  - pdq_glossifier/glossify-plugin
+
+# Include regions here because display order on blocks page isn't inherited from base theme
+regions:
+  header: 'Header'
+  pre_content: 'Pre-content'
+  breadcrumb: Breadcrumb
+  highlighted: Highlighted
+  help: Help
+  content: Content
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  sidebar_first: 'First sidebar'
+regions_hidden:
+- sidebar_first

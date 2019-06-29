@@ -1,0 +1,150 @@
+/* BEGIN Accordion Styles */
+// Accordions are styled by jquery-ui. These are override styles
+
+//@import "../../../../StyleSheets/sprites/img-sprites";
+//@import "accordion-sprites-bgs";
+//@include img-sprites-same-size($accordion-sprites);
+
+// The accordion is having problems with uncleared floats in mobile. This is a fix to clear those floats
+// WCMSFEQ-119
+// Example pages: /research/areas/clinical-trials, /research/progress/annual-report-nation
+@include bp(small) {
+	.accordion section {
+		clear: both;
+	}
+}
+// removing margin from the first and last paragraphs in an accordion content area
+.ui-accordion-content {
+		.location-filter {
+			margin: 1em 0 2em;	
+		}
+	
+		p:first-child, h2:first-child {
+			margin-top: 0;
+		}
+		p:last-child {
+			margin-bottom: 0;
+		}
+}
+
+/* begin CTHP accordion styling rules */
+@include bp(small) {
+  #content { // ID specificity is needed to override jQuery UI styles
+	  .cthp-intro-multimedia,
+	  .cthpCard {
+		  h2 {
+			  background-color: transparent;
+			  // background-image sprite is set in _chtp.scss.
+			  // No need to set it again even though I already did all this work making an awesome iterator
+			  // Saving it as a code example for assigning custom sprite backgrounds
+			  //background-image: url($accordion-image);
+			  &.ui-state-active span {
+				  background-color: #fff;
+			  }
+		  }
+	  }
+
+	  $headers: (
+		".cthp-intro-multimedia,.cthp-overview": (
+		  //sprite: $blue-purple-circles,
+		  color: #4c34c3
+		),
+		".cthp-treatment": (
+		  //sprite: $green-waves,
+		  color: #119f7d
+		),
+		".cthp-research": (
+		  //sprite: $blue-gears,
+		  color: #036eab
+		),
+		".cthp-causes": (
+		  //sprite: $purple-squares,
+		  color: #753190
+		),
+		".cthp-genetics": (
+		  //sprite: $blue-diamonds,
+		  color: #248f92
+		),
+		".cthp-screening": (
+		  //sprite: $red-triangles,
+		  color: #9e2f54
+		),
+		".cthp-survival": (
+		  //sprite: $yellow-squares,
+		  color: #b77704
+		),
+		".cthp-general": (
+		  //sprite: $blue-octagons,
+		  color: #29768c
+		),
+		".cthp-pink-feature": (
+		  //sprite: $pink-triangles,
+		  color: #b9299b
+		),
+		".cthp-yellow-feature": (
+		  //sprite: $yellow-hexagons,
+		  color: #cbb218
+		)
+	  );
+
+	  @each $selector, $attributes in $headers {
+		  //$sprite: map-get($attributes, 'sprite');
+		  $activeColor: map-get($attributes, 'color');
+
+		  //@debug($sprite);
+
+		  #{$selector} {
+		  	h2 {
+		  		//@include img-sprite-position($sprite);
+		  		span {
+		  			background-color: $activeColor;
+		  		}
+		  		&.ui-state-active span {
+		  			color: $activeColor;
+		  		}
+		  	}
+		  }
+	  }
+  }
+/* end CTHP accordion styling rules */
+	
+	/* begin accordion stretching styles */
+  // Default accordion spacing 
+	.ui-accordion .ui-accordion-header {
+		margin-left: -16px;
+		margin-right: -16px;
+	}
+	.ui-accordion div.ui-accordion-content {
+		padding: 10px 0 5px 0;
+		margin: 0;
+	}
+	
+	// Cancer Type Home Page accordion spacing 
+	.cgvcancertypehome .ui-accordion .ui-accordion-header {
+		margin-left: -30px;
+		margin-right: -30px;
+	}
+	.cgvcancertypehome .ui-accordion .ui-accordion-content {
+		margin-left: -12px;
+		margin-right: -12px;
+	}
+	// Fact Sheets Page accordion spacing 
+	.cgvfactsheet .ui-accordion .ui-accordion-header {
+		padding-left: 37px;
+	}
+	.cgvfactsheet .related-resources .ui-accordion-header {
+		padding-left: 22px;
+	}
+	// Selected References accordion spacing
+	#cgvCitationSl h6 {
+		padding-left: 22px;
+	}
+	
+	
+	/** Hide auto-generated OTP on mobile accordion collapse */
+	.hide-otp-on-collapse {
+		display: none;
+	}	
+}
+/* end accordion stretching styles */
+/* END Accordion Styles */

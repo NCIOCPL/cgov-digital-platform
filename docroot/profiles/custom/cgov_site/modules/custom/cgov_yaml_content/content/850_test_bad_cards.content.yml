@@ -1,0 +1,66 @@
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Bad Cards"
+  field_page_description:
+    value: "Test Bad Cards Description"
+  field_browser_title:
+    value: "Test Bad Cards Browser"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test/cards'
+  field_pretty_url:
+    value: "bad-cards"
+  ### English Contents
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Unpublished Item</h2>
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Unpublished Page'
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>Bad Item</h2>
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            value: 9999999
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <h2>No Item</h2>
+    - entity: 'paragraph'
+      type: "cgov_two_item_feature_row"
+      field_two_item_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"

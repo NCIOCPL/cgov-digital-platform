@@ -1,0 +1,46 @@
+########
+## Based on Lullabot Images
+version: "3.7"
+
+services:
+
+  web:
+    ## Use the web folder
+    build:
+      context: web
+    volumes:
+      ## The project root
+      - ../:/var/www:cached
+      ## Configs
+      - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
+      - ./web/runtime/php_apache2.ini:/etc/php/7.2/apache2/php.ini
+      - ./web/runtime/php_cli.ini:/etc/php/7.2/cli/php.ini
+      ## Block git repo management within the container
+      - ./web/runtime/container-hooks:/var/www/scripts/hooks
+    env_file:
+      - ./docker.env
+    ports:
+      - "80:80"
+    networks:
+      drupalvm:
+        aliases:
+          - simpletest
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: db
+    ## Map the backups folder.
+    ## TODO: Map mysql data file directory to persist db compose down commands.
+    volumes:
+      - ./db/overrides/backups:/var/mysql/backups:delegated
+    env_file:
+      - ./docker.env
+    ports:
+      - "3306:3306"
+    networks:
+      drupalvm:
+
+networks:
+  drupalvm:

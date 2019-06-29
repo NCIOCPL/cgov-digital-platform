@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_content_block.field_content_heading
+    - field.field.paragraph.cgov_content_block.field_html_content
+    - paragraphs.paragraphs_type.cgov_content_block
+  module:
+    - text
+id: paragraph.cgov_content_block.default
+targetEntityType: paragraph
+bundle: cgov_content_block
+mode: default
+content:
+  field_content_heading:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_html_content:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

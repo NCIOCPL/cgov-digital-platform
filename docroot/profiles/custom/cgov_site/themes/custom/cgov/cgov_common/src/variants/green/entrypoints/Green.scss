@@ -1,0 +1,810 @@
+@import '~Core/styles/breakpoints';
+@import '~Core/styles/colors';
+@import '~Core/styles/variables';
+@import "~Core/styles/environments/percussion";
+@import '../styles/sprites/svg-sprite';
+
+$cgov_path: "/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/dist/";
+
+// theme color palette
+$ocean: #006789;
+$acorn: #ae610a;
+$seafoam: #c6e5c7;
+$taupe: #f4e9dc;
+$army: #596b34;
+$night: #454545;
+$tangerine: #ff881e;
+$candy: #3dcdfe;
+$shade: #e2e2e2;
+$robin: #54beb9;
+$cloud: #f9f8f7;
+$highland: #738a5b;
+
+// utility shades
+$eggshell: #f2f0ef;
+$graphite: #4d4d4d;
+$storm: #666;
+$asphalt: #2e2e2e;
+$aqua: #c7eae8;
+$jade: #97ccc6;
+$freeze: #c2e4e0;
+$onyx: #3d3d3d;
+$space: #023c5a;
+$white: #fff;
+
+// theme assignments
+$default-link-color: $ocean;
+$default-link-color-hover: $acorn;
+$default-header-colors: $onyx;
+$page-margin-background: $white;
+$site-logo-width: initial;
+$site-logo-height: 66px;
+$site-logo-height-desktop: 67px;
+$site-logo-min-width: unset;
+$site-logo-max-width: 98%;
+$utility-text: $white;
+$utility-background-color: $acorn;
+$main-menu-link-color: $graphite;
+$main-menu-background-color: $eggshell;
+$main-menu-desktop-active-item-border-bottom: $ocean;
+$main-menu-desktop-svg-search-magnifying-glass: search-green-theme;
+$main-menu-desktop-search-background: $white;
+$main-menu-desktop-search-color: $graphite;
+$main-menu-mobile-tablet-nav-search-float-tablet-down: right; // necessary if mobile menu items decrease from the default 4 items
+$main-menu-mobile-tablet-svg-hamburger: menu-green-theme;
+$main-menu-mobile-tablet-svg-info: info-green-theme;
+$main-menu-mobile-tablet-svg-search: search-large-green-theme;
+$main-menu-mobile-tablet-svg-dictionary: book-green-theme;
+$mega-menu-desktop-group-header-color: $ocean;
+$section-navigation-desktop-active-item-triangle: $army;
+$section-navigation-desktop-header-background: $ocean;
+$section-navigation-desktop-active-subsection-background: $seafoam;
+$section-navigation-desktop-active-color: $white;
+$section-navigation-desktop-active-background: $army;
+$hamburger-active-link-background: $army;
+$hamburger-section-menu-parent-item-link-color: $army;
+$hamburger-menu-mobile-tablet-current-page-background: $army;
+$hamburger-menu-mobile-tablet-current-page-minus-color: $army;
+$hamburger-menu-mobile-tablet-current-page-minus-background: $white;
+$hamburger-menu-mobile-tablet-current-page-plus-color: $white;
+$hamburger-menu-mobile-tablet-current-page-plus-background: $highland;
+$hamburger-menu-mobile-tablet-not-current-page-plus-background: $robin;
+$hamburger-menu-mobile-tablet-not-current-page-plus-color: $white;
+$hamburger-menu-mobile-tablet-not-current-page-minus-color: $robin;
+$hamburger-menu-mobile-tablet-not-current-page-minus-background: $white;
+$section-menu-mobile-tablet-button-background: $army;
+$section-menu-mobile-tablet-title-background: $army;
+$section-menu-mobile-tablet-current-page-color: $white;
+$section-menu-mobile-tablet-current-page-background: $army;
+$section-menu-mobile-tablet-family-background: $seafoam;
+$section-menu-mobile-tablet-current-page-plus-background: $robin;
+$section-menu-mobile-tablet-current-page-plus-color: $white;
+$section-menu-mobile-tablet-current-page-minus-color: $robin;
+$section-menu-mobile-tablet-current-page-minus-background: $white;
+$section-menu-mobile-tablet-not-current-page-plus-background: $robin;
+$section-menu-mobile-tablet-not-current-page-plus-color: $white;
+$section-menu-mobile-tablet-not-current-page-minus-color: $robin;
+$section-menu-mobile-tablet-not-current-page-minus-background: $white;
+$page-options-mobile-tablet-background: $army;
+$page-options-mobile-tablet-hover-background: $robin;
+$page-options-desktop-background: transparent;
+$page-options-desktop-svg-font-size: font-size-green-theme;
+$page-options-desktop-svg-print: printer-green-theme;
+$page-options-desktop-svg-email: mail-envelope-closed-green-theme;
+$page-options-desktop-svg-facebook: facebook-green-theme;
+$page-options-desktop-svg-twitter: twitter-green-theme;
+$page-options-desktop-svg-pinterest: pinterest-green-theme;
+$landing-page-hero-text-tablet-background: $ocean;
+$landing-page-feature-card-background: $seafoam;
+$landing-page-feature-card-link-color: $night;
+$landing-page-guide-card-background: $cloud;
+$landing-page-guide-card-link-color: $asphalt;
+$landing-page-guide-card-link-hover-color: $acorn;
+$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-green.jpg") repeat;
+$content-view-button-background: $ocean;
+$content-view-button-hover-background: $tangerine;
+$content-pullquote-left-border: $army;
+$content-accordion-odd-rows-background: #98d8d5;
+$content-accordion-odd-rows-plus-background: $robin;
+$content-accordion-even-rows-background: #bbe5e3;
+$content-accordion-even-rows-plus-background: #96cac5;
+$content-accordion-odd-rows-minus-color: $robin;
+$content-accordion-even-rows-minus-color: $robin;
+$content-form-radio-background: $robin;
+$content-form-radio-border: $robin;
+$content-form-select-box-dropdown-color: $robin;
+$content-form-select-box-dropdown-hover-color: $robin;
+$content-form-select-box-list-item-hover-background: $ocean;
+$content-form-submit-button-background: $army;
+$content-form-submit-button-border: #2e4224;
+$content-form-submit-button-hover-background: #2e4224;
+$content-table-header-background: $seafoam;
+$content-svg-guide-card-circle-arrow: chevron-circle-green-theme;
+$content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-green-theme;
+$content-svg-external-link: external-link-green-theme;
+$footer-background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px,
+linear-gradient(45deg, $ocean, $robin);
+$footer-icons-hover-opacity: 1;
+$footer-svg-twitter: twitter-green-theme;
+$footer-svg-twitter-hover: twitter-hover-green-theme;
+$footer-svg-gov-delivery: gov-delivery-green-theme;
+$footer-svg-gov-delivery-hover: gov-delivery-hover-green-theme;
+$footer-svg-facebook: facebook-green-theme;
+$footer-svg-facebook-hover: facebook-hover-green-theme;
+$footer-svg-instagram: instagram-green-theme;
+$footer-svg-instagram-hover: instagram-hover-green-theme;
+$footer-svg-linkedin: linkedin-green-theme;
+$footer-svg-linkedin-hover: linkedin-hover-green-theme;
+$footer-svg-rss: rss-green-theme;
+$footer-svg-rss-hover: rss-hover-green-theme;
+$footer-svg-pinterest: pinterest-green-theme;
+$footer-svg-pinterest-hover: pinterest-hover-green-theme;
+$footer-svg-youtube: youtube-green-theme;
+$footer-svg-youtube-hover: youtube-hover-green-theme;
+
+
+
+// default theme link color
+.main-content a,
+#cgvBody h2 a,
+#cgvBody h3 a,
+#cgvBody h4 a,
+#cgvBody h5 a,
+#cgvBody h6 a,
+.contentzone h2 a,
+.contentzone h3 a,
+.contentzone h4 a,
+.contentzone h5 a,
+.contentzone h6 a,
+.main-content .feature-card a,
+.feature-card.cgvArticle a h3,
+.section-nav .contains-current>div a,
+.feature-primary a h3,
+ul.breadcrumbs>* a,
+.topic-feature a h3,
+.pullquote,
+.desktop #blog-archive-accordion .ui-accordion-header .toggle,
+.desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
+.multimedia .feature-card a h3,
+.multimedia .multimedia-feature-card a h3,
+table tbody tr td a,
+li a {
+  color: $default-link-color;
+}
+
+// default theme link hover/active color (for items that change color rather than get underlined)
+#cgvBody h2 a:focus,
+#cgvBody h2 a:hover,
+#cgvBody h3 a:focus,
+#cgvBody h3 a:hover,
+#cgvBody h4 a:focus,
+#cgvBody h4 a:hover,
+#cgvBody h5 a:focus,
+#cgvBody h5 a:hover,
+#cgvBody h6 a:focus,
+#cgvBody h6 a:hover,
+.contentzone h2 a:focus,
+.contentzone h2 a:hover,
+.contentzone h3 a:focus,
+.contentzone h3 a:hover,
+.contentzone h4 a:focus,
+.contentzone h4 a:hover,
+.contentzoneh5 a:focus,
+.contentzone h5 a:hover,
+.contentzone h6 a:focus,
+.contentzone h6 a:hover,
+.main-content a.title:hover,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.list .title a.title:hover,
+.list .title a.title:focus,
+.list .title a:hover,
+.list .title a:focus,
+.list.managed li.has-media:hover a,
+.list.managed li.has-media:focus a,
+.list.dynamic li.has-media:hover a,
+.list.dynamic li.has-media:focus a,
+.sub-nav-group a.sub-nav-group-header:hover,
+.sub-nav-group a.sub-nav-group-header:focus,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.multimedia-slot .feature-card:hover,
+.multimedia-slot .feature-card:focus,
+.multimedia-slot a:hover h3,
+.multimedia-slot a:focus h3,
+.multimedia .card:hover h3,
+.multimedia .card:focus h3,
+#cgvBody h3 a:hover,
+#cgvBody h2 a:hover,
+.post-title a:hover,
+.post-title a:focus,
+.feature-secondary a:hover,
+.feature-secondary a:focus,
+.feature-secondary a:hover h3,
+.feature-secondary a:focus h3,
+.blog-feature a:hover h3,
+.blog-feature a:focus h3,
+.landing-thumb-text h3 a:hover,
+.landing-thumb-text h3 a:focus,
+.title a.title:hover,
+.title a.title:focus,
+.title a:hover,
+.title a:focus,
+.page-options li a:hover,
+.page-options li a:focus,
+.contentzone table tbody tr td a:hover,
+.contentzone table tbody tr td a:focus,
+a.arrow-link:hover,
+a.arrow-link:focus,
+.topic-feature a:hover h3,
+.topic-feature a:focus h3
+{
+  color: $default-link-color-hover;
+}
+
+.embedded-entity[data-entity-embed-display*="_feature_card"] {
+  .feature-card {
+    a {
+      &:hover {
+        h3 {
+          color: $default-link-color-hover;
+        }
+      }
+
+      h3 {
+        color: $default-link-color;
+      }
+    }
+  }
+}
+
+// default header colors
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $default-header-colors;
+}
+
+// header
+.nci-logo-pages img {
+  width: $site-logo-width;
+  height: $site-logo-height;
+  min-width: $site-logo-min-width;
+  max-width: $site-logo-max-width;
+}
+
+// main content background
+.main-content {
+  background: $page-margin-background;
+}
+
+// language bar
+.columns.utility,
+.language-bar {
+  display: none;
+}
+
+// utility bar
+// style changes because its being treated as the section title rather than utility bar
+#microsite-a {
+  padding: 10px 0;
+  font-family: $montserrat-font-stack;
+  font-size: 20px;
+}
+
+.utility {
+  text-align: left;
+  color: $utility-text;
+}
+
+.utility-background {
+  background-color: $utility-background-color;
+}
+
+// overcoming foundation class that hides utility bar for mobile
+.utility-background.micro-a {
+  display: block !important;
+}
+
+// menu bar
+.menu.nav-menu>.nav-item>.nav-item-title>a.active,
+.menu.nav-menu>.nav-item>.nav-item-title>a.open,
+.menu.nav-menu>.nav-item>.nav-item-title>a:focus,
+.menu.nav-menu>.nav-item>.nav-item-title>a,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
+.mobile-menu-bar>a,
+.mobile-menu-bar>button,
+.mobile-menu-bar>a:focus,
+.mobile-menu-bar>a:hover,
+.mobile-menu-bar>button:focus,
+.mobile-menu-bar>button:hover {
+  color: $main-menu-link-color;
+}
+
+.nav-search-bar,
+#mega-nav,
+#mega-nav li {
+  background: $main-menu-background-color;
+}
+
+.nav-header.menu-btn::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-hamburger);
+}
+
+a.nav-contact::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-info);
+}
+
+button.nav-search::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-search);
+}
+
+a.nav-dictionary::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
+}
+
+#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+#mega-nav li.contains-current>div.nav-item-title>a,
+.section-nav .level-1.contains-current.has-children>div a,
+.contains-current.has-children>div>a {
+  color: $hamburger-section-menu-parent-item-link-color;
+}
+
+.section-nav .level-1.contains-current div.current-page a {
+  color: $section-menu-mobile-tablet-current-page-color;
+}
+
+#mega-nav .toggle[aria-expanded="true"],
+#mega-nav[aria-expanded="true"] .toggle {
+  color: $hamburger-menu-mobile-tablet-not-current-page-minus-color;
+  background: $hamburger-menu-mobile-tablet-not-current-page-minus-background;
+}
+
+#mega-nav .toggle[aria-expanded="false"],
+#mega-nav[aria-expanded="false"] .toggle {
+  background: $hamburger-menu-mobile-tablet-not-current-page-plus-background;
+  color: $hamburger-menu-mobile-tablet-not-current-page-plus-color;
+}
+
+// #mega-nav .contains-current .toggle[aria-expanded="false"] {
+//   background: $hamburger-menu-mobile-tablet-current-page-plus-background;
+//   color: $hamburger-menu-mobile-tablet-current-page-plus-color;
+// }
+
+// #mega-nav .contains-current .toggle[aria-expanded="true"] {
+//   color: $hamburger-menu-mobile-tablet-current-page-minus-color;
+//   background: $hamburger-menu-mobile-tablet-current-page-minus-background;
+// }
+
+.section-nav .level-1 .toggle[aria-expanded="true"],
+.section-nav .level-1[aria-expanded="true"] .toggle {
+  color: $section-menu-mobile-tablet-not-current-page-minus-color;
+  background: $section-menu-mobile-tablet-not-current-page-minus-background;
+}
+
+
+
+// mega menu
+
+#mega-nav .current-page {
+  background-color: $hamburger-menu-mobile-tablet-current-page-background;
+}
+
+#mega-nav .current-page>div .toggle[aria-expanded="true"],
+#mega-nav .current-page>div[aria-expanded="true"] .toggle {
+  background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
+  color: $hamburger-menu-mobile-tablet-current-page-minus-color;
+}
+
+#mega-nav .current-page>div .toggle[aria-expanded="false"],
+#mega-nav .current-page>div[aria-expanded="false"] .toggle {
+  background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
+  color: $hamburger-menu-mobile-tablet-current-page-plus-color;
+}
+
+// page options
+.page-options li {
+  background-color: $page-options-mobile-tablet-background;
+}
+
+.page-options li:hover {
+  background-color: $page-options-mobile-tablet-hover-background;
+}
+
+// content styles
+.guide-card .card {
+  background: $landing-page-guide-card-background;
+}
+
+a.arrow-link-white:before,
+a.arrow-link:before {
+  @include svg-sprite($content-svg-guide-card-circle-arrow);
+}
+
+a.arrow-link-white:hover:before,
+a.arrow-link:hover:before {
+  @include svg-sprite($content-svg-guide-card-circle-arrow-hover);
+}
+
+.pullquote {
+  border-left-color: $content-pullquote-left-border;
+}
+
+table.table-default th {
+  background: $content-table-header-background;
+}
+
+a.infographic-view-full,
+a.video-view-full,
+figure a.article-image-enlarge {
+  background-color: $content-view-button-background;
+}
+
+a.infographic-view-full:focus,
+a.infographic-view-full:hover,
+a.video-view-full:focus,
+a.video-view-full:hover,
+figure a.article-image-enlarge:focus,
+figure a.article-image-enlarge:hover {
+  background-color: $content-view-button-hover-background;
+}
+
+.feature-primary {
+  .card {
+    &:not(.topic-feature){
+      background-color: $landing-page-feature-card-background;
+    }
+  }
+}
+
+.feature-primary .feature-card a h3,
+.feature-primary .feature-card a:hover h3,
+.main-content .feature-card a {
+  color: $landing-page-feature-card-link-color;
+}
+
+.main-content .guide-card a.arrow-link,
+.main-content .guide-card a.arrow-link-white,
+.main-content a.definition,
+.multimedia .feature-card a,
+.search,
+.utility-background {
+  color: $landing-page-guide-card-link-color;
+}
+
+.main-content .guide-card a.arrow-link:hover {
+  color: $landing-page-guide-card-link-hover-color;
+}
+
+.multimedia-slot {
+  background: $landing-page-multimedia-background;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.icon-exit-notification {
+  @include svg-sprite($content-svg-external-link);
+}
+
+// form elements
+.radio input[type=radio]:checked+label:before {
+  background-color: $content-form-radio-background;
+}
+
+.radio input[type=radio]+label:before {
+  border-color: $content-form-radio-border;
+}
+
+.ui-selectmenu-button span.ui-icon {
+  background-color: $content-form-select-box-dropdown-color;
+}
+
+.ui-selectmenu-button:focus span.ui-icon,
+.ui-selectmenu-button:hover span.ui-icon {
+  background-color: $content-form-select-box-dropdown-hover-color;
+}
+
+.ui-selectmenu-menu .ui-state-focus {
+  background: $content-form-select-box-list-item-hover-background;
+}
+
+.button.submit,
+.button[type=submit],
+form button.submit,
+form button[type=submit] {
+  background-color: $content-form-submit-button-background;
+  border-color: $content-form-submit-button-border;
+}
+
+.button.submit:focus,
+.button.submit:hover,
+.button[type=submit]:focus,
+.button[type=submit]:hover,
+form button.submit:focus,
+form button.submit:hover,
+form button[type=submit]:focus,
+form button[type=submit]:hover {
+  background-color: $content-form-submit-button-hover-background;
+}
+
+// accordion
+.ui-accordion-header.odd,
+.ui-accordion-header.odd.ui-state-active {
+  background: $content-accordion-odd-rows-background;
+}
+
+.ui-accordion-header.even,
+.ui-accordion-header.even.ui-state-active {
+  background: $content-accordion-even-rows-background;
+}
+
+.ui-accordion-header.odd .toggle[aria-expanded="false"],
+.ui-accordion-header.odd[aria-expanded="false"] .toggle {
+  background: $content-accordion-odd-rows-plus-background;
+}
+
+.ui-accordion-header.even .toggle[aria-expanded="false"],
+.ui-accordion-header.even[aria-expanded="false"] .toggle {
+  background: $content-accordion-even-rows-plus-background;
+}
+
+.ui-accordion-header.odd .toggle[aria-expanded="true"],
+.ui-accordion-header.odd[aria-expanded="true"] .toggle {
+  color: $content-accordion-odd-rows-minus-color;
+}
+
+.ui-accordion-header.even .toggle[aria-expanded="true"],
+.ui-accordion-header.even[aria-expanded="true"] .toggle {
+  color: $content-accordion-even-rows-minus-color;
+}
+
+// footer
+.site-footer {
+  background: $footer-background;
+}
+
+.site-footer__icons li:hover {
+  opacity: $footer-icons-hover-opacity;
+}
+
+.site-footer__icons .icon.twitter {
+  @include svg-sprite($footer-svg-twitter);
+}
+
+.site-footer__icons .icon.twitter:hover {
+  @include svg-sprite($footer-svg-twitter-hover);
+}
+
+.site-footer__icons .icon.govdelivery {
+  @include svg-sprite($footer-svg-gov-delivery);
+}
+
+.site-footer__icons .icon.govdelivery:hover {
+  @include svg-sprite($footer-svg-gov-delivery-hover);
+}
+
+.site-footer__icons .icon.facebook {
+  @include svg-sprite($footer-svg-facebook);
+}
+
+.site-footer__icons .icon.facebook:hover {
+  @include svg-sprite($footer-svg-facebook-hover);
+}
+
+.site-footer__icons .icon.instagram {
+  @include svg-sprite($footer-svg-instagram);
+}
+
+.site-footer__icons .icon.instagram:hover {
+  @include svg-sprite($footer-svg-instagram-hover);
+}
+
+.site-footer__icons .icon.linkedin {
+  @include svg-sprite($footer-svg-linkedin);
+}
+
+.site-footer__icons .icon.linkedin:hover {
+  @include svg-sprite($footer-svg-linkedin-hover);
+}
+
+.site-footer__icons .icon.rss {
+  @include svg-sprite($footer-svg-rss);
+}
+
+.site-footer__icons .icon.rss:hover {
+  @include svg-sprite($footer-svg-rss-hover);
+}
+
+.site-footer__icons .icon.youtube {
+  @include svg-sprite($footer-svg-youtube);
+}
+
+.site-footer__icons .icon.youtube:hover {
+  @include svg-sprite($footer-svg-youtube-hover);
+}
+
+@include break(large) {
+
+  // changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
+  header {
+    margin-bottom: 20px;
+  }
+
+  // header
+  .nci-logo-pages {
+    img {
+      width: $site-logo-width;
+      height: $site-logo-height-desktop;
+    }
+  }
+
+
+  // utility
+  #microsite-a .utility span {
+    display: none;
+  }
+
+  //  main navigation and search
+  #swKeyword,
+  .search {
+    background-color: $main-menu-desktop-search-background;
+  }
+
+  #sitesearch {
+    @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
+  }
+
+  #mega-nav .nav-item.contains-current>.nav-item-title>a,
+  #mega-nav .nav-item.current-page>.nav-item-title>a {
+    border-bottom-color: $main-menu-desktop-active-item-border-bottom;
+  }
+
+  a.sub-nav-group-header {
+    color: $mega-menu-desktop-group-header-color;
+  }
+
+  #mega-nav,
+  #mega-nav li {
+    background: none;
+  }
+
+  // overwriting hamburger menu style rules
+  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+  #mega-nav li.contains-current>div.nav-item-title>a {
+    color: initial;
+  }
+
+  // Left navigation
+  .section-nav {
+    .current-page:after {
+      border-left-color: $section-navigation-desktop-active-item-triangle;
+    }
+
+    .level-0>div {
+      background-color: $section-navigation-desktop-header-background;
+    }
+
+    .level-1.contains-current {
+      background-color: $section-navigation-desktop-active-subsection-background;
+    }
+
+    div.current-page {
+      background-color: $section-navigation-desktop-active-background;
+    }
+
+    .has-children .contains-current {
+      >div.current-page a {
+        color: $section-navigation-desktop-active-color;
+      }
+    }
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .page-options li,
+  .page-options li:hover {
+    background-color: $page-options-desktop-background;
+  }
+
+  .page-options .page-options--resize a:before {
+    @include svg-sprite($page-options-desktop-svg-font-size, mq);
+  }
+
+  // desktop theme images
+  .page-options .page-options--print a:before {
+    @include svg-sprite($page-options-desktop-svg-print, mq);
+  }
+
+  .page-options .page-options--email a:before {
+    @include svg-sprite($page-options-desktop-svg-email, mq);
+  }
+
+  .page-options .social-share--facebook a:before {
+    @include svg-sprite($page-options-desktop-svg-facebook, mq);
+  }
+
+  .page-options .social-share--twitter a:before {
+    @include svg-sprite($page-options-desktop-svg-twitter, mq);
+  }
+
+  .page-options .social-share--pinterest a:before {
+    @include svg-sprite($page-options-desktop-svg-pinterest, mq);
+  }
+
+  // desktop main menu
+  #nvcgSlMainNav #swKeyword {
+    color: $main-menu-desktop-search-color;
+  }
+}
+
+@include bp(medium-down) {
+  .nav-search {
+    float: $main-menu-mobile-tablet-nav-search-float-tablet-down;
+  }
+
+  .nav-menu a:active {
+    background-color: $hamburger-active-link-background;
+  }
+
+  // section navigation mobile (tongue)
+  #section-menu-button {
+    background-color: $section-menu-mobile-tablet-button-background;
+  }
+
+  .section-nav .level-0>div {
+    background: $section-menu-mobile-tablet-title-background;
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .section-nav div.current-page {
+    background: $section-menu-mobile-tablet-current-page-background;
+  }
+
+  .section-nav .level-1.contains-current {
+    background: $section-menu-mobile-tablet-family-background;
+  }
+
+
+  .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
+  .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-current-page-plus-background;
+    color: $section-menu-mobile-tablet-current-page-plus-color;
+  }
+
+  .section-nav .level-1.contains-current .toggle[aria-expanded="true"],
+  .section-nav .level-1.contains-current[aria-expanded="true"] .toggle {
+    color: $section-menu-mobile-tablet-current-page-minus-color;
+    background: $section-menu-mobile-tablet-current-page-minus-background;
+  }
+
+  .section-nav .level-1 .toggle[aria-expanded="false"],
+  .section-nav .level-1[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-not-current-page-plus-background;
+    color: $section-menu-mobile-tablet-not-current-page-plus-color;
+  }
+}
+
+@include bp(medium) {
+  .nci-logo-pages img {
+    width: $site-logo-width;
+  }
+
+  .hero-text {
+    background: $landing-page-hero-text-tablet-background;
+  }
+
+  // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
+  .row>.page-options-container .page-options ul {
+    float: left !important;
+  }
+}

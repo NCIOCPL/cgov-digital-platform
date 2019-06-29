@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_card_raw_html.field_raw_html
+    - paragraphs.paragraphs_type.cgov_card_raw_html
+  module:
+    - text
+id: paragraph.cgov_card_raw_html.default
+targetEntityType: paragraph
+bundle: cgov_card_raw_html
+mode: default
+content:
+  field_raw_html:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

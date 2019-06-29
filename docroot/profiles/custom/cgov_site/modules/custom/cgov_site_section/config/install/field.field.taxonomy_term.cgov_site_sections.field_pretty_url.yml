@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_pretty_url
+    - taxonomy.vocabulary.cgov_site_sections
+id: taxonomy_term.cgov_site_sections.field_pretty_url
+field_name: field_pretty_url
+entity_type: taxonomy_term
+bundle: cgov_site_sections
+label: 'Pretty URL'
+description: 'Used as the "tail" of the URL for the assigned landing page. When building URL paths for the section, the parent section''s pretty URL path is pre-pended to this.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

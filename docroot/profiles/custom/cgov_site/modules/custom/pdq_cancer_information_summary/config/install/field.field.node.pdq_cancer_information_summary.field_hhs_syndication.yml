@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_hhs_syndication
+    - node.type.pdq_cancer_information_summary
+  module:
+    - cgov_syndication
+id: node.pdq_cancer_information_summary.field_hhs_syndication
+field_name: field_hhs_syndication
+entity_type: node
+bundle: pdq_cancer_information_summary
+label: 'HHS Syndication'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    syndicate: 1
+    keywords: ''
+default_value_callback: ''
+settings: {  }
+field_type: hhs_syndication

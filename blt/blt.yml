@@ -1,0 +1,101 @@
+project:
+  machine_name: microsite
+  prefix: NCIOCPL
+  human_name: 'National Cancer Institute'
+  profile:
+    name: cgov_site
+  local:
+    protocol: http
+    hostname: microsite.devbox
+git:
+  default_branch: develop
+  remotes:
+    acquia: 'ncigovcd@svn-29892.prod.hosting.acquia.com:ncigovcd.git'
+  hooks:
+    pre-commit: false
+    commit-msg: false
+deploy:
+  tag_source: true
+  exclude_file: '${repo.root}/scripts/blt/deploy/deploy-exclude.txt'
+drush:
+  aliases:
+    remote: '${project.machine_name}.test'
+    local: self
+    ci: self
+  default_alias: '${drush.aliases.local}'
+modules:
+  local:
+    enable: [dblog, devel, kint, seckit, views_ui, cgov_yaml_content]
+    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge]
+  ci:
+    enable: {  }
+    uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config]
+  ode:
+    enable: [dblog, acquia_connector, shield, cgov_caching_nocdn]
+    uninstall: [syslog, cgov_caching_cdn]
+  dev:
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [syslog, cgov_caching_nocdn]
+  int:
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [syslog, cgov_caching_cdn]
+  test:
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    uninstall: [syslog, devel, views_ui, cgov_caching_cdn]
+  ## We have no prod in ACE.
+  01dev:
+    enable: [dblog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ ]
+  01test:
+    enable: [syslog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ dblog ]
+  01live:
+    enable: [syslog, acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ dblog ]
+cm:
+  strategy: features
+  allow-overrides: true
+  features:
+    allow-overrides: true
+    bundle: [default]
+phpunit:
+  -
+    config: '${repo.root}/phpunit.xml'
+    path: '${docroot}/profiles/custom/cgov_site'
+    class: null
+    file: null
+paratest:
+  -
+    config: '${repo.root}/phpunit.xml'
+    path: '${docroot}/profiles/custom/cgov_site'
+    class: null
+    file: null
+    procs: 4
+command-hooks:
+  frontend-reqs:
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    command: 'npm ci'
+  frontend-assets:
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    command: 'npm run build'
+  frontend-test:
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    command: null
+  pre-commit:
+    dir: '${docroot}'
+    command: null
+  pre-config-import:
+    dir: '${docroot}'
+    command: null
+  post-deploy-build:
+    dir: '${deploy.dir}/docroot'
+    command: null
+  post-setup-build:
+    dir: '${docroot}'
+    command: null
+  post-deploy:
+    dir: '${docroot}'
+    command: null
+simplesamlphp: true
+cgov:
+  drupal_users_file: '${repo.root}/cgov-drupal-users.yml'

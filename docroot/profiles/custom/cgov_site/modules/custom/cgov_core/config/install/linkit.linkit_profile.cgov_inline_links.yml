@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: cgov_inline_links
+label: 'Cgov Inline Links'
+description: 'Linking configuration for CGov WYSIWYG linking.'
+matchers:
+  5d486987-30c4-436a-a318-b0b3c9253834:
+    uuid: 5d486987-30c4-436a-a318-b0b3c9253834
+    id: 'entity:node'
+    weight: 0
+    settings:
+      include_unpublished: true
+      metadata: ''
+      bundles: {  }
+      group_by_bundle: false
+      substitution_type: canonical
+      limit: 100
+  5a974a03-e5ca-4141-8020-ddd48fe00b1f:
+    uuid: 5a974a03-e5ca-4141-8020-ddd48fe00b1f
+    id: 'entity:media'
+    weight: 0
+    settings:
+      metadata: ''
+      bundles: {  }
+      group_by_bundle: false
+      substitution_type: canonical
+      limit: 100

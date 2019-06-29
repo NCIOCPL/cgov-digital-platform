@@ -1,0 +1,114 @@
+/*** Flex Video override ***/
+.flex-video {margin-bottom: 0}
+/*** End Flex Video override ***/
+/*** Video Player ***/
+.videoPlayer {
+	/* margin: 0px 0 20px 0; */
+}
+.video-carousel-container {
+	/* padding:0 0 20px 0;
+	float:left; */
+}
+.video-carousel-video {
+}
+/* Video Titles */
+.video > h4 {
+	font-weight: normal;
+	line-height: 24px;
+}
+h4.video50title {
+	padding: 0;
+	font-size:14px;
+}
+h4.video75title {
+	padding: 0;
+	font-size:16px;
+}
+h4.video100title {
+	padding: 0;
+	font-size:18px;
+}
+/* End Video Titles */
+/* Video Captions */
+.media-caption {
+	display:block;
+	color:#666;
+	background:#DDDDDD;
+	padding:10px;
+	margin-top:5px;
+	font-size:12px;
+	line-height:1.2em;
+}
+.media-caption p:first-child {
+	margin-top:0;
+}
+.media-caption p:last-child {
+	margin-bottom:0;
+}
+.caption-line {
+	margin-top:5px;
+	border-top: 1px solid #BDBDBD;
+}
+.video.size50 .media-caption {
+	font-size:11px;
+}
+.video.size75 .media-caption {
+	font-size:12px;
+}
+.video.size100 .media-caption {
+	font-size:13px;
+}
+.video-carousel-caption {
+	display: block;
+	color: #666;
+	background: #DDDDDD;
+	text-align: right;
+	padding: 10px;
+}
+.video-carousel-caption img {
+	float: right;
+	padding-left: 5px;
+}
+.video-carousel-caption .size75 {
+	font-size: 13px;
+}
+.video-carousel-caption .size100 {
+	font-size: 14px;
+}
+/* End Video Captions */
+/* Video Sizes */
+.video.size50 {
+	width:45%;
+}
+.video.size75 {
+	width:70%;
+}
+.video.size100 {
+	width:100%;
+}
+// all videos to be 100% width from tablet to mobile
+@include bp(medium-down) {
+	.video.size50, .video.size75 {
+		width:100%;
+		float: none;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+/* End Video Sizes */
+/* Video Alignment */
+.video.center {
+	float: none;
+	margin: auto;
+}
+.video.left {
+	float: left;
+	margin-right: 5%;
+}
+.video.right {
+	float: right;
+	margin-left: 5%;
+}
+/* End Video Alignment */
+/*** END Video Player ***/
+

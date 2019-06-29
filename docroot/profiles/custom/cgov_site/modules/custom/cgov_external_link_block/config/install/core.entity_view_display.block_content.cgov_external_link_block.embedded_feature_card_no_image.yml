@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.cgov_external_link_block
+    - core.entity_view_mode.block_content.embedded_feature_card_no_image
+    - field.field.block_content.cgov_external_link_block.field_featured_url
+    - field.field.block_content.cgov_external_link_block.field_override_card_description
+    - field.field.block_content.cgov_external_link_block.field_override_card_title
+    - field.field.block_content.cgov_external_link_block.field_override_image_promotional
+  module:
+    - link
+id: block_content.cgov_external_link_block.embedded_feature_card_no_image
+targetEntityType: block_content
+bundle: cgov_external_link_block
+mode: embedded_feature_card_no_image
+content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_featured_url:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    type: link_separate
+    region: content
+  field_override_card_description:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_override_card_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_override_image_promotional: true
+  langcode: true

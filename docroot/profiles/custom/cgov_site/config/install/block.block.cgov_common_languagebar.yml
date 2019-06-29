@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+  theme:
+    - cgov_common
+id: cgov_common_languagebar
+theme: cgov_common
+region: language_bar
+weight: 0
+provider: null
+plugin: 'language_block:language_content'
+settings:
+  id: 'language_block:language_content'
+  label: 'Language switcher (Content)'
+  provider: language
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,43 @@
+{% import '@cgov_common/content/blog/blog_macros.twig' as blogMacros %}
+{% set series = node.field_blog_series.entity %}
+
+<!-- ********************************* BEGIN Blog Post Page Full Content ********************************** -->
+<article>
+  <div class="resize-content">
+    <h1>
+      {{ node.label }}
+    </h1>
+    {{ drupal_block('page_options') }}
+    <div id="nvcgSubTitle">
+      {% if series.field_feedburner_url.value %}
+        <div class="subscribeRSS">
+          <a class="blogRSS" href="{{ series.field_feedburner_url.value }}"><span>{% trans %}Subscribe{% endtrans %}</span></a>
+        </div>
+      {% endif %}
+    </div>
+    <div id="cgvBody" class="cgvblogpost">
+      <p class="blog-post-publishing-info">
+        {{ blogMacros.getByline(content) }}
+      </p>
+      {{ content.field_image_article }}
+      {{ content.field_intro_text }}
+      {{ content.body }}
+    </div>
+  </div>
+
+  <footer class="article-footer">
+    {{ content.field_citation }}
+    {{ content.field_related_resources }}
+    {{ drupal_block('cgov_blog_pager', {label: ''}) }}
+    {% if content.field_recommended_content[0] %}
+      <div id="blog-cards">
+        <h4>{{ series.field_recommended_content_header.value }}</h4>
+        {{ content.field_recommended_content }}
+      <div>
+    {% endif %}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>
+<!-- ********************************* END Blog Post Page Full Content ********************************** -->

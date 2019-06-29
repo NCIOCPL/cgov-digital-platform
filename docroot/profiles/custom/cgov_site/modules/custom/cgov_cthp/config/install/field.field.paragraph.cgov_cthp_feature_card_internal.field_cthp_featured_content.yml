@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cthp_featured_content
+    - paragraphs.paragraphs_type.cgov_cthp_feature_card_internal
+id: paragraph.cgov_cthp_feature_card_internal.field_cthp_featured_content
+field_name: field_cthp_featured_content
+entity_type: paragraph
+bundle: cgov_cthp_feature_card_internal
+label: 'Featured Content'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: cgov_all_selection
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

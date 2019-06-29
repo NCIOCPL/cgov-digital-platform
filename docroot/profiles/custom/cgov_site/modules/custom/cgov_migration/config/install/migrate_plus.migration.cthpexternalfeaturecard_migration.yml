@@ -1,0 +1,71 @@
+id: cthpexternalfeaturecard_migration
+label: 'Custom cthpexternalfeaturecardmigration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://cthpexternalfeaturecard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+
+        -
+         name: field_cthp_featured_url
+         label: field_cthp_featured_url
+         selector: field_cthp_featured_url
+
+
+        -
+         name: field_cthp_card_theme
+         label: field_cthp_card_theme
+         selector: field_cthp_card_theme
+
+
+        -
+         name: field_cthp_card_title
+         label: field_cthp_card_title
+         selector: field_cthp_card_title
+
+
+
+        -
+         name: field_cthp_override_description
+         label: field_cthp_override_description
+         selector: field_cthp_override_description
+
+
+
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
+
+
+  ids:
+    id:
+      type: integer
+
+
+process:
+ id: id
+ langcode: langcode
+ field_cthp_card_theme: field_cthp_card_theme
+
+ field_cthp_override_description: field_cthp_override_description
+ field_cthp_card_title: field_cthp_card_title
+ field_cthp_featured_url: field_cthp_featured_url
+ field_override_image_promotional: field_override_image_promotional
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_cthp_feature_card_external
+migration_dependencies: {  }

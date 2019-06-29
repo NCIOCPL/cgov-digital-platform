@@ -1,0 +1,74 @@
+// this mixin creates the main breakpoints
+// to create a breakpoint, format like this: 
+// @include bp(large) {
+//    styles go here
+//  }
+// custom breakpoints would be in this format:
+// @include bp('(max-width: 30px) and (min-width: 20px)')
+
+$breakpoints: (
+	xsmall: 390px,
+	small: 640px,
+	medium: 1024px,
+	large: 1440px
+);
+
+@mixin bp($point) {
+  @if $point == xtra-large {
+    @media only screen and (min-width: map-get($breakpoints, large) + 1px) { @content; }
+  }
+	@else if $point == large-up {
+    @media only screen and (min-width: map-get($breakpoints, medium) + 1px)  { @content; }
+  }
+  @else if $point == large {
+    @media only screen and (min-width: map-get($breakpoints, medium) + 1px) and (max-width: map-get($breakpoints, large))  { @content; }
+  }
+  @else if $point == large-down {
+    @media only screen and (max-width: map-get($breakpoints, large))  { @content; }
+  }
+	@else if $point == medium-up {
+    @media only screen and (min-width: map-get($breakpoints, small) + 1px)  { @content; }
+  }
+	@else if $point == medium {
+    @media only screen and (min-width: map-get($breakpoints, small) + 1px) and (max-width: map-get($breakpoints, medium))  { @content; }
+  }
+	@else if $point == medium-down {
+    @media only screen and (max-width: map-get($breakpoints, medium))  { @content; }
+  }
+	@else if $point == small {
+    @media only screen and (max-width: map-get($breakpoints, small))  { @content; }
+  }
+	@else if $point == xtra-small {
+    @media only screen and (max-width: map-get($breakpoints, xsmall))  { @content; }
+  }
+	@else {
+		@media only screen and #{$point} { @content; }
+	}
+}
+
+// Mobile First
+@mixin break($breakpoint) {
+  @if $breakpoint == small {
+    @media only screen and (min-width: 391px) { @content; }
+  }
+
+  @if $breakpoint == medium {
+    @media only screen and (min-width: 641px) { @content; }
+  }
+
+  @else if $breakpoint == tablet-ls {
+    @media only screen and (min-width: 769px) { @content; }
+  }
+
+  @else if $breakpoint == large {
+    @media only screen and (min-width: 1025px) { @content; }
+  }
+
+  @else if $breakpoint == xlarge {
+    @media only screen and (min-width: 1441px) { @content; }
+  }
+
+  @else {
+		@media only screen and (#{$breakpoint}) { @content; }
+	}
+}

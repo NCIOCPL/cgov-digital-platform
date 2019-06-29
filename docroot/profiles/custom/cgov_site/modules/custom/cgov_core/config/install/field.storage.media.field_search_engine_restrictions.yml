@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - cgov_core
+  module:
+    - media
+    - options
+id: media.field_search_engine_restrictions
+field_name: field_search_engine_restrictions
+entity_type: media
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: IncludeSearch
+      label: 'Include in search'
+    -
+      value: ExcludeSearch
+      label: 'Exclude from search'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: true
+custom_storage: false

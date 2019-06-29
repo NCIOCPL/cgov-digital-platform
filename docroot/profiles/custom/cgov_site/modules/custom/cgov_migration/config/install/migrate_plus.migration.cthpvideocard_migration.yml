@@ -1,0 +1,103 @@
+id: cthpvideocard_migration
+label: 'Custom cthpvideocardmigration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://cthpvideocard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+
+        -
+         name: field_cthp_video
+         label: field_cthp_video
+         selector: field_cthp_video
+
+
+        -
+         name: field_cthp_card_theme
+         label: field_cthp_card_theme
+         selector: field_cthp_card_theme
+
+
+        -
+         name: field_cthp_card_title
+         label: field_cthp_card_title
+         selector: field_cthp_card_title
+
+
+        -
+         name: field_cthp_target_link
+         label: field_cthp_target_link
+         selector: field_cthp_target_link
+
+
+  ids:
+    id:
+      type: integer
+
+
+process:
+ field_cthp_video:
+    plugin: migration_lookup
+    migration:
+      - video_en_migration
+      - video_es_migration
+    source: field_cthp_video
+    no_stub: true
+
+ field_cthp_target_link/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        -
+          internallinksql_migration
+        -
+          externallinksql_migration
+        -
+         medialink_migration
+      no_stub: true
+      source: field_cthp_target_link
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_cthp_target_link/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        -
+          internallinksql_migration
+        -
+          externallinksql_migration
+        -
+          medialink_migration
+
+      no_stub: true
+      source: field_cthp_target_link
+    -
+      plugin: extract
+      index:
+        - 1
+
+ id: id
+ langcode: langcode
+ field_cthp_card_theme: field_cthp_card_theme
+
+ field_cthp_card_title: field_cthp_card_title
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_cthp_video_card
+migration_dependencies: {  }

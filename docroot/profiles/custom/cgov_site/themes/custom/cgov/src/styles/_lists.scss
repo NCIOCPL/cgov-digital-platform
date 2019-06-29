@@ -1,0 +1,331 @@
+ul,
+ol,
+dl {
+	line-height: 1.5;
+}
+
+// Managed List styles
+.list {
+	position: relative;
+	margin: 0 0 1em;
+
+	> .title {
+		font-family: $montserrat-font-stack;
+		color: #606060;
+		font-weight: normal;
+		font-size: 1.25em;
+		line-height: 1.2em;
+	}
+
+	.description {
+		font-size: 1em;
+		line-height: 1.5em;
+
+		> .date, > .body {
+			margin: 0.25em 0;
+		}
+	}
+	
+	&.compact {
+		li {
+			margin: 1em 0 1em 2em;
+			
+			&:before {
+				content: "\2022";
+				display: inline;
+				position: relative;
+				float: left;
+				left: -0.5em;
+				top: 0.25em;
+				margin: 0 -0.2em;
+				font-size: 1.1em;
+				line-height: 0.90909em;
+				color: $default-text;
+			}
+		}
+	}
+	
+	// CHTP pages More Information lists
+	&.more-info {
+		li {
+			margin: 0;
+			
+			&:before {
+				content: "\2022";
+				display: inline;
+				position: relative;
+				float: left;
+				left: -0.5em;
+				top: 0.25em;
+				margin: 0 -0.2em;
+				font-size: 1.1em;
+				line-height: 0.90909em;
+				color: $default-text;
+			}
+			
+			.title-and-desc {
+				display: inline;
+			}
+			
+			.title {
+				font-family: inherit;
+				font-size: inherit;
+			}
+		}
+	}
+	
+	// Related Resources list
+	&.related-resources {
+		li {
+			margin-top: 0.25em;
+			margin-bottom: 0.25em;
+			margin-left: 0;
+		
+			.title {
+				font-family: inherit;
+				font-size: inherit;
+			}
+		}
+	}
+
+	.title a.title:hover, .title a.title:focus, .title a:hover, .title a:focus {
+		color: $lcranberry;
+		text-decoration: none;
+	}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		> li {
+			margin: 1.875em 0;
+			clear: both;
+
+			&:before {
+				content: "";
+				display: none;
+			}
+		}
+	}
+	&.has-images ul > li {
+		margin-top: 2.5em;
+		margin-bottom: 2.5em;
+
+		&:first-child {
+			margin-top: 1.875em;
+		}
+	}
+
+	.container {
+		display: inline-block;
+		vertical-align: top;
+		padding: 0; // was 0 0 1.875em; but the 1.875em bottom padding was creating double spacing when combined with the margin for the li
+
+		&.image {
+			width: 21%;
+			margin-top: .25em;
+			padding: 0; // was 0 0 2.5em but the bottom padding also conflicted with the li margin, as above
+			margin-right: -4px;
+
+			+ .container.title {
+				width: 78%;
+				padding-left: 1.25em;
+				margin-right: -4px;
+
+				@include bp(small) {
+					width: 100%;
+					padding: 0;
+				}
+			}
+
+			@include bp(small) {
+				display: none;
+			}
+		}
+
+		.title {
+			font-family: $montserrat-font-stack;
+			font-weight: normal;
+			font-size: 1.125em;
+			line-height: 1.111em;
+		}
+
+		.desc {
+			font-size: inherit;
+			font-family: inherit;
+			color: inherit;
+		}
+	}
+
+	.infographic {
+		background: transparent;
+	}
+}
+
+// attaches a filetype icon to spans following media links like those used on CTHP Research cards or cthp-dropdown items
+.filetype {
+	position: relative;
+	top: 0.25em;
+	display: inline-block;
+	margin-left: 5px;
+
+	&.pdf {
+		@include svg-sprite(file-pdf-gray-o-thick);
+	}
+	&.exe, &.txt {
+		@include svg-sprite(file-download-gray-o);
+	}
+	&.ebook {
+		@include svg-sprite(file-ebook-gray);
+	}
+	&.ppt {
+		@include svg-sprite(file-ppt-gray);
+	}
+	&.word {
+		@include svg-sprite(file-word-gray);
+	}
+	&.excel {
+		@include svg-sprite(file-excel-gray);
+	}
+	&.unknown {
+		top: 0;
+		height: auto;
+		background: none;
+	}
+}
+
+// changing default behavior of list image for new landing page so that the image is 188px wide at desktop, matching the specs for thumbnail cards
+.row.news .list {
+		.container {
+			&.image {
+				width: 25%;
+			}
+		}
+	}
+
+// Dynamic List styles
+.list-item span.title a.title {
+	font-family: $montserrat-font-stack;
+	font-size: 1em;
+	line-height: 1.11111em;
+}
+
+@include bp(small) {	
+	.dynamic {
+		padding: 0 15px;
+	}	
+}
+
+// Fix for wrapping width issues on Dynamic Lists combined with right nav
+.large-8 .list .container.image + .container.title {
+	width: 73%;
+}
+@include bp(small){
+	.large-8 .list .container.image + .container.title {
+		width: 100%;
+	}
+}
+
+p.date.dynamic-date {
+	margin: 0;
+}
+p.description.dynamic-description {
+	margin: 0;
+}
+
+/* A to Z menu Start
+ * uses include Cancer Types A to Z
+ * and Drug Dictionary A to Z
+ */
+.az-list {
+
+	.browse {
+		float: left;
+		padding-top: 0.5em;
+		margin-right: 1em;
+	}
+
+	&.inline {
+		display: inline-block;
+		margin-left: 1em;
+
+		> ul {
+			margin-bottom: inherit;
+		}
+	}
+
+	> ul > li {
+		font-family: $montserrat-font-stack;
+		margin-left: 0;
+		margin-right: 1em;
+		display: inline-block;
+
+		&:before {
+			content: none;
+			display: none;
+		}
+	}
+
+	&.narrow { 
+		.browse, ul > li {
+			margin-right: 0.5em;
+		}
+	}
+}
+.azMenu {
+	width: auto;
+
+	ul {
+		width: 100%;
+		background: #f5f5f3;
+		margin: 0;
+		padding: 10px 0 10px 4px;
+		overflow: auto;
+
+		li {
+			display: block;
+			width: 3.8%;
+			text-align: center;
+			float: left;
+			margin: 0;
+			padding: 0;
+
+			&:before {
+				content: none;
+				display: none;
+			}
+		}
+	}
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		height: 0;
+		visibility: hidden;
+	}
+}
+/* end A to Z menu End */
+
+/* lists used for A to Z List of Cancer, Cancers by Body Location/System */
+ul.cancer-list {
+	li {
+		margin-left: 0;
+
+		&:before {
+			content: none;
+		}
+	}
+	ul {
+		margin-bottom: 0;
+
+		> li {
+			margin-left: 1em;
+		}
+	}
+}
+
+/* lists for Press Releases, NCI Fact Sheets */
+.list.no-bullets .general-list-item {
+    margin: 0 0 1.875em;
+}

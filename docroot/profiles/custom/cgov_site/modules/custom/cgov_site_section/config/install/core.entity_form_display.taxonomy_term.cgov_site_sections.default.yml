@@ -1,0 +1,132 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.cgov_site_sections.field_breadcrumb_root
+    - field.field.taxonomy_term.cgov_site_sections.field_channel
+    - field.field.taxonomy_term.cgov_site_sections.field_content_group
+    - field.field.taxonomy_term.cgov_site_sections.field_landing_page
+    - field.field.taxonomy_term.cgov_site_sections.field_levels_to_display
+    - field.field.taxonomy_term.cgov_site_sections.field_main_nav_root
+    - field.field.taxonomy_term.cgov_site_sections.field_mega_menu_content
+    - field.field.taxonomy_term.cgov_site_sections.field_navigation_display_options
+    - field.field.taxonomy_term.cgov_site_sections.field_navigation_label
+    - field.field.taxonomy_term.cgov_site_sections.field_pretty_url
+    - field.field.taxonomy_term.cgov_site_sections.field_section_nav_root
+    - taxonomy.vocabulary.cgov_site_sections
+  module:
+    - text
+id: taxonomy_term.cgov_site_sections.default
+targetEntityType: taxonomy_term
+bundle: cgov_site_sections
+mode: default
+content:
+  description:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+      rows: 5
+    third_party_settings: {  }
+  field_breadcrumb_root:
+    weight: 8
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_channel:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_content_group:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_landing_page:
+    weight: 10
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_levels_to_display:
+    weight: 9
+    settings:
+      placeholder: (1-5)
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_main_nav_root:
+    weight: 6
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_mega_menu_content:
+    weight: 11
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_navigation_display_options:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_navigation_label:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_pretty_url:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_section_nav_root:
+    weight: 7
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  path: true

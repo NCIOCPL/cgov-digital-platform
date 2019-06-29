@@ -1,0 +1,62 @@
+id: cthpfeaturecard_migration
+label: 'Custom cthpfeaturecardmigration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://cthpinternalfeaturecard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: id
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+
+        -
+         name: field_cthp_featured_content
+         label: field_cthp_featured_content
+         selector: field_cthp_featured_content
+
+
+        -
+         name: field_cthp_card_theme
+         label: field_cthp_card_theme
+         selector: field_cthp_card_theme
+
+
+        -
+         name: field_cthp_card_title
+         label: field_cthp_card_title
+         selector: field_cthp_card_title
+
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+
+  ids:
+    id:
+      type: integer
+
+
+process:
+ id: id
+ langcode: langcode
+ field_cthp_card_theme: field_cthp_card_theme
+
+ field_cthp_card_title: field_cthp_card_title
+ field_cthp_featured_content: field_cthp_featured_content
+ field_image_promotional: field_image_promotional
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_cthp_feature_card_internal
+migration_dependencies: {  }

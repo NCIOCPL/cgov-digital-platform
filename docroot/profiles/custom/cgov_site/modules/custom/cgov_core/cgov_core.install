@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_press_release.install.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\cgov_core\CgovCoreTools;
+
+/**
+ * Implements hook_install().
+ *
+ * Set up cgov_core module.
+ *
+ * @see system_install()
+ */
+function cgov_core_install() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Set the DTM config for this environment.
+  $siteHelper->installDtmEnvironment();
+
+  // Install permissions for this module.
+  _cgov_core_install_permissions($siteHelper);
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access media overview',
+      'access cgov_media_browser entity browser pages',
+      'access administration pages',
+      'view the administration theme',
+      'access cgov_content_browser entity browser pages',
+      'access cgov_embedded_content_browser entity browser pages',
+      'access toolbar',
+      'use moderation sidebar',
+      'link to any page',
+      'use text format full_html',
+      'use text format raw_html',
+      'use text format simple',
+      'use text format streamlined',
+    ],
+    'advanced_editor' => [
+      'access taxonomy overview',
+      'administer taxonomy',
+      'administer blocks',
+      'administer redirects',
+      'translate block_content',
+      'administer menu',
+      'delete content translations',
+      'use editorial_workflow transition quick_publish_replace',
+      'use editorial_workflow transition quick_publish',
+      'use simple_workflow transition create_new_draft',
+      'use simple_workflow transition publish',
+    ],
+    'authenticated' => [
+      'access content',
+      'view media',
+    ],
+    'content_author' => [
+      'access content overview',
+      'create content translations',
+      'edit content translations',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition request_archive',
+      'use editorial_workflow transition request_review_pub',
+      'use editorial_workflow transition request_review',
+      'use editorial_workflow transition resurrect_archived_content',
+      'use editorial_workflow transition revise',
+      'view any unpublished content',
+      'view latest version',
+    ],
+    'content_editor' => [
+      'use editorial_workflow transition approve_archive',
+      'use editorial_workflow transition approve',
+      'use editorial_workflow transition back_to_draft',
+      'use editorial_workflow transition back_to_editing',
+      'use editorial_workflow transition publish',
+      'use editorial_workflow transition reject_archive',
+    ],
+    'content_previewer' => [
+      'view all media revisions',
+      'view all revisions',
+      'view any unpublished content',
+    ],
+    'site_admin' => [
+      // View Logs.
+      'access site reports',
+      // Manage Users.
+      'administer users',
+      'select account cancellation method',
+      'access user profiles',
+      'administer account settings',
+      // Set DTM tag after site provisioning.
+      'administer adobe dynamic tag management',
+      // Set microsite theme colors after provisioning.
+      'administer themes',
+      'administer frontend globals',
+      // Let site_admin assign roles.
+      'assign admin_ui role',
+      'assign advanced_editor role',
+      'assign blog_manager role',
+      'assign content_author role',
+      'assign content_editor role',
+      'assign content_previewer role',
+      'assign image_manager role',
+      'assign layout_manager role',
+      'assign pdq_importer role',
+      'assign site_admin role',
+      'access site in maintenance mode',
+      'access files overview',
+      // Custom permissions.
+      'Basic site settings',
+      'File system',
+      'Logging and errors',
+      'RSS publishing',
+      'View plugins',
+      'Field list report',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Implements hook_themes_installed().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_themes_installed()
+ */
+function cgov_core_themes_installed() {
+  // Create Contact Us block for Press Releases.
+  $block_theme = \Drupal::config('system.theme')->get('default');
+  $block_region = 'public_use';
+  $block_label = 'Public Use';
+  $block_html = <<<EOMarkup
+<p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
+EOMarkup;
+
+  // Create block content.
+  $block_content = BlockContent::create([
+    'id' => 'public_use',
+    'type' => 'content_block',
+    'info' => $block_label,
+    'body' => ['value' => $block_html, 'format' => 'full_html'],
+  ]);
+  $block_content->save();
+
+  // Assign block to Region.
+  $data = [
+    'id' => 'public_use',
+    'plugin' => 'block_content:' . $block_content->uuid(),
+    'region' => $block_region,
+    'provider' => 'block_content',
+    'weight' => 0,
+    'theme' => $block_theme,
+    'settings' => [
+      'label' => $block_label,
+      'label_display' => '0',
+    ],
+  ];
+
+  $block = Block::create($data);
+  $block->save();
+
+}

@@ -1,0 +1,80 @@
+id: blogtopics_migration
+label: 'taxonomy blogtopics migration'
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://blogtopics.xml
+  item_selector: /rows/row
+
+
+  fields:
+        -
+         name: term_id
+         label: term_id
+         selector: term_id
+
+        -
+         name: name
+         label: name
+         selector: name
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+
+        -
+         name: description
+         label: description
+         selector: description
+
+
+        -
+         name: field_owner_blog
+         label: field_owner_blog
+         selector: field_owner_blog
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: field_pretty_url
+
+
+  ids:
+    term_id:
+      type: integer
+
+process:
+  tid: term_id
+  name: name
+  langcode: langcode
+  field_pretty_url: field_pretty_url
+  description/value: description
+  description/format:
+    plugin: default_value
+    default_value: simple
+
+  field_owner_blog:
+    plugin: migration_lookup
+    migration:
+      - blogseries_en_migration
+      - blogseries_es_migration
+
+    source: field_owner_blog
+    no_stub: true
+
+
+  vid:
+   plugin: default_value
+   default_value: cgov_blog_topics
+
+
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: cgov_blog_topics
+
+migration_dependencies: { }

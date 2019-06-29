@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: cancer_research_url
+label: 'Cancer Research URL'
+type: 'canonical_entities:node'
+pattern: '/[cgov_tokens:cgov-computed-path]/[node:field_pretty_url:value]'
+selection_criteria:
+  235fed31-5185-4684-83cf-d44fa141ec5d:
+    id: node_type
+    bundles:
+      cgov_cancer_research: cgov_cancer_research
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 235fed31-5185-4684-83cf-d44fa141ec5d
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -1,0 +1,29 @@
+field.formatter.settings.cgov_date_formatter:
+  type: field.formatter.settings.datetime_default
+  label: 'Cgov default datetime format settings'
+  mapping:
+    display_strategy:
+      type: string
+      label: 'Display Strategy'
+
+## This is for our selection handler. It works just like
+## core does, so we will inherit from that.
+entity_reference_selection.cgov_all_selection:
+  type: entity_reference_selection.default
+
+cgov_core.frontend_globals:
+  type: config_object
+  label: 'Frontend Globals Config Object'
+  mapping:
+    config_object:
+      type: string
+      label: 'Frontend Globals JSON Config Object'
+
+# Missing from the crop module. Without this, the unit tests fail.
+media.type.*.third_party.crop:
+  type: mapping
+  label: 'Crop settings'
+  mapping:
+    image_field:
+      type: string
+      label: 'Field storing image to be cropped'

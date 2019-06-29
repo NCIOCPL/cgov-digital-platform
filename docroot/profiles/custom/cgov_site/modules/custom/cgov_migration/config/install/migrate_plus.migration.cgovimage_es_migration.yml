@@ -1,0 +1,167 @@
+id: cgovimage_es_migration
+label: 'Custom minilanding es migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://cgovimage_es.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: field_caption
+         label: field_caption
+         selector: field_caption
+
+        -
+         name: field_accessible_version
+         label: field_accessible_version
+         selector: field_accessible_version
+
+        -
+         name: field_display_enlarge
+         label: field_display_enlarge
+         selector: field_display_enlarge
+
+        -
+         name: field_credit
+         label: field_credit
+         selector: field_credit
+
+
+        -
+         name: field_original_source
+         label: field_original_source
+         selector: field_original_source
+
+
+        -
+         name: name
+         label: name
+         selector: name
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+        -
+         name: field_media_image
+         label: field_media_image
+         selector: field_media_image
+
+        -
+         name: field_override_img_thumbnail
+         label: field_override_img_thumbnail
+         selector: field_override_img_thumbnail
+
+        -
+         name: field_override_img_featured
+         label: field_override_img_featured
+         selector: field_override_img_featured
+
+        -
+         name: field_override_img_panoramic
+         label: field_override_img_panoramic
+         selector: field_override_img_panoramic
+
+        -
+         name: field_override_img_social_media
+         label: field_override_img_social_media
+         selector: field_override_img_social_media
+
+
+
+
+
+
+  ids:
+    id:
+      type: integer
+
+process:
+  mid:
+    plugin: migration_lookup
+    source: id
+    migration: cgovimage_migration
+
+  name: name
+  langcode: langcode
+
+  field_caption/value:
+    -
+      plugin: remove_rx_wrapper
+      source: field_caption
+
+  field_caption/format:
+     plugin: default_value
+     default_value: simple
+
+  field_accessible_version: field_accessible_version
+  field_display_enlarge: field_display_enlarge
+  field_original_source: field_original_source
+  field_credit: field_credit
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+  moderation_state:
+   plugin: default_value
+   default_value: published
+
+  field_media_image:
+    plugin: image_import
+    source: field_media_image
+    destination: _file_destination
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  field_override_img_thumbnail:
+    plugin: image_import
+    source: field_override_img_thumbnail
+    destination: _thumbnail_file_destination
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  field_override_img_featured:
+    plugin: image_import
+    source: field_override_img_featured
+    destination: _featured_file_destination
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  field_override_img_panoramic:
+    plugin: image_import
+    source: field_override_img_panoramic
+    destination: _panoramic_file_destination
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  field_override_img_social_media:
+    plugin: image_import
+    source: field_override_img_social_media
+    destination: _social_file_destination
+    skip_on_missing_source: true
+    skip_on_error: true
+
+  path:
+    plugin: default_value
+    default_value: ‘/mypath/’
+
+destination:
+  plugin: entity:media
+  default_bundle: cgov_image
+  translations: true
+
+migration_dependencies:  { }

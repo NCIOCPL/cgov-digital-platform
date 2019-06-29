@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_image_promotional
+    - media.type.cgov_image
+    - media.type.cgov_infographic
+id: media.cgov_infographic.field_image_promotional
+field_name: field_image_promotional
+entity_type: media
+bundle: cgov_infographic
+label: 'Promotional Image'
+description: 'Overrides Lead Image for promotional use cases (lists, cards, social media sharing).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

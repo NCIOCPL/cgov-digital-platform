@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_blog.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Add custom validation for Cgov Blog Posts only.
+  if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
+
+    // Add the admin JS library so we can run the InvokeCommand. See
+    // https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Ajax%21InvokeCommand.php/class/InvokeCommand/8.2.x
+    $form['#attached']['library'][] = 'cgov_blog/cgov_blog_post_admin';
+
+    // Add Drupal JS settings.
+    // TODO: Add selector settings.
+    $id_pairs = _get_id_pairs($form);
+    $form['#attached']['drupalSettings']['adminJS']['idPairs'] = $id_pairs;
+    $form['#attached']['drupalSettings']['adminJS']['selectable'] = _is_selectable($form);
+
+    // If this is a draft or administrator role, fire off ajax function.
+    if (_is_selectable($form)) {
+      $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
+    }
+    else {
+      $form['field_blog_series']['#disabled'] = TRUE;
+    }
+  }
+
+  // Set field properties for Blog Series.
+  if ($form_id == 'node_cgov_blog_series_form' || $form_id == 'node_cgov_blog_series_edit_form') {
+
+    // Draw the custom description for the Feedburner field only.
+    $description = $form['field_feedburner_url']['widget']['#description'];
+    $form['field_feedburner_url']['widget'][0]['uri']['#description'] = $description;
+  }
+
+}
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+
+  // If this is a list in a Blog Series, use 'items per page' field.
+  if ($view->id() == 'cgov_block_blog_posts') {
+    $node = Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
+    if ($node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
+      $view->setItemsPerPage($node->field_num_display_posts->value);
+    }
+  }
+
+  // Allow replacement of contextual filters arguments.
+  // Can use ?series=cancer-currents&topic=clinical-trial-results .
+  if ($view->id() == 'blog_rss' || $view->id() == 'cgov_block_blog_posts') {
+    $series = \Drupal::request()->query->get('series');
+    $topic = \Drupal::request()->query->get('topic');
+
+    // Convert BlogSeries.Shortname to ID.
+    if ($series && !is_numeric($series) && $series != 'all') {
+      $nodes = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->loadByProperties(
+            ['field_blog_series_shortname' => $series]
+        );
+      // Get first array key.
+      reset($nodes);
+      $nid = key($nodes);
+      // Store NID as the first contextual filter argument.
+      $view->args[0] = (int) $nid;
+    }
+
+    // Convert BlogTopic.PrettyUrl to ID.
+    if ($topic && !is_numeric($topic) && $topic != 'all') {
+      $terms = \Drupal::entityTypeManager()
+        ->getStorage('taxonomy_term')
+        ->loadByProperties(
+            ['field_topic_pretty_url' => $topic]
+        );
+      // Get first array key.
+      reset($terms);
+      $tid = key($terms);
+      // Store NID as the first contextual filter argument.
+      $view->args[1] = (int) $tid;
+    }
+
+  }
+}
+
+/**
+ * Get an array of all taxonomy/owner blog pairs.
+ */
+function _get_id_pairs(array $form) {
+
+  // Get the list of topics (categories) from the vocabulary ID.
+  $vid = 'cgov_blog_topics';
+  $topics = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+
+  // Return Blog Topic IDs and associated node IDs as an array.
+  $id_pairs = [];
+  foreach ($topics as $topic) {
+    $tid = $topic->tid;
+    $nid = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid)->get('field_owner_blog')->target_id;
+    $id_pairs[$tid] = $nid;
+  }
+  return $id_pairs;
+}
+
+/**
+ * Check if the current form is in the draft or review state.
+ */
+function _is_selectable(array $form) {
+  $curr_state = $form['moderation_state']['widget'][0]['state']['#default_value'];
+  $selectable = ($curr_state == 'draft' || $curr_state == 'review') ? TRUE : FALSE;
+  return $selectable;
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * Limits allowed text formats using the cgov_core form_tools service.
+ */
+function cgov_blog_field_widget_form_alter(&$element, $form_state, $context) {
+  // Maps field names to an array containing a single format.
+  $map = [
+    'field_about_blog' => ['streamlined'],
+  ];
+  $formHelper = \Drupal::service('cgov_core.form_tools');
+  $formHelper->allowTextFormats($map, $element, $context);
+}

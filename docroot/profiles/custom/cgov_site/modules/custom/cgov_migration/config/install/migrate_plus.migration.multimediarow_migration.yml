@@ -1,0 +1,84 @@
+id: multimediarow_migration
+label: 'Custom multimedia row migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://multimediarow.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: row_rid
+         label: row_rid
+         selector: row_rid
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+        -
+         name: field_mm_feature_card
+         label: field_mm_feature_card
+         selector: field_mm_feature_card
+
+        -
+         name: field_mm_media_item
+         label: field_mm_media_item
+         selector: field_mm_media_item
+
+
+  ids:
+    row_rid:
+      type: integer
+
+
+process:
+ id: row_rid
+ langcode: langcode
+
+ field_mm_media_item:
+    plugin: migration_lookup
+    migration:
+      - infographic_en_migration
+      - infographic_es_migration
+      - video_en_migration
+      - video_es_migration
+
+    source: field_mm_media_item
+    no_stub: true
+
+
+ field_mm_feature_card/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_mm_feature_card
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_mm_feature_card/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_mm_feature_card
+    -
+      plugin: extract
+      index:
+        - 1
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_multimedia_row
+migration_dependencies: {  }

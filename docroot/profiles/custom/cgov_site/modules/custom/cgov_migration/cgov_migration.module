@@ -1,0 +1,188 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_promo.module.
+ */
+
+use Drupal\Core\Url;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Row;
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_externalpromocard_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_featured_url');
+}
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_externallinksql_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_external_link');
+}
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function cgov_migration_migrate_cthpexternalfeaturecard_migration_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  _cgov_migration_ensure_scheme_for_link($row, 'field_cthp_featured_url');
+}
+
+/**
+ * Implements hook_migrate_prepare_row().
+ */
+function cgov_migration_migrate_prepare_row($row, $source, $migration) {
+  // Decode HTL entities for the following fields.
+  $encoded_fields = [
+    'field_feature_card_description',
+    'field_card_title',
+    'field_intro_text',
+    'field_browser_title',
+    'field_list_description',
+    'field_page_description',
+    'field_navigation_label',
+    'title',
+    'field_short_title',
+    'field_phone_label_1',
+    'field_phone_label_2',
+    'field_website_title',
+    'field_org_head_title',
+    'address_line1',
+    'field_org_head_name',
+    'field_caption',
+    'field_override_title',
+    'name',
+    'description_value',
+  ];
+
+  foreach ($encoded_fields as $field) {
+    if ($row->hasSourceProperty($field)) {
+      $row->setSourceProperty($field, Html::decodeEntities($row->getSourceProperty($field)));
+    }
+  }
+
+  _cgov_migration_handle_file_fields($row, $source, $migration);
+
+}
+
+/**
+ * Handles Determining File Destinations.
+ *
+ * @param Drupal\migrate\Row $row
+ *   The row.
+ * @param Drupal\migrate\Plugin\MigrateSourceInterface $source
+ *   The source.
+ * @param Drupal\migrate\Plugin\MigrationInterface $migration
+ *   The migration.
+ */
+function _cgov_migration_handle_file_fields(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+
+  switch ($migration->id()) {
+    // Cgov Contextual Images.
+    case "contextualimage_migration":
+    case "contextualimage_es_migration":
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_contextual_image', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_file_destination', $destination);
+      break;
+
+    // Infographic Images.
+    case "infographic_en_migration":
+    case "infographic_es_migration":
+    case "update_infographic_es_migration":
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_infographic', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_file_destination', $destination);
+      break;
+
+    // .
+    case "minilanding_en_migration":
+    case "minilanding_es_migration":
+    case "blogseries_en_migration":
+    case "blogseries_es_migration":
+      $destination = _cgov_migration_get_destination_path_for_file('field_banner_image', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_file_destination', $destination);
+      break;
+
+    case "cgovimage_migration":
+    case "cgovimage_es_migration":
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_image/media_image', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_file_destination', $destination);
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_image/thumbnail', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_thumbnail_file_destination', $destination);
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_image/featured', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_featured_file_destination', $destination);
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_image/panoramic', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_panoramic_file_destination', $destination);
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_image/social_media', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_social_file_destination', $destination);
+      break;
+
+    case "file_en_migration":
+      $destination = _cgov_migration_get_destination_path_for_file('cgov_file', $row->getSourceProperty('id'));
+      $row->setSourceProperty('_file_destination', $destination);
+      break;
+
+  }
+}
+
+/**
+ * Gets a path for migrating images and files.
+ *
+ * @param string $type
+ *   The entity type, or the field name.
+ *
+ * @return string
+ *   The path to be used for the file's destination property.
+ */
+function _cgov_migration_get_destination_path_for_file($type, $id) {
+  $path_arr = str_split($id, 3);
+  for ($i = 0; $i < count($path_arr); ++$i) {
+    $tmp = (int) $path_arr[$i];
+    if ($tmp >= 100) {
+      // 666 -> 600.
+      $tmp = intdiv($tmp, 100) * 100;
+    }
+    elseif ($tmp >= 10) {
+      if (strlen($path_arr[$i]) == 3) {
+        $tmp = "000";
+      }
+      else {
+        // 66 -> 6.
+        $tmp = intdiv($tmp, 10) * 10;
+      }
+    }
+    else {
+      if (strlen($path_arr[$i]) == 3) {
+        $tmp = "000";
+      }
+    }
+    $path_arr[$i] = $tmp;
+  }
+  $path = implode('/', $path_arr);
+  return "public://$type/$path/files/";
+}
+
+/**
+ * Makes sure Link URIs have a scheme in source data.
+ *
+ * Drupal link fields require a scheme for the URI portion of the Link. For any
+ * internal links, we need to add internal: to the beginning of the URL.
+ *
+ * @param \Drupal\migrate\Row $row
+ *   The row to process.
+ * @param string $link_prop_name
+ *   The name of the source property that holds the url.
+ */
+function _cgov_migration_ensure_scheme_for_link(Row $row, $link_prop_name) {
+  $url = $row->getSourceProperty($link_prop_name);
+  try {
+    Url::fromUri($url);
+  }
+  catch (Exception $e) {
+    // If this is an error, let's assume it just needs to be internal:
+    $row->setSourceProperty($link_prop_name, 'internal:' . $url);
+  }
+}

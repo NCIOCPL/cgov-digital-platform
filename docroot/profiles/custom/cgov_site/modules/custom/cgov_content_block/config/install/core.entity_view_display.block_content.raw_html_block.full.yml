@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.raw_html_block
+    - core.entity_view_mode.block_content.full
+    - field.field.block_content.raw_html_block.field_raw_html
+  module:
+    - text
+id: block_content.raw_html_block.full
+targetEntityType: block_content
+bundle: raw_html_block
+mode: full
+content:
+  field_raw_html:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  langcode: true

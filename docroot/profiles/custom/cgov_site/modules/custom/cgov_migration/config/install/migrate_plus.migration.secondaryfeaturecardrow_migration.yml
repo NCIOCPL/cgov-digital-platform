@@ -1,0 +1,92 @@
+id: secondaryfeaturecardrow_migration
+label: 'Custom secondaryfeaturecardrow migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://secondaryfeaturecardrow.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: row_rid
+         label: row_rid
+         selector: row_rid
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_content_heading
+         label: field_content_heading
+         selector: field_content_heading
+        -
+         name: field_row_cards
+         label: field_row_cards
+         selector: field_row_cards
+        -
+         name: field_row_card
+         label: field_row_card
+         selector: field_row_card
+
+  ids:
+    row_rid:
+      type: integer
+
+
+process:
+ id: row_rid
+ langcode: langcode
+ field_content_heading: field_content_heading
+
+ temp_text:
+    plugin: migration_lookup
+    migration:
+      - promocard_migration
+      - externalpromocard_migration
+    no_stub: true
+    source: field_row_cards
+
+ field_row_cards:
+    plugin: iterator
+    source: '@temp_text'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+
+
+ field_row_cards/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_row_card
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_row_cards/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - promocard_migration
+        - externalpromocard_migration
+
+      no_stub: true
+      source: field_row_card
+    -
+      plugin: extract
+      index:
+        - 1
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_secondary_feature_row
+migration_dependencies: {  }

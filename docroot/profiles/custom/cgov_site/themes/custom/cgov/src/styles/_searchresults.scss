@@ -1,0 +1,154 @@
+.results {
+	dt,
+	dd.pronunciation,
+	dd.info-summary {
+		display: inline;
+		margin-bottom: 0;
+	}
+	dd.pronunciation,
+	dd.info-summary	{
+		margin-left: 0.5em;
+
+		> span {
+			margin-left: 0.25em;
+		}
+	}
+	dd {
+		margin-bottom: 1em;
+	}
+	
+
+	h2, h3, h4 {
+		font-size: em-calc(20px);
+		line-height: em-calc(24px);
+		margin-top: 40px;
+		margin-bottom: 30px;
+	}
+
+	.results-count {
+		font-family: $montserrat-font-stack;
+		font-weight: bold;
+		font-size: em-calc(20px);
+		line-height: em-calc(24px);
+	}
+
+	.result .row + .row {
+		margin-top: em-calc(20px);
+	}
+}
+.dictionary-list {
+	dfn {
+		a {
+			font-weight: 400;
+		}
+	}
+}
+.mtd_pronounce{
+	margin-left: 0.25em;
+}
+.results-pager {
+	margin-bottom: em-calc(85px);
+	
+	.pagination {
+		span {
+			margin-left: 0;	
+		}
+	}
+}
+.sitewide-results {
+	ul.no-bullets > li {
+		margin-top: em-calc(30px);
+		margin-bottom: em-calc(30px);
+	}
+	.url {
+		font-size: 0.875em;
+		display: table;
+		word-break: break-all;
+	}	
+}
+
+.pagination {
+	float: right;
+	font-size: 1.125em;
+
+	/* used on dictionary pages */
+	li, > ul.no-bullets > li {
+		display: inline-block;
+		margin-left: 0.75em;
+	}
+	// to get rid of bullets (can't use no-bullets because it adds annoying padding/margin)
+	ul > li:before {
+		content: none;
+	}
+
+	.next a:after {
+		content: ">";
+	}
+	.previous a:before {
+		content: "<";
+	}
+	.current {
+		font-weight: bold;
+	}
+
+	/* used on complex search pages (clinical trials, etc.) */
+	> span {
+		font-weight: bold;
+	}
+	input {
+		background: none;
+		border: none;
+		font-size: 1em;
+		font-family: inherit;
+		color: $color-link;
+		margin-left: 20px;
+		
+		&:hover, &:focus {
+			text-decoration: underline;
+		}
+		&:hover {
+			cursor: pointer;
+		}
+
+	}
+	span {
+		display: inline-block;
+	}
+}
+// Special spacing for active item in the pagination on clinical trial basic search
+.ct-results-lower-control.basic span, .ct-results-lower-control.basic a {
+	padding-left: 0;
+	margin-left: 15px;
+	padding-right: 0;
+	margin-right: 0;
+}
+// Special spacing for active item in the pagination on clinical trial regular search
+.ct-results-lower-control input, .ct-results-lower-control span {
+	margin-left: 20px;
+	padding: 0;
+}
+// Spacing for main search results
+.results-pager .pagination li {
+	margin-left: 20px;
+}
+.results-pager .pagination li span {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+// Override of hardcoded width and input[size] attribute on _form.scss
+// to prevent horizontal overflow of search results input bar on
+// site-wide search
+.results .small-12 {
+
+	
+	@include bp(small) {
+		input {
+			width: 100%;
+		}
+
+		.submit {
+			margin-right: 0;
+		}
+	}
+}

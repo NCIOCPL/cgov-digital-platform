@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme override for HHS Syndication.
+ *
+ * This strips down the syndicated content items to the marked-up
+ * information, without the CSS or JavaScript used for our own site.
+ * Note that Drupal's naming conventions use the path to find the
+ * right template at the top level, in contrast with the content-
+ * type templates, for which we need to control the template selection
+ * with the theme name.
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    {% if syndication_keywords %}
+      <meta name="keywords" content="{{ syndication_keywords }}">
+    {% endif %}
+    {% if syndication_description %}
+      <meta name="description" content="{{ syndication_description }}">
+    {% endif %}
+    <link rel="canonical" href="{{ syndication_canonical }}">
+  </head>
+  <body>
+    <div class="syndicate">
+      {{ page.content }}
+    </div>
+  </body>
+</html>

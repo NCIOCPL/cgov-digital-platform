@@ -1,0 +1,64 @@
+// HACK to fix header spacing on factsheets only
+// Added by OCEPROJECT-3099, should be removed by OCEPROJECT-1983
+body.cgvfactsheet h2 p {
+	line-height: inherit;
+	margin: inherit;
+}
+
+// HACK for custom styling of the "Funding Announcements" card (currently on '/grants-training')
+// Added by OCEPROJECT-3031, should be removed by ??? (funding announcements becoming a dynamic list?)
+.featured-text.funding-announcements {
+	color: inherit !important;
+	padding: 1.875em;
+
+	> h2 {
+		margin-top: 0;
+		font-size: 1.5em;
+		line-height: 1.215;
+		
+		@include bp('(min-width: ' + (map-get($breakpoints, small) + 1px) + ') and (max-width: ' + (750px) + ')') {
+			font-size: 20px;
+		}
+	}
+	.title > a {
+		display: inline;
+	}
+	.description {
+		font-size: 1.125em;
+	}
+
+	.arrow-link {
+		font-size: 1.125em;
+		color: $body-font-color;
+	}
+}
+
+
+
+// Hack to change spacing for thumbnail cards on Cancer Topic pages. They should have the styling of 3/9 columns instead of 2/10. Modifying widths of 2/10 for this specific instance. When the html is changed to 3/9, this hack can come out.
+@include bp(medium-up) {
+	.cgvtopicpage .card-thumbnail .small-2 {
+		width: 25%;
+	}
+	.cgvtopicpage .card-thumbnail .small-10 {
+		width: 75%;
+	}
+}
+
+
+// Hack to take away padding from Blog pages when in mobile. When the new classes are added, small-3, small-9, this should not be necessary anymore.
+@include bp(small) {
+	.medium-9 .post-info {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+
+
+// Hotfix for OCEPROJECT-3933. The button min-width of 130px doesn't work in this instance because the container its in can be smaller than that.
+// Applies to /publications/dictionaries/cancer-drug.
+// HTML needs to be changed for this widget
+.dictionary-search .button {
+	min-width: inherit;
+}

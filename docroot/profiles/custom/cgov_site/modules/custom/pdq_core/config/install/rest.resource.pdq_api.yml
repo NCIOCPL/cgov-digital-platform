@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pdq_core
+    - serialization
+id: pdq_api
+plugin_id: pdq_api
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - basic_auth

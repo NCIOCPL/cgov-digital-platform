@@ -1,0 +1,7 @@
+{# Hiding label for two column, content has their own labels #}
+{# {% if label %}
+<h3{{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>
+{% endif %} #}
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}

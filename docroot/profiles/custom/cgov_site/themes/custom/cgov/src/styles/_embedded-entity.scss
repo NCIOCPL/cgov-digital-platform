@@ -1,0 +1,177 @@
+.embedded-entity {
+
+  &[data-entity-embed-display] {
+    width: 100%;
+  }
+
+  &[data-entity-embed-display*="_feature_card"] {
+    background-color: $white;
+    border: 1px solid $yetAnotherGrey;
+    box-shadow: 0 0 9px 1px rgba($black, 0.15);
+
+    &.align-center,
+    &.align-left,
+    &.align-right {
+      margin: 1.25em 0;
+    }
+
+    h3 {
+      font-size: 1.375em;
+      line-height: 1.272;
+    }
+
+    a {
+      @extend .clearfix;
+      padding: 15px 1.875em;
+      display: block;
+
+      h3 {
+        font-weight: normal;
+        color: $color-link;
+      }
+
+      &:hover,
+      &:focus {
+        h3 {
+          color: $lcranberry;
+        }
+      }
+
+      @extend %card-link-hover;
+    }
+
+    p {
+      color: $body-font-color;
+      font-size: em-calc(16px);
+      line-height: 1.167em;
+      margin-bottom: 0;
+    }
+
+    @include card-clickable;
+
+    .feature-card {
+      h3 {
+        color: $color-link;
+        font-size: 1.2em;
+        font-weight: normal;
+        line-height: 1.2;
+        margin-top: 0;
+      }
+
+      p {
+        color: #757575;
+        font-size: 0.9em;
+        line-height: 1.375;
+      }
+
+      //mobile styling
+      h3,
+      p {
+        float: none;
+        width: auto;
+      }
+
+      .image-hover {
+        float: left;
+        margin-bottom: 1em;
+        width: 30%;
+
+        ~ h3,
+        ~ p {
+          float: right;
+          width: 68%;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        h3 {
+          color: $lcranberry;
+        }
+      }
+    }
+
+    @include break(medium) {
+      width: 33.333%;
+
+      &.align-right {
+        margin: 0 0 1em 1em;
+      }
+
+      &.align-left {
+        margin: 0 1em 1em 0;
+      }
+
+      &.align-center {
+        margin: 0 auto 1em;
+      }
+
+      .feature-card {
+        > a {
+          padding: 1.875em;
+        }
+
+        .image-hover {
+          float: none;
+          width: 100%;
+          ~ h3,
+          ~ p {
+            float: none;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  @include break(medium) {
+    margin-bottom: 2.5em;
+
+    &.align-right {
+      margin: 0 0 2.5em 2.5em;
+    }
+
+    &.align-left {
+      margin: 0 2.5em 2.5em 0;
+    }
+
+    &.align-center {
+      margin: 2.5em auto;
+    }
+
+    &[data-entity-embed-display*="_small"] {
+      width: 25%;
+    }
+
+    &[data-entity-embed-display*="_medium"] {
+      width: 40%;
+    }
+
+    &[data-entity-embed-display*="_large"] {
+      width: 75%;
+    }
+  }
+
+  /* https://github.com/NCIOCPL/cgov-digital-platform/issues/1575
+  This file should be refactored to scope all embedded entitiy rules to only the
+  appropriate entity types. Like so. */
+  &[data-entity-embed-display*="video"] {
+    @include break(medium) {
+      width: 100%;
+    }
+
+    @include break(large) {
+      &[data-entity-embed-display*="_small"] {
+        width: 45%;
+      }
+
+      &[data-entity-embed-display*="_medium"] {
+        width: 70%;
+      }
+
+      &[data-entity-embed-display*="_large"] {
+        width: 100%;
+      }
+    }
+  }
+}

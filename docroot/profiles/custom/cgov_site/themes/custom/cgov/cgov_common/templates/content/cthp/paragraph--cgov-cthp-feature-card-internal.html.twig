@@ -1,0 +1,27 @@
+{% set url = path('entity.node.canonical', {'node':  content.field_cthp_featured_content[0]["#node"].nid[0].value}) %}
+
+{% if content.field_override_image_promotional[0] %}
+  {% set image = content.field_override_image_promotional %}
+{% else %}
+  {% set image = content.field_cthp_featured_content %}
+{% endif %}
+
+{% if content.field_cthp_override_description|field_value %}
+  {% set description = content.field_cthp_override_description %}
+{% elseif content.field_cthp_featured_content[0]["#node"].field_feature_card_description[0] %}
+  {% set description = content.field_cthp_featured_content[0]["#node"].field_feature_card_description[0].value %}
+{% else %}
+  {# Don't set description #}
+{% endif %}
+
+<div class="equalheight bgWhite {{ content.field_cthp_card_theme|field_value }}">
+  <h2>{{ content.field_cthp_card_title}}</h2>
+  <div>
+    <a href="{{ url }}">{{ image }}</a>
+    {% if description %}
+      <div class="cardBody">
+        <a href="{{ url }}" class="arrow-link">{{ description }}</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

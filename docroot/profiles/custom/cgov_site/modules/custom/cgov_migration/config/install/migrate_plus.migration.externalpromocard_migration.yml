@@ -1,0 +1,68 @@
+id: externalpromocard_migration
+label: 'Custom external promocard migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://externalpromocard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: externalpromocard_id
+         label: externalpromocard_id
+         selector: externalpromocard_id
+
+
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_featured_url
+         label: field_featured_url
+         selector: field_featured_url
+
+        -
+         name: field_override_card_title
+         label: field_override_card_title
+         selector: field_override_card_title
+
+
+        -
+         name: field_override_card_description
+         label: field_override_card_description
+         selector: field_override_card_description
+
+
+
+
+        -
+         name: field_override_image_promotional
+         label: field_override_image_promotional
+         selector: field_override_image_promotional
+
+
+  ids:
+    externalpromocard_id:
+      type: integer
+
+
+process:
+ field_featured_url: field_featured_url
+ field_override_card_title: field_override_card_title
+ field_override_card_description: field_override_card_description
+
+ id: externalpromocard_id
+ langcode: langcode
+
+ field_override_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_override_image_promotional
+    no_stub: true
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_card_external
+migration_dependencies: {  }

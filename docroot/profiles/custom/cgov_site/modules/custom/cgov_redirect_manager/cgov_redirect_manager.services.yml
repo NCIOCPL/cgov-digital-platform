@@ -1,0 +1,7 @@
+services:
+  cgov_redirect_manager.importer:
+    class: Drupal\cgov_redirect_manager\CgovImporterService
+    arguments: ['@database', '@language_manager', '@logger.channel.cgov_redirect_manager']
+  logger.channel.cgov_redirect_manager:
+    parent: logger.channel_base
+    arguments: ['cgov_redirect_manager']

@@ -1,0 +1,14 @@
+{% import '@cgov_common/cards/card_macros.twig' as cardMacros %}
+
+
+{# ###### Setup Title ####### #}
+{% if content.field_card_title|field_value %}
+  {% set title = content.field_card_title|field_value %}
+{% else %}
+  {% set title = content.field_browser_title|field_value %}
+{% endif %}
+
+{# ####### Set description ###### #}
+{% set description = content.field_feature_card_description|field_value %}
+
+{{ cardMacros.featureCard(title, description, null, url) }}

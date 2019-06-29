@@ -1,0 +1,283 @@
+<?php
+
+/**
+ * @file
+ * The Cgov Site Section module file.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\cgov_site_section\FieldStorageDefinition;
+use Drupal\Core\Field\FieldDefinition;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_entity_field_storage_info().
+ */
+function cgov_site_section_entity_field_storage_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() == 'taxonomy_term') {
+    $definitions['computed_path'] = FieldStorageDefinition::create('string')
+      ->setName('computed_path')
+      ->setLabel(t('A custom computed site section field'))
+      ->setTargetEntityTypeId($entity_type->id());
+    return $definitions;
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info().
+ */
+function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
+  if ($entity_type->id() === 'taxonomy_term' && $bundle === 'cgov_site_sections') {
+    /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface $custom_bundle_field_storage */
+    $custom_bundle_field_storage = cgov_site_section_entity_field_storage_info($entity_type)['computed_path'];
+    $definitions[$custom_bundle_field_storage->getName()] = FieldDefinition::createFromFieldStorageDefinition($custom_bundle_field_storage);
+    return $definitions;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prior to saving a taxonomy term, this sets the value for the psuedo computed
+ * field 'computed_path'. 'computed_path' consists of the parents terms path
+ *  and this terms Pretty URL Field.
+ */
+function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
+  // Only do the following for site sections.
+  if ($entity->bundle() !== 'cgov_site_sections') {
+    return;
+  }
+
+  // Convert the URL to lowercase as we only want lowercased items and
+  // the server is case-sensitive.
+  if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+    $field_pretty_url = $entity->get('field_pretty_url')->value;
+    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+  }
+
+  // Calculate and set the compute_path field.
+  // TODO: Only recalculate path if parent or pretty url changed.
+  // Assume one parent. Sections cannot be multiple places.
+  $parent_tid = $entity->get('parent')->target_id;
+
+  $parent_path = '/';
+  // Unless it is TID 0 (the root), let's get the parents computed path.
+  if ($parent_tid != 0) {
+    try {
+      $parent_entity = Term::load($parent_tid);
+      $parent_path = $parent_entity->get('computed_path')->value;
+      $parent_langcode = $parent_entity->get('langcode')->value;
+
+      // Set the current entities language field based on it's parent term.
+      // Ultimately will override the value set by the user in the form
+      // with that of the root taxonomy term.
+      $entity->set('langcode', $parent_langcode);
+    }
+    catch (Exception $e) {
+      $parent_path = NULL;
+      \Drupal::logger('cgov_site_section')
+        ->notice('Could not retrieve computed path for tid: ' . $parent_tid);
+    }
+  }
+
+  // This is section's "folder name".
+  $field_pretty_url = $entity->get('field_pretty_url')->value;
+
+  // Assumption: Only root terms can have empty pretty url.
+  $entity->set(
+    'computed_path',
+    $parent_path === '/' ?
+      $parent_path . $field_pretty_url :
+      $parent_path . '/' . $field_pretty_url
+  );
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * If a term has either changed its parent or pretty url name,
+ * then we need to cascade those changes to any subsections and
+ * pages within those subsections.
+ */
+function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
+
+  // Only do this for site sections. In the future if there is
+  // a vocabulary in which we attach site_section for managing its node's
+  // pretty urls, then that vocabulary needs to do something very similar.
+  // BUT not in this module!
+  if ($entity->bundle() !== 'cgov_site_sections') {
+    return;
+  }
+
+  // We only set the front page for English nodes without a parent.
+  // NOTE: this does not account for the case when the root becomes a
+  // child of another node. It is possible, but the amount of complexity
+  // that check would add is not worth it.
+  // NOTE2: target_id can be an int and it can be a string.
+  if ($entity->parent->target_id == 0 && $entity->langcode->value === 'en') {
+    _cgov_site_section_attempt_set_front_page($entity);
+  }
+
+  // TODO: This comparison should be done somewhere else and less messy.
+  // Do not do unnessesary updates, so only cascade if a change was
+  // made to a significant field.
+  if (
+    $entity->original->get('computed_path')->value ===
+    $entity->get('computed_path')->value &&
+    $entity->original->get('parent')->target_id ===
+    $entity->get('parent')->target_id &&
+    $entity->original->get('field_pretty_url')->value ===
+    $entity->get('field_pretty_url')->value &&
+    $entity->original->get('langcode')->value ===
+    $entity->get('langcode')->value
+  ) {
+    return;
+  }
+  $term_storage = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term");
+
+  // Update immediate child sections.
+  $subsections = $term_storage->loadChildren($entity->id(), 'cgov_site_sections');
+
+  // Resave the sections. This should trigger the presave above with will set
+  // the computed_path to the new path.
+  foreach ($subsections as $section) {
+    $section->save();
+  }
+
+  // TODO: Figure out how to get pathauto to update all the aliases using
+  // pathauto. To do it here is A) too slow, and B) fraught with
+  // issue regarding workflow and the various entity types we would have to hit.
+}
+
+/**
+ * Set the front page if conditions are right.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $site_section
+ *   The site section.
+ */
+function _cgov_site_section_attempt_set_front_page(EntityInterface $site_section) {
+  /*
+   * If it has no landing page, then we need to exit.
+   *
+   * NOTE: We do not care about its published state as taxonomy does not have
+   * workflow yet. So when the landing page is set, then it updates the live
+   * site immediately. The assumption is that the home page will be published
+   * either before, or right after. If we checked the published state, and
+   * skipped updating it if the target was unpublished, then we would have to
+   * have an update hook for node checking if it is a landing then updating
+   * the section. That is too convoluted.
+   */
+  $home_page_id = $site_section->field_landing_page->target_id;
+  if ($home_page_id === NULL) {
+    return;
+  }
+
+  // Set the front page.
+  $config = \Drupal::configFactory()->getEditable('system.site');
+  $front_page = "/node/${home_page_id}";
+  // Only save if we need to change it.
+  if ($front_page !== $config->get('page.front')) {
+    $config->set('page.front', $front_page)->save();
+  }
+
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Prior to saving a node, formats the field..
+ */
+function cgov_site_section_entity_presave($entity) {
+  $entityType = $entity->getEntityType()->id();
+  if ($entityType == 'node'|| $entityType == 'media') {
+
+    if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
+      $field_pretty_url = $entity->get('field_pretty_url')->value;
+      $entity->set('field_pretty_url', strtolower($field_pretty_url));
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * Validates that on a node a Site Section and Pretty URL
+ * combination will be unique.
+ */
+function cgov_site_section_entity_type_build(array &$entity_types) {
+  // Add our custom validation to the node entity.
+  $entity_types['node']->addConstraint('UniqueCgovUrl');
+  $entity_types['media']->addConstraint('UniqueCgovUrl');
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ *
+ * Validates that the Pretty URL Field on Nodes and Site Sections
+ * matches the required pattern.
+ */
+function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node' || $entity_type->id() == 'media') && !empty($fields['field_pretty_url'])) {
+    $fields['field_pretty_url']->setPropertyConstraints('value', [
+      'Regex' => [
+        'pattern' => '/^[\.a-zA-Z0-9-]*$/',
+        'message' => 'The Pretty URL field only accepts letters, numbers, and dashes.',
+      ],
+    ]
+    );
+  }
+}
+
+/**
+ * Implements hook_views_data().
+ *
+ * This allows us to use the computed_path field in views.
+ */
+function cgov_site_section_views_data() {
+  $data = [];
+
+  // The outermost keys of $data are Views table names, which should usually
+  // be the same as the hook_schema() table names.
+  $data['taxonomy_term__computed_path'] = [];
+  $data['taxonomy_term__computed_path']['table']['group'] = t('Cgov Site Section');
+  $data['taxonomy_term__computed_path']['table']['join'] = [
+    // Within the 'join' section, list one or more tables to automatically
+    // join to. In this example, every time 'node_field_data' is available in
+    // a view, 'example_table' will be too. The array keys here are the array
+    // keys for the other tables, given in their hook_views_data()
+    // implementations. If the table listed here is from another module's
+    // hook_views_data() implementation, make sure your module depends on that
+    // other module.
+    'taxonomy_term_field_data' => [
+      // Primary key field in <entity>_field_data to use in the join.
+      'left_field' => 'tid',
+      // Primary key field in our custom field table to use in the join.
+      'field' => 'entity_id',
+    ],
+  ];
+  // Our custom computed path field, exposed as a field, sort, filter,
+  // and argument.
+  $data['taxonomy_term__computed_path']['computed_path_value'] = [
+    'title' => t('Computed Path'),
+    'help' => t('The computed_path Cgov Site Section field.'),
+    'field' => [
+      // ID of field handler plugin to use.
+      'id' => 'standard',
+    ],
+    'sort' => [
+      // ID of sort handler plugin to use.
+      'id' => 'standard',
+    ],
+    'filter' => [
+      // ID of filter handler plugin to use.
+      'id' => 'string',
+    ],
+    'argument' => [
+      // ID of argument handler plugin to use.
+      'id' => 'string',
+    ],
+  ];
+
+  return $data;
+}

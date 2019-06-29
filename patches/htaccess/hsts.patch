@@ -1,0 +1,11 @@
+diff --git docroot/.htaccess docroot/.htaccess
+index 55ba88ad..383dfb5a 100644
+--- docroot/.htaccess
++++ docroot/.htaccess
+@@ -198,4 +198,6 @@ AddEncoding gzip svgz
+   Header always set X-Content-Type-Options nosniff
+   # Disable Proxy header, since it's an attack vector.
+   RequestHeader unset Proxy
++  # Set the HSTS header on Acquia sites where the non-Acquia domains are used.
++  Header set Strict-Transport-Security "max-age=31557600; preload"
+ </IfModule>

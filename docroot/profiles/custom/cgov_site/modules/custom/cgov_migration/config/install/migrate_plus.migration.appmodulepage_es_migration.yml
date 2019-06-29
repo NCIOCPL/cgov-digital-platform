@@ -1,0 +1,187 @@
+id: appmodulepage_es_migration
+label: 'Custom appmodule migration'
+source:
+
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://appmodulepage_es.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: id
+         label: id
+         selector: '@id'
+        -
+         name: title
+         label: title
+         selector: '@title'
+
+        -
+         name: langcode
+         label: langcode
+         selector: '@langcode'
+        -
+         name: field_search_engine_restrictions
+         label: field_search_engine_restrictions
+         selector: '@field_search_engine_restrictions'
+
+
+        -
+         name: field_image_promotional
+         label: field_image_promotional
+         selector: field_image_promotional
+
+
+        -
+         name: field_public_use
+         label: field_public_use
+         selector: '@field_public_use'
+
+        -
+         name: body
+         label: body
+         selector: body
+
+
+        -
+         name: field_enable_push_state
+         label: field_enable_push_state
+         selector: field_enable_push_state
+
+
+        -
+         name: field_browser_title
+         label: field_browser_title
+         selector: '@field_browser_title'
+
+        -
+         name: field_card_title
+         label: field_card_title
+         selector: '@field_card_title'
+
+        -
+         name: field_page_description
+         label: field_page_description
+         selector: '@field_page_description'
+
+        -
+         name: field_list_description
+         label: field_list_description
+         selector: '@field_list_description'
+
+        -
+         name: field_feature_card_description
+         label: field_feature_card_description
+         selector: '@field_feature_card_description'
+
+        -
+         name: field_date_posted
+         label: field_date_posted
+         selector: '@field_date_posted'
+
+        -
+         name: field_date_updated
+         label: field_date_updated
+         selector: '@field_date_updated'
+
+        -
+         name: field_date_reviewed
+         label: field_date_reviewid
+         selector: '@field_date_reviewed'
+
+        -
+         name: term_id
+         label: term_id
+         selector: '@term_id'
+
+        -
+         name: field_pretty_url
+         label: field_pretty_url
+         selector: '@field_pretty_url'
+
+        -
+         name: date_display_mode
+         label: date_display_mode
+         selector: 'date_display_mode/date_display_mode'
+
+  ids:
+    id:
+      type: integer
+
+process:
+  nid:
+    plugin: migration_lookup
+    source: id
+    migration: appmodulepage_en_migration
+
+  title: title
+
+
+  uid:
+   plugin: default_value
+   default_value: 1
+
+
+  status:
+   plugin: default_value
+   default_value: 1
+
+
+  moderation_state:
+   plugin: default_value
+   default_value: published
+
+  langcode: langcode
+
+  field_browser_title: field_browser_title
+  field_card_title: field_card_title
+
+  field_page_description: field_page_description
+  field_list_description: field_list_description
+  field_feature_card_description: field_feature_card_description
+  field_date_posted: field_date_posted
+  field_date_reviewed: field_date_reviewed
+  field_date_updated: field_date_updated
+  field_date_display_mode: date_display_mode
+
+  field_search_engine_restrictions: field_search_engine_restrictions
+  field_public_use: field_public_use
+  field_enable_push_state: field_enable_push_state
+  body/value: body
+  body/format:
+   plugin: default_value
+   default_value: full
+
+
+  field_site_section:
+    plugin: migration_lookup
+    migration: sitesectionsql_migration
+    source: term_id
+    no_stub: true
+
+
+  field_image_promotional:
+    plugin: migration_lookup
+    migration: cgovimage_migration
+    source: field_image_promotional
+    no_stub: true
+
+
+
+  field_pretty_url: field_pretty_url
+
+
+  path:
+    plugin: default_value
+    default_value: ‘/mypath/’
+
+
+destination:
+  plugin: entity:node
+  default_bundle: cgov_application_page
+  translations: true
+migration_dependencies:
+  required:
+    - sitesectionsql_migration

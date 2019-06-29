@@ -1,0 +1,48 @@
+id: promocard_migration
+label: 'Custom promocard migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://promocard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: promocard_id
+         label: promocard_id
+         selector: promocard_id
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+        -
+         name: field_override_card_title
+         label: field_override_card_title
+         selector: field_override_card_title
+
+        -
+         name: field_featured_item_target_id
+         label: field_featured_item_target_id
+         selector: field_featured_item_target_id
+
+
+
+
+  ids:
+    promocard_id:
+      type: integer
+
+
+process:
+ field_featured_item/target_id: field_featured_item_target_id
+
+ id: promocard_id
+ langcode: langcode
+ field_override_card_title: field_override_card_title
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_card_internal
+migration_dependencies: {  }

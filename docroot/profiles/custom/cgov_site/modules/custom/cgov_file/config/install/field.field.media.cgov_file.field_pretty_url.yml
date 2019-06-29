@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_pretty_url
+    - media.type.cgov_file
+id: media.cgov_file.field_pretty_url
+field_name: field_pretty_url
+entity_type: media
+bundle: cgov_file
+label: 'Pretty URL'
+description: 'Used as the last segment of the URL. Do not include slash (/). All lowercase, with no spaces; use hyphens to separate words. Append with file extension (pretty-url.pdf)'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

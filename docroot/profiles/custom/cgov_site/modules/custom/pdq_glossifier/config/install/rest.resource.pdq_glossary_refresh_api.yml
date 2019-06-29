@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pdq_glossifier
+    - serialization
+id: pdq_glossary_refresh_api
+plugin_id: pdq_glossary_refresh_api
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - basic_auth

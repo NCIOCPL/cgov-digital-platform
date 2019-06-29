@@ -1,0 +1,95 @@
+id: guidecardrow_migration
+label: 'Custom guidecardrow migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://guidecard.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: row_rid
+         label: row_rid
+         selector: row_rid
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+
+        -
+         name: field_guide_card
+         label: field_guide_card
+         selector: field_guide_card
+
+        -
+         name: field_guide_cards
+         label: field_guide_cards
+         selector: field_guide_cards
+
+        -
+         name: field_container_heading
+         label: field_container_heading
+         selector: field_container_heading
+
+
+
+
+
+  ids:
+    row_rid:
+      type: integer
+
+
+process:
+ id: row_rid
+ langcode: langcode
+ field_container_heading: field_container_heading
+
+ temp_text:
+    plugin: migration_lookup
+    migration:
+      - rawhtml_migration
+      - contentblock_migration
+    no_stub: true
+    source: field_guide_cards
+
+ field_guide_cards:
+    plugin: iterator
+    source: '@temp_text'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+
+ field_guide_cards/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - rawhtml_migration
+        - contentblock_migration
+      no_stub: true
+      source: field_guide_card
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_guide_cards/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - rawhtml_migration
+        - contentblock_migration
+      no_stub: true
+      source: field_guide_card
+    -
+      plugin: extract
+      index:
+        - 1
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_guide_row
+migration_dependencies: {  }

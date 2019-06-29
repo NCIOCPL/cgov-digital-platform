@@ -1,0 +1,31 @@
+#!/bin/sh
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+PASSED=1
+if [ "$STAGED" != "" ]
+then
+    echo "Checking compliance with Drupal coding standards ..."
+    ./vendor/bin/blt tests:phpcs:sniff:files "$STAGED"
+    if [ $? != 0 ]
+    then
+        PASSED=0
+    fi
+    echo "Checking validity of TWIG templates ..."
+    ./vendor/bin/blt tests:twig:lint:files "$STAGED"
+    if [ $? != 0 ]
+    then
+        PASSED=0
+    fi
+    echo "Checking validity of YAML configuration files ..."
+    ./vendor/bin/blt tests:yaml:lint:files "$STAGED"
+    if [ $? != 0 ]
+    then
+        PASSED=0
+    fi
+    if [ $PASSED != 1 ]
+    then
+        echo "Fix the problems reported and try again ..."
+        exit 1
+    fi
+fi
+exit 0

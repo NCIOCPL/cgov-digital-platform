@@ -1,0 +1,25 @@
+diff --git a/.htaccess b/.htaccess
+index b2a1a29..0247fb0 100644
+--- a/.htaccess
++++ b/.htaccess
+@@ -122,6 +122,20 @@ AddEncoding gzip svgz
+   # uncomment the following line:
+   # RewriteBase /
+
++  # Return Status 403 (Forbidden) on non-ODE server access in the
++  # Acquia cloud.
++  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} ^(.)+$
++  RewriteCond %{HTTP_HOST} ^(.)+\.acquia-sites\.com$ [NC]
++  RewriteCond %{ENV:AH_SITE_ENVIRONMENT} !^ode[0-9]+$ [NC]
++  RewriteRule .* - [R=403]
++
++  # Redirect HTTP to HTTPS, but only on Acquia servers,and only
++  # for cancer.gov domains (non-HTTPS allowed for ODEs).
++  RewriteCond %{ENV:AH_SITE_ENVIRONMENT}  ^(.)+$
++  RewriteCond %{HTTP_HOST} ^(.)+\.cancer\.gov [nc]
++  RewriteCond %{HTTP:X-Forwarded-Proto} !https
++  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
++
+   # Redirect common PHP files to their new locations.
+   RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]
+   RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild.php)

@@ -1,0 +1,37 @@
+@import '~Core/styles/variables';
+@import '~Core/styles/breakpoints';
+
+
+.floating-delighter--nci-connect {
+    .floating-delighter__link {
+      background-color: #951b81;
+      font-size: .9em;
+
+      &:hover, &:focus, &:active {
+        background-color:#951b81;
+        text-decoration: none;
+      }
+    }
+
+    .floating-delighter__icon {
+
+      &::after {
+        content: '';
+
+        @include bp(small) {
+          font-size: .7em;
+        }
+      }
+    }
+
+    .floating-delighter__label {
+      padding-top: 26px;
+
+      @include bp(xtra-small) {
+        font-size: 14px;
+      }
+      @include bp(small) {
+        padding-top: 0;
+      }
+    }
+  }

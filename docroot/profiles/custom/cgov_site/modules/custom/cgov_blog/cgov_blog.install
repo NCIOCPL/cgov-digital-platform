@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_blog.install.
+ */
+
+use Drupal\cgov_core\CgovCoreTools;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function cgov_blog_install() {
+  // Get our helper.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Add content type permissions.
+  $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
+  $siteHelper->addContentTypePermissions('cgov_blog_series', ['blog_manager']);
+
+  // Install permissions for this module.
+  _cgov_blog_install_permissions($siteHelper);
+
+}
+
+/**
+ * Installs permissions for this module.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_blog_install_permissions(CgovCoreTools $siteHelper) {
+  $perms = [
+    'admin_ui' => [
+      'access cgov_blog_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
+}

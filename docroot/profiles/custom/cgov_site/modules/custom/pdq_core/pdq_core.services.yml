@@ -1,0 +1,5 @@
+services:
+  pdq_core.config_overrider:
+    class: Drupal\pdq_core\PDQConfigOverrider
+    tags:
+      - {name: config.factory.override, priority: 5}

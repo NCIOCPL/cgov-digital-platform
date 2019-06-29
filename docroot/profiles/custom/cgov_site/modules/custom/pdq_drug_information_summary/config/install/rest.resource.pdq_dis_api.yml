@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - pdq_drug_information_summary
+    - serialization
+id: pdq_dis_api
+plugin_id: pdq_dis_api
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+  formats:
+    - json
+  authentication:
+    - basic_auth

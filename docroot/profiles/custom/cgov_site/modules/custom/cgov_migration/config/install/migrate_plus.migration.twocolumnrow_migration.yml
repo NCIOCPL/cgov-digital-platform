@@ -1,0 +1,132 @@
+id: twocolumnrow_migration
+label: 'Custom twocolumnrow migration'
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: xml
+  urls: migration://twocolumnrow.xml
+  item_selector: /rows/row
+  fields:
+        -
+         name: row_rid
+         label: row_rid
+         selector: row_rid
+        -
+         name: langcode
+         label: langcode
+         selector: langcode
+        -
+         name: field_secondary_contents
+         label: field_secondary_contents
+         selector: field_secondary_contents
+        -
+         name: field_secondary_content
+         label: field_secondary_content
+         selector: field_secondary_content
+
+        -
+         name: field_main_contents
+         label: field_main_contents
+         selector: field_main_contents
+
+        -
+         name: field_main_content
+         label: field_main_content
+         selector: field_main_content
+
+  ids:
+    row_rid:
+      type: integer
+
+
+process:
+ id: row_rid
+ langcode: langcode
+
+
+ temp_text:
+    plugin: migration_lookup
+    migration: rawhtml_migration
+    no_stub: true
+    source: field_secondary_contents
+
+ field_secondary_contents:
+    plugin: iterator
+    source: '@temp_text'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+ field_secondary_contents/target_id:
+    -
+      plugin: migration_lookup
+      migration: rawhtml_migration
+      no_stub: true
+      source: field_secondary_content
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_secondary_contents/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration: rawhtml_migration
+      no_stub: true
+      source: field_secondary_content
+    -
+      plugin: extract
+      index:
+        - 1
+
+
+ temp_text1:
+    plugin: migration_lookup
+    migration:
+      - rawhtml_migration
+      - dynamiclist_migration
+    no_stub: true
+    source: field_main_contents
+
+ field_main_contents:
+    plugin: iterator
+    source: '@temp_text1'
+
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+ field_main_contents/target_id:
+    -
+      plugin: migration_lookup
+      migration:
+        - dynamiclist_migration
+        - rawhtml_migration
+      no_stub: true
+      source: field_main_content
+    -
+      plugin: extract
+      index:
+        - '0'
+
+ field_main_contents/target_revision_id:
+    -
+      plugin: migration_lookup
+      migration:
+         - dynamiclist_migration
+         - rawhtml_migration
+      no_stub: true
+      source: field_main_content
+    -
+      plugin: extract
+      index:
+        - 1
+
+
+destination:
+ plugin: 'entity_reference_revisions:paragraph'
+ default_bundle: cgov_column_two
+
+ migration_dependencies: {  }

@@ -1,0 +1,142 @@
+/* TODO: sorry for all the !important declarations but our table CSS cascade is terrible - upgrade to BEM */
+/* tables selectors like table.table-default.complex-table are overriding everything else */
+table[data-sortable] {
+  border-spacing: 0;
+  width: 100% !important;
+
+  thead {
+    tr {
+      background-color: $color-link !important;
+    }
+    th {
+      position: relative;
+      padding: 10px 10px 20px 10px;
+      border-left: none;
+      background-color: $color-link;
+      color: #fff;
+      font-family: Montserrat,Avant Garde,Arial,sans-serif;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1em;  
+
+      &:before {
+        @include svg-sprite(sortable-circle-nosort);
+        content: "";
+        display: block !important;
+        margin: 10px auto 10px;
+      }
+    }
+  }
+
+  th {
+    &[data-sorted="up"], &[data-sorted="down"] {
+      background-color: $endeavour;
+
+      &:before {
+        visibility: visible;
+        display: block;
+      }
+    }
+
+    // sort descending
+    &[data-sorted="down"]:before {
+      @include svg-sprite(sortable-circle-descending);
+    }
+
+    // sort ascending
+    &[data-sorted="up"]:before {
+      @include svg-sprite(sortable-circle-ascending);
+    }
+
+    // non-sortable column
+    &[data-fixed]:before {
+      background-image: none;
+    }
+  }
+  
+  //active sorted column
+  td[data-sorted="true"]{ 
+    background-color: $white01; 
+  }  
+}
+  
+
+// mobile styling
+@include bp(small) {
+
+  $columnOffset: 175px;
+
+  table[data-sortable] {
+    height: 100% !important;
+
+    thead {
+      tr {
+        th {
+          height: 7.85em !important; //override any th cell height attributes
+          
+          &:first-child {
+            box-shadow: 8px 0 12px -3px rgba(0,0,0,.2);
+            z-index: 2;
+          }
+        }
+        th:nth-child(2) {
+          padding-left: $columnOffset;
+        }
+      }
+    }
+    
+    thead tr th:first-child,
+    tbody tr td:first-child {
+      //background: #ace;
+      border-right: 1px solid #ccc;
+      border-left: 1.25px solid #ccc;
+      top: auto;
+      left: 0px;
+      position: absolute !important;
+      width: 160px !important;
+    }
+
+    tbody {
+      tr {
+        &:first-child {
+          td:nth-child(1) {
+            //stretch the first cell the height of the entire tbody - thead height - horizontal scrollbar
+            height: calc(100% - 7.85em - 16px) !important;
+            box-shadow: 8px 0 12px -3px rgba(0,0,0,.2);
+          }
+        }
+
+        td {
+          &:first-child {
+            background-color: $white;
+            z-index: 1;
+            border-bottom: none;
+          }
+
+          &:nth-child(2) {
+            padding-left: $columnOffset + 10;
+          }
+
+          &[data-sorted="true"]:first-child {
+            background-color: $white01;
+          }
+        }
+      }
+    }
+  
+    tfoot tr td {
+      height: auto !important;
+      &:last-child {
+        padding-bottom: 20px;
+      }
+    }
+  }
+  
+}
+
+// IE11 hack to set scrollbar offset to 19px
+@media all and (-ms-high-contrast:none) and (max-width: 640px) {
+	table[data-sortable] tbody tr:first-child td:nth-child(1) {
+    height: calc(100% - 7.85em - 19px) !important; 
+	}
+}
