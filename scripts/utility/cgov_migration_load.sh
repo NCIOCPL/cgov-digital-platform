@@ -13,6 +13,9 @@ CGOV | NANO | MYPART | NCICONNECT | DCEG)
     drush mim paragraph_en_migration; drush mim paragraph_es_migration
     drush mim appmodulepage_en_migration && drush mim appmodulepage_es_migration
 
+    drush mim venue_migration && drush mim eventseries_migration && drush mim event_migration
+    drush mim campus_migration && drush mim biography_migration
+
     drush mim pressrelease_en_migration && drush mim pressrelease_es_migration
     drush mim article_en_migration && drush mim article_es_migration
     drush mim video_en_migration && drush mim video_es_migration
@@ -46,9 +49,6 @@ CGOV | NANO | MYPART | NCICONNECT | DCEG)
     drush mim cthpvideocard_migration
     drush mim cthpoverviewcard_migration
     drush mim cthp_en_migration && drush mim cthp_es_migration
-
-    drush mim biography_migration
-    drush mim event_migration
 
     drush mim homelanding_en_migration && drush mim homelanding_es_migration
     drush mim contextualimage_migration && drush mim contextualimage_es_migration
