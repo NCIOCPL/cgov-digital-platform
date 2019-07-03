@@ -8,7 +8,6 @@ use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -130,7 +129,6 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     }
 
     $uri = $file->getFileUri();
-    $filename = $file->getFilename();
 
     // Or item does not exist on disk.
     if (!file_exists($uri)) {
@@ -142,11 +140,6 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     if ($this->doNotIndex($entity)) {
       $response->headers->set('X-Robots-Tag', 'noindex');
     }
-
-    $response->setContentDisposition(
-      ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-      $filename
-    );
 
     $event->setResponse($response);
 
