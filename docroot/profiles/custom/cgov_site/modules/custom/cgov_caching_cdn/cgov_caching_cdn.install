@@ -5,13 +5,12 @@
  * Contains cgov_caching_cdn.install.
  */
 
+use Drupal\cgov_core\CgovPurgeConfigInstaller;
+
 /**
  * Implements hook_install().
  */
 function cgov_caching_cdn_install() {
-  \Drupal::service('module_installer')->uninstall(['cgov_caching_nocdn']);
-  $service = \Drupal::service('features.manager');
-  $service->import(['cgov_caching_cdn']);
 
   // Setup permissions for site_admin.
   $permissions = [
@@ -21,4 +20,25 @@ function cgov_caching_cdn_install() {
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
   $siteHelper->addRolePermissions(['site_admin' => $permissions]);
+
+  // Uninstall the nocdn module if it is installed.
+  \Drupal::service('module_installer')->uninstall(['cgov_caching_nocdn']);
+
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag']);
+}
+
+/**
+ * Update for Hotfix 1.0.2.
+ *
+ * Updates purge config to ensure purge plugin IDs to be the same on each
+ * environment.
+ */
+function cgov_caching_cdn_update_8001() {
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag']);
 }
