@@ -5,11 +5,29 @@
  * Contains cdn_caching_nocdn.install.
  */
 
+use Drupal\cgov_core\CgovPurgeConfigInstaller;
+
 /**
  * Implements hook_install().
  */
 function cgov_caching_nocdn_install() {
   \Drupal::service('module_installer')->uninstall(['cgov_caching_cdn']);
-  $service = \Drupal::service('features.manager');
-  $service->import(['cgov_caching_nocdn']);
+
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['acquia_purge']);
+}
+
+/**
+ * Update for Hotfix 1.0.2.
+ *
+ * Updates purge config to ensure purge plugin ids ID to be the same on each
+ * environment.
+ */
+function cgov_caching_cdn_update_8001() {
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['acquia_purge']);
 }
