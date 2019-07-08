@@ -23,13 +23,22 @@ $db_role = $argv[3];
 
 $docroot = sprintf('/var/www/html/%s.%s/docroot', $site, $env);
 
-fwrite(STDERR, sprintf("Scrubbing site database: site: %s; env: %s; db_role: %s;\n", $site, $env, $db_role));
-
 include_once $docroot . '/sites/g/sites.inc';
 $sites_json = gardens_site_data_load_file();
 if (!$sites_json) {
-  error('The site registry could not be loaded from the server.');
+  // If the file exists, and cannot be loaded, exit with an error.
+  if (file_exists(gardens_site_data_get_filepath())) {
+    fwrite(STDERR, "The site registry could not be loaded from the server.\n");
+    exit(1);
+  }
+  // Exit gracefully if the sites.json is not available. That usually
+  // indicates that the code is running on a non-acsf environment.
+  fwrite(STDERR, "The site registry does not exist; this doesn't look like an ACSF environment.\n");
+  exit(0);
 }
+
+fwrite(STDERR, sprintf("Scrubbing site database: site: %s; env: %s; db_role: %s;\n", $site, $env, $db_role));
+
 $new_domain = FALSE;
 foreach ($sites_json['sites'] as $site_domain => $site_info) {
   if ($site_info['conf']['acsf_db_name'] === $db_role && !empty($site_info['flags']['preferred_domain'])) {
@@ -42,6 +51,7 @@ foreach ($sites_json['sites'] as $site_domain => $site_info) {
     // differences.
     if (!empty($site_info['flags']['staging_exec_on'])) {
       $env = $site_info['flags']['staging_exec_on'];
+      $docroot = sprintf('/var/www/html/%s.%s/docroot', $site, $env);
     }
     break;
   }
@@ -49,8 +59,6 @@ foreach ($sites_json['sites'] as $site_domain => $site_info) {
 if (!$new_domain) {
   error('Could not find the domain that belongs to the site.');
 }
-
-$docroot = sprintf('/var/www/html/%s.%s/docroot', $site, $env);
 
 // Create a cache directory for drush.
 $cache_directory = sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, md5($new_domain));
