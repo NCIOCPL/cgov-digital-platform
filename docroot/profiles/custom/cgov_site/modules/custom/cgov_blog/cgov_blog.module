@@ -136,3 +136,36 @@ function cgov_blog_field_widget_form_alter(&$element, $form_state, $context) {
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
 }
+
+/**
+ * Preprocess function for block templates.
+ */
+function cgov_blog_preprocess_block(&$variables) {
+  /*
+   * Make changes to the breadcrumb block. If the block is of type
+   * 'cgov_breadcrumb'and the URL contains valid query parameters
+   * and the content type is Blog Series, add the current,
+   * translated series link to the breadcrumb render array.
+   */
+  if ($variables['plugin_id'] == 'cgov_breadcrumb') {
+
+    // Proceed only if the view contains query params.
+    if (!empty($_GET['topic']) || !empty($_GET['year'])) {
+      $nid = \Drupal::routeMatch()->getRawParameter('node');
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+
+      // If Blog Series content type, add nav link for the current language.
+      if ($node->bundle() === 'cgov_blog_series') {
+        $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
+        $section = $node->field_site_section->entity;
+        $label = $section->field_navigation_label->value ?? $section->name->value;
+        $variables['content']['breadcrumbs'][] = [
+          'href' => $node->toUrl()->toString(),
+          'label' => $label,
+        ];
+      }
+    }
+  }
+
+}
