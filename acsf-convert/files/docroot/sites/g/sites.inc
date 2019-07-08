@@ -174,7 +174,17 @@ function gardens_site_data_get_site_from_server_info() {
       // that *if* we have data for a given domain at any point during a request
       // on the command line then that data remains the same for the duration of
       // the command execution.
-      $static_cache = &drupal_static('acsf_sites_php_site_data');
+      // For some drush commands (that have bootstrap levels lower than
+      // 'configuration', only when run with drush6/drush7), we don't have
+      // drupal_static() available. We'll skip caching for those few commands,
+      // so sites.json will be read always (which used to be the case for all
+      // commands before we implemented this cache).
+      if (function_exists('drupal_static')) {
+        $static_cache = &drupal_static('acsf_sites_php_site_data');
+      }
+      else {
+        $static_cache = [];
+      }
       if (isset($static_cache[$host . $path])) {
         $data = $static_cache[$host . $path];
       }
