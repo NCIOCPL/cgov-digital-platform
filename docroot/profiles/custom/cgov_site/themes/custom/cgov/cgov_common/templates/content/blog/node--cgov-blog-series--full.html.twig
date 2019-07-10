@@ -42,10 +42,12 @@
       <div class="slot-item last-SI">
         <div class="dynamic list has-images">
           <ul>
-            {# Draw the appropriate view using twig_tweak. Only draw thumnail vers for now. #}
-            {# if field_show_list_thumbnails #}
-            {{ drupal_view('cgov_block_blog_posts', 'block_bp_list_th', node.id) }}
-            {# else drupal_view('cgov_block_blog_posts', 'block_bp_list', node.id) #}
+            {# Draw the appropriate view using twig_tweak. #}
+            {% if node.field_show_list_thumbnails.0.value %}
+              {{ drupal_view('cgov_block_blog_posts', 'block_bp_list_th', node.id) }}
+            {% else %}
+              {{ drupal_view('cgov_block_blog_posts', 'block_bp_list', node.id) }}
+            {% endif %}
           </ul>
         </div>
       </div>
