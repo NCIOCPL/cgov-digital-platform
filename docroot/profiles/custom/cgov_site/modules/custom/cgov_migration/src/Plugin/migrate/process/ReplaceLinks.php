@@ -204,10 +204,11 @@ class ReplaceLinks extends CgovPluginBase {
     // text content, otherwise append the DOM node .
     foreach ($content as $node) {
       if ($node->nodeType == XML_TEXT_NODE) {
-        $frag->appendChild($this->doc->createTextNode($anchor->nodeValue));
+        $frag->appendChild($this->doc->createTextNode($node->nodeValue));
       }
       else {
-        $frag->appendChild($node);
+        $new = $this->cloneNode($node, $this->doc);
+        $frag->appendChild($new);
       }
     }
 
@@ -215,6 +216,7 @@ class ReplaceLinks extends CgovPluginBase {
     if (($frag->hasChildNodes())) {
       $element->appendChild($frag);
     }
+
     // Set the following pre-existing attributes from the incoming link.
     foreach ($this->attributeTypes as $type) {
       $attrValue = $anchor->getAttribute($type);
@@ -250,6 +252,27 @@ class ReplaceLinks extends CgovPluginBase {
     ];
 
     return $attributes;
+  }
+
+  /**
+   * Clones a given node, including it's children.
+   */
+  private function cloneNode($node, $doc) {
+    $newNode = $doc->createElement($node->nodeName);
+
+    if (!$node->childNodes) {
+      return $newNode;
+    }
+
+    foreach ($node->childNodes as $child) {
+      if ($child->nodeName == "#text") {
+        $newNode->appendChild($doc->createTextNode($child->nodeValue));
+      }
+      else {
+        $newNode->appendChild($this->cloneNode($child, $doc));
+      }
+    }
+    return $newNode;
   }
 
 }
