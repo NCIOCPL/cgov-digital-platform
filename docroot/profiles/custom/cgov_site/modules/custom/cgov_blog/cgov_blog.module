@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -135,4 +136,85 @@ function cgov_blog_field_widget_form_alter(&$element, $form_state, $context) {
   ];
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
+}
+
+/**
+ * Preprocess function for block templates.
+ */
+function cgov_blog_preprocess_block(&$variables) {
+  /*
+   * Make changes to the breadcrumb block. If the block is of type
+   * 'cgov_breadcrumb'and the URL contains valid query parameters
+   * and the content type is Blog Series, add the current,
+   * translated series link to the breadcrumb render array.
+   */
+  if ($variables['plugin_id'] == 'cgov_breadcrumb') {
+
+    // Proceed only if the view contains query params.
+    if (!empty($_GET['topic']) || !empty($_GET['year'])) {
+      $nid = \Drupal::routeMatch()->getRawParameter('node');
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+
+      // If Blog Series content type, add nav link for the current language.
+      if ($node->bundle() === 'cgov_blog_series') {
+        $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
+        $section = $node->field_site_section->entity;
+        $label = $section->field_navigation_label->value ?? $section->name->value;
+        $variables['content']['breadcrumbs'][] = [
+          'href' => $node->toUrl()->toString(),
+          'label' => $label,
+        ];
+      }
+    }
+  }
+
+  /*
+   * Modify the language toggle block.
+   * Set correct translation for topic query param.
+   */
+  if ($variables['plugin_id'] === 'language_block:language_content') {
+
+    // Proceed only if the view contains topic query param.
+    if (!empty($_GET['topic'])) {
+      $nid = \Drupal::routeMatch()->getRawParameter('node');
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+
+      // If Blog Series content type, add nav link for the current language.
+      if ($node->bundle() === 'cgov_blog_series') {
+        // Get the query parameter and current and opposite languages.
+        $topic = $_GET['topic'];
+        $lang_current = (\Drupal::languageManager()->getCurrentLanguage()->getId());
+        $lang_toggled = $lang_current != 'en' ? 'en' : 'es';
+
+        // Get array of blog topics.
+        $query = \Drupal::entityQuery('taxonomy_term');
+        $query->condition('vid', 'cgov_blog_topics');
+        $tids = $query->execute();
+        $terms = Term::loadMultiple($tids);
+
+        /*
+         * Loop through each term to find translation. If translation exists
+         * and the topic query param value does NOT match the language of the
+         * current page, replace with the correct language value.
+         */
+        foreach ($terms as $term) {
+          if ($term->hasTranslation($lang_current)) {
+            // Get field value for current page language.
+            $term_current = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_current);
+            $pretty_url_current = $term_current->get('field_topic_pretty_url')->value;
+
+            // If query parameter matches, replace with correct parameter.
+            if ($pretty_url_current == $topic) {
+              $term_toggled = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_toggled);
+              $pretty_url_toggled = $term_toggled->get('field_topic_pretty_url')->value;
+              $variables['content']['#links'][$lang_toggled]['query']['topic'] = $pretty_url_toggled;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
