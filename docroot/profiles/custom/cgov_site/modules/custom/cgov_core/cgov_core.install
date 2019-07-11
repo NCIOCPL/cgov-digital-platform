@@ -20,6 +20,15 @@ function cgov_core_install() {
   // Get the helper service.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
+  // Add Roles.
+  $siteHelper->addRole('content_author', 'Content Author', -8);
+  $siteHelper->addRole('content_editor', 'Content Editor', -7);
+  $siteHelper->addRole('advanced_editor', 'Advanced Editor', -6);
+  $siteHelper->addRole('layout_manager', 'Layout Manager', -5);
+  $siteHelper->addRole('site_admin', 'Site Admin', -4);
+  $siteHelper->addRole('admin_ui', 'Admin UI', 3);
+  $siteHelper->addRole('content_previewer', 'Content Previewer', 4);
+
   // Set the DTM config for this environment.
   $siteHelper->installDtmEnvironment();
 
