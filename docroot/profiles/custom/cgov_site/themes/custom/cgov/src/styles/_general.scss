@@ -614,7 +614,9 @@ sub {
   margin: 25px auto;
   width: 80%;
 }
-.callout-box-right {
+.callout-box-right,
+// Temp stopgap for DCEG integration.
+.callout-box.right {
   float: right;
   margin: 0 0 15px 15px;
   width: 40%;
@@ -633,7 +635,10 @@ sub {
   .callout-box-left,
   .callout-box-right {
     width: 90%;
-    float: none;
+    // The !important is being added specifically to override .right's rules
+    // This is a stopgap for DCEG integration. Future sprints should remove the
+    // need for this measure and allow for removal of the important and the rule above.
+    float: none !important;
     margin: 1em auto;
   }
 }
