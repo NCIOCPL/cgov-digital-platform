@@ -14,6 +14,10 @@ use Drupal\cgov_core\CgovCoreTools;
  */
 function cgov_image_install() {
   $tools = \Drupal::service('cgov_core.tools');
+
+  // Add Roles.
+  $tools->addRole('image_manager', 'Image Manager', -7);
+
   foreach (['cgov_image', 'cgov_contextual_image'] as $image_type) {
     // Add content type permissions.
     $tools->addMediaTypePermissions($image_type, 'image_manager');

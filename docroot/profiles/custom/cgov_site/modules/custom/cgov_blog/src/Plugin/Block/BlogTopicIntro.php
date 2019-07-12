@@ -67,26 +67,25 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    // Empty build object.
-    $build = [];
-
-    // Return collection of intros.
-    $topic_intros = $this->getTopicIntros();
+    $topic_intro = $this->getTopicIntro();
     $build = [
-      'topic_intros' => $topic_intros,
+      'topic_intro' => $topic_intro,
+      '#cache' => [
+        'tags' => [
+          'node_list',
+        ],
+      ],
     ];
     return $build;
   }
 
   /**
-   * Get category descriptions.
-   *
-   * {@inheritdoc}
+   * Get category description for intro text.
    */
-  private function getTopicIntros() {
-    // Get all of the associated categories their description fields.
-    $intros = $this->blogManager->getSeriesTopicDescription();
-    return $intros;
+  private function getTopicIntro() {
+    $topic = $this->blogManager->getSeriesTopicByUrl();
+    $intro = $topic->description->value ?? '';
+    return $intro;
   }
 
 }

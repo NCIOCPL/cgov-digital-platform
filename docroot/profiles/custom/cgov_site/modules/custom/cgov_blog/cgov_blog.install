@@ -18,6 +18,9 @@ function cgov_blog_install() {
   // Get our helper.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
+  // Add Roles.
+  $siteHelper->addRole('blog_manager', 'Blog Manager', -5);
+
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
   $siteHelper->addContentTypePermissions('cgov_blog_series', ['blog_manager']);

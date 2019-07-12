@@ -146,6 +146,8 @@ AddEncoding gzip svgz
   RewriteCond %{REQUEST_URI} !/core/[^/]*\.php$
   # Allow access to test-specific PHP files:
   RewriteCond %{REQUEST_URI} !/core/modules/system/tests/https?.php
+  # Allow access to simplesaml paths.
+  RewriteCond %{REQUEST_URI} !^/simplesaml
   # Allow access to Statistics module's custom front controller.
   # Copy and adapt this rule to directly execute PHP files in contributed or
   # custom modules or to run another PHP application in the same directory.
@@ -188,4 +190,6 @@ AddEncoding gzip svgz
   Header always set X-Content-Type-Options nosniff
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
+  # Set the HSTS header on Acquia sites where the non-Acquia domains are used.
+  Header set Strict-Transport-Security "max-age=31557600; preload"
 </IfModule>

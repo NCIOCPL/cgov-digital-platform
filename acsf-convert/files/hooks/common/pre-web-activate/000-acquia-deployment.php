@@ -53,6 +53,13 @@ function main($argv, $argc) {
   }
   $site = $argv[1];
   $env = $argv[2];
+
+  $registry_path = get_registry_file($site, $env);
+  if (!file_exists($registry_path)) {
+    printf("This doesn't look like an ACSF environment. Will not update ACSF themes.\n");
+    exit(0);
+  }
+
   $verbose = FALSE;
   if (in_array('-v', $argv) || in_array('--verbose', $argv)) {
     $verbose = TRUE;
@@ -165,6 +172,21 @@ function get_shared_creds($site, $env) {
     }
   }
   throw new Exception(sprintf('Unable to read credentials from %s', $shared));
+}
+
+/**
+ * Returns the path to the site registry file.
+ *
+ * @param string $site
+ *   The sitegroup name.
+ * @param string $env
+ *   The environment name.
+ *
+ * @return string
+ *   The site registry path.
+ */
+function get_registry_file($site, $env) {
+  return sprintf('/mnt/files/%s.%s/files-private/sites.json', $site, $env);
 }
 
 /**

@@ -39,7 +39,7 @@ const rules = [
         exclude: [
             /\/refer-participate/i,
             /\/blog/i,
-            /\/about/i,
+            /^\/rare-brain-spine-tumor\/about/i,
             /\/living\/finished-treatment/i,
             /\/living\/coping/i,
             /\/living\/stories/i

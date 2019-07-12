@@ -20,6 +20,15 @@ function cgov_core_install() {
   // Get the helper service.
   $siteHelper = \Drupal::service('cgov_core.tools');
 
+  // Add Roles.
+  $siteHelper->addRole('content_author', 'Content Author', -8);
+  $siteHelper->addRole('content_editor', 'Content Editor', -7);
+  $siteHelper->addRole('advanced_editor', 'Advanced Editor', -6);
+  $siteHelper->addRole('layout_manager', 'Layout Manager', -5);
+  $siteHelper->addRole('site_admin', 'Site Admin', -4);
+  $siteHelper->addRole('admin_ui', 'Admin UI', 3);
+  $siteHelper->addRole('content_previewer', 'Content Previewer', 4);
+
   // Set the DTM config for this environment.
   $siteHelper->installDtmEnvironment();
 
@@ -80,6 +89,8 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'use editorial_workflow transition revise',
       'view any unpublished content',
       'view latest version',
+      'view all media revisions',
+      'view all revisions',
     ],
     'content_editor' => [
       'use editorial_workflow transition approve_archive',
@@ -175,4 +186,25 @@ EOMarkup;
   $block = Block::create($data);
   $block->save();
 
+}
+
+/**
+ * Update for Hotfix 1.0.2.
+ *
+ * Adds view all media revisions and view all revisions to
+ * content author role. This allows for media moderation
+ * tab to appear.
+ */
+function cgov_core_update_8001() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'content_author' => [
+      'view all media revisions',
+      'view all revisions',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
