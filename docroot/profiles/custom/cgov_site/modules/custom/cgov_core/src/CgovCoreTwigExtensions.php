@@ -85,15 +85,19 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   Field has text content.
    */
   public function hasContent(array $field_array) {
-    $content = $field_array[0]['#text'];
-    $contentWithoutSpaces = str_replace("&nbsp;", "", $content);
-    $doc = Html::load($contentWithoutSpaces);
-    $nodeList = $doc->getElementsByTagName('body');
-    $elem = $nodeList[0];
-    $textContent = $elem->textContent;
-    $trimmed = trim($textContent);
-    $hasContent = strlen($trimmed) > 0;
-    return $hasContent;
+    $hasTextField = isset($field_array[0]['#text']);
+    if ($hasTextField) {
+      $content = $field_array[0]['#text'];
+      $contentWithoutSpaces = str_replace("&nbsp;", "", $content);
+      $doc = Html::load($contentWithoutSpaces);
+      $nodeList = $doc->getElementsByTagName('body');
+      $elem = $nodeList[0];
+      $textContent = $elem->textContent;
+      $trimmed = trim($textContent);
+      $hasContent = strlen($trimmed) > 0;
+      return $hasContent;
+    }
+    return FALSE;
   }
 
   /**

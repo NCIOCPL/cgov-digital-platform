@@ -44,14 +44,14 @@ modules:
     uninstall: [syslog, devel, views_ui, cgov_caching_cdn]
   ## We have no prod in ACE.
   01dev:
-    enable: [dblog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: [ ]
+    enable: [dblog, syslog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
+    uninstall: [ cgov_caching_nocdn ]
   01test:
     enable: [syslog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn]
-    uninstall: [ dblog ]
+    uninstall: [ dblog, cgov_caching_nocdn ]
   01live:
     enable: [syslog, acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
-    uninstall: [ dblog ]
+    uninstall: [ dblog, cgov_caching_nocdn ]
 cm:
   strategy: features
   allow-overrides: true

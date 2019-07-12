@@ -581,3 +581,24 @@ function cgov_core_toolbar_alter(&$items) {
   }
 
 }
+
+/**
+ * Implements hook_preprocess_image_formatter().
+ *
+ * When alt text for an image is NULL and empty alt tag will not
+ * be rendered. Through the UI this is not an issue, for migrated
+ * content it is.
+ *
+ * NOTE: I tried hook_preprocess_image, but that was never called.
+ * I found preprocess_image_formatter in the formatter and went
+ * with that and it works. We should be using the image formatter
+ * in most cases where this would apply.
+ */
+function cgov_core_preprocess_image_formatter(&$variables) {
+  if (
+    !array_key_exists('#alt', $variables['image']) ||
+    $variables['image']['#alt'] === NULL
+  ) {
+    $variables['image']['#alt'] = "";
+  }
+}

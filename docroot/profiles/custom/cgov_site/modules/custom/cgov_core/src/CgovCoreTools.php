@@ -186,6 +186,35 @@ class CgovCoreTools {
   }
 
   /**
+   * Creates a new role.
+   *
+   * Roles cannot be managed by features because we do not store permissions
+   * in the yml configs, but use addRolePermissions. Imports of roles wipe
+   * out the permissions. Call this from your install_hook.
+   *
+   * NOTE: This defaults to creating non-admin roles.
+   *
+   * @param string $id
+   *   The machine name of the role.
+   * @param string $label
+   *   The label for the role.
+   * @param int $weight
+   *   The weight for the role, whatever that may mean?
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addRole($id, $label, $weight) {
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $role = $role_storage->create([
+      'id' => $id,
+      'label' => $label,
+      'weight' => $weight,
+    ]);
+    $role->save();
+  }
+
+  /**
    * Add Permissions to a role.
    *
    * @param array $rolePermissions
@@ -409,7 +438,8 @@ class CgovCoreTools {
     $site_env = strtolower($this->getAhSiteEnvironment());
 
     // Check if site_env matches a prod environment name...
-    if (in_array($site_env, self::PROD_AH_SITE_ENVS)) {
+    if (in_array($site_env, self::PROD_AH_SITE_ENVS) ||
+      preg_match('/^.*(www-prod-acsf|www-cms).*$/', $site_env)) {
       return CgovEnvironments::PROD;
     }
     // Otherwise, check if site_env matches a test environment name...
