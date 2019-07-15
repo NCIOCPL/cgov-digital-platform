@@ -5,7 +5,6 @@
  * Contains cgov_biography.install.
  */
 
-use Drupal\taxonomy\Entity\Term;
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 
@@ -22,15 +21,6 @@ function cgov_biography_install() {
 
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_biography', ['content_author']);
-
-  $campusItems = [
-    'NCI Shady Grove Campus',
-    'NIH Bethesda Campus',
-    'NCI Frederick Campus',
-    'NCI Advanced Technology Research Facility',
-  ];
-
-  _cgov_biography_add_taxonomy_terms('cgov_biography_campuses', $campusItems);
 }
 
 /**
@@ -101,17 +91,4 @@ EOMarkup;
   $block = Block::create($data);
   $block->save();
 
-}
-
-/**
- * Local function to install default taxonomy terms for Biographies.
- */
-function _cgov_biography_add_taxonomy_terms($vocabulary, $items) {
-  foreach ($items as $item) {
-    Term::create([
-      'parent' => [],
-      'name' => $item,
-      'vid' => $vocabulary,
-    ])->save();
-  }
 }
