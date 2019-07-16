@@ -48,6 +48,7 @@ $(document).ready(function() {
 
     // Use the Adobe dynamic pageName value.
     var pageName = 'D=pageName';
+    var hostname = document.location.hostname;
     var trimmedPathname = document.location.pathname.replace(/\/$/, '');
 
     // PAGE OPTIONS MODULE
@@ -58,7 +59,7 @@ $(document).ready(function() {
 
     // FLOATING DELIGHTER MODULE
     registerCustomEventListener('NCI.floating-delighter.click', target => {
-        NCIAnalytics.HomePageDelighterClick(target, 'hp_find', pageName);
+        NCIAnalytics.HomePageDelighterClick(target, 'hp_find', hostname + trimmedPathname);
     });
 
     // If the screen is resized past a different breakpoint, track the variable and event
@@ -567,8 +568,8 @@ $(window).on('load',function(){
         $('#cgvBody ul').eq(0).find('li').each(function(){
             $(this).find('a').on('click', function(){
                 NCIAnalytics.GlobalLinkTrack({
-                    sender:this, // html link element
-                    label:$(this).text(), // text displayed to user
+                    sender:this, // html link element
+                    label:$(this).text(), // text displayed to user
                 });
             });
         });
@@ -578,8 +579,8 @@ $(window).on('load',function(){
                 $(this).on('click', function(){
                     NCIAnalytics.GlobalLinkTrack({
                         sender: this, // html link element
-                        label: 'email-contact',
-                    }); 
+                        label: 'email-contact',
+                    }); 
                 });
             }
         });
@@ -587,22 +588,22 @@ $(window).on('load',function(){
 
     // Add tracking for previous and next links on PDQ pages
     $(".previous-link, .next-link").on("click", "a", function() {
-        var linkText = $(this).text();
-        linkText = linkText.replace(/[<>]/,'').trim();
+        var linkText = $(this).text();
+        linkText = linkText.replace(/[<>]/,'').trim();
 
-        NCIAnalytics.GlobalLinkTrack({
-            sender: this, // html link element
-            label: linkText // text displayed to user
-        });
+        NCIAnalytics.GlobalLinkTrack({
+            sender: this, // html link element
+            label: linkText // text displayed to user
+        });
     });
 
     // 	Track "Go to Health Professional Version" and
     // "Go to Patient Version" links on PDQ pages.
     $(".pdq-hp-patient-toggle").on("click", "a", function() {
-        NCIAnalytics.GlobalLinkTrack({
-            sender: this, // html link element
-            label: $(this).text() // text displayed to user
-        });
+        NCIAnalytics.GlobalLinkTrack({
+            sender: this, // html link element
+            label: $(this).text() // text displayed to user
+        });
     });
 
     // Track clicks on blog archives accordion on all blog pages.
