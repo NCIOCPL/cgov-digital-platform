@@ -152,7 +152,7 @@ var AppMeasurementCustom = {
             s.eVar15 = s.prop15;
 
             // Set Previous Page values.
-            s.prop61 = s.getPreviousValue(s.pageName, 'gpv_pn', '');
+            s.prop61 = s.getPreviousValue(s.localPageName, 'gpv_pn', '');
 
             // Set load time of the page.
             s.prop65 = s.getLoadTime(); 
@@ -183,12 +183,12 @@ var AppMeasurementCustom = {
             s.eVar35 = s_campaign;
             s.campaign = s.getValOnce(s_campaign,'s_campaign',30);
 
-            /**
-             * Set pageName and eVar1 to localPageName.
-             */
-            s.setNciPageNameAdditions();
+            // Set s.pageName to localPageName BEFORE appending other identifiers.
             s.pageName = s.localPageName;
-            s.eVar1 = s.pageName;
+
+            // Build s.localPageName object and set eVar1.
+            s.setNciPageNameAdditions();
+            s.eVar1 = s.localPageName;
             s.mainCGovIndex = AppMeasurementCustom.getMainCGovIndex();
 
             // Social platform.
@@ -201,7 +201,6 @@ var AppMeasurementCustom = {
                 s.prop64 = s._ppvInitialPercentViewed + '|' + s._ppvHighestPercentViewed;
                 s.prop64 = (s.prop64=='0') ? 'zero' : s.prop64;
             }
-
 
             /**
              * tODO: Implement these as Appmodules are pulled into Digicomm Prod.
@@ -431,32 +430,39 @@ var AppMeasurementCustom = {
          */
         s.setNciPageNameAdditions = function() {
             let s = this;
-            let pageNameAdditions = [];
-            let pageNum = s.Util.getQueryParam('page');
+            let additions = [];
 
             // Add audience.
             if (s.prop7) {
-                pageNameAdditions.push(s.prop7);
+                additions.push(s.prop7);
             }
 
             // Add dictionary types.
             if (s.localPageName.indexOf("dictionaries") > -1 || s.localPageName.indexOf("diccionario") > -1) {
                 if (s.Util.getQueryParam('expand')) {
-                    pageNameAdditions.push('AlphaNumericBrowse');
+                    additions.push('AlphaNumericBrowse');
                 } else if (s.localPageName.indexOf("/def/") >= 0 ) {
-                    pageNameAdditions.push('Definition');
+                    additions.push('Definition');
                 }
             }
 
             // Add page number query parameter value.
+            let pageNum = s.Util.getQueryParam('page');
             if (pageNum) {
-                pageNameAdditions.push('Page ' + pageNum.toString());
+                additions.push('Page ' + pageNum.toString());
             }
 
+            // Remove duplicates if they exist.
+            let seen = {};
+            additions = additions.filter(function(item) {
+                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+            });
+
             // Concatenate pageName with any additional strings.
-            if(pageNameAdditions.length > 0) {
-                s.localPageName += " - " + pageNameAdditions.join(', ');
+            if(additions.length > 0) {
+                s.localPageName += ' - ' + additions.join(', ');
             }
+
         }
 
         /** 
