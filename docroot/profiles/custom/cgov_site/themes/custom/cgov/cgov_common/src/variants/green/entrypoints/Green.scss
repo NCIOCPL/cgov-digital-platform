@@ -1,8 +1,8 @@
-@import '~Core/styles/breakpoints';
-@import '~Core/styles/colors';
-@import '~Core/styles/variables';
+@import "~Core/styles/breakpoints";
+@import "~Core/styles/colors";
+@import "~Core/styles/variables";
 @import "~Core/styles/environments/percussion";
-@import '../styles/sprites/svg-sprite';
+@import "../styles/sprites/svg-sprite";
 
 $cgov_path: "/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/dist/";
 
@@ -100,7 +100,8 @@ $landing-page-feature-card-link-color: $night;
 $landing-page-guide-card-background: $cloud;
 $landing-page-guide-card-link-color: $asphalt;
 $landing-page-guide-card-link-hover-color: $acorn;
-$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-green.jpg") repeat;
+$landing-page-multimedia-background: url($cgov_path+"images/multimedia-background-green.jpg")
+  repeat;
 $content-view-button-background: $ocean;
 $content-view-button-hover-background: $tangerine;
 $content-pullquote-left-border: $army;
@@ -122,8 +123,9 @@ $content-table-header-background: $seafoam;
 $content-svg-guide-card-circle-arrow: chevron-circle-green-theme;
 $content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-green-theme;
 $content-svg-external-link: external-link-green-theme;
-$footer-background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px,
-linear-gradient(45deg, $ocean, $robin);
+$footer-background: url($backgrounds+"hexagon_molecular_structure_footer.png")
+    no-repeat 130% 00px,
+  linear-gradient(45deg, $ocean, $robin);
 $footer-icons-hover-opacity: 1;
 $footer-svg-twitter: twitter-green-theme;
 $footer-svg-twitter-hover: twitter-hover-green-theme;
@@ -142,8 +144,6 @@ $footer-svg-pinterest-hover: pinterest-hover-green-theme;
 $footer-svg-youtube: youtube-green-theme;
 $footer-svg-youtube-hover: youtube-hover-green-theme;
 
-
-
 // default theme link color
 .main-content a,
 #cgvBody h2 a,
@@ -158,9 +158,9 @@ $footer-svg-youtube-hover: youtube-hover-green-theme;
 .contentzone h6 a,
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
-.section-nav .contains-current>div a,
+.section-nav .contains-current > div a,
 .feature-primary a h3,
-ul.breadcrumbs>* a,
+ul.breadcrumbs > * a,
 .topic-feature a h3,
 .pullquote,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
@@ -237,8 +237,7 @@ li a {
 a.arrow-link:hover,
 a.arrow-link:focus,
 .topic-feature a:hover h3,
-.topic-feature a:focus h3
-{
+.topic-feature a:focus h3 {
   color: $default-link-color-hover;
 }
 
@@ -310,17 +309,17 @@ h6 {
 }
 
 // menu bar
-.menu.nav-menu>.nav-item>.nav-item-title>a.active,
-.menu.nav-menu>.nav-item>.nav-item-title>a.open,
-.menu.nav-menu>.nav-item>.nav-item-title>a:focus,
-.menu.nav-menu>.nav-item>.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
-.mobile-menu-bar>a,
-.mobile-menu-bar>button,
-.mobile-menu-bar>a:focus,
-.mobile-menu-bar>a:hover,
-.mobile-menu-bar>button:focus,
-.mobile-menu-bar>button:hover {
+.menu.nav-menu > .nav-item > .nav-item-title > a.active,
+.menu.nav-menu > .nav-item > .nav-item-title > a.open,
+.menu.nav-menu > .nav-item > .nav-item-title > a:focus,
+.menu.nav-menu > .nav-item > .nav-item-title > a,
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a,
+.mobile-menu-bar > a,
+.mobile-menu-bar > button,
+.mobile-menu-bar > a:focus,
+.mobile-menu-bar > a:hover,
+.mobile-menu-bar > button:focus,
+.mobile-menu-bar > button:hover {
   color: $main-menu-link-color;
 }
 
@@ -346,10 +345,10 @@ a.nav-dictionary::before {
   @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
 }
 
-#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-#mega-nav li.contains-current>div.nav-item-title>a,
-.section-nav .level-1.contains-current.has-children>div a,
-.contains-current.has-children>div>a {
+#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+#mega-nav li.contains-current > div.nav-item-title > a,
+.section-nav .level-1.contains-current.has-children > div a,
+.contains-current.has-children > div > a {
   color: $hamburger-section-menu-parent-item-link-color;
 }
 
@@ -385,22 +384,20 @@ a.nav-dictionary::before {
   background: $section-menu-mobile-tablet-not-current-page-minus-background;
 }
 
-
-
 // mega menu
 
 #mega-nav .current-page {
   background-color: $hamburger-menu-mobile-tablet-current-page-background;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="true"],
-#mega-nav .current-page>div[aria-expanded="true"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="true"],
+#mega-nav .current-page > div[aria-expanded="true"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
   color: $hamburger-menu-mobile-tablet-current-page-minus-color;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="false"],
-#mega-nav .current-page>div[aria-expanded="false"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="false"],
+#mega-nav .current-page > div[aria-expanded="false"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
   color: $hamburger-menu-mobile-tablet-current-page-plus-color;
 }
@@ -452,9 +449,26 @@ figure a.article-image-enlarge:hover {
   background-color: $content-view-button-hover-background;
 }
 
+// #2209: CR to update secondary feature styling 
+.feature-secondary {
+  .card { 
+    background: $cloud;
+  }
+
+  a {
+    h3 {
+      color: $ocean;
+    }
+  }
+
+  p {
+    color: $asphalt;
+  }
+}
+
 .feature-primary {
   .card {
-    &:not(.topic-feature){
+    &:not(.topic-feature) {
       background-color: $landing-page-feature-card-background;
     }
   }
@@ -492,11 +506,11 @@ figure a.article-image-enlarge:hover {
 }
 
 // form elements
-.radio input[type=radio]:checked+label:before {
+.radio input[type="radio"]:checked + label:before {
   background-color: $content-form-radio-background;
 }
 
-.radio input[type=radio]+label:before {
+.radio input[type="radio"] + label:before {
   border-color: $content-form-radio-border;
 }
 
@@ -514,21 +528,21 @@ figure a.article-image-enlarge:hover {
 }
 
 .button.submit,
-.button[type=submit],
+.button[type="submit"],
 form button.submit,
-form button[type=submit] {
+form button[type="submit"] {
   background-color: $content-form-submit-button-background;
   border-color: $content-form-submit-button-border;
 }
 
 .button.submit:focus,
 .button.submit:hover,
-.button[type=submit]:focus,
-.button[type=submit]:hover,
+.button[type="submit"]:focus,
+.button[type="submit"]:hover,
 form button.submit:focus,
 form button.submit:hover,
-form button[type=submit]:focus,
-form button[type=submit]:hover {
+form button[type="submit"]:focus,
+form button[type="submit"]:hover {
   background-color: $content-form-submit-button-hover-background;
 }
 
@@ -629,7 +643,6 @@ form button[type=submit]:hover {
 }
 
 @include break(large) {
-
   // changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
   header {
     margin-bottom: 20px;
@@ -642,7 +655,6 @@ form button[type=submit]:hover {
       height: $site-logo-height-desktop;
     }
   }
-
 
   // utility
   #microsite-a .utility span {
@@ -659,8 +671,8 @@ form button[type=submit]:hover {
     @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
   }
 
-  #mega-nav .nav-item.contains-current>.nav-item-title>a,
-  #mega-nav .nav-item.current-page>.nav-item-title>a {
+  #mega-nav .nav-item.contains-current > .nav-item-title > a,
+  #mega-nav .nav-item.current-page > .nav-item-title > a {
     border-bottom-color: $main-menu-desktop-active-item-border-bottom;
   }
 
@@ -674,8 +686,8 @@ form button[type=submit]:hover {
   }
 
   // overwriting hamburger menu style rules
-  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-  #mega-nav li.contains-current>div.nav-item-title>a {
+  #mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+  #mega-nav li.contains-current > div.nav-item-title > a {
     color: initial;
   }
 
@@ -685,7 +697,7 @@ form button[type=submit]:hover {
       border-left-color: $section-navigation-desktop-active-item-triangle;
     }
 
-    .level-0>div {
+    .level-0 > div {
       background-color: $section-navigation-desktop-header-background;
     }
 
@@ -698,13 +710,13 @@ form button[type=submit]:hover {
     }
 
     .has-children .contains-current {
-      >div.current-page a {
+      > div.current-page a {
         color: $section-navigation-desktop-active-color;
       }
     }
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -758,11 +770,11 @@ form button[type=submit]:hover {
     background-color: $section-menu-mobile-tablet-button-background;
   }
 
-  .section-nav .level-0>div {
+  .section-nav .level-0 > div {
     background: $section-menu-mobile-tablet-title-background;
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -773,7 +785,6 @@ form button[type=submit]:hover {
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
   }
-
 
   .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
   .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
@@ -804,7 +815,7 @@ form button[type=submit]:hover {
   }
 
   // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
-  .row>.page-options-container .page-options ul {
+  .row > .page-options-container .page-options ul {
     float: left !important;
   }
 }
