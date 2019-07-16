@@ -203,12 +203,8 @@ var AppMeasurementCustom = {
             }
 
 
-
-
-
             /**
-             * TODO: the tags below will be implemented in separate tickets when the components
-             * are built on dev. 
+             * tODO: Implement these as Appmodules are pulled into Digicomm Prod.
              */
             // // Will be used to set additional suite values, if needed
             // s_resultsCount = getNciMetaTagContent('[property="dcterms.coverage"]');
@@ -218,10 +214,6 @@ var AppMeasurementCustom = {
             // s_ctSearchType = getNciMetaTagContent('[property="dcterms.accrualMethod"]');
             // // Will be used to populate prop/eVar16, dictionary pages, definition pages.
             // s_cdrId = getNciDataAttr('dfn[data-cdr-id]', 'cdrId');
-
-
-
-
 
             // Set short title, pub date, and content group from meta tags.
             s.prop6 = getNciMetaTagContent('[property="og:title"]');
@@ -234,6 +226,18 @@ var AppMeasurementCustom = {
             
             // Set pageType based on dcterms.type meta tag.
             s.pageType = getNciMetaTagContent('[name="dcterms.type"]');
+
+            // Set pageType-specific values.
+            let s_pageType = s.pageType;
+            switch (s_pageType)
+            {
+                case 'cgvBlogPost':
+                    s.eVar48 = s.eVar44 + ' Viewer';
+                case 'errorpage':
+                    s.pageName = window.location.hostname + window.location.pathname;
+                default:
+                    break;
+            }
 
             // Set concatenated events list.
             s.setNciEvents();
