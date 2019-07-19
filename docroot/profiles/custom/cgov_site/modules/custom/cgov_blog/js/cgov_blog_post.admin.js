@@ -36,7 +36,7 @@
        */
       function filterTopicOptions(settings) {
         // Hide checkboxes to start.
-        $('#edit-field-blog-topics .js-form-item').addClass('visually-hidden');
+        $('#edit-field-blog-topics .js-form-item').addClass('show-for-sr');
 
         // Get the seleccted series ID.
         var sid = $('select#edit-field-blog-series')[0].value;
@@ -45,7 +45,7 @@
         var topics = settings.adminJS.idPairs;
         for (var tid in topics) {
           if(topics[tid] === sid) {
-            jQuery('input[value=' + tid + ']').parent().removeClass('visually-hidden');
+            jQuery('input[value=' + tid + ']').parent().removeClass('show-for-sr');
           }
         }
       } // filterTopicOptions()
