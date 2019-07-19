@@ -478,22 +478,6 @@ div.previous-next-links {
   }
 }
 
-// skip navigation styles
-.skip a,
-.skip a:hover,
-.skip a:visited {
-  position: absolute;
-  left: -999px;
-}
-.skip a:active,
-.skip a:focus {
-  display: block;
-  left: 0;
-  z-index: 999;
-  background: #fff;
-  border: 1px solid #000;
-  padding: 5px 5px 5px 5px;
-}
 /* fix for Chrome problem with rendering sup tags */
 .sup,
 sup {
@@ -714,7 +698,7 @@ h6 {
     display: none;
   }
 }
-
+.skipnav,
 .show-for-sr {
   position: absolute;
   width: 1px;
@@ -724,6 +708,22 @@ h6 {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+// skip navigation link styling
+.skipnav {
+  &:active,
+  &:focus {
+    display: block;
+    left: 0;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 5px;
+    width: auto;
+    height: auto;
+    clip: unset;
+  }
 }
 
 /********************* END General Styles ******************************************/
