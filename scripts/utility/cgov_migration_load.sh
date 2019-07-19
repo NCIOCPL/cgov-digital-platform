@@ -3,81 +3,124 @@
 #
 set -ev
 
+mig_name=$MIGRATION
 
 
-case $MIGRATION in
+migrations=(
+    summary_migration
+    summaryes_migration
+    dis_migration
+    cgovimage_migration
+    cgovimage_es_migration
+    externallinksql_migration
+    internallinksql_migration
+    citation_migration
+    medialink_migration
+    paragraph_en_migration
+    paragraph_es_migration
+    appmodulepage_en_migration
+    appmodulepage_es_migration
+    venue_migration
+    eventseries_migration
+    event_migration
+    campus_migration
+    biography_migration
+    pressrelease_en_migration
+    pressrelease_es_migration
+    article_en_migration
+    article_es_migration
+    video_en_migration
+    video_es_migration
+    infographic_en_migration
+    infographic_es_migration
+    region_migration
+    cancercentertype_migration
+    cancercenter_migration
+    promocard_migration
+    externalpromocard_migration
+    contentblock_migration
+    rawhtml_migration
+    primaryfeaturecardrow_migration
+    secondaryfeaturecardrow_migration
+    list_migration
+    multimediarow_migration
+    dynamiclist_migration
+    twocolumnrow_migration
+    guidecardrow_migration
+    twoitemfeaturecardrow_migration
+    blogseries_en_migration
+    blogseries_es_migration
+    blogtopics_migration
+    blogtopics_es_migration
+    blogpost_en_migration
+    blogpost_es_migration
+    minilanding_en_migration
+    minilanding_es_migration
+    cancerresearch_en_migration
+    cancerresearch_es_migration
+    cthpcontentblock_migration
+    cthpblockcontentcard_migration
+    cthpguidecard_migration
+    cthpexternalfeaturecard_migration
+    cthpfeaturecard_migration
+    cthpresearchcard_migration
+    cthpvideocard_migration
+    cthpoverviewcard_migration
+    cthp_en_migration
+    cthp_es_migration
+    homelanding_en_migration
+    homelanding_es_migration
+    contextualimage_migration
+    contextualimage_es_migration
+    file_en_migration
+);
+
+mig_updates=(
+    update_article_en_migration
+    update_article_es_migration
+    update_paragraph_en_migration
+    update_paragraph_es_migration
+    update_pressrelease_en_migration
+    update_pressrelease_es_migration
+    update_infographic_en_migration
+    update_infographic_es_migration
+    update_biography_migration
+    update_event_migration
+    update_cthpcontentblock_migration
+    update_contentblock_migration
+    update_citation_migration
+    update_cancercenter_migration
+    update_blogpost_en_migration
+    update_blogpost_es_migration
+);
+
+case $mig_name in
 CGOV | NANO | MYPART | NCICONNECT | DCEG)
-    drush mim summary_migration && drush mim summaryes_migration && drush mim dis_migration
-    drush mim cgovimage_migration && drush mim cgovimage_es_migration
-    drush mim externallinksql_migration; drush mim internallinksql_migration; drush mim citation_migration; drush mim medialink_migration
-    drush mim paragraph_en_migration; drush mim paragraph_es_migration
-    drush mim appmodulepage_en_migration && drush mim appmodulepage_es_migration
-
-    drush mim pressrelease_en_migration && drush mim pressrelease_es_migration
-    drush mim article_en_migration && drush mim article_es_migration
-    drush mim video_en_migration && drush mim video_es_migration
-    drush mim infographic_en_migration && drush mim infographic_es_migration
-
-    drush mim region_migration && drush mim cancercentertype_migration && drush mim cancercenter_migration
-
-    drush mim promocard_migration; drush mim externalpromocard_migration
-    drush mim contentblock_migration; drush mim rawhtml_migration
-
-    drush mim primaryfeaturecardrow_migration && drush mim secondaryfeaturecardrow_migration && drush mim list_migration && drush mim multimediarow_migration
-    drush mim dynamiclist_migration
-
-    drush mim twocolumnrow_migration && drush mim guidecardrow_migration
-
-    drush mim twoitemfeaturecardrow_migration
-
-    drush mim blogseries_en_migration && drush mim blogseries_es_migration && drush mim blogtopics_migration && drush mim blogtopics_es_migration
-    drush mim blogpost_en_migration && drush mim blogpost_es_migration
-
-    drush mim minilanding_en_migration && drush mim minilanding_es_migration
-
-    drush mim cancerresearch_en_migration && drush mim cancerresearch_es_migration
-
-    drush mim cthpcontentblock_migration
-    drush mim cthpblockcontentcard_migration
-    drush mim cthpguidecard_migration
-    drush mim cthpexternalfeaturecard_migration
-    drush mim cthpfeaturecard_migration
-    drush mim cthpresearchcard_migration
-    drush mim cthpvideocard_migration
-    drush mim cthpoverviewcard_migration
-    drush mim cthp_en_migration && drush mim cthp_es_migration
-
-    drush mim biography_migration
-    drush mim event_migration
-
-    drush mim homelanding_en_migration && drush mim homelanding_es_migration
-    drush mim contextualimage_migration && drush mim contextualimage_es_migration
-    drush mim file_en_migration
-
-    # Migration Updates
-    drush mim update_article_en_migration && drush mim update_article_es_migration
-    drush mim update_paragraph_en_migration && drush mim update_paragraph_es_migration
-    drush mim update_pressrelease_en_migration && drush mim update_pressrelease_es_migration
-    drush mim update_infographic_en_migration && drush mim update_infographic_es_migration
-
-    drush mim update_biography_migration
-    drush mim update_event_migration
-
-    drush mim update_cthpcontentblock_migration
-
-    drush mim update_contentblock_migration
-    drush mim update_citation_migration
-    drush mim update_cancercenter_migration
-    drush mim update_blogpost_en_migration && drush mim update_blogpost_es_migration
-
-
-    drush ms --format=csv
-
   ;;
 *)
   echo 'MIGRATION NOT SET'
   ;;
 esac
 
+echo "[$(date +%F_%T)] Executing migration to $mig_name"
+
+echo "[$(date +%F_%T)] Starting First Pass"
+for mig in "${migrations[@]}"
+do
+  echo "[$(date +%F_%T)] Executing $mig"
+  MIGRATION=$mig_name drush mim $mig
+done
+echo "[$(date +%F_%T)] First Pass Done"
+
+echo "[$(date +%F_%T)] Starting Updates"
+for mig in "${mig_updates[@]}"
+do
+  echo "[$(date +%F_%T)] Executing $mig"
+  MIGRATION=$mig_name drush mim $mig
+done
+echo "[$(date +%F_%T)] Finished Updates"
+
+drush ms --format=csv
+echo "[$(date +%F_%T)] Finished migration to $mig_name"
 
 set +v

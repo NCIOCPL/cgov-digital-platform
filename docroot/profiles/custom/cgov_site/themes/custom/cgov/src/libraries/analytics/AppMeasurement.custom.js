@@ -152,7 +152,7 @@ var AppMeasurementCustom = {
             s.eVar15 = s.prop15;
 
             // Set Previous Page values.
-            s.prop61 = s.getPreviousValue(s.pageName, 'gpv_pn', '');
+            s.prop61 = s.getPreviousValue(s.localPageName, 'gpv_pn', '');
 
             // Set load time of the page.
             s.prop65 = s.getLoadTime(); 
@@ -183,12 +183,12 @@ var AppMeasurementCustom = {
             s.eVar35 = s_campaign;
             s.campaign = s.getValOnce(s_campaign,'s_campaign',30);
 
-            /**
-             * Set pageName and eVar1 to localPageName.
-             */
-            s.setNciPageNameAdditions();
+            // Set s.pageName to localPageName BEFORE appending other identifiers.
             s.pageName = s.localPageName;
-            s.eVar1 = s.pageName;
+
+            // Build s.localPageName object and set eVar1.
+            s.setNciPageNameAdditions();
+            s.eVar1 = s.localPageName;
             s.mainCGovIndex = AppMeasurementCustom.getMainCGovIndex();
 
             // Social platform.
@@ -202,13 +202,8 @@ var AppMeasurementCustom = {
                 s.prop64 = (s.prop64=='0') ? 'zero' : s.prop64;
             }
 
-
-
-
-
             /**
-             * TODO: the tags below will be implemented in separate tickets when the components
-             * are built on dev. 
+             * tODO: Implement these as Appmodules are pulled into Digicomm Prod.
              */
             // // Will be used to set additional suite values, if needed
             // s_resultsCount = getNciMetaTagContent('[property="dcterms.coverage"]');
@@ -218,10 +213,6 @@ var AppMeasurementCustom = {
             // s_ctSearchType = getNciMetaTagContent('[property="dcterms.accrualMethod"]');
             // // Will be used to populate prop/eVar16, dictionary pages, definition pages.
             // s_cdrId = getNciDataAttr('dfn[data-cdr-id]', 'cdrId');
-
-
-
-
 
             // Set short title, pub date, and content group from meta tags.
             s.prop6 = getNciMetaTagContent('[property="og:title"]');
@@ -234,6 +225,18 @@ var AppMeasurementCustom = {
             
             // Set pageType based on dcterms.type meta tag.
             s.pageType = getNciMetaTagContent('[name="dcterms.type"]');
+
+            // Set pageType-specific values.
+            let s_pageType = s.pageType;
+            switch (s_pageType)
+            {
+                case 'cgvBlogPost':
+                    s.eVar48 = s.eVar44 + ' Viewer';
+                case 'errorpage':
+                    s.pageName = window.location.hostname + window.location.pathname;
+                default:
+                    break;
+            }
 
             // Set concatenated events list.
             s.setNciEvents();
@@ -427,32 +430,39 @@ var AppMeasurementCustom = {
          */
         s.setNciPageNameAdditions = function() {
             let s = this;
-            let pageNameAdditions = [];
-            let pageNum = s.Util.getQueryParam('page');
+            let additions = [];
 
             // Add audience.
             if (s.prop7) {
-                pageNameAdditions.push(s.prop7);
+                additions.push(s.prop7);
             }
 
             // Add dictionary types.
             if (s.localPageName.indexOf("dictionaries") > -1 || s.localPageName.indexOf("diccionario") > -1) {
                 if (s.Util.getQueryParam('expand')) {
-                    pageNameAdditions.push('AlphaNumericBrowse');
+                    additions.push('AlphaNumericBrowse');
                 } else if (s.localPageName.indexOf("/def/") >= 0 ) {
-                    pageNameAdditions.push('Definition');
+                    additions.push('Definition');
                 }
             }
 
             // Add page number query parameter value.
+            let pageNum = s.Util.getQueryParam('page');
             if (pageNum) {
-                pageNameAdditions.push('Page ' + pageNum.toString());
+                additions.push('Page ' + pageNum.toString());
             }
 
+            // Remove duplicates if they exist.
+            let seen = {};
+            additions = additions.filter(function(item) {
+                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+            });
+
             // Concatenate pageName with any additional strings.
-            if(pageNameAdditions.length > 0) {
-                s.localPageName += " - " + pageNameAdditions.join(', ');
+            if(additions.length > 0) {
+                s.localPageName += ' - ' + additions.join(', ');
             }
+
         }
 
         /** 

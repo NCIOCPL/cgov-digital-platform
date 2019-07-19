@@ -223,6 +223,22 @@ abstract class CgovPluginBase extends ProcessPluginBase {
         $values['data_entity_type'] = 'node';
         break;
 
+      // 2392    nvcgDsFeatureCardRightNoImage  D - Feature Card Right No Image.
+      case '2392':
+        $values['view_mode'] = 'view_mode:node.embedded_feature_card_no_image';
+        $values['data_align'] = 'right';
+        $values['data_embed_button'] = 'cgov_featured_content_button';
+        $values['data_entity_type'] = 'node';
+        break;
+
+      // 2390    nvcgDsFeatureCardLeftNoImage    D- Feature Card Left No Image.
+      case '2390':
+        $values['view_mode'] = 'view_mode:node.embedded_feature_card_no_image';
+        $values['data_align'] = 'left';
+        $values['data_embed_button'] = 'cgov_featured_content_button';
+        $values['data_entity_type'] = 'node';
+        break;
+
       // gloDsSnBody    S – Body.
       case '1998':
         $values['view_mode'] = 'view_mode:block_content.full';
