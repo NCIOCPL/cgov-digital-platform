@@ -192,9 +192,9 @@
     <span class="filetype {{file_type}}">
       {% if file_type != "unknown" %}
         {# Note, the spanish should have the word order reversed... #}
-        <span class="hidden">{{ file_type }} {% trans %}file{% endtrans %}</span>
+        <span class="show-for-sr">{{ file_type }} {% trans %}file{% endtrans %}</span>
       {% else %}
-        {{ file_ext }}<span class="hidden"> {% trans %}file{% endtrans %}</span>
+        {{ file_ext }}<span class="show-for-sr"> {% trans %}file{% endtrans %}</span>
       {% endif %}
     </span>
     <span class="filesize">({{ file_size }})</span>

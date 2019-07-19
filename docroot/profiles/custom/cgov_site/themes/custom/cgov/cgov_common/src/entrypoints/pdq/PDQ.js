@@ -82,7 +82,7 @@ const buildAudioLinks = () => {
   const audioPronunciation = audioEl.parentElement.textContent.replace('Placeholder slot\n', '');
 
   if(audioId){
-    audioEl.parentElement.innerHTML = '<a href="' + audioPath + '" class="CDR_audiofile"><span class="hidden">listen</span></a>' + audioPronunciation;
+    audioEl.parentElement.innerHTML = '<a href="' + audioPath + '" class="CDR_audiofile"><span class="show-for-sr">listen</span></a>' + audioPronunciation;
 
     // The audioplayer setup is called only once on page load, so we need to
     // initialize it again for audiolinks added dynamically, but scoped to only the
