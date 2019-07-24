@@ -55,6 +55,9 @@ import charts from 'Libraries/charts';
 
 DeepLinkPatch();
 
+// Check if floatingDelighters are enabled on the global config
+const shouldShowFloatingDelighters = window.CDEConfig.showFloatingDelighters;
+
 //DOM Ready event
 const onDOMContentLoaded = () => {
 
@@ -159,7 +162,10 @@ const onDOMContentLoaded = () => {
 
   imageCarousel();
 
-  floatingDelighter();
+  // Check global config as to whether floatingDelighters should be instantiated (#2229)
+  if(shouldShowFloatingDelighters) {
+  	floatingDelighter();
+  }
 
   charts();
 
