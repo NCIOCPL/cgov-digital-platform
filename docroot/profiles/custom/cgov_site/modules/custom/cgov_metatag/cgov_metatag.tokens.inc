@@ -37,6 +37,11 @@ function cgov_metatag_token_info() {
           'name' => t('Cgov og:site_name Meta Tag'),
           'description' => t('The value to use for the og:site_name meta tag.'),
         ];
+  $info['tokens']['cgov_tokens']['cgov-media-content-language'] =
+        [
+          'name' => t('Cgov Media content-language Meta Tag'),
+          'description' => t('The value to use for the media content-language meta tag.'),
+        ];
 
   return $info;
 }
@@ -63,6 +68,10 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
 
         case 'cgov-og-site-name':
           $replacements[$original] = get_meta_og_site_name_token(t('National Cancer Institute'));
+          break;
+
+        case 'cgov-media-content-language':
+          $replacements[$original] = get_media_meta_content_language_token($data);
           break;
       }
     }
@@ -254,4 +263,23 @@ function get_meta_og_site_name_token(string $transOrgName) {
   else {
     return $name;
   }
+}
+
+/**
+ * Sets up media-langcode metatag value.
+ */
+function get_media_meta_content_language_token(array $data) {
+
+  // Get the entity from the appropriate data key.
+  if (!empty($data['media'])) {
+    $entity = $data['media'];
+  }
+
+  if (empty($entity)) {
+    return;
+  }
+
+  $langcode = $entity->get('langcode')->value;
+
+  return $langcode;
 }
