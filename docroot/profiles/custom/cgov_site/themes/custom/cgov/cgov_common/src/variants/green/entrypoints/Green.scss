@@ -159,7 +159,6 @@ $footer-svg-youtube-hover: youtube-hover-green-theme;
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
 .section-nav .contains-current > div a,
-.feature-primary a h3,
 ul.breadcrumbs > * a,
 .topic-feature a h3,
 .pullquote,
@@ -472,10 +471,15 @@ figure a.article-image-enlarge:hover {
       background-color: $landing-page-feature-card-background;
     }
   }
+  // 2240: hovering over the feature card should change the linked heading to the golden color
+  .feature-card a h3 {
+    color: $default-link-color;
+  }
+  .feature-card a:hover h3 {
+    color: $default-link-color-hover;
+  }
 }
 
-.feature-primary .feature-card a h3,
-.feature-primary .feature-card a:hover h3,
 .main-content .feature-card a {
   color: $landing-page-feature-card-link-color;
 }
