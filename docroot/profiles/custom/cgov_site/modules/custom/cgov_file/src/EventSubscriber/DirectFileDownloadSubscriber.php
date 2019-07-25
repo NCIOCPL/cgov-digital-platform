@@ -2,9 +2,12 @@
 
 namespace Drupal\cgov_file\EventSubscriber;
 
+use Drupal\akamai\Event\AkamaiHeaderEvents;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -53,6 +56,24 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
   protected $requestStack;
 
   /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
+   * The Service Container.
+   *
+   * Purge is not a required module and therefore we cannot pass in the
+   * TagsHeadersServiceInterface. So we must probe for the service from
+   * the service container in order to get it out.
+   *
+   * @var \Symfony\Component\DependencyInjection\ContainerInterface
+   */
+  protected $serviceContainer;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -61,11 +82,23 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
    *   The current route.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request object.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The configuration factory.
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $serviceContainer
+   *   Service Container.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ResettableStackedRouteMatchInterface $current_route, RequestStack $request_stack) {
+  public function __construct(
+      EntityTypeManagerInterface $entity_type_manager,
+      ResettableStackedRouteMatchInterface $current_route,
+      RequestStack $request_stack,
+      ConfigFactoryInterface $configFactory,
+      ContainerInterface $serviceContainer
+  ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->currentRoute = $current_route;
     $this->requestStack = $request_stack;
+    $this->configFactory = $configFactory;
+    $this->serviceContainer = $serviceContainer;
   }
 
   /**
@@ -137,12 +170,124 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
     $response = new BinaryFileResponse($uri);
 
+    // Add response header so we can indicate to any upstream CDN that
+    // this file can change its contents at any point. i.e. don't let
+    // end users cache it.
+    $response->headers->set('X-CGDP-Managed-File', 'true');
+
+    // Add cache tags because a BinaryFileResponse does not implement
+    // CacheableResponseInterface, and therefore it is our duty to
+    // manage anything cache related -- Drupal and Purge will not.
+    // Code below lifted from Purge's CacheableResponseSubscriber.
+    $tags = $entity->getCacheTags();
+    $this->addCacheTags($response, $tags);
+
+    // Set the max age for our CDN friends. I mean, if we have a cache
+    // tag then we can clear it, right?
+    $perfConfig = $this->configFactory->get('system.performance');
+    $maxAge = $perfConfig->get('cache.page.max_age');
+    $response->setMaxAge($maxAge);
+
     if ($this->doNotIndex($entity)) {
       $response->headers->set('X-Robots-Tag', 'noindex');
     }
 
     $event->setResponse($response);
 
+  }
+
+  /**
+   * Add optional cache tag headers.
+   *
+   * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
+   *   The response object to add the headers to.
+   * @param array $tags
+   *   The tags to add.
+   */
+  private function addCacheTags(BinaryFileResponse $response, array $tags) {
+    $this->addPurgeCacheTags($response, $tags);
+    $this->addAkamaiCacheTags($response, $tags);
+  }
+
+  /**
+   * Add optional cache tag headers if purge is enabled.
+   *
+   * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
+   *   The response object to add the headers to.
+   * @param array $tags
+   *   The tags to add.
+   */
+  private function addPurgeCacheTags(BinaryFileResponse $response, array $tags) {
+    if ($this->serviceContainer->has('purge.tagsheaders')) {
+      // @var Drupal\purge\Plugin\Purge\TagsHeader\TagsHeadersServiceInterface;
+      $purgeTagsHeaders = $this->serviceContainer->get('purge.tagsheaders');
+
+      foreach ($purgeTagsHeaders as $header) {
+
+        // Retrieve the header name perform a few simple sanity checks.
+        $name = $header->getHeaderName();
+        if ((!is_string($name)) || empty(trim($name))) {
+          $plugin_id = $header->getPluginId();
+          throw new \LogicException("Header plugin '$plugin_id' should return a non-empty string on ::getHeaderName()!");
+        }
+
+        $response->headers->set($name, $header->getValue($tags));
+      }
+    }
+  }
+
+  /**
+   * Adds the Akamai cache tags if Akamai is enabled.
+   *
+   * Akamai has purge integrations, but does not use purge to add in
+   * the cache tags header. Therefore we need to copy even MORE logic
+   * than just purge. Oh and see if Akamai is installed. Boo! Bad
+   * Akamai module!
+   *
+   * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
+   *   The response object to add the headers to.
+   * @param array $tags
+   *   The tags to add.
+   */
+  private function addAkamaiCacheTags(BinaryFileResponse $response, array $tags) {
+
+    // Check if Akamai is enabled.
+    if ($this->serviceContainer->has('akamai.client.manager')) {
+
+      // Get Akamai Required Services.
+      // @var \Drupal\akamai\Helper\CacheTagFormatter
+      $tagFormatter = $this->serviceContainer->get('akamai.helper.cachetagformatter');
+      // @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+      $eventDispatcher = $this->serviceContainer->get('event_dispatcher');
+
+      $config = $this->configFactory->get('akamai.settings');
+      $header = $config->get('edge_cache_tag_header');
+      if ($header) {
+        $blacklist = $config->get('edge_cache_tag_header_blacklist');
+        $blacklist = is_array($blacklist) ? $blacklist : [];
+
+        $filtered_tags = array_filter($tags, function ($tag) use ($blacklist) {
+          foreach ($blacklist as $prefix) {
+            if (strpos($tag, $prefix) !== FALSE) {
+              return FALSE;
+            }
+          }
+          return TRUE;
+        });
+
+        // Instantiate our event to allow tag modification.
+        $event = new AkamaiHeaderEvents($filtered_tags);
+        $eventDispatcher->dispatch(AkamaiHeaderEvents::HEADER_CREATION, $event);
+
+        // Format the modified tags and add them as a header.
+        $modified_tags = $event->data;
+        foreach ($modified_tags as &$tag) {
+          $tag = $tagFormatter->format($tag);
+        }
+        $response->headers->set('Edge-Cache-Tag', implode(',', $modified_tags));
+
+      }
+    }
   }
 
   /**
