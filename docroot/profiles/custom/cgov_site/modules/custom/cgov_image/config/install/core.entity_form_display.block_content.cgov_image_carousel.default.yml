@@ -7,6 +7,7 @@ dependencies:
     - field.field.block_content.cgov_image_carousel.field_carousel_image_title
     - field.field.block_content.cgov_image_carousel.field_carousel_images
   module:
+    - content_moderation
     - entity_browser
 id: block_content.cgov_image_carousel.default
 targetEntityType: block_content
@@ -50,6 +51,12 @@ content:
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
     third_party_settings: {  }
   translation:
     weight: 4
