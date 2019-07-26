@@ -103,6 +103,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
     'content_previewer' => [
       'view all media revisions',
       'view all revisions',
+      'view latest version',
       'view any unpublished content',
     ],
     'site_admin' => [
@@ -203,6 +204,24 @@ function cgov_core_update_8001() {
     'content_author' => [
       'view all media revisions',
       'view all revisions',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Update for Hotfix 1.1.2.
+ *
+ * Adds view latest version to content previewer role.
+ */
+function cgov_core_update_8002() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'content_previewer' => [
+      'view latest version',
     ],
   ];
 
