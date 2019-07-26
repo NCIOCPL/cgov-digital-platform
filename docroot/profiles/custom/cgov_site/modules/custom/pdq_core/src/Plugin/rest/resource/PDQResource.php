@@ -58,7 +58,7 @@ class PDQResource extends ResourceBase {
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Used (indirectly) to create entity queries.
+   *   Used to find and load node revisions.
    */
   public function __construct(
     array $configuration,
@@ -108,6 +108,8 @@ class PDQResource extends ResourceBase {
    *   Thrown when the summary node was not found.
    * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
    *   Thrown when no ID was provided.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function get($id) {
 
@@ -118,11 +120,11 @@ class PDQResource extends ResourceBase {
 
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException(t('No ID was provided'));
+      throw new BadRequestHttpException($this->t('No ID was provided'));
     }
     $matches = $this->lookupCdrId($id);
     if (count($matches) === 0) {
-      $msg = t('CDR ID @id not found', ['@id' => $id]);
+      $msg = $this->t('CDR ID @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
     $response = new ResourceResponse($matches);
@@ -148,33 +150,40 @@ class PDQResource extends ResourceBase {
    * @return \Drupal\rest\ModifiedResourceResponse
    *   Possibly empty sequence of node ID/language/error arrays
    *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   *   Throws exception expected.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function post(array $summaries) {
 
     $errors = [];
-    $storage = \Drupal::entityManager()->getStorage('node');
+    $success_count = 0;
+    /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
+    $storage = $this->entityTypeManager->getStorage('node');
     foreach ($summaries as $summary) {
       try {
-        list($nid, $language) = $summary;
-        $revisions = $storage->getQuery()
-          ->latestRevision()
-          ->condition('nid', $nid, '=', $language)
-          ->execute();
-        foreach (array_keys($revisions) as $vid) {
+        list($nid, $lang) = $summary;
+        $vid = $storage->getLatestRevisionId($nid);
+        if (empty($vid)) {
+          $errors[] = [$nid, $lang, 'not found'];
+        }
+        else {
           $revision = $storage->loadRevision($vid);
-          $translation = $revision->getTranslation($language);
+          $translation = $revision->getTranslation($lang);
           $translation->moderation_state->value = 'published';
+          $translation->setRevisionTranslationAffected(TRUE);
           $translation->save();
+          $success_count++;
+          $args = ['%vid' => $vid, '%nid' => $nid, '%lang' => $lang];
+          $msg = 'marked %lang revision %vid of node %nid published';
+          $this->logger->debug($msg, $args);
         }
       }
       catch (Exception $e) {
         $message = $e->getMessage() ?? 'unexpected failure';
-        $errors[] = [$nid, $language, $message];
+        $errors[] = [$nid, $lang, $message];
       }
     }
-    $args = ['%count' => count($summaries)];
+    $args = ['%count' => $success_count];
     $this->logger->notice('%count PDQ summaries set to published', $args);
     return new ModifiedResourceResponse(['errors' => $errors], 200);
   }
@@ -189,15 +198,19 @@ class PDQResource extends ResourceBase {
    * @return \Drupal\rest\ModifiedResourceResponse
    *   The HTTP response object.
    *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
    *   Throws exception expected.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function delete($id) {
 
     // @todo: avoid deleting target of links from other content.
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException(t('No ID was provided'));
+      throw new BadRequestHttpException($this->t('No ID was provided'));
     }
 
     // Make sure the CDR ID matches exactly one entity.
@@ -210,7 +223,7 @@ class PDQResource extends ResourceBase {
       return new ModifiedResourceResponse(NULL, 204);
     }
     if (count($matches) > 1) {
-      $msg = t('Ambiguous CDR ID @id', ['@id' => $id]);
+      $msg = $this->t('Ambiguous CDR ID @id', ['@id' => $id]);
       throw new BadRequestHttpException($msg);
     }
     list($nid, $langcode) = $matches[0];
@@ -226,7 +239,7 @@ class PDQResource extends ResourceBase {
     }
     else {
       if ($node->hasTranslation('es') && $id > 0) {
-        throw new BadRequestHttpException(t('Spanish translation exists'));
+        throw new BadRequestHttpException($this->t('Spanish translation exists'));
       }
       $node->delete();
       $args = ['%cdrid' => $id, '%nid' => $node->id()];
@@ -245,6 +258,9 @@ class PDQResource extends ResourceBase {
    * @return array
    *   Sequence of value pairs, each of which has a node ID and a
    *   language code.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function lookupCdrId($id) {
     if (substr($id, 0, 3) === 'CDR') {
@@ -268,10 +284,10 @@ class PDQResource extends ResourceBase {
   /**
    * Return a catalog of the PDQ content in the Drupal CMS.
    *
-   * @return array
+   * @return \Drupal\Rest\ResourceResponse
    *   Sequence of key-indexed arrays, each of which contains
    *   values for `cdr_id`, `nid`, `vid`, `created`, `updated`,
-   *   `langcode`, and `type`.
+   *   `langcode`, and `type`, wrapped in a ResourceResponse.
    */
   private function catalog() {
     $join = 'd.nid = c.entity_id AND d.langcode = c.langcode';
