@@ -31,30 +31,43 @@
  */
 #}
 {% if items %}
-  <div>
-      {# Print previous item if we are not on the first page. #}
-      {% if items.previous %}
-        <a href="{{ items.previous.href }}" rel="prev"{{ items.previous.attributes|without('href', 'title', 'rel') }}>&lt;&nbsp;{{- 'Previous'|t -}}</a>
-        &nbsp;
-      {% endif %}
+    <nav aria-labelledby="pagination-heading" class="pager" role="navigation">
+        <h4 class="visually-hidden" id="pagination-heading">Pagination</h4>
+        <ul
+            class="pager__items">
+            {# Print previous item if we are not on the first page. #}
+            {% if items.previous %}
+                <li class=" pager__item pager__item--previous">
+                    <a href="{{ items.previous.href }}" rel="prev" {{ items.previous.attributes|without('href', 'title', 'rel') }} title="Go to previous page">
+                        <span class="visually-hidden">Previous page</span>
+                        <span aria-hidden="true">&lt;&nbsp;{{- 'Previous'|t -}}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {# Now generate the actual pager piece. #}
+            {% for key, item in items.pages %}
+                {% set itemClass = (current == key)? 'pager__item is-active' : 'pager__item' %}
+                <li class="{{- itemClass -}}">
+                    {% if current == key %}
+                      <span class="visually-hidden">Current Page</span>
+                    {% else %}
+                      <span class="visually-hidden">Page</span>
+                    {% endif %}
+                    <a href="{{ item.href }}" {{ item.attributes|without('href', 'title') }}>
+                      {{- key -}}
+                    </a>
+                </li>
+            {% endfor %}
 
-      {# Now generate the actual pager piece. #}
-      {% for key, item in items.pages %}
-
-        {% if current == key %}
-          <span class="pager-SelectedPage">{{- key -}}</span>
-        {% else %}
-          <a class="pager-SelectedPage" href="{{ item.href }}" {{ item.attributes|without('href', 'title') }}>
-            {{- key -}}
-          </a>
-        {% endif %}
-
-      {% endfor %}
-
-      {# Print next item if we are not on the last page. #}
-      {% if items.next %}
-        &nbsp;
-        <a href="{{ items.next.href }}" rel="next"{{ items.next.attributes|without('href', 'title', 'rel') }}>{{- 'Next'|t -}}&nbsp;&gt;</a>
-      {% endif %}
-  </div>
+            {# Print next item if we are not on the last page. #}
+            {% if items.next %}
+                <li class="pager__item  pager__item--next">
+                    <a href="{{ items.next.href }}" rel="next" {{ items.next.attributes|without('href', 'title', 'rel') }} title="Go to next page">
+                        <span class="visually-hidden">Next page</span>
+                        <span aria-hidden="true">{{- 'Next'|t -}}&nbsp;&gt;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endif %}
