@@ -551,6 +551,19 @@ display:
           expose:
             label: ''
           granularity: second
+        field_event_start_date_value:
+          id: field_event_start_date_value
+          table: node__field_event_start_date
+          field: field_event_start_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: datetime
       title: Events
       header: {  }
       footer: {  }
@@ -698,11 +711,26 @@ display:
         filters: false
         filter_groups: false
         title: false
+        sorts: false
       filter_groups:
         operator: AND
         groups:
           1: AND
       title: 'Upcoming Events'
+      sorts:
+        field_event_start_date_value:
+          id: field_event_start_date_value
+          table: node__field_event_start_date
+          field: field_event_start_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: datetime
     cache_metadata:
       max-age: -1
       contexts:
@@ -727,6 +755,21 @@ display:
       title: 'Previous Events'
       defaults:
         title: false
+        sorts: false
+      sorts:
+        field_event_start_date_value:
+          id: field_event_start_date_value
+          table: node__field_event_start_date
+          field: field_event_start_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: datetime
     cache_metadata:
       max-age: -1
       contexts:
