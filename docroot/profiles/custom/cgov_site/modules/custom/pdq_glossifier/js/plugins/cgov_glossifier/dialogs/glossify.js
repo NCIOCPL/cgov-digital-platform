@@ -91,7 +91,7 @@ function requestGlossification(dialog) {
       const csrfToken = data;
       jQuery.ajax({
         context: dialog,
-        url: '/pdq/api/glossifier',
+        url: Drupal.url('pdq/api/glossifier'),
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
