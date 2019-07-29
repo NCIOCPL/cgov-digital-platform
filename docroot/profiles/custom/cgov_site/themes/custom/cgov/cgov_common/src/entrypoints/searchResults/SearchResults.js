@@ -1,5 +1,8 @@
+import initializeSitewideSearchResults from 'Libraries/sitewideSearchResults/sitewideSearchResults';
+import 'nci-search-results-app/build/static/css/main.css';
+
 const onDomContentLoaded = () => {
-  console.log('Hello');
+  initializeSitewideSearchResults();
 }
 
 window.addEventListener('DOMContentLoaded', onDomContentLoaded);
