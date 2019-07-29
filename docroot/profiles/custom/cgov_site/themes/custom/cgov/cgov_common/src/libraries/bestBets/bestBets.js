@@ -2,7 +2,7 @@
 import $ from 'jquery';
 import DictionaryService from 'Core/libraries/dictionaryService';
 import * as config from 'Core/libraries/nciConfig/NCI.config';
-import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
+import linkAudioPlayer from 'Core/libraries/linkAudioPlayer';
 
 var lang = $('html').attr('lang') || 'en';
 // Set the language for finding the dictionary term/definition

@@ -2,7 +2,7 @@ import $ from 'jquery';
 import dictionary from 'Core/libraries/dictionaryService';
 import queryString from 'query-string';
 import * as config from 'Core/libraries/nciConfig/NCI.config';
-import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
+import linkAudioPlayer from 'Core/libraries/linkAudioPlayer';
 import NCIModal from 'Core/libraries/modal';
 
 

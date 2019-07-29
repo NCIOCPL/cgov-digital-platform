@@ -45,7 +45,7 @@ import SiteWideSearch from 'Libraries/sitewideSearch/sitewideSearch';
 import megaMenuModule from 'Libraries/megamenu/megamenu';
 import headroomPlugin from 'Core/libraries/headroom/headroom';
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
-import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
+import linkAudioPlayer from 'Core/libraries/linkAudioPlayer';
 import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
 import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
 import glossaryPopups from 'Libraries/popups/glossaryPopups';

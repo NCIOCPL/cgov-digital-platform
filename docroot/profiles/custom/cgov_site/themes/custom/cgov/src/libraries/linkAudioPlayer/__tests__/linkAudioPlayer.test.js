@@ -1,9 +1,9 @@
-import { 
+import {
     attachHandlers,
     DEFAULT_AUDIO_FILE_TARGET_SELECTOR,
     AUDIO_FILE_DATA_ATTRIBUTE,
     initialize,
-} from '../linkAudioPlayer';
+} from '../index';
 import AudioPlayer from '../AudioPlayer'
 jest.mock('../AudioPlayer');
 
@@ -30,13 +30,13 @@ describe('linkAudioPlayer', () => {
     it('should initialize an audio player once when one audiofile element is present', () => {
         document.documentElement.innerHTML = '<a href="/test" class="CDR_audiofile"/>';
         initialize(DEFAULT_AUDIO_FILE_TARGET_SELECTOR);
-        expect(AudioPlayer).toBeCalled(); 
+        expect(AudioPlayer).toBeCalled();
     })
 
     it('should initialize an audio player only once when multiple audiofile elements are present', () => {
         document.documentElement.innerHTML = '<a href="/test" class="CDR_audiofile"/><a href="/test" class="CDR_audiofile"/><a href="/test" class="CDR_audiofile"/>';
         initialize(DEFAULT_AUDIO_FILE_TARGET_SELECTOR);
-        expect(AudioPlayer).toBeCalled(); 
+        expect(AudioPlayer).toBeCalled();
     })
 
     it('should attach a handler to any element with a given selector', () => {
