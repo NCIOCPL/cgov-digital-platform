@@ -1,6 +1,6 @@
 services:
   cgov_file.direct_file_download:
     class: Drupal\cgov_file\EventSubscriber\DirectFileDownloadSubscriber
-    arguments: ['@entity_type.manager', '@current_route_match', '@request_stack']
+    arguments: ['@entity_type.manager', '@current_route_match', '@request_stack', '@config.factory', '@service_container']
     tags:
       - { name: event_subscriber }

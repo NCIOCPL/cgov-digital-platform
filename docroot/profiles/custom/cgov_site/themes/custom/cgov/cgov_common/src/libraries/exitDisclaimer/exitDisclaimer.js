@@ -25,7 +25,7 @@ function _initialize() {
       && !$(this).hasClass('no-exit-notification');
 	}).after($(
 		'<a class="icon-exit-notification" title="' + altText + '" href="' + path + '">' +
-		'<span class="hidden">' + altText + '</span>' +
+		'<span class="show-for-sr">' + altText + '</span>' +
 		'</a>'
 	));
 

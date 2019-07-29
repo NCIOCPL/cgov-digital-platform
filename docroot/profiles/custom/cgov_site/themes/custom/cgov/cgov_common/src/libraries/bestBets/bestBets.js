@@ -42,7 +42,7 @@ var _render = function (obj) {
 
 	// check if pronunciation exists before building the audio and pronunciation of the definition
 	if (obj.pronunciation) {
-		audio = '<a href="' + obj.pronunciation.audio + '" class="CDR_audiofile"><span class="hidden">listen</span></a> ';
+		audio = '<a href="' + obj.pronunciation.audio + '" class="CDR_audiofile"><span class="show-for-sr">listen</span></a> ';
 		pronunciation = obj.pronunciation.key;
 	}
 	// toggle controls whether to show first sentence or full definition in mobile

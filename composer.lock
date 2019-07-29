@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3063fbd173d93d5ed22d1f194de6fbe2",
+    "content-hash": "146d9fca583127276405e4e454bbb372",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -7125,6 +7125,9 @@
                 },
                 "branch-alias": {
                     "dev-master": "9.x-dev"
+                },
+                "patches_applied": {
+                    "drush-ops/drush#3145: Request URI is incorrect with subdirectories": "patches/drush/4136-request-uri-fix.patch"
                 }
             },
             "autoload": {
@@ -13273,11 +13276,6 @@
         {
             "name": "webflo/drupal-core-require-dev",
             "version": "8.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webflo/drupal-core-require-dev.git",
-                "reference": "0f1f36e71d63e05f1bb599e0bfd20f7722b700a2"
-            },
             "require": {
                 "behat/mink": "1.7.x-dev",
                 "behat/mink-goutte-driver": "^1.2",
