@@ -1,0 +1,22 @@
+/*
+  This file should contain unique selectors that can be used by external and integration scripts to
+  add in cgov sprites without needing to build their own spritesheets. For example, nci-search-results-app
+  uses this in the dictionary widget.
+*/
+
+.sprite-hook__chevron-black {
+  &:before {
+    content:"";
+    display: inline-block;
+    font-size: .6em;
+    margin: 0 8px 1px 0;
+    @include svg-sprite(chevron-black,$rotate:flip);
+  }
+
+  &.sprite-hook__chevron-black--up {
+    &:before {
+      transform: rotate(0);
+      margin-bottom: 3px;
+    }
+  }
+}
