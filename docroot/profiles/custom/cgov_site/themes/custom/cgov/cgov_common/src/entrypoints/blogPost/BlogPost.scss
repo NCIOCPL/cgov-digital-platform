@@ -57,14 +57,33 @@
   margin-top: 3em;
 }
 
-.embedded-entity[data-entity-embed-display*="_medium"]{
-  margin: 0;
-  figure.image-medium {
-    margin-left: 1em;
-    padding-left: 2.5em;
-    background-color: transparent;
-  }
-} 
+// #2179: there were some styles scoped specifically to embedded images.  Fixed so that styles are properly applied for all the embeddeds
+.cgvblogpost {
+  // wrapped specifically to this content type so that it doesn't cause side effects elsewhere on the site
+  .embedded-entity{
+    &.align-center,
+      &.align-left,
+      &.align-right {
+        margin: 0 0 2.5em 0;
+      }
+  
+    &.align-left {
+      margin-right: 2.5em;
+    }
+  
+    &.align-right {
+      margin-left: 2.5em;
+    }
+  
+    &.align-center {
+      margin: 2.5em auto;
+    }
+  
+    figure.image-medium {
+      background-color: transparent;
+    }
+  } 
+}
 
 @include bp(medium-up) {
 	// set width of blog intro text for tablet and desktop, depending on size of image
@@ -100,13 +119,11 @@
 }
 
 @include bp(small) {
-	// remove extra padding (used for intro text on desktop/tablet only)
-	.embedded-entity[data-entity-embed-display*="_medium"] {
-    float: none;
-    margin: 0;
-		figure.image-medium {
-			padding-left: 0;
-			margin-left: 0;
-		}
-	}
+  // remove extra padding (used for intro text on desktop/tablet only)
+  .cgvblogpost{
+    .embedded-entity {
+      float: none;
+      margin: 0;
+    }
+  }
 }
