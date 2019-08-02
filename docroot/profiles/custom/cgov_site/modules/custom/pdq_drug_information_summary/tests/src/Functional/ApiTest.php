@@ -151,6 +151,14 @@ class ApiTest extends BrowserTestBase {
     // Make sure the pathauto mechanism is behaving correctly.
     $this->checkPathauto($this->drug);
 
+    // Make sure changes are published correctly. Fails without patch for #2249.
+    $this->drug['title'] = 'Jewel Weed';
+    $this->store($this->drug, 200);
+    $this->publish();
+    $h1 = "<h1>{$this->drug['title']}</h1>";
+    $page = $this->drupalGet("node/$nid");
+    $this->assertTrue(strpos($page, $h1) !== FALSE, 'Published changes OK');
+
     // Delete the drug summary.
     $this->delete($this->drug);
   }
@@ -168,6 +176,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return \Psr\Http\Message\ResponseInterface
    *   Object representing response from server.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function request(string $method, string $url, array $options = []) {
     $options['auth'] = $this->auth;
@@ -189,6 +199,8 @@ class ApiTest extends BrowserTestBase {
    * @return array
    *   Array with node ID (indexed by 'nid') if successful; error message
    *   (indexed by 'message') otherwise.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function store(array $values, $expected) {
     $response = $this->request('POST', $this->disUrl, ['json' => $values]);
@@ -204,6 +216,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return array
    *   Pairs of node ID and language code (must be only one pair).
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function findNodes($cdr_id) {
     $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
@@ -226,6 +240,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return array
    *   Values for the requested node (all languages).
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function fetchNode($nid) {
     $response = $this->request('GET', "$this->disUrl/$nid");

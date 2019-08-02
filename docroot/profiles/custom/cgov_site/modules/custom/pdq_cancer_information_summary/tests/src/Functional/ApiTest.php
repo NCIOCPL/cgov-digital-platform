@@ -192,11 +192,18 @@ class ApiTest extends BrowserTestBase {
     $this->assertEmpty($tids, 'Creation of site sections deferred');
 
     // Publish the summaries and make sure they're still intact.
+    // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2249.
     $this->publish();
     $values = $this->fetchNode($nid);
     $this->assertTrue($values['en']['published'], 'Published');
     $this->assertTrue($values['es']['published'], 'Published');
     $this->checkValues($values, ['en', 'es']);
+    $h1 = "<h1>{$this->english['title']}</h1>";
+    $page = $this->drupalGet("node/$nid");
+    $this->assertTrue(strpos($page, $h1) !== FALSE, 'English visible');
+    $h1 = "<h1>{$this->spanish['title']}</h1>";
+    $page = $this->drupalGet("espanol/node/$nid");
+    $this->assertTrue(strpos($page, $h1) !== FALSE, 'Spanish visible');
 
     // Confirm the existence of the site sections.
     $this->checkSiteSections($this->english);
@@ -252,6 +259,19 @@ class ApiTest extends BrowserTestBase {
     $this->assertEqual(preg_match($pattern, $entry['changed']), 1,
       'Changed is datetime');
 
+    // Make sure changes are published correctly. Fails without patch for #2249.
+    $this->english['title'] = 'Three blind mice';
+    $this->spanish['title'] = 'Tres ratones ciegos';
+    $this->store($this->english, 200);
+    $this->store($this->spanish, 200);
+    $this->publish();
+    $h1 = "<h1>{$this->english['title']}</h1>";
+    $page = $this->drupalGet("node/$nid");
+    $this->assertTrue(strpos($page, $h1) !== FALSE, 'English changes OK');
+    $h1 = "<h1>{$this->spanish['title']}</h1>";
+    $page = $this->drupalGet("espanol/node/$nid");
+    $this->assertTrue(strpos($page, $h1) !== FALSE, 'Spanish changed OK');
+
     // Try to delete the English summary (should fail).
     $this->delete($this->english, FALSE);
 
@@ -275,6 +295,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return \Psr\Http\Message\ResponseInterface
    *   Object representing response from server.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function request(string $method, string $url, array $options = []) {
     $options['auth'] = $this->auth;
@@ -296,6 +318,8 @@ class ApiTest extends BrowserTestBase {
    * @return array
    *   Array with node ID (indexed by 'nid') if successful; error message
    *   (indexed by 'message') otherwise.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function store(array $values, $expected) {
     $response = $this->request('POST', $this->cisUrl, ['json' => $values]);
@@ -311,6 +335,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return array
    *   Pairs of node ID and language code (must be only one pair).
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function findNodes($cdr_id) {
     $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
@@ -333,6 +359,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @return array
    *   Values for the requested node (all languages).
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function fetchNode($nid) {
     $response = $this->request('GET', "$this->cisUrl/$nid");
@@ -373,6 +401,8 @@ class ApiTest extends BrowserTestBase {
    *
    * @param array $summaries
    *   Override which summaries to publish.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function publish(array $summaries = NULL) {
     if (empty($summaries)) {
@@ -394,6 +424,8 @@ class ApiTest extends BrowserTestBase {
    *   Values for the summary to be deleted.
    * @param bool $success_expected
    *   TRUE if the deletion should succeed.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   private function delete(array $summary, $success_expected) {
     $cdr_id = $summary['cdr_id'];
@@ -448,6 +480,9 @@ class ApiTest extends BrowserTestBase {
    * @param string $nav_label
    *   Optional value for earlier label which should still be visible,
    *   while a change to the label is waiting to be published.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function checkSiteSections(array $summary, $nav_label = NULL) {
 
