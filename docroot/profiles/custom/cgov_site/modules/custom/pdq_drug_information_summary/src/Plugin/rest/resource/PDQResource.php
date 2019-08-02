@@ -2,6 +2,7 @@
 
 namespace Drupal\pdq_drug_information_summary\Plugin\rest\resource;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -35,6 +36,13 @@ class PDQResource extends ResourceBase {
   protected $currentUser;
 
   /**
+   * Access to entity storage.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a new PdqResource object.
    *
    * @param array $configuration
@@ -49,6 +57,8 @@ class PDQResource extends ResourceBase {
    *   A logger instance.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Used to find and load node revisions.
    */
   public function __construct(
     array $configuration,
@@ -56,10 +66,12 @@ class PDQResource extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    AccountProxyInterface $current_user) {
+    AccountProxyInterface $current_user,
+    EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -72,7 +84,8 @@ class PDQResource extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -97,13 +110,13 @@ class PDQResource extends ResourceBase {
 
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException(t('No ID was provided'));
+      throw new BadRequestHttpException($this->t('No ID was provided'));
     }
 
     // We got a node ID, so return the corresponding node's values.
     $node = Node::load($id);
     if (empty($node)) {
-      $msg = t('Node @id not found', ['@id' => $id]);
+      $msg = $this->t('Node @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
     $fields = [
@@ -150,7 +163,9 @@ class PDQResource extends ResourceBase {
    *   The response containing the node ID for the PDQ Drug Summary.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   *   Throws exception expected.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function post(array $drug) {
 
@@ -167,7 +182,10 @@ class PDQResource extends ResourceBase {
 
     // The node already exists: fetch it.
     else {
-      $node = Node::load($nid);
+      /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
+      $storage = $this->entityTypeManager->getStorage('node');
+      $vid = $storage->getLatestRevisionId($nid);
+      $node = $storage->loadRevision($vid);
     }
 
     // Fill in the values for the drug summary.
