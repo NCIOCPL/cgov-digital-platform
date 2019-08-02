@@ -10,10 +10,11 @@ switch ( $_ENV['AH_SITE_ENVIRONMENT'] ) {
 
   case '01test':
   case '01testup':
-    // This may not be correct.
-    $idp = 'https://authtest.nih.gov/SAML2/IDP';
+    $idp = 'https://authtest.nih.gov/IDP';
     break;
 
+  case '01dev':
+  case '01dev':
   default:
     $idp = 'https://authdev.nih.gov/SAML2/IDP';
 }
