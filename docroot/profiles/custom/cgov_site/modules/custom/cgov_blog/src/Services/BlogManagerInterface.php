@@ -23,4 +23,12 @@ interface BlogManagerInterface {
    */
   public function getSeriesEntity();
 
+  /**
+   * Get the in-usage blog categories.
+   *
+   * @return array
+   *   The active topics, or an empty array if none found.
+   */
+  public function getActiveSeriesTopics();
+
 }

@@ -105,7 +105,7 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   private function drawBlogCategories() {
     $category_links = [];
     // Get all associated categories and build URL paths for this series.
-    $categories = $this->blogManager->getSeriesTopics();
+    $categories = $this->blogManager->getActiveSeriesTopics();
     foreach ($categories as $cat) {
       $link = $this->getCategoryLink($cat->tid);
       $category_links[$link['link_name']] = $link['link_path'];
