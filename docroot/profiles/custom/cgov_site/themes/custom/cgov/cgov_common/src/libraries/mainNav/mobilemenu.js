@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import 'jquery-touchswipe';
 import {
-  lang as text
+  lang as textTrans
 } from 'Core/libraries/nciConfig/NCI.config';
 
 const lang = $('html').attr('lang') || 'en'; // set the language
@@ -41,7 +41,7 @@ const initialize = () => {
     .find(" > div > .toggle")
     .attr("aria-expanded", "true")
     .children('span')
-    .text(text.Collapse[lang])
+    .text(textTrans.Collapse[lang])
     .end()
     .end()
     .find(" > .mobile-item").show();
@@ -70,44 +70,35 @@ const createSectionToggleButton = () => {
       'type': 'button'
     }).click(toggleSection)
     .append(
-      $('<span>').addClass('hidden')
-      .text(text.Expand[lang])
+      $('<span>').addClass('show-for-sr')
+      .text(textTrans.Expand[lang])
     );
 };
 
 const toggleSection = (e) => {
-
-  var $this = $(e.target),
-    li = $this.closest(".has-children"), // parent LI of the clicked button
-    ul = li.children("ul"), // UL menu item we are hiding / showing
-    lvl = 0;
-
-  if (li.hasClass("lvl-1") || li.hasClass("level-1")) {
-    lvl = 2;
-  }
-  if (li.hasClass("lvl-2") || li.hasClass("level-2")) {
-    lvl = 3;
-  }
+  var $this = $(e.target);
+  var li = $this.closest(".has-children"); // parent LI of the clicked button
+  var ul = li.children(".mobile-item"); // UL menu item we are hiding / showing
 
 
   if ($this.attr('aria-expanded') == 'true') { // CLOSING
-    $this
-      .attr('aria-expanded', 'false').children('span').text(text.Expand[lang])
-      .parent().find('[aria-expanded=true]')
-      .attr('aria-expanded', 'false').children('span').text(text.Expand[lang]);
+    // swap button 
+    $this.attr('aria-expanded', 'false').children('span').text(textTrans.Expand[lang]);
+
     ul.slideUp("slow");
+    
   } else { // EXPANDING
     // collapse all the expanded siblings
     var siblings = li.siblings(".has-children");
-    var sib_btns = siblings.children("div:first-of-type").find("button[aria-expanded='true']");
-    var sib_uls = siblings.children("ul");
+    var sib_btns = siblings.children(".nav-item-title").children("button");
+    var sib_uls = siblings.children(".mobile-item");
 
     // close any open siblings and their children
-    sib_btns.attr('aria-expanded', 'false').children('span').text(text.Expand[lang]);
+    sib_btns.attr('aria-expanded', 'false').children('span').text(textTrans.Expand[lang]);
     sib_uls.slideUp("slow");
 
     // expand the one we clicked
-    $this.attr('aria-expanded', 'true').children('span').text(text.Collapse[lang]);
+    $this.attr('aria-expanded', 'true').children('span').text(textTrans.Collapse[lang]);
 
     ul.slideDown("slow");
   }
