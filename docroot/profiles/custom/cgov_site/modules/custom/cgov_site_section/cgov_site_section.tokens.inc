@@ -160,6 +160,11 @@ function _get_valid_parent($alias) {
   // Return node if matches, otherwise run through this method again.
   if (preg_match('/node\/(\d+)/', $parentPath, $matches)) {
     $node = Node::load($matches[1]);
+    // Get the correct node translation.
+    $langid = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    if ($node && $node->hasTranslation($langid)) {
+      $node = $node->getTranslation($langid);
+    }
     return $node;
   }
   else {
