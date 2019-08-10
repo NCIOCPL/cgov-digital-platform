@@ -148,6 +148,8 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
       'user.login',
       'user.login.http',
       'simplesamlphp_auth.saml_login',
+      'system.403',
+      'system.401',
     ];
     return in_array($route_name, $login_routes);
   }
