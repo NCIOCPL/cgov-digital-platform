@@ -195,7 +195,7 @@ class PDQResource extends ResourceBase {
   public function post(array $summary) {
 
     // Extract the bits we'll use frequently.
-    $nid = $summary['nid'];
+    $nid = $summary['nid'] ?? '';
     $language = $summary['language'];
     $cdr_id = $summary['cdr_id'];
 
