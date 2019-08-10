@@ -214,6 +214,7 @@ class PDQResource extends ResourceBase {
     }
 
     // Make sure the CDR ID matches exactly one entity.
+    // 2019-08-10 (#2318) remove that restriction for publish preview.
     // 2019-05-03: Treat request to remove a PDQ item which is not present
     // as a success, to avoid publishing job failures caused by shifting
     // contents of rebuilt Drupal servers on the lower tiers (#1610).
@@ -222,28 +223,30 @@ class PDQResource extends ResourceBase {
       $this->logger->notice('DELETE: CDR ID @id not found', ['@id' => $id]);
       return new ModifiedResourceResponse(NULL, 204);
     }
-    if (count($matches) > 1) {
+    if ($id > 0 && count($matches) > 1) {
       $msg = $this->t('Ambiguous CDR ID @id', ['@id' => $id]);
       throw new BadRequestHttpException($msg);
     }
-    list($nid, $langcode) = $matches[0];
-    $node = Node::load($nid);
+    foreach ($matches as $match) {
+      list($nid, $langcode) = $match;
+      $node = Node::load($nid);
 
-    // Apply deletion logic based on language.
-    if ($langcode === 'es' && $id > 0) {
-      $node->removeTranslation('es');
-      $node->save();
-      $args = ['%cdrid' => $id, '%nid' => $node->id()];
-      $msg = 'Spanish translation for node %nid dropped for CDR ID %cdrid';
-      $this->logger->notice($msg, $args);
-    }
-    else {
-      if ($node->hasTranslation('es') && $id > 0) {
-        throw new BadRequestHttpException($this->t('Spanish translation exists'));
+      // Apply deletion logic based on language.
+      if ($langcode === 'es' && $id > 0) {
+        $node->removeTranslation('es');
+        $node->save();
+        $args = ['%cdrid' => $id, '%nid' => $node->id()];
+        $msg = 'Spanish translation for node %nid dropped for CDR ID %cdrid';
+        $this->logger->notice($msg, $args);
       }
-      $node->delete();
-      $args = ['%cdrid' => $id, '%nid' => $node->id()];
-      $this->logger->notice('node %nid removed for CDR ID %cdrid', $args);
+      else {
+        if ($node->hasTranslation('es') && $id > 0) {
+          throw new BadRequestHttpException($this->t('Spanish translation exists'));
+        }
+        $node->delete();
+        $args = ['%cdrid' => $id, '%nid' => $node->id()];
+        $this->logger->notice('node %nid removed for CDR ID %cdrid', $args);
+      }
     }
     return new ModifiedResourceResponse(NULL, 204);
   }
