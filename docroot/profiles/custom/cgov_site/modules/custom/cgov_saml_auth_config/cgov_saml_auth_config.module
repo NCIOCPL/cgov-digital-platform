@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_saml_auth_config.module.
+ */
+
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+/**
+ * Implements hook_simplesamlphp_auth_allow_login().
+ *
+ * This will allow us to force a login failure if a user is not
+ * allowed to login.
+ */
+function cgov_saml_auth_config_simplesamlphp_auth_allow_login(array $attributes) {
+  $external_auth = \Drupal::service('externalauth.externalauth');
+  $simplesaml_man = \Drupal::service('simplesamlphp_auth.manager');
+
+  $authname = $simplesaml_man->getAuthname();
+  $account = $external_auth->load($authname, 'simplesamlphp_auth');
+
+  if (!$account) {
+    \Drupal::logger('cgov_saml_auth_config')->warning('Could not find SSO user: %authname', [
+      '%authname' => $authname,
+    ]);
+    throw new AccessDeniedHttpException();
+  }
+  return TRUE;
+}
