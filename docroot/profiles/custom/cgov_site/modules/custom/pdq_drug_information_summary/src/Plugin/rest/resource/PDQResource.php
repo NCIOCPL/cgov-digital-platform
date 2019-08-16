@@ -170,7 +170,7 @@ class PDQResource extends ResourceBase {
   public function post(array $drug) {
 
     // Extract the bits we'll use more than once.
-    $nid = $drug['nid'];
+    $nid = $drug['nid'] ?? '';
 
     // If the node doesn't already exist, create it.
     if (empty($nid)) {

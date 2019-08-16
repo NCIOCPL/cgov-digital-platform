@@ -50,23 +50,7 @@
         {% endif %}
         <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
           <div class="error-page">
-            <div class="error-content-english">
-              <h1>Page Not Found</h1>
-              <p>We can't find the page you're looking for.</p>
-              <p>Visit the <a href="/">homepage</a>, browse by <a href="/types" title="">cancer type</a>, or use the search below.</p>
-              <p>Have a question? <a href="/contact" title="">Get in touch</a>.</p>
-            </div>
-            <div class="error-searchbar">
-              <!-- Begin Search form -->
-              <div id="error-form">
-                <form action="/search/results" method="get" id="pageNotFoundSearchForm" name="pageNotFoundSearchForm" data-language="en" _lpchecked="1">
-                  <label class="show-for-sr" for="nfKeyword">Search</label>
-                  <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
-                  <button class="searchSubmit" id="nf-search__button" type="submit">Search</button>
-                </form>
-              </div>
-              <!-- End Search form -->
-            </div>
+            {{ page.page_not_found }}
           </div>
         </div>
       </div>

@@ -128,3 +128,14 @@ function cgov_common_preprocess_field(&$variables) {
     $variables['node_id'] = $nid;
   }
 }
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function cgov_common_page_attachments_alter(&$attachments) {
+  foreach ($attachments['#attached']['html_head'] as $key => $item) {
+    if (isset($item[0]["#attributes"]["name"]) && $item[0]["#attributes"]["name"] == 'viewport') {
+      $attachments['#attached']['html_head'][$key][0]["#attributes"]["content"] = "width=device-width, user-scalable=yes, initial-scale=1, minimum-scale=1";
+    }
+  }
+}

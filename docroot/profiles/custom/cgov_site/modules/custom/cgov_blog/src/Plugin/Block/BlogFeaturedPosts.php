@@ -87,8 +87,15 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
     if (!empty($featured_nodes)) {
       $i = 0;
       foreach ($featured_nodes as $node) {
+        if ($node->hasField('field_card_title') && !$node->get('field_card_title')
+          ->isEmpty()) {
+          $title = $node->field_card_title->value;
+        }
+        else {
+          $title = $node->field_browser_title->value;
+        }
         $featured[$i] = [
-          'title' => $node->title->value,
+          'title' => $title,
           'href' => $this->blogManager->getBlogPathFromNid($node->id()),
           'date' => $node->field_date_posted->date->format('F j, Y'),
           'author' => $node->field_author->value,

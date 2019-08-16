@@ -50,23 +50,7 @@
         {% endif %}
         <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
           <div class="error-page">
-            <div class="error-content-spanish">
-              <h1>No se encontró la página</h1>
-              <p><span>No podemos encontrar la página que busca.</span></p>
-              <p><span>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos" title="">tipo de cáncer</a>,&nbsp;o use la casilla de búsqueda en la parte de abajo de esta página.</span></p>
-              <p><span>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</span></p>
-            </div>
-            <div class="error-searchbar">
-              <!-- Begin Search form -->
-              <div id="error-form">
-                <form action="/espanol/buscar/resultados" method="get" id="pageNotFoundSearchForm" name="pageNotFoundSearchForm" data-language="es">
-                  <label class="show-for-sr" for="nfKeyword">Buscar</label>
-                  <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
-                  <button class="searchSubmit" id="nf-search__button" type="submit">Buscar</button>
-                </form>
-              </div>
-              <!-- End Search form -->
-            </div>
+            {{ page.page_not_found }}
           </div>
         </div>
       </div>

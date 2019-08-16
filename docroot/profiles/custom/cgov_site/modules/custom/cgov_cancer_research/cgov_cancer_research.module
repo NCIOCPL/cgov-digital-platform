@@ -24,7 +24,10 @@ function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $ent
 
   $date_to_display = NULL;
 
+  // When grabbing the node we need to get the correct translation.
+  $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $node = $build['field_internal_link']['#items']->entity;
+  $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
 
   if ($node->bundle() === "cgov_blog_post") {
     $date_to_display = $node->field_date_posted->view([
