@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_form_alter().
@@ -217,4 +218,50 @@ function cgov_blog_preprocess_block(&$variables) {
     }
   }
 
+}
+
+/**
+ * Implements hook_taxonomy_term_update().
+ */
+function cgov_blog_taxonomy_term_update($term_entity) {
+  /* When taxonomy term for blog categories is updated invalidate the
+   *  corresponding blog series page.
+   */
+  if ($term_entity->getVocabularyId() === "cgov_blog_topics") {
+    $owner_blog = $term_entity->field_owner_blog;
+    // Invalidate the cache tag for blog series node.
+    if ($owner_blog->target_id > 0) {
+      Cache::invalidateTags(['node:' . $owner_blog->target_id]);
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function cgov_blog_theme($existing, $type, $theme, $path) {
+  return [
+    'cgov_blocks_blog_categories' => [
+      'variables' => [
+        'rows' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function cgov_blog_entity_update($entity) {
+  // Verify that the node type is blog post.
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_blog_post") {
+    // Get the blog series nid and invalidate cache tag.
+    $current_entity_lang = $entity->get('langcode')->value;
+    $translated_entity = $entity->getTranslation($current_entity_lang);
+    $current_state = $translated_entity->get('moderation_state')->value;
+    $blog_series_target_id = $translated_entity->get("field_blog_series")->target_id;
+    if ($current_state === "published" && $blog_series_target_id > 0) {
+      Cache::invalidateTags(['node:' . $blog_series_target_id]);
+    }
+  }
 }
