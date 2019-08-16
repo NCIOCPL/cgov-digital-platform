@@ -4,6 +4,8 @@ namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -72,15 +74,31 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Return blog category elements.
     $blog_categories = $this->drawBlogCategories();
+    // Get series nid for the block.
+    $series_nid = $this->blogManager->getSeriesId();
     $build = [
-      'blog_categories' => $blog_categories,
+      'blog_categories' => [
+        '#theme' => 'cgov_blocks_blog_categories',
+        '#rows' => $blog_categories,
+      ],
       '#cache' => [
         'tags' => [
-          'node_list',
+          'node:' . $series_nid,
         ],
       ],
     ];
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function blockAccess(AccountInterface $account) {
+    $blog_categories = $this->drawBlogCategories();
+    if (count($blog_categories) > 0) {
+      return AccessResult::allowed();
+    }
+    return AccessResult::forbidden();
   }
 
   /**
