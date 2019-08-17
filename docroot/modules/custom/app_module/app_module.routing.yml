@@ -1,0 +1,31 @@
+entity.app_module.collection:
+  path: '/admin/structure/app_module'
+  defaults:
+    _entity_list: 'app_module'
+    _title: 'Application module configuration'
+  requirements:
+    _permission: 'administer app modules'
+
+entity.app_module.add_form:
+  path: '/admin/structure/app_module/add'
+  defaults:
+    _entity_form: 'app_module.add'
+    _title: 'Add application module'
+  requirements:
+    _permission: 'administer app modules'
+
+entity.app_module.edit_form:
+  path: '/admin/structure/app_module/{app_module}'
+  defaults:
+    _entity_form: 'app_module.edit'
+    _title: 'Edit application module'
+  requirements:
+    _permission: 'administer app modules'
+
+entity.app_module.delete_form:
+  path: '/admin/structure/app_module/{app_module}/delete'
+  defaults:
+    _entity_form: 'app_module.delete'
+    _title: 'Delete application module'
+  requirements:
+    _permission: 'administer app modules'
