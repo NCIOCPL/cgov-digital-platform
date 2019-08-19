@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_application_page.body
+    - field.field.node.cgov_application_page.field_application_module
     - field.field.node.cgov_application_page.field_browser_title
     - field.field.node.cgov_application_page.field_card_title
     - field.field.node.cgov_application_page.field_date_display_mode
@@ -21,6 +22,7 @@ dependencies:
     - field.field.node.cgov_application_page.field_site_section
     - node.type.cgov_application_page
   module:
+    - app_module
     - cgov_core
     - options
     - text
@@ -42,6 +44,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_application_module:
+    type: app_module_reference_formatter
+    weight: 8
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
   field_browser_title:
     weight: 2
     label: hidden
@@ -59,33 +68,13 @@ content:
     type: string
     region: content
   field_date_display_mode:
-    weight: 11
+    weight: 12
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_date_posted:
-    weight: 8
-    label: hidden
-    settings:
-      timezone_override: ''
-      format_type: cgov_display_date
-      display_strategy: latest
-    third_party_settings: {  }
-    type: cgov_date_formatter
-    region: content
-  field_date_reviewed:
-    weight: 10
-    label: hidden
-    settings:
-      timezone_override: ''
-      format_type: cgov_display_date
-      display_strategy: latest
-    third_party_settings: {  }
-    type: cgov_date_formatter
-    region: content
-  field_date_updated:
     weight: 9
     label: hidden
     settings:
@@ -95,8 +84,28 @@ content:
     third_party_settings: {  }
     type: cgov_date_formatter
     region: content
+  field_date_reviewed:
+    weight: 11
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
+  field_date_updated:
+    weight: 10
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: cgov_display_date
+      display_strategy: latest
+    third_party_settings: {  }
+    type: cgov_date_formatter
+    region: content
   field_enable_push_state:
-    weight: 12
+    weight: 13
     label: hidden
     settings:
       format: default

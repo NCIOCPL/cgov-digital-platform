@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.cgov_application_page.body
+    - field.field.node.cgov_application_page.field_application_module
     - field.field.node.cgov_application_page.field_browser_title
     - field.field.node.cgov_application_page.field_card_title
     - field.field.node.cgov_application_page.field_date_display_mode
@@ -20,6 +21,7 @@ dependencies:
     - field.field.node.cgov_application_page.field_site_section
     - node.type.cgov_application_page
   module:
+    - app_module
     - datetime
     - metatag
     - options
@@ -42,6 +44,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_application_module:
+    weight: 18
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: app_module_reference_formatter
+    region: content
   field_browser_title:
     weight: 5
     label: above
