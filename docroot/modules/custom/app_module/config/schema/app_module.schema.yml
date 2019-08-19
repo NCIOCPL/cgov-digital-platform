@@ -8,3 +8,33 @@ app_module.app.*:
     label:
       type: label
       label: 'Label'
+
+field.storage_settings.app_module_reference:
+  type: mapping
+  label: 'App Module reference settings'
+  mapping:
+    target_type:
+      type: string
+      label: 'Type of item to reference'
+
+field.value.app_module_reference:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    target_id:
+      type: string
+      label: 'Value'
+    target_uuid:
+      type: string
+      label: 'Target UUID'
+
+field.field_settings.app_module_reference:
+  type: mapping
+  label: 'Application module reference settings'
+  mapping:
+    handler:
+      type: string
+      label: 'Reference method'
+    handler_settings:
+      type: entity_reference_selection.[%parent.handler]
+      label: 'Reference method settings'
