@@ -80,18 +80,27 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     switch ($content_type) {
       case 'cgov_blog_post':
         $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
+        // Get series nid for the block.
+        $series_nid = $this->blogManager->getSeriesId();
         $langcode = $curr_entity->language()->getId();
-
+        $prev_nid = $post['prev_nid'] ?? '';
+        $prev_title = $post['prev_title'] ?? '';
+        $prev_link = $this->blogManager->getBlogPathFromNid($prev_nid, $langcode);
+        $next_nid = $post['next_nid'] ?? '';
+        $next_title = $post['next_title'] ?? '';
+        $next_link = $this->blogManager->getBlogPathFromNid($next_nid, $langcode);
         // Build the render array & cache tags.
-        $build['prev_nid'] = $post['prev_nid'] ?? '';
-        $build['prev_title'] = $post['prev_title'] ?? '';
-        $build['prev_link'] = $this->blogManager->getBlogPathFromNid($build['prev_nid'], $langcode);
-        $build['next_nid'] = $post['next_nid'] ?? '';
-        $build['next_title'] = $post['next_title'] ?? '';
-        $build['next_link'] = $this->blogManager->getBlogPathFromNid($build['next_nid'], $langcode);
+        $build['#cgov_block_data'] = [
+          'prev_nid' => $prev_nid,
+          'prev_title' => $prev_title,
+          'prev_link' => $prev_link,
+          'next_nid' => $next_nid,
+          'next_title' => $next_title,
+          'next_link' => $next_link,
+        ];
         $build['#cache'] = [
           'tags' => [
-            'node_list',
+            'node:' . $series_nid,
           ],
         ];
         break;
