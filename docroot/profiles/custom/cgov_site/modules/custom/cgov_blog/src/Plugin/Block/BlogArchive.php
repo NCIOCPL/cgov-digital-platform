@@ -72,13 +72,19 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
       $years_back = $series->field_archive_back_years->getValue()['0']['value'];
       $archive = $this->drawArchiveData($years_back, $group_by);
       $path = $this->blogManager->getSeriesPath();
+      /*
+       * Pass custom data to the block inside '#cgov_block_data'.
+       * Otherwise render array is invalid.
+       */
       $build = [
-        'archive_data' => $archive,
-        'archive_granularity' => $group_by,
-        'archive_path' => $path,
+        '#cgov_block_data' => [
+          'archive_data' => $archive,
+          'archive_granularity' => $group_by,
+          'archive_path' => $path,
+        ],
         '#cache' => [
           'tags' => [
-            'node_list',
+            'node:' . $series->id(),
           ],
         ],
       ];
