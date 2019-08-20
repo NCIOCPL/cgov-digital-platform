@@ -221,19 +221,6 @@ function cgov_blog_preprocess_block(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_node().
- */
-function cgov_blog_preprocess_node(&$variables) {
-  // Add blog series cache tag for blog page.
-  if ($variables['node']->getType() === 'cgov_blog_post' && $variables['view_mode'] == 'full') {
-    $blog_series_value = $variables['node']->get('field_blog_series')->getValue();
-    if ($blog_series_value != NULL && $blog_series_value[0]['target_id'] > 0) {
-      $variables['#cache']['tags'][] = 'node:' . $blog_series_value[0]['target_id'];
-    }
-  }
-}
-
-/**
  * Implements hook_taxonomy_term_update().
  */
 function cgov_blog_taxonomy_term_update($term_entity) {
@@ -241,10 +228,23 @@ function cgov_blog_taxonomy_term_update($term_entity) {
    *  corresponding blog series page.
    */
   if ($term_entity->getVocabularyId() === "cgov_blog_topics") {
-    $owner_blog = $term_entity->get('field_owner_blog')->getValue();
+    $owner_blog = $term_entity->field_owner_blog;
     // Invalidate the cache tag for blog series node.
-    if ($owner_blog != NULL && $owner_blog[0]['target_id'] > 0) {
-      Cache::invalidateTags(['node:' . $owner_blog[0]['target_id']]);
+    if ($owner_blog->target_id > 0) {
+      Cache::invalidateTags(['node:' . $owner_blog->target_id]);
     }
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function cgov_blog_theme($existing, $type, $theme, $path) {
+  return [
+    'cgov_blocks_blog_categories' => [
+      'variables' => [
+        'rows' => [],
+      ],
+    ],
+  ];
 }
