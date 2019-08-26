@@ -52,3 +52,15 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
 
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Update for v1.1.6.
+ *
+ * Install ImageMagick as an image manipulation toolkit.
+ */
+function cgov_image_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('imagemagick')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['imagemagick']);
+  }
+}

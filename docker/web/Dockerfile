@@ -38,6 +38,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     mariadb-client \
     curl \
     git \
+    imagemagick \
     vim \
     zip
 
