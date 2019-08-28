@@ -432,11 +432,6 @@ var AppMeasurementCustom = {
             let s = this;
             let additions = [];
 
-            // Add audience.
-            if (s.prop7) {
-                additions.push(s.prop7);
-            }
-
             // Add dictionary types.
             if (s.localPageName.indexOf("dictionaries") > -1 || s.localPageName.indexOf("diccionario") > -1) {
                 if (s.Util.getQueryParam('expand')) {
