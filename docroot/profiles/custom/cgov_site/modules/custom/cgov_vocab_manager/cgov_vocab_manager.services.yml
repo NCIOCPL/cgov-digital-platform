@@ -1,0 +1,7 @@
+services:
+  cgov_vocab_manager.route_subscriber:
+    class: Drupal\cgov_vocab_manager\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  cgov_vocab_manager.manager:
+    class: Drupal\cgov_vocab_manager\Manager\CgovVocabManager

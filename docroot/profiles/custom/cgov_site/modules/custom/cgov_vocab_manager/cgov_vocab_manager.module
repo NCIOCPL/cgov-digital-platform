@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_vocab_manager.module.
+ */
+
+/**
+ * Implements hook_taxonomy_tree_args_alter().
+ */
+function cgov_vocab_manager_taxonomy_tree_args_alter(array &$tree_args) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  // Get PARENT from /admin/structure/cgov_taxonomy_manager/tags/59.
+  $path_args = explode('/', $current_path);
+  $parent_id = isset($path_args[5]) ? $path_args[5] : NULL;
+  if (!is_null($parent_id)) {
+    $tree_args['parent'] = $parent_id;
+    $tree_args['max_depth'] = 1;
+    $tree_args['load_entities'] = FALSE;
+  }
+
+}
