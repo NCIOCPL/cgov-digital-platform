@@ -1,0 +1,7 @@
+cgov_vocab_manager.cgov_vocab_manager_form:
+  path: '/admin/structure/cgov_taxonomy_manager/{taxonomy_vocabulary}'
+  defaults:
+    _form: 'Drupal\cgov_vocab_manager\Form\CgovVocabManagerForm'
+    _title_callback: '\Drupal\cgov_vocab_manager\Form\CgovVocabManagerForm::getTitle'
+  requirements:
+    _permission: 'administer taxonomy'

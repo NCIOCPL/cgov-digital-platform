@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\cgov_site_section\FieldStorageDefinition;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Cache\Cache;
 
@@ -541,4 +542,28 @@ function get_section_parent(Term $term) {
     return $parents[array_keys($parents)[0]];
   }
   return FALSE;
+}
+
+/**
+ * Implements hook_link_alter().
+ *
+ * Hooks to replace the Drupal taxonomy term listing to use our
+ * lighter-weight editor. This takes care of the operations list,
+ * the admin toolbar link to the overview, and the tabs on the
+ * edit pages.
+ */
+function cgov_site_section_link_alter(&$variables) {
+  if (isset($variables['url'])) {
+    /** @var \Drupal\Core\Url $url */
+    $url = $variables['url'];
+    if ($url->isRouted() && $url->getRouteName() == "entity.taxonomy_vocabulary.overview_form") {
+      $params = $url->getRouteParameters();
+      if (isset($params['taxonomy_vocabulary']) && $params['taxonomy_vocabulary'] === 'cgov_site_sections') {
+        $variables['url'] = Url::fromRoute(
+          'cgov_vocab_manager.cgov_vocab_manager_form',
+          $url->getRouteParameters()
+        );
+      }
+    }
+  }
 }
