@@ -70,8 +70,19 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
 
     // Return blog featured post block elements. TODO: clean up twig.
     $featured = $this->drawFeaturedPosts();
+    // Get series nid for the block.
+    $series_nid = $this->blogManager->getSeriesId();
+    /*
+     * Pass custom data to the block inside '#cgov_featured'.
+     * Otherwise render array is invalid.
+     */
     $build = [
-      '#featured' => $featured,
+      '#cgov_featured' => $featured,
+      '#cache' => [
+        'tags' => [
+          'node:' . $series_nid,
+        ],
+      ],
     ];
     return $build;
   }

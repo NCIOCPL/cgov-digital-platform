@@ -6,6 +6,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\TypedData\TranslatableInterface;
@@ -51,6 +52,14 @@ class BlogManager implements BlogManagerInterface {
    */
   protected $aliasManager;
 
+
+  /**
+   * Language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
   /**
    * An HTTP request.
    *
@@ -71,6 +80,8 @@ class BlogManager implements BlogManagerInterface {
    *   The route matcher.
    * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
    *   The path alias manager.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   An HTTP request.
    */
@@ -80,6 +91,7 @@ class BlogManager implements BlogManagerInterface {
     EntityTypeManagerInterface $entity_type_manager,
     RouteMatchInterface $route_matcher,
     AliasManagerInterface $alias_manager,
+    LanguageManagerInterface $language_manager,
     RequestStack $request_stack
   ) {
     $this->entityQuery = $entity_query;
@@ -87,6 +99,7 @@ class BlogManager implements BlogManagerInterface {
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
     $this->aliasManager = $alias_manager;
+    $this->languageManager = $language_manager;
     $this->requestStack = $request_stack;
   }
 
@@ -249,7 +262,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series topics (cagtegories).
+   * Get Blog Series topics (categories).
    */
   public function getSeriesTopics() {
     $topics = [];
@@ -260,13 +273,43 @@ class BlogManager implements BlogManagerInterface {
     if (count($taxonomy) > 0) {
       foreach ($taxonomy as $taxon) {
         $tid = $taxon->tid;
-        $owner_nid = $this->loadBlogTopic($tid)->get('field_owner_blog')->target_id;
+        $owner_nid = $this->loadBlogTopic($tid)
+          ->get('field_owner_blog')->target_id;
         if ($curr_nid == $owner_nid) {
           $topics[] = $taxon;
         }
       }
     }
     return $topics;
+  }
+
+  /**
+   * Get the in usage Subset of Blog Series topics (categories).
+   */
+  public function getActiveSeriesTopics() {
+    // Get all associated categories.
+    $activeTopics = $this->getSeriesTopics();
+
+    // Skip setting the category if there are 0 posts for this language.
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
+    foreach ($activeTopics as $key => $topic) {
+      // Query for nodes with this category in the current language context.
+      $query = $this->entityTypeManager->getStorage('node')->getQuery();
+      $langcode_group = $query->andConditionGroup()
+        ->condition("field_blog_topics", $topic->tid, '=', $langcode);
+
+      $nodes = $query
+        ->condition('type', 'cgov_blog_post')
+        ->condition('status', 1)
+        ->condition($langcode_group)
+        ->execute();
+      // Remove the category if there are zero usages.
+      if (empty($nodes)) {
+        unset($activeTopics[$key]);
+      }
+    }
+
+    return $activeTopics;
   }
 
   /**

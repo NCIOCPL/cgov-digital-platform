@@ -4,6 +4,8 @@ namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -72,15 +74,27 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
 
     // Return blog category elements.
     $blog_categories = $this->drawBlogCategories();
+    // Get series nid for the block.
     $build = [
-      'blog_categories' => $blog_categories,
-      '#cache' => [
-        'tags' => [
-          'node_list',
-        ],
+      'blog_categories' => [
+        '#theme' => 'cgov_blocks_blog_categories',
+        '#rows' => $blog_categories,
       ],
     ];
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function blockAccess(AccountInterface $account) {
+    $blog_categories = $this->drawBlogCategories();
+    $series_nid = $this->blogManager->getSeriesId();
+    $result = AccessResult::forbidden();
+    if (count($blog_categories) > 0) {
+      $result = AccessResult::allowed();
+    }
+    return $result->addCacheTags(['node:' . $series_nid]);
   }
 
   /**
@@ -91,7 +105,7 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   private function drawBlogCategories() {
     $category_links = [];
     // Get all associated categories and build URL paths for this series.
-    $categories = $this->blogManager->getSeriesTopics();
+    $categories = $this->blogManager->getActiveSeriesTopics();
     foreach ($categories as $cat) {
       $link = $this->getCategoryLink($cat->tid);
       $category_links[$link['link_name']] = $link['link_path'];
