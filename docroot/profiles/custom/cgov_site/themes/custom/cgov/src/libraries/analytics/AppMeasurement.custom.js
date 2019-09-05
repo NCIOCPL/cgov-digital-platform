@@ -3,7 +3,7 @@ import { attachEvents } from 'Core/libraries/analytics/nci-analytics-functions';
 
 var AppMeasurementCustom = {
 
-    /** 
+    /**
      * Send tagging requests to correct server and set namespace.
      * WARNING: Changing any of the below variables will cause drastic
      * changes to how your visitor data is collected. Changes should only be
@@ -11,8 +11,8 @@ var AppMeasurementCustom = {
     trackingServer: 'nci.122.2o7.net',
     visitorNamespace: 'nci',
 
-    /** 
-     * Set configuration variable values for AppMeasurement. 
+    /**
+     * Set configuration variable values for AppMeasurement.
      * See https://marketing.adobe.com/resources/help/en_US/sc/implement/configuration-variables.html
      */
     linkInternalFilters: 'javascript:,cancer.gov,localhost,www.devbox,ncigovcdode,cgov.ncigov',
@@ -71,23 +71,23 @@ var AppMeasurementCustom = {
 
     /**
      * Build the s object using DTM and DOM elements.
-     * 
-     * @param {*} s 
+     *
+     * @param {*} s
      */
     setScodeProperties: function(s) {
 
         /************************** CONFIG SECTION **************************/
-        
+
         /*
          * Set the report suite value(s).
          * s.account and s_account (report suites) should be defined before this function is called.
          * If not, set a default value of 'ncidevelopment'.
          */
         if (!s.account) {
-            s.account = s_account || 'ncidevelopment';            
+            s.account = s_account || 'ncidevelopment';
         }
-        
-        // For debugging only 
+
+        // For debugging only
         if (AppMeasurementCustom.debug) {
             console.log('Debug AppMeasurementCustom.setScodeProperties():');
             console.log(s.account);
@@ -104,7 +104,7 @@ var AppMeasurementCustom = {
         s.linkTrackEvents = AppMeasurementCustom.linkTrackEvents;
         s.useForcedLinkTracking = AppMeasurementCustom.useForcedLinkTracking;
         s.forcedLinkTrackingTimeout = AppMeasurementCustom.forcedLinkTrackingTimeout;
-        
+
         /* Get the page name to be used in tracking variables. */
         s.localPageName = AppMeasurementCustom.getLocalPageName();
 
@@ -114,7 +114,7 @@ var AppMeasurementCustom = {
 
         /**
          * Fire off plugins. Add calls to plugins here.
-         * 
+         *
          * @param {*} s
          *   The 's' object.
          */
@@ -155,20 +155,20 @@ var AppMeasurementCustom = {
             s.prop61 = s.getPreviousValue(s.localPageName, 'gpv_pn', '');
 
             // Set load time of the page.
-            s.prop65 = s.getLoadTime(); 
+            s.prop65 = s.getLoadTime();
 
             // Set browser width value.
-            s.eVar5 = getNciViewPort(); 
+            s.eVar5 = getNciViewPort();
 
             // Track scroll percentage of previous page / percent visible on current page.
             s.prop48 = NCIAnalytics.cookieRead("nci_scroll");
 
             // Dynamically Capture Hierarchy Variable via Custom Plugin.
             s.hier1 = getNciHierarchy();
-                        
+
             // Set campaign & urs tracking values.
             let s_campaign = s.getNciCampaign();
-            if (s_campaign && NCIAnalytics.urs) {
+            if (NCIAnalytics.urs) {
                 window.urs = NCIAnalytics.urs.get({
                     campaign: s_campaign,
                     referrer: document.referrer
@@ -222,7 +222,7 @@ var AppMeasurementCustom = {
 
             // Set channel based on dcterms.subject meta tag.
             s.channel = getNciMetaTagContent('[name="dcterms.subject"]');
-            
+
             // Set pageType based on dcterms.type meta tag.
             s.pageType = getNciMetaTagContent('[name="dcterms.type"]');
 
@@ -243,20 +243,20 @@ var AppMeasurementCustom = {
 
             // Set props and eVars from data attributes.
             s.setNciNumberedVars('prop');
-            s.setNciNumberedVars('evar');            
+            s.setNciNumberedVars('evar');
         }
-        s.doPlugins=s_doPlugins 
-        
+        s.doPlugins=s_doPlugins
+
 
         /************************* FUNCTIONS SECTION ************************/
         /* Custom NCI functions can be added here.                          */
-        /********************************************************************/        
+        /********************************************************************/
 
         /**
          * Get the document title.
          */
         function getNciPageTitle() {
-            // If this  is an R4R page, set the generic title 
+            // If this  is an R4R page, set the generic title
             if(document.querySelector('#r4r-root .r4r-resource')) {
                 return 'Resources for Researchers - National Cancer Institute';
             } else {
@@ -266,8 +266,8 @@ var AppMeasurementCustom = {
 
         /**
          * Check for meta attribute and get content if exists.
-         * 
-         * @param {*} selector 
+         *
+         * @param {*} selector
          */
         function getNciMetaTagContent (selector) {
             let metaTag = document.head.querySelector(selector) || null;
@@ -279,8 +279,8 @@ var AppMeasurementCustom = {
 
         /**
          * Check for meta attribute and get content if exists.
-         * 
-         * @param {*} selector 
+         *
+         * @param {*} selector
          */
         function getNciDataAttr (selector, attribute) {
             let elem = document.querySelector(selector);
@@ -400,7 +400,7 @@ var AppMeasurementCustom = {
             let id = s.Util.getQueryParam('protocolsearchid') || s.Util.getQueryParam('PrintID');
             return id;
         }
-            
+
         /**
          * Set the campagin value if there are any matching queries in the URL.
          */
@@ -409,7 +409,7 @@ var AppMeasurementCustom = {
             let s = this;
             let campaign = s.Util.getQueryParam('cid') || s.Util.getQueryParam('gclid');
 
-            // If still no value, try the utm_* parameters. 
+            // If still no value, try the utm_* parameters.
             // Return a value if one or more params are set.
             if (!campaign) {
                 let hasUtm = false;
@@ -465,7 +465,7 @@ var AppMeasurementCustom = {
 
         }
 
-        /** 
+        /**
          * Build comma-separated string of s.event values.
          */
         s.setNciEvents = function() {
@@ -474,7 +474,7 @@ var AppMeasurementCustom = {
             let eventsArr = (s.events && s.events.length > 0) ? s.events.split(',') : [];
             let headData = getNciMetaTagContent('[name="dcterms.isReferencedBy"]');
             let elemData = document.querySelector('[class*="wa-data"][data-events]');
-        
+
             // Add any events from dcterms.isReferencedBy meta tag.
             if(headData) {
                 eventsArr = eventsArr.concat(headData.split(','));
@@ -485,42 +485,42 @@ var AppMeasurementCustom = {
                 let eventData = elemData.getAttribute('data-events');
                 if (eventData) eventsArr = eventsArr.concat(eventData.split(','));
             }
-        
+
             // Add the standard load events
             eventsArr.push('event1');
             eventsArr.push('event47=' + s.getLoadTime());
-        
+
             // Add engagement tracking (event92)
             if(s.mainCGovIndex >= 0) {
                 try {
                     if (typeof (window.NCIEngagementPageLoadComplete) === 'undefined' || !window.NCIEngagementPageLoadComplete) {
-        
+
                         // check the cookie
                         let engagementScore = window.NCIEngagement.getAndResetEngagementCookie();
-        
+
                         // add engagement metrics to the page load call, if needed
                         if (engagementScore && parseInt(engagementScore) > 0) {
                             eventsArr.push('event92=' + engagementScore);
                         }
-        
+
                         // flag to prevent firing this logic more than once per page load
                         window.NCIEngagementPageLoadComplete = true;
                     }
                 } catch (err) {
                     // console.log(err);
                 }
-            }    
-        
+            }
+
             // Remove event duplicates and join everything
             eventsArr = eventsArr.filter((item, index) => eventsArr.indexOf(item) === index);
             s.events = eventsArr.join(',');
         }
 
-        /** 
+        /**
          * Dynamically add numbered variables (e.g. prop1, eVar8) and values to the 's' object.
-         * 
-         * @param {*} varName 
-         * @param {*} selector 
+         *
+         * @param {*} varName
+         * @param {*} selector
          */
         s.setNciNumberedVars = function(varName, selector) {
 
@@ -528,7 +528,7 @@ var AppMeasurementCustom = {
             selector = selector || '.wa-data-element';
             let s = this;
             let waData = document.querySelector(selector);
-        
+
             if(varName && waData) {
                 for(dataAttr in waData.dataset) {
                     if(dataAttr.indexOf(varName) > -1)
@@ -540,7 +540,7 @@ var AppMeasurementCustom = {
                 }
             }
         }
-                
+
         /************************** PLUGINS SECTION *************************/
         /* Adobe / 3rd party plugins can be added here.                     */
         /********************************************************************/
@@ -577,24 +577,24 @@ var AppMeasurementCustom = {
 
         /* Adobe Consulting Plugin: getPercentPageViewed v3.01 w/handlePPVevents helper function (Requires AppMeasurement and p_fo plugin) */
         /* See https://marketing.adobe.com/resources/help/en_US/sc/implement/getPercentPageViewed.html */
-        s.getPercentPageViewed=function(pid,ch){var s=this,a=s.c_r("s_ppv");a=-1<a.indexOf(",")?a.split(","):[];a[0]=s.unescape(a[0]); 
+        s.getPercentPageViewed=function(pid,ch){var s=this,a=s.c_r("s_ppv");a=-1<a.indexOf(",")?a.split(","):[];a[0]=s.unescape(a[0]);
         pid=pid?pid:s.pageName?s.pageName:document.location.href;s.ppvChange=ch?ch:!0;if("undefined"===typeof s.linkType||"o"!==
         s.linkType)s.ppvID&&s.ppvID===pid||(s.ppvID=pid,s.c_w("s_ppv",""),s.handlePPVevents()),s.p_fo("s_gppvLoad")&&window
         .addEventListener&&(window.addEventListener("load",s.handlePPVevents,!1),window.addEventListener("click",s.handlePPVevents, !1),window.addEventListener("scroll",s.handlePPVevents,!1),window.addEventListener("resize",s.handlePPVevents,!1)),s._ppvPreviousPage
-        =a[0]?a[0]:"",s._ppvHighestPercentViewed=a[1]?a[1]:"",s._ppvInitialPercentViewed=a[2]?a[2]:"",s._ppvHighestPixelsSeen=a[3]?a[3]:""}; 
+        =a[0]?a[0]:"",s._ppvHighestPercentViewed=a[1]?a[1]:"",s._ppvInitialPercentViewed=a[2]?a[2]:"",s._ppvHighestPixelsSeen=a[3]?a[3]:""};
 
-        /* Adobe Consulting Plugin: handlePPVevents helper function (for getPercentPageViewed v3.01 Plugin) */ 
-        s.handlePPVevents=function(){if("undefined"!==typeof s_c_il){for(var c=0,d=s_c_il.length;c<d;c++)if(s_c_il[c]&& 
-        s_c_il[c].getPercentPageViewed){var a=s_c_il[c];break}if(a&&a.ppvID){var f=Math.max(Math.max(document.body.scrollHeight, 
+        /* Adobe Consulting Plugin: handlePPVevents helper function (for getPercentPageViewed v3.01 Plugin) */
+        s.handlePPVevents=function(){if("undefined"!==typeof s_c_il){for(var c=0,d=s_c_il.length;c<d;c++)if(s_c_il[c]&&
+        s_c_il[c].getPercentPageViewed){var a=s_c_il[c];break}if(a&&a.ppvID){var f=Math.max(Math.max(document.body.scrollHeight,
         document.documentElement.scrollHeight),Math.max(document.body.offsetHeight,document.documentElement.offsetHeight),Math.max(document.
         body.clientHeight,document.documentElement.clientHeight));c=(window.pageYOffset||window.document.documentElement.scrollTop||window.document.body.scrollTop)+(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight);d=Math.min(Math.round
         (c/f*100),100);var e="";!a.c_r("s_tp")||a.unescape(a.c_r("s_ppv").split(",")[0])!==a.ppvID||1==a.ppvChange&&
-        a.c_r("s_tp")&&f!= a.c_r("s_tp")?(a.c_w("s_tp",f),a.c_w("s_ppv","")):e=a.c_r("s_ppv");var b=e&&-1<e.indexOf(",")?e.split(",",4):[];f=0<b.length?b[0]: 
-        escape(a.ppvID);var g=1<b.length?parseInt(b[1]):d,h=2<b.length?parseInt(b[2]):d;b=3<b.length?parseInt(b[3]):c;0<d&&(e=f+"," 
-        +(d>g?d:g)+","+h+","+(c>b?c:b));a.c_w("s_ppv",e)}}}; 
+        a.c_r("s_tp")&&f!= a.c_r("s_tp")?(a.c_w("s_tp",f),a.c_w("s_ppv","")):e=a.c_r("s_ppv");var b=e&&-1<e.indexOf(",")?e.split(",",4):[];f=0<b.length?b[0]:
+        escape(a.ppvID);var g=1<b.length?parseInt(b[1]):d,h=2<b.length?parseInt(b[2]):d;b=3<b.length?parseInt(b[3]):c;0<d&&(e=f+","
+        +(d>g?d:g)+","+h+","+(c>b?c:b));a.c_w("s_ppv",e)}}};
 
-        /* Adobe Consulting Plugin: p_fo (pageFirstOnly) v2.0 (Requires AppMeasurement) */ 
-        s.p_fo=function(on){var s=this;s.__fo||(s.__fo={});if(s.__fo[on])return!1;s.__fo[on]={};return!0}; 
+        /* Adobe Consulting Plugin: p_fo (pageFirstOnly) v2.0 (Requires AppMeasurement) */
+        s.p_fo=function(on){var s=this;s.__fo||(s.__fo={});if(s.__fo[on])return!1;s.__fo[on]={};return!0};
 
         /******************************
          * Plugin: socialPlatforms v1.0
@@ -644,7 +644,7 @@ var AppMeasurementCustom = {
         window[engagementObject].initialize(window[engagementObject]);var engagement_timer=setInterval(function(){window[engagementObject].getEngagementStatus();
         var e=window[engagementObject].engagementScore>=window[engagementObject].minimumEngagementScore,n=NCIAnalytics.cookieRead(window[engagementObject].cookieName)||0,
         t=e?'engaged':'not engaged';if('engaged'===t){var o=parseInt(n)+window[engagementObject].scorePerInterval;NCIAnalytics.cookieWrite(window[engagementObject].cookieName,o),
-        window[engagementObject].logger('engagement-score_'+o),window[engagementObject].engagementScore=window[engagementObject].defaultEngagementScore}else 
+        window[engagementObject].logger('engagement-score_'+o),window[engagementObject].engagementScore=window[engagementObject].defaultEngagementScore}else
         window[engagementObject].logger('engagement-score: '+t.toUpperCase())},window[engagementObject].pollingInterval);ae({element:window,event:'scroll',
         action:function(){window[engagementObject].doScroll()}}),ae({element:window,event:'mouseover',action:function(){window[engagementObject].doMouse()}}),
         ae({element:window,event:'click',action:function(){window[engagementObject].doClick()}})};
