@@ -25,6 +25,12 @@ function cgov_blog_install() {
   $siteHelper->addContentTypePermissions('cgov_blog_post', ['content_author']);
   $siteHelper->addContentTypePermissions('cgov_blog_series', ['blog_manager']);
 
+  $siteHelper->addRolePermissions([
+    'site_admin' => [
+      'translate cgov_blog_topics taxonomy_term',
+    ],
+  ]);
+
   // Install permissions for this module.
   _cgov_blog_install_permissions($siteHelper);
 
@@ -40,6 +46,24 @@ function _cgov_blog_install_permissions(CgovCoreTools $siteHelper) {
   $perms = [
     'admin_ui' => [
       'access cgov_blog_browser entity browser pages',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Update for v1.1.7.
+ *
+ * Allow site_admin users to translate a blog's topic.
+ */
+function cgov_blog_update_8001() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'site_admin' => [
+      'translate cgov_blog_topics taxonomy_term',
     ],
   ];
 
