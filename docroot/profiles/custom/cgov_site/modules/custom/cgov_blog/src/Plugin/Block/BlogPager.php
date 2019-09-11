@@ -127,6 +127,9 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     $filter_node = $this->blogManager->getNodeFromNid($cid);
     $filter_series = $filter_node->field_blog_series->target_id;
 
+    // Initialize the links list in case there aren't any published posts.
+    $blog_links = [];
+
     // Build a collection of blog link objects.
     foreach ($blog_post_nids as $nid) {
       $node = $this->blogManager->getNodeFromNid($nid);
