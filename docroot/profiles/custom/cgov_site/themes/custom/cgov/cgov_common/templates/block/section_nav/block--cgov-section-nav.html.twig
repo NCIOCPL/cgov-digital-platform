@@ -1,3 +1,5 @@
+{% set nav_tree = content['#nav_tree']%}
+{% set catch_cache = content|render %}
 {% macro nav_level(links) %}
   {% import _self as macros %}
   {% for link in links %}
@@ -22,18 +24,18 @@
 {% endmacro %}
 
 {% import _self as macros %}
-{% if content.nav_tree.label %}
+{% if nav_tree.label %}
   <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
     <div class="slot-item only-SI">
       <div class="section-nav">
         <ul>
-          <li class="{{ content.nav_tree.class }}">
-            <div class="{{ content.nav_tree.isCurrentSectionLandingPage ? 'current-page' : '' }}">
-              <a href="{{ content.nav_tree.href }}">{{ content.nav_tree.label }}</a>
+          <li class="{{ nav_tree.class }}">
+            <div class="{{ nav_tree.isCurrentSectionLandingPage ? 'current-page' : '' }}">
+              <a href="{{ nav_tree.href }}">{{ nav_tree.label }}</a>
             </div>
-            {% if content.nav_tree.children|length > 0 %}
+            {% if nav_tree.children|length > 0 %}
               <ul>
-                {{ macros.nav_level(content.nav_tree.children) }}
+                {{ macros.nav_level(nav_tree.children) }}
               </ul>
             {% endif %}
           </li>

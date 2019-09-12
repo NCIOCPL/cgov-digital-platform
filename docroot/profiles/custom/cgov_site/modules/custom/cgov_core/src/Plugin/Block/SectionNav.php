@@ -179,21 +179,35 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+
+    $build = [];
+
     $navTree = $this->getSectionNav();
     if ($navTree) {
       $build = [
         '#type' => 'block',
-        'nav_tree' => $navTree,
+        '#nav_tree' => $navTree,
       ];
-      return $build;
+
+      // Set the cache tag if this if a nav root exists for this section.
+      $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
+      if ($navRoot) {
+        $section_root_tid = $navRoot->getTerm()->id();
+        $build['#cache'] = [
+          'tags' => [
+            'site_section:' . $section_root_tid,
+          ],
+        ];
+      }
     }
+    return $build;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCacheMaxAge() {
-    return 0;
+    return 300;
   }
 
 }
