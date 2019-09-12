@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
+import TextInput from '../../atomic/TextInput';
 import './KeywordsPhrases.scss';
 
 const KeywordsPhrases = () => {
@@ -9,7 +10,7 @@ const KeywordsPhrases = () => {
       id="keyword"
       legend="Keywords/Phrases"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#keywords">
-      <input type="text" />
+      <TextInput id="q" label="Search by word or phrase (use quotation marks with phrases)." placeHolder="Examples: PSA, 'Paget disease'" />
     </Fieldset>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
+import TextInput from '../../atomic/TextInput';
 import './LeadOrganization.scss';
 
 const LeadOrganization = () => {
@@ -9,7 +10,7 @@ const LeadOrganization = () => {
       id="location"
       legend="Location"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization">
-      <input type="text" />
+      <TextInput id="lo" label="Search by Lead Organization." />
     </Fieldset>
   );
 };
