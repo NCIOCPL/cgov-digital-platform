@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormBasic from '../FormBasic';
 import FormAdvanced from '../FormAdvanced';
-import Delighter from '../../components/Delighter';
+import Delighter from '../../components/atomic/Delighter';
 
 
 const SearchPage = ({ form }) => {
