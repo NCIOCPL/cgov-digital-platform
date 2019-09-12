@@ -9,7 +9,7 @@ const Checkbox = ({ id, label, value, name, classes, disabled, ...otherProps }) 
       className="usa-checkbox__input"
       type="checkbox"
       name={name}
-      value={value ? value : this.id}
+      value={value ? value : id}
       disabled={disabled || false}
       {...otherProps}
     />
