@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import './Checkbox.scss';
 
 const Checkbox = ({ id, label, value, name, classes, disabled, ...otherProps }) => (
-  <div className={`usa-checkbox ${classes}`}>
+  <div className={`cts-checkbox ${classes}`}>
     <input
       id={id}
-      className="usa-checkbox__input"
+      className="cts-checkbox__input"
       type="checkbox"
       name={name}
       value={value ? value : id}
       disabled={disabled || false}
       {...otherProps}
     />
-    <label className="usa-checkbox__label" htmlFor={id}>
+    <label className="cts-checkbox__label" htmlFor={id}>
       {label}
     </label>
   </div>

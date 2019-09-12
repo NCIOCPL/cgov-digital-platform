@@ -118,7 +118,7 @@ class TextInput extends React.Component {
             this.state.isValid ? 'cts-input--success' : null
           }`}
           required={this.props.required}
-          maxlength={this.props.maxLength}
+          maxLength={this.props.maxLength}
           placeholder={this.props.placeHolder}
           aria-required={this.props.required}
           onBlur={this._handleBlur.bind(this)}

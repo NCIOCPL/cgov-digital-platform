@@ -5,5 +5,5 @@ export { default as Fieldset } from "./Fieldset";
 export { default as InputLabel } from "./InputLabel";
 export { default as RadioButton } from "./RadioButton";
 export { default as ResultsItem } from "./ResultsItem";
-export { default as Select } from "./Select";
+export { default as Dropdown } from "./Dropdown";
 export { default as TextInput } from "./TextInput";

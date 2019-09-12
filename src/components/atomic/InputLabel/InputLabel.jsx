@@ -25,8 +25,4 @@ InputLabel.propTypes = {
   required: PropTypes.bool,
 };
 
-InputLabel.defaultProps = {
-  sampleProperty: 'InputLabel',
-};
-
 export default InputLabel;
