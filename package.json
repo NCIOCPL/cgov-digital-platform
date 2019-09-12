@@ -16,7 +16,9 @@
     "test:ci": "npm test -- --coverage --watchAll=false",
     "test:cvg": "npm run test:ci -- --watchAll",
     "eject": "react-scripts eject",
-    "plop": "plop --plopfile .plop/index.js"
+    "plop": "plop --plopfile .plop/index.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,13 +44,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@storybook/addon-a11y": "^5.1.11",
+    "@storybook/addon-actions": "^5.1.11",
+    "@storybook/addon-info": "^5.1.11",
+    "@storybook/addon-knobs": "^5.1.11",
+    "@storybook/addon-links": "^5.1.11",
+    "@storybook/addons": "^5.1.11",
+    "@storybook/react": "^5.1.11",
     "@testing-library/react": "^9.1.4",
+    "babel-loader": "^8.0.6",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
     "jest-enzyme": "^7.1.1",
     "node-sass": "^4.12.0",
     "plop": "^2.4.0",
-    "sinon": "^7.4.2"
+    "sinon": "^7.4.2",
+    "storybook-react-router": "^1.0.7"
   }
 }

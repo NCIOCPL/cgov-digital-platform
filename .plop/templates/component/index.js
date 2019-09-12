@@ -50,6 +50,12 @@ module.exports = {
     },
     {
       type: "add",
+      path: `${componentPath}/{{ properCase name }}/{{ properCase name }}.story.js`,
+      templateFile: "./templates/component/element.story.js.hbs",
+      abortOnFail: true
+    },
+    {
+      type: "add",
       path: `${componentPath}/{{ properCase name }}/__tests__/{{ properCase name }}.test.js`,
       templateFile: "./templates/component/element.test.js.hbs",
       abortOnFail: true
