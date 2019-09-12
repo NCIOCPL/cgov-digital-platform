@@ -5,15 +5,16 @@ import InputLabel from '../InputLabel.jsx';
 jest.unmock('../InputLabel.jsx');
 
 describe('InputLabel', () => {
-
   let wrapper = null;
   const label = 'Label test';
   const htmlFor = 'htmlForTest';
 
   beforeEach(function() {
-    wrapper = shallow(
-      <InputLabel label={label} htmlFor={htmlFor} />
-    );
+    wrapper = shallow(<InputLabel label={label} htmlFor={htmlFor} />);
+  });
+
+  it('renders without error', () => {
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('is defined', () => {
@@ -34,6 +35,6 @@ describe('InputLabel', () => {
 
   it('accepts the required attribute', () => {
     wrapper = shallow(<InputLabel required label={label} htmlFor={htmlFor} />);
-    expect(wrapper.hasClass('usa-label--required')).toBe(true);
+    expect(wrapper.hasClass('--required')).toBe(true);
   });
 });

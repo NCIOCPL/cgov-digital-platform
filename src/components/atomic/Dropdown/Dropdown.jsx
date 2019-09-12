@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InputLabel from '../InputLabel';
-import { uniqueIdForComponent } from '../../../utilities/utilities';
+import utils from '../../../utilities/utilities';
 
 //  Class representing a dropdown
 //
@@ -56,7 +56,7 @@ export default class Dropdown extends React.Component {
 
   // check to see if an Id was passed in, if not generate one.
   componentWillMount() {
-    this.id = this.props.id ? this.props.id : uniqueIdForComponent(this);
+    this.id = this.props.id ? this.props.id : utils.uniqueIdForComponent(this);
   }
 
   // If a errorMessage is passed after initial render, adjust the state accordingly
@@ -83,7 +83,7 @@ export default class Dropdown extends React.Component {
     let errorMessage = null;
     if (this.state.hasError) {
       errorMessage = (
-        <span className="usa-error-message" role="alert">
+        <span className="cts-error-message" role="alert">
           {this.state.errorMessageBody}
         </span>
       );
@@ -110,7 +110,7 @@ export default class Dropdown extends React.Component {
         {errorMessage}
 
         <select
-          className="usa-select"
+          className="cts-select"
           name={this.props.id}
           id={this.id}
           value={this.state.value}

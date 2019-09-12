@@ -58,7 +58,7 @@ describe('Dropdown', () => {
       <option value='value2'>Option B</option>
       <option value='value3'>Option C</option>
     </Dropdown>);
-    expect(wrapper.find('label').hasClass('usa-label--required')).toBe(true);
+    expect(wrapper.find('label').hasClass('--required')).toBe(true);
   });
 
   it('displays the error message when present', () => {
@@ -68,7 +68,7 @@ describe('Dropdown', () => {
       <option value='value2'>Option B</option>
       <option value='value3'>Option C</option>
     </Dropdown>);
-    expect(wrapper.find('.usa-error-message').text()).toBe(message);
+    expect(wrapper.find('.cts-error-message').text()).toBe(message);
   });
 
   it('handles onChange event', () => {

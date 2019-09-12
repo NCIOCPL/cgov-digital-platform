@@ -1,36 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//  Label for form fields
-//  @returns {node} the rendered DOM node
-//  @param {string} label required - text for the input's label
-//  @param {string} labelHint - hint text for the input's label
-//  @param {string} htmlFor required - sets the <label for... attribute
-//  @param {bool} hasError -  edds error styling
-//  @param {bool} required -  edds required styling
-
-export default function InputLabel({
+const InputLabel = ({
   label,
   labelHint,
   htmlFor,
   required,
-  hasError
-}) {
-  let classes = 'usa-label';
-  classes += required ? ' usa-label--required' : '';
-  classes += hasError ? ' usa-label--error' : '';
+  hasError,
+  classes,
+}) => {
   return (
-    <label id={`${htmlFor}-label`} className={classes} htmlFor={htmlFor}>
+    <label id={`${htmlFor}-label`} className={`${classes} ${required? '--required': ''}`} htmlFor={htmlFor}>
       {label}
-      {labelHint && <span className='usa-hint'> {labelHint}</span>}
+      {labelHint && <span className="cts-input__hint"> {labelHint}</span>}
     </label>
   );
-}
+};
 
 InputLabel.propTypes = {
   hasError: PropTypes.bool,
   htmlFor: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   labelHint: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
 };
+
+export default InputLabel;
