@@ -3,7 +3,7 @@ import Checkbox from './Checkbox';
 
 generateStories({
   component: { Checkbox },
-  storyName: 'Elements|Checkbox',
+  storyName: 'Elements | Checkbox',
   defaultProps: {
     id: 'storybook-checkbox',
     label: 'Example Checkbox',
