@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormBasic from '../FormBasic';
-import FormAdvanced from '../FormAdvanced';
-import Delighter from '../../components/atomic/Delighter';
+import FormBasic from './FormBasic';
+import FormAdvanced from './FormAdvanced';
+import {Accordion, AccordionItem, Delighter} from '../../components/atomic';
 
 
 const SearchPage = ({ form }) => {
   const [formVersion, setFormVersion] = useState(form);
+  
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -53,8 +54,9 @@ const SearchPage = ({ form }) => {
     
   const toggleForm = () => {
     setFormVersion((formVersion === 'basic')? 'advanced': 'basic');
-  }
+  };
 
+  
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
@@ -70,11 +72,20 @@ const SearchPage = ({ form }) => {
             <p className="form-switch">
               <button type="button" onClick={toggleForm}>View {(formVersion === 'basic')? 'Advanced':'Basic'}</button>
             </p>
+            <Accordion startCollapsed>
+            <AccordionItem title="First Amendment">
+        <p>Congress shall make no law respecting an establishment of ...</p>
+      </AccordionItem>
+      <AccordionItem>
+        <span>First Amendment</span>
+        <p>Congress shall make no law respecting an establishment of ...</p>
+      </AccordionItem>
+      </Accordion>
           </div>
 
           <div className="search-page__content">
-            {(formVersion === 'advanced')?
-              <FormAdvanced />
+            {(formVersion === 'advanced')
+              ? <FormAdvanced />
               : <FormBasic />
             }
             

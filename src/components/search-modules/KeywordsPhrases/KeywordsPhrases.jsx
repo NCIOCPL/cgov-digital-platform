@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import {Fieldset, TextInput} from '../../atomic';
 import './KeywordsPhrases.scss';
 
 const KeywordsPhrases = () => {
@@ -13,12 +11,6 @@ const KeywordsPhrases = () => {
       <TextInput id="q" label="Search by word or phrase (use quotation marks with phrases)." placeHolder="Examples: PSA, 'Paget disease'" />
     </Fieldset>
   );
-};
-
-KeywordsPhrases.propTypes = {
-};
-
-KeywordsPhrases.defaultProps = {
 };
 
 export default KeywordsPhrases;

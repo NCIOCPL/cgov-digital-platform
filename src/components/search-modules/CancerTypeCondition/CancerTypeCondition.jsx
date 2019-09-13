@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
 import './CancerTypeCondition.scss';
 
@@ -12,14 +11,6 @@ const CancerTypeCondition = () => {
       <input type="text" />
     </Fieldset>
   );
-};
-
-CancerTypeCondition.propTypes = {
-  sampleProperty: PropTypes.string
-};
-
-CancerTypeCondition.defaultProps = {
-  sampleProperty: 'CancerTypeCondition'
 };
 
 export default CancerTypeCondition;

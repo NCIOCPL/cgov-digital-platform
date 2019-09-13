@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import {Fieldset, TextInput} from '../../atomic';
 
 const ZipCode = () => {
   return (
@@ -14,10 +12,5 @@ const ZipCode = () => {
   );
 };
 
-ZipCode.propTypes = {
-};
-
-ZipCode.defaultProps = {
-};
 
 export default ZipCode;

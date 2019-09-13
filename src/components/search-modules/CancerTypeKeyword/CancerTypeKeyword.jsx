@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import {Fieldset, TextInput} from '../../atomic';
 import './CancerTypeKeyword.scss';
 
 const CancerTypeKeyword = () => {
@@ -13,12 +11,6 @@ const CancerTypeKeyword = () => {
       <TextInput id="q" label="Cancer Type/Keyword" placeHolder="Start typing to select a cancer type" labelHidden />
     </Fieldset>
   );
-};
-
-CancerTypeKeyword.propTypes = {
-};
-
-CancerTypeKeyword.defaultProps = {
 };
 
 export default CancerTypeKeyword;
