@@ -4,7 +4,7 @@ import Dropdown from './Dropdown';
 
 generateStories({
   component: { Dropdown },
-  storyName: 'Elements|Dropdown',
+  storyName: 'Elements | Dropdown',
   defaultProps: {
     id: 'test-id',
     label: 'Example Dropdown Select Input',

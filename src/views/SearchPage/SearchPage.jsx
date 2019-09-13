@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormBasic from './FormBasic';
 import FormAdvanced from './FormAdvanced';
-import {Accordion, AccordionItem, Delighter} from '../../components/atomic';
+import {Accordion, AccordionItem, Delighter, Toggle} from '../../components/atomic';
 
 
 const SearchPage = ({ form }) => {
@@ -82,6 +82,8 @@ const SearchPage = ({ form }) => {
       </AccordionItem>
       </Accordion>
           </div>
+
+<Toggle id="va" value="1" />
 
           <div className="search-page__content">
             {(formVersion === 'advanced')

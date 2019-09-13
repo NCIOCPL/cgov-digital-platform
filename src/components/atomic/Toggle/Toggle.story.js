@@ -1,10 +1,13 @@
 import generateStories from '../../../../.storybook/generateStories';
-import {{ properCase name }} from './{{ properCase name }}';
+import Toggle from './Toggle';
 
 generateStories({
-  component: { {{ properCase name }} },
-  storyName: 'Elements | {{ properCase name }}',
+  component: { Toggle },
+  storyName: 'Elements | Toggle',
   defaultProps: {
+    id: 'mockid',
+    label: 'mockToggle',
+    defaultChecked: false
   },
   stories: [
     {
