@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   CancerTypeCondition,
@@ -35,9 +34,5 @@ const FormAdvanced = () => {
     </form>
   );
 };
-
-FormAdvanced.propTypes = {};
-
-FormAdvanced.defaultProps = {};
 
 export default FormAdvanced;

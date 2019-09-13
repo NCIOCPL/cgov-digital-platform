@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 //modules
 import {
   Age,
@@ -21,12 +19,6 @@ const FormBasic = () => {
       <ZipCode />
     </form>
   );
-};
-
-FormBasic.propTypes = {
-};
-
-FormBasic.defaultProps = {
 };
 
 export default FormBasic;

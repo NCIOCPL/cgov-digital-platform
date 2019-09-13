@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormBasic from '../FormBasic';
 import FormAdvanced from '../FormAdvanced';
-import Delighter from '../../components/atomic/Delighter';
+import {Accordion, AccordionItem, Delighter} from '../../components/atomic';
 
 
 const SearchPage = ({ form }) => {
@@ -70,6 +70,15 @@ const SearchPage = ({ form }) => {
             <p className="form-switch">
               <button type="button" onClick={toggleForm}>View {(formVersion === 'basic')? 'Advanced':'Basic'}</button>
             </p>
+            <Accordion startCollapsed>
+            <AccordionItem title="First Amendment">
+        <p>Congress shall make no law respecting an establishment of ...</p>
+      </AccordionItem>
+      <AccordionItem>
+        <span>First Amendment</span>
+        <p>Congress shall make no law respecting an establishment of ...</p>
+      </AccordionItem>
+      </Accordion>
           </div>
 
           <div className="search-page__content">

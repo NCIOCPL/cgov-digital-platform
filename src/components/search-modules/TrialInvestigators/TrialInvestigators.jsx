@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import {Fieldset, TextInput} from '../../atomic';
 import './TrialInvestigators.scss';
 
 const TrialInvestigators = ({
@@ -15,12 +13,6 @@ const TrialInvestigators = ({
       <TextInput id="in" label="Search by Trial Investigators." />
     </Fieldset>
   );
-};
-
-TrialInvestigators.propTypes = {
-};
-
-TrialInvestigators.defaultProps = {
 };
 
 export default TrialInvestigators;

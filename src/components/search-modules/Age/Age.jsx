@@ -1,8 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
-import './Age.scss';
+import {Fieldset, TextInput} from '../../atomic';
 
 const Age = () => {
   return (
@@ -13,14 +10,6 @@ const Age = () => {
       <TextInput id="a" label="Enter the age of the participant." maxLength={3} />
     </Fieldset>
   );
-};
-
-Age.propTypes = {
-  
-};
-
-Age.defaultProps = {
-  
 };
 
 export default Age;
