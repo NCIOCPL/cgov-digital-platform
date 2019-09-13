@@ -15,8 +15,9 @@ describe('Radio', () => {
     wrapper = mount(<Radio label={label} />);
   });
 
-  it('is defined', () => {
+  it('is defined and renders without error', () => {
     expect(wrapper).toBeDefined();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders the label text correctly', () => {

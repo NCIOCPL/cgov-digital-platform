@@ -31,6 +31,10 @@ describe('Accordion', () => {
   //   expect(accordion).toMatchSnapshot();
   // });
 
+  it('renders correctly without errors', () => {
+    expect(accordion).toMatchSnapshot();
+  });
+
   it('is a div element', () => {
     expect(accordion.type()).toEqual(Accordion);
     expect(accordion.getDOMNode().tagName.toLowerCase()).toEqual('div');
