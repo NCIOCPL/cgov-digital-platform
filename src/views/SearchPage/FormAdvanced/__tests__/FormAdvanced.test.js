@@ -3,20 +3,20 @@ import { render, shallow, mount } from 'enzyme';
 import {
   resetDom,
   setupDom
-} from '../../../utilities/testHelpers';
-import FormBasic from '../FormBasic';
+} from '../../../../utilities/testHelpers';
+import FormAdvanced from '../FormAdvanced';
 
 const defaultProps = {
 }
 
 const setup = (enzymeMethod = render, props = {}) => {
   const component = enzymeMethod(
-    <FormBasic {...props} />
+    <FormAdvanced {...props} />
   );
   return component;
 };
 
-describe('FormBasic', () => {
+describe('FormAdvanced', () => {
   describe('Render', () => {
     let component = null;
 

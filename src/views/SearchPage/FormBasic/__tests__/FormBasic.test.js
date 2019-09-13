@@ -1,22 +1,22 @@
 import React from 'react';
-import { render, shallow, mount } from 'enzyme';
+import { render} from 'enzyme';
 import {
   resetDom,
   setupDom
-} from '../../../utilities/testHelpers';
-import FormAdvanced from '../FormAdvanced';
+} from '../../../../utilities/testHelpers';
+import FormBasic from '../FormBasic';
 
 const defaultProps = {
 }
 
 const setup = (enzymeMethod = render, props = {}) => {
   const component = enzymeMethod(
-    <FormAdvanced {...props} />
+    <FormBasic {...props} />
   );
   return component;
 };
 
-describe('FormAdvanced', () => {
+describe('FormBasic', () => {
   describe('Render', () => {
     let component = null;
 

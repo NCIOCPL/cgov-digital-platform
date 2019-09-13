@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormBasic from '../FormBasic';
-import FormAdvanced from '../FormAdvanced';
+import FormBasic from './FormBasic';
+import FormAdvanced from './FormAdvanced';
 import {Accordion, AccordionItem, Delighter} from '../../components/atomic';
 
 
 const SearchPage = ({ form }) => {
   const [formVersion, setFormVersion] = useState(form);
+  
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -53,8 +54,9 @@ const SearchPage = ({ form }) => {
     
   const toggleForm = () => {
     setFormVersion((formVersion === 'basic')? 'advanced': 'basic');
-  }
+  };
 
+  
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
@@ -82,8 +84,8 @@ const SearchPage = ({ form }) => {
           </div>
 
           <div className="search-page__content">
-            {(formVersion === 'advanced')?
-              <FormAdvanced />
+            {(formVersion === 'advanced')
+              ? <FormAdvanced />
               : <FormBasic />
             }
             
