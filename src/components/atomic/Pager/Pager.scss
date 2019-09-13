@@ -1,0 +1,65 @@
+.pager__container {
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+
+  .pager__count p {
+    font-weight: bold;
+  }
+
+  .pager__nav {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .pager__num,
+  .pager__arrow {
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #2b7bba;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 150ms linear;
+  }
+
+  .pager__num,
+  .pager__arrow {
+    &:focus {
+      background: #cbe8fc;
+    }
+  }
+
+  .pager__num,
+  .pager__arrow {
+    margin: 0 3px;
+  }
+
+  .pager__num,
+  .pager__arrow {
+    &:hover {
+      background: #cbe8fc;
+    }
+  }
+
+  .pager__ellipses,
+  .pager__num--active {
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  .pager__num--active {
+    background: #2a71a5;
+    color: white;
+    cursor: default;
+    user-select: none;
+    &:hover,
+    &:focus {
+      background: #2a71a5;
+    }
+  }
+}
