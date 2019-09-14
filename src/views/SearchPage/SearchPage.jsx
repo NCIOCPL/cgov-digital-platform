@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormBasic from './FormBasic';
 import FormAdvanced from './FormAdvanced';
-import {Accordion, AccordionItem, Delighter, Toggle} from '../../components/atomic';
-
+import {
+  Accordion,
+  AccordionItem,
+  Delighter,
+  Toggle,
+  RemovableTag,
+  TagContainer
+} from '../../components/atomic';
 
 const SearchPage = ({ form }) => {
   const [formVersion, setFormVersion] = useState(form);
-  
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -48,15 +53,13 @@ const SearchPage = ({ form }) => {
           Use the checklist in our guide to gather the information you’ll need.
         </p>
       </Delighter>
-
     </div>
   );
-    
+
   const toggleForm = () => {
-    setFormVersion((formVersion === 'basic')? 'advanced': 'basic');
+    setFormVersion(formVersion === 'basic' ? 'advanced' : 'basic');
   };
 
-  
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
@@ -70,30 +73,41 @@ const SearchPage = ({ form }) => {
               included in NCI's collection.
             </p>
             <p className="form-switch">
-              <button type="button" onClick={toggleForm}>View {(formVersion === 'basic')? 'Advanced':'Basic'}</button>
+              <button type="button" onClick={toggleForm}>
+                View {formVersion === 'basic' ? 'Advanced' : 'Basic'}
+              </button>
             </p>
+
+            <TagContainer>
+              <RemovableTag label="Blinotumomab" />
+              <RemovableTag label="Bevacizumab" />
+              <RemovableTag label="Anti-HER2 Antibody-drug Conjugate" />
+              <RemovableTag label="Trastuzumab" />
+              <RemovableTag label="Pentostatin" />
+              <RemovableTag label="Cyclophosphamide" />
+            </TagContainer>
+
             <Accordion startCollapsed>
-            <AccordionItem title="First Amendment">
-        <p>Congress shall make no law respecting an establishment of ...</p>
-      </AccordionItem>
-      <AccordionItem>
-        <span>First Amendment</span>
-        <p>Congress shall make no law respecting an establishment of ...</p>
-      </AccordionItem>
-      </Accordion>
+              <AccordionItem title="First Amendment">
+                <p>
+                  Congress shall make no law respecting an establishment of ...
+                </p>
+              </AccordionItem>
+              <AccordionItem>
+                <span>First Amendment</span>
+                <p>
+                  Congress shall make no law respecting an establishment of ...
+                </p>
+              </AccordionItem>
+            </Accordion>
           </div>
 
-<Toggle id="va" value="1" />
+          <Toggle id="va" value="1" />
 
           <div className="search-page__content">
-            {(formVersion === 'advanced')
-              ? <FormAdvanced />
-              : <FormBasic />
-            }
-            
-            <aside className="search-page__aside">
-              {renderDelighters()}
-            </aside>
+            {formVersion === 'advanced' ? <FormAdvanced /> : <FormBasic />}
+
+            <aside className="search-page__aside">{renderDelighters()}</aside>
           </div>
           <div className="search-page__footer">
             <div className="api-reference-section">
@@ -102,10 +116,11 @@ const SearchPage = ({ form }) => {
                 trial search
               </h3>
               <p className="api-reference-content">
-                  An application programming interface (API) helps translate
-                  large amounts of data in meaningful ways. NCI’s clinical
-                  trials search data is now powered by an API, allowing
-                  programmers to build applications <a href="/syndication/api">using this open data.</a>
+                An application programming interface (API) helps translate large
+                amounts of data in meaningful ways. NCI’s clinical trials search
+                data is now powered by an API, allowing programmers to build
+                applications{' '}
+                <a href="/syndication/api">using this open data.</a>
               </p>
             </div>
           </div>
