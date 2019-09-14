@@ -1,6 +1,7 @@
 import { configure } from "@storybook/react";
 
-// import '../node_modules/react-uswds2/src/uswds/styles/uswds.scss';
+import '../src/__nci-dev__common.css';
+import './storybook-shim.css';
 
 function loadStories() {
   const projectReq = require.context("../src", true, /\.story\.js$/);

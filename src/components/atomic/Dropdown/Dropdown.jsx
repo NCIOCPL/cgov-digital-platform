@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InputLabel from '../InputLabel';
 import utils from '../../../utilities/utilities';
+import './Dropdown.scss';
 
 //  Class representing a dropdown
 //

@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './InputLabel.scss';
 
 const InputLabel = ({
   label,
   labelHint,
   htmlFor,
   required,
-  hasError,
-  classes,
+  hasError
 }) => {
+  let classes = 'cts-label';
+  classes += required ? ' cts-label--required' : '';
+  classes += hasError ? ' cts-label--error' : '';
   return (
-    <label id={`${htmlFor}-label`} className={`${classes} ${required? '--required': ''}`} htmlFor={htmlFor}>
+    <label id={`${htmlFor}-label`} className={classes} htmlFor={htmlFor}>
       {label}
-      {labelHint && <span className="cts-input__hint"> {labelHint}</span>}
+      {labelHint && <span className="cts-hint"> {labelHint}</span>}
     </label>
   );
 };
