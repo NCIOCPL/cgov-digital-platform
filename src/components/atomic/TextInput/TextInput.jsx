@@ -7,9 +7,19 @@ import './TextInput.scss';
 class TextInput extends React.Component {
   static propTypes = {
     action: PropTypes.func,
+    allowedChars: PropTypes.object,
+    classes: PropTypes.string,
+    enableSpellCheck: PropTypes.bool,
+    errorMessage: PropTypes.string,
     id: PropTypes.string.isRequired,
+    inputHelpText: PropTypes.string,
+    isValid: PropTypes.bool,
     label: PropTypes.string.isRequired,
+    labelHidden: PropTypes.bool,
     labelHint: PropTypes.string,
+    maxLength: PropTypes.number,
+    placeHolder: PropTypes.string,
+    required: PropTypes.bool,
     type: PropTypes.oneOf([
       'text',
       'email',
@@ -22,18 +32,8 @@ class TextInput extends React.Component {
       'week',
       'number',
     ]),
-    classes: PropTypes.string,
-    placeHolder: PropTypes.string,
-    required: PropTypes.bool,
-    enableSpellCheck: PropTypes.bool,
-    errorMessage: PropTypes.string,
-    isValid: PropTypes.bool,
     value: PropTypes.string,
-    validators: PropTypes.array,
-    allowedChars: PropTypes.object,
-    maxLength: PropTypes.number,
-    inputHelpText: PropTypes.string,
-    labelHidden: PropTypes.bool,
+    validators: PropTypes.array
   };
 
   static defaultProps = {
@@ -93,12 +93,10 @@ class TextInput extends React.Component {
       );
     }
 
-    ariaLabel = (this.props.labelHidden)
-    ? {"aria-label": this.props.label} 
-    : {"aria-labelledby": this.props.id + '-label'};
-      
-    
-    
+    ariaLabel = this.props.labelHidden
+      ? { 'aria-label': this.props.label }
+      : { 'aria-labelledby': this.props.id + '-label' };
+
     return (
       <>
         {this.props.labelHidden ? null : (
