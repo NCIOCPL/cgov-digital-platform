@@ -6,6 +6,8 @@ export { default as Dropdown } from "./Dropdown";
 export { default as Fieldset } from "./Fieldset";
 export { default as InputLabel } from "./InputLabel";
 export { default as Radio } from "./Radio";
+export { default as RemovableTag } from "./RemovableTag";
 export { default as ResultsItem } from "./ResultsItem";
+export { default as TagContainer } from "./TagContainer";
 export { default as TextInput } from "./TextInput";
 export { default as Toggle } from "./Toggle";

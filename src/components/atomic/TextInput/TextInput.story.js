@@ -1,6 +1,5 @@
 import generateStories from '../../../../.storybook/generateStories';
 import TextInput from './TextInput';
-import { text } from '@storybook/addon-knobs';
 
 generateStories({
   component: { TextInput },
