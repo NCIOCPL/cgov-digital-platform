@@ -8,7 +8,7 @@ import {
   Delighter,
   Toggle,
   RemovableTag,
-  TagContainer
+  TagContainer,
 } from '../../components/atomic';
 
 const SearchPage = ({ form }) => {
@@ -60,11 +60,32 @@ const SearchPage = ({ form }) => {
     setFormVersion(formVersion === 'basic' ? 'advanced' : 'basic');
   };
 
+  const renderSearchTip = () => (
+    <div className="cts-search-tip">
+      <div className="cts-search-tip__icon">
+        <i className="lightbulb-circle-yellow"></i>
+      </div>
+      <div className="cts-search-tip__body">
+        <strong>Search Tip:</strong>
+        {formVersion === 'basic' ? (
+          <>{` For more search options, use our `}</>
+        ) : (
+          <>{` All fields are optional. Skip any items that are unknown or not applicable or try our `}</>
+        )}
+        <button type="button" onClick={toggleForm}>
+          {formVersion === 'basic' ? 'advanced search' : 'basic search'}
+        </button>
+        .
+      </div>
+    </div>
+  );
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
         {/* */}
         <article className="search-page">
+
           <div className="search-page__header">
             <p>
               NCI-supported clinical trials are those sponsored or otherwise
@@ -72,43 +93,14 @@ const SearchPage = ({ form }) => {
               Clinical Trial, to learn about options for finding trials not
               included in NCI's collection.
             </p>
-            <p className="form-switch">
-              <button type="button" onClick={toggleForm}>
-                View {formVersion === 'basic' ? 'Advanced' : 'Basic'}
-              </button>
-            </p>
-
-            <TagContainer>
-              <RemovableTag label="Blinotumomab" />
-              <RemovableTag label="Bevacizumab" />
-              <RemovableTag label="Anti-HER2 Antibody-drug Conjugate" />
-              <RemovableTag label="Trastuzumab" />
-              <RemovableTag label="Pentostatin" />
-              <RemovableTag label="Cyclophosphamide" />
-            </TagContainer>
-
-            <Accordion startCollapsed>
-              <AccordionItem title="First Amendment">
-                <p>
-                  Congress shall make no law respecting an establishment of ...
-                </p>
-              </AccordionItem>
-              <AccordionItem>
-                <span>First Amendment</span>
-                <p>
-                  Congress shall make no law respecting an establishment of ...
-                </p>
-              </AccordionItem>
-            </Accordion>
+            {renderSearchTip()}
           </div>
-
-          <Toggle id="va" value="1" />
 
           <div className="search-page__content">
             {formVersion === 'advanced' ? <FormAdvanced /> : <FormBasic />}
-
             <aside className="search-page__aside">{renderDelighters()}</aside>
           </div>
+
           <div className="search-page__footer">
             <div className="api-reference-section">
               <h3 id="ui-id-4">
@@ -124,6 +116,7 @@ const SearchPage = ({ form }) => {
               </p>
             </div>
           </div>
+
         </article>
         {/* */}
       </div>
