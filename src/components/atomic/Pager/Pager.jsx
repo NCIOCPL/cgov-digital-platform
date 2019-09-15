@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Utilities from '../../../utilities/utilities';
 import './Pager.scss';
 
 const Pager = ({ data, startFromPage, numberToShow, callback }) => {
   const [currentPage, setCurrentPage] = useState(startFromPage);
+
+  useEffect(() => {
+    if (callback) {
+      const startFrom = currentPage * numberToShow;
+      const endAt = startFrom + numberToShow;
+      const results = data.slice(startFrom, endAt);
+      callback(results);
+    }
+  }, [currentPage]);
 
   const renderEllipsis = key => {
     return (
@@ -17,40 +26,39 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
   const determineSteps = (total, numberToShow, activePage) => {
     const divisions = Math.ceil(total / numberToShow);
     const pagesFromStart = activePage;
-    const pagesFromEnd = divisions - activePage;
+    const pagesFromEnd = divisions - (activePage + 1);
     let pages;
-    if (pagesFromStart > 5) {
-      pages = [0, renderEllipsis, activePage - 2, activePage - 1, activePage];
+    if (divisions > 1) {
+      if (pagesFromStart > 5) {
+        pages = [0, renderEllipsis, activePage - 2, activePage - 1, activePage];
+      } else {
+        pages = Array(activePage + 1)
+          .fill()
+          .map((el, idx) => idx);
+      }
+      if (pagesFromEnd > 5) {
+        pages = [
+          ...pages,
+          activePage + 1,
+          activePage + 2,
+          renderEllipsis,
+          divisions,
+        ];
+      } else {
+        const remainingPages = Array(pagesFromEnd)
+          .fill()
+          .map((el, idx) => activePage + 1 + idx);
+        pages = [...pages, ...remainingPages];
+      }
     } else {
-      pages = Array(activePage + 1)
-        .fill()
-        .map((el, idx) => idx);
-    }
-    if (pagesFromEnd > 5) {
-      pages = [
-        ...pages,
-        activePage + 1,
-        activePage + 2,
-        renderEllipsis,
-        divisions,
-      ];
-    } else {
-      const remainingPages = Array(pagesFromEnd + 1)
-        .fill()
-        .map((el, idx) => activePage + 1 + idx);
-      pages = [...pages, ...remainingPages];
+      //One or fewer divisions exist. Do not render the Pager
+      pages = [];
     }
     return pages;
   };
 
   const determineResults = pageNumber => {
     setCurrentPage(pageNumber);
-    if (callback) {
-      const startFrom = pageNumber * numberToShow;
-      const endAt = startFrom + numberToShow;
-      const results = data.slice(startFrom, endAt);
-      callback(results);
-    }
   };
 
   const renderSteps = (stepsArray, activePage) => {
@@ -78,36 +86,38 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
 
   let steps = determineSteps(data.length, numberToShow, currentPage);
   let isFirstPage = currentPage === 0;
-  let isLastPage = currentPage === Math.ceil(data.length / numberToShow) + 1;
+  let isLastPage = currentPage + 1 === Math.ceil(data.length / numberToShow);
   return (
     <nav className="pager__container">
-      <div className="pager__nav">
-        {!isFirstPage && (
-          <div
-            className="pager__arrow"
-            tabIndex="0"
-            onClick={() => determineResults(currentPage - 1)}
-            onKeyPress={Utilities.keyHandler({
-              fn: () => determineResults(currentPage - 1),
-            })}
-          >
-            {'<'}
-          </div>
-        )}
-        {renderSteps(steps, currentPage)}
-        {!isLastPage && (
-          <div
-            className="pager__arrow"
-            tabIndex="0"
-            onClick={() => determineResults(currentPage + 1)}
-            onKeyPress={Utilities.keyHandler({
-              fn: () => determineResults(currentPage + 1),
-            })}
-          >
-            {'>'}
-          </div>
-        )}
-      </div>
+      {steps.length > 0 ? (
+        <div className="pager__nav">
+          {!isFirstPage && (
+            <div
+              className="pager__arrow"
+              tabIndex="0"
+              onClick={() => determineResults(currentPage - 1)}
+              onKeyPress={Utilities.keyHandler({
+                fn: () => determineResults(currentPage - 1),
+              })}
+            >
+              {'< Previous'}
+            </div>
+          )}
+          {renderSteps(steps, currentPage)}
+          {!isLastPage && (
+            <div
+              className="pager__arrow"
+              tabIndex="0"
+              onClick={() => determineResults(currentPage + 1)}
+              onKeyPress={Utilities.keyHandler({
+                fn: () => determineResults(currentPage + 1),
+              })}
+            >
+              {'Next >'}
+            </div>
+          )}
+        </div>
+      ) : null}
     </nav>
   );
 };

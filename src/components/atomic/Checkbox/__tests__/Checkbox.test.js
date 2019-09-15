@@ -81,7 +81,7 @@ describe('Checkbox', () => {
 
   it('it is not checked by default', () => {
     const wrapper = setup(mount, defaultProps);
-    const inputChecked = wrapper.find('input').props().defaultChecked;
+    const inputChecked = wrapper.find('input').instance().checked;
     expect(inputChecked).toBe(false);
   });
 
@@ -90,7 +90,7 @@ describe('Checkbox', () => {
       ...defaultProps,
       defaultChecked: true
     });
-    const inputChecked = wrapper.find('input').props().defaultChecked;
+    const inputChecked = wrapper.find('input').instance().defaultChecked;
     expect(inputChecked).toBe(true);
   });
 
