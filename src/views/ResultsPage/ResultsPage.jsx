@@ -14,6 +14,7 @@ import './ResultsPage.scss';
 const ResultsPage = ({ results }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [paginatedResults, setPaginatedResults] = useState([]);
+  const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
 
   useEffect(() => {
@@ -36,8 +37,9 @@ const ResultsPage = ({ results }) => {
     }
   }, [paginatedResults, selectedResults]);
 
-  const handlePagination = slicedResults => {
+  const handlePagination = (slicedResults, currentPage) => {
     setPaginatedResults([...slicedResults]);
+    setPagerPage(currentPage);
   };
 
   const renderDelighters = () => (
@@ -77,7 +79,11 @@ const ResultsPage = ({ results }) => {
   const renderResultsHeader = () => {
     return (
       <div className="cts-results-header">
-        <p><strong>Results 1-10 of {paginatedResults.length} for your search</strong></p>
+        <p>
+          <strong>
+            Results 1-10 of {paginatedResults.length} for your search
+          </strong>
+        </p>
         <Accordion bordered>
           <AccordionItem title="Show Search Criteria">
             <div>
@@ -93,6 +99,30 @@ const ResultsPage = ({ results }) => {
     );
   };
 
+  const renderResultsControl = () => {
+    return (
+      <>
+        <div className="results-page__select-all">
+          <Checkbox
+            id="select-all-checkbox"
+            name="select-all"
+            label="Select All on Page"
+            checked={selectAll}
+            onChange={() => setSelectAll(!selectAll)}
+          />
+          <button className="results-page__print-button">Print Selected</button>
+        </div>
+        <div className="results-page__pager">
+          <Pager
+            data={results}
+            startFromPage={pagerPage}
+            callback={handlePagination}
+          />
+        </div>
+      </>
+    );
+  };
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
@@ -101,21 +131,7 @@ const ResultsPage = ({ results }) => {
           {renderResultsHeader()}
           <div className="results-page__content">
             <div className="results-page__control --top">
-              <div className="results-page__select-all">
-                <Checkbox
-                  id="select-all-checkbox"
-                  name="select-all"
-                  label="Select All on Page"
-                  checked={selectAll}
-                  onChange={() => setSelectAll(!selectAll)}
-                />
-                <button className="results-page__print-button">
-                  Print Selected
-                </button>
-              </div>
-              <div className="results-page__pager">
-                <Pager data={results} callback={handlePagination} />
-              </div>
+              {renderResultsControl()}
             </div>
             <div className="results-page__list">
               <ResultsList
@@ -123,27 +139,17 @@ const ResultsPage = ({ results }) => {
                 selectedResults={selectedResults}
                 setSelectedResults={setSelectedResults}
               />
-              <aside className="results-page__aside --side">{renderDelighters()}</aside>
+              <aside className="results-page__aside --side">
+                {renderDelighters()}
+              </aside>
             </div>
             <div className="results-page__control --bottom">
-              <div className="results-page__select-all">
-                <Checkbox
-                  id="select-all-checkbox"
-                  name="select-all"
-                  label="Select All on Page"
-                  checked={selectAll}
-                  onChange={() => setSelectAll(!selectAll)}
-                />
-                <button className="results-page__print-button">
-                  Print Selected
-                </button>
-              </div>
-              <div className="results-page__pager">
-                <Pager data={results} callback={handlePagination} />
-              </div>
+              {renderResultsControl()}
             </div>
           </div>
-          <aside className="results-page__aside --bottom">{renderDelighters()}</aside>
+          <aside className="results-page__aside --bottom">
+            {renderDelighters()}
+          </aside>
         </article>
         {/* */}
       </div>
