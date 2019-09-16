@@ -42,7 +42,7 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
           activePage + 1,
           activePage + 2,
           renderEllipsis,
-          divisions,
+          divisions - 1,
         ];
       } else {
         const remainingPages = Array(pagesFromEnd)
