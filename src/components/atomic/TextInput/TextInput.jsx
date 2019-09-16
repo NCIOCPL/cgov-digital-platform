@@ -152,6 +152,7 @@ class TextInput extends React.Component {
     }
     // If validator(s) were sent as a prop, test them next
     else if (validators) {
+      // eslint-disable-next-line
       for (let validator of validators) {
         // check is validator is forced 'no validation'
         if (!validator.pattern && !validator.isValid(this.state.value)) {

@@ -29,20 +29,19 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
     const pagesFromEnd = divisions - (activePage + 1);
     let pages;
     if (divisions > 1) {
-      if (pagesFromStart > 5) {
-        pages = [0, renderEllipsis, activePage - 2, activePage - 1, activePage];
+      if (pagesFromStart > 3) {
+        pages = [0, renderEllipsis, activePage - 1, activePage];
       } else {
         pages = Array(activePage + 1)
           .fill()
           .map((el, idx) => idx);
       }
-      if (pagesFromEnd > 5) {
+      if (pagesFromEnd > 3) {
         pages = [
           ...pages,
           activePage + 1,
-          activePage + 2,
           renderEllipsis,
-          divisions,
+          divisions - 1,
         ];
       } else {
         const remainingPages = Array(pagesFromEnd)

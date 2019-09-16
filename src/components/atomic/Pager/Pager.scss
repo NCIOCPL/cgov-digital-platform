@@ -45,9 +45,10 @@
     }
   }
 
-  .pager__ellipses,
-  .pager__num--active {
-    &:hover {
+  .pager__ellipses {
+    &:hover,
+    &:focus {
+      background: white;
       cursor: default;
     }
   }
@@ -59,6 +60,7 @@
     user-select: none;
     &:hover,
     &:focus {
+      cursor: default;
       background: #2a71a5;
     }
   }
