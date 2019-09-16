@@ -3,7 +3,7 @@ import { render, shallow, mount } from 'enzyme';
 import {
   resetDom,
   setupDom
-} from '../../../utilities/testHelpers';
+} from '../../../../utilities/testHelpers';
 import RemovableTag from '../RemovableTag';
 
 const defaultProps = {
