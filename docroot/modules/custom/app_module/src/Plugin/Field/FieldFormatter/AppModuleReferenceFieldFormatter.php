@@ -48,8 +48,9 @@ class AppModuleReferenceFieldFormatter extends FormatterBase {
        * 3. We then return the build objject from the display
        *    handler.
        */
+      $plugin = $app_module->getAppModulePlugin();
       $elements[$delta]['contents'] = [
-        '#markup' => "<div>App Module: $app_id</div>",
+        '#markup' => "<div>App Module: " . $plugin->pluginTitle() . " </div>",
       ];
     }
 

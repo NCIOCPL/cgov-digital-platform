@@ -51,7 +51,13 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['block', 'node', 'field_ui', 'app_module'];
+  public static $modules = [
+    'block',
+    'node',
+    'field_ui',
+    'app_module',
+    'app_module_test',
+  ];
 
   /**
    * {@inheritdoc}
@@ -86,6 +92,7 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       [
         'label' => $this->appModuleId,
         'id' => $this->appModuleId,
+        'app_module_plugin_id' => 'test_app_module_plugin',
       ],
       'Save'
     );

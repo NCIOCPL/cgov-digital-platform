@@ -49,8 +49,8 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
     $this->drupalPostForm(NULL, $edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
-    // Verity the web page is displaying the formatter.
-    $assert->pageTextContains('App Module: ' . $this->appModuleId);
+    // Verify the web page is displaying the formatter.
+    $assert->pageTextContains('App Module: Test App Module Plugin');
   }
 
 }

@@ -50,7 +50,7 @@ class AppModuleReferenceSelectWidget extends OptionsSelectWidget {
     $app_modules = AppModules::getEnabledAppModules();
     $options = [];
     foreach ($app_modules as $app_module) {
-      $options[$app_module->id] = $app_module->label;
+      $options[$app_module->id()] = $app_module->label();
     }
     return $options;
   }
