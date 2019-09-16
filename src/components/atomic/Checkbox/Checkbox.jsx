@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Checkbox.scss';
 
-const Checkbox = ({ id, label, value, name, classes, disabled, ...otherProps }) => (
+const Checkbox = ({
+  id,
+  label,
+  value,
+  name,
+  classes,
+  disabled,
+  ...otherProps
+}) => (
   <div className={`cts-checkbox ${classes}`}>
     <input
       id={id}
@@ -21,17 +29,15 @@ const Checkbox = ({ id, label, value, name, classes, disabled, ...otherProps }) 
 
 Checkbox.propTypes = {
   id: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
-  defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
   classes: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   classes: '',
-  defaultChecked: false,
   name: 'checkboxes',
 };
 
