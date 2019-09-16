@@ -601,4 +601,19 @@ function cgov_core_preprocess_image_formatter(&$variables) {
   ) {
     $variables['image']['#alt'] = "";
   }
+
+}
+
+/**
+ * Implements hook_entity_build_defaults_alter().
+ */
+function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $entity, $view_mode) {
+  // Add the bundle as a cache tag to help simplify cache invalidation.
+  if ($entity->getEntityTypeId() === 'node' || $entity->getEntityTypeId() === 'media') {
+    $tags = $view_mode == 'full' ? [$entity->bundle() . ':full'] : [];
+    $tags[] = $entity->bundle() . ':all-view-modes';
+    $build['#cache'] = [
+      'tags' => Cache::mergeTags($entity->getCacheTags(), $tags),
+    ];
+  }
 }
