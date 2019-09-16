@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { Checkbox, ResultsList, Delighter, Pager } from '../../components/atomic';
+import { Link } from 'react-router-dom';
+import {
+  Checkbox,
+  ResultsList,
+  Delighter,
+  Pager,
+  Accordion,
+  AccordionItem,
+} from '../../components/atomic';
 import './ResultsPage.scss';
 
 const ResultsPage = ({ results }) => {
@@ -29,9 +36,9 @@ const ResultsPage = ({ results }) => {
     }
   }, [paginatedResults, selectedResults]);
 
-  const handlePagination = (slicedResults) => {
+  const handlePagination = slicedResults => {
     setPaginatedResults([...slicedResults]);
-  }
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -75,11 +82,31 @@ const ResultsPage = ({ results }) => {
     </div>
   );
 
+  const renderResultsHeader = () => {
+    return (
+      <div className="cts-results-header">
+        <p><strong>Results 1-10 of {paginatedResults.length} for your search</strong></p>
+        <Accordion bordered>
+          <AccordionItem title="Show Search Criteria">
+            <div>
+              <h3>Your Search Criteria</h3>
+              ...Table here...
+            </div>
+          </AccordionItem>
+        </Accordion>
+        <p className="reset-form">
+          <Link to="/search">Start Over</Link>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
         {/* */}
         <article className="results-page">
+          {renderResultsHeader()}
           <div className="results-page__control">
             <Checkbox
               id="select-all-checkbox"
@@ -89,7 +116,7 @@ const ResultsPage = ({ results }) => {
               checked={selectAll}
               onChange={() => setSelectAll(!selectAll)}
             />
-            <Pager data={results} callback={handlePagination}/>
+            <Pager data={results} callback={handlePagination} />
           </div>
           <div className="results-page__content">
             {
