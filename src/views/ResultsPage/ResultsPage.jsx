@@ -117,7 +117,7 @@ const ResultsPage = ({ results }) => {
           <button className="results-page__print-button">Print Selected</button>
         </div>
         <div className="results-page__pager">
-          <Pager data={results} callback={handlePagination} />
+          <Pager data={results} callback={handlePagination} startFromPage={pagerPage} />
         </div>
       </div>
     );
