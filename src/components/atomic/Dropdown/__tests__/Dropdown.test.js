@@ -58,7 +58,7 @@ describe('Dropdown', () => {
       <option value='value2'>Option B</option>
       <option value='value3'>Option C</option>
     </Dropdown>);
-    expect(wrapper.find('label').hasClass('--required')).toBe(true);
+    expect(wrapper.find('label').hasClass('cts-label--required')).toBe(true);
   });
 
   it('displays the error message when present', () => {

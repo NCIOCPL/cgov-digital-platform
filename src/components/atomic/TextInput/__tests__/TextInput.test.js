@@ -45,6 +45,6 @@ describe('TextInput', () => {
 
   it('accepts the required property', () => {
     wrapper = mount(<TextInput required id={testId} label={label} />);
-    expect(wrapper.find('label').hasClass('--required')).toBe(true);
+    expect(wrapper.find('label').hasClass('cts-label--required')).toBe(true);
   });
 });

@@ -35,6 +35,6 @@ describe('InputLabel', () => {
 
   it('accepts the required attribute', () => {
     wrapper = shallow(<InputLabel required label={label} htmlFor={htmlFor} />);
-    expect(wrapper.hasClass('--required')).toBe(true);
+    expect(wrapper.hasClass('cts-label--required')).toBe(true);
   });
 });
