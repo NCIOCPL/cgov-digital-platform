@@ -107,27 +107,51 @@ const ResultsPage = ({ results }) => {
         {/* */}
         <article className="results-page">
           {renderResultsHeader()}
-          <div className="results-page__control">
-            <Checkbox
-              id="select-all-checkbox"
-              name="select-all"
-              label="Select All on Page"
-              classes="results-page__select-all"
-              checked={selectAll}
-              onChange={() => setSelectAll(!selectAll)}
-            />
-            <Pager data={results} callback={handlePagination} />
-          </div>
           <div className="results-page__content">
-            {
+            <div className="results-page__control --top">
+              <div className="results-page__select-all">
+                <Checkbox
+                  id="select-all-checkbox"
+                  name="select-all"
+                  label="Select All on Page"
+                  checked={selectAll}
+                  onChange={() => setSelectAll(!selectAll)}
+                />
+                <button className="results-page__print-button">
+                  Print Selected
+                </button>
+              </div>
+              <div className="results-page__pager">
+                <Pager data={results} callback={handlePagination} />
+              </div>
+            </div>
+            <div className="results-page__list">
               <ResultsList
                 results={paginatedResults}
                 selectedResults={selectedResults}
                 setSelectedResults={setSelectedResults}
               />
-            }
-            <aside className="results-page__aside">{renderDelighters()}</aside>
+              <aside className="results-page__aside --side">{renderDelighters()}</aside>
+            </div>
+            <div className="results-page__control --bottom">
+              <div className="results-page__select-all">
+                <Checkbox
+                  id="select-all-checkbox"
+                  name="select-all"
+                  label="Select All on Page"
+                  checked={selectAll}
+                  onChange={() => setSelectAll(!selectAll)}
+                />
+                <button className="results-page__print-button">
+                  Print Selected
+                </button>
+              </div>
+              <div className="results-page__pager">
+                <Pager data={results} callback={handlePagination} />
+              </div>
+            </div>
           </div>
+          <aside className="results-page__aside --bottom">{renderDelighters()}</aside>
         </article>
         {/* */}
       </div>
