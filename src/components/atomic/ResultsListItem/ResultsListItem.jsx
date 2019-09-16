@@ -7,7 +7,7 @@ import './ResultsListItem.scss';
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
 
   return (
-    <div className="results-list-item results-list__item" key={id}>
+    <div className="results-list-item results-list__item">
       <div className="results-list-item__checkbox">
         <Checkbox
           id={id || item.title}

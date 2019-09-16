@@ -30,7 +30,6 @@ const ResultsPage = ({ results }) => {
   }, [paginatedResults, selectedResults]);
 
   const handlePagination = (slicedResults) => {
-    console.log('slicedResults: ', slicedResults);
     setPaginatedResults([...slicedResults]);
   }
 
