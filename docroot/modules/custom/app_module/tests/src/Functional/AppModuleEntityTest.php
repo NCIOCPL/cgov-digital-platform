@@ -104,6 +104,7 @@ class AppModuleEntityTest extends BrowserTestBase {
       [
         'label' => $app_machine_name,
         'id' => $app_machine_name,
+        'app_module_plugin_id' => 'test_app_module_plugin',
       ],
       'Save'
     );
@@ -122,6 +123,7 @@ class AppModuleEntityTest extends BrowserTestBase {
       [
         'label' => $app2_label,
         'id' => $app2_machine_name,
+        'app_module_plugin_id' => 'test_app_module_plugin',
       ],
       'Save'
     );
@@ -136,6 +138,7 @@ class AppModuleEntityTest extends BrowserTestBase {
       [
         'label' => $app2_label,
         'id' => $app2_machine_name,
+        'app_module_plugin_id' => 'test_app_module_plugin',
       ],
       'Save'
     );

@@ -2,6 +2,7 @@
 
 namespace Drupal\app_module\Form;
 
+use Drupal\app_module\Plugin\AppModulePluginManager;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -14,13 +15,23 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AppModuleForm extends EntityForm {
 
   /**
+   * The Application Module plugin manager.
+   *
+   * @var \Drupal\app_module\Plugin\AppModulePluginManager
+   */
+  protected $pluginManager;
+
+  /**
    * Constructs an AppModuleForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entityTypeManager.
+   * @param \Drupal\app_module\Plugin\AppModulePluginManager $pluginManager
+   *   The Application Module plugin manager.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, AppModulePluginManager $pluginManager) {
     $this->entityTypeManager = $entityTypeManager;
+    $this->pluginManager = $pluginManager;
   }
 
   /**
@@ -28,7 +39,8 @@ class AppModuleForm extends EntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('plugin.manager.app_module')
     );
   }
 
@@ -55,6 +67,14 @@ class AppModuleForm extends EntityForm {
         'exists' => [$this, 'exist'],
       ],
       '#disabled' => !$app_module->isNew(),
+    ];
+    $form['app_module_plugin_id'] = [
+      '#type' => 'select',
+      '#title' => $this
+        ->t('Select element'),
+      '#options' => $this->getAppModulePluginOptions(),
+      '#required' => TRUE,
+      '#default_value' => $app_module->appModulePluginId(),
     ];
 
     // TODO: You will need additional form elements for your custom properties.
@@ -90,6 +110,21 @@ class AppModuleForm extends EntityForm {
       ->condition('id', $id)
       ->execute();
     return (bool) $entity;
+  }
+
+  /**
+   * Gets the available App Module plugins as options for a select.
+   *
+   * @return array
+   *   Returns an options array of all app module plugins.
+   */
+  private function getAppModulePluginOptions() {
+    $options = [];
+    $app_module_plugins = $this->pluginManager->getDefinitions();
+    foreach ($app_module_plugins as $name => $plugin) {
+      $options[$name] = $plugin['label'];
+    }
+    return $options;
   }
 
 }
