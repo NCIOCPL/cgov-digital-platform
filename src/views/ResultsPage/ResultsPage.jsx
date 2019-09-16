@@ -99,27 +99,27 @@ const ResultsPage = ({ results }) => {
     );
   };
 
-  const renderResultsControl = () => {
+  const renderControls = (isBottom = false) => {
+    const cbxId = isBottom ? 'select-all-cbx-bottom' : 'select-all-cbx-top';
     return (
-      <>
+      <div
+        className={`results-page__control ${isBottom ? '--bottom' : '--top'}`}
+      >
         <div className="results-page__select-all">
           <Checkbox
-            id="select-all-checkbox"
+            id={cbxId}
             name="select-all"
             label="Select All on Page"
             checked={selectAll}
+            hideLabel
             onChange={() => setSelectAll(!selectAll)}
           />
           <button className="results-page__print-button">Print Selected</button>
         </div>
         <div className="results-page__pager">
-          <Pager
-            data={results}
-            startFromPage={pagerPage}
-            callback={handlePagination}
-          />
+          <Pager data={results} callback={handlePagination} startFromPage={pagerPage} />
         </div>
-      </>
+      </div>
     );
   };
 
@@ -130,9 +130,7 @@ const ResultsPage = ({ results }) => {
         <article className="results-page">
           {renderResultsHeader()}
           <div className="results-page__content">
-            <div className="results-page__control --top">
-              {renderResultsControl()}
-            </div>
+            {renderControls()}
             <div className="results-page__list">
               <ResultsList
                 results={paginatedResults}
@@ -143,9 +141,7 @@ const ResultsPage = ({ results }) => {
                 {renderDelighters()}
               </aside>
             </div>
-            <div className="results-page__control --bottom">
-              {renderResultsControl()}
-            </div>
+            {renderControls(true)}
           </div>
           <aside className="results-page__aside --bottom">
             {renderDelighters()}

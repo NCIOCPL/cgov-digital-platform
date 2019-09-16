@@ -13,6 +13,8 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
           id={id || item.title}
           name={item.title}
           checked={isChecked}
+          label="Select this article for print"
+          hideLabel
           onChange={() => onCheckChange(id)}
         />
       </div>
