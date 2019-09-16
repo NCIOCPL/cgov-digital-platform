@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mount } from 'enzyme';
+import { render } from 'enzyme';
 import ResultsList from '../ResultsList';
 
 const defaultProps = {

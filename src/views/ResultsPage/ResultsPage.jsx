@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import {
   Checkbox,
   ResultsList,
   Delighter,
   Pager,
+  Accordion,
+  AccordionItem,
 } from '../../components/atomic';
 import './ResultsPage.scss';
 
@@ -80,11 +82,31 @@ const ResultsPage = ({ results }) => {
     </div>
   );
 
+  const renderResultsHeader = () => {
+    return (
+      <div className="cts-results-header">
+        <p><strong>Results 1-10 of {paginatedResults.length} for your search</strong></p>
+        <Accordion bordered>
+          <AccordionItem title="Show Search Criteria">
+            <div>
+              <h3>Your Search Criteria</h3>
+              ...Table here...
+            </div>
+          </AccordionItem>
+        </Accordion>
+        <p className="reset-form">
+          <Link to="/search">Start Over</Link>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
         {/* */}
         <article className="results-page">
+          {renderResultsHeader()}
           <div className="results-page__content">
             <div className="results-page__control --top">
               <div className="results-page__select-all">
