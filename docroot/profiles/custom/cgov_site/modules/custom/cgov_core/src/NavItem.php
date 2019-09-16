@@ -247,6 +247,16 @@ class NavItem {
   }
 
   /**
+   * Return the term.
+   *
+   * @return enttity
+   *   Site Section Term.
+   */
+  public function getTerm() {
+    return $this->term;
+  }
+
+  /**
    * Determine whether NavItem has filter rule.
    *
    * @param string $rule

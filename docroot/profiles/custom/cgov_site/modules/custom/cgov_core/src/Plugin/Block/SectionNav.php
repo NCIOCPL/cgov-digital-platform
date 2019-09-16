@@ -9,6 +9,7 @@ use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\cgov_core\NavItem;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Provides a 'Section Nav' block.
@@ -179,14 +180,16 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    $build = [];
+
     $navTree = $this->getSectionNav();
     if ($navTree) {
       $build = [
         '#type' => 'block',
-        'nav_tree' => $navTree,
+        '#nav_tree' => $navTree,
       ];
-      return $build;
     }
+    return $build;
   }
 
   /**
@@ -194,6 +197,32 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function getCacheMaxAge() {
     return 0;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    $tags = [];
+
+    $navTree = $this->getSectionNav();
+    if ($navTree) {
+      // Set the cache tag if a nav root exists for this section.
+      $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
+      if ($navRoot) {
+        $section_root_tid = $navRoot->getTerm()->id();
+        $tags[] = 'site_section:' . $section_root_tid;
+      }
+    }
+
+    return Cache::mergeTags(parent::getCacheTags(), $tags);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(parent::getCacheContexts(), ['url.path']);
   }
 
 }
