@@ -20,6 +20,7 @@ class TextInput extends React.Component {
     maxLength: PropTypes.number,
     placeHolder: PropTypes.string,
     required: PropTypes.bool,
+    disabled: PropTypes.bool,
     type: PropTypes.oneOf([
       'text',
       'email',
@@ -33,7 +34,7 @@ class TextInput extends React.Component {
       'number',
     ]),
     value: PropTypes.string,
-    validators: PropTypes.array
+    validators: PropTypes.array,
   };
 
   static defaultProps = {
@@ -42,6 +43,7 @@ class TextInput extends React.Component {
     type: 'text',
     enableSpellCheck: false,
     required: false,
+    disabled: false,
   };
 
   constructor(props) {
@@ -119,6 +121,7 @@ class TextInput extends React.Component {
           maxLength={this.props.maxLength}
           placeholder={this.props.placeHolder}
           aria-required={this.props.required}
+          disabled={this.props.disabled}
           onBlur={this._handleBlur.bind(this)}
           onChange={this._handleChange.bind(this)}
           spellCheck={this.props.enableSpellCheck ? true : false}
