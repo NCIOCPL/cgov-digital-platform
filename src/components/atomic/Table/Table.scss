@@ -1,0 +1,51 @@
+.cts-table {
+  line-height: 1.52155;
+  border-spacing: 0;
+  margin: 1.25rem 0;
+  thead {
+    th,
+    td {
+      background-color: #f0f0f0;
+    }
+    th {
+      font-weight: 700;
+    }
+  }
+  th,
+  td {
+    border-width: 1px;
+    border-color: #565c65;
+    border-style: solid;
+    background-color: white;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+  }
+  th {
+    text-align: left;
+  }
+  caption {
+    font-family: Merriweather Web, Georgia, Cambria, Times New Roman, Times,
+      serif;
+    font-size: 0.91476rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  &.cts-table--borderless {
+    border: 0;
+    
+    thead th {
+      background-color: transparent;
+      border-top: 0;
+    }
+    th,
+    td {
+      border-left: 0;
+      border-right: 0;
+    }
+    th:first-child {
+      padding-left: 0;
+    }
+  }
+}
