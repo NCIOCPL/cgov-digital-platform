@@ -9,8 +9,12 @@ const Checkbox = ({
   name,
   classes,
   disabled,
+  hideLabel,
   ...otherProps
-}) => (
+}) => {
+  
+
+  return (
   <div className={`cts-checkbox ${classes}`}>
     <input
       id={id}
@@ -22,10 +26,11 @@ const Checkbox = ({
       {...otherProps}
     />
     <label className="cts-checkbox__label" htmlFor={id}>
-      {label}
+      {hideLabel? (<span className="show-for-sr">{label}</span>) : label}
     </label>
   </div>
-);
+  );
+};
 
 Checkbox.propTypes = {
   id: PropTypes.string,
@@ -34,11 +39,13 @@ Checkbox.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   classes: PropTypes.string,
+  hideLabel: PropTypes.bool,
 };
 
 Checkbox.defaultProps = {
   classes: '',
   name: 'checkboxes',
+  hideLabel: false
 };
 
 export default Checkbox;
