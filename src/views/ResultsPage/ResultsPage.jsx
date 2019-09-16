@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { Checkbox, ResultsList, Delighter, Pager } from '../../components/atomic';
+import { Link } from 'react-router-dom';
+import {
+  Checkbox,
+  ResultsList,
+  Delighter,
+  Pager,
+  Accordion,
+  AccordionItem,
+} from '../../components/atomic';
 import './ResultsPage.scss';
 
 const ResultsPage = ({ results }) => {
@@ -29,9 +36,9 @@ const ResultsPage = ({ results }) => {
     }
   }, [paginatedResults, selectedResults]);
 
-  const handlePagination = (slicedResults) => {
+  const handlePagination = slicedResults => {
     setPaginatedResults([...slicedResults]);
-  }
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -56,14 +63,6 @@ const ResultsPage = ({ results }) => {
       </Delighter>
 
       <Delighter
-        classes="cts-what"
-        url="/about-cancer/treatment/clinical-trials/what-are-trials"
-        titleText={<>What Are Cancer Clinical Trials?</>}
-      >
-        <p>Learn what they are and what you should know about them.</p>
-      </Delighter>
-
-      <Delighter
         classes="cts-which"
         url="/about-cancer/treatment/clinical-trials/search/trial-guide"
         titleText={<>Which trials are right for you?</>}
@@ -75,32 +74,76 @@ const ResultsPage = ({ results }) => {
     </div>
   );
 
+  const renderResultsHeader = () => {
+    return (
+      <div className="cts-results-header">
+        <p><strong>Results 1-10 of {paginatedResults.length} for your search</strong></p>
+        <Accordion bordered>
+          <AccordionItem title="Show Search Criteria">
+            <div>
+              <h3>Your Search Criteria</h3>
+              ...Table here...
+            </div>
+          </AccordionItem>
+        </Accordion>
+        <p className="reset-form">
+          <Link to="/search">Start Over</Link>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
         {/* */}
         <article className="results-page">
-          <div className="results-page__control">
-            <Checkbox
-              id="select-all-checkbox"
-              name="select-all"
-              label="Select All on Page"
-              classes="results-page__select-all"
-              checked={selectAll}
-              onChange={() => setSelectAll(!selectAll)}
-            />
-            <Pager data={results} callback={handlePagination}/>
-          </div>
+          {renderResultsHeader()}
           <div className="results-page__content">
-            {
+            <div className="results-page__control --top">
+              <div className="results-page__select-all">
+                <Checkbox
+                  id="select-all-checkbox"
+                  name="select-all"
+                  label="Select All on Page"
+                  checked={selectAll}
+                  onChange={() => setSelectAll(!selectAll)}
+                />
+                <button className="results-page__print-button">
+                  Print Selected
+                </button>
+              </div>
+              <div className="results-page__pager">
+                <Pager data={results} callback={handlePagination} />
+              </div>
+            </div>
+            <div className="results-page__list">
               <ResultsList
                 results={paginatedResults}
                 selectedResults={selectedResults}
                 setSelectedResults={setSelectedResults}
               />
-            }
-            <aside className="results-page__aside">{renderDelighters()}</aside>
+              <aside className="results-page__aside --side">{renderDelighters()}</aside>
+            </div>
+            <div className="results-page__control --bottom">
+              <div className="results-page__select-all">
+                <Checkbox
+                  id="select-all-checkbox"
+                  name="select-all"
+                  label="Select All on Page"
+                  checked={selectAll}
+                  onChange={() => setSelectAll(!selectAll)}
+                />
+                <button className="results-page__print-button">
+                  Print Selected
+                </button>
+              </div>
+              <div className="results-page__pager">
+                <Pager data={results} callback={handlePagination} />
+              </div>
+            </div>
           </div>
+          <aside className="results-page__aside --bottom">{renderDelighters()}</aside>
         </article>
         {/* */}
       </div>

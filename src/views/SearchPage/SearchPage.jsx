@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormBasic from './FormBasic';
 import FormAdvanced from './FormAdvanced';
-import {
-  Accordion,
-  AccordionItem,
-  Delighter,
-  Toggle,
-  RemovableTag,
-  TagContainer,
-} from '../../components/atomic';
+import { Delighter } from '../../components/atomic';
 
 const SearchPage = ({ form }) => {
   const [formVersion, setFormVersion] = useState(form);
@@ -85,7 +78,6 @@ const SearchPage = ({ form }) => {
       <div className="contentzone">
         {/* */}
         <article className="search-page">
-
           <div className="search-page__header">
             <p>
               NCI-supported clinical trials are those sponsored or otherwise
@@ -116,7 +108,6 @@ const SearchPage = ({ form }) => {
               </p>
             </div>
           </div>
-
         </article>
         {/* */}
       </div>
