@@ -31,6 +31,7 @@ export default class Dropdown extends React.Component {
     id: PropTypes.string,
     label: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    classes: PropTypes.string,
     required: PropTypes.bool,
     hasError: PropTypes.bool,
     errorMessage: PropTypes.string,
@@ -40,6 +41,7 @@ export default class Dropdown extends React.Component {
 
   static defaultProps = {
     required: false,
+    classes: '',
     hasError: false,
     action: () => {},
   };
@@ -101,7 +103,7 @@ export default class Dropdown extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <div className={this.props.classes}>
         <InputLabel
           htmlFor={this.id}
           required={this.props.required}
@@ -121,7 +123,7 @@ export default class Dropdown extends React.Component {
           {emptyPlaceholder}
           {this.props.children}
         </select>
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -100,7 +100,7 @@ class TextInput extends React.Component {
       : { 'aria-labelledby': this.props.id + '-label' };
 
     return (
-      <>
+      <div className={this.props.classes}>
         {this.props.labelHidden ? null : (
           <InputLabel
             label={this.props.label}
@@ -114,7 +114,7 @@ class TextInput extends React.Component {
           id={this.id}
           type={this.props.type}
           value={this.state.value}
-          className={`cts-input ${this.props.classes} ${
+          className={`cts-input ${
             this.state.isValid ? 'cts-input--success' : null
           }`}
           required={this.props.required}
@@ -129,7 +129,7 @@ class TextInput extends React.Component {
         />
         {error}
         {helpText}
-      </>
+      </div>
     );
   }
 

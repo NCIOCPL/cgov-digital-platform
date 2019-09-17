@@ -1,3 +1,48 @@
-.location {
-  
+.search-location {
+
+  &__panel {
+    display: flex;
+    align-items: center;
+    padding: .6em 1.5em;
+    margin: 1em 0;
+    border: 1px solid #bdbdc2;
+    background: #f2f2f2;
+    color: #606060;
+  }
+
+  &__country,
+  &__zip {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    &.--country,
+    &.--radius {
+      margin-bottom: 1rem;
+    }
+
+    &.--city-and-state {
+      display: flex;
+      flex-direction: column;
+      @media screen and (min-width: 1025px) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    &.--city,
+    &.--state {
+      width: auto;
+      margin: 0;
+      @media screen and (min-width: 1025px) {
+        width: 100%;
+      }
+    }
+
+    &.--state {
+      @media screen and (min-width: 1025px) {
+        margin-right: 1rem;
+      }
+    }
+  }
 }
