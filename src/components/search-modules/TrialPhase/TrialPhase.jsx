@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Fieldset, Checkbox } from '../../atomic';
 import './TrialPhase.scss';
 
-const TrialPhase = ({ selectedPhases }) => {
+const TrialPhase = ({ selectedPhases, phaseFields }) => {
   const [phases, setPhases] = useState([]);
 
   useEffect(() => {
     //initialize trials state after mount
     setPhases([...selectedPhases]);
-  }, []);
+  }, [selectedPhases]);
 
   const handleSelectAll = e => {
     setPhases([]);
@@ -45,49 +45,36 @@ const TrialPhase = ({ selectedPhases }) => {
         onChange={handleSelectAll}
       />
       <div className="group-phases">
-        <Checkbox
+        {phaseFields.map((field, idx) => (
+          <Checkbox
+          id={'tp_' + field.value}
+          key={'tp_' + field.value}
           name="tp"
-          id="tp_1"
-          value="I"
-          label="Phase I"
+          value={field.value}
+          label={field.label}
           onChange={handleCheckPhase}
-          checked={phases.includes('I')}
+          checked={phases.includes(field.value)}
         />
-        <Checkbox
-          name="tp"
-          id="tp_2"
-          value="II"
-          label="Phase II"
-          onChange={handleCheckPhase}
-          checked={phases.includes('II')}
-        />
-        <Checkbox
-          name="tp"
-          id="tp_3"
-          value="III"
-          label="Phase III"
-          onChange={handleCheckPhase}
-          checked={phases.includes('III')}
-        />
-        <Checkbox
-          name="tp"
-          id="tp_4"
-          value="IV"
-          label="Phase IV"
-          onChange={handleCheckPhase}
-          checked={phases.includes('IV')}
-        />
+        ))}
+        
       </div>
     </Fieldset>
   );
 };
 
 TrialPhase.propTypes = {
+  phaseFields: PropTypes.array,
   selectedPhases: PropTypes.array,
 };
 
 TrialPhase.defaultProps = {
   selectedPhases: [],
+  phaseFields: [
+    { label: 'Phase I', value: 'I' },
+    { label: 'Phase I', value: 'II' },
+    { label: 'Phase III', value: 'III' },
+    { label: 'Phase IV', value: 'IV' },
+  ]
 };
 
 export default TrialPhase;

@@ -51,6 +51,8 @@ Fieldset.propTypes = {
   onChange: PropTypes.func,
 };
 
-Fieldset.defaultProps = {};
+Fieldset.defaultProps = {
+  classes: ''
+};
 
 export default Fieldset;
