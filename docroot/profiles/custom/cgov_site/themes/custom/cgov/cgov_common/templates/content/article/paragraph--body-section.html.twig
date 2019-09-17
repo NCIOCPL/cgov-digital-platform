@@ -11,8 +11,20 @@
 {% if content.field_body_section_heading['#items'].getValue() %}
   {# TODO: Determine how to deal with headings that are H3s #}
   {# Set the id to a clean version of the section heading for OTP links. #}
-  <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | clean_id }}">
+  {% if schema_org_type %}
+    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | clean_id }}" itemprop="name">
+  {% else %}
+    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | clean_id }}">
+  {% endif %}
     {{- content.field_body_section_heading -}}
   </h2>
 {% endif %}
+{% if schema_org_type %}
+  <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text">
+{% endif %}
 {{ content.field_body_section_content }}
+{% if schema_org_type %}
+    </div>
+  </div>
+{% endif %}

@@ -19,3 +19,15 @@ function cgov_article_field_widget_form_alter(&$element, $form_state, $context) 
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
 }
+
+/**
+ * Update for v1.1.8.
+ *
+ * Install cgov_schema_org as a CGov Module.
+ */
+function cgov_article_update_8003() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_schema_org')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_schema_org']);
+  }
+}

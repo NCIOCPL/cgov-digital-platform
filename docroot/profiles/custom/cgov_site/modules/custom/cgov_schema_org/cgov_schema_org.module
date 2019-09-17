@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for schema.org markup implementation.
+ */
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function cgov_schema_org_preprocess_html(&$variables) {
+  $entity = _cgov_schema_org_get_curr_entity();
+  if ($entity && $entity->hasField('field_schema_org_data')) {
+    $schemaOrgType = $entity->field_schema_org_data->page_itemtype;
+    if ($schemaOrgType == 'faq_page') {
+      $variables['html_attributes']['itemscope'] = TRUE;
+      $variables['html_attributes']['itemtype'] = 'https://schema.org/FAQPage';
+    }
+  }
+}
+
+/**
+ * Gets the current entity if there is one.
+ *
+ * @return Drupal\Core\Entity\ContentEntityInterface
+ *   The retrieved entity, or FALSE if none found.
+ */
+function _cgov_schema_org_get_curr_entity() {
+  $params = \Drupal::routeMatch()->getParameters()->all();
+  foreach ($params as $param) {
+    if (!is_object($param)) {
+      continue;
+    }
+
+    $class = new \ReflectionClass($param);
+
+    if (in_array('Drupal\Core\Entity\ContentEntityInterface', $class->getInterfaceNames())) {
+      // If you find a ContentEntityInterface stop iterating and return it.
+      return $param;
+    }
+  }
+  return FALSE;
+}
