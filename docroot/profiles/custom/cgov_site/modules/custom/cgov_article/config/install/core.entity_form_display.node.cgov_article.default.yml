@@ -22,6 +22,7 @@ dependencies:
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
     - field.field.node.cgov_article.field_related_resources
+    - field.field.node.cgov_article.field_schema_org_data
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
@@ -29,6 +30,7 @@ dependencies:
     module:
       - cgov_core
   module:
+    - cgov_schema_org
     - cgov_syndication
     - content_moderation
     - datetime
@@ -204,6 +206,12 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+    region: content
+  field_schema_org_data:
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    type: cgov_schema_org_widget
     region: content
   field_search_engine_restrictions:
     weight: 20
