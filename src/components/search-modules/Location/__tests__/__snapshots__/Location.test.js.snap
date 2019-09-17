@@ -24,9 +24,132 @@ exports[`Location Render renders without error 1`] = `
   <div
     class="cts-fieldset__body"
   >
-    <input
-      type="text"
-    />
+    <p>
+      Search for trials near a specific zip code; or in a country, state and city; or at a particular institution. The default selection will search for trials in all available locations.
+    </p>
+    <div
+      class="search-location__panel"
+    >
+      Limit results to Veterans Affairs facilities:
+      <div
+        class="cts-toggle "
+      >
+        <input
+          class="cts-toggle__input"
+          id="search-location-toggle"
+          name="search-location-toggle"
+          type="checkbox"
+        />
+        <label
+          aria-label="Limit results to Veterans Affairs facilities:"
+          class="cts-toggle__label"
+          for="search-location-toggle"
+        >
+          <span
+            aria-hidden="true"
+            class="neg"
+          >
+            No
+          </span>
+          <span
+            aria-hidden="true"
+            class="pos"
+          >
+            Yes
+          </span>
+        </label>
+      </div>
+    </div>
+    <div
+      class="cts-radio "
+    >
+      <input
+        aria-disabled="false"
+        class="cts-radio__input"
+        id="search-location-all"
+        name="radios"
+        type="radio"
+        value="search-location-all"
+      />
+      <label
+        class="cts-radio__label"
+        for="search-location-all"
+      >
+        Search All Locations
+      </label>
+    </div>
+    <div
+      class="cts-radio "
+    >
+      <input
+        aria-disabled="false"
+        class="cts-radio__input"
+        id="search-location-zip"
+        name="radios"
+        type="radio"
+        value="search-location-zip"
+      />
+      <label
+        class="cts-radio__label"
+        for="search-location-zip"
+      >
+        ZIP Code
+      </label>
+    </div>
+    <div
+      class="cts-radio "
+    >
+      <input
+        aria-disabled="false"
+        class="cts-radio__input"
+        id="search-location-country"
+        name="radios"
+        type="radio"
+        value="search-location-country"
+      />
+      <label
+        class="cts-radio__label"
+        for="search-location-country"
+      >
+        Country, State, City
+      </label>
+    </div>
+    <div
+      class="cts-radio "
+    >
+      <input
+        aria-disabled="false"
+        class="cts-radio__input"
+        id="search-location-hospital"
+        name="radios"
+        type="radio"
+        value="search-location-hospital"
+      />
+      <label
+        class="cts-radio__label"
+        for="search-location-hospital"
+      >
+        Hospitals/Institutions
+      </label>
+    </div>
+    <div
+      class="cts-radio "
+    >
+      <input
+        aria-disabled="false"
+        class="cts-radio__input"
+        id="search-location-nih"
+        name="radios"
+        type="radio"
+        value="search-location-nih"
+      />
+      <label
+        class="cts-radio__label"
+        for="search-location-nih"
+      >
+        At NIH (only show trials at the NIH clinical center in Bethesda, MD)
+      </label>
+    </div>
   </div>
 </fieldset>
 `;

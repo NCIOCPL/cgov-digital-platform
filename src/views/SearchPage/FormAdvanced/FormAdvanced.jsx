@@ -30,8 +30,10 @@ const FormAdvanced = submitFn => {
   return (
     <form onSubmit={handleSubmit} className="search-page__form advanced">
       <CancerTypeCondition />
-      <Age />
-      <KeywordsPhrases />
+      <div className="side-by-side">
+        <Age />
+        <KeywordsPhrases />
+      </div>
       <Location />
       <TrialType />
       <DrugTreatment />

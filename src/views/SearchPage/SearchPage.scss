@@ -13,8 +13,36 @@
   &__form {
     margin: 0 1% 30px 0;
 
+    .side-by-side {
+      display: flex;
+      flex-direction: column;
+    }
+
     @media screen and (min-width: 1025px) {
       flex: 1 1 75%;
+
+      .side-by-side {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 20px;
+        
+        .cts-fieldset {
+          height: 100%;
+          flex: 1 1 49%;
+          display: flex;
+          flex-direction: column;
+          margin-top: 0;
+
+          &__legend {
+            flex: none;
+            height: 42px;
+          }
+          &__body {
+            flex: 1 1 auto;
+          }
+        }
+      }
     }
   }
   &__aside {

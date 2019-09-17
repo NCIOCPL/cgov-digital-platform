@@ -26,8 +26,10 @@ const FormBasic = submitFn => {
   return (
     <form onSubmit={handleSubmit} className="search-page__form advanced">
       <CancerTypeKeyword />
-      <Age />
-      <ZipCode />
+      <div className="side-by-side">
+        <Age />
+        <ZipCode />
+      </div>
       <div className="submit-block">
         <button type="submit" className="btn-submit">
           Find Trials
