@@ -35,28 +35,29 @@ const TrialPhase = ({ selectedPhases, phaseFields }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialphase"
     >
       <p>Search by one or more trial phases.</p>
-      <Checkbox
-        value=""
-        name="tp"
-        id="tp_all"
-        label="All"
-        classes="tp-all"
-        checked={phases.length === 0}
-        onChange={handleSelectAll}
-      />
+      <div className="select-all">
+        <Checkbox
+          value=""
+          name="tp"
+          id="tp_all"
+          label="All"
+          classes="tp-all"
+          checked={phases.length === 0}
+          onChange={handleSelectAll}
+        />
+      </div>
       <div className="group-phases">
         {phaseFields.map((field, idx) => (
           <Checkbox
-          id={'tp_' + field.value}
-          key={'tp_' + field.value}
-          name="tp"
-          value={field.value}
-          label={field.label}
-          onChange={handleCheckPhase}
-          checked={phases.includes(field.value)}
-        />
+            id={'tp_' + field.value}
+            key={'tp_' + field.value}
+            name="tp"
+            value={field.value}
+            label={field.label}
+            onChange={handleCheckPhase}
+            checked={phases.includes(field.value)}
+          />
         ))}
-        
       </div>
     </Fieldset>
   );
@@ -74,7 +75,7 @@ TrialPhase.defaultProps = {
     { label: 'Phase I', value: 'II' },
     { label: 'Phase III', value: 'III' },
     { label: 'Phase IV', value: 'IV' },
-  ]
+  ],
 };
 
 export default TrialPhase;

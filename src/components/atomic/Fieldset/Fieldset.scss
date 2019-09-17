@@ -1,8 +1,7 @@
 .cts-fieldset {
-    display: block;
-    position: relative;
-    
-    border-radius: 4px;
+  display: block;
+  position: relative;
+  border-radius: 4px;
 
   &__legend {
     display: block;
@@ -15,25 +14,41 @@
     width: 100%;
     float: none;
     position: relative;
-
   }
 
   .text-icon-help {
-      position: absolute;
-      top: 7px;
-      right: 16px;
+    position: absolute;
+    top: 7px;
+    right: 16px;
 
-      &:hover,
-      &:focus {
-          text-decoration: none;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  &__body {
+    padding: 16px 16px 8px;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: #bdbdc2;
+
+    p {
+      margin: 0 0 1em;
+    }
+
+    .data-toggle-block {
+      display: flex;
+      align-items: center;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border: 1px solid #bdbdc2;
+      background: #f2f2f2;
+      color: #606060;
+      
+      .cts-toggle {
+        margin-right: 1em;
       }
+    }
   }
-
-  &__body{
-      padding: 16px 16px 8px;
-      border-width: 0 1px 1px;
-      border-style: solid;
-      border-color: #bdbdc2;
-  }
-
 }

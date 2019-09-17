@@ -27,10 +27,6 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields }) => {
     }
   };
 
-  const handleToggleChange = () => {
-
-  }
-
   return (
     <Fieldset
       id="trialtype"
@@ -43,24 +39,21 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields }) => {
         box or select "All."
       </p>
 
-      <div className="healthy-volunteers">
-        Limit results to trials accepting healthy volunteers:
-        <Toggle
-          id="hv"
-          label="Limit results to Veterans Affairs facilities:"
-          onChange={handleToggleChange}
+      <div className="data-toggle-block">
+        <Toggle id="hv" label="Limit results to Veterans Affairs facilities" />
+        Limit results to trials accepting healthy volunteers
+      </div>
+      <div className="select-all">
+        <Checkbox
+          value=""
+          name="tt"
+          id="tt_all"
+          label="All"
+          classes="tt-all"
+          checked={trialTypes.length === 0}
+          onChange={handleSelectAll}
         />
       </div>
-
-      <Checkbox
-        value=""
-        name="tp"
-        id="tp_all"
-        label="All"
-        classes="tp-all"
-        checked={trialTypes.length === 0}
-        onChange={handleSelectAll}
-      />
       <div className="group-trial-types">
         {trialTypeFields.map((trialType, idx) => (
           <Checkbox
