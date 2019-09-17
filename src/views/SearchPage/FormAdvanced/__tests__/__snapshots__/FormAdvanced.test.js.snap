@@ -32,90 +32,102 @@ exports[`FormAdvanced Render renders without error 1`] = `
       />
     </div>
   </fieldset>
-  <fieldset
-    class="cts-fieldset"
-    id="fieldset--age"
+  <div
+    class="side-by-side"
   >
-    <legend
-      class="cts-fieldset__legend"
+    <fieldset
+      class="cts-fieldset"
+      id="fieldset--age"
     >
-      <span>
-        Age
-      </span>
-    </legend>
-    <a
-      aria-label="Help"
-      class="text-icon-help"
-      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      ?
-    </a>
-    <div
-      class="cts-fieldset__body"
-    >
-      <label
-        class="cts-label"
-        for="a"
-        id="a-label"
+      <legend
+        class="cts-fieldset__legend"
       >
-        Enter the age of the participant.
-      </label>
-      <input
-        aria-labelledby="a-label"
-        aria-required="false"
-        class="cts-input  null"
-        id="a"
-        maxlength="3"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
-  </fieldset>
-  <fieldset
-    class="cts-fieldset"
-    id="fieldset--keyword"
-  >
-    <legend
-      class="cts-fieldset__legend"
-    >
-      <span>
-        Keywords/Phrases
-      </span>
-    </legend>
-    <a
-      aria-label="Help"
-      class="text-icon-help"
-      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#keywords"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      ?
-    </a>
-    <div
-      class="cts-fieldset__body"
-    >
-      <label
-        class="cts-label"
-        for="q"
-        id="q-label"
+        <span>
+          Age
+        </span>
+      </legend>
+      <a
+        aria-label="Help"
+        class="text-icon-help"
+        href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
+        rel="noopener noreferrer"
+        target="_blank"
       >
-        Search by word or phrase (use quotation marks with phrases).
-      </label>
-      <input
-        aria-labelledby="q-label"
-        aria-required="false"
-        class="cts-input  null"
-        id="q"
-        placeholder="Examples: PSA, 'Paget disease'"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
-  </fieldset>
+        ?
+      </a>
+      <div
+        class="cts-fieldset__body"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="cts-label"
+            for="a"
+            id="a-label"
+          >
+            Enter the age of the participant.
+          </label>
+          <input
+            aria-labelledby="a-label"
+            aria-required="false"
+            class="cts-input null"
+            id="a"
+            maxlength="3"
+            spellcheck="false"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </fieldset>
+    <fieldset
+      class="cts-fieldset"
+      id="fieldset--keyword"
+    >
+      <legend
+        class="cts-fieldset__legend"
+      >
+        <span>
+          Keywords/Phrases
+        </span>
+      </legend>
+      <a
+        aria-label="Help"
+        class="text-icon-help"
+        href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#keywords"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        ?
+      </a>
+      <div
+        class="cts-fieldset__body"
+      >
+        <div
+          class=""
+        >
+          <label
+            class="cts-label"
+            for="q"
+            id="q-label"
+          >
+            Search by word or phrase (use quotation marks with phrases).
+          </label>
+          <input
+            aria-labelledby="q-label"
+            aria-required="false"
+            class="cts-input null"
+            id="q"
+            placeholder="Examples: PSA, 'Paget disease'"
+            spellcheck="false"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </fieldset>
+  </div>
   <fieldset
     class="cts-fieldset"
     id="fieldset--location"
@@ -139,6 +151,42 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
+      <p>
+        Search for trials near a specific zip code; or in a country, state and city; or at a particular institution. The default selection will search for trials in all available locations.
+      </p>
+      <div
+        class="search-location__panel"
+      >
+        Limit results to Veterans Affairs facilities:
+        <div
+          class="cts-toggle "
+        >
+          <input
+            class="cts-toggle__input"
+            id="search-location-toggle"
+            name="search-location-toggle"
+            type="checkbox"
+          />
+          <label
+            aria-label="Limit results to Veterans Affairs facilities:"
+            class="cts-toggle__label"
+            for="search-location-toggle"
+          >
+            <span
+              aria-hidden="true"
+              class="neg"
+            >
+              No
+            </span>
+            <span
+              aria-hidden="true"
+              class="pos"
+            >
+              Yes
+            </span>
+          </label>
+        </div>
+      </div>
       <div
         class="cts-radio "
       >
@@ -175,42 +223,6 @@ exports[`FormAdvanced Render renders without error 1`] = `
           ZIP Code
         </label>
       </div>
-      <div>
-        <label
-          class="cts-label"
-          for="component-unique-id-1"
-          id="component-unique-id-1-label"
-        >
-          U.S. ZIP Code
-        </label>
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-1"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
-        <label
-          class="cts-label"
-          for="component-unique-id-2"
-          id="component-unique-id-2-label"
-        >
-          Radius
-        </label>
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-2"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
-      </div>
       <div
         class="cts-radio "
       >
@@ -229,59 +241,6 @@ exports[`FormAdvanced Render renders without error 1`] = `
           Country, State, City
         </label>
       </div>
-      <div>
-        <label
-          class="cts-label"
-          for="component-unique-id-3"
-          id="component-unique-id-3-label"
-        >
-          Country
-        </label>
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-3"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
-        <label
-          class="cts-label"
-          for="component-unique-id-4"
-          id="component-unique-id-4-label"
-        >
-          State
-        </label>
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-4"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
-        <label
-          class="cts-label"
-          for="component-unique-id-5"
-          id="component-unique-id-5-label"
-        >
-          City
-        </label>
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-5"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
-      </div>
       <div
         class="cts-radio "
       >
@@ -299,23 +258,6 @@ exports[`FormAdvanced Render renders without error 1`] = `
         >
           Hospitals/Institutions
         </label>
-      </div>
-      <div>
-        <label
-          class="cts-label"
-          for="component-unique-id-6"
-          id="component-unique-id-6-label"
-        />
-        <input
-          aria-labelledby="undefined-label"
-          aria-required="false"
-          class="cts-input  null"
-          disabled=""
-          id="component-unique-id-6"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
       </div>
       <div
         class="cts-radio "
@@ -367,19 +309,19 @@ exports[`FormAdvanced Render renders without error 1`] = `
   </fieldset>
   <fieldset
     class="cts-fieldset"
-    id="fieldset--trialtreatment"
+    id="fieldset--type"
   >
     <legend
       class="cts-fieldset__legend"
     >
       <span>
-        Drug/Treatment
+        Cancer Type/Condition
       </span>
     </legend>
     <a
       aria-label="Help"
       class="text-icon-help"
-      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
+      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#cancertype"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -388,9 +330,51 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
-      <input
-        type="text"
-      />
+      <p>
+        Search for a specific drug or intervention. You can use the drug's generic or brand name.
+      </p>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="search-drug-family"
+          id="search-drug-family-label"
+        >
+          Drug/Drug Family
+        </label>
+        <input
+          aria-labelledby="search-drug-family-label"
+          aria-required="false"
+          class="cts-input null"
+          id="search-drug-family"
+          placeholder="Please enter 3 or more characters"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="search-drug-other"
+          id="search-drug-other-label"
+        >
+          Other Treatments
+        </label>
+        <input
+          aria-labelledby="search-drug-other-label"
+          aria-required="false"
+          class="cts-input null"
+          id="search-drug-other"
+          placeholder="Please enter 3 or more characters"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </fieldset>
   <fieldset
@@ -444,9 +428,26 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
-      <input
-        type="text"
-      />
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="search-trial-id"
+          id="search-trial-id-label"
+        >
+          Separate multiple IDs with commas or semicolons.
+        </label>
+        <input
+          aria-labelledby="search-trial-id-label"
+          aria-required="false"
+          class="cts-input null"
+          id="search-trial-id"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </fieldset>
   <fieldset
@@ -472,22 +473,26 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
-      <label
-        class="cts-label"
-        for="in"
-        id="in-label"
+      <div
+        class=""
       >
-        Search by Trial Investigators.
-      </label>
-      <input
-        aria-labelledby="in-label"
-        aria-required="false"
-        class="cts-input  null"
-        id="in"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+        <label
+          class="cts-label"
+          for="in"
+          id="in-label"
+        >
+          Search by Trial Investigators.
+        </label>
+        <input
+          aria-labelledby="in-label"
+          aria-required="false"
+          class="cts-input null"
+          id="in"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </fieldset>
   <fieldset
@@ -513,22 +518,26 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
-      <label
-        class="cts-label"
-        for="lo"
-        id="lo-label"
+      <div
+        class=""
       >
-        Search by Lead Organization.
-      </label>
-      <input
-        aria-labelledby="lo-label"
-        aria-required="false"
-        class="cts-input  null"
-        id="lo"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+        <label
+          class="cts-label"
+          for="lo"
+          id="lo-label"
+        >
+          Search by Lead Organization.
+        </label>
+        <input
+          aria-labelledby="lo-label"
+          aria-required="false"
+          class="cts-input null"
+          id="lo"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </fieldset>
   <div

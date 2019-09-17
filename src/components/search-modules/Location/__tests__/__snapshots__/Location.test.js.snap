@@ -24,6 +24,42 @@ exports[`Location Render renders without error 1`] = `
   <div
     class="cts-fieldset__body"
   >
+    <p>
+      Search for trials near a specific zip code; or in a country, state and city; or at a particular institution. The default selection will search for trials in all available locations.
+    </p>
+    <div
+      class="search-location__panel"
+    >
+      Limit results to Veterans Affairs facilities:
+      <div
+        class="cts-toggle "
+      >
+        <input
+          class="cts-toggle__input"
+          id="search-location-toggle"
+          name="search-location-toggle"
+          type="checkbox"
+        />
+        <label
+          aria-label="Limit results to Veterans Affairs facilities:"
+          class="cts-toggle__label"
+          for="search-location-toggle"
+        >
+          <span
+            aria-hidden="true"
+            class="neg"
+          >
+            No
+          </span>
+          <span
+            aria-hidden="true"
+            class="pos"
+          >
+            Yes
+          </span>
+        </label>
+      </div>
+    </div>
     <div
       class="cts-radio "
     >
@@ -60,42 +96,6 @@ exports[`Location Render renders without error 1`] = `
         ZIP Code
       </label>
     </div>
-    <div>
-      <label
-        class="cts-label"
-        for="component-unique-id-1"
-        id="component-unique-id-1-label"
-      >
-        U.S. ZIP Code
-      </label>
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-1"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-      <label
-        class="cts-label"
-        for="component-unique-id-2"
-        id="component-unique-id-2-label"
-      >
-        Radius
-      </label>
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-2"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
     <div
       class="cts-radio "
     >
@@ -114,59 +114,6 @@ exports[`Location Render renders without error 1`] = `
         Country, State, City
       </label>
     </div>
-    <div>
-      <label
-        class="cts-label"
-        for="component-unique-id-3"
-        id="component-unique-id-3-label"
-      >
-        Country
-      </label>
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-3"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-      <label
-        class="cts-label"
-        for="component-unique-id-4"
-        id="component-unique-id-4-label"
-      >
-        State
-      </label>
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-4"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-      <label
-        class="cts-label"
-        for="component-unique-id-5"
-        id="component-unique-id-5-label"
-      >
-        City
-      </label>
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-5"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
     <div
       class="cts-radio "
     >
@@ -184,23 +131,6 @@ exports[`Location Render renders without error 1`] = `
       >
         Hospitals/Institutions
       </label>
-    </div>
-    <div>
-      <label
-        class="cts-label"
-        for="component-unique-id-6"
-        id="component-unique-id-6-label"
-      />
-      <input
-        aria-labelledby="undefined-label"
-        aria-required="false"
-        class="cts-input  null"
-        disabled=""
-        id="component-unique-id-6"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
     </div>
     <div
       class="cts-radio "

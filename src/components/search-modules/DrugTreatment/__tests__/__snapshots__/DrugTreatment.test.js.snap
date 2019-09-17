@@ -3,19 +3,19 @@
 exports[`DrugTreatment Render renders without error 1`] = `
 <fieldset
   class="cts-fieldset"
-  id="fieldset--trialtreatment"
+  id="fieldset--type"
 >
   <legend
     class="cts-fieldset__legend"
   >
     <span>
-      Drug/Treatment
+      Cancer Type/Condition
     </span>
   </legend>
   <a
     aria-label="Help"
     class="text-icon-help"
-    href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
+    href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#cancertype"
     rel="noopener noreferrer"
     target="_blank"
   >
@@ -24,9 +24,51 @@ exports[`DrugTreatment Render renders without error 1`] = `
   <div
     class="cts-fieldset__body"
   >
-    <input
-      type="text"
-    />
+    <p>
+      Search for a specific drug or intervention. You can use the drug's generic or brand name.
+    </p>
+    <div
+      class=""
+    >
+      <label
+        class="cts-label"
+        for="search-drug-family"
+        id="search-drug-family-label"
+      >
+        Drug/Drug Family
+      </label>
+      <input
+        aria-labelledby="search-drug-family-label"
+        aria-required="false"
+        class="cts-input null"
+        id="search-drug-family"
+        placeholder="Please enter 3 or more characters"
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class=""
+    >
+      <label
+        class="cts-label"
+        for="search-drug-other"
+        id="search-drug-other-label"
+      >
+        Other Treatments
+      </label>
+      <input
+        aria-labelledby="search-drug-other-label"
+        aria-required="false"
+        class="cts-input null"
+        id="search-drug-other"
+        placeholder="Please enter 3 or more characters"
+        spellcheck="false"
+        type="text"
+        value=""
+      />
+    </div>
   </div>
 </fieldset>
 `;
