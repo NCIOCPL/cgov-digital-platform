@@ -11,9 +11,13 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
       const startFrom = currentPage * numberToShow;
       const endAt = startFrom + numberToShow;
       const results = data.slice(startFrom, endAt);
-      callback(results);
+      callback(results, currentPage);
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(startFromPage);
+  }, [startFromPage])
 
   const renderEllipsis = key => {
     return (

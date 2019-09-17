@@ -20,12 +20,6 @@ describe('Pager', () => {
       const component = setup(render, defaultProps);
       expect(component).toMatchSnapshot();
     });
-
-    // it('divides the total number of items with the number of items to show and renders one item for each division', () => {
-    //   const component = setup(mount, defaultProps);
-    //   const divisions = Math.ceil(defaultProps.data.length / defaultProps.numberToShow);
-    //   expect(component.find('.pager__num')).toHaveLength(divisions);
-    // });
   });
 
   describe('Logic', () => {
@@ -38,7 +32,7 @@ describe('Pager', () => {
       );
       const pages = component.find('.pager__num');
       pages.at(1).simulate('click');
-      expect(defaultProps.callback).toHaveBeenCalledWith(slicedArray);
+      expect(defaultProps.callback).toHaveBeenCalledWith(slicedArray, 1);
     });
   });
 });

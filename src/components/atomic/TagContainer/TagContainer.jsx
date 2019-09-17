@@ -17,7 +17,7 @@ TagContainer.propTypes = {
 };
 
 TagContainer.defaultProps = {
-  children: () => (<></>)
+  children: <></>
 };
 
 export default TagContainer;
