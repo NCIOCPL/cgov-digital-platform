@@ -120,7 +120,7 @@ SearchPage.propTypes = {
 };
 
 SearchPage.defaultProps = {
-  form: 'basic',
+  form: 'advanced',
 };
 
 export default SearchPage;
