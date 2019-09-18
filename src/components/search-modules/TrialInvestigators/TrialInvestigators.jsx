@@ -2,9 +2,7 @@ import React from 'react';
 import {Fieldset, TextInput} from '../../atomic';
 import './TrialInvestigators.scss';
 
-const TrialInvestigators = ({
-  sampleProperty
-}) => {
+const TrialInvestigators = () => {
   return (
     <Fieldset
       id="trialinvestigator"

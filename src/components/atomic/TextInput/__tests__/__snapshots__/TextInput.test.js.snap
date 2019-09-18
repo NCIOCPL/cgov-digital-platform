@@ -4,37 +4,43 @@ exports[`TextInput renders without error 1`] = `
 <TextInput
   action={[Function]}
   classes=""
+  disabled={false}
   enableSpellCheck={false}
   id="myId"
   label="label goes here"
   required={false}
   type="text"
 >
-  <InputLabel
-    hasError={false}
-    htmlFor="myId"
-    label="label goes here"
-    required={false}
+  <div
+    className=""
   >
-    <label
-      className="cts-label"
+    <InputLabel
+      hasError={false}
       htmlFor="myId"
-      id="myId-label"
+      label="label goes here"
+      required={false}
     >
-      label goes here
-    </label>
-  </InputLabel>
-  <input
-    aria-labelledby="myId-label"
-    aria-required={false}
-    className="cts-input  null"
-    id="myId"
-    onBlur={[Function]}
-    onChange={[Function]}
-    required={false}
-    spellCheck={false}
-    type="text"
-    value=""
-  />
+      <label
+        className="cts-label"
+        htmlFor="myId"
+        id="myId-label"
+      >
+        label goes here
+      </label>
+    </InputLabel>
+    <input
+      aria-labelledby="myId-label"
+      aria-required={false}
+      className="cts-input null"
+      disabled={false}
+      id="myId"
+      onBlur={[Function]}
+      onChange={[Function]}
+      required={false}
+      spellCheck={false}
+      type="text"
+      value=""
+    />
+  </div>
 </TextInput>
 `;

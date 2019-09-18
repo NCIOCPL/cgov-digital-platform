@@ -7,7 +7,15 @@ import './Fieldset.scss';
 //  @returns {node} The rendered DOM node
 //  @param {object} props  The props
 
-const Fieldset = ({ legend, children, name, onChange, id, helpUrl }) => {
+const Fieldset = ({
+  children,
+  classes,
+  helpUrl,
+  id,
+  legend,
+  name,
+  onChange,
+}) => {
   if (name) {
     children = React.Children.map(children, child =>
       React.cloneElement(child, { name, onChange: onChange })
@@ -15,8 +23,10 @@ const Fieldset = ({ legend, children, name, onChange, id, helpUrl }) => {
   }
 
   return (
-    <fieldset id={`fieldset--${id}`} className="cts-fieldset">
-      <legend className="cts-fieldset__legend"><span>{legend}</span></legend>
+    <fieldset id={`fieldset--${id}`} className={`cts-fieldset ${classes}`}>
+      <legend className="cts-fieldset__legend">
+        <span>{legend}</span>
+      </legend>
       <a
         href={helpUrl}
         className="text-icon-help"
@@ -26,23 +36,23 @@ const Fieldset = ({ legend, children, name, onChange, id, helpUrl }) => {
       >
         ?
       </a>
-      <div className="cts-fieldset__body">
-      {children}
-      </div>
+      <div className="cts-fieldset__body">{children}</div>
     </fieldset>
   );
 };
 
 Fieldset.propTypes = {
   children: PropTypes.node.isRequired,
+  classes: PropTypes.string,
+  helpUrl: PropTypes.string,
   id: PropTypes.string.isRequired,
   legend: PropTypes.string.isRequired,
-  helpUrl: PropTypes.string,
   name: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 Fieldset.defaultProps = {
+  classes: ''
 };
 
 export default Fieldset;
