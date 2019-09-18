@@ -11,7 +11,7 @@ const TrialId = () => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialid"
     >
       <TextInput
-        id="search-trial-id"
+        id="tid"
         type="text"
         label="Separate multiple IDs with commas or semicolons."
       />

@@ -1,3 +1,24 @@
-.autocomplete {
-  
+.cts-autocomplete {
+  position: relative;
+
+  &__menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    top: 65px;
+    width: 100%;
+    z-index: 10;
+    overflow: auto;
+    max-height: 280px;
+
+    &-item {
+      line-height: 2.5em;
+      padding: 0 0.5em;
+
+      &.highlighted {
+        background: #e3e3e3;
+        font-weight: bold;
+      }
+    }
+  }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import scrollIntoView from 'dom-scroll-into-view';
+import {InputLabel} from '../../atomic';
+import Utilities from '../../../utilities/utilities';
 import './Autocomplete.scss';
 
 const IMPERATIVE_API = [
@@ -38,6 +40,14 @@ function getScrollOffset() {
 
 class Autocomplete extends React.Component {
   static propTypes = {
+    /**
+     * Input id
+     */
+    id: PropTypes.string,
+    /**
+     * The items to display in the dropdown menu
+     */
+    labelHint: PropTypes.string,
     /**
      * The items to display in the dropdown menu
      */
@@ -110,11 +120,11 @@ class Autocomplete extends React.Component {
      */
     renderMenu: PropTypes.func,
     /**
-     * Styles that are applied to the dropdown menu in the default `renderMenu`
-     * implementation. If you override `renderMenu` and you want to use
-     * `menuStyle` you must manually apply them (`this.props.menuStyle`).
+     * Styles that are applied to the dropdown menu 
+     * `menuClass` applies css landmark to add custom styles
+     * to the rendered menu
      */
-    menuStyle: PropTypes.object,
+    menuClass: PropTypes.object,
     /**
      * Arguments: `props: Object`
      *
@@ -145,7 +155,7 @@ class Autocomplete extends React.Component {
      * Note that `wrapperStyle` is applied before `wrapperProps`, so the latter
      * will win if it contains a `style` entry.
      */
-    wrapperStyle: PropTypes.object,
+    wrapperClasses: PropTypes.string,
     /**
      * Whether or not to automatically highlight the top match in the dropdown
      * menu.
@@ -177,9 +187,7 @@ class Autocomplete extends React.Component {
     inputClasses: '',
     value: '',
     wrapperProps: {},
-    wrapperStyle: {
-      display: 'inline-block',
-    },
+    wrapperStyle: {},
     inputProps: {},
     renderInput(props) {
       return <input {...props} />;
@@ -190,21 +198,13 @@ class Autocomplete extends React.Component {
       return true;
     },
     renderMenu(items, value, style) {
-      return <div style={{ ...style, ...this.menuStyle }} children={items} />;
-    },
-    menuStyle: {
-      borderRadius: '3px',
-      boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-      background: 'rgba(255, 255, 255, 0.9)',
-      padding: '2px 0',
-      fontSize: '90%',
-      position: 'fixed',
-      overflow: 'auto',
-      maxHeight: '50%',
+      return <div className={`cts-autocomplete__menu ${this.props.menuClass}`} children={items} />;
     },
     autoHighlight: true,
     selectOnBlur: false,
     onMenuVisibilityChange() {},
+    labelHint: '',
+    wrapperClasses: '',
   };
 
   constructor(props) {
@@ -222,6 +222,9 @@ class Autocomplete extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleInputClick = this.handleInputClick.bind(this);
     this.maybeAutoCompleteText = this.maybeAutoCompleteText.bind(this);
+
+    // Generate an HTML ID if one was not provided
+    this.id = this.props.id || Utilities.uniqueIdForComponent();
   }
 
   componentWillMount() {
@@ -605,15 +608,21 @@ class Autocomplete extends React.Component {
     const { inputProps } = this.props;
     const open = this.isOpen();
     return (
-      <div style={{ ...this.props.wrapperStyle }} {...this.props.wrapperProps}>
+      <div className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
+        <InputLabel
+            label={this.props.label}
+            labelHint={this.props.labelHint}
+            htmlFor={this.id}
+          />
         {this.props.renderInput({
           ...inputProps,
+          id: this.id,
           role: 'combobox',
           'aria-autocomplete': 'list',
           'aria-expanded': open,
           autoComplete: 'off',
           ref: this.exposeAPI,
-          className: 'cts-input ' + this.props.inputClasses,
+          className: 'cts-input cts-autocomplete__input' + this.props.inputClasses,
           onFocus: this.handleInputFocus,
           onBlur: this.handleInputBlur,
           onChange: this.handleChange,

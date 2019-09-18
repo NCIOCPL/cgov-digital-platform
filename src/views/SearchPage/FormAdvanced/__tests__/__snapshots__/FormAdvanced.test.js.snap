@@ -27,9 +27,89 @@ exports[`FormAdvanced Render renders without error 1`] = `
     <div
       class="cts-fieldset__body"
     >
-      <input
-        type="text"
-      />
+      <p>
+        Select a cancer type or condition. Select additional options, if applicable.
+      </p>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="q"
+          id="q-label"
+        >
+          Primary Cancer Type/Condition
+        </label>
+        <input
+          aria-labelledby="q-label"
+          aria-required="false"
+          class="cts-input  "
+          id="q"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="st"
+          id="st-label"
+        >
+          Subtype
+        </label>
+        <input
+          aria-labelledby="st-label"
+          aria-required="false"
+          class="cts-input  "
+          id="st"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="stage"
+          id="stage-label"
+        >
+          Stage
+        </label>
+        <input
+          aria-labelledby="stage-label"
+          aria-required="false"
+          class="cts-input  "
+          id="stage"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class=""
+      >
+        <label
+          class="cts-label"
+          for="fin"
+          id="fin-label"
+        >
+          Side Effects/Biomarkers/Participant Attributes
+        </label>
+        <input
+          aria-labelledby="fin-label"
+          aria-required="false"
+          class="cts-input  "
+          id="fin"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </fieldset>
   <div
@@ -71,7 +151,7 @@ exports[`FormAdvanced Render renders without error 1`] = `
           <input
             aria-labelledby="a-label"
             aria-required="false"
-            class="cts-input null"
+            class="cts-input  "
             id="a"
             maxlength="3"
             spellcheck="false"
@@ -117,7 +197,7 @@ exports[`FormAdvanced Render renders without error 1`] = `
           <input
             aria-labelledby="q-label"
             aria-required="false"
-            class="cts-input null"
+            class="cts-input  "
             id="q"
             placeholder="Examples: PSA, 'Paget disease'"
             spellcheck="false"
@@ -545,7 +625,7 @@ exports[`FormAdvanced Render renders without error 1`] = `
         <input
           aria-labelledby="search-drug-family-label"
           aria-required="false"
-          class="cts-input null"
+          class="cts-input  "
           id="search-drug-family"
           placeholder="Please enter 3 or more characters"
           spellcheck="false"
@@ -566,7 +646,7 @@ exports[`FormAdvanced Render renders without error 1`] = `
         <input
           aria-labelledby="search-drug-other-label"
           aria-required="false"
-          class="cts-input null"
+          class="cts-input  "
           id="search-drug-other"
           placeholder="Please enter 3 or more characters"
           spellcheck="false"
@@ -726,16 +806,16 @@ exports[`FormAdvanced Render renders without error 1`] = `
       >
         <label
           class="cts-label"
-          for="search-trial-id"
-          id="search-trial-id-label"
+          for="tid"
+          id="tid-label"
         >
           Separate multiple IDs with commas or semicolons.
         </label>
         <input
-          aria-labelledby="search-trial-id-label"
+          aria-labelledby="tid-label"
           aria-required="false"
-          class="cts-input null"
-          id="search-trial-id"
+          class="cts-input  "
+          id="tid"
           spellcheck="false"
           type="text"
           value=""
@@ -779,7 +859,7 @@ exports[`FormAdvanced Render renders without error 1`] = `
         <input
           aria-labelledby="in-label"
           aria-required="false"
-          class="cts-input null"
+          class="cts-input  "
           id="in"
           spellcheck="false"
           type="text"
@@ -790,13 +870,13 @@ exports[`FormAdvanced Render renders without error 1`] = `
   </fieldset>
   <fieldset
     class="cts-fieldset "
-    id="fieldset--location"
+    id="fieldset--lead_organization"
   >
     <legend
       class="cts-fieldset__legend"
     >
       <span>
-        Location
+        Lead Organization
       </span>
     </legend>
     <a
@@ -812,21 +892,22 @@ exports[`FormAdvanced Render renders without error 1`] = `
       class="cts-fieldset__body"
     >
       <div
-        class=""
+        class="cts-autocomplete "
       >
         <label
           class="cts-label"
-          for="lo"
-          id="lo-label"
+          for="component-unique-id-1"
+          id="component-unique-id-1-label"
         >
-          Search by Lead Organization.
+          Search by Lead Organization
         </label>
         <input
-          aria-labelledby="lo-label"
-          aria-required="false"
-          class="cts-input null"
-          id="lo"
-          spellcheck="false"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          autocomplete="off"
+          class="cts-input cts-autocomplete__input"
+          id="component-unique-id-1"
+          role="combobox"
           type="text"
           value=""
         />

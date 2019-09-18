@@ -2,36 +2,41 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
 import { Autocomplete } from '../../atomic';
-import { getStates, matchStateToTerm, sortStates } from '../../../mocks/mock-autocomplete-util';
+import { getLeadOrgs } from '../../../mocks/mock-lead-org';
+import {matchItemToTerm, sortItems} from '../../../utilities/utilities';
 import './LeadOrganization.scss';
-import { set } from 'store2';
 
 const LeadOrganization = () => {
   const [orgName, setOrgName] = useState({ value: '' });
 
   return (
     <Fieldset
-      id="location"
-      legend="Location"
+      id="lead_organization"
+      legend="Lead Organization"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization"
     >
       <Autocomplete
+        label="Search by Lead Organization"
         value={orgName.value}
-        inputProps={{ id: 'states-autocomplete' }}
+        inputProps={{ id: 'lo' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={getStates()}
-        getItemValue={item => item.name}
-        shouldItemRender={matchStateToTerm}
-        sortItems={sortStates}
+        items={getLeadOrgs().terms}
+        getItemValue={item => item.term}
+        shouldItemRender={matchItemToTerm}
+        sortItems={sortItems}
         onChange={(event, value) => setOrgName({ value })}
         onSelect={value => setOrgName({ value })}
-        renderMenu={children => <div className="menu">{children}</div>}
+        renderMenu={children => (
+          <div className="cts-autocomplete__menu --leadOrg">{children}</div>
+        )}
         renderItem={(item, isHighlighted) => (
           <div
-            className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-            key={item.abbr}
+            className={`cts-autocomplete__menu-item ${
+              isHighlighted ? 'highlighted' : ''
+            }`}
+            key={item.term_key}
           >
-            {item.name}
+            {item.term}
           </div>
         )}
       />
