@@ -16,9 +16,10 @@
     .side-by-side {
       display: flex;
       flex-direction: column;
+      
     }
 
-    @media screen and (min-width: 1025px) {
+    @media screen and (min-width: 641px) {
       flex: 1 1 75%;
 
       .side-by-side {
@@ -26,20 +27,23 @@
         flex-direction: row;
         justify-content: space-between;
         margin-top: 20px;
+        position: relative;
+        align-items: stretch;
+        
         
         .cts-fieldset {
-          height: 100%;
-          flex: 1 1 49%;
+          flex: 0 1 48.5%;
           display: flex;
+          align-self: stretch;
           flex-direction: column;
           margin-top: 0;
 
           &__legend {
-            flex: none;
-            height: 42px;
+            flex: none
           }
           &__body {
             flex: 1 1 auto;
+            min-height: 135px;
           }
         }
       }

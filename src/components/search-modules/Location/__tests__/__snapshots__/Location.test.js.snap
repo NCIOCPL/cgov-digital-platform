@@ -2,7 +2,7 @@
 
 exports[`Location Render renders without error 1`] = `
 <fieldset
-  class="cts-fieldset"
+  class="cts-fieldset search-location"
   id="fieldset--location"
 >
   <legend
@@ -28,9 +28,8 @@ exports[`Location Render renders without error 1`] = `
       Search for trials near a specific zip code; or in a country, state and city; or at a particular institution. The default selection will search for trials in all available locations.
     </p>
     <div
-      class="search-location__panel"
+      class="data-toggle-block"
     >
-      Limit results to Veterans Affairs facilities:
       <div
         class="cts-toggle "
       >
@@ -41,7 +40,7 @@ exports[`Location Render renders without error 1`] = `
           type="checkbox"
         />
         <label
-          aria-label="Limit results to Veterans Affairs facilities:"
+          aria-label="Limit results to Veterans Affairs facilities"
           class="cts-toggle__label"
           for="search-location-toggle"
         >
@@ -59,96 +58,101 @@ exports[`Location Render renders without error 1`] = `
           </span>
         </label>
       </div>
+      Limit results to Veterans Affairs facilities
     </div>
     <div
-      class="cts-radio "
+      class="group-locations"
     >
-      <input
-        aria-disabled="false"
-        class="cts-radio__input"
-        id="search-location-all"
-        name="radios"
-        type="radio"
-        value="search-location-all"
-      />
-      <label
-        class="cts-radio__label"
-        for="search-location-all"
+      <div
+        class="cts-radio "
       >
-        Search All Locations
-      </label>
-    </div>
-    <div
-      class="cts-radio "
-    >
-      <input
-        aria-disabled="false"
-        class="cts-radio__input"
-        id="search-location-zip"
-        name="radios"
-        type="radio"
-        value="search-location-zip"
-      />
-      <label
-        class="cts-radio__label"
-        for="search-location-zip"
+        <input
+          aria-disabled="false"
+          class="cts-radio__input"
+          id="search-location-all"
+          name="radios"
+          type="radio"
+          value="search-location-all"
+        />
+        <label
+          class="cts-radio__label"
+          for="search-location-all"
+        >
+          Search All Locations
+        </label>
+      </div>
+      <div
+        class="cts-radio "
       >
-        ZIP Code
-      </label>
-    </div>
-    <div
-      class="cts-radio "
-    >
-      <input
-        aria-disabled="false"
-        class="cts-radio__input"
-        id="search-location-country"
-        name="radios"
-        type="radio"
-        value="search-location-country"
-      />
-      <label
-        class="cts-radio__label"
-        for="search-location-country"
+        <input
+          aria-disabled="false"
+          class="cts-radio__input"
+          id="search-location-zip"
+          name="radios"
+          type="radio"
+          value="search-location-zip"
+        />
+        <label
+          class="cts-radio__label"
+          for="search-location-zip"
+        >
+          ZIP Code
+        </label>
+      </div>
+      <div
+        class="cts-radio "
       >
-        Country, State, City
-      </label>
-    </div>
-    <div
-      class="cts-radio "
-    >
-      <input
-        aria-disabled="false"
-        class="cts-radio__input"
-        id="search-location-hospital"
-        name="radios"
-        type="radio"
-        value="search-location-hospital"
-      />
-      <label
-        class="cts-radio__label"
-        for="search-location-hospital"
+        <input
+          aria-disabled="false"
+          class="cts-radio__input"
+          id="search-location-country"
+          name="radios"
+          type="radio"
+          value="search-location-country"
+        />
+        <label
+          class="cts-radio__label"
+          for="search-location-country"
+        >
+          Country, State, City
+        </label>
+      </div>
+      <div
+        class="cts-radio "
       >
-        Hospitals/Institutions
-      </label>
-    </div>
-    <div
-      class="cts-radio "
-    >
-      <input
-        aria-disabled="false"
-        class="cts-radio__input"
-        id="search-location-nih"
-        name="radios"
-        type="radio"
-        value="search-location-nih"
-      />
-      <label
-        class="cts-radio__label"
-        for="search-location-nih"
+        <input
+          aria-disabled="false"
+          class="cts-radio__input"
+          id="search-location-hospital"
+          name="radios"
+          type="radio"
+          value="search-location-hospital"
+        />
+        <label
+          class="cts-radio__label"
+          for="search-location-hospital"
+        >
+          Hospitals/Institutions
+        </label>
+      </div>
+      <div
+        class="cts-radio "
       >
-        At NIH (only show trials at the NIH clinical center in Bethesda, MD)
-      </label>
+        <input
+          aria-disabled="false"
+          class="cts-radio__input"
+          id="search-location-nih"
+          name="radios"
+          type="radio"
+          value="search-location-nih"
+        />
+        <label
+          class="cts-radio__label"
+          for="search-location-nih"
+        >
+          At NIH (only show trials at the NIH clinical center in Bethesda, MD)
+        </label>
+      </div>
     </div>
   </div>
 </fieldset>
