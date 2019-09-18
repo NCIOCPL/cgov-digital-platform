@@ -2,3 +2,6 @@ services:
   plugin.manager.app_module:
     class: Drupal\app_module\Plugin\AppModulePluginManager
     arguments: ['@container.namespaces', '@cache.discovery', '@module_handler']
+  app_module.builder:
+    class: Drupal\app_module\AppModuleRenderArrayBuilder
+    arguments: ['@request_stack']

@@ -99,7 +99,7 @@ class AppModuleReferenceItem extends EntityReferenceItem {
     $appmodules = AppModule::getEnabledAppModules();
     $options = [];
     foreach ($appmodules as $appmodule) {
-      $options[$appmodule->id] = $appmodule->label;
+      $options[$appmodule->id()] = $appmodule->label();
     }
     return $options;
   }
