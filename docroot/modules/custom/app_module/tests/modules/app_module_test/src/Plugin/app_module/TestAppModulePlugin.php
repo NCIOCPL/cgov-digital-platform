@@ -16,4 +16,22 @@ use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
  */
 class TestAppModulePlugin extends AppModulePluginBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getAppRouteId($path, array $options = []) {
+    return 'default';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForRoute($path, array $options = []) {
+    $build = [
+      '#markup' => "<div>App Module: " . $this->pluginTitle() . " </div>",
+    ];
+
+    return $build;
+  }
+
 }

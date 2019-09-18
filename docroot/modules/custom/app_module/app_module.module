@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Contains app_module.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function app_module_theme($existing, $type, $theme, $path) {
+
+  return [
+    'app_module' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements template_preprocess_HOOK().
+ */
+function template_preprocess_app_module(&$variables) {
+  $variables['configuration'] = $variables['elements']['#configuration'];
+  $variables['app_module_id'] = $variables['elements']['#app_module_id'];
+  $variables['app_module_plugin_id'] = $variables['elements']['#app_module_plugin_id'];
+  $variables['app_route_id'] = $variables['elements']['#app_route_id'];
+  $variables['content'] = $variables['elements']['content'];
+
+  // Create a valid HTML ID and make sure it is unique.
+  // There should be only 1 app module instance on a page.
+  if (!empty($variables['elements']['#id'])) {
+    $variables['attributes']['id'] = Html::getUniqueId('app-module-' . $variables['elements']['#app_module_id']);
+  }
+
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function app_module_theme_suggestions_app_module(array $variables) {
+  $suggestions = [];
+  $app_module_id = $variables['elements']['#app_module_id'];
+  $app_module_plugin_id = $variables['elements']['#app_module_plugin_id'];
+  $app_route_id = $variables['elements']['#app_route_id'];
+
+  // Just app_module to start.
+  $suggestions[] = 'app_module';
+
+  // Do the plugin.
+  $suggestions[] = 'app_module__' . $app_module_plugin_id;
+
+  // Plugin + route.
+  $suggestions[] = 'app_module__' .
+    $app_module_plugin_id . '__' .
+    $app_route_id;
+
+  // App Module ID.
+  $suggestions[] = 'app_module__' . $app_module_id;
+
+  // App Module ID + plugin.
+  $suggestions[] = 'app_module__' .
+    $app_module_id . '__' .
+    $app_module_plugin_id;
+
+  // App Module ID + plugin + path.
+  $suggestions[] = 'app_module__' .
+    $app_module_id . '__' .
+    $app_module_plugin_id . '__' .
+    $app_route_id;
+
+  return $suggestions;
+}

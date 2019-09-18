@@ -2,6 +2,7 @@
 
 namespace Drupal\app_module\Plugin\app_module;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -45,6 +46,21 @@ abstract class AppModulePluginBase extends PluginBase implements AppModulePlugin
    */
   public function pluginTitle() {
     return $this->definition['label'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function pluginId() {
+    return $this->definition['id'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheInfoForRoute($path, array $options = []) {
+    // This should create a cacheable metadata with a cacheMaxAge of 0.
+    return CacheableMetadata::createFromObject(NULL);
   }
 
 }
