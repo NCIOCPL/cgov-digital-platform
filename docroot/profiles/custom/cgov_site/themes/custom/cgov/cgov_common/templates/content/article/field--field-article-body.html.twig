@@ -34,11 +34,19 @@ multiple sections expecting OTP to be drawn by the javascript method. The legacy
 Common.js #}
 {% for item in items %}
   {% if items | length > 1 %}
-    <section>
+    {% if schema_org_type %}
+      <section itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    {% else %}
+      <section>
+    {% endif %}
+  {% else %}
+    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
   {% endif %}
     {{ item.content }}
   {% if items | length > 1 %}
     </section>
+  {% else %}
+    </div>
   {% endif %}
 {% endfor %}
 {% if items | length > 1 %}

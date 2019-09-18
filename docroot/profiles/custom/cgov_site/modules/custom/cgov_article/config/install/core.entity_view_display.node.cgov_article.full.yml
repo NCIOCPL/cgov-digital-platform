@@ -22,11 +22,13 @@ dependencies:
     - field.field.node.cgov_article.field_pretty_url
     - field.field.node.cgov_article.field_public_use
     - field.field.node.cgov_article.field_related_resources
+    - field.field.node.cgov_article.field_schema_org_data
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
   module:
     - cgov_core
+    - cgov_schema_org
     - entity_reference_revisions
     - options
     - text
@@ -166,6 +168,13 @@ content:
     settings:
       view_mode: list_item_title
       link: ''
+    third_party_settings: {  }
+  field_schema_org_data:
+    type: cgov_schema_org_empty_formatter
+    weight: 17
+    region: content
+    label: above
+    settings: {  }
     third_party_settings: {  }
   links:
     weight: 0
