@@ -1,14 +1,22 @@
 import React from 'react';
-import {Fieldset, TextInput} from '../../atomic';
+import { Fieldset, TextInput } from '../../atomic';
 import './CancerTypeKeyword.scss';
 
-const CancerTypeKeyword = () => {
+const CancerTypeKeyword = ({ handleUpdate }) => {
   return (
     <Fieldset
       id="type"
       legend="Cancer Type/Keyword"
-      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch">
-      <TextInput id="q" label="Cancer Type/Keyword" placeHolder="Start typing to select a cancer type" labelHidden />
+      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
+    >
+      <TextInput
+        action={handleUpdate}
+        id="q"
+        name="CancerTypeKeyword"
+        label="Cancer Type/Keyword"
+        placeHolder="Start typing to select a cancer type"
+        labelHidden
+      />
     </Fieldset>
   );
 };

@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 import { Checkbox, Fieldset, Toggle } from '../../atomic';
 import './TrialType.scss';
 
-const TrialType = ({ selectedTrialTypes, trialTypeFields }) => {
+const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
   const [trialTypes, setTrialTypes] = useState([]);
 
   useEffect(() => {
     //initialize trials state after mount
     setTrialTypes([...selectedTrialTypes]);
   }, [selectedTrialTypes]);
+
+  useEffect(() => {
+    const updateObject = {
+      target: {
+        name: 'trialTypes',
+        value: [...trialTypes],
+      },
+    };
+    handleUpdate(updateObject);
+  }, [trialTypes, handleUpdate]);
 
   const handleSelectAll = e => {
     setTrialTypes([]);

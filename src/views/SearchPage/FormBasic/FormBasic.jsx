@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 //modules
@@ -9,42 +8,35 @@ import {
   ZipCode,
 } from '../../../components/search-modules/';
 
-
-const FormBasic = submitFn => {
-  const [redirectToResults, setRedirectToResults] = useState(false);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setRedirectToResults(true);
-  }
-
-  if (redirectToResults) {
-    return <Redirect push to="/r" />;
-  }
-
+const FormBasic = ({ handleUpdate }) => {
+  const modules = [CancerTypeKeyword, [Age, ZipCode]];
 
   return (
-    <form onSubmit={handleSubmit} className="search-page__form advanced">
-      <CancerTypeKeyword />
-      <div className="side-by-side">
-        <Age />
-        <ZipCode />
-      </div>
-      <div className="submit-block">
-        <button type="submit" className="btn-submit">
-          Find Trials
-        </button>
-      </div>
-    </form>
+    <>
+      {modules.map((Module, idx) => {
+        if (Array.isArray(Module)) {
+          return (
+            <div key={`formAdvanced-${idx}`} className="side-by-side">
+              {Module.map((Mod, i) => (
+                <Mod
+                  key={`formAdvanced-${idx}-${i}`}
+                  handleUpdate={handleUpdate}
+                />
+              ))}
+            </div>
+          );
+        } else {
+          return (
+            <Module key={`formAdvanced-${idx}`} handleUpdate={handleUpdate} />
+          );
+        }
+      })}
+    </>
   );
 };
 
 FormBasic.propTypes = {
-  submitFn: PropTypes.func,
-};
-
-FormBasic.defaultProps = {
-  submitFn: () => {},
+  handleUpdate: PropTypes.func,
 };
 
 export default FormBasic;

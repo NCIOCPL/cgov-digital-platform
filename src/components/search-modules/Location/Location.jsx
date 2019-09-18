@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
 import './Location.scss';
 
-const Location = () => {
+const Location = ({ handleUpdate }) => {
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
 
@@ -48,12 +48,16 @@ const Location = () => {
         {activeRadio === 'search-location-zip' && (
           <div className="search-location__zip">
             <TextInput
+              action={handleUpdate}
               id="search-location-zip-input"
+              name="zip"
               classes="search-location__zip --zip"
               label="U.S. ZIP Code"
             />
             <Dropdown
+              action={handleUpdate}
               id="search-location-radius"
+              name="radius"
               classes="search-location__zip --radius"
               label="Radius"
             >
@@ -73,7 +77,9 @@ const Location = () => {
         {activeRadio === 'search-location-country' && (
           <div className="search-location__country">
             <Dropdown
+              action={handleUpdate}
               classes="search-location__country --country"
+              name="country"
               label="Country"
             >
               {[
@@ -88,12 +94,16 @@ const Location = () => {
             </Dropdown>
             <div className="search-location__country --city-and-state">
               <TextInput
+                action={handleUpdate}
                 id="search-location-state"
+                name="state"
                 classes="search-location__country --state"
                 label="State"
               />
               <TextInput
+                action={handleUpdate}
                 id="search-location-city"
+                name="city"
                 classes="search-location__country --city"
                 label="City"
               />
@@ -109,7 +119,12 @@ const Location = () => {
             />
             {activeRadio === 'search-location-hospital' && (
               <div>
-                <TextInput label="" />
+                <TextInput
+                  action={handleUpdate}
+                  id="search-location-hospital-field"
+                  name="hospital"
+                  label=""
+                />
               </div>
             )}
             <Radio

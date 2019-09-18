@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 import { Fieldset, Checkbox } from '../../atomic';
 import './TrialPhase.scss';
 
-const TrialPhase = ({ selectedPhases, phaseFields }) => {
+const TrialPhase = ({ selectedPhases, phaseFields, handleUpdate }) => {
   const [phases, setPhases] = useState([]);
 
   useEffect(() => {
     //initialize trials state after mount
     setPhases([...selectedPhases]);
   }, [selectedPhases]);
+
+  useEffect(() => {
+    const updateObject = {
+      target: {
+        name: 'trialPhase',
+        value: [...phases],
+      },
+    };
+    handleUpdate(updateObject);
+  }, [phases, handleUpdate]);
 
   const handleSelectAll = e => {
     setPhases([]);
@@ -66,6 +76,7 @@ const TrialPhase = ({ selectedPhases, phaseFields }) => {
 TrialPhase.propTypes = {
   phaseFields: PropTypes.array,
   selectedPhases: PropTypes.array,
+  handleUpdate: PropTypes.func,
 };
 
 TrialPhase.defaultProps = {

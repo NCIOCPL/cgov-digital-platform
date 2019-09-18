@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormBasic from './FormBasic';
 import FormAdvanced from './FormAdvanced';
 import { Delighter } from '../../components/atomic';
+import { updateForm } from '../../store/actions';
 
 const SearchPage = ({ form }) => {
+  const dispatch = useDispatch();
   const [formVersion, setFormVersion] = useState(form);
+  const [redirectToResults, setRedirectToResults] = useState(false);
+
+  useEffect(() => {
+    if (redirectToResults) {
+      return <Redirect push to="/r" />;
+    }
+  }, [redirectToResults])
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setRedirectToResults(true);
+  };
+
+  const handleUpdate = e => {
+    console.log('e: ', e.target.name, e.target.value);
+    dispatch(
+      updateForm({
+        field: e.target.name,
+        value: e.target.value,
+      })
+    );
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -89,7 +115,21 @@ const SearchPage = ({ form }) => {
           </div>
 
           <div className="search-page__content">
-            {formVersion === 'advanced' ? <FormAdvanced /> : <FormBasic />}
+            <form
+              onSubmit={handleSubmit}
+              className={`search-page__form ${formVersion}`}
+            >
+              {formVersion === 'advanced' ? (
+                <FormAdvanced handleUpdate={handleUpdate} />
+              ) : (
+                <FormBasic handleUpdate={handleUpdate} />
+              )}
+              <div className="submit-block">
+                <button type="submit" className="btn-submit">
+                  Find Trials
+                </button>
+              </div>
+            </form>
             <aside className="search-page__aside">{renderDelighters()}</aside>
           </div>
 

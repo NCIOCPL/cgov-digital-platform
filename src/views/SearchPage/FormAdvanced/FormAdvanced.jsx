@@ -15,47 +15,37 @@ import {
   LeadOrganization,
 } from '../../../components/search-modules';
 
-const FormAdvanced = submitFn => {
-  const [redirectToResults, setRedirectToResults] = useState(false);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setRedirectToResults(true);
-  };
-
-  if (redirectToResults) {
-    return <Redirect push to="/r" />;
-  }
+const FormAdvanced = ({ handleUpdate }) => {
+  //Module groups in arrays will be placed side-by-side in the form
+  const modules = [
+    CancerTypeCondition,
+    [Age, KeywordsPhrases],
+    Location,
+    TrialType,
+    DrugTreatment,
+    TrialPhase,
+    TrialId,
+    TrialInvestigators,
+    LeadOrganization,
+  ];
 
   return (
-    <form onSubmit={handleSubmit} className="search-page__form advanced">
-      <CancerTypeCondition />
-      <div className="side-by-side">
-        <Age />
-        <KeywordsPhrases />
-      </div>
-      <Location />
-      <TrialType />
-      <DrugTreatment />
-      <TrialPhase />
-      <TrialId />
-      <TrialInvestigators />
-      <LeadOrganization />
-      <div className="submit-block">
-        <button type="submit" className="btn-submit">
-          Find Trials
-        </button>
-      </div>
-    </form>
+    <>
+      {modules.map((Module, idx) => {
+        if (Array.isArray(Module)) {
+          return <div key={`formAdvanced-${idx}`} className="side-by-side">
+            {Module.map((Mod, i) => <Mod key={`formAdvanced-${idx}-${i}`} handleUpdate={handleUpdate} />)}
+          </div>;
+        } else {
+          return <Module key={`formAdvanced-${idx}`} handleUpdate={handleUpdate} />;
+        }
+      })}
+    </>
   );
 };
 
 FormAdvanced.propTypes = {
-  submitFn: PropTypes.func,
-};
-
-FormAdvanced.defaultProps = {
-  submitFn: () => {},
+  handleUpdate: PropTypes.func,
 };
 
 export default FormAdvanced;

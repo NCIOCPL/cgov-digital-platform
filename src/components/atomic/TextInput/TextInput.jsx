@@ -12,6 +12,7 @@ class TextInput extends React.Component {
     enableSpellCheck: PropTypes.bool,
     errorMessage: PropTypes.string,
     id: PropTypes.string.isRequired,
+    name: PropTypes.string,
     inputHelpText: PropTypes.string,
     isValid: PropTypes.bool,
     label: PropTypes.string.isRequired,
@@ -112,6 +113,7 @@ class TextInput extends React.Component {
         )}
         <input
           id={this.id}
+          name={this.props.name || this.id}
           type={this.props.type}
           value={this.state.value}
           className={`cts-input ${
@@ -206,7 +208,7 @@ class TextInput extends React.Component {
     }
 
     // Call action handler prop
-    this.props.action(event.target.value);
+    this.props.action(event);
 
     // Commit the input's value to state.value.
     this.setState({ value: event.target.value }, () => {

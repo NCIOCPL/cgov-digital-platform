@@ -4,23 +4,21 @@ import Fieldset from '../../atomic/Fieldset';
 import TextInput from '../../atomic/TextInput';
 import './LeadOrganization.scss';
 
-const LeadOrganization = () => {
+const LeadOrganization = ({ handleUpdate }) => {
   return (
     <Fieldset
       id="location"
       legend="Location"
-      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization">
-      <TextInput id="lo" label="Search by Lead Organization." />
+      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization"
+    >
+      <TextInput
+        action={handleUpdate}
+        id="lo"
+        name="leadOrganization"
+        label="Search by Lead Organization."
+      />
     </Fieldset>
   );
-};
-
-LeadOrganization.propTypes = {
-  sampleProperty: PropTypes.string
-};
-
-LeadOrganization.defaultProps = {
-  sampleProperty: 'LeadOrganization'
 };
 
 export default LeadOrganization;
