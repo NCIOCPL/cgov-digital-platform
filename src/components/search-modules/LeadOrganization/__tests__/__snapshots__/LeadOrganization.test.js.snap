@@ -3,13 +3,13 @@
 exports[`LeadOrganization Render renders without error 1`] = `
 <fieldset
   class="cts-fieldset "
-  id="fieldset--location"
+  id="fieldset--lead_organization"
 >
   <legend
     class="cts-fieldset__legend"
   >
     <span>
-      Location
+      Lead Organization
     </span>
   </legend>
   <a
@@ -25,24 +25,30 @@ exports[`LeadOrganization Render renders without error 1`] = `
     class="cts-fieldset__body"
   >
     <div
-      class=""
+      class="cts-autocomplete "
+      id="component-unique-id-1-autocomplete-wrapper"
     >
       <label
         class="cts-label"
-        for="lo"
-        id="lo-label"
+        for="component-unique-id-1"
+        id="component-unique-id-1-label"
       >
-        Search by Lead Organization.
+        Search by Lead Organization
       </label>
-      <input
-        aria-labelledby="lo-label"
-        aria-required="false"
-        class="cts-input null"
-        id="lo"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+      <div
+        class=""
+      >
+        <input
+          aria-autocomplete="list"
+          aria-expanded="false"
+          autocomplete="off"
+          class="cts-input cts-autocomplete__input"
+          id="component-unique-id-1"
+          role="combobox"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </div>
 </fieldset>

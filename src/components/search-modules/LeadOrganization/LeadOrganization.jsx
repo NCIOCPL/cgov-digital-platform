@@ -1,26 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import { Autocomplete } from '../../atomic';
+import { getLeadOrgs } from '../../../mocks/mock-lead-org';
+import {matchItemToTerm, sortItems} from '../../../utilities/utilities';
 import './LeadOrganization.scss';
 
 const LeadOrganization = () => {
+  const [orgName, setOrgName] = useState({ value: '' });
+
   return (
     <Fieldset
-      id="location"
-      legend="Location"
-      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization">
-      <TextInput id="lo" label="Search by Lead Organization." />
+      id="lead_organization"
+      legend="Lead Organization"
+      helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization"
+    >
+      <Autocomplete
+        label="Search by Lead Organization"
+        value={orgName.value}
+        inputProps={{ id: 'lo' }}
+        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+        items={getLeadOrgs().terms}
+        getItemValue={item => item.term}
+        shouldItemRender={matchItemToTerm}
+        sortItems={sortItems}
+        onChange={(event, value) => setOrgName({ value })}
+        onSelect={value => setOrgName({ value })}
+        renderMenu={children => (
+          <div className="cts-autocomplete__menu --leadOrg">{children}</div>
+        )}
+        renderItem={(item, isHighlighted) => (
+          <div
+            className={`cts-autocomplete__menu-item ${
+              isHighlighted ? 'highlighted' : ''
+            }`}
+            key={item.term_key}
+          >
+            {item.term}
+          </div>
+        )}
+      />
     </Fieldset>
   );
 };
 
 LeadOrganization.propTypes = {
-  sampleProperty: PropTypes.string
+  sampleProperty: PropTypes.string,
 };
 
 LeadOrganization.defaultProps = {
-  sampleProperty: 'LeadOrganization'
+  sampleProperty: 'LeadOrganization',
 };
 
 export default LeadOrganization;

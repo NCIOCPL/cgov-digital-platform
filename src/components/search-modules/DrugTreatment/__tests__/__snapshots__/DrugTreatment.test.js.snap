@@ -9,13 +9,13 @@ exports[`DrugTreatment Render renders without error 1`] = `
     class="cts-fieldset__legend"
   >
     <span>
-      Cancer Type/Condition
+      Drug/Treatment
     </span>
   </legend>
   <a
     aria-label="Help"
     class="text-icon-help"
-    href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#cancertype"
+    href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
     rel="noopener noreferrer"
     target="_blank"
   >
@@ -28,42 +28,46 @@ exports[`DrugTreatment Render renders without error 1`] = `
       Search for a specific drug or intervention. You can use the drug's generic or brand name.
     </p>
     <div
-      class=""
+      class="cts-autocomplete "
+      id="dt-autocomplete-wrapper"
     >
       <label
         class="cts-label"
-        for="search-drug-family"
-        id="search-drug-family-label"
+        for="dt"
+        id="dt-label"
       >
-        Drug/Drug Family
+        Drug/DrugFamily
       </label>
-      <input
-        aria-labelledby="search-drug-family-label"
-        aria-required="false"
-        class="cts-input null"
-        id="search-drug-family"
-        placeholder="Please enter 3 or more characters"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+      <div
+        class="cts-chip-list"
+      >
+        <input
+          aria-autocomplete="list"
+          aria-expanded="false"
+          autocomplete="off"
+          class="cts-input cts-autocomplete__input"
+          id="dt"
+          role="combobox"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
     <div
       class=""
     >
       <label
         class="cts-label"
-        for="search-drug-other"
-        id="search-drug-other-label"
+        for="ot"
+        id="ot-label"
       >
         Other Treatments
       </label>
       <input
-        aria-labelledby="search-drug-other-label"
+        aria-labelledby="ot-label"
         aria-required="false"
-        class="cts-input null"
-        id="search-drug-other"
-        placeholder="Please enter 3 or more characters"
+        class="cts-input  "
+        id="ot"
         spellcheck="false"
         type="text"
         value=""
