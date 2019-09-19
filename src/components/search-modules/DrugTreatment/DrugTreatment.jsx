@@ -51,7 +51,7 @@ const DrugTreatment = () => {
 
       <Autocomplete
         id="dt"
-        label="Drug/DrugFamily"
+        label="Drug/Drug Family"
         value={drugVal.value}
         inputProps={{ id: 'dt' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
