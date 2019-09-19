@@ -3,38 +3,59 @@ import PropTypes from 'prop-types';
 import { Checkbox, Fieldset, Toggle } from '../../atomic';
 import './TrialType.scss';
 
-const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
-  const [trialTypes, setTrialTypes] = useState([]);
-
-  useEffect(() => {
-    //initialize trials state after mount
-    setTrialTypes([...selectedTrialTypes]);
-  }, [selectedTrialTypes]);
+const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
+  const initPhases = trialTypeFields.map(type => {
+    if (type && !type.checked) {
+      return {
+        ...type,
+        checked: false,
+      };
+    } else {
+      return type;
+    }
+  });
+  const [trialTypes, setTrialTypes] = useState(initPhases);
 
   useEffect(() => {
     const updateObject = {
       target: {
-        name: 'trialTypes',
+        name: 'trialType',
         value: [...trialTypes],
       },
     };
     handleUpdate(updateObject);
   }, [trialTypes, handleUpdate]);
 
+  const handleToggle = checked => {
+    handleUpdate({
+      target: {
+        name: 'healthyVolunteers',
+        value: !checked,
+      },
+    });
+  };
+
   const handleSelectAll = e => {
-    setTrialTypes([]);
+    setTrialTypes(
+      trialTypes.map(type => ({
+        ...type,
+        checked: false,
+      }))
+    );
   };
 
   const handleCheckType = e => {
-    let filtered = [];
-    if (e.target.checked) {
-      setTrialTypes([...trialTypes, e.target.value]);
-    } else {
-      filtered = trialTypes.filter((value, index, arr) => {
-        return value !== e.target.value;
-      });
-      setTrialTypes([...filtered]);
-    }
+    const filtered = trialTypes.map(type => {
+      if (type.value === e.target.value) {
+        return {
+          ...type,
+          checked: e.target.checked,
+        };
+      } else {
+        return type;
+      }
+    });
+    setTrialTypes(filtered);
   };
 
   return (
@@ -50,7 +71,13 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
       </p>
 
       <div className="data-toggle-block">
-        <Toggle id="hv" label="Limit results to Veterans Affairs facilities" />
+        <Toggle
+          id="hv"
+          name="healthyVolunteers"
+          checked={useValue('healthyVolunteers')}
+          label="Limit results to Veterans Affairs facilities"
+          onClick={handleToggle}
+        />
         Limit results to trials accepting healthy volunteers
       </div>
       <div className="select-all">
@@ -60,12 +87,12 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
           id="tt_all"
           label="All"
           classes="tt-all"
-          checked={trialTypes.length === 0}
+          checked={trialTypes.every(type => !type.checked)}
           onChange={handleSelectAll}
         />
       </div>
       <div className="group-trial-types">
-        {trialTypeFields.map((trialType, idx) => (
+        {trialTypes.map((trialType, idx) => (
           <Checkbox
             key={idx}
             name="tt"
@@ -73,7 +100,7 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
             value={trialType.value}
             label={trialType.label}
             onChange={handleCheckType}
-            checked={trialTypes.includes(trialType.value)}
+            checked={trialType.checked}
           />
         ))}
       </div>
@@ -82,12 +109,12 @@ const TrialType = ({ selectedTrialTypes, trialTypeFields, handleUpdate }) => {
 };
 
 TrialType.propTypes = {
-  selectedTrialTypes: PropTypes.array,
   trialTypeFields: PropTypes.array,
+  handleUpdate: PropTypes.func,
+  useValue: PropTypes.func,
 };
 
 TrialType.defaultProps = {
-  selectedTrialTypes: [],
   trialTypeFields: [
     { label: 'Treatment', value: 'treatment' },
     { label: 'Prevention', value: 'prevention' },

@@ -2,7 +2,7 @@ import React from 'react';
 import { Fieldset, TextInput } from '../../atomic';
 import './CancerTypeCondition.scss';
 
-const CancerTypeCondition = ({ handleUpdate }) => {
+const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   return (
     <Fieldset
       id="type"
@@ -13,6 +13,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         action={handleUpdate}
         id="cancerTypeCondition"
         name="cancerTypeCondition"
+        value={useValue('cancerTypeCondition')}
         type="text"
       />
     </Fieldset>

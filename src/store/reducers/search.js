@@ -5,9 +5,24 @@ import {
 } from '../identifiers';
 
 export const defaultState = {
-  type: '',
   age: '',
-  zip: '',
+  cancerTypeCondition: '',
+  cancerTypeKeyword: '',
+  drugFamily: '',
+  otherTreatements: '',
+  keywordPhrases:'',
+  leadOrganization:'',
+  zip:'',
+  radius:'',
+  country: '',
+  state: '',
+  city: '',
+  hospital:'',
+  trialId: '',
+  trialInvestigators: '',
+  healthyVolunteers: false,
+  trialPhase: [],
+  trialType: [],
 };
 
 export const reducer = (state = defaultState, action) => {

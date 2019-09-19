@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Fieldset from '../../atomic/Fieldset';
-import TextInput from '../../atomic/TextInput';
+import { Fieldset, TextInput } from '../../atomic';
 import './LeadOrganization.scss';
 
-const LeadOrganization = ({ handleUpdate }) => {
+const LeadOrganization = ({ handleUpdate, useValue }) => {
   return (
     <Fieldset
       id="location"
@@ -15,6 +13,7 @@ const LeadOrganization = ({ handleUpdate }) => {
         action={handleUpdate}
         id="lo"
         name="leadOrganization"
+        value={useValue('leadOrganization')}
         label="Search by Lead Organization."
       />
     </Fieldset>

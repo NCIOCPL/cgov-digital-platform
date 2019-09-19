@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Fieldset, TextInput } from '../../atomic';
 import './TrialId.scss';
 
-const TrialId = ({ handleUpdate }) => {
+const TrialId = ({ handleUpdate, useValue }) => {
   return (
     <Fieldset
       id="trialid"
@@ -14,6 +14,7 @@ const TrialId = ({ handleUpdate }) => {
         action={handleUpdate}
         id="search-trial-id"
         name="trialId"
+        value={useValue('trialId')}
         type="text"
         label="Separate multiple IDs with commas or semicolons."
       />
@@ -23,6 +24,7 @@ const TrialId = ({ handleUpdate }) => {
 
 TrialId.propTypes = {
   handleUpdate: PropTypes.func,
+  useValue: PropTypes.func
 };
 
 export default TrialId;

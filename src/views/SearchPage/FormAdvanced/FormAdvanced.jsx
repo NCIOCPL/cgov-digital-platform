@@ -33,11 +33,20 @@ const FormAdvanced = ({ handleUpdate }) => {
     <>
       {modules.map((Module, idx) => {
         if (Array.isArray(Module)) {
-          return <div key={`formAdvanced-${idx}`} className="side-by-side">
-            {Module.map((Mod, i) => <Mod key={`formAdvanced-${idx}-${i}`} handleUpdate={handleUpdate} />)}
-          </div>;
+          return (
+            <div key={`formAdvanced-${idx}`} className="side-by-side">
+              {Module.map((Mod, i) => (
+                <Mod
+                  key={`formAdvanced-${idx}-${i}`}
+                  handleUpdate={handleUpdate}
+                />
+              ))}
+            </div>
+          );
         } else {
-          return <Module key={`formAdvanced-${idx}`} handleUpdate={handleUpdate} />;
+          return (
+            <Module key={`formAdvanced-${idx}`} handleUpdate={handleUpdate} />
+          );
         }
       })}
     </>

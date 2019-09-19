@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
 import './Location.scss';
 
-const Location = ({ handleUpdate }) => {
+const Location = ({ handleUpdate, useValue }) => {
+  //Hooks must always be rendered in same order.
+  let zip = useValue('zip');
+  let radius = useValue('radius');
+  let country = useValue('country');
+  let city = useValue('city');
+  let state = useValue('state');
+  let hospital = useValue('hospital');
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
 
@@ -51,6 +58,7 @@ const Location = ({ handleUpdate }) => {
               action={handleUpdate}
               id="search-location-zip-input"
               name="zip"
+              value={zip}
               classes="search-location__zip --zip"
               label="U.S. ZIP Code"
             />
@@ -58,6 +66,7 @@ const Location = ({ handleUpdate }) => {
               action={handleUpdate}
               id="search-location-radius"
               name="radius"
+              value={radius}
               classes="search-location__zip --radius"
               label="Radius"
             >
@@ -80,6 +89,7 @@ const Location = ({ handleUpdate }) => {
               action={handleUpdate}
               classes="search-location__country --country"
               name="country"
+              value={country}
               label="Country"
             >
               {[
@@ -97,6 +107,7 @@ const Location = ({ handleUpdate }) => {
                 action={handleUpdate}
                 id="search-location-state"
                 name="state"
+                value={state}
                 classes="search-location__country --state"
                 label="State"
               />
@@ -104,6 +115,7 @@ const Location = ({ handleUpdate }) => {
                 action={handleUpdate}
                 id="search-location-city"
                 name="city"
+                value={city}
                 classes="search-location__country --city"
                 label="City"
               />
@@ -123,6 +135,7 @@ const Location = ({ handleUpdate }) => {
                   action={handleUpdate}
                   id="search-location-hospital-field"
                   name="hospital"
+                  value={hospital}
                   label=""
                 />
               </div>

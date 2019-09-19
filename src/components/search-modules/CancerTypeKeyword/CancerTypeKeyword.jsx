@@ -2,7 +2,7 @@ import React from 'react';
 import { Fieldset, TextInput } from '../../atomic';
 import './CancerTypeKeyword.scss';
 
-const CancerTypeKeyword = ({ handleUpdate }) => {
+const CancerTypeKeyword = ({ handleUpdate, useValue }) => {
   return (
     <Fieldset
       id="type"
@@ -12,8 +12,9 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
       <TextInput
         action={handleUpdate}
         id="q"
-        name="CancerTypeKeyword"
+        name="cancerTypeKeyword"
         label="Cancer Type/Keyword"
+        value={useValue('cancerTypeKeyword')}
         placeHolder="Start typing to select a cancer type"
         labelHidden
       />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Fieldset, TextInput } from '../../atomic';
 import './DrugTreatment.scss';
 
-const DrugTreatment = ({ handleUpdate }) => {
+const DrugTreatment = ({ handleUpdate, useValue }) => {
   const placeholder = 'Please enter 3 or more characters';
   return (
     <Fieldset
@@ -18,6 +18,7 @@ const DrugTreatment = ({ handleUpdate }) => {
         action={handleUpdate}
         id="search-drug-family"
         name="drugFamily"
+        value={useValue('drugFamily')}
         type="text"
         label="Drug/Drug Family"
         placeHolder={placeholder}
@@ -26,6 +27,7 @@ const DrugTreatment = ({ handleUpdate }) => {
         action={handleUpdate}
         id="search-drug-other"
         name="otherTreatements"
+        value={useValue('otherTreatements')}
         type="text"
         label="Other Treatments"
         placeHolder={placeholder}

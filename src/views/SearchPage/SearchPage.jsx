@@ -2,10 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import FormBasic from './FormBasic';
-import FormAdvanced from './FormAdvanced';
 import { Delighter } from '../../components/atomic';
+import {
+  CancerTypeCondition,
+  Age,
+  KeywordsPhrases,
+  Location,
+  TrialType,
+  DrugTreatment,
+  TrialPhase,
+  TrialId,
+  TrialInvestigators,
+  LeadOrganization,
+  CancerTypeKeyword,
+  ZipCode,
+} from '../../components/search-modules';
 import { updateForm } from '../../store/actions';
+
+//Module groups in arrays will be placed side-by-side in the form
+const basicFormModules = [Age, CancerTypeKeyword, ZipCode];
+const advancedFormModules = [
+  CancerTypeCondition,
+  [Age, KeywordsPhrases],
+  Location,
+  TrialType,
+  DrugTreatment,
+  TrialPhase,
+  TrialId,
+  TrialInvestigators,
+  LeadOrganization,
+];
+
+const useValue = (prop) => useSelector(({search}) => search[prop]);
 
 const SearchPage = ({ form }) => {
   const dispatch = useDispatch();
@@ -16,7 +44,7 @@ const SearchPage = ({ form }) => {
     if (redirectToResults) {
       return <Redirect push to="/r" />;
     }
-  }, [redirectToResults])
+  }, [redirectToResults]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -99,6 +127,8 @@ const SearchPage = ({ form }) => {
     </div>
   );
 
+  let formModules = formVersion === 'advanced' ? advancedFormModules : basicFormModules;
+
   return (
     <div className="general-page-body-container">
       <div className="contentzone">
@@ -119,11 +149,29 @@ const SearchPage = ({ form }) => {
               onSubmit={handleSubmit}
               className={`search-page__form ${formVersion}`}
             >
-              {formVersion === 'advanced' ? (
-                <FormAdvanced handleUpdate={handleUpdate} />
-              ) : (
-                <FormBasic handleUpdate={handleUpdate} />
-              )}
+              {formModules.map((Module, idx) => {
+                if (Array.isArray(Module)) {
+                  return (
+                    <div key={`formAdvanced-${idx}`} className="side-by-side">
+                      {Module.map((Mod, i) => (
+                        <Mod
+                          key={`formAdvanced-${idx}-${i}`}
+                          handleUpdate={handleUpdate}
+                          useValue={useValue}
+                        />
+                      ))}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <Module
+                      key={`formAdvanced-${idx}`}
+                      handleUpdate={handleUpdate}
+                      useValue={useValue}
+                    />
+                  );
+                }
+              })}
               <div className="submit-block">
                 <button type="submit" className="btn-submit">
                   Find Trials
