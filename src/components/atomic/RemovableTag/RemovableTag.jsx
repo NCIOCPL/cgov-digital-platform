@@ -6,14 +6,13 @@ const RemovableTag = ({
   label,
   onRemove
 }) => {
-  const handleClick = (e) => {
-    console.log('remove');
-    onRemove();
+  const handleClick = () => {
+    onRemove({label});
   }
 
   return (
-    <div className="cts-removable-tag">
-      <button className="cts-removable-tag__button" type="button" aria-label={`remove ${label}`} onClick={handleClick}><span aria-hidden="true">X</span></button>
+    <div className="cts-removable-tag" role="option" aria-selected="true">
+      <button className="cts-removable-tag__button" type="button" aria-label={`remove ${label}`} onClick={handleClick} value={label}><span aria-hidden="true">X</span></button>
       <span className="cts-removable-tag__label">{label}</span>
     </div>
   );

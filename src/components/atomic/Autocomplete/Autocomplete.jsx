@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import scrollIntoView from 'dom-scroll-into-view';
-import {InputLabel} from '../../atomic';
+import {InputLabel, RemovableTag} from '../../atomic';
 import Utilities from '../../../utilities/utilities';
 import './Autocomplete.scss';
 
@@ -181,6 +181,9 @@ class Autocomplete extends React.Component {
      */
     open: PropTypes.bool,
     debug: PropTypes.bool,
+    multiselect: PropTypes.bool,
+    chipList: PropTypes.array,
+    onChipRemove: PropTypes.func
   };
 
   static defaultProps = {
@@ -205,6 +208,9 @@ class Autocomplete extends React.Component {
     onMenuVisibilityChange() {},
     labelHint: '',
     wrapperClasses: '',
+    multiselect: false,
+    chipList: [],
+    onChipRemove() {}
   };
 
   constructor(props) {
@@ -481,6 +487,17 @@ class Autocomplete extends React.Component {
     this._ignoreBlur = ignore;
   }
 
+  renderChips() {
+    return (
+      <>
+      {this.props.chipList.map((chip, idx) => (
+        <RemovableTag key={idx} label={chip.label} onRemove={this.props.onChipRemove} />
+      ))
+      }
+      </>
+    )
+  };
+
   renderMenu() {
     const items = this.getFilteredItems(this.props).map((item, index) => {
       const element = this.props.renderItem(
@@ -579,7 +596,7 @@ class Autocomplete extends React.Component {
 
   handleInputClick() {
     // Input will not be focused if it's disabled
-    if (this.isInputFocused() && !this.isOpen())
+    if (this.isInputFocused() && !this.isOpen() && this.props.value.length > 2)
       this.setState({ isOpen: true });
   }
 
@@ -608,12 +625,14 @@ class Autocomplete extends React.Component {
     const { inputProps } = this.props;
     const open = this.isOpen();
     return (
-      <div className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
+      <div id={this.id + '-autocomplete-wrapper'} className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
         <InputLabel
             label={this.props.label}
             labelHint={this.props.labelHint}
             htmlFor={this.id}
           />
+        <div className={this.props.multiselect ? 'cts-chip-list' : ''}>
+        {this.props.multiselect && this.renderChips()}
         {this.props.renderInput({
           ...inputProps,
           id: this.id,
@@ -637,6 +656,7 @@ class Autocomplete extends React.Component {
           type: 'text',
           value: this.props.value,
         })}
+        </div>
         {open && this.renderMenu()}
         {this.props.debug && (
           <pre style={{ marginLeft: 300 }}>

@@ -594,13 +594,13 @@ exports[`FormAdvanced Render renders without error 1`] = `
       class="cts-fieldset__legend"
     >
       <span>
-        Cancer Type/Condition
+        Drug/Treatment
       </span>
     </legend>
     <a
       aria-label="Help"
       class="text-icon-help"
-      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#cancertype"
+      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -613,42 +613,46 @@ exports[`FormAdvanced Render renders without error 1`] = `
         Search for a specific drug or intervention. You can use the drug's generic or brand name.
       </p>
       <div
-        class=""
+        class="cts-autocomplete "
+        id="dt-autocomplete-wrapper"
       >
         <label
           class="cts-label"
-          for="search-drug-family"
-          id="search-drug-family-label"
+          for="dt"
+          id="dt-label"
         >
-          Drug/Drug Family
+          Drug/DrugFamily
         </label>
-        <input
-          aria-labelledby="search-drug-family-label"
-          aria-required="false"
-          class="cts-input  "
-          id="search-drug-family"
-          placeholder="Please enter 3 or more characters"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
+        <div
+          class="cts-chip-list"
+        >
+          <input
+            aria-autocomplete="list"
+            aria-expanded="false"
+            autocomplete="off"
+            class="cts-input cts-autocomplete__input"
+            id="dt"
+            role="combobox"
+            type="text"
+            value=""
+          />
+        </div>
       </div>
       <div
         class=""
       >
         <label
           class="cts-label"
-          for="search-drug-other"
-          id="search-drug-other-label"
+          for="ot"
+          id="ot-label"
         >
           Other Treatments
         </label>
         <input
-          aria-labelledby="search-drug-other-label"
+          aria-labelledby="ot-label"
           aria-required="false"
           class="cts-input  "
-          id="search-drug-other"
-          placeholder="Please enter 3 or more characters"
+          id="ot"
           spellcheck="false"
           type="text"
           value=""
@@ -847,24 +851,30 @@ exports[`FormAdvanced Render renders without error 1`] = `
       class="cts-fieldset__body"
     >
       <div
-        class=""
+        class="cts-autocomplete "
+        id="component-unique-id-1-autocomplete-wrapper"
       >
         <label
           class="cts-label"
-          for="in"
-          id="in-label"
+          for="component-unique-id-1"
+          id="component-unique-id-1-label"
         >
-          Search by Trial Investigators.
+          Search by Trial Investigators
         </label>
-        <input
-          aria-labelledby="in-label"
-          aria-required="false"
-          class="cts-input  "
-          id="in"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
+        <div
+          class=""
+        >
+          <input
+            aria-autocomplete="list"
+            aria-expanded="false"
+            autocomplete="off"
+            class="cts-input cts-autocomplete__input"
+            id="component-unique-id-1"
+            role="combobox"
+            type="text"
+            value=""
+          />
+        </div>
       </div>
     </div>
   </fieldset>
@@ -893,24 +903,29 @@ exports[`FormAdvanced Render renders without error 1`] = `
     >
       <div
         class="cts-autocomplete "
+        id="component-unique-id-2-autocomplete-wrapper"
       >
         <label
           class="cts-label"
-          for="component-unique-id-1"
-          id="component-unique-id-1-label"
+          for="component-unique-id-2"
+          id="component-unique-id-2-label"
         >
           Search by Lead Organization
         </label>
-        <input
-          aria-autocomplete="list"
-          aria-expanded="false"
-          autocomplete="off"
-          class="cts-input cts-autocomplete__input"
-          id="component-unique-id-1"
-          role="combobox"
-          type="text"
-          value=""
-        />
+        <div
+          class=""
+        >
+          <input
+            aria-autocomplete="list"
+            aria-expanded="false"
+            autocomplete="off"
+            class="cts-input cts-autocomplete__input"
+            id="component-unique-id-2"
+            role="combobox"
+            type="text"
+            value=""
+          />
+        </div>
       </div>
     </div>
   </fieldset>
