@@ -17,6 +17,11 @@ const ResultsPage = ({ results }) => {
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
 
+  // scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0,0);
+  },[]);
+
   useEffect(() => {
     if (selectAll) {
       setSelectedResults([...paginatedResults.map(result => result.title)]);
