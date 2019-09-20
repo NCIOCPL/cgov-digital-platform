@@ -51,15 +51,17 @@ const Location = () => {
           onChange={handleRadioChange}
           id="search-location-all"
           label="Search All Locations"
+          checked={activeRadio === 'search-location-all'}
         />
         <Radio
           onChange={handleRadioChange}
           id="search-location-zip"
           label="ZIP Code"
+          checked={activeRadio === 'search-location-zip'}
         />
         {activeRadio === 'search-location-zip' && (
           <div className="search-location__block search-location__zip">
-            <div className="--two-col">
+            <div className="two-col">
               <TextInput
                 id="search-location-zip-input"
                 classes="zip"
@@ -85,6 +87,7 @@ const Location = () => {
           onChange={handleRadioChange}
           id="search-location-country"
           label="Country, State, City"
+          checked={activeRadio === 'search-location-country'}
         />
         {activeRadio === 'search-location-country' && (
           <div className="search-location__block search-location__country">
@@ -103,7 +106,7 @@ const Location = () => {
                 return <option key={city} value={city}>{`${city}`}</option>;
               })}
             </Dropdown>
-            <div className={`search-location__country ${showStateField ? '--two-col' : ''}`}>
+            <div className={`search-location__country ${showStateField ? 'two-col' : ''}`}>
               {showStateField && (
                 <Dropdown
                   id="search-location-state"
@@ -117,7 +120,6 @@ const Location = () => {
               )}
               <TextInput
                 id="search-location-city"
-                classes="city"
                 label="City"
               />
             </div>
@@ -129,6 +131,7 @@ const Location = () => {
               onChange={handleRadioChange}
               id="search-location-hospital"
               label="Hospitals/Institutions"
+              checked={activeRadio === 'search-location-hospital'}
             />
             {activeRadio === 'search-location-hospital' && (
               <div className="search-location__block">
@@ -144,6 +147,7 @@ const Location = () => {
               onChange={handleRadioChange}
               id="search-location-nih"
               label="At NIH (only show trials at the NIH clinical center in Bethesda, MD)"
+              checked={activeRadio === 'search-location-nih'}
             />
           </>
         )}

@@ -5,25 +5,27 @@
   &__block {
     margin: 0.5rem 0 1.5rem 2rem;
 
-    .--two-col {
-      @media screen and (min-width: 1025px) {
+    .two-col {
+      @media screen and (min-width: 641px) {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-between;
         > div {
-          flex: 1 1 50%;
+          flex: 0 1 48.5%;
         }
       }
     }
 
-    .country{
+    .zip,
+    .country,
+    .state {
       margin-bottom: 1rem;
     }
 
-    .radius {
-      margin-bottom: 1rem;
-      @media screen and (min-width: 1025px) {
+    .state,
+    .zip {
+      @media screen and (min-width: 641px) {
         margin-bottom: 0;
       }
     }
@@ -31,16 +33,8 @@
     .city,
     .state {
       width: auto;
-      margin: 0;
-      @media screen and (min-width: 1025px) {
+      @media screen and (min-width: 641px) {
         width: 100%;
-      }
-    }
-
-    .state,
-    .zip {
-      @media screen and (min-width: 1025px) {
-        margin-right: 1rem;
       }
     }
   }
