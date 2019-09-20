@@ -84,7 +84,7 @@ const ResultsPage = ({ results }) => {
             Results 1-10 of {paginatedResults.length} for your search
           </strong>
         </p>
-        <Accordion bordered>
+        <Accordion bordered startCollapsed>
           <AccordionItem title="Show Search Criteria">
             <div>
               <h3>Your Search Criteria</h3>

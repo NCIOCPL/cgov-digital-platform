@@ -12,8 +12,8 @@ const RemovableTag = ({
 
   return (
     <div className="cts-removable-tag" role="option" aria-selected="true">
-      <button className="cts-removable-tag__button" type="button" aria-label={`remove ${label}`} onClick={handleClick} value={label}><span aria-hidden="true">X</span></button>
       <span className="cts-removable-tag__label">{label}</span>
+      <button className="cts-removable-tag__button" type="button" aria-label={`remove ${label}`} onClick={handleClick} value={label}><span aria-hidden="true">X</span></button>
     </div>
   );
 };
