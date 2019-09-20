@@ -1,9 +1,8 @@
 .cts-toggle {
   display: inline-block;
-  min-width: 80px;
   position: relative;
   overflow: hidden;
-  height: 42px;
+  height: 36px;
   padding: 0;
   text-align: left;
   box-sizing: content-box;
@@ -23,7 +22,7 @@
       + .cts-toggle__label{
           background: #accae1;
           &::before {
-            left: calc(100% - 35px);
+            left: calc(100% - 28px);
           }
           .pos {
               opacity: 1;
@@ -39,30 +38,31 @@
   &__label {
     display: inline-block;
     position: relative;
-    height: 42px;
-    width: 80px;
+    height: 36px;
+    width: 74px;
     background-color: #d8d9db;
     border-radius: 21px;
     border: 2px dotted transparent;
     transition: all 0.4s ease-out;
-    line-height: 40px;
+    line-height: 2.1;
     font-weight: bold;
 
     &::before {
       display: inline-block;
       content: '';
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #2b7bba;
       position: absolute;
       top: 3px;
-      left: 4px;
+      left: 3px;
       transition: all 0.4s ease-out;
     }
 
     .neg,
     .pos {
+      color: #3e4043;
       display: inline-block;
       padding: 0 4px;
       position: absolute;
