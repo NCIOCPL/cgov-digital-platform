@@ -6,21 +6,20 @@ import RemovableTag from '../RemovableTag';
 generateStories({
   component: { TagContainer },
   storyName: 'Elements | TagContainer',
-  defaultProps: {
-  },
+  defaultProps: {},
   defaultChildren: (
     <React.Fragment>
       <RemovableTag label="Blinotumomab" />
-              <RemovableTag label="Bevacizumab" />
-              <RemovableTag label="Anti-HER2 Antibody-drug Conjugate" />
-              <RemovableTag label="Trastuzumab" />
-              <RemovableTag label="Pentostatin" />
-              <RemovableTag label="Cyclophosphamide" />
+      <RemovableTag label="Bevacizumab" />
+      <RemovableTag label="Anti-HER2 Antibody-drug Conjugate" />
+      <RemovableTag label="Trastuzumab" />
+      <RemovableTag label="Pentostatin" />
+      <RemovableTag label="Cyclophosphamide" />
     </React.Fragment>
   ),
   stories: [
     {
-      name: 'default'
-    }
-  ]
+      name: 'default',
+    },
+  ],
 });

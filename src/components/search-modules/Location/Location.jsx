@@ -46,23 +46,27 @@ const Location = () => {
           label="ZIP Code"
         />
         {activeRadio === 'search-location-zip' && (
-          <div className="search-location__zip">
-            <TextInput
-              id="search-location-zip-input"
-              classes="search-location__zip --zip"
-              label="U.S. ZIP Code"
-            />
-            <Dropdown
-              id="search-location-radius"
-              classes="search-location__zip --radius"
-              label="Radius"
-            >
-              {[20, 50, 100, 200, 500].map(dist => {
-                return (
-                  <option key={dist} value={dist}>{`${dist} miles`}</option>
-                );
-              })}
-            </Dropdown>
+          <div className="search-location__block search-location__zip">
+            <div className="--two-col">
+              <TextInput
+                id="search-location-zip-input"
+                classes="zip"
+                label="U.S. ZIP Code"
+                maxLength={5}
+              />
+              <Dropdown
+                id="search-location-radius"
+                classes="radius"
+                label="Radius"
+                value={100}
+              >
+                {[20, 50, 100, 200, 500].map(dist => {
+                  return (
+                    <option key={dist} value={dist}>{`${dist} miles`}</option>
+                  );
+                })}
+              </Dropdown>
+            </div>
           </div>
         )}
         <Radio
@@ -71,11 +75,8 @@ const Location = () => {
           label="Country, State, City"
         />
         {activeRadio === 'search-location-country' && (
-          <div className="search-location__country">
-            <Dropdown
-              classes="search-location__country --country"
-              label="Country"
-            >
+          <div className="search-location__block search-location__country">
+            <Dropdown classes="country" label="Country">
               {[
                 'United States',
                 'United Kingdom',
@@ -86,15 +87,15 @@ const Location = () => {
                 return <option key={city} value={city}>{`${city}`}</option>;
               })}
             </Dropdown>
-            <div className="search-location__country --city-and-state">
+            <div className="search-location__country --two-col">
               <TextInput
                 id="search-location-state"
-                classes="search-location__country --state"
+                classes="state"
                 label="State"
               />
               <TextInput
                 id="search-location-city"
-                classes="search-location__country --city"
+                classes="city"
                 label="City"
               />
             </div>
@@ -108,8 +109,13 @@ const Location = () => {
               label="Hospitals/Institutions"
             />
             {activeRadio === 'search-location-hospital' && (
-              <div>
-                <TextInput label="" />
+              <div className="search-location__block">
+                <TextInput
+                  id="hos"
+                  label="Hospitals/Institutions"
+                  labelHidden
+                  placeHolder="Please enter 3 or more characters"
+                />
               </div>
             )}
             <Radio

@@ -1,3 +1,8 @@
+$cts-accordion-border: #ddd;
+$cts-accordion-heading-bg-odd: #f2f2f2;
+$cts-accordion-heading-toggle-odd: #006F8A;
+
+
 .cts-accordion {
   margin-bottom: 0;
   margin-top: 0;
@@ -12,18 +17,18 @@
 
   &--bordered {
     .cts-accordion__heading {
-      border-top: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      border-top: 1px solid $cts-accordion-border;
+      border-left: 1px solid $cts-accordion-border;
+      border-right: 1px solid $cts-accordion-border;
       margin-bottom: 0;
       &[aria-expanded='false'] {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid $cts-accordion-border;
       }
     }
     .cts-accordion__content {
-      border-bottom: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      border-bottom: 1px solid $cts-accordion-border;
+      border-left: 1px solid $cts-accordion-border;
+      border-right: 1px solid $cts-accordion-border;
       padding-bottom: 1rem;
 
       + .cts-accordion__heading {
@@ -87,14 +92,15 @@
   h2{
     &:nth-of-type(odd){
       .cts-accordion__button {
-        background: #bcedf2;
+        background: $cts-accordion-heading-bg-odd;
 
         &::after {
           background: white;
+          color: $cts-accordion-heading-toggle-odd;
         }
         &[aria-expanded='false'] {
           &::after{
-            background: #8fd4db;
+            background: $cts-accordion-heading-toggle-odd;
             color: white;
           }
         }

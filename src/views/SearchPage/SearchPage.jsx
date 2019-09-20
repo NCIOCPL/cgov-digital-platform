@@ -74,7 +74,7 @@ const SearchPage = ({ form }) => {
   );
 
   return (
-    <div className="general-page-body-container">
+    <div className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="search-page">

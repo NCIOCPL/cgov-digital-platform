@@ -84,7 +84,7 @@ const ResultsPage = ({ results }) => {
             Results 1-10 of {paginatedResults.length} for your search
           </strong>
         </p>
-        <Accordion bordered>
+        <Accordion bordered startCollapsed>
           <AccordionItem title="Show Search Criteria">
             <div>
               <h3>Your Search Criteria</h3>
@@ -124,7 +124,7 @@ const ResultsPage = ({ results }) => {
   };
 
   return (
-    <div className="general-page-body-container">
+    <div className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="results-page">
