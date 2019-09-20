@@ -1,7 +1,6 @@
-$cts-accordion-border: #ddd;
+$cts-accordion-border: #7d7d7d;
 $cts-accordion-heading-bg-odd: #f2f2f2;
-$cts-accordion-heading-toggle-odd: #006F8A;
-
+$cts-accordion-heading-toggle-odd: #006f8a;
 
 .cts-accordion {
   margin-bottom: 0;
@@ -73,7 +72,7 @@ $cts-accordion-heading-toggle-odd: #006F8A;
     transition: max-height 1s;
     height: auto;
     max-height: 10000px;
-    
+
     &[aria-hidden='true'] {
       display: none;
       max-height: 0;
@@ -89,8 +88,8 @@ $cts-accordion-heading-toggle-odd: #006F8A;
     }
   }
 
-  h2{
-    &:nth-of-type(odd){
+  h2 {
+    &:nth-of-type(odd) {
       .cts-accordion__button {
         background: $cts-accordion-heading-bg-odd;
 
@@ -99,12 +98,11 @@ $cts-accordion-heading-toggle-odd: #006F8A;
           color: $cts-accordion-heading-toggle-odd;
         }
         &[aria-expanded='false'] {
-          &::after{
+          &::after {
             background: $cts-accordion-heading-toggle-odd;
             color: white;
           }
         }
-
       }
     }
   }
@@ -147,7 +145,7 @@ $cts-accordion-heading-toggle-odd: #006F8A;
     }
 
     &[aria-expanded='false'] {
-      &::after{
+      &::after {
         content: '+';
         background: #b2dcdf;
         color: white;
@@ -164,6 +162,5 @@ $cts-accordion-heading-toggle-odd: #006F8A;
     &:visited {
       color: #562b97;
     }
-
   }
 }
