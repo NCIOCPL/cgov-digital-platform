@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
 import './Location.scss';
 
+//TODO: Using mock list of states until API is ready;
+import {getStates} from '../../../mocks/mock-autocomplete-util';
+
 const Location = () => {
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
+  const [showStateField, setShowStateField] = useState(false);
 
   const handleToggleChange = e => {
     setLimitToVA(e.target.checked);
@@ -12,6 +16,14 @@ const Location = () => {
 
   const handleRadioChange = e => {
     setActiveRadio(e.target.value);
+  };
+
+  const handleCountryOnChange = country => {
+    if (country === 'United States') {
+      setShowStateField(true);
+    } else {
+      setShowStateField(false);
+    }
   };
 
   return (
@@ -76,7 +88,11 @@ const Location = () => {
         />
         {activeRadio === 'search-location-country' && (
           <div className="search-location__block search-location__country">
-            <Dropdown classes="country" label="Country">
+            <Dropdown
+              classes="country"
+              label="Country"
+              action={handleCountryOnChange}
+            >
               {[
                 'United States',
                 'United Kingdom',
@@ -87,12 +103,18 @@ const Location = () => {
                 return <option key={city} value={city}>{`${city}`}</option>;
               })}
             </Dropdown>
-            <div className="search-location__country --two-col">
-              <TextInput
-                id="search-location-state"
-                classes="state"
-                label="State"
-              />
+            <div className={`search-location__country ${showStateField ? '--two-col' : ''}`}>
+              {showStateField && (
+                <Dropdown
+                  id="search-location-state"
+                  classes="state"
+                  label="State"
+                >
+                  {getStates().map(state => {
+                    return <option key={state.abbr} value={state.abbr}>{`${state.name}`}</option>;
+                  })}
+                </Dropdown>
+              )}
               <TextInput
                 id="search-location-city"
                 classes="city"
