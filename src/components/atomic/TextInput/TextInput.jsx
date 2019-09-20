@@ -116,8 +116,8 @@ class TextInput extends React.Component {
           name={this.props.name || this.id}
           type={this.props.type}
           value={this.state.value}
-          className={`cts-input ${
-            this.state.isValid ? 'cts-input--success' : null
+          className={`cts-input ${this.props.classes} ${
+            this.state.isValid ? 'cts-input--success' : ''
           }`}
           required={this.props.required}
           maxLength={this.props.maxLength}

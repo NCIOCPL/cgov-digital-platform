@@ -12,9 +12,9 @@ const TrialId = ({ handleUpdate, useValue }) => {
     >
       <TextInput
         action={handleUpdate}
-        id="search-trial-id"
         name="trialId"
         value={useValue('trialId')}
+        id="tid"
         type="text"
         label="Separate multiple IDs with commas or semicolons."
       />
