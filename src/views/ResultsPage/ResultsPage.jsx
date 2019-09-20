@@ -124,7 +124,7 @@ const ResultsPage = ({ results }) => {
   };
 
   return (
-    <div className="general-page-body-container">
+    <div className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="results-page">

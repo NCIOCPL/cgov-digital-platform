@@ -13,7 +13,7 @@ const CancerTypeCondition = () => {
         Select a cancer type or condition. Select additional options, if
         applicable.
       </p>
-      <TextInput id="q" label="Primary Cancer Type/Condition" />
+      <TextInput id="ct" label="Primary Cancer Type/Condition" />
       <TextInput id="st" label="Subtype" />
       <TextInput id="stage" label="Stage" />
       <TextInput id="fin" label="Side Effects/Biomarkers/Participant Attributes" />
