@@ -26,8 +26,7 @@ const Fieldset = ({
     <fieldset id={`fieldset--${id}`} className={`cts-fieldset ${classes}`}>
       <legend className="cts-fieldset__legend">
         <span>{legend}</span>
-      </legend>
-      <a
+        <a
         href={helpUrl}
         className="text-icon-help"
         target="_blank"
@@ -36,6 +35,8 @@ const Fieldset = ({
       >
         ?
       </a>
+      </legend>
+      
       <div className="cts-fieldset__body">{children}</div>
     </fieldset>
   );

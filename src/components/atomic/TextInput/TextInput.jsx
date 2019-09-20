@@ -100,7 +100,7 @@ class TextInput extends React.Component {
       : { 'aria-labelledby': this.props.id + '-label' };
 
     return (
-      <div className={this.props.classes}>
+      <div className={`cts-input-group ${this.props.classes}`}>
         {this.props.labelHidden ? null : (
           <InputLabel
             label={this.props.label}
