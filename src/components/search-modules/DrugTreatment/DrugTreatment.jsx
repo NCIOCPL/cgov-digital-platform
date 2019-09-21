@@ -7,6 +7,7 @@ const DrugTreatment = () => {
   const [drugVal, setDrugVal] = useState({ value: '' });
   const [drugChips, setDrugChips] = useState([]);
   const [trtmtVal, setTrtmtVal] = useState({ value: '' });
+  const [trtmtChips, setTrmtChips] = useState([]);
 
   const placeholder = 'Please enter 3 or more characters';
 
@@ -31,12 +32,14 @@ const DrugTreatment = () => {
     setDrugChips([...newChipList]);
   };
 
-  // Add a chip once selected
-  const addChip = val => {
-    setDrugChips([...drugChips, { label: val.value }]);
-    //reset input
-    setDrugVal({ value: '' });
-  };
+
+  const addChip = (item, chipList, chipListSetter, inputSetter) => {
+    //prevent dupes
+    if(!chipList.includes(item.value)){
+      chipListSetter([...chipList, { label:  item.value }]);
+      inputSetter({value: ''});
+    }
+  }
 
   return (
     <Fieldset
@@ -53,13 +56,13 @@ const DrugTreatment = () => {
         id="dt"
         label="Drug/Drug Family"
         value={drugVal.value}
-        inputProps={{ id: 'dt' }}
+        inputProps={{ id: 'dt', placeholder: placeholder }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={getDrugs().terms}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setDrugVal({ value })}
-        onSelect={value => addChip({ value })}
+        onSelect={value => addChip({ value }, drugChips, setDrugChips, setDrugVal)}
         multiselect={true}
         chipList={drugChips}
         onChipRemove={handleRemoveChip}
@@ -85,7 +88,43 @@ const DrugTreatment = () => {
           </div>
         )}
       />
-      <TextInput id="ot" label="Other Treatments" />
+
+      <Autocomplete
+        id="ti"
+        label="Other Treatments"
+        value={trtmtVal.value}
+        inputProps={{ placeholder: placeholder }}
+        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+        items={getTreatments().terms}
+        getItemValue={item => item.name}
+        shouldItemRender={matchItemToTerm}
+        onChange={(event, value) => setTrtmtVal({ value })}
+        onSelect={value => addChip({ value }, trtmtChips, setTrmtChips, setTrtmtVal)}
+        multiselect={true}
+        chipList={trtmtChips}
+        onChipRemove={handleRemoveChip}
+        renderMenu={children => (
+          <div className="cts-autocomplete__menu --trtmt">{children}</div>
+        )}
+        renderItem={(item, isHighlighted) => (
+          <div
+            className={`cts-autocomplete__menu-item ${
+              isHighlighted ? 'highlighted' : ''
+            }`}
+            key={item.codes[0]}
+          >
+            <div className="preferredName">
+              {item.name}
+              {item.category.indexOf('category') !== -1 ? ' (DRUG FAMILY)' : ''}
+            </div>
+            {item.synonyms.length > 0 && (
+              <span className="synonyms">
+                Other Names: {item.synonyms.join(', ')}
+              </span>
+            )}
+          </div>
+        )}
+      />
     </Fieldset>
   );
 };

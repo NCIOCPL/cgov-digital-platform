@@ -65,7 +65,7 @@ const SearchPage = ({ form }) => {
         ) : (
           <>{` All fields are optional. Skip any items that are unknown or not applicable or try our `}</>
         )}
-        <button type="button" class="btnAsLink" onClick={toggleForm}>
+        <button type="button" className="btnAsLink" onClick={toggleForm}>
           {formVersion === 'basic' ? 'advanced search' : 'basic search'}
         </button>
         .
