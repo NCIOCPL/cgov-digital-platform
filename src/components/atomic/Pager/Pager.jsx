@@ -13,7 +13,8 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
       const results = data.slice(startFrom, endAt);
       callback(results, currentPage);
     }
-  }, [currentPage]);
+    document.querySelector('.pager__num--active').focus();
+  }, [currentPage, callback, data, numberToShow]);
 
   useEffect(() => {
     setCurrentPage(startFromPage);
