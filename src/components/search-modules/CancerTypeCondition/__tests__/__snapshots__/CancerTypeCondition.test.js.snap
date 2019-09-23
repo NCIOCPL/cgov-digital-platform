@@ -2,7 +2,7 @@
 
 exports[`CancerTypeCondition Render renders without error 1`] = `
 <fieldset
-  class="cts-fieldset "
+  class="cts-fieldset cancer-type-condition"
   id="fieldset--type"
 >
   <legend
@@ -28,7 +28,8 @@ exports[`CancerTypeCondition Render renders without error 1`] = `
       Select a cancer type or condition. Select additional options, if applicable.
     </p>
     <div
-      class="cts-input-group "
+      class="cts-autocomplete "
+      id="ct-autocomplete-wrapper"
     >
       <label
         class="cts-label"
@@ -37,75 +38,20 @@ exports[`CancerTypeCondition Render renders without error 1`] = `
       >
         Primary Cancer Type/Condition
       </label>
-      <input
-        aria-labelledby="ct-label"
-        aria-required="false"
-        class="cts-input  "
-        id="ct"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="cts-input-group "
-    >
-      <label
-        class="cts-label"
-        for="st"
-        id="st-label"
+      <div
+        class=""
       >
-        Subtype
-      </label>
-      <input
-        aria-labelledby="st-label"
-        aria-required="false"
-        class="cts-input  "
-        id="st"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="cts-input-group "
-    >
-      <label
-        class="cts-label"
-        for="stage"
-        id="stage-label"
-      >
-        Stage
-      </label>
-      <input
-        aria-labelledby="stage-label"
-        aria-required="false"
-        class="cts-input  "
-        id="stage"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      class="cts-input-group "
-    >
-      <label
-        class="cts-label"
-        for="fin"
-        id="fin-label"
-      >
-        Side Effects/Biomarkers/Participant Attributes
-      </label>
-      <input
-        aria-labelledby="fin-label"
-        aria-required="false"
-        class="cts-input  "
-        id="fin"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+        <input
+          aria-autocomplete="list"
+          aria-expanded="false"
+          autocomplete="off"
+          class="cts-input cts-autocomplete__input faux-select"
+          id="ct"
+          role="combobox"
+          type="text"
+          value="All"
+        />
+      </div>
     </div>
   </div>
 </fieldset>

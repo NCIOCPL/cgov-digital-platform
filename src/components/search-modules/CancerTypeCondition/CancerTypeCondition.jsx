@@ -74,100 +74,101 @@ const CancerTypeCondition = () => {
           </div>
         )}
       />
-      <div
-        className={`subsearch ${cancerType.value === 'All' ? 'disabled' : ''}`}
-        aria-hidden={cancerType.value === 'All'}
-      >
-        <Autocomplete
-          id="st"
-          label="Subtype"
-          value={subtype.value}
-          inputProps={{ placeholder: 'Select a subtype' }}
-          items={getSubTypes().terms}
-          getItemValue={item => item.name}
-          shouldItemRender={matchItemToTerm}
-          onChange={(event, value) => setSubtype({ value })}
-          onSelect={value =>
-            addChip({ value }, subtypeChips, setSubtypeChips, setSubtype)
-          }
-          multiselect={true}
-          chipList={subtypeChips}
-          onChipRemove={e => handleRemoveChip(e, subtypeChips, setSubtypeChips)}
-          renderMenu={children => (
-            <div className="cts-autocomplete__menu --subtype">{children}</div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              className={`cts-autocomplete__menu-item ${
-                isHighlighted ? 'highlighted' : ''
-              }`}
-              key={item.codes[0]}
-            >
-              {item.name}
-            </div>
-          )}
-        />
+      {cancerType.value != 'All' && (
+        <div className="subsearch">
+          <Autocomplete
+            id="st"
+            label="Subtype"
+            value={subtype.value}
+            inputProps={{ placeholder: 'Select a subtype' }}
+            items={getSubTypes().terms}
+            getItemValue={item => item.name}
+            shouldItemRender={matchItemToTerm}
+            onChange={(event, value) => setSubtype({ value })}
+            onSelect={value =>
+              addChip({ value }, subtypeChips, setSubtypeChips, setSubtype)
+            }
+            multiselect={true}
+            chipList={subtypeChips}
+            onChipRemove={e =>
+              handleRemoveChip(e, subtypeChips, setSubtypeChips)
+            }
+            renderMenu={children => (
+              <div className="cts-autocomplete__menu --subtype">{children}</div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={`cts-autocomplete__menu-item ${
+                  isHighlighted ? 'highlighted' : ''
+                }`}
+                key={item.codes[0]}
+              >
+                {item.name}
+              </div>
+            )}
+          />
 
-        <Autocomplete
-          id="stage"
-          label="Stage"
-          value={stage.value}
-          inputProps={{ placeholder: 'Select a stage' }}
-          items={getStages().terms}
-          getItemValue={item => item.name}
-          shouldItemRender={matchItemToTerm}
-          onChange={(event, value) => setStage({ value })}
-          onSelect={value =>
-            addChip({ value }, stageChips, setStageChips, setStage)
-          }
-          multiselect={true}
-          chipList={stageChips}
-          onChipRemove={e => handleRemoveChip(e, stageChips, setStageChips)}
-          renderMenu={children => (
-            <div className="cts-autocomplete__menu --stage">{children}</div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              className={`cts-autocomplete__menu-item ${
-                isHighlighted ? 'highlighted' : ''
-              }`}
-              key={item.codes[0]}
-            >
-              {item.name}
-            </div>
-          )}
-        />
+          <Autocomplete
+            id="stage"
+            label="Stage"
+            value={stage.value}
+            inputProps={{ placeholder: 'Select a stage' }}
+            items={getStages().terms}
+            getItemValue={item => item.name}
+            shouldItemRender={matchItemToTerm}
+            onChange={(event, value) => setStage({ value })}
+            onSelect={value =>
+              addChip({ value }, stageChips, setStageChips, setStage)
+            }
+            multiselect={true}
+            chipList={stageChips}
+            onChipRemove={e => handleRemoveChip(e, stageChips, setStageChips)}
+            renderMenu={children => (
+              <div className="cts-autocomplete__menu --stage">{children}</div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={`cts-autocomplete__menu-item ${
+                  isHighlighted ? 'highlighted' : ''
+                }`}
+                key={item.codes[0]}
+              >
+                {item.name}
+              </div>
+            )}
+          />
 
-        <Autocomplete
-          id="fin"
-          label="Side Effects/Biomarkers/Participant Attributes"
-          value={sideEffects.value}
-          inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
-          items={getSideEffects().terms}
-          getItemValue={item => item.name}
-          shouldItemRender={matchItemToTerm}
-          onChange={(event, value) => setSideEffects({ value })}
-          onSelect={value =>
-            addChip({ value }, finChips, setFinChips, setSideEffects)
-          }
-          multiselect={true}
-          chipList={finChips}
-          onChipRemove={e => handleRemoveChip(e, finChips, setFinChips)}
-          renderMenu={children => (
-            <div className="cts-autocomplete__menu --fin">{children}</div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              className={`cts-autocomplete__menu-item ${
-                isHighlighted ? 'highlighted' : ''
-              }`}
-              key={item.codes[0]}
-            >
-              {item.name}
-            </div>
-          )}
-        />
-      </div>
+          <Autocomplete
+            id="fin"
+            label="Side Effects/Biomarkers/Participant Attributes"
+            value={sideEffects.value}
+            inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
+            items={getSideEffects().terms}
+            getItemValue={item => item.name}
+            shouldItemRender={matchItemToTerm}
+            onChange={(event, value) => setSideEffects({ value })}
+            onSelect={value =>
+              addChip({ value }, finChips, setFinChips, setSideEffects)
+            }
+            multiselect={true}
+            chipList={finChips}
+            onChipRemove={e => handleRemoveChip(e, finChips, setFinChips)}
+            renderMenu={children => (
+              <div className="cts-autocomplete__menu --fin">{children}</div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={`cts-autocomplete__menu-item ${
+                  isHighlighted ? 'highlighted' : ''
+                }`}
+                key={item.codes[0]}
+              >
+                {item.name}
+              </div>
+            )}
+          />
+        </div>
+      )}
     </Fieldset>
   );
 };
