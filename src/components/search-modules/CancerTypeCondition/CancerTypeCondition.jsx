@@ -10,7 +10,7 @@ import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = () => {
   const [cancerType, setCancerType] = useState({ value: 'All' });
-  const [ctChips, setCtChips] = useState([]);
+
   const [subtype, setSubtype] = useState({ value: '' });
   const [subtypeChips, setSubtypeChips] = useState([]);
   const [stage, setStage] = useState({ value: '' });
@@ -74,9 +74,10 @@ const CancerTypeCondition = () => {
           </div>
         )}
       />
-      <div 
-      className={`subsearch ${cancerType.value === 'All'? 'disabled':''}`}
-      aria-hidden={cancerType.value === 'All'}>
+      <div
+        className={`subsearch ${cancerType.value === 'All' ? 'disabled' : ''}`}
+        aria-hidden={cancerType.value === 'All'}
+      >
         <Autocomplete
           id="st"
           label="Subtype"
@@ -91,7 +92,7 @@ const CancerTypeCondition = () => {
           }
           multiselect={true}
           chipList={subtypeChips}
-          onChipRemove={handleRemoveChip}
+          onChipRemove={e => handleRemoveChip(e, subtypeChips, setSubtypeChips)}
           renderMenu={children => (
             <div className="cts-autocomplete__menu --subtype">{children}</div>
           )}
@@ -121,7 +122,7 @@ const CancerTypeCondition = () => {
           }
           multiselect={true}
           chipList={stageChips}
-          onChipRemove={handleRemoveChip}
+          onChipRemove={e => handleRemoveChip(e, stageChips, setStageChips)}
           renderMenu={children => (
             <div className="cts-autocomplete__menu --stage">{children}</div>
           )}
@@ -151,7 +152,7 @@ const CancerTypeCondition = () => {
           }
           multiselect={true}
           chipList={finChips}
-          onChipRemove={handleRemoveChip}
+          onChipRemove={e => handleRemoveChip(e, finChips, setFinChips)}
           renderMenu={children => (
             <div className="cts-autocomplete__menu --fin">{children}</div>
           )}
