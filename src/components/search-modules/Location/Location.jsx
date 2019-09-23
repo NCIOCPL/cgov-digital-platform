@@ -8,7 +8,7 @@ import {getStates} from '../../../mocks/mock-autocomplete-util';
 const Location = () => {
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
-  const [showStateField, setShowStateField] = useState(false);
+  const [showStateField, setShowStateField] = useState(true);
 
   const handleToggleChange = e => {
     setLimitToVA(e.target.checked);
@@ -95,6 +95,7 @@ const Location = () => {
               classes="country"
               label="Country"
               action={handleCountryOnChange}
+              value="United States"
             >
               {[
                 'United States',
