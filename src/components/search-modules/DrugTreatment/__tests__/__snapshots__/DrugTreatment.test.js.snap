@@ -45,8 +45,9 @@ exports[`DrugTreatment Render renders without error 1`] = `
           aria-autocomplete="list"
           aria-expanded="false"
           autocomplete="off"
-          class="cts-input cts-autocomplete__input"
+          class="cts-input cts-autocomplete__input "
           id="dt"
+          placeholder="Please enter 3 or more characters"
           role="combobox"
           type="text"
           value=""
@@ -54,24 +55,31 @@ exports[`DrugTreatment Render renders without error 1`] = `
       </div>
     </div>
     <div
-      class="cts-input-group "
+      class="cts-autocomplete "
+      id="ti-autocomplete-wrapper"
     >
       <label
         class="cts-label"
-        for="ot"
-        id="ot-label"
+        for="ti"
+        id="ti-label"
       >
         Other Treatments
       </label>
-      <input
-        aria-labelledby="ot-label"
-        aria-required="false"
-        class="cts-input  "
-        id="ot"
-        spellcheck="false"
-        type="text"
-        value=""
-      />
+      <div
+        class="cts-chip-list"
+      >
+        <input
+          aria-autocomplete="list"
+          aria-expanded="false"
+          autocomplete="off"
+          class="cts-input cts-autocomplete__input "
+          id="ti"
+          placeholder="Please enter 3 or more characters"
+          role="combobox"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
   </div>
 </fieldset>
