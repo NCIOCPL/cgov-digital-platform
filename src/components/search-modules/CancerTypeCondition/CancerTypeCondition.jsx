@@ -59,11 +59,7 @@ const CancerTypeCondition = () => {
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setCancerType({ value })}
-        onSelect={value =>
-          addChip({ value }, ctChips, setCtChips, setCancerType)
-        }
-        chipList={ctChips}
-        onChipRemove={handleRemoveChip}
+        onSelect={value => setCancerType({ value })}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --ct">{children}</div>
         )}
