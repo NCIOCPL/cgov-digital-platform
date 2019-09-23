@@ -28,7 +28,7 @@ const ResultsPage = ({ results }) => {
     } else {
       setSelectedResults([]);
     }
-  }, [selectAll]);
+  }, [selectAll, setSelectedResults, paginatedResults]);
 
   useEffect(() => {
     setSelectedResults([]);

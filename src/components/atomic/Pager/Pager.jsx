@@ -14,7 +14,7 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
       callback(results, currentPage);
     }
     document.querySelector('.pager__num--active').focus();
-  }, [currentPage, callback, data, numberToShow]);
+  }, [currentPage, data, numberToShow]);
 
   useEffect(() => {
     setCurrentPage(startFromPage);
