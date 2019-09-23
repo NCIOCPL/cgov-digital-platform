@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Fieldset, Autocomplete, TextInput } from '../../atomic';
+import { Fieldset, Autocomplete } from '../../atomic';
 import { getTreatments, getDrugs } from '../../../mocks/mock-interventions';
 import './DrugTreatment.scss';
 
@@ -28,10 +28,8 @@ const DrugTreatment = () => {
     let newChipList = drugChips.filter((value, index, arr) => {
       return value.label !== e.label;
     });
-    console.log(newChipList);
     setDrugChips([...newChipList]);
   };
-
 
   const addChip = (item, chipList, chipListSetter, inputSetter) => {
     //prevent dupes
