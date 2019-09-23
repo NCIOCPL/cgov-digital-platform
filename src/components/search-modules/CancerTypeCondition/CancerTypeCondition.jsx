@@ -25,7 +25,7 @@ const CancerTypeCondition = () => {
   // remove chip
   const handleRemoveChip = (e, chiplist, chiplistSetter) => {
     let newChipList = chiplist.filter((value, index, arr) => {
-      return value.name !== e.name;
+      return value.label !== e.label;
     });
     chiplistSetter([...newChipList]);
   };
