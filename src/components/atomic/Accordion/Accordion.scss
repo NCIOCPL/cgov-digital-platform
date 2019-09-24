@@ -1,3 +1,7 @@
+$cts-accordion-border: #7d7d7d;
+$cts-accordion-heading-bg-odd: #f2f2f2;
+$cts-accordion-heading-toggle-odd: #006f8a;
+
 .cts-accordion {
   margin-bottom: 0;
   margin-top: 0;
@@ -12,18 +16,18 @@
 
   &--bordered {
     .cts-accordion__heading {
-      border-top: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      border-top: 1px solid $cts-accordion-border;
+      border-left: 1px solid $cts-accordion-border;
+      border-right: 1px solid $cts-accordion-border;
       margin-bottom: 0;
       &[aria-expanded='false'] {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid $cts-accordion-border;
       }
     }
     .cts-accordion__content {
-      border-bottom: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      border-bottom: 1px solid $cts-accordion-border;
+      border-left: 1px solid $cts-accordion-border;
+      border-right: 1px solid $cts-accordion-border;
       padding-bottom: 1rem;
 
       + .cts-accordion__heading {
@@ -68,7 +72,7 @@
     transition: max-height 1s;
     height: auto;
     max-height: 10000px;
-    
+
     &[aria-hidden='true'] {
       display: none;
       max-height: 0;
@@ -84,21 +88,21 @@
     }
   }
 
-  h2{
-    &:nth-of-type(odd){
+  h2 {
+    &:nth-of-type(odd) {
       .cts-accordion__button {
-        background: #bcedf2;
+        background: $cts-accordion-heading-bg-odd;
 
         &::after {
           background: white;
+          color: $cts-accordion-heading-toggle-odd;
         }
         &[aria-expanded='false'] {
-          &::after{
-            background: #8fd4db;
+          &::after {
+            background: $cts-accordion-heading-toggle-odd;
             color: white;
           }
         }
-
       }
     }
   }
@@ -141,7 +145,7 @@
     }
 
     &[aria-expanded='false'] {
-      &::after{
+      &::after {
         content: '+';
         background: #b2dcdf;
         color: white;
@@ -158,6 +162,5 @@
     &:visited {
       color: #562b97;
     }
-
   }
 }

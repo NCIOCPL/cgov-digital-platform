@@ -119,7 +119,7 @@ const SearchPage = ({ form }) => {
         ) : (
           <>{` All fields are optional. Skip any items that are unknown or not applicable or try our `}</>
         )}
-        <button type="button" onClick={toggleForm}>
+        <button type="button" className="btnAsLink" onClick={toggleForm}>
           {formVersion === 'basic' ? 'advanced search' : 'basic search'}
         </button>
         .
@@ -130,7 +130,7 @@ const SearchPage = ({ form }) => {
   let formModules = formVersion === 'advanced' ? advancedFormModules : basicFormModules;
 
   return (
-    <div className="general-page-body-container">
+    <div className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="search-page">

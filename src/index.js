@@ -1,4 +1,5 @@
 import './polyfills/array_fill';
+import './__nci-dev__common.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -24,12 +25,13 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// The following lets us run the app in dev not in situ as would normally be the case.
-if (process.env.NODE_ENV !== 'production') {
-  try{
-    import('./__nci-dev__common.css');
-  }
-  catch(err){
-    console.log("Can't find common.css file")
-  }
-}
+//TODO: Blocks Netlify deploys
+// // The following lets us run the app in dev not in situ as would normally be the case.
+// if (process.env.NODE_ENV !== 'production') {
+//   try{
+//     import('./__nci-dev__common.css');
+//   }
+//   catch(err){
+//     console.log("Can't find common.css file")
+//   }
+// }

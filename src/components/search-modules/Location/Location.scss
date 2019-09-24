@@ -1,42 +1,41 @@
 .search-location {
   .group-locations {
-    padding: 0 1em;
+    padding-left: 1em;
   }
-  
-  &__country,
-  &__zip {
-    margin-left: 1rem;
-    display: flex;
-    flex-direction: column;
+  &__block {
+    margin: 0.5rem 0 1.5rem 2rem;
 
-    &.--country,
-    &.--radius {
+    .two-col {
+      @media screen and (min-width: 641px) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        > div {
+          flex: 0 1 48.5%;
+        }
+      }
+    }
+
+    .zip,
+    .country,
+    .state {
       margin-bottom: 1rem;
     }
 
-    &.--city-and-state {
-      display: flex;
-      flex-direction: column;
-      @media screen and (min-width: 1025px) {
-        flex-direction: row;
-        justify-content: space-between;
+    .state,
+    .zip {
+      @media screen and (min-width: 641px) {
+        margin-bottom: 0;
       }
     }
 
-    &.--city,
-    &.--state {
+    .city,
+    .state {
       width: auto;
-      margin: 0;
-      @media screen and (min-width: 1025px) {
+      @media screen and (min-width: 641px) {
         width: 100%;
       }
     }
-
-    &.--state {
-      @media screen and (min-width: 1025px) {
-        margin-right: 1rem;
-      }
-    }
-    
   }
 }

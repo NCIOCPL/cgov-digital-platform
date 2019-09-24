@@ -13,7 +13,7 @@ const Age = ({ handleUpdate, useValue }) => {
         id="a"
         name="age"
         value={useValue('age')}
-        label="Enter the age of the participant."
+        label="Your age helps determine which trials are right for you."
         maxLength={3}
       />
     </Fieldset>

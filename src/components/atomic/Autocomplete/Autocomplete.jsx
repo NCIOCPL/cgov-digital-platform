@@ -641,7 +641,7 @@ class Autocomplete extends React.Component {
           'aria-expanded': open,
           autoComplete: 'off',
           ref: this.exposeAPI,
-          className: 'cts-input cts-autocomplete__input' + this.props.inputClasses,
+          className: 'cts-input cts-autocomplete__input ' + this.props.inputClasses,
           onFocus: this.handleInputFocus,
           onBlur: this.handleInputBlur,
           onChange: this.handleChange,
