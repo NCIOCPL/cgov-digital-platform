@@ -486,7 +486,7 @@ function gardens_site_data_refresh_domains(array $domains) {
  *   a scalar 0; if sites.json could not be read, then NULL.
  */
 function gardens_site_data_cache_set($domain, $data) {
-  if (function_exists('apc_store')) {
+  if (extension_loaded('apcu') && ini_get('apc.enabled') && function_exists('apcu_store')) {
     if ($data === NULL) {
       $ttl = GARDENS_SITE_DATA_READ_FAILURE_TTL;
     }
@@ -498,7 +498,7 @@ function gardens_site_data_cache_set($domain, $data) {
     }
     if ($ttl) {
       $domain_key = "gardens_domain:$domain";
-      apc_store($domain_key, $data, $ttl);
+      apcu_store($domain_key, $data, $ttl);
     }
   }
 }
@@ -515,9 +515,9 @@ function gardens_site_data_cache_set($domain, $data) {
  */
 function gardens_site_data_cache_get($domain) {
   $result = FALSE;
-  if (function_exists('apc_fetch')) {
+  if (extension_loaded('apcu') && ini_get('apc.enabled') && function_exists('apcu_fetch')) {
     $domain_key = "gardens_domain:$domain";
-    $result = apc_fetch($domain_key);
+    $result = apcu_fetch($domain_key);
   }
   return $result;
 }
