@@ -47,7 +47,7 @@ export function getDiseasesForSimpleTypeAhead({
     type: '@@api/CTS',
     payload: {
       service: 'getDiseases',
-      queries: ['maintype', 'subtype', 'stage'],
+      category: ['maintype', 'subtype', 'stage'],
       params: undefined,
       options: {
         name,
@@ -75,7 +75,7 @@ export function getMainType({ size = 0, isDebug = false }) {
     type: '@@api/CTS',
     payload: {
       service: 'getDiseases',
-      queries: 'maintype',
+      category: 'maintype',
       params: undefined,
       options: {
         size,
@@ -114,7 +114,7 @@ export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
     type: '@@api/CTS',
     payload: {
       service: 'getDiseases',
-      queries: 'subtype',
+      category: 'subtype',
       params: ancestorID,
       options: {
         size,
@@ -141,7 +141,7 @@ export function getStages({ ancestorID, size = 0, isDebug = false }) {
     type: '@@api/CTS',
     payload: {
       service: 'getDiseases',
-      queries: 'stage',
+      category: 'stage',
       params: ancestorID,
       options: {
         size,
@@ -168,7 +168,7 @@ export function getFindings({ ancestorID, size = 0, isDebug = false }) {
     type: '@@api/CTS',
     payload: {
       service: 'getDiseases',
-      queries: 'finding',
+      category: 'finding',
       params: ancestorID,
       options: {
         size,
@@ -190,39 +190,39 @@ export function getFindings({ ancestorID, size = 0, isDebug = false }) {
   };
 }
 
-export function getCountries() {
-  return {
-    type: '@@api/CTS',
-    payload: {
-      service: 'getTerms',
-      queries: 'sites.org_country',
-      options: {
-        sort: 'term',
-        current_trial_status: VIEWABLE_TRIALS,
-      },
-      fetchHandlers: {
-        formatResponse: terms => {
-          return terms.map(term => term.term);
-        },
-      },
-      resultName: 'countries',
-    },
-  };
-}
+// export function getCountries() {
+//   return {
+//     type: '@@api/CTS',
+//     payload: {
+//       service: 'getTerms',
+//       category: 'sites.org_country',
+//       options: {
+//         sort: 'term',
+//         current_trial_status: VIEWABLE_TRIALS,
+//       },
+//       fetchHandlers: {
+//         formatResponse: terms => {
+//           return terms.map(term => term.term);
+//         },
+//       },
+//       resultName: 'countries',
+//     },
+//   };
+// }
 
-export function searchHospital(searchText) { 
+// export function searchHospital(searchText) { 
 
-  return {
-    type: '@@api/CTS',
-    payload: {
-      service: 'getTerms',
-      queries: 'sites.org_name',
-      options: {
-        term: searchText,
-        sort: 'term',
-        current_trial_status: VIEWABLE_TRIALS,
-      },
-      resultName: 'hospital',
-    },
-  };
-}
+//   return {
+//     type: '@@api/CTS',
+//     payload: {
+//       service: 'getTerms',
+//       category: 'sites.org_name',
+//       options: {
+//         term: searchText,
+//         sort: 'term',
+//         current_trial_status: VIEWABLE_TRIALS,
+//       },
+//       resultName: 'hospital',
+//     },
+//   };
+// }

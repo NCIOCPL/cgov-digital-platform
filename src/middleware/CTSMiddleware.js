@@ -19,12 +19,12 @@ const createCTSMiddleware = services => ({
     return;
   }
 
-  const { service: serviceName, queries, params, options, fetchHandlers, resultName } = action.payload;
+  const { service: serviceName, category, params, options, fetchHandlers, resultName } = action.payload;
   console.log('OPTIONS: ', options);
   const service = services[serviceName]();
   if (service !== null) {
     try {
-      const response = await service(queries, params, options);
+      const response = await service(category, params, options);
       const body = response.terms;
       console.log('body: ', body);
       const { formatResponse } = fetchHandlers;
