@@ -3,7 +3,8 @@ import {
 } from '../identifiers';
 
 export const defaultState = {
-  diseases: []
+  diseases: [],
+  countries: []
 }
 
 export const reducer = (state = defaultState, action) => {

@@ -12,7 +12,7 @@ import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: 'All' });
+  const [cancerType, setCancerType] = useState({ value: 'All', id: null });
   const [subtype, setSubtype] = useState({ value: '' });
   const [subtypeChips, setSubtypeChips] = useState([]);
   const [stage, setStage] = useState({ value: '' });

@@ -19,17 +19,33 @@ const createCTSMiddleware = services => ({
     return;
   }
 
-  const { service: serviceName, category, params, options, fetchHandlers, resultName } = action.payload;
-  console.log('OPTIONS: ', options);
+  const { service: serviceName, fieldName, requestParams, fetchHandlers } = action.payload;
   const service = services[serviceName]();
   if (service !== null) {
+
+    let serviceMethod;
+    switch(fieldName) {
+      case 'diseases':
+      case 'maintype':
+      case 'subtypes':
+      case 'stages':
+      case 'findings':
+        serviceMethod = 'getDiseases';
+        break;
+      case 'countries':
+      case 'hospitals':
+        serviceMethod = 'getTerms';
+        break;
+      default:
+        console.log(fieldName, ' method not found')
+    }
+
     try {
-      const response = await service(category, params, options);
+      const response = await service[serviceMethod](...Object.values(requestParams));
       const body = response.terms;
-      console.log('body: ', body);
       const { formatResponse } = fetchHandlers;
       const formattedBody = formatResponse ? formatResponse(body) : body;
-      dispatch(receiveData(resultName, formattedBody));
+      dispatch(receiveData(fieldName, formattedBody));
     } catch (err) {
       console.log(err);
     }

@@ -49,30 +49,16 @@ if (process.env.NODE_ENV !== 'production') {
     console.log("Can't find common.css file")
   }
   const rootId = 'NCI-search-results-root';
-  const getDiseases = () => {
+  const ctsSearch = () => {
     const hostName = 'clinicaltrialsapi.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
-    return service.getDiseases;
-  }
-
-  const getTerms = () => {
-    const hostName = 'clinicaltrialsapi.cancer.gov';
-    const service = ClinicalTrialsServiceFactory.create(hostName);
-    return service.getTerms;
-  }
-
-  const getInterventions = () => {
-    const hostName = 'clinicaltrialsapi.cancer.gov';
-    const service = ClinicalTrialsServiceFactory.create(hostName);
-    return service.getInterventions;
+    return service;
   }
 
   initialize({
     rootId,
     services: {
-      getDiseases,
-      getTerms,
-      getInterventions
+      ctsSearch
     },
     language: 'en',
   });

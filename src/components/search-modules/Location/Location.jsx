@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
+import { getCountries } from '../../../store/actions';
 import './Location.scss';
 
 //TODO: Using mock list of states until API is ready;
-import {getStates} from '../../../mocks/mock-autocomplete-util';
+import { getStates } from '../../../mocks/mock-autocomplete-util';
 
 const Location = ({ handleUpdate, useValue }) => {
   //Hooks must always be rendered in same order.
+  const dispatch = useDispatch();
+  const {countries} = useSelector(store => store.results)
   let zip = useValue('zip');
   let radius = useValue('radius');
   let country = useValue('country');
@@ -16,7 +20,9 @@ const Location = ({ handleUpdate, useValue }) => {
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
   const [showStateField, setShowStateField] = useState(true);
-
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
   const handleToggleChange = e => {
     setLimitToVA(e.target.checked);
   };
@@ -109,17 +115,15 @@ const Location = ({ handleUpdate, useValue }) => {
               action={handleCountryOnChange}
               value={country}
             >
-              {[
-                'United States',
-                'United Kingdom',
-                'Zambia',
-                'Japan',
-                'Uruguay',
-              ].map(city => {
+              {countries.map(city => {
                 return <option key={city} value={city}>{`${city}`}</option>;
               })}
             </Dropdown>
-            <div className={`search-location__country ${showStateField ? 'two-col' : ''}`}>
+            <div
+              className={`search-location__country ${
+                showStateField ? 'two-col' : ''
+              }`}
+            >
               {showStateField && (
                 <Dropdown
                   id="search-location-state"
@@ -129,7 +133,12 @@ const Location = ({ handleUpdate, useValue }) => {
                   value={state}
                 >
                   {getStates().map(state => {
-                    return <option key={state.abbr} value={state.abbr}>{`${state.name}`}</option>;
+                    return (
+                      <option
+                        key={state.abbr}
+                        value={state.abbr}
+                      >{`${state.name}`}</option>
+                    );
                   })}
                 </Dropdown>
               )}

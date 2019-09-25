@@ -46,26 +46,29 @@ export function getDiseasesForSimpleTypeAhead({
   return {
     type: '@@api/CTS',
     payload: {
-      service: 'getDiseases',
-      category: ['maintype', 'subtype', 'stage'],
-      params: undefined,
-      options: {
-        name,
-        size,
-        sort: 'cancergov',
+      service: 'ctsSearch',
+      fieldName: 'diseases',
+      requestParams: {
+        category: ['maintype', 'subtype', 'stage'],
+        ancestorId: undefined,
+        additionalParams: {
+          name,
+          size,
+          sort: 'cancergov',
+        },
       },
       fetchHandlers: {
         formatResponse: diseases => {
           // TODO: DEBUG
           if (isDebug) {
             diseases.forEach(
-              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+              disease =>
+                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
             );
           }
           return diseases;
         },
       },
-      resultName: 'diseases',
     },
   };
 }
@@ -74,12 +77,15 @@ export function getMainType({ size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
-      service: 'getDiseases',
-      category: 'maintype',
-      params: undefined,
-      options: {
-        size,
-        current_trial_status: VIEWABLE_TRIALS,
+      service: 'ctsSearch',
+      fieldName: 'maintype',
+      requestParams: {
+        category: 'maintype',
+        ancestorId: undefined,
+        additionalParams: {
+          size,
+          current_trial_status: VIEWABLE_TRIALS,
+        },
       },
       fetchHandlers: {
         formatResponse: diseases => {
@@ -98,13 +104,13 @@ export function getMainType({ size = 0, isDebug = false }) {
           //TODO: DEBUG
           if (isDebug) {
             newDiseases.forEach(
-              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+              disease =>
+                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
             );
           }
           return diseases;
         },
       },
-      resultName: 'mainType',
     },
   };
 }
@@ -113,25 +119,28 @@ export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
-      service: 'getDiseases',
-      category: 'subtype',
-      params: ancestorID,
-      options: {
-        size,
-        current_trial_status: VIEWABLE_TRIALS,
+      service: 'ctsSearch',
+      fieldName: 'subtypes',
+      requestParams: {
+        category: 'subtype',
+        ancestorId: ancestorID,
+        additionalParams: {
+          size,
+          current_trial_status: VIEWABLE_TRIALS,
+        },
       },
       fetchHandlers: {
         formatResponse: diseases => {
           // TODO: DEBUG
           if (isDebug) {
             diseases.forEach(
-              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+              disease =>
+                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
             );
           }
           return diseases;
         },
       },
-      resultName: 'subtypes',
     },
   };
 }
@@ -140,25 +149,28 @@ export function getStages({ ancestorID, size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
-      service: 'getDiseases',
-      category: 'stage',
-      params: ancestorID,
-      options: {
-        size,
-        current_trial_status: VIEWABLE_TRIALS,
+      service: 'ctsSearch',
+      fieldName: 'stages',
+      requestParams: {
+        category: 'stage',
+        ancestorId: ancestorID,
+        additionalParams: {
+          size,
+          current_trial_status: VIEWABLE_TRIALS,
+        },
       },
       fetchHandlers: {
         formatResponse: diseases => {
           // TODO: DEBUG
           if (isDebug) {
             diseases.forEach(
-              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+              disease =>
+                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
             );
           }
           return diseases;
         },
       },
-      resultName: 'stages',
     },
   };
 }
@@ -167,62 +179,70 @@ export function getFindings({ ancestorID, size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
-      service: 'getDiseases',
-      category: 'finding',
-      params: ancestorID,
-      options: {
-        size,
-        current_trial_status: VIEWABLE_TRIALS,
+      service: 'ctsSearch',
+      fieldName: 'findings',
+      requestParams: {
+        category: 'finding',
+        ancestorId: ancestorID,
+        additionalParams: {
+          size,
+          current_trial_status: VIEWABLE_TRIALS,
+        },
       },
       fetchHandlers: {
         formatResponse: diseases => {
           // TODO: DEBUG
           if (isDebug) {
             diseases.forEach(
-              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+              disease =>
+                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
             );
           }
           return diseases;
         },
       },
-      resultName: 'findings',
     },
   };
 }
 
-// export function getCountries() {
-//   return {
-//     type: '@@api/CTS',
-//     payload: {
-//       service: 'getTerms',
-//       category: 'sites.org_country',
-//       options: {
-//         sort: 'term',
-//         current_trial_status: VIEWABLE_TRIALS,
-//       },
-//       fetchHandlers: {
-//         formatResponse: terms => {
-//           return terms.map(term => term.term);
-//         },
-//       },
-//       resultName: 'countries',
-//     },
-//   };
-// }
+export function getCountries({ size = 100 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'countries',
+      requestParams: {
+        category: 'sites.org_country',
+        additionalParams: {
+          sort: 'term',
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        size
+      },
+      fetchHandlers: {
+        formatResponse: terms => {
+          return terms.map(term => term.term);
+        },
+      },
+    },
+  };
+}
 
-// export function searchHospital(searchText) { 
-
-//   return {
-//     type: '@@api/CTS',
-//     payload: {
-//       service: 'getTerms',
-//       category: 'sites.org_name',
-//       options: {
-//         term: searchText,
-//         sort: 'term',
-//         current_trial_status: VIEWABLE_TRIALS,
-//       },
-//       resultName: 'hospital',
-//     },
-//   };
-// }
+export function searchHospital({ searchText, size = 10 }) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'hospital',
+      requestParams: {
+        category: 'sites.org_name',
+        additionalParams: {
+          term: searchText,
+          sort: 'term',
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        size
+      },
+    },
+  };
+}
