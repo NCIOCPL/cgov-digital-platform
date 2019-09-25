@@ -18,7 +18,8 @@ const Location = ({ handleUpdate, useValue }) => {
   const [showStateField, setShowStateField] = useState(true);
 
   const handleToggleChange = e => {
-    setLimitToVA(e.target.checked);
+    console.log(e, '<<<');
+    setLimitToVA(e);
   };
 
   const handleRadioChange = e => {
@@ -49,7 +50,7 @@ const Location = ({ handleUpdate, useValue }) => {
         <Toggle
           id="search-location-toggle"
           label="Limit results to Veterans Affairs facilities"
-          onChange={handleToggleChange}
+          onClick={handleToggleChange}
         />
         Limit results to Veterans Affairs facilities
       </div>

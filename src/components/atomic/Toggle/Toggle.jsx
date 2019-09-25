@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import './Toggle.scss';
 
 const Toggle = ({ id, classes, label, onClick, checked, ...otherProps }) => {
+  const handleChange = e => {
+    onClick(e);
+  };
   return (
     <div className={`cts-toggle ${classes}`}>
       <input
@@ -11,7 +14,12 @@ const Toggle = ({ id, classes, label, onClick, checked, ...otherProps }) => {
         id={id}
         {...otherProps}
       />
-      <label className="cts-toggle__label" htmlFor={id} aria-label={label} onClick={() => onClick(checked)}>
+      <label
+        className="cts-toggle__label"
+        htmlFor={id}
+        aria-label={label}
+        onClick={handleChange}
+      >
         <span aria-hidden="true" className="neg">
           No
         </span>
@@ -27,11 +35,13 @@ Toggle.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.string,
   label: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 Toggle.defaultProps = {
   classes: '',
   label: '',
+  onClick: {}
 };
 
 export default Toggle;
