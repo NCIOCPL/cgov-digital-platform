@@ -1,7 +1,6 @@
 import {
   UPDATE_FORM,
   CLEAR_FORM,
-  RECEIVE_DATA
 } from '../identifiers';
 
 export const defaultState = {

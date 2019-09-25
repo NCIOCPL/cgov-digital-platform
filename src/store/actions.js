@@ -10,6 +10,14 @@ const VIEWABLE_TRIALS = [
   'Temporarily Closed to Accrual and Intervention',
 ];
 
+//These are the two catch all buckets that we must add to the bottom of the list.
+//ORDER will matter here.
+const OTHER_MAIN_TYPES = [
+  'C2916', //Carcinoma not in main type (Other Carcinoma)
+  'C3262', //Neoplasm not in main type (Other Neoplasm)
+  'C2991', //Disease or Disorder (Other Disease)
+];
+
 export function updateForm({ field, value }) {
   return {
     type: UPDATE_FORM,
@@ -30,7 +38,11 @@ export function receiveData(field, value) {
   };
 }
 
-export function getDiseasesForSimpleTypeAhead({ name, size = 10 }) {
+export function getDiseasesForSimpleTypeAhead({
+  name,
+  size = 10,
+  isDebug = false,
+}) {
   return {
     type: '@@api/CTS',
     payload: {
@@ -44,16 +56,173 @@ export function getDiseasesForSimpleTypeAhead({ name, size = 10 }) {
       },
       fetchHandlers: {
         formatResponse: diseases => {
-          //TODO: DEBUG
-          // if (this.isDebug) {
-          //   diseases.forEach(
-          //     disease => (disease.name += ' (' + disease.codes.join('|') + ')')
-          //   );
-          // }
+          // TODO: DEBUG
+          if (isDebug) {
+            diseases.forEach(
+              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+            );
+          }
           return diseases;
         },
       },
-      resultName: 'diseases'
+      resultName: 'diseases',
+    },
+  };
+}
+
+export function getMainType({ size = 0, isDebug = false }) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getDiseases',
+      queries: 'maintype',
+      params: undefined,
+      options: {
+        size,
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      fetchHandlers: {
+        formatResponse: diseases => {
+          const types = [];
+          const otherTypes = [];
+
+          diseases.forEach(disease => {
+            if (OTHER_MAIN_TYPES.includes(disease.codes.join('|'))) {
+              otherTypes.push(disease);
+            } else {
+              types.push(disease);
+            }
+          });
+
+          const newDiseases = types.concat(otherTypes);
+          //TODO: DEBUG
+          if (isDebug) {
+            newDiseases.forEach(
+              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+            );
+          }
+          return diseases;
+        },
+      },
+      resultName: 'mainType',
+    },
+  };
+}
+
+export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getDiseases',
+      queries: 'subtype',
+      params: ancestorID,
+      options: {
+        size,
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      fetchHandlers: {
+        formatResponse: diseases => {
+          // TODO: DEBUG
+          if (isDebug) {
+            diseases.forEach(
+              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+            );
+          }
+          return diseases;
+        },
+      },
+      resultName: 'subtypes',
+    },
+  };
+}
+
+export function getStages({ ancestorID, size = 0, isDebug = false }) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getDiseases',
+      queries: 'stage',
+      params: ancestorID,
+      options: {
+        size,
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      fetchHandlers: {
+        formatResponse: diseases => {
+          // TODO: DEBUG
+          if (isDebug) {
+            diseases.forEach(
+              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+            );
+          }
+          return diseases;
+        },
+      },
+      resultName: 'stages',
+    },
+  };
+}
+
+export function getFindings({ ancestorID, size = 0, isDebug = false }) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getDiseases',
+      queries: 'finding',
+      params: ancestorID,
+      options: {
+        size,
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      fetchHandlers: {
+        formatResponse: diseases => {
+          // TODO: DEBUG
+          if (isDebug) {
+            diseases.forEach(
+              disease => (disease.name += ' (' + disease.codes.join('|') + ')')
+            );
+          }
+          return diseases;
+        },
+      },
+      resultName: 'findings',
+    },
+  };
+}
+
+export function getCountries() {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getTerms',
+      queries: 'sites.org_country',
+      options: {
+        sort: 'term',
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      fetchHandlers: {
+        formatResponse: terms => {
+          return terms.map(term => term.term);
+        },
+      },
+      resultName: 'countries',
+    },
+  };
+}
+
+export function searchHospital(searchText) { 
+
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'getTerms',
+      queries: 'sites.org_name',
+      options: {
+        term: searchText,
+        sort: 'term',
+        current_trial_status: VIEWABLE_TRIALS,
+      },
+      resultName: 'hospital',
     },
   };
 }

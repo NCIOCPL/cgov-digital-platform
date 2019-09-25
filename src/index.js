@@ -11,7 +11,7 @@ import { history } from './services/history.service';
 import * as reducers from './store/reducers';
 import './index.css';
 import createCTSMiddleware from './middleware/CTSMiddleware';
-import { ClinicalTrialsServiceFactory } from 'clinical-trials-service';
+import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js';
 
 import App from './App';
 
@@ -52,14 +52,27 @@ if (process.env.NODE_ENV !== 'production') {
   const getDiseases = () => {
     const hostName = 'clinicaltrialsapi.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
-    console.log('service: ', service);
     return service.getDiseases;
+  }
+
+  const getTerms = () => {
+    const hostName = 'clinicaltrialsapi.cancer.gov';
+    const service = ClinicalTrialsServiceFactory.create(hostName);
+    return service.getTerms;
+  }
+
+  const getInterventions = () => {
+    const hostName = 'clinicaltrialsapi.cancer.gov';
+    const service = ClinicalTrialsServiceFactory.create(hostName);
+    return service.getInterventions;
   }
 
   initialize({
     rootId,
     services: {
       getDiseases,
+      getTerms,
+      getInterventions
     },
     language: 'en',
   });
