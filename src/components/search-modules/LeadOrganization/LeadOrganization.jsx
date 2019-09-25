@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Fieldset from '../../atomic/Fieldset';
 import { Autocomplete } from '../../atomic';
@@ -8,7 +8,14 @@ import './LeadOrganization.scss';
 
 const LeadOrganization = ({ handleUpdate, useValue }) => {
   const [orgName, setOrgName] = useState({ value: '' });
-
+  useEffect(() => {
+    handleUpdate({
+      target: {
+        name: 'lo',
+        value: orgName
+      }
+    });
+  }, [orgName, handleUpdate])
   return (
     <Fieldset
       id="lead_organization"

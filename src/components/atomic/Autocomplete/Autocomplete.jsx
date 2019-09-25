@@ -305,6 +305,7 @@ class Autocomplete extends React.Component {
   }
 
   handleChange(event) {
+    console.log('event: ', event);
     this.props.onChange(event, event.target.value);
   }
 

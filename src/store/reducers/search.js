@@ -36,11 +36,6 @@ export const reducer = (state = defaultState, action) => {
       return {
         ...defaultState,
       };
-    case RECEIVE_DATA:
-      return {
-        ...state,
-        ...action.payload,
-      };
     default:
       return {
         ...state,

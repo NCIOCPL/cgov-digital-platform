@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
+import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
 import {
   getMainTypes,
   getSubTypes,
@@ -9,14 +11,50 @@ import {
 import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate, useValue }) => {
+  const dispatch = useDispatch();
   const [cancerType, setCancerType] = useState({ value: 'All' });
-
   const [subtype, setSubtype] = useState({ value: '' });
   const [subtypeChips, setSubtypeChips] = useState([]);
   const [stage, setStage] = useState({ value: '' });
   const [stageChips, setStageChips] = useState([]);
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [finChips, setFinChips] = useState([]);
+  const { diseases } = useSelector(store => store.results);
+  useEffect(() => {
+    dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
+  }, [cancerType, dispatch]);
+
+  //TODO: Abstract these out to a hook
+  useEffect(
+    () =>
+      handleUpdate({
+        target: {
+          value: [...subtypeChips],
+          name: 'st',
+        },
+      }),
+    [subtypeChips, handleUpdate]
+  );
+  useEffect(
+    () =>
+      handleUpdate({
+        target: {
+          value: [...stageChips],
+          name: 'stage',
+        },
+      }),
+    [stageChips, handleUpdate]
+  );
+  useEffect(
+    () =>
+      handleUpdate({
+        target: {
+          value: [...finChips],
+          name: 'fin',
+        },
+      }),
+    [finChips, handleUpdate]
+  );
 
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
@@ -55,11 +93,19 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
         value={cancerType.value}
         inputClasses="faux-select"
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={getMainTypes().terms}
+        items={diseases}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setCancerType({ value })}
-        onSelect={value => setCancerType({ value })}
+        onSelect={value => {
+          handleUpdate({
+            target: {
+              name: 'ct',
+              value,
+            },
+          });
+          setCancerType({ value });
+        }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --ct">{children}</div>
         )}
