@@ -228,6 +228,71 @@ export function getCountries({ size = 100 } = {}) {
   };
 }
 
+/**
+ * Gets drugs intervention items for search field
+ */
+export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'drugs',
+      requestParams: {
+        category: ['Agent', 'Agent Category'],
+        searchText: searchText,
+        size: size,
+        additionalParams: {
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        sort: 'cancergov',
+      },
+      fetchHandlers: {
+        formatResponse: drugs => {
+          if (isDebug) {
+            drugs.forEach(
+              drug => (drug.name += ' (' + drug.codes.join('|') + ')')
+            );
+          }
+          return drugs;
+        },
+      },
+    },
+  };
+}
+
+/**
+ * Gets other intervention items for search field
+ */
+export function searchOtherInterventions({ searchText, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'treatments',
+      requestParams: {
+        category: 'Other',
+        searchText: searchText,
+        size: size,
+        additionalParams: {
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        sort: 'cancergov',
+      },
+      fetchHandlers: {
+        formatResponse: (treatments, isDebug) => {
+          if (isDebug) {
+            treatments.forEach(
+              treatment =>
+                (treatment.name += ' (' + treatment.codes.join('|') + ')')
+            );
+          }
+          return treatments;
+        },
+      },
+    },
+  };
+}
+
 export function searchHospital({ searchText, size = 10 }) {
   return {
     type: '@@api/CTS',
