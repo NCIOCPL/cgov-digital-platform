@@ -217,7 +217,7 @@ export function getCountries({ size = 100 } = {}) {
           sort: 'term',
           current_trial_status: VIEWABLE_TRIALS,
         },
-        size
+        size,
       },
       fetchHandlers: {
         formatResponse: terms => {
@@ -241,7 +241,7 @@ export function searchHospital({ searchText, size = 10 }) {
           sort: 'term',
           current_trial_status: VIEWABLE_TRIALS,
         },
-        size
+        size,
       },
     },
   };

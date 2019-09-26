@@ -1,7 +1,4 @@
-import {
-  UPDATE_FORM,
-  CLEAR_FORM,
-} from '../identifiers';
+import { UPDATE_FORM, CLEAR_FORM } from '../identifiers';
 
 export const defaultState = {
   age: '',
@@ -16,7 +13,7 @@ export const defaultState = {
   country: 'United States',
   state: '',
   city: '',
-  hospital:'',
+  hospital: '',
   trialId: '',
   trialInvestigators: '',
   healthyVolunteers: false,
@@ -40,4 +37,4 @@ export const reducer = (state = defaultState, action) => {
         ...state,
       };
   }
-}
+};

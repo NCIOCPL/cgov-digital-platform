@@ -1,6 +1,4 @@
-import {
-  RECEIVE_DATA
-} from '../identifiers';
+import { RECEIVE_DATA } from '../identifiers';
 
 export const defaultState = {
   diseases: [],
@@ -22,4 +20,4 @@ export const reducer = (state = defaultState, action) => {
         ...state,
       };
   }
-}
+};
