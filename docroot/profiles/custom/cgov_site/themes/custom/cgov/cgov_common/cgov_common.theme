@@ -127,23 +127,6 @@ function cgov_common_preprocess_field(&$variables) {
     $nid = $variables['element']['#object']->id();
     $variables['node_id'] = $nid;
   }
-
-  if ($variables['element']['#field_name'] == 'field_article_body') {
-    // Get the schema.org type for use in field templates.
-    $node = \Drupal::routeMatch()->getParameter('node');
-    $schema_org_type = $node->field_schema_org_data->page_itemtype;
-    $variables['schema_org_type'] = $schema_org_type;
-  }
-}
-
-/**
- * Preprocess function for paragraph templates.
- */
-function cgov_common_preprocess_paragraph__body_section(&$variables) {
-  // Get the schema.org type for use in paragraph templates.
-  $parent = $variables['paragraph']->getParentEntity();
-  $schema_org_type = $parent->field_schema_org_data->page_itemtype;
-  $variables['schema_org_type'] = $schema_org_type;
 }
 
 /**
