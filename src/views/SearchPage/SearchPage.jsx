@@ -1,11 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import FormBasic from './FormBasic';
-import FormAdvanced from './FormAdvanced';
 import { Delighter } from '../../components/atomic';
+import {
+  CancerTypeCondition,
+  Age,
+  KeywordsPhrases,
+  Location,
+  TrialType,
+  DrugTreatment,
+  TrialPhase,
+  TrialId,
+  TrialInvestigators,
+  LeadOrganization,
+  CancerTypeKeyword,
+  ZipCode,
+} from '../../components/search-modules';
+import { updateForm } from '../../store/actions';
+
+//Module groups in arrays will be placed side-by-side in the form
+const basicFormModules = [
+  CancerTypeKeyword,
+  Age,
+  ZipCode
+];
+const advancedFormModules = [
+  CancerTypeCondition,
+  [Age, KeywordsPhrases],
+  Location,
+  TrialType,
+  DrugTreatment,
+  TrialPhase,
+  TrialId,
+  TrialInvestigators,
+  LeadOrganization,
+];
+
+const useValue = (prop) => useSelector(({search}) => search[prop]);
 
 const SearchPage = ({ form }) => {
+  const dispatch = useDispatch();
   const [formVersion, setFormVersion] = useState(form);
+  const [redirectToResults, setRedirectToResults] = useState(false);
+
+  useEffect(() => {
+    if (redirectToResults) {
+      return <Redirect push to="/r" />;
+    }
+  }, [redirectToResults]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setRedirectToResults(true);
+  };
+
+  const handleUpdate = e => {
+    dispatch(
+      updateForm({
+        field: e.target.name,
+        value: e.target.value,
+      })
+    );
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -73,6 +130,8 @@ const SearchPage = ({ form }) => {
     </div>
   );
 
+  let formModules = formVersion === 'advanced' ? advancedFormModules : basicFormModules;
+
   return (
     <div className="general-page-body-container main-content">
       <div className="contentzone">
@@ -89,7 +148,39 @@ const SearchPage = ({ form }) => {
           </div>
 
           <div className="search-page__content">
-            {formVersion === 'advanced' ? <FormAdvanced /> : <FormBasic />}
+            <form
+              onSubmit={handleSubmit}
+              className={`search-page__form ${formVersion}`}
+            >
+              {formModules.map((Module, idx) => {
+                if (Array.isArray(Module)) {
+                  return (
+                    <div key={`formAdvanced-${idx}`} className="side-by-side">
+                      {Module.map((Mod, i) => (
+                        <Mod
+                          key={`formAdvanced-${idx}-${i}`}
+                          handleUpdate={handleUpdate}
+                          useValue={useValue}
+                        />
+                      ))}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <Module
+                      key={`formAdvanced-${idx}`}
+                      handleUpdate={handleUpdate}
+                      useValue={useValue}
+                    />
+                  );
+                }
+              })}
+              <div className="submit-block">
+                <button type="submit" className="btn-submit">
+                  Find Trials
+                </button>
+              </div>
+            </form>
             <aside className="search-page__aside">{renderDelighters()}</aside>
           </div>
 

@@ -3,28 +3,50 @@ import PropTypes from 'prop-types';
 import { Fieldset, Checkbox } from '../../atomic';
 import './TrialPhase.scss';
 
-const TrialPhase = ({ selectedPhases, phaseFields }) => {
-  const [phases, setPhases] = useState([]);
+const TrialPhase = ({ phaseFields, handleUpdate, useValue }) => {
+  const initPhases = phaseFields.map(phase => {
+    if (phase && !phase.checked) {
+      return {
+        ...phase,
+        checked: false,
+      };
+    } else {
+      return phase;
+    }
+  });
+  const [phases, setPhases] = useState(initPhases);
 
   useEffect(() => {
-    //initialize trials state after mount
-    setPhases([...selectedPhases]);
-  }, [selectedPhases]);
+    const updateObject = {
+      target: {
+        name: 'trialPhase',
+        value: [...phases],
+      },
+    };
+    handleUpdate(updateObject);
+  }, [phases, handleUpdate]);
 
   const handleSelectAll = e => {
-    setPhases([]);
+    setPhases(
+      phases.map(phase => ({
+        ...phase,
+        checked: false,
+      }))
+    );
   };
 
   const handleCheckPhase = e => {
-    let filtered = [];
-    if (e.target.checked) {
-      setPhases([...phases, e.target.value]);
-    } else {
-      filtered = phases.filter((value, index, arr) => {
-        return value !== e.target.value;
-      });
-      setPhases([...filtered]);
-    }
+    const filtered = phases.map(phase => {
+      if (phase.value === e.target.value) {
+        return {
+          ...phase,
+          checked: e.target.checked,
+        };
+      } else {
+        return phase;
+      }
+    });
+    setPhases(filtered);
   };
 
   return (
@@ -42,12 +64,12 @@ const TrialPhase = ({ selectedPhases, phaseFields }) => {
           id="tp_all"
           label="All"
           classes="tp-all"
-          checked={phases.length === 0}
+          checked={phases.every(phase => !phase.checked)}
           onChange={handleSelectAll}
         />
       </div>
       <div className="group-phases">
-        {phaseFields.map((field, idx) => (
+        {phases.map((field, idx) => (
           <Checkbox
             id={'tp_' + field.value}
             key={'tp_' + field.value}
@@ -55,7 +77,7 @@ const TrialPhase = ({ selectedPhases, phaseFields }) => {
             value={field.value}
             label={field.label}
             onChange={handleCheckPhase}
-            checked={phases.includes(field.value)}
+            checked={field.checked}
           />
         ))}
       </div>
@@ -65,11 +87,11 @@ const TrialPhase = ({ selectedPhases, phaseFields }) => {
 
 TrialPhase.propTypes = {
   phaseFields: PropTypes.array,
-  selectedPhases: PropTypes.array,
+  useValue: PropTypes.func,
+  handleUpdate: PropTypes.func,
 };
 
 TrialPhase.defaultProps = {
-  selectedPhases: [],
   phaseFields: [
     { label: 'Phase I', value: 'I' },
     { label: 'Phase I', value: 'II' },

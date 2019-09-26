@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
+import { getCountries } from '../../../store/actions';
 import './Location.scss';
 
 //TODO: Using mock list of states until API is ready;
-import {getStates} from '../../../mocks/mock-autocomplete-util';
+import { getStates } from '../../../mocks/mock-autocomplete-util';
 
-const Location = () => {
+const Location = ({ handleUpdate, useValue }) => {
+  //Hooks must always be rendered in same order.
+  const dispatch = useDispatch();
+  const { countries } = useSelector(store => store.results);
+  const { zip, radius, country, city, state, hospital } = useSelector(
+    store => store.search
+  );
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
   const [showStateField, setShowStateField] = useState(true);
-
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
   const handleToggleChange = e => {
-    setLimitToVA(e.target.checked);
+    console.log(e, '<<<');
+    setLimitToVA(e);
   };
 
   const handleRadioChange = e => {
     setActiveRadio(e.target.value);
   };
 
-  const handleCountryOnChange = country => {
+  const handleCountryOnChange = e => {
+    const country = e.target.value;
     if (country === 'United States') {
       setShowStateField(true);
     } else {
@@ -42,7 +54,7 @@ const Location = () => {
         <Toggle
           id="search-location-toggle"
           label="Limit results to Veterans Affairs facilities"
-          onChange={handleToggleChange}
+          onClick={handleToggleChange}
         />
         Limit results to Veterans Affairs facilities
       </div>
@@ -63,16 +75,20 @@ const Location = () => {
           <div className="search-location__block search-location__zip">
             <div className="two-col">
               <TextInput
+                action={handleUpdate}
                 id="search-location-zip-input"
-                classes="zip"
+                name="zip"
+                value={zip}
+                classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
-                maxLength={5}
               />
               <Dropdown
+                action={handleUpdate}
                 id="search-location-radius"
-                classes="radius"
+                name="radius"
+                value={radius}
+                classes="search-location__zip --radius"
                 label="Radius"
-                value={100}
               >
                 {[20, 50, 100, 200, 500].map(dist => {
                   return (
@@ -92,36 +108,44 @@ const Location = () => {
         {activeRadio === 'search-location-country' && (
           <div className="search-location__block search-location__country">
             <Dropdown
-              classes="country"
+              classes="search-location__country --country"
+              name="country"
               label="Country"
               action={handleCountryOnChange}
-              value="United States"
+              value={country}
             >
-              {[
-                'United States',
-                'United Kingdom',
-                'Zambia',
-                'Japan',
-                'Uruguay',
-              ].map(city => {
+              {countries.map(city => {
                 return <option key={city} value={city}>{`${city}`}</option>;
               })}
             </Dropdown>
-            <div className={`search-location__country ${showStateField ? 'two-col' : ''}`}>
+            <div
+              className={`search-location__country ${
+                showStateField ? 'two-col' : ''
+              }`}
+            >
               {showStateField && (
                 <Dropdown
                   id="search-location-state"
                   classes="state"
                   label="State"
+                  action={handleUpdate}
+                  value={state}
                 >
                   {getStates().map(state => {
-                    return <option key={state.abbr} value={state.abbr}>{`${state.name}`}</option>;
+                    return (
+                      <option
+                        key={state.abbr}
+                        value={state.abbr}
+                      >{`${state.name}`}</option>
+                    );
                   })}
                 </Dropdown>
               )}
               <TextInput
+                action={handleUpdate}
                 id="search-location-city"
                 label="City"
+                value={city}
               />
             </div>
           </div>
@@ -137,9 +161,12 @@ const Location = () => {
             {activeRadio === 'search-location-hospital' && (
               <div className="search-location__block">
                 <TextInput
+                  action={handleUpdate}
                   id="hos"
                   label="Hospitals/Institutions"
+                  name="hospital"
                   labelHidden
+                  value={hospital}
                   placeHolder="Please enter 3 or more characters"
                 />
               </div>

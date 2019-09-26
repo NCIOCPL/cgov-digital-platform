@@ -3,7 +3,7 @@ import { Fieldset, Autocomplete } from '../../atomic';
 import { getTreatments, getDrugs } from '../../../mocks/mock-interventions';
 import './DrugTreatment.scss';
 
-const DrugTreatment = () => {
+const DrugTreatment = ({ handleUpdate, useValue }) => {
   const [drugVal, setDrugVal] = useState({ value: '' });
   const [drugChips, setDrugChips] = useState([]);
   const [trtmtVal, setTrtmtVal] = useState({ value: '' });
@@ -49,6 +49,23 @@ const DrugTreatment = () => {
         Search for a specific drug or intervention. You can use the drug's
         generic or brand name.
       </p>
+      {/* <TextInput
+        action={handleUpdate}
+        id="search-drug-family"
+        name="drugFamily"
+        value={useValue('drugFamily')}
+        type="text"
+        label="Drug/Drug Family"
+        placeHolder={placeholder}
+      />
+      <TextInput
+        action={handleUpdate}
+        id="search-drug-other"
+        name="otherTreatements"
+        value={useValue('otherTreatements')}
+        type="text"
+        label="Other Treatments"
+        placeHolder={placeholder} */}
 
       <Autocomplete
         id="dt"

@@ -29,6 +29,7 @@ export default class Dropdown extends React.Component {
 
   static propTypes = {
     id: PropTypes.string,
+    name: PropTypes.string,
     label: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     classes: PropTypes.string,
@@ -79,7 +80,7 @@ export default class Dropdown extends React.Component {
     this.setState({
       value: event.target.value,
     });
-    this.props.action(event.target.value);
+    this.props.action(event);
   }
 
   render() {
@@ -114,7 +115,7 @@ export default class Dropdown extends React.Component {
 
         <select
           className="cts-select"
-          name={this.props.id}
+          name={this.props.name || this.props.id}
           id={this.id}
           value={this.state.value}
           required={this.props.required}
