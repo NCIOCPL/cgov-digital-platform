@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
+import { getDiseasesForSimpleTypeAhead, getSubtypes } from '../../../store/actions';
 import {
   getMainTypes,
   getSubTypes,
@@ -12,16 +12,19 @@ import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: 'All', id: null });
+  const [cancerType, setCancerType] = useState({ value: 'All', codes: null });
   const [subtype, setSubtype] = useState({ value: '' });
   const [subtypeChips, setSubtypeChips] = useState([]);
   const [stage, setStage] = useState({ value: '' });
   const [stageChips, setStageChips] = useState([]);
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [finChips, setFinChips] = useState([]);
-  const { diseases } = useSelector(store => store.results);
+  const { diseases, subtypes } = useSelector(store => store.results);
   useEffect(() => {
     dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
+    if (cancerType.codes !== null) {
+      dispatch(getSubtypes(cancerType.codes))
+    }
   }, [cancerType, dispatch]);
 
   //TODO: Abstract these out to a hook
@@ -96,15 +99,18 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
         items={diseases}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => setCancerType({ value })}
-        onSelect={value => {
+        onChange={(event, value) => setCancerType({ value, codes: [] })}
+        onSelect={(value, item) => {
           handleUpdate({
             target: {
               name: 'ct',
-              value,
+              value: {
+                value,
+                codes: item.codes,
+              },
             },
           });
-          setCancerType({ value });
+          setCancerType({ value, codes: item.codes });
         }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --ct">{children}</div>
@@ -127,7 +133,7 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Subtype"
             value={subtype.value}
             inputProps={{ placeholder: 'Select a subtype' }}
-            items={getSubTypes().terms}
+            items={subtypes}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSubtype({ value })}

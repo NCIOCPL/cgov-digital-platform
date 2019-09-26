@@ -4,7 +4,8 @@ import {
 
 export const defaultState = {
   diseases: [],
-  countries: []
+  countries: [],
+  subtypes: []
 }
 
 export const reducer = (state = defaultState, action) => {
