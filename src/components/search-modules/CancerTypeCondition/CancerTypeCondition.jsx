@@ -7,17 +7,19 @@ import {
   getStages,
   getFindings,
 } from '../../../store/actions';
+import { useChipList } from '../../../store/hooks';
 import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   const dispatch = useDispatch();
   const [cancerType, setCancerType] = useState({ value: 'All', codes: null });
+  const subtypeChips = useChipList('subtypes', handleUpdate);
+  const stageChips = useChipList('stages', handleUpdate);
+  const finChips = useChipList('findings', handleUpdate);
   const [subtype, setSubtype] = useState({ value: '' });
-  const [subtypeChips, setSubtypeChips] = useState([]);
   const [stage, setStage] = useState({ value: '' });
-  const [stageChips, setStageChips] = useState([]);
   const [sideEffects, setSideEffects] = useState({ value: '' });
-  const [finChips, setFinChips] = useState([]);
+
   const { diseases, subtypes, stages, findings } = useSelector(
     store => store.results
   );
@@ -30,56 +32,17 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
     }
   }, [cancerType, dispatch]);
 
-  //TODO: Abstract these out to a hook
-  useEffect(
-    () =>
-      handleUpdate({
-        target: {
-          value: [...subtypeChips],
-          name: 'st',
-        },
-      }),
-    [subtypeChips, handleUpdate]
-  );
-  useEffect(
-    () =>
-      handleUpdate({
-        target: {
-          value: [...stageChips],
-          name: 'stage',
-        },
-      }),
-    [stageChips, handleUpdate]
-  );
-  useEffect(
-    () =>
-      handleUpdate({
-        target: {
-          value: [...finChips],
-          name: 'fin',
-        },
-      }),
-    [finChips, handleUpdate]
-  );
-
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
-
-  // remove chip
-  const handleRemoveChip = (e, chiplist, chiplistSetter) => {
-    let newChipList = chiplist.filter((value, index, arr) => {
-      return value.label !== e.label;
-    });
-    chiplistSetter([...newChipList]);
-  };
-
-  const addChip = (item, chipList, chipListSetter, inputSetter) => {
-    //prevent dupes
-    if (!chipList.includes(item.value)) {
-      chipListSetter([...chipList, { label: item.value }]);
-      inputSetter({ value: '' });
+  
+  const filterSelectedItems = (items, selections) => {
+    if(!items.length || !selections.length) {
+      return items;
     }
+    return items.filter(
+      item => !selections.find(selection => selection.label === item.name)
+    );
   };
 
   return (
@@ -136,18 +99,19 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Subtype"
             value={subtype.value}
             inputProps={{ placeholder: 'Select a subtype' }}
-            items={subtypes}
+            items={filterSelectedItems(subtypes, subtypeChips.list)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSubtype({ value })}
-            onSelect={value =>
-              addChip({ value }, subtypeChips, setSubtypeChips, setSubtype)
-            }
+            onSelect={value => {
+              subtypeChips.add(value);
+              setSubtype({ value: '' });
+            }}
             multiselect={true}
-            chipList={subtypeChips}
-            onChipRemove={e =>
-              handleRemoveChip(e, subtypeChips, setSubtypeChips)
-            }
+            chipList={subtypeChips.list}
+            onChipRemove={e => {
+              subtypeChips.remove(e.label);
+            }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --subtype">{children}</div>
             )}
@@ -168,16 +132,17 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Stage"
             value={stage.value}
             inputProps={{ placeholder: 'Select a stage' }}
-            items={stages}
+            items={filterSelectedItems(stages, stageChips.list)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setStage({ value })}
-            onSelect={value =>
-              addChip({ value }, stageChips, setStageChips, setStage)
-            }
+            onSelect={value => {
+              stageChips.add(value);
+              setStage({ value: '' });
+            }}
             multiselect={true}
-            chipList={stageChips}
-            onChipRemove={e => handleRemoveChip(e, stageChips, setStageChips)}
+            chipList={stageChips.list}
+            onChipRemove={e => stageChips.remove(e.label)}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --stage">{children}</div>
             )}
@@ -198,16 +163,17 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Side Effects/Biomarkers/Participant Attributes"
             value={sideEffects.value}
             inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
-            items={findings}
+            items={filterSelectedItems(findings, finChips.list)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSideEffects({ value })}
-            onSelect={value =>
-              addChip({ value }, finChips, setFinChips, setSideEffects)
-            }
+            onSelect={value => {
+              finChips.add(value);
+              setSideEffects({ value: '' });
+            }}
             multiselect={true}
-            chipList={finChips}
-            onChipRemove={e => handleRemoveChip(e, finChips, setFinChips)}
+            chipList={finChips.list}
+            onChipRemove={e => finChips.remove(e.label)}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --fin">{children}</div>
             )}

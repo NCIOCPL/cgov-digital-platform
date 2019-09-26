@@ -11,7 +11,6 @@ const createCTSMiddleware = services => ({
   dispatch,
   getState,
 }) => next => async action => {
-  console.log('action: ', action);
   next(action);
 
   if (action.type !== '@@api/CTS') {

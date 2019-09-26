@@ -116,7 +116,6 @@ export function getMainType({ size = 0, isDebug = false }) {
 }
 
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
-  console.log('ancestorId: ', ancestorId);
   return {
     type: '@@api/CTS',
     payload: {

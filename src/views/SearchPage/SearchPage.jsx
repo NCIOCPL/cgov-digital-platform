@@ -52,7 +52,6 @@ const SearchPage = ({ form }) => {
   };
 
   const handleUpdate = e => {
-    console.log('e: ', e.target.name, e.target.value);
     dispatch(
       updateForm({
         field: e.target.name,
