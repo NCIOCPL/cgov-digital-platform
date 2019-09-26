@@ -1,11 +1,9 @@
-import {
-  RECEIVE_DATA
-} from '../identifiers';
+import { RECEIVE_DATA } from '../identifiers';
 
 export const defaultState = {
   diseases: [],
-  countries: []
-}
+  countries: [],
+};
 
 export const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -19,4 +17,4 @@ export const reducer = (state = defaultState, action) => {
         ...state,
       };
   }
-}
+};

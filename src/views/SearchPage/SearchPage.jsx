@@ -20,7 +20,11 @@ import {
 import { updateForm } from '../../store/actions';
 
 //Module groups in arrays will be placed side-by-side in the form
-const basicFormModules = [Age, CancerTypeKeyword, ZipCode];
+const basicFormModules = [
+  CancerTypeKeyword,
+  Age,
+  ZipCode
+];
 const advancedFormModules = [
   CancerTypeCondition,
   [Age, KeywordsPhrases],
