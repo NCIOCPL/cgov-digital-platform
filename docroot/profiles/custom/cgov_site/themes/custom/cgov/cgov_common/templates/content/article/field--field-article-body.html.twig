@@ -40,13 +40,17 @@ Common.js #}
       <section>
     {% endif %}
   {% else %}
-    <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    {% if schema_org_type %}
+      <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    {% endif %}
   {% endif %}
     {{ item.content }}
   {% if items | length > 1 %}
     </section>
   {% else %}
-    </div>
+    {% if schema_org_type %}
+      </div>
+    {% endif %}
   {% endif %}
 {% endfor %}
 {% if items | length > 1 %}
