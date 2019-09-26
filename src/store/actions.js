@@ -115,7 +115,8 @@ export function getMainType({ size = 0, isDebug = false }) {
   };
 }
 
-export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
+export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
+  console.log('ancestorId: ', ancestorId);
   return {
     type: '@@api/CTS',
     payload: {
@@ -123,7 +124,7 @@ export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
       fieldName: 'subtypes',
       requestParams: {
         category: 'subtype',
-        ancestorId: ancestorID,
+        ancestorId: ancestorId,
         additionalParams: {
           size,
           current_trial_status: VIEWABLE_TRIALS,
@@ -145,7 +146,7 @@ export function getSubtypes({ ancestorID, size = 0, isDebug = false }) {
   };
 }
 
-export function getStages({ ancestorID, size = 0, isDebug = false }) {
+export function getStages({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
@@ -153,7 +154,7 @@ export function getStages({ ancestorID, size = 0, isDebug = false }) {
       fieldName: 'stages',
       requestParams: {
         category: 'stage',
-        ancestorId: ancestorID,
+        ancestorId: ancestorId,
         additionalParams: {
           size,
           current_trial_status: VIEWABLE_TRIALS,
@@ -175,7 +176,7 @@ export function getStages({ ancestorID, size = 0, isDebug = false }) {
   };
 }
 
-export function getFindings({ ancestorID, size = 0, isDebug = false }) {
+export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@api/CTS',
     payload: {
@@ -183,7 +184,7 @@ export function getFindings({ ancestorID, size = 0, isDebug = false }) {
       fieldName: 'findings',
       requestParams: {
         category: 'finding',
-        ancestorId: ancestorID,
+        ancestorId: ancestorId,
         additionalParams: {
           size,
           current_trial_status: VIEWABLE_TRIALS,

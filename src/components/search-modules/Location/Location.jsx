@@ -10,13 +10,10 @@ import { getStates } from '../../../mocks/mock-autocomplete-util';
 const Location = ({ handleUpdate, useValue }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
-  const {countries} = useSelector(store => store.results)
-  let zip = useValue('zip');
-  let radius = useValue('radius');
-  let country = useValue('country');
-  let city = useValue('city');
-  let state = useValue('state');
-  let hospital = useValue('hospital');
+  const { countries } = useSelector(store => store.results);
+  const { zip, radius, country, city, state, hospital } = useSelector(
+    store => store.search
+  );
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
   const [showStateField, setShowStateField] = useState(true);
@@ -32,7 +29,8 @@ const Location = ({ handleUpdate, useValue }) => {
     setActiveRadio(e.target.value);
   };
 
-  const handleCountryOnChange = country => {
+  const handleCountryOnChange = e => {
+    const country = e.target.value;
     if (country === 'United States') {
       setShowStateField(true);
     } else {

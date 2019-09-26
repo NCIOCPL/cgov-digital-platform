@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-import { getDiseasesForSimpleTypeAhead, getSubtypes } from '../../../store/actions';
 import {
-  getMainTypes,
-  getSubTypes,
+  getDiseasesForSimpleTypeAhead,
+  getSubtypes,
   getStages,
-  getSideEffects,
-} from '../../../mocks/mock-diseases';
+  getFindings,
+} from '../../../store/actions';
 import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate, useValue }) => {
@@ -19,11 +18,15 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   const [stageChips, setStageChips] = useState([]);
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [finChips, setFinChips] = useState([]);
-  const { diseases, subtypes } = useSelector(store => store.results);
+  const { diseases, subtypes, stages, findings } = useSelector(
+    store => store.results
+  );
   useEffect(() => {
     dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
     if (cancerType.codes !== null) {
-      dispatch(getSubtypes(cancerType.codes))
+      dispatch(getStages({ ancestorId: cancerType.codes }));
+      dispatch(getSubtypes({ ancestorId: cancerType.codes }));
+      dispatch(getFindings({ ancestorId: cancerType.codes }));
     }
   }, [cancerType, dispatch]);
 
@@ -165,7 +168,7 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Stage"
             value={stage.value}
             inputProps={{ placeholder: 'Select a stage' }}
-            items={getStages().terms}
+            items={stages}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setStage({ value })}
@@ -195,7 +198,7 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
             label="Side Effects/Biomarkers/Participant Attributes"
             value={sideEffects.value}
             inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
-            items={getSideEffects().terms}
+            items={findings}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSideEffects({ value })}

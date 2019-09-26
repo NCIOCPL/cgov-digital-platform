@@ -13,7 +13,7 @@ export const defaultState = {
   leadOrganization:'',
   zip:'',
   radius:'',
-  country: '',
+  country: 'United States',
   state: '',
   city: '',
   hospital:'',

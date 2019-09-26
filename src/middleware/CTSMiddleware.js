@@ -13,7 +13,6 @@ const createCTSMiddleware = services => ({
 }) => next => async action => {
   console.log('action: ', action);
   next(action);
-  console.log('services: ', services);
 
   if (action.type !== '@@api/CTS') {
     return;
