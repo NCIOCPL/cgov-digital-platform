@@ -37,8 +37,6 @@ const advancedFormModules = [
   LeadOrganization,
 ];
 
-const useValue = (prop) => useSelector(({search}) => search[prop]);
-
 const SearchPage = ({ form }) => {
   const dispatch = useDispatch();
   const [formVersion, setFormVersion] = useState(form);
@@ -55,11 +53,11 @@ const SearchPage = ({ form }) => {
     setRedirectToResults(true);
   };
 
-  const handleUpdate = e => {
+  const handleUpdate = (field, value) => {
     dispatch(
       updateForm({
-        field: e.target.name,
-        value: e.target.value,
+        field,
+        value
       })
     );
   };
@@ -160,7 +158,6 @@ const SearchPage = ({ form }) => {
                         <Mod
                           key={`formAdvanced-${idx}-${i}`}
                           handleUpdate={handleUpdate}
-                          useValue={useValue}
                         />
                       ))}
                     </div>
@@ -170,7 +167,6 @@ const SearchPage = ({ form }) => {
                     <Module
                       key={`formAdvanced-${idx}`}
                       handleUpdate={handleUpdate}
-                      useValue={useValue}
                     />
                   );
                 }

@@ -6,15 +6,10 @@ import { getLeadOrgs } from '../../../mocks/mock-lead-org';
 import {matchItemToTerm, sortItems} from '../../../utilities/utilities';
 import './LeadOrganization.scss';
 
-const LeadOrganization = ({ handleUpdate, useValue }) => {
+const LeadOrganization = ({ handleUpdate }) => {
   const [orgName, setOrgName] = useState({ value: '' });
   useEffect(() => {
-    handleUpdate({
-      target: {
-        name: 'lo',
-        value: orgName
-      }
-    });
+    handleUpdate('lo', orgName);
   }, [orgName, handleUpdate])
   return (
     <Fieldset
@@ -53,7 +48,6 @@ const LeadOrganization = ({ handleUpdate, useValue }) => {
 
 LeadOrganization.propTypes = {
   handleUpdate: PropTypes.func,
-  useValue: PropTypes.func
 };
 
 export default LeadOrganization;

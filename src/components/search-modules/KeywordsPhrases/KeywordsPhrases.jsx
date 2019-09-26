@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Fieldset, TextInput } from '../../atomic';
 import './KeywordsPhrases.scss';
 
-const KeywordsPhrases = ({ handleUpdate, useValue }) => {
+const KeywordsPhrases = ({ handleUpdate }) => {
+  const keywordPhrases = useSelector(store => store.form.q);
   return (
     <Fieldset
       id="keyword"
@@ -10,10 +12,9 @@ const KeywordsPhrases = ({ handleUpdate, useValue }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#keywords"
     >
       <TextInput
-        action={handleUpdate}
+        action={e => handleUpdate(e.target.id, e.target.value)}
         id="q"
-        name="keywordPhrases"
-        value={useValue('keywordPhrases')}
+        value={keywordPhrases}
         label="Search by word or phrase (use quotation marks with phrases)."
         placeHolder="Examples: PSA, 'Paget disease'"
       />

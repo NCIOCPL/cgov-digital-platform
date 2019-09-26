@@ -7,12 +7,12 @@ import './Location.scss';
 //TODO: Using mock list of states until API is ready;
 import { getStates } from '../../../mocks/mock-autocomplete-util';
 
-const Location = ({ handleUpdate, useValue }) => {
+const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
   const { countries } = useSelector(store => store.results);
-  const { zip, radius, country, city, state, hospital } = useSelector(
-    store => store.search
+  const { z, zp, lcnty, lcty, lst, hos } = useSelector(
+    store => store.form
   );
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
@@ -20,9 +20,8 @@ const Location = ({ handleUpdate, useValue }) => {
   useEffect(() => {
     dispatch(getCountries());
   }, []);
-  const handleToggleChange = e => {
-    console.log(e, '<<<');
-    setLimitToVA(e);
+  const handleToggleChange = () => {
+    setLimitToVA(!limitToVA);
   };
 
   const handleRadioChange = e => {
@@ -75,18 +74,16 @@ const Location = ({ handleUpdate, useValue }) => {
           <div className="search-location__block search-location__zip">
             <div className="two-col">
               <TextInput
-                action={handleUpdate}
-                id="search-location-zip-input"
-                name="zip"
-                value={zip}
+                action={e => handleUpdate(e.target.id, e.target.value)}
+                id="z"
+                value={z}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
               />
               <Dropdown
-                action={handleUpdate}
-                id="search-location-radius"
-                name="radius"
-                value={radius}
+                action={e => handleUpdate(e.target.id, e.target.value)}
+                id="zp"
+                value={zp}
                 classes="search-location__zip --radius"
                 label="Radius"
               >
@@ -109,10 +106,10 @@ const Location = ({ handleUpdate, useValue }) => {
           <div className="search-location__block search-location__country">
             <Dropdown
               classes="search-location__country --country"
-              name="country"
+              id="lcnty"
               label="Country"
               action={handleCountryOnChange}
-              value={country}
+              value={lcnty}
             >
               {countries.map(city => {
                 return <option key={city} value={city}>{`${city}`}</option>;
@@ -125,11 +122,11 @@ const Location = ({ handleUpdate, useValue }) => {
             >
               {showStateField && (
                 <Dropdown
-                  id="search-location-state"
+                  id="lst"
                   classes="state"
                   label="State"
-                  action={handleUpdate}
-                  value={state}
+                  action={e => handleUpdate(e.target.id, e.target.value)}
+                  value={lst}
                 >
                   {getStates().map(state => {
                     return (
@@ -142,10 +139,10 @@ const Location = ({ handleUpdate, useValue }) => {
                 </Dropdown>
               )}
               <TextInput
-                action={handleUpdate}
-                id="search-location-city"
+                action={e => handleUpdate(e.target.id, e.target.value)}
+                id="lcty"
                 label="City"
-                value={city}
+                value={lcty}
               />
             </div>
           </div>
@@ -161,12 +158,11 @@ const Location = ({ handleUpdate, useValue }) => {
             {activeRadio === 'search-location-hospital' && (
               <div className="search-location__block">
                 <TextInput
-                  action={handleUpdate}
+                  action={e => handleUpdate(e.target.id, e.target.value)}
                   id="hos"
                   label="Hospitals/Institutions"
-                  name="hospital"
                   labelHidden
-                  value={hospital}
+                  value={hos}
                   placeHolder="Please enter 3 or more characters"
                 />
               </div>

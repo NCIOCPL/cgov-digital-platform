@@ -4,16 +4,11 @@ import { getTrialInvestigators } from '../../../mocks/mock-trial-investigator';
 import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 import './TrialInvestigators.scss';
 
-const TrialInvestigators = ({ handleUpdate, useValue }) => {
+const TrialInvestigators = ({ handleUpdate }) => {
   const [tiName, setTiName] = useState({ value: '' });
   useEffect(() => {
-    handleUpdate({
-      target: {
-        name: 'ti',
-        value: tiName
-      }
-    });
-  }, [tiName, handleUpdate])
+    handleUpdate('in', tiName);
+  }, [tiName, handleUpdate]);
   return (
     <Fieldset
       id="trialInvestigators"
@@ -21,10 +16,10 @@ const TrialInvestigators = ({ handleUpdate, useValue }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialinvestigators"
     >
       <Autocomplete
-        id="ti"
+        id="in"
         label="Search by Trial Investigators"
         value={tiName.value}
-        inputProps={{ id: 'ti' }}
+        inputProps={{ id: 'in' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={getTrialInvestigators().terms}
         getItemValue={item => item.term}

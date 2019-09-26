@@ -4,12 +4,7 @@ import {useSelector} from 'react-redux';
 export const useChipList = (chiplistName, handleUpdate) => {
   const [chips, setChips] = useState([])
   useEffect(() => {
-    handleUpdate({
-      target: {
-        value: [...chips],
-        name: chiplistName,
-      },
-    })
+    handleUpdate(chiplistName, [...chips])
   }, [chips, chiplistName, handleUpdate]);
   const add = (item) => {
     //prevent dupes
@@ -23,7 +18,7 @@ export const useChipList = (chiplistName, handleUpdate) => {
     console.log('newChips: ', newChips);
     setChips([...newChips]);
   };
-  const list = useSelector(store => store.search[chiplistName]);
+  const list = useSelector(store => store.form[chiplistName]);
 
   return {
     list,
