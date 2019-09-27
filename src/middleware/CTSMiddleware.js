@@ -34,6 +34,10 @@ const createCTSMiddleware = services => ({
       case 'hospitals':
         serviceMethod = 'getTerms';
         break;
+      case 'drugs':
+      case 'treatments':
+        serviceMethod = 'getInterventions';
+        break;
       default:
         console.log(fieldName, ' method not found')
     }

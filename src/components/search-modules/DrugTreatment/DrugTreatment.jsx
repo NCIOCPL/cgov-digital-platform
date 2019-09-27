@@ -1,15 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-import { getTreatments, getDrugs } from '../../../mocks/mock-interventions';
+
+import { searchDrugs, searchOtherInterventions } from '../../../store/actions';
+
+import { useChipList } from '../../../store/hooks';
+
 import './DrugTreatment.scss';
 
 const DrugTreatment = ({ handleUpdate, useValue }) => {
-  const [drugVal, setDrugVal] = useState({ value: '' });
-  const [drugChips, setDrugChips] = useState([]);
-  const [trtmtVal, setTrtmtVal] = useState({ value: '' });
-  const [trtmtChips, setTrmtChips] = useState([]);
-
   const placeholder = 'Please enter 3 or more characters';
+
+  const dispatch = useDispatch();
+
+  //store vals
+  const { drugs, treatments } = useSelector(store => store.results);
+
+  //chip lists
+  const drugChips = useChipList('drugs', handleUpdate);
+  const treatmentChips = useChipList('treatments', handleUpdate);
+
+  //input state
+  const [drugVal, setDrugVal] = useState({ value: '' });
+  const [treatmentVal, setTreatmentVal] = useState({ value: '' });
+
+  //based on drug field input
+  useEffect(() => {
+    if(drugVal.value.length > 2){
+      dispatch(searchDrugs({ name: drugVal.value }));
+    }
+  }, [drugVal, dispatch]);
+
+  //based on drug field input
+  useEffect(() => {
+    if (treatmentVal.value.length > 2) {
+      dispatch(searchOtherInterventions({ name: treatmentVal.value }));
+    }
+  }, [treatmentVal, dispatch]);
+
 
   const matchItemToTerm = (item, value) => {
     //convert synonyms array to lowercase for comparison
@@ -22,22 +50,14 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
     );
   };
 
-  // remove chip
-
-  const handleRemoveChip = e => {
-    let newChipList = drugChips.filter((value, index, arr) => {
-      return value.label !== e.label;
-    });
-    setDrugChips([...newChipList]);
-  };
-
-  const addChip = (item, chipList, chipListSetter, inputSetter) => {
-    //prevent dupes
-    if(!chipList.includes(item.value)){
-      chipListSetter([...chipList, { label:  item.value }]);
-      inputSetter({value: ''});
+  const filterSelectedItems = (items = [], selections = []) => {
+    if (!items.length || !selections.length) {
+      return items;
     }
-  }
+    return items.filter(
+      item => !selections.find(selection => selection.label === item.name)
+    );
+  };
 
   return (
     <Fieldset
@@ -49,40 +69,27 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         Search for a specific drug or intervention. You can use the drug's
         generic or brand name.
       </p>
-      {/* <TextInput
-        action={handleUpdate}
-        id="search-drug-family"
-        name="drugFamily"
-        value={useValue('drugFamily')}
-        type="text"
-        label="Drug/Drug Family"
-        placeHolder={placeholder}
-      />
-      <TextInput
-        action={handleUpdate}
-        id="search-drug-other"
-        name="otherTreatements"
-        value={useValue('otherTreatements')}
-        type="text"
-        label="Other Treatments"
-        placeHolder={placeholder} */}
 
       <Autocomplete
         id="dt"
         label="Drug/Drug Family"
         value={drugVal.value}
-        inputProps={{ id: 'dt', placeholder: placeholder }}
-        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={getDrugs().terms}
+        inputProps={{ placeholder: placeholder }}
+        items={filterSelectedItems(drugs, drugChips.list)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setDrugVal({ value })}
-        onSelect={value => addChip({ value }, drugChips, setDrugChips, setDrugVal)}
+        onSelect={value => {
+          drugChips.add(value);
+          setDrugVal({ value: '' });
+        }}
         multiselect={true}
-        chipList={drugChips}
-        onChipRemove={handleRemoveChip}
+        chipList={drugChips.list}
+        onChipRemove={e => drugChips.remove(e.label)}
         renderMenu={children => (
-          <div className="cts-autocomplete__menu --drugs">{children}</div>
+          <div className="cts-autocomplete__menu --drugs">
+            {children}
+          </div>
         )}
         renderItem={(item, isHighlighted) => (
           <div
@@ -107,17 +114,19 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
       <Autocomplete
         id="ti"
         label="Other Treatments"
-        value={trtmtVal.value}
+        value={treatmentVal.value}
         inputProps={{ placeholder: placeholder }}
-        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={getTreatments().terms}
+        items={filterSelectedItems(treatments, treatmentChips.list)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => setTrtmtVal({ value })}
-        onSelect={value => addChip({ value }, trtmtChips, setTrmtChips, setTrtmtVal)}
+        onChange={(event, value) => setTreatmentVal({ value })}
+        onSelect={value => {
+          treatmentChips.add(value);
+          setTreatmentVal({ value: '' });
+        }}
         multiselect={true}
-        chipList={trtmtChips}
-        onChipRemove={handleRemoveChip}
+        chipList={treatmentChips.list}
+        onChipRemove={e => treatmentChips.remove(e.label)}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --trtmt">{children}</div>
         )}
@@ -134,7 +143,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
             </div>
             {item.synonyms.length > 0 && (
               <span className="synonyms">
-                Other Names: {item.synonyms.join(', ')}
+                Other Stuff Names: {item.synonyms.join(', ')}
               </span>
             )}
           </div>
