@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
 import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
 
-const CancerTypeKeyword = ({ handleUpdate, useValue }) => {
+const CancerTypeKeyword = ({ handleUpdate }) => {
   const dispatch = useDispatch();
   const [cancerType, setCancerType] = useState({ value: '', id: null });
   const { diseases } = useSelector(store => store.results);
@@ -33,12 +33,7 @@ const CancerTypeKeyword = ({ handleUpdate, useValue }) => {
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setCancerType({ value })}
         onSelect={value => {
-          handleUpdate({
-            target: {
-              name: 'q',
-              value,
-            },
-          });
+          handleUpdate('q', value);
           setCancerType({ value });
         }}
         renderMenu={children => (

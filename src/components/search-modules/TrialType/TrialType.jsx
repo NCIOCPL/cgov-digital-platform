@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Checkbox, Fieldset, Toggle } from '../../atomic';
 import './TrialType.scss';
 
-const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
+const TrialType = ({ trialTypeFields, handleUpdate }) => {
+  const healthyVolunteers = useSelector(store => store.form.hv);
   const initPhases = trialTypeFields.map(type => {
     if (type && !type.checked) {
       return {
@@ -17,22 +19,11 @@ const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
   const [trialTypes, setTrialTypes] = useState(initPhases);
 
   useEffect(() => {
-    const updateObject = {
-      target: {
-        name: 'trialType',
-        value: [...trialTypes],
-      },
-    };
-    handleUpdate(updateObject);
+    handleUpdate('tt', [...trialTypes]);
   }, [trialTypes, handleUpdate]);
 
   const handleToggle = checked => {
-    handleUpdate({
-      target: {
-        name: 'healthyVolunteers',
-        value: !checked,
-      },
-    });
+    handleUpdate('hv', !checked);
   };
 
   const handleSelectAll = e => {
@@ -73,8 +64,7 @@ const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
       <div className="data-toggle-block">
         <Toggle
           id="hv"
-          name="healthyVolunteers"
-          checked={useValue('healthyVolunteers')}
+          checked={healthyVolunteers}
           label="Limit results to Veterans Affairs facilities"
           onClick={handleToggle}
         />
@@ -83,7 +73,6 @@ const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
       <div className="select-all">
         <Checkbox
           value=""
-          name="tt"
           id="tt_all"
           label="All"
           classes="tt-all"
@@ -95,7 +84,6 @@ const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
         {trialTypes.map((trialType, idx) => (
           <Checkbox
             key={idx}
-            name="tt"
             id={`tp_${trialType.value}`}
             value={trialType.value}
             label={trialType.label}
@@ -111,7 +99,6 @@ const TrialType = ({ trialTypeFields, handleUpdate, useValue }) => {
 TrialType.propTypes = {
   trialTypeFields: PropTypes.array,
   handleUpdate: PropTypes.func,
-  useValue: PropTypes.func,
 };
 
 TrialType.defaultProps = {

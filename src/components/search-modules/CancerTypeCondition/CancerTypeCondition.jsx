@@ -10,7 +10,7 @@ import {
 import { useChipList } from '../../../store/hooks';
 import './CancerTypeCondition.scss';
 
-const CancerTypeCondition = ({ handleUpdate, useValue }) => {
+const CancerTypeCondition = ({ handleUpdate }) => {
   const dispatch = useDispatch();
   const [cancerType, setCancerType] = useState({ value: 'All', codes: null });
   const subtypeChips = useChipList('subtypes', handleUpdate);
@@ -35,9 +35,9 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
-  
-  const filterSelectedItems = (items, selections) => {
-    if(!items.length || !selections.length) {
+
+  const filterSelectedItems = (items = [], selections = []) => {
+    if (!items.length || !selections.length) {
       return items;
     }
     return items.filter(
@@ -67,14 +67,9 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setCancerType({ value, codes: [] })}
         onSelect={(value, item) => {
-          handleUpdate({
-            target: {
-              name: 'ct',
-              value: {
-                value,
-                codes: item.codes,
-              },
-            },
+          handleUpdate('ct', {
+            value,
+            code: item.codes,
           });
           setCancerType({ value, codes: item.codes });
         }}
@@ -128,7 +123,7 @@ const CancerTypeCondition = ({ handleUpdate, useValue }) => {
           />
 
           <Autocomplete
-            id="stage"
+            id="stg"
             label="Stage"
             value={stage.value}
             inputProps={{ placeholder: 'Select a stage' }}

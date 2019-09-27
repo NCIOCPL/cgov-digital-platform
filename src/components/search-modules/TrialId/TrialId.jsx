@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Fieldset, TextInput } from '../../atomic';
 import './TrialId.scss';
 
-const TrialId = ({ handleUpdate, useValue }) => {
+const TrialId = ({ handleUpdate }) => {
+  let value = useSelector(store => store.form.tid);
   return (
     <Fieldset
       id="trialid"
@@ -11,9 +13,8 @@ const TrialId = ({ handleUpdate, useValue }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialid"
     >
       <TextInput
-        action={handleUpdate}
-        name="trialId"
-        value={useValue('trialId')}
+        action={e => handleUpdate(e.target.id, e.target.value)}
+        value={value}
         id="tid"
         type="text"
         label="Separate multiple IDs with commas or semicolons."
@@ -24,7 +25,6 @@ const TrialId = ({ handleUpdate, useValue }) => {
 
 TrialId.propTypes = {
   handleUpdate: PropTypes.func,
-  useValue: PropTypes.func
 };
 
 export default TrialId;
