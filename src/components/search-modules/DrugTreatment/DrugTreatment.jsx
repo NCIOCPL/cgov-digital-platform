@@ -9,7 +9,7 @@ import { useChipList } from '../../../store/hooks';
 import './DrugTreatment.scss';
 
 const DrugTreatment = ({ handleUpdate, useValue }) => {
-  const placeholder = 'Please enter 3 or more characters';
+  const placeholderText = 'Please enter 3 or more characters';
 
   const dispatch = useDispatch();
 
@@ -26,18 +26,17 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
 
   //based on drug field input
   useEffect(() => {
-    if(drugVal.value.length > 2){
-      dispatch(searchDrugs({ name: drugVal.value }));
+    if (drugVal.value.length > 2) {
+      dispatch(searchDrugs({ searchText: drugVal.value }));
     }
   }, [drugVal, dispatch]);
 
   //based on drug field input
   useEffect(() => {
     if (treatmentVal.value.length > 2) {
-      dispatch(searchOtherInterventions({ name: treatmentVal.value }));
+      dispatch(searchOtherInterventions({ searchText: treatmentVal.value }));
     }
   }, [treatmentVal, dispatch]);
-
 
   const matchItemToTerm = (item, value) => {
     //convert synonyms array to lowercase for comparison
@@ -54,9 +53,10 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
     if (!items.length || !selections.length) {
       return items;
     }
-    return items.filter(
+    const filteredItems = items.filter(
       item => !selections.find(selection => selection.label === item.name)
     );
+    return filteredItems;
   };
 
   return (
@@ -74,7 +74,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         id="dt"
         label="Drug/Drug Family"
         value={drugVal.value}
-        inputProps={{ placeholder: placeholder }}
+        inputProps={{ placeholder: placeholderText }}
         items={filterSelectedItems(drugs, drugChips.list)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
@@ -86,11 +86,16 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         multiselect={true}
         chipList={drugChips.list}
         onChipRemove={e => drugChips.remove(e.label)}
-        renderMenu={children => (
-          <div className="cts-autocomplete__menu --drugs">
-            {children}
-          </div>
-        )}
+        renderMenu={children => {
+          return (
+            <div className="cts-autocomplete__menu --drugs">
+              {(drugVal.value.length > 2 )
+                ? (children) 
+                : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
+              }
+            </div>
+          );
+        }}
         renderItem={(item, isHighlighted) => (
           <div
             className={`cts-autocomplete__menu-item ${
@@ -115,7 +120,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         id="ti"
         label="Other Treatments"
         value={treatmentVal.value}
-        inputProps={{ placeholder: placeholder }}
+        inputProps={{ placeholder: placeholderText }}
         items={filterSelectedItems(treatments, treatmentChips.list)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
@@ -127,9 +132,16 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         multiselect={true}
         chipList={treatmentChips.list}
         onChipRemove={e => treatmentChips.remove(e.label)}
-        renderMenu={children => (
-          <div className="cts-autocomplete__menu --trtmt">{children}</div>
-        )}
+        renderMenu={children => {
+          return (
+            <div className="cts-autocomplete__menu --drugs">
+              {(treatmentVal.value.length > 2 )
+                ? (children) 
+                : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
+              }
+            </div>
+          );
+        }}
         renderItem={(item, isHighlighted) => (
           <div
             className={`cts-autocomplete__menu-item ${

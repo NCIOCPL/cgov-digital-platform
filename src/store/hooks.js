@@ -1,28 +1,30 @@
-import {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export const useChipList = (chiplistName, handleUpdate) => {
-  const [chips, setChips] = useState([])
+  const [chips, setChips] = useState([]);
   useEffect(() => {
-    handleUpdate(chiplistName, [...chips])
+    handleUpdate(chiplistName, [...chips]);
   }, [chips, chiplistName, handleUpdate]);
-  const add = (item) => {
+
+  const add = item => {
     //prevent dupes
     const newChips = [...chips, { label: item }];
     setChips([...new Set(newChips)]);
   };
-  const remove = (item) => {
-    let newChips = chips.filter((value) => {
+
+  const remove = item => {
+    let newChips = chips.filter(value => {
       return value.label !== item;
     });
-    console.log('newChips: ', newChips);
     setChips([...newChips]);
   };
+  
   const list = useSelector(store => store.form[chiplistName]);
 
   return {
     list,
     add,
-    remove
-  }
-}
+    remove,
+  };
+};
