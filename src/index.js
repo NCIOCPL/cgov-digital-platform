@@ -9,26 +9,56 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Router } from 'react-router-dom';
 import { history } from './services/history.service';
 import * as reducers from './store/reducers';
+import {
+  loadStateFromSessionStorage,
+  saveStatetoSessionStorage,
+} from './utilities/utilities';
 import './index.css';
 import createCTSMiddleware from './middleware/CTSMiddleware';
+import cacheMiddleware from './middleware/cacheMiddleware';
 import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js';
 
 import App from './App';
 
 const initialize = ({
-  appId = '@@/DEFAULT_SWS_APP_ID',
+  appId = '@@/DEFAULT_CTS_APP_ID',
+  useSessionStorage = true,
   rootId = 'NCI-search-results-root',
   services = {},
   language = 'en',
 } = {}) => {
+  let cachedState;
+  if (process.env.NODE_ENV !== 'development' && useSessionStorage === true) {
+    cachedState = loadStateFromSessionStorage(appId);
+  }
   // Set up middleware chain for redux dispatch.
   // const historyMiddleware = createHistoryMiddleware(history);
+
   const ctsMiddleware = createCTSMiddleware(services);
 
   const store = createStore(
     combineReducers(reducers),
-    composeWithDevTools(applyMiddleware(ctsMiddleware))
+    cachedState,
+    composeWithDevTools(applyMiddleware(cacheMiddleware, ctsMiddleware))
   );
+
+  // With the store now created, we want to subscribe to updates.
+  // This implementation updates session storage backup on each store change.
+  // If for some reason that proves too heavy, it's simple enough to scope to
+  // only specific changes (like the url);
+  //TODO: Only in prod?
+  if (useSessionStorage === true) {
+    const saveDesiredStateToSessionStorage = () => {
+      const state = store.getState();
+      // const { form, ...state } = allState;
+      saveStatetoSessionStorage({
+        state,
+        appId,
+      });
+    };
+
+    store.subscribe(saveDesiredStateToSessionStorage);
+  }
 
   ReactDOM.render(
     <Provider store={store}>
@@ -42,23 +72,22 @@ const initialize = ({
 
 // The following lets us run the app in dev not in situ as would normally be the case.
 if (process.env.NODE_ENV !== 'production') {
-  try{
+  try {
     import('./__nci-dev__common.css');
-  }
-  catch(err){
-    console.log("Can't find common.css file")
+  } catch (err) {
+    console.log("Can't find common.css file");
   }
   const rootId = 'NCI-search-results-root';
   const ctsSearch = () => {
     const hostName = 'clinicaltrialsapi.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
     return service;
-  }
+  };
 
   initialize({
     rootId,
     services: {
-      ctsSearch
+      ctsSearch,
     },
     language: 'en',
   });

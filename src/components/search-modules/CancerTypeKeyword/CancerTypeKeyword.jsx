@@ -6,7 +6,7 @@ import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
 const CancerTypeKeyword = ({ handleUpdate }) => {
   const dispatch = useDispatch();
   const [cancerType, setCancerType] = useState({ value: '', id: null });
-  const { diseases } = useSelector(store => store.results);
+  const { diseases } = useSelector(store => store.cache);
 
   useEffect(() => {
     dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));

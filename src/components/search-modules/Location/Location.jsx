@@ -10,7 +10,7 @@ import { getStates } from '../../../mocks/mock-autocomplete-util';
 const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
-  const { countries } = useSelector(store => store.results);
+  const { countries = [] } = useSelector(store => store.cache);
   const { z, zp, lcnty, lcty, lst, hos } = useSelector(
     store => store.form
   );
@@ -18,8 +18,10 @@ const Location = ({ handleUpdate }) => {
   const [limitToVA, setLimitToVA] = useState(false);
   const [showStateField, setShowStateField] = useState(true);
   useEffect(() => {
-    dispatch(getCountries());
-  }, []);
+    if (activeRadio === 'search-location-country') {
+      dispatch(getCountries());
+    }
+  }, [activeRadio, dispatch]);
   const handleToggleChange = () => {
     setLimitToVA(!limitToVA);
   };
