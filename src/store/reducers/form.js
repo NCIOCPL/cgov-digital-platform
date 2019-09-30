@@ -22,7 +22,7 @@ export const defaultState = {
   tt: [], //Trial Type
   tp: [], //Trial phase
   nih: false, //At NIH only
-  va: false //VA facilities only
+  va: false, //VA facilities only
 };
 
 export const reducer = (state = defaultState, action) => {

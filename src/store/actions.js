@@ -1,3 +1,4 @@
+// import querystring from 'query-string';
 import { UPDATE_FORM, CLEAR_FORM, RECEIVE_DATA } from './identifiers';
 
 //Statuses of what Cancer.gov trials should be shown
@@ -10,14 +11,6 @@ const VIEWABLE_TRIALS = [
   'Temporarily Closed to Accrual and Intervention',
 ];
 
-//These are the two catch all buckets that we must add to the bottom of the list.
-//ORDER will matter here.
-const OTHER_MAIN_TYPES = [
-  'C2916', //Carcinoma not in main type (Other Carcinoma)
-  'C3262', //Neoplasm not in main type (Other Neoplasm)
-  'C2991', //Disease or Disorder (Other Disease)
-];
-
 export function updateForm({ field, value }) {
   return {
     type: UPDATE_FORM,
@@ -28,13 +21,19 @@ export function updateForm({ field, value }) {
   };
 }
 
-export function receiveData(field, value) {
+export function receiveData(cacheKey, value) {
   return {
     type: RECEIVE_DATA,
     payload: {
-      field,
+      cacheKey,
       value,
     },
+  };
+}
+
+export function clearForm() {
+  return {
+    type: CLEAR_FORM,
   };
 }
 
@@ -44,186 +43,190 @@ export function getDiseasesForSimpleTypeAhead({
   isDebug = false,
 }) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'diseases',
-      requestParams: {
-        category: ['maintype', 'subtype', 'stage'],
-        ancestorId: undefined,
-        additionalParams: {
-          name,
-          size,
-          sort: 'cancergov',
+      cacheKey: 'diseases',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: ['maintype', 'subtype', 'stage'],
+            ancestorId: undefined,
+            additionalParams: {
+              name,
+              size,
+              sort: 'cancergov',
+            },
+          },
+          fetchHandlers: {
+            formatResponse: diseases => {
+              // TODO: DEBUG
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
         },
-      },
-      fetchHandlers: {
-        formatResponse: diseases => {
-          // TODO: DEBUG
-          if (isDebug) {
-            diseases.forEach(
-              disease =>
-                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
-            );
-          }
-          return diseases;
-        },
-      },
+      ],
     },
   };
 }
 
-export function getMainType({ size = 0, isDebug = false }) {
+export function getCancerTypeDescendents({
+  cacheKey,
+  codes,
+  size = 0,
+  isDebug = false,
+}) {
+  console.log('cacheKey: ', cacheKey);
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'maintype',
-      requestParams: {
-        category: 'maintype',
-        ancestorId: undefined,
-        additionalParams: {
-          size,
-          current_trial_status: VIEWABLE_TRIALS,
-        },
-      },
-      fetchHandlers: {
-        formatResponse: diseases => {
-          const types = [];
-          const otherTypes = [];
-
-          diseases.forEach(disease => {
-            if (OTHER_MAIN_TYPES.includes(disease.codes.join('|'))) {
-              otherTypes.push(disease);
-            } else {
-              types.push(disease);
-            }
-          });
-
-          const newDiseases = types.concat(otherTypes);
-          //TODO: DEBUG
-          if (isDebug) {
-            newDiseases.forEach(
-              disease =>
-                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
-            );
-          }
-          return diseases;
-        },
-      },
+      cacheKey,
+      requests: [
+        getStages({ ancestorId: codes }),
+        getSubtypes({ ancestorId: codes }),
+        getFindings({ ancestorId: codes }),
+      ],
     },
   };
 }
 
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'subtypes',
-      requestParams: {
-        category: 'subtype',
-        ancestorId: ancestorId,
-        additionalParams: {
-          size,
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'subtypes',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: 'subtype',
+            ancestorId: ancestorId,
+            additionalParams: {
+              size,
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+          },
+          fetchHandlers: {
+            formatResponse: diseases => {
+              // TODO: DEBUG
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
         },
-      },
-      fetchHandlers: {
-        formatResponse: diseases => {
-          // TODO: DEBUG
-          if (isDebug) {
-            diseases.forEach(
-              disease =>
-                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
-            );
-          }
-          return diseases;
-        },
-      },
+      ],
     },
   };
 }
 
 export function getStages({ ancestorId, size = 0, isDebug = false }) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'stages',
-      requestParams: {
-        category: 'stage',
-        ancestorId: ancestorId,
-        additionalParams: {
-          size,
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'stages',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: 'stage',
+            ancestorId: ancestorId,
+            additionalParams: {
+              size,
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+          },
+          fetchHandlers: {
+            formatResponse: diseases => {
+              // TODO: DEBUG
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
         },
-      },
-      fetchHandlers: {
-        formatResponse: diseases => {
-          // TODO: DEBUG
-          if (isDebug) {
-            diseases.forEach(
-              disease =>
-                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
-            );
-          }
-          return diseases;
-        },
-      },
+      ],
     },
   };
 }
 
 export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'findings',
-      requestParams: {
-        category: 'finding',
-        ancestorId: ancestorId,
-        additionalParams: {
-          size,
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'findings',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: 'finding',
+            ancestorId: ancestorId,
+            additionalParams: {
+              size,
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+          },
+          fetchHandlers: {
+            formatResponse: diseases => {
+              // TODO: DEBUG
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
         },
-      },
-      fetchHandlers: {
-        formatResponse: diseases => {
-          // TODO: DEBUG
-          if (isDebug) {
-            diseases.forEach(
-              disease =>
-                (disease.fieldName += ' (' + disease.codes.join('|') + ')')
-            );
-          }
-          return diseases;
-        },
-      },
+      ],
     },
   };
 }
 
 export function getCountries({ size = 100 } = {}) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'countries',
-      requestParams: {
-        category: 'sites.org_country',
-        additionalParams: {
-          sort: 'term',
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'countries',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'sites.org_country',
+            additionalParams: {
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+          fetchHandlers: {
+            formatResponse: terms => {
+              return terms.map(term => term.term);
+            },
+          },
         },
-        size,
-      },
-      fetchHandlers: {
-        formatResponse: terms => {
-          return terms.map(term => term.term);
-        },
-      },
+      ],
     },
   };
 }
@@ -295,19 +298,24 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
 
 export function searchHospital({ searchText, size = 10 }) {
   return {
-    type: '@@api/CTS',
+    type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'hospital',
-      requestParams: {
-        category: 'sites.org_name',
-        additionalParams: {
-          term: searchText,
-          sort: 'term',
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'hospital',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'sites.org_name',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
         },
-        size,
-      },
+      ],
     },
   };
 }

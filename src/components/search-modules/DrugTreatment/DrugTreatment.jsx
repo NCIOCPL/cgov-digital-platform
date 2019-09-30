@@ -4,7 +4,7 @@ import { Fieldset, Autocomplete } from '../../atomic';
 
 import { searchDrugs, searchOtherInterventions } from '../../../store/actions';
 
-import { useChipList } from '../../../store/hooks';
+import { useChipList } from '../../../utilities/hooks';
 
 import './DrugTreatment.scss';
 
@@ -14,7 +14,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
   const dispatch = useDispatch();
 
   //store vals
-  const { drugs, treatments } = useSelector(store => store.results);
+  const { drugs, treatments } = useSelector(store => store.cache);
 
   //chip lists
   const drugChips = useChipList('drugs', handleUpdate);

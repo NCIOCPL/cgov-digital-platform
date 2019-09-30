@@ -16,38 +16,54 @@ const createCTSMiddleware = services => ({
   if (action.type !== '@@api/CTS') {
     return;
   }
-
-  const { service: serviceName, fieldName, requestParams, fetchHandlers } = action.payload;
+  const { service: serviceName, cacheKey, requests } = action.payload;
   const service = services[serviceName]();
-  if (service !== null) {
 
-    let serviceMethod;
-    switch(fieldName) {
-      case 'diseases':
-      case 'maintype':
-      case 'subtypes':
-      case 'stages':
-      case 'findings':
-        serviceMethod = 'getDiseases';
-        break;
-      case 'countries':
-      case 'hospitals':
-        serviceMethod = 'getTerms';
-        break;
-      case 'drugs':
-      case 'treatments':
-        serviceMethod = 'getInterventions';
-        break;
-      default:
-        console.log(fieldName, ' method not found')
-    }
+  const getAllRequests = requests => {
+    return Promise.all(
+      requests.map(async request => {
+        if (request.payload) {
+          const {
+            requests: nestedRequests,
+            cacheKey: nestedKey,
+          } = request.payload;
+          const nestedResponses = await getAllRequests(nestedRequests);
+          return {
+            [nestedKey]:
+              nestedResponses.length > 1
+                ? [
+                    Object.assign(
+                      {},
+                      ...nestedResponses.map(res => ({ ...res }))
+                    ),
+                  ]
+                : nestedResponses[0],
+          };
+        } else {
+          const { method, requestParams, fetchHandlers } = request;
+          const response = await service[method](
+            ...Object.values(requestParams)
+          );
+          const body = response.terms;
+          let formattedBody = body;
+          if (fetchHandlers) {
+            const { formatResponse } = fetchHandlers;
+            formattedBody = formatResponse ? formatResponse(body) : body;
+          }
+          return formattedBody;
+        }
+      })
+    );
+  };
 
+  if (service !== null && requests) {
     try {
-      const response = await service[serviceMethod](...Object.values(requestParams));
-      const body = response.terms;
-      const { formatResponse } = fetchHandlers;
-      const formattedBody = formatResponse ? formatResponse(body) : body;
-      dispatch(receiveData(fieldName, formattedBody));
+      const results = await getAllRequests(requests);
+      const valueToCache =
+        requests.length > 1
+          ? [Object.assign({}, ...results.map(result => ({ ...result })))]
+          : results;
+      dispatch(receiveData(cacheKey, ...valueToCache));
     } catch (err) {
       console.log(err);
     }

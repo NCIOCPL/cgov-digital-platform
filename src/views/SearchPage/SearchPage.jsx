@@ -20,10 +20,7 @@ import {
 import { updateForm } from '../../store/actions';
 
 //Module groups in arrays will be placed side-by-side in the form
-const basicFormModules = [
-  CancerTypeKeyword,
-  [Age, ZipCode]
-];
+const basicFormModules = [CancerTypeKeyword, [Age, ZipCode]];
 const advancedFormModules = [
   CancerTypeCondition,
   [Age, KeywordsPhrases],
@@ -56,7 +53,7 @@ const SearchPage = ({ form }) => {
     dispatch(
       updateForm({
         field,
-        value
+        value,
       })
     );
   };
@@ -127,7 +124,8 @@ const SearchPage = ({ form }) => {
     </div>
   );
 
-  let formModules = formVersion === 'advanced' ? advancedFormModules : basicFormModules;
+  let formModules =
+    formVersion === 'advanced' ? advancedFormModules : basicFormModules;
 
   return (
     <div className="general-page-body-container main-content">

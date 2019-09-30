@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
 import {
   getDiseasesForSimpleTypeAhead,
-  getSubtypes,
-  getStages,
-  getFindings,
+  getCancerTypeDescendents,
 } from '../../../store/actions';
-import { useChipList } from '../../../store/hooks';
+import { useChipList, useCachedValues } from '../../../utilities/hooks';
 import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate }) => {
@@ -20,15 +18,22 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
 
-  const { diseases, subtypes, stages, findings } = useSelector(
-    store => store.results
-  );
+  const { diseases, subtypes, findings, stages } = useCachedValues([
+    'diseases',
+    'subtypes',
+    'findings',
+    'stages',
+  ]);
+
   useEffect(() => {
     dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
-    if (cancerType.codes !== null) {
-      dispatch(getStages({ ancestorId: cancerType.codes }));
-      dispatch(getSubtypes({ ancestorId: cancerType.codes }));
-      dispatch(getFindings({ ancestorId: cancerType.codes }));
+    if (cancerType.codes && cancerType.codes.length > 0) {
+      dispatch(
+        getCancerTypeDescendents({
+          cacheKey: cancerType.value,
+          codes: cancerType.codes,
+        })
+      );
     }
   }, [cancerType, dispatch]);
 
@@ -62,10 +67,12 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         value={cancerType.value}
         inputClasses="faux-select"
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={diseases}
+        items={diseases || []}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => setCancerType({ value, codes: [] })}
+        onChange={(event, value) => {
+          setCancerType({ value, codes: [] })
+        }}
         onSelect={(value, item) => {
           handleUpdate('ct', {
             value,
