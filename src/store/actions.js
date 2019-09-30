@@ -1,5 +1,4 @@
-import querystring from 'query-string';
-import { useDispatch, useSelector } from 'react-redux';
+// import querystring from 'query-string';
 import { UPDATE_FORM, CLEAR_FORM, RECEIVE_DATA } from './identifiers';
 
 //Statuses of what Cancer.gov trials should be shown
@@ -10,14 +9,6 @@ const VIEWABLE_TRIALS = [
   'In Review',
   'Temporarily Closed to Accrual',
   'Temporarily Closed to Accrual and Intervention',
-];
-
-//These are the two catch all buckets that we must add to the bottom of the list.
-//ORDER will matter here.
-const OTHER_MAIN_TYPES = [
-  'C2916', //Carcinoma not in main type (Other Carcinoma)
-  'C3262', //Neoplasm not in main type (Other Neoplasm)
-  'C2991', //Disease or Disorder (Other Disease)
 ];
 
 export function updateForm({ field, value }) {
@@ -236,6 +227,71 @@ export function getCountries({ size = 100 } = {}) {
           },
         },
       ],
+    },
+  };
+}
+
+/**
+ * Gets drugs intervention items for search field
+ */
+export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'drugs',
+      requestParams: {
+        category: ['Agent', 'Agent Category'],
+        searchText: searchText,
+        size: size,
+        additionalParams: {
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        sort: 'cancergov',
+      },
+      fetchHandlers: {
+        formatResponse: drugs => {
+          if (isDebug) {
+            drugs.forEach(
+              drug => (drug.name += ' (' + drug.codes.join('|') + ')')
+            );
+          }
+          return drugs;
+        },
+      },
+    },
+  };
+}
+
+/**
+ * Gets other intervention items for search field
+ */
+export function searchOtherInterventions({ searchText, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      fieldName: 'treatments',
+      requestParams: {
+        category: 'Other',
+        searchText: searchText,
+        size: size,
+        additionalParams: {
+          current_trial_status: VIEWABLE_TRIALS,
+        },
+        sort: 'cancergov',
+      },
+      fetchHandlers: {
+        formatResponse: (treatments, isDebug) => {
+          if (isDebug) {
+            treatments.forEach(
+              treatment =>
+                (treatment.name += ' (' + treatment.codes.join('|') + ')')
+            );
+          }
+          return treatments;
+        },
+      },
     },
   };
 }

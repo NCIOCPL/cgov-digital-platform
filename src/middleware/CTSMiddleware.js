@@ -17,7 +17,6 @@ const createCTSMiddleware = services => ({
     return;
   }
   const { service: serviceName, cacheKey, requests } = action.payload;
-  console.log('requests: ', requests);
   const service = services[serviceName]();
 
   const getAllRequests = requests => {

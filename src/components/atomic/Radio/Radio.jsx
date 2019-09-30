@@ -37,7 +37,6 @@ Radio.defaultProps = {
   id: Utilities.uniqueIdForComponent(),
   name: 'radios',
   disabled: false,
-  defaultChecked: false,
   className: '',
 };
 
