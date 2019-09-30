@@ -20,3 +20,17 @@ function cgov_article_install() {
   $siteHelper->addContentTypePermissions('cgov_article', ['content_author']);
 
 }
+
+/**
+ * Update for v1.1.8.
+ *
+ * Install cgov_schema_org as a CGov Module.
+ * NOTE: This is actually the first update for this module. There is no
+ * 8001 or 8002.
+ */
+function cgov_article_update_8003() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_schema_org')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_schema_org']);
+  }
+}

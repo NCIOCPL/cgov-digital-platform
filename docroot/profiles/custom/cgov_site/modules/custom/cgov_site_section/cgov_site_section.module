@@ -567,15 +567,3 @@ function cgov_site_section_link_alter(&$variables) {
     }
   }
 }
-
-/**
- * Update for v1.1.9.
- *
- * Install the cgov_vocab_manager module.
- */
-function cgov_site_section_update_8000() {
-  if (!\Drupal::moduleHandler()->moduleExists('cgov_vocab_manager')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_vocab_manager']);
-  }
-}
