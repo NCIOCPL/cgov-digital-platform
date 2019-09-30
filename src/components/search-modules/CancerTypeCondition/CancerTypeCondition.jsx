@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Fieldset, Autocomplete } from '../../atomic';
+import { Fieldset, Autocomplete, InputLabel } from '../../atomic';
 import {
   getDiseasesForSimpleTypeAhead,
   getCancerTypeDescendents,
@@ -10,7 +10,9 @@ import './CancerTypeCondition.scss';
 
 const CancerTypeCondition = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: 'All', codes: null });
+  const [cancerType, setCancerType] = useState({ value: '', codes: [] });
+  const [searchText, setSearchText] = useState({ value: '', codes: [] });
+
   const subtypeChips = useChipList('subtypes', handleUpdate);
   const stageChips = useChipList('stages', handleUpdate);
   const finChips = useChipList('findings', handleUpdate);
@@ -50,6 +52,25 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     );
   };
 
+  const ctSelectButtonDisplay =
+    cancerType.value === ''
+      ? 'All'
+      : cancerType.value;
+
+  const handleCTSelectToggle = () => {
+    setCtMenuOpen(!ctMenuOpen);
+  };
+
+  const handleCTSelect = (value, item) => {
+    handleUpdate('ct', {
+      value,
+      code: item.codes,
+    });
+    setCancerType({ value, codes: item.codes });
+    setCtMenuOpen(false);
+    setSearchText({ value: '', codes: null });
+  }
+
   return (
     <Fieldset
       id="type"
@@ -61,40 +82,53 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         Select a cancer type or condition. Select additional options, if
         applicable.
       </p>
-      <Autocomplete
-        id="ct"
-        label="Primary Cancer Type/Condition"
-        value={cancerType.value}
-        inputClasses="faux-select"
-        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={diseases || []}
-        getItemValue={item => item.name}
-        shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => {
-          setCancerType({ value, codes: [] })
-        }}
-        onSelect={(value, item) => {
-          handleUpdate('ct', {
-            value,
-            code: item.codes,
-          });
-          setCancerType({ value, codes: item.codes });
-        }}
-        renderMenu={children => (
-          <div className="cts-autocomplete__menu --ct">{children}</div>
-        )}
-        renderItem={(item, isHighlighted) => (
-          <div
-            className={`cts-autocomplete__menu-item ${
-              isHighlighted ? 'highlighted' : ''
-            }`}
-            key={item.codes[0]}
-          >
-            {item.name}
-          </div>
-        )}
-      />
-      {cancerType.value !== 'All' && (
+
+      <div className="ct-select">
+        <InputLabel label="Primary Cancer Type/Condition" htmlFor="ct" />
+        <button
+          id="ct-btn"
+          className="ct-select__button faux-select"
+          onClick={handleCTSelectToggle}
+          aria-label="Click to select specific cancer type"
+          aria-expanded={ctMenuOpen}
+        >
+          {ctSelectButtonDisplay}
+        </button>
+        <div className={`ct-select__menu ${ctMenuOpen? 'open': ''}`} >
+          <Autocomplete
+            id="ct-searchTerm"
+            label="Primary Cancer Type/Condition"
+            value={searchText.value}
+            inputClasses="faux-select"
+            labelHidden={true}
+            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+            open={true}
+            items={diseases}
+            getItemValue={item => item.name}
+            shouldItemRender={matchItemToTerm}
+            onChange={(event, value) => setSearchText({ value, codes: [] })}
+            onSelect={(value, item) => {
+              handleCTSelect(value, item);
+            }}
+            renderMenu={children => (
+              <div className="cts-autocomplete__menu --ct">{children}</div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={`cts-autocomplete__menu-item ${
+                  isHighlighted ? 'highlighted' : ''
+                }`}
+                key={item.codes[0]}
+              >
+                {item.name}
+              </div>
+            )}
+          />
+        </div>
+        <input type="hidden" id="ct" name="ct" value={cancerType.value} />
+      </div>
+
+      {cancerType.codes.length > 0 && (
         <div className="subsearch">
           <Autocomplete
             id="st"
