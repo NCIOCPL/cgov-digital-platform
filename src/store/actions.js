@@ -106,14 +106,10 @@ export function getCancerTypeDescendents({
   };
 }
 
-
 /**
  * Gets all primary cancer types
  */
-export function getMainType({
-  size = 0,
-  isDebug = false,
-}) {
+export function getMainType({ size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
     payload: {
@@ -132,10 +128,11 @@ export function getMainType({
           },
           fetchHandlers: {
             formatResponse: res => {
+              console.log(res.length);
               let types = [];
               let otherTypes = [];
 
-              res.terms.forEach(disease => {
+              res.forEach(disease => {
                 if (OTHER_MAIN_TYPES.includes(disease.codes.join('|'))) {
                   otherTypes.push(disease);
                 } else {
@@ -143,8 +140,9 @@ export function getMainType({
                 }
               });
 
-              let diseases = [{}, ...types.concat(otherTypes)];
+              let diseases = [{name: 'All', codes: []}, ...types.concat(otherTypes)];
 
+              console.log(diseases, '<<< diseases')
               if (isDebug) {
                 diseases.forEach(
                   disease =>
@@ -159,8 +157,6 @@ export function getMainType({
     },
   };
 }
-
-
 
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   return {
@@ -181,7 +177,6 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
           },
           fetchHandlers: {
             formatResponse: diseases => {
-              
               if (isDebug) {
                 diseases.forEach(
                   disease =>
