@@ -11,6 +11,14 @@ const VIEWABLE_TRIALS = [
   'Temporarily Closed to Accrual and Intervention',
 ];
 
+//These are the two catch all buckets that we must add to the bottom of the list.
+//ORDER will matter here.
+const OTHER_MAIN_TYPES = [
+  'C2916', //Carcinoma not in main type (Other Carcinoma)
+  'C3262', //Neoplasm not in main type (Other Neoplasm)
+  'C2991', //Disease or Disorder (Other Disease)
+];
+
 export function updateForm({ field, value }) {
   return {
     type: UPDATE_FORM,
@@ -98,6 +106,62 @@ export function getCancerTypeDescendents({
   };
 }
 
+
+/**
+ * Gets all primary cancer types
+ */
+export function getMainType({
+  size = 0,
+  isDebug = false,
+}) {
+  return {
+    type: '@@cache/RETRIEVE',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'maintypes',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: 'maintype',
+            ancestorId: undefined,
+            additionalParams: {
+              size,
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+          },
+          fetchHandlers: {
+            formatResponse: res => {
+              let types = [];
+              let otherTypes = [];
+
+              res.terms.forEach(disease => {
+                if (OTHER_MAIN_TYPES.includes(disease.codes.join('|'))) {
+                  otherTypes.push(disease);
+                } else {
+                  types.push(disease);
+                }
+              });
+
+              let diseases = [{}, ...types.concat(otherTypes)];
+
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
+        },
+      ],
+    },
+  };
+}
+
+
+
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -117,7 +181,7 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
           },
           fetchHandlers: {
             formatResponse: diseases => {
-              // TODO: DEBUG
+              
               if (isDebug) {
                 diseases.forEach(
                   disease =>
