@@ -61,7 +61,7 @@ describe('Radio', () => {
   });
 
   it('is not checked by default', () => {
-    const inputChecked = wrapper.find('input').props().checked;
+    const inputChecked = wrapper.find('input').props().defaultChecked;
     expect(inputChecked).toBe(false);
   });
 
