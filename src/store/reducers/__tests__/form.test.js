@@ -1,4 +1,4 @@
-import { reducer, defaultState } from '../search';
+import { reducer, defaultState } from '../form';
 
 import { UPDATE_FORM, CLEAR_FORM } from '../../identifiers';
 

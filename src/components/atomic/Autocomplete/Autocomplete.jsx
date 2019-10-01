@@ -200,8 +200,8 @@ class Autocomplete extends React.Component {
     isItemSelectable() {
       return true;
     },
-    renderMenu(items, value, style) {
-      return <div className={`cts-autocomplete__menu ${this.props.menuClass}`} children={items} />;
+    renderMenu(items, value, style, classes) {
+      return <div className={`cts-autocomplete__menu ${classes}`} children={items} />;
     },
     autoHighlight: true,
     selectOnBlur: false,
@@ -520,7 +520,7 @@ class Autocomplete extends React.Component {
       top: this.state.menuTop,
       minWidth: this.state.menuWidth,
     };
-    const menu = this.props.renderMenu(items, this.props.value, style);
+    const menu = this.props.renderMenu(items, this.props.value, style, this.props.menuClass);
     return React.cloneElement(menu, {
       ref: e => (this.refs.menu = e),
       // Ignore blur to prevent menu from de-rendering before we can process click
