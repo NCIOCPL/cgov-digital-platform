@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CancerTypeKeyword Render renders without error 1`] = `
+exports[`CancerTypeCondition Render renders without error 1`] = `
 <fieldset
-  class="cts-fieldset "
+  class="cts-fieldset cancer-type-condition"
   id="fieldset--type"
 >
   <legend
     class="cts-fieldset__legend"
   >
     <span>
-      Cancer Type/Keyword
+      Cancer Type/Condition
     </span>
     <a
       aria-label="Help"
       class="text-icon-help"
-      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
+      href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#cancertype"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -24,16 +24,19 @@ exports[`CancerTypeKeyword Render renders without error 1`] = `
   <div
     class="cts-fieldset__body"
   >
+    <p>
+      Select a cancer type or condition. Select additional options, if applicable.
+    </p>
     <div
       class="cts-autocomplete "
-      id="q-autocomplete-wrapper"
+      id="ct-autocomplete-wrapper"
     >
       <label
         class="cts-label"
-        for="q"
-        id="q-label"
+        for="ct"
+        id="ct-label"
       >
-        Cancer Type/Keyword
+        Primary Cancer Type/Condition
       </label>
       <div
         class=""
@@ -42,12 +45,11 @@ exports[`CancerTypeKeyword Render renders without error 1`] = `
           aria-autocomplete="list"
           aria-expanded="false"
           autocomplete="off"
-          class="cts-input cts-autocomplete__input "
-          id="q"
-          placeholder="Start typing to select a cancer type"
+          class="cts-input cts-autocomplete__input faux-select"
+          id="ct"
           role="combobox"
           type="text"
-          value=""
+          value="All"
         />
       </div>
     </div>

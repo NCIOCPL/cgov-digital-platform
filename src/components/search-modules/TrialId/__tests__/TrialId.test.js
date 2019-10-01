@@ -1,13 +1,19 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 import { render } from 'enzyme';
 import TrialId from '../TrialId';
 
-const defaultProps = {
-}
+const mockStore = configureMockStore();
 
-const setup = (enzymeMethod = render, props = {}) => {
+const defaultProps = {};
+
+const setup = (enzymeMethod = render, props = {}, initialState = {}) => {
+  const store = mockStore(initialState);
   const component = enzymeMethod(
-    <TrialId {...props} />
+    <Provider store={store}>
+      <TrialId {...props} />
+    </Provider>
   );
   return component;
 };
@@ -15,9 +21,12 @@ const setup = (enzymeMethod = render, props = {}) => {
 describe('TrialId', () => {
   describe('Render', () => {
     it('renders without error', () => {
-      const component = setup(render, defaultProps);
+      const component = setup(render, defaultProps, {
+        form: {
+          tid: ''
+        }
+      });
       expect(component).toMatchSnapshot();
     });
   });
-
 });
