@@ -291,6 +291,30 @@ export function getCountries({ size = 100 } = {}) {
   };
 }
 
+export function searchHospital({ searchText, size = 10 }) {
+  return {
+    type: '@@cache/RETRIEVE',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'hospital',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'sites.org_name',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+        },
+      ],
+    },
+  };
+}
+
 /**
  * Gets drugs intervention items for search field
  */
@@ -352,30 +376,6 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
           return treatments;
         },
       },
-    },
-  };
-}
-
-export function searchHospital({ searchText, size = 10 }) {
-  return {
-    type: '@@cache/RETRIEVE',
-    payload: {
-      service: 'ctsSearch',
-      cacheKey: 'hospital',
-      requests: [
-        {
-          method: 'getTerms',
-          requestParams: {
-            category: 'sites.org_name',
-            additionalParams: {
-              term: searchText,
-              sort: 'term',
-              current_trial_status: VIEWABLE_TRIALS,
-            },
-            size,
-          },
-        },
-      ],
     },
   };
 }

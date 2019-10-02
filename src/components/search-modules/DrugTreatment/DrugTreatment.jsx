@@ -10,7 +10,6 @@ import './DrugTreatment.scss';
 
 const DrugTreatment = ({ handleUpdate, useValue }) => {
   const placeholderText = 'Please enter 3 or more characters';
-
   const dispatch = useDispatch();
 
   //store vals
@@ -27,13 +26,15 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
   //based on drug field input
   useEffect(() => {
     if (drugVal.value.length > 2) {
+      console.log(drugVal.value, '<<<< drugVal');
       dispatch(searchDrugs({ searchText: drugVal.value }));
     }
   }, [drugVal, dispatch]);
 
-  //based on drug field input
+  //based on treatments field input
   useEffect(() => {
     if (treatmentVal.value.length > 2) {
+      console.log(treatmentVal.value, '<<<< trtmt');
       dispatch(searchOtherInterventions({ searchText: treatmentVal.value }));
     }
   }, [treatmentVal, dispatch]);
@@ -90,7 +91,9 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
           return (
             <div className="cts-autocomplete__menu --drugs">
               {(drugVal.value.length > 2 )
-                ? (children) 
+                ? (filterSelectedItems(drugs, drugChips.list).length)
+                    ? (children)
+                    : <div className="cts-autocomplete__menu-item">No results found</div>
                 : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
               }
             </div>
@@ -136,7 +139,9 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
           return (
             <div className="cts-autocomplete__menu --drugs">
               {(treatmentVal.value.length > 2 )
-                ? (children) 
+                ? (filterSelectedItems(treatments, treatmentChips.list).length)
+                    ? (children)
+                    : <div className="cts-autocomplete__menu-item">No results found</div>
                 : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
               }
             </div>

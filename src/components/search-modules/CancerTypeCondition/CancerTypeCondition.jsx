@@ -50,6 +50,8 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
 
+  
+
   const filterSelectedItems = (items = [], selections = []) => {
     if (!items.length || !selections.length) {
       return items;
@@ -125,6 +127,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Primary Cancer Type/Condition"
             value={searchText.value}
             inputClasses="faux-select"
+            inputProps={{ placeholder: 'Begin typing to narrow options below' }}
             labelHidden={true}
             wrapperStyle={{ position: 'relative', display: 'inline-block' }}
             open={true}
@@ -136,7 +139,15 @@ const CancerTypeCondition = ({ handleUpdate }) => {
               handleCTSelect(value, item);
             }}
             renderMenu={children => (
-              <div className="cts-autocomplete__menu --ct">{children}</div>
+              <div className="cts-autocomplete__menu --ct">
+                {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No results found
+                  </div>
+                )}
+              </div>
             )}
             renderItem={(item, isHighlighted) => (
               <div
