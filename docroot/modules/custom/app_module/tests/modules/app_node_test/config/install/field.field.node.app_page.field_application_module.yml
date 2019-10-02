@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_application_module
+    - node.type.app_page
+  module:
+    - app_module
+id: node.app_page.field_application_module
+field_name: field_application_module
+entity_type: node
+bundle: app_page
+label: 'Application Module'
+description: 'The application Module'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:app_module'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: app_module_reference

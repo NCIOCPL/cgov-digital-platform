@@ -71,3 +71,31 @@ function app_module_theme_suggestions_app_module(array $variables) {
 
   return $suggestions;
 }
+
+/*
+ * Below are hook implmentations for keeping our aliases up to date with
+ * the system's aliases. (Insert is not needed because we should only insert
+ * when an entity HAS an app module, and we would not know that here.)
+ */
+
+/**
+ * Implements hook_path_update().
+ */
+function app_module_path_update(array $path) {
+  /* If the owner_pid can be found, then we should update the
+   * owner_alias. ASSUMPTION: the source cannot change.
+   */
+  \Drupal::service('app_module.app_path_manager')->updateAliasFromPath($path);
+}
+
+/**
+ * Implements hook_path_delete().
+ */
+function app_module_path_delete($path) {
+  /* If the owner_pid can be found, then we should delete
+   * the item.
+   */
+  if ($path) {
+    \Drupal::service('app_module.app_path_manager')->deleteByPath($path);
+  }
+}

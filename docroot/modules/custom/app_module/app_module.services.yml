@@ -5,3 +5,16 @@ services:
   app_module.builder:
     class: Drupal\app_module\AppModuleRenderArrayBuilder
     arguments: ['@request_stack']
+  app_module.app_path_manager:
+    class: Drupal\app_module\AppPathManager
+    arguments: ['@path.alias_manager', '@path.alias_storage', '@app_module.app_path_storage', '@language_manager', '@cache.data']
+  app_module.app_path_storage:
+    class: Drupal\app_module\AppPathStorage
+    arguments: ['@database', '@module_handler']
+    tags:
+      - { name: backend_overridable }
+  app_module.path_processor_app_module:
+    class: Drupal\app_module\PathProcessor\PathProcessorAppModule
+    arguments: ['@app_module.app_path_manager', '@entity_type.manager']
+    tags:
+      - { name: path_processor_inbound, priority: 101 }

@@ -34,6 +34,42 @@ interface AppModulePluginInterface extends PluginInspectionInterface {
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition);
 
   /**
+   * Gets the app_module route information from a path.
+   *
+   * Example return value structure for the string /bar/23 if the route is
+   * /bar and the id parameter is 23.
+   * @code
+   * $route_info = [
+   *   'app_module_route' => '/bar',
+   *   'params' => [
+   *     'id' => 23
+   *   ]
+   * ]
+   * @endcode
+   *
+   * @param string $path
+   *   A full unprocessed path of the app module. This will contain parameters
+   *   as part of the route, but will have had the parent entity's alias
+   *   stripped from the path. (e.g. the parent entity is /foo, the app module
+   *   route is /bar and the parameters for bar are 23. The requested url would
+   *   be /foo/bar/23 and this $path would be /bar/23.)
+   *   NOTE: To make it more clear, this would not the same as $path in the
+   *   other methods in this class. They all would expect $path to be /bar in
+   *   our example.
+   * @param array $options
+   *   The settings for this instance of the AppModule on an entity.
+   *
+   * @return array|null
+   *   The route info or NULL if the route was not matched. See above for
+   *   an example route info array.
+   *   NOTE: the array key 'app_module_route' is REQUIRED!
+   *
+   * @throws InvalidArgumentException
+   *   Thrown if $path does not begin with a slash(/).
+   */
+  public function matchRoute($path, array $options = []);
+
+  /**
    * Builds and returns a renderable array for a route of this appmodule plugin.
    *
    * @param string $path

@@ -1,0 +1,28 @@
+# Placeholder article for related resource link target in 011_article_coping_self_image
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Find NCI-Supported Clinical Trials"
+  field_page_description:
+    value: "Find an NCI-supported clinical trial—and learn how to locate other research studies—that may be right for you or a loved one."
+  field_browser_title:
+    value: "Find NCI-Supported Clinical Trials"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/clinical-trials/search'
+  field_application_module:
+    - target_id: dummy_app_module
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"

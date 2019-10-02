@@ -74,6 +74,38 @@ class TestMultiRouteAppModulePlugin extends MultiRouteAppModulePluginBase {
 
   /**
    * {@inheritdoc}
+   *
+   * NOTE: I do not see a need for having some abstraction around the
+   * multi-route handling of matches. In the future if routes are
+   * defined in yml files, then it would make sense for route matches
+   * to be handled in the multi-route base.
+   */
+  protected function matchRouteInternal(array $path_components, array $options = []) {
+    $route_info = NULL;
+
+    if ($path_components[0] == 'chicken') {
+
+      $route_info = [
+        'app_module_route' => '/chicken',
+        'params' => [],
+      ];
+
+      // Match optional parameters.
+      if (count($path_components) > 1) {
+        $route_info['params']['id'] = $path_components[1];
+      }
+
+      if (count($path_components) > 2) {
+        $route_info['params']['color'] = $path_components[2];
+      }
+
+    }
+
+    return $route_info;
+  }
+
+  /**
+   * {@inheritdoc}
    */
   protected function getBuilderForRoute($path) {
 

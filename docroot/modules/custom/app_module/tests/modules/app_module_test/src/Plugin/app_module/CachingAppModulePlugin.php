@@ -20,6 +20,26 @@ class CachingAppModulePlugin extends AppModulePluginBase {
   /**
    * {@inheritdoc}
    */
+  protected function matchRouteInternal(array $path_components, array $options = []) {
+    $route_info = NULL;
+
+    if ($path_components[0] == 'chicken') {
+
+      $route_info = [
+        'app_module_route' => '/chicken',
+        'params' => [],
+      ];
+
+    }
+
+    // NOTE: If it is not a known path, then NULL will be returned as expected.
+    // The default route with no params is handled by the AppModulePluginBase.
+    return $route_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getAppRouteId($path, array $options = []) {
     if ($path == '/chicken') {
       return 'chicken';
