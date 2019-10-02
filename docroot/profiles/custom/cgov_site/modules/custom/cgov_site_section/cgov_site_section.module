@@ -112,7 +112,7 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
 
   /*
    * If this is a node or media item and has changed its section parent or
-   * pretty url name, if it displays in navigation, cascade those changes
+   * alias, if it displays in navigation, cascade those changes
    *  to any subsections and pages within those subsections.
    *
    */
@@ -126,8 +126,10 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
     $current_entity_lang = $entity->get('langcode')->value;
     $translated_entity = $entity->getTranslation($current_entity_lang);
     $current_state = $translated_entity->get('moderation_state')->value;
+
     if ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity)) {
-      // Get the Sections where it's a landing page. Note: This could be none.
+      // Find the Sections where this node is a landing page.
+      // Invalidate their cache to account for the nodes new alias.
       $section_entities = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties([
@@ -145,7 +147,6 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
         }
       }
     }
-
   }
 }
 
@@ -280,6 +281,34 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
     if (!$updated_entity->hasField('field_site_section')) {
       return FALSE;
     }
+
+    // Get the language alias prefix.
+    $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+    $current_langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $prefix = '';
+
+    if ($current_langcode != $default_langcode) {
+      $all_prefixes = \Drupal::config('language.negotiation')->get('url.prefixes');
+      $prefix = '/' . $all_prefixes[$current_langcode];
+    }
+
+    // Construct the new alias.
+    $section_tid = (int) $updated_entity->get('field_site_section')->target_id;
+    $term = Term::load($section_tid);
+    $computed_path = $term->get('computed_path')->value;
+    $pretty_url = $updated_entity->get('field_pretty_url')->value;
+
+    $new_alias = empty($pretty_url) ? $prefix . $computed_path : $prefix .
+      $computed_path . '/' . $pretty_url;
+
+    $original_alias = $updated_entity->toUrl()->toString();
+
+    // Exit early and trigger a cache clear if the alias for this node
+    // has changed.
+    if ($new_alias !== $original_alias) {
+      return TRUE;
+    }
+
     // Set entity Fields which trigger invalidation when modified.
     $values =
       [
