@@ -52,6 +52,8 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
    * @var array
    */
   public static $modules = [
+    'language',
+    'path',
     'block',
     'node',
     'field_ui',
@@ -81,6 +83,7 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       'administer node display',
       'administer app modules',
       'access administration pages',
+      'administer url aliases',
     ];
     $this->administratorAccount = $this->drupalCreateUser($permissions);
     parent::drupalLogin($this->administratorAccount);
@@ -113,7 +116,10 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
 
     // Now that we have a new content type, create a user that has privileges
     // on the content type.
-    $this->authorAccount = $this->drupalCreateUser([$create_permission]);
+    $this->authorAccount = $this->drupalCreateUser([
+      $create_permission,
+      'create url aliases',
+    ]);
 
   }
 
