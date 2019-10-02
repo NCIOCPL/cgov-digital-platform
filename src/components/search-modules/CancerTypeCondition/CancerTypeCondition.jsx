@@ -4,6 +4,7 @@ import { Fieldset, Autocomplete, InputLabel } from '../../atomic';
 import { getMainType, getCancerTypeDescendents } from '../../../store/actions';
 import { useChipList, useCachedValues } from '../../../utilities/hooks';
 import './CancerTypeCondition.scss';
+require('../../../polyfills/closest');
 
 const CancerTypeCondition = ({ handleUpdate }) => {
   const dispatch = useDispatch();
@@ -28,10 +29,14 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   // Retrieval of main types is triggered by expanding the cancer type dropdown
   useEffect(() => {
     // if maintypes is essentially empty, fetch mainTypes
-    if(maintypes.length < 1 && ctMenuOpen){
-      dispatch(getMainType({})); 
+    if (maintypes.length < 1 && ctMenuOpen) {
+      dispatch(getMainType({}));
     }
-    if (cancerType.codes && cancerType.codes.length > 0) {
+    if (ctMenuOpen) {
+      document.getElementById('ct-searchTerm').focus();
+      watchClickOutside(document.getElementById('ctMenu'));
+    }
+    if (cancerType.codes.length > 0) {
       dispatch(
         getCancerTypeDescendents({
           cacheKey: cancerType.value,
@@ -71,6 +76,21 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     setSearchText({ value: '', codes: null });
   };
 
+  function watchClickOutside(element) {
+    const outsideClickListener = event => {
+      if (!element.contains(event.target) && ctMenuOpen) {
+        setCtMenuOpen(false);
+        removeClickListener();
+      }
+    };
+
+    const removeClickListener = () => {
+      document.removeEventListener('click', outsideClickListener);
+    };
+
+    document.addEventListener('click', outsideClickListener);
+  }
+
   return (
     <Fieldset
       id="type"
@@ -90,11 +110,16 @@ const CancerTypeCondition = ({ handleUpdate }) => {
           className="ct-select__button faux-select"
           onClick={handleCTSelectToggle}
           aria-label="Click to select specific cancer type"
+          aria-haspopup={true}
+          aria-controls=""
           aria-expanded={ctMenuOpen}
         >
           {ctSelectButtonDisplay}
         </button>
-        <div className={`ct-select__menu ${ctMenuOpen ? 'open' : ''}`}>
+        <div
+          id="ctMenu"
+          className={`ct-select__menu ${ctMenuOpen ? 'open' : ''}`}
+        >
           <Autocomplete
             id="ct-searchTerm"
             label="Primary Cancer Type/Condition"

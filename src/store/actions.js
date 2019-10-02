@@ -128,7 +128,6 @@ export function getMainType({ size = 0, isDebug = false }) {
           },
           fetchHandlers: {
             formatResponse: res => {
-              console.log(res.length);
               let types = [];
               let otherTypes = [];
 
@@ -140,9 +139,11 @@ export function getMainType({ size = 0, isDebug = false }) {
                 }
               });
 
-              let diseases = [{name: 'All', codes: []}, ...types.concat(otherTypes)];
+              let diseases = [
+                { name: 'All', codes: [] },
+                ...types.concat(otherTypes),
+              ];
 
-              console.log(diseases, '<<< diseases')
               if (isDebug) {
                 diseases.forEach(
                   disease =>
