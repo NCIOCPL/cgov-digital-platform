@@ -54,9 +54,8 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
     $plugin = $app_module->getAppModulePlugin();
 
     // Determine the path.
-    // TODO: Replace with path once path processor is finished. The path
-    // processor should have a method to push the app module path into
-    // the request object's query params.
+    // The path processor will push the app module path into the request
+    // object's query params.
     $path = $this->requestStack->getCurrentRequest()->query->get('app_module_route') ?? '/';
 
     // Get Cache Information from our Plugin and setup the cache information

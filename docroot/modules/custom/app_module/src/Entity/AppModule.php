@@ -20,7 +20,7 @@ use Drupal\app_module\AppModuleInterface;
  *       "delete" = "Drupal\app_module\Form\AppModuleDeleteForm",
  *     }
  *   },
- *   config_prefix = "app",
+ *   config_prefix = "app_module",
  *   admin_permission = "administer app modules",
  *   entity_keys = {
  *     "id" = "id",

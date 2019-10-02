@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Contains app_path_test.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function app_node_test_node_insert(EntityInterface $entity) {
+  if ($entity->bundle() === 'app_page') {
+    /* New entity then the app path never existed. Register.
+     */
+    $app_path_svc = \Drupal::service('app_module.app_path_manager');
+    $app_path_svc->updateAppPath($entity);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function app_node_test_node_update(EntityInterface $entity) {
+  if ($entity->bundle() === 'app_page') {
+    /* Update the app path information, or create if it did not exist
+     * before.
+     */
+    $app_path_svc = \Drupal::service('app_module.app_path_manager');
+    $app_path_svc->updateAppPath($entity);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function app_node_test_node_delete(EntityInterface $entity) {
+  /*
+   * We probably don't need this as the app_module module listens for
+   * path deletions. When the node is deleted, then the alias will be
+   * deleted. Our handler will get triggered and remove the entry with
+   * that source_pid.
+   *
+   */
+}
