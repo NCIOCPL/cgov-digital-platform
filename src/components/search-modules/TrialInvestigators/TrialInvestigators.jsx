@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-import { getTrialInvestigators } from '../../../mocks/mock-trial-investigator';
+import { searchTrialInvestigators } from '../../../store/actions';
 import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
-import './TrialInvestigators.scss';
 
 const TrialInvestigators = ({ handleUpdate }) => {
+  const dispatch = useDispatch();
   const [tiName, setTiName] = useState({ value: '' });
+
+  //store vals
+  const { tis = [] } = useSelector(store => store.cache);
+
   useEffect(() => {
     handleUpdate('in', tiName);
   }, [tiName, handleUpdate]);
+
+  useEffect(() => {
+    if (tiName.value.length > 2) {
+      dispatch(searchTrialInvestigators({ searchText: tiName.value }));
+    }
+  }, [tiName, dispatch]);
+
+
   return (
     <Fieldset
       id="trialInvestigators"
@@ -19,9 +32,9 @@ const TrialInvestigators = ({ handleUpdate }) => {
         id="in"
         label="Search by Trial Investigators"
         value={tiName.value}
-        inputProps={{ id: 'in' }}
+        inputProps={{ id: 'in', placeHolder: 'Investigator name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={getTrialInvestigators().terms}
+        items={tis}
         getItemValue={item => item.term}
         shouldItemRender={matchItemToTerm}
         sortItems={sortItems}
@@ -29,7 +42,12 @@ const TrialInvestigators = ({ handleUpdate }) => {
         onSelect={value => setTiName({ value })}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --trialInvestigators">
-            {children}
+            {(tiName.value.length > 2 )
+                ? (tis.length)
+                    ? (children)
+                    : <div className="cts-autocomplete__menu-item">No results found</div>
+                : <div className="cts-autocomplete__menu-item">Please enter 3 or more characters</div>
+            }
           </div>
         )}
         renderItem={(item, isHighlighted) => (

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-
 import { searchDrugs, searchOtherInterventions } from '../../../store/actions';
-
 import { useChipList } from '../../../utilities/hooks';
 
 import './DrugTreatment.scss';
@@ -26,7 +24,6 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
   //based on drug field input
   useEffect(() => {
     if (drugVal.value.length > 2) {
-      console.log(drugVal.value, '<<<< drugVal');
       dispatch(searchDrugs({ searchText: drugVal.value }));
     }
   }, [drugVal, dispatch]);
@@ -34,7 +31,6 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
   //based on treatments field input
   useEffect(() => {
     if (treatmentVal.value.length > 2) {
-      console.log(treatmentVal.value, '<<<< trtmt');
       dispatch(searchOtherInterventions({ searchText: treatmentVal.value }));
     }
   }, [treatmentVal, dispatch]);
@@ -62,7 +58,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
 
   return (
     <Fieldset
-      id="type"
+      id="drug-trtmt"
       legend="Drug/Treatment"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
     >

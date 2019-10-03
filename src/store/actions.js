@@ -19,6 +19,11 @@ const OTHER_MAIN_TYPES = [
   'C2991', //Disease or Disorder (Other Disease)
 ];
 
+/**
+ * Facade wrapping a ClinicalTrialsService instance to create app specific methods
+ * and simplify interacting with API.  Ported from ctapi-facade.ts from WCMS
+ */
+
 export function updateForm({ field, value }) {
   return {
     type: UPDATE_FORM,
@@ -91,7 +96,6 @@ export function getCancerTypeDescendents({
   size = 0,
   isDebug = false,
 }) {
-  console.log('cacheKey: ', cacheKey);
   return {
     type: '@@cache/RETRIEVE',
     payload: {
@@ -159,6 +163,9 @@ export function getMainType({ size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets cancer subtypes for a given parent ID
+ */
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -193,6 +200,9 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets cancer stages for a given parent ID
+ */
 export function getStages({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -228,6 +238,9 @@ export function getStages({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets cancer findings based on parent ID
+ */
 export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -263,6 +276,9 @@ export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets hospital/institution to populate the Hospital/Institution field
+ */
 export function getCountries({ size = 100 } = {}) {
   return {
     type: '@@cache/RETRIEVE',
@@ -339,7 +355,6 @@ export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
           },
           fetchHandlers: {
             formatResponse: drugs => {
-              console.log(drugs);
               if (isDebug) {
                 drugs.forEach(
                   drug => (drug.name += ' (' + drug.codes.join('|') + ')')
@@ -377,7 +392,6 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
           },
           fetchHandlers: {
             formatResponse: (treatments, isDebug) => {
-              console.log(treatments);
               if (isDebug) {
                 treatments.forEach(
                   treatment =>
@@ -414,18 +428,6 @@ export function searchTrialInvestigators({ searchText, size = 10 } = {}) {
             },
             size,
           },
-          fetchHandlers: {
-            formatResponse: (treatments, isDebug) => {
-              console.log(treatments);
-              if (isDebug) {
-                treatments.forEach(
-                  treatment =>
-                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
-                );
-              }
-              return treatments;
-            },
-          },
         },
       ],
     },
@@ -452,18 +454,6 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
               current_trial_status: VIEWABLE_TRIALS,
             },
             size,
-          },
-          fetchHandlers: {
-            formatResponse: (treatments, isDebug) => {
-              console.log(treatments);
-              if (isDebug) {
-                treatments.forEach(
-                  treatment =>
-                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
-                );
-              }
-              return treatments;
-            },
           },
         },
       ],
