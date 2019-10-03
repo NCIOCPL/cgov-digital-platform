@@ -99,24 +99,12 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
  * Implements hook_ENTITY_TYPE_update().
  */
 function cgov_site_section_entity_update(EntityInterface $entity) {
-
-  $entityType = $entity->getEntityType()->id();
-
-  // If this is a Site Sectiion, invalidate if it meets the criteria for
-  // cache tag invalidation.
-  if ($entityType === 'taxonomy_term' && $entity->hasField('field_site_section')) {
-    if (_will_trigger_cache_tag_invalidation($entity)) {
-      invalidate_section_cache_tag($entity);
-    }
-  }
-
   /*
    * If this is a node or media item and has changed its section parent or
    * alias, if it displays in navigation, cascade those changes
    *  to any subsections and pages within those subsections.
    *
    */
-
   if (
     $entity->getEntityTypeId() === 'node' &&
     $entity->hasField('field_site_section')
@@ -180,11 +168,41 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   if (will_trigger_save_children($entity)) {
     save_term_children($entity);
   }
-  // Determine if this term update meets the criteria for tag invalidation.
+  // Determine if this term update meets the criteria for tag invalidation,
+  // and invalidate.
   if (_will_trigger_cache_tag_invalidation($entity)) {
-    invalidate_section_cache_tag($entity);
-  }
 
+    // Get the display options for this entity.
+    $displayOptions = $entity->field_navigation_display_options->getValue();
+    $isHidden = !empty($displayOptions) ?
+      in_array('hide_in_section_nav', $displayOptions) : FALSE;
+
+    // Get the display options for the original entity.
+    $originalOptions = $entity->original->field_navigation_display_options->getValue();
+    $originalIsHidden = !empty($originalOptions)
+      ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
+
+    // Invalidate the relevant sections. Skip invalidation if this doesn't
+    // currently and didn't previously render in the navigation.
+    if (!($isHidden && $originalIsHidden)) {
+
+      // Get the set of section that display this item; invalidate their tags.
+      // Includes this term itself if its a nav root.
+      $renderingSections = get_rendering_sections($entity);
+      foreach ($renderingSections as $navroot) {
+        invalidate_section_cache_tag($navroot);
+      }
+
+      // If this section changed parents, invalidate the cache for the original
+      // rendering sections as well.
+      if (entity_fields_modified(['parent'], $entity)) {
+        $originalRenderingSections = get_rendering_sections($entity->original);
+        foreach ($originalRenderingSections as $navroot) {
+          invalidate_section_cache_tag($navroot);
+        }
+      }
+    }
+  }
   // TODO: Figure out how to get pathauto to update all the aliases using
   // pathauto. To do it here is A) too slow, and B) fraught with
   // issue regarding workflow and the various entity types we would have to hit.
@@ -216,7 +234,7 @@ function save_term_children(EntityInterface $updated_section_entity) {
   // Update immediate child sections.
   $subsections = $term_storage->loadChildren($updated_section_entity->id(), 'cgov_site_sections');
 
-  // Re-save the sections. This should trigger the presave above with will set
+  // Re-save the sections. This should trigger the presave above which will set
   // the computed_path to the new path.
   foreach ($subsections as $section) {
     $section->save();
@@ -278,7 +296,7 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
   // Invalidation check for Nodes.
   if ($entityType === 'node') {
     // Exit early if this entity doesn't have site sections.
-    if (!$updated_entity->hasField('field_site_section')) {
+    if (!$updated_entity->hasField('field_site_section')|| empty($updated_entity->get('field_site_section')->first())) {
       return FALSE;
     }
 
@@ -368,7 +386,7 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
     return (int) $original->get($field_name)->target_id !== (int) $entity->get($field_name)->target_id;
   };
   $get_value = function ($field_name) use ($entity, $original) {
-    return $original->get($field_name)->value !== $entity->get($field_name)->value;
+    return $original->get($field_name)->value != $entity->get($field_name)->value;
   };
 
   // Loop though the given fields to check for modification.
@@ -552,13 +570,77 @@ function get_root_nav_section($term) {
 }
 
 /**
- * Returns a Site Section Terms Parent.
+ * Returns the section nav roots which render a given section.
+ *
+ * \Drupal\Core\Entity\EntityInterface $term
+ *    The site section.
+ */
+function get_rendering_sections(EntityInterface $term) {
+  $renderingSections = [];
+  // Get the full term tree as an array.
+  $sectionTree = get_term_tree($term);
+
+  // Loop over the term tree, storing only nav roots that render,
+  // based on total distance from Root Nav -> Section being modified; and
+  // display options.
+  $totalLevels = count($sectionTree);
+  for ($level = 0; $level < $totalLevels; $level++) {
+    // Get the section term.
+    $section = $sectionTree[$level];
+
+    // If the current section being checked on is not a root, go to
+    // the next iteration.
+    if ($section->field_section_nav_root->value == 0) {
+      continue;
+    }
+
+    // If the current term is a root, determine if it would display
+    // the updated sections changes.
+    // Levels to render will always be a positive integer, eg. from 1-5.
+    $levelsToRender = $section->field_levels_to_display->value;
+    if ($level < $levelsToRender) {
+      $renderingSections[] = $section;
+    }
+
+    // If the root item just checked is hidden in nav, nothing above it
+    // will render this change, therefore we can stop checking the tree.
+    // Determine this by checking the display options for the root.
+    $displayOptions = $section->field_navigation_display_options->getValue();
+    $displayOptions = !empty($displayOptions) ? $displayOptions : [];
+
+    if (in_array('hide_in_section_nav', $displayOptions)) {
+      break;
+    }
+  }
+  return $renderingSections;
+}
+
+/**
+ * Return the full term tree for a given section, including the giving term.
+ *
+ * @param \Drupal\taxonomy\Entity\Term $term
+ *   The taxonomy term.
+ */
+function get_term_tree(Term $term) {
+  $termTree = [$term];
+  $parentTerm = get_section_parent($term);
+
+  while ($parentTerm !== NULL) {
+    $termTree[] = $parentTerm;
+    $parentTerm = get_section_parent($parentTerm);
+  }
+
+  return $termTree;
+}
+
+/**
+ * Returns a Site Section Terms direct Parent.
  *
  * @param \Drupal\taxonomy\Entity\Term $term
  *   The Site Section.
  *
  * @return mixed
- *   The Site Sections Parent or FALSE.
+ *   The Site Sections Parent or NULL.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -568,9 +650,11 @@ function get_section_parent(Term $term) {
 
   if ($term) {
     $parents = $termStorage->loadParents($term->id());
-    return $parents[array_keys($parents)[0]];
+    if (!empty($parents)) {
+      return $parents[array_keys($parents)[0]];
+    }
   }
-  return FALSE;
+  return NULL;
 }
 
 /**

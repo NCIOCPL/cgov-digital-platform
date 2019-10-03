@@ -1,0 +1,439 @@
+
+### Navigation Roots
+## Level 1
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  tid: 902902
+  name: "Top Level Root"
+  field_pretty_url:
+    value: "top-level-root"
+  field_navigation_label:
+    value: "Top Level Root"
+  field_section_nav_root:
+    value: true
+  field_levels_to_display:
+    value: 5
+  computed_path: "/about-cancer/treatment/top-level-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Cancer Treatment"
+          - computed_path: "/about-cancer/treatment"
+
+## LEVEL 2
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Root"
+  field_pretty_url:
+    value: "second-root"
+  field_navigation_label:
+    value: "Top Level Root"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 4
+  computed_path: "/about-cancer/treatment/top-level-root/second-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+          - computed_path: "/about-cancer/treatment/top-level-root"
+
+## LEVEL 3
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Root"
+  field_pretty_url:
+    value: "third-root"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Second Level Root"
+          - computed_path: "/about-cancer/treatment/top-level-root/second-root"
+
+## LEVEL 4
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Fourth Level Root"
+  field_pretty_url:
+    value: "fourth-root"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root/fourth-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+          - computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root"
+
+ ## LEVEL 5
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Fifth Level Root"
+  field_pretty_url:
+    value: "fifth-root"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root/fourth-root/fifth-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fourth Level Root"
+          - computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root/fourth-root"
+
+## LEVEL 6
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Sixth Level Root"
+  field_pretty_url:
+    value: "sixth-root"
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root/fourth-root/fifth-root/sixth-root"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fifth Level Root"
+          - computed_path: "/about-cancer/treatment/top-level-root/second-root/third-root/fourth-root/fifth-root"
+
+
+#### Non Root Sections
+#####  
+## LEVEL 1  
+##### 
+## Section 1  
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Section 1"
+  field_pretty_url:
+    value: "second-level-section-1"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+### Section 2   
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Section 2"
+  field_pretty_url:
+    value: "second-level-section-2"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+### Section 3        
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Section 3"
+  field_pretty_url:
+    value: "second-level-section-3"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+## Section 4          
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Section 4"
+  field_pretty_url:
+    value: "second-level-section-4"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+## Section 5          
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Second Level Section 5"
+  field_pretty_url:
+    value: "second-level-section-5"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Top Level Root"
+
+
+
+#####
+## LEVEL 3
+#####
+## Section 1
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 1"
+  field_pretty_url:
+    value: "third-level-section-1"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+### Section 2
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 2"
+  field_pretty_url:
+    value: "third-level-section-2"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+### Section 3
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 3"
+  field_pretty_url:
+    value: "third-level-section-3"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+## Section 4
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 4"
+  field_pretty_url:
+    value: "third-level-section-4"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+## Section 4
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 5"
+  field_pretty_url:
+    value: "third-level-section-5"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+## Section 5
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 5"
+  field_pretty_url:
+    value: "third-level-section-5"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+## Section 6
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Third Level Section 6"
+  field_pretty_url:
+    value: "third-level-section-6"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Third Level Root"
+
+#####
+## LEVEL 6
+#####
+
+## Section 1
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Sixth Level Section 1"
+  field_pretty_url:
+    value: "sixth-level-section-1"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fifth Level Root"
+
+  ### Section 2
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Sixth Level Section 2"
+  field_pretty_url:
+    value: "sixth-level-section-2"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fifth Level Root"
+
+   ### Section 3
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Sixth Level Section 3"
+  field_pretty_url:
+    value: "sixth-level-section-3"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fifth Level Root"
+
+  ## Section 4
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Sixth Level Section 4"
+  field_pretty_url:
+    value: "sixth-level-section-4"
+  field_section_nav_root:
+    value: false
+  field_navigation_display_options:
+  field_levels_to_display:
+    value: 5
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Fifth Level Root"
