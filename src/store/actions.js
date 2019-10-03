@@ -11,6 +11,19 @@ const VIEWABLE_TRIALS = [
   'Temporarily Closed to Accrual and Intervention',
 ];
 
+//These are the two catch all buckets that we must add to the bottom of the list.
+//ORDER will matter here.
+const OTHER_MAIN_TYPES = [
+  'C2916', //Carcinoma not in main type (Other Carcinoma)
+  'C3262', //Neoplasm not in main type (Other Neoplasm)
+  'C2991', //Disease or Disorder (Other Disease)
+];
+
+/**
+ * Facade wrapping a ClinicalTrialsService instance to create app specific methods
+ * and simplify interacting with API.  Ported from ctapi-facade.ts from WCMS
+ */
+
 export function updateForm({ field, value }) {
   return {
     type: UPDATE_FORM,
@@ -83,7 +96,6 @@ export function getCancerTypeDescendents({
   size = 0,
   isDebug = false,
 }) {
-  console.log('cacheKey: ', cacheKey);
   return {
     type: '@@cache/RETRIEVE',
     payload: {
@@ -98,6 +110,62 @@ export function getCancerTypeDescendents({
   };
 }
 
+/**
+ * Gets all primary cancer types
+ */
+export function getMainType({ size = 0, isDebug = false }) {
+  return {
+    type: '@@cache/RETRIEVE',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'maintypes',
+      requests: [
+        {
+          method: 'getDiseases',
+          requestParams: {
+            category: 'maintype',
+            ancestorId: undefined,
+            additionalParams: {
+              size,
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+          },
+          fetchHandlers: {
+            formatResponse: res => {
+              let types = [];
+              let otherTypes = [];
+
+              res.forEach(disease => {
+                if (OTHER_MAIN_TYPES.includes(disease.codes.join('|'))) {
+                  otherTypes.push(disease);
+                } else {
+                  types.push(disease);
+                }
+              });
+
+              let diseases = [
+                { name: 'All', codes: [] },
+                ...types.concat(otherTypes),
+              ];
+
+              if (isDebug) {
+                diseases.forEach(
+                  disease =>
+                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                );
+              }
+              return diseases;
+            },
+          },
+        },
+      ],
+    },
+  };
+}
+
+/**
+ * Gets cancer subtypes for a given parent ID
+ */
 export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -117,7 +185,6 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
           },
           fetchHandlers: {
             formatResponse: diseases => {
-              // TODO: DEBUG
               if (isDebug) {
                 diseases.forEach(
                   disease =>
@@ -133,6 +200,9 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets cancer stages for a given parent ID
+ */
 export function getStages({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -168,6 +238,9 @@ export function getStages({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets cancer findings based on parent ID
+ */
 export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   return {
     type: '@@cache/RETRIEVE',
@@ -203,6 +276,9 @@ export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
+/**
+ * Gets hospital/institution to populate the Hospital/Institution field
+ */
 export function getCountries({ size = 100 } = {}) {
   return {
     type: '@@cache/RETRIEVE',
@@ -231,6 +307,30 @@ export function getCountries({ size = 100 } = {}) {
   };
 }
 
+export function searchHospital({ searchText, size = 10 }) {
+  return {
+    type: '@@cache/RETRIEVE',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'hospital',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'sites.org_name',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+        },
+      ],
+    },
+  };
+}
+
 /**
  * Gets drugs intervention items for search field
  */
@@ -239,26 +339,32 @@ export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'drugs',
-      requestParams: {
-        category: ['Agent', 'Agent Category'],
-        searchText: searchText,
-        size: size,
-        additionalParams: {
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'drugs',
+
+      requests: [
+        {
+          method: 'getInterventions',
+          requestParams: {
+            category: ['Agent', 'Agent Category'],
+            searchText: searchText,
+            size: size,
+            additionalParams: {
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            sort: 'cancergov',
+          },
+          fetchHandlers: {
+            formatResponse: drugs => {
+              if (isDebug) {
+                drugs.forEach(
+                  drug => (drug.name += ' (' + drug.codes.join('|') + ')')
+                );
+              }
+              return drugs;
+            },
+          },
         },
-        sort: 'cancergov',
-      },
-      fetchHandlers: {
-        formatResponse: drugs => {
-          if (isDebug) {
-            drugs.forEach(
-              drug => (drug.name += ' (' + drug.codes.join('|') + ')')
-            );
-          }
-          return drugs;
-        },
-      },
+      ],
     },
   };
 }
@@ -271,42 +377,77 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'treatments',
-      requestParams: {
-        category: 'Other',
-        searchText: searchText,
-        size: size,
-        additionalParams: {
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'treatments',
+      requests: [
+        {
+          method: 'getInterventions',
+          requestParams: {
+            category: 'Other',
+            searchText: searchText,
+            size: size,
+            additionalParams: {
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            sort: 'cancergov',
+          },
+          fetchHandlers: {
+            formatResponse: (treatments, isDebug) => {
+              if (isDebug) {
+                treatments.forEach(
+                  treatment =>
+                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
+                );
+              }
+              return treatments;
+            },
+          },
         },
-        sort: 'cancergov',
-      },
-      fetchHandlers: {
-        formatResponse: (treatments, isDebug) => {
-          if (isDebug) {
-            treatments.forEach(
-              treatment =>
-                (treatment.name += ' (' + treatment.codes.join('|') + ')')
-            );
-          }
-          return treatments;
-        },
-      },
+      ],
     },
   };
 }
 
-export function searchHospital({ searchText, size = 10 }) {
+/**
+ * Gets trial investigators to populate the Trial Investigators field
+ */
+export function searchTrialInvestigators({ searchText, size = 10 } = {}) {
   return {
-    type: '@@cache/RETRIEVE',
+    type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'hospital',
+      cacheKey: 'tis',
       requests: [
         {
           method: 'getTerms',
           requestParams: {
-            category: 'sites.org_name',
+            category: 'principal_investigator',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+        },
+      ],
+    },
+  };
+}
+
+/**
+ * Gets lead orgs to populate the Lead Organization field
+ */
+export function searchLeadOrg({ searchText, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'leadorgs',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'lead_org',
             additionalParams: {
               term: searchText,
               sort: 'term',

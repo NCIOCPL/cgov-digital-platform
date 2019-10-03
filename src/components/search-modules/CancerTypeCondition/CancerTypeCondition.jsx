@@ -1,33 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Fieldset, Autocomplete } from '../../atomic';
-import {
-  getDiseasesForSimpleTypeAhead,
-  getCancerTypeDescendents,
-} from '../../../store/actions';
+import { Fieldset, Autocomplete, InputLabel } from '../../atomic';
+import { getMainType, getCancerTypeDescendents } from '../../../store/actions';
 import { useChipList, useCachedValues } from '../../../utilities/hooks';
 import './CancerTypeCondition.scss';
+require('../../../polyfills/closest');
 
 const CancerTypeCondition = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: 'All', codes: null });
+  const [cancerType, setCancerType] = useState({ value: '', codes: [] });
+  const [searchText, setSearchText] = useState({ value: '', codes: [] });
+
   const subtypeChips = useChipList('subtypes', handleUpdate);
   const stageChips = useChipList('stages', handleUpdate);
   const finChips = useChipList('findings', handleUpdate);
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
+  const [ctMenuOpen, setCtMenuOpen] = useState(false);
 
-  const { diseases, subtypes, findings, stages } = useCachedValues([
-    'diseases',
-    'subtypes',
-    'findings',
-    'stages',
-  ]);
+  const {
+    maintypes = [],
+    subtypes = [],
+    findings = [],
+    stages = [],
+  } = useCachedValues(['maintypes', 'subtypes', 'findings', 'stages']);
 
+  // Retrieval of main types is triggered by expanding the cancer type dropdown
   useEffect(() => {
-    dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
-    if (cancerType.codes && cancerType.codes.length > 0) {
+    // if maintypes is essentially empty, fetch mainTypes
+    if (maintypes.length < 1 && ctMenuOpen) {
+      dispatch(getMainType({}));
+    }
+    if (ctMenuOpen) {
+      document.getElementById('ct-searchTerm').focus();
+      watchClickOutside(document.getElementById('ctMenu'));
+    }
+    if (cancerType.codes.length > 0) {
       dispatch(
         getCancerTypeDescendents({
           cacheKey: cancerType.value,
@@ -35,11 +44,13 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         })
       );
     }
-  }, [cancerType, dispatch]);
+  }, [ctMenuOpen, dispatch]);
 
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
+
+  
 
   const filterSelectedItems = (items = [], selections = []) => {
     if (!items.length || !selections.length) {
@@ -49,6 +60,38 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       item => !selections.find(selection => selection.label === item.name)
     );
   };
+
+  const ctSelectButtonDisplay =
+    cancerType.codes.length === 0 ? 'All' : cancerType.value;
+
+  const handleCTSelectToggle = () => {
+    setCtMenuOpen(!ctMenuOpen);
+  };
+
+  const handleCTSelect = (value, item) => {
+    handleUpdate('ct', {
+      value,
+      code: item.codes,
+    });
+    setCancerType({ value, codes: item.codes });
+    setCtMenuOpen(false);
+    setSearchText({ value: '', codes: null });
+  };
+
+  function watchClickOutside(element) {
+    const outsideClickListener = event => {
+      if (!element.contains(event.target) && ctMenuOpen) {
+        setCtMenuOpen(false);
+        removeClickListener();
+      }
+    };
+
+    const removeClickListener = () => {
+      document.removeEventListener('click', outsideClickListener);
+    };
+
+    document.addEventListener('click', outsideClickListener);
+  }
 
   return (
     <Fieldset
@@ -61,40 +104,67 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         Select a cancer type or condition. Select additional options, if
         applicable.
       </p>
-      <Autocomplete
-        id="ct"
-        label="Primary Cancer Type/Condition"
-        value={cancerType.value}
-        inputClasses="faux-select"
-        wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-        items={diseases || []}
-        getItemValue={item => item.name}
-        shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => {
-          setCancerType({ value, codes: [] })
-        }}
-        onSelect={(value, item) => {
-          handleUpdate('ct', {
-            value,
-            code: item.codes,
-          });
-          setCancerType({ value, codes: item.codes });
-        }}
-        renderMenu={children => (
-          <div className="cts-autocomplete__menu --ct">{children}</div>
-        )}
-        renderItem={(item, isHighlighted) => (
-          <div
-            className={`cts-autocomplete__menu-item ${
-              isHighlighted ? 'highlighted' : ''
-            }`}
-            key={item.codes[0]}
-          >
-            {item.name}
-          </div>
-        )}
-      />
-      {cancerType.value !== 'All' && (
+
+      <div className="ct-select">
+        <InputLabel label="Primary Cancer Type/Condition" htmlFor="ct" />
+        <button
+          id="ct-btn"
+          className="ct-select__button faux-select"
+          onClick={handleCTSelectToggle}
+          aria-label="Click to select specific cancer type"
+          aria-haspopup={true}
+          aria-controls=""
+          aria-expanded={ctMenuOpen}
+        >
+          {ctSelectButtonDisplay}
+        </button>
+        <div
+          id="ctMenu"
+          className={`ct-select__menu ${ctMenuOpen ? 'open' : ''}`}
+        >
+          <Autocomplete
+            id="ct-searchTerm"
+            label="Primary Cancer Type/Condition"
+            value={searchText.value}
+            inputClasses="faux-select"
+            inputProps={{ placeholder: 'Begin typing to narrow options below' }}
+            labelHidden={true}
+            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+            open={true}
+            items={maintypes}
+            getItemValue={item => item.name}
+            shouldItemRender={matchItemToTerm}
+            onChange={(event, value) => setSearchText({ value, codes: [] })}
+            onSelect={(value, item) => {
+              handleCTSelect(value, item);
+            }}
+            renderMenu={children => (
+              <div className="cts-autocomplete__menu --ct">
+                {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No results found
+                  </div>
+                )}
+              </div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={`cts-autocomplete__menu-item ${
+                  isHighlighted ? 'highlighted' : ''
+                }`}
+                key={item.codes[0] || 'all'}
+              >
+                {item.name}
+              </div>
+            )}
+          />
+        </div>
+        <input type="hidden" id="ct" name="ct" value={cancerType.value} />
+      </div>
+
+      {cancerType.codes.length > 0 && (
         <div className="subsearch">
           <Autocomplete
             id="st"

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
-
 import { searchDrugs, searchOtherInterventions } from '../../../store/actions';
-
 import { useChipList } from '../../../utilities/hooks';
 
 import './DrugTreatment.scss';
 
 const DrugTreatment = ({ handleUpdate, useValue }) => {
   const placeholderText = 'Please enter 3 or more characters';
-
   const dispatch = useDispatch();
 
   //store vals
@@ -31,7 +28,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
     }
   }, [drugVal, dispatch]);
 
-  //based on drug field input
+  //based on treatments field input
   useEffect(() => {
     if (treatmentVal.value.length > 2) {
       dispatch(searchOtherInterventions({ searchText: treatmentVal.value }));
@@ -61,7 +58,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
 
   return (
     <Fieldset
-      id="type"
+      id="drug-trtmt"
       legend="Drug/Treatment"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
     >
@@ -90,7 +87,9 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
           return (
             <div className="cts-autocomplete__menu --drugs">
               {(drugVal.value.length > 2 )
-                ? (children) 
+                ? (filterSelectedItems(drugs, drugChips.list).length)
+                    ? (children)
+                    : <div className="cts-autocomplete__menu-item">No results found</div>
                 : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
               }
             </div>
@@ -136,7 +135,9 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
           return (
             <div className="cts-autocomplete__menu --drugs">
               {(treatmentVal.value.length > 2 )
-                ? (children) 
+                ? (filterSelectedItems(treatments, treatmentChips.list).length)
+                    ? (children)
+                    : <div className="cts-autocomplete__menu-item">No results found</div>
                 : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
               }
             </div>

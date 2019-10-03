@@ -624,17 +624,25 @@ class Autocomplete extends React.Component {
 
     const { inputProps } = this.props;
     const open = this.isOpen();
+
+    const ariaLabel = this.props.labelHidden
+      ? { 'aria-label': this.props.label }
+      : {};
+
     return (
       <div id={this.id + '-autocomplete-wrapper'} className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
+        {this.props.labelHidden ? null : (
         <InputLabel
             label={this.props.label}
             labelHint={this.props.labelHint}
             htmlFor={this.id}
-          />
+          />)
+        }
         <div className={this.props.multiselect ? 'cts-chip-list' : ''}>
         {this.props.multiselect && this.renderChips()}
         {this.props.renderInput({
           ...inputProps,
+          ...ariaLabel,
           id: this.id,
           role: 'combobox',
           'aria-autocomplete': 'list',
