@@ -33,7 +33,7 @@ const LeadOrganization = ({ handleUpdate }) => {
       <Autocomplete
         label="Search by Lead Organization"
         value={orgName.value}
-        inputProps={{ id: 'lo', placeHolder: 'Organization name' }}
+        inputProps={{ id: 'lo', placeholder: 'Organization name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={leadorgs}
         getItemValue={item => item.term}
