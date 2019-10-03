@@ -28,8 +28,7 @@ exports[`CancerTypeCondition Render renders without error 1`] = `
       Select a cancer type or condition. Select additional options, if applicable.
     </p>
     <div
-      class="cts-autocomplete "
-      id="ct-autocomplete-wrapper"
+      class="ct-select"
     >
       <label
         class="cts-label"
@@ -38,20 +37,57 @@ exports[`CancerTypeCondition Render renders without error 1`] = `
       >
         Primary Cancer Type/Condition
       </label>
-      <div
-        class=""
+      <button
+        aria-controls=""
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="Click to select specific cancer type"
+        class="ct-select__button faux-select"
+        id="ct-btn"
       >
-        <input
-          aria-autocomplete="list"
-          aria-expanded="false"
-          autocomplete="off"
-          class="cts-input cts-autocomplete__input faux-select"
-          id="ct"
-          role="combobox"
-          type="text"
-          value="All"
-        />
+        All
+      </button>
+      <div
+        class="ct-select__menu "
+        id="ctMenu"
+      >
+        <div
+          class="cts-autocomplete "
+          id="ct-searchTerm-autocomplete-wrapper"
+        >
+          <div
+            class=""
+          >
+            <input
+              aria-autocomplete="list"
+              aria-expanded="true"
+              aria-label="Primary Cancer Type/Condition"
+              autocomplete="off"
+              class="cts-input cts-autocomplete__input faux-select"
+              id="ct-searchTerm"
+              placeholder="Begin typing to narrow options below"
+              role="combobox"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="cts-autocomplete__menu --ct"
+          >
+            <div
+              class="cts-autocomplete__menu-item"
+            >
+              No results found
+            </div>
+          </div>
+        </div>
       </div>
+      <input
+        id="ct"
+        name="ct"
+        type="hidden"
+        value=""
+      />
     </div>
   </div>
 </fieldset>
