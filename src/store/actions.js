@@ -323,26 +323,33 @@ export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'drugs',
-      requestParams: {
-        category: ['Agent', 'Agent Category'],
-        searchText: searchText,
-        size: size,
-        additionalParams: {
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'drugs',
+
+      requests: [
+        {
+          method: 'getInterventions',
+          requestParams: {
+            category: ['Agent', 'Agent Category'],
+            searchText: searchText,
+            size: size,
+            additionalParams: {
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            sort: 'cancergov',
+          },
+          fetchHandlers: {
+            formatResponse: drugs => {
+              console.log(drugs);
+              if (isDebug) {
+                drugs.forEach(
+                  drug => (drug.name += ' (' + drug.codes.join('|') + ')')
+                );
+              }
+              return drugs;
+            },
+          },
         },
-        sort: 'cancergov',
-      },
-      fetchHandlers: {
-        formatResponse: drugs => {
-          if (isDebug) {
-            drugs.forEach(
-              drug => (drug.name += ' (' + drug.codes.join('|') + ')')
-            );
-          }
-          return drugs;
-        },
-      },
+      ],
     },
   };
 }
@@ -355,27 +362,111 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      fieldName: 'treatments',
-      requestParams: {
-        category: 'Other',
-        searchText: searchText,
-        size: size,
-        additionalParams: {
-          current_trial_status: VIEWABLE_TRIALS,
+      cacheKey: 'treatments',
+      requests: [
+        {
+          method: 'getInterventions',
+          requestParams: {
+            category: 'Other',
+            searchText: searchText,
+            size: size,
+            additionalParams: {
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            sort: 'cancergov',
+          },
+          fetchHandlers: {
+            formatResponse: (treatments, isDebug) => {
+              console.log(treatments);
+              if (isDebug) {
+                treatments.forEach(
+                  treatment =>
+                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
+                );
+              }
+              return treatments;
+            },
+          },
         },
-        sort: 'cancergov',
-      },
-      fetchHandlers: {
-        formatResponse: (treatments, isDebug) => {
-          if (isDebug) {
-            treatments.forEach(
-              treatment =>
-                (treatment.name += ' (' + treatment.codes.join('|') + ')')
-            );
-          }
-          return treatments;
+      ],
+    },
+  };
+}
+
+/**
+ * Gets trial investigators to populate the Trial Investigators field
+ */
+export function searchTrialInvestigators({ searchText, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'tis',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'principal_investigator',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+          fetchHandlers: {
+            formatResponse: (treatments, isDebug) => {
+              console.log(treatments);
+              if (isDebug) {
+                treatments.forEach(
+                  treatment =>
+                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
+                );
+              }
+              return treatments;
+            },
+          },
         },
-      },
+      ],
+    },
+  };
+}
+
+/**
+ * Gets lead orgs to populate the Lead Organization field
+ */
+export function searchLeadOrg({ searchText, size = 10 } = {}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'leadorgs',
+      requests: [
+        {
+          method: 'getTerms',
+          requestParams: {
+            category: 'lead_org',
+            additionalParams: {
+              term: searchText,
+              sort: 'term',
+              current_trial_status: VIEWABLE_TRIALS,
+            },
+            size,
+          },
+          fetchHandlers: {
+            formatResponse: (treatments, isDebug) => {
+              console.log(treatments);
+              if (isDebug) {
+                treatments.forEach(
+                  treatment =>
+                    (treatment.name += ' (' + treatment.codes.join('|') + ')')
+                );
+              }
+              return treatments;
+            },
+          },
+        },
+      ],
     },
   };
 }
