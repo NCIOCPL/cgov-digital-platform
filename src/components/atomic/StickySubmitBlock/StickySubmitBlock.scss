@@ -1,0 +1,44 @@
+$cts-purple: #82368c;
+
+.sticky-block {
+  bottom: 0;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0);
+  transition: all ease-in 0.33s;
+  padding: 13px 0;
+  text-align: center;
+  height: 95px;
+
+  &__anchor {
+    height: 95px;
+    margin-top: 1rem;
+
+    &.--sticky {
+      .sticky-block {
+        position: fixed;
+        bottom: 0;
+        border-color: $cts-purple;
+        background: rgba(255, 255, 255, 0.9);
+        width: calc(100% - 35px);
+
+        @media screen and (min-width: 1025px) {
+          width: 667px;
+        }
+      }
+      .helper-text {
+        display: block;
+      }
+    }
+  }
+
+  .helper-text {
+    color: $cts-purple;
+    margin-top: 5px;
+    font-size: 14px;
+    display: none;
+  }
+
+  .btn-submit {
+    margin: 0;
+  }
+}

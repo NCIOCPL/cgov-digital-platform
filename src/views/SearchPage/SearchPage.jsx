@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Delighter } from '../../components/atomic';
+import { Delighter, StickySubmitBlock } from '../../components/atomic';
 import {
-  CancerTypeCondition,
   Age,
-  KeywordsPhrases,
-  Location,
-  TrialType,
+  CancerTypeCondition,
+  CancerTypeKeyword,
   DrugTreatment,
-  TrialPhase,
+  KeywordsPhrases,
+  LeadOrganization,
+  Location,
   TrialId,
   TrialInvestigators,
-  LeadOrganization,
-  CancerTypeKeyword,
+  TrialPhase,
+  TrialType,
   ZipCode,
 } from '../../components/search-modules';
 import { updateForm } from '../../store/actions';
@@ -35,6 +35,7 @@ const advancedFormModules = [
 
 const SearchPage = ({ form }) => {
   const dispatch = useDispatch();
+  const sentinelRef = useRef(null);
   const [formVersion, setFormVersion] = useState(form);
   const [redirectToResults, setRedirectToResults] = useState(false);
 
@@ -132,6 +133,7 @@ const SearchPage = ({ form }) => {
       <div className="contentzone">
         {/* */}
         <article className="search-page">
+          <div ref={sentinelRef} className="search-page__sentinel"></div>
           <div className="search-page__header">
             <p>
               NCI-supported clinical trials are those sponsored or otherwise
@@ -168,11 +170,8 @@ const SearchPage = ({ form }) => {
                   );
                 }
               })}
-              <div className="submit-block">
-                <button type="submit" className="btn-submit">
-                  Find Trials
-                </button>
-              </div>
+
+              <StickySubmitBlock sentinel={sentinelRef} />
             </form>
             <aside className="search-page__aside">{renderDelighters()}</aside>
           </div>
