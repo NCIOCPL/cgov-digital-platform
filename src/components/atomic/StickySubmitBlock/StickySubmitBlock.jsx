@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './StickySubmitBlock.scss';
 
@@ -30,9 +30,12 @@ const StickySubmitBlock = ({ sentinelRef }) => {
   return (
     <div ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
-        <button type="submit" className="btn-submit">
+        {/* <button type="submit" className="btn-submit">
           Find Trials
-        </button>
+        </button> */}
+        <Link to="/r" className="faux-btn-submit">
+          Find Trials
+        </Link>
         <div className="helper-text">Start your search at any time.</div>
       </div>
     </div>
