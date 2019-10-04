@@ -10,6 +10,7 @@ export { default as Pager } from './Pager';
 export { default as Radio } from './Radio';
 export { default as RemovableTag } from './RemovableTag';
 export { default as ResultsList } from './ResultsList';
+export { default as StickySubmitBlock } from './StickySubmitBlock';
 export { default as Table } from './Table';
 export { default as TableCell } from './Table/TableCell';
 export { default as TableRow } from './Table/TableRow';
