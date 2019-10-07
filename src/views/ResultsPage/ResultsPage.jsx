@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  Checkbox,
-  ResultsList,
-  Delighter,
-  Pager,
   Accordion,
   AccordionItem,
+  Delighter,
+  Checkbox,
+  Modal,
+  Pager,
+  ResultsList,
 } from '../../components/atomic';
+import { useModal } from '../../utilities/hooks';
 import './ResultsPage.scss';
 
 const ResultsPage = ({ results }) => {
@@ -19,9 +21,10 @@ const ResultsPage = ({ results }) => {
 
   // scroll to top on mount
   useEffect(() => {
-    window.scrollTo(0,0);
-  },[]);
+    window.scrollTo(0, 0);
+  }, []);
 
+  //manage Pager Results
   useEffect(() => {
     if (selectAll) {
       setSelectedResults([...paginatedResults.map(result => result.title)]);
@@ -30,10 +33,12 @@ const ResultsPage = ({ results }) => {
     }
   }, [selectAll, setSelectedResults, paginatedResults]);
 
+  // update selected results for Print
   useEffect(() => {
     setSelectedResults([]);
   }, [paginatedResults]);
 
+  // select all
   useEffect(() => {
     if (selectedResults.length === 0) {
       setSelectAll(false);
@@ -41,6 +46,10 @@ const ResultsPage = ({ results }) => {
       setSelectAll(true);
     }
   }, [paginatedResults, selectedResults]);
+
+  // setup print Modal
+  const { isShowing, toggleModal } = useModal();
+  const printSelectedBtn = useRef(null);
 
   const handlePagination = (slicedResults, currentPage) => {
     setPaginatedResults([...slicedResults]);
@@ -119,13 +128,50 @@ const ResultsPage = ({ results }) => {
             hideLabel
             onChange={() => setSelectAll(!selectAll)}
           />
-          <button className="results-page__print-button">Print Selected</button>
+          <button
+            className="results-page__print-button"
+            ref={printSelectedBtn}
+            onClick={toggleModal}
+          >
+            Print Selected
+          </button>
         </div>
         <div className="results-page__pager">
-          <Pager data={results} callback={handlePagination} startFromPage={pagerPage} />
+          <Pager
+            data={results}
+            callback={handlePagination}
+            startFromPage={pagerPage}
+          />
         </div>
       </div>
     );
+  };
+
+  const renderModalContent = () => {
+    if (selectedResults.length === 0) {
+      return (
+        <>
+          <div className="icon-warning" aria-hidden="true">!</div>
+          <p>
+            You have not selected any trials. Please select at least one trial
+            to print.
+          </p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="spinkit spinner">
+            <div className="dot1"></div>
+            <div className="dot2"></div>
+          </div>
+          <p>
+            You will automatically be directed to your print results in just a
+            moment...
+          </p>
+        </>
+      );
+    }
   };
 
   return (
@@ -152,6 +198,9 @@ const ResultsPage = ({ results }) => {
             {renderDelighters()}
           </aside>
         </article>
+        <Modal isShowing={isShowing} hide={toggleModal}>
+          {renderModalContent()}
+        </Modal>
         {/* */}
       </div>
     </div>

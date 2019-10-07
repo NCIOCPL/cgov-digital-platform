@@ -6,6 +6,7 @@ export { default as Delighter } from './Delighter';
 export { default as Dropdown } from './Dropdown';
 export { default as Fieldset } from './Fieldset';
 export { default as InputLabel } from './InputLabel';
+export { default as Modal } from './Modal';
 export { default as Pager } from './Pager';
 export { default as Radio } from './Radio';
 export { default as RemovableTag } from './RemovableTag';
