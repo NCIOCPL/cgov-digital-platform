@@ -121,8 +121,9 @@ const ResultsPage = ({ results }) => {
           <Checkbox
             id={cbxId}
             name="select-all"
-            label="Select All on Page"
+            label="Select all on page"
             checked={selectAll}
+            classes="check-all"
             onChange={() => setSelectAll(!selectAll)}
           />
           <button

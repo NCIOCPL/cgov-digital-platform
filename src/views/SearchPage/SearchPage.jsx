@@ -89,7 +89,6 @@ const SearchPage = ({ form }) => {
   );
 
   const toggleForm = () => {
-    console.log('hi');
     setFormVersion(formVersion === 'basic' ? 'advanced' : 'basic');
   };
 
@@ -118,7 +117,6 @@ const SearchPage = ({ form }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('trying to submit');
   }
 
   return (
