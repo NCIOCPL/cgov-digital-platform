@@ -12,7 +12,7 @@ const TrialInvestigators = ({ handleUpdate }) => {
   const { tis = [] } = useSelector(store => store.cache);
 
   useEffect(() => {
-    handleUpdate('in', tiName);
+    handleUpdate('inv', tiName);
   }, [tiName, handleUpdate]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const TrialInvestigators = ({ handleUpdate }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialinvestigators"
     >
       <Autocomplete
-        id="in"
+        id="inv"
         label="Search by Trial Investigators"
         value={tiName.value}
         inputProps={{ id: 'in', placeholder: 'Investigator name' }}

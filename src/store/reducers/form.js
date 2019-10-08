@@ -8,16 +8,16 @@ export const defaultState = {
   fin: [], //Side effects (AKA "findings")
   q: '', //Cancer Type Keyword (ALSO Keyword Phrases)
   dt: '', //Drug/Drug family
-  ti: '', //Other Treatments
+  ti: '', //Treatment/Interventions
   lo: '', //Lead Organization
   z: '', //Zipcode
-  zp: '', //Radius
+  zp: 100, //Radius
   lcnty: 'United States', //Country
   lst: '', //State
   lcty: '', //City
   hos: '', //Hospital
-  tid: '', //Trial ID
-  in: '', //Trial Investigators
+  tid: '', //Trial ID,
+  inv: '', // Trial investigators
   hv: false, //Healthy Volunteers,
   tt: [], //Trial Type
   tp: [], //Trial phase

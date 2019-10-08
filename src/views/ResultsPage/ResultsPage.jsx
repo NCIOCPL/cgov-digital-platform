@@ -9,6 +9,7 @@ import {
   Modal,
   Pager,
   ResultsList,
+  SearchCriteriaTable
 } from '../../components/atomic';
 import { useModal } from '../../utilities/hooks';
 import './ResultsPage.scss';
@@ -100,10 +101,7 @@ const ResultsPage = ({ results }) => {
         </p>
         <Accordion bordered startCollapsed>
           <AccordionItem title="Show Search Criteria">
-            <div>
-              <h3>Your Search Criteria</h3>
-              ...Table here...
-            </div>
+            <SearchCriteriaTable />
           </AccordionItem>
         </Accordion>
         <p className="reset-form">
@@ -125,7 +123,6 @@ const ResultsPage = ({ results }) => {
             name="select-all"
             label="Select All on Page"
             checked={selectAll}
-            hideLabel
             onChange={() => setSelectAll(!selectAll)}
           />
           <button
