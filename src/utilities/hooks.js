@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { deepSearchObject } from './utilities';
 
+// Hooks to share common logic between multiple components
+
 export const useCachedValues = cacheKeys => {
   const [currentVals, setCurrentVals] = useState({
     ...cacheKeys.map(key => ({ [key]: [] })),
@@ -42,5 +44,25 @@ export const useChipList = (chiplistName, handleUpdate) => {
     list,
     add,
     remove,
+  };
+};
+
+// showing and hiding a react modal component
+export const useModal = () => {
+  const [isShowing, setIsShowing] = useState(false);
+
+  function toggleModal() {
+    setIsShowing(!isShowing);
+
+    if (!isShowing) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }
+
+  return {
+    isShowing,
+    toggleModal,
   };
 };

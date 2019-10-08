@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
@@ -37,18 +36,6 @@ const SearchPage = ({ form }) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
   const [formVersion, setFormVersion] = useState(form);
-  const [redirectToResults, setRedirectToResults] = useState(false);
-
-  useEffect(() => {
-    if (redirectToResults) {
-      return <Redirect push to="/r" />;
-    }
-  }, [redirectToResults]);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setRedirectToResults(true);
-  };
 
   const handleUpdate = (field, value) => {
     dispatch(
@@ -102,6 +89,7 @@ const SearchPage = ({ form }) => {
   );
 
   const toggleForm = () => {
+    console.log('hi');
     setFormVersion(formVersion === 'basic' ? 'advanced' : 'basic');
   };
 
@@ -127,6 +115,11 @@ const SearchPage = ({ form }) => {
 
   let formModules =
     formVersion === 'advanced' ? advancedFormModules : basicFormModules;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('trying to submit');
+  }
 
   return (
     <div className="general-page-body-container main-content">

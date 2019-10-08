@@ -6,6 +6,7 @@ import './TrialType.scss';
 
 const TrialType = ({ trialTypeFields, handleUpdate }) => {
   const healthyVolunteers = useSelector(store => store.form.hv);
+  const [hvToggle, setHvToggle] = useState(healthyVolunteers);
   const initPhases = trialTypeFields.map(type => {
     if (type && !type.checked) {
       return {
@@ -16,14 +17,19 @@ const TrialType = ({ trialTypeFields, handleUpdate }) => {
       return type;
     }
   });
+
   const [trialTypes, setTrialTypes] = useState(initPhases);
 
   useEffect(() => {
     handleUpdate('tt', [...trialTypes]);
   }, [trialTypes, handleUpdate]);
 
+  useEffect(() => {
+    handleUpdate('hv', hvToggle);
+  }, [hvToggle, handleUpdate]);
+
   const handleToggle = checked => {
-    handleUpdate('hv', !checked);
+    setHvToggle(!hvToggle);
   };
 
   const handleSelectAll = e => {
@@ -64,7 +70,7 @@ const TrialType = ({ trialTypeFields, handleUpdate }) => {
       <div className="data-toggle-block">
         <Toggle
           id="hv"
-          checked={healthyVolunteers}
+          checked={hvToggle}
           label="Limit results to Veterans Affairs facilities"
           onClick={handleToggle}
         />

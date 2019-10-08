@@ -17,11 +17,17 @@ const Location = ({ handleUpdate }) => {
   const [activeRadio, setActiveRadio] = useState('search-location-all');
   const [limitToVA, setLimitToVA] = useState(false);
   const [showStateField, setShowStateField] = useState(true);
+
   useEffect(() => {
     if (activeRadio === 'search-location-country') {
       dispatch(getCountries());
     }
   }, [activeRadio, dispatch]);
+
+  useEffect(() => {
+    handleUpdate('va', limitToVA);
+  }, [limitToVA, handleUpdate]);
+
   const handleToggleChange = () => {
     setLimitToVA(!limitToVA);
   };
@@ -29,6 +35,8 @@ const Location = ({ handleUpdate }) => {
   const handleRadioChange = e => {
     setActiveRadio(e.target.value);
   };
+
+  
 
   const handleCountryOnChange = e => {
     const country = e.target.value;
@@ -54,6 +62,7 @@ const Location = ({ handleUpdate }) => {
       <div className="data-toggle-block">
         <Toggle
           id="search-location-toggle"
+          checked={limitToVA}
           label="Limit results to Veterans Affairs facilities"
           onClick={handleToggleChange}
         />
