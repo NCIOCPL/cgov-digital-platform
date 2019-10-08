@@ -17,34 +17,52 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 
   // Add custom validation for Cgov Blog Posts only.
   if ($form_id == 'node_cgov_blog_post_form' || $form_id == 'node_cgov_blog_post_edit_form') {
+    // Add wrapper for blog topics.
+    // The id for the blog wrapper changes after ajax requests.
+    $form['field_blog_topics']['#prefix'] = '<div id="cgov-edit-blog-topics-wrapper">';
+    $form['field_blog_topics']['#suffix'] = '</div>';
 
-    // Add the admin JS library so we can run the InvokeCommand. See
-    // https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Ajax%21InvokeCommand.php/class/InvokeCommand/8.2.x
-    $form['#attached']['library'][] = 'cgov_blog/cgov_blog_post_admin';
-
-    // Add Drupal JS settings.
-    // TODO: Add selector settings.
-    $id_pairs = _get_id_pairs($form);
-    $form['#attached']['drupalSettings']['adminJS']['idPairs'] = $id_pairs;
-    $form['#attached']['drupalSettings']['adminJS']['selectable'] = _is_selectable($form);
-
-    // If this is a draft or administrator role, fire off ajax function.
+    // Check if the current form is in the draft or review state.
     if (_is_selectable($form)) {
+      // Hide blog topics on initial content creation.
       $form['field_blog_topics']['#states']['invisible']['select[name="field_blog_series"]']['value'] = '_none';
+      // Set replacing wrapper for initial load and ajax
+      // requests when creating a blog post.
+      $form['field_blog_series']['widget']['#ajax'] = [
+        'callback' => '_update_blog_post_checkboxes',
+        'wrapper' => 'cgov-edit-blog-topics-wrapper',
+        'event' => 'change',
+        'method' => 'replace',
+      ];
+
+      $series_id = $form_state->getValue("field_blog_series");
+      $blog_manager = \Drupal::service('cgov_blog.blog_manager');
+      $form['field_blog_topics']['widget']['#options'] = $blog_manager->getBlogTopicsForSeries($series_id[0]['target_id']);
+
     }
     else {
+      // Editing a published node. Restrict to series topics.
+      $series_id = $form['field_blog_series']['widget']['#default_value'];
+      $blog_manager = \Drupal::service('cgov_blog.blog_manager');
+      $form['field_blog_topics']['widget']['#options'] = $blog_manager->getBlogTopicsForSeries($series_id[0]);
       $form['field_blog_series']['#disabled'] = TRUE;
     }
   }
-
   // Set field properties for Blog Series.
   if ($form_id == 'node_cgov_blog_series_form' || $form_id == 'node_cgov_blog_series_edit_form') {
-
     // Draw the custom description for the Feedburner field only.
     $description = $form['field_feedburner_url']['widget']['#description'];
     $form['field_feedburner_url']['widget'][0]['uri']['#description'] = $description;
   }
 
+}
+
+/**
+ * Custom callback for updating blog post topic checkboxes.
+ */
+function _update_blog_post_checkboxes($form, &$form_state) {
+  // Returns the form element for replacing.
+  return $form['field_blog_topics'];
 }
 
 /**

@@ -396,4 +396,25 @@ class BlogManager implements BlogManagerInterface {
     return $nids;
   }
 
+  /**
+   * Return list of terms for series..
+   *
+   * @param string $series_id
+   *   The series node id.
+   */
+  public function getBlogTopicsForSeries($series_id) {
+
+    $vid = 'cgov_blog_topics';
+    $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vid);
+    $term_data = [];
+    foreach ($terms as $term) {
+      $term_series_tid = $this->entityTypeManager->getStorage('taxonomy_term')->load($term->tid)->get('field_owner_blog')->target_id;
+      if ($term_series_tid == $series_id) {
+        $term_data[$term->tid] = $term->name;
+      }
+    }
+
+    return $term_data;
+  }
+
 }
