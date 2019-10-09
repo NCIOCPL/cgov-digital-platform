@@ -9,19 +9,20 @@ class TextInput extends React.Component {
     action: PropTypes.func,
     allowedChars: PropTypes.object,
     classes: PropTypes.string,
+    disabled: PropTypes.bool,
     enableSpellCheck: PropTypes.bool,
     errorMessage: PropTypes.string,
     id: PropTypes.string.isRequired,
-    name: PropTypes.string,
     inputHelpText: PropTypes.string,
     isValid: PropTypes.bool,
     label: PropTypes.string.isRequired,
     labelHidden: PropTypes.bool,
     labelHint: PropTypes.string,
     maxLength: PropTypes.number,
+    name: PropTypes.string,
+    onBlur: PropTypes.func,
     placeHolder: PropTypes.string,
     required: PropTypes.bool,
-    disabled: PropTypes.bool,
     type: PropTypes.oneOf([
       'text',
       'email',
@@ -34,8 +35,8 @@ class TextInput extends React.Component {
       'week',
       'number',
     ]),
-    value: PropTypes.string,
     validators: PropTypes.array,
+    value: PropTypes.string,
   };
 
   static defaultProps = {
@@ -60,7 +61,7 @@ class TextInput extends React.Component {
       isPristine: pristine,
       isValid: this.props.isValid ? true : false,
       hasError: this.props.errorMessage ? true : false,
-      errorMessage: this.props.errorMessage,
+      errorMessageBody: this.props.errorMessage,
     };
 
     // Generate an HTML ID if one was not provided
@@ -73,7 +74,7 @@ class TextInput extends React.Component {
       this.setState({
         isPristine: false,
         isValid: false,
-        hasError: true,
+        hasError: this.props.errorMessage !== '',
         errorMessageBody: this.props.errorMessage,
       });
     }
@@ -83,10 +84,11 @@ class TextInput extends React.Component {
     let error,
       helpText,
       ariaLabel = null;
+      
     if (this.state.hasError) {
       error = (
-        <span className="cts-input__error" role="alert">
-          {this.state.errorMessage}
+        <span className="cts-input__error-message" role="alert">
+          {this.state.errorMessageBody}
         </span>
       );
     }
@@ -101,22 +103,22 @@ class TextInput extends React.Component {
       : { 'aria-labelledby': this.props.id + '-label' };
 
     return (
-      <div className={`cts-input-group ${this.props.classes}`}>
+      <div className={`cts-input-group ${this.state.hasError? 'cts-input-group--error ' : ''}${this.props.classes}`}>
         {this.props.labelHidden ? null : (
           <InputLabel
             label={this.props.label}
             labelHint={this.props.labelHint}
             htmlFor={this.id}
             hasError={this.state.hasError}
-            required={this.props.required}
-          />
+            required={this.props.required} />
         )}
+        {error}
         <input
           id={this.id}
           name={this.props.name || this.id}
           type={this.props.type}
           value={this.state.value}
-          className={`cts-input ${this.props.classes} ${
+          className={`cts-input ${this.state.hasError? 'cts-input--error ' : ''}${this.props.classes} ${
             this.state.isValid ? 'cts-input--success' : ''
           }`}
           required={this.props.required}
@@ -129,7 +131,6 @@ class TextInput extends React.Component {
           spellCheck={this.props.enableSpellCheck ? true : false}
           {...ariaLabel}
         />
-        {error}
         {helpText}
       </div>
     );
@@ -187,10 +188,11 @@ class TextInput extends React.Component {
   //  onBlur event on input
   _handleBlur() {
     if (
-      (this.props.required || this.props.validators) &&
+      (this.props.required || this.props.validators || this.props.onBlur) &&
       !this.state.isPristine
     ) {
       this._validate();
+      this.props.onBlur();
     }
   }
 

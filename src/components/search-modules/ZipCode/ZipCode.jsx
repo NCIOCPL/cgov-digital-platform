@@ -11,7 +11,9 @@ const ZipCode = ({ handleUpdate }) => {
       <TextInput
         action={e => handleUpdate(e.target.id, e.target.value)}
         id="z"
-        label="Show trials near this U.S. ZIP code."
+        label="zip code"
+        labelHidden
+        inputHelpText="Show trials near this U.S. ZIP code."
         maxLength={5}
       />
     </Fieldset>
