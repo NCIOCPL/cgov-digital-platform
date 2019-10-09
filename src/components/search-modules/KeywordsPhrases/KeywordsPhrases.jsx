@@ -15,7 +15,9 @@ const KeywordsPhrases = ({ handleUpdate }) => {
         action={e => handleUpdate(e.target.id, e.target.value)}
         id="q"
         value={keywordPhrases}
-        label="Search by word or phrase (use quotation marks with phrases)."
+        label="Keywords phrases"
+        labelHidden
+        inputHelpText="Search by word or phrase (use quotation marks with phrases)."
         placeHolder="Examples: PSA, 'Paget disease'"
       />
     </Fieldset>

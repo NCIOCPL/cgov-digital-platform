@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
@@ -36,6 +36,11 @@ const SearchPage = ({ form }) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
   const [formVersion, setFormVersion] = useState(form);
+
+  // scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleUpdate = (field, value) => {
     dispatch(

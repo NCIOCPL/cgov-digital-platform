@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Table } from '../../atomic';
+import { Accordion, AccordionItem, Table } from '../../atomic';
 import './SearchCriteriaTable.scss';
 
 const SearchCriteriaTable = () => {
@@ -25,8 +25,14 @@ const SearchCriteriaTable = () => {
     treatments,
   } = useSelector(store => store.form);
 
+  const [criterion, setCriterion] = useState([]);
+  useEffect(()=> {
+    formatStoreDataForDisplay()
+  }, []);
+
+  const criteria = [];
   const formatStoreDataForDisplay = () => {
-    const criteria = [];
+    console.log('hi! '  + criteria.length);
 
     if (a && a !== '') {
       criteria.push({ category: 'Age', selection: a });
@@ -38,7 +44,7 @@ const SearchCriteriaTable = () => {
         selection: 'within ' + zp + ' miles of ' + z,
       });
     }
-    
+
     if (ct && ct.code.length > 0) {
       criteria.push({
         category: 'Primary Cancer Type/Condition',
@@ -48,7 +54,7 @@ const SearchCriteriaTable = () => {
 
     if (subtypes && subtypes.length > 0) {
       let joinedVals = [];
-      subtypes.forEach(function(subtype){
+      subtypes.forEach(function(subtype) {
         joinedVals.push(subtype.label);
       });
 
@@ -57,15 +63,15 @@ const SearchCriteriaTable = () => {
 
     if (stages && stages.length > 0) {
       let joinedVals = [];
-      stages.forEach(function(stage){
-        joinedVals.push(stage.label)
+      stages.forEach(function(stage) {
+        joinedVals.push(stage.label);
       });
       criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
     }
 
     if (findings && findings.length > 0) {
       let joinedVals = [];
-      findings.forEach(function(finding){
+      findings.forEach(function(finding) {
         joinedVals.push(finding.label);
       });
       criteria.push({
@@ -94,46 +100,52 @@ const SearchCriteriaTable = () => {
 
     if (tt) {
       let joinedVals = [];
-      tt.forEach(function(trialType){
-        if(trialType.checked){
-          joinedVals.push(trialType.label)
+      tt.forEach(function(trialType) {
+        if (trialType.checked) {
+          joinedVals.push(trialType.label);
         }
-      })
-      if(joinedVals.length !== tt.length){
-        criteria.push({ category: 'Trial Type', selection: joinedVals.join(', ') });
+      });
+      if (joinedVals.length > 0 && joinedVals.length !== tt.length) {
+        criteria.push({
+          category: 'Trial Type',
+          selection: joinedVals.join(', '),
+        });
       }
     }
 
     if (drugs && drugs.length > 0) {
-      let joinedVals = ''
-      drugs.forEach(function(drug){
+      let joinedVals = '';
+      drugs.forEach(function(drug) {
         joinedVals += drug.label + ', ';
-      })
+      });
       criteria.push({
         category: 'Drug/Drug Family',
-        selection: joinedVals
+        selection: joinedVals,
       });
     }
     if (treatments && treatments.length > 0) {
-      let joinedVals = ''
-      treatments.forEach(function(treatment){
+      let joinedVals = '';
+      treatments.forEach(function(treatment) {
         joinedVals += treatment.label + ', ';
-      })
+      });
       criteria.push({
         category: 'Other Treatments',
-        selection: joinedVals
+        selection: joinedVals,
       });
     }
 
     if (tp) {
       let joinedVals = [];
-      tp.forEach(function(phase){
-        if(phase.checked){
-          joinedVals.push(phase.label)
+      tp.forEach(function(phase) {
+        if (phase.checked === true) {
+          joinedVals.push(phase.label);
         }
-      })
-      if(joinedVals.length < tp.length){
-        criteria.push({ category: 'Trial Phase', selection: joinedVals.join(', ') });
+      });
+      if (joinedVals.length > 0 && joinedVals.length < tp.length) {
+        criteria.push({
+          category: 'Trial Phase',
+          selection: joinedVals.join(', '),
+        });
       }
     }
 
@@ -141,29 +153,36 @@ const SearchCriteriaTable = () => {
       criteria.push({ category: 'Trial ID', selection: tid });
     }
 
-    if (inv && inv.termKey !== '') {
-      criteria.push({ category: 'Trial Investigators', selection: inv.termKey });
+    if (inv && inv.value !== '') {
+      criteria.push({ category: 'Trial Investigators', selection: inv.value });
     }
 
     if (lo && lo.value !== '') {
       criteria.push({ category: 'Lead Organizations', selection: lo.value });
     }
 
-    return criteria;
+    console.log(criteria);
+    setCriterion([...criteria]);
   };
 
   return (
-    <div className="search-criteria-table">
-      <Table
-        borderless
-        columns={[
-          { colId: 'category', displayName: 'Category' },
-          { colId: 'selection', displayName: 'Your Selection' },
-        ]}
-        data={formatStoreDataForDisplay()}
-      />
-    </div>
-  );
+    criterion.length? (
+    <Accordion bordered startCollapsed>
+      <AccordionItem title="Show Search Criteria">
+        <div className="search-criteria-table">
+          <Table
+            borderless
+            columns={[
+              { colId: 'category', displayName: 'Category' },
+              { colId: 'selection', displayName: 'Your Selection' },
+            ]}
+            data={criterion}
+          />
+        </div>
+      </AccordionItem>
+    </Accordion>
+    ) : null
+  )
 };
 
 export default SearchCriteriaTable;

@@ -63,13 +63,13 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
     >
       <p>
-        Search for a specific drug or intervention. You can use the drug's
-        generic or brand name.
+        Search for a specific drug or intervention.
       </p>
 
       <Autocomplete
         id="dt"
         label="Drug/Drug Family"
+        inputHelpText="You can use the drug's generic or brand name."
         value={drugVal.value}
         inputProps={{ placeholder: placeholderText }}
         items={filterSelectedItems(drugs, drugChips.list)}

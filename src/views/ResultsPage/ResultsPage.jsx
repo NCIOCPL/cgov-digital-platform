@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  Accordion,
-  AccordionItem,
   Delighter,
   Checkbox,
   Modal,
   Pager,
   ResultsList,
-  SearchCriteriaTable
+  SearchCriteriaTable,
 } from '../../components/atomic';
 import { useModal } from '../../utilities/hooks';
 import './ResultsPage.scss';
@@ -99,11 +97,8 @@ const ResultsPage = ({ results }) => {
             Results 1-10 of {paginatedResults.length} for your search
           </strong>
         </p>
-        <Accordion bordered startCollapsed>
-          <AccordionItem title="Show Search Criteria">
-            <SearchCriteriaTable />
-          </AccordionItem>
-        </Accordion>
+
+        <SearchCriteriaTable />
         <p className="reset-form">
           <Link to="/search">Start Over</Link>
         </p>
@@ -129,8 +124,7 @@ const ResultsPage = ({ results }) => {
           <button
             className="results-page__print-button"
             ref={printSelectedBtn}
-            onClick={toggleModal}
-          >
+            onClick={toggleModal}>
             Print Selected
           </button>
         </div>
@@ -149,7 +143,9 @@ const ResultsPage = ({ results }) => {
     if (selectedResults.length === 0) {
       return (
         <>
-          <div className="icon-warning" aria-hidden="true">!</div>
+          <div className="icon-warning" aria-hidden="true">
+            !
+          </div>
           <p>
             You have not selected any trials. Please select at least one trial
             to print.
@@ -173,7 +169,7 @@ const ResultsPage = ({ results }) => {
   };
 
   return (
-    <div className="general-page-body-container main-content">
+    <div id="main-content" className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="results-page">

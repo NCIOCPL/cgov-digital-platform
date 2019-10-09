@@ -30,7 +30,9 @@ const TrialInvestigators = ({ handleUpdate }) => {
     >
       <Autocomplete
         id="inv"
-        label="Search by Trial Investigators"
+        label="Trial investigators"
+        labelHidden
+        inputHelpText="Search by Trial Investigators"
         value={tiName.value}
         inputProps={{ id: 'in', placeholder: 'Investigator name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}

@@ -11,6 +11,12 @@
     overflow: auto;
     max-height: 280px;
 
+    // menus with hidden labels
+    &.--leadOrg,
+    &.--trialInvestigators {
+      top: 39px;
+    }
+
     &-item {
       line-height: 2.5em;
       padding: 0 0.5em;
@@ -22,6 +28,9 @@
       }
     }
   }
+  + .cts-autocomplete {
+    margin-top: 1em;
+  }
 }
 
 .cts-chip-list {
@@ -29,7 +38,6 @@
   border: 1px solid #bdbdc2;
   padding: 0 2px;
   box-shadow: inset 0 2px 4px 0 hsla(240, 4%, 95%, 0.05);
-  margin-bottom: 1em;
   
   .cts-input {
     border: 0;
@@ -37,4 +45,8 @@
     width: 270px;
     margin-bottom: 0;
   }
+}
+
+.cts-input__help-text:not(:last-child){
+  margin-bottom: 1em;
 }

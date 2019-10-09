@@ -630,6 +630,7 @@ class Autocomplete extends React.Component {
       : {};
 
     return (
+      <>
       <div id={this.id + '-autocomplete-wrapper'} className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
         {this.props.labelHidden ? null : (
         <InputLabel
@@ -664,8 +665,10 @@ class Autocomplete extends React.Component {
           type: 'text',
           value: this.props.value,
         })}
+        
         </div>
         {open && this.renderMenu()}
+        
         {this.props.debug && (
           <pre style={{ marginLeft: 300 }}>
             {JSON.stringify(
@@ -679,6 +682,10 @@ class Autocomplete extends React.Component {
           </pre>
         )}
       </div>
+      {this.props.inputHelpText &&
+        <span className="cts-input__help-text">{this.props.inputHelpText}</span>
+      }
+      </>
     );
   }
 }

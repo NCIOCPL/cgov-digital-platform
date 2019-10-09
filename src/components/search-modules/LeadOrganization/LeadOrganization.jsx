@@ -31,7 +31,9 @@ const LeadOrganization = ({ handleUpdate }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#leadorganization"
     >
       <Autocomplete
-        label="Search by Lead Organization"
+        label="Lead organization"
+        labelHidden
+        inputHelpText="Search by Lead Organization"
         value={orgName.value}
         inputProps={{ id: 'lo', placeholder: 'Organization name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
