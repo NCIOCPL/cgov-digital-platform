@@ -7,10 +7,10 @@ import {
   Modal,
   Pager,
   ResultsList,
-  SearchCriteriaTable,
 } from '../../components/atomic';
 import { useModal } from '../../utilities/hooks';
 import './ResultsPage.scss';
+import ResultsPageHeader from './ResultsPageHeader';
 
 const ResultsPage = ({ results }) => {
   const [selectAll, setSelectAll] = useState(false);
@@ -89,23 +89,6 @@ const ResultsPage = ({ results }) => {
     </div>
   );
 
-  const renderResultsHeader = () => {
-    return (
-      <div className="cts-results-header">
-        <p>
-          <strong>
-            Results 1-10 of {paginatedResults.length} for your search
-          </strong>
-        </p>
-
-        <SearchCriteriaTable />
-        <p className="reset-form">
-          <Link to="/search">Start Over</Link>
-        </p>
-      </div>
-    );
-  };
-
   const renderControls = (isBottom = false) => {
     const cbxId = isBottom ? 'select-all-cbx-bottom' : 'select-all-cbx-top';
     return (
@@ -124,7 +107,8 @@ const ResultsPage = ({ results }) => {
           <button
             className="results-page__print-button"
             ref={printSelectedBtn}
-            onClick={toggleModal}>
+            onClick={toggleModal}
+          >
             Print Selected
           </button>
         </div>
@@ -173,7 +157,7 @@ const ResultsPage = ({ results }) => {
       <div className="contentzone">
         {/* */}
         <article className="results-page">
-          {renderResultsHeader()}
+          <ResultsPageHeader resultsCount={paginatedResults.length} />
           <div className="results-page__content">
             {renderControls()}
             <div className="results-page__list">
