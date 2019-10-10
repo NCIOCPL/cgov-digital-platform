@@ -276,9 +276,7 @@ export function getFindings({ ancestorId, size = 0, isDebug = false }) {
   };
 }
 
-/**
- * Gets hospital/institution to populate the Hospital/Institution field
- */
+
 export function getCountries({ size = 100 } = {}) {
   return {
     type: '@@cache/RETRIEVE',
@@ -307,12 +305,15 @@ export function getCountries({ size = 100 } = {}) {
   };
 }
 
+/**
+ * Gets hospital/institution to populate the Hospital/Institution field
+ */
 export function searchHospital({ searchText, size = 10 }) {
   return {
     type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'hospital',
+      cacheKey: 'hospitals',
       requests: [
         {
           method: 'getTerms',
@@ -321,7 +322,7 @@ export function searchHospital({ searchText, size = 10 }) {
             additionalParams: {
               term: searchText,
               sort: 'term',
-              current_trial_status: VIEWABLE_TRIALS,
+              current_trial_statuses: VIEWABLE_TRIALS,
             },
             size,
           },

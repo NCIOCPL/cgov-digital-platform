@@ -23,6 +23,7 @@ export const defaultState = {
   tp: [], //Trial phase
   nih: false, //At NIH only
   va: false, //VA facilities only
+  location: 'search-location-all' // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 
 export const reducer = (state = defaultState, action) => {

@@ -1,32 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Fieldset, TextInput, Radio, Toggle, Dropdown } from '../../atomic';
-import { getCountries } from '../../../store/actions';
+import {
+  Fieldset,
+  TextInput,
+  Radio,
+  Toggle,
+  Dropdown,
+  Autocomplete,
+} from '../../atomic';
+import { getCountries, searchHospital } from '../../../store/actions';
+import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 import './Location.scss';
 
-//TODO: Using mock list of states until API is ready;
 import { getStates } from '../../../mocks/mock-autocomplete-util';
 
 const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
+
   const { countries = [] } = useSelector(store => store.cache);
-  const { z, zp, lcnty, lcty, lst, hos } = useSelector(
+  const { location, z, zp, lcnty, lcty, lst, hos, nih, va } = useSelector(
     store => store.form
   );
-  const [activeRadio, setActiveRadio] = useState('search-location-all');
-  const [limitToVA, setLimitToVA] = useState(false);
+  const [activeRadio, setActiveRadio] = useState(location);
+  const [limitToVA, setLimitToVA] = useState(va);
+  const [closeToNIH, setCloseToNIH] = useState(nih);
   const [showStateField, setShowStateField] = useState(true);
 
+  const [hospitalName, setHospitalName] = useState({ value: '' });
+
+  //hospital
+  const { hospitals = [] } = useSelector(store => store.cache);
+
   useEffect(() => {
+    handleUpdate('hos', hospitalName);
+  }, [hospitalName, handleUpdate]);
+
+  useEffect(() => {
+    if (hospitalName.value.length > 2) {
+      dispatch(searchHospital({ searchText: hospitalName.value }));
+    }
+  }, [hospitalName, dispatch]);
+
+  useEffect(() => {
+    handleUpdate('location', activeRadio);
+
     if (activeRadio === 'search-location-country') {
       dispatch(getCountries());
     }
+    setCloseToNIH(activeRadio === 'search-location-nih');
   }, [activeRadio, dispatch]);
 
   useEffect(() => {
     handleUpdate('va', limitToVA);
   }, [limitToVA, handleUpdate]);
+
+  useEffect(() => {
+    handleUpdate('nih', closeToNIH);
+  }, [closeToNIH, handleUpdate]);
 
   const handleToggleChange = () => {
     setLimitToVA(!limitToVA);
@@ -36,10 +67,9 @@ const Location = ({ handleUpdate }) => {
     setActiveRadio(e.target.value);
   };
 
-  
-
   const handleCountryOnChange = e => {
     const country = e.target.value;
+    handleUpdate('lcnty', country);
     if (country === 'United States') {
       setShowStateField(true);
     } else {
@@ -168,13 +198,51 @@ const Location = ({ handleUpdate }) => {
             />
             {activeRadio === 'search-location-hospital' && (
               <div className="search-location__block">
-                <TextInput
-                  action={e => handleUpdate(e.target.id, e.target.value)}
-                  id="hos"
-                  label="Hospitals/Institutions"
+                <Autocomplete
+                  label="hospitals / institutions"
                   labelHidden
-                  value={hos}
-                  placeHolder="Please enter 3 or more characters"
+                  value={hospitalName.value}
+                  inputProps={{
+                    id: 'hos',
+                    placeholder: 'Hospital/Institution name',
+                  }}
+                  wrapperStyle={{
+                    position: 'relative',
+                    display: 'inline-block',
+                  }}
+                  items={hospitals}
+                  getItemValue={item => item.term}
+                  shouldItemRender={matchItemToTerm}
+                  sortItems={sortItems}
+                  onChange={(event, value) => setHospitalName({ value })}
+                  onSelect={value => setHospitalName({ value })}
+                  renderMenu={children => (
+                    <div className="cts-autocomplete__menu --hospitals">
+                      {hospitalName.value.length > 2 ? (
+                        hospitals.length ? (
+                          children
+                        ) : (
+                          <div className="cts-autocomplete__menu-item">
+                            No results found
+                          </div>
+                        )
+                      ) : (
+                        <div className="cts-autocomplete__menu-item">
+                          Please enter 3 or more characters
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      className={`cts-autocomplete__menu-item ${
+                        isHighlighted ? 'highlighted' : ''
+                      }`}
+                      key={item.termKey}
+                    >
+                      {item.term}
+                    </div>
+                  )}
                 />
               </div>
             )}

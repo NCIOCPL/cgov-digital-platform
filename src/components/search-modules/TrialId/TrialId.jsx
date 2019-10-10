@@ -5,7 +5,8 @@ import { Fieldset, TextInput } from '../../atomic';
 import './TrialId.scss';
 
 const TrialId = ({ handleUpdate }) => {
-  let value = useSelector(store => store.form.tid);
+  const tid = useSelector(store => store.form.tid);
+
   return (
     <Fieldset
       id="trialid"
@@ -14,7 +15,7 @@ const TrialId = ({ handleUpdate }) => {
     >
       <TextInput
         action={e => handleUpdate(e.target.id, e.target.value)}
-        value={value}
+        value={tid}
         id="tid"
         type="text"
         label="Trial ID"

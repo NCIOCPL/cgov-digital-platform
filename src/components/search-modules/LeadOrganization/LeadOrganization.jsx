@@ -60,7 +60,7 @@ const LeadOrganization = ({ handleUpdate }) => {
             }`}
             key={item.term_key}
           >
-            {item.term_key}{item.term}
+            {item.term}
           </div>
         )}
       />
