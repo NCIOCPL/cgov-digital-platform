@@ -491,7 +491,7 @@ class Autocomplete extends React.Component {
     return (
       <>
       {this.props.chipList.map((chip, idx) => (
-        <RemovableTag key={idx} label={chip.label} onRemove={this.props.onChipRemove} />
+        <RemovableTag key={idx} label={chip.name} onRemove={this.props.onChipRemove} />
       ))
       }
       </>

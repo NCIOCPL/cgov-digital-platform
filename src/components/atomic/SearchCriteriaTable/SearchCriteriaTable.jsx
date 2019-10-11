@@ -32,8 +32,6 @@ const SearchCriteriaTable = () => {
 
   const criteria = [];
   const formatStoreDataForDisplay = () => {
-    console.log('hi! '  + criteria.length);
-
     if (a && a !== '') {
       criteria.push({ category: 'Age', selection: a });
     }
@@ -116,17 +114,18 @@ const SearchCriteriaTable = () => {
     if (drugs && drugs.length > 0) {
       let joinedVals = '';
       drugs.forEach(function(drug) {
-        joinedVals += drug.label + ', ';
+        joinedVals += drug.name + ', ';
       });
       criteria.push({
         category: 'Drug/Drug Family',
         selection: joinedVals,
       });
     }
+
     if (treatments && treatments.length > 0) {
       let joinedVals = '';
       treatments.forEach(function(treatment) {
-        joinedVals += treatment.label + ', ';
+        joinedVals += treatment.name + ', ';
       });
       criteria.push({
         category: 'Other Treatments',
@@ -161,7 +160,6 @@ const SearchCriteriaTable = () => {
       criteria.push({ category: 'Lead Organizations', selection: lo.value });
     }
 
-    console.log(criteria);
     setCriterion([...criteria]);
   };
 

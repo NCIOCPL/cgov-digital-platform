@@ -118,7 +118,7 @@ export function getMainType({ size = 0, isDebug = false }) {
     type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'maintypes',
+      cacheKey: 'maintypeOptions',
       requests: [
         {
           method: 'getDiseases',
@@ -171,7 +171,7 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
     type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'subtypes',
+      cacheKey: 'subtypeOptions',
       requests: [
         {
           method: 'getDiseases',
@@ -208,7 +208,7 @@ export function getStages({ ancestorId, size = 0, isDebug = false }) {
     type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'stages',
+      cacheKey: 'stageOptions',
       requests: [
         {
           method: 'getDiseases',
@@ -246,7 +246,7 @@ export function getFindings({ ancestorId, size = 0, isDebug = false }) {
     type: '@@cache/RETRIEVE',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'findings',
+      cacheKey: 'findingsOptions',
       requests: [
         {
           method: 'getDiseases',
@@ -340,7 +340,7 @@ export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'drugs',
+      cacheKey: 'drugOptions',
 
       requests: [
         {
@@ -378,7 +378,7 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'treatments',
+      cacheKey: 'treatmentOptions',
       requests: [
         {
           method: 'getInterventions',

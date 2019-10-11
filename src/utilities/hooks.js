@@ -23,12 +23,15 @@ export const useCachedValues = cacheKeys => {
 };
 
 export const useChipList = (chiplistName, handleUpdate) => {
+  const list = useSelector(store => store.form[chiplistName]);
+  console.log(chiplistName + ' list: ' + JSON.stringify(list));
   const [chips, setChips] = useState([]);
   useEffect(() => {
     handleUpdate(chiplistName, [...chips]);
   }, [chips, chiplistName, handleUpdate]);
   const add = item => {
     //prevent dupes
+    console.log(JSON.stringify(item));
     const newChips = [...chips, { label: item }];
     setChips([...new Set(newChips)]);
   };
@@ -38,7 +41,6 @@ export const useChipList = (chiplistName, handleUpdate) => {
     });
     setChips([...newChips]);
   };
-  const list = useSelector(store => store.form[chiplistName]);
 
   return {
     list,

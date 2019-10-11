@@ -1,15 +1,15 @@
 import { UPDATE_FORM, CLEAR_FORM } from '../identifiers';
 
 export const defaultState = {
-  a: '', //Age
-  ct: '', //Cancer Type/Condition
-  st: [], //Subtype
-  stg: [], //Stage
-  fin: [], //Side effects (AKA "findings")
+  a: '', // (a) Age
+  cancerType: {name: '', codes: []}, // (ct) Cancer Type/Condition
+  subtypes: [], // (st) Subtype
+  stages: [], // (stg) Stage
+  findings: [], // (fin) Side effects 
   q: '', //Cancer Type Keyword (ALSO Keyword Phrases)
   dt: '', //Drug/Drug family
   ti: '', //Treatment/Interventions
-  lo: '', //Lead Organization
+  lo: {value: ''}, //Lead Organization
   z: '', //Zipcode
   zp: 100, //Radius
   lcnty: 'United States', //Country
@@ -17,13 +17,16 @@ export const defaultState = {
   lcty: '', //City
   hos: '', //Hospital
   tid: '', //Trial ID,
-  inv: '', // Trial investigators
+  inv: {value: ''}, // Trial investigators ('in' is legacy but is a keyword and does not work well as a key name; be ready to handle both in query string)
   hv: false, //Healthy Volunteers,
   tt: [], //Trial Type
   tp: [], //Trial phase
   nih: false, //At NIH only
   va: false, //VA facilities only
-  location: 'search-location-all' // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
+
+  location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
+  drugs: [],
+  treatments: [],
 };
 
 export const reducer = (state = defaultState, action) => {

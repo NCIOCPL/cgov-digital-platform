@@ -6,10 +6,12 @@ import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 
 const TrialInvestigators = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [tiName, setTiName] = useState({ value: '' });
-
+  
   //store vals
+  const { inv } = useSelector(store => store.form);
   const { tis = [] } = useSelector(store => store.cache);
+  
+  const [tiName, setTiName] = useState({ value:  inv.value });
 
   useEffect(() => {
     handleUpdate('inv', tiName);
@@ -20,7 +22,6 @@ const TrialInvestigators = ({ handleUpdate }) => {
       dispatch(searchTrialInvestigators({ searchText: tiName.value }));
     }
   }, [tiName, dispatch]);
-
 
   return (
     <Fieldset
@@ -57,7 +58,7 @@ const TrialInvestigators = ({ handleUpdate }) => {
             className={`cts-autocomplete__menu-item ${
               isHighlighted ? 'highlighted' : ''
             }`}
-            key={item.term_key}
+            key={item.termKey}
           >
             {item.term}
           </div>

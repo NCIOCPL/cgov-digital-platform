@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete } from '../../atomic';
 import { searchDrugs, searchOtherInterventions } from '../../../store/actions';
-import { useChipList } from '../../../utilities/hooks';
 
 import './DrugTreatment.scss';
 
@@ -11,11 +10,11 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
   const dispatch = useDispatch();
 
   //store vals
-  const { drugs, treatments } = useSelector(store => store.cache);
+  // list of selected drugs and treatments
+  const { drugs, treatments } = useSelector(store => store.form);
 
-  //chip lists
-  const drugChips = useChipList('drugs', handleUpdate);
-  const treatmentChips = useChipList('treatments', handleUpdate);
+  // cached options lists for drugs and treatments
+  const { drugOptions, treatmentOptions } = useSelector(store => store.cache);
 
   //input state
   const [drugVal, setDrugVal] = useState({ value: '' });
@@ -46,6 +45,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
     );
   };
 
+  //not displaying everything!!
   const filterSelectedItems = (items = [], selections = []) => {
     if (!items.length || !selections.length) {
       return items;
@@ -62,9 +62,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
       legend="Drug/Treatment"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#drugtreatment"
     >
-      <p>
-        Search for a specific drug or intervention.
-      </p>
+      <p>Search for a specific drug or intervention.</p>
 
       <Autocomplete
         id="dt"
@@ -72,26 +70,39 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         inputHelpText="You can use the drug's generic or brand name."
         value={drugVal.value}
         inputProps={{ placeholder: placeholderText }}
-        items={filterSelectedItems(drugs, drugChips.list)}
+        items={filterSelectedItems(drugOptions, drugs)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setDrugVal({ value })}
         onSelect={value => {
-          drugChips.add(value);
+          handleUpdate('drugs', [
+            ...drugs,
+            drugOptions.find(({ name }) => name === value),
+          ]);
           setDrugVal({ value: '' });
         }}
         multiselect={true}
-        chipList={drugChips.list}
-        onChipRemove={e => drugChips.remove(e.label)}
+        chipList={drugs}
+        onChipRemove={e => {
+          let newChips = drugs.filter(item => item.name !== e.label);
+          handleUpdate('drugs', [...newChips]);
+        }}
         renderMenu={children => {
           return (
             <div className="cts-autocomplete__menu --drugs">
-              {(drugVal.value.length > 2 )
-                ? (filterSelectedItems(drugs, drugChips.list).length)
-                    ? (children)
-                    : <div className="cts-autocomplete__menu-item">No results found</div>
-                : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
-              }
+              {drugVal.value.length > 2 ? (
+                filterSelectedItems(drugOptions, drugs).length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No results found
+                  </div>
+                )
+              ) : (
+                <div className="cts-autocomplete__menu-item">
+                  {placeholderText}
+                </div>
+              )}
             </div>
           );
         }}
@@ -120,26 +131,39 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         label="Other Treatments"
         value={treatmentVal.value}
         inputProps={{ placeholder: placeholderText }}
-        items={filterSelectedItems(treatments, treatmentChips.list)}
+        items={filterSelectedItems(treatmentOptions, treatments)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => setTreatmentVal({ value })}
         onSelect={value => {
-          treatmentChips.add(value);
+          handleUpdate('treatments', [
+            ...treatments,
+            treatmentOptions.find(({ name }) => name === value),
+          ]);
           setTreatmentVal({ value: '' });
         }}
         multiselect={true}
-        chipList={treatmentChips.list}
-        onChipRemove={e => treatmentChips.remove(e.label)}
+        chipList={treatments}
+        onChipRemove={e => {
+          let newChips = treatments.filter(item => item.name !== e.label);
+          handleUpdate('treatments', [...newChips]);
+        }}
         renderMenu={children => {
           return (
             <div className="cts-autocomplete__menu --drugs">
-              {(treatmentVal.value.length > 2 )
-                ? (filterSelectedItems(treatments, treatmentChips.list).length)
-                    ? (children)
-                    : <div className="cts-autocomplete__menu-item">No results found</div>
-                : <div className="cts-autocomplete__menu-item">{placeholderText}</div>
-              }
+              {treatmentVal.value.length > 2 ? (
+                filterSelectedItems(treatmentOptions, treatments).length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No results found
+                  </div>
+                )
+              ) : (
+                <div className="cts-autocomplete__menu-item">
+                  {placeholderText}
+                </div>
+              )}
             </div>
           );
         }}
@@ -156,7 +180,7 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
             </div>
             {item.synonyms.length > 0 && (
               <span className="synonyms">
-                Other Stuff Names: {item.synonyms.join(', ')}
+                Other Names: {item.synonyms.join(', ')}
               </span>
             )}
           </div>

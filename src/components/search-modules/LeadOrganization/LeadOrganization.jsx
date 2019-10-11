@@ -8,10 +8,10 @@ import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 
 const LeadOrganization = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [orgName, setOrgName] = useState({ value: '' });
-
-  //store vals
+  const { lo } = useSelector(store => store.form);
   const { leadorgs = [] } = useSelector(store => store.cache);
+  
+  const [orgName, setOrgName] = useState({ value: lo.value });
 
   useEffect(() => {
     handleUpdate('lo', orgName);
@@ -58,7 +58,7 @@ const LeadOrganization = ({ handleUpdate }) => {
             className={`cts-autocomplete__menu-item ${
               isHighlighted ? 'highlighted' : ''
             }`}
-            key={item.term_key}
+            key={item.termKey}
           >
             {item.term}
           </div>
