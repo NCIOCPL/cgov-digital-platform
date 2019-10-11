@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Fieldset, Checkbox } from '../../atomic';
 import './TrialPhase.scss';
 
 const TrialPhase = ({ phaseFields, handleUpdate }) => {
-  const initPhases = phaseFields.map(phase => {
-    if (phase && !phase.checked) {
-      return {
-        ...phase,
-        checked: false,
-      };
-    } else {
-      return phase;
-    }
-  });
-  const [phases, setPhases] = useState(initPhases);
+  const { trialPhases } = useSelector(store => store.form);
+
+ 
+  const [phases, setPhases] = useState(trialPhases);
 
   useEffect(() => {
-    handleUpdate('tp', [...phases]);
+    handleUpdate('trialPhases', [...phases]);
   }, [phases, handleUpdate]);
 
   const handleSelectAll = e => {
@@ -84,13 +78,5 @@ TrialPhase.propTypes = {
   handleUpdate: PropTypes.func,
 };
 
-TrialPhase.defaultProps = {
-  phaseFields: [
-    { label: 'Phase I', value: 'I' },
-    { label: 'Phase I', value: 'II' },
-    { label: 'Phase III', value: 'III' },
-    { label: 'Phase IV', value: 'IV' },
-  ],
-};
 
 export default TrialPhase;

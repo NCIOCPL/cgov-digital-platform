@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
 import {
   Age,
@@ -32,10 +31,10 @@ const advancedFormModules = [
   LeadOrganization,
 ];
 
-const SearchPage = ({ form }) => {
+const SearchPage = () => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
-  const [formVersion, setFormVersion] = useState(form);
+  const formType = useSelector( store => store.form.formType );
 
   // scroll to top on mount
   useEffect(() => {
@@ -94,7 +93,7 @@ const SearchPage = ({ form }) => {
   );
 
   const toggleForm = () => {
-    setFormVersion(formVersion === 'basic' ? 'advanced' : 'basic');
+    handleUpdate('formType', formType === 'basic' ? 'advanced' : 'basic');
   };
 
   const renderSearchTip = () => (
@@ -104,13 +103,13 @@ const SearchPage = ({ form }) => {
       </div>
       <div className="cts-search-tip__body">
         <strong>Search Tip:</strong>
-        {formVersion === 'basic' ? (
+        {formType === 'basic' ? (
           <>{` For more search options, use our `}</>
         ) : (
           <>{` All fields are optional. Skip any items that are unknown or not applicable or try our `}</>
         )}
         <button type="button" className="btnAsLink" onClick={toggleForm}>
-          {formVersion === 'basic' ? 'advanced search' : 'basic search'}
+          {formType === 'basic' ? 'advanced search' : 'basic search'}
         </button>
         .
       </div>
@@ -118,7 +117,7 @@ const SearchPage = ({ form }) => {
   );
 
   let formModules =
-    formVersion === 'advanced' ? advancedFormModules : basicFormModules;
+    formType === 'advanced' ? advancedFormModules : basicFormModules;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -143,7 +142,7 @@ const SearchPage = ({ form }) => {
           <div className="search-page__content">
             <form
               onSubmit={handleSubmit}
-              className={`search-page__form ${formVersion}`}
+              className={`search-page__form ${formType}`}
             >
               {formModules.map((Module, idx) => {
                 if (Array.isArray(Module)) {
@@ -192,14 +191,6 @@ const SearchPage = ({ form }) => {
       </div>
     </div>
   );
-};
-
-SearchPage.propTypes = {
-  form: PropTypes.string,
-};
-
-SearchPage.defaultProps = {
-  form: 'advanced',
 };
 
 export default SearchPage;

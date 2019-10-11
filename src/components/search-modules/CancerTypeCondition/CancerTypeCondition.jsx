@@ -40,7 +40,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       watchClickOutside(document.getElementById('ctMenu'));
     }
     if (cancerType.codes.length > 0) {
-      console.log('fetch other stuff');
       dispatch(
         getCancerTypeDescendents({
           cacheKey: cancerType.name,

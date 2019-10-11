@@ -12,29 +12,30 @@ import { getCountries, searchHospital } from '../../../store/actions';
 import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 import './Location.scss';
 
-import { getStates } from '../../../mocks/mock-autocomplete-util';
+import { getStates, matchStateToTerm } from '../../../mocks/mock-autocomplete-util';
 
 const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
 
   const { countries = [] } = useSelector(store => store.cache);
-  const { location, zip, zipRadius, country, city, state, hospital, nih, va } = useSelector(
+  const { location, zip, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
     store => store.form
   );
   const [activeRadio, setActiveRadio] = useState(location);
-  const [limitToVA, setLimitToVA] = useState(va);
-  const [closeToNIH, setCloseToNIH] = useState(nih);
+  const [limitToVA, setLimitToVA] = useState(vaOnly);
+  const [closeToNIH, setCloseToNIH] = useState(nihOnly);
   const [showStateField, setShowStateField] = useState(true);
 
-  const [hospitalName, setHospitalName] = useState({ value: '' });
-
+  const [hospitalName, setHospitalName] = useState({ value: hospital.term });
   //hospital
   const { hospitals = [] } = useSelector(store => store.cache);
 
-  useEffect(() => {
-    handleUpdate('hos', hospitalName);
-  }, [hospitalName, handleUpdate]);
+  //state input
+  const [stateVal, setStateVal] = useState({ value: '' });
+  const stateOptions = getStates();
+  
+
 
   useEffect(() => {
     if (hospitalName.value.length > 2) {
@@ -52,11 +53,11 @@ const Location = ({ handleUpdate }) => {
   }, [activeRadio, dispatch]);
 
   useEffect(() => {
-    handleUpdate('va', limitToVA);
+    handleUpdate('vaOnly', limitToVA);
   }, [limitToVA, handleUpdate]);
 
   useEffect(() => {
-    handleUpdate('nih', closeToNIH);
+    handleUpdate('nihOnly', closeToNIH);
   }, [closeToNIH, handleUpdate]);
 
   const handleToggleChange = () => {
@@ -75,6 +76,15 @@ const Location = ({ handleUpdate }) => {
     } else {
       setShowStateField(false);
     }
+  };
+
+  const filterSelectedItems = (items = [], selections = []) => {
+    if (!items.length || !selections.length) {
+      return items;
+    }
+    return items.filter(
+      item => !selections.find(selection => selection.name === item.name)
+    );
   };
 
   return (
@@ -162,22 +172,57 @@ const Location = ({ handleUpdate }) => {
               }`}
             >
               {showStateField && (
-                <Dropdown
-                  id="lst"
-                  classes="state"
-                  label="State"
-                  action={e => handleUpdate(e.target.id, e.target.value)}
-                  value={state}
-                >
-                  {getStates().map(state => {
-                    return (
-                      <option
-                        key={state.abbr}
-                        value={state.abbr}
-                      >{`${state.name}`}</option>
-                    );
-                  })}
-                </Dropdown>
+                <Autocomplete
+                id="lst"
+                label="State"
+                value={stateVal.value}
+                items={filterSelectedItems(stateOptions, states)}
+                getItemValue={item => item.name}
+                shouldItemRender={matchStateToTerm}
+                onChange={(event, value) => setStateVal({ value })}
+                onSelect={value => {
+                  handleUpdate('states', [
+                    ...states,
+                    stateOptions.find(({ name }) => name === value),
+                  ]);
+                  setStateVal({ value: '' });
+                }}
+                multiselect={true}
+                chipList={states}
+                onChipRemove={e => {
+                  let newChips = states.filter(item => item.name !== e.label);
+                  handleUpdate('states', [...newChips]);
+                }}
+                renderMenu={children => {
+                  return (
+                    <div className="cts-autocomplete__menu --drugs">
+                      {stateVal.value.length ? (
+                        filterSelectedItems(stateOptions, states).length ? (
+                          children
+                        ) : (
+                          <div className="cts-autocomplete__menu-item">
+                            No results found
+                          </div>
+                        )
+                      ) : (
+                        <div className="cts-autocomplete__menu-item">
+                          Enter state name
+                        </div>
+                      )}
+                    </div>
+                  );
+                }}
+                renderItem={(item, isHighlighted) => (
+                  <div
+                    className={`cts-autocomplete__menu-item ${
+                      isHighlighted ? 'highlighted' : ''
+                    }`}
+                    key={item.abbr}
+                  >
+                      {item.name}
+                  </div>
+                )}
+              />
               )}
               <TextInput
                 action={e => handleUpdate(e.target.id, e.target.value)}

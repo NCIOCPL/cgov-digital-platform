@@ -8,14 +8,10 @@ const TrialInvestigators = ({ handleUpdate }) => {
   const dispatch = useDispatch();
   
   //store vals
-  const { inv } = useSelector(store => store.form);
+  const { investigator } = useSelector(store => store.form);
   const { tis = [] } = useSelector(store => store.cache);
   
-  const [tiName, setTiName] = useState({ value:  inv.value });
-
-  useEffect(() => {
-    handleUpdate('inv', tiName);
-  }, [tiName, handleUpdate]);
+  const [tiName, setTiName] = useState({ value:  investigator.term });
 
   useEffect(() => {
     if (tiName.value.length > 2) {
@@ -35,14 +31,17 @@ const TrialInvestigators = ({ handleUpdate }) => {
         labelHidden
         inputHelpText="Search by Trial Investigators"
         value={tiName.value}
-        inputProps={{ id: 'in', placeholder: 'Investigator name' }}
+        inputProps={{ id: 'investigator', placeholder: 'Investigator name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={tis}
         getItemValue={item => item.term}
         shouldItemRender={matchItemToTerm}
         sortItems={sortItems}
         onChange={(event, value) => setTiName({ value })}
-        onSelect={value => setTiName({ value })}
+        onSelect={(value, item) => {
+          handleUpdate('investigator', item);
+          setTiName({ value });
+        }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --trialInvestigators">
             {(tiName.value.length > 2 )
