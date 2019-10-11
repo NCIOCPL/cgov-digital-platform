@@ -4,28 +4,23 @@ import PropTypes from 'prop-types';
 import { Checkbox, Fieldset, Toggle } from '../../atomic';
 import './TrialType.scss';
 
-const TrialType = ({ trialTypeFields, handleUpdate }) => {
-  const healthyVolunteers = useSelector(store => store.form.hv);
+const TrialType = ({ handleUpdate }) => {
+  const healthyVolunteers = useSelector(store => store.form.healthyVolunteers);
+
+  //store vals
+  const { trialTypes } = useSelector(store => store.form);
+  const [trials, setTrials] = useState(trialTypes);
+
   const [hvToggle, setHvToggle] = useState(healthyVolunteers);
-  const initPhases = trialTypeFields.map(type => {
-    if (type && !type.checked) {
-      return {
-        ...type,
-        checked: false,
-      };
-    } else {
-      return type;
-    }
-  });
 
-  const [trialTypes, setTrialTypes] = useState(initPhases);
+
 
   useEffect(() => {
-    handleUpdate('tt', [...trialTypes]);
-  }, [trialTypes, handleUpdate]);
+    handleUpdate('trialTypes', [...trials]);
+  }, [trials, handleUpdate]);
 
   useEffect(() => {
-    handleUpdate('hv', hvToggle);
+    handleUpdate('healthyVolunteers', hvToggle);
   }, [hvToggle, handleUpdate]);
 
   const handleToggle = checked => {
@@ -33,8 +28,8 @@ const TrialType = ({ trialTypeFields, handleUpdate }) => {
   };
 
   const handleSelectAll = e => {
-    setTrialTypes(
-      trialTypes.map(type => ({
+    setTrials(
+      trials.map(type => ({
         ...type,
         checked: false,
       }))
@@ -52,7 +47,7 @@ const TrialType = ({ trialTypeFields, handleUpdate }) => {
         return type;
       }
     });
-    setTrialTypes(filtered);
+    setTrials(filtered);
   };
 
   return (
@@ -107,17 +102,5 @@ TrialType.propTypes = {
   handleUpdate: PropTypes.func,
 };
 
-TrialType.defaultProps = {
-  trialTypeFields: [
-    { label: 'Treatment', value: 'treatment' },
-    { label: 'Prevention', value: 'prevention' },
-    { label: 'Supportive Care', value: 'supportive_care' },
-    { label: 'Health Services Research', value: 'health_services_research' },
-    { label: 'Diagnostic', value: 'diagnostic' },
-    { label: 'Screening', value: 'screening' },
-    { label: 'Basic Science', value: 'basic_science' },
-    { label: 'Other', value: 'other' },
-  ],
-};
 
 export default TrialType;

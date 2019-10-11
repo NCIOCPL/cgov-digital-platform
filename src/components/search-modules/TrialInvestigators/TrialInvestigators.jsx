@@ -6,21 +6,18 @@ import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 
 const TrialInvestigators = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [tiName, setTiName] = useState({ value: '' });
-
+  
   //store vals
+  const { investigator } = useSelector(store => store.form);
   const { tis = [] } = useSelector(store => store.cache);
-
-  useEffect(() => {
-    handleUpdate('inv', tiName);
-  }, [tiName, handleUpdate]);
+  
+  const [tiName, setTiName] = useState({ value:  investigator.term });
 
   useEffect(() => {
     if (tiName.value.length > 2) {
       dispatch(searchTrialInvestigators({ searchText: tiName.value }));
     }
   }, [tiName, dispatch]);
-
 
   return (
     <Fieldset
@@ -34,14 +31,17 @@ const TrialInvestigators = ({ handleUpdate }) => {
         labelHidden
         inputHelpText="Search by Trial Investigators"
         value={tiName.value}
-        inputProps={{ id: 'in', placeholder: 'Investigator name' }}
+        inputProps={{ id: 'investigator', placeholder: 'Investigator name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={tis}
         getItemValue={item => item.term}
         shouldItemRender={matchItemToTerm}
         sortItems={sortItems}
         onChange={(event, value) => setTiName({ value })}
-        onSelect={value => setTiName({ value })}
+        onSelect={(value, item) => {
+          handleUpdate('investigator', item);
+          setTiName({ value });
+        }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --trialInvestigators">
             {(tiName.value.length > 2 )
@@ -57,7 +57,7 @@ const TrialInvestigators = ({ handleUpdate }) => {
             className={`cts-autocomplete__menu-item ${
               isHighlighted ? 'highlighted' : ''
             }`}
-            key={item.term_key}
+            key={item.termKey}
           >
             {item.term}
           </div>

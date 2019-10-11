@@ -5,8 +5,10 @@ import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
 
 const CancerTypeKeyword = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: '', id: null });
+  const { keywordPhrases } = useSelector(store => store.form);
   const { diseases = [] } = useSelector(store => store.cache);
+
+  const [cancerType, setCancerType] = useState({ value: keywordPhrases });
 
   useEffect(() => {
     dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
@@ -23,7 +25,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
     >
       <Autocomplete
-        id="q"
+        id="ctk"
         label="Cancer Type/Keyword"
         value={cancerType.value}
         inputProps={{ placeholder: 'Start typing to select a cancer type' }}
@@ -31,15 +33,18 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
         items={diseases}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
-        onChange={(event, value) => setCancerType({ value })}
-        onSelect={value => {
-          handleUpdate('q', value);
+        onChange={(event, value) => {
           setCancerType({ value });
+          handleUpdate('keywordPhrases', value);
+          handleUpdate('typeCode', []);
+        }}
+        onSelect={(value, item) => {
+          setCancerType({ value });
+          handleUpdate('typeCode', item.codes);
+          handleUpdate('keywordPhrases', value);
         }}
         renderMenu={children => (
-          <div className="cts-autocomplete__menu --q">
-          {children}
-          </div>
+          <div className="cts-autocomplete__menu --q">{children}</div>
         )}
         renderItem={(item, isHighlighted) => (
           <div
@@ -52,7 +57,6 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
           </div>
         )}
       />
-
     </Fieldset>
   );
 };

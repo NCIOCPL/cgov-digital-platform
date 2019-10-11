@@ -6,49 +6,61 @@ import './SearchCriteriaTable.scss';
 const SearchCriteriaTable = () => {
   //store vals
   const {
-    a,
-    ct,
+    age,
+    cancerType,
     subtypes,
     stages,
     findings,
-    q,
-    lo,
-    z,
-    zp,
-    inv,
-    tid,
-    hv,
-    tt,
-    tp,
-    va,
+    keywordPhrases,
+    leadOrg,
+    zip,
+    zipRadius,
+    country,
+    states,
+    city,
+    hospital,
+    trialId,
+    investigator,
+    healthyVolunteers,
+    trialTypes,
+    trialPhases,
+    nihOnly,
+    vaOnly,
     drugs,
     treatments,
+    location,
+    formType,
   } = useSelector(store => store.form);
 
   const [criterion, setCriterion] = useState([]);
-  useEffect(()=> {
-    formatStoreDataForDisplay()
+  useEffect(() => {
+    formatStoreDataForDisplay();
   }, []);
 
   const criteria = [];
   const formatStoreDataForDisplay = () => {
-    console.log('hi! '  + criteria.length);
-
-    if (a && a !== '') {
-      criteria.push({ category: 'Age', selection: a });
-    }
-
-    if (z && z !== '') {
+    if (keywordPhrases && keywordPhrases !== '') {
       criteria.push({
-        category: 'Near ZIP Code:',
-        selection: 'within ' + zp + ' miles of ' + z,
+        category: 'Keywords/Phrases',
+        selection: keywordPhrases,
       });
     }
 
-    if (ct && ct.code.length > 0) {
+    if (age && age !== '') {
+      criteria.push({ category: 'Age', selection: age });
+    }
+
+    if (formType === 'basic' && zip && zip !== '') {
+      criteria.push({
+        category: 'Near ZIP Code',
+        selection: 'within ' + zipRadius + ' miles of ' + zip,
+      });
+    }
+
+    if (cancerType && cancerType.codes.length > 0) {
       criteria.push({
         category: 'Primary Cancer Type/Condition',
-        selection: ct.value,
+        selection: cancerType.value,
       });
     }
 
@@ -80,32 +92,93 @@ const SearchCriteriaTable = () => {
       });
     }
 
-    if (q && q !== '') {
-      criteria.push({ category: 'Keywords/Phrases', selection: q });
+    switch (location) {
+      case 'search-location-zip':
+        if (zip && zip !== '') {
+          criteria.push({
+            category: 'Near ZIP Code',
+            selection: 'within ' + zipRadius + ' miles of ' + zip,
+          });
+        }
+        break;
+      case 'search-location-country':
+        if (country === 'United States') {
+          criteria.push({
+            category: 'Country',
+            selection: country,
+          });
+          if (states && states.length > 0) {
+            let joinedVals = [];
+            states.forEach(function(state) {
+              joinedVals.push(state.name);
+            });
+            criteria.push({
+              category: `${states.length > 1 ? 'State' : 'States'}`,
+              selection: joinedVals.join(', '),
+            });
+          }
+          if (city && city !== '') {
+            criteria.push({
+              category: 'City',
+              selection: city,
+            });
+          }
+        } else {
+          criteria.push({
+            category: 'Country',
+            selection: country,
+          });
+          if (city && city !== '') {
+            criteria.push({
+              category: 'City',
+              selection: city,
+            });
+          }
+        }
+        break;
+      case 'search-location-hospital':
+        if (hospital && hospital.term.length > 0) {
+          criteria.push({
+            category: 'At Hospital/Institution',
+            selection: hospital.term,
+          });
+        }
+        break;
+      case 'search-location-nih':
+        if (nihOnly) {
+          criteria.push({
+            category: 'At NIH',
+            selection:
+              'Only show trials at the NIH Clinical Center (Bethesda, MD)',
+          });
+        }
+        break;
+      default:
+        break;
     }
 
-    if (va) {
+    if (vaOnly) {
       criteria.push({
         category: 'Veterans Affairs Facilities',
         selection: 'Results limited to trials at Veterans Affairs facilities',
       });
     }
 
-    if (hv) {
+    if (healthyVolunteers) {
       criteria.push({
         category: 'Healthy Volunteers',
         selection: 'Results limited to trials accepting healthy volunteers',
       });
     }
 
-    if (tt) {
+    if (trialTypes) {
       let joinedVals = [];
-      tt.forEach(function(trialType) {
+      trialTypes.forEach(function(trialType) {
         if (trialType.checked) {
           joinedVals.push(trialType.label);
         }
       });
-      if (joinedVals.length > 0 && joinedVals.length !== tt.length) {
+      if (joinedVals.length > 0 && joinedVals.length !== trialTypes.length) {
         criteria.push({
           category: 'Trial Type',
           selection: joinedVals.join(', '),
@@ -116,17 +189,18 @@ const SearchCriteriaTable = () => {
     if (drugs && drugs.length > 0) {
       let joinedVals = '';
       drugs.forEach(function(drug) {
-        joinedVals += drug.label + ', ';
+        joinedVals += drug.name + ', ';
       });
       criteria.push({
         category: 'Drug/Drug Family',
         selection: joinedVals,
       });
     }
+
     if (treatments && treatments.length > 0) {
       let joinedVals = '';
       treatments.forEach(function(treatment) {
-        joinedVals += treatment.label + ', ';
+        joinedVals += treatment.name + ', ';
       });
       criteria.push({
         category: 'Other Treatments',
@@ -134,14 +208,18 @@ const SearchCriteriaTable = () => {
       });
     }
 
-    if (tp) {
+    if (trialId && trialId !== '') {
+      criteria.push({ category: 'Trial ID', selection: trialId });
+    }
+
+    if (trialPhases) {
       let joinedVals = [];
-      tp.forEach(function(phase) {
+      trialPhases.forEach(function(phase) {
         if (phase.checked === true) {
           joinedVals.push(phase.label);
         }
       });
-      if (joinedVals.length > 0 && joinedVals.length < tp.length) {
+      if (joinedVals.length > 0 && joinedVals.length < trialPhases.length) {
         criteria.push({
           category: 'Trial Phase',
           selection: joinedVals.join(', '),
@@ -149,24 +227,24 @@ const SearchCriteriaTable = () => {
       }
     }
 
-    if (tid && tid !== '') {
-      criteria.push({ category: 'Trial ID', selection: tid });
+    if (investigator && investigator.term !== '') {
+      criteria.push({
+        category: 'Trial Investigators',
+        selection: investigator.term,
+      });
     }
 
-    if (inv && inv.value !== '') {
-      criteria.push({ category: 'Trial Investigators', selection: inv.value });
+    if (leadOrg && leadOrg.term !== '') {
+      criteria.push({
+        category: 'Lead Organizations',
+        selection: leadOrg.term,
+      });
     }
 
-    if (lo && lo.value !== '') {
-      criteria.push({ category: 'Lead Organizations', selection: lo.value });
-    }
-
-    console.log(criteria);
     setCriterion([...criteria]);
   };
 
-  return (
-    criterion.length? (
+  return criterion.length ? (
     <Accordion bordered startCollapsed>
       <AccordionItem title="Show Search Criteria">
         <div className="search-criteria-table">
@@ -181,8 +259,7 @@ const SearchCriteriaTable = () => {
         </div>
       </AccordionItem>
     </Accordion>
-    ) : null
-  )
+  ) : null;
 };
 
 export default SearchCriteriaTable;

@@ -4,7 +4,7 @@ import { Fieldset, TextInput } from '../../atomic';
 import './KeywordsPhrases.scss';
 
 const KeywordsPhrases = ({ handleUpdate }) => {
-  const keywordPhrases = useSelector(store => store.form.q);
+  const keywordPhrases = useSelector(store => store.form.keywordPhrases);
   return (
     <Fieldset
       id="keyword"
@@ -13,7 +13,7 @@ const KeywordsPhrases = ({ handleUpdate }) => {
     >
       <TextInput
         action={e => handleUpdate(e.target.id, e.target.value)}
-        id="q"
+        id="keywordPhrases"
         value={keywordPhrases}
         label="Keywords phrases"
         labelHidden
