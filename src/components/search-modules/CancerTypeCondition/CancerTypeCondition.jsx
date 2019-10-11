@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Fieldset, Autocomplete, InputLabel } from '../../atomic';
 import { getMainType, getCancerTypeDescendents } from '../../../store/actions';
-import { useChipList, useCachedValues } from '../../../utilities/hooks';
+import { useCachedValues } from '../../../utilities/hooks';
 import './CancerTypeCondition.scss';
 require('../../../polyfills/closest');
 
 const CancerTypeCondition = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const [cancerType, setCancerType] = useState({ value: '', codes: [] });
-  const [searchText, setSearchText] = useState({ value: '', codes: [] });
+  const [searchText, setSearchText] = useState({ value: '' });
 
-  const subtypeChips = useChipList('subtypes', handleUpdate);
-  const stageChips = useChipList('stages', handleUpdate);
-  const finChips = useChipList('findings', handleUpdate);
+  //store values
+  const { cancerType, subtypes, stages, findings } = useSelector(store => store.form);
+
+
+  //typeahead states
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
+
+
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
 
   const {
-    maintypes = [],
-    subtypes = [],
-    findings = [],
-    stages = [],
-  } = useCachedValues(['maintypes', 'subtypes', 'findings', 'stages']);
+    maintypeOptions = [],
+    subtypeOptions,
+    stageOptions,
+    findingsOptions
+  } = useCachedValues(['maintypeOptions', 'subtypeOptions', 'stageOptions', 'findingsOptions', ]);
 
   // Retrieval of main types is triggered by expanding the cancer type dropdown
   useEffect(() => {
     // if maintypes is essentially empty, fetch mainTypes
-    if (maintypes.length < 1 && ctMenuOpen) {
+    if (maintypeOptions.length < 1 && ctMenuOpen) {
       dispatch(getMainType({}));
     }
     if (ctMenuOpen) {
@@ -37,9 +40,10 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       watchClickOutside(document.getElementById('ctMenu'));
     }
     if (cancerType.codes.length > 0) {
+      console.log('fetch other stuff');
       dispatch(
         getCancerTypeDescendents({
-          cacheKey: cancerType.value,
+          cacheKey: cancerType.name,
           codes: cancerType.codes,
         })
       );
@@ -50,30 +54,24 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
 
-  
-
   const filterSelectedItems = (items = [], selections = []) => {
     if (!items.length || !selections.length) {
       return items;
     }
     return items.filter(
-      item => !selections.find(selection => selection.label === item.name)
+      item => !selections.find(selection => selection.name === item.name)
     );
   };
 
   const ctSelectButtonDisplay =
-    cancerType.codes.length === 0 ? 'All' : cancerType.value;
+    cancerType.codes.length === 0 ? 'All' : cancerType.name;
 
   const handleCTSelectToggle = () => {
     setCtMenuOpen(!ctMenuOpen);
   };
 
   const handleCTSelect = (value, item) => {
-    handleUpdate('ct', {
-      value,
-      code: item.codes,
-    });
-    setCancerType({ value, codes: item.codes });
+    handleUpdate('cancerType', item);
     setCtMenuOpen(false);
     setSearchText({ value: '', codes: null });
   };
@@ -131,10 +129,10 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             labelHidden={true}
             wrapperStyle={{ position: 'relative', display: 'inline-block' }}
             open={true}
-            items={maintypes}
+            items={maintypeOptions}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
-            onChange={(event, value) => setSearchText({ value, codes: [] })}
+            onChange={(event, value) => setSearchText({ value })}
             onSelect={(value, item) => {
               handleCTSelect(value, item);
             }}
@@ -161,7 +159,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             )}
           />
         </div>
-        <input type="hidden" id="ct" name="ct" value={cancerType.value} />
+        <input type="hidden" id="ct" name="ct" value={cancerType.name} />
       </div>
 
       {cancerType.codes.length > 0 && (
@@ -171,18 +169,22 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Subtype"
             value={subtype.value}
             inputProps={{ placeholder: 'Select a subtype' }}
-            items={filterSelectedItems(subtypes, subtypeChips.list)}
+            items={filterSelectedItems(subtypeOptions, subtypes)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSubtype({ value })}
             onSelect={value => {
-              subtypeChips.add(value);
+              handleUpdate('subtypes', [
+                ...subtypes,
+                subtypeOptions.find(({ name }) => name === value),
+              ]);
               setSubtype({ value: '' });
             }}
             multiselect={true}
-            chipList={subtypeChips.list}
+            chipList={subtypes}
             onChipRemove={e => {
-              subtypeChips.remove(e.label);
+              let newChips = subtypes.filter(item => item.name !== e.label);
+              handleUpdate('subtypes', [...newChips]);
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --subtype">{children}</div>
@@ -204,17 +206,23 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Stage"
             value={stage.value}
             inputProps={{ placeholder: 'Select a stage' }}
-            items={filterSelectedItems(stages, stageChips.list)}
+            items={filterSelectedItems(stageOptions, stages)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setStage({ value })}
             onSelect={value => {
-              stageChips.add(value);
+              handleUpdate('stages', [
+                ...stages,
+                stageOptions.find(({ name }) => name === value),
+              ]);
               setStage({ value: '' });
             }}
             multiselect={true}
-            chipList={stageChips.list}
-            onChipRemove={e => stageChips.remove(e.label)}
+            chipList={stages}
+            onChipRemove={e => {
+              let newChips = stages.filter(item => item.name !== e.label);
+              handleUpdate('stages', [...newChips]);
+            }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --stage">{children}</div>
             )}
@@ -235,17 +243,23 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Side Effects/Biomarkers/Participant Attributes"
             value={sideEffects.value}
             inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
-            items={filterSelectedItems(findings, finChips.list)}
+            items={filterSelectedItems(findingsOptions, findings)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => setSideEffects({ value })}
             onSelect={value => {
-              finChips.add(value);
+              handleUpdate('findings', [
+                ...findings,
+                findingsOptions.find(({ name }) => name === value),
+              ]);
               setSideEffects({ value: '' });
             }}
             multiselect={true}
-            chipList={finChips.list}
-            onChipRemove={e => finChips.remove(e.label)}
+            chipList={findings}
+            onChipRemove={e => {
+              let newChips = findings.filter(item => item.name !== e.label);
+              handleUpdate('findings', [...newChips]);
+            }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --fin">{children}</div>
             )}

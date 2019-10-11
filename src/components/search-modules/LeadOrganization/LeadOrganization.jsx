@@ -8,14 +8,10 @@ import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 
 const LeadOrganization = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const { lo } = useSelector(store => store.form);
+  const { leadOrg } = useSelector(store => store.form);
   const { leadorgs = [] } = useSelector(store => store.cache);
   
-  const [orgName, setOrgName] = useState({ value: lo.value });
-
-  useEffect(() => {
-    handleUpdate('lo', orgName);
-  }, [orgName, handleUpdate]);
+  const [orgName, setOrgName] = useState({ value: leadOrg.term });
 
   useEffect(() => {
     if (orgName.value.length > 2) {
@@ -42,7 +38,10 @@ const LeadOrganization = ({ handleUpdate }) => {
         shouldItemRender={matchItemToTerm}
         sortItems={sortItems}
         onChange={(event, value) => setOrgName({ value })}
-        onSelect={value => setOrgName({ value })}
+        onSelect={(value, item) => { 
+          handleUpdate('leadOrg', item);
+          setOrgName({value: item.term});
+         }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --leadOrg">
             {(orgName.value.length > 2 )

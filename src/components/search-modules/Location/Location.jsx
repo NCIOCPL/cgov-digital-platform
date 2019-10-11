@@ -19,7 +19,7 @@ const Location = ({ handleUpdate }) => {
   const dispatch = useDispatch();
 
   const { countries = [] } = useSelector(store => store.cache);
-  const { location, z, zp, lcnty, lcty, lst, hos, nih, va } = useSelector(
+  const { location, zip, zipRadius, country, city, state, hospital, nih, va } = useSelector(
     store => store.form
   );
   const [activeRadio, setActiveRadio] = useState(location);
@@ -69,7 +69,7 @@ const Location = ({ handleUpdate }) => {
 
   const handleCountryOnChange = e => {
     const country = e.target.value;
-    handleUpdate('lcnty', country);
+    handleUpdate('country', country);
     if (country === 'United States') {
       setShowStateField(true);
     } else {
@@ -116,19 +116,19 @@ const Location = ({ handleUpdate }) => {
             <div className="two-col">
               <TextInput
                 action={e => handleUpdate(e.target.id, e.target.value)}
-                id="z"
-                value={z}
+                id="zip"
+                value={zip}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
               />
               <Dropdown
                 action={e => handleUpdate(e.target.id, e.target.value)}
-                id="zp"
-                value={zp}
+                id="zipRadius"
+                value={zipRadius}
                 classes="search-location__zip --radius"
                 label="Radius"
               >
-                {[20, 50, 100, 200, 500].map(dist => {
+                {['20', '50', '100', '200', '500'].map(dist => {
                   return (
                     <option key={dist} value={dist}>{`${dist} miles`}</option>
                   );
@@ -147,10 +147,10 @@ const Location = ({ handleUpdate }) => {
           <div className="search-location__block search-location__country">
             <Dropdown
               classes="search-location__country --country"
-              id="lcnty"
+              id="country"
               label="Country"
               action={handleCountryOnChange}
-              value={lcnty}
+              value={country}
             >
               {countries.map(city => {
                 return <option key={city} value={city}>{`${city}`}</option>;
@@ -167,7 +167,7 @@ const Location = ({ handleUpdate }) => {
                   classes="state"
                   label="State"
                   action={e => handleUpdate(e.target.id, e.target.value)}
-                  value={lst}
+                  value={state}
                 >
                   {getStates().map(state => {
                     return (
@@ -181,9 +181,9 @@ const Location = ({ handleUpdate }) => {
               )}
               <TextInput
                 action={e => handleUpdate(e.target.id, e.target.value)}
-                id="lcty"
+                id="city"
                 label="City"
-                value={lcty}
+                value={city}
               />
             </div>
           </div>
@@ -215,7 +215,10 @@ const Location = ({ handleUpdate }) => {
                   shouldItemRender={matchItemToTerm}
                   sortItems={sortItems}
                   onChange={(event, value) => setHospitalName({ value })}
-                  onSelect={value => setHospitalName({ value })}
+                  onSelect={(value, item) => {
+                    handleUpdate('hospital', item);
+                    setHospitalName({value: item.term});
+                  }}
                   renderMenu={children => (
                     <div className="cts-autocomplete__menu --hospitals">
                       {hospitalName.value.length > 2 ? (

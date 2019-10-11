@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Fieldset, TextInput } from '../../atomic';
 
 const Age = ({ handleUpdate }) => {
-  const age = useSelector(store => store.form.a);
+  const age = useSelector(store => store.form.age);
   const [errorMsg, setErrorMsg] = useState('');
 
   const validateAgeEntry = () => {
@@ -27,7 +27,7 @@ const Age = ({ handleUpdate }) => {
     >
       <TextInput
         action={e => handleUpdate(e.target.id, e.target.value)}
-        id="a"
+        id="age"
         value={age}
         label="age"
         labelHidden
