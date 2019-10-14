@@ -53,7 +53,7 @@ export function clearForm() {
 export function getDiseasesForSimpleTypeAhead({
   name,
   size = 10,
-  isDebug = false,
+  isDebug = true,
 }) {
   return {
     type: '@@api/CTS',
@@ -70,18 +70,23 @@ export function getDiseasesForSimpleTypeAhead({
               name,
               size,
               sort: 'cancergov',
-              current_trial_status: VIEWABLE_TRIALS
+              current_trial_status: VIEWABLE_TRIALS,
             },
           },
           fetchHandlers: {
-            formatResponse: diseases => {
+            formatResponse: res => {
+              console.log(res);
+
+              let diseases = [...res];
+
               // TODO: DEBUG
               if (isDebug) {
                 diseases.forEach(
                   disease =>
-                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                    (disease.name += ' (' + disease.codes.join('|') + ')')
                 );
               }
+              
               return diseases;
             },
           },
@@ -152,7 +157,7 @@ export function getMainType({ size = 0, isDebug = false }) {
               if (isDebug) {
                 diseases.forEach(
                   disease =>
-                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                    (disease.name += ' (' + disease.codes.join('|') + ')')
                 );
               }
               return diseases;
@@ -189,7 +194,7 @@ export function getSubtypes({ ancestorId, size = 0, isDebug = false }) {
               if (isDebug) {
                 diseases.forEach(
                   disease =>
-                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                    (disease.name += ' (' + disease.codes.join('|') + ')')
                 );
               }
               return diseases;
@@ -227,7 +232,7 @@ export function getStages({ ancestorId, size = 0, isDebug = false }) {
               if (isDebug) {
                 diseases.forEach(
                   disease =>
-                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                    (disease.name += ' (' + disease.codes.join('|') + ')')
                 );
               }
               return diseases;
@@ -265,7 +270,7 @@ export function getFindings({ ancestorId, size = 0, isDebug = false }) {
               if (isDebug) {
                 diseases.forEach(
                   disease =>
-                    (disease.fieldName += ' (' + disease.codes.join('|') + ')')
+                    (disease.name += ' (' + disease.codes.join('|') + ')')
                 );
               }
               return diseases;
