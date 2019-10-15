@@ -1,6 +1,7 @@
 // import querystring from 'query-string';
 import { UPDATE_FORM, CLEAR_FORM, RECEIVE_DATA } from './identifiers';
 
+
 //Statuses of what Cancer.gov trials should be shown
 const VIEWABLE_TRIALS = [
   'Active',
@@ -466,4 +467,24 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
       ],
     },
   };
+}
+
+
+export function searchTrials({ requestJSON = {} }) {
+  console.log('search trials');
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'searchTrials',
+      requests: [
+        {
+          method: 'searchTrials',
+          requestParams: {
+             requestJSON
+          }
+        }
+      ]
+    }
+  }
 }
