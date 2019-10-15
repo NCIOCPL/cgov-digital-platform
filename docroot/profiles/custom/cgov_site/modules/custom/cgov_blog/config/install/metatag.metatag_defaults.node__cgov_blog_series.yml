@@ -4,20 +4,20 @@ dependencies: {  }
 id: node__cgov_blog_series
 label: 'Content: Blog Series'
 tags:
-  canonical_url: '[node:url]'
+  title: '[cgov_blog:blog-series-title] - [cgov_tokens:cgov-trans-org-name]'
   content_language: '[node:langcode]'
+  canonical_url: '[node:url]'
   description: '[node:field_page_description:value]'
-  title: '[cgov_tokens:cgov-title] - [cgov_tokens:cgov-trans-org-name]'
+  dcterms_type: cgvBlogSeries
   dcterms_coverage: 'nciglobal,ncienterprise'
+  dcterms_subject: '[cgov_tokens:cgov-analytics-channel]'
+  dcterms_is_referenced_by: event1
   dcterms_issued: '[node:field_date_posted:date:short]'
   dcterms_is_part_of: '[cgov_tokens:cgov-analytics-group]'
-  dcterms_is_referenced_by: event1
-  dcterms_subject: '[cgov_tokens:cgov-analytics-channel]'
-  dcterms_type: cgvBlogSeries
-  og_description: '[node:field_page_description:value]'
-  og_image: '[cgov_tokens:cgov-og-image]'
-  og_site_name: '[cgov_tokens:cgov-og-site-name]'
-  og_title: '[node:field_browser_title:value]'
   og_type: Website
+  og_image: '[cgov_tokens:cgov-og-image]'
   og_url: '[current-page:url]'
+  og_description: '[node:field_page_description:value]'
+  og_site_name: '[cgov_tokens:cgov-og-site-name]'
+  og_title: '[cgov_blog:blog-series-title]'
   twitter_cards_type: summary

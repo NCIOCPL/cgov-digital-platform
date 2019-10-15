@@ -74,18 +74,7 @@
   <h1>
     <span>
       {# Draw card title if a topic or archive page. #}
-      {% if (topic or year) %}
-        {% if year %}
-          {{ month ? _self.transformMonthName(month) : '' }}
-          {{ year }} &#45; 
-        {% endif %}
-        {% if topic %}
-          {{ drupal_block('cgov_blog_topic_title', {label: topic}) }} &#45;
-        {% endif %}
-        {{ (node.field_card_title.value) ? node.field_card_title.value : node.field_browser_title.value }}
-      {% else %}
-        {{ node.label }}
-      {% endif %}
+      {{ get_blog_series_title(month, year, topic, node) }}
     </span>
   </h1>
 {% endmacro %}

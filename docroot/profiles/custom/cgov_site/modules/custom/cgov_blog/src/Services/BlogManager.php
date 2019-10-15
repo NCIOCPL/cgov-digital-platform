@@ -417,4 +417,42 @@ class BlogManager implements BlogManagerInterface {
     return $term_data;
   }
 
+  /**
+   * Return the title for blog series..
+   *
+   * @param string $month
+   *   Month value.
+   * @param string $year
+   *   Year value.
+   * @param string $topic
+   *   Topic value.
+   * @param object $node
+   *   Node object.
+   *
+   * @return string
+   *   Blog series title.
+   */
+  public function getBlogSeriesTitle($month, $year, $topic, $node) {
+
+    $title = "";
+    // If url has topic or year add them to the title.
+    if ($topic or $year) {
+      if ($year) {
+        $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
+        $title .= ' ' . $year . ' - ';
+      }
+      if ($topic) {
+        $topic_text = $this->getSeriesTopicByUrl();
+        $topic_text = (!empty($topic_text) ? $topic_text->getName() : '');
+        $title .= $topic_text . ' - ';
+      }
+      // Show card title if not empty. Otherwise show browser title field.
+      $title .= ($node->field_card_title->value) ? $node->field_card_title->value : $node->field_browser_title->value;
+    }
+    else {
+      $title = $node->getTitle();
+    }
+    return $title;
+  }
+
 }
