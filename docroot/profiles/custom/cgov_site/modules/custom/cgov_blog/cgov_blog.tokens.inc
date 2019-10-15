@@ -23,6 +23,10 @@ function cgov_blog_token_info() {
       'name' => t('Blog Topic Path'),
       'description' => t('The path of a Blog Topic taxonomy term.'),
     ],
+    'blog-series-title' => [
+      'name' => t('Blog Series Title'),
+      'description' => t('The title for the blog series page based on filters.'),
+    ],
   ];
 
   return $info;
@@ -52,6 +56,12 @@ function cgov_blog_tokens($type, $tokens, array $data, array $options, Bubbleabl
       case 'blog-topic-path':
         if (!empty($data['term'])) {
           $replacements[$original] = _get_blog_topic_path($data['term'] ?: $replacements[$original]);
+        }
+        break;
+
+      case 'blog-series-title':
+        if (!empty($data['node'])) {
+          $replacements[$original] = _get_blog_series_title($data['node']);
         }
         break;
 
@@ -120,4 +130,16 @@ function _get_blog_topic_path($term) {
     }
   }
   return $path;
+}
+
+/**
+ * Get the blog series title base of the url params..
+ */
+function _get_blog_series_title($node) {
+  $year = \Drupal::request()->query->get('year');
+  $topic = \Drupal::request()->query->get('topic');
+  $month = \Drupal::request()->query->get('month');
+
+  $blogManager = \Drupal::service('cgov_blog.blog_manager');
+  return $blogManager->getBlogSeriesTitle($month, $year, $topic, $node);
 }

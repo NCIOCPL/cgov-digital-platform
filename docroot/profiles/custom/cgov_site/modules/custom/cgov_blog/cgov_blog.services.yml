@@ -9,3 +9,8 @@ services:
       - '@path.alias_manager'
       - '@language_manager'
       - '@request_stack'
+  cgov_blog.twig_extensions:
+    class: Drupal\cgov_blog\CgovBlogTwigExtensions
+    arguments: ['@cgov_blog.blog_manager']
+    tags:
+      - { name: twig.extension }
