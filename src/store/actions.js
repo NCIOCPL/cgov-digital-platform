@@ -470,19 +470,19 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
 }
 
 
-export function searchTrials({ requestJSON = {} }) {
+export function searchTrials(requestJSON = '') {
   console.log('search trials');
   return {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'searchTrials',
+      cacheKey: 'trialsResults',
       requests: [
         {
           method: 'searchTrials',
           requestParams: {
              requestJSON
-          }
+          },
         }
       ]
     }

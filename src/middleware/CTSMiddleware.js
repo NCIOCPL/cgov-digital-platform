@@ -44,7 +44,11 @@ const createCTSMiddleware = services => ({
           const response = await service[method](
             ...Object.values(requestParams)
           );
-          const body = response.terms;
+          console.log(response);
+
+          //is it a searchTrials response?
+          let body = (response.trials)? response.trials : response.terms;
+
           let formattedBody = body;
           if (fetchHandlers) {
             const { formatResponse } = fetchHandlers;

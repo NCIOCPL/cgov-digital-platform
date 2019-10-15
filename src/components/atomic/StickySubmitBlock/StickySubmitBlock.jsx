@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './StickySubmitBlock.scss';
 
-const StickySubmitBlock = ({ sentinelRef }) => {
+const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
   const stickyEl = useRef(null);
 
   useEffect(() => {
@@ -25,17 +25,21 @@ const StickySubmitBlock = ({ sentinelRef }) => {
     });
   };
 
+  const handleClick = e => {
+    onSubmit(e);
+  }
+
   const intObserver = new IntersectionObserver(callback, options);
 
   return (
     <div ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
-        {/* <button type="submit" className="btn-submit">
+        <button type="button" className="btn-submit" onClick={handleClick}>
           Find Trials
-        </button> */}
-        <Link to="/about-cancer/treatment/clinical-trials/search/r" className="faux-btn-submit">
+        </button>
+        {/* <Link to="/r" className="faux-btn-submit">
           Find Trials
-        </Link>
+        </Link> */}
         <div className="helper-text">Start your search at any time.</div>
       </div>
     </div>
@@ -44,8 +48,11 @@ const StickySubmitBlock = ({ sentinelRef }) => {
 
 StickySubmitBlock.propTypes = {
   sentinelRef: PropTypes.node,
+  onSubmit: PropTypes.func
 };
 
-StickySubmitBlock.defaultProps = {};
+StickySubmitBlock.defaultProps = {
+  onSubmit: ()=>{}
+};
 
 export default StickySubmitBlock;

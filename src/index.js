@@ -51,10 +51,10 @@ const initialize = ({
     const saveDesiredStateToSessionStorage = () => {
       const state = store.getState();
       // const { form, ...state } = allState;
-      saveStatetoSessionStorage({
-        state,
-        appId,
-      });
+      // saveStatetoSessionStorage({
+      //   state,
+      //   appId,
+      // });
     };
 
     store.subscribe(saveDesiredStateToSessionStorage);
