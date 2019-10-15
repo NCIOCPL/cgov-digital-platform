@@ -151,8 +151,10 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] == 'cgov_breadcrumb') {
 
+    $year = \Drupal::request()->query->get('year');
+    $topic = \Drupal::request()->query->get('topic');
     // Proceed only if the view contains query params.
-    if (!empty($_GET['topic']) || !empty($_GET['year'])) {
+    if (!empty($topic) || !empty($year)) {
       $nid = \Drupal::routeMatch()->getRawParameter('node');
       $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
 
@@ -176,15 +178,15 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] === 'language_block:language_content') {
 
+    $topic = \Drupal::request()->query->get('topic');
     // Proceed only if the view contains topic query param.
-    if (!empty($_GET['topic'])) {
+    if (!empty($topic)) {
       $nid = \Drupal::routeMatch()->getRawParameter('node');
       $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
 
       // If Blog Series content type, add nav link for the current language.
       if ($node->bundle() === 'cgov_blog_series') {
         // Get the query parameter and current and opposite languages.
-        $topic = $_GET['topic'];
         $lang_current = (\Drupal::languageManager()->getCurrentLanguage()->getId());
         $lang_toggled = $lang_current != 'en' ? 'en' : 'es';
 
