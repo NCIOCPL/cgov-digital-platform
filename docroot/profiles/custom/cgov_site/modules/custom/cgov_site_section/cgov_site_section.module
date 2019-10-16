@@ -130,7 +130,7 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
         foreach ($section_entities as $section) {
           $navRoot = get_root_nav_section($section);
           if ($navRoot) {
-            invalidate_section_cache_tag($navRoot);
+            invalidate_section_cache_tag($navRoot->id());
           }
         }
       }
@@ -172,53 +172,70 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   // and invalidate.
   if (_will_trigger_cache_tag_invalidation($entity)) {
 
-    // Get the display options for this entity.
-    $displayOptions = $entity->field_navigation_display_options->getValue();
-    $isHidden = !empty($displayOptions) ?
-      in_array('hide_in_section_nav', $displayOptions) : FALSE;
+    // Get the complete set of sections IDs to clear.
+    $sectionsToClear = get_sections_to_clear($entity);
 
-    // Get the display options for the original entity.
-    $originalOptions = $entity->original->field_navigation_display_options->getValue();
-    $originalIsHidden = !empty($originalOptions)
-      ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
-
-    // Invalidate the relevant sections. Skip invalidation if this doesn't
-    // currently and didn't previously render in the navigation.
-    if (!($isHidden && $originalIsHidden)) {
-
-      // Get the set of section that display this item; invalidate their tags.
-      // Includes this term itself if its a nav root.
-      $renderingSections = get_rendering_sections($entity);
-      foreach ($renderingSections as $navroot) {
-        invalidate_section_cache_tag($navroot);
-      }
-
-      // If this section changed parents, invalidate the cache for the original
-      // rendering sections as well.
-      if (entity_fields_modified(['parent'], $entity)) {
-        $originalRenderingSections = get_rendering_sections($entity->original);
-        foreach ($originalRenderingSections as $navroot) {
-          invalidate_section_cache_tag($navroot);
-        }
-      }
+    // Clear the cache tags.
+    foreach ($sectionsToClear as $sectionID) {
+      invalidate_section_cache_tag($sectionID);
     }
   }
+
   // TODO: Figure out how to get pathauto to update all the aliases using
   // pathauto. To do it here is A) too slow, and B) fraught with
   // issue regarding workflow and the various entity types we would have to hit.
 }
 
 /**
- * Invalidate the cache tag equal to the given Site Sections ID.
+ * Returns the set of sections IDs to clear for a given site section update.
  *
- * @param \Drupal\Core\Entity\EntityInterface $site_section_entity
- *   The Site Section to invalidate.
+ * @param \Drupal\Core\Entity\EntityInterface $section_entity
+ *   The section being updated.
+ *
+ * @return array
+ *   The sections IDs to cache tag clear.
  */
-function invalidate_section_cache_tag(EntityInterface $site_section_entity) {
-  $section_id = $site_section_entity->id();
+function get_sections_to_clear(EntityInterface $section_entity) {
+  // Get the current set of section IDs that display this item.
+  // Includes this term itself if its a nav root.
+  $sectionsToClear = get_rendering_sections($section_entity);
+
+  // If this section changed parents, or visibility, invalidate
+  // the cache tags for the original rendering sections as well.
+  if (entity_fields_modified([
+    'parent',
+    'field_navigation_display_options',
+  ], $section_entity)) {
+    $originalRenderingSections = get_rendering_sections($section_entity->original);
+    $sectionsToClear = array_merge($sectionsToClear, $originalRenderingSections);
+  }
+
+  // If this section changed from being a section nav root to not,
+  // we need to invalidate pages having its old section nav root ID.
+  if ($section_entity->field_section_nav_root->value == 0 &&
+    $section_entity->original->field_section_nav_root->value == 1) {
+    $sectionsToClear[] = $section_entity->id();
+  }
+
+  // De-dupe the IDs.
+  $sectionsToClear = array_unique($sectionsToClear);
+
+  return $sectionsToClear;
+}
+
+/**
+ * Invalidate the cache tag with the given Site Section ID.
+ *
+ * Int $section_id
+ *   The Site Section ID to invalidate.
+ */
+function invalidate_section_cache_tag($section_id) {
   // Get the sections ID and invalidate the cache tag.
-  if ($section_id) {
+  if ($section_id !== NULL) {
     Cache::invalidateTags(['site_section:' . $section_id]);
+    \Drupal::logger('cgov_site_section')
+      ->notice('Invalidated Cache Tag for Site Section with tid: ' .
+        $section_id);
   }
 }
 
@@ -345,6 +362,24 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
       return TRUE;
     }
 
+    // Exit early if this section was previously and is currently hidden.
+    // Get the display options for this entity.
+    $displayOptions = $updated_entity->field_navigation_display_options->getValue();
+    $displayOptions = array_column($displayOptions, 'value');
+    $isHidden = !empty($displayOptions) ?
+      in_array('hide_in_section_nav', $displayOptions) : FALSE;
+
+    // Get the display options for the original entity.
+    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = array_column($originalOptions, 'value');
+    $originalIsHidden = !empty($originalOptions)
+      ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
+
+    if ($isHidden && $originalIsHidden) {
+      // Will not trigger invalidation.
+      return FALSE;
+    }
+
     // Set Site Section Fields which trigger invalidation.
     $values =
       [
@@ -386,7 +421,7 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
     return (int) $original->get($field_name)->target_id !== (int) $entity->get($field_name)->target_id;
   };
   $get_value = function ($field_name) use ($entity, $original) {
-    return $original->get($field_name)->value != $entity->get($field_name)->value;
+    return $original->get($field_name)->getValue() != $entity->get($field_name)->getValue();
   };
 
   // Loop though the given fields to check for modification.
@@ -570,7 +605,7 @@ function get_root_nav_section($term) {
 }
 
 /**
- * Returns the section nav roots which render a given section.
+ * Returns the section nav root IDs which render a given section.
  *
  * \Drupal\Core\Entity\EntityInterface $term
  *    The site section.
@@ -580,7 +615,7 @@ function get_rendering_sections(EntityInterface $term) {
   // Get the full term tree as an array.
   $sectionTree = get_term_tree($term);
 
-  // Loop over the term tree, storing only nav roots that render,
+  // Loop over the term tree, storing only nav root IDs that render,
   // based on total distance from Root Nav -> Section being modified; and
   // display options.
   $totalLevels = count($sectionTree);
@@ -599,7 +634,7 @@ function get_rendering_sections(EntityInterface $term) {
     // Levels to render will always be a positive integer, eg. from 1-5.
     $levelsToRender = $section->field_levels_to_display->value;
     if ($level < $levelsToRender) {
-      $renderingSections[] = $section;
+      $renderingSections[] = $section->id();
     }
 
     // If the root item just checked is hidden in nav, nothing above it
@@ -607,6 +642,7 @@ function get_rendering_sections(EntityInterface $term) {
     // Determine this by checking the display options for the root.
     $displayOptions = $section->field_navigation_display_options->getValue();
     $displayOptions = !empty($displayOptions) ? $displayOptions : [];
+    $displayOptions = array_column($displayOptions, 'value');
 
     if (in_array('hide_in_section_nav', $displayOptions)) {
       break;
