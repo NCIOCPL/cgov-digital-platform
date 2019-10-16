@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { SearchCriteriaTable } from '../../components/atomic';
+import {history} from '../../services/history.service';
 
-const ResultsPageHeader = ({ resultsCount }) => {
+const ResultsPageHeader = ({ handleUpdate , resultsCount }) => {
+
+  const handleRefineSearch = () => {
+    handleUpdate('formType', 'advanced');
+    history.push('/search');
+  }
   return (
     <div className="cts-results-header">
       <p>
@@ -14,7 +20,7 @@ const ResultsPageHeader = ({ resultsCount }) => {
       <p className="reset-form">
         <Link to="/search">Start Over</Link>
         <span aria-hidden="true" className="separator">|</span>
-        <Link to="/search?f=a">Refine Search Criteria</Link>
+        <button type="button" className="btnAsLink" onClick={handleRefineSearch}>Refine Search Criteria</button>
       </p>
     </div>
   );

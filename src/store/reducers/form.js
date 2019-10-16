@@ -43,7 +43,7 @@ export const defaultState = {
   investigator: { term: '', termKey: '' }, // (in) Trial investigators ('in' is legacy but is a keyword and does not work well as a key name; be ready to handle both in query string)
   leadOrg: { term: '', termKey: '' }, // (lo) Lead Organization
   
-  formType: 'advanced', // (basic (default) | advanced)
+  formType: 'basic', // (basic (default) | advanced)
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 

@@ -11,7 +11,8 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
   const [cancerType, setCancerType] = useState({ value: keywordPhrases });
 
   useEffect(() => {
-    dispatch(getDiseasesForSimpleTypeAhead({ name: cancerType.value }));
+    console.log(cancerType.value);
+    dispatch(getDiseasesForSimpleTypeAhead(cancerType.value ));
   }, [cancerType, dispatch]);
 
   const matchItemToTerm = (item, value) => {

@@ -5,6 +5,11 @@ import { Fieldset, TextInput } from '../../atomic';
 const ZipCode = ({ handleUpdate }) => {
   const { zip } = useSelector(store => store.form);
   
+  const handleZipUpdate = (e) => {
+    handleUpdate(e.target.id, e.target.value);
+    handleUpdate('location', 'search-location-zip')
+  }
+
   return (
     <Fieldset
       id="zip"
@@ -12,7 +17,7 @@ const ZipCode = ({ handleUpdate }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#basicsearch"
     >
       <TextInput
-        action={e => handleUpdate(e.target.id, e.target.value)}
+        action={handleZipUpdate}
         id="zip"
         label="zip code"
         labelHidden

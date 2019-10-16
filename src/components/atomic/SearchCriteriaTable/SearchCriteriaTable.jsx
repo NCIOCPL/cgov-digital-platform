@@ -94,7 +94,7 @@ const SearchCriteriaTable = () => {
 
     switch (location) {
       case 'search-location-zip':
-        if (zip && zip !== '') {
+        if (formType !== 'basic'  && zip && zip !== '') {
           criteria.push({
             category: 'Near ZIP Code',
             selection: 'within ' + zipRadius + ' miles of ' + zip,

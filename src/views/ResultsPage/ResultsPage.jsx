@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateForm } from '../../store/actions';
 import {
   Delighter,
   Checkbox,
@@ -13,6 +14,7 @@ import './ResultsPage.scss';
 import ResultsPageHeader from './ResultsPageHeader';
 
 const ResultsPage = ({ results }) => {
+  const dispatch = useDispatch();
   const [selectAll, setSelectAll] = useState(false);
   const [paginatedResults, setPaginatedResults] = useState([]);
   const [pagerPage, setPagerPage] = useState(0);
@@ -45,6 +47,17 @@ const ResultsPage = ({ results }) => {
       setSelectAll(true);
     }
   }, [paginatedResults, selectedResults]);
+
+  const handleUpdate = (field, value) => {
+    dispatch(
+      updateForm({
+        field,
+        value,
+      })
+    );
+  };
+
+
 
   // setup print Modal
   const { isShowing, toggleModal } = useModal();
@@ -157,7 +170,7 @@ const ResultsPage = ({ results }) => {
       <div className="contentzone">
         {/* */}
         <article className="results-page">
-          <ResultsPageHeader resultsCount={paginatedResults.length} />
+          <ResultsPageHeader resultsCount={paginatedResults.length} handleUpdate={handleUpdate} />
           <div className="results-page__content">
             {renderControls()}
             <div className="results-page__list">

@@ -18,8 +18,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
-
-
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
 
   const {

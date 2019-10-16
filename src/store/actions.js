@@ -70,6 +70,7 @@ export function getDiseasesForSimpleTypeAhead({
               name,
               size,
               sort: 'cancergov',
+              current_trial_status: VIEWABLE_TRIALS
             },
           },
           fetchHandlers: {
