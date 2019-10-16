@@ -176,6 +176,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
           className={`ct-select__button faux-select ${
             cancerTypeModified ? '--modified' : ''
           }`}
+          type="button"
           onClick={handleCTSelectToggle}
           aria-label="Click to select specific cancer type"
           aria-haspopup={true}

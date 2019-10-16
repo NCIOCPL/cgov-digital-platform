@@ -45,9 +45,14 @@ const createCTSMiddleware = services => ({
             ...Object.values(requestParams)
           );
           console.log(response);
-
-          //is it a searchTrials response?
-          let body = (response.trials)? response.trials : response.terms;
+          let body = {}
+          
+          // if search results, add total and starting index
+          if(response.trials) {
+            body = response;
+          }else {
+            body = response.terms;
+          }
 
           let formattedBody = body;
           if (fetchHandlers) {
@@ -63,11 +68,11 @@ const createCTSMiddleware = services => ({
   if (service !== null && requests) {
     try {
       const results = await getAllRequests(requests);
-      const valueToCache =
-        requests.length > 1
-          ? [Object.assign({}, ...results.map(result => ({ ...result })))]
-          : results;
-      dispatch(receiveData(cacheKey, ...valueToCache));
+      // const valueToCache =
+      //   requests.length > 1
+      //     ? [Object.assign({}, ...results.map(result => ({ ...result })))]
+      //     : results;
+      dispatch(receiveData(cacheKey, ...results));
     } catch (err) {
       console.log(err);
     }

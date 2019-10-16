@@ -20,6 +20,8 @@ const ResultsPage = ({ results }) => {
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
 
+
+
   // scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -195,12 +197,5 @@ const ResultsPage = ({ results }) => {
   );
 };
 
-ResultsPage.propTypes = {
-  results: PropTypes.array,
-};
-
-ResultsPage.defaultProps = {
-  results: [],
-};
 
 export default ResultsPage;

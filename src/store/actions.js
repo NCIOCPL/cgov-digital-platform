@@ -471,7 +471,6 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
 
 
 export function searchTrials(requestJSON = '') {
-  console.log('search trials');
   return {
     type: '@@api/CTS',
     payload: {
@@ -481,7 +480,7 @@ export function searchTrials(requestJSON = '') {
         {
           method: 'searchTrials',
           requestParams: {
-             requestJSON
+             
           },
         }
       ]

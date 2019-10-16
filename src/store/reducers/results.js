@@ -12,6 +12,7 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         cacheKey,
       };
+      // restore data from cache hit
     case UPDATE_RESULTS:
       return {
         ...state,

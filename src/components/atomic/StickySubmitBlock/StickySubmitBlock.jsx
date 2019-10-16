@@ -34,7 +34,7 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
   return (
     <div ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
-        <button type="button" className="btn-submit" onClick={handleClick}>
+        <button type="button" className="btn-submit faux-btn-submit" onClick={handleClick}>
           Find Trials
         </button>
         {/* <Link to="/r" className="faux-btn-submit">
