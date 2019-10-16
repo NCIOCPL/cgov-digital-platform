@@ -34,7 +34,7 @@ const advancedFormModules = [
 const SearchPage = () => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
-  const formType = useSelector( store => store.form.formType );
+  const {formType} = useSelector( store => store.form );
 
   // scroll to top on mount
   useEffect(() => {

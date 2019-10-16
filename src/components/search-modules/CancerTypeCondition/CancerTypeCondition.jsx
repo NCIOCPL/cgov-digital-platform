@@ -11,14 +11,22 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [searchText, setSearchText] = useState({ value: '' });
 
   //store values
-  const { cancerType, subtypes, stages, findings } = useSelector(store => store.form);
-
+  const { cancerType, subtypes, stages, findings, refineSearch, typeCode } = useSelector(store => store.form);
 
   //typeahead states
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if(refineSearch){
+      dispatch(getMainType({}));
+    }
+    // does typecode match anything in maintypes?
+  }, []);
+
+ 
 
   const {
     maintypeOptions = [],

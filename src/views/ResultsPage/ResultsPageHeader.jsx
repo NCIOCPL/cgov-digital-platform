@@ -8,6 +8,7 @@ const ResultsPageHeader = ({ handleUpdate , resultsCount }) => {
 
   const handleRefineSearch = () => {
     handleUpdate('formType', 'advanced');
+    handleUpdate('refineSearch', true);
     history.push('/search');
   }
   return (

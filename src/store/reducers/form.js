@@ -44,6 +44,7 @@ export const defaultState = {
   leadOrg: { term: '', termKey: '' }, // (lo) Lead Organization
   
   formType: 'basic', // (basic (default) | advanced)
+  refineSearch: false, //is the form in refine search mode
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 
