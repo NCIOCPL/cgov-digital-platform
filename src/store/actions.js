@@ -56,7 +56,7 @@ export function getDiseasesForSimpleTypeAhead({
   isDebug = false,
 }) {
   return {
-    type: '@@cache/RETRIEVE',
+    type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
       cacheKey: 'diseases',

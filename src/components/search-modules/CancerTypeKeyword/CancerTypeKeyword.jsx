@@ -12,7 +12,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
 
   useEffect(() => {
     console.log(cancerType.value);
-    dispatch(getDiseasesForSimpleTypeAhead(cancerType.value ));
+    dispatch(getDiseasesForSimpleTypeAhead({name: cancerType.value}));
   }, [cancerType, dispatch]);
 
   const matchItemToTerm = (item, value) => {
