@@ -251,7 +251,12 @@ const CancerTypeCondition = ({ handleUpdate }) => {
               handleUpdate('subtypes', [...newChips]);
             }}
             renderMenu={children => (
-              <div className="cts-autocomplete__menu --subtype">{children}</div>
+              <div className="cts-autocomplete__menu --subtype">
+                {(children.length)
+                  ? (children)
+                  : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>
+                }
+              </div>
             )}
             renderItem={(item, isHighlighted) => (
               <div
@@ -292,7 +297,11 @@ const CancerTypeCondition = ({ handleUpdate }) => {
               handleUpdate('stages', [...newChips]);
             }}
             renderMenu={children => (
-              <div className="cts-autocomplete__menu --stage">{children}</div>
+              <div className="cts-autocomplete__menu --stage">
+                {(children.length)
+                ? (children)
+                : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>}
+              </div>
             )}
             renderItem={(item, isHighlighted) => (
               <div
@@ -329,7 +338,11 @@ const CancerTypeCondition = ({ handleUpdate }) => {
               handleUpdate('findings', [...newChips]);
             }}
             renderMenu={children => (
-              <div className="cts-autocomplete__menu --fin">{children}</div>
+              <div className="cts-autocomplete__menu --fin">
+                {(children.length)
+                ? (children)
+                : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>}
+              </div>
             )}
             renderItem={(item, isHighlighted) => (
               <div
