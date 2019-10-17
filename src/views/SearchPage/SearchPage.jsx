@@ -31,10 +31,10 @@ const advancedFormModules = [
   LeadOrganization,
 ];
 
-const SearchPage = () => {
+const SearchPage = (form) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
-  const {formType} = useSelector( store => store.form );
+  const formType = useSelector( store => store.form.formType );
 
   // scroll to top on mount
   useEffect(() => {

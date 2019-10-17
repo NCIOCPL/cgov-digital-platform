@@ -11,27 +11,19 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [searchText, setSearchText] = useState({ value: '' });
 
   //store values
-  const { cancerType, subtypes, stages, findings, refineSearch, typeCode } = useSelector(store => store.form);
-
+  const { cancerType, subtypes, stages, findings, refineSearch } = useSelector(store => store.form);
+  const cache = useSelector(store => store.cache);
   //typeahead states
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if(refineSearch){
-      dispatch(getMainType({}));
-    }
-    // does typecode match anything in maintypes?
-  }, []);
-
- 
+  const [placeholder, setPlaceholder] = useState({});
 
   const {
     maintypeOptions = [],
-    subtypeOptions,
-    stageOptions,
+    subtypeOptions = [],
+    stageOptions = [],
     findingsOptions
   } = useCachedValues(['maintypeOptions', 'subtypeOptions', 'stageOptions', 'findingsOptions', ]);
 
@@ -54,6 +46,44 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       );
     }
   }, [ctMenuOpen, dispatch]);
+
+  // onMount check to see if in refine SearchMode.
+  useEffect(() => {
+    if(maintypeOptions.length > 0 && refineSearch) {
+      initRefineSearch();
+    }
+  }, [maintypeOptions]);
+
+  const initRefineSearch = () => {
+    if(!cancerType.type !== 'maintype') {
+      // find the name of the parent cancer
+      const parentCancer = maintypeOptions.find(({codes}) => codes[0] === cancerType.parentDiseaseID[0]);
+
+      dispatch(
+        getCancerTypeDescendents({
+          cacheKey: parentCancer.name,
+          codes: parentCancer.codes,
+        })
+      );
+      // send basic selection to its proper place 
+      if(cancerType.type[0] === 'subtype'){
+        handleUpdate('subtypes', [
+          ...subtypes,
+          cancerType
+        ]);
+      }else if(cancerType.type[0] === 'stage'){
+        handleUpdate('stages', [
+          ...stages,
+          cancerType
+        ]);
+      }
+      // now set cancerType to be the parent cancer
+      setPlaceholder(cancerType);
+      handleUpdate('cancerType', parentCancer);
+    }
+    handleUpdate('refineSearch', false);
+  }
+
 
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;

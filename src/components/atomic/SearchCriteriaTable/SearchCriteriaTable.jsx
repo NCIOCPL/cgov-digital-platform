@@ -60,14 +60,14 @@ const SearchCriteriaTable = () => {
     if (cancerType && cancerType.codes.length > 0) {
       criteria.push({
         category: 'Primary Cancer Type/Condition',
-        selection: cancerType.value,
+        selection: cancerType.name,
       });
     }
 
     if (subtypes && subtypes.length > 0) {
       let joinedVals = [];
       subtypes.forEach(function(subtype) {
-        joinedVals.push(subtype.label);
+        joinedVals.push(subtype.name);
       });
 
       criteria.push({ category: 'Subtype', selection: joinedVals.join(', ') });
@@ -76,7 +76,7 @@ const SearchCriteriaTable = () => {
     if (stages && stages.length > 0) {
       let joinedVals = [];
       stages.forEach(function(stage) {
-        joinedVals.push(stage.label);
+        joinedVals.push(stage.name);
       });
       criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
     }
@@ -84,7 +84,7 @@ const SearchCriteriaTable = () => {
     if (findings && findings.length > 0) {
       let joinedVals = [];
       findings.forEach(function(finding) {
-        joinedVals.push(finding.label);
+        joinedVals.push(finding.name);
       });
       criteria.push({
         category: 'Side Effects / Biomarkers / Participant Attributes',

@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCachedValues } from '../../utilities/hooks';
+import { getMainType, getCancerTypeDescendents } from '../../store/actions';
 import { Link } from 'react-router-dom';
 import { SearchCriteriaTable } from '../../components/atomic';
-import {history} from '../../services/history.service';
+import { history } from '../../services/history.service';
 
-const ResultsPageHeader = ({ handleUpdate , resultsCount }) => {
+const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
+  const dispatch = useDispatch();
+  const { formType, cancerType, refineSearch } = useSelector(store => store.form);
+  const {
+    maintypeOptions = [],
+  } = useCachedValues([
+    'maintypeOptions',
+  ]);
 
   const handleRefineSearch = () => {
-    handleUpdate('formType', 'advanced');
+    if (formType === 'basic') {
+      //prefetch stuff
+      if (maintypeOptions.length < 1) {
+        dispatch(getMainType({}));
+      }
+      handleUpdate('formType', 'advanced');
+    }
     handleUpdate('refineSearch', true);
     history.push('/search');
-  }
+  };
+
   return (
     <div className="cts-results-header">
       <p>
@@ -20,8 +37,16 @@ const ResultsPageHeader = ({ handleUpdate , resultsCount }) => {
       <SearchCriteriaTable />
       <p className="reset-form">
         <Link to="/search">Start Over</Link>
-        <span aria-hidden="true" className="separator">|</span>
-        <button type="button" className="btnAsLink" onClick={handleRefineSearch}>Refine Search Criteria</button>
+        <span aria-hidden="true" className="separator">
+          |
+        </span>
+        <button
+          type="button"
+          className="btnAsLink"
+          onClick={handleRefineSearch}
+        >
+          Refine Search Criteria
+        </button>
       </p>
     </div>
   );

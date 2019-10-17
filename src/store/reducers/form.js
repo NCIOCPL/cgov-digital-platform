@@ -6,7 +6,6 @@ export const defaultState = {
   subtypes: [], // (st) Subtype
   stages: [], // (stg) Stage
   findings: [], // (fin) Side effects
-  typeCode: [], // (t) from basic search where option is selected
   keywordPhrases: '', // (q) Cancer Type Keyword (ALSO Keyword Phrases)
   zip: '', // (z) Zipcode
   zipRadius: '100', //(zp) Radius
