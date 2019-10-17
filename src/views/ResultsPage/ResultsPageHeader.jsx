@@ -9,7 +9,7 @@ import { history } from '../../services/history.service';
 
 const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
   const dispatch = useDispatch();
-  const { formType, cancerType, refineSearch } = useSelector(store => store.form);
+  const { formType, age, zip } = useSelector(store => store.form);
   const {
     maintypeOptions = [],
   } = useCachedValues([
@@ -21,6 +21,12 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
       //prefetch stuff
       if (maintypeOptions.length < 1) {
         dispatch(getMainType({}));
+      }
+      if (age !== ''){
+        handleUpdate('ageModified', true);
+      }
+      if(zip !== ''){
+        handleUpdate('zipModified', true);
       }
       handleUpdate('formType', 'advanced');
     }

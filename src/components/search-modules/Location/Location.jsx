@@ -18,8 +18,8 @@ const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
 
-  const { countries = [] } = useSelector(store => store.cache);
-  const { location, zip, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
+  const { countries = [], hospitals = []  } = useSelector(store => store.cache);
+  const { location, zip, zipModified, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
     store => store.form
   );
   const [activeRadio, setActiveRadio] = useState(location);
@@ -27,15 +27,12 @@ const Location = ({ handleUpdate }) => {
   const [closeToNIH, setCloseToNIH] = useState(nihOnly);
   const [showStateField, setShowStateField] = useState(true);
 
-  const [hospitalName, setHospitalName] = useState({ value: hospital.term });
   //hospital
-  const { hospitals = [] } = useSelector(store => store.cache);
+  const [hospitalName, setHospitalName] = useState({ value: hospital.term });
 
   //state input
   const [stateVal, setStateVal] = useState({ value: '' });
   const stateOptions = getStates();
-  
-
 
   useEffect(() => {
     if (hospitalName.value.length > 2) {
@@ -87,6 +84,12 @@ const Location = ({ handleUpdate }) => {
     );
   };
 
+  const checkZip = () => {
+    if(zipModified){
+      handleUpdate('zipModified', false);
+    }
+  }
+
   return (
     <Fieldset
       id="location"
@@ -130,6 +133,8 @@ const Location = ({ handleUpdate }) => {
                 value={zip}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
+                success={zipModified}
+                onBlur={checkZip}
               />
               <Dropdown
                 action={e => handleUpdate(e.target.id, e.target.value)}

@@ -11,8 +11,16 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [searchText, setSearchText] = useState({ value: '' });
 
   //store values
-  const { cancerType, subtypes, stages, findings, refineSearch } = useSelector(store => store.form);
-  const cache = useSelector(store => store.cache);
+  const {
+    cancerType,
+    cancerTypeModified,
+    subtypes,
+    subtypeModified,
+    stages,
+    stagesModified,
+    findings,
+    refineSearch,
+  } = useSelector(store => store.form);
   //typeahead states
   const [subtype, setSubtype] = useState({ value: '' });
   const [stage, setStage] = useState({ value: '' });
@@ -24,8 +32,13 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     maintypeOptions = [],
     subtypeOptions = [],
     stageOptions = [],
-    findingsOptions
-  } = useCachedValues(['maintypeOptions', 'subtypeOptions', 'stageOptions', 'findingsOptions', ]);
+    findingsOptions,
+  } = useCachedValues([
+    'maintypeOptions',
+    'subtypeOptions',
+    'stageOptions',
+    'findingsOptions',
+  ]);
 
   // Retrieval of main types is triggered by expanding the cancer type dropdown
   useEffect(() => {
@@ -49,41 +62,40 @@ const CancerTypeCondition = ({ handleUpdate }) => {
 
   // onMount check to see if in refine SearchMode.
   useEffect(() => {
-    if(maintypeOptions.length > 0 && refineSearch) {
+    if (maintypeOptions.length > 0 && refineSearch) {
       initRefineSearch();
     }
   }, [maintypeOptions]);
 
   const initRefineSearch = () => {
-    if(!cancerType.type !== 'maintype') {
+    if (cancerType.name.length > 0 && !cancerType.type !== 'maintype') {
       // find the name of the parent cancer
-      const parentCancer = maintypeOptions.find(({codes}) => codes[0] === cancerType.parentDiseaseID[0]);
+      const parentCancer = maintypeOptions.find(
+        ({ codes }) => codes[0] === cancerType.parentDiseaseID[0]
+      );
 
+      // now set cancerType to be the parent cancer
+      handleUpdate('cancerType', parentCancer);
+      handleUpdate('cancerTypeModified', true);
+      handleUpdate('subtypes', []);
+      handleUpdate('stages', []);
       dispatch(
         getCancerTypeDescendents({
           cacheKey: parentCancer.name,
           codes: parentCancer.codes,
         })
       );
-      // send basic selection to its proper place 
-      if(cancerType.type[0] === 'subtype'){
-        handleUpdate('subtypes', [
-          ...subtypes,
-          cancerType
-        ]);
-      }else if(cancerType.type[0] === 'stage'){
-        handleUpdate('stages', [
-          ...stages,
-          cancerType
-        ]);
+      // send basic selection to its proper place
+      if (cancerType.type[0] === 'subtype') {
+        handleUpdate('subtypes', [...subtypes, cancerType]);
+        handleUpdate('subtypeModified', true);
+      } else if (cancerType.type[0] === 'stage') {
+        handleUpdate('stages', [...stages, cancerType]);
+        handleUpdate('stagesModified', true);
       }
-      // now set cancerType to be the parent cancer
-      setPlaceholder(cancerType);
-      handleUpdate('cancerType', parentCancer);
     }
     handleUpdate('refineSearch', false);
-  }
-
+  };
 
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
@@ -107,6 +119,11 @@ const CancerTypeCondition = ({ handleUpdate }) => {
 
   const handleCTSelect = (value, item) => {
     handleUpdate('cancerType', item);
+    handleUpdate('subtypes', []);
+    handleUpdate('stages', []);
+    handleUpdate('ctModified', false);
+    handleUpdate('subtypeModified', false);
+    handleUpdate('stagesModified', false);
     setCtMenuOpen(false);
     setSearchText({ value: '', codes: null });
   };
@@ -142,7 +159,9 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         <InputLabel label="Primary Cancer Type/Condition" htmlFor="ct" />
         <button
           id="ct-btn"
-          className="ct-select__button faux-select"
+          className={`ct-select__button faux-select ${
+            cancerTypeModified ? '--success' : ''
+          }`}
           onClick={handleCTSelectToggle}
           aria-label="Click to select specific cancer type"
           aria-haspopup={true}
@@ -159,6 +178,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="ct-searchTerm"
             label="Primary Cancer Type/Condition"
             value={searchText.value}
+            success={cancerTypeModified}
             inputClasses="faux-select"
             inputProps={{ placeholder: 'Begin typing to narrow options below' }}
             labelHidden={true}
@@ -167,7 +187,12 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             items={maintypeOptions}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
-            onChange={(event, value) => setSearchText({ value })}
+            onChange={(event, value) => {
+              setSearchText({ value });
+              handleUpdate('cancerTypeModified', false);
+              handleUpdate('subtypeModified', false);
+              handleUpdate('stagesModified', false);
+            }}
             onSelect={(value, item) => {
               handleCTSelect(value, item);
             }}
@@ -203,11 +228,15 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="st"
             label="Subtype"
             value={subtype.value}
+            success={subtypeModified}
             inputProps={{ placeholder: 'Select a subtype' }}
             items={filterSelectedItems(subtypeOptions, subtypes)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
-            onChange={(event, value) => setSubtype({ value })}
+            onChange={(event, value) => {
+              setSubtype({ value });
+              handleUpdate('subtypeModified', false);
+            }}
             onSelect={value => {
               handleUpdate('subtypes', [
                 ...subtypes,
@@ -240,11 +269,15 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="stg"
             label="Stage"
             value={stage.value}
+            success={stagesModified}
             inputProps={{ placeholder: 'Select a stage' }}
             items={filterSelectedItems(stageOptions, stages)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
-            onChange={(event, value) => setStage({ value })}
+            onChange={(event, value) => {
+              setStage({ value });
+              handleUpdate('stagesModified', false);
+            }}
             onSelect={value => {
               handleUpdate('stages', [
                 ...stages,

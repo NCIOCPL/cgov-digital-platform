@@ -44,6 +44,11 @@ export const defaultState = {
   
   formType: 'basic', // (basic (default) | advanced)
   refineSearch: false, //is the form in refine search mode
+  ageModified: false,
+  zipModified: false,
+  cancerTypeModified: false,
+  subtypesModified: false,
+  stagesModified: false,
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 
