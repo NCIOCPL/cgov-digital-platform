@@ -29,7 +29,7 @@ const TrialInvestigators = ({ handleUpdate }) => {
         id="inv"
         label="Trial investigators"
         labelHidden
-        inputHelpText="Search by Trial Investigators"
+        inputHelpText="Search by trial investigator."
         value={tiName.value}
         inputProps={{ id: 'investigator', placeholder: 'Investigator name' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}

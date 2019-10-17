@@ -34,7 +34,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
         id="ctk"
         label="Cancer Type/Keyword"
         value={CTK.value}
-        inputProps={{ placeholder: 'Start typing to select a cancer type' }}
+        inputProps={{ placeholder: 'Start typing to select a cancer type or keyword' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={diseases}
         getItemValue={item => item.name}

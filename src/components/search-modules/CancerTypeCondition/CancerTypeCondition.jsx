@@ -26,12 +26,11 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
-  const [placeholder, setPlaceholder] = useState({});
 
   const {
     maintypeOptions = [],
-    subtypeOptions = [],
-    stageOptions = [],
+    subtypeOptions,
+    stageOptions,
     findingsOptions,
   } = useCachedValues([
     'maintypeOptions',
@@ -50,7 +49,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       document.getElementById('ct-searchTerm').focus();
       watchClickOutside(document.getElementById('ctMenu'));
     }
-    if (cancerType.codes.length > 0) {
+    if (cancerType.codes.length > 0 && !refineSearch) {
       dispatch(
         getCancerTypeDescendents({
           cacheKey: cancerType.name,
@@ -67,33 +66,46 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     }
   }, [maintypeOptions]);
 
+  const retrieveDescendents = (cacheKey, diseaseCodes) => {
+    dispatch(
+      getCancerTypeDescendents({
+        cacheKey: cacheKey,
+        codes: diseaseCodes,
+      })
+    );
+  };
+
   const initRefineSearch = () => {
-    if (cancerType.name.length > 0 && !cancerType.type !== 'maintype') {
-      // find the name of the parent cancer
-      const parentCancer = maintypeOptions.find(
+    if (cancerType.type.length > 0 && cancerType.type.includes('maintype')) {
+      //if it has a maintype, primary is already set!
+      // just retrieve descendents
+      retrieveDescendents(cancerType.name, cancerType.codes);
+    } else {
+      // use the parentDisease ID to select the primary cancer type
+      let parentCancer = maintypeOptions.find(
         ({ codes }) => codes[0] === cancerType.parentDiseaseID[0]
       );
+      if (parentCancer) {
+        retrieveDescendents(parentCancer.name, parentCancer.codes);
+      } else {
+        //codes don't match up!  Handle error
+        // TODO: handle error (unrecognizable maintype)
+      }
 
-      // now set cancerType to be the parent cancer
-      handleUpdate('cancerType', parentCancer);
-      handleUpdate('cancerTypeModified', true);
-      handleUpdate('subtypes', []);
-      handleUpdate('stages', []);
-      dispatch(
-        getCancerTypeDescendents({
-          cacheKey: parentCancer.name,
-          codes: parentCancer.codes,
-        })
-      );
       // send basic selection to its proper place
-      if (cancerType.type[0] === 'subtype') {
+      if (cancerType.type.includes('subtype')) {
+        // always set as subtype even if also a stage
         handleUpdate('subtypes', [...subtypes, cancerType]);
         handleUpdate('subtypeModified', true);
-      } else if (cancerType.type[0] === 'stage') {
+      } else if (cancerType.type.includes('stage')) {
         handleUpdate('stages', [...stages, cancerType]);
         handleUpdate('stagesModified', true);
       }
+      // now set cancerType to be the parent cancer
+      handleUpdate('cancerType', parentCancer);
     }
+    handleUpdate('cancerTypeModified', true);
+    //switch off refineSearch
     handleUpdate('refineSearch', false);
   };
 
@@ -151,8 +163,8 @@ const CancerTypeCondition = ({ handleUpdate }) => {
       classes="cancer-type-condition"
     >
       <p>
-        Select a cancer type or condition. Select additional options, if
-        applicable.
+        Select a cancer type/condition, then include subtypes, stages or other
+        attributes, if applicable.
       </p>
 
       <div className="ct-select">
@@ -229,7 +241,8 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Subtype"
             value={subtype.value}
             success={subtypeModified}
-            inputProps={{ placeholder: 'Select a subtype' }}
+            inputProps={{ placeholder: 'Start typing to select a subtype' }}
+            inputHelpText="More than one selection may be made."
             items={filterSelectedItems(subtypeOptions, subtypes)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
@@ -252,10 +265,13 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --subtype">
-                {(children.length)
-                  ? (children)
-                  : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>
-                }
+                {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No available options based on your previous selections
+                  </div>
+                )}
               </div>
             )}
             renderItem={(item, isHighlighted) => (
@@ -275,7 +291,8 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Stage"
             value={stage.value}
             success={stagesModified}
-            inputProps={{ placeholder: 'Select a stage' }}
+            inputProps={{ placeholder: 'Start typing to select a stage' }}
+            inputHelpText="More than one selection may be made."
             items={filterSelectedItems(stageOptions, stages)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
@@ -298,9 +315,13 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --stage">
-                {(children.length)
-                ? (children)
-                : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>}
+                {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No available options based on your previous selections
+                  </div>
+                )}
               </div>
             )}
             renderItem={(item, isHighlighted) => (
@@ -320,6 +341,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             label="Side Effects/Biomarkers/Participant Attributes"
             value={sideEffects.value}
             inputProps={{ placeholder: 'Examples: Nausea, BRCA1' }}
+            inputHelpText="More than one selection may be made."
             items={filterSelectedItems(findingsOptions, findings)}
             getItemValue={item => item.name}
             shouldItemRender={matchItemToTerm}
@@ -339,9 +361,13 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --fin">
-                {(children.length)
-                ? (children)
-                : <div className="cts-autocomplete__menu-item">No available options based on your previous seelections</div>}
+                {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No available options based on your previous selections
+                  </div>
+                )}
               </div>
             )}
             renderItem={(item, isHighlighted) => (

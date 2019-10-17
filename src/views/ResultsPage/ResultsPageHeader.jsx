@@ -51,7 +51,7 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
           className="btnAsLink"
           onClick={handleRefineSearch}
         >
-          Refine Search Criteria
+          Modify Search Criteria
         </button>
       </p>
     </div>

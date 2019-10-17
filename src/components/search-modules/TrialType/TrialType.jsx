@@ -13,8 +13,6 @@ const TrialType = ({ handleUpdate }) => {
 
   const [hvToggle, setHvToggle] = useState(healthyVolunteers);
 
-
-
   useEffect(() => {
     handleUpdate('trialTypes', [...trials]);
   }, [trials, handleUpdate]);
@@ -59,7 +57,7 @@ const TrialType = ({ handleUpdate }) => {
     >
       <p>
         Select the type of trial for your search. You may check more than one
-        box or select "All."
+        box or select "All." You may choose to limit results to trials accepting healthy volunteers.
       </p>
 
       <div className="data-toggle-block">

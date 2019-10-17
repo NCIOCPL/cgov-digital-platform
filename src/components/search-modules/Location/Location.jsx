@@ -100,7 +100,7 @@ const Location = ({ handleUpdate }) => {
       <p>
         Search for trials near a specific zip code; or in a country, state and
         city; or at a particular institution. The default selection will search
-        for trials in all available locations.
+        for trials in all available locations. You may choose to limit results to Veterans Affairs facilities.
       </p>
       <div className="data-toggle-block">
         <Toggle
@@ -181,6 +181,7 @@ const Location = ({ handleUpdate }) => {
                 id="lst"
                 label="State"
                 value={stateVal.value}
+                inputHelpText="More than one selection may be made."
                 items={filterSelectedItems(stateOptions, states)}
                 getItemValue={item => item.name}
                 shouldItemRender={matchStateToTerm}
@@ -254,7 +255,7 @@ const Location = ({ handleUpdate }) => {
                   value={hospitalName.value}
                   inputProps={{
                     id: 'hos',
-                    placeholder: 'Hospital/Institution name',
+                    placeholder: 'Start typing to select a hospital or institution',
                   }}
                   wrapperStyle={{
                     position: 'relative',
@@ -302,7 +303,7 @@ const Location = ({ handleUpdate }) => {
             <Radio
               onChange={handleRadioChange}
               id="search-location-nih"
-              label="At NIH (only show trials at the NIH clinical center in Bethesda, MD)"
+              label="At NIH (only show trials at the NIH Clinical Center in Bethesda, MD)"
               checked={activeRadio === 'search-location-nih'}
             />
           </>

@@ -67,9 +67,9 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
       <Autocomplete
         id="dt"
         label="Drug/Drug Family"
-        inputHelpText="You can use the drug's generic or brand name."
+        inputHelpText="You can use the drug's generic or brand name. More than one selection may be made."
         value={drugVal.value}
-        inputProps={{ placeholder: placeholderText }}
+        inputProps={{ placeholder: 'Start typing to select drugs and/or drug families' }}
         items={filterSelectedItems(drugOptions, drugs)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
@@ -130,7 +130,8 @@ const DrugTreatment = ({ handleUpdate, useValue }) => {
         id="ti"
         label="Other Treatments"
         value={treatmentVal.value}
-        inputProps={{ placeholder: placeholderText }}
+        inputProps={{ placeholder: 'Start typing to select other treatments' }}
+        inputHelpText="More than one selection may be made."
         items={filterSelectedItems(treatmentOptions, treatments)}
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
