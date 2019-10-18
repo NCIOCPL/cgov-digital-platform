@@ -133,7 +133,7 @@ const Location = ({ handleUpdate }) => {
                 value={zip}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
-                success={zipModified}
+                modified={zipModified}
                 onBlur={checkZip}
               />
               <Dropdown

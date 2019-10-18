@@ -38,7 +38,7 @@ const Age = ({ handleUpdate }) => {
         inputHelpText="Your age helps determine which trials are right for you."
         maxLength={3}
         onBlur={validateAgeEntry}
-        success={ageModified}
+        modified={ageModified}
       />
     </Fieldset>
   );

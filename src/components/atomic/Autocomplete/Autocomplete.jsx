@@ -639,7 +639,7 @@ class Autocomplete extends React.Component {
             htmlFor={this.id}
           />)
         }
-        <div className={`${this.props.multiselect ? 'cts-chip-list' : ''} ${this.props.success? 'cts-chip-list--success': ''}`}>
+        <div className={`${this.props.multiselect ? 'cts-chip-list' : ''} ${this.props.modified? 'cts-chip-list--modified': ''}`}>
         {this.props.multiselect && this.renderChips()}
         {this.props.renderInput({
           ...inputProps,

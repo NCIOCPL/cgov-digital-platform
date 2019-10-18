@@ -76,35 +76,37 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   };
 
   const initRefineSearch = () => {
-    if (cancerType.type.length > 0 && cancerType.type.includes('maintype')) {
-      //if it has a maintype, primary is already set!
-      // just retrieve descendents
-      retrieveDescendents(cancerType.name, cancerType.codes);
-    } else {
-      // use the parentDisease ID to select the primary cancer type
-      let parentCancer = maintypeOptions.find(
-        ({ codes }) => codes[0] === cancerType.parentDiseaseID[0]
-      );
-      if (parentCancer) {
-        retrieveDescendents(parentCancer.name, parentCancer.codes);
+    if(cancerTypeModified) {
+      if (cancerType.type.length > 0 && cancerType.type.includes('maintype')) {
+        //if it has a maintype, primary is already set!
+        // just retrieve descendents
+        retrieveDescendents(cancerType.name, cancerType.codes);
       } else {
-        //codes don't match up!  Handle error
-        // TODO: handle error (unrecognizable maintype)
+        // use the parentDisease ID to select the primary cancer type
+        let parentCancer = maintypeOptions.find(
+          ({ codes }) => codes[0] === cancerType.parentDiseaseID[0]
+        );
+        if (parentCancer) {
+          retrieveDescendents(parentCancer.name, parentCancer.codes);
+        } else {
+          //codes don't match up!  Handle error
+          // TODO: handle error (unrecognizable maintype)
+        }
+  
+        // send basic selection to its proper place
+        if (cancerType.type.includes('subtype')) {
+          // always set as subtype even if also a stage
+          handleUpdate('subtypes', [...subtypes, cancerType]);
+          handleUpdate('subtypeModified', true);
+        } else if (cancerType.type.includes('stage')) {
+          handleUpdate('stages', [...stages, cancerType]);
+          handleUpdate('stagesModified', true);
+        }
+        // now set cancerType to be the parent cancer
+        handleUpdate('cancerType', parentCancer);
       }
-
-      // send basic selection to its proper place
-      if (cancerType.type.includes('subtype')) {
-        // always set as subtype even if also a stage
-        handleUpdate('subtypes', [...subtypes, cancerType]);
-        handleUpdate('subtypeModified', true);
-      } else if (cancerType.type.includes('stage')) {
-        handleUpdate('stages', [...stages, cancerType]);
-        handleUpdate('stagesModified', true);
-      }
-      // now set cancerType to be the parent cancer
-      handleUpdate('cancerType', parentCancer);
     }
-    handleUpdate('cancerTypeModified', true);
+
     //switch off refineSearch
     handleUpdate('refineSearch', false);
   };
@@ -172,7 +174,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
         <button
           id="ct-btn"
           className={`ct-select__button faux-select ${
-            cancerTypeModified ? '--success' : ''
+            cancerTypeModified ? '--modified' : ''
           }`}
           onClick={handleCTSelectToggle}
           aria-label="Click to select specific cancer type"
@@ -190,7 +192,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="ct-searchTerm"
             label="Primary Cancer Type/Condition"
             value={searchText.value}
-            success={cancerTypeModified}
+            modified={cancerTypeModified}
             inputClasses="faux-select"
             inputProps={{ placeholder: 'Begin typing to narrow options below' }}
             labelHidden={true}
@@ -240,7 +242,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="st"
             label="Subtype"
             value={subtype.value}
-            success={subtypeModified}
+            modified={subtypeModified}
             inputProps={{ placeholder: 'Start typing to select a subtype' }}
             inputHelpText="More than one selection may be made."
             items={filterSelectedItems(subtypeOptions, subtypes)}
@@ -290,7 +292,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             id="stg"
             label="Stage"
             value={stage.value}
-            success={stagesModified}
+            modified={stagesModified}
             inputProps={{ placeholder: 'Start typing to select a stage' }}
             inputHelpText="More than one selection may be made."
             items={filterSelectedItems(stageOptions, stages)}

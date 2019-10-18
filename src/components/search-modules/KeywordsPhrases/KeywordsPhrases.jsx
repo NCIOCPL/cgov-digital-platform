@@ -4,7 +4,13 @@ import { Fieldset, TextInput } from '../../atomic';
 import './KeywordsPhrases.scss';
 
 const KeywordsPhrases = ({ handleUpdate }) => {
-  const keywordPhrases = useSelector(store => store.form.keywordPhrases);
+  const {keywordPhrases, keywordPhrasesModified} = useSelector(store => store.form);
+
+  const handleKeywordUpdate = (e) => {
+    handleUpdate(e.target.id, e.target.value);
+    handleUpdate('keywordPhrasesModified', false);
+  }
+
   return (
     <Fieldset
       id="keyword"
@@ -12,8 +18,9 @@ const KeywordsPhrases = ({ handleUpdate }) => {
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#keywords"
     >
       <TextInput
-        action={e => handleUpdate(e.target.id, e.target.value)}
+        action={handleKeywordUpdate}
         id="keywordPhrases"
+        modified={keywordPhrasesModified}
         value={keywordPhrases}
         label="Keywords phrases"
         labelHidden

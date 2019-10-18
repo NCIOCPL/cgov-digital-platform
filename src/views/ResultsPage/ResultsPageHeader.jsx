@@ -9,7 +9,7 @@ import { history } from '../../services/history.service';
 
 const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
   const dispatch = useDispatch();
-  const { formType, age, zip } = useSelector(store => store.form);
+  const { formType, cancerType, age, zip, keywordPhrases } = useSelector(store => store.form);
   const {
     maintypeOptions = [],
   } = useCachedValues([
@@ -22,11 +22,17 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
       if (maintypeOptions.length < 1) {
         dispatch(getMainType({}));
       }
+      if(cancerType.name !== '') {
+        handleUpdate('cancerTypeModified', true);
+      }
       if (age !== ''){
         handleUpdate('ageModified', true);
       }
       if(zip !== ''){
         handleUpdate('zipModified', true);
+      }
+      if(keywordPhrases !== ''){
+        handleUpdate('keywordPhrasesModified', true);
       }
       handleUpdate('formType', 'advanced');
     }

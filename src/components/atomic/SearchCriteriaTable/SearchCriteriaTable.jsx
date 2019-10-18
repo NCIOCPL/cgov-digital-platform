@@ -39,7 +39,47 @@ const SearchCriteriaTable = () => {
 
   const criteria = [];
   const formatStoreDataForDisplay = () => {
-    if (keywordPhrases && keywordPhrases !== '') {
+    if (cancerType && cancerType.codes.length > 0) {
+      criteria.push({
+        category: 'Primary Cancer Type/Condition',
+        selection: cancerType.name,
+      });
+    }
+
+    if (formType === 'advanced') {
+      if (subtypes && subtypes.length > 0) {
+        let joinedVals = [];
+        subtypes.forEach(function(subtype) {
+          joinedVals.push(subtype.name);
+        });
+
+        criteria.push({
+          category: 'Subtype',
+          selection: joinedVals.join(', '),
+        });
+      }
+
+      if (stages && stages.length > 0) {
+        let joinedVals = [];
+        stages.forEach(function(stage) {
+          joinedVals.push(stage.name);
+        });
+        criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
+      }
+
+      if (findings && findings.length > 0) {
+        let joinedVals = [];
+        findings.forEach(function(finding) {
+          joinedVals.push(finding.name);
+        });
+        criteria.push({
+          category: 'Side Effects / Biomarkers / Participant Attributes',
+          selection: joinedVals.join(', '),
+        });
+      }
+    }
+
+    if (formType === 'basic' && keywordPhrases && keywordPhrases !== '') {
       criteria.push({
         category: 'Keywords/Phrases',
         selection: keywordPhrases,
@@ -50,6 +90,13 @@ const SearchCriteriaTable = () => {
       criteria.push({ category: 'Age', selection: age });
     }
 
+    if (formType === 'advanced' && keywordPhrases && keywordPhrases !== '') {
+      criteria.push({
+        category: 'Keywords/Phrases',
+        selection: keywordPhrases,
+      });
+    }
+
     if (formType === 'basic' && zip && zip !== '') {
       criteria.push({
         category: 'Near ZIP Code',
@@ -57,44 +104,9 @@ const SearchCriteriaTable = () => {
       });
     }
 
-    if (cancerType && cancerType.codes.length > 0) {
-      criteria.push({
-        category: 'Primary Cancer Type/Condition',
-        selection: cancerType.name,
-      });
-    }
-
-    if (subtypes && subtypes.length > 0) {
-      let joinedVals = [];
-      subtypes.forEach(function(subtype) {
-        joinedVals.push(subtype.name);
-      });
-
-      criteria.push({ category: 'Subtype', selection: joinedVals.join(', ') });
-    }
-
-    if (stages && stages.length > 0) {
-      let joinedVals = [];
-      stages.forEach(function(stage) {
-        joinedVals.push(stage.name);
-      });
-      criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
-    }
-
-    if (findings && findings.length > 0) {
-      let joinedVals = [];
-      findings.forEach(function(finding) {
-        joinedVals.push(finding.name);
-      });
-      criteria.push({
-        category: 'Side Effects / Biomarkers / Participant Attributes',
-        selection: joinedVals.join(', '),
-      });
-    }
-
     switch (location) {
       case 'search-location-zip':
-        if (formType !== 'basic'  && zip && zip !== '') {
+        if (formType !== 'basic' && zip && zip !== '') {
           criteria.push({
             category: 'Near ZIP Code',
             selection: 'within ' + zipRadius + ' miles of ' + zip,

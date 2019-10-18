@@ -47,8 +47,9 @@ export const defaultState = {
   ageModified: false,
   zipModified: false,
   cancerTypeModified: false,
-  subtypesModified: false,
+  subtypeModified: false,
   stagesModified: false,
+  keywordPhrasesModified: false,
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 
