@@ -21,18 +21,6 @@ function cgov_article_field_widget_form_alter(&$element, $form_state, $context) 
 }
 
 /**
- * Update for v1.1.8.
- *
- * Install cgov_schema_org as a CGov Module.
- */
-function cgov_article_update_8003() {
-  if (!\Drupal::moduleHandler()->moduleExists('cgov_schema_org')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_schema_org']);
-  }
-}
-
-/**
  * Preprocess function for field templates.
  */
 function cgov_article_preprocess_field(&$variables) {

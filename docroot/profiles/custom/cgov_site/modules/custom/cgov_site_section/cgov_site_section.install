@@ -55,3 +55,15 @@ function cgov_site_section_uninstall() {
 
   $field_storage_manager->onFieldStorageDefinitionDelete($definition);
 }
+
+/**
+ * Update for v1.1.9.
+ *
+ * Install the cgov_vocab_manager module.
+ */
+function cgov_site_section_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_vocab_manager')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_vocab_manager']);
+  }
+}

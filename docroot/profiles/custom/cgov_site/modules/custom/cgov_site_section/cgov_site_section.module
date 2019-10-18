@@ -99,24 +99,12 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
  * Implements hook_ENTITY_TYPE_update().
  */
 function cgov_site_section_entity_update(EntityInterface $entity) {
-
-  $entityType = $entity->getEntityType()->id();
-
-  // If this is a Site Sectiion, invalidate if it meets the criteria for
-  // cache tag invalidation.
-  if ($entityType === 'taxonomy_term' && $entity->hasField('field_site_section')) {
-    if (_will_trigger_cache_tag_invalidation($entity)) {
-      invalidate_section_cache_tag($entity);
-    }
-  }
-
   /*
    * If this is a node or media item and has changed its section parent or
-   * pretty url name, if it displays in navigation, cascade those changes
+   * alias, if it displays in navigation, cascade those changes
    *  to any subsections and pages within those subsections.
    *
    */
-
   if (
     $entity->getEntityTypeId() === 'node' &&
     $entity->hasField('field_site_section')
@@ -126,8 +114,10 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
     $current_entity_lang = $entity->get('langcode')->value;
     $translated_entity = $entity->getTranslation($current_entity_lang);
     $current_state = $translated_entity->get('moderation_state')->value;
+
     if ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity)) {
-      // Get the Sections where it's a landing page. Note: This could be none.
+      // Find the Sections where this node is a landing page.
+      // Invalidate their cache to account for the nodes new alias.
       $section_entities = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties([
@@ -140,12 +130,11 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
         foreach ($section_entities as $section) {
           $navRoot = get_root_nav_section($section);
           if ($navRoot) {
-            invalidate_section_cache_tag($navRoot);
+            invalidate_section_cache_tag($navRoot->id());
           }
         }
       }
     }
-
   }
 }
 
@@ -179,9 +168,17 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   if (will_trigger_save_children($entity)) {
     save_term_children($entity);
   }
-  // Determine if this term update meets the criteria for tag invalidation.
+  // Determine if this term update meets the criteria for tag invalidation,
+  // and invalidate.
   if (_will_trigger_cache_tag_invalidation($entity)) {
-    invalidate_section_cache_tag($entity);
+
+    // Get the complete set of sections IDs to clear.
+    $sectionsToClear = get_sections_to_clear($entity);
+
+    // Clear the cache tags.
+    foreach ($sectionsToClear as $sectionID) {
+      invalidate_section_cache_tag($sectionID);
+    }
   }
 
   // TODO: Figure out how to get pathauto to update all the aliases using
@@ -190,16 +187,55 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
 }
 
 /**
- * Invalidate the cache tag equal to the given Site Sections ID.
+ * Returns the set of sections IDs to clear for a given site section update.
  *
- * @param \Drupal\Core\Entity\EntityInterface $site_section_entity
- *   The Site Section to invalidate.
+ * @param \Drupal\Core\Entity\EntityInterface $section_entity
+ *   The section being updated.
+ *
+ * @return array
+ *   The sections IDs to cache tag clear.
  */
-function invalidate_section_cache_tag(EntityInterface $site_section_entity) {
-  $section_id = $site_section_entity->id();
+function get_sections_to_clear(EntityInterface $section_entity) {
+  // Get the current set of section IDs that display this item.
+  // Includes this term itself if its a nav root.
+  $sectionsToClear = get_rendering_sections($section_entity);
+
+  // If this section changed parents, or visibility, invalidate
+  // the cache tags for the original rendering sections as well.
+  if (entity_fields_modified([
+    'parent',
+    'field_navigation_display_options',
+  ], $section_entity)) {
+    $originalRenderingSections = get_rendering_sections($section_entity->original);
+    $sectionsToClear = array_merge($sectionsToClear, $originalRenderingSections);
+  }
+
+  // If this section changed from being a section nav root to not,
+  // we need to invalidate pages having its old section nav root ID.
+  if ($section_entity->field_section_nav_root->value == 0 &&
+    $section_entity->original->field_section_nav_root->value == 1) {
+    $sectionsToClear[] = $section_entity->id();
+  }
+
+  // De-dupe the IDs.
+  $sectionsToClear = array_unique($sectionsToClear);
+
+  return $sectionsToClear;
+}
+
+/**
+ * Invalidate the cache tag with the given Site Section ID.
+ *
+ * Int $section_id
+ *   The Site Section ID to invalidate.
+ */
+function invalidate_section_cache_tag($section_id) {
   // Get the sections ID and invalidate the cache tag.
-  if ($section_id) {
+  if ($section_id !== NULL) {
     Cache::invalidateTags(['site_section:' . $section_id]);
+    \Drupal::logger('cgov_site_section')
+      ->notice('Invalidated Cache Tag for Site Section with tid: ' .
+        $section_id);
   }
 }
 
@@ -215,7 +251,7 @@ function save_term_children(EntityInterface $updated_section_entity) {
   // Update immediate child sections.
   $subsections = $term_storage->loadChildren($updated_section_entity->id(), 'cgov_site_sections');
 
-  // Re-save the sections. This should trigger the presave above with will set
+  // Re-save the sections. This should trigger the presave above which will set
   // the computed_path to the new path.
   foreach ($subsections as $section) {
     $section->save();
@@ -277,9 +313,37 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
   // Invalidation check for Nodes.
   if ($entityType === 'node') {
     // Exit early if this entity doesn't have site sections.
-    if (!$updated_entity->hasField('field_site_section')) {
+    if (!$updated_entity->hasField('field_site_section')|| empty($updated_entity->get('field_site_section')->first())) {
       return FALSE;
     }
+
+    // Get the language alias prefix.
+    $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+    $current_langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $prefix = '';
+
+    if ($current_langcode != $default_langcode) {
+      $all_prefixes = \Drupal::config('language.negotiation')->get('url.prefixes');
+      $prefix = '/' . $all_prefixes[$current_langcode];
+    }
+
+    // Construct the new alias.
+    $section_tid = (int) $updated_entity->get('field_site_section')->target_id;
+    $term = Term::load($section_tid);
+    $computed_path = $term->get('computed_path')->value;
+    $pretty_url = $updated_entity->get('field_pretty_url')->value;
+
+    $new_alias = empty($pretty_url) ? $prefix . $computed_path : $prefix .
+      $computed_path . '/' . $pretty_url;
+
+    $original_alias = $updated_entity->toUrl()->toString();
+
+    // Exit early and trigger a cache clear if the alias for this node
+    // has changed.
+    if ($new_alias !== $original_alias) {
+      return TRUE;
+    }
+
     // Set entity Fields which trigger invalidation when modified.
     $values =
       [
@@ -296,6 +360,24 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
     $weightModified = $updated_entity->original->getWeight() !== $updated_entity->getWeight();
     if ($weightModified) {
       return TRUE;
+    }
+
+    // Exit early if this section was previously and is currently hidden.
+    // Get the display options for this entity.
+    $displayOptions = $updated_entity->field_navigation_display_options->getValue();
+    $displayOptions = array_column($displayOptions, 'value');
+    $isHidden = !empty($displayOptions) ?
+      in_array('hide_in_section_nav', $displayOptions) : FALSE;
+
+    // Get the display options for the original entity.
+    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = array_column($originalOptions, 'value');
+    $originalIsHidden = !empty($originalOptions)
+      ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
+
+    if ($isHidden && $originalIsHidden) {
+      // Will not trigger invalidation.
+      return FALSE;
     }
 
     // Set Site Section Fields which trigger invalidation.
@@ -339,7 +421,7 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
     return (int) $original->get($field_name)->target_id !== (int) $entity->get($field_name)->target_id;
   };
   $get_value = function ($field_name) use ($entity, $original) {
-    return $original->get($field_name)->value !== $entity->get($field_name)->value;
+    return $original->get($field_name)->getValue() != $entity->get($field_name)->getValue();
   };
 
   // Loop though the given fields to check for modification.
@@ -523,13 +605,78 @@ function get_root_nav_section($term) {
 }
 
 /**
- * Returns a Site Section Terms Parent.
+ * Returns the section nav root IDs which render a given section.
+ *
+ * \Drupal\Core\Entity\EntityInterface $term
+ *    The site section.
+ */
+function get_rendering_sections(EntityInterface $term) {
+  $renderingSections = [];
+  // Get the full term tree as an array.
+  $sectionTree = get_term_tree($term);
+
+  // Loop over the term tree, storing only nav root IDs that render,
+  // based on total distance from Root Nav -> Section being modified; and
+  // display options.
+  $totalLevels = count($sectionTree);
+  for ($level = 0; $level < $totalLevels; $level++) {
+    // Get the section term.
+    $section = $sectionTree[$level];
+
+    // If the current section being checked on is not a root, go to
+    // the next iteration.
+    if ($section->field_section_nav_root->value == 0) {
+      continue;
+    }
+
+    // If the current term is a root, determine if it would display
+    // the updated sections changes.
+    // Levels to render will always be a positive integer, eg. from 1-5.
+    $levelsToRender = $section->field_levels_to_display->value;
+    if ($level < $levelsToRender) {
+      $renderingSections[] = $section->id();
+    }
+
+    // If the root item just checked is hidden in nav, nothing above it
+    // will render this change, therefore we can stop checking the tree.
+    // Determine this by checking the display options for the root.
+    $displayOptions = $section->field_navigation_display_options->getValue();
+    $displayOptions = !empty($displayOptions) ? $displayOptions : [];
+    $displayOptions = array_column($displayOptions, 'value');
+
+    if (in_array('hide_in_section_nav', $displayOptions)) {
+      break;
+    }
+  }
+  return $renderingSections;
+}
+
+/**
+ * Return the full term tree for a given section, including the giving term.
+ *
+ * @param \Drupal\taxonomy\Entity\Term $term
+ *   The taxonomy term.
+ */
+function get_term_tree(Term $term) {
+  $termTree = [$term];
+  $parentTerm = get_section_parent($term);
+
+  while ($parentTerm !== NULL) {
+    $termTree[] = $parentTerm;
+    $parentTerm = get_section_parent($parentTerm);
+  }
+
+  return $termTree;
+}
+
+/**
+ * Returns a Site Section Terms direct Parent.
  *
  * @param \Drupal\taxonomy\Entity\Term $term
  *   The Site Section.
  *
  * @return mixed
- *   The Site Sections Parent or FALSE.
+ *   The Site Sections Parent or NULL.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -539,9 +686,11 @@ function get_section_parent(Term $term) {
 
   if ($term) {
     $parents = $termStorage->loadParents($term->id());
-    return $parents[array_keys($parents)[0]];
+    if (!empty($parents)) {
+      return $parents[array_keys($parents)[0]];
+    }
   }
-  return FALSE;
+  return NULL;
 }
 
 /**
