@@ -37,6 +37,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
         inputProps={{ placeholder: 'Start typing to select a cancer type or keyword' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={diseases}
+        inputHelpText="Leave blank to search all cancer types or keywords."
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => {
@@ -49,7 +50,15 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
           handleSelection(item);
         }}
         renderMenu={children => (
-          <div className="cts-autocomplete__menu --q">{children}</div>
+          <div className="cts-autocomplete__menu --q">
+            {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No available options found.  Your search will be based on the text above.
+                  </div>
+                )}
+          </div>
         )}
         renderItem={(item, isHighlighted) => (
           <div

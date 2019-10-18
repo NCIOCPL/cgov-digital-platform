@@ -194,7 +194,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             value={searchText.value}
             modified={cancerTypeModified}
             inputClasses="faux-select"
-            inputProps={{ placeholder: 'Begin typing to narrow options below' }}
+            inputProps={{ placeholder: 'Start typing to narrow options below' }}
             labelHidden={true}
             wrapperStyle={{ position: 'relative', display: 'inline-block' }}
             open={true}

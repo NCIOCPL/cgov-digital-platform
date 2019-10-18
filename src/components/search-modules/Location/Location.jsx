@@ -182,6 +182,7 @@ const Location = ({ handleUpdate }) => {
                 label="State"
                 value={stateVal.value}
                 inputHelpText="More than one selection may be made."
+                inputClasses="--state"
                 items={filterSelectedItems(stateOptions, states)}
                 getItemValue={item => item.name}
                 shouldItemRender={matchStateToTerm}

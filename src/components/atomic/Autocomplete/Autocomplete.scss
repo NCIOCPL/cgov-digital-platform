@@ -34,9 +34,15 @@
     position: relative;
   }
 
-  + .cts-autocomplete, 
+  + .cts-autocomplete{
+    margin-top: 1em;
+  }
+
   + .cts-input-group {
     margin-top: 1em;
+    @media only screen and (min-width: 641px) {
+      margin-top: 0;
+    }
   }
 }
 
@@ -61,8 +67,12 @@
     border: 0;
     display: inline-block;
     width: 50%;
-    min-width: 300px;
+    min-width: 360px;
     margin-bottom: 0;
+
+    &.--state {
+      min-width: 200px;
+    }
   }
 }
 
