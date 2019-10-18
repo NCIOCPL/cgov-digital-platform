@@ -9,12 +9,15 @@ import { history } from '../../services/history.service';
 
 const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
   const dispatch = useDispatch();
-  const { formType, cancerType, age, zip, keywordPhrases } = useSelector(store => store.form);
   const {
-    maintypeOptions = [],
-  } = useCachedValues([
-    'maintypeOptions',
-  ]);
+    formType,
+    cancerType,
+    age,
+    zip,
+    keywordPhrases,
+    isDirty,
+  } = useSelector(store => store.form);
+  const { maintypeOptions = [] } = useCachedValues(['maintypeOptions']);
 
   const handleRefineSearch = () => {
     if (formType === 'basic') {
@@ -22,16 +25,16 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
       if (maintypeOptions.length < 1) {
         dispatch(getMainType({}));
       }
-      if(cancerType.name !== '') {
+      if (cancerType.name !== '') {
         handleUpdate('cancerTypeModified', true);
       }
-      if (age !== ''){
+      if (age !== '') {
         handleUpdate('ageModified', true);
       }
-      if(zip !== ''){
+      if (zip !== '') {
         handleUpdate('zipModified', true);
       }
-      if(keywordPhrases !== ''){
+      if (keywordPhrases !== '') {
         handleUpdate('keywordPhrasesModified', true);
       }
       handleUpdate('formType', 'advanced');
@@ -46,26 +49,25 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
         <strong>Results 1-10 of {resultsCount} for your search</strong>
       </p>
 
-      <SearchCriteriaTable />
+      <SearchCriteriaTable handleUpdate={handleUpdate} />
       <p className="reset-form">
         <Link to="/search">Start Over</Link>
-        <span aria-hidden="true" className="separator">
-          |
-        </span>
-        <button
-          type="button"
-          className="btnAsLink"
-          onClick={handleRefineSearch}
-        >
-          Modify Search Criteria
-        </button>
+        {isDirty && (
+          <>
+            <span aria-hidden="true" className="separator">
+              |
+            </span>
+            <button
+              type="button"
+              className="btnAsLink"
+              onClick={handleRefineSearch}>
+              Modify Search Criteria
+            </button>
+          </>
+        )}
       </p>
     </div>
   );
-};
-
-ResultsPageHeader.propTypes = {
-  resultsCount: PropTypes.string,
 };
 
 export default ResultsPageHeader;

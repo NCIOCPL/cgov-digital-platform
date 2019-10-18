@@ -1,6 +1,6 @@
 .cts-autocomplete {
   position: relative;
-
+  
   &__menu {
     position: absolute;
     background: white;
@@ -20,7 +20,7 @@
 
     &-item {
       line-height: 1.4;
-      padding: .5em 0.5em;
+      padding: 0.5em 0.5em;
 
       &.highlighted {
         background: #286ea7;
@@ -29,7 +29,13 @@
       }
     }
   }
-  + .cts-autocomplete {
+
+  .menu-anchor {
+    position: relative;
+  }
+
+  + .cts-autocomplete, 
+  + .cts-input-group {
     margin-top: 1em;
   }
 }
@@ -41,31 +47,25 @@
   box-shadow: inset 0 2px 4px 0 hsla(240, 4%, 95%, 0.05);
 
   &.cts-chip-list--modified {
-    background: rgba(254, 230, 133, .4);
+    background: rgba(254, 230, 133, 0.4);
     .cts-input {
       background: none;
-
-      
-      
     }
-    
+
     *::placeholder {
-      color: #707070; 
+      color: #707070;
     }
   }
-  
+
   .cts-input {
     border: 0;
     display: inline-block;
-    width: 270px;
+    width: 50%;
+    min-width: 300px;
     margin-bottom: 0;
-  }
-
-  + .menu-anchor{
-    position: relative;
   }
 }
 
-.cts-input__help-text:not(:last-child){
+.cts-input__help-text:not(:last-child) {
   margin-bottom: 1em;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import scrollIntoView from 'dom-scroll-into-view';
-import {InputLabel, RemovableTag} from '../../atomic';
+import { InputLabel, RemovableTag } from '../../atomic';
 import Utilities from '../../../utilities/utilities';
 import './Autocomplete.scss';
 
@@ -120,7 +120,7 @@ class Autocomplete extends React.Component {
      */
     renderMenu: PropTypes.func,
     /**
-     * Styles that are applied to the dropdown menu 
+     * Styles that are applied to the dropdown menu
      * `menuClass` applies css landmark to add custom styles
      * to the rendered menu
      */
@@ -183,7 +183,7 @@ class Autocomplete extends React.Component {
     debug: PropTypes.bool,
     multiselect: PropTypes.bool,
     chipList: PropTypes.array,
-    onChipRemove: PropTypes.func
+    onChipRemove: PropTypes.func,
   };
 
   static defaultProps = {
@@ -201,7 +201,9 @@ class Autocomplete extends React.Component {
       return true;
     },
     renderMenu(items, value, style, classes) {
-      return <div className={`cts-autocomplete__menu ${classes}`} children={items} />;
+      return (
+        <div className={`cts-autocomplete__menu ${classes}`} children={items} />
+      );
     },
     autoHighlight: true,
     selectOnBlur: false,
@@ -210,7 +212,7 @@ class Autocomplete extends React.Component {
     wrapperClasses: '',
     multiselect: false,
     chipList: [],
-    onChipRemove() {}
+    onChipRemove() {},
   };
 
   constructor(props) {
@@ -490,13 +492,16 @@ class Autocomplete extends React.Component {
   renderChips() {
     return (
       <>
-      {this.props.chipList.map((chip, idx) => (
-        <RemovableTag key={idx} label={chip.name} onRemove={this.props.onChipRemove} />
-      ))
-      }
+        {this.props.chipList.map((chip, idx) => (
+          <RemovableTag
+            key={idx}
+            label={chip.name}
+            onRemove={this.props.onChipRemove}
+          />
+        ))}
       </>
-    )
-  };
+    );
+  }
 
   renderMenu() {
     const items = this.getFilteredItems(this.props).map((item, index) => {
@@ -520,7 +525,12 @@ class Autocomplete extends React.Component {
       top: this.state.menuTop,
       minWidth: this.state.menuWidth,
     };
-    const menu = this.props.renderMenu(items, this.props.value, style, this.props.menuClass);
+    const menu = this.props.renderMenu(
+      items,
+      this.props.value,
+      style,
+      this.props.menuClass
+    );
     return React.cloneElement(menu, {
       ref: e => (this.refs.menu = e),
       // Ignore blur to prevent menu from de-rendering before we can process click
@@ -631,62 +641,70 @@ class Autocomplete extends React.Component {
 
     return (
       <>
-      <div id={this.id + '-autocomplete-wrapper'} className={`cts-autocomplete ${this.props.wrapperClasses}`} {...this.props.wrapperProps}>
-        {this.props.labelHidden ? null : (
-        <InputLabel
-            label={this.props.label}
-            labelHint={this.props.labelHint}
-            htmlFor={this.id}
-          />)
-        }
-        <div className={`${this.props.multiselect ? 'cts-chip-list' : ''} ${this.props.modified? 'cts-chip-list--modified': ''}`}>
-        {this.props.multiselect && this.renderChips()}
-        {this.props.renderInput({
-          ...inputProps,
-          ...ariaLabel,
-          id: this.id,
-          role: 'combobox',
-          'aria-autocomplete': 'list',
-          'aria-expanded': open,
-          autoComplete: 'off',
-          ref: this.exposeAPI,
-          className: 'cts-input cts-autocomplete__input ' + this.props.inputClasses,
-          onFocus: this.handleInputFocus,
-          onBlur: this.handleInputBlur,
-          onChange: this.handleChange,
-          onKeyDown: this.composeEventHandlers(
-            this.handleKeyDown,
-            inputProps.onKeyDown
-          ),
-          onClick: this.composeEventHandlers(
-            this.handleInputClick,
-            inputProps.onClick
-          ),
-          type: 'text',
-          value: this.props.value,
-        })}
-  
-        </div>
-        <div className="menu-anchor">
-        {open && this.renderMenu()}
-        </div>
-        
-        {this.props.debug && (
-          <pre style={{ marginLeft: 300 }}>
-            {JSON.stringify(
-              this._debugStates.slice(
-                Math.max(0, this._debugStates.length - 5),
-                this._debugStates.length
+        <div
+          id={this.id + '-autocomplete-wrapper'}
+          className={`cts-autocomplete ${this.props.wrapperClasses}`}
+          {...this.props.wrapperProps}
+        >
+          {this.props.labelHidden ? null : (
+            <InputLabel
+              label={this.props.label}
+              labelHint={this.props.labelHint}
+              htmlFor={this.id}
+            />
+          )}
+          <div
+            className={`${this.props.multiselect ? 'cts-chip-list' : ''} ${
+              this.props.modified ? 'cts-chip-list--modified' : ''
+            }`}
+          >
+            {this.props.multiselect && this.renderChips()}
+            {this.props.renderInput({
+              ...inputProps,
+              ...ariaLabel,
+              id: this.id,
+              role: 'combobox',
+              'aria-autocomplete': 'list',
+              'aria-expanded': open,
+              autoComplete: 'off',
+              ref: this.exposeAPI,
+              className:
+                'cts-input cts-autocomplete__input ' + this.props.inputClasses,
+              onFocus: this.handleInputFocus,
+              onBlur: this.handleInputBlur,
+              onChange: this.handleChange,
+              onKeyDown: this.composeEventHandlers(
+                this.handleKeyDown,
+                inputProps.onKeyDown
               ),
-              null,
-              2
-            )}
-          </pre>
-        )}
-      </div>
-      {this.props.inputHelpText &&
-        <span className="cts-input__help-text">{this.props.inputHelpText}</span>
-      }
+              onClick: this.composeEventHandlers(
+                this.handleInputClick,
+                inputProps.onClick
+              ),
+              type: 'text',
+              value: this.props.value,
+            })}
+          </div>
+          <div className="menu-anchor">{open && this.renderMenu()}</div>
+
+          {this.props.debug && (
+            <pre style={{ marginLeft: 300 }}>
+              {JSON.stringify(
+                this._debugStates.slice(
+                  Math.max(0, this._debugStates.length - 5),
+                  this._debugStates.length
+                ),
+                null,
+                2
+              )}
+            </pre>
+          )}
+          {this.props.inputHelpText && (
+            <span className="cts-input__help-text">
+              {this.props.inputHelpText}
+            </span>
+          )}
+        </div>
       </>
     );
   }

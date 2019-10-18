@@ -8,7 +8,8 @@ class AccordionItem extends React.Component {
     action: PropTypes.func,
     children: PropTypes.node,
     expanded: PropTypes.bool,
-    title: PropTypes.string,
+    titleCollapsed: PropTypes.string,
+    titleExpanded: PropTypes.string
   };
 
   static defaultProps = {
@@ -69,8 +70,8 @@ class AccordionItem extends React.Component {
   //  @returns {Node} The rendered DOM node.
   renderTitleElement() {
     let element;
-    if (this.props.title.length > 0) {
-      element = <span>{this.props.title}</span>;
+    if (this.props.titleCollapsed.length > 0) {
+      element = <span>{this.props.expanded? this.props.titleExpanded : this.props.titleCollapsed}</span>;
     } else {
       if (React.Children.count(this.props.children) !== 2) {
         throw new Error('Either a title or 2 child elements must be supplied.');

@@ -43,6 +43,7 @@ export const defaultState = {
   leadOrg: { term: '', termKey: '' }, // (lo) Lead Organization
   
   formType: 'basic', // (basic (default) | advanced)
+  isDirty: false, // only updated after submission of either form
   refineSearch: false, //is the form in refine search mode
   ageModified: false,
   zipModified: false,

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Accordion, AccordionItem, Table } from '../../atomic';
+import { updateForm } from '../../../store/actions';
 import './SearchCriteriaTable.scss';
 
 const SearchCriteriaTable = () => {
+  const dispatch = useDispatch();
+
   //store vals
   const {
     age,
@@ -36,6 +39,16 @@ const SearchCriteriaTable = () => {
   useEffect(() => {
     formatStoreDataForDisplay();
   }, []);
+
+  const handleUpdate = (field, value) => {
+    dispatch(
+      updateForm({
+        field,
+        value,
+      })
+    );
+  };
+
 
   const criteria = [];
   const formatStoreDataForDisplay = () => {
@@ -252,13 +265,13 @@ const SearchCriteriaTable = () => {
         selection: leadOrg.term,
       });
     }
-
+    handleUpdate('isDirty', criteria.length > 0);
     setCriterion([...criteria]);
   };
 
   return criterion.length ? (
     <Accordion bordered startCollapsed>
-      <AccordionItem title="Show Search Criteria">
+      <AccordionItem titleExpanded="Hide Search Criteria" titleCollapsed="Show Search Criteria">
         <div className="search-criteria-table">
           <Table
             borderless
