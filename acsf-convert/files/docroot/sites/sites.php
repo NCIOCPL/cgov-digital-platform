@@ -61,6 +61,10 @@ if (!function_exists('acsf_hooks_includes')) {
    *   ascending.
    */
   function acsf_hooks_includes($hook_name) {
+    // Only include hooks if we are properly booting Drupal.
+    if (!defined('DRUPAL_ROOT')) {
+      return [];
+    }
     $hook_pattern = sprintf('%s/../factory-hooks/%s/*.php', DRUPAL_ROOT, $hook_name);
     return glob($hook_pattern);
   }

@@ -180,6 +180,35 @@ if (file_exists('/var/www/site-php')) {
   if (!empty($site_settings['conf']) && is_array($site_settings['conf'])) {
     $config = $site_settings['conf'] + $config;
   }
+
+  // Set the twig cache directory / change the default from Acquia Hosting:
+  // - Make it specific per site. The default is set based on the environment,
+  //   meaning it is the same for every site. This wouldn't cause twig caches
+  //   to be reused across multiple sites (at least not since D8.6), but:
+  //   - Cache clears on a single site would cause all sites' twig files to be
+  //     deleted;
+  //   - Concurrent cache clears could throw exceptions (when simultaneously
+  //     removing the same subdirectories).
+  // - Acquia Hosting has a feature where a 'deployment identifier' can be part
+  //   of the directory name, which allows a cleanup script to more easily
+  //   remove stale twig cache files lingering on multiple web nodes. Site
+  //   Factory does not include this deployment identifier, so a new code
+  //   deployment will not force twig caches for all hosted websites to be
+  //   regenerated at the exact same moment. This implies that the Site Factory
+  //   infrastructure is responsible for cleaning up stale twig cache files.
+  // - To not clash with the Acquia Hosting cleanup script (which shouldn't run
+  //   for us, but just to be sure...), make the base directory different from
+  //   Acquia Hosting's default of "php_storage". (Core uses "php".)
+  // - Don't include 'twig'. (FileStorage by definition already takes care of
+  //   dedicated storage for a specific bin (called "twig") inside this
+  //   directory, which in practice means "/twig" already gets appended.)
+  if (isset($_ENV['AH_SITE_GROUP']) && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+    // For completeness: we don't need to take care of creating the directory.
+    // We don't care if the 'directory' value was / wasn't defined already, or
+    // if the companion value 'secret' was somehow not defined; Core has a
+    // fallback for 'secret'.
+    $settings['php_storage']['twig']['directory'] = "/mnt/tmp/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/php_storage_acsf/{$site_settings['conf']['acsf_db_name']}";
+  }
 }
 
 /**
