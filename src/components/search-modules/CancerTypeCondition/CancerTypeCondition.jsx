@@ -128,6 +128,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     cancerType.codes.length === 0 ? 'All' : cancerType.name;
 
   const handleCTSelectToggle = () => {
+    handleUpdate('cancerTypeModified', false);
     setCtMenuOpen(!ctMenuOpen);
   };
 
@@ -135,7 +136,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     handleUpdate('cancerType', item);
     handleUpdate('subtypes', []);
     handleUpdate('stages', []);
-    handleUpdate('ctModified', false);
     handleUpdate('subtypeModified', false);
     handleUpdate('stagesModified', false);
     setCtMenuOpen(false);
@@ -203,12 +203,11 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             shouldItemRender={matchItemToTerm}
             onChange={(event, value) => {
               setSearchText({ value });
-              handleUpdate('cancerTypeModified', false);
-              handleUpdate('subtypeModified', false);
-              handleUpdate('stagesModified', false);
             }}
             onSelect={(value, item) => {
               handleCTSelect(value, item);
+              handleUpdate('subtypeModified', false);
+              handleUpdate('stagesModified', false);
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --ct">

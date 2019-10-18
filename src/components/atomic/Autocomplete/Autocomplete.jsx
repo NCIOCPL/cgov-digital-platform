@@ -665,9 +665,11 @@ class Autocomplete extends React.Component {
           type: 'text',
           value: this.props.value,
         })}
-        
+  
         </div>
+        <div className="menu-anchor">
         {open && this.renderMenu()}
+        </div>
         
         {this.props.debug && (
           <pre style={{ marginLeft: 300 }}>
