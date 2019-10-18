@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Accordion, AccordionItem, Table } from '../../atomic';
+import { updateForm } from '../../../store/actions';
 import './SearchCriteriaTable.scss';
 
 const SearchCriteriaTable = () => {
+  const dispatch = useDispatch();
+
   //store vals
   const {
     age,
@@ -37,9 +40,59 @@ const SearchCriteriaTable = () => {
     formatStoreDataForDisplay();
   }, []);
 
+  const handleUpdate = (field, value) => {
+    dispatch(
+      updateForm({
+        field,
+        value,
+      })
+    );
+  };
+
+
   const criteria = [];
   const formatStoreDataForDisplay = () => {
-    if (keywordPhrases && keywordPhrases !== '') {
+    if (cancerType && cancerType.codes.length > 0) {
+      criteria.push({
+        category: 'Primary Cancer Type/Condition',
+        selection: cancerType.name,
+      });
+    }
+
+    if (formType === 'advanced') {
+      if (subtypes && subtypes.length > 0) {
+        let joinedVals = [];
+        subtypes.forEach(function(subtype) {
+          joinedVals.push(subtype.name);
+        });
+
+        criteria.push({
+          category: 'Subtype',
+          selection: joinedVals.join(', '),
+        });
+      }
+
+      if (stages && stages.length > 0) {
+        let joinedVals = [];
+        stages.forEach(function(stage) {
+          joinedVals.push(stage.name);
+        });
+        criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
+      }
+
+      if (findings && findings.length > 0) {
+        let joinedVals = [];
+        findings.forEach(function(finding) {
+          joinedVals.push(finding.name);
+        });
+        criteria.push({
+          category: 'Side Effects / Biomarkers / Participant Attributes',
+          selection: joinedVals.join(', '),
+        });
+      }
+    }
+
+    if (formType === 'basic' && keywordPhrases && keywordPhrases !== '') {
       criteria.push({
         category: 'Keywords/Phrases',
         selection: keywordPhrases,
@@ -50,6 +103,13 @@ const SearchCriteriaTable = () => {
       criteria.push({ category: 'Age', selection: age });
     }
 
+    if (formType === 'advanced' && keywordPhrases && keywordPhrases !== '') {
+      criteria.push({
+        category: 'Keywords/Phrases',
+        selection: keywordPhrases,
+      });
+    }
+
     if (formType === 'basic' && zip && zip !== '') {
       criteria.push({
         category: 'Near ZIP Code',
@@ -57,44 +117,9 @@ const SearchCriteriaTable = () => {
       });
     }
 
-    if (cancerType && cancerType.codes.length > 0) {
-      criteria.push({
-        category: 'Primary Cancer Type/Condition',
-        selection: cancerType.value,
-      });
-    }
-
-    if (subtypes && subtypes.length > 0) {
-      let joinedVals = [];
-      subtypes.forEach(function(subtype) {
-        joinedVals.push(subtype.label);
-      });
-
-      criteria.push({ category: 'Subtype', selection: joinedVals.join(', ') });
-    }
-
-    if (stages && stages.length > 0) {
-      let joinedVals = [];
-      stages.forEach(function(stage) {
-        joinedVals.push(stage.label);
-      });
-      criteria.push({ category: 'Stage', selection: joinedVals.join(', ') });
-    }
-
-    if (findings && findings.length > 0) {
-      let joinedVals = [];
-      findings.forEach(function(finding) {
-        joinedVals.push(finding.label);
-      });
-      criteria.push({
-        category: 'Side Effects / Biomarkers / Participant Attributes',
-        selection: joinedVals.join(', '),
-      });
-    }
-
     switch (location) {
       case 'search-location-zip':
-        if (formType !== 'basic'  && zip && zip !== '') {
+        if (formType !== 'basic' && zip && zip !== '') {
           criteria.push({
             category: 'Near ZIP Code',
             selection: 'within ' + zipRadius + ' miles of ' + zip,
@@ -240,13 +265,13 @@ const SearchCriteriaTable = () => {
         selection: leadOrg.term,
       });
     }
-
+    handleUpdate('isDirty', criteria.length > 0);
     setCriterion([...criteria]);
   };
 
   return criterion.length ? (
     <Accordion bordered startCollapsed>
-      <AccordionItem title="Show Search Criteria">
+      <AccordionItem titleExpanded="Hide Search Criteria" titleCollapsed="Show Search Criteria">
         <div className="search-criteria-table">
           <Table
             borderless

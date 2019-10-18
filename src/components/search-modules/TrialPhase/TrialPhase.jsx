@@ -44,7 +44,7 @@ const TrialPhase = ({ phaseFields, handleUpdate }) => {
       legend="Trial Phase"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialphase"
     >
-      <p>Search by one or more trial phases.</p>
+      <p>Select the trial phases for your search. You may check more than one box or select "All".</p>
       <div className="select-all">
         <Checkbox
           value=""

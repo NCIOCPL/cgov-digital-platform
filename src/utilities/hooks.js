@@ -24,7 +24,6 @@ export const useCachedValues = cacheKeys => {
 
 export const useChipList = (chiplistName, handleUpdate) => {
   const list = useSelector(store => store.form[chiplistName]);
-  console.log(chiplistName + ' list: ' + JSON.stringify(list));
   const [chips, setChips] = useState([]);
   useEffect(() => {
     handleUpdate(chiplistName, [...chips]);

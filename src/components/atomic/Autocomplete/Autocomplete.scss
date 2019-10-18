@@ -1,11 +1,11 @@
 .cts-autocomplete {
   position: relative;
-
+  
   &__menu {
     position: absolute;
     background: white;
     border: 1px solid #ccc;
-    top: 65px;
+    top: 0;
     width: 100%;
     z-index: 10;
     overflow: auto;
@@ -20,7 +20,7 @@
 
     &-item {
       line-height: 1.4;
-      padding: .5em 0.5em;
+      padding: 0.5em 0.5em;
 
       &.highlighted {
         background: #286ea7;
@@ -29,8 +29,20 @@
       }
     }
   }
-  + .cts-autocomplete {
+
+  .menu-anchor {
+    position: relative;
+  }
+
+  + .cts-autocomplete{
     margin-top: 1em;
+  }
+
+  + .cts-input-group {
+    margin-top: 1em;
+    @media only screen and (min-width: 641px) {
+      margin-top: 0;
+    }
   }
 }
 
@@ -39,15 +51,31 @@
   border: 1px solid #bdbdc2;
   padding: 0 2px;
   box-shadow: inset 0 2px 4px 0 hsla(240, 4%, 95%, 0.05);
-  
+
+  &.cts-chip-list--modified {
+    background: rgba(254, 230, 133, 0.4);
+    .cts-input {
+      background: none;
+    }
+
+    *::placeholder {
+      color: #707070;
+    }
+  }
+
   .cts-input {
     border: 0;
     display: inline-block;
-    width: 270px;
+    width: 50%;
+    min-width: 360px;
     margin-bottom: 0;
+
+    &.--state {
+      min-width: 200px;
+    }
   }
 }
 
-.cts-input__help-text:not(:last-child){
+.cts-input__help-text:not(:last-child) {
   margin-bottom: 1em;
 }

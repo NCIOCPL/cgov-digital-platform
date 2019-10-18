@@ -23,6 +23,7 @@ class TextInput extends React.Component {
     onBlur: PropTypes.func,
     placeHolder: PropTypes.string,
     required: PropTypes.bool,
+    modified: PropTypes.bool,
     type: PropTypes.oneOf([
       'text',
       'email',
@@ -45,6 +46,7 @@ class TextInput extends React.Component {
     type: 'text',
     enableSpellCheck: false,
     required: false,
+    modified: false,
     disabled: false,
   };
 
@@ -119,7 +121,7 @@ class TextInput extends React.Component {
           type={this.props.type}
           value={this.state.value}
           className={`cts-input ${this.state.hasError? 'cts-input--error ' : ''}${this.props.classes} ${
-            this.state.isValid ? 'cts-input--success' : ''
+            (this.props.modified) ? 'cts-input--modified' : ''
           }`}
           required={this.props.required}
           maxLength={this.props.maxLength}

@@ -5,19 +5,24 @@ import { getDiseasesForSimpleTypeAhead } from '../../../store/actions';
 
 const CancerTypeKeyword = ({ handleUpdate }) => {
   const dispatch = useDispatch();
-  const { keywordPhrases } = useSelector(store => store.form);
+  const { keywordPhrases, cancerType } = useSelector(store => store.form);
   const { diseases = [] } = useSelector(store => store.cache);
 
-  const [cancerType, setCancerType] = useState({ value: keywordPhrases });
+  const [CTK, setCTK] = useState({ value: (cancerType.name)? cancerType.name : keywordPhrases });
 
   useEffect(() => {
-    console.log(cancerType.value);
-    dispatch(getDiseasesForSimpleTypeAhead(cancerType.value ));
-  }, [cancerType, dispatch]);
+    dispatch(getDiseasesForSimpleTypeAhead({name: CTK.value}));
+  }, [CTK, dispatch]);
 
   const matchItemToTerm = (item, value) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
+
+  // when selecting from dropdown, make it the cancer type and clear keywords/phrases
+  const handleSelection = (diseaseResult) => {
+    handleUpdate('cancerType', diseaseResult);
+    handleUpdate('keywordPhrases', '');
+  }
 
   return (
     <Fieldset
@@ -28,24 +33,32 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
       <Autocomplete
         id="ctk"
         label="Cancer Type/Keyword"
-        value={cancerType.value}
-        inputProps={{ placeholder: 'Start typing to select a cancer type' }}
+        value={CTK.value}
+        inputProps={{ placeholder: 'Start typing to select a cancer type or keyword' }}
         wrapperStyle={{ position: 'relative', display: 'inline-block' }}
         items={diseases}
+        inputHelpText="Leave blank to search all cancer types or keywords."
         getItemValue={item => item.name}
         shouldItemRender={matchItemToTerm}
         onChange={(event, value) => {
-          setCancerType({ value });
+          setCTK({ value });
+          handleUpdate('cancerType', {name: '', codes: []})
           handleUpdate('keywordPhrases', value);
-          handleUpdate('typeCode', []);
         }}
         onSelect={(value, item) => {
-          setCancerType({ value });
-          handleUpdate('typeCode', item.codes);
-          handleUpdate('keywordPhrases', value);
+          setCTK({ value });
+          handleSelection(item);
         }}
         renderMenu={children => (
-          <div className="cts-autocomplete__menu --q">{children}</div>
+          <div className="cts-autocomplete__menu --q">
+            {children.length ? (
+                  children
+                ) : (
+                  <div className="cts-autocomplete__menu-item">
+                    No available options found.  Your search will be based on the text above.
+                  </div>
+                )}
+          </div>
         )}
         renderItem={(item, isHighlighted) => (
           <div

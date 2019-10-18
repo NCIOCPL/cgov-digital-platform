@@ -18,8 +18,8 @@ const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
 
-  const { countries = [] } = useSelector(store => store.cache);
-  const { location, zip, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
+  const { countries = [], hospitals = []  } = useSelector(store => store.cache);
+  const { location, zip, zipModified, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
     store => store.form
   );
   const [activeRadio, setActiveRadio] = useState(location);
@@ -27,15 +27,12 @@ const Location = ({ handleUpdate }) => {
   const [closeToNIH, setCloseToNIH] = useState(nihOnly);
   const [showStateField, setShowStateField] = useState(true);
 
-  const [hospitalName, setHospitalName] = useState({ value: hospital.term });
   //hospital
-  const { hospitals = [] } = useSelector(store => store.cache);
+  const [hospitalName, setHospitalName] = useState({ value: hospital.term });
 
   //state input
   const [stateVal, setStateVal] = useState({ value: '' });
   const stateOptions = getStates();
-  
-
 
   useEffect(() => {
     if (hospitalName.value.length > 2) {
@@ -87,6 +84,12 @@ const Location = ({ handleUpdate }) => {
     );
   };
 
+  const checkZip = () => {
+    if(zipModified){
+      handleUpdate('zipModified', false);
+    }
+  }
+
   return (
     <Fieldset
       id="location"
@@ -97,7 +100,7 @@ const Location = ({ handleUpdate }) => {
       <p>
         Search for trials near a specific zip code; or in a country, state and
         city; or at a particular institution. The default selection will search
-        for trials in all available locations.
+        for trials in all available locations. You may choose to limit results to Veterans Affairs facilities.
       </p>
       <div className="data-toggle-block">
         <Toggle
@@ -130,6 +133,8 @@ const Location = ({ handleUpdate }) => {
                 value={zip}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
+                modified={zipModified}
+                onBlur={checkZip}
               />
               <Dropdown
                 action={e => handleUpdate(e.target.id, e.target.value)}
@@ -176,6 +181,8 @@ const Location = ({ handleUpdate }) => {
                 id="lst"
                 label="State"
                 value={stateVal.value}
+                inputHelpText="More than one selection may be made."
+                inputClasses="--state"
                 items={filterSelectedItems(stateOptions, states)}
                 getItemValue={item => item.name}
                 shouldItemRender={matchStateToTerm}
@@ -249,7 +256,7 @@ const Location = ({ handleUpdate }) => {
                   value={hospitalName.value}
                   inputProps={{
                     id: 'hos',
-                    placeholder: 'Hospital/Institution name',
+                    placeholder: 'Start typing to select a hospital or institution',
                   }}
                   wrapperStyle={{
                     position: 'relative',
@@ -297,7 +304,7 @@ const Location = ({ handleUpdate }) => {
             <Radio
               onChange={handleRadioChange}
               id="search-location-nih"
-              label="At NIH (only show trials at the NIH clinical center in Bethesda, MD)"
+              label="At NIH (only show trials at the NIH Clinical Center in Bethesda, MD)"
               checked={activeRadio === 'search-location-nih'}
             />
           </>

@@ -6,7 +6,6 @@ export const defaultState = {
   subtypes: [], // (st) Subtype
   stages: [], // (stg) Stage
   findings: [], // (fin) Side effects
-  typeCode: [], // (t) from basic search where option is selected
   keywordPhrases: '', // (q) Cancer Type Keyword (ALSO Keyword Phrases)
   zip: '', // (z) Zipcode
   zipRadius: '100', //(zp) Radius
@@ -44,6 +43,14 @@ export const defaultState = {
   leadOrg: { term: '', termKey: '' }, // (lo) Lead Organization
   
   formType: 'basic', // (basic (default) | advanced)
+  isDirty: false, // only updated after submission of either form
+  refineSearch: false, //is the form in refine search mode
+  ageModified: false,
+  zipModified: false,
+  cancerTypeModified: false,
+  subtypeModified: false,
+  stagesModified: false,
+  keywordPhrasesModified: false,
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
 

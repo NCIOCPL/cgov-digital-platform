@@ -4,11 +4,11 @@ import { Fieldset, TextInput } from '../../atomic';
 
 const ZipCode = ({ handleUpdate }) => {
   const { zip } = useSelector(store => store.form);
-  
-  const handleZipUpdate = (e) => {
+
+  const handleZipUpdate = e => {
     handleUpdate(e.target.id, e.target.value);
-    handleUpdate('location', 'search-location-zip')
-  }
+    handleUpdate('location', 'search-location-zip');
+  };
 
   return (
     <Fieldset
