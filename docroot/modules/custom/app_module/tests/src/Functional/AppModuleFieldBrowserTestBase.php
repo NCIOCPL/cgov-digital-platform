@@ -113,11 +113,14 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
     // Reset the permission cache.
     $create_permission = 'create ' . $this->contentTypeName . ' content';
     $this->checkPermissions([$create_permission], TRUE);
+    $edit_permission = 'edit any ' . $this->contentTypeName . ' content';
+    $this->checkPermissions([$edit_permission], TRUE);
 
     // Now that we have a new content type, create a user that has privileges
     // on the content type.
     $this->authorAccount = $this->drupalCreateUser([
       $create_permission,
+      $edit_permission,
       'create url aliases',
     ]);
 
