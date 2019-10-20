@@ -92,8 +92,6 @@ class AppModuleReferenceFieldFormatter extends FormatterBase implements Containe
       $app_id = $item->getValue()['target_id'];
       $app_instance_options = $item->getValue()['data'] ?: [];
 
-      // TODO: Use app module settings handler to deserialize.
-      // $data = $item->getValue()['data'];
       $app_module = AppModule::load($app_id);
 
       // Add an extra check because the app module could have been deleted.

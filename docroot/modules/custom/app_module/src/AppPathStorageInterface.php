@@ -38,8 +38,8 @@ interface AppPathStorageInterface {
    *   The owning entities URL alias.
    * @param string $app_module_id
    *   The id of the app module.
-   * @param string $app_module_data
-   *   The serialized data of this app module instance.
+   * @param array $app_module_data
+   *   The data of this app module instance.
    * @param string $langcode
    *   (optional) The language code of the alias.
    * @param int|null $pid
@@ -52,7 +52,7 @@ interface AppPathStorageInterface {
    *   - owner_source (string): The internal system path with a starting slash.
    *   - owner_alias (string): The URL alias with a starting slash.
    *   - app_module_id (string): The id of the app module.
-   *   - app_module_data (string): The data for the instance of the app module.
+   *   - app_module_data (array): The data for the instance of the app module.
    *   - pid (int): Unique path alias identifier.
    *   - langcode (string): The language code of the alias.
    *   - original: For updates, an array with source, alias and langcode with
@@ -66,7 +66,7 @@ interface AppPathStorageInterface {
     $owner_source,
     $owner_alias,
     $app_module_id,
-    $app_module_data,
+    array $app_module_data,
     $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED,
     $pid = NULL);
 
