@@ -59,7 +59,7 @@ class AppPathStorage implements AppPathStorageInterface {
     $owner_source,
     $owner_alias,
     $app_module_id,
-    $app_module_data = NULL,
+    $app_module_data = [],
     $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED,
     $pid = NULL
   ) {

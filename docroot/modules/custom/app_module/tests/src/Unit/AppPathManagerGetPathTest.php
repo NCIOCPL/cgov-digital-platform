@@ -67,7 +67,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
             'owner_source' => '/node/22',
             'owner_alias' => '/no-match',
             'app_module_id' => 'test_module_id',
-            'app_module_data' => NULL,
+            'app_module_data' => [],
             'langcode' => $language->getId(),
           ],
         ]
@@ -111,7 +111,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
             'owner_source' => '/node/22',
             'owner_alias' => '/no-match',
             'app_module_id' => 'test_module_id',
-            'app_module_data' => NULL,
+            'app_module_data' => [],
             'langcode' => $language->getId(),
           ],
         ]
@@ -149,7 +149,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
       'owner_source' => '/node/22',
       'owner_alias' => $path,
       'app_module_id' => 'test_module_id',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => $language->getId(),
     ];
 
@@ -164,7 +164,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
             'owner_source' => '/node/22',
             'owner_alias' => $path,
             'app_module_id' => 'test_module_id',
-            'app_module_data' => NULL,
+            'app_module_data' => [],
             'langcode' => $language->getId(),
           ],
         ]
@@ -212,7 +212,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
       'owner_source' => '/node/22',
       'owner_alias' => $path,
       'app_module_id' => 'test_module_id',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => $language->getId(),
     ];
 
@@ -227,7 +227,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
             'owner_source' => '/node/22',
             'owner_alias' => $path,
             'app_module_id' => 'test_module_id',
-            'app_module_data' => NULL,
+            'app_module_data' => [],
             'langcode' => $language->getId(),
           ],
         ]
@@ -275,7 +275,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
       'owner_source' => '/node/22',
       'owner_alias' => '/short',
       'app_module_id' => 'test_module_id',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => $language->getId(),
     ];
 
@@ -285,7 +285,7 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
       'owner_source' => '/node/33',
       'owner_alias' => '/short/then/long',
       'app_module_id' => 'test_module_id',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => $language->getId(),
     ];
 
