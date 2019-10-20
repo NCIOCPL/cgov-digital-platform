@@ -25,19 +25,96 @@ class AppModuleReferenceSelectWidget extends OptionsSelectWidget {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $select_element['target_id'] = parent::formElement($items, $delta, $element, $form, $form_state);
 
-    // This sets up the form element.
-    $select_element = $this->fieldElement($items, $delta, $select_element, $form, $form_state);
-    $select_element['target_id']['#multiple'] = FALSE;
+    // Set the target_id field to the select (#type => select) FromElement
+    // from our parent.
+    $form_fields['target_id'] = parent::formElement($items, $delta, $element, $form, $form_state);
+
+    // Set some options on the target_id field.
+    $form_fields['target_id']['#multiple'] = FALSE;
     if (!$this->isDefaultValueWidget($form_state)) {
       $available_apps = $this->getAppModuleNames();
       if (count($available_apps) >= 1) {
         $first_option = ['_none' => '- None -'];
-        $select_element['target_id']['#options'] = array_merge($first_option, $available_apps);
+        $form_fields['target_id']['#options'] = array_merge($first_option, $available_apps);
       }
     }
-    return $select_element;
+
+    // Now setup the data form field.
+    $data_value = isset($items[$delta]->data) ? $items[$delta]->data : [];
+    $data_value = json_encode($data_value, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
+
+    $form_fields['data'] = [
+      '#type' => 'textarea',
+      '#default_value' => $data_value,
+      '#rows' => 10,
+      '#title' => $this->t('App Module Instance Settings'),
+      '#resizable' => 'both',
+      '#element_validate' => [
+        [$this, 'validateData'],
+      ],
+    ];
+
+    return $form_fields;
+  }
+
+  /**
+   * Validates that the data element is proper JSON.
+   *
+   * @param array $element
+   *   The element being validated.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function validateData(array $element, FormStateInterface $form_state) {
+    $data = $element['#value'];
+
+    // Decode using data as an associative array.
+    $test = json_decode($data, TRUE);
+
+    // TODO: When we move to PHP 7.3 we should use JSON_THROW_ON_ERROR
+    // in the json_decode statement so that we do not have to check
+    // errors like this.
+    $hasError = json_last_error() !== JSON_ERROR_NONE;
+
+    // Test if the $test is an associative array.
+    $is_object = (!$hasError) &&
+                  is_array($test) &&
+                  (
+                    count($test) == 0 ||
+                    array_diff_key(
+                      $test,
+                      array_keys(array_keys($test))
+                    )
+                  );
+
+    if (!$is_object) {
+      $hasError = TRUE;
+    }
+
+    if ($hasError) {
+      $form_state->setError($element, $this->t('Instance settings must be a valid JSON object.'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    $values = parent::massageFormValues($values, $form, $form_state);
+
+    foreach ($values as $delta => $value) {
+      if (isset($value['data'])) {
+        $data = json_decode(
+          $value['data'],
+          TRUE
+        );
+
+        $values[$delta]['data'] = $data;
+      }
+    }
+
+    return $values;
   }
 
   /**
@@ -53,30 +130,6 @@ class AppModuleReferenceSelectWidget extends OptionsSelectWidget {
       $options[$app_module->id()] = $app_module->label();
     }
     return $options;
-  }
-
-  /**
-   * Build a field element for a app_module_reference field.
-   *
-   * @param \Drupal\Core\Field\FieldItemListInterface $items
-   *   Array of default values for this field.
-   * @param int $delta
-   *   The order of this item in the array of sub-elements (0, 1, 2, etc.).
-   * @param array $element
-   *   The field item element.
-   * @param array $form
-   *   The overall form array.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Array of default values for this field.
-   *
-   * @return array
-   *   The changed field element.
-   */
-  public function fieldElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    // On selection of view, an Ajax call must be made to get the settings
-    // for this app module. This will then either replace the select element,
-    // or replace it.
-    return $element;
   }
 
 }

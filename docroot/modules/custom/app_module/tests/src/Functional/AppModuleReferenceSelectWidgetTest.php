@@ -51,6 +51,51 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
 
     // Verify the web page is displaying the formatter.
     $assert->pageTextContains('App Module: Test App Module Plugin');
+
+    // Test resave app module json.
+    $node = $this->getNodeByTitle($title);
+    $this->drupalGet('node/' . $node->id() . '/edit');
+    $this->drupalPostForm(
+      NULL,
+      [
+        'field_' . $this->fieldName . '[0][data]' => '{"a": "b", "c": ["d", "e"]]}',
+      ],
+      'Save'
+    );
+    /* TODO: Check that values are correct in text box.
+     * (It is HTML encoded so it will be annoying)
+     */
+
+    // Check validation.
+    $this->drupalGet('node/add/' . $this->contentTypeName);
+
+    // Details to be submitted for content creation.
+    $title = $this->randomMachineName(20);
+    $edit = [
+      'title[0][value]' => $title,
+      'field_' . $this->fieldName . '[0][target_id]' => $this->appModuleId,
+      'field_' . $this->fieldName . '[0][data]' => '',
+    ];
+
+    // Submit the content creation form.
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $assert->pageTextContains('Instance settings must be a valid JSON object.');
+
+    // Check validation.
+    $this->drupalGet('node/add/' . $this->contentTypeName);
+
+    // Details to be submitted for content creation.
+    $title = $this->randomMachineName(20);
+    $edit = [
+      'title[0][value]' => $title,
+      'field_' . $this->fieldName . '[0][target_id]' => $this->appModuleId,
+      'field_' . $this->fieldName . '[0][data]' => 'chicken',
+    ];
+
+    // Submit the content creation form.
+    $this->drupalPostForm(NULL, $edit, 'Save');
+    $assert->pageTextContains('Instance settings must be a valid JSON object.');
+
   }
 
 }
