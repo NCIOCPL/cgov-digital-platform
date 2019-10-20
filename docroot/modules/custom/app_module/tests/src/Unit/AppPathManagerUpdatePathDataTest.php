@@ -128,7 +128,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       NULL,
       new Language(['id' => 'en']),
       'test_app_module',
-      NULL
+      []
     );
 
     $actual = $this->appPathManager->updateAppPath($entity);
@@ -149,7 +149,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'owner_source' => '/node/22',
       'owner_alias' => '/test-alias',
       'app_module_id' => 'test_app_module',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => 'en',
     ];
 
@@ -185,7 +185,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
         '/node/22',
         '/test-alias',
         'test_app_module',
-        NULL,
+        [],
         'en',
         NULL
       )
@@ -217,7 +217,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       '/test-alias',
       new Language(['id' => 'en']),
       'test_app_module',
-      NULL
+      []
     );
 
     $actual = $this->appPathManager->updateAppPath($entity);
@@ -235,7 +235,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'owner_source' => '/node/22',
       'owner_alias' => '/test-alias',
       'app_module_id' => 'test_app_module',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => 'en',
     ];
 
@@ -266,7 +266,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
         'owner_source' => '/node/22',
         'owner_alias' => '/test-alias',
         'app_module_id' => 'other_app_module',
-        'app_module_data' => NULL,
+        'app_module_data' => [],
         'langcode' => 'en',
       ]);
 
@@ -279,7 +279,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
         '/node/22',
         '/test-alias',
         'test_app_module',
-        NULL,
+        [],
         'en',
         3
       )
@@ -311,7 +311,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       '/test-alias',
       new Language(['id' => 'en']),
       'test_app_module',
-      NULL
+      []
     );
 
     $actual = $this->appPathManager->updateAppPath($entity);

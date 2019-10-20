@@ -52,7 +52,7 @@ class AppPathStorageTest extends KernelTestBase {
       'owner_alias' => '/test-alias-Case',
       'owner_source' => '/node/10',
       'app_module_id' => 'test_app_module',
-      'app_module_data' => NULL,
+      'app_module_data' => [],
       'langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
     ];
 
@@ -91,7 +91,7 @@ class AppPathStorageTest extends KernelTestBase {
         'owner_alias' => '/test-multi-alias-2',
         'owner_source' => '/node/12',
         'app_module_id' => 'test_app_module',
-        'app_module_data' => NULL,
+        'app_module_data' => [],
         'langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
       ],
       [
@@ -100,7 +100,7 @@ class AppPathStorageTest extends KernelTestBase {
         'owner_alias' => '/test-multi-alias-1',
         'owner_source' => '/node/11',
         'app_module_id' => 'test_app_module',
-        'app_module_data' => NULL,
+        'app_module_data' => [],
         'langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED,
       ],
     ];

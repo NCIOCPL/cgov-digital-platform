@@ -6,7 +6,7 @@ use Drupal\app_module\AppModule;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
-use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\TypedData\MapDataDefinition;
 
 /**
  * Defines the 'appmodulereference' entity field type.
@@ -52,7 +52,7 @@ class AppModuleReferenceItem extends EntityReferenceItem {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = parent::propertyDefinitions($field_definition);
-    $properties['data'] = DataDefinition::create('string')
+    $properties['data'] = MapDataDefinition::create()
       ->setLabel(new TranslatableMarkup('Data'))
       ->setDescription(new TranslatableMarkup('Settings data for this instance'));
     return $properties;
@@ -67,6 +67,7 @@ class AppModuleReferenceItem extends EntityReferenceItem {
       'description' => 'Serialized data.',
       'type' => 'text',
       'size' => 'big',
+      'serialize' => TRUE,
     ];
     return $schema;
   }
