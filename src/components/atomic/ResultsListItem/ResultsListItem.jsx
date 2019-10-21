@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import {Link} from 'react-router-dom';
 import Checkbox from '../Checkbox';
 import './ResultsListItem.scss';
 
@@ -20,7 +20,7 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
       </div>
       <div className="results-list-item__contents">
         <div className="results-list-item__title">
-          <a href={item.url}>{item.title}</a>
+          <Link to='/v'>{item.title}</Link>
         </div>
         <div className="results-list-item__category"><span>Status:</span>{item.status ? 'Active' : 'Active'}</div>
         <div className="results-list-item__category"><span>Age:</span>{item.age} years and older</div>

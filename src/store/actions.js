@@ -354,7 +354,7 @@ export function searchDrugs({ searchText, isDebug = false, size = 10 } = {}) {
           method: 'getInterventions',
           requestParams: {
             category: ['Agent', 'Agent Category'],
-            searchText: searchText,
+            name: searchText,
             size: size,
             additionalParams: {
               current_trial_status: VIEWABLE_TRIALS,
@@ -391,7 +391,7 @@ export function searchOtherInterventions({ searchText, size = 10 } = {}) {
           method: 'getInterventions',
           requestParams: {
             category: 'Other',
-            searchText: searchText,
+            name: searchText,
             size: size,
             additionalParams: {
               current_trial_status: VIEWABLE_TRIALS,
@@ -480,8 +480,24 @@ export function searchTrials(requestJSON = '') {
         {
           method: 'searchTrials',
           requestParams: {
-             
+            size: 10,
           },
+        }
+      ]
+    }
+  }
+}
+
+export function getTrial({trialId}) {
+  return {
+    type: '@@api/CTS',
+    payload: {
+      service: 'ctsSearch',
+      cacheKey: 'trialId',
+      requests: [
+        {
+          method: 'getTrial',
+          requestParams: trialId,
         }
       ]
     }
