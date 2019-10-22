@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Contains app_module.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function app_module_theme($existing, $type, $theme, $path) {
+
+  return [
+    'app_module' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements template_preprocess_HOOK().
+ */
+function template_preprocess_app_module(&$variables) {
+  $variables['configuration'] = $variables['elements']['#configuration'];
+  $variables['app_module_id'] = $variables['elements']['#app_module_id'];
+  $variables['app_module_plugin_id'] = $variables['elements']['#app_module_plugin_id'];
+  $variables['app_route_id'] = $variables['elements']['#app_route_id'];
+  $variables['content'] = $variables['elements']['content'];
+
+  // Create a valid HTML ID and make sure it is unique.
+  // There should be only 1 app module instance on a page.
+  if (!empty($variables['elements']['#id'])) {
+    $variables['attributes']['id'] = Html::getUniqueId('app-module-' . $variables['elements']['#app_module_id']);
+  }
+
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function app_module_theme_suggestions_app_module(array $variables) {
+  $suggestions = [];
+  $app_module_id = $variables['elements']['#app_module_id'];
+  $app_module_plugin_id = $variables['elements']['#app_module_plugin_id'];
+  $app_route_id = $variables['elements']['#app_route_id'];
+
+  // Just app_module to start.
+  $suggestions[] = 'app_module';
+
+  // Do the plugin.
+  $suggestions[] = 'app_module__' . $app_module_plugin_id;
+
+  // Plugin + route.
+  $suggestions[] = 'app_module__' .
+    $app_module_plugin_id . '__' .
+    $app_route_id;
+
+  // App Module ID.
+  $suggestions[] = 'app_module__' . $app_module_id;
+
+  // App Module ID + plugin.
+  $suggestions[] = 'app_module__' .
+    $app_module_id . '__' .
+    $app_module_plugin_id;
+
+  // App Module ID + plugin + path.
+  $suggestions[] = 'app_module__' .
+    $app_module_id . '__' .
+    $app_module_plugin_id . '__' .
+    $app_route_id;
+
+  return $suggestions;
+}
+
+/*
+ * Below are hook implmentations for keeping our aliases up to date with
+ * the system's aliases. (Insert is not needed because we should only insert
+ * when an entity HAS an app module, and we would not know that here.)
+ */
+
+/**
+ * Implements hook_path_update().
+ */
+function app_module_path_update(array $path) {
+  /* If the owner_pid can be found, then we should update the
+   * owner_alias. ASSUMPTION: the source cannot change.
+   */
+  \Drupal::service('app_module.app_path_manager')->updateAliasFromPath($path);
+}
+
+/**
+ * Implements hook_path_delete().
+ */
+function app_module_path_delete($path) {
+  /* If the owner_pid can be found, then we should delete
+   * the item.
+   */
+  if ($path) {
+    \Drupal::service('app_module.app_path_manager')->deleteByPath($path);
+  }
+}
