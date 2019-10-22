@@ -44,14 +44,11 @@ const createCTSMiddleware = services => ({
 
           const response = (method === 'searchTrials')
             ? await service[method](JSON.stringify(requestParams))
-            : await service[method](requestParams);
-            
-          console.log(response);
+            : await service[method](...Object.values(requestParams));
           let body = {}
           
           // if search results, add total and starting index
           if(response.trials) {
-            console.log('hi');
             body = response;
           }else {
             body = response.terms;
