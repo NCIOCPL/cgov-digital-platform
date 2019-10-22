@@ -7,6 +7,10 @@ const config = {
       filename: '[name].js',
       path: path.join(__dirname, 'dist/js'),
   },
+  optimization: {
+	// We no not want to minimize our code.
+	minimize: false
+  },
   externals: {
     'jquery': 'jQuery',
     'jQuery': 'jQuery',
