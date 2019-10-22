@@ -23,7 +23,7 @@ import App from './App';
 const initialize = ({
   appId = '@@/DEFAULT_CTS_APP_ID',
   useSessionStorage = true,
-  rootId = 'NCI-search-results-root',
+  rootId = 'NCI-CTS-root',
   services = {},
   language = 'en',
 } = {}) => {
@@ -66,7 +66,7 @@ const initialize = ({
         <App />
       </Router>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById(rootId)
   );
 };
 
@@ -77,7 +77,7 @@ if (process.env.NODE_ENV !== 'production') {
   } catch (err) {
     console.log("Can't find common.css file");
   }
-  const rootId = 'NCI-search-results-root';
+  const rootId = 'NCI-CTS-root';
   const ctsSearch = () => {
     const hostName = 'clinicaltrialsapi.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
