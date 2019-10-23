@@ -32,3 +32,15 @@ function cgov_application_page_update_8001() {
     $installer->install(['app_module']);
   }
 }
+
+/**
+ * Update for Clinical Trials Search Feature.
+ *
+ * Install the cgov_cts module.
+ */
+function cgov_application_page_update_8002() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_cts')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_cts']);
+  }
+}
