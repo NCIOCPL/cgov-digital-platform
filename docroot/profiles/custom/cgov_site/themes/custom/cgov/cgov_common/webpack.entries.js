@@ -15,5 +15,6 @@ module.exports = {
     "Blue": path.resolve(__dirname, "src/variants/blue/entrypoints/Blue.js"),
     "Green": path.resolve(__dirname, "src/variants/green/entrypoints/Green.js"),
     "CTHP": path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
-    "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js")
+    "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js"),
+    "CTSApp": path.resolve(__dirname, "src/entrypoints/cts/CTSApp.js"),
 }
