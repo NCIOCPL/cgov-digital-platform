@@ -27,7 +27,9 @@ const initialize = ({
   services = {},
   language = 'en',
 } = {}) => {
+
   let cachedState;
+  
   if (process.env.NODE_ENV !== 'development' && useSessionStorage === true) {
     cachedState = loadStateFromSessionStorage(appId);
   }
@@ -92,3 +94,5 @@ if (process.env.NODE_ENV !== 'production') {
     language: 'en',
   });
 }
+
+export default initialize;
