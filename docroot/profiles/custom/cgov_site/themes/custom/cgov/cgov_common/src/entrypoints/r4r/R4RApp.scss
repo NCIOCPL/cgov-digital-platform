@@ -1,0 +1,186 @@
+/* PULLED IN DIRECTLY FROM WCMS-FRONTEND */
+@import '../../styles/sprites/svg-sprite';
+@import '../../../../src/styles/colors';
+
+.r4r-results .facet__title {
+    margin-top: 0;
+}
+
+.r4r-results input[type="checkbox"] {
+    margin: 0;
+}
+
+.r4r-container p {
+    margin: 0;
+}
+
+.r4r-container h3 {
+    margin: 0;
+}
+
+.r4r-container h4 {
+    margin: 0;
+}
+
+.r4r-container header {
+    padding: 0;
+}
+
+.r4r-container input[type=text] {
+    margin: 0;
+}
+
+.r4r-container label {
+    margin: 0;
+}
+
+.results-container h2 {
+    margin-top: 0;
+}
+
+.r4r-resource h2 {
+    margin: 10px 0;
+}
+
+.r4r-container input[type="submit"] {
+    margin: 0;
+    width: 40px;
+}
+
+.contentzone .r4r-container button, .contentzone .r4r-container form button {
+    min-width: 0;
+}
+
+.contentzone .r4r-container button {
+    background: #2a71a5;
+}
+
+.contentzone .r4r-container button:hover, .contentzone .r4r-container button:focus {
+    background: #266594;
+}
+
+.selected-filters__header {
+    margin: 0;
+}
+
+.browse__tile.arrow-link {
+    padding: 7px 15px;
+    font-size: 18px;
+}
+
+a.arrow-link-white:before, a.arrow-link:before {
+    right: 15px;
+}
+
+/* With no clearance at the bottom, the box-shadow marking the borders of the browse boxes isn't visible */
+#r4r-root {
+    padding-bottom: 2px;
+}
+
+.r4r-container .resource__link--external.r4r-DEFAULT{
+    font-family: "Montserrat";
+    font-weight: bold;
+    width: 150px;
+}
+
+.r4r-container .resource__link--external a:hover{
+    text-decoration: none;
+}
+
+.r4r-container .resource__link--external .icon-exit-notification {
+    position: absolute;
+    top: calc(50% - 7.5px);
+    right: -30px;
+}
+
+.r4r-container .results__filter-button {
+    font-family: "Montserrat";
+    font-weight: bold;
+}
+
+.r4r-container .results__selected-filters {
+    font-family: "Montserrat";
+}
+
+.r4r-container .r4r-resource .resource__access h4 {
+    font-weight: 400;
+}
+
+.r4r-container .view-all__link.arrow-link {
+    flex: inherit;
+    width: 230px;
+    color: #2b7bba;
+}
+
+
+@media only screen and (max-width: 1024px){
+    .r4r-container header {
+        padding: 0;
+    }
+}
+
+/* PAGE OPTIONS CUSTOMIZATION */
+
+.general-page-body-container {
+    padding-bottom: 0;
+}
+
+.page-options {
+    li {
+        margin: 0 0.875em 0 0;
+        width: 35px;
+        height: 35px;
+        background-color: $color-link;
+        border-radius: 50%;
+
+        a {
+            position: relative;
+            display: block;
+            height: 100%;
+            font-size: 91%;
+            min-width: 35px;
+
+            &::before {
+                position: absolute;
+                left: 50%;
+                top: calc(50% + 1px);
+                transform: translateX(-50%) translateY(-50%);
+            }
+        }
+
+
+        &:hover {
+            background-color: $lcranberry;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    ul {
+        justify-content: center;
+    }
+
+    .social-share--twitter a:before {
+        @include svg-sprite(twitter-white);
+        font-size: 17px;
+    }
+
+    .page-options--email a::before {
+        @include svg-sprite(mail-envelope-closed-white);
+    }
+}
+
+
+@media only screen and (min-width: 1025px){
+    /* Override default page options behavior to keep them at the bottom of the screen */
+    /* NOTE: This may be moved to App module template specific file */
+    .page-options {
+        position: inherit;
+        float: none;
+    }
+
+    .page-options ul {
+        float: none;
+    }
+}

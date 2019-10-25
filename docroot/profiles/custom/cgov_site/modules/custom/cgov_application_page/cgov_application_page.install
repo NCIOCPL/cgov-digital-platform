@@ -32,3 +32,15 @@ function cgov_application_page_update_8001() {
     $installer->install(['app_module']);
   }
 }
+
+/**
+ * Update for R4R App Module Feature.
+ *
+ * Install the cgov_r4r module.
+ */
+function cgov_application_page_update_8002() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_r4r')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_r4r']);
+  }
+}
