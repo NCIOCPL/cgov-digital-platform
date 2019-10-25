@@ -107,14 +107,12 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      loaders.push(
-        {
-          loader: require.resolve(preProcessor),
-          options: {
-            sourceMap: isEnvProduction && shouldUseSourceMap,
-          },
-        }
-      );
+      loaders.push({
+        loader: require.resolve(preProcessor),
+        options: {
+          sourceMap: isEnvProduction && shouldUseSourceMap,
+        },
+      });
     }
     return loaders;
   };
@@ -168,6 +166,8 @@ module.exports = function(webpackEnv) {
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
+      library: "nci-search-results-app",
+      libraryTarget: "umd",
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
@@ -184,8 +184,8 @@ module.exports = function(webpackEnv) {
         new TerserPlugin({
           terserOptions: {
             parse: {
-              // We want terser to parse ecma 8 code. However, we don't want it
-              // to apply any minification steps that turns valid ecma 5 code
+              // we want terser to parse ecma 8 code. However, we don't want it
+              // to apply any minfication steps that turns valid ecma 5 code
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
               // https://github.com/facebook/create-react-app/pull/4234
@@ -201,7 +201,7 @@ module.exports = function(webpackEnv) {
               comparisons: false,
               // Disabled because of an issue with Terser breaking valid code:
               // https://github.com/facebook/create-react-app/issues/5250
-              // Pending further investigation:
+              // Pending futher investigation:
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
             },
@@ -239,7 +239,7 @@ module.exports = function(webpackEnv) {
                   annotation: true,
                 }
               : false,
-          }
+          },
         }),
       ],
       // Automatically split vendor and commons
@@ -310,7 +310,6 @@ module.exports = function(webpackEnv) {
               options: {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname,
                 
               },
               loader: require.resolve('eslint-loader'),
@@ -351,8 +350,7 @@ module.exports = function(webpackEnv) {
                     {
                       loaderMap: {
                         svg: {
-                          ReactComponent:
-                            '@svgr/webpack?-svgo,+ref![path]',
+                          ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
                         },
                       },
                     },
@@ -543,7 +541,7 @@ module.exports = function(webpackEnv) {
           // Options similar to the same options in webpackOptions.output
           // both options are optional
           filename: 'static/css/[name].css',
-          chunkFilename: 'static/css/[name].css',
+          chunkFilename: 'static/css/[name].chunk.css',
         }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
@@ -579,11 +577,9 @@ module.exports = function(webpackEnv) {
           navigateFallbackBlacklist: [
             // Exclude URLs starting with /_, as they're likely an API call
             new RegExp('^/_'),
-            // Exclude any URLs whose last part seems to be a file extension
-            // as they're likely a resource and not a SPA route.
-            // URLs containing a "?" character won't be blacklisted as they're likely
-            // a route with query params (e.g. auth callbacks).
-            new RegExp('/[^/?]+\\.[^/]+$'),
+            // Exclude URLs containing a dot, as they're likely a resource in
+            // public/ and not a SPA route
+            new RegExp('/[^/]+\\.[^/]+$'),
           ],
         }),
       // TypeScript type checking
