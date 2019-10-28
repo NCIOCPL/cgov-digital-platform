@@ -1,14 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateForm, getTrial } from '../../store/actions';
-import {
-  Delighter,
-  Checkbox,
-  Modal,
-  Pager,
-  ResultsList,
-} from '../../components/atomic';
+import { getTrial } from '../../store/actions';
+import { Delighter } from '../../components/atomic';
 
 import './ProtocolPage.scss';
 
@@ -20,10 +13,10 @@ const ProtocolPage = ({ results }) => {
     window.scrollTo(0, 0);
   }, []);
 
- useEffect(() => {
-   console.log('run getTrial');
+  useEffect(() => {
+    console.log('run getTrial');
     dispatch(getTrial({ trialId: 'NCI-2018-03587' }));
- }, [dispatch])
+  }, [dispatch]);
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -59,16 +52,12 @@ const ProtocolPage = ({ results }) => {
     </div>
   );
 
- 
-
   return (
     <div id="main-content" className="general-page-body-container main-content">
       <div className="contentzone">
         {/* */}
         <article className="protocol-page">
-          <div className="protocol-page__content">
-            Hi
-           </div>
+          <div className="protocol-page__content">Hi</div>
           <aside className="protocol-page__aside --bottom">
             {renderDelighters()}
           </aside>
@@ -78,6 +67,5 @@ const ProtocolPage = ({ results }) => {
     </div>
   );
 };
-
 
 export default ProtocolPage;

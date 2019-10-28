@@ -53,7 +53,7 @@ const createCTSMiddleware = services => ({
           }else {
             body = response.terms;
           }
-
+          console.log(body);
           let formattedBody = body;
           if (fetchHandlers) {
             const { formatResponse } = fetchHandlers;

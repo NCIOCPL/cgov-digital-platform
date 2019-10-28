@@ -80,7 +80,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
   const rootId = 'NCI-CTS-root';
   const ctsSearch = () => {
-    const hostName = 'clinicaltrialsapi.cancer.gov';
+    const hostName = 'dceg-test-acsf.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
     return service;
   };

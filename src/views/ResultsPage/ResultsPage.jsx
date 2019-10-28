@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { updateForm } from '../../store/actions';
 import {

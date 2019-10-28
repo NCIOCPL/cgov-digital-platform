@@ -18,12 +18,6 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
     return item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
   };
 
-  // when selecting from dropdown, make it the cancer type and clear keywords/phrases
-  const handleSelection = (diseaseResult) => {
-    handleUpdate('cancerType', diseaseResult);
-    handleUpdate('keywordPhrases', '');
-  }
-
   return (
     <Fieldset
       id="type"
@@ -48,7 +42,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
         }}
         onSelect={(value, item) => {
           setCTK({ value });
-          handleUpdate('typeCode', item);
+          handleUpdate('cancerType', item);
           handleUpdate('keywordPhrases', value);
         }}
         renderMenu={children => (
