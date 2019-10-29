@@ -16,6 +16,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq \
     apache2 \
+    build-essential \
     php7.2 \
     libapache2-mod-php7.2 \
     php7.2-bz2 \
@@ -114,7 +115,7 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # update npm
-RUN npm install -g npm@6.5
+RUN npm install -g npm@6.12
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
