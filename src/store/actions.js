@@ -99,9 +99,7 @@ export function getDiseasesForSimpleTypeAhead({
 
 export function getCancerTypeDescendents({
   cacheKey,
-  codes,
-  size = 0,
-  isDebug = false,
+  codes
 }) {
   return {
     type: '@@cache/RETRIEVE',

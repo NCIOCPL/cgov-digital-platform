@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import Checkbox from '../Checkbox';
-import './ResultsListItem.scss';
+import Checkbox from '../../components/atomic/Checkbox';
 
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
 

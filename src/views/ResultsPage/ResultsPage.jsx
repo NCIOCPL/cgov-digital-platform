@@ -6,11 +6,11 @@ import {
   Checkbox,
   Modal,
   Pager,
-  ResultsList,
 } from '../../components/atomic';
 import { useModal } from '../../utilities/hooks';
-import './ResultsPage.scss';
 import ResultsPageHeader from './ResultsPageHeader';
+import ResultsList from './ResultsList';
+import './ResultsPage.scss';
 
 const ResultsPage = ({ results }) => {
   const dispatch = useDispatch();

@@ -23,11 +23,15 @@ const createCTSMiddleware = services => ({
     return Promise.all(
       requests.map(async request => {
         if (request.payload) {
+          // get descendant data and map to cache based on maintype code
+
           const {
             requests: nestedRequests,
             cacheKey: nestedKey,
           } = request.payload;
+          
           const nestedResponses = await getAllRequests(nestedRequests);
+
           return {
             [nestedKey]:
               nestedResponses.length > 1
@@ -42,18 +46,18 @@ const createCTSMiddleware = services => ({
         } else {
           const { method, requestParams, fetchHandlers } = request;
 
-          const response = (method === 'searchTrials')
-            ? await service[method](JSON.stringify(requestParams))
-            : await service[method](...Object.values(requestParams));
-          let body = {}
-          
+          const response =
+            method === 'searchTrials'
+              ? await service[method](JSON.stringify(requestParams))
+              : await service[method](...Object.values(requestParams));
+          let body = {};
+
           // if search results, add total and starting index
-          if(response.trials) {
+          if (response.trials) {
             body = response;
-          }else {
+          } else {
             body = response.terms;
           }
-          console.log(body);
           let formattedBody = body;
           if (fetchHandlers) {
             const { formatResponse } = fetchHandlers;
@@ -68,11 +72,11 @@ const createCTSMiddleware = services => ({
   if (service !== null && requests) {
     try {
       const results = await getAllRequests(requests);
-      // const valueToCache =
-      //   requests.length > 1
-      //     ? [Object.assign({}, ...results.map(result => ({ ...result })))]
-      //     : results;
-      dispatch(receiveData(cacheKey, ...results));
+      const valueToCache =
+        requests.length > 1
+          ? [Object.assign({}, ...results.map(result => ({ ...result })))]
+          : results;
+      dispatch(receiveData(cacheKey, ...valueToCache));
     } catch (err) {
       console.log(err);
     }

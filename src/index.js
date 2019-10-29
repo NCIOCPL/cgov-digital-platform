@@ -23,7 +23,6 @@ const initialize = ({
   useSessionStorage = true,
   rootId = 'NCI-CTS-root',
   services = {},
-  language = 'en',
 } = {}) => {
 
   let cachedState;
@@ -80,7 +79,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
   const rootId = 'NCI-CTS-root';
   const ctsSearch = () => {
-    const hostName = 'dceg-test-acsf.cancer.gov';
+    const hostName = 'ctsproxy.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
     return service;
   };

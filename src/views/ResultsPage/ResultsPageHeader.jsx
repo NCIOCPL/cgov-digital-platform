@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCachedValues } from '../../utilities/hooks';
 import { getMainType } from '../../store/actions';
 import { Link } from 'react-router-dom';
 import { SearchCriteriaTable } from '../../components/atomic';
@@ -16,7 +15,8 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
     keywordPhrases,
     isDirty,
   } = useSelector(store => store.form);
-  const { maintypeOptions = [] } = useCachedValues(['maintypeOptions']);
+
+  const { maintypeOptions } = useSelector(store => store.cache);
 
   const handleRefineSearch = () => {
     if (formType === 'basic') {
