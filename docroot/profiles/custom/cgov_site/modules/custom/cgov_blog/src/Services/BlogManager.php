@@ -396,4 +396,82 @@ class BlogManager implements BlogManagerInterface {
     return $nids;
   }
 
+  /**
+   * Return the title for blog series..
+   *
+   * @param string $month
+   *   Month value.
+   * @param string $year
+   *   Year value.
+   * @param string $topic
+   *   Topic value.
+   * @param object $node
+   *   Node object.
+   *
+   * @return string
+   *   Blog series title.
+   */
+  public function getBlogSeriesTitle($month, $year, $topic, $node) {
+
+    $title = "";
+    // If url has topic or year add them to the title.
+    if ($topic or $year) {
+      if ($year) {
+        $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
+        $title .= ' ' . $year . ' - ';
+      }
+      if ($topic) {
+        $topic_text = $this->getSeriesTopicByUrl();
+        $topic_text = (!empty($topic_text) ? $topic_text->getName() : '');
+        $title .= $topic_text . ' - ';
+      }
+      // Show card title if not empty. Otherwise show browser title field.
+      $title .= ($node->field_card_title->value) ? $node->field_card_title->value : $node->field_browser_title->value;
+    }
+    else {
+      $title = $node->getTitle();
+    }
+    return $title;
+  }
+
+  /**
+   * Return list of terms for series..
+   *
+   * @param string $series_id
+   *   The series node id.
+   * @param string $language_id
+   *   The series language.
+   *
+   * @return array
+   *   Blog series terms.
+   */
+  public function getBlogTopicsForSeries($series_id, $language_id) {
+
+    $vid = 'cgov_blog_topics';
+
+    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $terms = $taxonomy_storage->loadTree($vid);
+
+    $term_data = [];
+
+    foreach ($terms as $term) {
+      $term_series_tid = $this->entityTypeManager->getStorage('taxonomy_term')->load($term->tid)->get('field_owner_blog')->target_id;
+      if ($term_series_tid == $series_id) {
+        // Not default language.
+        if ($term->langcode != $language_id) {
+          $term_object = $taxonomy_storage->load($term->tid);
+          if ($term_object->hasTranslation($language_id)) {
+            $translated_term = $term_object->getTranslation($language_id);
+            $term_data[$term->tid] = $translated_term->getName();
+          }
+        }
+        else {
+          $term_data[$term->tid] = $term->name;
+        }
+      }
+    }
+
+    return $term_data;
+  }
+
 }

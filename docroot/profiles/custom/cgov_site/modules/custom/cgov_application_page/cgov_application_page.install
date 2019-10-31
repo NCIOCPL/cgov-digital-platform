@@ -20,3 +20,15 @@ function cgov_application_page_install() {
   $siteHelper->addContentTypePermissions('cgov_application_page', ['site_admin']);
 
 }
+
+/**
+ * Update for App Module Feature.
+ *
+ * Install the app_module module.
+ */
+function cgov_application_page_update_8001() {
+  if (!\Drupal::moduleHandler()->moduleExists('app_module')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['app_module']);
+  }
+}
