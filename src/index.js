@@ -61,15 +61,16 @@ const initialize = ({
 
     store.subscribe(saveDesiredStateToSessionStorage);
   }
-
+  const appRootDOMNode = document.getElementById(rootId);
   ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <App />
       </Router>
     </Provider>,
-    document.getElementById(rootId)
+    appRootDOMNode
   );
+  return appRootDOMNode;
 };
 
 // The following lets us run the app in dev not in situ as would normally be the case.
