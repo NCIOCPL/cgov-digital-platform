@@ -29,7 +29,7 @@ const createCTSMiddleware = services => ({
             requests: nestedRequests,
             cacheKey: nestedKey,
           } = request.payload;
-          
+
           const nestedResponses = await getAllRequests(nestedRequests);
 
           return {
@@ -45,7 +45,6 @@ const createCTSMiddleware = services => ({
           };
         } else {
           const { method, requestParams, fetchHandlers } = request;
-
           const response =
             method === 'searchTrials'
               ? await service[method](JSON.stringify(requestParams))
@@ -53,12 +52,13 @@ const createCTSMiddleware = services => ({
           let body = {};
 
           // if search results, add total and starting index
-          if (response.trials) {
-            body = response;
-          } else {
+          if (response.terms) {
             body = response.terms;
+          } else {
+            body = response;
           }
           let formattedBody = body;
+
           if (fetchHandlers) {
             const { formatResponse } = fetchHandlers;
             formattedBody = formatResponse ? formatResponse(body) : body;

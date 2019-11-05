@@ -19,3 +19,4 @@ export { default as TableHeaderCell } from './Table/TableHeaderCell';
 export { default as TagContainer } from './TagContainer';
 export { default as TextInput } from './TextInput';
 export { default as Toggle } from './Toggle';
+export { default as TrialStatusIndicator } from './TrialStatusIndicator';

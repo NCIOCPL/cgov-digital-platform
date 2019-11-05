@@ -53,6 +53,15 @@ const SearchPage = ({ formInit = 'basic' }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  let formModules =
+  formType === 'advanced' ? advancedFormModules : basicFormModules;
+
+const handleSubmit = e => {
+  e.preventDefault();
+  dispatch(searchTrials());
+  history.push('/r');
+};
+
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -125,13 +134,7 @@ const SearchPage = ({ formInit = 'basic' }) => {
     </div>
   );
 
-  let formModules =
-    formType === 'advanced' ? advancedFormModules : basicFormModules;
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(searchTrials());
-  };
 
   return (
     <article className="search-page">

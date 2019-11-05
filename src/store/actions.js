@@ -491,11 +491,13 @@ export function getTrial({trialId}) {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'trialId',
+      cacheKey: trialId,
       requests: [
         {
           method: 'getTrial',
-          requestParams: trialId,
+          requestParams: {
+            trialId: trialId
+          },
         }
       ]
     }

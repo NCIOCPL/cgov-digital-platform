@@ -71,7 +71,7 @@ class AccordionItem extends React.Component {
   renderTitleElement() {
     let element;
     if (this.props.titleCollapsed.length > 0) {
-      element = <span>{this.props.expanded? this.props.titleExpanded : this.props.titleCollapsed}</span>;
+      element = <span>{(this.props.expanded && this.props.titleExpanded)? this.props.titleExpanded : this.props.titleCollapsed}</span>;
     } else {
       if (React.Children.count(this.props.children) !== 2) {
         throw new Error('Either a title or 2 child elements must be supplied.');
