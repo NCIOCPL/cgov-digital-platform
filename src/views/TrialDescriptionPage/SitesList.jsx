@@ -6,6 +6,10 @@ const SitesList = sites => {
   const [locArray, setLocArray] = useState([]);
   const [countries, setCountries] = useState([]);
   const [statesList, setStatesList] = useState([]);
+  const [filteredLocArray, setFilteredLocArray] = useState([]);
+  const [selectedState, setSelectedState] = useState('all');
+  const [selectedCountry, setSelectedCountry] = useState('United States');
+  const [statesItems, setStatesItems] = useState([]);
 
   const buildCountriesList = sitesArr => {
     if (sitesArr.length > 0) {
@@ -23,6 +27,10 @@ const SitesList = sites => {
   useEffect(() => {
     constructFilterableArray();
   }, [countries]);
+
+  useEffect(() => {
+    setFilteredLocArray(locArray);
+  }, [locArray]);
 
   // build list per city
   const buildCitiesArray = parentArray => {
@@ -65,8 +73,29 @@ const SitesList = sites => {
           };
           c.states.push(s);
         });
+        setStatesItems(c);
         masterArray.unshift(c);
-      } else {
+      } else if(countryName === 'Canada') {
+        let canadaSites = sites.sites.filter(
+          item => item.org_country === 'Canada'
+        );
+        let pl = [...new Set(canadaSites.map(item => item.org_state_or_province))];
+        pl.sort((a, b) => (a > b ? 1 : -1));
+        c.provinces = [];
+
+        pl.forEach(provinceName => {
+          let sitesByProvince = canadaSites.filter(
+            item => item.org_state_or_province === provinceName
+          );
+          let provinceSitesList = buildCitiesArray(sitesByProvince);
+          let s = {
+            province: provinceName,
+            cities: provinceSitesList,
+          };
+          c.provinces.push(s);
+        });
+        masterArray.push(c);
+      }else {
         c.cities = buildCitiesArray(
           sites.sites.filter(item => item.org_country === countryName)
         );
@@ -78,9 +107,9 @@ const SitesList = sites => {
 
   const renderLocationBlock = (locationObj, index) => {
     return (
-      <div key={index} className="location">
+      <div key={'loc-' + locationObj.org_name} className="location">
         <strong className="location-name">{locationObj.org_name}</strong>
-        <div>Status: {locationObj.recruitment_status}</div>
+        <div>Status: {getTrialStatusForDisplay(locationObj.recruitment_status)}</div>
         <div>Contact: {locationObj.contact_name}</div>
         <div>Phone: {locationObj.contact_phone}</div>
         {locationObj.contact_email && (
@@ -95,17 +124,42 @@ const SitesList = sites => {
     );
   };
 
+  const handleFilterByCountry = e => {
+    let filtered = [];
+    if (e.target.value === 'other') {
+      filtered = locArray.filter(
+        item => item.country !== 'United States' && item.country !== 'Canada'
+      );
+    } else {
+      filtered = locArray.filter(item => item.country === e.target.value);
+    }
+    setSelectedCountry(e.target.value);
+    if (e.target.value !== 'United States') {
+      setSelectedState('all');
+    }
+    setFilteredLocArray(filtered);
+  };
+
+  const handleFilterByState = e => {
+    // the filtered array is already USA only
+    let filtered = [];
+    if (e.target.value !== '') {
+      filtered = statesItems.states.filter(item => item.state === e.target.value);
+    } else {
+      filtered = statesItems;
+    }
+    setSelectedState(e.target.value);
+    setFilteredLocArray(filtered);
+  };
+
   const renderFilterDropdowns = () => {
-    const mapCountryOptions = () =>
-      countries.map((country, idx) => (
-        <option key={idx} value={country.country}>
-          {country.country}
-        </option>
-      ));
+    const otherCountries = countries.filter(
+      country => country !== 'United States' && country !== 'Canada'
+    );
 
     const mapStateOptions = () =>
       statesList.map((stateAbbr, idx) => (
-        <option key={idx} value={stateAbbr}>
+        <option key={'state-' + idx} value={stateAbbr}>
           {getStateNameFromAbbr(stateAbbr)}
         </option>
       ));
@@ -113,14 +167,27 @@ const SitesList = sites => {
     return countries.length > 1 || statesList.length > 1 ? (
       <>
         {countries.length > 1 && (
-          <Dropdown label="Country">
-            <option value="">All</option>
-            {mapCountryOptions()}
+          <Dropdown
+            label="Country:"
+            action={handleFilterByCountry}
+            value={selectedCountry}
+          >
+            {countries.includes('United States') && (
+              <option value="United States">U.S.A.</option>
+            )}
+            {countries.includes('Canada') && (
+              <option value="Canada">Canada</option>
+            )}
+            {otherCountries.length > 0 && <option value="other">Other</option>}
           </Dropdown>
         )}
-        {statesList.length > 1 && (
-          <Dropdown label="State">
-            <option value="">All</option>
+        {statesList.length > 1 && selectedCountry === 'United States' && (
+          <Dropdown
+            label="State:"
+            action={handleFilterByState}
+            value={selectedState}
+          >
+            <option value="all">All</option>
             {mapStateOptions()}
           </Dropdown>
         )}
@@ -133,7 +200,7 @@ const SitesList = sites => {
   const renderSitesByCity = citiesArray => {
     return citiesArray.map((city, idx) => {
       return (
-        <div className="location-city" key={idx}>
+        <div className="location-city" key={'city' + idx}>
           <h5>{city.city}</h5>
           {city.sites.map(site => {
             return renderLocationBlock(site, idx);
@@ -143,30 +210,49 @@ const SitesList = sites => {
     });
   };
 
-  const renderUSASites = usaSites => {
+  //render North American Sites
+  const renderNASites = sitesArr => {
     return (
       <>
-        {countries.length > 1 && <h3>United States</h3>}
-        {usaSites.states.map((siteState, idx) => (
-          <div className="location-state" key={idx}>
+        {(sitesArr.country === 'United States')
+          ? sitesArr.states.map((siteState, idx) => (
+          <div className="location-state" key={'state-' + idx}>
             <h4>{getStateNameFromAbbr(siteState.state)}</h4>
             {renderSitesByCity(siteState.cities)}
           </div>
-        ))}
+          ))
+          : sitesArr.provinces.map((site, idx) => (
+            <div className="location-province" key={'province-' + idx}>
+              <h4>{site.province}</h4>
+              {renderSitesByCity(site.cities)}
+            </div>
+          ))
+        }
       </>
     );
   };
 
-  const generateListDisplay = () => {
+  const getTrialStatusForDisplay = statusKey => {
+    const statuses = {
+      ACTIVE: 'Active',
+      CLOSED_TO_ACCRUAL: 'Closed to accrual',
+      TEMPORARILY_CLOSED_TO_ACCRUAL: 'Temporarily closed to accrual',
+    };
+    return statuses[statusKey];
+  };
 
-    return locArray.length > 0 ? (
-      locArray.map((country, idx) => {
-        return country.country === 'United States' ? (
-          <React.Fragment key={idx}>{renderUSASites(country)}</React.Fragment>
-        ) : (
-          <React.Fragment key={idx}>
-            {renderSitesByCity(country.cities)}
+  const generateListDisplay = () => {
+    return filteredLocArray.length > 0 ? (
+      filteredLocArray.map((country, idx) => {
+        return (country.country === 'United States' || country.country === 'Canada') ? (
+          <React.Fragment key={'country' + idx}>
+            {renderNASites(country)}
           </React.Fragment>
+        ) : (
+          <div className="location-country" key={'country' + idx}>
+            <h3>{country.country}</h3>
+            {renderSitesByCity(country.cities)}
+          </div>
         );
       })
     ) : (

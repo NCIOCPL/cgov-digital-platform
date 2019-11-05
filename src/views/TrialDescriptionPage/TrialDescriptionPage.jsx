@@ -27,7 +27,7 @@ const TrialDescriptionPage = form => {
   }, []);
 
   useEffect(() => {
-    dispatch(getTrial({ trialId: 'NCI-2015-00054' }));
+    dispatch(getTrial({ trialId: 'NCI-2011-01915' }));
   }, [dispatch]);
 
   const updateCache = (value) => {
@@ -174,6 +174,14 @@ const TrialDescriptionPage = form => {
 
               <div className="trial-description-page__aside">
                 {renderDelighters()}
+                {/* <div class="no-resize cts-share view-delighter-share">
+			<div class="share-text">Share this clinical trial with your doctor:</div>
+									<a class="print" title="Print" href="#">
+				<span class="icon icon-print"></span><span class="text">Print</span>
+			</a><a class="email" title="Email" href="/common/popUps/PopEmail.aspx?title=Radiation+Therapy+or+Radiation+Therapy+and+Temozolomide+in+Treating+Patients+with+Newly+Diagnosed+Anaplastic+Glioma+or+Low+Grade+Glioma&amp;docurl=%2fabout-cancer%2ftreatment%2fclinical-trials%2fsearch%2fv%3floc%3d0__amp%3btid%3dNCT00887146__amp%3brl%3d2__amp%3bid%3dNCI-2011-01915__amp%3bpn%3d1__amp%3bni%3d10&amp;language=en&amp;a=O688268744&amp;b=1j5801">
+				<span class="icon icon-email"></span><span class="text">Email</span>
+			</a>
+		</div> */}
               </div>
             </div>
           </article>
