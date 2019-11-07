@@ -1,6 +1,4 @@
 import './polyfills/array_fill';
-//TODO: Remove this next import once done with Netlify.
-import './__nci-dev__common.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
