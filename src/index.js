@@ -1,6 +1,4 @@
 import './polyfills/array_fill';
-//TODO: Remove this next import once done with Netlify.
-import './__nci-dev__common.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -27,7 +25,9 @@ const initialize = ({
   services = {},
   language = 'en',
 } = {}) => {
+
   let cachedState;
+  
   if (process.env.NODE_ENV !== 'development' && useSessionStorage === true) {
     cachedState = loadStateFromSessionStorage(appId);
   }
@@ -59,15 +59,16 @@ const initialize = ({
 
     store.subscribe(saveDesiredStateToSessionStorage);
   }
-
+  const appRootDOMNode = document.getElementById(rootId);
   ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
         <App />
       </Router>
     </Provider>,
-    document.getElementById(rootId)
+    appRootDOMNode
   );
+  return appRootDOMNode;
 };
 
 // The following lets us run the app in dev not in situ as would normally be the case.
@@ -92,3 +93,5 @@ if (process.env.NODE_ENV !== 'production') {
     language: 'en',
   });
 }
+
+export default initialize;
