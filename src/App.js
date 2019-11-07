@@ -11,10 +11,10 @@ function App() {
   return (
     <Fragment>
       <Switch>
-        <Redirect exact from="/" to="/search" />
-        <Route path="/search" component={SearchPage} />
+        <Redirect exact from="/" to="/about-cancer/treatment/clinical-trials/search" />
+        <Route path="/about-cancer/treatment/clinical-trials/search" component={SearchPage} />
         <Route
-          path="/r"
+          path="/about-cancer/treatment/clinical-trials/search/r"
           render={() => <ResultsPage results={mockResults} />}
         />
       </Switch>
