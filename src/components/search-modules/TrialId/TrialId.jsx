@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Fieldset, TextInput } from '../../atomic';
-import './TrialId.scss';
 
 const TrialId = ({ handleUpdate }) => {
   const trialId = useSelector(store => store.form.trialId);
