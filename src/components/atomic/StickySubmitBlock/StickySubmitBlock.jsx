@@ -26,14 +26,18 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
 
   const handleClick = e => {
     onSubmit(e);
-  }
+  };
 
   const intObserver = new IntersectionObserver(callback, options);
 
   return (
     <div ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
-        <button type="button" className="btn-submit faux-btn-submit" onClick={handleClick}>
+        <button
+          type="button"
+          className="btn-submit faux-btn-submit"
+          onClick={handleClick}
+        >
           Find Trials
         </button>
         {/* <Link to="/r" className="faux-btn-submit">
@@ -47,11 +51,11 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
 
 StickySubmitBlock.propTypes = {
   sentinelRef: PropTypes.node,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
 StickySubmitBlock.defaultProps = {
-  onSubmit: ()=>{}
+  onSubmit: () => {},
 };
 
 export default StickySubmitBlock;

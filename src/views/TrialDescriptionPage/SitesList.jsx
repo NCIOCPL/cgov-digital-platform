@@ -111,7 +111,9 @@ const SitesList = sites => {
         <strong className="location-name">{locationObj.org_name}</strong>
         <div>Status: {getTrialStatusForDisplay(locationObj.recruitment_status)}</div>
         <div>Contact: {locationObj.contact_name}</div>
-        <div>Phone: {locationObj.contact_phone}</div>
+        {locationObj.contact_phone && (
+          <div>Phone: {locationObj.contact_phone}</div>
+        )}
         {locationObj.contact_email && (
           <div>
             Email:{' '}

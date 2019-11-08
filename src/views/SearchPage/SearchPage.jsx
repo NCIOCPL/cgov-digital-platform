@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
-import {history} from '../../services/history.service';
 import {
   Age,
   CancerTypeCondition,
@@ -53,15 +52,15 @@ const SearchPage = ({ formInit = 'basic' }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   let formModules =
-  formType === 'advanced' ? advancedFormModules : basicFormModules;
+    formType === 'advanced' ? advancedFormModules : basicFormModules;
 
-const handleSubmit = e => {
-  e.preventDefault();
-  dispatch(searchTrials());
-  history.push('/r');
-};
-
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(searchTrials());
+    history.push('/about-cancer/treatment/clinical-trials/search/r');
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -134,8 +133,6 @@ const handleSubmit = e => {
     </div>
   );
 
-
-
   return (
     <article className="search-page">
       <div ref={sentinelRef} className="search-page__sentinel"></div>
@@ -163,38 +160,38 @@ const handleSubmit = e => {
                       key={`formAdvanced-${idx}-${i}`}
                       handleUpdate={handleUpdate}
                     />
-                  ))
-                }
+                  ))}
                 </div>
-              )
-              }
-              
-              })}
+              );
+            } else {
+              return (
+                <Module
+                  key={`formAdvanced-${idx}`}
+                  handleUpdate={handleUpdate}
+                />
+              );
+            }
+          })}
+          <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
+        </form>
+        <aside className="search-page__aside">{renderDelighters()}</aside>
+      </div>
 
-              <StickySubmitBlock
-                sentinel={sentinelRef}
-                onSubmit={handleSubmit}
-              />
-            </form>
-            <aside className="search-page__aside">{renderDelighters()}</aside>
-          </div>
-
-          <div className="search-page__footer">
-            <div className="api-reference-section">
-              <h3 id="ui-id-4">
-                The Clinical Trials API: Use our data to power your own clinical
-                trial search
-              </h3>
-              <p className="api-reference-content">
-                An application programming interface (API) helps translate large
-                amounts of data in meaningful ways. NCI’s clinical trials search
-                data is now powered by an API, allowing programmers to build
-                applications{' '}
-                <a href="/syndication/api">using this open data.</a>
-              </p>
-            </div>
-          </div>
-        </article>
+      <div className="search-page__footer">
+        <div className="api-reference-section">
+          <h3 id="ui-id-4">
+            The Clinical Trials API: Use our data to power your own clinical
+            trial search
+          </h3>
+          <p className="api-reference-content">
+            An application programming interface (API) helps translate large
+            amounts of data in meaningful ways. NCI’s clinical trials search
+            data is now powered by an API, allowing programmers to build
+            applications <a href="/syndication/api">using this open data.</a>
+          </p>
+        </div>
+      </div>
+    </article>
   );
 };
 
