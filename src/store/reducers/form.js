@@ -9,6 +9,7 @@ export const defaultState = {
   findings: [], // (fin) Side effects
   keywordPhrases: '', // (q) Cancer Type Keyword (ALSO Keyword Phrases)
   zip: '', // (z) Zipcode
+  zipCoords: {lat: '', lon: ''},
   zipRadius: '100', //(zp) Radius
   country: 'United States', // (lcnty) Country
   states: [], // (lst) State
