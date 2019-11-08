@@ -1,8 +1,17 @@
 $imgPath: 'http://cancer.gov';
 
+.show-for-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 // atomic
-@import 
-  '../components/atomic/Accordion/Accordion',
+@import '../components/atomic/Accordion/Accordion',
   '../components/atomic/Autocomplete/Autocomplete',
   '../components/atomic/Checkbox/Checkbox.scss',
   '../components/atomic/Delighter/Delighter',
@@ -22,8 +31,7 @@ $imgPath: 'http://cancer.gov';
   '../components/atomic/Toggle/Toggle';
 
 // search modules
-@import 
-  '../components/search-modules/Age/Age',
+@import '../components/search-modules/Age/Age',
   '../components/search-modules/CancerTypeCondition/CancerTypeCondition',
   '../components/search-modules/DrugTreatment/DrugTreatment',
   '../components/search-modules/Location/Location',

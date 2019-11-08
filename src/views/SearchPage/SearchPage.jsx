@@ -16,6 +16,7 @@ import {
   ZipCode,
 } from '../../components/search-modules';
 import { updateForm } from '../../store/actions';
+import { history } from '../../services/history.service';
 
 //Module groups in arrays will be placed side-by-side in the form
 const basicFormModules = [CancerTypeKeyword, [Age, ZipCode]];
@@ -31,15 +32,9 @@ const advancedFormModules = [
   LeadOrganization,
 ];
 
-const SearchPage = form => {
+const SearchPage = ({ formInit = 'basic' }) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
-  const formType = useSelector(store => store.form.formType);
-
-  // scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const handleUpdate = (field, value) => {
     dispatch(
@@ -49,6 +44,14 @@ const SearchPage = form => {
       })
     );
   };
+
+  handleUpdate('formType', formInit);
+  const formType = useSelector(store => store.form.formType);
+
+  // scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -94,6 +97,7 @@ const SearchPage = form => {
 
   const toggleForm = () => {
     handleUpdate('formType', formType === 'basic' ? 'advanced' : 'basic');
+    history.push(`/about-cancer/treatment/clinical-trials/search${formType === 'basic' ? '/advanced' : ''}`);
   };
 
   const renderSearchTip = () => (
