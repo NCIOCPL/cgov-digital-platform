@@ -23,7 +23,6 @@ const initialize = ({
   useSessionStorage = true,
   rootId = 'NCI-CTS-root',
   services = {},
-  language = 'en',
 } = {}) => {
 
   let cachedState;
@@ -51,10 +50,10 @@ const initialize = ({
     const saveDesiredStateToSessionStorage = () => {
       const state = store.getState();
       // const { form, ...state } = allState;
-      saveStatetoSessionStorage({
-        state,
-        appId,
-      });
+      // saveStatetoSessionStorage({
+      //   state,
+      //   appId,
+      // });
     };
 
     store.subscribe(saveDesiredStateToSessionStorage);
@@ -80,7 +79,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
   const rootId = 'NCI-CTS-root';
   const ctsSearch = () => {
-    const hostName = 'clinicaltrialsapi.cancer.gov';
+    const hostName = 'ctsproxy.cancer.gov';
     const service = ClinicalTrialsServiceFactory.create(hostName);
     return service;
   };

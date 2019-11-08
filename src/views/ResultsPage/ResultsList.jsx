@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ResultsListItem from './ResultsListItem';
 
-import ResultsListItem from '../ResultsListItem';
-import './ResultsList.scss';
 
 const ResultsList = ({ results, selectedResults, setSelectedResults }) => {
   const handleOnCheckChange = id => {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { updateForm } from '../../store/actions';
 import {
@@ -7,11 +6,11 @@ import {
   Checkbox,
   Modal,
   Pager,
-  ResultsList,
 } from '../../components/atomic';
 import { useModal } from '../../utilities/hooks';
-import './ResultsPage.scss';
 import ResultsPageHeader from './ResultsPageHeader';
+import ResultsList from './ResultsList';
+import './ResultsPage.scss';
 
 const ResultsPage = ({ results }) => {
   const dispatch = useDispatch();
@@ -195,12 +194,5 @@ const ResultsPage = ({ results }) => {
   );
 };
 
-ResultsPage.propTypes = {
-  results: PropTypes.array,
-};
-
-ResultsPage.defaultProps = {
-  results: [],
-};
 
 export default ResultsPage;

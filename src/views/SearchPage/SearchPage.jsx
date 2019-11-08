@@ -15,8 +15,8 @@ import {
   TrialType,
   ZipCode,
 } from '../../components/search-modules';
-import { updateForm } from '../../store/actions';
 import { history } from '../../services/history.service';
+import { updateForm, searchTrials } from '../../store/actions';
 
 //Module groups in arrays will be placed side-by-side in the form
 const basicFormModules = [CancerTypeKeyword, [Age, ZipCode]];
@@ -52,6 +52,15 @@ const SearchPage = ({ formInit = 'basic' }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  let formModules =
+    formType === 'advanced' ? advancedFormModules : basicFormModules;
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(searchTrials());
+    history.push('/about-cancer/treatment/clinical-trials/search/r');
+  };
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -97,7 +106,11 @@ const SearchPage = ({ formInit = 'basic' }) => {
 
   const toggleForm = () => {
     handleUpdate('formType', formType === 'basic' ? 'advanced' : 'basic');
-    history.push(`/about-cancer/treatment/clinical-trials/search${formType === 'basic' ? '/advanced' : ''}`);
+    history.push(
+      `/about-cancer/treatment/clinical-trials/search${
+        formType === 'basic' ? '/advanced' : ''
+      }`
+    );
   };
 
   const renderSearchTip = () => (
@@ -119,13 +132,6 @@ const SearchPage = ({ formInit = 'basic' }) => {
       </div>
     </div>
   );
-
-  let formModules =
-    formType === 'advanced' ? advancedFormModules : basicFormModules;
-
-  const handleSubmit = e => {
-    e.preventDefault();
-  };
 
   return (
     <article className="search-page">
@@ -166,8 +172,7 @@ const SearchPage = ({ formInit = 'basic' }) => {
               );
             }
           })}
-
-          <StickySubmitBlock sentinel={sentinelRef} />
+          <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
         </form>
         <aside className="search-page__aside">{renderDelighters()}</aside>
       </div>

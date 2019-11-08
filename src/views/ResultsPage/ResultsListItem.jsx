@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Checkbox from '../Checkbox';
-import './ResultsListItem.scss';
+import { Link } from 'react-router-dom';
+import Checkbox from '../../components/atomic/Checkbox';
 
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
-
   return (
     <div className="results-list-item results-list__item">
       <div className="results-list-item__checkbox">
@@ -20,12 +18,26 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
       </div>
       <div className="results-list-item__contents">
         <div className="results-list-item__title">
-          <a href={item.url}>{item.title}</a>
+          <Link to="/about-cancer/treatment/clinical-trials/search/v">
+            {item.title}
+          </Link>
         </div>
-        <div className="results-list-item__category"><span>Status:</span>{item.status ? 'Active' : 'Active'}</div>
-        <div className="results-list-item__category"><span>Age:</span>{item.age} years and older</div>
-        <div className="results-list-item__category"><span>Gender:</span>{item.gender}</div>
-        <div className="results-list-item__category"><span>Location:</span>{item.location} locations</div>
+        <div className="results-list-item__category">
+          <span>Status:</span>
+          {item.status ? 'Active' : 'Active'}
+        </div>
+        <div className="results-list-item__category">
+          <span>Age:</span>
+          {item.age} years and older
+        </div>
+        <div className="results-list-item__category">
+          <span>Gender:</span>
+          {item.gender}
+        </div>
+        <div className="results-list-item__category">
+          <span>Location:</span>
+          {item.location} locations
+        </div>
       </div>
     </div>
   );
@@ -46,7 +58,7 @@ ResultsListItem.propTypes = {
 
 ResultsListItem.defaultProps = {
   results: [],
-  isChecked: false
+  isChecked: false,
 };
 
 export default ResultsListItem;

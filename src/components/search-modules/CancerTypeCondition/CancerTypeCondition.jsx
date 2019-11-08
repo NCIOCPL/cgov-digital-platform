@@ -52,7 +52,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
     if (cancerType.codes.length > 0 && !refineSearch) {
       dispatch(
         getCancerTypeDescendents({
-          cacheKey: cancerType.name,
+          cacheKey: cancerType.codes[0],
           codes: cancerType.codes,
         })
       );
@@ -67,6 +67,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   }, [maintypeOptions]);
 
   const retrieveDescendents = (cacheKey, diseaseCodes) => {
+    console.log('cacheKey: ' + cacheKey);
     dispatch(
       getCancerTypeDescendents({
         cacheKey: cacheKey,
@@ -87,7 +88,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
           ({ codes }) => codes[0] === cancerType.parentDiseaseID[0]
         );
         if (parentCancer) {
-          retrieveDescendents(parentCancer.name, parentCancer.codes);
+          retrieveDescendents(parentCancer.codes[0], parentCancer.codes);
         } else {
           //codes don't match up!  Handle error
           // TODO: handle error (unrecognizable maintype)
@@ -176,6 +177,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
           className={`ct-select__button faux-select ${
             cancerTypeModified ? '--modified' : ''
           }`}
+          type="button"
           onClick={handleCTSelectToggle}
           aria-label="Click to select specific cancer type"
           aria-haspopup={true}

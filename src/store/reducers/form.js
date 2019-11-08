@@ -1,5 +1,6 @@
 import { UPDATE_FORM, CLEAR_FORM } from '../identifiers';
 
+
 export const defaultState = {
   age: '', // (a) Age
   cancerType: { name: '', codes: [] }, // (ct) Cancer Type/Condition
@@ -53,6 +54,96 @@ export const defaultState = {
   keywordPhrasesModified: false,
   location: 'search-location-all', // active location option (search-location-all | search-location-zip | search-location-country | search-location-hospital | search-location-nih)
 };
+
+export function addArrayValues(paramName, srcArray) {
+  let params = '';
+  if(srcArray.length > 0){
+    let p = `&${paramName}=`;
+    params += p;
+    params += srcArray.map(e => e.codes ).join(p);
+  }
+  return params;
+}
+
+export const formatTrialSearchQuery = (state = defaultState) => {
+  let filterCriteria = {}
+
+    //diseases
+    if(state.cancerType.codes.length > 0){
+      filterCriteria._maintypes = state.cancerType.codes[0];
+    }
+
+    if(state.subtypes.codes.length > 0) {
+      filterCriteria._subtypes = state.subtypes.codes;
+    }
+
+    if(state.stages.codes.length > 0) {
+      filterCriteria._stages =  state.stages.codes;
+    }
+
+    if(state.findings.codes.length > 0) {
+      filterCriteria._findings = state.findings;
+    }
+
+    //Drugs and Treatments
+    if(state.drugs.length > 0 || state.treatments.length > 0) {
+      let drugAndTrialIds = [];
+      if(state.drugs.length > 0) {
+        drugAndTrialIds = [...state.drugs];
+      }
+      if(state.treatments.length > 0) {
+        drugAndTrialIds = [drugAndTrialIds, ...state.drugs];
+      }
+      filterCriteria.arms.interventions.intervention_code = drugAndTrialIds;
+    }
+
+    //Add Age filter
+    if(state.age !== ''){
+      filterCriteria.eligibility.structured.max_age_in_years_gte = state.age;
+      filterCriteria.eligibility.structured.min_age_in_years_lte = state.age;
+    }
+
+    // keywords
+    if(state.keywords !== '') {
+      filterCriteria._fulltext = state.keywords;
+    }
+
+    // trialTypes
+    //check if all or none are selected, none being the same as all
+    // if(state.trialTypes.every(type => !type.checked) || trialTypes.every(type => type.checked)) {
+
+    // }else {
+    //   let tt = trialTypes.filter().
+
+    //   primary_purpose.primary_purpose_code = 
+    // }
+    
+
+    // filterCriteria.primary_purpose.primary_purpose_code = 
+
+    // trialPhases
+
+
+    // investigator
+    if(state.investigator !== ''){
+      filterCriteria.principal_investigator_fulltext  = state.investigator;
+    }
+
+    // leadOrg
+    if(state.leadOrg !== ''){
+      filterCriteria.lead_org_fulltext = state.leadOrg;
+    }
+
+    // add healthy volunteers filter
+    filterCriteria.accepts_healthy_volunteers_indicator = (state.healthyVolunteers)? 'YES' : 'NO';
+
+    //trial ids
+    if(state.trialId !== ''){
+      filterCriteria.sites.org_va = state.trialId;
+    }
+
+  return filterCriteria;
+} 
 
 export const reducer = (state = defaultState, action) => {
   switch (action.type) {
