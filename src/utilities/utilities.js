@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-
+const zip_codes = require('../mocks/zip_codes.json');
 let index = 0;
 
 //  Provides utility functions for components in this library.
@@ -176,7 +176,41 @@ export const getStateNameFromAbbr = abbrToLookup => {
     WV: 'West Virginia',
     WI: 'Wisconsin',
     WY: 'Wyoming',
-    PR: 'Puerto Rico'
+    PR: 'Puerto Rico',
   };
   return states[abbrToLookup];
 };
+
+export const convertZipToLatLong = zip => {
+  //TODO: replace with zip code lookup service
+  return zip_codes[zip];
+};
+
+/**
+ * Mock ZIP code to Geolocation service.
+ *
+ * Responds to requests sent to /service/zip_lookup/ZIP_CODE
+ * where ZIP_CODE is the zip code to lookup.
+ *
+ * The actual path will likely change.
+ */
+// module.exports = function(app) {
+//     app.use(
+//         '/service/zip_lookup/:zip_code',
+//         function (req, res) {
+
+//             const zip = req.params.zip_code;
+//             const loc = zip_codes[zip];
+
+//             if( loc != null ) {
+//                 res
+//                     .status(200)
+//                     .json(loc);
+//             }
+//             else {
+//                 res.sendStatus(404);
+//             }
+
+//         }
+//     );
+// };
