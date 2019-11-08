@@ -40,7 +40,7 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
       handleUpdate('formType', 'advanced');
     }
     handleUpdate('refineSearch', true);
-    history.push('/search');
+    history.push('/about-cancer/treatment/clinical-trials/search/advanced');
   };
 
   return (
@@ -51,7 +51,7 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
 
       <SearchCriteriaTable handleUpdate={handleUpdate} />
       <p className="reset-form">
-        <Link to="/search">Start Over</Link>
+        <Link to={`/about-cancer/treatment/clinical-trials/search${formType === 'basic' ? '' : '/advanced'}`}>Start Over</Link>
         {isDirty && (
           <>
             <span aria-hidden="true" className="separator">

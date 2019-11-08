@@ -57,8 +57,6 @@ const ResultsPage = ({ results }) => {
     );
   };
 
-
-
   // setup print Modal
   const { isShowing, toggleModal } = useModal();
   const printSelectedBtn = useRef(null);
@@ -166,35 +164,34 @@ const ResultsPage = ({ results }) => {
   };
 
   return (
-    <div id="main-content" className="general-page-body-container main-content">
-      <div className="contentzone">
-        {/* */}
-        <article className="results-page">
-          <ResultsPageHeader resultsCount={paginatedResults.length} handleUpdate={handleUpdate} />
-          <div className="results-page__content">
-            {renderControls()}
-            <div className="results-page__list">
-              <ResultsList
-                results={paginatedResults}
-                selectedResults={selectedResults}
-                setSelectedResults={setSelectedResults}
-              />
-              <aside className="results-page__aside --side">
-                {renderDelighters()}
-              </aside>
-            </div>
-            {renderControls(true)}
+    <>
+      <article className="results-page">
+        <ResultsPageHeader
+          resultsCount={paginatedResults.length}
+          handleUpdate={handleUpdate}
+        />
+        <div className="results-page__content">
+          {renderControls()}
+          <div className="results-page__list">
+            <ResultsList
+              results={paginatedResults}
+              selectedResults={selectedResults}
+              setSelectedResults={setSelectedResults}
+            />
+            <aside className="results-page__aside --side">
+              {renderDelighters()}
+            </aside>
           </div>
-          <aside className="results-page__aside --bottom">
-            {renderDelighters()}
-          </aside>
-        </article>
-        <Modal isShowing={isShowing} hide={toggleModal}>
-          {renderModalContent()}
-        </Modal>
-        {/* */}
-      </div>
-    </div>
+          {renderControls(true)}
+        </div>
+        <aside className="results-page__aside --bottom">
+          {renderDelighters()}
+        </aside>
+      </article>
+      <Modal isShowing={isShowing} hide={toggleModal}>
+        {renderModalContent()}
+      </Modal>
+    </>
   );
 };
 
