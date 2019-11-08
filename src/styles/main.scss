@@ -1,34 +1,42 @@
-.general-page-body-container {
-  background: #fffffb;
-  padding-bottom: 1.5em;
-  position: relative;
-  box-shadow: 10px 0 10px -7px rgba(0, 0, 0, 0.5),
-    -10px 0 10px -7px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
-  max-width: 62.5em;
-}
-
-.contentzone {
-  padding: 30px 15px;
-  @media only screen and (min-width: 1025px) {
-    padding: 30px 50px;
-  }
-}
+$imgPath: 'http://cancer.gov';
 
 .show-for-sr {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
+  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
   border: 0;
 }
+// atomic
+@import '../components/atomic/Accordion/Accordion',
+  '../components/atomic/Autocomplete/Autocomplete',
+  '../components/atomic/Checkbox/Checkbox.scss',
+  '../components/atomic/Delighter/Delighter',
+  '../components/atomic/Dropdown/Dropdown.scss',
+  '../components/atomic/Fieldset/Fieldset',
+  '../components/atomic/InputLabel/InputLabel',
+  '../components/atomic/Modal/Modal', '../components/atomic/Pager/Pager',
+  '../components/atomic/Radio/Radio',
+  '../components/atomic/RemovableTag/RemovableTag',
+  '../components/atomic/ResultsList/ResultsList',
+  '../components/atomic/ResultsListItem/ResultsListItem',
+  '../components/atomic/SearchCriteriaTable/SearchCriteriaTable',
+  '../components/atomic/StickySubmitBlock/StickySubmitBlock',
+  '../components/atomic/Table/Table',
+  '../components/atomic/TagContainer/TagContainer',
+  '../components/atomic/TextInput/TextInput',
+  '../components/atomic/Toggle/Toggle';
 
-$imgPath: 'http://cancer.gov';
+// search modules
+@import '../components/search-modules/Age/Age',
+  '../components/search-modules/CancerTypeCondition/CancerTypeCondition',
+  '../components/search-modules/DrugTreatment/DrugTreatment',
+  '../components/search-modules/Location/Location',
+  '../components/search-modules/TrialPhase/TrialPhase',
+  '../components/search-modules/TrialType/TrialType';
 
 // Views
 @import '../views/SearchPage/SearchPage';

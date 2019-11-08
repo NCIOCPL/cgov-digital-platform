@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Fieldset, TextInput } from '../../atomic';
-import './KeywordsPhrases.scss';
 
 const KeywordsPhrases = ({ handleUpdate }) => {
   const {keywordPhrases, keywordPhrasesModified} = useSelector(store => store.form);

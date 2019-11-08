@@ -33,7 +33,7 @@ const StickySubmitBlock = ({ sentinelRef }) => {
         {/* <button type="submit" className="btn-submit">
           Find Trials
         </button> */}
-        <Link to="/r" className="faux-btn-submit">
+        <Link to="/about-cancer/treatment/clinical-trials/search/r" className="faux-btn-submit">
           Find Trials
         </Link>
         <div className="helper-text">Start your search at any time.</div>

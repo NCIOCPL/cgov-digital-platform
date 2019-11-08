@@ -12,11 +12,13 @@ function App() {
     <Fragment>
       <Switch>
         <Redirect exact from="/" to="/about-cancer/treatment/clinical-trials/search" />
-        <Route path="/about-cancer/treatment/clinical-trials/search" component={SearchPage} />
         <Route
+          exact
           path="/about-cancer/treatment/clinical-trials/search/r"
           render={() => <ResultsPage results={mockResults} />}
         />
+        <Route exact path="/about-cancer/treatment/clinical-trials/search/advanced" render={() => <SearchPage formInit="advanced" />} />
+        <Route path="/about-cancer/treatment/clinical-trials/search" component={SearchPage} />
       </Switch>
     </Fragment>
   );
