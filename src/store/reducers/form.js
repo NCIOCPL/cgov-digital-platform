@@ -32,7 +32,7 @@ export const defaultState = {
   ], // (tt) Trial Type
   trialPhases: [
     { label: 'Phase I', value: 'I', checked: false },
-    { label: 'Phase I', value: 'II', checked: false },
+    { label: 'Phase II', value: 'II', checked: false },
     { label: 'Phase III', value: 'III', checked: false },
     { label: 'Phase IV', value: 'IV', checked: false },
   ], // (tp) Trial phase

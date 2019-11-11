@@ -67,7 +67,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   }, [maintypeOptions]);
 
   const retrieveDescendents = (cacheKey, diseaseCodes) => {
-    console.log('cacheKey: ' + cacheKey);
     dispatch(
       getCancerTypeDescendents({
         cacheKey: cacheKey,
@@ -208,8 +207,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             }}
             onSelect={(value, item) => {
               handleCTSelect(value, item);
-              handleUpdate('subtypeModified', false);
-              handleUpdate('stagesModified', false);
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --ct">

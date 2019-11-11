@@ -1,4 +1,5 @@
 import { receiveData } from '../store/actions';
+import { constructSearchQueryFromStore } from '../utilities/utilities';
 
 /**
  * This middleware serves two purposes (and could perhaps be broken into two pieces).
@@ -16,6 +17,7 @@ const createCTSMiddleware = services => ({
   if (action.type !== '@@api/CTS') {
     return;
   }
+ 
   const { service: serviceName, cacheKey, requests } = action.payload;
   const service = services[serviceName]();
 

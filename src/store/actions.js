@@ -54,7 +54,7 @@ export function clearForm() {
 export function getDiseasesForSimpleTypeAhead({
   name,
   size = 10,
-  isDebug = true,
+  isDebug = false,
 }) {
   return {
     type: '@@api/CTS',

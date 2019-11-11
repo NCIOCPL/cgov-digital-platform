@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 import { Fieldset, Checkbox } from '../../atomic';
 import './TrialPhase.scss';
 
-const TrialPhase = ({ phaseFields, handleUpdate }) => {
+const TrialPhase = ({ handleUpdate }) => {
   const { trialPhases } = useSelector(store => store.form);
-
- 
   const [phases, setPhases] = useState(trialPhases);
 
   useEffect(() => {
+    updateStore();
+  }, [phases]);
+
+  const updateStore = () => {
     handleUpdate('trialPhases', [...phases]);
-  }, [phases, handleUpdate]);
+  };
 
   const handleSelectAll = e => {
     setPhases(
@@ -44,7 +46,10 @@ const TrialPhase = ({ phaseFields, handleUpdate }) => {
       legend="Trial Phase"
       helpUrl="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/help#trialphase"
     >
-      <p>Select the trial phases for your search. You may check more than one box or select "All".</p>
+      <p>
+        Select the trial phases for your search. You may check more than one box
+        or select "All".
+      </p>
       <div className="select-all">
         <Checkbox
           value=""
@@ -77,6 +82,5 @@ TrialPhase.propTypes = {
   phaseFields: PropTypes.array,
   handleUpdate: PropTypes.func,
 };
-
 
 export default TrialPhase;
