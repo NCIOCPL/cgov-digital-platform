@@ -54,3 +54,40 @@ function cgov_application_page_module_implements_alter(&$implementations, $hook)
   unset($implementations['cgov_application_page']);
   $implementations['cgov_application_page'] = $group;
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function cgov_application_page_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  $entity = _cgov_application_page_get_curr_entity();
+  if ($entity && $entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_application_page") {
+    $content_type = $entity->bundle();
+    $page_template = $entity->field_app_module_page_template->value;
+    if ($page_template !== NULL) {
+      $suggestions[] = 'page__' . $content_type . '__' . $page_template;
+    }
+  }
+}
+
+/**
+ * Gets the current entity if there is one.
+ *
+ * @return Drupal\Core\Entity\ContentEntityInterface
+ *   The retrieved entity, or FALSE if none found.
+ */
+function _cgov_application_page_get_curr_entity() {
+  $params = \Drupal::routeMatch()->getParameters()->all();
+  foreach ($params as $param) {
+    if (!is_object($param)) {
+      continue;
+    }
+
+    $class = new \ReflectionClass($param);
+
+    if (in_array('Drupal\Core\Entity\ContentEntityInterface', $class->getInterfaceNames())) {
+      // If you find a ContentEntityInterface stop iterating and return it.
+      return $param;
+    }
+  }
+  return FALSE;
+}

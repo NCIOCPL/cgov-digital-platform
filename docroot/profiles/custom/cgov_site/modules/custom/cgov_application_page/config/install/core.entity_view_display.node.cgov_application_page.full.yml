@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.cgov_application_page.body
+    - field.field.node.cgov_application_page.field_app_module_page_template
     - field.field.node.cgov_application_page.field_application_module
     - field.field.node.cgov_application_page.field_browser_title
     - field.field.node.cgov_application_page.field_card_title
@@ -44,6 +45,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_app_module_page_template:
+    weight: 14
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_application_module:
     type: app_module_reference_formatter
     weight: 8

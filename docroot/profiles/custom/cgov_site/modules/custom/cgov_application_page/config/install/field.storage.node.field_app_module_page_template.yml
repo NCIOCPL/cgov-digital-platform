@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_app_module_page_template
+field_name: field_app_module_page_template
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: left_nav
+      label: 'Display Left Nav'
+    -
+      value: no_left_nav
+      label: 'Hide Left Nav'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
