@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getTrial, receiveData } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { history } from '../../services/history.service';
+import { getTrial } from '../../store/actions';
 import {
   Accordion,
   AccordionItem,
@@ -10,35 +10,37 @@ import {
   Table,
 } from '../../components/atomic';
 import SitesList from './SitesList';
-import { getMockTrial } from '../../mocks/mock-trial-description';
-
 import './TrialDescriptionPage.scss';
+const queryString = require('query-string');
 
-const TrialDescriptionPage = form => {
+const TrialDescriptionPage = ({ location }) => {
   const dispatch = useDispatch();
-  //const { cache } = useSelector(store => store.cache['NCI-2018-03587']);
-  const [isTrialLoading, setIsTrialLoading] = useState(false);
-  const trial = getMockTrial();
-  
+  const [isTrialLoading, setIsTrialLoading] = useState(true);
+  const qs = location.search;
+  const parsed = queryString.parse(qs);
+  const currId = parsed.id;
+
+  const trial = useSelector(store => store.cache[currId]);
+
+  useEffect(() => {
+    if (trial) {
+      initTrialData();
+    }
+  }, [trial]);
 
   // scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (trial && trial.briefTitle) {
+      initTrialData();
+    } else {
+      dispatch(getTrial({ trialId: currId }));
+    }
   }, []);
 
-  useEffect(() => {
-    dispatch(getTrial({ trialId: 'NCI-2011-01915' }));
-  }, [dispatch]);
-
-  const updateCache = (value) => {
-    dispatch(
-      receiveData({
-        cacheKey: 'NCI-2015-00054', 
-        value
-      })
-    );
+  const initTrialData = () => {
+    setIsTrialLoading(false);
   };
-
 
   const renderDelighters = () => (
     <div className="cts-delighter-container">
@@ -77,9 +79,11 @@ const TrialDescriptionPage = form => {
   const renderTrialDescriptionHeader = () => {
     return (
       <div className="trial-description-page__header">
-        <h1>{trial.brief_title}</h1>
-        <div className="back-to-search">
-          <Link to="/r">&lt; Back to search results</Link>
+        <h1>{trial.briefTitle}</h1>
+        <div className="back-to-search btnAsLink">
+          <span onClick={() => history.goBack()}>
+            &lt; Back to search results
+          </span>
         </div>
 
         <div>
@@ -102,69 +106,83 @@ const TrialDescriptionPage = form => {
             <div className="trial-description-page__description">
               <div className="trial-description-page__content">
                 <TrialStatusIndicator
-                  status={trial.current_trial_status.toLowerCase()}
+                  status={trial.currentTrialStatus.toLowerCase()}
                 />
                 <Accordion>
                   <AccordionItem titleCollapsed="Description" expanded>
-                    {trial.brief_summary}
+                    {trial.briefSummary}
                   </AccordionItem>
                   <AccordionItem titleCollapsed="Eligibility Criteria">
-                    {trial.eligibility.unstructured[0].description}
+                    <div>
+                      {trial.eligibilityInfo.unstructuredCriteria.map(
+                        (item, idx) => (
+                          <p key={`uc-${idx}`}>{item.description}</p>
+                        )
+                      )}
+                    </div>
                   </AccordionItem>
                   <AccordionItem titleCollapsed="Locations &amp; Contacts">
                     <SitesList sites={trial.sites} />
                   </AccordionItem>
                   <AccordionItem titleCollapsed="Trial Objectives and Outline">
-                    {trial.detail_description}
+                    {trial.detailDescription}
                   </AccordionItem>
                   <AccordionItem titleCollapsed="Trial Phase &amp; Type">
                     <Table
                       borderless
-                      columns={[{
-                        colId: 'phase',
-                        displayName: 'Trial Phase',
-                      },
-                      {
-                        colId: 'type',
-                        displayName: 'Trial Type',
-                      }]}
+                      columns={[
+                        {
+                          colId: 'phase',
+                          displayName: 'Trial Phase',
+                        },
+                        {
+                          colId: 'type',
+                          displayName: 'Trial Type',
+                        },
+                      ]}
                       data={[
                         {
-                          phase: `Phase ${trial.phase.phase}`, 
-                          type: trial.primary_purpose.primary_purpose_code
-                        }
-                      ]} />
+                          phase: `Phase ${trial.trialPhase.phaseNumber}`,
+                          type: trial.primaryPurpose.code,
+                        },
+                      ]}
+                    />
                   </AccordionItem>
-                  {(trial.lead_org || trial.principal_investigator) &&
+                  {(trial.leadOrganizationName ||
+                    trial.principalInvestigator) && (
                     <AccordionItem titleCollapsed="Lead Organization">
-                      {trial.lead_org && trial.lead_org !== '' &&
-                      <p className="leadOrg">
-                        <strong>Lead Organization</strong>
-                        {trial.lead_org}
-                      </p>
-                      }
-                      {trial.principal_investigator && trial.principal_investigator !== '' &&
-                      <p className="investigator">
-                        <strong>Principal Investigator</strong>
-                        {trial.principal_investigator}
-                      </p>
-                      }
+                      <>
+                        {trial.leadOrganizationName &&
+                          trial.leadOrganizationName !== '' && (
+                            <p className="leadOrg">
+                              <strong>Lead Organization</strong>
+                              {trial.leadOrganizationName}
+                            </p>
+                          )}
+                        {trial.principalInvestigator &&
+                          trial.principalInvestigator !== '' && (
+                            <p className="investigator">
+                              <strong>Principal Investigator</strong>
+                              {trial.principalInvestigator}
+                            </p>
+                          )}
+                      </>
                     </AccordionItem>
-                  }
+                  )}
                   <AccordionItem titleCollapsed="Trial IDs">
                     <ul className="trial-ids">
                       <li>
                         <strong>Primary ID</strong>
-                        {trial.protocol_id}
+                        {trial.protocolID}
                       </li>
                       <li>
                         <strong>Clinicaltials.gov ID</strong>
                         <a
-                          href={`http://clinicaltrials.gov/show/${trial.nct_id}`}
+                          href={`http://clinicaltrials.gov/show/${trial.nctID}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {trial.nct_id}
+                          {trial.nctID}
                         </a>
                       </li>
                     </ul>

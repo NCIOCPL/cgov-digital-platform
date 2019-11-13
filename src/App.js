@@ -6,8 +6,6 @@ import SearchPage from './views/SearchPage';
 import ResultsPage from './views/ResultsPage';
 import TrialDescriptionPage from './views/TrialDescriptionPage';
 
-import mockResults from './mocks/mock-results.json';
-
 function App() {
   return (
     <Fragment>
@@ -16,7 +14,7 @@ function App() {
         <Route
           exact
           path="/about-cancer/treatment/clinical-trials/search/r"
-          render={() => <ResultsPage results={mockResults} />}
+          component={ResultsPage}
         />
         <Route exact path="/about-cancer/treatment/clinical-trials/search/v" component={TrialDescriptionPage} />
         <Route exact path="/about-cancer/treatment/clinical-trials/search/advanced" render={() => <SearchPage formInit="advanced" />} />

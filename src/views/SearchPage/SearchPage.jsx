@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
 import {
   Age,
@@ -16,7 +16,7 @@ import {
   ZipCode,
 } from '../../components/search-modules';
 import { history } from '../../services/history.service';
-import { updateForm, searchTrials } from '../../store/actions';
+import { updateForm } from '../../store/actions';
 import { useQueryString } from '../../utilities/hooks';
 const queryString = require('query-string');
 

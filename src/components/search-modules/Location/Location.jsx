@@ -36,7 +36,6 @@ const Location = ({ handleUpdate }) => {
   } = useSelector(store => store.form);
   const [activeRadio, setActiveRadio] = useState(location);
   const [limitToVA, setLimitToVA] = useState(vaOnly);
-  const [closeToNIH, setCloseToNIH] = useState(nihOnly);
   const [showStateField, setShowStateField] = useState(true);
 
   //hospital
@@ -70,7 +69,6 @@ const Location = ({ handleUpdate }) => {
 
   const handleRadioChange = e => {
     setActiveRadio(e.target.value);
-    setCloseToNIH(e.target.value === 'search-location-nih');
     updateStore(e.target.value);
   };
 

@@ -1,6 +1,7 @@
 import { RECEIVE_DATA } from '../identifiers';
 
-export const defaultState = {};
+export const defaultState = {
+};
 
 export const reducer = (state = defaultState, action) => {
   switch (action.type) {

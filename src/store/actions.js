@@ -468,12 +468,12 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
 }
 
 
-export function searchTrials(requestJSON = '') {
+export function searchTrials({cacheKey, requestJSON = ''}) {
   return {
     type: '@@api/CTS',
     payload: {
       service: 'ctsSearch',
-      cacheKey: 'trialsResults',
+      cacheKey: cacheKey,
       requests: [
         {
           method: 'searchTrials',
