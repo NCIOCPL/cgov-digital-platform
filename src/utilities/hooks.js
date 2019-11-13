@@ -339,7 +339,7 @@ export const useTrialSearchQueryFormatter = () => {
     'Enrolling by Invitation',
     'In Review',
     'Temporarily Closed to Accrual',
-    'Temporarily Closed to Accrual and Intervention',
+    'Temporarily Closed to Accrual and Intervention'
   ];
 
   filterCriteria.include = [
@@ -347,7 +347,7 @@ export const useTrialSearchQueryFormatter = () => {
     'brief_title',
     'current_trial_status',
     'eligibility.structured',
-    'sites.org_coordinates',
+    'sites.org_coordinates'
   ];
 
   return filterCriteria;
