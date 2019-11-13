@@ -2,6 +2,7 @@
 import { UPDATE_FORM, CLEAR_FORM, RECEIVE_DATA } from './identifiers';
 
 
+
 //Statuses of what Cancer.gov trials should be shown
 const VIEWABLE_TRIALS = [
   'Active',
@@ -76,7 +77,6 @@ export function getDiseasesForSimpleTypeAhead({
           },
           fetchHandlers: {
             formatResponse: res => {
-              console.log(res);
 
               let diseases = [...res];
 
@@ -468,7 +468,7 @@ export function searchLeadOrg({ searchText, size = 10 } = {}) {
 }
 
 
-export function searchTrials({cacheKey, requestJSON = ''}) {
+export function searchTrials({cacheKey, data}) {
   return {
     type: '@@api/CTS',
     payload: {
@@ -478,8 +478,8 @@ export function searchTrials({cacheKey, requestJSON = ''}) {
         {
           method: 'searchTrials',
           requestParams: {
-            size: 10,
-          },
+            document: encodeURIComponent(JSON.stringify(data))
+          }
         }
       ]
     }

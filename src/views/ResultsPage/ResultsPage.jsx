@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateForm } from '../../store/actions';
 import { Delighter, Checkbox, Modal, Pager } from '../../components/atomic';
-import { useModal } from '../../utilities/hooks';
+import { useModal, useTrialSearchQueryFormatter } from '../../utilities/hooks';
 import ResultsPageHeader from './ResultsPageHeader';
 import ResultsList from './ResultsList';
 import { searchTrials } from '../../store/actions';
@@ -19,6 +19,7 @@ const ResultsPage = ({ location }) => {
 
   const qs = JSON.stringify(location.search);
   const trialResults = useSelector(store => store.cache[qs]);
+  const formData = useTrialSearchQueryFormatter();
 
   // scroll to top on mount
   useEffect(() => {
@@ -27,9 +28,11 @@ const ResultsPage = ({ location }) => {
       initData();
     } else {
       //data isn't there, fetch it
+      
       dispatch(
         searchTrials({
           cacheKey: qs,
+          data: formData
         })
       );
     }

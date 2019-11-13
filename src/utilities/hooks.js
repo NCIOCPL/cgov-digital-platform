@@ -31,7 +31,6 @@ export const useChipList = (chiplistName, handleUpdate) => {
   }, [chips, chiplistName, handleUpdate]);
   const add = item => {
     //prevent dupes
-    console.log(JSON.stringify(item));
     const newChips = [...chips, { label: item }];
     setChips([...new Set(newChips)]);
   };
@@ -182,7 +181,7 @@ export const useQueryString = () => {
     if (healthyVolunteers) {
       searchValues.hv = 1;
     }
-    
+
     if (drugs.length > 0) {
       searchValues.dt = [...new Set(drugs.map(item => item.code))];
     }
@@ -202,86 +201,154 @@ export const useQueryString = () => {
   }
 };
 
-// export const formatTrialSearchQuery = () => {
-//   let filterCriteria = {};
+// wcms-cde/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/SearchParams/CTSSearchParamToQueryExtensions.cs
+export const useTrialSearchQueryFormatter = () => {
+  let filterCriteria = {};
+  const form = useSelector(store => store.form);
 
-//   //diseases
-//   if (state.cancerType.codes.length > 0) {
-//     filterCriteria._maintypes = state.cancerType.codes[0];
-//   }
+  //diseases
+  if (form.cancerType.codes.length > 0) {
+    filterCriteria._maintypes = form.cancerType.codes[0];
+  }
 
-//   if (state.subtypes.codes.length > 0) {
-//     filterCriteria._subtypes = state.subtypes.codes;
-//   }
+  if (form.subtypes.codes && form.subtypes.codes.length > 0) {
+    filterCriteria._subtypes = form.subtypes.codes;
+  }
 
-//   if (state.stages.codes.length > 0) {
-//     filterCriteria._stages = state.stages.codes;
-//   }
+  if (form.stages.codes && form.stages.codes.length > 0) {
+    filterCriteria._stages = form.stages.codes;
+  }
 
-//   if (state.findings.codes.length > 0) {
-//     filterCriteria._findings = state.findings;
-//   }
+  if (form.findings.codes && form.findings.codes.length > 0) {
+    filterCriteria._findings = form.findings;
+  }
 
-//   //Drugs and Treatments
-//   if (state.drugs.length > 0 || state.treatments.length > 0) {
-//     let drugAndTrialIds = [];
-//     if (state.drugs.length > 0) {
-//       drugAndTrialIds = [...state.drugs];
-//     }
-//     if (state.treatments.length > 0) {
-//       drugAndTrialIds = [drugAndTrialIds, ...state.drugs];
-//     }
-//     filterCriteria.arms.interventions.intervention_code = drugAndTrialIds;
-//   }
+  //Drugs and Treatments
+  if (form.drugs.length > 0 || form.treatments.length > 0) {
+    let drugAndTrialIds = [];
+    if (form.drugs.length > 0) {
+      drugAndTrialIds = [...form.drugs];
+    }
+    if (form.treatments.length > 0) {
+      drugAndTrialIds = [drugAndTrialIds, ...form.drugs];
+    }
+    filterCriteria.arms.interventions.intervention_code = drugAndTrialIds;
+  }
 
-//   //Add Age filter
-//   if (state.age !== '') {
-//     filterCriteria.eligibility.structured.max_age_in_years_gte = state.age;
-//     filterCriteria.eligibility.structured.min_age_in_years_lte = state.age;
-//   }
+  //Add Age filter
+  if (form.age !== '') {
+    filterCriteria.eligibility.structured.max_age_in_years_gte = form.age;
+    filterCriteria.eligibility.structured.min_age_in_years_lte = form.age;
+  }
 
-//   // keywords
-//   if (state.keywords !== '') {
-//     filterCriteria._fulltext = state.keywords;
-//   }
+  // keywords
+  if (form.keywords !== '') {
+    filterCriteria._fulltext = form.keywords;
+  }
 
-//   // trialTypes
-//   //check if all or none are selected, none being the same as all
-//   // if(state.trialTypes.every(type => !type.checked) || trialTypes.every(type => type.checked)) {
+  // trialTypes
+  let trialTypesChecked = form.trialTypes.filter(item => item.checked);
+  //check if any are selected, none being the same as all
+  if (trialTypesChecked.length) {
+    filterCriteria.primary_purpose.primary_purpose_code = [
+      ...new Set(trialTypesChecked.map(item => item.value)),
+    ];
+  }
 
-//   // }else {
-//   //   let tt = trialTypes.filter().
+  // trialPhases
+  //need to add overlapping phases to the array before passing it
+  let checkedPhases = form.trialPhases.filter(item => item.checked);
+  if(checkedPhases.length > 0){
+    let phaseList = [
+      ...new Set(checkedPhases.map(item => item.value)),
+    ]; 
+  
+    if(phaseList.includes('i')){
+      phaseList.push('i_ii');
+    }
+    if(phaseList.includes('iii')){
+      phaseList.push('ii_iii');
+    }
+    if(phaseList.includes('ii')){
+      if(!phaseList.includes('i_ii')){
+        phaseList.push('i_ii');
+      }
+      if(!phaseList.includes('ii_iii')){
+        phaseList.push('ii_iii');
+      }
+    }
+    if(phaseList.length > 0){
+      filterCriteria['phase.phase'] = phaseList;
+    }
+  }
 
-//   //   primary_purpose.primary_purpose_code =
-//   // }
+  // investigator
+  if (form.investigator.term !== '') {
+    filterCriteria.principal_investigator_fulltext = form.investigator.term;
+  }
 
-//   // filterCriteria.primary_purpose.primary_purpose_code =
+  // leadOrg
+  if (form.leadOrg.term !== '') {
+    filterCriteria.lead_org_fulltext = form.leadOrg.term;
+  }
 
-//   // trialPhases
+  // add healthy volunteers filter
+  if (form.healthyVolunteers) {
+    filterCriteria.accepts_healthy_volunteers_indicator = 'YES';
+  }
 
-//   // investigator
-//   if (state.investigator !== '') {
-//     filterCriteria.principal_investigator_fulltext = state.investigator;
-//   }
+  //trial ids
+  if (form.trialId !== '') {
+    filterCriteria._trialids = form.trialId;
+  }
 
-//   // leadOrg
-//   if (state.leadOrg !== '') {
-//     filterCriteria.lead_org_fulltext = state.leadOrg;
-//   }
+  // VA only
+  if (form.vaOnly) {
+    filterCriteria.sites.org_va = true;
+  }
 
-//   // add healthy volunteers filter
-//   filterCriteria.accepts_healthy_volunteers_indicator = state.healthyVolunteers
-//     ? 'YES'
-//     : 'NO';
+  // location
+  switch (form.location) {
+    case 'search-location-nih':
+      //NIH has their own postal code, so this means @NIH
+      filterCriteria.sites.org_postal_code = '20892';
+      break;
+    case 'search-location-hospital':
+      filterCriteria.sites.org_name_fulltext = form.hospital.term;
+      break;
+    case 'search-location-country':
+      filterCriteria.sites.org_country = form.country;
+      filterCriteria.sites.org_city = form.city;
+      if (form.country === 'United States') {
+        filterCriteria.sites.org_state_or_province = form.states;
+      }
+      break;
+    case 'search-location-zip':
+      if (form.zipCoords.lat !== '' && form.zipCoords.lon !== '') {
+        filterCriteria.sites.org_coordinates_lat = form.zipCoords.lat;
+        filterCriteria.sites.org_coordinates_lon = form.zipCoords.lon;
+        filterCriteria.sites.org_coordinates_dist = form.zipRadius + 'mi';
+      }
+      break;
+    default:
+  }
 
-//   //trial ids
-//   if (state.trialId !== '') {
-//     filterCriteria.sites.org_va = state.trialId;
-//   }
+  filterCriteria.current_trial_status = [
+    'Active',
+    'Approved',
+    'Enrolling by Invitation',
+    'In Review',
+    'Temporarily Closed to Accrual',
+    'Temporarily Closed to Accrual and Intervention',
+  ];
 
-//   return filterCriteria;
-// };
+  filterCriteria.include = [
+    'nci_id',
+    'brief_title',
+    'current_trial_status',
+    'eligibility.structured',
+    'sites.org_coordinates',
+  ];
 
-// const buildStoreFromQuery = urlSearch => {
-//   const parsed = queryString.parse(urlSearch);
-// };
+  return filterCriteria;
+};

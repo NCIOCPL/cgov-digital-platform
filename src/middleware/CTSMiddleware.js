@@ -1,5 +1,5 @@
 import { receiveData } from '../store/actions';
-import { constructSearchQueryFromStore } from '../utilities/utilities';
+const queryString = require('query-string');
 
 /**
  * This middleware serves two purposes (and could perhaps be broken into two pieces).
@@ -49,10 +49,10 @@ const createCTSMiddleware = services => ({
           const { method, requestParams, fetchHandlers } = request;
           const response =
             method === 'searchTrials'
-              ? await service[method](JSON.stringify(requestParams))
+              ? await service[method](...Object.values(requestParams))
               : await service[method](...Object.values(requestParams));
           let body = {};
-
+          
           // if search results, add total and starting index
           if (response.terms) {
             body = response.terms;

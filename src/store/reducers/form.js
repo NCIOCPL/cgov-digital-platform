@@ -31,10 +31,10 @@ export const defaultState = {
     { label: 'Other', value: 'other', checked: false },
   ], // (tt) Trial Type
   trialPhases: [
-    { label: 'Phase I', value: 'I', checked: false },
-    { label: 'Phase II', value: 'II', checked: false },
-    { label: 'Phase III', value: 'III', checked: false },
-    { label: 'Phase IV', value: 'IV', checked: false },
+    { label: 'Phase I', value: 'i', checked: false },
+    { label: 'Phase II', value: 'ii', checked: false },
+    { label: 'Phase III', value: 'iii', checked: false },
+    { label: 'Phase IV', value: 'iv', checked: false },
   ], // (tp) Trial phase
   nihOnly: false, // (nih) At NIH only
   vaOnly: false, // (va) VA facilities only
