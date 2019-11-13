@@ -17,10 +17,10 @@ const ResultsList = ({ results, selectedResults, setSelectedResults }) => {
       {results.map(item => {
         return (
           <ResultsListItem
-            key={item.title}
-            id={item.title}
+            key={item.nciID}
+            id={item.nciID}
             item={item}
-            isChecked={selectedResults.indexOf(item.title) > -1}
+            isChecked={selectedResults.indexOf(item.nciID) > -1}
             onCheckChange={handleOnCheckChange}
           />
         );
@@ -32,15 +32,7 @@ const ResultsList = ({ results, selectedResults, setSelectedResults }) => {
 ResultsList.propTypes = {
   setSelectedResults: PropTypes.func,
   selectedResults: PropTypes.array,
-  results: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      status: PropTypes.bool.isRequired,
-      age: PropTypes.number.isRequired,
-      gender: PropTypes.string.isRequired,
-      location: PropTypes.string.isRequired,
-    })
-  ),
+  results: PropTypes.array
 };
 
 ResultsList.defaultProps = {

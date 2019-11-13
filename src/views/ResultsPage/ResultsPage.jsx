@@ -1,27 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateForm } from '../../store/actions';
-import {
-  Delighter,
-  Checkbox,
-  Modal,
-  Pager,
-} from '../../components/atomic';
-import { useModal } from '../../utilities/hooks';
+import { Delighter, Checkbox, Modal, Pager } from '../../components/atomic';
+import { useModal, useTrialSearchQueryFormatter } from '../../utilities/hooks';
 import ResultsPageHeader from './ResultsPageHeader';
 import ResultsList from './ResultsList';
+import { searchTrials } from '../../store/actions';
 import './ResultsPage.scss';
+const queryString = require('query-string');
 
-const ResultsPage = ({ results }) => {
+const ResultsPage = ({ location }) => {
   const dispatch = useDispatch();
   const [selectAll, setSelectAll] = useState(false);
   const [paginatedResults, setPaginatedResults] = useState([]);
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const qs = JSON.stringify(location.search);
+  const trialResults = useSelector(store => store.cache[qs]);
+  const formData = useTrialSearchQueryFormatter();
 
   // scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (trialResults) {
+      initData();
+    } else {
+      //data isn't there, fetch it
+      
+      dispatch(
+        searchTrials({
+          cacheKey: qs,
+          data: formData
+        })
+      );
+    }
   }, []);
 
   //manage Pager Results
@@ -46,6 +60,17 @@ const ResultsPage = ({ results }) => {
       setSelectAll(true);
     }
   }, [paginatedResults, selectedResults]);
+
+  //when trial results come in, open up shop
+  useEffect(() => {
+    if (trialResults && trialResults.total) {
+      initData();
+    }
+  }, [trialResults]);
+
+  const initData = () => {
+    setIsLoading(false);
+  };
 
   const handleUpdate = (field, value) => {
     dispatch(
@@ -124,7 +149,7 @@ const ResultsPage = ({ results }) => {
         </div>
         <div className="results-page__pager">
           <Pager
-            data={results}
+            data={trialResults.trials}
             callback={handlePagination}
             startFromPage={pagerPage}
           />
@@ -162,27 +187,52 @@ const ResultsPage = ({ results }) => {
     }
   };
 
+  const renderNoResults = () => {
+    return (
+      <div className="no-results">
+        <p>
+          <strong>No clinical trials matched your search.</strong>
+        </p>
+        <p>
+          For assistance, please contact the NCI Contact Center. You can chat
+          online or call 1-800-4-CANCER (1-800-422-6237).
+        </p>
+        <p>Try a new search</p>
+      </div>
+    );
+  };
+
   return (
     <>
       <article className="results-page">
-        <ResultsPageHeader
-          resultsCount={paginatedResults.length}
-          handleUpdate={handleUpdate}
-        />
-        <div className="results-page__content">
-          {renderControls()}
-          <div className="results-page__list">
-            <ResultsList
-              results={paginatedResults}
-              selectedResults={selectedResults}
-              setSelectedResults={setSelectedResults}
+        {isLoading ? (
+          <>Loading...</>
+        ) : trialResults.total < 1 ? (
+          <>{renderNoResults()}</>
+        ) : (
+          <>
+            <ResultsPageHeader
+              resultsCount={trialResults.total}
+              handleUpdate={handleUpdate}
             />
-            <aside className="results-page__aside --side">
-              {renderDelighters()}
-            </aside>
-          </div>
-          {renderControls(true)}
-        </div>
+            <div className="results-page__content">
+              {renderControls()}
+              <div className="results-page__list">
+                <ResultsList
+                  results={paginatedResults}
+                  selectedResults={selectedResults}
+                  setSelectedResults={setSelectedResults}
+                />
+                <aside className="results-page__aside --side">
+                  {renderDelighters()}
+                </aside>
+              </div>
+
+              {renderControls(true)}
+            </div>
+          </>
+        )}
+
         <aside className="results-page__aside --bottom">
           {renderDelighters()}
         </aside>
@@ -193,6 +243,5 @@ const ResultsPage = ({ results }) => {
     </>
   );
 };
-
 
 export default ResultsPage;

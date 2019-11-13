@@ -8,12 +8,14 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
 
   useEffect(() => {
     if (callback) {
-      const startFrom = currentPage * numberToShow;
-      const endAt = startFrom + numberToShow;
-      const results = data.slice(startFrom, endAt);
+      // originally, this assumed that the data comes back as a huge block, in CTS case, each results set is a distinct block
+      // const startFrom = currentPage * numberToShow;
+      // const endAt = startFrom + numberToShow;
+      // const results = data.slice(startFrom, endAt);
+      const results = data;
       callback(results, currentPage);
     }
-    document.querySelector('.pager__num--active').focus();
+    //document.querySelector('.pager__num--active').focus();
   }, [currentPage, data, numberToShow]);
 
   useEffect(() => {

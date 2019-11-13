@@ -21,7 +21,7 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
   const handleRefineSearch = () => {
     if (formType === 'basic') {
       //prefetch stuff
-      if (maintypeOptions.length < 1) {
+      if (!maintypeOptions || maintypeOptions.length < 1) {
         dispatch(getMainType({}));
       }
       if (cancerType.name !== '') {

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Delighter, StickySubmitBlock } from '../../components/atomic';
 import {
   Age,
@@ -16,7 +16,9 @@ import {
   ZipCode,
 } from '../../components/search-modules';
 import { history } from '../../services/history.service';
-import { updateForm, searchTrials } from '../../store/actions';
+import { updateForm } from '../../store/actions';
+import { useQueryString } from '../../utilities/hooks';
+const queryString = require('query-string');
 
 //Module groups in arrays will be placed side-by-side in the form
 const basicFormModules = [CancerTypeKeyword, [Age, ZipCode]];
@@ -35,6 +37,8 @@ const advancedFormModules = [
 const SearchPage = ({ formInit = 'basic' }) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
+  const [formFactor, setFormFactor] = useState(formInit);
+  const qs = useQueryString();
 
   const handleUpdate = (field, value) => {
     dispatch(
@@ -45,21 +49,28 @@ const SearchPage = ({ formInit = 'basic' }) => {
     );
   };
 
-  handleUpdate('formType', formInit);
-  const formType = useSelector(store => store.form.formType);
-
   // scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (formInit !== 'basic') {
+      updateFormType();
+    }
   }, []);
 
+  const updateFormType = () => {
+    handleUpdate('formType', formInit);
+  };
+
   let formModules =
-    formType === 'advanced' ? advancedFormModules : basicFormModules;
+    formFactor === 'advanced' ? advancedFormModules : basicFormModules;
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(searchTrials());
-    history.push('/about-cancer/treatment/clinical-trials/search/r');
+    history.push(
+      `/about-cancer/treatment/clinical-trials/search/r?${queryString.stringify(
+        qs
+      )}`
+    );
   };
 
   const renderDelighters = () => (
@@ -105,12 +116,12 @@ const SearchPage = ({ formInit = 'basic' }) => {
   );
 
   const toggleForm = () => {
-    handleUpdate('formType', formType === 'basic' ? 'advanced' : 'basic');
     history.push(
       `/about-cancer/treatment/clinical-trials/search${
-        formType === 'basic' ? '/advanced' : ''
+        formFactor === 'basic' ? '/advanced' : ''
       }`
     );
+    setFormFactor(formFactor === 'basic' ? 'advanced': 'basic');
   };
 
   const renderSearchTip = () => (
@@ -120,13 +131,13 @@ const SearchPage = ({ formInit = 'basic' }) => {
       </div>
       <div className="cts-search-tip__body">
         <strong>Search Tip:</strong>
-        {formType === 'basic' ? (
+        {formFactor === 'basic' ? (
           <>{` For more search options, use our `}</>
         ) : (
           <>{` All fields are optional. Skip any items that are unknown or not applicable or try our `}</>
         )}
         <button type="button" className="btnAsLink" onClick={toggleForm}>
-          {formType === 'basic' ? 'advanced search' : 'basic search'}
+          {formFactor === 'basic' ? 'advanced search' : 'basic search'}
         </button>
         .
       </div>
@@ -149,7 +160,7 @@ const SearchPage = ({ formInit = 'basic' }) => {
       <div className="search-page__content">
         <form
           onSubmit={handleSubmit}
-          className={`search-page__form ${formType}`}
+          className={`search-page__form ${formFactor}`}
         >
           {formModules.map((Module, idx) => {
             if (Array.isArray(Module)) {

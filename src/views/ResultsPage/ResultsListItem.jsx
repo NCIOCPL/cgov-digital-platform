@@ -4,12 +4,22 @@ import { Link } from 'react-router-dom';
 import Checkbox from '../../components/atomic/Checkbox';
 
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
+
+  const getGenderDisplay = genderVal => {
+    const displays = {
+      MALE: 'Male',
+      FEMALE: 'Female',
+      BOTH: 'Male or Female',
+    };
+    return displays[genderVal];
+  };
+
   return (
     <div className="results-list-item results-list__item">
       <div className="results-list-item__checkbox">
         <Checkbox
-          id={id || item.title}
-          name={item.title}
+          id={id || item.nciID}
+          name={item.nciID}
           checked={isChecked}
           label="Select this article for print"
           hideLabel
@@ -18,25 +28,25 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
       </div>
       <div className="results-list-item__contents">
         <div className="results-list-item__title">
-          <Link to="/about-cancer/treatment/clinical-trials/search/v">
-            {item.title}
+          <Link to={`/about-cancer/treatment/clinical-trials/search/v?id=${item.nciID}`}>
+            {item.briefTitle}
           </Link>
         </div>
         <div className="results-list-item__category">
           <span>Status:</span>
-          {item.status ? 'Active' : 'Active'}
+          {item.currentTrialStatus  ? 'Active' : 'Active'}
         </div>
         <div className="results-list-item__category">
           <span>Age:</span>
-          {item.age} years and older
+          {item.eligibilityInfo.structuredCriteria.minAgeInt} years and older
         </div>
         <div className="results-list-item__category">
           <span>Gender:</span>
-          {item.gender}
+          {getGenderDisplay(item.eligibilityInfo.structuredCriteria.gender)}
         </div>
         <div className="results-list-item__category">
           <span>Location:</span>
-          {item.location} locations
+          {`${item.sites.length} location${(item.sites.length === 1)? '': 's'}`}
         </div>
       </div>
     </div>
@@ -45,13 +55,7 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
 
 ResultsListItem.propTypes = {
   id: PropTypes.string,
-  item: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    status: PropTypes.bool.isRequired,
-    age: PropTypes.number.isRequired,
-    gender: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-  }),
+  item: PropTypes.object,
   isChecked: PropTypes.bool,
   onCheckChange: PropTypes.func.isRequired,
 };

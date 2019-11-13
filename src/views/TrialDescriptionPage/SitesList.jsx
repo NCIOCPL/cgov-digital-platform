@@ -13,7 +13,7 @@ const SitesList = sites => {
 
   const buildCountriesList = sitesArr => {
     if (sitesArr.length > 0) {
-      let countriesList = [...new Set(sitesArr.map(item => item.org_country))];
+      let countriesList = [...new Set(sitesArr.map(item => item.country))];
       setCountries(countriesList);
     }
   };
@@ -35,10 +35,10 @@ const SitesList = sites => {
   // build list per city
   const buildCitiesArray = parentArray => {
     let ca = []; //cities array
-    let citiesList = [...new Set(parentArray.map(item => item.org_city))];
+    let citiesList = [...new Set(parentArray.map(item => item.city))];
 
     citiesList.forEach(cityName => {
-      let citySites = parentArray.filter(item => item.org_city === cityName);
+      let citySites = parentArray.filter(item => item.city === cityName);
       let cityObj = {
         city: cityName,
         sites: citySites,
@@ -55,16 +55,18 @@ const SitesList = sites => {
       let c = { country: countryName };
       if (countryName === 'United States') {
         let usaSites = sites.sites.filter(
-          item => item.org_country === 'United States'
+          item => item.country === 'United States'
         );
-        let sl = [...new Set(usaSites.map(item => item.org_state_or_province))];
+        let sl = [
+          ...new Set(usaSites.map(item => item.stateOrProvinceAbbreviation)),
+        ];
         sl.sort((a, b) => (a > b ? 1 : -1));
         setStatesList(sl);
         c.states = [];
 
         sl.forEach(stateName => {
           let sitesByState = usaSites.filter(
-            item => item.org_state_or_province === stateName
+            item => item.stateOrProvinceAbbreviation === stateName
           );
           let stateSitesList = buildCitiesArray(sitesByState);
           let s = {
@@ -75,17 +77,17 @@ const SitesList = sites => {
         });
         setStatesItems(c);
         masterArray.unshift(c);
-      } else if(countryName === 'Canada') {
-        let canadaSites = sites.sites.filter(
-          item => item.org_country === 'Canada'
-        );
-        let pl = [...new Set(canadaSites.map(item => item.org_state_or_province))];
+      } else if (countryName === 'Canada') {
+        let canadaSites = sites.sites.filter(item => item.country === 'Canada');
+        let pl = [
+          ...new Set(canadaSites.map(item => item.stateOrProvinceAbbreviation)),
+        ];
         pl.sort((a, b) => (a > b ? 1 : -1));
         c.provinces = [];
 
         pl.forEach(provinceName => {
           let sitesByProvince = canadaSites.filter(
-            item => item.org_state_or_province === provinceName
+            item => item.stateOrProvinceAbbreviation === provinceName
           );
           let provinceSitesList = buildCitiesArray(sitesByProvince);
           let s = {
@@ -95,9 +97,9 @@ const SitesList = sites => {
           c.provinces.push(s);
         });
         masterArray.push(c);
-      }else {
+      } else {
         c.cities = buildCitiesArray(
-          sites.sites.filter(item => item.org_country === countryName)
+          sites.sites.filter(item => item.country === countryName)
         );
         masterArray.push(c);
       }
@@ -107,18 +109,20 @@ const SitesList = sites => {
 
   const renderLocationBlock = (locationObj, index) => {
     return (
-      <div key={'loc-' + locationObj.org_name} className="location">
-        <strong className="location-name">{locationObj.org_name}</strong>
-        <div>Status: {getTrialStatusForDisplay(locationObj.recruitment_status)}</div>
-        <div>Contact: {locationObj.contact_name}</div>
-        {locationObj.contact_phone && (
-          <div>Phone: {locationObj.contact_phone}</div>
+      <div key={'loc-' + locationObj.name} className="location">
+        <strong className="location-name">{locationObj.name}</strong>
+        <div>
+          Status: {getTrialStatusForDisplay(locationObj.recruitmentStatus)}
+        </div>
+        <div>Contact: {locationObj.contactName}</div>
+        {locationObj.contactPhone && (
+          <div>Phone: {locationObj.contactPhone}</div>
         )}
-        {locationObj.contact_email && (
+        {locationObj.contactEmail && (
           <div>
             Email:{' '}
-            <a href={`mailto:${locationObj.contact_email}`}>
-              {locationObj.contact_email}
+            <a href={`mailto:${locationObj.contactEmail}`}>
+              {locationObj.contactEmail}
             </a>
           </div>
         )}
@@ -146,7 +150,9 @@ const SitesList = sites => {
     // the filtered array is already USA only
     let filtered = [];
     if (e.target.value !== '') {
-      filtered = statesItems.states.filter(item => item.state === e.target.value);
+      filtered = statesItems.states.filter(
+        item => item.state === e.target.value
+      );
     } else {
       filtered = statesItems;
     }
@@ -216,20 +222,19 @@ const SitesList = sites => {
   const renderNASites = sitesArr => {
     return (
       <>
-        {(sitesArr.country === 'United States')
+        {sitesArr.country === 'United States'
           ? sitesArr.states.map((siteState, idx) => (
-          <div className="location-state" key={'state-' + idx}>
-            <h4>{getStateNameFromAbbr(siteState.state)}</h4>
-            {renderSitesByCity(siteState.cities)}
-          </div>
-          ))
+              <div className="location-state" key={'state-' + idx}>
+                <h4>{getStateNameFromAbbr(siteState.state)}</h4>
+                {renderSitesByCity(siteState.cities)}
+              </div>
+            ))
           : sitesArr.provinces.map((site, idx) => (
-            <div className="location-province" key={'province-' + idx}>
-              <h4>{site.province}</h4>
-              {renderSitesByCity(site.cities)}
-            </div>
-          ))
-        }
+              <div className="location-province" key={'province-' + idx}>
+                <h4>{site.province}</h4>
+                {renderSitesByCity(site.cities)}
+              </div>
+            ))}
       </>
     );
   };
@@ -246,7 +251,8 @@ const SitesList = sites => {
   const generateListDisplay = () => {
     return filteredLocArray.length > 0 ? (
       filteredLocArray.map((country, idx) => {
-        return (country.country === 'United States' || country.country === 'Canada') ? (
+        return country.country === 'United States' ||
+          country.country === 'Canada' ? (
           <React.Fragment key={'country' + idx}>
             {renderNASites(country)}
           </React.Fragment>

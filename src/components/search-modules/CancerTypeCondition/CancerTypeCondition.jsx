@@ -26,18 +26,30 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   const [stage, setStage] = useState({ value: '' });
   const [sideEffects, setSideEffects] = useState({ value: '' });
   const [ctMenuOpen, setCtMenuOpen] = useState(false);
+  const [subtypeOptions, setSubtypeOptions] = useState([]);
+  const [stageOptions, setStageOptions] = useState([]);
+  const [findingsOptions, setFindingsOptions] = useState([]);
 
   const {
-    maintypeOptions = [],
-    subtypeOptions,
-    stageOptions,
-    findingsOptions,
+    maintypeOptions = []
   } = useCachedValues([
-    'maintypeOptions',
-    'subtypeOptions',
-    'stageOptions',
-    'findingsOptions',
+    'maintypeOptions'
   ]);
+
+  const cache = useSelector(store => store.cache);
+  
+
+  useEffect(() => {
+    if(cache[cancerType.codes[0]]){
+      populateSubmenus(cancerType.codes[0])
+    }
+  }, [cache])
+
+  const populateSubmenus = (ctCode) => {
+    setSubtypeOptions(cache[ctCode].subtypeOptions);
+    setStageOptions(cache[ctCode].stageOptions);
+    setFindingsOptions(cache[ctCode].findingsOptions);
+  }
 
   // Retrieval of main types is triggered by expanding the cancer type dropdown
   useEffect(() => {
@@ -67,7 +79,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
   }, [maintypeOptions]);
 
   const retrieveDescendents = (cacheKey, diseaseCodes) => {
-    console.log('cacheKey: ' + cacheKey);
     dispatch(
       getCancerTypeDescendents({
         cacheKey: cacheKey,
@@ -135,6 +146,7 @@ const CancerTypeCondition = ({ handleUpdate }) => {
 
   const handleCTSelect = (value, item) => {
     handleUpdate('cancerType', item);
+    retrieveDescendents(item.codes[0], item.codes);
     handleUpdate('subtypes', []);
     handleUpdate('stages', []);
     handleUpdate('subtypeModified', false);
@@ -208,8 +220,6 @@ const CancerTypeCondition = ({ handleUpdate }) => {
             }}
             onSelect={(value, item) => {
               handleCTSelect(value, item);
-              handleUpdate('subtypeModified', false);
-              handleUpdate('stagesModified', false);
             }}
             renderMenu={children => (
               <div className="cts-autocomplete__menu --ct">

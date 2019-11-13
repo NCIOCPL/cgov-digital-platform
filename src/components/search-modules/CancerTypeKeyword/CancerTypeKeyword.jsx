@@ -43,7 +43,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
         onSelect={(value, item) => {
           setCTK({ value });
           handleUpdate('cancerType', item);
-          handleUpdate('keywordPhrases', value);
+          handleUpdate('keywordPhrases', '');
         }}
         renderMenu={children => (
           <div className="cts-autocomplete__menu --q">
@@ -63,7 +63,7 @@ const CancerTypeKeyword = ({ handleUpdate }) => {
             }`}
             key={item.codes[0]}
           >
-            {item.name} {item.ancestor_ids} {item.parent_ids} {item.type}
+            {item.name}
           </div>
         )}
       />
