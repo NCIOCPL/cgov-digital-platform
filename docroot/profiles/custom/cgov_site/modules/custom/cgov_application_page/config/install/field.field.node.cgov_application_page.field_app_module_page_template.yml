@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_app_module_page_template
+    - node.type.cgov_application_page
+  module:
+    - options
+id: node.cgov_application_page.field_app_module_page_template
+field_name: field_app_module_page_template
+entity_type: node
+bundle: cgov_application_page
+label: 'Application Module Page Template'
+description: 'Select whether or not to display the left navigation on the application module page.'
+required: true
+translatable: true
+default_value:
+  -
+    value: left_nav
+default_value_callback: ''
+settings: {  }
+field_type: list_string
