@@ -478,7 +478,7 @@ export function searchTrials({cacheKey, data}) {
         {
           method: 'searchTrials',
           requestParams: {
-            document: encodeURIComponent(JSON.stringify(data))
+            document: JSON.stringify(data)
           }
         }
       ]
