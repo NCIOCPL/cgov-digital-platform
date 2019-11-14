@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCachedValues } from '../../utilities/hooks';
-import { getMainType, getCancerTypeDescendents } from '../../store/actions';
+import { getMainType } from '../../store/actions';
 import { Link } from 'react-router-dom';
 import { SearchCriteriaTable } from '../../components/atomic';
 import { history } from '../../services/history.service';
@@ -17,12 +15,13 @@ const ResultsPageHeader = ({ handleUpdate, resultsCount }) => {
     keywordPhrases,
     isDirty,
   } = useSelector(store => store.form);
-  const { maintypeOptions = [] } = useCachedValues(['maintypeOptions']);
+
+  const { maintypeOptions } = useSelector(store => store.cache);
 
   const handleRefineSearch = () => {
     if (formType === 'basic') {
       //prefetch stuff
-      if (maintypeOptions.length < 1) {
+      if (!maintypeOptions || maintypeOptions.length < 1) {
         dispatch(getMainType({}));
       }
       if (cancerType.name !== '') {

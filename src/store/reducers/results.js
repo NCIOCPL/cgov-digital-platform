@@ -1,6 +1,16 @@
 import { RECEIVE_DATA, UPDATE_RESULTS } from '../identifiers';
 
-const defaultState = {};
+const defaultState = {
+  search: null,
+};
+
+export const updateResults = (key, value) => ({
+  type: UPDATE_RESULTS,
+  payload: {
+    key,
+    value
+  }
+})
 
 export const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -12,6 +22,7 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         cacheKey,
       };
+      // restore data from cache hit
     case UPDATE_RESULTS:
       return {
         ...state,

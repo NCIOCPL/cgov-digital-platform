@@ -1,4 +1,5 @@
 import { receiveData } from '../store/actions';
+const queryString = require('query-string');
 
 /**
  * This middleware serves two purposes (and could perhaps be broken into two pieces).
@@ -16,6 +17,7 @@ const createCTSMiddleware = services => ({
   if (action.type !== '@@api/CTS') {
     return;
   }
+ 
   const { service: serviceName, cacheKey, requests } = action.payload;
   const service = services[serviceName]();
 
@@ -23,11 +25,15 @@ const createCTSMiddleware = services => ({
     return Promise.all(
       requests.map(async request => {
         if (request.payload) {
+          // get descendant data and map to cache based on maintype code
+
           const {
             requests: nestedRequests,
             cacheKey: nestedKey,
           } = request.payload;
+
           const nestedResponses = await getAllRequests(nestedRequests);
+
           return {
             [nestedKey]:
               nestedResponses.length > 1
@@ -41,11 +47,20 @@ const createCTSMiddleware = services => ({
           };
         } else {
           const { method, requestParams, fetchHandlers } = request;
-          const response = await service[method](
-            ...Object.values(requestParams)
-          );
-          const body = response.terms;
+          const response =
+            method === 'searchTrials'
+              ? await service[method](...Object.values(requestParams))
+              : await service[method](...Object.values(requestParams));
+          let body = {};
+          
+          // if search results, add total and starting index
+          if (response.terms) {
+            body = response.terms;
+          } else {
+            body = response;
+          }
           let formattedBody = body;
+
           if (fetchHandlers) {
             const { formatResponse } = fetchHandlers;
             formattedBody = formatResponse ? formatResponse(body) : body;

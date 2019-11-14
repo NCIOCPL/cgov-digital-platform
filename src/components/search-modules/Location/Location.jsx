@@ -12,19 +12,30 @@ import { getCountries, searchHospital } from '../../../store/actions';
 import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
 import './Location.scss';
 
-import { getStates, matchStateToTerm } from '../../../mocks/mock-autocomplete-util';
+import {
+  getStates,
+  matchStateToTerm,
+} from '../../../mocks/mock-autocomplete-util';
 
 const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
 
-  const { countries = [], hospitals = []  } = useSelector(store => store.cache);
-  const { location, zip, zipModified, zipRadius, country, city, states, hospital, nihOnly, vaOnly } = useSelector(
-    store => store.form
-  );
+  const { countries = [], hospitals = [] } = useSelector(store => store.cache);
+  const {
+    location,
+    zip,
+    zipModified,
+    zipRadius,
+    country,
+    city,
+    states,
+    hospital,
+    nihOnly,
+    vaOnly,
+  } = useSelector(store => store.form);
   const [activeRadio, setActiveRadio] = useState(location);
   const [limitToVA, setLimitToVA] = useState(vaOnly);
-  const [closeToNIH, setCloseToNIH] = useState(nihOnly);
   const [showStateField, setShowStateField] = useState(true);
 
   //hospital
@@ -41,28 +52,24 @@ const Location = ({ handleUpdate }) => {
   }, [hospitalName, dispatch]);
 
   useEffect(() => {
-    handleUpdate('location', activeRadio);
-
     if (activeRadio === 'search-location-country') {
       dispatch(getCountries());
     }
-    setCloseToNIH(activeRadio === 'search-location-nih');
   }, [activeRadio, dispatch]);
 
-  useEffect(() => {
-    handleUpdate('vaOnly', limitToVA);
-  }, [limitToVA, handleUpdate]);
-
-  useEffect(() => {
-    handleUpdate('nihOnly', closeToNIH);
-  }, [closeToNIH, handleUpdate]);
+  const updateStore = (locRadio) => {
+    handleUpdate('location', locRadio);
+    handleUpdate('nihOnly', (locRadio === 'search-location-nih'));
+  };
 
   const handleToggleChange = () => {
     setLimitToVA(!limitToVA);
+    handleUpdate('vaOnly', limitToVA);
   };
 
   const handleRadioChange = e => {
     setActiveRadio(e.target.value);
+    updateStore(e.target.value);
   };
 
   const handleCountryOnChange = e => {
@@ -85,10 +92,10 @@ const Location = ({ handleUpdate }) => {
   };
 
   const checkZip = () => {
-    if(zipModified){
+    if (zipModified) {
       handleUpdate('zipModified', false);
     }
-  }
+  };
 
   return (
     <Fieldset
@@ -100,7 +107,8 @@ const Location = ({ handleUpdate }) => {
       <p>
         Search for trials near a specific zip code; or in a country, state and
         city; or at a particular institution. The default selection will search
-        for trials in all available locations. You may choose to limit results to Veterans Affairs facilities.
+        for trials in all available locations. You may choose to limit results
+        to Veterans Affairs facilities.
       </p>
       <div className="data-toggle-block">
         <Toggle
@@ -178,58 +186,58 @@ const Location = ({ handleUpdate }) => {
             >
               {showStateField && (
                 <Autocomplete
-                id="lst"
-                label="State"
-                value={stateVal.value}
-                inputHelpText="More than one selection may be made."
-                inputClasses="--state"
-                items={filterSelectedItems(stateOptions, states)}
-                getItemValue={item => item.name}
-                shouldItemRender={matchStateToTerm}
-                onChange={(event, value) => setStateVal({ value })}
-                onSelect={value => {
-                  handleUpdate('states', [
-                    ...states,
-                    stateOptions.find(({ name }) => name === value),
-                  ]);
-                  setStateVal({ value: '' });
-                }}
-                multiselect={true}
-                chipList={states}
-                onChipRemove={e => {
-                  let newChips = states.filter(item => item.name !== e.label);
-                  handleUpdate('states', [...newChips]);
-                }}
-                renderMenu={children => {
-                  return (
-                    <div className="cts-autocomplete__menu --drugs">
-                      {stateVal.value.length ? (
-                        filterSelectedItems(stateOptions, states).length ? (
-                          children
+                  id="lst"
+                  label="State"
+                  value={stateVal.value}
+                  inputHelpText="More than one selection may be made."
+                  inputClasses="--state"
+                  items={filterSelectedItems(stateOptions, states)}
+                  getItemValue={item => item.name}
+                  shouldItemRender={matchStateToTerm}
+                  onChange={(event, value) => setStateVal({ value })}
+                  onSelect={value => {
+                    handleUpdate('states', [
+                      ...states,
+                      stateOptions.find(({ name }) => name === value),
+                    ]);
+                    setStateVal({ value: '' });
+                  }}
+                  multiselect={true}
+                  chipList={states}
+                  onChipRemove={e => {
+                    let newChips = states.filter(item => item.name !== e.label);
+                    handleUpdate('states', [...newChips]);
+                  }}
+                  renderMenu={children => {
+                    return (
+                      <div className="cts-autocomplete__menu --drugs">
+                        {stateVal.value.length ? (
+                          filterSelectedItems(stateOptions, states).length ? (
+                            children
+                          ) : (
+                            <div className="cts-autocomplete__menu-item">
+                              No results found
+                            </div>
+                          )
                         ) : (
                           <div className="cts-autocomplete__menu-item">
-                            No results found
+                            Enter state name
                           </div>
-                        )
-                      ) : (
-                        <div className="cts-autocomplete__menu-item">
-                          Enter state name
-                        </div>
-                      )}
-                    </div>
-                  );
-                }}
-                renderItem={(item, isHighlighted) => (
-                  <div
-                    className={`cts-autocomplete__menu-item ${
-                      isHighlighted ? 'highlighted' : ''
-                    }`}
-                    key={item.abbr}
-                  >
+                        )}
+                      </div>
+                    );
+                  }}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      className={`cts-autocomplete__menu-item ${
+                        isHighlighted ? 'highlighted' : ''
+                      }`}
+                      key={item.abbr}
+                    >
                       {item.name}
-                  </div>
-                )}
-              />
+                    </div>
+                  )}
+                />
               )}
               <TextInput
                 action={e => handleUpdate(e.target.id, e.target.value)}
@@ -256,7 +264,8 @@ const Location = ({ handleUpdate }) => {
                   value={hospitalName.value}
                   inputProps={{
                     id: 'hos',
-                    placeholder: 'Start typing to select a hospital or institution',
+                    placeholder:
+                      'Start typing to select a hospital or institution',
                   }}
                   wrapperStyle={{
                     position: 'relative',
@@ -269,7 +278,7 @@ const Location = ({ handleUpdate }) => {
                   onChange={(event, value) => setHospitalName({ value })}
                   onSelect={(value, item) => {
                     handleUpdate('hospital', item);
-                    setHospitalName({value: item.term});
+                    setHospitalName({ value: item.term });
                   }}
                   renderMenu={children => (
                     <div className="cts-autocomplete__menu --hospitals">

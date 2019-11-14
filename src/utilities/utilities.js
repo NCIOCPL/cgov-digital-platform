@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-
+const zip_codes = require('../mocks/zip_codes.json');
 let index = 0;
 
 //  Provides utility functions for components in this library.
@@ -111,13 +111,106 @@ export const saveStatetoSessionStorage = ({ state, appId }) => {
 
 export const deepSearchObject = (cacheKey, object, result = []) => {
   Object.keys(object).forEach(key => {
+    // does the key match what we're looking for?
     if (key === cacheKey) {
       result.push(object[key]);
       return result;
     }
-    if (typeof object[key] === 'object') {
+    if (typeof object[key] === 'object' && object[key] !== null) {
       deepSearchObject(cacheKey, object[key], result);
     }
   });
   return result;
 };
+
+export const getStateNameFromAbbr = abbrToLookup => {
+  const states = {
+    AL: 'Alabama',
+    AK: 'Alaska',
+    AZ: 'Arizona',
+    AR: 'Arkansas',
+    CA: 'California',
+    CO: 'Colorado',
+    CT: 'Connecticut',
+    DC: 'District of Columbia',
+    DE: 'Delaware',
+    FL: 'Florida',
+    GA: 'Georgia',
+    HI: 'Hawaii',
+    ID: 'Idaho',
+    IL: 'Illinois',
+    IN: 'Indiana',
+    IA: 'Iowa',
+    KS: 'Kansas',
+    KY: 'Kentucky',
+    LA: 'Louisiana',
+    ME: 'Maine',
+    MD: 'Maryland',
+    MA: 'Massachusetts',
+    MI: 'Michigan',
+    MN: 'Minnesota',
+    MS: 'Mississippi',
+    MO: 'Missouri',
+    MT: 'Montana',
+    NE: 'Nebraska',
+    NV: 'Nevada',
+    NH: 'New Hampshire',
+    NJ: 'New Jersey',
+    NM: 'New Mexico',
+    NY: 'New York',
+    NC: 'North Carolina',
+    ND: 'North Dakota',
+    OH: 'Ohio',
+    OK: 'Oklahoma',
+    OR: 'Oregon',
+    PA: 'Pennsylvania',
+    RI: 'Rhode Island',
+    SC: 'South Carolina',
+    SD: 'South Dakota',
+    TN: 'Tennessee',
+    TX: 'Texas',
+    UT: 'Utah',
+    VT: 'Vermont',
+    VA: 'Virginia',
+    WA: 'Washington',
+    WV: 'West Virginia',
+    WI: 'Wisconsin',
+    WY: 'Wyoming',
+    PR: 'Puerto Rico',
+  };
+  return states[abbrToLookup];
+};
+
+export const convertZipToLatLong = zip => {
+  //TODO: replace with zip code lookup service
+  return zip_codes[zip];
+};
+
+/**
+ * Mock ZIP code to Geolocation service.
+ *
+ * Responds to requests sent to /service/zip_lookup/ZIP_CODE
+ * where ZIP_CODE is the zip code to lookup.
+ *
+ * The actual path will likely change.
+ */
+// module.exports = function(app) {
+//     app.use(
+//         '/service/zip_lookup/:zip_code',
+//         function (req, res) {
+
+//             const zip = req.params.zip_code;
+//             const loc = zip_codes[zip];
+
+//             if( loc != null ) {
+//                 res
+//                     .status(200)
+//                     .json(loc);
+//             }
+//             else {
+//                 res.sendStatus(404);
+//             }
+
+//         }
+//     );
+// };

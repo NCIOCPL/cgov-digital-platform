@@ -86,24 +86,8 @@ $cts-accordion-heading-toggle-odd: #006f8a;
     :not(:first-child) {
       margin-top: 0.5rem;
     }
-  }
-
-  h2 {
-    &:nth-of-type(odd) {
-      .cts-accordion__button {
-        background: $cts-accordion-heading-bg-odd;
-
-        &::after {
-          background: white;
-          color: $cts-accordion-heading-toggle-odd;
-        }
-        &[aria-expanded='false'] {
-          &::after {
-            background: $cts-accordion-heading-toggle-odd;
-            color: white;
-          }
-        }
-      }
+    + h2 {
+      margin-top: .5rem;
     }
   }
 

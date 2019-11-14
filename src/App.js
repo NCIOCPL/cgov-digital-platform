@@ -4,8 +4,7 @@ import './styles/main.scss';
 
 import SearchPage from './views/SearchPage';
 import ResultsPage from './views/ResultsPage';
-
-import mockResults from './mocks/mock-results.json';
+import TrialDescriptionPage from './views/TrialDescriptionPage';
 
 function App() {
   return (
@@ -15,8 +14,9 @@ function App() {
         <Route
           exact
           path="/about-cancer/treatment/clinical-trials/search/r"
-          render={() => <ResultsPage results={mockResults} />}
+          component={ResultsPage}
         />
+        <Route exact path="/about-cancer/treatment/clinical-trials/search/v" component={TrialDescriptionPage} />
         <Route exact path="/about-cancer/treatment/clinical-trials/search/advanced" render={() => <SearchPage formInit="advanced" />} />
         <Route path="/about-cancer/treatment/clinical-trials/search" component={SearchPage} />
       </Switch>
