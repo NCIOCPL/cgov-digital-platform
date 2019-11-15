@@ -95,104 +95,103 @@ const TrialDescriptionPage = ({ location }) => {
   };
 
   return (
-    <div id="main-content" className="general-page-body-container main-content">
-      <div className="contentzone">
-        {isTrialLoading ? (
-          <div>Loading</div>
-        ) : (
-          <article className="trial-description-page">
-            {renderTrialDescriptionHeader()}
+    <>
+      {isTrialLoading ? (
+        <div>Loading</div>
+      ) : (
+        <article className="trial-description-page">
+          {renderTrialDescriptionHeader()}
 
-            <div className="trial-description-page__description">
-              <div className="trial-description-page__content">
-                <TrialStatusIndicator
-                  status={trial.currentTrialStatus.toLowerCase()}
-                />
-                <Accordion>
-                  <AccordionItem titleCollapsed="Description" expanded>
-                    {trial.briefSummary}
+          <div className="trial-description-page__description">
+            <div className="trial-description-page__content">
+              <TrialStatusIndicator
+                status={trial.currentTrialStatus.toLowerCase()}
+              />
+              <Accordion>
+                <AccordionItem titleCollapsed="Description" expanded>
+                  {trial.briefSummary}
+                </AccordionItem>
+                <AccordionItem titleCollapsed="Eligibility Criteria">
+                  <div>
+                    {trial.eligibilityInfo.unstructuredCriteria.map(
+                      (item, idx) => (
+                        <p key={`uc-${idx}`}>{item.description}</p>
+                      )
+                    )}
+                  </div>
+                </AccordionItem>
+                <AccordionItem titleCollapsed="Locations &amp; Contacts">
+                  <SitesList sites={trial.sites} />
+                </AccordionItem>
+                <AccordionItem titleCollapsed="Trial Objectives and Outline">
+                  {trial.detailDescription}
+                </AccordionItem>
+                <AccordionItem titleCollapsed="Trial Phase &amp; Type">
+                  <Table
+                    borderless
+                    columns={[
+                      {
+                        colId: 'phase',
+                        displayName: 'Trial Phase',
+                      },
+                      {
+                        colId: 'type',
+                        displayName: 'Trial Type',
+                      },
+                    ]}
+                    data={[
+                      {
+                        phase: `Phase ${trial.trialPhase.phaseNumber}`,
+                        type: trial.primaryPurpose.code,
+                      },
+                    ]}
+                  />
+                </AccordionItem>
+                {(trial.leadOrganizationName ||
+                  trial.principalInvestigator) && (
+                  <AccordionItem titleCollapsed="Lead Organization">
+                    <>
+                      {trial.leadOrganizationName &&
+                        trial.leadOrganizationName !== '' && (
+                          <p className="leadOrg">
+                            <strong>Lead Organization</strong>
+                            {trial.leadOrganizationName}
+                          </p>
+                        )}
+                      {trial.principalInvestigator &&
+                        trial.principalInvestigator !== '' && (
+                          <p className="investigator">
+                            <strong>Principal Investigator</strong>
+                            {trial.principalInvestigator}
+                          </p>
+                        )}
+                    </>
                   </AccordionItem>
-                  <AccordionItem titleCollapsed="Eligibility Criteria">
-                    <div>
-                      {trial.eligibilityInfo.unstructuredCriteria.map(
-                        (item, idx) => (
-                          <p key={`uc-${idx}`}>{item.description}</p>
-                        )
-                      )}
-                    </div>
-                  </AccordionItem>
-                  <AccordionItem titleCollapsed="Locations &amp; Contacts">
-                    <SitesList sites={trial.sites} />
-                  </AccordionItem>
-                  <AccordionItem titleCollapsed="Trial Objectives and Outline">
-                    {trial.detailDescription}
-                  </AccordionItem>
-                  <AccordionItem titleCollapsed="Trial Phase &amp; Type">
-                    <Table
-                      borderless
-                      columns={[
-                        {
-                          colId: 'phase',
-                          displayName: 'Trial Phase',
-                        },
-                        {
-                          colId: 'type',
-                          displayName: 'Trial Type',
-                        },
-                      ]}
-                      data={[
-                        {
-                          phase: `Phase ${trial.trialPhase.phaseNumber}`,
-                          type: trial.primaryPurpose.code,
-                        },
-                      ]}
-                    />
-                  </AccordionItem>
-                  {(trial.leadOrganizationName ||
-                    trial.principalInvestigator) && (
-                    <AccordionItem titleCollapsed="Lead Organization">
-                      <>
-                        {trial.leadOrganizationName &&
-                          trial.leadOrganizationName !== '' && (
-                            <p className="leadOrg">
-                              <strong>Lead Organization</strong>
-                              {trial.leadOrganizationName}
-                            </p>
-                          )}
-                        {trial.principalInvestigator &&
-                          trial.principalInvestigator !== '' && (
-                            <p className="investigator">
-                              <strong>Principal Investigator</strong>
-                              {trial.principalInvestigator}
-                            </p>
-                          )}
-                      </>
-                    </AccordionItem>
-                  )}
-                  <AccordionItem titleCollapsed="Trial IDs">
-                    <ul className="trial-ids">
-                      <li>
-                        <strong>Primary ID</strong>
-                        {trial.protocolID}
-                      </li>
-                      <li>
-                        <strong>Clinicaltials.gov ID</strong>
-                        <a
-                          href={`http://clinicaltrials.gov/show/${trial.nctID}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {trial.nctID}
-                        </a>
-                      </li>
-                    </ul>
-                  </AccordionItem>
-                </Accordion>
-              </div>
+                )}
+                <AccordionItem titleCollapsed="Trial IDs">
+                  <ul className="trial-ids">
+                    <li>
+                      <strong>Primary ID</strong>
+                      {trial.protocolID}
+                    </li>
+                    <li>
+                      <strong>Clinicaltials.gov ID</strong>
+                      <a
+                        href={`http://clinicaltrials.gov/show/${trial.nctID}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {trial.nctID}
+                      </a>
+                    </li>
+                  </ul>
+                </AccordionItem>
+              </Accordion>
+            </div>
 
-              <div className="trial-description-page__aside">
-                {renderDelighters()}
-                {/* <div class="no-resize cts-share view-delighter-share">
+            <div className="trial-description-page__aside">
+              {renderDelighters()}
+              {/* <div class="no-resize cts-share view-delighter-share">
 			<div class="share-text">Share this clinical trial with your doctor:</div>
 									<a class="print" title="Print" href="#">
 				<span class="icon icon-print"></span><span class="text">Print</span>
@@ -200,12 +199,11 @@ const TrialDescriptionPage = ({ location }) => {
 				<span class="icon icon-email"></span><span class="text">Email</span>
 			</a>
 		</div> */}
-              </div>
             </div>
-          </article>
-        )}
-      </div>
-    </div>
+          </div>
+        </article>
+      )}
+    </>
   );
 };
 
