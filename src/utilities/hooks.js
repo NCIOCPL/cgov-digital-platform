@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { deepSearchObject } from './utilities';
-import { queryString } from 'query-string';
 
 // Hooks to share common logic between multiple components
 
@@ -94,6 +93,7 @@ export const useQueryString = () => {
     trialId,
     investigator,
     leadOrg,
+    resultsPage,
   } = useSelector(store => store.form);
 
   let searchValues = {};
@@ -183,10 +183,10 @@ export const useQueryString = () => {
     }
 
     if (drugs.length > 0) {
-      searchValues.dt = [...new Set(drugs.map(item => item.code))];
+      searchValues.dt = [...new Set(drugs.map(item => item.codes[0]))];
     }
     if (treatments > 0) {
-      searchValues.ti = [...new Set(treatments.map(item => item.code))];
+      searchValues.ti = [...new Set(treatments.map(item => item.codes[0]))];
     }
     if (trialId !== '') {
       searchValues.tid = trialId;
@@ -197,158 +197,11 @@ export const useQueryString = () => {
     if (leadOrg.term !== '') {
       searchValues.lo = leadOrg.term;
     }
+    if (resultsPage > 1){
+      searchValues.pn = resultsPage;
+    }
+
     return searchValues;
   }
 };
 
-// wcms-cde/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/SearchParams/CTSSearchParamToQueryExtensions.cs
-export const useTrialSearchQueryFormatter = () => {
-  let filterCriteria = {};
-  const form = useSelector(store => store.form);
-
-  //diseases
-  if (form.cancerType.codes.length > 0) {
-    filterCriteria._maintypes = form.cancerType.codes[0];
-  }
-
-  if (form.subtypes.codes && form.subtypes.codes.length > 0) {
-    filterCriteria._subtypes = form.subtypes.codes;
-  }
-
-  if (form.stages.codes && form.stages.codes.length > 0) {
-    filterCriteria._stages = form.stages.codes;
-  }
-
-  if (form.findings.codes && form.findings.codes.length > 0) {
-    filterCriteria._findings = form.findings;
-  }
-
-  //Drugs and Treatments
-  if (form.drugs.length > 0 || form.treatments.length > 0) {
-    let drugAndTrialIds = [];
-    if (form.drugs.length > 0) {
-      drugAndTrialIds = [...form.drugs];
-    }
-    if (form.treatments.length > 0) {
-      drugAndTrialIds = [drugAndTrialIds, ...form.drugs];
-    }
-    filterCriteria.arms.interventions.intervention_code = drugAndTrialIds;
-  }
-
-  //Add Age filter
-  if (form.age !== '') {
-    filterCriteria.eligibility.structured.max_age_in_years_gte = form.age;
-    filterCriteria.eligibility.structured.min_age_in_years_lte = form.age;
-  }
-
-  // keywords
-  if (form.keywords !== '') {
-    filterCriteria._fulltext = form.keywords;
-  }
-
-  // trialTypes
-  let trialTypesChecked = form.trialTypes.filter(item => item.checked);
-  //check if any are selected, none being the same as all
-  if (trialTypesChecked.length) {
-    filterCriteria.primary_purpose.primary_purpose_code = [
-      ...new Set(trialTypesChecked.map(item => item.value)),
-    ];
-  }
-
-  // trialPhases
-  //need to add overlapping phases to the array before passing it
-  let checkedPhases = form.trialPhases.filter(item => item.checked);
-  if(checkedPhases.length > 0){
-    let phaseList = [
-      ...new Set(checkedPhases.map(item => item.value)),
-    ]; 
-  
-    if(phaseList.includes('i')){
-      phaseList.push('i_ii');
-    }
-    if(phaseList.includes('iii')){
-      phaseList.push('ii_iii');
-    }
-    if(phaseList.includes('ii')){
-      if(!phaseList.includes('i_ii')){
-        phaseList.push('i_ii');
-      }
-      if(!phaseList.includes('ii_iii')){
-        phaseList.push('ii_iii');
-      }
-    }
-    if(phaseList.length > 0){
-      filterCriteria['phase.phase'] = phaseList;
-    }
-  }
-
-  // investigator
-  if (form.investigator.term !== '') {
-    filterCriteria.principal_investigator_fulltext = form.investigator.term;
-  }
-
-  // leadOrg
-  if (form.leadOrg.term !== '') {
-    filterCriteria.lead_org_fulltext = form.leadOrg.term;
-  }
-
-  // add healthy volunteers filter
-  if (form.healthyVolunteers) {
-    filterCriteria.accepts_healthy_volunteers_indicator = 'YES';
-  }
-
-  //trial ids
-  if (form.trialId !== '') {
-    filterCriteria._trialids = form.trialId;
-  }
-
-  // VA only
-  if (form.vaOnly) {
-    filterCriteria.sites.org_va = true;
-  }
-
-  // location
-  switch (form.location) {
-    case 'search-location-nih':
-      //NIH has their own postal code, so this means @NIH
-      filterCriteria.sites.org_postal_code = '20892';
-      break;
-    case 'search-location-hospital':
-      filterCriteria.sites.org_name_fulltext = form.hospital.term;
-      break;
-    case 'search-location-country':
-      filterCriteria.sites.org_country = form.country;
-      filterCriteria.sites.org_city = form.city;
-      if (form.country === 'United States') {
-        filterCriteria.sites.org_state_or_province = form.states;
-      }
-      break;
-    case 'search-location-zip':
-      if (form.zipCoords.lat !== '' && form.zipCoords.lon !== '') {
-        filterCriteria.sites.org_coordinates_lat = form.zipCoords.lat;
-        filterCriteria.sites.org_coordinates_lon = form.zipCoords.lon;
-        filterCriteria.sites.org_coordinates_dist = form.zipRadius + 'mi';
-      }
-      break;
-    default:
-  }
-
-  filterCriteria.current_trial_status = [
-    'Active',
-    'Approved',
-    'Enrolling by Invitation',
-    'In Review',
-    'Temporarily Closed to Accrual',
-    'Temporarily Closed to Accrual and Intervention'
-  ];
-
-  filterCriteria.include = [
-    'nci_id',
-    'brief_title',
-    'current_trial_status',
-    'eligibility.structured',
-    'sites.org_coordinates'
-  ];
-
-  return filterCriteria;
-};

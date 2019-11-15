@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import Utilities from '../../../utilities/utilities';
 import './Pager.scss';
 
-const Pager = ({ data, startFromPage, numberToShow, callback }) => {
+const Pager = ({ data, totalItems, startFromPage, numberToShow, callback }) => {
   const [currentPage, setCurrentPage] = useState(startFromPage);
 
   useEffect(() => {
     if (callback) {
       // originally, this assumed that the data comes back as a huge block, in CTS case, each results set is a distinct block
-      // const startFrom = currentPage * numberToShow;
-      // const endAt = startFrom + numberToShow;
-      // const results = data.slice(startFrom, endAt);
-      const results = data;
-      callback(results, currentPage);
+      // just tell the parent to get the page
+      callback(currentPage);
     }
     //document.querySelector('.pager__num--active').focus();
   }, [currentPage, data, numberToShow]);
@@ -90,9 +87,9 @@ const Pager = ({ data, startFromPage, numberToShow, callback }) => {
     });
   };
 
-  let steps = determineSteps(data.length, numberToShow, currentPage);
+  let steps = determineSteps(totalItems, numberToShow, currentPage);
   let isFirstPage = currentPage === 0;
-  let isLastPage = currentPage + 1 === Math.ceil(data.length / numberToShow);
+  let isLastPage = currentPage + 1 === Math.ceil(totalItems / numberToShow);
   return (
     <nav className="pager__container">
       {steps.length > 0 ? (
@@ -133,6 +130,7 @@ Pager.propTypes = {
   startFromPage: PropTypes.number,
   numberToShow: PropTypes.number,
   callback: PropTypes.func.isRequired,
+  totalItems: PropTypes.number
 };
 
 Pager.defaultProps = {
