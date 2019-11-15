@@ -350,13 +350,9 @@ export const formatTrialSearchQuery = form => {
     if (form.drugs.length > 0) {
       drugAndTrialIds = [...form.drugs];
     }
-    console.log('dd: ' + JSON.stringify(drugAndTrialIds));
-    console.log([...new Set(drugAndTrialIds.map(item => item.codes))]);
     if (form.treatments.length > 0) {
       drugAndTrialIds = [...drugAndTrialIds, ...form.treatments];
     }
-    console.log('dt: ' + drugAndTrialIds);
-    console.log([...new Set(drugAndTrialIds.map(item => item.codes[0]))]);
     filterCriteria['arms.interventions.intervention_code'] = [...new Set(drugAndTrialIds.map(item => item.codes[0]))];
   }
 
