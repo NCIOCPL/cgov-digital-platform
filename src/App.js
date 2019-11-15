@@ -10,9 +10,7 @@ function App() {
   return (
     <Fragment>
       <Switch>
-        <Redirect exact from="/" to="/about-cancer/treatment/clinical-trials/search" />
         <Route
-          exact
           path="/about-cancer/treatment/clinical-trials/search/r"
           component={ResultsPage}
         />

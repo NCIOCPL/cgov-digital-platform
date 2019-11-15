@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateForm } from '../../store/actions';
+import { Link } from 'react-router-dom';
+import { updateForm, clearForm } from '../../store/actions';
 import { Delighter, Checkbox, Modal, Pager } from '../../components/atomic';
-import { useModal, useTrialSearchQueryFormatter } from '../../utilities/hooks';
+import {
+  formatTrialSearchQuery,
+  buildQueryString,
+} from '../../utilities/utilities';
+import { useModal, useQueryString } from '../../utilities/hooks';
 import ResultsPageHeader from './ResultsPageHeader';
 import ResultsList from './ResultsList';
 import { searchTrials } from '../../store/actions';
+import { history } from '../../services/history.service';
 import './ResultsPage.scss';
 const queryString = require('query-string');
 
@@ -16,41 +22,31 @@ const ResultsPage = ({ location }) => {
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [trialResults, setTrialResults] = useState();
 
-  const qs = JSON.stringify(location.search);
-  const trialResults = useSelector(store => store.cache[qs]);
-  const formData = useTrialSearchQueryFormatter();
+  const formSnapshot = useSelector(store => store.form);
+  const [formData, setFormData] = useState(formSnapshot);
+
+  const qs = queryString.stringify(buildQueryString(formSnapshot));
+  const [query, setQuery] = useState(qs);
+
+  const cache = useSelector(store => store.cache);
+  var cacheLookup = cache[query];
 
   // scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (trialResults) {
+    if (trialResults && trialResults.total >= 0) {
       initData();
     } else {
       //data isn't there, fetch it
-      
-      dispatch(
-        searchTrials({
-          cacheKey: qs,
-          data: formData
-        })
-      );
+      history.replace({
+        path: '/about-cancer/treatment/clinical-trials/search/r',
+        search: qs,
+      });
+      fetchTrials(qs);
     }
   }, []);
-
-  //manage Pager Results
-  useEffect(() => {
-    if (selectAll) {
-      setSelectedResults([...paginatedResults.map(result => result.title)]);
-    } else {
-      setSelectedResults([]);
-    }
-  }, [selectAll, setSelectedResults, paginatedResults]);
-
-  // update selected results for Print
-  useEffect(() => {
-    setSelectedResults([]);
-  }, [paginatedResults]);
 
   // select all
   useEffect(() => {
@@ -63,15 +59,30 @@ const ResultsPage = ({ location }) => {
 
   //when trial results come in, open up shop
   useEffect(() => {
-    if (trialResults && trialResults.total) {
+    if (isLoading && cacheLookup && cacheLookup.total >= 0) {
       initData();
     }
-  }, [trialResults]);
+  }, [cacheLookup]);
 
   const initData = () => {
     setIsLoading(false);
+    setTrialResults(cacheLookup);
   };
 
+  const fetchTrials = queryKey => {
+    setIsLoading(true);
+    cacheLookup = cache[queryKey];
+    dispatch(
+      searchTrials({
+        cacheKey: queryKey,
+        data: formatTrialSearchQuery(formData),
+      })
+    );
+  };
+
+  const handleStartOver = () => {
+    dispatch(clearForm());
+  };
   const handleUpdate = (field, value) => {
     dispatch(
       updateForm({
@@ -85,9 +96,23 @@ const ResultsPage = ({ location }) => {
   const { isShowing, toggleModal } = useModal();
   const printSelectedBtn = useRef(null);
 
-  const handlePagination = (slicedResults, currentPage) => {
-    setPaginatedResults([...slicedResults]);
-    setPagerPage(currentPage);
+  const handlePagination = currentPage => {
+    if (currentPage !== pagerPage) {
+      // set currentPage and kick off fetch
+      setPagerPage(currentPage);
+      let tmpForm = formData;
+      tmpForm.resultsPage = parseInt(currentPage);
+      setFormData(tmpForm);
+      // update qs
+      const parsed = queryString.parse(location.search);
+      parsed.pn = currentPage + 1;
+      let newqs = queryString.stringify(parsed);
+      setQuery(newqs);
+      history.push({
+        search: newqs,
+      });
+      fetchTrials(newqs);
+    }
   };
 
   const renderDelighters = () => (
@@ -148,11 +173,14 @@ const ResultsPage = ({ location }) => {
           </button>
         </div>
         <div className="results-page__pager">
-          <Pager
-            data={trialResults.trials}
-            callback={handlePagination}
-            startFromPage={pagerPage}
-          />
+          {trialResults && trialResults.total > 1 && (
+            <Pager
+              data={trialResults.trials}
+              callback={handlePagination}
+              startFromPage={pagerPage}
+              totalItems={trialResults.total}
+            />
+          )}
         </div>
       </div>
     );
@@ -189,7 +217,7 @@ const ResultsPage = ({ location }) => {
 
   const renderNoResults = () => {
     return (
-      <div className="no-results">
+      <div className="results-list no-results">
         <p>
           <strong>No clinical trials matched your search.</strong>
         </p>
@@ -197,7 +225,16 @@ const ResultsPage = ({ location }) => {
           For assistance, please contact the NCI Contact Center. You can chat
           online or call 1-800-4-CANCER (1-800-422-6237).
         </p>
-        <p>Try a new search</p>
+        <p>
+          <Link
+            to={`/about-cancer/treatment/clinical-trials/search${
+              formSnapshot.formType === 'basic' ? '' : '/advanced'
+            }`}
+            onClick={handleStartOver}
+          >
+            Try a new search
+          </Link>
+        </p>
       </div>
     );
   };
@@ -207,28 +244,32 @@ const ResultsPage = ({ location }) => {
       <article className="results-page">
         {isLoading ? (
           <>Loading...</>
-        ) : trialResults.total < 1 ? (
-          <>{renderNoResults()}</>
         ) : (
           <>
             <ResultsPageHeader
               resultsCount={trialResults.total}
+              pageNum={pagerPage}
               handleUpdate={handleUpdate}
+              handleReset={handleStartOver}
             />
             <div className="results-page__content">
-              {renderControls()}
+              {trialResults.total === 0 ? null : renderControls()}
               <div className="results-page__list">
-                <ResultsList
-                  results={paginatedResults}
-                  selectedResults={selectedResults}
-                  setSelectedResults={setSelectedResults}
-                />
+                {trialResults && trialResults.total === 0 ? (
+                  <>{renderNoResults()}</>
+                ) : (
+                  <ResultsList
+                    results={trialResults.trials}
+                    selectedResults={selectedResults}
+                    setSelectedResults={setSelectedResults}
+                  />
+                )}
                 <aside className="results-page__aside --side">
                   {renderDelighters()}
                 </aside>
               </div>
 
-              {renderControls(true)}
+              {trialResults.total === 0 ? null : renderControls(true)}
             </div>
           </>
         )}

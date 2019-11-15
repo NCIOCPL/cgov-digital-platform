@@ -24,9 +24,8 @@ const initialize = ({
   rootId = 'NCI-CTS-root',
   services = {},
 } = {}) => {
-
   let cachedState;
-  
+
   if (process.env.NODE_ENV !== 'development' && useSessionStorage === true) {
     cachedState = loadStateFromSessionStorage(appId);
   }
@@ -59,14 +58,27 @@ const initialize = ({
     store.subscribe(saveDesiredStateToSessionStorage);
   }
   const appRootDOMNode = document.getElementById(rootId);
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </Provider>,
-    appRootDOMNode
-  );
+  const isRehydrating = appRootDOMNode.getAttribute('data-isRehydrating');
+
+  if (isRehydrating) {
+    ReactDOM.hydrate(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>,
+      appRootDOMNode
+    );
+  } else {
+    ReactDOM.render(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>,
+      appRootDOMNode
+    );
+  }
   return appRootDOMNode;
 };
 

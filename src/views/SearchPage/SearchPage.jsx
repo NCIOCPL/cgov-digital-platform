@@ -17,8 +17,6 @@ import {
 } from '../../components/search-modules';
 import { history } from '../../services/history.service';
 import { updateForm } from '../../store/actions';
-import { useQueryString } from '../../utilities/hooks';
-const queryString = require('query-string');
 
 //Module groups in arrays will be placed side-by-side in the form
 const basicFormModules = [CancerTypeKeyword, [Age, ZipCode]];
@@ -38,7 +36,6 @@ const SearchPage = ({ formInit = 'basic' }) => {
   const dispatch = useDispatch();
   const sentinelRef = useRef(null);
   const [formFactor, setFormFactor] = useState(formInit);
-  const qs = useQueryString();
 
   const handleUpdate = (field, value) => {
     dispatch(
@@ -66,11 +63,7 @@ const SearchPage = ({ formInit = 'basic' }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    history.push(
-      `/about-cancer/treatment/clinical-trials/search/r?${queryString.stringify(
-        qs
-      )}`
-    );
+    history.push('/about-cancer/treatment/clinical-trials/search/r');
   };
 
   const renderDelighters = () => (
@@ -121,7 +114,9 @@ const SearchPage = ({ formInit = 'basic' }) => {
         formFactor === 'basic' ? '/advanced' : ''
       }`
     );
-    setFormFactor(formFactor === 'basic' ? 'advanced': 'basic');
+    let newState = formFactor === 'basic' ? 'advanced' : 'basic';
+    handleUpdate('formType', newState);
+    setFormFactor(newState);
   };
 
   const renderSearchTip = () => (
