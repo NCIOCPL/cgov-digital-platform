@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import ResultsListItem from './ResultsListItem';
 
 
-const ResultsList = ({ results, selectedResults, setSelectedResults }) => {
+const ResultsList = ({ results, selectedResults, setSelectedResults, setSelectAll }) => {
   const handleOnCheckChange = id => {
     if (selectedResults.indexOf(id) === -1) {
       setSelectedResults([...selectedResults, id]);
     } else {
+      // remove from selected
+      setSelectAll(false);
       setSelectedResults(selectedResults.filter(item => item !== id));
     }
   };

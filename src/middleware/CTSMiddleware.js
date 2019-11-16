@@ -1,5 +1,4 @@
 import { receiveData } from '../store/actions';
-const queryString = require('query-string');
 
 /**
  * This middleware serves two purposes (and could perhaps be broken into two pieces).
