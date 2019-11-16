@@ -7,22 +7,22 @@ import {
   formatTrialSearchQuery,
   buildQueryString,
 } from '../../utilities/utilities';
-import { useModal, useQueryString } from '../../utilities/hooks';
+import { useModal } from '../../utilities/hooks';
 import ResultsPageHeader from './ResultsPageHeader';
 import ResultsList from './ResultsList';
 import { searchTrials } from '../../store/actions';
 import { history } from '../../services/history.service';
+import PrintModalContent from './PrintModalContent';
 import './ResultsPage.scss';
 const queryString = require('query-string');
 
 const ResultsPage = ({ location }) => {
   const dispatch = useDispatch();
   const [selectAll, setSelectAll] = useState(false);
-  const [paginatedResults, setPaginatedResults] = useState([]);
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [trialResults, setTrialResults] = useState();
+  const [trialResults, setTrialResults] = useState([]);
 
   const formSnapshot = useSelector(store => store.form);
   const [formData, setFormData] = useState(formSnapshot);
@@ -48,15 +48,6 @@ const ResultsPage = ({ location }) => {
     }
   }, []);
 
-  // select all
-  useEffect(() => {
-    if (selectedResults.length === 0) {
-      setSelectAll(false);
-    } else if (paginatedResults.length === selectedResults.length) {
-      setSelectAll(true);
-    }
-  }, [paginatedResults, selectedResults]);
-
   //when trial results come in, open up shop
   useEffect(() => {
     if (isLoading && cacheLookup && cacheLookup.total >= 0) {
@@ -64,7 +55,17 @@ const ResultsPage = ({ location }) => {
     }
   }, [cacheLookup]);
 
+  //track usage of selected results for print
+  useEffect(() =>{
+    if(selectedResults.length >= 100){
+      toggleModal();
+    }
+  }, [selectedResults]);
+
   const initData = () => {
+    window.scrollTo(0, 0);
+    setSelectAll(false);
+    //console.log('selected(' + selectedResults.length + '): ' + selectedResults);
     setIsLoading(false);
     setTrialResults(cacheLookup);
   };
@@ -80,9 +81,23 @@ const ResultsPage = ({ location }) => {
     );
   };
 
+  const handleSelectAll = () => {
+    if (!selectAll) {
+      setSelectAll(true); // toggle the box then check all the trial results boxes
+      const pageResultIds = [
+        ...new Set(trialResults.trials.map(item => item.nciID)),
+      ];
+      setSelectedResults([...new Set([...selectedResults, ...pageResultIds]) ]);
+      
+    } else {
+      setSelectAll(false);
+    }
+  };
+
   const handleStartOver = () => {
     dispatch(clearForm());
   };
+
   const handleUpdate = (field, value) => {
     dispatch(
       updateForm({
@@ -162,12 +177,12 @@ const ResultsPage = ({ location }) => {
             label="Select all on page"
             checked={selectAll}
             classes="check-all"
-            onChange={() => setSelectAll(!selectAll)}
+            onChange={handleSelectAll}
           />
           <button
             className="results-page__print-button"
             ref={printSelectedBtn}
-            onClick={toggleModal}
+            onClick={handlePrintSelected}
           >
             Print Selected
           </button>
@@ -186,33 +201,8 @@ const ResultsPage = ({ location }) => {
     );
   };
 
-  const renderModalContent = () => {
-    if (selectedResults.length === 0) {
-      return (
-        <>
-          <div className="icon-warning" aria-hidden="true">
-            !
-          </div>
-          <p>
-            You have not selected any trials. Please select at least one trial
-            to print.
-          </p>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div className="spinkit spinner">
-            <div className="dot1"></div>
-            <div className="dot2"></div>
-          </div>
-          <p>
-            You will automatically be directed to your print results in just a
-            moment...
-          </p>
-        </>
-      );
-    }
+  const handlePrintSelected = () => {
+    toggleModal();
   };
 
   const renderNoResults = () => {
@@ -262,6 +252,7 @@ const ResultsPage = ({ location }) => {
                     results={trialResults.trials}
                     selectedResults={selectedResults}
                     setSelectedResults={setSelectedResults}
+                    setSelectAll={setSelectAll}
                   />
                 )}
                 <aside className="results-page__aside --side">
@@ -279,7 +270,10 @@ const ResultsPage = ({ location }) => {
         </aside>
       </article>
       <Modal isShowing={isShowing} hide={toggleModal}>
-        {renderModalContent()}
+        <PrintModalContent
+          selectedList={selectedResults}
+          handleClose={toggleModal}
+        />
       </Modal>
     </>
   );

@@ -23,6 +23,7 @@ const initialize = ({
   useSessionStorage = true,
   rootId = 'NCI-CTS-root',
   services = {},
+  printCacheEndpoint = '/CTS.Print/GenCache',
 } = {}) => {
   let cachedState;
 
@@ -39,6 +40,13 @@ const initialize = ({
     cachedState,
     composeWithDevTools(applyMiddleware(cacheMiddleware, ctsMiddleware))
   );
+
+  store.dispatch({
+    type: 'LOAD_GLOBALS',
+    payload: {
+      printCacheEndpoint,
+    },
+  });
 
   // With the store now created, we want to subscribe to updates.
   // This implementation updates session storage backup on each store change.
@@ -57,6 +65,7 @@ const initialize = ({
 
     store.subscribe(saveDesiredStateToSessionStorage);
   }
+
   const appRootDOMNode = document.getElementById(rootId);
   const isRehydrating = appRootDOMNode.getAttribute('data-isRehydrating');
 
@@ -101,7 +110,7 @@ if (process.env.NODE_ENV !== 'production') {
     services: {
       ctsSearch,
     },
-    language: 'en',
+    printCacheEndpoint: 'https://dceg-test-acsf.cancer.gov/CTS.Print/GenCache'
   });
 }
 
