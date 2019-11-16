@@ -14,6 +14,21 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
     return displays[genderVal];
   };
 
+  const getAgeDisplay = () => {
+    if(item.eligibilityInfo.structuredCriteria.minAgeInt === 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt > 120){
+      return 'Not Specified';
+    }
+    if(item.eligibilityInfo.structuredCriteria.minAgeInt === 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt < 120){
+      return `${item.eligibilityInfo.structuredCriteria.minAgeInt} years and younger`;
+    }
+    if(item.eligibilityInfo.structuredCriteria.minAgeInt > 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt < 120){
+      return `${item.eligibilityInfo.structuredCriteria.minAgeInt} to ${item.eligibilityInfo.structuredCriteria.maxAgeInt} years`;
+    }
+    if(item.eligibilityInfo.structuredCriteria.minAgeInt > 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt > 120){
+      return `${item.eligibilityInfo.structuredCriteria.minAgeInt} years and over`;
+    }
+  };
+
   return (
     <div className="results-list-item results-list__item">
       <div className="results-list-item__checkbox">
@@ -38,7 +53,7 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
         </div>
         <div className="results-list-item__category">
           <span>Age:</span>
-          {item.eligibilityInfo.structuredCriteria.minAgeInt} years and older
+          {getAgeDisplay()}
         </div>
         <div className="results-list-item__category">
           <span>Gender:</span>
