@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import {useSelector} from 'react-redux';
 import { usePrintApi } from '../../utilities/hooks';
 import { history } from '../../services/history.service';
 
 const PrintModalContent = ({ selectedList = [], handleClose = () => {} }) => {
   // in dev use
-  const printUrl = '/CTS.Print/GenCache';
+  const printUrl = useSelector(store => store.globals.printCacheEndpoint);
 
   const [{ data, isLoading, isError, doPrint }] = usePrintApi(
     { TrialIDs: selectedList },

@@ -7,7 +7,7 @@ import {
   formatTrialSearchQuery,
   buildQueryString,
 } from '../../utilities/utilities';
-import { useModal, useQueryString } from '../../utilities/hooks';
+import { useModal } from '../../utilities/hooks';
 import ResultsPageHeader from './ResultsPageHeader';
 import ResultsList from './ResultsList';
 import { searchTrials } from '../../store/actions';
@@ -19,7 +19,6 @@ const queryString = require('query-string');
 const ResultsPage = ({ location }) => {
   const dispatch = useDispatch();
   const [selectAll, setSelectAll] = useState(false);
-  const [paginatedResults, setPaginatedResults] = useState([]);
   const [pagerPage, setPagerPage] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
