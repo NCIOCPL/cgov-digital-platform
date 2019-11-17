@@ -186,7 +186,7 @@ export const convertZipToLatLong = zip => {
   return zip_codes[zip];
 };
 
-export const buildQueryString = (formStore) => {
+export const buildQueryString = formStore => {
   const {
     formType,
     age,
@@ -316,7 +316,7 @@ export const buildQueryString = (formStore) => {
     if (leadOrg.term !== '') {
       searchValues.lo = leadOrg.term;
     }
-    if (resultsPage > 1){
+    if (resultsPage > 1) {
       searchValues.pn = resultsPage;
     }
 
@@ -353,7 +353,9 @@ export const formatTrialSearchQuery = form => {
     if (form.treatments.length > 0) {
       drugAndTrialIds = [...drugAndTrialIds, ...form.treatments];
     }
-    filterCriteria['arms.interventions.intervention_code'] = [...new Set(drugAndTrialIds.map(item => item.codes[0]))];
+    filterCriteria['arms.interventions.intervention_code'] = [
+      ...new Set(drugAndTrialIds.map(item => item.codes[0])),
+    ];
   }
 
   //Add Age filter
@@ -436,10 +438,14 @@ export const formatTrialSearchQuery = form => {
       filterCriteria['sites.org_name_fulltext'] = form.hospital.term;
       break;
     case 'search-location-country':
-      filterCriteria['sites.org_country'] = form.country;
-      filterCriteria['sites.org_city'] = form.city;
+      filterCriteria['sites.org_country._raw'] = form.country;
+      if(form.city !== ''){
+        filterCriteria['sites.org_city'] = form.city;
+      }
       if (form.country === 'United States') {
-        filterCriteria['sites.org_state_or_province'] = [...new Set(form.states.map(item => item.abbr))];
+        filterCriteria['sites.org_state_or_province'] = [
+          ...new Set(form.states.map(item => item.abbr)),
+        ];
       }
       break;
     case 'search-location-zip':
@@ -456,14 +462,14 @@ export const formatTrialSearchQuery = form => {
     filterCriteria.from = form.resultsPage * 10;
   }
 
-  // filterCriteria['sites.recruitment_status'] = [
-  //   'Active',
-  //   'Approved',
-  //   'Enrolling by Invitation',
-  //   'In Review',
-  //   'Temporarily Closed to Accrual',
-  //   'Temporarily Closed to Accrual and Intervention',
-  // ];
+  filterCriteria['sites.recruitment_status'] = [
+    'Active',
+    'Approved',
+    'Enrolling by Invitation',
+    'In Review',
+    'Temporarily Closed to Accrual',
+    'Temporarily Closed to Accrual and Intervention',
+  ];
 
   filterCriteria.current_trial_status = [
     'Active',
@@ -494,30 +500,57 @@ export const formatTrialSearchQuery = form => {
 };
 
 /**
- * Mock ZIP code to Geolocation service.
- *
- * Responds to requests sent to /service/zip_lookup/ZIP_CODE
- * where ZIP_CODE is the zip code to lookup.
- *
- * The actual path will likely change.
+ * Calculates whether the distance from a point (expressed as a latitude and longitude) is
+ * within radius miles of this location.
  */
-// module.exports = function(app) {
-//     app.use(
-//         '/service/zip_lookup/:zip_code',
-//         function (req, res) {
+export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
+  // Calculate the difference between this point and the other in miles,
+  // using the Haversine formula.
+  let resultDistance = 0.0;
+  const avgRadiusOfEarth = 3960; //Radius of the earth differ, I'm taking the average.
+  const zipLat = zipCoords.lat;
+  const zipLon = zipCoords.lon;
+  if(!siteCoords){
+    return false;
+  }
+  const siteLat = siteCoords.latitude;
+  const siteLon = siteCoords.longitude;
+  
 
-//             const zip = req.params.zip_code;
-//             const loc = zip_codes[zip];
+  /**
+   * Converts a Degree to Radians.
+   * @param val The value in degrees
+   * @returns The value in radians.
+   */
+  function degreeToRadian(val) {
+    return (Math.PI / 180) * val;
+  }
+  //Haversine formula
+  //distance = R * 2 * aTan2 ( square root of A, square root of 1 - A )
+  //                   where A = sinus squared (difference in latitude / 2) + (cosine of latitude 1 * cosine of latitude 2 * sinus squared (difference in longitude / 2))
+  //                   and R = the circumference of the earth
 
-//             if( loc != null ) {
-//                 res
-//                     .status(200)
-//                     .json(loc);
-//             }
-//             else {
-//                 res.sendStatus(404);
-//             }
+  let differenceInLat = degreeToRadian(zipLat - siteLat);
+  let differenceInLong = degreeToRadian(zipLon - siteLon);
+  let aInnerFormula =
+    Math.cos(degreeToRadian(zipLat)) *
+    Math.cos(degreeToRadian(siteLat)) *
+    Math.sin(differenceInLong / 2) *
+    Math.sin(differenceInLong / 2);
+  let aFormula =
+    Math.sin(differenceInLat / 2) * Math.sin(differenceInLat / 2) +
+    aInnerFormula;
+  resultDistance =
+    avgRadiusOfEarth *
+    2 *
+    Math.atan2(Math.sqrt(aFormula), Math.sqrt(1 - aFormula));
 
-//         }
-//     );
-// };
+  return resultDistance <= zipRadius;
+};
+
+export const listSitesWithinRadius = (originCoords, sitesArr, radius = 100) => {
+  let nearbySites = sitesArr.filter(item =>
+    isWithinRadius(originCoords, item.coordinates, radius)
+  );
+  return nearbySites;
+};

@@ -82,11 +82,11 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
       setIsLoading(true);
       const headers = {
         'Content-Type': 'application/json',
-      }
+      };
       try {
         const result = await axios.post(url, queryString.stringify(idList), {
-          headers: headers
-        })
+          headers: headers,
+        });
         setData(result.data);
       } catch (error) {
         setIsError(true);
@@ -98,7 +98,7 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
 
   const doPrint = () => {
     setUrl(printAPIUrl);
-  }
+  };
 
   return [{ data, isLoading, isError, doPrint }];
-}
+};
