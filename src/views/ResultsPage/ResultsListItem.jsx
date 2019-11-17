@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Checkbox from '../../components/atomic/Checkbox';
+import { isWithinRadius } from '../../utilities/utilities';
 
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
+  const { zip, zipCoords, zipRadius } = useSelector(store => store.form);
+  const [nearbySitesCount, setNearbySitesCount] = useState(0);
+
+  function countNearbySitesByZip(arr) {
+    return arr.reduce(
+      (count, siteItem) =>
+        count + isWithinRadius(zipCoords, siteItem.coordinates, zipRadius),
+      0
+    );
+  }
 
   const getGenderDisplay = genderVal => {
     const displays = {
@@ -15,18 +27,57 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
   };
 
   const getAgeDisplay = () => {
-    if(item.eligibilityInfo.structuredCriteria.minAgeInt === 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt > 120){
+    if (
+      item.eligibilityInfo.structuredCriteria.minAgeInt === 0 &&
+      item.eligibilityInfo.structuredCriteria.maxAgeInt > 120
+    ) {
       return 'Not Specified';
     }
-    if(item.eligibilityInfo.structuredCriteria.minAgeInt === 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt < 120){
+    if (
+      item.eligibilityInfo.structuredCriteria.minAgeInt === 0 &&
+      item.eligibilityInfo.structuredCriteria.maxAgeInt < 120
+    ) {
       return `${item.eligibilityInfo.structuredCriteria.minAgeInt} years and younger`;
     }
-    if(item.eligibilityInfo.structuredCriteria.minAgeInt > 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt < 120){
+    if (
+      item.eligibilityInfo.structuredCriteria.minAgeInt > 0 &&
+      item.eligibilityInfo.structuredCriteria.maxAgeInt < 120
+    ) {
       return `${item.eligibilityInfo.structuredCriteria.minAgeInt} to ${item.eligibilityInfo.structuredCriteria.maxAgeInt} years`;
     }
-    if(item.eligibilityInfo.structuredCriteria.minAgeInt > 0 && item.eligibilityInfo.structuredCriteria.maxAgeInt > 120){
+    if (
+      item.eligibilityInfo.structuredCriteria.minAgeInt > 0 &&
+      item.eligibilityInfo.structuredCriteria.maxAgeInt > 120
+    ) {
       return `${item.eligibilityInfo.structuredCriteria.minAgeInt} years and over`;
     }
+  };
+
+  const getLocationDisplay = () => {
+    if (item.sites.length === 1) {
+      const site = item.sites[0];
+      let displayText = `${site.name}, ${site.city}, `;
+      displayText +=
+        site.country === 'United States'
+          ? site.stateOrProvinceAbbreviation
+          : site.country;
+      return displayText;
+    }
+    // zip code present
+    if (zip !== '') {
+      //has a zip
+      if (zipCoords.lat !== '' && zipCoords.lon !== '') {
+        return `${item.sites.length} location${
+          item.sites.length === 1 ? '' : 's'
+        }, including ${countNearbySitesByZip(item.sites)} near you`;
+      }
+      if (nearbySitesCount > 0) {
+        return `${item.sites.length} location${
+          item.sites.length === 1 ? '' : 's'
+        }, including ${nearbySitesCount} near you`;
+      }
+    }
+    return `${item.sites.length} location${item.sites.length === 1 ? '' : 's'}`;
   };
 
   return (
@@ -43,13 +94,15 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
       </div>
       <div className="results-list-item__contents">
         <div className="results-list-item__title">
-          <Link to={`/about-cancer/treatment/clinical-trials/search/v?id=${item.nciID}`}>
+          <Link
+            to={`/about-cancer/treatment/clinical-trials/search/v?id=${item.nciID}`}
+          >
             {item.briefTitle}
           </Link>
         </div>
         <div className="results-list-item__category">
           <span>Status:</span>
-          {item.currentTrialStatus  ? 'Active' : 'Active'}
+          {item.currentTrialStatus ? 'Active' : 'Active'}
         </div>
         <div className="results-list-item__category">
           <span>Age:</span>
@@ -61,7 +114,7 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
         </div>
         <div className="results-list-item__category">
           <span>Location:</span>
-          {`${item.sites.length} location${(item.sites.length === 1)? '': 's'}`}
+          {getLocationDisplay()}
         </div>
       </div>
     </div>
