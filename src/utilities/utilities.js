@@ -438,8 +438,10 @@ export const formatTrialSearchQuery = form => {
       filterCriteria['sites.org_name_fulltext'] = form.hospital.term;
       break;
     case 'search-location-country':
-      filterCriteria['sites.org_country'] = form.country;
-      filterCriteria['sites.org_city'] = form.city;
+      filterCriteria['sites.org_country._raw'] = form.country;
+      if(form.city !== ''){
+        filterCriteria['sites.org_city'] = form.city;
+      }
       if (form.country === 'United States') {
         filterCriteria['sites.org_state_or_province'] = [
           ...new Set(form.states.map(item => item.abbr)),
@@ -547,7 +549,6 @@ export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
 };
 
 export const listSitesWithinRadius = (originCoords, sitesArr, radius = 100) => {
-  console.log(JSON.stringify(sitesArr[0].coordinates));
   let nearbySites = sitesArr.filter(item =>
     isWithinRadius(originCoords, item.coordinates, radius)
   );

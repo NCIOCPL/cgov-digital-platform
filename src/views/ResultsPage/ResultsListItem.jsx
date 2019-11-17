@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -6,16 +6,75 @@ import Checkbox from '../../components/atomic/Checkbox';
 import { isWithinRadius } from '../../utilities/utilities';
 
 const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
-  const { zip, zipCoords, zipRadius } = useSelector(store => store.form);
-  const [nearbySitesCount, setNearbySitesCount] = useState(0);
+  const {
+    zip,
+    zipCoords,
+    zipRadius,
+    location,
+    country,
+    states,
+    city,
+  } = useSelector(store => store.form);
 
-  function countNearbySitesByZip(arr) {
+  //compare site values against user criteria
+   const isLocationParamMatch = siteObj => {
+    if (siteObj.country === country) {
+      if (country === 'United States') {
+        if (states.length > 0) {
+          const statesList = [
+            ...new Set(states.map(item => item.abbr)),
+          ];
+          if (statesList.includes(siteObj.stateOrProvinceAbbreviation)) {
+            if (siteObj.city && siteObj.city === city) {
+              return true;
+            } 
+            return true;
+          } else {
+            return false;
+          }
+        }
+        if (city !== '') {
+          if (siteObj.city === city) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+        // only looking for US sites
+        return true;
+      } else {
+        // check for city
+        if (city !== '') {
+          if (siteObj.city === city) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          // only searching on country but is match
+          return true;
+        }
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const countNearbySitesByZip = arr => {
     return arr.reduce(
       (count, siteItem) =>
         count + isWithinRadius(zipCoords, siteItem.coordinates, zipRadius),
       0
     );
-  }
+  };
+
+  const countNearbySitesByCountryParams = arr => {
+    return arr.reduce(
+      (count, siteItem) => 
+        count + isLocationParamMatch(siteItem),
+      0
+    );
+  };
 
   const getGenderDisplay = genderVal => {
     const displays = {
@@ -71,11 +130,11 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
           item.sites.length === 1 ? '' : 's'
         }, including ${countNearbySitesByZip(item.sites)} near you`;
       }
-      if (nearbySitesCount > 0) {
-        return `${item.sites.length} location${
-          item.sites.length === 1 ? '' : 's'
-        }, including ${nearbySitesCount} near you`;
-      }
+    }
+    if (location === 'search-location-country') {
+      return `${item.sites.length} location${
+        item.sites.length === 1 ? '' : 's'
+      }, including ${countNearbySitesByCountryParams(item.sites)} near you`;
     }
     return `${item.sites.length} location${item.sites.length === 1 ? '' : 's'}`;
   };
