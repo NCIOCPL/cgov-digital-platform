@@ -20,7 +20,8 @@ class Accordion extends React.Component {
     this.state = {
       activeIndex: props.startCollapsed ? -1 : 0,
     };
-    this._initialExpand();
+
+    
   }
 
   //  Before the component mounts, loop through the children to see if any of
@@ -61,6 +62,10 @@ class Accordion extends React.Component {
   //
   //  @param {Number} index The item index that should be the active item.
   //
+  componentDidMount() {
+    this._initialExpand();
+  }
+  
   setActiveItem(index) {
     this.setState({ activeIndex: index });
   }
