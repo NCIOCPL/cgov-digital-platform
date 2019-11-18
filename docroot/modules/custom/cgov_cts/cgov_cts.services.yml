@@ -6,3 +6,12 @@ services:
   cgov_cts.app_route_view_details:
     class: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder
     arguments: []
+  ## The constructor of the lookup service takes in the file path
+  ## of the zipcode DB, So we cannot use the constructor, we must
+  ## use a factory method, which is what factory below does. This
+  ## method does NOT have any arguments. So there is a create
+  ## method, but our class does not have to implement the
+  ## ContainerInjectionInterface nor the ContainerFactoryPluginInterface.
+  cgov_cts.zip_code_lookup:
+    class: Drupal\cgov_cts\FileBasedZipCodeLookupService
+    factory: Drupal\cgov_cts\FileBasedZipCodeLookupService::create
