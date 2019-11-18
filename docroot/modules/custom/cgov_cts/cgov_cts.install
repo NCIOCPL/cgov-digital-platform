@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_cts.install.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ *
+ * Set up cgov_cts module.
+ *
+ * @see system_install()
+ */
+function cgov_cts_install() {
+  $roles = Role::loadMultiple(['anonymous', 'authenticated']);
+
+  foreach ($roles as $role) {
+    $role->grantPermission('restful get zip_code_lookup_resource');
+    $role->save();
+  }
+
+}
