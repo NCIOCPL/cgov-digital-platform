@@ -9,7 +9,7 @@ import {
   Autocomplete,
 } from '../../atomic';
 import { getCountries, searchHospital } from '../../../store/actions';
-import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
+import { matchItemToTerm, sortItems, convertZipToLatLong } from '../../../utilities/utilities';
 import './Location.scss';
 
 import {
@@ -97,6 +97,20 @@ const Location = ({ handleUpdate }) => {
     }
   };
 
+  const handleZipUpdate = (e) => {
+    if(e.target.value.length === 5){
+      const zipLookup = convertZipToLatLong(e.target.value);
+      if(zipLookup && zipLookup.lon !== ''){
+        handleUpdate(e.target.id, e.target.value);
+        handleUpdate('zipCoords', zipLookup);
+        handleUpdate('location', 'search-location-zip');
+      } else {
+        handleUpdate('zip', '');
+        handleUpdate('zipCoords', {lat: '', lon: ''});
+      }
+    }
+  }
+
   return (
     <Fieldset
       id="location"
@@ -136,7 +150,7 @@ const Location = ({ handleUpdate }) => {
           <div className="search-location__block search-location__zip">
             <div className="two-col">
               <TextInput
-                action={e => handleUpdate(e.target.id, e.target.value)}
+                action={e => handleZipUpdate(e)}
                 id="zip"
                 value={zip}
                 classes="search-location__zip --zip"
