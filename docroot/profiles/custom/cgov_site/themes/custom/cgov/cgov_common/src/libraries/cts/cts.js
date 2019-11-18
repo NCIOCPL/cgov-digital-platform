@@ -14,7 +14,8 @@ const config = {
   rootId: 'NCI-CTS-root',
   services: {
     ctsSearch,
-  }
+  },
+  printCacheEndpoint: window.CDEConfig.ctsConfig.printCacheEndpoint
 }
 // ctsReactApp is initialize(config) (default export from @nciocpl/clinical-trials-search-app)
 const initializeCTSApp = () => {
