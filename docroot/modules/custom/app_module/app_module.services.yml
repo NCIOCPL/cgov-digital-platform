@@ -18,3 +18,7 @@ services:
     arguments: ['@app_module.app_path_manager', '@entity_type.manager']
     tags:
       - { name: path_processor_inbound, priority: 101 }
+  app_module.route_normalizer_block_request_subscriber:
+    class: Drupal\app_module\EventSubscriber\AppModuleRouteNormalizerBlockRequestSubscriber
+    tags:
+      - { name: event_subscriber }

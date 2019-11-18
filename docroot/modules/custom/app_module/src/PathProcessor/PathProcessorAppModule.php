@@ -106,11 +106,6 @@ class PathProcessorAppModule implements InboundPathProcessorInterface {
       $request->query->add([$param_name => $param_value]);
     }
 
-    // The redirect module's route normalizer will redirect if the
-    // requested url does not match the alias. This stops that from
-    // happening.
-    $request->attributes->set('_disable_route_normalizer', TRUE);
-
     // Return the alias of the parent entity.
     return $appPath['owner_alias'];
   }
