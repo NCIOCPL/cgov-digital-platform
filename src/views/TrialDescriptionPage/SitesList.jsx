@@ -62,16 +62,19 @@ const SitesList = sites => {
   };
 
   useEffect(() => {
-    if (countries.length === 0) {
-      buildCountriesList(sites.sites);
+    if(sites.sites.length > 0){
+      if (countries.length === 0) {
+        buildCountriesList(sites.sites);
+      }
+      if (states.length === 0) {
+        buildUSStatesList(sites.sites);
+      }
     }
-    if (states.length === 0) {
-      buildUSStatesList(sites.sites);
-    }
+    
   }, []);
 
   useEffect(() => {
-    constructFilterableArray(sites.sites, setLocArray, true);
+    constructFilterableArray(sites.sites, setLocArray, countries, true);
     buildNearbySites(sites.sites);
   }, [countries]);
 
@@ -81,7 +84,9 @@ const SitesList = sites => {
 
   useEffect(() => {
     if (nearbySites.length > 0) {
-      constructFilterableArray(nearbySites, setFilteredNearbySites);
+        let nearbyCountries = [...new Set(nearbySites.map(item => item.country))];
+        nearbyCountries.sort((a, b) => (a > b ? 1 : -1));
+      constructFilterableArray(nearbySites, setFilteredNearbySites, nearbyCountries);
       setShowNearbySites(true);
     }
   }, [nearbySites]);
@@ -91,9 +96,9 @@ const SitesList = sites => {
   };
 
   //output location
-  const constructFilterableArray = (parentArray, stateMethod, isAllSites = false) => {
+  const constructFilterableArray = (parentArray, stateMethod, representedCountries = [], isAllSites = false) => {
     let masterArray = [];
-    countries.forEach(countryName => {
+    representedCountries.forEach(countryName => {
       let c = { country: countryName };
       if (countryName === 'United States') {
         let usaSites = parentArray.filter(
@@ -381,6 +386,7 @@ const SitesList = sites => {
       </div>
     );
   };
+
   const renderNearbySites = () => {
     return (
       <div

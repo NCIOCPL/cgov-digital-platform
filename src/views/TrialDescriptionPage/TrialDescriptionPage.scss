@@ -132,3 +132,37 @@
     }
   }
 }
+
+.eligibility-criteria {
+  ul {
+    margin-bottom: 1em;
+    li {
+      position: relative;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: 2em;
+      &::before {
+        content: '\2022';
+        display: inline;
+        position: absolute;
+        left: -.75em;
+        top: 0.25em;
+        margin: 0;
+        font-size: 1.1em;
+        line-height: 0.90909em;
+      }
+    }
+  }
+}
+.trial-objectives-outline {
+  white-space: pre-wrap;
+}
+
+.sentence-case {
+  display: inline-block;
+  text-transform: lowercase;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}

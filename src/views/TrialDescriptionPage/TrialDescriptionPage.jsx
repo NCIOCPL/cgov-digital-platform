@@ -7,7 +7,6 @@ import {
   AccordionItem,
   Delighter,
   TrialStatusIndicator,
-  Table,
 } from '../../components/atomic';
 import SitesList from './SitesList';
 import './TrialDescriptionPage.scss';
@@ -21,6 +20,9 @@ const TrialDescriptionPage = ({ location }) => {
   const currId = parsed.id;
 
   const trial = useSelector(store => store.cache[currId]);
+
+  // enum for empty location checks
+  const noLocInfo = ['not yet active', 'in review', 'approved'];
 
   useEffect(() => {
     if (trial) {
@@ -130,6 +132,77 @@ const TrialDescriptionPage = ({ location }) => {
     );
   };
 
+  const renderEligibilityCriteria = () => {
+    const eligibilityArr = trial.eligibilityInfo.unstructuredCriteria;
+    const inclusionArr = eligibilityArr.filter(
+      item => item.isInclusionCriterion
+    );
+    const exclusionArr = eligibilityArr.filter(
+      item => !item.isInclusionCriterion
+    );
+    return (
+      <div className="eligibility-criteria">
+        <h3>Inclusion Criteria</h3>
+        <ul>
+          {inclusionArr.map((item, idx) => (
+            <li key={'inclusion-' + idx}>{item.description}</li>
+          ))}
+        </ul>
+        {exclusionArr.length > 0 && (
+          <>
+            <h3>Exclusion Criteria</h3>
+            <ul>
+              {exclusionArr.map((item, idx) => (
+                <li key={'exclusion-' + idx}>{item.description}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    );
+  };
+
+  const renderSecondaryIDs = () => {
+    let secArr = [];
+    const secIDFields = ['nciID', 'ccrID', 'ctepID', 'dcpID', 'otherTrialIDs'];
+    // push secondaries onto array
+    secIDFields.forEach(idField => {
+      if (idField === 'otherTrialIDs') {
+        if (trial.otherTrialIDs && trial.otherTrialIDs.length > 0) {
+          trial.otherTrialIDs.forEach(item => {
+            secArr.push(item.value);
+          });
+        }
+      } else {
+        let id = trial[idField];
+        if (id && id !== '') {
+          secArr.push(id);
+        }
+      }
+    });
+    //de-dupe
+    secArr = [...new Set(secArr)];
+    // filter out nct and protocol id
+    secArr = secArr.filter(
+      item => item !== trial.nctID && item !== trial.protocolID
+    );
+
+    return secArr.length > 0 ? (
+      <li>
+        <strong className="field-label">Secondary IDs</strong>
+        {secArr.join(', ')}
+      </li>
+    ) : (
+      <></>
+    );
+  };
+
+  const prettifyDescription = () => {
+    let formattedStr =
+      '<p>' + trial.detailedDescription.replace(/(\r\n)/gm, '</p><p>') + '</p>';
+    return { __html: formattedStr };
+  };
+
   return (
     <>
       {isTrialLoading ? (
@@ -148,38 +221,56 @@ const TrialDescriptionPage = ({ location }) => {
                   <p>{trial.briefSummary}</p>
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Eligibility Criteria">
-                  <div>
-                    {trial.eligibilityInfo.unstructuredCriteria.map(
-                      (item, idx) => (
-                        <p key={`uc-${idx}`}>{item.description}</p>
-                      )
-                    )}
-                  </div>
+                  {renderEligibilityCriteria()}
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Locations &amp; Contacts">
-                  <SitesList sites={trial.sites} />
+                  {trial.sites && trial.sites.length > 0 ? (
+                    <SitesList sites={trial.sites} />
+                  ) : noLocInfo.includes(trial.currentTrialStatus.toLower()) ? (
+                    <p>Location information is not yet available.</p>
+                  ) : (
+                    <p>
+                      See trial information on{' '}
+                      <a
+                        href={`https://www.clinicaltrials.gov/show/${trial.NCTID}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        ClinicalTrials.gov
+                      </a>{' '}
+                      for a list of participating sites.
+                    </p>
+                  )}
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Objectives and Outline">
-                  <p>{trial.detailedDescription}</p>
+                  <div
+                    className="trial-objectives-outline"
+                    dangerouslySetInnerHTML={prettifyDescription()}
+                  />
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Phase &amp; Type">
                   <>
-                      {trial.trialPhase.phaseNumber &&
-                        trial.trialPhase.phaseNumber !== '' && (
-                          <p className="trial-phase">
-                            <strong class="field-label">Trial Phase</strong>
-                            {`Phase ${trial.trialPhase.phaseNumber}`}
-                          </p>
-                        )}
-                      {trial.primaryPurpose.code &&
-                        trial.primaryPurpose.code !== '' && (
-                          <p className="trial-type">
-                            <strong  class="field-label">Trial Type</strong>
-                            {trial.primaryPurpose.code}
-                          </p>
-                        )}
-                    </>
-
+                    <p className="trial-phase">
+                      <strong className="field-label">Trial Phase</strong>
+                      {`${
+                        trial.trialPhase.phaseNumber &&
+                        trial.trialPhase.phaseNumber !== 'NA'
+                          ? 'Phase ' + trial.trialPhase.phaseNumber
+                          : 'No phase specified'
+                      }`}
+                    </p>
+                    {trial.primaryPurpose.code &&
+                      trial.primaryPurpose.code !== '' && (
+                        <p className="trial-type">
+                          <strong className="field-label">Trial Type</strong>
+                          <span className="sentence-case">
+                            {trial.primaryPurpose.code.toLowerCase() === 'other'
+                              ? trial.primaryPurpose.otherText
+                              : trial.primaryPurpose.code}
+                          </span>
+                        </p>
+                      )}
+                  </>
                 </AccordionItem>
                 {(trial.leadOrganizationName ||
                   trial.principalInvestigator) && (
@@ -188,14 +279,18 @@ const TrialDescriptionPage = ({ location }) => {
                       {trial.leadOrganizationName &&
                         trial.leadOrganizationName !== '' && (
                           <p className="leadOrg">
-                            <strong class="field-label">Lead Organization</strong>
+                            <strong className="field-label">
+                              Lead Organization
+                            </strong>
                             {trial.leadOrganizationName}
                           </p>
                         )}
                       {trial.principalInvestigator &&
                         trial.principalInvestigator !== '' && (
                           <p className="investigator">
-                            <strong  class="field-label">Principal Investigator</strong>
+                            <strong className="field-label">
+                              Principal Investigator
+                            </strong>
                             {trial.principalInvestigator}
                           </p>
                         )}
@@ -205,11 +300,14 @@ const TrialDescriptionPage = ({ location }) => {
                 <AccordionItem titleCollapsed="Trial IDs">
                   <ul className="trial-ids">
                     <li>
-                      <strong class="field-label">Primary ID</strong>
+                      <strong className="field-label">Primary ID</strong>
                       {trial.protocolID}
                     </li>
+                    {renderSecondaryIDs()}
                     <li>
-                      <strong class="field-label">Clinicaltials.gov ID</strong>
+                      <strong className="field-label">
+                        Clinicaltials.gov ID
+                      </strong>
                       <a
                         href={`http://clinicaltrials.gov/show/${trial.nctID}`}
                         target="_blank"
