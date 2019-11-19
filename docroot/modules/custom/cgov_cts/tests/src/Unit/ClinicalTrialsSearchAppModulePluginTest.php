@@ -7,7 +7,7 @@ use Drupal\Tests\UnitTestCase;
 /**
  * Tests for the PathProcessorAppModule.
  */
-class ClinicalTrialsSearchAppModulePluginTests extends UnitTestCase {
+class ClinicalTrialsSearchAppModulePluginTest extends UnitTestCase {
 
   /**
    * Tests CTSPlugin functions.
