@@ -5,7 +5,9 @@ services:
     arguments: []
   cgov_cts.app_route_view_details:
     class: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder
-    arguments: []
+    factory: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder::create
+    arguments:
+      - '@service_container'
   ## The constructor of the lookup service takes in the file path
   ## of the zipcode DB, So we cannot use the constructor, we must
   ## use a factory method, which is what factory below does. This

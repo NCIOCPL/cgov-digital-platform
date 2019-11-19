@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_cts.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function cgov_cts_theme($existing, $type, $theme, $path) {
+
+  return [
+    'clinical_trial' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Implements template_preprocess_HOOK().
+ */
+function template_preprocess_clinical_trial(&$variables) {
+  $variables['content'] = $variables['elements']['content'];
+  $variables['trial'] = $variables['elements']['#trial'];
+  $variables['inclusion_criteria'] = $variables['elements']['#inclusion_criteria'];
+  $variables['exclusion_criteria'] = $variables['elements']['#exclusion_criteria'];
+  $variables['usa_study_sites'] = $variables['elements']['#usa_study_sites'];
+  $variables['canada_study_sites'] = $variables['elements']['#canada_study_sites'];
+  $variables['other_study_sites'] = $variables['elements']['#other_study_sites'];
+  $variables['trial_objectives'] = $variables['elements']['#trial_objectives'];
+  $variables['trial_phase'] = $variables['elements']['#trial_phase'];
+  $variables['trial_type'] = $variables['elements']['#trial_type'];
+  $variables['secondary_ids'] = $variables['elements']['#secondary_ids'];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function cgov_cts_theme_suggestions_clinical_trial(array $variables) {
+  $suggestions = [];
+
+  // Just clinical_trial to start.
+  $suggestions[] = 'clinical_trial';
+
+  return $suggestions;
+}
