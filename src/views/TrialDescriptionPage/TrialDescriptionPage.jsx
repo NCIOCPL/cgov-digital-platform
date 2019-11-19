@@ -42,39 +42,76 @@ const TrialDescriptionPage = ({ location }) => {
     setIsTrialLoading(false);
   };
 
-  const renderDelighters = () => (
-    <div className="cts-delighter-container">
-      <Delighter
-        classes="cts-livehelp"
-        url="/contact"
-        titleText={
-          <>
-            Have a question?
-            <br />
-            We're here to help
-          </>
-        }
-      >
-        <p>
-          <strong>Chat with us:</strong> LiveHelp
-          <br />
-          <strong>Call us:</strong> 1-800-4-CANCER
-          <br />
-          (1-800-422-6237)
-        </p>
-      </Delighter>
+  const handlePrintTrial = () => {
+    window.print();
+  };
 
-      <Delighter
-        classes="cts-which"
-        url="/about-cancer/treatment/clinical-trials/search/trial-guide"
-        titleText={<>Which trials are right for you?</>}
-      >
-        <p>
-          Use the checklist in our guide to gather the information you’ll need.
-        </p>
-      </Delighter>
-    </div>
-  );
+  const handleEmailTrial = () => {
+    window.location.href = `mailto:?subject=Information%20from%20the%20National%20Cancer%20Institute%20Web%20Site&body=I%20found%20this%20information%20on%20www.cancer.gov%20and%20I'd%20like%20to%20share%20it%20with%20you:%20https%3A%2F%2Fwww.cancer.gov%2Fabout-cancer%2Ftreatment%2Fclinical-trials%2Fsearch%2Fv%3Fid%3D${currId}%0A%0A%20NCI's%20Web%20site,%20www.cancer.gov,%20provides%20accurate,%20up-to-date,%20comprehensive%20cancer%20information%20from%20the%20U.S.%20government's%20principal%20agency%20for%20cancer%20research.%20If%20you%20have%20questions%20or%20need%20additional%20information,%20we%20invite%20you%20to%20contact%20NCI%E2%80%99s%20LiveHelp%20instant%20messaging%20service%20at%20https://livehelp.cancer.gov,%20or%20call%20the%20NCI's%20Contact%20Center%201-800-4-CANCER%20(1-800-422-6237)%20(toll-free%20from%20the%20United%20States).`;
+  };
+
+  const renderDelighters = () => {
+    return (
+      <>
+        <div className="cts-delighter-container">
+          <Delighter
+            classes="cts-livehelp"
+            url="/contact"
+            titleText={
+              <>
+                Have a question?
+                <br />
+                We're here to help
+              </>
+            }
+          >
+            <p>
+              <strong>Chat with us:</strong> LiveHelp
+              <br />
+              <strong>Call us:</strong> 1-800-4-CANCER
+              <br />
+              (1-800-422-6237)
+            </p>
+          </Delighter>
+
+          <Delighter
+            classes="cts-which"
+            url="/about-cancer/treatment/clinical-trials/search/trial-guide"
+            titleText={<>Which trials are right for you?</>}
+          >
+            <p>
+              Use the checklist in our guide to gather the information you’ll
+              need.
+            </p>
+          </Delighter>
+        </div>
+        <div class="delighter cts-share">
+          <div class="share-text">
+            Share this clinical trial with your doctor:
+          </div>
+          <div className="share-btn-container">
+            <button
+              className="share-btn cts-share-print"
+              type="button"
+              onClick={handlePrintTrial}
+            >
+              <span class="icon icon-print" aria-hidden="true"></span>
+              Print
+              <span className="show-for-sr"> this trial</span>
+            </button>
+            <button
+              className="share-btn cts-share-email"
+              type="button"
+              onClick={handleEmailTrial}
+            >
+              <span className="icon icon-email" aria-hidden="true"></span>
+              Email <span className="show-for-sr">this trial</span>
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  };
 
   const renderTrialDescriptionHeader = () => {
     return (
@@ -85,7 +122,6 @@ const TrialDescriptionPage = ({ location }) => {
             &lt; Back to search results
           </span>
         </div>
-
         <div>
           This clinical trial matches: "all trials" |{' '}
           <button className="btnAsLink">Start Over</button>
@@ -191,14 +227,6 @@ const TrialDescriptionPage = ({ location }) => {
 
             <div className="trial-description-page__aside">
               {renderDelighters()}
-              {/* <div class="no-resize cts-share view-delighter-share">
-			<div class="share-text">Share this clinical trial with your doctor:</div>
-									<a class="print" title="Print" href="#">
-				<span class="icon icon-print"></span><span class="text">Print</span>
-			</a><a class="email" title="Email" href="/common/popUps/PopEmail.aspx?title=Radiation+Therapy+or+Radiation+Therapy+and+Temozolomide+in+Treating+Patients+with+Newly+Diagnosed+Anaplastic+Glioma+or+Low+Grade+Glioma&amp;docurl=%2fabout-cancer%2ftreatment%2fclinical-trials%2fsearch%2fv%3floc%3d0__amp%3btid%3dNCT00887146__amp%3brl%3d2__amp%3bid%3dNCI-2011-01915__amp%3bpn%3d1__amp%3bni%3d10&amp;language=en&amp;a=O688268744&amp;b=1j5801">
-				<span class="icon icon-email"></span><span class="text">Email</span>
-			</a>
-		</div> */}
             </div>
           </div>
         </article>
