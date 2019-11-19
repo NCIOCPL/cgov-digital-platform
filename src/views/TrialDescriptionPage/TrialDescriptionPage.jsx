@@ -145,7 +145,7 @@ const TrialDescriptionPage = ({ location }) => {
               />
               <Accordion>
                 <AccordionItem titleCollapsed="Description" expanded>
-                  {trial.briefSummary}
+                  <p>{trial.briefSummary}</p>
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Eligibility Criteria">
                   <div>
@@ -160,7 +160,7 @@ const TrialDescriptionPage = ({ location }) => {
                   <SitesList sites={trial.sites} />
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Objectives and Outline">
-                  {trial.detailedDescription}
+                  <p>{trial.detailedDescription}</p>
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Phase &amp; Type">
                   <>
