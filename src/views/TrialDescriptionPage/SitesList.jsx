@@ -181,7 +181,7 @@ const SitesList = sites => {
           );
         }
         // just looking for US sites
-        setNearbySites(sites.filter(site => site.country === country));
+        setNearbySites(siteArr.filter(site => site.country === country));
       } else {
         if (city !== '') {
           setNearbySites(

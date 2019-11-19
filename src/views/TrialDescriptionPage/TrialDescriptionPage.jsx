@@ -85,8 +85,8 @@ const TrialDescriptionPage = ({ location }) => {
             </p>
           </Delighter>
         </div>
-        <div class="delighter cts-share">
-          <div class="share-text">
+        <div className="delighter cts-share">
+          <div className="share-text">
             Share this clinical trial with your doctor:
           </div>
           <div className="share-btn-container">
@@ -95,7 +95,7 @@ const TrialDescriptionPage = ({ location }) => {
               type="button"
               onClick={handlePrintTrial}
             >
-              <span class="icon icon-print" aria-hidden="true"></span>
+              <span className="icon icon-print" aria-hidden="true"></span>
               Print
               <span className="show-for-sr"> this trial</span>
             </button>
@@ -160,28 +160,26 @@ const TrialDescriptionPage = ({ location }) => {
                   <SitesList sites={trial.sites} />
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Objectives and Outline">
-                  {trial.detailDescription}
+                  {trial.detailedDescription}
                 </AccordionItem>
                 <AccordionItem titleCollapsed="Trial Phase &amp; Type">
-                  <Table
-                    borderless
-                    columns={[
-                      {
-                        colId: 'phase',
-                        displayName: 'Trial Phase',
-                      },
-                      {
-                        colId: 'type',
-                        displayName: 'Trial Type',
-                      },
-                    ]}
-                    data={[
-                      {
-                        phase: `Phase ${trial.trialPhase.phaseNumber}`,
-                        type: trial.primaryPurpose.code,
-                      },
-                    ]}
-                  />
+                  <>
+                      {trial.trialPhase.phaseNumber &&
+                        trial.trialPhase.phaseNumber !== '' && (
+                          <p className="trial-phase">
+                            <strong class="field-label">Trial Phase</strong>
+                            {`Phase ${trial.trialPhase.phaseNumber}`}
+                          </p>
+                        )}
+                      {trial.primaryPurpose.code &&
+                        trial.primaryPurpose.code !== '' && (
+                          <p className="trial-type">
+                            <strong  class="field-label">Trial Type</strong>
+                            {trial.primaryPurpose.code}
+                          </p>
+                        )}
+                    </>
+
                 </AccordionItem>
                 {(trial.leadOrganizationName ||
                   trial.principalInvestigator) && (
@@ -190,14 +188,14 @@ const TrialDescriptionPage = ({ location }) => {
                       {trial.leadOrganizationName &&
                         trial.leadOrganizationName !== '' && (
                           <p className="leadOrg">
-                            <strong>Lead Organization</strong>
+                            <strong class="field-label">Lead Organization</strong>
                             {trial.leadOrganizationName}
                           </p>
                         )}
                       {trial.principalInvestigator &&
                         trial.principalInvestigator !== '' && (
                           <p className="investigator">
-                            <strong>Principal Investigator</strong>
+                            <strong  class="field-label">Principal Investigator</strong>
                             {trial.principalInvestigator}
                           </p>
                         )}
@@ -207,11 +205,11 @@ const TrialDescriptionPage = ({ location }) => {
                 <AccordionItem titleCollapsed="Trial IDs">
                   <ul className="trial-ids">
                     <li>
-                      <strong>Primary ID</strong>
+                      <strong class="field-label">Primary ID</strong>
                       {trial.protocolID}
                     </li>
                     <li>
-                      <strong>Clinicaltials.gov ID</strong>
+                      <strong class="field-label">Clinicaltials.gov ID</strong>
                       <a
                         href={`http://clinicaltrials.gov/show/${trial.nctID}`}
                         target="_blank"
