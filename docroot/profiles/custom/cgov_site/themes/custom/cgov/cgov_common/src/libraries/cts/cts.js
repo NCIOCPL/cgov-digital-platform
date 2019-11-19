@@ -3,7 +3,7 @@ import initialize from '@nciocpl/clinical-trials-search-app';
 
 //assumes import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js' is good to go
 const ctsSearch = () => {
-  const hostName = 'ctsproxy.cancer.gov';
+  const hostName = window.CDEConfig.ctsConfig.apiServer;
   const service = ClinicalTrialsServiceFactory.create(hostName);
   return service;
 };
