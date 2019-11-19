@@ -15,3 +15,12 @@ services:
   cgov_cts.zip_code_lookup:
     class: Drupal\cgov_cts\FileBasedZipCodeLookupService
     factory: Drupal\cgov_cts\FileBasedZipCodeLookupService::create
+  cgov_cts.clinical_trials_api_proxy:
+    class: Drupal\cgov_cts\Services\ClinicalTrialsApiProxy
+    factory: Drupal\cgov_cts\Services\ClinicalTrialsApiProxy::create
+    arguments:
+      - '@service_container'
+  cgov_cts.cts_manager:
+    class: Drupal\cgov_cts\Services\CTSManager
+    arguments:
+      - '@cgov_cts.clinical_trials_api_proxy'
