@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08ac2918fe5a1d438aa8053f5211e925",
+    "content-hash": "553a362adb77924b37b43ebd472ac30d",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -8945,6 +8945,58 @@
             "time": "2019-04-07T13:18:21+00:00"
         },
         {
+            "name": "nciocpl/clinical-trial-search-client.php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NCIOCPL/clinical-trials-search-client.php.git",
+                "reference": "a696fc3aafa382727fa4c2a8642db43b848a3ed5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NCIOCPL/clinical-trials-search-client.php/zipball/a696fc3aafa382727fa4c2a8642db43b848a3ed5",
+                "reference": "a696fc3aafa382727fa4c2a8642db43b848a3ed5",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+                "drupal/coder": "^8.3",
+                "phpunit/phpunit": "^8",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "scripts/composer/Hoover.php"
+                ],
+                "psr-4": {
+                    "NCIOCPL\\ClinicalTrialSearch\\": "lib/",
+                    "Test\\": "test/"
+                }
+            },
+            "scripts": {
+                "post-install-cmd": [
+                    "git config --local core.hooksPath scripts/hooks"
+                ],
+                "cgov-clean": [
+                    "CGovPlatform\\composer\\Hoover::clean",
+                    "@composer clearcache --ansi"
+                ],
+                "test": [
+                    "./vendor/bin/phpunit --bootstrap vendor/autoload.php --disallow-test-output  test"
+                ]
+            },
+            "description": "PHP client for consuming the NCI Clinical Trial Search API",
+            "support": {
+                "source": "https://github.com/NCIOCPL/clinical-trials-search-client.php/tree/master",
+                "issues": "https://github.com/NCIOCPL/clinical-trials-search-client.php/issues"
+            },
+            "time": "2019-09-30T20:55:12+00:00"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v3.1.5",
             "source": {
@@ -15322,6 +15374,7 @@
         "drupal/redirect": 20,
         "drupal/viewsreference": 20,
         "drupal/yaml_content": 20,
+        "nciocpl/clinical-trial-search-client.php": 20,
         "sensiolabs-de/deprecation-detector": 20
     },
     "prefer-stable": true,
