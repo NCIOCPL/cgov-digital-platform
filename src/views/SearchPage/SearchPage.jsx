@@ -178,7 +178,19 @@ const SearchPage = ({ formInit = 'basic' }) => {
               );
             }
           })}
-          <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
+          {formFactor === 'advanced' ? (
+            <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
+          ) : (
+            <div className="static-submit-block">
+              <button
+                type="submit"
+                className="btn-submit faux-btn-submit"
+                onClick={handleSubmit}
+              >
+                Find Trials
+              </button>
+            </div>
+          )}
         </form>
         <aside className="search-page__aside">{renderDelighters()}</aside>
       </div>
