@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { deepSearchObject } from './utilities';
 import axios from 'axios';
+import ResultsPage from '../views/ResultsPage';
 
 // Hooks to share common logic between multiple components
 
@@ -112,10 +113,10 @@ export const useZipConversion = (lookupZip, updateFunc) => {
       setIsError(false);
       const url = `${zipBase}/${lookupZip}`;
       try {
-        const result = await axios.get(url);
+        const response = await axios.get(url);
         // if we don't get back a message, good to go
-        if(!result.message){
-          updateFunc('zipCoords', result);
+        if(response.data && !response.data.message){
+          updateFunc('zipCoords', response.data);
         }else{
           updateFunc('hasInvalidZip', true);
         }
