@@ -53,7 +53,6 @@ export const useChipList = (chiplistName, handleUpdate) => {
 // showing and hiding a react modal component
 export const useModal = () => {
   const [isShowing, setIsShowing] = useState(false);
-
   function toggleModal() {
     setIsShowing(!isShowing);
 
@@ -63,13 +62,14 @@ export const useModal = () => {
       document.body.classList.remove('modal-open');
     }
   }
-
   return {
     isShowing,
     toggleModal,
   };
 };
 
+
+// fetches cache id for clinical trials print service
 export const usePrintApi = (idList = {}, printAPIUrl = '') => {
   const [data, setData] = useState({ hits: [] });
   const [url, setUrl] = useState();
@@ -84,7 +84,7 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
         'Content-Type': 'application/json',
       };
       try {
-        const result = await axios.post(url, queryString.stringify(idList), {
+        const result = await axios.post(url, idList, {
           headers: headers,
         });
         setData(result.data);
@@ -93,7 +93,9 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
       }
       setIsLoading(false);
     };
-    fetchData();
+    if (url && url !== '') {
+      fetchData();
+    }
   }, [url]);
 
   const doPrint = () => {
@@ -102,3 +104,5 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
 
   return [{ data, isLoading, isError, doPrint }];
 };
+
+

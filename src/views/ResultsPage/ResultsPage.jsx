@@ -82,15 +82,15 @@ const ResultsPage = ({ location }) => {
   };
 
   const handleSelectAll = () => {
+    const pageResultIds = [
+      ...new Set(trialResults.trials.map(item => item.nciID)),
+    ];
     if (!selectAll) {
       setSelectAll(true); // toggle the box then check all the trial results boxes
-      const pageResultIds = [
-        ...new Set(trialResults.trials.map(item => item.nciID)),
-      ];
       setSelectedResults([...new Set([...selectedResults, ...pageResultIds]) ]);
-      
     } else {
       setSelectAll(false);
+      setSelectedResults(selectedResults.filter(item => !pageResultIds.includes(item)));
     }
   };
 

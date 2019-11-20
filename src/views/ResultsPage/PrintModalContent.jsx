@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { usePrintApi } from '../../utilities/hooks';
 import { history } from '../../services/history.service';
 
@@ -20,16 +20,13 @@ const PrintModalContent = ({ selectedList = [], handleClose = () => {} }) => {
   }, [selectedList]);
 
   useEffect(() => {
-    if (!isLoading && !isError && data.printID) {
+    if (!isLoading && data.printID) {
       //success
       closeModal();
       history.push({
         pathname: '/CTS.Print/Display',
         search: '?printid=' + data.printID,
       });
-    }
-    if (isError) {
-      console.log('Error occurred.');
     }
   }, [isLoading, isError, data]);
 
@@ -97,8 +94,11 @@ const PrintModalContent = ({ selectedList = [], handleClose = () => {} }) => {
         renderTooManyItemsSelected()
       ) : (
         <>
-          {isLoading && <>{renderPrintInterstitial()}</>}
-          {isError && <>{renderPrintError()}</>}
+          {!isError ? (
+            <>{renderPrintInterstitial()}</>
+          ) : (
+            <>{renderPrintError()}</>
+          )}
         </>
       )}
     </>
