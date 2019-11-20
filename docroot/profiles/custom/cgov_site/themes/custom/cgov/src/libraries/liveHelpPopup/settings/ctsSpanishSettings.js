@@ -34,17 +34,23 @@ const ctsSpanishSettings = {
         <h2 class="title">¿Necesita ayuda en encontrar un estudio clínico?</h2>
         <div class="content spanish-livehelp">
             <p>Especialistas de Información están disponibles para ayudarle en hacer una búsqueda y contestar a sus preguntas.</p>
+            <!--
             <form onsubmit="return false;">
                 <input id="chat-button" type="button" name="rn_nciChatLaunchButton_4_Button" class="chat-button" value="Iniciar Chat">
             </form>
-            <div class="live-help"></div>    
+            -->
+            <form action="https://livehelp-es.cancer.gov/app/chat/chat_landing" id="bar" method="POST">
+                <input name="_icf_22" style="display: none !important;" type="text" value="2174">
+                <button type="submit">Iniciar Chat</button>
+            </form>
+            <div class="live-help"></div>
         </div>
     `,
     optOutDurationDays: 30,
     timerIntervalSeconds: 5,
-    interactionDelaySeconds: 10,	// Minimum number of seconds to wait after a user interaction before displaying the prompt.
+    interactionDelaySeconds: 10,    // Minimum number of seconds to wait after a user interaction before displaying the prompt.
     startDate: new Date(0), // default start data is 1/1/1970
-    endDate: null    
+    endDate: null
 }
 
 export default ctsSpanishSettings;
