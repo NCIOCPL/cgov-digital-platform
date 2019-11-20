@@ -18,15 +18,21 @@ const ctsEnglishSettings = {
         <h2 class="title">Need Help Finding a Clinical Trial?</h2>
         <div class="content">
             <p>Information Specialists are available to help you search and answer your questions.</p>
+            <!--
             <form onsubmit="return false;">
                 <input id="chat-button" type="button" name="rn_nciChatLaunchButton_4_Button" class="chat-button" value="Chat Now">
             </form>
-            <div class="live-help"></div>    
+            -->
+            <form action="https://livehelp.cancer.gov/app/chat/chat_landing" id="bar" method="POST">
+                <input name="_icf_22" style="display: none !important;" type="text" value="2174">
+                <button type="submit">Chat Now</button>
+            </form>
+            <div class="live-help"></div>
         </div>
     `,
     optOutDurationDays: 30,
     timerIntervalSeconds: 5,
-    interactionDelaySeconds: 10,	// Minimum number of seconds to wait after a user interaction before displaying the prompt.
+    interactionDelaySeconds: 10,    // Minimum number of seconds to wait after a user interaction before displaying the prompt.
     startDate: new Date(0), // default start data is 1/1/1970
     endDate: null
 }
