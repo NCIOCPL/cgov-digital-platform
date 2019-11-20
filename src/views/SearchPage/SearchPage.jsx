@@ -142,6 +142,7 @@ const SearchPage = ({ formInit = 'basic' }) => {
   return (
     <article className="search-page">
       <div ref={sentinelRef} className="search-page__sentinel"></div>
+      <h1>Find NCI-Supported Clinical Trials</h1>
       <div className="search-page__header">
         <p>
           NCI-supported clinical trials are those sponsored or otherwise

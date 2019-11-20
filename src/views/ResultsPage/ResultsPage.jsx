@@ -277,6 +277,7 @@ const ResultsPage = ({ location }) => {
   return (
     <>
       <article className="results-page">
+        <h1>Clinical Trials Search Results</h1>
         {isLoading ? (
           <>Loading...</>
         ) : formSnapshot.hasInvalidZip ? (
