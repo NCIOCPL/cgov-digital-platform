@@ -446,9 +446,9 @@ export const formatTrialSearchQuery = form => {
       }
       break;
     case 'search-location-zip':
-      if (form.zipCoords.lat !== '' && form.zipCoords.lon !== '') {
+      if (form.zipCoords.lat !== '' && form.zipCoords.long !== '') {
         filterCriteria['sites.org_coordinates_lat'] = form.zipCoords.lat;
-        filterCriteria['sites.org_coordinates_lon'] = form.zipCoords.lon;
+        filterCriteria['sites.org_coordinates_lon'] = form.zipCoords.long;
         filterCriteria['sites.org_coordinates_dist'] = form.zipRadius + 'mi';
       }
       break;
@@ -513,12 +513,12 @@ export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
   let resultDistance = 0.0;
   const avgRadiusOfEarth = 3960; //Radius of the earth differ, I'm taking the average.
   const zipLat = zipCoords.lat;
-  const zipLon = zipCoords.lon;
+  const zipLong = zipCoords.long;
   if (!siteCoords) {
     return false;
   }
   const siteLat = siteCoords.latitude;
-  const siteLon = siteCoords.longitude;
+  const siteLong = siteCoords.longitude;
 
   /**
    * Converts a Degree to Radians.
@@ -534,7 +534,7 @@ export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
   //                   and R = the circumference of the earth
 
   let differenceInLat = degreeToRadian(zipLat - siteLat);
-  let differenceInLong = degreeToRadian(zipLon - siteLon);
+  let differenceInLong = degreeToRadian(zipLong - siteLong);
   let aInnerFormula =
     Math.cos(degreeToRadian(zipLat)) *
     Math.cos(degreeToRadian(siteLat)) *

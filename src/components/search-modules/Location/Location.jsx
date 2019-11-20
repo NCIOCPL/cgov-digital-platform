@@ -116,7 +116,7 @@ const Location = ({ handleUpdate }) => {
         handleUpdate('location', 'search-location-zip');
       } else {
         handleUpdate('zip', '');
-        handleUpdate('zipCoords', {lat: '', lon: ''});
+        handleUpdate('zipCoords', {lat: '', long: ''});
         setZipErrorMsg(`${zipInput} is not a valid U.S. zip code`);
       }
     }
