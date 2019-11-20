@@ -23,6 +23,7 @@ const ResultsPage = ({ location }) => {
   const [selectedResults, setSelectedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [trialResults, setTrialResults] = useState([]);
+  const [resultsCount, setResultsCount] = useState(0);
 
   const formSnapshot = useSelector(store => store.form);
   const [formData, setFormData] = useState(formSnapshot);
@@ -38,13 +39,11 @@ const ResultsPage = ({ location }) => {
     window.scrollTo(0, 0);
     if (trialResults && trialResults.total >= 0) {
       initData();
-    } else {
+    } else if (!formSnapshot.hasInvalidZip) {
       //data isn't there, fetch it
-      history.replace({
-        path: '/about-cancer/treatment/clinical-trials/search/r',
-        search: qs,
-      });
       fetchTrials(qs);
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -56,8 +55,8 @@ const ResultsPage = ({ location }) => {
   }, [cacheLookup]);
 
   //track usage of selected results for print
-  useEffect(() =>{
-    if(selectedResults.length >= 100){
+  useEffect(() => {
+    if (selectedResults.length >= 100) {
       toggleModal();
     }
   }, [selectedResults]);
@@ -72,6 +71,10 @@ const ResultsPage = ({ location }) => {
 
   const fetchTrials = queryKey => {
     setIsLoading(true);
+    history.replace({
+      path: '/about-cancer/treatment/clinical-trials/search/r',
+      search: qs,
+    });
     cacheLookup = cache[queryKey];
     dispatch(
       searchTrials({
@@ -87,10 +90,12 @@ const ResultsPage = ({ location }) => {
     ];
     if (!selectAll) {
       setSelectAll(true); // toggle the box then check all the trial results boxes
-      setSelectedResults([...new Set([...selectedResults, ...pageResultIds]) ]);
+      setSelectedResults([...new Set([...selectedResults, ...pageResultIds])]);
     } else {
       setSelectAll(false);
-      setSelectedResults(selectedResults.filter(item => !pageResultIds.includes(item)));
+      setSelectedResults(
+        selectedResults.filter(item => !pageResultIds.includes(item))
+      );
     }
   };
 
@@ -167,42 +172,79 @@ const ResultsPage = ({ location }) => {
   const renderControls = (isBottom = false) => {
     const cbxId = isBottom ? 'select-all-cbx-bottom' : 'select-all-cbx-top';
     return (
-      <div
-        className={`results-page__control ${isBottom ? '--bottom' : '--top'}`}
-      >
-        <div className="results-page__select-all">
-          <Checkbox
-            id={cbxId}
-            name="select-all"
-            label="Select all on page"
-            checked={selectAll}
-            classes="check-all"
-            onChange={handleSelectAll}
-          />
-          <button
-            className="results-page__print-button"
-            ref={printSelectedBtn}
-            onClick={handlePrintSelected}
+      <>
+        {resultsCount > 0 ? (
+          <div
+            className={`results-page__control ${
+              isBottom ? '--bottom' : '--top'
+            }`}
           >
-            Print Selected
-          </button>
-        </div>
-        <div className="results-page__pager">
-          {trialResults && trialResults.total > 1 && (
-            <Pager
-              data={trialResults.trials}
-              callback={handlePagination}
-              startFromPage={pagerPage}
-              totalItems={trialResults.total}
-            />
-          )}
-        </div>
-      </div>
+            <div className="results-page__select-all">
+              <Checkbox
+                id={cbxId}
+                name="select-all"
+                label="Select all on page"
+                checked={selectAll}
+                classes="check-all"
+                onChange={handleSelectAll}
+              />
+              <button
+                className="results-page__print-button"
+                ref={printSelectedBtn}
+                onClick={handlePrintSelected}
+              >
+                Print Selected
+              </button>
+            </div>
+            <div className="results-page__pager">
+              {trialResults && trialResults.total > 1 && (
+                <Pager
+                  data={trialResults.trials}
+                  callback={handlePagination}
+                  startFromPage={pagerPage}
+                  totalItems={trialResults.total}
+                />
+              )}
+            </div>
+          </div>
+        ) : null}
+      </>
     );
   };
 
   const handlePrintSelected = () => {
     toggleModal();
+  };
+
+  const renderInvalidZip = () => {
+    return (
+      <div className="results-list invalid-zip">
+        <p>
+          Sorry you seem to have entered invalid criteria. Please check the
+          following, and try your search again:
+        </p>
+        <ul>
+          <li>Zip Code</li>
+        </ul>
+        <p>
+          For assistance, please contact the NCI Contact Center. You can{' '}
+          <a href="/contact" className="live-help-link">
+            chat online
+          </a>{' '}
+          or call 1-800-4-CANCER (1-800-422-6237).
+        </p>
+        <p>
+          <Link
+            to={`/about-cancer/treatment/clinical-trials/search${
+              formSnapshot.formType === 'basic' ? '' : '/advanced'
+            }`}
+            onClick={handleStartOver}
+          >
+            Try a new search
+          </Link>
+        </p>
+      </div>
+    );
   };
 
   const renderNoResults = () => {
@@ -212,8 +254,11 @@ const ResultsPage = ({ location }) => {
           <strong>No clinical trials matched your search.</strong>
         </p>
         <p>
-          For assistance, please contact the NCI Contact Center. You can chat
-          online or call 1-800-4-CANCER (1-800-422-6237).
+          For assistance, please contact the NCI Contact Center. You can{' '}
+          <a href="/contact" className="live-help-link">
+            chat online
+          </a>{' '}
+          or call 1-800-4-CANCER (1-800-422-6237).
         </p>
         <p>
           <Link
@@ -234,16 +279,18 @@ const ResultsPage = ({ location }) => {
       <article className="results-page">
         {isLoading ? (
           <>Loading...</>
+        ) : formSnapshot.hasInvalidZip ? (
+          <>{renderInvalidZip()}</>
         ) : (
           <>
             <ResultsPageHeader
-              resultsCount={trialResults.total}
+              resultsCount={resultsCount}
               pageNum={pagerPage}
               handleUpdate={handleUpdate}
               handleReset={handleStartOver}
             />
             <div className="results-page__content">
-              {trialResults.total === 0 ? null : renderControls()}
+              {renderControls()}
               <div className="results-page__list">
                 {trialResults && trialResults.total === 0 ? (
                   <>{renderNoResults()}</>
@@ -260,7 +307,7 @@ const ResultsPage = ({ location }) => {
                 </aside>
               </div>
 
-              {trialResults.total === 0 ? null : renderControls(true)}
+              {renderControls(true)}
             </div>
           </>
         )}

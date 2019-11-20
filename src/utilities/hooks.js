@@ -104,7 +104,6 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
 
 export const useZipConversion = (lookupZip, updateFunc) => {
   const [zip, setZip] = useState();
-  const [data, setData] = useState({});
   const [isError, setIsError] = useState(false);
   const zipBase = useSelector(store => store.globals.zipConversionEndpoint) 
 
@@ -114,8 +113,14 @@ export const useZipConversion = (lookupZip, updateFunc) => {
       const url = `${zipBase}/${lookupZip}`;
       try {
         const result = await axios.get(url);
-        updateFunc('zipCoords', result.data);
+        // if we don't get back a message, good to go
+        if(!result.message){
+          updateFunc('zipCoords', result);
+        }else{
+          updateFunc('hasInvalidZip', true);
+        }
       } catch (error) {
+        updateFunc('hasInvalidZip', true);
         setIsError(true);
       }
     };

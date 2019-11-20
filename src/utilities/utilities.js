@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom';
-const zip_codes = require('../mocks/zip_codes.json');
 let index = 0;
 
 //  Provides utility functions for components in this library.
@@ -179,11 +178,6 @@ export const getStateNameFromAbbr = abbrToLookup => {
     PR: 'Puerto Rico',
   };
   return states[abbrToLookup];
-};
-
-export const convertZipToLatLong = zip => {
-  //TODO: replace with zip code lookup service
-  return zip_codes[zip];
 };
 
 export const buildQueryString = formStore => {

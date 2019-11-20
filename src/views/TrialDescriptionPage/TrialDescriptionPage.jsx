@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {updateForm} from '../../store/actions';
 import { history } from '../../services/history.service';
 import { getTrial } from '../../store/actions';
 import {
@@ -7,6 +8,7 @@ import {
   AccordionItem,
   Delighter,
   TrialStatusIndicator,
+  SearchCriteriaTable
 } from '../../components/atomic';
 import SitesList from './SitesList';
 import './TrialDescriptionPage.scss';
@@ -39,6 +41,15 @@ const TrialDescriptionPage = ({ location }) => {
       dispatch(getTrial({ trialId: currId }));
     }
   }, []);
+
+  const handleUpdate = (field, value) => {
+    dispatch(
+      updateForm({
+        field,
+        value,
+      })
+    );
+  };
 
   const initTrialData = () => {
     setIsTrialLoading(false);
@@ -119,13 +130,20 @@ const TrialDescriptionPage = ({ location }) => {
     return (
       <div className="trial-description-page__header">
         <h1>{trial.briefTitle}</h1>
+        
         <div className="back-to-search btnAsLink">
           <span onClick={() => history.goBack()}>
             &lt; Back to search results
           </span>
         </div>
+        
+        
+        
         <div>
+
           This clinical trial matches: "all trials" |{' '}
+
+          <SearchCriteriaTable handleUpdate={handleUpdate} />
           <button className="btnAsLink">Start Over</button>
         </div>
       </div>
@@ -210,7 +228,6 @@ const TrialDescriptionPage = ({ location }) => {
       ) : (
         <article className="trial-description-page">
           {renderTrialDescriptionHeader()}
-
           <div className="trial-description-page__description">
             <div className="trial-description-page__content">
               <TrialStatusIndicator

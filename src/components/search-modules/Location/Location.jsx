@@ -9,7 +9,8 @@ import {
   Autocomplete,
 } from '../../atomic';
 import { getCountries, searchHospital } from '../../../store/actions';
-import { matchItemToTerm, sortItems, convertZipToLatLong } from '../../../utilities/utilities';
+import { matchItemToTerm, sortItems } from '../../../utilities/utilities';
+import {useZipConversion} from '../../../utilities/hooks';
 import './Location.scss';
 
 import {
@@ -20,7 +21,8 @@ import {
 const Location = ({ handleUpdate }) => {
   //Hooks must always be rendered in same order.
   const dispatch = useDispatch();
-
+  const [inputtedZip, setInputtedZip] = useState('');
+  const [{ getZipCoords }] = useZipConversion(inputtedZip, handleUpdate);
   const { countries = [], hospitals = [] } = useSelector(store => store.cache);
   const {
     location,
@@ -37,6 +39,7 @@ const Location = ({ handleUpdate }) => {
   const [activeRadio, setActiveRadio] = useState(location);
   const [limitToVA, setLimitToVA] = useState(vaOnly);
   const [showStateField, setShowStateField] = useState(true);
+  const [zipErrorMsg, setZipErrorMsg] = useState('');
 
   //hospital
   const [hospitalName, setHospitalName] = useState({ value: hospital.term });
@@ -44,6 +47,12 @@ const Location = ({ handleUpdate }) => {
   //state input
   const [stateVal, setStateVal] = useState({ value: '' });
   const stateOptions = getStates();
+
+  useEffect(() => {
+    if(inputtedZip !== ''){
+      getZipCoords(inputtedZip);
+    }
+  }, [inputtedZip]);
 
   useEffect(() => {
     if (hospitalName.value.length > 2) {
@@ -98,15 +107,17 @@ const Location = ({ handleUpdate }) => {
   };
 
   const handleZipUpdate = (e) => {
-    if(e.target.value.length === 5){
-      const zipLookup = convertZipToLatLong(e.target.value);
-      if(zipLookup && zipLookup.lon !== ''){
-        handleUpdate(e.target.id, e.target.value);
-        handleUpdate('zipCoords', zipLookup);
+    const zipInput = e.target.value;
+    if(zipInput.length === 5){
+      if(!/^[0-9]+$/.test(zipInput)){
+        setZipErrorMsg('');
+        setInputtedZip(zipInput);
+        handleUpdate(e.target.id, zipInput);
         handleUpdate('location', 'search-location-zip');
       } else {
         handleUpdate('zip', '');
         handleUpdate('zipCoords', {lat: '', lon: ''});
+        setZipErrorMsg(`${zipInput} is not a valid U.S. zip code`);
       }
     }
   }
@@ -150,13 +161,15 @@ const Location = ({ handleUpdate }) => {
           <div className="search-location__block search-location__zip">
             <div className="two-col">
               <TextInput
-                action={e => handleZipUpdate(e)}
+                action={handleZipUpdate}
                 id="zip"
                 value={zip}
                 classes="search-location__zip --zip"
                 label="U.S. ZIP Code"
                 modified={zipModified}
+                errorMessage={zipErrorMsg}
                 onBlur={checkZip}
+                maxLength={5}
               />
               <Dropdown
                 action={e => handleUpdate(e.target.id, e.target.value)}
