@@ -64,9 +64,9 @@ const ResultsPage = ({ location }) => {
   const initData = () => {
     window.scrollTo(0, 0);
     setSelectAll(false);
-    //console.log('selected(' + selectedResults.length + '): ' + selectedResults);
     setIsLoading(false);
     setTrialResults(cacheLookup);
+    setResultsCount(cacheLookup.total);
   };
 
   const fetchTrials = queryKey => {
