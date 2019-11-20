@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { deepSearchObject } from './utilities';
 import axios from 'axios';
 
-const queryString = require('query-string');
-
 // Hooks to share common logic between multiple components
 
 export const useCachedValues = cacheKeys => {
@@ -68,13 +66,12 @@ export const useModal = () => {
   };
 };
 
-
 // fetches cache id for clinical trials print service
 export const usePrintApi = (idList = {}, printAPIUrl = '') => {
-  const [data, setData] = useState({ hits: [] });
+  const [data, setData] = useState({});
+  const [isError, setIsError] = useState(false);
   const [url, setUrl] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,4 +102,30 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
   return [{ data, isLoading, isError, doPrint }];
 };
 
+export const useZipConversion = (lookupZip, updateFunc) => {
+  const [zip, setZip] = useState();
+  const [data, setData] = useState({});
+  const [isError, setIsError] = useState(false);
+  const zipBase = useSelector(store => store.globals.zipConversionEndpoint) 
 
+  useEffect(() => {
+    const fetchZipCoords = async () => {
+      setIsError(false);
+      const url = `${zipBase}/${lookupZip}`;
+      try {
+        const result = await axios.get(url);
+        updateFunc('zipCoords', result.data);
+      } catch (error) {
+        setIsError(true);
+      }
+    };
+    if (zip && zip !== '') {
+      fetchZipCoords();
+    }
+  }, [zip]);
+
+  const getZipCoords = () => {
+    setZip(lookupZip);
+  };
+  return [{ getZipCoords, isError }];
+};

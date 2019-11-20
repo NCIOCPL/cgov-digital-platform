@@ -23,7 +23,8 @@ const initialize = ({
   useSessionStorage = true,
   rootId = 'NCI-CTS-root',
   services = {},
-  printCacheEndpoint = '/CTS.Print/GenCache',
+  printCacheEndpoint = 'https://www.cancer.gov/CTS.Print/GenCache',
+  zipConversionEndpoint = 'https://www.cancer.gov/cts_api/zip_code_lookup'
 } = {}) => {
   let cachedState;
 
@@ -45,6 +46,7 @@ const initialize = ({
     type: 'LOAD_GLOBALS',
     payload: {
       printCacheEndpoint,
+      zipConversionEndpoint
     },
   });
 

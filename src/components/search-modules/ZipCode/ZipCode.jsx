@@ -1,24 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { Fieldset, TextInput } from '../../atomic';
 import {convertZipToLatLong} from '../../../utilities/utilities';
+import {useZipConversion} from '../../../utilities/hooks';
 
 const ZipCode = ({ handleUpdate }) => {
   const { zip } = useSelector(store => store.form);
   const [errorMsg, setErrorMsg] = useState('');
+  const [inputtedZip, setInputtedZip] = useState('');
+  const [{ getZipCoords, isError }] = useZipConversion(inputtedZip, handleUpdate);
+
+  useEffect(() => {
+    if(inputtedZip !== ''){
+      getZipCoords(inputtedZip);
+    }
+  }, [inputtedZip]);
 
   const handleZipUpdate = e => {
-    if(e.target.value.length === 5){
-      const zipLookup = convertZipToLatLong(e.target.value);
-      if(zipLookup && zipLookup.lon !== ''){
+    const zipInput = e.target.value;
+
+    if(zipInput.length === 5){
+      //const zipLookup = convertZipToLatLong(e.target.value);
+      
+      // test that all characters are numbers
+      if(/^[0-9]+$/.test(zipInput)){
         setErrorMsg('');
-        handleUpdate(e.target.id, e.target.value);
-        handleUpdate('zipCoords', zipLookup);
+        setInputtedZip(zipInput);
+        handleUpdate('zip', zipInput);
         handleUpdate('location', 'search-location-zip');
       } else {
         handleUpdate('zip', '');
-        handleUpdate('zipCoords', {lat: '', lon: ''});
-        setErrorMsg(`${e.target.value} is not a valid U.S. zip code`);
+        setErrorMsg(`${zipInput} is not a valid U.S. zip code`);
       }
     }
   };
