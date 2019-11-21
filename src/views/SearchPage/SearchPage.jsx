@@ -142,11 +142,12 @@ const SearchPage = ({ formInit = 'basic' }) => {
   return (
     <article className="search-page">
       <div ref={sentinelRef} className="search-page__sentinel"></div>
+      <h1>Find NCI-Supported Clinical Trials</h1>
       <div className="search-page__header">
         <p>
           NCI-supported clinical trials are those sponsored or otherwise
-          financially supported by NCI. See our guide, Steps to Find a Clinical
-          Trial, to learn about options for finding trials not included in NCI's
+          financially supported by NCI. See our guide, <a href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide">Steps to Find a Clinical
+          Trial</a>, to learn about options for finding trials not included in NCI's
           collection.
         </p>
         {renderSearchTip()}
@@ -178,7 +179,19 @@ const SearchPage = ({ formInit = 'basic' }) => {
               );
             }
           })}
-          <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
+          {formFactor === 'advanced' ? (
+            <StickySubmitBlock sentinel={sentinelRef} onSubmit={handleSubmit} />
+          ) : (
+            <div className="static-submit-block">
+              <button
+                type="submit"
+                className="btn-submit faux-btn-submit"
+                onClick={handleSubmit}
+              >
+                Find Trials
+              </button>
+            </div>
+          )}
         </form>
         <aside className="search-page__aside">{renderDelighters()}</aside>
       </div>

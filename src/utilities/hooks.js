@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { deepSearchObject } from './utilities';
 import axios from 'axios';
-
-const queryString = require('query-string');
+import ResultsPage from '../views/ResultsPage';
 
 // Hooks to share common logic between multiple components
 
@@ -53,7 +52,6 @@ export const useChipList = (chiplistName, handleUpdate) => {
 // showing and hiding a react modal component
 export const useModal = () => {
   const [isShowing, setIsShowing] = useState(false);
-
   function toggleModal() {
     setIsShowing(!isShowing);
 
@@ -63,18 +61,18 @@ export const useModal = () => {
       document.body.classList.remove('modal-open');
     }
   }
-
   return {
     isShowing,
     toggleModal,
   };
 };
 
+// fetches cache id for clinical trials print service
 export const usePrintApi = (idList = {}, printAPIUrl = '') => {
-  const [data, setData] = useState({ hits: [] });
+  const [data, setData] = useState({});
+  const [isError, setIsError] = useState(false);
   const [url, setUrl] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +82,7 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
         'Content-Type': 'application/json',
       };
       try {
-        const result = await axios.post(url, queryString.stringify(idList), {
+        const result = await axios.post(url, idList, {
           headers: headers,
         });
         setData(result.data);
@@ -93,7 +91,9 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
       }
       setIsLoading(false);
     };
-    fetchData();
+    if (url && url !== '') {
+      fetchData();
+    }
   }, [url]);
 
   const doPrint = () => {
@@ -101,4 +101,37 @@ export const usePrintApi = (idList = {}, printAPIUrl = '') => {
   };
 
   return [{ data, isLoading, isError, doPrint }];
+};
+
+export const useZipConversion = (lookupZip, updateFunc) => {
+  const [zip, setZip] = useState();
+  const [isError, setIsError] = useState(false);
+  const zipBase = useSelector(store => store.globals.zipConversionEndpoint) 
+
+  useEffect(() => {
+    const fetchZipCoords = async () => {
+      setIsError(false);
+      const url = `${zipBase}/${lookupZip}`;
+      try {
+        const response = await axios.get(url);
+        // if we don't get back a message, good to go
+        if(response.data && !response.data.message){
+          updateFunc('zipCoords', response.data);
+        }else{
+          updateFunc('hasInvalidZip', true);
+        }
+      } catch (error) {
+        updateFunc('hasInvalidZip', true);
+        setIsError(true);
+      }
+    };
+    if (zip && zip !== '') {
+      fetchZipCoords();
+    }
+  }, [zip]);
+
+  const getZipCoords = () => {
+    setZip(lookupZip);
+  };
+  return [{ getZipCoords, isError }];
 };

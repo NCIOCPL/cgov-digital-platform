@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom';
-const zip_codes = require('../mocks/zip_codes.json');
 let index = 0;
 
 //  Provides utility functions for components in this library.
@@ -179,11 +178,6 @@ export const getStateNameFromAbbr = abbrToLookup => {
     PR: 'Puerto Rico',
   };
   return states[abbrToLookup];
-};
-
-export const convertZipToLatLong = zip => {
-  //TODO: replace with zip code lookup service
-  return zip_codes[zip];
 };
 
 export const buildQueryString = formStore => {
@@ -418,6 +412,9 @@ export const formatTrialSearchQuery = form => {
     filterCriteria.accepts_healthy_volunteers_indicator = 'YES';
   }
 
+  //gender filter goes here but it is not set within our app
+  // filterCriteria['eligibility.structured.gender']
+
   //trial ids
   if (form.trialId !== '') {
     filterCriteria._trialids = form.trialId;
@@ -439,19 +436,19 @@ export const formatTrialSearchQuery = form => {
       break;
     case 'search-location-country':
       filterCriteria['sites.org_country._raw'] = form.country;
-      if(form.city !== ''){
+      if (form.city !== '') {
         filterCriteria['sites.org_city'] = form.city;
       }
-      if (form.country === 'United States') {
-        filterCriteria['sites.org_state_or_province'] = [
-          ...new Set(form.states.map(item => item.abbr)),
-        ];
+      //
+      let statesList = [...new Set(form.states.map(item => item.abbr))];
+      if (form.country === 'United States' && statesList.length > 0) {
+        filterCriteria['sites.org_state_or_province'] = statesList;
       }
       break;
     case 'search-location-zip':
-      if (form.zipCoords.lat !== '' && form.zipCoords.lon !== '') {
+      if (form.zipCoords.lat !== '' && form.zipCoords.long !== '') {
         filterCriteria['sites.org_coordinates_lat'] = form.zipCoords.lat;
-        filterCriteria['sites.org_coordinates_lon'] = form.zipCoords.lon;
+        filterCriteria['sites.org_coordinates_lon'] = form.zipCoords.long;
         filterCriteria['sites.org_coordinates_dist'] = form.zipRadius + 'mi';
       }
       break;
@@ -462,15 +459,22 @@ export const formatTrialSearchQuery = form => {
     filterCriteria.from = form.resultsPage * 10;
   }
 
-  filterCriteria['sites.recruitment_status'] = [
-    'Active',
-    'Approved',
-    'Enrolling by Invitation',
-    'In Review',
-    'Temporarily Closed to Accrual',
-    'Temporarily Closed to Accrual and Intervention',
-  ];
+  // Adds criteria to only match locations that are actively recruiting sites. (CTSConstants.ActiveRecruitmentStatuses)
+  // filterCriteria['sites.recruitment_status'] = [
+  //   'active',
+  //   'approved',
+  //   'enrolling_by_invitation',
+  //   'in_review',
+  //   'temporarily_closed_to_accrual',
+  //   // These statuses DO NOT appear in results:
+  //   /// "closed_to_accrual",
+  //   /// "completed",
+  //   /// "administratively_complete",
+  //   /// "closed_to_accrual_and_intervention",
+  //   /// "withdrawn"
+  // ];
 
+  // This is searching only for open trials (CTSConstants.ActiveTrialStatuses)
   filterCriteria.current_trial_status = [
     'Active',
     'Approved',
@@ -509,13 +513,12 @@ export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
   let resultDistance = 0.0;
   const avgRadiusOfEarth = 3960; //Radius of the earth differ, I'm taking the average.
   const zipLat = zipCoords.lat;
-  const zipLon = zipCoords.lon;
-  if(!siteCoords){
+  const zipLong = zipCoords.long;
+  if (!siteCoords) {
     return false;
   }
   const siteLat = siteCoords.latitude;
-  const siteLon = siteCoords.longitude;
-  
+  const siteLong = siteCoords.longitude;
 
   /**
    * Converts a Degree to Radians.
@@ -531,7 +534,7 @@ export const isWithinRadius = (zipCoords, siteCoords, zipRadius) => {
   //                   and R = the circumference of the earth
 
   let differenceInLat = degreeToRadian(zipLat - siteLat);
-  let differenceInLong = degreeToRadian(zipLon - siteLon);
+  let differenceInLong = degreeToRadian(zipLong - siteLong);
   let aInnerFormula =
     Math.cos(degreeToRadian(zipLat)) *
     Math.cos(degreeToRadian(siteLat)) *

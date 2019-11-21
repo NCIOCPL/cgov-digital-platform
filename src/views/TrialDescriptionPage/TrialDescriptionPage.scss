@@ -1,8 +1,24 @@
 .trial-description-page {
+  h1 {
+    line-height: 1.4;
+  }
+
   &__header {
-    margin-bottom: 1em;
-    h1 {
-      line-height: 1.4;
+    margin-bottom: 2em;
+    @media only screen and (min-width: 641px) {
+      //tablet
+      width: 90%;
+    }
+
+    @media screen and (min-width: 1025px) {
+      //desktop
+      width: 60%;
+    }
+    .back-to-search {
+      margin-bottom: 2em;
+    }
+    .cts-accordion {
+      margin-bottom: 1em;
     }
   }
 
@@ -40,9 +56,9 @@
         float: none;
         margin: 0;
       }
-    }
-    strong {
-      margin-right: 10px;
+      + li {
+        margin-top: 0.5em;
+      }
     }
   }
 
@@ -54,10 +70,11 @@
     }
   }
 }
-
-.btnAsLink {
-  font-weight: 700;
+.field-label {
+  display: inline-block;
+  margin-right: 10px;
 }
+
 .location-city {
   margin-left: 20px;
   .location {
@@ -71,10 +88,95 @@
   h4 {
     margin-top: 0;
   }
-  .location{
+  .location {
     > div {
       margin-top: 0;
     }
+
+    + .location {
+      margin-top: 1em;
+    }
   }
-  
+}
+
+.share-btn-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  .icon {
+    display: inline-block;
+    background-image: url(https://www.cancer.gov/publishedcontent/images/images/design-elements/sprites/svg-sprite.__v15577802.svg);
+    background-size: 12em 262.5em;
+    font-size: 115%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .share-btn {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    line-height: 3;
+    border-radius: 3px;
+    color: #fff;
+    margin: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 0 none;
+    width: 47%;
+    cursor: pointer;
+  }
+  .cts-share-email {
+    background-color: #14819b;
+    .icon-email {
+      width: 1.5625em;
+      height: 1em;
+      background-position: 6.0241% 64.04494%;
+    }
+  }
+  .cts-share-print {
+    display: none;
+    background-color: #24b2a1;
+
+    @media screen and (min-width: 1025px) {
+      display: inline-block;
+    }
+    .icon-print {
+      width: 1.5625em;
+      height: 1.3125em;
+      background-position: 6.0241% 79.12877%;
+    }
+  }
+}
+
+.eligibility-criteria {
+  ul {
+    margin-bottom: 1em;
+    li {
+      position: relative;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: 2em;
+      &::before {
+        content: '\2022';
+        display: inline;
+        position: absolute;
+        left: -.75em;
+        top: 0.25em;
+        margin: 0;
+        font-size: 1.1em;
+        line-height: 0.90909em;
+      }
+    }
+  }
+}
+.trial-objectives-outline {
+  white-space: pre-wrap;
+}
+
+.sentence-case {
+  display: inline-block;
+  text-transform: lowercase;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
 }

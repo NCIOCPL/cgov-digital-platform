@@ -1,6 +1,5 @@
 import { UPDATE_FORM, CLEAR_FORM } from '../identifiers';
 
-
 export const defaultState = {
   age: '', // (a) Age
   cancerType: { name: '', codes: [] }, // (ct) Cancer Type/Condition
@@ -9,7 +8,7 @@ export const defaultState = {
   findings: [], // (fin) Side effects
   keywordPhrases: '', // (q) Cancer Type Keyword (ALSO Keyword Phrases)
   zip: '', // (z) Zipcode
-  zipCoords: {lat: '', lon: ''},
+  zipCoords: {lat: '', long: ''},
   zipRadius: '100', //(zp) Radius
   country: 'United States', // (lcnty) Country
   states: [], // (lst) State
@@ -46,9 +45,10 @@ export const defaultState = {
   
   formType: 'basic', // (basic (default) | advanced)
   isDirty: false, // only updated after submission of either form
+  zipModified: false,
+  hasInvalidZip: false, // zip does not return coodinates
   refineSearch: false, //is the form in refine search mode
   ageModified: false,
-  zipModified: false,
   cancerTypeModified: false,
   subtypeModified: false,
   stagesModified: false,
