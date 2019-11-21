@@ -119,24 +119,24 @@
                         <h5>{{ key }}</h5>
                         {% for item in value %}
                           <div class="location">
-                            {% if item.Name is defined %}
+                            {% if item.Name is not empty %}
                               <strong class="location-name">{{ item.Name }}</strong>
                             {% endif %}
-                            {% if item.RecruitmentStatus is defined %}
+                            {% if item.RecruitmentStatus is not empty %}
                               <div>Status: {{ item.RecruitmentStatus }}</div>
                             {% endif %}
-                            {% if item.ContactName is defined %}
+                            {% if item.ContactName is not empty %}
                               <div>Contact: {{ item.ContactName }}</div>
                             {% endif %}
-                            {# {% if item.ContactPhone is defined and item.ContactPhone is not null %}
+                            {% if item.ContactPhone is not empty %}
                               <div>Phone: {{ item.ContactPhone }}</div>
                             {% endif %}
-                            {% if item.ContactEmail is defined %}
+                            {% if item.ContactEmail is not empty %}
                               <div>
                                 Email:
-                                <a href="mailto:{{ item.ContactEmail|striptags }}">{{ item.ContactEmail }}</a>
+                                <a href="mailto:{{ item.ContactEmail }}">{{ item.ContactEmail }}</a>
                               </div>
-                            {% endif %} #}
+                            {% endif %}
                           </div>
                           {% endfor %}
                       </div>
@@ -153,24 +153,24 @@
                         <h5>{{ key }}</h5>
                         {% for item in value %}
                           <div class="location">
-                            {% if item.Name is defined %}
+                            {% if item.Name is not empty %}
                               <strong class="location-name">{{ item.Name }}</strong>
                             {% endif %}
-                            {% if item.RecruitmentStatus is defined %}
+                            {% if item.RecruitmentStatus is not empty %}
                               <div>Status: {{ item.RecruitmentStatus }}</div>
                             {% endif %}
-                            {% if item.ContactName is defined %}
+                            {% if item.ContactName is not empty %}
                               <div>Contact: {{ item.ContactName }}</div>
                             {% endif %}
-                            {# {% if item.ContactPhone is defined %}
+                            {% if item.ContactPhone is not empty %}
                               <div>Phone: {{ item.ContactPhone }}</div>
                             {% endif %}
-                            {% if item.ContactEmail is defined %}
+                            {% if item.ContactEmail is not empty %}
                               <div>
                                 Email:
                                 <a href="mailto:{{ item.ContactEmail|raw }}">{{ item.ContactEmail }}</a>
                               </div>
-                            {% endif %} #}
+                            {% endif %}
                           </div>
                           {% endfor %}
                       </div>
@@ -187,24 +187,24 @@
                         <h5>{{ key }}</h5>
                         {% for item in value %}
                           <div class="location">
-                            {% if item.Name is defined %}
+                            {% if item.Name is not empty %}
                               <strong class="location-name">{{ item.Name }}</strong>
                             {% endif %}
-                            {% if item.RecruitmentStatus is defined %}
+                            {% if item.RecruitmentStatus is not empty %}
                               <div>Status: {{ item.RecruitmentStatus }}</div>
                             {% endif %}
-                            {% if item.ContactName is defined %}
+                            {% if item.ContactName is not empty %}
                               <div>Contact: {{ item.ContactName }}</div>
                             {% endif %}
-                            {# {% if item.ContactPhone is defined %}
+                            {% if item.ContactPhone is not empty %}
                               <div>Phone: {{ item.ContactPhone }}</div>
                             {% endif %}
-                            {% if item.ContactEmail is defined %}
+                            {% if item.ContactEmail is not empty %}
                               <div>
                                 Email:
                                 <a href="mailto:{{ item.ContactEmail }}">{{ item.ContactEmail }}</a>
                               </div>
-                            {% endif %} #}
+                            {% endif %}
                           </div>
                           {% endfor %}
                       </div>
