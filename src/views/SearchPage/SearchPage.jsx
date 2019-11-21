@@ -146,8 +146,8 @@ const SearchPage = ({ formInit = 'basic' }) => {
       <div className="search-page__header">
         <p>
           NCI-supported clinical trials are those sponsored or otherwise
-          financially supported by NCI. See our guide, Steps to Find a Clinical
-          Trial, to learn about options for finding trials not included in NCI's
+          financially supported by NCI. See our guide, <a href="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide">Steps to Find a Clinical
+          Trial</a>, to learn about options for finding trials not included in NCI's
           collection.
         </p>
         {renderSearchTip()}

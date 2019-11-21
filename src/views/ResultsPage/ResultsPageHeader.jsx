@@ -50,64 +50,40 @@ const ResultsPageHeader = ({
 
   return (
     <div className="cts-results-header">
-      <p>
-        <strong>
-          {resultsCount === 0 ? (
-            <>No clinical trials matched your search.</>
-          ) : (
-            <>
-              Results{' '}
-              {`${pageNum * step + 1}-${
-                resultsCount <= step * (pageNum + 1)
-                  ? resultsCount
-                  : step * (pageNum + 1)
-              } `}{' '}
-              of {resultsCount} for your search{' '}
-              {`${!isDirty ? 'for: "all trials"' : ''}`}
-            </>
-          )}
-        </strong>
-        {!isDirty && (
-          <>
-            {' '}
-            &nbsp;| &nbsp;{' '}
-            <Link
-              to={`/about-cancer/treatment/clinical-trials/search${
-                formType === 'basic' ? '' : '/advanced'
-              }`}
-              onClick={handleReset}
-            >
-              Start Over
-            </Link>
-          </>
-        )}
-      </p>
-
-      <SearchCriteriaTable handleUpdate={handleUpdate} />
-      <p className="reset-form">
-        <Link
-          to={`/about-cancer/treatment/clinical-trials/search${
-            formType === 'basic' ? '' : '/advanced'
-          }`}
-          onClick={handleReset}
-        >
-          Start Over
-        </Link>
-        {isDirty && (
-          <>
-            <span aria-hidden="true" className="separator">
-              |
-            </span>
-            <button
-              type="button"
-              className="btnAsLink"
-              onClick={handleRefineSearch}
-            >
-              Modify Search Criteria
-            </button>
-          </>
-        )}
-      </p>
+      {resultsCount === 0 ? (
+        <div className="no-trials-found">
+          <strong>No clinical trials matched your search.</strong>
+        </div>
+      ) : (
+        <div className="all-trials">
+          <strong>
+            Results{' '}
+            {`${pageNum * step + 1}-${
+              resultsCount <= step * (pageNum + 1)
+                ? resultsCount
+                : step * (pageNum + 1)
+            } `}{' '}
+            of {resultsCount} for your search{' '}
+            {!isDirty ? (
+                <>
+                  for: "all trials" &nbsp; | &nbsp;
+                  <Link
+                    to={`/about-cancer/treatment/clinical-trials/search${
+                      formType === 'basic' ? '' : '/advanced'
+                    }`}
+                    onClick={handleReset}
+                  >
+                    Start Over
+                  </Link>
+                </>
+              ) : (
+                ''
+              )
+            }
+          </strong>
+        </div>
+      )}
+      <SearchCriteriaTable handleRefine={handleRefineSearch} />
     </div>
   );
 };

@@ -1,8 +1,24 @@
 .trial-description-page {
+  h1 {
+    line-height: 1.4;
+  }
+
   &__header {
-    margin-bottom: 1em;
-    h1 {
-      line-height: 1.4;
+    margin-bottom: 2em;
+    @media only screen and (min-width: 641px) {
+      //tablet
+      width: 90%;
+    }
+
+    @media screen and (min-width: 1025px) {
+      //desktop
+      width: 60%;
+    }
+    .back-to-search {
+      margin-bottom: 2em;
+    }
+    .cts-accordion {
+      margin-bottom: 1em;
     }
   }
 
@@ -58,9 +74,7 @@
   display: inline-block;
   margin-right: 10px;
 }
-.btnAsLink {
-  font-weight: 700;
-}
+
 .location-city {
   margin-left: 20px;
   .location {

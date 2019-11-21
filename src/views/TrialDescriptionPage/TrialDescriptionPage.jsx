@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {updateForm} from '../../store/actions';
+import { updateForm, clearForm } from '../../store/actions';
 import { history } from '../../services/history.service';
 import { getTrial } from '../../store/actions';
 import {
@@ -8,7 +8,7 @@ import {
   AccordionItem,
   Delighter,
   TrialStatusIndicator,
-  SearchCriteriaTable
+  SearchCriteriaTable,
 } from '../../components/atomic';
 import SitesList from './SitesList';
 import './TrialDescriptionPage.scss';
@@ -53,6 +53,10 @@ const TrialDescriptionPage = ({ location }) => {
 
   const initTrialData = () => {
     setIsTrialLoading(false);
+  };
+  const handleStartOver = () => {
+    
+    dispatch(clearForm());
   };
 
   const handlePrintTrial = () => {
@@ -129,23 +133,12 @@ const TrialDescriptionPage = ({ location }) => {
   const renderTrialDescriptionHeader = () => {
     return (
       <div className="trial-description-page__header">
-        <h1>{trial.briefTitle}</h1>
-        
         <div className="back-to-search btnAsLink">
           <span onClick={() => history.goBack()}>
             &lt; Back to search results
           </span>
         </div>
-        
-        
-        
-        <div>
-
-          This clinical trial matches: "all trials" |{' '}
-
-          <SearchCriteriaTable handleUpdate={handleUpdate} />
-          <button className="btnAsLink">Start Over</button>
-        </div>
+        <SearchCriteriaTable handleReset={handleStartOver} placement="trial" />
       </div>
     );
   };
@@ -227,6 +220,7 @@ const TrialDescriptionPage = ({ location }) => {
         <div>Loading</div>
       ) : (
         <article className="trial-description-page">
+          <h1>{trial.briefTitle}</h1>
           {renderTrialDescriptionHeader()}
           <div className="trial-description-page__description">
             <div className="trial-description-page__content">

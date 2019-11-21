@@ -28,7 +28,7 @@ const ZipCode = ({ handleUpdate }) => {
       } else {
         handleUpdate('hasInvalidZip', true);
         handleUpdate('zip', '');
-        setErrorMsg(`${zipInput} is not a valid U.S. zip code`);
+        setErrorMsg(`Please enter a 5 digit U.S. zip code`);
       }
     }
   };

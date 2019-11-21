@@ -109,7 +109,8 @@ const Location = ({ handleUpdate }) => {
   const handleZipUpdate = (e) => {
     const zipInput = e.target.value;
     if(zipInput.length === 5){
-      if(!/^[0-9]+$/.test(zipInput)){
+      console.log('valid!');
+      if(/^[0-9]+$/.test(zipInput)){
         setZipErrorMsg('');
         setInputtedZip(zipInput);
         handleUpdate(e.target.id, zipInput);
@@ -117,7 +118,7 @@ const Location = ({ handleUpdate }) => {
       } else {
         handleUpdate('zip', '');
         handleUpdate('zipCoords', {lat: '', long: ''});
-        setZipErrorMsg(`${zipInput} is not a valid U.S. zip code`);
+        setZipErrorMsg(`Please enter a 5 digit U.S. zip code`);
       }
     }
   }
