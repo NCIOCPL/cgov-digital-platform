@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './StickySubmitBlock.scss';
+require('intersection-observer');
 
 const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
   const stickyEl = useRef(null);
@@ -29,7 +30,7 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
   };
 
   const intObserver = new IntersectionObserver(callback, options);
-
+  
   return (
     <div id="stickyAnchor" ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
