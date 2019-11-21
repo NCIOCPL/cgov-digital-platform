@@ -1,5 +1,6 @@
-$imgPath: 'http://cancer.gov';
-
+#NCI-CTS-root{
+  min-height: 100vh;
+}
 .show-for-sr {
   position: absolute;
   width: 1px;
@@ -9,6 +10,21 @@ $imgPath: 'http://cancer.gov';
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.btnAsLink {
+  appearance: none;
+  border: 0 none;
+  padding: 0;
+  font-size: 1em;
+  color: #2b7bba;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 // atomic

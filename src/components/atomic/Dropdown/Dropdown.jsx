@@ -63,16 +63,6 @@ export default class Dropdown extends React.Component {
     this.id = this.props.id ? this.props.id : utils.uniqueIdForComponent(this);
   }
 
-  // If a errorMessage is passed after initial render, adjust the state accordingly
-  componentWillReceiveProps({ errorMessage }) {
-    if (errorMessage) {
-      this.setState({
-        hasError: true,
-        errorMessageBody: errorMessage,
-      });
-    }
-  }
-
   //  Update the state when user selects a new option
   //  @param {event} event The async event
 
@@ -84,25 +74,6 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
-    let errorMessage = null;
-    if (this.state.hasError) {
-      errorMessage = (
-        <span className="cts-error-message" role="alert">
-          {this.state.errorMessageBody}
-        </span>
-      );
-    }
-
-    let emptyPlaceholder = null;
-
-    if (this.state.value === '') {
-      emptyPlaceholder = (
-        <option disabled value="">
-          Select ...
-        </option>
-      );
-    }
-
     return (
       <div className={this.props.classes}>
         <InputLabel
@@ -111,7 +82,11 @@ export default class Dropdown extends React.Component {
           label={this.props.label}
         />
 
-        {errorMessage}
+        {this.props.hasError && (
+          <span className="cts-error-message" role="alert">
+            {this.props.errorMessage}
+          </span>
+        )}
 
         <select
           className="cts-select"
@@ -121,7 +96,11 @@ export default class Dropdown extends React.Component {
           required={this.props.required}
           onChange={this._handleChange.bind(this)}
         >
-          {emptyPlaceholder}
+          {this.state.value === '' && (
+            <option disabled value="">
+              Select ...
+            </option>
+          )}
           {this.props.children}
         </select>
       </div>

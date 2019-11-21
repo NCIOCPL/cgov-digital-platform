@@ -24,6 +24,7 @@ const initialize = ({
   rootId = 'NCI-CTS-root',
   services = {},
   printCacheEndpoint = '/CTS.Print/GenCache',
+  zipConversionEndpoint = '/cts_api/zip_code_lookup'
 } = {}) => {
   let cachedState;
 
@@ -45,6 +46,7 @@ const initialize = ({
     type: 'LOAD_GLOBALS',
     payload: {
       printCacheEndpoint,
+      zipConversionEndpoint
     },
   });
 
@@ -110,7 +112,8 @@ if (process.env.NODE_ENV !== 'production') {
     services: {
       ctsSearch,
     },
-    printCacheEndpoint: 'https://dceg-test-acsf.cancer.gov/CTS.Print/GenCache'
+    printCacheEndpoint: 'https://dceg-test-acsf.cancer.gov/CTS.Print/GenCache',
+    zipConversionEndpoint: 'https://ncigovcdode283.prod.acquia-sites.com/cts_api/zip_code_lookup'
   });
 }
 

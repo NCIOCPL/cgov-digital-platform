@@ -1,3 +1,38 @@
+.cts-accordion {
+  &.table-dropdown {
+    h2 {
+      border: 1px solid #999;
+      width: 75%;
+    }
+    .cts-accordion__button {
+      padding: 10px 45px 10px 20px;
+      background: white;
+      font-size: 1em;
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        border-radius: 16px;
+        line-height: 28px;
+        top: 5px;
+        right: 5px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-color: #b2dcdf;
+        background-position: 2px;
+        transform: rotate(270deg);
+      }
+      &[aria-expanded='false'] {
+        &::after {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    .cts-accordion__content {
+      box-shadow: 0 1px 0.2em rgba(0, 0, 0, 0.5);
+    }
+  }
+}
 .search-criteria-table {
   .cts-table {
     width: 100%;
@@ -6,16 +41,21 @@
     td {
       padding: 0.5em;
       border: 0;
+      text-align: left;
       &:first-child {
-        width: 40%;
+        width: 35%;
         text-align: right;
         font-weight: bold;
       }
     }
     thead {
-        th {
-            font-size: 16px;
+      th {
+        font-size: 16px;
+        text-align: left;
+        &:first-child {
+          text-align: right;
         }
+      }
     }
     tbody {
       tr:nth-child(even) {

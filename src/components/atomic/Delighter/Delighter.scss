@@ -1,5 +1,73 @@
+%svginclude {
+  content: '';
+  width: 7em;
+  height: 7em;
+  display: inline-block;
+  background-image: url(http://www.cancer.gov/publishedcontent/images/images/design-elements/sprites/svg-sprite.__v15577802.svg);
+  background-size: 12em 262.5em;
+}
+
 .cts-delighter-container {
   .delighter {
     padding: 12px;
+  }
+
+  .cts-livehelp {
+    a::before {
+      @extend %svginclude;
+      // operator
+      background-position: 12.65823% 61.43871%;
+    }
+    h4 {
+      background-color: #35778f;
+    }
+  }
+  .cts-which {
+    a::before {
+      @extend %svginclude;
+      // checklist
+      background-position: 12.65823% 5.67654%;
+    }
+    h4 {
+      background-color: #4a437a;
+    }
+  }
+  .cts-what {
+    a::before {
+      @extend %svginclude;
+      //questionmark large
+      background-position: 12.65823% 81.89381%;
+    }
+    h4 {
+      background-color: #265c89;
+    }
+  }
+
+  .delighter {
+    text-align: center;
+    max-width: 225px;
+    margin: 0 auto;
+
+    p {
+      line-height: 1.166667;
+      font-family: 'Montserrat', 'Avant Garde', Arial, sans-serif;
+      font-size: 12px;
+      color: #706f6f;
+      letter-spacing: 0.05em;
+      margin: auto;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      max-width: 195px;
+    }
+    h4 {
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Montserrat', 'Avant Garde', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      margin: auto;
+      padding: 9px;
+      text-transform: uppercase;
+    }
   }
 }

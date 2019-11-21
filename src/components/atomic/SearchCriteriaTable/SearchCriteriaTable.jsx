@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Accordion, AccordionItem, Table } from '../../atomic';
 import { updateForm } from '../../../store/actions';
 import './SearchCriteriaTable.scss';
 
-const SearchCriteriaTable = () => {
+const SearchCriteriaTable = ({ placement, handleReset, handleRefine }) => {
   const dispatch = useDispatch();
 
   //store vals
@@ -48,7 +49,6 @@ const SearchCriteriaTable = () => {
       })
     );
   };
-
 
   const criteria = [];
   const formatStoreDataForDisplay = () => {
@@ -269,22 +269,74 @@ const SearchCriteriaTable = () => {
     setCriterion([...criteria]);
   };
 
-  return criterion.length ? (
-    <Accordion bordered startCollapsed>
-      <AccordionItem titleExpanded="Hide Search Criteria" titleCollapsed="Show Search Criteria">
-        <div className="search-criteria-table">
-          <Table
-            borderless
-            columns={[
-              { colId: 'category', displayName: 'Category' },
-              { colId: 'selection', displayName: 'Your Selection' },
-            ]}
-            data={criterion}
-          />
+  console.log('placement: ' + placement);
+  return criterion.length > 0 ? (
+    <>
+      {placement === 'trial' ? (
+        <strong>This clinical trial matches:</strong>
+      ) : null}
+      <Accordion classes="table-dropdown" startCollapsed>
+        <AccordionItem
+          titleExpanded="Hide Search Criteria"
+          titleCollapsed="Show Search Criteria"
+        >
+          <div className="search-criteria-table">
+            <Table
+              borderless
+              columns={[
+                { colId: 'category', displayName: 'Category' },
+                { colId: 'selection', displayName: 'Your Selection' },
+              ]}
+              data={criterion}
+            />
+          </div>
+        </AccordionItem>
+      </Accordion>
+      {placement === 'trial' ? (
+        <Link
+          to={`/about-cancer/treatment/clinical-trials/search${
+            formType === 'basic' ? '' : '/advanced'
+          }`}
+          onClick={handleReset}
+        >
+          <strong>Start Over</strong>
+        </Link>
+      ) : (
+        <div className="reset-form">
+          <Link
+            to={`/about-cancer/treatment/clinical-trials/search${
+              formType === 'basic' ? '' : '/advanced'
+            }`}
+            onClick={handleReset}
+          >
+            Start Over
+          </Link>
+          <span aria-hidden="true" className="separator">
+            |
+          </span>
+          <button type="button" className="btnAsLink" onClick={handleRefine}>
+            Modify Search Criteria
+          </button>
         </div>
-      </AccordionItem>
-    </Accordion>
-  ) : null;
+      )}
+    </>
+  ) : (
+    <>
+      {placement === 'trial' && (
+        <>
+          <strong>This clinical trial matches: "all trials"</strong> |{' '}
+          <Link
+            to={`/about-cancer/treatment/clinical-trials/search${
+              formType === 'basic' ? '' : '/advanced'
+            }`}
+            onClick={handleReset}
+          >
+            <strong>Start Over</strong>
+          </Link>
+        </>
+      )}
+    </>
+  );
 };
 
 export default SearchCriteriaTable;

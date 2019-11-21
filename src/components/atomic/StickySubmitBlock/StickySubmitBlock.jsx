@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './StickySubmitBlock.scss';
 
@@ -18,7 +18,7 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && entry.intersectionRatio === 1) {
         entry.target.classList.remove('--sticky');
-      } else {
+      } else if (window.scrollY < entry.target.offsetTop) {
         entry.target.classList.add('--sticky');
       }
     });
@@ -31,7 +31,7 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
   const intObserver = new IntersectionObserver(callback, options);
 
   return (
-    <div ref={stickyEl} className="sticky-block__anchor">
+    <div id="stickyAnchor" ref={stickyEl} className="sticky-block__anchor">
       <div className="sticky-block">
         <button
           type="button"
@@ -40,9 +40,6 @@ const StickySubmitBlock = ({ sentinelRef, onSubmit }) => {
         >
           Find Trials
         </button>
-        {/* <Link to="/r" className="faux-btn-submit">
-          Find Trials
-        </Link> */}
         <div className="helper-text">Start your search at any time.</div>
       </div>
     </div>

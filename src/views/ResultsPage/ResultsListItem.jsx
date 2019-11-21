@@ -125,7 +125,7 @@ const ResultsListItem = ({ id, item, isChecked, onCheckChange }) => {
     // zip code present
     if (zip !== '') {
       //has a zip
-      if (zipCoords.lat !== '' && zipCoords.lon !== '') {
+      if (zipCoords.lat !== '' && zipCoords.long !== '') {
         return `${item.sites.length} location${
           item.sites.length === 1 ? '' : 's'
         }, including ${countNearbySitesByZip(item.sites)} near you`;
