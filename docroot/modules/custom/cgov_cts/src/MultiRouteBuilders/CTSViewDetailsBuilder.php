@@ -137,6 +137,24 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function alterTokens(array &$replacements, array $context, array $options = []) {
+    $this->initializeTrial();
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function getTokensForAltering(array $options = []) {
+    $tokensToAlter = [];
+
+    return $tokensToAlter;
+  }
+
+  /**
    * Set up Inclusion Criteria variable.
    */
   protected function setupInclusionCriteria($trial) {
