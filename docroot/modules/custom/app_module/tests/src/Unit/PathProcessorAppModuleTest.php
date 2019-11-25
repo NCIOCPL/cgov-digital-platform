@@ -103,6 +103,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $request_url);
     // There also should NOT be a param set for app_module_route.
     $this->assertTrue(!$request->query->has('app_module_route'));
+    $this->assertTrue(!$request->query->has('app_module_id'));
+    $this->assertTrue(!$request->query->has('app_module_data'));
     $stack->pop();
   }
 
@@ -141,6 +143,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // request.
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
+    $this->assertEquals($request->query->get('app_module_id'), 'fake');
+    $this->assertEquals($request->query->get('app_module_data'), []);
     $stack->pop();
   }
 
@@ -179,6 +183,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // request.
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
+    $this->assertEquals($request->query->get('app_module_id'), 'fake');
+    $this->assertEquals($request->query->get('app_module_data'), []);
     $stack->pop();
   }
 
@@ -217,6 +223,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // request.
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/');
+    $this->assertEquals($request->query->get('app_module_id'), 'fake');
+    $this->assertEquals($request->query->get('app_module_data'), []);
     $stack->pop();
   }
 
@@ -253,6 +261,9 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // the redirect to the non-trailing slash url.
     $this->assertEquals($path, $request_url);
     $this->assertTrue(!$request->query->has('app_module_route'));
+    $this->assertTrue(!$request->query->has('app_module_id'));
+    $this->assertTrue(!$request->query->has('app_module_data'));
+
     $stack->pop();
   }
 
@@ -295,6 +306,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // request.
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/route');
+    $this->assertEquals($request->query->get('app_module_id'), 'fake');
+    $this->assertEquals($request->query->get('app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
     $stack->pop();
   }
@@ -338,6 +351,8 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // request.
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/route');
+    $this->assertEquals($request->query->get('app_module_id'), 'fake');
+    $this->assertEquals($request->query->get('app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
     $stack->pop();
   }

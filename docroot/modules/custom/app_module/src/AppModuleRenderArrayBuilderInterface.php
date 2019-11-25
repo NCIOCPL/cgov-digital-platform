@@ -26,4 +26,19 @@ interface AppModuleRenderArrayBuilderInterface {
    */
   public function build(AppModuleInterface $app_module, array $options);
 
+  /**
+   * Gets a Cache Dependency for this App Module Route.
+   *
+   * @param AppModuleInterface $app_module
+   *   The AppModule Entity being viewed.
+   * @param string $path
+   *   The current app module route.
+   * @param array $options
+   *   The instance options for that app module.
+   *
+   * @return \Drupal\Core\Cache\CacheableDependencyInterface
+   *   The cache dependency.
+   */
+  public static function getCacheDependencyForBuild(AppModuleInterface $app_module, $path, array $options = []);
+
 }

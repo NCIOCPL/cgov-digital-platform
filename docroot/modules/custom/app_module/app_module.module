@@ -5,6 +5,9 @@
  * Contains app_module.module.
  */
 
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\app_module\Entity\AppModule;
+
 /**
  * Implements hook_theme().
  */
@@ -97,5 +100,114 @@ function app_module_path_delete($path) {
    */
   if ($path) {
     \Drupal::service('app_module.app_path_manager')->deleteByPath($path);
+  }
+}
+
+/*
+ * These are the hooks to allow our app module to interact with metadata.
+ */
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function app_module_page_attachments_alter(array &$attachments) {
+  $app_module_id = \Drupal::request()->query->get('app_module_id');
+  $app_module_route = \Drupal::request()->query->get('app_module_route');
+  $app_module_data = \Drupal::request()->query->get('app_module_data');
+
+  // We are not rendering an app module, so exit.
+  if (!$app_module_id) {
+    return;
+  }
+
+  // Get the app module entity.
+  /* @var \Drupal\app_module\AppModuleInterface */
+  $app_module = AppModule::load($app_module_id);
+
+  if (!$app_module) {
+    // How could this happen exactly, I don't know.
+    throw new \Exception("Request parameters indicate app module loaded, but app module does not exist.");
+  }
+
+  // Load the app module plugin.
+  /* @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
+  $app_module_plugin = $app_module->getAppModulePlugin();
+
+  if (!$app_module_plugin) {
+    // How could this happen exactly, I don't know.
+    throw new \Exception("Request parameters indicate app module loaded, but app module plugin could not be loaded.");
+  }
+
+  if ($app_module_plugin) {
+    $app_module_plugin->alterPageAttachments($attachments, $app_module_route, (array) $app_module_data);
+  }
+
+}
+
+/**
+ * Implements hook_tokens_alter().
+ */
+function app_module_tokens_alter(array &$replacements, array $context, BubbleableMetadata $bubbleable_metadata) {
+  $app_module_id = \Drupal::request()->query->get('app_module_id');
+  $app_module_route = \Drupal::request()->query->get('app_module_route');
+  $app_module_data = \Drupal::request()->query->get('app_module_data');
+
+  // We are not rendering an app module, so exit.
+  if (!$app_module_id) {
+    return;
+  }
+
+  // Get the app module entity.
+  /* @var \Drupal\app_module\AppModuleInterface */
+  $app_module = AppModule::load($app_module_id);
+
+  if (!$app_module) {
+    // How could this happen exactly, I don't know.
+    throw new \Exception("Request parameters indicate app module loaded, but app module does not exist.");
+  }
+
+  // Load the app module plugin.
+  /* @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
+  $app_module_plugin = $app_module->getAppModulePlugin();
+
+  if (!$app_module_plugin) {
+    // How could this happen exactly, I don't know.
+    throw new \Exception("Request parameters indicate app module loaded, but app module plugin could not be loaded.");
+  }
+
+  /* @var \Drupal\app_module\AppModuleRenderArrayBuilderInterface */
+  $app_module_builder = \Drupal::service('app_module.builder');
+
+  if ($app_module_plugin) {
+    $tokensToAlter = $app_module_plugin->getTokensForAltering($app_module_route, (array) $app_module_data);
+
+    if (count(array_intersect($tokensToAlter, array_keys($replacements))) !== 0) {
+      $app_module_plugin->alterTokens($replacements, $context, $app_module_route, (array) $app_module_data);
+
+      // Add cache dependencies to bubble up because we are probably
+      // overwriting tokens that come from a node. If we are doing
+      // that, then we are probably need to vary the cache context.
+      // The app_module *SHOULD* already be doing this, so the cache
+      // metadata for the app_module build will be the same as what
+      // is needed here.
+      $bubbleable_metadata->addCacheableDependency(
+        $app_module_builder->getCacheDependencyForBuild($app_module, $app_module_route, (array) $app_module_data)
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Make sure our page_attachments_alter comes at the very end of the
+ * implementation list. Also ensure tokens_alter comes at the very
+ * end too.
+ */
+function app_module_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'page_attachments_alter' || $hook === 'tokens_alter') {
+    $group = $implementations['app_module'];
+    unset($implementations['app_module']);
+    $implementations['app_module'] = $group;
   }
 }

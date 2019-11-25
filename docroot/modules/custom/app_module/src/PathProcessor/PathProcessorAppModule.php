@@ -100,6 +100,8 @@ class PathProcessorAppModule implements InboundPathProcessorInterface {
     // Set the app_module_route parameter so the AppModuleRenderArrayBuilder
     // can pass it off to the plugin for rendering.
     $request->query->add(['app_module_route' => $app_route['app_module_route']]);
+    $request->query->add(['app_module_data' => $appPath['app_module_data']]);
+    $request->query->add(['app_module_id' => $appPath['app_module_id']]);
 
     // Add any additional params to the request object.
     foreach ($app_route['params'] as $param_name => $param_value) {
