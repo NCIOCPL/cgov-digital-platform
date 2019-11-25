@@ -76,4 +76,52 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  final public function alterPageAttachments(array &$attachments, $path, array $options = []) {
+    parent::alterPageAttachments($attachments, $path, $options);
+
+    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    $builder = $this->getBuilderForRoute($path);
+
+    if ($builder) {
+      $builder->alterPageAttachments($attachments, $options);
+    }
+
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  final public function alterTokens(array &$replacements, array $context, $path, array $options = []) {
+    parent::alterTokens($replacements, $context, $path, $options);
+
+    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    $builder = $this->getBuilderForRoute($path);
+
+    if ($builder) {
+      $builder->alterTokens($replacements, $context, $options);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function getTokensForAltering($path, array $options = []) {
+    $builder = $this->getBuilderForRoute($path);
+
+    if ($builder) {
+      $tokensToAlter = $builder->getTokensForAltering($options);
+      return $tokensToAlter;
+    }
+    else {
+      return [];
+    }
+  }
+
 }
