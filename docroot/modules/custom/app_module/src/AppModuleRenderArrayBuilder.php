@@ -3,6 +3,7 @@
 namespace Drupal\app_module;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableMetadata;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -58,30 +59,11 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
     // object's query params.
     $path = $this->requestStack->getCurrentRequest()->query->get('app_module_route') ?? '/';
 
-    // Get Cache Information from our Plugin and setup the cache information
-    // for the build. This information will vary by route and params passed to
-    // that route. So it is the job of the plugin to give us the correct
-    // information.
-    $cache_meta = $plugin->getCacheInfoForRoute($path, $options);
+    // Get the specific route id.
     $app_route_id = $plugin->getAppRouteId($path, $options);
 
-    // We must always vary by the app_module_route parameter.
-    $route_contexts = Cache::mergeContexts(
-      ['url.query_args:app_module_route'],
-      $app_module->getCacheContexts()
-    );
-
-    $build_cache = [
-      'contexts' => Cache::mergeContexts(
-        $cache_meta->getCacheContexts(),
-        $route_contexts
-      ),
-      'tags' => Cache::mergeTags(
-        $cache_meta->getCacheTags(),
-        $app_module->getCacheTags()
-      ),
-      'max-age' => $cache_meta->getCacheMaxAge(),
-    ];
+    // Get the cache metadata for dependencies.
+    $cache_meta = self::getCacheDependencyForBuild($app_module, $path, $options);
 
     // Setup the app_module wrapper.
     $build = [
@@ -100,10 +82,59 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
       '#pre_render' => [
         static::class . '::preRender',
       ],
-      '#cache' => $build_cache,
+      '#cache' => [
+        'contexts' => $cache_meta->getCacheContexts(),
+        'tags' => $cache_meta->getCacheTags(),
+        'max-age' => $cache_meta->getCacheMaxAge(),
+      ],
     ];
 
     return $build;
+  }
+
+  /**
+   * Gets a Cache Dependency for this App Module Route.
+   *
+   * @param AppModuleInterface $app_module
+   *   The AppModule Entity being viewed.
+   * @param string $path
+   *   The current app module route.
+   * @param array $options
+   *   The instance options for that app module.
+   *
+   * @return \Drupal\Core\Cache\CacheableDependencyInterface
+   *   The cache dependency.
+   */
+  public static function getCacheDependencyForBuild(AppModuleInterface $app_module, $path, array $options = []) {
+    $plugin = $app_module->getAppModulePlugin();
+
+    // Get Cache Information from our Plugin and setup the cache information
+    // for the build. This information will vary by route and params passed to
+    // that route. So it is the job of the plugin to give us the correct
+    // information.
+    $cache_meta = $plugin->getCacheInfoForRoute($path, $options);
+
+    // We must always vary by the app_module_route parameter.
+    $route_contexts = Cache::mergeContexts(
+      ['url.query_args:app_module_route'],
+      $app_module->getCacheContexts()
+    );
+
+    $build_cache = [
+      '#cache' => [
+        'contexts' => Cache::mergeContexts(
+          $cache_meta->getCacheContexts(),
+          $route_contexts
+        ),
+        'tags' => Cache::mergeTags(
+          $cache_meta->getCacheTags(),
+          $app_module->getCacheTags()
+        ),
+        'max-age' => $cache_meta->getCacheMaxAge(),
+      ],
+    ];
+
+    return CacheableMetadata::createFromRenderArray($build_cache);
   }
 
   /**
