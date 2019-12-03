@@ -3,15 +3,18 @@
 namespace Drupal\cgov_cts\MultiRouteBuilders;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase;
 use Drupal\Core\Cache\CacheableMetadata;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_cts\Services\CTSManager;
 
 /**
- * Default route builder for CTS - should just load React app.
+ * View details route builder for CTS.
+ *
+ * Loads the trial information and displays the content
+ * for indexing; loads the React app; sets up the page-
+ * specific metadata.
  */
-class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
+class CTSViewDetailsBuilder extends CTSBuilderBase {
 
   /**
    * Symfony\Component\HttpFoundation\RequestStack definition.
@@ -33,6 +36,20 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
    * @var string
    */
   private $trialID = '';
+
+  /**
+   * Gets the currently requested trial.
+   *
+   * @var \NCIOCPL\ClinicalTrialSearch\Model\ClinicalTrial
+   */
+  private $trial;
+
+  /**
+   * Indicator if we have attempted to fetch the trial.
+   *
+   * @var bool
+   */
+  private $hasFetched = FALSE;
 
   /**
    * Constructs a CTSViewDetailsBuilder object.
@@ -68,19 +85,9 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
    * {@inheritdoc}
    */
   public function build(array $options) {
-    // Get ID from current request's query params.
-    $id = $this->requestStack->getCurrentRequest()->query->get('id');
+    $this->initializeTrial();
 
-    // Validate ID query param.
-    if (preg_match("/^NCT[0-9]+$/", $id) || preg_match("/^NCI-/", $id)) {
-      $this->trialID = $id;
-    }
-    else {
-      throw new \Exception("Invalid trial ID.");
-    }
-
-    // Get Clinical Trial from ID.
-    $trial = $this->ctsManager->get($this->trialID);
+    $trial = $this->trial;
 
     // Set up Inclusion/Exclusion Criteria variables.
     $inclusionCriteria = $this->setupInclusionCriteria($trial);
@@ -106,6 +113,7 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
     $build = [
       '#theme' => 'clinical_trial',
       '#attributes' => [],
+      '#markup' => '<noscript>You need to enable JavaScript to run this app.</noscript>',
       '#trial' => $trial,
       '#inclusion_criteria' => $inclusionCriteria,
       '#exclusion_criteria' => $exclusionCriteria,
@@ -127,9 +135,9 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
    */
   public function getCacheInfo(array $options) {
     $meta = new CacheableMetadata();
-    // TODO: Add protocol ID here.
+    $metaId = 'cgov_cts_app:' . $this->trialID;
     $meta
-      ->setCacheTags(['cgov_cts_app', $this->trialID]);
+      ->setCacheTags(['cgov_cts_app', $metaId]);
 
     $meta
       ->setCacheContexts(['url.query_args:id']);
@@ -141,17 +149,80 @@ class CTSViewDetailsBuilder extends MultiRouteAppModuleBuilderBase {
    */
   public function alterTokens(array &$replacements, array $context, array $options = []) {
     $this->initializeTrial();
+
+    foreach ($replacements as $key => $value) {
+      switch ($key) {
+        case '[cgov_tokens:cgov-title]':
+          $replacements[$key] = $this->trial->BriefTitle;
+          break;
+
+        case '[node:field_page_description:value]':
+          if ($this->trial->NCTID) {
+            $replacements[$key] = $this->trial->BriefTitle . ' - ' . $this->trial->NCTID;
+          }
+          else {
+            $replacements[$key] = $this->trial->BriefTitle;
+          }
+          break;
+
+        case '[node:field_browser_title:value]':
+          $replacements[$key] = $this->trial->BriefTitle;
+          break;
+
+        case '[node:url]':
+          $replacements[$key] = $value . '/v?id=' . $this->trial->NCIID;
+
+        case '[current-page:url]':
+          $replacements[$key] = $value . '/v?id=' . $this->trial->NCIID;
+
+        default:
+          break;
+      }
+    }
   }
 
   /**
    * {@inheritdoc}
    *
-   * The default implementation is a NOOP.
+   * Return an array of tokens to alter.
    */
   public function getTokensForAltering(array $options = []) {
-    $tokensToAlter = [];
+    $tokensToAlter = [
+      '[cgov_tokens:cgov-title]',
+      '[node:field_page_description:value]',
+      '[node:field_browser_title:value]',
+      '[node:url]',
+      '[current-page:url]',
+    ];
 
     return $tokensToAlter;
+  }
+
+  /**
+   * Loads the trial once and only once.
+   */
+  private function initializeTrial() {
+
+    if ($this->hasFetched) {
+      return;
+    }
+
+    // Get ID from current request's query params.
+    $id = $this->requestStack->getCurrentRequest()->query->get('id');
+
+    // Validate ID query param.
+    if (preg_match("/^NCT[0-9]+$/", $id) || preg_match("/^NCI-/", $id)) {
+      $this->trialID = $id;
+    }
+    else {
+      throw new \Exception("Invalid trial ID.");
+    }
+
+    // Get Clinical Trial from ID.
+    $trial = $this->ctsManager->get($this->trialID);
+
+    $this->trial = $trial;
+    $this->hasFetched = TRUE;
   }
 
   /**

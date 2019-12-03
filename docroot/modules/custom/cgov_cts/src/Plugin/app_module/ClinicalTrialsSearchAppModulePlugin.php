@@ -26,7 +26,21 @@ class ClinicalTrialsSearchAppModulePlugin extends MultiRouteAppModulePluginBase 
   private $defaultBuilder;
 
   /**
-   * Gets the default route builder.
+   * Gets the advanced search route builder.
+   *
+   * @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface
+   */
+  private $advancedSearchBuilder;
+
+  /**
+   * Gets the results route builder.
+   *
+   * @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface
+   */
+  private $resultsBuilder;
+
+  /**
+   * Gets the view details route builder.
    *
    * @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface
    */
@@ -43,19 +57,27 @@ class ClinicalTrialsSearchAppModulePlugin extends MultiRouteAppModulePluginBase 
    *   The plugin implementation definition.
    * @param \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface $default_builder
    *   The default route builder.
+   * @param \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface $advanced_search_builder
+   *   The advanced search route builder.
+   * @param \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface $results_builder
+   *   The results route builder.
    * @param \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface $view_details_builder
-   *   The chicken route builder.
+   *   The view details route builder.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     MultiRouteAppModuleBuilderInterface $default_builder,
+    MultiRouteAppModuleBuilderInterface $advanced_search_builder,
+    MultiRouteAppModuleBuilderInterface $results_builder,
     MultiRouteAppModuleBuilderInterface $view_details_builder
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->definition = $plugin_definition + $configuration;
     $this->defaultBuilder = $default_builder;
+    $this->advancedSearchBuilder = $advanced_search_builder;
+    $this->resultsBuilder = $results_builder;
     $this->viewDetailsBuilder = $view_details_builder;
   }
 
@@ -68,6 +90,8 @@ class ClinicalTrialsSearchAppModulePlugin extends MultiRouteAppModulePluginBase 
       $plugin_id,
       $plugin_definition,
       $container->get('cgov_cts.app_route_default'),
+      $container->get('cgov_cts.app_route_advanced_search'),
+      $container->get('cgov_cts.app_route_results'),
       $container->get('cgov_cts.app_route_view_details')
     );
   }
@@ -91,7 +115,17 @@ class ClinicalTrialsSearchAppModulePlugin extends MultiRouteAppModulePluginBase 
      */
     switch ($path_components[0]) {
       case "advanced":
+        return [
+          'app_module_route' => '/' . $path_components[0],
+          'params' => [],
+        ];
+
       case "r":
+        return [
+          'app_module_route' => '/' . $path_components[0],
+          'params' => [],
+        ];
+
       case "v":
         return [
           'app_module_route' => '/' . $path_components[0],
@@ -108,6 +142,12 @@ class ClinicalTrialsSearchAppModulePlugin extends MultiRouteAppModulePluginBase 
   protected function getBuilderForRoute($path) {
 
     switch ($path) {
+      case '/advanced':
+        return $this->advancedSearchBuilder;
+
+      case '/r':
+        return $this->resultsBuilder;
+
       case '/v':
         return $this->viewDetailsBuilder;
 
