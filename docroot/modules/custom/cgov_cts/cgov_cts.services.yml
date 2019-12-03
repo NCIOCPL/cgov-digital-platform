@@ -3,6 +3,14 @@ services:
   cgov_cts.app_route_default:
     class: Drupal\cgov_cts\MultiRouteBuilders\CTSDefaultBuilder
     arguments: []
+  cgov_cts.app_route_advanced_search:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSAdvancedSearchBuilder
+    arguments: []
+  cgov_cts.app_route_results:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSResultsBuilder
+    factory: Drupal\cgov_cts\MultiRouteBuilders\CTSResultsBuilder::create
+    arguments:
+      - '@service_container'
   cgov_cts.app_route_view_details:
     class: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder
     factory: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder::create

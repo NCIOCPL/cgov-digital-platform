@@ -47,10 +47,9 @@ abstract class MultiRouteAppModuleBuilderBase implements MultiRouteAppModuleBuil
 
   /**
    * {@inheritdoc}
-   *
-   * The default implementation is a NOOP.
    */
   public function getTokensForAltering(array $options = []) {
+    return [];
   }
 
 }
