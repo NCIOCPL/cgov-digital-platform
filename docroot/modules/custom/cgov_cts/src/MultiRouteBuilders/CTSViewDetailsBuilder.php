@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Cache\CacheableMetadata;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_cts\Services\CTSManager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Psr\Log\LoggerInterface;
 
 /**
  * View details route builder for CTS.
@@ -29,6 +31,13 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
    * @var \Drupal\cgov_cts\Services\CTSManager
    */
   private $ctsManager;
+
+  /**
+   * The logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
 
   /**
    * The trial ID.
@@ -58,10 +67,13 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
    *   The request object.
    * @param \Drupal\cgov_cts\Services\CTSManager $ctsManager
    *   A configuration array containing information about the plugin instance.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger.
    */
-  public function __construct(RequestStack $request_stack, CTSManager $ctsManager) {
+  public function __construct(RequestStack $request_stack, CTSManager $ctsManager, LoggerInterface $logger) {
     $this->requestStack = $request_stack;
     $this->ctsManager = $ctsManager;
+    $this->logger = $logger;
   }
 
   /**
@@ -70,8 +82,9 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
   public static function create(ContainerInterface $container) {
     $requestStack = $container->get('request_stack');
     $ctsManager = $container->get('cgov_cts.cts_manager');
+    $logger = $container->get('logger.factory')->get('cts_view_details_builder');
 
-    return new static($requestStack, $ctsManager);
+    return new static($requestStack, $ctsManager, $logger);
   }
 
   /**
@@ -148,6 +161,10 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
    * {@inheritdoc}
    */
   public function alterTokens(array &$replacements, array $context, array $options = []) {
+    if (!$this->trial && $this->hasFetched) {
+      return;
+    }
+
     $this->initializeTrial();
 
     foreach ($replacements as $key => $value) {
@@ -187,6 +204,10 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
    * Return an array of tokens to alter.
    */
   public function getTokensForAltering(array $options = []) {
+    if (!$this->trial && $this->hasFetched) {
+      return [];
+    }
+
     $tokensToAlter = [
       '[cgov_tokens:cgov-title]',
       '[node:field_page_description:value]',
@@ -215,11 +236,29 @@ class CTSViewDetailsBuilder extends CTSBuilderBase {
       $this->trialID = $id;
     }
     else {
-      throw new \Exception("Invalid trial ID.");
+      $this->hasFetched = TRUE;
+      // We currently only have styled 404 error pages, so throw
+      // a not found exception for now.
+      throw new NotFoundHttpException("Invalid trial ID.");
     }
 
     // Get Clinical Trial from ID.
-    $trial = $this->ctsManager->get($this->trialID);
+    try {
+      $trial = $this->ctsManager->get($this->trialID);
+    }
+    catch (\Exception $e) {
+      $this->hasFetched = TRUE;
+      $this->logger->error($e->getMessage());
+      throw new NotFoundHttpException("Trial not found.");
+    }
+
+    // Not sure how this would get here without hitting the
+    // above exception, but we should check and throw this
+    // exception just in case.
+    if (!$trial) {
+      $this->hasFetched = TRUE;
+      throw new NotFoundHttpException('Trial not found.');
+    }
 
     $this->trial = $trial;
     $this->hasFetched = TRUE;
