@@ -26,6 +26,13 @@ class CTSViewDetailsBuilderTest extends UnitTestCase {
   private $manager;
 
   /**
+   * The logger mock.
+   *
+   * @var \Psr\Log\LoggerInterface|\PHPUnit_Framework_MockObject_MockObject
+   */
+  protected $logger;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp() {
@@ -35,13 +42,14 @@ class CTSViewDetailsBuilderTest extends UnitTestCase {
     $this->manager = $this->getMockBuilder('\Drupal\cgov_cts\Services\CTSManager')
       ->disableOriginalConstructor()
       ->getMock();
+    $this->logger = $this->getMock('\Psr\Log\LoggerInterface');
   }
 
   /**
    * {@inheritdoc}
    */
   public function testBuilder() {
-    $builder = new CTSViewDetailsBuilder($this->requestStack, $this->manager);
+    $builder = new CTSViewDetailsBuilder($this->requestStack, $this->manager, $this->logger);
     $this->assertNotNull($builder, 'Can create new instance of builder class');
   }
 
@@ -49,7 +57,7 @@ class CTSViewDetailsBuilderTest extends UnitTestCase {
    * {@inheritdoc}
    */
   public function testAppModuleId() {
-    $builder = new CTSViewDetailsBuilder($this->requestStack, $this->manager);
+    $builder = new CTSViewDetailsBuilder($this->requestStack, $this->manager, $this->logger);
     $this->assertEquals($builder->id(), 'view_details', 'ID is "view_details".');
   }
 

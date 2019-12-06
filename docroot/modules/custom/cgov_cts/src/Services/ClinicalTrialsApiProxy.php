@@ -70,7 +70,7 @@ class ClinicalTrialsApiProxy implements ClinicalTrialsApiInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
-      $container->get('logger.factory')->get('cgov_cts')
+      $container->get('logger.factory')->get('cts_api_proxy')
     );
   }
 
