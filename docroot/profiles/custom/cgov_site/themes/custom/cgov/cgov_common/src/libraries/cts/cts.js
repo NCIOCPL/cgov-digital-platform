@@ -1,9 +1,10 @@
-import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js'
+import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js';
+import { trackCTSEvent } from './cts-analytics';
 import initialize from '@nciocpl/clinical-trials-search-app';
 
 //assumes import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js' is good to go
 const ctsSearch = () => {
-  const hostName = 'ctsproxy.cancer.gov';
+  const hostName = window.CDEConfig.ctsConfig.apiServer;
   const service = ClinicalTrialsServiceFactory.create(hostName);
   return service;
 };
@@ -23,6 +24,9 @@ const elementsUsedByCTS = elementSelectors.map(el => {
 // title tag is updated by CTS app so want to prevent duplication here, too
 elementsUsedByCTS.push(document.querySelector('title'));
 
+// Add the canonical url
+elementsUsedByCTS.push(document.querySelector('link[rel="canonical"]'));
+
 elementsUsedByCTS.forEach(el => {
   // Some elements are originated by react-helmet after this script runs and will be null
   if (el) {
@@ -37,7 +41,8 @@ const config = {
   services: {
     ctsSearch,
   },
-  printCacheEndpoint: window.CDEConfig.ctsConfig.printCacheEndpoint
+  printCacheEndpoint: window.CDEConfig.ctsConfig.printCacheEndpoint,
+  analyticsHandler: trackCTSEvent,
 }
 // ctsReactApp is initialize(config) (default export from @nciocpl/clinical-trials-search-app)
 const initializeCTSApp = () => {
