@@ -34,14 +34,9 @@ const ctsSpanishSettings = {
         <h2 class="title">¿Necesita ayuda en encontrar un estudio clínico?</h2>
         <div class="content spanish-livehelp">
             <p>Especialistas de Información están disponibles para ayudarle en hacer una búsqueda y contestar a sus preguntas.</p>
-            <!--
-            <form onsubmit="return false;">
-                <input id="chat-button" type="button" name="rn_nciChatLaunchButton_4_Button" class="chat-button" value="Iniciar Chat">
-            </form>
-            -->
             <form action="https://livehelp-es.cancer.gov/app/chat/chat_landing" id="bar" method="POST">
                 <input name="_icf_22" style="display: none !important;" type="text" value="2174">
-                <button type="submit">Iniciar Chat</button>
+                <button id="chat-button" type="submit">Iniciar Chat</button>
             </form>
             <div class="live-help"></div>
         </div>
