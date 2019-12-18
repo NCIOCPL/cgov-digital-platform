@@ -1,8 +1,18 @@
+
+// Which chat server should be used? Test or production.
+const HOST_SERVER_LIVE = "livehelp.cancer.gov";
+const HOST_SERVER_TEST = "nci--tst.custhelp.com";
+
+const currentHost = location.hostname.toLowerCase();
+const server = (currentHost === "www.cancer.gov") ? HOST_SERVER_LIVE : HOST_SERVER_TEST;
+
+
 const ctsEnglishSettings = {
     urls: [
         "/about-cancer/treatment/clinical-trials/search",
         "/about-cancer/treatment/clinical-trials/basic",
         "/about-cancer/treatment/clinical-trials/search/a",
+        "/about-cancer/treatment/clinical-trials/search/advanced",
         "/about-cancer/treatment/clinical-trials/search/r",
         "/about-cancer/treatment/clinical-trials/search/v",
         "/about-cancer/treatment/clinical-trials/advanced-search",
@@ -18,7 +28,7 @@ const ctsEnglishSettings = {
         <h2 class="title">Need Help Finding a Clinical Trial?</h2>
         <div class="content">
             <p>Information Specialists are available to help you search and answer your questions.</p>
-            <form action="https://livehelp.cancer.gov/app/chat/chat_landing" id="bar" method="POST">
+            <form action="https://${server}/app/chat/chat_landing" target="_blank" id="proactive-chat-form" method="POST">
                 <input name="_icf_22" style="display: none !important;" type="text" value="2174">
                 <button id="chat-button" type="submit">Chat Now</button>
             </form>
