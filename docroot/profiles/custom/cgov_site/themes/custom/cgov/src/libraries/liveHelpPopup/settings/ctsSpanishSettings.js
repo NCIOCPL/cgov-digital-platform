@@ -1,5 +1,11 @@
 //import { CTSSimpleFormSetup } from "UX/AppModuleSpecific/BasicCTS/Search/Enhancements/cts-simple-form-setup";
 
+var HOST_SERVER_LIVE = "livehelp-es.cancer.gov";
+var HOST_SERVER_TEST = "nci2--tst.custhelp.com";
+
+const currentHost = location.hostname.toLowerCase();
+const server = (currentHost === "www.cancer.gov") ? HOST_SERVER_LIVE : HOST_SERVER_TEST;
+
 const ctsSpanishSettings = {
     urls: [
         '/espanol/cancer/tratamiento/medicamentos',
@@ -34,7 +40,7 @@ const ctsSpanishSettings = {
         <h2 class="title">¿Necesita ayuda en encontrar un estudio clínico?</h2>
         <div class="content spanish-livehelp">
             <p>Especialistas de Información están disponibles para ayudarle en hacer una búsqueda y contestar a sus preguntas.</p>
-            <form action="https://livehelp-es.cancer.gov/app/chat/chat_landing" id="bar" method="POST">
+            <form action="https://${server}/app/chat/chat_landing" target="_blank" id="proactive-chat-form" method="POST">
                 <input name="_icf_22" style="display: none !important;" type="text" value="2174">
                 <button id="chat-button" type="submit">Iniciar Chat</button>
             </form>
