@@ -29,4 +29,27 @@ abstract class MultiRouteAppModuleBuilderBase implements MultiRouteAppModuleBuil
     return CacheableMetadata::createFromObject(NULL);
   }
 
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function alterPageAttachments(array &$attachments, array $options = []) {
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function alterTokens(array &$replacements, array $context, array $options = []) {
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTokensForAltering(array $options = []) {
+    return [];
+  }
+
 }

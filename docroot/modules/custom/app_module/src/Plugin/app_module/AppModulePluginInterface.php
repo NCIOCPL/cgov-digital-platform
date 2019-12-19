@@ -131,4 +131,76 @@ interface AppModulePluginInterface extends PluginInspectionInterface {
    */
   public function getCacheInfoForRoute($path, array $options = []);
 
+  /**
+   * Alter attachments (typically assets) to a page before it is rendered.
+   *
+   * Override this method when you want to remove or alter attachments on the
+   * page, or add attachments to the page that depend on another module's
+   * attachments. More specifically, implement this method to manipulate the
+   * page's metadata.
+   *
+   * If you try to add anything but #attached and #cache to the array, an
+   * exception is thrown.
+   *
+   * @param array &$attachments
+   *   Array of all attachments provided by hook_page_attachments()
+   *   implementations.
+   * @param string $path
+   *   The requested app module path as a string. This is relative to the
+   *   app module alias. For the node /foo/bar, if the url requested is
+   *   /foo/bar/bazz/blah then the $path would be /bazz/blah.
+   * @param array $options
+   *   The settings for this instance of the AppModule on an entity.
+   *
+   * @see hook_page_attachments()
+   */
+  public function alterPageAttachments(array &$attachments, $path, array $options = []);
+
+  /**
+   * Alter replacement values for tokens.
+   *
+   * Override this method when you want to change the contents for tokens for
+   * specific placeholder. More specifically, this is an easier way to
+   * manipulate the page's metadata rather than digging around page attachments.
+   *
+   * NOTE: The bubbleableMetadata will be taken care of by the app module
+   * framework. Just know that it will use getCacheInfo to get tags and
+   * contexts.
+   *
+   * @param array &$replacements
+   *   An associative array of replacements returned by hook_tokens().
+   * @param array $context
+   *   The context in which hook_tokens() was called. An associative array with
+   *   the following keys, which have the same meaning as the corresponding
+   *   parameters of hook_tokens():
+   *   - 'type'
+   *   - 'tokens'
+   *   - 'data'
+   *   - 'options'.
+   * @param string $path
+   *   The requested app module path as a string. This is relative to the
+   *   app module alias. For the node /foo/bar, if the url requested is
+   *   /foo/bar/bazz/blah then the $path would be /bazz/blah.
+   * @param array $options
+   *   The settings for this instance of the AppModule on an entity.
+   *
+   * @see hook_tokens()
+   */
+  public function alterTokens(array &$replacements, array $context, $path, array $options = []);
+
+  /**
+   * Gets the list of metadata tokens for this app module to alter.
+   *
+   * @param string $path
+   *   The requested app module path as a string. This is relative to the
+   *   app module alias. For the node /foo/bar, if the url requested is
+   *   /foo/bar/bazz/blah then the $path would be /bazz/blah.
+   * @param array $options
+   *   The settings for this instance of the AppModule on an entity.
+   *
+   * @return array
+   *   Returns an array with the tokens that this app module should alter.
+   */
+  public function getTokensForAltering($path, array $options = []);
+
 }

@@ -1,0 +1,36 @@
+services:
+  ## App module builders below.
+  cgov_cts.app_route_default:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSDefaultBuilder
+    arguments: []
+  cgov_cts.app_route_advanced_search:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSAdvancedSearchBuilder
+    arguments: []
+  cgov_cts.app_route_results:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSResultsBuilder
+    factory: Drupal\cgov_cts\MultiRouteBuilders\CTSResultsBuilder::create
+    arguments:
+      - '@service_container'
+  cgov_cts.app_route_view_details:
+    class: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder
+    factory: Drupal\cgov_cts\MultiRouteBuilders\CTSViewDetailsBuilder::create
+    arguments:
+      - '@service_container'
+  ## The constructor of the lookup service takes in the file path
+  ## of the zipcode DB, So we cannot use the constructor, we must
+  ## use a factory method, which is what factory below does. This
+  ## method does NOT have any arguments. So there is a create
+  ## method, but our class does not have to implement the
+  ## ContainerInjectionInterface nor the ContainerFactoryPluginInterface.
+  cgov_cts.zip_code_lookup:
+    class: Drupal\cgov_cts\FileBasedZipCodeLookupService
+    factory: Drupal\cgov_cts\FileBasedZipCodeLookupService::create
+  cgov_cts.clinical_trials_api_proxy:
+    class: Drupal\cgov_cts\Services\ClinicalTrialsApiProxy
+    factory: Drupal\cgov_cts\Services\ClinicalTrialsApiProxy::create
+    arguments:
+      - '@service_container'
+  cgov_cts.cts_manager:
+    class: Drupal\cgov_cts\Services\CTSManager
+    arguments:
+      - '@cgov_cts.clinical_trials_api_proxy'

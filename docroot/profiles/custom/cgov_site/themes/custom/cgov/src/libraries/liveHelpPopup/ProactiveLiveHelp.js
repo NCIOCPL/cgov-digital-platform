@@ -40,13 +40,8 @@ export default class ProactiveLiveHelp {
         document.querySelector('body').appendChild(popupElement);
 
         const popupLiveHelpHandler = () => {
-            if(this.options.popupID === 'Spanish-CTSPrompt'){
-                LiveChat.openSpanishChatWindow();
-            } else {
-                LiveChat.openChatWindow();
-            }
-
-            this.dismissPrompt();
+          // the popeup should close upon opening a chat.
+          this.dismissPrompt();
         }
         document.getElementById('chat-button').addEventListener('click', popupLiveHelpHandler);
 
@@ -176,16 +171,17 @@ function activatePromptAnalytics () {
 
 
     // Set up analytics handler for "Chat Now" button.
-    var button = $(".ProactiveLiveHelpPrompt .chat-button");
-    if (!!button) {
-        button.on('click.PLH',function () {
+    var form = $(".ProactiveLiveHelpPrompt #proactive-chat-form");
+    if (!!form) {
+        form.on('submit.PLH',function () {
+          //debugger
             if (NCIAnalytics && NCIAnalytics.RecordProactiveChatPromptClick)
                 NCIAnalytics.RecordProactiveChatPromptClick(this);
         });
     }
 
     // Set up analytics for dismissal button.
-    button = $(".ProactiveLiveHelpPrompt .close");
+    var button = $(".ProactiveLiveHelpPrompt .close");
     if (!!button) {
         button.on('click.PLH',function () {
             if (NCIAnalytics && NCIAnalytics.RecordProactiveChatPromptDismissal)

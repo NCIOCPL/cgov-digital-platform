@@ -97,7 +97,6 @@ const initialize = () => {
     }
     else {
         isInitialized = true;
-
         // Should pass in pathName to make testing even easier without correct routing
         const pathName = location.pathname.toLowerCase();
         const popupSettings = getPopupSettings(basePaths, pathName);

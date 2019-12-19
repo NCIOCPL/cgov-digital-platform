@@ -1,5 +1,6 @@
 import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
 import { attachEvents } from 'Core/libraries/analytics/nci-analytics-functions';
+import { initializeDumbDataLayer } from './dumb-datalayer';
 
 var AppMeasurementCustom = {
 
@@ -49,9 +50,14 @@ var AppMeasurementCustom = {
      * Get the page name (hostname + path).
      */
     getLocalPageName: function() {
-        let canonicalLink = document.querySelector("link[rel='canonical']").href;
+        const canonicalElement = document.querySelector("link[rel='canonical']");
+        let canonicalLink = canonicalElement ? canonicalElement.href : null;
         let localPageName = canonicalLink || (window.location.hostname + window.location.pathname);
         localPageName = localPageName.replace(/(^\w+:|^)\/\//, '');
+        if (localPageName.indexOf("?") > 0) {
+          localPageName = localPageName.substring(0, localPageName.indexOf("?"));
+        }
+
         return localPageName.toLowerCase();
     },
 
@@ -147,9 +153,14 @@ var AppMeasurementCustom = {
             s.prop29 = s.getTimeParting('n','-5');
 
             // Set ID param variable value.
-            s.prop15 = (fullURL.indexOf('cts.print/display') > -1) ? getNciPrintID() : '';
-            s.prop15 = s.prop15 || s.getNciSearchId();
-            s.eVar15 = s.prop15;
+            // Somehow in the migration the null check was removed. :|
+            // TODO: Removed this code if it is no longer used by anything
+            // other than CTS.
+            if(s.prop15 == null && s.eVar15 == null) {
+              s.prop15 = (fullURL.indexOf('cts.print/display') > -1) ? getNciPrintID() : '';
+              s.prop15 = s.prop15 || s.getNciSearchId();
+              s.eVar15 = s.prop15;
+            }
 
             // Set Previous Page values.
             s.prop61 = s.getPreviousValue(s.localPageName, 'gpv_pn', '');
@@ -673,8 +684,15 @@ var AppMeasurementCustom = {
         new Image,d.src=c.c(a,b))};a.script=function(b){a.get(b,1)};a.delay=function(){a._d++};a.ready=function(){a._d--;a.disable||l.delayReady()};c.list.push(d)};c._g=function(d){var b,a=(d?"use":"set")+"Vars";for(d=0;d<c.list.length;d++)if((b=c[c.list[d]])&&!b.disable&&b[a])try{b[a](l,b)}catch(e){}};c._t=function(){c._g(1)};c._d=function(){var d,b;for(d=0;d<c.list.length;d++)if((b=c[c.list[d]])&&!b.disable&&0<b._d)return 1;return 0};c.c=function(c,b){var a,e,g,f;"http"!=b.toLowerCase().substring(0,4)&&
         (b="http://"+b);l.ssl&&(b=l.replace(b,"http:","https:"));c.RAND=Math.floor(1E13*Math.random());for(a=0;0<=a;)a=b.indexOf("[",a),0<=a&&(e=b.indexOf("]",a),e>a&&(g=b.substring(a+1,e),2<g.length&&"s."==g.substring(0,2)?(f=l[g.substring(2)])||(f=""):(f=""+c[g],f!=c[g]&&parseFloat(f)!=c[g]&&(g=0)),g&&(b=b.substring(0,a)+encodeURIComponent(f)+b.substring(e+1)),a=e));return b}}
 
-   }
-
+   },
+   /**
+    * Initializes the dumb data layer. This is meant to be called from
+    * DTM's Adobe Analytics Tool Custom Code. (As DTM has an instance
+    * of s_gi)
+    *
+    * @param {Object} s - The Adobe Analytics s object.
+    */
+   initializeDumbDataLayer: (s) => initializeDumbDataLayer(s, AppMeasurementCustom)
 };
 
 // Export our AppMeasurementCustom object.

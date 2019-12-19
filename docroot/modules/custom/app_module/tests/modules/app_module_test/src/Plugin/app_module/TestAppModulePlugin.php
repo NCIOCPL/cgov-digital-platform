@@ -46,4 +46,22 @@ class TestAppModulePlugin extends AppModulePluginBase {
     return $build;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function alterPageAttachments(array &$attachments, $path, array $options = []) {
+    parent::alterPageAttachments($attachments, $path, $options);
+
+    $attachments['#attached']['html_head'][] = [
+      [
+        '#tag' => 'meta',
+        '#attributes' => [
+          'name' => 'testmeta',
+          'content' => 'test meta',
+        ],
+      ],
+      'testmeta',
+    ];
+  }
+
 }

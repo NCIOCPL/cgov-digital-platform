@@ -44,7 +44,13 @@ class AppModuleRouteTest extends AppModuleFieldBrowserTestBase {
     /* --------------------------------------
      * There is some issue where the path processor
      * is not firing. I don't know if it is minimal
-     * kernel or what. TODO: Test routing.
+     * kernel or what.
+     *
+     * There is an issue where a hook_page_attachments_alter is not firing
+     * as well. Probably similar issue.
+     *
+     * TODO: Test routing.
+     * TODO: Test meta tag additions.
      * --------------------------------------
      */
   }
