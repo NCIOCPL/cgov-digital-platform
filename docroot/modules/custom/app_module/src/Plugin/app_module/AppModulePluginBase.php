@@ -121,4 +121,29 @@ abstract class AppModulePluginBase extends PluginBase implements AppModulePlugin
    */
   abstract protected function matchRouteInternal(array $path_components, array $options = []);
 
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function alterPageAttachments(array &$attachments, $path, array $options = []) {
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function alterTokens(array &$replacements, array $context, $path, array $options = []) {
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * The default implementation is a NOOP.
+   */
+  public function getTokensForAltering($path, array $options = []) {
+    return [];
+  }
+
 }

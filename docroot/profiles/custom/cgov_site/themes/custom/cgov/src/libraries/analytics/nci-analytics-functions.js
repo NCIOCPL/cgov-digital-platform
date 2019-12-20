@@ -52,7 +52,7 @@ var NCIAnalytics = {
          */
         this.ReportSuites = (s_account) ? s_account : 'ncidevelopment'; // Formerly the reportSuites argument
 
-        // For debugging only 
+        // For debugging only
         if (NCIAnalytics.debug) {
             console.log('Debug NCIAnalytics.ClickParams():');
             console.log(s.account);
@@ -97,7 +97,7 @@ var NCIAnalytics = {
 
                 if (local_s.linkTrackVars.length > 0)
                   local_s.linkTrackVars += ',';
-                
+
                 local_s.linkTrackVars += 'prop67';
             }
 
@@ -122,14 +122,14 @@ var NCIAnalytics = {
                     /** console.log(err); */
                 }
             }
-            
+
             // add link.href value (prop4) to all link tracking calls when not already present; existing values are given preference
             if(!this.Props[4]) {
                 local_s['prop4'] = 'D=pev1';
 
                 if (local_s.linkTrackVars.length > 0)
                   local_s.linkTrackVars += ',';
-                
+
                 local_s.linkTrackVars += 'prop4';
             }
 
@@ -333,20 +333,9 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    CTSearchResults: function(sender, resultIndex) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal,nciclinicaltrials', 'o', 'CTSearchResults');
-        clickParams.Props = {
-            13: resultIndex
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
     TermsDictionarySearch: function(sender, isSpanish) {
         var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-        
+
         NCIAnalytics.TermsDictionarySearchCore(sender,
             document.getElementById('AutoComplete1').value,
             prop24Contents,
@@ -740,89 +729,6 @@ var NCIAnalytics = {
         clickParams.LogToOmniture();
     },
     //******************************************************************************************************
-    CTSPrintResults_TopLinkClick: function(sender, linkVal, printID){
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'CTSPrintResults_TopLinkClick');
-
-        clickParams.Props = {
-            21: 'CTSPrintPage_' + linkVal,
-            62: 'Clinical Trials: Print Results Page',
-            67: pageName + '_' + printID
-        };            
-        
-        clickParams.Evars = {
-            62: 'Clinical Trials: Print Results Page'
-        };
-        if(linkVal == "Email" || linkVal == "Print Page"){
-            clickParams.Events = [17];
-        }
-        clickParams.LogToOmniture();
-    },
-    //******************************************************************************************************
-    CTSPrintResults_VewUpdatesLinkClick: function(sender, printID){
-        var clickParams = new NCIAnalytics.ClickParams(sender,'nciglobal', 'o', ' CTSPrintResults_VewUpdatesLinkClick');
-
-        var link = sender.href;
-        clickParams.Props = {
-            21: 'CTSPrintPage_CheckUpdates_' + sender.attr('id'),
-            62: 'Clinical Trials: Print Results Page',
-            67: pageName + '_' + printID
-        };
-        
-        clickParams.Evars = {
-            62: 'Clinical Trials: Print Results Page'
-        };
-
-        clickParams.LogToOmniture();
-    },
-	//******************************************************************************************************
-	// Original method for old basic form - kept to not break Analytics
-    CTSResultsPrintSelectedClick: function(sender, location, hasSelectAll, totalChecked, checkedPages){
-        NCIAnalytics.CTSResultsPrintSelectedWithFormClick(sender, location, hasSelectAll, totalChecked, checkedPages, "clinicaltrials_basic");
-    },
-	//******************************************************************************************************
-    CTSResultsPrintSelectedWithFormClick: function(sender, location, hasSelectAll, totalChecked, checkedPages, formName){
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTSResultsPrintSelectedClick');
-        clickParams.Events = [48];
-        clickParams.Props = {
-            21: 'CTSPrintSelected_' + location + '_' + hasSelectAll + '_' + totalChecked + '_' + checkedPages,
-            67: pageName,
-            74: formName + '|print selected'
-        };
-        clickParams.LogToOmniture();
-    },
-	//******************************************************************************************************
-	// Original method for old basic form - kept to not break Analytics
-    CTSResultsMaxSelectedClick: function(sender) { 
-        NCIAnalytics.CTSResultsSelectedErrorClick(sender, "clinicaltrials_basic", "maxselectionreached"); 
-    },
-    //******************************************************************************************************
-    // Replacing CTSResultsMaxSelectedClick 
-    CTSResultsSelectedErrorClick: function(sender, formName, errorText) { 
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTSResultsSelectedErrorClick'); 
-        clickParams.Events = [41]; 
-        clickParams.Props = { 
-            74: formName + '|error', 
-            75: 'printselected|' + errorText
-        }; 
-        clickParams.LogToOmniture(); 
-    },
-	//******************************************************************************************************
-	// Original method for old basic form - kept to not break Analytics
-	CTStartOverClick: function(sender) { 
-        NCIAnalytics.CTStartOverWithFormClick(sender, "clinicaltrials_basic", "start over"); 
-    },
-    //******************************************************************************************************
-    CTStartOverWithFormClick: function(sender, formName, linkText) { 
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTStartOverClick'); 
-        clickParams.Events = [49]; 
-        clickParams.Props = { 
-            67: pageName,
-            74: formName + '|' + linkText
-        }; 
-        clickParams.LogToOmniture(); 
-    },
-    //******************************************************************************************************
     SendToPrinterLink: function(sender) {
 
         var clickParams = new NCIAnalytics.ClickParams(sender,
@@ -932,7 +838,7 @@ var NCIAnalytics = {
         section = this.siteSection || '',
         hash = document.location.hash,
         isTrackable = true;
-      
+
       if(payload.eventList) {
         switch(payload.eventList.toLowerCase()) {
           case 'ogapreaward':   events = [101]; break;
@@ -945,16 +851,16 @@ var NCIAnalytics = {
       }
 
       var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'GlobalLinkTrack');
-      var pageDetail = NCIAnalytics.buildPageDetail() || '';	  
+      var pageDetail = NCIAnalytics.buildPageDetail() || '';
 
       clickParams.Props = {
-          28: pageName + pageDetail,      
+          28: pageName + pageDetail,
           48: payload.previousPageMaxVerticalTrackingString || '',
       };
       if(!clickParams.Props[48]) { clickParams.Props[66] = (((section) ? section + '_' : '') + label.toLowerCase()); }
 
       clickParams.Events = events;
-      clickParams.EventsWithIncrementors = eventsWithIncrementors;      
+      clickParams.EventsWithIncrementors = eventsWithIncrementors;
       clickParams.LogToOmniture();
     },
 
@@ -1160,7 +1066,7 @@ var NCIAnalytics = {
             case 'SearchResults':
                 clickParams.Props[13] = index;
                 break;
-            default: 
+            default:
                 break;
         }
 
@@ -1366,8 +1272,8 @@ var NCIAnalytics = {
 
     //******************************************************************************************************
     InThisSectionClick: function(sender, linkText, pageName) {
-        var clickParams = new NCIAnalytics.ClickParams (sender, 'nciglobal', 'o', 'InThisSectionClick'); 
-        
+        var clickParams = new NCIAnalytics.ClickParams (sender, 'nciglobal', 'o', 'InThisSectionClick');
+
         clickParams.Props = {
             66: "InThisSection_" + linkText,
             67: pageName
@@ -1381,14 +1287,14 @@ var NCIAnalytics = {
     PDQMobileClick: function(sender, linkText, isExpanded, pageName) {
         var state = isExpanded?"AccordionSectionExpand_":"AccordionSectionCollapse_";
         var clickParams = new NCIAnalytics.ClickParams (sender, 'nciglobal', 'o', 'PDQMobileClick');
-        
+
         clickParams.Events = isExpanded?[31]:[32];
-        
+
         clickParams.Props = {
             66: state + linkText,
             67: pageName
         };
-        
+
         clickParams.LogToOmniture();
     },
 
@@ -1495,7 +1401,7 @@ var NCIAnalytics = {
     /******************************************************************************************************
     * General accordion click tracking
     * sender - the element responsible for this event.
-    * accordionId - identifier for the whole accordion 
+    * accordionId - identifier for the whole accordion
 	* sectionId - identifier for the clicked accordion section
 	* name - readable accordion section name
 	* action - expand or collapse
@@ -1565,7 +1471,7 @@ var NCIAnalytics = {
 
 	// Record that the proactive chat prompt was dismissed.
 	// sender - the element responsible for this event.
-	RecordProactiveChatPromptDismissal: function(sender){        
+	RecordProactiveChatPromptDismissal: function(sender){
 		var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'ProactiveChat');
 		clickParams.Props = {
 			5 : 'livehelp_proactive chat - dismiss|' + pageName
@@ -1573,11 +1479,11 @@ var NCIAnalytics = {
 		clickParams.Events = [43];
 		clickParams.LogToOmniture();
 	},
-	
+
 	/******************************************************************************************************
 	* Track clicks on CTS feedback form
 	* sender - the element responsible for this event.
-	*/	
+	*/
 	FeedbackFormClick: function(sender, value){
 		var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'FeedbackForm');
 		clickParams.Props = {
@@ -1585,12 +1491,12 @@ var NCIAnalytics = {
 		};
 		clickParams.LogToOmniture();
 	},
-	
+
     /******************************************************************************************************
 	* Track link clicks on CTS pages
 	* sender - the element responsible for this event.
 	* type - info about which component is being tracked
-	* value - pagename 
+	* value - pagename
 	*/
 	SimpleCTSLink: function(sender, type, value) {
 		var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTSLink');
@@ -1600,33 +1506,6 @@ var NCIAnalytics = {
 		clickParams.LogToOmniture();
 	},
 
-	/******************************************************************************************************
-	* Original method for old basic form - kept to not break Analytics
-	*/
-	CTSResultsClick: function(sender, rank, custom) {
-		var type = 'clinicaltrials_basic';
-        if(custom) {
-            type = 'clinicaltrials_custom';
-        }
-		NCIAnalytics.CTSResultsWithFormClick(sender, rank, type);
-	},
-    /******************************************************************************************************
-	* Track search result click on CTS Results page
-	* sender - the element responsible for this event
-	* rank - the position of the selected item on a given page
-	*/
-	CTSResultsWithFormClick: function(sender, rank, formName) {
-		var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTSLink');
-		clickParams.Events = [42];
-		clickParams.Props = {
-			12: formName,
-			13: rank
-		};
-		clickParams.Evars = {
-			12: formName
-		};
-		clickParams.LogToOmniture();
-	},
     //******************************************************************************************************
     SPLF_Lang: function() {
         //alert('Lang');
@@ -1688,7 +1567,7 @@ var NCIAnalytics = {
         } else {
             action = 'Expand:' + action;
         }
-        
+
         clickParams.Props = {
             66: NCIAnalytics.concatCustomLink(action),
             67: pageName
@@ -1710,13 +1589,13 @@ var NCIAnalytics = {
     /* ********************************************************************** */
     glossifiedTerm: function(sender, linkText, blogLink){
         var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'glossifiedTerm');
-        
+
         clickParams.Props = {
             45: "Glossified Term",
             50: linkText,
             67: pageName
         };
-        
+
         if(blogLink) {
             clickParams.Props[66] = NCIAnalytics.concatCustomLink('BodyGlossifiedTerm');
         }
@@ -1741,7 +1620,7 @@ var NCIAnalytics = {
             clickParams.Events = [59];
             clickParams.Props[66] = NCIAnalytics.concatCustomLink('RelatedResource:' + index);
         }
-        
+
         clickParams.LogToOmniture();
     },
     /* ********************************************************************** */
@@ -1813,8 +1692,8 @@ var NCIAnalytics = {
     /* ********************************************************************** */
     ProfilePanelLinkClick: function(sender, linkText, token) {
         var clickParams = new NCIAnalytics.ClickParams (sender,
-            'nciglobal', 'o', 'ProfilePanelLinkClick'); 
-        
+            'nciglobal', 'o', 'ProfilePanelLinkClick');
+
         clickParams.Props = {
             66: "InstitutionCard_" + token + "_" + linkText,
             67: pageName
@@ -1849,7 +1728,7 @@ NCIAnalytics.concatCustomLink = function(value) {
     if (value) {
         linkArr.push(value);
     }
-    
+
     return linkArr.join('_').trim();
 }
 
@@ -1867,14 +1746,14 @@ NCIAnalytics.blogLocation = function() {
 }
 
 /**
- * Get the content group (currently used for prop44, prop66) fron the 
+ * Get the content group (currently used for prop44, prop66) fron the
  * 'isPartOf' metatag.
  */
 NCIAnalytics.contentGroup = function() {
     let metaTag = document.head.querySelector('[name="dcterms.isPartOf"]');
     let metaVal = '';
-    if (metaTag) { 
-        metaVal = metaTag.content || ''; 
+    if (metaTag) {
+        metaVal = metaTag.content || '';
     }
     return metaVal;
 }
@@ -1891,7 +1770,7 @@ NCIAnalytics.buildPageDetail = function() {
 
     // find name of current pdq section
     hash = hash.replace(/#?(section|link)\//g, '');
-    hash = hash.replace(/#/g, '');		
+    hash = hash.replace(/#/g, '');
     if (hash) {
         selector = document.querySelector('#' + hash + ' h2');
         if(selector) {
@@ -1917,8 +1796,8 @@ NCIAnalytics.startPageLoadTimer = function () {
  * Start the pageLoadTimer if the DOM is loaded or document.readyState == complete
  */
 if (document.readyState === "complete" ||
-   (document.readyState !== "loading" && !document.documentElement.doScroll)) { 
-    NCIAnalytics.startPageLoadTimer(); 
+   (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+    NCIAnalytics.startPageLoadTimer();
 } else {
     document.addEventListener('DOMContentLoaded', NCIAnalytics.startPageLoadTimer);
 }
@@ -1939,7 +1818,7 @@ NCIAnalytics.dynamicGrantsTraining = function () {
     });
 
     // Set the "timetoclick" event (106) for specified grants-training links
-    function setTimeToClick(e) {	
+    function setTimeToClick(e) {
         let href = e.target.href;
         let destinationSiteSection = '';
 
@@ -1949,10 +1828,10 @@ NCIAnalytics.dynamicGrantsTraining = function () {
         } else if (cct_pattern.test(href)) {
             destinationSiteSection = 'cct'
         }
-		
+
         if (destinationSiteSection && window.pageLoadedAtTime) {
             let linkText = e.target.textContent.toLowerCase().substring(0, 89).trim();
-            let linkClickedAtTime = new Date().getTime();    
+            let linkClickedAtTime = new Date().getTime();
 
             NCIAnalytics.GlobalLinkTrack({
                 sender: this,
@@ -2024,14 +1903,14 @@ NCIAnalytics.cookieRead = function(c_name) {
  * @param {object} payload
  * @param {Boolean} payload.updateOnly - Restricts functionality when updating data; Typically only used with onscroll
  * @param {Boolean} payload.reset - Simulates a true page load/broswer referesh on SPA pages
- * @param {string} payload.source - Identifies location where call to getScrollDetails occurred 
+ * @param {string} payload.source - Identifies location where call to getScrollDetails occurred
  * @param {string} payload.pageOverride - Override value for last element of TrackingString properties
  * @requires s
  */
 NCIAnalytics.getScrollDetails = function(payload) {
     var previousPageScroll = NCIAnalytics.previousPageMaxVerticalTrackingString || '',
         pageSection = '';
-		
+
     var page = pageName + ((pageSection) ? '/' + pageSection : '');
 
     if (payload) {
@@ -2110,10 +1989,10 @@ NCIAnalytics.getScrollDetails = function(payload) {
     NCIAnalytics.scrollDetails = updateScrollDetails();
 
     // set cookie for capture on next page (or next non-updateOnly call to this function)
-    NCIAnalytics.cookieWrite('nci_scroll', 
-        NCIAnalytics.scrollDetails.percentOfTotalPageViewed + 'pct|' + 
+    NCIAnalytics.cookieWrite('nci_scroll',
+        NCIAnalytics.scrollDetails.percentOfTotalPageViewed + 'pct|' +
         NCIAnalytics.scrollDetails.percentAboveFoldAtLoad + 'pct|' +
-        NCIAnalytics.maxPageHeight + 'px|' + 
+        NCIAnalytics.maxPageHeight + 'px|' +
         page
     );
 
@@ -2125,8 +2004,8 @@ NCIAnalytics.getScrollDetails = function(payload) {
     // send analytics call
     if(payload && payload.sendCall === true) {
         var hash = document.location.hash || '';
-        // If this is a PDQ page, track scroll pct as a click event 
-        if(hash.match(/^(#link|#section)/) != null) {      
+        // If this is a PDQ page, track scroll pct as a click event
+        if(hash.match(/^(#link|#section)/) != null) {
             NCIAnalytics.GlobalLinkTrack({
                 // percentAboveFoldAtLoadTrackingString: NCIAnalytics.scrollDetails.percentAboveFoldAtLoadTrackingString,
                 previousPageMaxVerticalTrackingString: NCIAnalytics.scrollDetails.previousPageMaxVerticalTrackingString
@@ -2161,7 +2040,7 @@ function buildPageOverride(payload) {
     section = NCIAnalytics.buildPageDetail();
     section = (section) ? section : hash; // default to hash value if nothing returns from buildPageDetail()
     section = section.replace(/^\//, '');
-    
+
     // stitch it all together
     retVal += (section) ? '/' + section : '';
 
@@ -2178,7 +2057,7 @@ function buildPageOverride(payload) {
 function changeMonitor(payload) {
   var variableName = payload.name,
       variableValue = payload.value;
-  
+
   if(window[variableName] != variableValue) {
     // console.info('window["' + variableName + '"] has changed from ' + window[variableName] + ' to "' + variableValue + '"');
     var fireCallback = true;
@@ -2190,7 +2069,7 @@ function changeMonitor(payload) {
           payload.callback();
         }
     }
-    window[variableName] = variableValue;                 
+    window[variableName] = variableValue;
   }
 }
 
@@ -2218,7 +2097,7 @@ attachEvents({
     action: function() {
         NCIAnalytics.getScrollDetails({
             source: 'window.load',
-            //sendCall: true, 
+            //sendCall: true,
             pageOverride: buildPageOverride({page: pageName, hash: document.location.hash})
         });
     }
@@ -2243,7 +2122,7 @@ attachEvents({
 
 /**
  * monitor for changes in document.location.hash
- */  
+ */
 attachEvents({
     element: window,
     event: 'hashchange',
@@ -2269,8 +2148,8 @@ attachEvents({
 });
 
 
-/** 
- * determine if variable is null, undefined or blank ("") 
+/**
+ * determine if variable is null, undefined or blank ("")
  * @param variable {string}
  * @author Evolytics <nci@evolytics.com>
  * @since 2017-04-28
@@ -2293,13 +2172,13 @@ NCIAnalytics.getQueryString = function(pv_queryParam, pv_url) {
     var returnVal = '',
         fullSubString,
         splitSubString;
-    
+
     fullSubString = (pv_url) ? pv_url.slice(pv_url.indexOf("?") + 1) : window.location.search.substring(1);
 
     var subStringArray = fullSubString.split("&");
     var queryParamArray = pv_queryParam.split(",");
 
-    if(subStringArray.length > 0) {        
+    if(subStringArray.length > 0) {
         for (var i = 0, maxi = subStringArray.length; i < maxi; i++) { // loop through params in query string
             var paramValue = subStringArray[i].split("=");
             for (var ii = 0, maxii = queryParamArray.length; ii < maxii; ii++) { //loop through params in pv_queryParam
@@ -2317,7 +2196,7 @@ NCIAnalytics.getQueryString = function(pv_queryParam, pv_url) {
 
 /**
  * build channel stack cookie for cross-visit participation
- * @param payload {object} 
+ * @param payload {object}
  * @param payload.cookieName {string} - cookie name
  * @param payload.cookieValue {string} - value to add to cookie
  * @param payload.returnLength {number} - number of items to stack
@@ -2362,7 +2241,7 @@ NCIAnalytics.urs = {
             'google.', 'msn.com', 'search.yahoo.', 'yandex.'
         ],
         socialNetworks: [
-            'facebook.com', 'flickr.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'plus.google.com', 
+            'facebook.com', 'flickr.com', 'instagram.com', 'linkedin.com', 'pinterest.com', 'plus.google.com',
             'reddit.com', 't.co', 'tumblr.com', 'twitter.com', 'yelp.com', 'youtube.com'
         ],
         govDomains: ['.gov'], // specific gov domains; change to '.gov' to include all gov domains
@@ -2387,7 +2266,7 @@ NCIAnalytics.urs = {
     },
 
     /**
-     * @description retieves list of # most recent marketing channel sources for visitor 
+     * @description retieves list of # most recent marketing channel sources for visitor
      * @param payload {object}
      * @param payload.channel {string}
      * @param payload.ursCookie {string}
