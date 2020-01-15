@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 import $ from 'jquery';
 /*======================================================================================================
 * function doAutocomplete
@@ -15,60 +19,57 @@ import $ from 'jquery';
 *
 *====================================================================================================*/
 export function doAutocomplete(target, src, contains, queryParam, queryString, opts) {
-	// ensure our target is a jQuery object
-	var $target = $(target);
+    // Ensure our target is a jQuery object.
+    var $target = $(target);
 
-	var appendTo = $target.is("#swKeyword")?null:$target.parent(),
-		queryParameter = queryParam || "term",
-		defaultOptions = {
-			appendTo: appendTo,
-			// Set AJAX service source
-			source: function( request, response ) {
-				var dataQuery = $.extend({}, queryString || {}),
-					term = request.term,
-					xhr;
-				dataQuery[queryParameter] = term;
+    var appendTo = $target.is("#swKeyword") ? null : $target.parent(),
+        queryParameter = queryParam || "term",
+        defaultOptions = {
+            appendTo: appendTo,
+            // Set AJAX service source.
+            source: function (request, response) {
+        var term = request.term,
+          xhr;
 
-				if (xhr && xhr.abort) {
-					xhr.abort();
-				}
-				if (typeof src === 'string') {
-					xhr = $.ajax({
-						url: src,
-						data: dataQuery,
-						dataType: 'json'
-					});
-				} else {
-					xhr = src.call(this, term)
-						.done(function(data) {
-							return data.result;
-						});
-				}
+                if (xhr && xhr.abort) {
+                    xhr.abort();
+                }
+                if (typeof src === 'string') {
+                    xhr = $.ajax({
+                        url: src + term
+                    });
+                }
+else {
+                    xhr = src.call(this, term)
+                        .done(function (data) {
+                            return data.results;
+                        });
+                }
 
-				$.when(xhr)
-					.done(function(data) {
-						if(data.result) {
-							response(data.result.map(function(el){
-								return el.term
-							}));
-						} else {
-							var values = [];
-							for(var i = 0; i < data.length; i++){
-								values.push(data[i].item);
-							}
-							response(values);
-						}
-					})
-					.fail(function() {
-						response([]);
-					});
-			},
-			minLength: 3
-		},
-		options = $.extend({}, defaultOptions, opts || {})
-	;
+                $.when(xhr)
+                    .done(function (data) {
+                        if (data.results) {
+                            response(data.results.map(function (el) {
+                                return el.term
+                            }));
+                        }
+else {
+                            var values = [];
+                            for (var i = 0; i < data.length; i++) {
+                                values.push(data[i].item);
+                            }
+                            response(values);
+                        }
+                    })
+                    .fail(function () {
+                        response([]);
+                    });
+            },
+            minLength: 3
+        },
+        options = $.extend({}, defaultOptions, opts || {});
 
-	$target.autocomplete(options);
+    $target.autocomplete(options);
 
-	return $target;
+    return $target;
 }
