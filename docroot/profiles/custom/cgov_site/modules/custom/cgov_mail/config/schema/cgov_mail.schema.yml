@@ -1,0 +1,16 @@
+cgov_mail.settings:
+  type: config_object
+  label: 'Email Settings'
+  mapping:
+    contact_form_recipient:
+      type: text
+      label: 'Email form recipient, only takes effect on prod.'
+    es_contact_form_recipient:
+      type: text
+      label: 'Email form recipient, only takes effect on prod.'
+    re-captcha:
+      type: text
+      label: 'Re-captcha key'
+    enable-lower-tier-routing:
+      type: boolean
+      label: 'Whether or not rerouting mail to log is enabled for lower tiers.'

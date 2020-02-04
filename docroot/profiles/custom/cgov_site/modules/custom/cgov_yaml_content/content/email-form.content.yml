@@ -1,0 +1,344 @@
+## About us contact
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  tid: 902900
+  name: "Contact Us"
+  field_pretty_url:
+    value: "contact"
+  field_navigation_label:
+    value: "Contact"
+  field_section_nav_root:
+    value: true
+  field_levels_to_display:
+    value: 5
+  computed_path: "/contact"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Cancer Treatment"
+          - computed_path: "/about-cancer/treatment"
+
+###
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "Contact Us Email Form - English"
+  info__ES:
+    value: "Contact Us Email Form - Spanish"
+  langcode: en
+  status: 1
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <!-- function validateEmail() -->
+        <script language="javascript" type="text/javascript">  function validateEmail() {
+            var email = "not valid email";
+            var saywhat = '';
+            var theresponse = '';
+            if (document.contactNCI.__from.value === '') {
+                saywhat += "Please enter a valid email address (ex. xxxxx@xxxxx.com).\n";
+            } else {
+                theresponse = '';
+                theresponse += CheckEmail(document.contactNCI.__from.value);
+                if (theresponse !== '') {
+                    saywhat += theresponse;
+                } else {
+                    email = document.contactNCI.__from.value;
+                }
+            }
+            if (document.contactNCI.__email_confirm.value === '') {
+                saywhat += "Please enter a valid confirmation email address.\n";
+            }
+            if (email !== document.contactNCI.__email_confirm.value) {
+                saywhat += "Please make sure both email addresses match.\n";
+            }
+            if (document.contactNCI.Message.value === '') {
+                saywhat += "Please enter a message.\n";
+            }
+            if (email === document.contactNCI.__email_confirm.value && document.contactNCI.Message.value !== '') {
+                if (document.contactNCI.__subject.value.indexOf('Cancer.gov Inquiry - ') === -1) {
+                    document.contactNCI.__subject.value = 'Cancer.gov Inquiry - ' + document.contactNCI.__subject.value;
+                }
+            }
+            if (saywhat !== '') {
+                alert(saywhat);
+                return false;
+            }
+            return true;
+        }
+
+        function CheckEmail(strng) {
+            var error = '';
+            var emailFilter = /^.+@.+\..{2,3}$/;
+            if (!(emailFilter.test(strng))) {
+                error = "Please enter a valid email address.\n";
+            } else {
+                var illegalChars = /[\(\)\,\;\:\\\"\[\]]/;
+                if (strng.match(illegalChars)) {
+                    error = "The email address contains illegal characters.\n";
+                }
+            }
+            return error;
+        } </script> <!-- end function validateEmail() -->
+        <div class="callout-box-right"> OMB NO: 0925-0208<br> EXPIRATION DATE: 11/30/2021<br> <a href="#omb-control">Burden
+            Statement</a></div>  <p>Please use this form to contact NCI. Your answers will help us give you the most useful
+            information. Personal information will be kept confidential and used only to respond to your question.</p> <p>NOTE:
+            Information provided by the NCI’s Cancer Information Service is not a substitute for personal medical advice.
+            <strong>Do not send or attach photos or medical reports.</strong> If you need medical advice, please consult with
+            your health care provider.</p>
+        <div class="callout-box"><p> Would you rather speak with one of our Cancer Information Specialists?<br> <b>1-800-4-CANCER
+            (1-800-422-6237)</b><br> 9 a.m. to 9 p.m. ET, M-F </p></div>
+        <form action="/FormEmailer" id="Form1" method="post" name="contactNCI" class="email-us-form"
+              onsubmit="return(validateEmail());"><input name="__recipient" id="Hidden1" type="hidden"
+                                                         value="contact_form_recipient"> <input name="__redirectto" id="Hidden2"
+                                                                                               type="hidden"
+                                                                                               value="/form/thank-you">
+            <input name="__splitFields" type="hidden" value="describe_yourself,your_question_is_about">
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__from" class="inline">E-mail address:*</label></div>
+                <div class="medium-8 columns"><input id="a__from" name="__from" type="text" maxlength="60"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__email_confirm" class="inline">Enter e-mail address again to
+                    confirm:*</label></div>
+                <div class="medium-8 columns"><input id="a__email_confirm" name="__email_confirm" type="text" maxlength="60">
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__zipcode" class="inline">Zip code (if U.S. resident):</label></div>
+                <div class="medium-8 columns"><input id="a__zipcode" name="your_zipcode" type="text" maxlength="5"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__country" class="inline">Country (if outside the U.S.):</label>
+                </div>
+                <div class="medium-8 columns"><input id="a__country" name="your_country" type="text" maxlength="100"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__subject" class="inline">Enter the subject of your e-mail:</label>
+                </div>
+                <div class="medium-8 columns"><input id="a__subject" name="__subject" type="text" maxlength="50"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="message" class="inline"> Message<br> (please limit your message to
+                    2,000 characters):* </label></div>
+                <div class="medium-8 columns"><textarea id="message" name="Message" rows="10"></textarea>
+                    <p>Should your message require a response, you may expect one within 5 business days.</p></div>
+            </div>
+            <div class="row">
+                <div class="medium-8 columns right">    <!-- Recaptcha set up -->
+                    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+                    <div class='g-recaptcha' data-sitekey='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'></div>
+                </div>
+            </div>
+            <div class="row vertical-space">
+                <div class="medium-8 right columns">
+                    <button type="submit" class="submit button">Submit</button>
+                    <button type="reset" class="reset button">Clear</button>
+                </div>
+            </div>
+        </form> <p>* Required field</p> <p><a href="/policies/privacy-security#email">Privacy Policy on E-mail Messages Sent to
+            the NCI Web Site</a></p>
+        <div class="callout-box" id="omb-control" tabindex="0"><p>Public reporting burden for this collection of information is
+            estimated to average 10 minutes per response, including the time for reviewing instructions, searching existing data
+            sources, gathering and maintaining the data needed, and completing and reviewing the collection of information. An
+            agency may not conduct or sponsor, and a person is not required to respond to, a collection of information unless it
+            displays a currently valid OMB control number. Send comments regarding this burden estimate or any other aspect of
+            this collection of information, including suggestions for reducing this burden, to: NIH, Project Clearance Branch,
+            6705 Rockledge Drive, MSC 7974, Bethesda, MD 20892-7974, ATTN: PRA (0925-0208). Do not return the completed form to
+            this address.</p></div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <!-- function validateEmail() -->
+        <script language="javascript" type="text/javascript">  function validateEmail() {
+            var email = "not valid email";
+            var saywhat = '';
+            var theresponse = '';
+            if (document.contactNCI.__from.value === '') {
+                saywhat += "Por favor escriba una dirección de correo electrónica válida: (p.ej. xxxxx@xxxxx.com).\n";
+            } else {
+                theresponse = '';
+                theresponse += CheckEmail(document.contactNCI.__from.value);
+                if (theresponse !== '') {
+                    saywhat += theresponse;
+                } else {
+                    email = document.contactNCI.__from.value;
+                }
+            }
+            if (document.contactNCI.__email_confirm.value === '') {
+                saywhat += "Por favor escriba un correo electrónico de confirmación válido.\n";
+            }
+            if (email !== document.contactNCI.__email_confirm.value) {
+                saywhat += "Por favor asegúrese de que ambas direcciones de correo electrónico sean las mismas.\n";
+            }
+            if (document.contactNCI.Message.value === '') {
+                saywhat += "Por favor escriba un mensaje.\n";
+            }
+            if (email === document.contactNCI.__email_confirm.value && document.contactNCI.Message.value !== '') {
+                if (document.contactNCI.__subject.value.indexOf('Cancer.gov Inquiry - ') === -1) {
+                    document.contactNCI.__subject.value = 'Cancer.gov Inquiry - ' + document.contactNCI.__subject.value;
+                }
+            }
+            if (saywhat !== '') {
+                alert(saywhat);
+                return false;
+            }
+            return true;
+        }
+
+        function CheckEmail(strng) {
+            var error = '';
+            var emailFilter = /^.+@.+\..{2,3}$/;
+            if (!(emailFilter.test(strng))) {
+                error = "Por favor escriba una dirección de correo electrónica válida.\n";
+            } else {
+                var illegalChars = /[\(\)\,\;\:\\\"\[\]]/;
+                if (strng.match(illegalChars)) {
+                    error = "Por favor escriba una dirección de correo electrónica válida.\n";
+                }
+            }
+            return error;
+        } </script>
+        <div class="callout-box-right"> OMB NO: 0925-0208<br> FECHA DE VENCIMIENTO: 30 de noviembre de 2021<br> <a
+                href="#omb-control">Declaración de tiempo estimado</a></div>  <p>Para comunicarse con el Instituto Nacional del
+            C&aacute;ncer (NCI), s&iacute;rvase llenar este formulario. Sus respuestas nos ayudar&aacute;n a darle la informaci&oacute;n
+            m&aacute;s &uacute;til posible. La informaci&oacute;n personal ser&aacute; considerada confidencial y se utilizar&aacute;
+            solamente para responder a sus preguntas.</p> <p>NOTA: La información que se suministra a través del Servicio de
+            Información sobre el Cáncer del NCI no sustituye las recomendaciones de su médico personal. <strong>Por favor no
+                envíe ni añada fotos o reportes médicos.</strong> Si necesita consejos médicos, por favor consulte a su
+            proveedor de atención médica.</p>
+        <div class="callout-box"> &iquest;Preferir&iacute;a hablar con uno de nuestros especialistas en informaci&oacute;n sobre
+            el c&aacute;ncer?<br> <b>1-800-4-CANCER (1-800-422-6237)</b><br> 9 a.m. a 9 p.m. hora del Este de EE. UU., lunes a
+            viernes
+        </div>  <!-- end function validateEmail() -->
+        <form action="/FormEmailer" id="Form1" method="post" name="contactNCI" class="email-us-form"
+              onsubmit="return(validateEmail());"><input name="__recipient" id="Hidden1" type="hidden"
+                                                         value="es_contact_form_recipient"> <input name="__redirectto"
+                                                                                                  id="Hidden2" type="hidden"
+                                                                                                  value="/form/thank-you">
+            <input name="__splitFields" type="hidden" value="describe_yourself,your_question_is_about">
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__from" class="inline">Direcci&oacute;n de correo electr&oacute;nico:*</label>
+                </div>
+                <div class="medium-8 columns"><input id="a__from" name="__from" type="text" maxlength="60"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__email_confirm" class="inline">Repita su direcci&oacute;n de correo
+                    electr&oacute;nico para confirmarla:*</label></div>
+                <div class="medium-8 columns"><input id="a__email_confirm" name="__email_confirm" type="text" maxlength="60">
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__zipcode" class="inline">C&oacute;digo postal (si reside en Estados
+                    Unidos):</label></div>
+                <div class="medium-8 columns"><input id="a__zipcode" name="your_zipcode" type="text" maxlength="5"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__country" class="inline">Pa&iacute;s (si reside fuera de Estados
+                    Unidos):</label></div>
+                <div class="medium-8 columns"><input id="a__country" name="your_country" type="text" maxlength="30"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="a__subject" class="inline">Tema de su correo
+                    electr&oacute;nico:</label></div>
+                <div class="medium-8 columns"><input id="a__subject" name="__subject" type="text" maxlength="50"></div>
+            </div>
+            <div class="row">
+                <div class="medium-4 columns"><label for="message" class="inline"> Mensaje<br> (por favor limite su mensaje a
+                    2000 caracteres):* </label></div>
+                <div class="medium-8 columns"><textarea id="message" name="Message" rows="10"></textarea>
+                    <p>Si su mensaje requiere de una respuesta, espere recibirla en cinco d&iacute;as laborales.</p></div>
+            </div>
+            <div class="row">
+                <div class="medium-8 columns right">    <!-- Recaptcha set up -->
+                    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+                    <div class='g-recaptcha' data-sitekey='6LePCSkTAAAAAP_Eqe83x8ohu-Tb9Chk3TBhFhY7'></div>
+                </div>
+            </div>
+            <div class="row vertical-space">
+                <div class="medium-8 right columns">
+                    <button type="submit" class="submit button">Enviar</button>
+                    <button type="reset" class="reset button">Borrar</button>
+                </div>
+            </div>
+        </form>  <p>* Campo obligatorio</p> <p><a href="/espanol/global/politicas/confidencialidad">Pol&iacute;tica de
+            confidencialidad sobre correos electr&oacute;nicos enviados al sitio web del Instituto Nacional del
+            C&aacute;ncer</a></p>
+        <div class="callout-box" id="omb-control" tabindex="0"><p>Se calcula que la carga p&uacute;blica para suministrar esta
+            informaci&oacute;n es en promedio de 10 minutos por respuesta, e incluye el tiempo para leer las instrucciones,
+            revisar las fuentes de informaci&oacute;n existentes, recopilar y mantener los datos necesarios, y concluir y
+            revisar la informaci&oacute;n recogida. Ninguna agencia puede realizar ni patrocinar la recolecci&oacute;n de
+            informaci&oacute;n, y no se requiere que ninguna persona responda a tal recolecci&oacute;n de informaci&oacute;n, a
+            menos que &eacute;sta tenga un n&uacute;mero de control OMB v&aacute;lido vigente. Env&iacute;e sus comentarios
+            acerca de esta carga estimada o sobre cualquier otro aspecto de esta recolecci&oacute;n de informaci&oacute;n y sus
+            sugerencias para reducir el tiempo invertido en esta tarea a: NIH, Project Clearance Branch, 6705 Rockledge Drive,
+            MSC 7974, Bethesda, MD 20892-7974, ATTN: PRA (0925-0208). No env&iacute;e el formulario completo a esta direcci&oacute;n.</p>
+        </div>
+######
+- entity: "node"
+  type: "cgov_article"
+  title: "Contact Us E-mail Form"
+  title__ES:
+    value: "Contact Us E-mail Form - Spanish"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/contact'
+  field_pretty_url:
+    value: 'email-us'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/espanol/contactenos'
+  field_pretty_url__ES:
+    value: 'correo-electronico'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - value: |
+          format: "full_html"
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+
+  field_browser_title:
+    value: "Contact Us"
+  field_browser_title__ES:
+    value: "Contact Us - Spanish"
+  field_feature_card_description:
+    value: "Contact US "
+  field_feature_card_description__ES:
+    value: "Contact Us - Spanish"
+  field_card_title:
+    value: "Contact Us"
+  field_card_title__ES:
+    value: "Contact Us - Spanish"
+  field_date_display_mode:
+    - value: "reviewed"
+  field_list_description:
+  field_page_description:
+    value: "Contact us e-mail page."
+  field_page_description__ES:
+    value: "Información y consejos para controlar la anemia, un efecto secundario del tratamiento del cáncer."
+  field_date_posted:
+    value: "2020-02-01"
+  field_date_reviewed:
+    value: "2020-02-01"
+  field_date_updated:
+    value: "2020-02-01"

@@ -81,3 +81,50 @@
     }
   }
 }
+
+.error-page .error-content div {
+  padding: 0 0 10px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1
+}
+
+.error-page .error-content h1 {
+  font-size: 30px;
+  line-height: 35px;
+  margin-top: 1.4em
+}
+
+.error-page .error-content .error-content-english h1 {
+  color: #62539d
+}
+
+.error-page .error-content .error-content-spanish h1 {
+  color: #14819b
+}
+
+@media screen and (max-width: 767px) {
+  .error-page .error-content-spanish h1 {
+    margin-top: 0
+  }
+  .error-content div {
+    padding-bottom: 0
+  }
+  .error-searchbar {
+    display: block
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .error-page .error-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+  }
+  .error-page .error-content .error-content-english {
+    padding-right: 40px
+  }
+  .error-page .error-content .error-content-spanish {
+    padding-left: 40px
+  }
+}
