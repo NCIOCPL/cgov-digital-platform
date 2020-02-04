@@ -1,0 +1,27 @@
+cgov_mail.email_settings:
+  path: '/admin/config/cgov_mail/settings'
+  defaults:
+    _form: '\Drupal\cgov_mail\Form\MailSettingsForm'
+    _title: 'Cancer.gov mail form configuration.'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+
+####
+# Form API endpoints
+cgov_mail_api.post:
+  path: '/FormEmailer'
+  defaults: { _controller: '\Drupal\cgov_mail\Controller\MailAPIController::handleForm' }
+  methods:  [POST]
+  requirements:
+    ## Public API
+    _access: 'TRUE'
+
+cgov_mail_api.thank_you:
+  path: '/form/thank-you'
+  defaults:
+    _controller: '\Drupal\cgov_mail\Controller\MailAPIController::handleThankYouRedirect'
+    _title: 'Contact Us - Thank You'
+  requirements:
+    _permission: 'access content'
