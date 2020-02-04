@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_mail logic.
+ */
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_mail().
+ */
+function cgov_mail_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'send_contact_form':
+      $message['from'] = $params['from'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = Html::escape($params['message']);
+      break;
+  }
+}
