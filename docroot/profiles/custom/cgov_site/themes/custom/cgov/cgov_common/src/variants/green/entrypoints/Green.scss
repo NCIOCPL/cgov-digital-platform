@@ -279,9 +279,8 @@ h6 {
   background: $page-margin-background;
 }
 
-// language bar
-.columns.utility,
-.language-bar {
+// hidden elements
+.columns.utility {
   display: none;
 }
 
@@ -305,6 +304,16 @@ h6 {
 // overcoming foundation class that hides utility bar for mobile
 .utility-background.micro-a {
   display: block !important;
+}
+
+// language bar
+// Override colors from _language_bar.scss
+.language-bar {
+  background: #fff;
+}
+
+.sitewide-language a {
+  color: $ocean;
 }
 
 // menu bar
@@ -448,9 +457,9 @@ figure a.article-image-enlarge:hover {
   background-color: $content-view-button-hover-background;
 }
 
-// #2209: CR to update secondary feature styling 
+// #2209: CR to update secondary feature styling
 .feature-secondary {
-  .card { 
+  .card {
     background: $cloud;
   }
 
