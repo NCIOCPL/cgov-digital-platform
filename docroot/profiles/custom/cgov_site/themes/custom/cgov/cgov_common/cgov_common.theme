@@ -74,6 +74,11 @@ function cgov_common_theme_suggestions_field_alter(array &$suggestions, array $v
 function cgov_common_preprocess_html(&$variables) {
   $colorTheme = theme_get_setting('color_theme');
   $variables['attributes']['class'][] = $colorTheme . '-theme';
+
+  $hasTranslations = theme_get_setting('has_translations');
+  if ($hasTranslations){
+    $variables['attributes']['class'][] = 'has-translated-content';
+  }
 }
 
 /**

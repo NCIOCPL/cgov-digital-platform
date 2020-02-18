@@ -40,4 +40,18 @@ function cgov_common_form_system_theme_settings_alter(&$form) {
       // Add new theme names here. Value(key) should match folder name in /src/variants
     ],
   );
+  /* ------------ 'Has Translations' button ----------- */
+  $form['translations'] = array(
+    '#type' => 'details',
+    '#title' => ('Translations'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#open' => TRUE,
+  );
+  $form['translations']['has_translations'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Has Translations'),
+    '#description' => t('Does the site include translated content?'),
+    '#default_value' => theme_get_setting('has_translations'),
+  );
 }

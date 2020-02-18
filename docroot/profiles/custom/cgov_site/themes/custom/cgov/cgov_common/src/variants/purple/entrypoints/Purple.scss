@@ -42,7 +42,7 @@ $bronze: #c78005;
 .contentzone h4 a,
 .contentzone h5 a,
 .contentzone h6 a,
-.main-content .feature-card a, 
+.main-content .feature-card a,
 ul.breadcrumbs>* a,
 .pullquote,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
@@ -141,7 +141,6 @@ a.arrow-link:focus,
 }
 
 // hidden elements
-.language-bar,
 #microsite-a .utility {
   display: none;
 }
@@ -162,6 +161,15 @@ a.arrow-link:focus,
     padding-left: 5px;
     color: $asphalt;
   }
+}
+
+// language bar
+// Override colors from _language_bar.scss
+.language-bar {
+  background: #fff;
+}
+.sitewide-language a {
+  color: $ultra-violet;
 }
 
 // menu bar
@@ -469,7 +477,7 @@ form button[type="submit"]:hover {
   .section-nav .contains-current>div a {
     color: $iris;
   }
-  
+
   .section-nav .level-0.contains-current>div a {
     color: #fff;
   }
