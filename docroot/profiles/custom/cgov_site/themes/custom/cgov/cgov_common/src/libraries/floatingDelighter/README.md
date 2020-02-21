@@ -10,11 +10,13 @@ Inject a floating delighter anchor element onto a page given a set of a rules fo
 
 New delighters should be defined in their own sub-directory in the delighters directory. Any custom css can be included through the new element file as well. A new element should consist of an exported object with the shape:
 
+```js
 {
     href: String,
     innerHTML: String,
     ?classList: String[]
 }
+```
 
 The href will be used to generate an anchor tag wrapping the innerHTML. The innerHTML should represent a string containing valid HTML that will be injected inside the anchor. The classList is an array of class names that will be added to the delighter container which will be inserted onto the page.
 
@@ -22,12 +24,13 @@ The href will be used to generate an anchor tag wrapping the innerHTML. The inne
 
 Adding a new rule is as simple as adding a new object to the rules array in rules.js. A new rule should have the shape:
 
+```js
 {
     rule: RegExp,
     delighter: Delighter,
     ?exclude: [ RegExp | { rule: RegExp, whitelist: String[] } ]
 }
-
+```
 
 ## Troubleshooting
 
