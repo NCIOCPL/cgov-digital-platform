@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 import {
     cts,
     socialMedia,
@@ -5,6 +9,8 @@ import {
 } from './delighters';
 
 /**
+ * Delighter configuration rules.
+ *
  * A rule is an object required to have a rule and delighter property. The third property exclude is optional. Exclude is an array of regular expressions and/or
  * objects containing a rule (regex) and whitelist (array) property.
  *
@@ -42,7 +48,8 @@ const rules = [
             /^\/rare-brain-spine-tumor\/about/i,
             /\/living\/finished-treatment/i,
             /\/living\/coping/i,
-            /\/living\/stories/i
+            /\/living\/stories/i,
+            /^\/rare-brain-spine-tumor\/espanol/i
         ]
     },
 ];
