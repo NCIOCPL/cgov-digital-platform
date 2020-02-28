@@ -20,6 +20,17 @@
 $config['locale.settings']['translation']['use_source'] = 'local';
 $config['locale.settings']['translation']['path'] = DRUPAL_ROOT . '/translations';
 
+// Set up the Drupal 8 fast 404 functionality in order to avoid the overhead
+// of rendering a fully-themed error page in certain cases by outputting a hard-coded
+// basic error page.
+//
+// Only render a themed 404 page on one path.
+$config['system.performance']['fast_404']['exclude_paths'] = '/\/Real404Page/i';
+// Use fast 404 everywhere else.
+$config['system.performance']['fast_404']['paths'] = '/.*/';
+// The actual page.
+$config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The URL "@path" was not found on this server.</p></body></html>';
+
 // Pass in the correct ACSF site name to build the sitemap.xml.
 // The base_url is picked up from, well, who knows what actually. It should be
 // what is passed in for the --uri flag to drush for the cron, but then again
