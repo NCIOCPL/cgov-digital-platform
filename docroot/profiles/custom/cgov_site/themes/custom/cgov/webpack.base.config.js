@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const config = {
   target: 'web',
@@ -7,15 +9,14 @@ const config = {
       filename: '[name].js',
       path: path.join(__dirname, 'dist/js'),
   },
-  optimization: {
-	// We no not want to minimize our code.
-	minimize: false
-  },
   externals: {
     'jquery': 'jQuery',
     'jQuery': 'jQuery',
     'jquery-ui': 'jQuery.ui',
     'CDEConfig': 'CDEConfig'
+  },
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   module: {
 		rules: [
