@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "gulp": "gulp",
-    "build": "gulp && webpack",
+    "build": "gulp && webpack --mode=production",
     "watch": "gulp && webpack --watch --mode=development"
   },
   "keywords": [],
@@ -29,9 +29,11 @@
     "merge-stream": "^1.0.1",
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.10.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "svg-sprite": "^1.5.0",
+    "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.1.2"
   },
