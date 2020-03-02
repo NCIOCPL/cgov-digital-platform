@@ -34,11 +34,11 @@ modules:
     enable: [dblog, acquia_connector, shield, cgov_caching_nocdn]
     uninstall: [syslog, cgov_caching_cdn, akamai]
   dev:
-    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
-    uninstall: [syslog, cgov_caching_nocdn, akamai]
-  int:
     enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
-    uninstall: [syslog, cgov_caching_cdn, akamai]
+    uninstall: [syslog, cgov_caching_cdn , akamai]
+  int:
+    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    uninstall: [syslog, cgov_caching_nocdn]
   test:
     enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
     uninstall: [syslog, devel, views_ui, cgov_caching_cdn, akamai]
