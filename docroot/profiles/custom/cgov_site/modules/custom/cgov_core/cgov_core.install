@@ -29,9 +29,6 @@ function cgov_core_install() {
   $siteHelper->addRole('admin_ui', 'Admin UI', 3);
   $siteHelper->addRole('content_previewer', 'Content Previewer', 4);
 
-  // Set the DTM config for this environment.
-  $siteHelper->installDtmEnvironment();
-
   // Install permissions for this module.
   _cgov_core_install_permissions($siteHelper);
 }
