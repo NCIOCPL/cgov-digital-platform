@@ -1,5 +1,18 @@
 enabled: true
-property_embed_code_id: f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84
-property_embed_code_hash: 8c356a9a11116b0b8550a4349b05bc801933186c
 datalayer_enabled: false
-environment: production
+paths:
+  - '/admin*'
+  - '/batch*'
+  - '/node/add*'
+  - '/node/*/edit'
+  - '/node/*/delete'
+  - '/node/*/revisions*'
+  - '/user/*/edit*'
+  - '/user/*/cancel*'
+paths_negate: '1'
+connection_type: dtm
+launch_property_build_url: ''
+dtm_property_embed_code_id: f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84
+dtm_property_embed_code_hash: 8c356a9a11116b0b8550a4349b05bc801933186c
+dtm_environment: production
+launch_property_async: false

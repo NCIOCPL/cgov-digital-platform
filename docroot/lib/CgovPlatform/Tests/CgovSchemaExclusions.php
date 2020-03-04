@@ -35,6 +35,9 @@ class CgovSchemaExclusions {
     'metatag.metatag_defaults.node__cgov_video',
     'metatag.metatag_defaults.node__pdq_cancer_information_summary',
     'metatag.metatag_defaults.node__pdq_drug_information_summary',
+    // See https://www.drupal.org/project/adobe_dtm/issues/3117875
+    // for the tracked issue.
+    'adobe_dtm.settings',
   ];
 
 }
