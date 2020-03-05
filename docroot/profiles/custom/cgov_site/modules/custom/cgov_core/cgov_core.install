@@ -227,3 +227,15 @@ function cgov_core_update_8002() {
 
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Update for v1.1.14.
+ *
+ * Install cgov_mail as a CGov Module.
+ */
+function cgov_core_update_8003() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_mail')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_mail']);
+  }
+}
