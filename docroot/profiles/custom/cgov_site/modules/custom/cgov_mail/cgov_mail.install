@@ -1,0 +1,11 @@
+<? php /**
+* Update for v1.1.14.
+*
+* Install cgov_mail as a CGov Module.
+*/
+function cgov_mail_update_8001() {
+if (!\Drupal::moduleHandler()->moduleExists('cgov_mail')) {
+$installer = \Drupal::service('module_installer');
+$installer->install(['cgov_mail']);
+}
+}
