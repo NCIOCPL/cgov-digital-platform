@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_mail logic.
+ */
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_mail().
+ */
+function cgov_mail_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'send_contact_form':
+      $message['from'] = $params['from'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = Html::escape($params['message']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_metatags_attachments_alter().
+ */
+function cgov_mail_metatags_attachments_alter(array &$metatag_attachments) {
+  // Add no-index to the metatags for our custom thank you page.
+  $current_path = \Drupal::service('path.current')->getPath();
+  if ($current_path == '/form/thank-you') {
+
+    // Set the title.
+    foreach ($metatag_attachments['#attached']['html_head'] as $id => $attachment) {
+      if ($attachment[1] == 'title') {
+        $metatag_attachments['#attached']['html_head'][$id][0]['#attributes']['content'] = 'Thank You - National Cancer Institute';
+      }
+    }
+
+    $metatag_attachments['#attached']['html_head'][] = [
+      [
+        '#tag' => 'meta',
+        '#attributes' => [
+          'name' => 'robots',
+          'content' => 'noindex',
+        ],
+      ],
+      'noindex',
+    ];
+
+  }
+}
