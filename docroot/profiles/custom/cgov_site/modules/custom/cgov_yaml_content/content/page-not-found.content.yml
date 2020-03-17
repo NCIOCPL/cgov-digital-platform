@@ -1,0 +1,55 @@
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGOV 404 Page Not Found - English"
+  info__ES:
+    value: "CGOV 404 Page Not Found - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "page_not_found"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="error-content-english">
+          <h1>Page Not Found</h1>
+          <p>We can't find the page you're looking for.</p>
+          <p>Visit the <a href="/">homepage</a>, browse by <a href="/types" title="">cancer type</a>, or use the search below.</p>
+          <p>Have a question? <a href="/contact" title="">Get in touch</a>.</p>
+        </div>
+        <div class="error-searchbar">
+          <div id="error-form">
+            <form action="/search/results"
+              method="get"
+              id="pageNotFoundSearchForm"
+              name="pageNotFoundSearchForm"
+              data-language="en"
+              _lpchecked="1">
+              <label class="show-for-sr" for="nfKeyword">Search</label>
+              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+              <button class="searchSubmit" id="nf-search__button" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="error-content-spanish">
+          <h1>No se encontró la página</h1>
+          <p> No podemos encontrar la página que busca.</p>
+          <p>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos">tipo de cáncer</a>, o use la casilla de búsqueda en la parte de abajo de esta página.</p>
+          <p>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</p>
+        </div>
+        <div class="error-searchbar">
+          <div id="error-form">
+            <form action="/espanol/buscar/resultados"
+              method="get"
+              id="pageNotFoundSearchForm"
+              name="pageNotFoundSearchForm"
+              data-language="en"
+              _lpchecked="1">
+              <label class="show-for-sr" for="nfKeyword">Search</label>
+              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+              <button class="searchSubmit" id="nf-search__button" type="submit">Buscar</button>
+            </form>
+          </div>
+        </div>
