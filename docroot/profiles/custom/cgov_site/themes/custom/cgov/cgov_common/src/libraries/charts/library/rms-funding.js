@@ -8,7 +8,7 @@ function initChart(Chart) {
       type: 'NCI_bar'
     },
     title: { text: 'Extramural vs Intramural and RMS Funding' },
-    subtitle: { text: 'Fiscal Years 2014 - 2018' },
+    subtitle: { text: 'Fiscal Years 2014 - 2019' },
     tooltip: {
       pointFormat: '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>${point.y}</div>'
     },
@@ -37,7 +37,8 @@ function initChart(Chart) {
         { y: 3687, drilldown: '2015E' },
         { y: 3911.9, drilldown: '2016E' },
         { y: 4309.7, drilldown: '2017E' },
-        { y: 4539.8, drilldown: '2018E' }
+        { y: 4539.8, drilldown: '2018E' },
+        { y: 4577.5, drilldown: '2019E' }
       ]
     },
     {
@@ -47,7 +48,8 @@ function initChart(Chart) {
         { y: 1265.6, drilldown: '2015I' },
         { y: 1294.3, drilldown: '2016I' },
         { y: 1326.7, drilldown: '2017I' },
-        { y: 1387.9, drilldown: '2018I' }
+        { y: 1387.9, drilldown: '2018I' },
+        { y: 1414.8, drilldown: '2019I' }
       ]
     }],
     drilldown: {
@@ -113,7 +115,7 @@ function initChart(Chart) {
           ['Buildings & Facilities', 30.0]
         ]
       }, {
-name: '2018 Extramural',
+      name: '2018 Extramural',
         id: '2018E',
         xAxis: 1,
         data: [
@@ -128,6 +130,23 @@ name: '2018 Extramural',
           ['Buildings & Facilities', 18.0]
         ]
       }, {
+        name: '2019 Extramural',
+        id: '2019E',
+        xAxis: 1,
+        data: [
+          ['Research Project Grants', 2541.70],
+          ['Cancer Centers', 337.08],
+          ['SPOREs', 110.67],
+          ['Other P50s/P20s', 7.42],
+          ['Other Specialized Centers', 200.79],
+          ['Other Research Grants', 506.76],
+          ['NRSA', 86.98],
+          ['R&D Contracts', 768.10],
+          ['Buildings & Facilities', 18.00]
+        ]
+      },
+
+        {
         name: '2014 IRP & RMS',
         id: '2014I',
         xAxis: 1,
@@ -167,8 +186,15 @@ name: '2018 Extramural',
           ['Intramural Research', 945.5],
           ['RMS', 442.4]
         ]
-      }]
-
+      }, {
+          name: '2019 IRP & RMS',
+          id: '2019I',
+          xAxis: 1,
+          data: [
+            ['Intramural Research', 964.90],
+            ['RMS', 449.89]
+          ]
+        }]
     }
   });
 
