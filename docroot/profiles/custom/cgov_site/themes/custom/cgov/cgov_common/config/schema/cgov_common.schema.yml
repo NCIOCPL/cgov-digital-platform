@@ -1,0 +1,37 @@
+cgov_common.settings:
+  type: theme_settings
+  label: 'CGov Common settings'
+  mapping:
+    features:
+      type: config_object
+      mapping:
+        node_user_picture:
+          type: boolean
+          label: 'User pictures in posts'
+        comment_user_picture:
+          type: boolean
+          label: 'User pictures in comments'
+        comment_user_verification:
+          type: boolean
+          label: 'User verification status in comments'
+        favicon:
+          type: integer
+          label: 'Shortcut icon'
+    logo:
+      type: config_object
+      mapping:
+        use_default:
+          type: integer
+          label: 'Use the logo supplied by the theme'
+    favicon:
+      type: config_object
+      mapping:
+        use_default:
+          type: integer
+          label: 'Use the logo supplied by the theme'
+    color_theme:
+      type: string
+      label: 'Theme'
+    has_translations:
+      type: integer
+      label: 'Has Translations'
