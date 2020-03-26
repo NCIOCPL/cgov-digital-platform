@@ -89,9 +89,9 @@ function initChart(Chart) {
                     colors: ['#FF5F00', '#802F00', '#FFBF99', '#FFBF99'],
                     data: [
                         {name: 'Cancer Centers Grants-P20/P30', y: 337081712},
-                        {name: 'SPOREs', y: 110671817},
+                        {name: 'SPOREs', y: 112795999},
                         {name: 'Other P50s/P20s', y: 7423937},
-                        {name: 'Other Specialized Centers', y: 200788913}
+                        {name: 'Other Specialized Centers', y: 198664731}
                     ]
                 },
 
