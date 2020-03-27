@@ -20,3 +20,17 @@ cgov_core.frontend_globals_form:
     _title: 'FrontendGlobalsForm'
   requirements:
     _permission: 'administer frontend globals'
+
+cgov_core.block.navigation_block:
+  path: '/block/{block_id}'
+  defaults:
+    _controller: '\Drupal\cgov_core\Controller\CgovBlockController::getBlock'
+    _title: 'navigation block route'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+    block_id: '[a-zA-Z0-9_\-]+'
+  options:
+    parameters:
+      block_id:
+        type: string

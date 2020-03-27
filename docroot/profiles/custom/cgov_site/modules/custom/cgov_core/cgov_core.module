@@ -342,6 +342,22 @@ function cgov_core_theme_suggestions_entity_embed_container(array $variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * If we're working with the block containing the main navigation,
+ * and ESI processing was turned on in MainNav::build, then we
+ * need to override the default template with one which knows how to
+ * render the ESI tag in place of the navigation block.
+ */
+function cgov_core_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  if ($variables['elements']['#plugin_id'] == 'cgov_main_nav' &&
+    isset($variables['elements']['content']['ESI']) &&
+    $variables['elements']['content']['ESI'] == 'ON') {
+      $suggestions = ['block__cgov_main_nav_esi'];
+  }
+}
+
+/**
  * Implements hook_language_switch_links_alter().
  *
  * The default language switcher shows all links to content, including the

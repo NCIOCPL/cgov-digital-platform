@@ -8,7 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\cgov_core\NavItem;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Extension\ModuleHandler;
 
 /**
  * Provides a 'Main Nav' block.
@@ -21,14 +22,33 @@ use Drupal\cgov_core\NavItem;
  */
 class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
 
-  const MOBILE_NAV_MAX_DEPTH = 3;
-
   /**
    * Cgov Navigation Manager Service.
    *
    * @var \Drupal\cgov_core\Services\CgovNavigationManager
    */
   protected $navMgr;
+
+  /**
+   * Core language manager service.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
+   * Is the Akamai module enabled?
+   *
+   * @var bool
+   */
+  protected $akamaiIsEnabled;
 
   /**
    * Constructs an LanguageBar object.
@@ -41,15 +61,28 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin implementation definition.
    * @param \Drupal\cgov_core\Services\CgovNavigationManager $navigationManager
    *   Cgov navigation service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   Core language manager.
+   * @param \Drupal\Core\Extension\ModuleHandler $moduleHandler
+   *   Core module handler.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    CgovNavigationManager $navigationManager
+    CgovNavigationManager $navigationManager,
+    LanguageManagerInterface $languageManager,
+    ModuleHandler $moduleHandler
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
+    $this->moduleHandler = $moduleHandler;
+    $this->languageManager = $languageManager;
+
+    $this->akamaiIsEnabled = FALSE;
+    if ($this->moduleHandler->moduleExists('akamai')) {
+      $this->akamaiIsEnabled = TRUE;
+    }
   }
 
   /**
@@ -60,7 +93,9 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('cgov_core.cgov_navigation_manager')
+      $container->get('cgov_core.cgov_navigation_manager'),
+      $container->get('language_manager'),
+      $container->get('module_handler')
     );
   }
 
@@ -76,169 +111,41 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Generic sorting function to sort by Term weight.
-   *
-   * It's equivalent to reverse sort, since higher weights should
-   * appear first.
-   *
-   * @param \Drupal\cgov_core\NavItem $firstItem
-   *   Nav item.
-   * @param \Drupal\cgov_core\NavItem $secondItem
-   *   Nav item.
-   *
-   * @return int
-   *   Sort result.
-   */
-  public function sortItemsByWeight(NavItem $firstItem, NavItem $secondItem) {
-    $firstWeight = $firstItem->getWeight();
-    $secondWeight = $secondItem->getWeight();
-    if ($firstWeight === $secondWeight) {
-      return 0;
-    }
-    return ($firstWeight < $secondWeight) ? -1 : 1;
-  }
-
-  /**
-   * Get Main Nav NavItems.
-   *
-   * @return array
-   *   Multidimensional main nav.
-   */
-  public function getMainNav() {
-    $navRoot = $this->navMgr->getNavRoot('field_main_nav_root');
-    if ($navRoot) {
-      $renderTree = $this->renderMainNav($navRoot);
-      return $renderTree;
-    }
-  }
-
-  /**
-   * Generate Main Navigation Markup.
-   *
-   * @param \Drupal\cgov_core\NavItem $navRoot
-   *   Root NavItem.
-   *
-   * @return string
-   *   Markup as string.
-   */
-  public function renderMainNav(NavItem $navRoot) {
-    $megaNavRootItems = $navRoot->getChildren();
-    $filteredMegaNavRootItems = [];
-    foreach ($megaNavRootItems as $child) {
-      if (!$child->hasDisplayRule('hide_in_main_nav')) {
-        $filteredMegaNavRootItems[] = $child;
-      }
-    }
-    usort($filteredMegaNavRootItems, [$this, "sortItemsByWeight"]);
-    $renderedMegaNavTrees = [];
-    for ($i = 0; $i < count($filteredMegaNavRootItems); $i++) {
-      $rootItem = $filteredMegaNavRootItems[$i];
-      $itemIndex = $i + 1;
-      $href = $rootItem->getHref();
-      $label = $rootItem->getLabel();
-      $containsCurrent = $rootItem->getIsInCurrentPath();
-      $isCurrent = $rootItem->isCurrentSiteSection();
-      $currentStatusClassname = "";
-      if ($containsCurrent) {
-        $currentStatusClassname = "contains-current";
-      }
-      if ($isCurrent) {
-        $currentStatusClassname = "current-page";
-      }
-      $children = $this->renderMobileNavLevel($rootItem, $containsCurrent, 2);
-      $megamenu = $rootItem->getMegamenuContent();
-      $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
-      $markup = "
-      <li class='nav-item lvl-1 $hasChildrenClassname $currentStatusClassname item-$itemIndex'>
-        <div class='nav-item-title'>
-          <a href='$href'>$label</a>
-        </div>
-        $children
-        <div class='sub-nav-mega' aria-expanded='true' aria-haspopup='true'>
-          $megamenu
-        </div>
-      </li>
-      ";
-      $renderedMegaNavTrees[] = $markup;
-    }
-    $megaNav = implode("", $renderedMegaNavTrees);
-    return $megaNav;
-  }
-
-  /**
-   * Generate Mobile navtree markup.
-   *
-   * @param \Drupal\cgov_core\NavItem $rootItem
-   *   Root NavItem for mobile tree.
-   * @param bool $isOpen
-   *   Is this path expanded in the tree?
-   * @param int $currentDepth
-   *   Used to add class attributes and prevent
-   *   excessively deep rendering.
-   *
-   * @return string
-   *   Constructed markup as string.
-   */
-  public function renderMobileNavLevel(NavItem $rootItem, bool $isOpen, int $currentDepth) {
-    $isNotLastLevel = self::MOBILE_NAV_MAX_DEPTH - $currentDepth > 0;
-    $mobileItemsToRender = $rootItem->getChildren();
-    $filteredMobileItemsToRender = [];
-    foreach ($mobileItemsToRender as $child) {
-      if (!$child->hasDisplayRule('hide_in_mobile_nav')) {
-        $filteredMobileItemsToRender[] = $child;
-      }
-    }
-    $hasItemsToRender = count($filteredMobileItemsToRender);
-    if (!$hasItemsToRender) {
-      return "";
-    }
-    usort($filteredMobileItemsToRender, [$this, "sortItemsByWeight"]);
-    $renderedMobileItems = [];
-    foreach ($filteredMobileItemsToRender as $mobileItem) {
-      $href = $mobileItem->getHref();
-      $label = $mobileItem->getLabel();
-      $containsCurrent = $mobileItem->getIsInCurrentPath();
-      $isCurrent = $mobileItem->isCurrentSiteSection();
-      $currentStatusClassname = "";
-      $hasChildrenClassname = "";
-      if ($containsCurrent) {
-        $currentStatusClassname = "contains-current";
-      }
-      if ($isCurrent) {
-        $currentStatusClassname = "current-page";
-      }
-      $children = "";
-      if ($isNotLastLevel) {
-        $children = $this->renderMobileNavLevel($mobileItem, $containsCurrent, $currentDepth + 1);
-        $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
-      }
-      $markup = "
-      <li class='lvl-$currentDepth $currentStatusClassname $isCurrent $hasChildrenClassname'>
-        <div class='nav-item-title'>
-          <a href='$href'>$label</a>
-        </div>
-        $children
-      </li>
-      ";
-      $renderedMobileItems[] = $markup;
-    }
-    $renderedMobileItemString = implode("", $renderedMobileItems);
-    $markup = "
-    <ul class='mobile-item'>
-      $renderedMobileItemString
-    </ul>
-    ";
-    return $markup;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function build() {
-    $navTree = $this->getMainNav();
-    $build = [
-      '#markup' => $navTree,
-    ];
+
+    // If the Akamai module is enabled, we want to output an ESI tag and use
+    // the CDN's "Edge Side Includes" capability to insert the navigation.
+    if ($this->akamaiIsEnabled) {
+
+      $langCode = $this->languageManager->getCurrentLanguage()->getId();
+      switch ($langCode) {
+        case 'es':
+          $langPath = 'espanol/';
+          break;
+
+        case 'en':
+        default:
+          $langPath = '';
+      }
+
+      $build = [
+        'ESI' => 'ON',
+        'block_id' => $this->configuration['id'],
+        'lang_path' => $langPath,
+      ];
+    }
+    else {
+      // Using dependency injection would be preferable, however the service
+      // will not be called from here in production, so there's no sense
+      // incurring the overhead of creating/injecting it here.
+      $svc = \Drupal::service('cgov_core.navigation_block');
+      $navTree = $svc->getNavigationBlock('cgov_main_nav');
+      $build = [
+        '#markup' => $navTree,
+      ];
+    }
     return $build;
   }
 
@@ -246,7 +153,13 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function getCacheMaxAge() {
-    return 0;
+
+    if ($this->akamaiIsEnabled) {
+      return parent::getCacheMaxAge();
+    }
+    else {
+      return 0;
+    }
   }
 
 }
