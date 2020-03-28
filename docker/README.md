@@ -47,6 +47,20 @@ The site is now accessible via [www.devbox](http://www.devbox)
 
 **NOTE:** One more time, currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
 
+### 4. What to do after checking out a new branch (or pulling updates for your current branch)
+Run these commands locally:
+
+1. `cd <project_root>`
+1. `composer cgov-clean && composer install`
+1. `docker-compose -f docker/docker-compose.yml build [--no-cache]`  (see note below about when to include `--no-cache`)
+1. `docker-compose -f docker/docker-compose.yml up -d`
+1. `docker-compose -f docker/docker-compose.yml exec web bash`
+
+(Use the `--no-cache` option -- without the square brackets -- for step 3 if it has been a long time since you've worked on the project or if instructed to do so by another member of the team.)
+
+Run these commands inside the docker container:
+
+`blt --no-interaction cgov:reinstall && blt --no-interaction cgov:rebuild-feq`
 
 ### Managing Virtual Hosts
 At some point in time there will be multiple websites within our project. (e.g. www & dceg) You can add additional virtual hosts to the apache configuration by:
