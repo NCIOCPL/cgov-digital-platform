@@ -8,7 +8,7 @@ function initChart(Chart) {
       type: 'NCI_pie'
     },
     title: {text: 'Program Structure'},
-    subtitle: {text: 'Fiscal Year 2018'},
+    subtitle: {text: 'Fiscal Year 2019'},
     series: [{
       name: 'Budget',
       data: [

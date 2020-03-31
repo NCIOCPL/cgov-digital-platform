@@ -6,7 +6,7 @@ function initChart(Chart) {
   new Chart(id, {
     chart: { type: 'line' },
     title: { text: 'Comparison of Dollars, Positions, and Space' },
-    subtitle: { text: 'Fiscal Years 2009 - 2019' }, plotOptions: { series: { pointStart: 2009 } },
+    subtitle: { text: 'Fiscal Years 2010 - 2019' }, plotOptions: { series: { pointStart: 2010 } },
     yAxis: [{
       title: { text: 'Funds (millions)', style: { color: '#40bfa2' } },
       labels: {
@@ -36,17 +36,17 @@ function initChart(Chart) {
     series: [{
       name: 'Funds',
       yAxis: 0,
-      data: [4967, 5098, 5058, 5067, 4789, 4932, 4953, 5206, 5636,5928, 5993],
+      data: [5098, 5058, 5067, 4789, 4932, 4953, 5206, 5636,5928, 5992],
       tooltip: { valuePrefix: '$', valueSuffix: ',000' }
     }, {
       name: 'Space (Sq Ft)',
       yAxis: 1,
-      data: [955, 983, 952, 952, 1072, 992, 1011, 1001, 1004, 1019, 1055],
+      data: [983, 952, 952, 1072, 992, 1011, 1001, 1004, 1019, 1055],
       tooltip: { pointFormat: '<span style="color:{point.color}">\u25CF</span> Space: {point.y}<br/>' }
     }, {
       name: 'FTEs',
       yAxis: 2,
-      data: [2956, 3056, 3135, 3136, 3103, 3040, 2998, 2962, 3029, 2952, 2888]
+      data: [3056, 3135, 3136, 3103, 3040, 2998, 2962, 3029, 2952, 2888]
     }]
   });
 };
