@@ -9,9 +9,7 @@ function initChart(Chart){
     subtitle: { text: 'Fiscal Year 2019' },
     series: [{
       name: 'Budget',
-      data: [{ name: 'Research Grants', y: 208289710, drilldown: 'Research Grants' }, { name: 'Intramural Research', y: 19695533 }, { name: 'R&D Contracts', y: 30238296, drilldown: 'R&D Contracts' }, { name: 'Research Management & Support', y: 128645 }
-
-      ]
+      data: [{ name: 'Research Grants', y: 208289710, drilldown: 'Research Grants' }, { name: 'Intramural Research', y: 19695533 }, { name: 'R&D Contracts', y: 30238296, drilldown: 'R&D Contracts' }, { name: 'Research Management & Support', y: 128645 }]
     }],
 
     drilldown: {
@@ -31,7 +29,7 @@ function initChart(Chart){
 
           colors: ['#FF5F00', '#FFBF99'],
 
-          data: [['R&D Contracts', 30238296], ['SBIR/STTR Contracts', 12598652]]
+          data: [['R&D Contracts', 17639644], ['SBIR/STTR Contracts', 12598652]]
         },
         ]
     }
