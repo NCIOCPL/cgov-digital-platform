@@ -1,6 +1,6 @@
 <?php
 
-namespace Acquia\Blt\Custom\Task;
+namespace Cgov\Task;
 
 use Robo\Contract\CommandInterface;
 use Robo\Contract\PrintedInterface;

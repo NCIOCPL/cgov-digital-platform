@@ -1,13 +1,13 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 
 /**
  * Handle importing default yaml content.
  */
-class YamlContentCommand extends BltTasks {
+class YamlContentCommands extends BltTasks {
 
   /**
    * Enable and install yaml content from a cgov custom module.

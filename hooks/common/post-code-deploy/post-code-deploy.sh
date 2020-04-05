@@ -39,7 +39,7 @@ fi
 drush cgov:destroy-cache
 
 ## Perform a fresh install.
-blt artifact:install:drupal --environment=$target_env -v --yes --no-interaction -D drush.ansi=false
+blt artifact:install:drupal --environment=$target_env -v --no-interaction -D drush.ansi=false
 
 ## Load our test users.
 blt cgov:user:load-all -D cgov.drupal_users_file=$users_file -D drush.ansi=false
