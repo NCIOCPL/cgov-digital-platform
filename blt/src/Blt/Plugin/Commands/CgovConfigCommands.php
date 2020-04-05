@@ -1,6 +1,6 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\Exceptions\BltException;
 use Acquia\Blt\Robo\Commands\Setup\ConfigCommand;
@@ -8,7 +8,7 @@ use Acquia\Blt\Robo\Commands\Setup\ConfigCommand;
 /**
  * Defines commands in the "cgov" namespace.
  */
-class CgovConfigCommand extends ConfigCommand {
+class CgovConfigCommands extends ConfigCommand {
 
   /**
    * Imports configuration for the cgov platform.

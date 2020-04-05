@@ -1,13 +1,13 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 
 /**
  * A library of convenience commands.
  */
-class SlevenCommand extends BltTasks {
+class SlevenCommands extends BltTasks {
 
   /**
    * Reinstalls a web site.

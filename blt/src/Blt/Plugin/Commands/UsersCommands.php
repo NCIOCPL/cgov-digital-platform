@@ -1,6 +1,6 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 use Acquia\Blt\Robo\Exceptions\BltException;
@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Handle cgov user tasks.
  */
-class UsersCommand extends BltTasks {
+class UsersCommands extends BltTasks {
 
   /**
    * Create Users based on a configuration file.
