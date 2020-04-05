@@ -81,7 +81,7 @@ else {
 
 // Execute the updates.
 $command = sprintf(
-  'DRUSH_PATHS_CACHE_DIRECTORY=%s %s cgov:acsf:post-install %s --environment=%s --site=%s --define drush.uri=%s --verbose --yes --no-interaction',
+  'DRUSH_PATHS_CACHE_DIRECTORY=%s %s cgov:acsf:post-install %s --environment=%s --site=%s --define drush.uri=%s --verbose --no-interaction',
   escapeshellarg($cache_directory),
   escapeshellarg($blt),
   $usr_file_param,

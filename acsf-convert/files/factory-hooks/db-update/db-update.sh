@@ -18,7 +18,8 @@ site="$1"
 env="$2"
 # database role. (Not expected to be needed in most hook scripts.)
 db_role="$3"
-# The public domain name of the website.
+# The public domain name of the website. If the site uses a path based domain,
+# the path is appended (without trailing slash), e.g. "domain.com/subpath".
 domain="$4"
 
 # BLT executable:
@@ -44,6 +45,12 @@ echo "Generated temporary drush cache directory: $cacheDir."
 # Print to cloud task log.
 echo "Running BLT deploy tasks on $uri domain in $env environment on the $site subscription."
 
-DRUSH_PATHS_CACHE_DIRECTORY=$cacheDir $blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain --verbose --yes --no-interaction
+# Update Drupal.
+# --------> GITHUB REVIEWER! Check the comment below in the diff!!! <----------
+# NOTE: OUR DRUSH DOES NOT HAVE A URI BUG! So you will see in the factory-hooks in BLT that
+# they have added a trailing slash to '--define drush.uri'. We have a patch that actually
+# fixes the drush uri issues, and adding a trailing slash breaks it. So when updating this
+# file, you need to make sure you do not add the bad trailing slash.
+DRUSH_PATHS_CACHE_DIRECTORY=$cacheDir $blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain --verbose --no-interaction
 
 set +v

@@ -1,8 +1,8 @@
 <?php
 
-namespace Acquia\Blt\Custom;
+namespace Cgov;
 
-use Acquia\Blt\Custom\Task\Paratest;
+use Cgov\Task\Paratest;
 
 /**
  * Trait ParatestTrait.

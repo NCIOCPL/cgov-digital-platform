@@ -1,6 +1,6 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 
@@ -11,7 +11,7 @@ use Acquia\Blt\Robo\BltTasks;
  * looking at you post-install) So for consistency, we will define all
  * cgov factory hook methods here.
  */
-class CgovAcsfCommand extends BltTasks {
+class CgovAcsfCommands extends BltTasks {
 
   /**
    * Post Install Support for ACSF.

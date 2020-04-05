@@ -1,13 +1,13 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 
 /**
  * Commands for installing the CancerGov site sections.
  */
-class SiteSectionsCommand extends BltTasks {
+class SiteSectionsCommands extends BltTasks {
 
   /**
    * Define the cgov:install namespace.
