@@ -7,7 +7,7 @@ function initChart(Chart) {
       {
         chart: { type: 'NCI_column' },
         title: { text: 'National Research Service Awards (NRSAs) Predoctoral and Postdoctoral Trainees (Full-Time Trainee Positions)' },
-        subtitle: { text: 'Fiscal Years 2009 - 2018' }, plotOptions: { series: { pointStart: 2009 } },
+        subtitle: { text: 'Fiscal Years 2010 - 2019' }, plotOptions: { series: { pointStart: 2010 } },
         yAxis: {
           min: 0,
           title: {
@@ -23,15 +23,15 @@ function initChart(Chart) {
         series:
           [{
             name: 'Predoc',
-            data: [503, 476, 464, 497, 587, 664, 699, 722, 744, 715]
+            data: [476, 464, 497, 587, 664, 699, 722, 744, 715, 771]
           },
           {
             name: 'Postdoc',
-            data: [989, 952, 911, 845, 766, 768, 722, 717, 776, 817]
+            data: [952, 911, 845, 766, 768, 722, 717, 776, 817, 818]
           },
           {
             name: 'Total',
-            data: [1492, 1428, 1375, 1342, 1353, 1432, 1421, 1439, 1520, 1532]
+            data: [1428, 1375, 1342, 1353, 1432, 1421, 1439, 1520, 1532, 1589]
           }]
       });
   };
