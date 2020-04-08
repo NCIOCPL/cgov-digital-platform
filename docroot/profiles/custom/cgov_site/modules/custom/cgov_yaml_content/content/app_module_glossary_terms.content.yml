@@ -1,0 +1,75 @@
+# NCI Dictionary of Cancer Terms app module page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Dictionary of Cancer Terms"
+  title__ES:
+    value: "Diccionario de cáncer"
+  field_page_description:
+    value: "NCI's Dictionary of Cancer Terms provides easy-to-understand definitions for words and phrases related to cancer and medicine."
+  field_page_description__ES:
+    value: "Diccionario de cáncer"
+  field_browser_title:
+    value: "NCI Dictionary of Cancer Terms"
+  field_browser_title__ES:
+    value: "Diccionario de cáncer"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications/dictionaries'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publicaciones'
+  field_pretty_url:
+    value: 'cancer-terms'
+  field_pretty_url__ES:
+    value: 'diccionario'
+  field_application_module:
+    - target_id: cgov_glossary_app
+      data:
+        altLanguageDictionaryBasePath: "/espanol/publicaciones/diccionario"
+        appId: "@@/DEFAULT_DICTIONARY"
+        audience: "Patient"
+        basePath: "/publications/dictionaries/cancer-terms"
+        dictionaryEndpoint: "https://webapis-dev.cancer.gov/glossary/v1/"
+        dictionaryName: "Cancer.gov"
+        dictionaryIntroText: "<p>The NCI Dictionary of Cancer Terms features <strong>{{term_count}}</strong> terms related to cancer and medicine.</p><p>We offer a widget that you can add to your website to let users look up cancer-related terms. <a href=\"/syndication/widgets\">Get NCI's Dictionary of Cancer Terms Widget</a>.</p>"
+        dictionaryTitle: "NCI Dictionary of Cancer Terms"
+        language: "en"
+        languageToggleSelector: "#LangList1 a"
+        rootId: "NCI-glossary-root"
+        searchBoxTitle: "Search NCI's Dictionary of Cancer Terms"
+  field_application_module__ES:
+    - target_id: cgov_glossary_app
+      data:
+        altLanguageDictionaryBasePath: "/publications/dictionaries/cancer-terms"
+        appId: "@@/TERMS_DICTIONARY_SPANISH"
+        audience: "Patient"
+        basePath: "/espanol/publicaciones/diccionario"
+        dictionaryEndpoint: "https://webapis-dev.cancer.gov/glossary/v1/"
+        dictionaryName: "Cancer.gov"
+        dictionaryIntroText: "<p>El diccionario de cáncer del NCI contiene <strong>{{term_count}}</strong> términos relacionados con el cáncer y la medicina.</p><p>Ofrecemos un widget que usted puede añadir a su sitio web para que sus usuarios puedan buscar términos de cáncer. <a href=\"/espanol/sindicacion/widgets\">Obtenga el widget de términos de cáncer del Diccionario del NCI</a>.</p>"
+        dictionaryTitle: "Diccionario de cáncer"
+        language: "es"
+        languageToggleSelector: "#LangList1 a"
+        rootId: "NCI-glossary-root"
+        searchBoxTitle: "Busca diccionario de cáncer"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: left_nav

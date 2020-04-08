@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Search theme implementation to display the glossary app_module.
+ *
+ * Available variables:
+ * - app_module_plugin_id: The ID of the app module implementation.
+ * - configuration: A list of the app module's configuration values.
+ * - content: The content of this app_module screen.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *   - id: A valid HTML ID and guaranteed unique.
+ *
+ * @see template_preprocess_app_module()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cgov_common/glossary-app') }}
+<div id="NCI-glossary-root">
+  {{ content['#markup']|raw }}
+  <script>
+    window.glossaryAppSettings = {{ configuration|json_encode|raw }}
+  </script>
+</div>

@@ -1,0 +1,1 @@
+The glossary module is outside of the cgov_site profile so that we can create tests based on the minimal profile which should speed up testing. As this does not rely on any of the core modules we can do this. Once it requires the profile, well, all bets are off.

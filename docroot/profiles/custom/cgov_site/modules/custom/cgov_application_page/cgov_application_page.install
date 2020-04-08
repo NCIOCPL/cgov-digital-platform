@@ -44,3 +44,15 @@ function cgov_application_page_update_8002() {
     $installer->install(['cgov_cts']);
   }
 }
+
+/**
+ * Update for Glossary Feature.
+ *
+ * Install the cgov_glossary module.
+ */
+function cgov_application_page_update_8003() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_glossary')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_glossary']);
+  }
+}
