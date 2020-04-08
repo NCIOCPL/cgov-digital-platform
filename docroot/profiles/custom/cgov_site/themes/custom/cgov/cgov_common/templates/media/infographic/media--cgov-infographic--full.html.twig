@@ -1,4 +1,5 @@
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{% import '@cgov_common/media/infographic/infographic_macros.twig' as infographicMacros %}
 
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
@@ -9,19 +10,9 @@
     <div id="cgvBody">
       {{ content.body }}
 
-      <figure class="image-center-full centered-set">
-        <div class="centered-element">
-          {{ content.field_infographic }}
-            {% if content.enlarge_uri|field_value %}
-              <a
-                href="{{- content.enlarge_uri|field_value -}}"
-                target="_blank"
-                class="article-image-enlarge no-resize">
-                {% trans %}Enlarge{% endtrans %}
-              </a>
-            {% endif %}
-        </div>
-      </figure>
+      {% set classes = "image-center-full" %}
+
+      {{ infographicMacros.infographicImage(classes, content) }}
 
       <footer>
         {{ contentPageMacros.displayDates(media,content) }}

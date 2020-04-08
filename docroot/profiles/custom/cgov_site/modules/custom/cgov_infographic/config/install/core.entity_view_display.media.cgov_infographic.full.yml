@@ -14,6 +14,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_feature_card_description
     - field.field.media.cgov_infographic.field_image_promotional
     - field.field.media.cgov_infographic.field_infographic
+    - field.field.media.cgov_infographic.field_infographic_mobile
     - field.field.media.cgov_infographic.field_list_description
     - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_page_description
@@ -65,14 +66,14 @@ content:
     third_party_settings: {  }
   field_date_display_mode:
     type: list_default
-    weight: 10
+    weight: 11
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
     type: cgov_date_formatter
-    weight: 9
+    weight: 10
     region: content
     label: hidden
     settings:
@@ -82,7 +83,7 @@ content:
     third_party_settings: {  }
   field_date_reviewed:
     type: cgov_date_formatter
-    weight: 8
+    weight: 9
     region: content
     label: hidden
     settings:
@@ -92,7 +93,7 @@ content:
     third_party_settings: {  }
   field_date_updated:
     type: cgov_date_formatter
-    weight: 7
+    weight: 8
     region: content
     label: hidden
     settings:
@@ -109,9 +110,18 @@ content:
     third_party_settings: {  }
     type: image
     region: content
+  field_infographic_mobile:
+    type: image
+    weight: 7
+    region: content
+    label: hidden
+    settings:
+      image_style: cgov_article
+      image_link: ''
+    third_party_settings: {  }
   field_public_use:
     type: list_default
-    weight: 11
+    weight: 12
     region: content
     label: hidden
     settings: {  }
