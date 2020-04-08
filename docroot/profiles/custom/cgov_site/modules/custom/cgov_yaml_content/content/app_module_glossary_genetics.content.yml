@@ -1,0 +1,43 @@
+# NCI Dictionary of Cancer Terms app module page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Dictionary of Genetics Terms"
+  field_page_description:
+    value: "A dictionary of more than 150 genetics-related terms written for healthcare professionals. This resource was developed to support the comprehensive, evidence-based, peer-reviewed PDQ cancer genetics information summaries."
+  field_browser_title:
+    value: "NCI Dictionary of Genetics Terms"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications/dictionaries'
+  field_pretty_url:
+    value: 'genetics-dictionary'
+  field_application_module:
+    - target_id: cgov_glossary_app
+      data:
+        appId: "@@/GENETICS_DICTIONARY"
+        audience: "HealthProfessional"
+        basePath: "/publications/dictionaries/genetics-dictionary"
+        dictionaryEndpoint: "https://webapis-dev.cancer.gov/glossary/v1/"
+        dictionaryName: "Genetics"
+        dictionaryIntroText: "<p>The NCI Dictionary of Genetics Terms contains technical definitions for more than {{term_count}} terms related to genetics. These definitions were developed by the <a title=\"Follow link\" class=\"external-link\" href=\"/publications/pdq/editorial-boards/genetics\" rel=\"nofollow\"> PDQ® Cancer Genetics Editorial Board</a> to support the evidence-based, peer-reviewed <a title=\"Follow link\" class=\"external-link\" href=\"/publications/pdq/information-summaries/genetics\" rel=\"nofollow\"> PDQ cancer genetics information summaries</a>.</p>"
+        dictionaryTitle: "NCI Dictionary of Genetics Terms"
+        language: "en"
+        rootId: "NCI-glossary-root"
+        searchBoxTitle: "Search NCI's Dictionary of Genetics Terms"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: left_nav
