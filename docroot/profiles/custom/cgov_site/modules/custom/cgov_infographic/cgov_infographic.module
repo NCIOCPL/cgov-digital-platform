@@ -60,13 +60,35 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
   }
 
   // Add enlarge_uri to the build array so it appears as a property on the
-  // content variable in the 'full' display twig template.
-  if ($build['#view_mode'] == 'full') {
+  // content variable in the 'full', 'infographic_display_article_large', 'infographic_display_article_medium'
+  // display twig template.
+  if (
+    $build['#view_mode'] == 'full' ||
+    $build['#view_mode'] == 'infographic_display_article_large' ||
+    $build['#view_mode'] == 'infographic_display_article_medium'
+  ) {
     $build['enlarge_uri'] = $build['field_infographic']['#items']->view([
       'type' => 'image_url',
       'settings' => [
         'image_style' => 'cgov_enlarged',
       ],
     ]);
+    $build['desktop_uri'] = $build['field_infographic']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'cgov_article',
+      ],
+    ]);
+    // Mobile is optional, so let's make sure it has an image.
+    if (array_key_exists("#items", $build['field_infographic_mobile'])) {
+      $build['mobile_uri'] = $build['field_infographic_mobile']['#items']->view([
+        'type' => 'image_url',
+        'settings' => [
+          'image_style' => 'cgov_article',
+        ],
+      ]);
+    } else {
+      $build['mobile_uri'] = [];
+    }
   }
 }

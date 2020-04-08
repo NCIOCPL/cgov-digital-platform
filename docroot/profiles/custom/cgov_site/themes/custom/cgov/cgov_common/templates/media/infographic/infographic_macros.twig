@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying infographics images.
+ */
+#}
+
+{# Renders an infographic image  #}
+{% macro infographicImage(
+  classes,
+  content,
+  link_text = 'View and Print Infographic') %}
+
+  {# Set up the classes for the figure #}
+  {% set attr = create_attribute() %}
+  {% set attr = attr.addClass(classes) %}
+  {% set attr = attr.addClass('centered-set') %}
+
+
+
+  {% set infographic_desktop_uri = content.desktop_uri[0] %}
+  {% set infographic_mobile_uri = null %}
+  {% set enlarge_uri = null %}
+
+  {% if content.enlarge_uri[0] %}
+    {% set enlarge_uri = content.enlarge_uri[0] %}
+  {% endif %}
+
+  {% if content.mobile_uri[0] %}
+    {% set infographic_mobile_uri = content.mobile_uri[0] %}
+  {% endif %}
+
+  <figure{{ attr }}>
+      <div class="centered-element">
+        {% if infographic_mobile_uri is not empty %}
+          <picture>
+              <source srcset="{{infographic_mobile_uri}}" media="(max-width: 768px)">
+              <source srcset="{{infographic_desktop_uri}}" media="(min-width: 769px)">
+           {{ content.field_infographic }}
+          </picture>
+        {% else %}
+          {# if no infographic mobile, just render as an image #}
+          {{ content.field_infographic }}
+        {% endif %}
+      </div>
+        <figcaption>
+          {# {% if caption|render|striptags|trim %}
+            <div class="caption-container no-resize">
+                {{ caption }}
+            </div>
+          {% endif %} #}
+          <div class="caption-container">
+            <a href="{{enlarge_uri}}" class="infographic-link" target="_blank">{{ link_text|trans }}</a>
+          </div>
+        </figcaption>
+  </figure>
+
+{% endmacro %}
