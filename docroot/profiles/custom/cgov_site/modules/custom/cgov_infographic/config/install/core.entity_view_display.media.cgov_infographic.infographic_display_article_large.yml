@@ -14,6 +14,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_feature_card_description
     - field.field.media.cgov_infographic.field_image_promotional
     - field.field.media.cgov_infographic.field_infographic
+    - field.field.media.cgov_infographic.field_infographic_mobile
     - field.field.media.cgov_infographic.field_list_description
     - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_page_description
@@ -22,11 +23,20 @@ dependencies:
     - field.field.media.cgov_infographic.field_search_engine_restrictions
     - field.field.media.cgov_infographic.field_site_section
     - media.type.cgov_infographic
+  module:
+    - image
 id: media.cgov_infographic.infographic_display_article_large
 targetEntityType: media
 bundle: cgov_infographic
 mode: infographic_display_article_large
 content:
+  field_accessible_version:
+    type: basic_string
+    weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_image_promotional:
     type: entity_reference_entity_view
     weight: 0
@@ -36,11 +46,28 @@ content:
       view_mode: image_crop_article
       link: false
     third_party_settings: {  }
+  field_infographic:
+    type: image
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      image_style: cgov_article
+      image_link: ''
+    third_party_settings: {  }
+  field_infographic_mobile:
+    type: image
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
 hidden:
   body: true
   content_moderation_control: true
   created: true
-  field_accessible_version: true
   field_browser_title: true
   field_card_title: true
   field_date_display_mode: true
@@ -48,7 +75,6 @@ hidden:
   field_date_reviewed: true
   field_date_updated: true
   field_feature_card_description: true
-  field_infographic: true
   field_list_description: true
   field_meta_tags: true
   field_page_description: true

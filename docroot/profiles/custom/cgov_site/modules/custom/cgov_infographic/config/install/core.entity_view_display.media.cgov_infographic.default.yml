@@ -13,6 +13,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_feature_card_description
     - field.field.media.cgov_infographic.field_image_promotional
     - field.field.media.cgov_infographic.field_infographic
+    - field.field.media.cgov_infographic.field_infographic_mobile
     - field.field.media.cgov_infographic.field_list_description
     - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_page_description
@@ -32,14 +33,14 @@ bundle: cgov_infographic
 mode: default
 content:
   content_moderation_control:
-    weight: -20
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   created:
     label: hidden
     type: timestamp
-    weight: 0
+    weight: 2
     region: content
     settings:
       date_format: medium
@@ -47,7 +48,7 @@ content:
       timezone: ''
     third_party_settings: {  }
   field_infographic:
-    weight: 6
+    weight: 4
     label: above
     settings:
       image_style: ''
@@ -55,8 +56,17 @@ content:
     third_party_settings: {  }
     type: image
     region: content
+  field_infographic_mobile:
+    weight: 5
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
   field_meta_tags:
-    weight: 7
+    weight: 6
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -64,7 +74,7 @@ content:
     region: content
   thumbnail:
     type: image
-    weight: 5
+    weight: 3
     label: hidden
     settings:
       image_style: thumbnail
@@ -74,7 +84,7 @@ content:
   uid:
     label: hidden
     type: author
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -44,3 +44,55 @@
   </figure>
 
 {% endmacro %}
+
+{# Renders an infographic image  #}
+{% macro infographicImage(
+  classes, 
+  infographic_desktop,
+  infographic_mobile,
+  enlarge_uri,
+  caption,
+  link_text = 'View and Print Infographic') %}
+
+  {# Set up the classes for the figure #}
+  {% set attr = create_attribute() %}
+  {% set attr = attr.addClass(classes) %}
+  {% set attr = attr.addClass('centered-set') %}
+
+  {# Links to infographics also use this macro but need a different class to allow them to use a chevron sprite.
+  We're cheating and hooking on to an unrelated variable that tells us whether this is an infographic or not. #}
+  {% set classForSpriteSelection = link_text == 'View Infographic' ? 'infographic-view-full' : 'article-image-enlarge' %}
+
+{% set infographic_desktop_uri = file_url(infographic_desktop['#items'].entity.uri.value) %}
+{% set infographic_mobile_uri = null %}
+
+{% if infographic_mobile['#items'].entity.uri.value is not empty %}
+  {% set infographic_mobile_uri = file_url(infographic_mobile['#items'].entity.uri.value) %}
+{% endif %}
+
+  <figure{{ attr }}>
+      <div class="centered-element">
+        {% if infographic_mobile_uri is not empty %}
+          <picture>
+              <source srcset="{{infographic_mobile_uri}}" media="(max-width: 768px)">
+              <source srcset="{{infographic_desktop_uri}}" media="(min-width: 769px)">
+           {{infographic_desktop}}
+          </picture>
+        {% else %}
+          {# if no infographic mobile, just render as an image #}
+          {{ infographic_desktop }}
+        {% endif %}
+      </div>
+        <figcaption>
+          {# {% if caption|render|striptags|trim %}
+            <div class="caption-container no-resize">
+                {{ caption }}
+            </div>
+          {% endif %} #}
+          <div class="caption-container">
+            <a href="{{infographic_uri}}" class="infographic-link" target="_blank">{{ link_text|trans }}</a>
+          </div>  
+        </figcaption>
+  </figure>
+
+{% endmacro %}
