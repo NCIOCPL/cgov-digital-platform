@@ -5,13 +5,17 @@ dependencies:
     - file
     - image
     - media
-id: media.field_infographic
-field_name: field_infographic
+  enforced:
+    module:
+      - cgov_core
+id: media.field_infographic_mobile
+field_name: field_infographic_mobile
 entity_type: media
 type: image
 settings:
+  uri_scheme: public
   default_image:
-    uuid: null
+    uuid: ''
     alt: ''
     title: ''
     width: null
@@ -19,7 +23,6 @@ settings:
   target_type: file
   display_field: false
   display_default: false
-  uri_scheme: public
 module: image
 locked: false
 cardinality: 1
