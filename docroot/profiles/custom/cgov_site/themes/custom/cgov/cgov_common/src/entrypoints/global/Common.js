@@ -37,7 +37,8 @@ import formControls from 'Core/libraries/formControls/formControls';
 import tooltips from 'Core/libraries/tooltips/referenceTooltip';
 
 // // Unfortunately AMD doesn't play nice with export default;
-import proactiveLiveHelp from 'Core/libraries/liveHelpPopup';
+import {verifyShouldLiveHelpRun, initLiveHelp} from 'Core/libraries/liveHelpPopup';
+import ProactiveLiveHelp from 'Core/libraries/liveHelpPopup/ProactiveLiveHelp';
 import sortablejs from 'Core/libraries/sortableTables';
 import pageOptions from 'Libraries/pageOptions';
 
@@ -60,7 +61,6 @@ const shouldShowFloatingDelighters = window.CDEConfig.showFloatingDelighters;
 
 //DOM Ready event
 const onDOMContentLoaded = () => {
-
 	// /*** BEGIN header component ***/
 	megaMenuModule();
 
@@ -154,8 +154,13 @@ const onDOMContentLoaded = () => {
 	// initialize the prevent-enter enhancement
 	$('[data-prevent-enter="true"]').NCI_prevent_enter();
 
-	// Proactive Live Help for CTS
-  proactiveLiveHelp();
+  // expose Proactive Live Chat functions and classes for use with Launch
+  window.MDUX = {};
+  window.MDUX.verifyShouldLiveHelpRun = verifyShouldLiveHelpRun;
+  window.MDUX.ProactiveLiveHelp = ProactiveLiveHelp;
+
+  // initialize Proactive Live Help for CTS
+  initLiveHelp();
 
   // Shim for handling drupal glossified terms
   glossaryPopups();
