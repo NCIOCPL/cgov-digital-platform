@@ -3,7 +3,6 @@
 namespace Drupal\cgov_core\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -62,10 +61,14 @@ class CgovBlockController extends ControllerBase {
     $navTree = $this->blockMgr->getNavigationBlock($block_id);
 
     if (strlen($navTree) > 0) {
-      $response = new Response();
-      $response->setContent($navTree);
-      $response->headers->set('Content-Type', 'text/plain');
-      return $response;
+      $result = [
+        '#markup' => $navTree,
+      ];
+      return $result;
+      // $response = new Response();
+      // $response->setContent($navTree);
+      // $response->headers->set('Content-Type', 'text/plain');
+      // return $response;
     }
 
     throw new NotFoundHttpException();
