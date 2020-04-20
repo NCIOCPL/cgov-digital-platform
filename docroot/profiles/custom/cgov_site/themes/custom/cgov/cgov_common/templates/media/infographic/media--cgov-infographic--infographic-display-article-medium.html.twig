@@ -6,4 +6,4 @@
 {% set infographic_uri = path('entity.media.canonical', {'media': media.mid[0].value }) %}
 
 {# We pass null because embedded infographics swhould not show the promotional image credit. #}
-{{ imageMacros.articleImage(classes, content.field_image_promotional, infographic_uri, null, content.caption, "View Infographic") }}
+{{ imageMacros.infographicImage(classes, content.field_infographic.uri, content.field_infographic_mobile.uri, null, infographic_uri, null, content.field_accessible_version, "View Infographic") }}
