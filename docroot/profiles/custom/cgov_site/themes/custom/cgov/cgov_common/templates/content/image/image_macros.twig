@@ -75,8 +75,8 @@
       <div class="centered-element">
         {% if infographic_mobile_uri is not empty %}
           <picture>
-            <source srcset="{{infographic_mobile_uri}}" sizes="(max-width: 768px)">
-            <source srcset="{{infographic_desktop_uri}}" sizes="(min-width: 769px)">
+              <source srcset="{{infographic_mobile_uri}}" media="(max-width: 768px)">
+              <source srcset="{{infographic_desktop_uri}}" media="(min-width: 769px)">
            {{infographic_desktop}}
           </picture>
         {% else %}
