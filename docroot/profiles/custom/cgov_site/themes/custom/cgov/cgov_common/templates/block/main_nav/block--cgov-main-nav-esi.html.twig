@@ -4,11 +4,7 @@
   and cgov_core_theme_suggestions_block_alter() in cgov_core.
 
   Variables (provided by MainNav::build())
+  * lang_path - language-specific path.  Empty for English.
   * block_id - the block being rendered
-  * ?????
 #}
-<nav id="mega-nav" role="navigation">
-  <ul class="menu nav-menu">
-    <esi:include src="https://www-int-ac.cancer.gov/{{ content.lang_path }}block/{{ content.block_id }}" />
-  </ul>
-</nav>
+<esi:include src="https://www-int-ac.cancer.gov/{{ content.lang_path }}block/{{ content.block_id }}" />

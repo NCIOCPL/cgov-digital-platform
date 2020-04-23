@@ -137,16 +137,20 @@ class NavigationBlockManager implements NavigationBlockManagerInterface {
       $megamenu = $rootItem->getMegamenuContent();
       $hasChildrenClassname = strlen($children) > 0 ? 'has-children' : '';
       $markup = "
-      <li class='nav-item lvl-1 $hasChildrenClassname $currentStatusClassname item-$itemIndex'>
-        <div class='nav-item-title'>
-          <a href='$href'>$label</a>
-        </div>
-        $children
-        <div class='sub-nav-mega' aria-expanded='true' aria-haspopup='true'>
-          $megamenu
-        </div>
-      </li>
-      ";
+      <nav id='mega-nav' role='navigation'>
+        <ul class='menu nav-menu'>
+          <li class='nav-item lvl-1 $hasChildrenClassname $currentStatusClassname item-$itemIndex'>
+            <div class='nav-item-title'>
+              <a href='$href'>$label</a>
+            </div>
+            $children
+            <div class='sub-nav-mega' aria-expanded='true' aria-haspopup='true'>
+              $megamenu
+            </div>
+          </li>
+        </ul>
+      </nav>
+          ";
       $renderedMegaNavTrees[] = $markup;
     }
     $megaNav = implode("", $renderedMegaNavTrees);

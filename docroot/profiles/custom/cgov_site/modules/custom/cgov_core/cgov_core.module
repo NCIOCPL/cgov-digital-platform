@@ -633,3 +633,60 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
     ];
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function cgov_core_theme($existing, $type, $theme, $path) {
+  $result = [
+    'main_nav_esi' => [
+      'render element' => 'elements',
+    ],
+  ];
+  return $result;
+}
+
+/**
+ * Implements template_preprocess_HOOK().
+ */
+// function template_preprocess_main_nav_esi(&$variables) {
+//   $variables['foo'] = $variables['elements']['foo'];
+//   $variables['the_nav'] = $variables['elements']['the_nav'];
+// }
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+// function cgov_core_theme_suggestions_main_nav_esi(array $variables) {
+//   $suggestions = [];
+//   $main_nav_esi_id = $variables['elements']['#main_nav_esi_id'];
+//   $main_nav_esi_plugin_id = $variables['elements']['#main_nav_esi_plugin_id'];
+//   $app_route_id = $variables['elements']['#app_route_id'];
+
+//   // Just main_nav_esi to start.
+//   $suggestions[] = 'main_nav_esi';
+
+//   // Do the plugin.
+//   $suggestions[] = 'main_nav_esi__' . $main_nav_esi_plugin_id;
+
+//   // Plugin + route.
+//   $suggestions[] = 'main_nav_esi__' .
+//     $main_nav_esi_plugin_id . '__' .
+//     $app_route_id;
+
+//   // App Module ID.
+//   $suggestions[] = 'main_nav_esi__' . $main_nav_esi_id;
+
+//   // App Module ID + plugin.
+//   $suggestions[] = 'main_nav_esi__' .
+//     $main_nav_esi_id . '__' .
+//     $main_nav_esi_plugin_id;
+
+//   // App Module ID + plugin + path.
+//   $suggestions[] = 'main_nav_esi__' .
+//     $main_nav_esi_id . '__' .
+//     $main_nav_esi_plugin_id . '__' .
+//     $app_route_id;
+
+//   return $suggestions;
+// }

@@ -62,7 +62,9 @@ class CgovBlockController extends ControllerBase {
 
     if (strlen($navTree) > 0) {
       $result = [
-        '#markup' => $navTree,
+        '#theme' => 'main_nav_esi',
+        '#the_nav' => $navTree,
+        '#foo' => 'bar',
       ];
       return $result;
       // $response = new Response();
