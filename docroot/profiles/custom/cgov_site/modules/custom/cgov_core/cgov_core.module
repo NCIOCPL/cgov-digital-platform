@@ -640,7 +640,9 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
 function cgov_core_theme($existing, $type, $theme, $path) {
   $result = [
     'main_nav_esi' => [
-      'render element' => 'elements',
+      'variables' => [
+        'the_nav' => 'I got nothing',
+      ],
     ],
   ];
   return $result;
@@ -657,36 +659,14 @@ function cgov_core_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-// function cgov_core_theme_suggestions_main_nav_esi(array $variables) {
-//   $suggestions = [];
-//   $main_nav_esi_id = $variables['elements']['#main_nav_esi_id'];
-//   $main_nav_esi_plugin_id = $variables['elements']['#main_nav_esi_plugin_id'];
-//   $app_route_id = $variables['elements']['#app_route_id'];
+function cgov_core_theme_suggestions_main_nav_esi(array $variables) {
 
-//   // Just main_nav_esi to start.
-//   $suggestions[] = 'main_nav_esi';
+  if(\count($variables) >= 0) {
+    $suggestions = [];
 
-//   // Do the plugin.
-//   $suggestions[] = 'main_nav_esi__' . $main_nav_esi_plugin_id;
+    // Just main_nav_esi to start.
+    $suggestions[] = 'main_nav_esi';
 
-//   // Plugin + route.
-//   $suggestions[] = 'main_nav_esi__' .
-//     $main_nav_esi_plugin_id . '__' .
-//     $app_route_id;
-
-//   // App Module ID.
-//   $suggestions[] = 'main_nav_esi__' . $main_nav_esi_id;
-
-//   // App Module ID + plugin.
-//   $suggestions[] = 'main_nav_esi__' .
-//     $main_nav_esi_id . '__' .
-//     $main_nav_esi_plugin_id;
-
-//   // App Module ID + plugin + path.
-//   $suggestions[] = 'main_nav_esi__' .
-//     $main_nav_esi_id . '__' .
-//     $main_nav_esi_plugin_id . '__' .
-//     $app_route_id;
-
-//   return $suggestions;
-// }
+    return $suggestions;
+    }
+}
