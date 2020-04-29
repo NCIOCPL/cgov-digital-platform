@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_yaml_content.module.
+ */
+
+use \Drupal\Core\Entity\EntityInterface;
+
+/*
+ * This is going to be a fairly short treatise on the limitations of yaml_content module's
+ * event system. Basically the events like FIELD_IMPORT would lead to believe that you
+ * can manipulate the data coming in (getContentData), however, you cannot as the content
+ * data is immutable. After putzing for a while to find ways for us to replace the
+ * <drupal-entity> UUID attributes with the correctly loaded UUID, there appeared to be
+ * no sane way to accomplish this. (The yaml_content authors agreed it is a known limitation)
+ * SO... What we are going to do is to write some presave hooks that fire only when we
+ * are running the yaml_content module. (Oh, I should note that Paragraph entities got
+ * insanely complex to even attempt to fix pre-save as the entity revision was already
+ * saved at the point of pre-save for the node)
+ */
+
+/**
+ * Implements hook_entity_presave().
+ */
+function cgov_yaml_content_entity_presave(EntityInterface $entity) {
+  // Are we running from the command line?
+  if (PHP_SAPI !== 'cli') {
+    return;
+  }
+
+  /* TODO: Only run if we are in a YAML_Content command */
+  /* This may not be possible. */
+
+  // Only do this for entities implementing ContentEntityInterface.
+  $class = new \ReflectionClass($entity);
+  if (!in_array('Drupal\Core\Entity\ContentEntityInterface', $class->getInterfaceNames())) {
+    return;
+  }
+
+  $entity_embed_processor = \Drupal::service('cgov_yaml_content.yaml_entity_embed_processor');
+  $entity_embed_processor->processEntity($entity);
+}

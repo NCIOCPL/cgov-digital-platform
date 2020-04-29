@@ -74,6 +74,10 @@ NCICONNECT)
   ;;
 *)
   blt custom:install_cgov_yaml_content_by_module cgov_yaml_content -D drush.ansi=false
+  ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
+  ## drupal-entity.
+  drush pmu cgov_yaml_content
   ;;
 esac
+
 set +v
