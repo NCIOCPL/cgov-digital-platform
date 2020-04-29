@@ -627,7 +627,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // Build parameter output description for error message.
     $error_params = [
       '[',
-      '  "entity_type" => ' . $entity_type . ',',
+      '  "entity_type" => "' . $entity_type . '",',
     ];
     foreach ($filter_params as $key => $value) {
       $error_params[] = sprintf("  '%s' => '%s',", $key, $value);

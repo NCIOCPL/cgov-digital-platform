@@ -4,3 +4,6 @@ services:
     arguments: ['@theme.manager', '@entity.query', '@entity_type.manager', '@token', '@event_dispatcher']
     tags:
       - {name: event_subscriber}
+  cgov_yaml_content.yaml_entity_embed_processor:
+    class: Drupal\cgov_yaml_content\Service\YamlEntityEmbedProcessor
+    arguments: ['@entity_type.manager']
