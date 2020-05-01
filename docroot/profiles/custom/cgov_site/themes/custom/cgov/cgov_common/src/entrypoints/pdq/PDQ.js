@@ -33,7 +33,7 @@ const moveToggle = () => {
 const buildInThisSection = (sections) => {
   sections.map((section)=>{
     const headers = getNodeArray('h3, h4',section);
-    
+
     // filter out "About This PDQ" section, sections with no h3's or h4's and sections with Key Points
     if(section.id !== '_AboutThis_1' && headers.length > 0 && !headers[0].id.match(/kpBox/)) {
       let nav = `<nav class="in-this-section role="navigation"><h6>${lang.InThisSection[language]}</h6><ul>`;
@@ -77,8 +77,9 @@ const citAnchorLinks = () => {
 
 const buildAudioLinks = () => {
   const audioEl = document.querySelectorAll('[templatename="pdqSnMediaAudioPlayer"]')[0];
-  const audioId = audioEl.getAttribute("objectid").substring(3).replace(/^0+/, '');
-  const audioPath = '/PublishedContent/Media/CDR/Media/' + audioId + '.mp3';
+  const audioId = audioEl.getAttribute("objectid").replace(/^CDR0+/i, '');
+  const server = CDEConfig.general.mediaServer;
+  const audioPath = server + '/pdq/media/audio/' + audioId + '.mp3';
   const audioPronunciation = audioEl.parentElement.textContent.replace('Placeholder slot\n', '');
 
   if(audioId){
@@ -89,4 +90,4 @@ const buildAudioLinks = () => {
     // new element to avoid potential duplication on existing elements.
     linkAudioPlayer(".pdqdruginfosummary .CDR_audiofile");
   }
-}; 
+};
