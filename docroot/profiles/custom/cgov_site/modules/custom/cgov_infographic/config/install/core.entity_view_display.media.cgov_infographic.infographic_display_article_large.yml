@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.cgov_infographic.body
     - field.field.media.cgov_infographic.field_accessible_version
     - field.field.media.cgov_infographic.field_browser_title
+    - field.field.media.cgov_infographic.field_caption
     - field.field.media.cgov_infographic.field_card_title
     - field.field.media.cgov_infographic.field_date_display_mode
     - field.field.media.cgov_infographic.field_date_posted
@@ -25,6 +26,7 @@ dependencies:
     - media.type.cgov_infographic
   module:
     - image
+    - text
 id: media.cgov_infographic.infographic_display_article_large
 targetEntityType: media
 bundle: cgov_infographic
@@ -33,6 +35,13 @@ content:
   field_accessible_version:
     type: basic_string
     weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_caption:
+    type: text_default
+    weight: 4
     region: content
     label: hidden
     settings: {  }

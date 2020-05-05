@@ -9,47 +9,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
 /**
- * Implements hook_ENTITY_TYPE_view().
- */
-function cgov_infographic_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity == NULL || $entity->bundle() != 'cgov_infographic') {
-    return;
-  }
-
-  // Constrain to only embedded view modes. Using list instead of
-  // pattern for readability.
-  $allowedViewModes = [
-    'infographic_display_article_large',
-    'infographic_display_article_medium',
-  ];
-  $currentViewMode = $build['#view_mode'];
-  $isAllowedViewMode = in_array($currentViewMode, $allowedViewModes);
-  if (!$isAllowedViewMode) {
-    return;
-  }
-
-  // The ostensible goal here is extract and render fields from an entity
-  // reference field (promotional image) and hoist those to the
-  // top level of the infographic render array so that we have access to
-  // the rendered values in the infographic templates (while we can access
-  // the infographic.field_image_promotional fields, they are in a pre-render
-  // state which makes certain properties inaccessible.)
-  $aliasedFieldsToExtractFromPromotionalImage = [
-    'caption' => 'field_caption',
-  ];
-  $entityTypeManager = \Drupal::entityTypeManager();
-  $promotionalImage = $build['#media']->field_image_promotional->entity;
-  if ($promotionalImage) {
-    $viewBuilder = $entityTypeManager->getViewBuilder('media');
-    foreach ($aliasedFieldsToExtractFromPromotionalImage as $alias => $fieldName) {
-      $fieldList = $promotionalImage->get($fieldName);
-      $renderedField = $viewBuilder->viewField($fieldList);
-      $build[$alias] = $renderedField;
-    }
-  }
-}
-
-/**
  * Implements hook_entity_view_alter().
  *
  * Adds attributes to certain fields.
@@ -87,7 +46,8 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
           'image_style' => 'cgov_article',
         ],
       ]);
-    } else {
+    }
+    else {
       $build['mobile_uri'] = [];
     }
   }
