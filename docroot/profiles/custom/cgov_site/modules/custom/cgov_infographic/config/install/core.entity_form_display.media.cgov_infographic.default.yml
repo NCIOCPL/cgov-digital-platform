@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.cgov_infographic.body
     - field.field.media.cgov_infographic.field_accessible_version
     - field.field.media.cgov_infographic.field_browser_title
+    - field.field.media.cgov_infographic.field_caption
     - field.field.media.cgov_infographic.field_card_title
     - field.field.media.cgov_infographic.field_date_display_mode
     - field.field.media.cgov_infographic.field_date_posted
@@ -24,6 +25,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_site_section
     - image.style.thumbnail
     - media.type.cgov_infographic
+    - workflows.workflow.editorial_workflow
   module:
     - content_moderation
     - datetime
@@ -47,7 +49,7 @@ content:
     third_party_settings: {  }
   field_accessible_version:
     type: string_textarea
-    weight: 10
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -61,6 +63,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_caption:
+    weight: 10
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
   field_card_title:
     type: string_textfield
     weight: 5
@@ -71,25 +81,25 @@ content:
     third_party_settings: {  }
   field_date_display_mode:
     type: options_buttons
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
     type: datetime_default
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   field_date_reviewed:
     type: datetime_default
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   field_date_updated:
     type: datetime_default
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -103,7 +113,7 @@ content:
     third_party_settings: {  }
   field_image_promotional:
     type: entity_browser_entity_reference
-    weight: 13
+    weight: 14
     region: content
     settings:
       entity_browser: cgov_image_browser
@@ -117,7 +127,7 @@ content:
       open: false
     third_party_settings: {  }
   field_infographic:
-    weight: 11
+    weight: 12
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -125,7 +135,7 @@ content:
     type: image_image
     region: content
   field_infographic_mobile:
-    weight: 12
+    weight: 13
     settings:
       preview_image_style: thumbnail
       progress_indicator: throbber
@@ -158,13 +168,13 @@ content:
     third_party_settings: {  }
   field_public_use:
     type: options_select
-    weight: 18
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_search_engine_restrictions:
     type: options_select
-    weight: 19
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -191,7 +201,7 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 22
+    weight: 23
     settings: {  }
     region: content
     third_party_settings: {  }
@@ -205,7 +215,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 23
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -213,11 +223,11 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 22
     region: content
     third_party_settings: {  }
   translation:
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
