@@ -29,6 +29,7 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
       $config['system.performance']['css']['gzip'] = FALSE;
       $config['system.performance']['js']['preprocess'] = FALSE;
       $config['system.performance']['js']['gzip'] = FALSE;
+    case 'int':
     case '01test':
     case 'test':
     case '01live':
