@@ -5,7 +5,14 @@ dependencies:
     - field.storage.media.field_infographic
     - media.type.cgov_infographic
   module:
+    - content_translation
     - image
+third_party_settings:
+  content_translation:
+    translation_sync:
+      alt: '0'
+      title: '0'
+      file: file
 id: media.cgov_infographic.field_infographic
 field_name: field_infographic
 entity_type: media
@@ -22,7 +29,7 @@ settings:
   max_filesize: 256MB
   max_resolution: ''
   min_resolution: ''
-  alt_field: false
+  alt_field: true
   alt_field_required: false
   title_field: false
   title_field_required: false

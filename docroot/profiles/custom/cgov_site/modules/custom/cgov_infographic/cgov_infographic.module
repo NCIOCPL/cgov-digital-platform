@@ -19,8 +19,8 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
   }
 
   // Add enlarge_uri to the build array so it appears as a property on the
-  // content variable in the 'full', 'infographic_display_article_large', 'infographic_display_article_medium'
-  // display twig template.
+  // content variable in the 'full', 'infographic_display_article_large',
+  // 'infographic_display_article_medium' display twig template.
   if (
     $build['#view_mode'] == 'full' ||
     $build['#view_mode'] == 'infographic_display_article_large' ||
@@ -49,6 +49,42 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
     }
     else {
       $build['mobile_uri'] = [];
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function cgov_infographic_media_view(array &$build,
+ EntityInterface $entity,
+                                     EntityViewDisplayInterface $display,
+ $view_mode) {
+  // Limit the following to infographic build renders.
+  if ($entity == NULL || $entity->bundle() != 'cgov_infographic') {
+    return;
+  }
+  // Constrain view modes to mobile image displays.
+  $allowedViewModes = [
+    'full',
+    'infographic_display_article_large',
+    'infographic_display_article_medium',
+  ];
+  $currentViewMode = $build['#view_mode'];
+  $isAllowedViewMode = in_array($currentViewMode, $allowedViewModes);
+  if (!$isAllowedViewMode) {
+    return;
+  }
+
+  // If we're rendering an infographic, populate / override the mobile
+  // alt with the desktop version. (Note:field_infograpic is a required field.)
+  $infographic_desktop_alt = $entity->get('field_infographic')->alt;
+
+  if (!empty($infographic_desktop_alt)) {
+    // Set the mobile alt tag for this render to the desktop version.
+    $mobile = $entity->get('field_infographic_mobile');
+    if ($mobile) {
+      $mobile->alt = $infographic_desktop_alt;
     }
   }
 }
