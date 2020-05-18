@@ -156,7 +156,6 @@ table figure {
   }
   .infographic-link {
     text-transform: uppercase;
-
     &::after {
       border-style: solid;
       border-width: 3px 3px 0 0;
@@ -172,6 +171,13 @@ table figure {
     }
   }
 }
+
+.infographic-link-container {
+      display: none;
+      @include break(tablet-ls) {
+        display: block;
+      }
+    }
 
 // replacement for download data images
 a.data-download-btn {
