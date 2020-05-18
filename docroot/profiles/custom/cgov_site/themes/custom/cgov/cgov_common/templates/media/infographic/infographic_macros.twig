@@ -44,16 +44,14 @@
         {% endif %}
       </div>
 
-
-
         <figcaption>
            {% if content.field_caption|render|striptags|trim %}
             <div class="caption-container no-resize">
                 {{ content.field_caption }}
             </div>
           {% endif %}
-          <div class="caption-container">
-            <a href="{{enlarge_uri}}" class="infographic-link" data-link_title= "{{ content.name }}" target="_blank">{{ link_text|trans }}</a>
+          <div class="caption-container infographic-link-container">
+            <a href="{{enlarge_uri}}" class="infographic-link" data-link_title= "{{ content.name|field_value }}" target="_blank">{{ link_text|trans }}</a>
           </div>
         </figcaption>
   </figure>
