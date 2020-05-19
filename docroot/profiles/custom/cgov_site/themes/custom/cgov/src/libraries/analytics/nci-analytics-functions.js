@@ -1697,10 +1697,21 @@ var NCIAnalytics = {
         clickParams.Props = {
             66: "InstitutionCard_" + token + "_" + linkText,
             67: pageName
-        }
+        };
+        clickParams.LogToOmniture();
+    },
+    /* ********************************************************************** */
+    InfographicClick: function(sender, linkData, pageName) {
+        var clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'InfographicClick');
+
+        clickParams.Events = [71];
+        clickParams.Props = {
+            66:  linkData,
+            67: pageName
+        };
         clickParams.LogToOmniture();
     }
-
 };
 
 /* End the giant NCIAnalytics object functions */

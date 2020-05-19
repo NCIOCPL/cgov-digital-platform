@@ -725,4 +725,13 @@ $(window).on('load',function(){
 
         NCIAnalytics.ProfilePanelLinkClick($this, linkText, name);
     });
+
+    // Tracks clicks of "View and Print" link on infographic items.
+    $('.infographic-link').on('click', function() {
+        var $this = $(this);
+        var title = $this.attr('data-link_title');
+        var linkData = 'viewprint|inline|' + title;
+
+        NCIAnalytics.InfographicClick($this, linkData, pageName);
+    });
 });
