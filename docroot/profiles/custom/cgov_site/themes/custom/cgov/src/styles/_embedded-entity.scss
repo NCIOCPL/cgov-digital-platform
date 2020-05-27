@@ -152,6 +152,17 @@
     }
   }
 
+  // infographics rulesets
+  &[data-entity-embed-display*="infographic_display_article_large"] {
+    width: 100%;
+  }
+  &[data-entity-embed-display*="infographic_display_article_medium"] {
+    width: 100%;
+    @include break(tablet-ls){
+      width: 40%;
+    }
+  }
+
   /* https://github.com/NCIOCPL/cgov-digital-platform/issues/1575
   This file should be refactored to scope all embedded entitiy rules to only the
   appropriate entity types. Like so. */

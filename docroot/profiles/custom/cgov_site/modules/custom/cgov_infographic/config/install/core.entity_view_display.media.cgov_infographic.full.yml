@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.cgov_infographic.body
     - field.field.media.cgov_infographic.field_accessible_version
     - field.field.media.cgov_infographic.field_browser_title
+    - field.field.media.cgov_infographic.field_caption
     - field.field.media.cgov_infographic.field_card_title
     - field.field.media.cgov_infographic.field_date_display_mode
     - field.field.media.cgov_infographic.field_date_posted
@@ -14,6 +15,7 @@ dependencies:
     - field.field.media.cgov_infographic.field_feature_card_description
     - field.field.media.cgov_infographic.field_image_promotional
     - field.field.media.cgov_infographic.field_infographic
+    - field.field.media.cgov_infographic.field_infographic_mobile
     - field.field.media.cgov_infographic.field_list_description
     - field.field.media.cgov_infographic.field_meta_tags
     - field.field.media.cgov_infographic.field_page_description
@@ -63,16 +65,23 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_caption:
+    type: text_default
+    weight: 13
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_date_display_mode:
     type: list_default
-    weight: 10
+    weight: 11
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_date_posted:
     type: cgov_date_formatter
-    weight: 9
+    weight: 10
     region: content
     label: hidden
     settings:
@@ -82,7 +91,7 @@ content:
     third_party_settings: {  }
   field_date_reviewed:
     type: cgov_date_formatter
-    weight: 8
+    weight: 9
     region: content
     label: hidden
     settings:
@@ -92,7 +101,7 @@ content:
     third_party_settings: {  }
   field_date_updated:
     type: cgov_date_formatter
-    weight: 7
+    weight: 8
     region: content
     label: hidden
     settings:
@@ -109,12 +118,29 @@ content:
     third_party_settings: {  }
     type: image
     region: content
+  field_infographic_mobile:
+    type: image
+    weight: 7
+    region: content
+    label: hidden
+    settings:
+      image_style: cgov_article
+      image_link: ''
+    third_party_settings: {  }
   field_public_use:
     type: list_default
-    weight: 11
+    weight: 12
     region: content
     label: hidden
     settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string
+    weight: 14
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
   thumbnail:
     type: image
@@ -144,4 +170,3 @@ hidden:
   field_search_engine_restrictions: true
   field_site_section: true
   langcode: true
-  name: true
