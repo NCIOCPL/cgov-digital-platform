@@ -1,13 +1,13 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
 
 /**
  * Handle importing default yaml content.
  */
-class TranslateCommand extends BltTasks {
+class TranslateCommands extends BltTasks {
 
   /**
    * Translate strings for all available locales.

@@ -1,16 +1,16 @@
 <?php
 
-namespace Acquia\Blt\Custom\Commands;
+namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
-use Acquia\Blt\Custom\ParatestTrait;
+use Cgov\ParatestTrait;
 use Acquia\Blt\Robo\Exceptions\BltException;
 use Robo\Contract\VerbosityThresholdInterface;
 
 /**
  * Defines commands in the "tests" namespace.
  */
-class ParatestCommand extends BltTasks {
+class ParatestCommands extends BltTasks {
   use ParatestTrait;
 
   /**
