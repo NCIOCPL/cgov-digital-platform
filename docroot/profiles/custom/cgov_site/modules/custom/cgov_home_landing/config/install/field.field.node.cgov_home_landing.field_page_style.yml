@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_style
+    - node.type.cgov_home_landing
+  module:
+    - options
+id: node.cgov_home_landing.field_page_style
+field_name: field_page_style
+entity_type: node
+bundle: cgov_home_landing
+label: 'Home and Landing Page Style'
+description: 'Select a template for the page'
+required: true
+translatable: false
+default_value:
+  -
+    value: standard
+default_value_callback: ''
+settings: {  }
+field_type: list_string

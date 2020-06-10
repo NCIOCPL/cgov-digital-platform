@@ -1,0 +1,95 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Annual Plan & Budget Proposal For Fiscal Year 2022"
+  title__ES:
+      value: "Spanish: NCI Annual Plan & Budget Proposal For Fiscal Year 2022"
+  field_page_description:
+    value: "Home and Landing Special Report"
+  field_page_description__ES:
+    value: "Spanish: Home and Landing Special Report "
+  field_browser_title:
+    value: "NCI Annual Plan"
+  field_browser_title__ES:
+    value: "Spanish - NCI Annual Plan"
+  field_pretty_url:
+    value: "special-report"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "special_report"
+  field_hero_banner:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_hero_banner"
+      field_desktop_hero:
+      - '#process':
+          callback: 'file'
+          args:
+            - 'image'
+            - type: 'module'
+              filename: 'apfy22-hero-placeholder.jpg'
+        alt: 'AP FY 2022 Hero'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'apfy22-hero-placeholder.jpg'
+          alt: 'AP FY 2022 Hero'
+      field_tagline:
+          - value: ""
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="temp-block">
+              <a href="#"><span class="filetype pdf annual-pdf"></span>Annual Plan & Budget Proposal At A Glance</a>
+            </div>
+      type: "cgov_card_borderless"
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Lead"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'special-report-card-image.png'
+      field_override_card_title:
+        - value: Alternate Title
+      field_override_card_longer_descr:
+        - value: "Over the last 5 decades, mortality rates have declined for most cancers, largely due to improvements in prevention, detection, and treatment.  These advances have been fueled by breakthrough studies of complex environmental and genetic interactions that can lead to cancer, the identification of targets that drive cancer, and the development of effective interventions against those targets."              

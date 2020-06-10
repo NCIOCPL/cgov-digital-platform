@@ -34,6 +34,14 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     // Add theme suggestion of 'page__article', 'page__biography', etc.
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
+
+    // Add theme suggestion for special report template if appropriate.
+    if ($node->bundle() == "cgov_home_landing") {
+      $page_template = $node->field_page_style->value;
+      if ($page_template == 'special_report') {
+        $suggestions[] = 'page__' . $content_type . '__' . $page_template;
+      }
+    }
   }
 
   // ADD SUGGESTIONS FOR CUSTOM 401/403/404 PAGE TEMPLATES.
@@ -45,13 +53,16 @@ function cgov_common_theme_suggestions_page_alter(array &$suggestions, array $va
     // 3) Get the status code.
     $status_code = $exception->getStatusCode();
     // 4) Get the current langauge.
-    $language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId();
+    $language = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+      ->getId();
     if (in_array($status_code, [401, 403, 404])) {
       $suggestions[] = 'page__' . $status_code;
       $suggestions[] = 'page__' . $status_code . '_' . $language;
     }
   }
 }
+
 
 /**
  * Allows us to add the container's view mode to field suggestions.
@@ -76,7 +87,7 @@ function cgov_common_preprocess_html(&$variables) {
   $variables['attributes']['class'][] = $colorTheme . '-theme';
 
   $hasTranslations = theme_get_setting('has_translations');
-  if ($hasTranslations){
+  if ($hasTranslations) {
     $variables['attributes']['class'][] = 'has-translated-content';
   }
 }
@@ -115,8 +126,7 @@ function cgov_common_preprocess_node(&$variables) {
   // (NOTE: An exception might be thrown.)
   try {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
-  }
-  catch (Exception $e) {
+  } catch (Exception $e) {
     // If the database is not yet available, set the default value.
     $variables['is_front'] = FALSE;
   }
