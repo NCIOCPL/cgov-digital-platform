@@ -5,6 +5,7 @@ module.exports = {
     "Ckeditor": path.resolve(__dirname, "src/entrypoints/ckeditor/Ckeditor.js"),
     "Article": path.resolve(__dirname, "src/entrypoints/article/Article.js"),
     "Homelanding": path.resolve(__dirname, "src/entrypoints/homelanding/Homelanding.js"),
+    "SpecialReport": path.resolve(__dirname, "src/entrypoints/specialReport/SpecialReport.js"),
     "PDQ": path.resolve(__dirname, "src/entrypoints/pdq/PDQ.js"),
     "Minilanding": path.resolve(__dirname, "src/entrypoints/minilanding/Minilanding.js"),
     "CancerCenters": path.resolve(__dirname, "src/entrypoints/cancerCenters/CancerCenters.js"),

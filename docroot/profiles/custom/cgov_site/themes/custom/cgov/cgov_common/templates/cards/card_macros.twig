@@ -6,72 +6,78 @@
 #}
 
 {% macro featureCard(title, description, image, url) %}
-  <div class="feature-card">
-    <a href="{{ url }}">
-      {% if image %}
-        <div class="image-hover">
-          {{- image -}}
-        </div>
-      {% endif %}
-      <h3>{{ title }}</h3>
-      {% if description %}
-        <p>{{ description }}</p>
-      {% endif %}
-    </a>
-  </div>
+	<div class="feature-card">
+		<a href="{{ url }}">
+			{% if image %}
+				<div class="image-hover">
+					{{- image -}}
+				</div>
+			{% endif %}
+			<h3>{{ title }}</h3>
+			{% if description %}
+				<p>{{ description }}</p>
+			{% endif %}
+		</a>
+	</div>
 {% endmacro %}
 
 {% macro borderlessCard(title, description, image, url, button_text, button_alt, nid) %}
-  <div class="row flex-columns borderless-container">
-    <div class="borderless-card">
-      <div class="borderless-text-container">
-        <h2 class="desktop-tablet-display"><a href="{{ url }}">{{ title }}</a></h2>
-        {% if description %}
-          <p>{{ description }}</p>
-        {% endif %}
-        <div class="centered-container thick-top-margin">
-            <a href="{{ url }}" title="{{ button_alt }}" class="borderless-button">{{ button_text }}</a>
-        </div>
-      </div>
-      {% if image %}
-        <div class="image-hover borderless-image-container">
-          <h2 class="mobile-display"><a href="{{ url }}">{{ title }}</a></h2>
-          <a href="{{ url }}">
-          {{- image -}}
-          </a>
-        </div>
-      {% endif %}
-    </div>
-  </div>
+	<div class="row flex-columns borderless-container">
+		<div class="borderless-card medium-10 columns align-center">
+			<div class="borderless-text-container">
+				<h2 class="desktop-tablet-display">
+					<a href="{{ url }}">{{ title }}</a>
+				</h2>
+				{% if description %}
+					<p>{{ description }}</p>
+				{% endif %}
+				<div class="centered-container thick-top-margin">
+					<a href="{{ url }}" title="{{ button_alt }}" class="borderless-button">{{ button_text }}</a>
+				</div>
+			</div>
+			{% if image %}
+				<div class="image-hover borderless-image-container">
+					<h2 class="mobile-display">
+						<a href="{{ url }}">{{ title }}</a>
+					</h2>
+					<a href="{{ url }}">
+						{{- image -}}
+					</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
 {% endmacro %}
 
 {% macro thumbnailCard(title, list_description, image, url) %}
-  <div class="row card-thumbnail">
-    {# TODO: What if no image? #}
-    <div class="small-2 columns card-thumbnail-image">
-      {# TODO: ESCAPE THE TITLE. USE ATTR CORRECTLY #}
-      <a href="{{url}}" class="image-hover" data-title="{{title}}">{{image}}</a>
-    </div>
-    <div class="small-10 columns card-thumbnail-text">
-      <h3>
-        <a href="{{url}}">{{title}}</a>
-      </h3>
-      {% if list_description %}
-        <p>{{list_description}}</p>
-      {% endif %}
-    </div>
-  </div>
+	<div
+		class="row card-thumbnail">
+		{# TODO: What if no image? #}
+		<div
+			class="small-2 columns card-thumbnail-image">
+			{# TODO: ESCAPE THE TITLE. USE ATTR CORRECTLY #}
+			<a href="{{url}}" class="image-hover" data-title="{{title}}">{{image}}</a>
+		</div>
+		<div class="small-10 columns card-thumbnail-text">
+			<h3>
+				<a href="{{url}}">{{title}}</a>
+			</h3>
+			{% if list_description %}
+				<p>{{list_description}}</p>
+			{% endif %}
+		</div>
+	</div>
 {% endmacro %}
 
 {% macro recommendedContentCard(title, url, img) %}
-  <div class="slot-item equalheight large-4 columns card gutter blog-feature">
-    <div class="feature-card cgvBlogPost">
-      <a href="{{url}}">
-        <div class="image-hover">
-          {{img}}
-        </div>
-        <h3>{{title}}</h3>
-      </a>
-    </div>
-  </div>
+	<div class="slot-item equalheight large-4 columns card gutter blog-feature">
+		<div class="feature-card cgvBlogPost">
+			<a href="{{url}}">
+				<div class="image-hover">
+					{{img}}
+				</div>
+				<h3>{{title}}</h3>
+			</a>
+		</div>
+	</div>
 {% endmacro %}
