@@ -1,13 +1,12 @@
-@import './breakpoints';
-@import './colors';
+@import "./breakpoints";
+@import "./colors";
 
 /* Borderless Cards */
 .borderless-container {
-  padding:0 0.9375em 1.5em 0.9375em;
+  padding: 20px 0.9375em 1.5em 0.9375em;
   .borderless-card {
     @include flexcontainer();
     @include property-prefix(justify-content, space-between);
-    width:100%;
     .borderless-text-container {
       @include flex-order(1);
       @include flex(1);
@@ -17,28 +16,28 @@
       p {
         color: $light-gray-text;
         line-height: 26px;
-        @include bp(small){
+        @include bp(small) {
           line-height: 25px;
         }
       }
       @include bp(medium-up) {
-        width:66%;
+        width: 66%;
       }
-      @include bp(small){
+      @include bp(small) {
         @include flex-order(2);
         width: 100%;
-        margin-right:0;
+        margin-right: 0;
         line-height: 25px;
       }
     }
     .borderless-image-container {
       @include flex-order(2);
       @include bp(medium-up) {
-        width:33%;
+        width: 33%;
       }
-      @include bp(small){
+      @include bp(small) {
         @include flex-order(1);
-        width:100%;
+        width: 100%;
       }
     }
     h2 {
@@ -57,16 +56,17 @@
       color: $very-dark-grey;
       font-weight: bold;
       &:hover {
-        color:$cranberry;
+        color: $cranberry;
         text-decoration: none;
       }
     }
   }
 }
-.borderless-button, a.borderless-button {
+.borderless-button,
+a.borderless-button {
   @include button-base;
-  @include button-size($padding:false);
-  @include button-style($color-link,5px);
+  @include button-size($padding: false);
+  @include button-style($color-link, 5px);
   padding: 14px 34px 14px 20px;
   color: $white;
   box-shadow: 0 3px 0 0 $button-box-shadow-color;
@@ -78,7 +78,7 @@
     position: absolute;
     right: 5%;
     top: 37%;
-    @include svg-sprite(chevron-white,$rotate:right);
+    @include svg-sprite(chevron-white, $rotate: right);
   }
 }
 
@@ -86,7 +86,7 @@
 .centered-container {
   @include flexbox();
   @include property-prefix(justify-content, center);
-  width:100%;
+  width: 100%;
 }
 .thick-top-margin {
   margin-top: 2rem;
@@ -97,13 +97,13 @@
 
 .desktop-tablet-display {
   @include bp(small) {
-    display:none;
+    display: none;
   }
 }
 
 .mobile-display {
   display: none;
   @include bp(small) {
-    display:block;
+    display: block;
   }
 }
