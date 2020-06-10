@@ -13,6 +13,10 @@ module.exports = {
     __dirname,
     "src/entrypoints/homelanding/Homelanding.js"
   ),
+  SpecialReport: path.resolve(
+    __dirname,
+    "src/entrypoints/specialReport/SpecialReport.js"
+  ),
   PDQ: path.resolve(__dirname, "src/entrypoints/pdq/PDQ.js"),
   Minilanding: path.resolve(
     __dirname,

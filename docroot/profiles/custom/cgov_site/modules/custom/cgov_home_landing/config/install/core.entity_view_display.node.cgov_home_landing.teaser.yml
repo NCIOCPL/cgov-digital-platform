@@ -16,6 +16,7 @@ dependencies:
     - field.field.node.cgov_home_landing.field_list_description
     - field.field.node.cgov_home_landing.field_meta_tags
     - field.field.node.cgov_home_landing.field_page_description
+    - field.field.node.cgov_home_landing.field_page_style
     - field.field.node.cgov_home_landing.field_pretty_url
     - field.field.node.cgov_home_landing.field_search_engine_restrictions
     - field.field.node.cgov_home_landing.field_site_section
@@ -27,6 +28,11 @@ targetEntityType: node
 bundle: cgov_home_landing
 mode: teaser
 content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   links:
     weight: 100
     settings: {  }
@@ -46,6 +52,7 @@ hidden:
   field_list_description: true
   field_meta_tags: true
   field_page_description: true
+  field_page_style: true
   field_pretty_url: true
   field_search_engine_restrictions: true
   field_site_section: true
