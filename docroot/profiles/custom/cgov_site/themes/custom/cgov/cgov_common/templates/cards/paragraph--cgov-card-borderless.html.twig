@@ -1,0 +1,62 @@
+{% import '@cgov_common/cards/card_macros.twig' as cardMacros %}
+
+{# This is an adaptation of feature card template. The biggest difference is that
+ # this template allows for overrides. I cannot see a straight forward way of overriding
+ # the node's title and description fields and still using the Feature Card template. So
+ # we will duplicate it.
+ #}
+
+{% if content.field_featured_item[0] %}
+
+
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
+  {% set nid = featured_item_node.id %}
+  {% set image_template = 'borderless_card_image' %}
+  {% set featured_item_image_id = drupal_field('field_image_promotional', 'node', nid, image_template)|render|striptags|trim|number_format + 0 %}
+
+
+
+  {# ###### Setup Title ####### #}
+
+  {% if content.field_override_card_title[0] is not empty %}
+    {% set title = content.field_override_card_title[0]['#context'].value %}
+  {% elseif featured_item_node.field_card_title[0] is not empty %}
+    {% set title = featured_item_node.field_card_title[0].value %}
+  {% else %}
+    {% set title = featured_item_node.field_browser_title[0].value %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% if content.field_override_card_longer_descr[0] is not empty %}
+    {% set description = content.field_override_card_longer_descr[0]['#context'].value %}
+  {% elseif featured_item_node.field_feature_card_description[0] is not empty %}
+    {% set description = featured_item_node.field_feature_card_description[0].value %}
+  {% else %}
+    {% set description = '' %}
+  {% endif %}
+
+  {# ###### Setup URL ######## #}
+  {% set url = path('entity.node.canonical', {'node' : nid}) %}
+
+  {# ###### Setup Image ######## #}
+  {% set image = content.field_featured_item %}
+  {% if content.field_override_image_promotional[0] %}
+    {% set image = content.field_override_image_promotional %}
+  {% endif %}
+
+ {####### Setup Button  ######## #}
+  {% if content.field_button_text|render|striptags|trim is not empty %}
+    {% set button_text = content.field_button_text|render|striptags|trim|upper %}
+  {% else %}
+    {% set button_text = '' %}
+  {% endif %}
+
+  {% if content.field_button_alt|render|striptags|trim is not empty %}
+    {% set button_alt = content.field_button_alt|render|striptags|trim %}
+  {% else %}
+    {% set button_alt = '' %}
+  {% endif %}
+
+  {{ cardMacros.borderlessCard(title, description, image, url, button_text, button_alt, nid) }}
+
+{% endif %}

@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_event.body
+    - field.field.node.cgov_event.field_all_day_event
+    - field.field.node.cgov_event.field_browser_title
+    - field.field.node.cgov_event.field_card_title
+    - field.field.node.cgov_event.field_city_state
+    - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_series
+    - field.field.node.cgov_event.field_event_start_date
+    - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_article
+    - field.field.node.cgov_event.field_image_promotional
+    - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_meta_tags
+    - field.field.node.cgov_event.field_page_description
+    - field.field.node.cgov_event.field_pretty_url
+    - field.field.node.cgov_event.field_related_resources
+    - field.field.node.cgov_event.field_room
+    - field.field.node.cgov_event.field_search_engine_restrictions
+    - field.field.node.cgov_event.field_site_section
+    - field.field.node.cgov_event.field_venue
+    - node.type.cgov_event
+  module:
+    - user
+id: node.cgov_event.borderless_card_image
+targetEntityType: node
+bundle: cgov_event
+mode: borderless_card_image
+content:
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_all_day_event: true
+  field_city_state: true
+  field_event_end_date: true
+  field_event_series: true
+  field_event_start_date: true
+  field_image_article: true
+  field_list_description: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_related_resources: true
+  field_room: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  field_venue: true
+  langcode: true
+  links: true

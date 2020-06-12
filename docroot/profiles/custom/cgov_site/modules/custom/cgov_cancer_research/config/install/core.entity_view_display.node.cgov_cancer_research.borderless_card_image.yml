@@ -1,0 +1,54 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_cancer_research.body
+    - field.field.node.cgov_cancer_research.field_browser_title
+    - field.field.node.cgov_cancer_research.field_card_title
+    - field.field.node.cgov_cancer_research.field_date_display_mode
+    - field.field.node.cgov_cancer_research.field_date_posted
+    - field.field.node.cgov_cancer_research.field_date_reviewed
+    - field.field.node.cgov_cancer_research.field_date_updated
+    - field.field.node.cgov_cancer_research.field_feature_card_description
+    - field.field.node.cgov_cancer_research.field_image_promotional
+    - field.field.node.cgov_cancer_research.field_list_description
+    - field.field.node.cgov_cancer_research.field_meta_tags
+    - field.field.node.cgov_cancer_research.field_page_description
+    - field.field.node.cgov_cancer_research.field_pretty_url
+    - field.field.node.cgov_cancer_research.field_search_engine_restrictions
+    - field.field.node.cgov_cancer_research.field_selected_research
+    - field.field.node.cgov_cancer_research.field_site_section
+    - node.type.cgov_cancer_research
+  module:
+    - user
+id: node.cgov_cancer_research.borderless_card_image
+targetEntityType: node
+bundle: cgov_cancer_research
+mode: borderless_card_image
+content:
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_list_description: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_selected_research: true
+  field_site_section: true
+  langcode: true
+  links: true

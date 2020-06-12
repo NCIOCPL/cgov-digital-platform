@@ -1,0 +1,26 @@
+uuid: b8744e35-6f31-488c-ab0a-981ddd1464cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_item
+    - paragraphs.paragraphs_type.cgov_card_borderless
+id: paragraph.cgov_card_borderless.field_featured_item
+field_name: field_featured_item
+entity_type: paragraph
+bundle: cgov_card_borderless
+label: 'Featured Item'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: cgov_biography
+field_type: entity_reference
