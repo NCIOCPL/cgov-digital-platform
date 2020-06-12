@@ -1,0 +1,28 @@
+uuid: 1e68e342-d176-455b-a5f6-eff8ffb6f2f4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_override_image_promotional
+    - media.type.cgov_image
+    - paragraphs.paragraphs_type.cgov_card_borderless
+id: paragraph.cgov_card_borderless.field_override_image_promotional
+field_name: field_override_image_promotional
+entity_type: paragraph
+bundle: cgov_card_borderless
+label: 'Promotional Image'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      cgov_image: cgov_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

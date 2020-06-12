@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_landing_contents
     - node.type.cgov_home_landing
+    - paragraphs.paragraphs_type.cgov_card_borderless
     - paragraphs.paragraphs_type.cgov_card_raw_html
     - paragraphs.paragraphs_type.cgov_column_one
     - paragraphs.paragraphs_type.cgov_column_two
@@ -33,31 +34,14 @@ settings:
       cgov_primary_feature_row: cgov_primary_feature_row
       cgov_guide_row: cgov_guide_row
       cgov_secondary_feature_row: cgov_secondary_feature_row
+      cgov_multimedia_row: cgov_multimedia_row
       cgov_list: cgov_list
-      cgov_content_block: cgov_content_block
-      cgov_card_raw_html: cgov_card_raw_html
       cgov_column_one: cgov_column_one
       cgov_column_two: cgov_column_two
-      cgov_multimedia_row: cgov_multimedia_row
+      cgov_card_raw_html: cgov_card_raw_html
+      cgov_content_block: cgov_content_block
+      cgov_card_borderless: cgov_card_borderless
     target_bundles_drag_drop:
-      cgov_primary_feature_row:
-        enabled: true
-        weight: 0
-      cgov_guide_row:
-        enabled: true
-        weight: 1
-      cgov_secondary_feature_row:
-        enabled: true
-        weight: 2
-      cgov_list:
-        enabled: true
-        weight: 4
-      cgov_column_one:
-        enabled: true
-        weight: 5
-      cgov_column_two:
-        enabled: true
-        weight: 6
       body_section:
         weight: -15
         enabled: false
@@ -67,31 +51,82 @@ settings:
       cgov_card_internal:
         weight: -13
         enabled: false
-      cgov_card_raw_html:
-        weight: 7
+      cgov_primary_feature_row:
         enabled: true
+        weight: 0
+      cgov_guide_row:
+        enabled: true
+        weight: 1
+      cgov_secondary_feature_row:
+        enabled: true
+        weight: 2
+      cgov_multimedia_row:
+        enabled: true
+        weight: 3
+      cgov_list:
+        enabled: true
+        weight: 4
+      cgov_column_one:
+        enabled: true
+        weight: 5
+      cgov_column_two:
+        enabled: true
+        weight: 6
+      cgov_card_raw_html:
+        enabled: true
+        weight: 7
+      cgov_content_block:
+        enabled: true
+        weight: 8
       cgov_citation:
         weight: 23
         enabled: false
-      cgov_content_block:
-        weight: 8
-        enabled: true
       cgov_dynamic_list:
         weight: 27
         enabled: false
       cgov_external_link:
         weight: 28
         enabled: false
+      cgov_card_borderless:
+        enabled: true
+        weight: 30
       cgov_internal_link:
         weight: 30
         enabled: false
-      cgov_multimedia_row:
-        enabled: true
-        weight: 3
       cgov_two_item_feature_row:
         weight: 35
         enabled: false
       pdq_summary_section:
         weight: 36
+        enabled: false
+      cgov_cthp_block_card:
+        weight: 39
+        enabled: false
+      cgov_cthp_feature_card_external:
+        weight: 40
+        enabled: false
+      cgov_cthp_feature_card_internal:
+        weight: 41
+        enabled: false
+      cgov_cthp_guide_card:
+        weight: 42
+        enabled: false
+      cgov_cthp_overview_card:
+        weight: 43
+        enabled: false
+      cgov_cthp_raw_html_card:
+        weight: 44
+        enabled: false
+      cgov_cthp_research_card:
+        weight: 45
+        enabled: false
+      cgov_cthp_video_card:
+        weight: 46
+        enabled: false
+      cgov_hero_banner:
+        weight: 50
+        enabled: false
+      cgov_media_link:
+        weight: 53
         enabled: false
 field_type: entity_reference_revisions

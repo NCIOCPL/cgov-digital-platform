@@ -81,3 +81,53 @@
 		}
 	}
 }
+
+//Vendor prefixes
+@mixin prefix($property, $value, $vendors: webkit moz ms o) {
+	@if $vendors {
+		@each $vendor in $vendors {
+			#{$property}: #{"-" + $vendor + "-" + $value};
+		}
+	}
+	#{$property}: #{$value};
+}
+
+@mixin property-prefix($property, $value, $vendors: webkit moz ms o) {
+	@if $vendors {
+		@each $vendor in $vendors {
+			#{"-" + $vendor + "-" + $property}: #{$value};
+		}
+	}
+	#{$property}: #{$value};
+}
+
+//Flex mixins
+@mixin flexbox() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+@mixin flex($values) {
+	-webkit-box-flex: $values;
+	-moz-box-flex:  $values;
+	-webkit-flex:  $values;
+	-ms-flex:  $values;
+	flex:  $values;
+}
+@mixin flexcontainer() {
+	@include flexbox();
+	@include property-prefix(flex-direction,row);
+	overflow:hidden;
+	@include bp(small) {
+		@include property-prefix(flex-direction,column);
+	}
+}
+@mixin flex-order($val) {
+	-webkit-box-ordinal-group: $val;
+	-moz-box-ordinal-group: $val;
+	-ms-flex-order: $val;
+	// -webkit-order: $val;
+	order: $val;
+}

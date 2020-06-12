@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_landing_contents
     - node.type.cgov_mini_landing
+    - paragraphs.paragraphs_type.cgov_card_borderless
     - paragraphs.paragraphs_type.cgov_card_raw_html
     - paragraphs.paragraphs_type.cgov_content_block
     - paragraphs.paragraphs_type.cgov_dynamic_list
@@ -28,6 +29,7 @@ settings:
       cgov_two_item_feature_row: cgov_two_item_feature_row
       cgov_list: cgov_list
       cgov_content_block: cgov_content_block
+      cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
     target_bundles_drag_drop:
@@ -64,10 +66,13 @@ settings:
       cgov_card_internal:
         weight: -13
         enabled: false
-      cgov_card_raw_html:
+      cgov_card_borderless:
         weight: 4
+        enabled: true
+      cgov_card_raw_html:
+        weight: 5
         enabled: true
       cgov_dynamic_list:
         enabled: true
-        weight: 5
+        weight: 6
 field_type: entity_reference_revisions
