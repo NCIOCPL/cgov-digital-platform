@@ -1,0 +1,58 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_application_page.body
+    - field.field.node.cgov_application_page.field_app_module_page_template
+    - field.field.node.cgov_application_page.field_application_module
+    - field.field.node.cgov_application_page.field_browser_title
+    - field.field.node.cgov_application_page.field_card_title
+    - field.field.node.cgov_application_page.field_date_display_mode
+    - field.field.node.cgov_application_page.field_date_posted
+    - field.field.node.cgov_application_page.field_date_reviewed
+    - field.field.node.cgov_application_page.field_date_updated
+    - field.field.node.cgov_application_page.field_enable_push_state
+    - field.field.node.cgov_application_page.field_feature_card_description
+    - field.field.node.cgov_application_page.field_image_promotional
+    - field.field.node.cgov_application_page.field_list_description
+    - field.field.node.cgov_application_page.field_meta_tags
+    - field.field.node.cgov_application_page.field_page_description
+    - field.field.node.cgov_application_page.field_pretty_url
+    - field.field.node.cgov_application_page.field_search_engine_restrictions
+    - field.field.node.cgov_application_page.field_site_section
+    - node.type.cgov_application_page
+  module:
+    - user
+id: node.cgov_application_page.borderless_card_image
+targetEntityType: node
+bundle: cgov_application_page
+mode: borderless_card_image
+content:
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  body: true
+  content_moderation_control: true
+  field_app_module_page_template: true
+  field_application_module: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_enable_push_state: true
+  field_list_description: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true

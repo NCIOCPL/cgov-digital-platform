@@ -1,0 +1,66 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_blog_series.field_about_blog
+    - field.field.node.cgov_blog_series.field_allow_comments
+    - field.field.node.cgov_blog_series.field_archive_back_years
+    - field.field.node.cgov_blog_series.field_archive_group_by
+    - field.field.node.cgov_blog_series.field_banner_image
+    - field.field.node.cgov_blog_series.field_blog_series_shortname
+    - field.field.node.cgov_blog_series.field_browser_title
+    - field.field.node.cgov_blog_series.field_card_title
+    - field.field.node.cgov_blog_series.field_feature_card_description
+    - field.field.node.cgov_blog_series.field_featured_posts
+    - field.field.node.cgov_blog_series.field_feedburner_url
+    - field.field.node.cgov_blog_series.field_image_promotional
+    - field.field.node.cgov_blog_series.field_list_description
+    - field.field.node.cgov_blog_series.field_meta_tags
+    - field.field.node.cgov_blog_series.field_num_display_posts
+    - field.field.node.cgov_blog_series.field_page_description
+    - field.field.node.cgov_blog_series.field_pretty_url
+    - field.field.node.cgov_blog_series.field_public_use
+    - field.field.node.cgov_blog_series.field_recommended_content_header
+    - field.field.node.cgov_blog_series.field_search_engine_restrictions
+    - field.field.node.cgov_blog_series.field_show_list_thumbnails
+    - field.field.node.cgov_blog_series.field_site_section
+    - node.type.cgov_blog_series
+  module:
+    - user
+id: node.cgov_blog_series.borderless_card_image
+targetEntityType: node
+bundle: cgov_blog_series
+mode: borderless_card_image
+content:
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_about_blog: true
+  field_allow_comments: true
+  field_archive_back_years: true
+  field_archive_group_by: true
+  field_banner_image: true
+  field_blog_series_shortname: true
+  field_featured_posts: true
+  field_feedburner_url: true
+  field_list_description: true
+  field_meta_tags: true
+  field_num_display_posts: true
+  field_page_description: true
+  field_pretty_url: true
+  field_public_use: true
+  field_recommended_content_header: true
+  field_search_engine_restrictions: true
+  field_show_list_thumbnails: true
+  field_site_section: true
+  langcode: true
+  links: true

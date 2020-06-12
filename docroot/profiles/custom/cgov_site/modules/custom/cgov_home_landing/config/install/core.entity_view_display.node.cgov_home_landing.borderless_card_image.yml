@@ -1,0 +1,54 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_home_landing.field_browser_title
+    - field.field.node.cgov_home_landing.field_card_title
+    - field.field.node.cgov_home_landing.field_date_display_mode
+    - field.field.node.cgov_home_landing.field_date_posted
+    - field.field.node.cgov_home_landing.field_date_reviewed
+    - field.field.node.cgov_home_landing.field_date_updated
+    - field.field.node.cgov_home_landing.field_feature_card_description
+    - field.field.node.cgov_home_landing.field_hero_banner
+    - field.field.node.cgov_home_landing.field_image_promotional
+    - field.field.node.cgov_home_landing.field_landing_contents
+    - field.field.node.cgov_home_landing.field_list_description
+    - field.field.node.cgov_home_landing.field_meta_tags
+    - field.field.node.cgov_home_landing.field_page_description
+    - field.field.node.cgov_home_landing.field_pretty_url
+    - field.field.node.cgov_home_landing.field_search_engine_restrictions
+    - field.field.node.cgov_home_landing.field_site_section
+    - node.type.cgov_home_landing
+  module:
+    - user
+id: node.cgov_home_landing.borderless_card_image
+targetEntityType: node
+bundle: cgov_home_landing
+mode: borderless_card_image
+content:
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_hero_banner: true
+  field_landing_contents: true
+  field_list_description: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true

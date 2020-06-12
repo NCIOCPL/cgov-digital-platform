@@ -1,0 +1,78 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.borderless_card_image
+    - field.field.node.cgov_article.field_article_body
+    - field.field.node.cgov_article.field_browser_title
+    - field.field.node.cgov_article.field_card_title
+    - field.field.node.cgov_article.field_citation
+    - field.field.node.cgov_article.field_date_display_mode
+    - field.field.node.cgov_article.field_date_posted
+    - field.field.node.cgov_article.field_date_reviewed
+    - field.field.node.cgov_article.field_date_updated
+    - field.field.node.cgov_article.field_feature_card_description
+    - field.field.node.cgov_article.field_hhs_syndication
+    - field.field.node.cgov_article.field_image_article
+    - field.field.node.cgov_article.field_image_promotional
+    - field.field.node.cgov_article.field_intro_text
+    - field.field.node.cgov_article.field_list_description
+    - field.field.node.cgov_article.field_meta_tags
+    - field.field.node.cgov_article.field_page_description
+    - field.field.node.cgov_article.field_pretty_url
+    - field.field.node.cgov_article.field_public_use
+    - field.field.node.cgov_article.field_related_resources
+    - field.field.node.cgov_article.field_schema_org_data
+    - field.field.node.cgov_article.field_search_engine_restrictions
+    - field.field.node.cgov_article.field_site_section
+    - node.type.cgov_article
+  enforced:
+    module:
+      - cgov_core
+  module:
+    - user
+id: node.cgov_article.borderless_card_image
+targetEntityType: node
+bundle: cgov_article
+mode: borderless_card_image
+content:
+  field_image_article:
+    type: entity_reference_entity_view
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+hidden:
+  content_moderation_control: true
+  field_article_body: true
+  field_citation: true
+  field_date_display_mode: true
+  field_date_posted: true
+  field_date_reviewed: true
+  field_date_updated: true
+  field_hhs_syndication: true
+  field_image_article: true
+  field_intro_text: true
+  field_list_description: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_public_use: true
+  field_related_resources: true
+  field_schema_org_data: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true
