@@ -136,6 +136,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'RSS publishing',
       'View plugins',
       'Field list report',
+      'regenerate urls',
     ],
   ];
 
@@ -235,4 +236,22 @@ function cgov_core_update_8003() {
     $installer = \Drupal::service('module_installer');
     $installer->install(['cgov_mail']);
   }
+}
+
+/**
+ * Update for Issue #2784.
+ *
+ * Adds regenerate urls to site admin role.
+ */
+function cgov_core_update_8004() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'site_admin' => [
+      'regenerate urls',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }
