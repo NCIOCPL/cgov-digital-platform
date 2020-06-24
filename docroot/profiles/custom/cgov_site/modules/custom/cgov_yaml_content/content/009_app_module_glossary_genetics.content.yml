@@ -1,0 +1,63 @@
+# NCI Dictionary of Cancer Terms app module page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Dictionary of Genetics Terms"
+  title__ES:
+    value: "Diccionario de genética"
+  field_page_description:
+    value: "A dictionary of more than 150 genetics-related terms written for healthcare professionals. This resource was developed to support the comprehensive, evidence-based, peer-reviewed PDQ cancer genetics information summaries."
+  field_page_description__ES:
+    value: "Diccionario de genética"
+  field_browser_title:
+    value: "NCI Dictionary of Genetics Terms"
+  field_browser_title__ES:
+    value: "Diccionario de genética"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications/dictionaries'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publicaciones'
+  field_pretty_url:
+    value: 'genetics-dictionary'
+  field_pretty_url__ES:
+    value: 'diccionario-de-genetica'
+  field_application_module:
+    - target_id: cgov_glossary_app
+      data:
+        analyticsName: 'Genetics'
+        audience: "HealthProfessional"
+        dictionaryIntroText: "<p>The NCI Dictionary of Genetics Terms contains technical definitions for <strong>{{term_count}}</strong> terms related to genetics. These definitions were developed by the PDQ® Cancer Genetics Editorial Board to support the evidence-based, peer-reviewed PDQ cancer genetics information summaries.</p>"
+        dictionaryName: "Genetics"
+        dictionaryTitle: "NCI Dictionary of Genetics Terms"
+        searchBoxTitle: "Search NCI's Dictionary of Genetics Terms"
+  field_application_module__ES:
+    - target_id: cgov_glossary_app
+      data:
+        analyticsName: 'Genetics'
+        audience: "HealthProfessional"
+        dictionaryIntroText: "<p>El diccionario de genética del NCI contiene mas de <strong>{{term_count}}</strong> términos relacionados con genética.</p>"
+        dictionaryName: "Genetics"
+        dictionaryTitle: "Diccionario de genética"
+        searchBoxTitle: "Busca diccionario de genética"
+  field_date_posted:
+    value: "2011-02-02"
+  field_date_reviewed:
+    value: "2011-02-02"
+  field_date_updated:
+    value: "2011-02-02"
+  field_app_module_page_template:
+    value: left_nav
