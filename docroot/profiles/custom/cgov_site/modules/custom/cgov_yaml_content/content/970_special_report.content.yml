@@ -66,6 +66,7 @@
             <div class="temp-block">
               <a href="#"><span class="filetype pdf annual-pdf"></span>Annual Plan & Budget Proposal At A Glance</a>
             </div>
+      ######## Borderless card ###########
       type: "cgov_card_borderless"
     - entity: 'paragraph'
       type: "cgov_card_borderless"
@@ -84,4 +85,118 @@
       field_override_card_title:
         - value: Alternate Title
       field_override_card_longer_descr:
-        - value: "Over the last 5 decades, mortality rates have declined for most cancers, largely due to improvements in prevention, detection, and treatment.  These advances have been fueled by breakthrough studies of complex environmental and genetic interactions that can lead to cancer, the identification of targets that drive cancer, and the development of effective interventions against those targets."              
+        - value: "Over the last 5 decades, mortality rates have declined for most cancers, largely due to improvements in prevention, detection, and treatment.  These advances have been fueled by breakthrough studies of complex environmental and genetic interactions that can lead to cancer, the identification of targets that drive cancer, and the development of effective interventions against those targets."
+      ######## End Borderless card ###########
+      ######## Begin Alternating Image List ###########
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image_alternating
+      field_list_items:
+        ######## Begin First List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Molecular Diagnostics'
+          field_override_list_description:
+            - value: 'Developing the next generation of biomarkers for cancer risk assessment, diagnosis, and treatment selection and monitoring. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed consectetur mi, venenatis scelerisque mi.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'AI approach outperformed human experts in identifying cervical precancer'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Cat-Cat'
+        ######## End First List Item ###########
+        ######## Begin Second List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Drug Resistance and Sensitivity'
+          field_override_list_description:
+            - value: 'Understanding why treatments work for some patients and not others and how cancers develop resistance to previously effective treatments. Developing new approaches, such as combination therapies, to prevent or delay treatment resistance.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Shady Grove Campus'
+        ######## End Second List Item ###########
+        ######## Begin Third List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Survivorship'
+          field_override_list_description:
+            - value: 'Research to improve the quality of life of cancer survivors, including addressing the short and long-term physical and psychological impacts of cancer and its treatment in children and adults. Lorem ipsum dolor sit amet, consectetur adipiscing.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+        ######## End Third List Item ###########
+        ######## Begin Fourth List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Obesity'
+          field_override_list_description:
+            - value: 'Improving the understanding of how obesity increases the risk for cancer and developing tools and interventions to prevent more cancers and improve clinical care of patients. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'Leukemia - Ibrutinib plus rituximab superior to standard treatment for some patients with chronic leukemia'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Snuggles'
+        ######## End Fourth List Item ###########
+        ######## Begin Fifth List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Cat-Cat'
+          field_external_link:
+            - uri: 'https://www.google.com'
+         ######## End Fifth List Item ###########
+      ######## End Alternating Image List ###########
