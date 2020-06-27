@@ -53,3 +53,7 @@ services:
     class: Drupal\cgov_core\CgovConfigOverrider
     tags:
       - {name: config.factory.override, priority: 5}
+  cgov_core.route_subscriber:
+    class: Drupal\cgov_core\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

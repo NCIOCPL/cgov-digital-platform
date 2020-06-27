@@ -54,17 +54,31 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
         elseif (!empty($data['media'])) {
           $entity = $data['media'];
         }
+        else {
+          \Drupal::logger('cgov_site_section')
+            ->notice('Could not identify entity from data');
+          break;
+        }
 
         if (!empty($entity->get('field_site_section')->first())) {
           try {
             $tid = $entity->get('field_site_section')->first()->getValue()['target_id'];
-            $term = Term::load($tid);;
+            $term = Term::load($tid);
+            if (!$term) {
+              \Drupal::logger('cgov_site_section')
+                ->notice('Could not load the term for tid: ' . $tid . " for entity " . $entity->id());
+              break;
+            }
             $replacements[$original] = $term->get('computed_path')->value;
           }
           catch (Exception $e) {
             \Drupal::logger('cgov_site_section')
-              ->notice('Could not retrieve computed path for tid: ' . $tid);
+              ->notice('Error loading and getting the computed path for tid: ' . $tid . " for entity " . $entity->id());
           }
+        }
+        else {
+          \Drupal::logger('cgov_site_section')
+            ->notice('Entity has no site section, entity: ' . $entity->id());
         }
         break;
 

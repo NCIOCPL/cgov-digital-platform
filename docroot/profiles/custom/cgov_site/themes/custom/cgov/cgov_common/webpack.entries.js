@@ -1,3 +1,8 @@
+/***
+ * @file
+ * Declaration of application entrypoints.
+ */
+
 const path = require('path');
 
 module.exports = {
@@ -17,4 +22,5 @@ module.exports = {
     "CTHP": path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
     "Event": path.resolve(__dirname, "src/entrypoints/event/Event.js"),
     "CTSApp": path.resolve(__dirname, "src/entrypoints/cts/CTSApp.js"),
-}
+    "GlossaryApp": path.resolve(__dirname, "src/entrypoints/glossary/GlossaryApp.js"),
+};
