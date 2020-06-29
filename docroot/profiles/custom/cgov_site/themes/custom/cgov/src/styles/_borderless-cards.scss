@@ -4,6 +4,9 @@
 /* Borderless Cards */
 .borderless-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
+  @include bp(small) {
+    padding: 0 0.9375em;
+  }
   .borderless-card {
     @include flexcontainer();
     @include property-prefix(justify-content, space-between);
@@ -46,7 +49,7 @@
       line-height: 38px;
       font-weight: bold;
       @include bp(small) {
-        margin-top: 1em;
+        margin-top: 0;
         font-size: 24px;
         line-height: 25px;
       }
@@ -56,7 +59,7 @@
       color: $very-dark-grey;
       font-weight: bold;
       &:hover {
-        color: $cranberry;
+        color: $lcranberry;
         text-decoration: none;
       }
     }
