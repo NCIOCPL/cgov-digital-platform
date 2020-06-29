@@ -22,11 +22,12 @@
   //Even Alternating Image Items
 .alternating-image-list-container > ul > .alternating-image-list-item:nth-child(even) {
   .alternating-image-list-image {
-    @include flex-order(1);
-    padding-right: 24px;
+    @include flex-order(2);
+
   }
   .alternating-image-list-text {
-    @include flex-order(2);
+    @include flex-order(1);
+    padding-right: 24px;
 
 
   }
@@ -34,12 +35,13 @@
 //Odd Alternating Image Items
 .alternating-image-list-container > ul > .alternating-image-list-item:nth-child(odd) {
   .alternating-image-list-image {
-    @include flex-order(2);
+    @include flex-order(1);
+    padding-right: 24px;
 
   }
   .alternating-image-list-text {
-    @include flex-order(1);
-    padding-right: 24px;
+    @include flex-order(2);
+
   }
 }
 
