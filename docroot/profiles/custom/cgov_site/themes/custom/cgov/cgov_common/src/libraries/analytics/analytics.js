@@ -163,10 +163,38 @@ $(document).ready(function () {
         $(el).on('click.analytics', 'a', function (event) {
             var $this = $(this);
             var $borderlessContainer = $(this).parents('.borderless-container');
-            var cardTitle = $borderlessContainer.find('h2').first().text();
+            var cardTitle = $borderlessContainer.find('h2').first().text().trim();
             var linkText = cardTitle;
             var container = 'fullwidth';
             var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
+
+    $('.special-report-raw-html-container').each(function (i, el) {
+        $(el).on('click.analytics','a', function (event) {
+            var $rawHTMLContainer = $(this).parents('.special-report-raw-html-container');
+            var cardTitle = $rawHTMLContainer.find('h2').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'rawHTML';
+            var containerIndex = i + 1;
+            //window.console && console.log('$rawHTMLContainer',$rawHTMLContainer);
+            //window.console && console.log('cardTitle',cardTitle);
+            //window.console && console.log('containerIndex',containerIndex);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
+
+    $('.alternating-image-list-container-link').each(function (i, el) {
+        $(el).on('click.analytics', function (event) {
+            var $alternatingImageContainer = $(this);
+            var cardTitle = $alternatingImageContainer.find('h3').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'alternatingImage';
+            var containerIndex = i + 1;
+            //window.console && console.log('$alternatingImageContainer',$alternatingImageContainer);
+           //window.console && console.log('cardTitle',cardTitle);
+           //window.console && console.log('containerIndex',containerIndex);
             NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
