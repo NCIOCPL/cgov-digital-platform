@@ -225,13 +225,21 @@ const renderTerm = (term) => {
     return imageHtml;
   }
 
+  // Sub-template for pronunciation.
+  let subTemplate = '';
+  if( term.pronunciation && (term.pronunciation.key || term.pronunciation.audio) ) {
+    const audio = term.pronunciation.audio ? `<a href="${term.pronunciation.audio}" class="CDR_audiofile"><span class="show-for-sr">listen</span></a>` : '';
+    const key = term.pronunciation.key ? term.pronunciation.key : '';
+    subTemplate = `<span class="pronunciation">${key} ${audio}</span>`;
+  }
+
   // this is the complete template that will be rendered to the dialog popup. It will conditionally check for data values before attempting to render anything. This way we can avoid property undefined errors and empty DOM nodes.
   let template = `
     <dl>
       <dt class="term">
         <div class="title">${config.lang.Definition_Title[term.language]}:</div>
         <dfn>${term.termName}</dfn>
-        ${term.pronunciation ? `<span class="pronunciation">${term.pronunciation.key} <a href="${term.pronunciation.audio}" class="CDR_audiofile"><span class="show-for-sr">listen</span></a></span>` : ''}
+        ${subTemplate}
       </dt>
       ${term.definition.html ? `<dd class="definition">${term.definition.html}</dd>` : ''}
       ${!!term.media && !!term.media.length ? renderMedia(term.media) : ''}
