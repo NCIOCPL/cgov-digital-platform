@@ -1,0 +1,48 @@
+@import "./breakpoints";
+@import "./colors";
+
+/* Special Report Raw HTML */
+.special-report-raw-html-container {
+  padding: 20px 0.9375em 1.5em 0.9375em;
+  @include bp(small) {
+    padding-top: 0;
+  }
+  p {
+    color: $light-gray-text;
+    line-height: 26px;
+    @include bp(small) {
+      line-height: 25px;
+    }
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: bold;
+    @include bp(small) {
+      margin-top: 1em;
+      font-size: 24px;
+      line-height: 25px;
+    }
+  }
+  h2 > a {
+    //color: $dgrey00;
+    color: $very-dark-grey;
+    font-weight: bold;
+    &:hover {
+      color: $lcranberry;
+      text-decoration: none;
+    }
+  }
+  img {
+    float: right;
+    width: 35%;
+    margin: 0 0 1rem 1rem;
+    @include bp(small) {
+      display: block;
+      width: auto;
+      float: none;
+      margin: 1rem 0;
+    }
+  }
+}
