@@ -736,4 +736,11 @@ $(window).on('load',function () {
 
         NCIAnalytics.InfographicClick($this, linkData, pageName);
     });
+
+    // Tracks clicks of AP PDF link.
+    $('.ap-file-block').each(function (i, el) {
+      $(el).on('click.analytics', 'a', function (event) {
+        NCIAnalytics.SpecialReportFileClick(this,  pageName);
+      });
+    });
 });
