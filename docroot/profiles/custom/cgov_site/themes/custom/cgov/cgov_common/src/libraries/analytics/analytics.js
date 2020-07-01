@@ -199,7 +199,6 @@ $(document).ready(function () {
         });
     });
 
-
     $('.feature-primary .feature-card').each(function (i, el) {
         $(el).on('click.analytics', 'a', function (event) {
             var $this = $(this);
