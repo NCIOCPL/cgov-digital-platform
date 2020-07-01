@@ -20,6 +20,7 @@
       </div>
     </div>
   {% else %}
+    {% set attr = attr.addClass('managed list') %}
     <div{{ attr }}>
       {{ content.field_list_title }}
       {{ content.field_list_items }}
