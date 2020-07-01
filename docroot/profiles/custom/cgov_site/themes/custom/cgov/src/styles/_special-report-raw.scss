@@ -28,7 +28,7 @@
     color: $very-dark-grey;
     font-weight: bold;
     &:hover {
-      color: $cranberry;
+      color: $lcranberry;
       text-decoration: none;
     }
   }
@@ -36,5 +36,11 @@
     float: right;
     width: 35%;
     margin: 0 0 1rem 1rem;
+    @include bp(small) {
+      display: block;
+      width: auto;
+      float: none;
+      margin: 1rem 0;
+    }
   }
 }
