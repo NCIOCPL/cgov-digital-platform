@@ -12,9 +12,7 @@
 .specialReport {
   &.main-content {
     padding: 0;
-    background: #f7f8f3
-      url(/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/background-graphics/texture-ap2022.gif)
-      top left;
+    background: #f7f8f3 url(/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/background-graphics/texture-ap2022.gif) top left;
   }
 
   .row.hero-slot {
@@ -26,7 +24,7 @@
 
     @include break(medium) {
       max-height: 384px;
-      height: 37.5w;
+      height: 37.5 w;
     }
 
     @include break(large) {
@@ -113,25 +111,25 @@
 /********************* BEGIN PDF Block styling ******************************************/
 .ap-file-block {
   display: none;
-    @include break(medium) {
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      width: 100%;
-      height: 96px;
-      justify-content: center;
-      align-items: center;
+  @include break(medium) {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+    height: 96px;
+    justify-content: center;
+    align-items: center;
 
-      a {
-        color: #4b8cc1;
-        font-size: 0.8em;
-        span {
-          display: inline-block;
-          margin-right: 5px;
-        }
+    a {
+      color: #4b8cc1;
+      font-size: 0.8em;
+
+      span {
+        display: inline-block;
+        margin-right: 5px;
       }
     }
-
+  }
 
 
 }
@@ -309,6 +307,49 @@ li.social-share a {
     }
   }
 }
+
+
+/**** */
+
+.specialReport .mobile-page-options  .page-options-container{
+  display: flex;
+
+  .bottom-options{
+    margin: 0;
+  }
+  .bottom-options ul{
+    flex-direction: row;
+    align-content: center;
+    margin: -12px -12px 0 auto;
+    padding-bottom: 22px;
+
+    li{
+      background-color: white;
+    }
+  }
+}
+
+.mobile-page-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include break(large) {
+    display: none;
+  }
+  hr{
+    border: 1px solid #CCCCCC;
+    width: 90%;
+    margin: auto;
+  }
+  p {
+    font-size: 16px;
+    font-family: Noto Sans Regular, sans-serif;
+    align-content: center;
+    color: #666666;
+    padding: 22px;
+  }
+}
+
 
 /********************* BEGIN Additional Card Styles ******************************************/
 
@@ -681,7 +722,7 @@ a.learn-more {
 //targets multimedia row when there is no thumbnail content
 //TODO: div:last-of-type is the slot-item, but not all the slot-items have been preserved with the migration
 .nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child,
-  .nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
+.nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
 {
   margin-bottom: 0;
 }
