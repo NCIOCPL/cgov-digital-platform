@@ -1711,7 +1711,18 @@ var NCIAnalytics = {
             67: pageName
         };
         clickParams.LogToOmniture();
-    }
+    },
+  /* ********************************************************************** */
+    SpecialReportFileClick: function (sender, pageName) {
+      var clickParams = new NCIAnalytics.ClickParams(sender,
+        'nciglobal', 'o', ' v');
+      clickParams.Events = [52];
+      clickParams.Props = {
+        66:  "filedownload_icon",
+        67: pageName
+      };
+      clickParams.LogToOmniture();
+    },
 };
 
 /* End the giant NCIAnalytics object functions */
