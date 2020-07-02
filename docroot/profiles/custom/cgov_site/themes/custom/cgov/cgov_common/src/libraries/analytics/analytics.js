@@ -178,9 +178,6 @@ $(document).ready(function () {
             var linkText = cardTitle;
             var container = 'rawHTML';
             var containerIndex = i + 1;
-            //window.console && console.log('$rawHTMLContainer',$rawHTMLContainer);
-            //window.console && console.log('cardTitle',cardTitle);
-            //window.console && console.log('containerIndex',containerIndex);
             NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
@@ -192,9 +189,6 @@ $(document).ready(function () {
             var linkText = cardTitle;
             var container = 'alternatingImage';
             var containerIndex = i + 1;
-            //window.console && console.log('$alternatingImageContainer',$alternatingImageContainer);
-           //window.console && console.log('cardTitle',cardTitle);
-           //window.console && console.log('containerIndex',containerIndex);
             NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
