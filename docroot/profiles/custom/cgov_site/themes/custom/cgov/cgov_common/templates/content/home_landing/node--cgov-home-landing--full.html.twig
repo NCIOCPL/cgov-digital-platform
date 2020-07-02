@@ -18,6 +18,11 @@
 	<div class="row report-container">
 		{{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
 		{{content.field_landing_contents}}
+    <div class="mobile-page-options">
+      <hr>
+      <p>SHARE THIS PAGE</p>
+      {{ drupal_block('page_options', {additionalClasses: 'bottom-options large-5 columns'}) }}
+    </div>
 	</div>
 
 
@@ -36,4 +41,5 @@
 {# End Title Row#}
 <div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
 	{{content.field_landing_contents}}
-</div>{% endif %}
+</div>
+{% endif %}
