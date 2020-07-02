@@ -123,6 +123,15 @@
   a {
     color: #4b8cc1;
     font-size: 0.8em;
+    &:before {
+      content: "";
+      position: relative;
+      top: 0.25em;
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 12px;
+      @include svg-sprite(file-pdf-blue-o-thick);
+    }
     span {
       display: inline-block;
       margin-right: 5px;
