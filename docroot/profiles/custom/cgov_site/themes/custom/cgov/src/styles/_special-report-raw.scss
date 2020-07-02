@@ -4,7 +4,9 @@
 /* Special Report Raw HTML */
 .special-report-raw-html-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
-
+  @include bp(small) {
+    padding-top: 0;
+  }
   p {
     color: $light-gray-text;
     line-height: 26px;
