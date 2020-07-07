@@ -8,7 +8,11 @@
 /**
  * An example global include file.
  *
- * To use this file, rename to global.settings.php.
+ * We don't actually use this file.  But if we delete it, BLT will recreate it
+ * during the build process, then the continuous integration build will fail
+ * because there's a source file which isn't in source control.
+ *
+ * So, we end up with extra code in global.settings.php in order to ignore it.
  */
 
 /**
