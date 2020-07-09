@@ -24,7 +24,6 @@
 
     @include break(medium) {
       max-height: 384px;
-      height: 37.5 w;
     }
 
     @include break(large) {
@@ -120,18 +119,24 @@
     justify-content: center;
     align-items: center;
 
-    a {
-      color: #4b8cc1;
-      font-size: 0.8em;
+    &.pdf {
+      a {
+        color: #4b8cc1;
+        font-size: 0.8em;
 
-      span {
-        display: inline-block;
-        margin-right: 5px;
+        &:before {
+          content: "";
+          position: relative;
+          top: 0.6em;
+          display: inline-block;
+          margin-left: 5px;
+          font-size: 12px;
+          padding-right: 2.5em;
+          @include svg-sprite(file-pdf-blue-o-thick);
+        }
       }
     }
   }
-
-
 }
 
 /********************* BEGIN Special Report Container styling ******************************************/
@@ -236,95 +241,43 @@ li.social-share a {
       }
     }
 
+    &.social-share.social-share--facebook {
+      font-size: 18px;
+    }
+
     &.social-share.social-share--pinterest {
       display: none;
     }
   }
-
-  // Expand the Social Media icons to full width at mobile
-  @include bp(xtra-small) {
-    width: 100%;
-    float: none;
-
-    ul {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-
-    li {
-      width: 48px;
-      height: 48px;
-    }
-  }
-}
-
-/* MOBILE page options */
-@include bp(medium-down) {
-  .page-options {
-    li {
-      margin: 0 0.875em 0 0;
-      width: 35px;
-      height: 35px;
-      background-color: $color-link;
-      border-radius: 50%;
-
-      a {
-        position: relative;
-        display: block;
-        height: 100%;
-        font-size: 91%;
-        min-width: 35px;
-
-        &::before {
-          position: absolute;
-          left: 50%;
-          top: calc(50% + 1px);
-          transform: translateX(-50%) translateY(-50%);
-        }
-      }
-
-      &:hover {
-        background-color: $lcranberry;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-
-    .page-options--email a::before {
-      @include svg-sprite(email-redesign);
-    }
-
-    .social-share--facebook a::before {
-      @include svg-sprite(facebook-white, mq);
-      font-size: 22px;
-    }
-
-    .social-share--twitter a::before {
-      @include svg-sprite(twitter-redesign);
-      font-size: 17px;
-    }
-  }
 }
 
 
-/**** */
+/** Bottom Page Options **/
 
-.specialReport .mobile-page-options  .page-options-container{
+.specialReport .mobile-page-options .page-options-container {
   display: flex;
+  margin: 0;
 
-  .bottom-options{
-    margin: 0;
+  .page-options .social-share--facebook a::before {
+    background-position: 5.52486% 30.6366%;
+    font-size: 18px;
   }
-  .bottom-options ul{
+
+  .bottom-options {
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .bottom-options ul {
     flex-direction: row;
     align-content: center;
     margin: -12px -12px 0 auto;
     padding-bottom: 22px;
 
-    li{
+
+    li {
       background-color: white;
+      margin: 8px;
     }
   }
 }
@@ -336,17 +289,34 @@ li.social-share a {
   @include break(large) {
     display: none;
   }
-  hr{
+
+  hr {
     border: 1px solid #CCCCCC;
     width: 90%;
     margin: auto;
   }
+
   p {
     font-size: 16px;
-    font-family: Noto Sans Regular, sans-serif;
+    font-family: $noto-font-stack;
     align-content: center;
     color: #666666;
-    padding: 22px;
+    padding-top: 20px;
+    padding-bottom: 2px;
+  }
+
+  li {
+    width: auto;
+    height: auto;
+
+    &.social-share.social-share--twitter {
+      a {
+        &::before {
+          width: 1.6em;
+          height: 1.4em;
+        }
+      }
+    }
   }
 }
 
