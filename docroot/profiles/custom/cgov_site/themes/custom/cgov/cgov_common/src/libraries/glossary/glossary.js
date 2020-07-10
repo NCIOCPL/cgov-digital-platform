@@ -24,13 +24,22 @@ if (!canonicalHref) {
 
 const canonicalHost = canonicalHref.protocol + "//" + canonicalHref.host;
 
+let pathName = null;
+if(canonicalHref.pathname) {
+  pathName = (canonicalHref.pathname.charAt(0) === "/") ? canonicalHref.pathname : "/" + canonicalHref.pathname;
+}
+
 const alternateLangLink = document.querySelector('link[rel="alternate"]:not([hreflang="' + language + '"])');
 const alternateLangHref = alternateLangLink ? parseUrl(alternateLangLink.href, document) : null;
-const altLanguageDictionaryBasePath = alternateLangHref ? alternateLangHref.pathname : undefined;
+
+let altLanguageDictionaryBasePath = undefined;
+if(alternateLangHref) {
+  altLanguageDictionaryBasePath = (alternateLangHref.pathname.charAt(0) === "/") ? alternateLangHref.pathname : "/" + alternateLangHref.pathname;
+}
 
 const drupalConfig = {
   baseHost: window.location.protocol + "//" + window.location.hostname,
-  basePath: canonicalHref ? canonicalHref.pathname :
+  basePath: pathName ? pathName :
   canonicalHost,
   altLanguageDictionaryBasePath,
   analyticsChannel: metaTags['dcterms.subject'],
