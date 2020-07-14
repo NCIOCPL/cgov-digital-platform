@@ -14,6 +14,7 @@ dependencies:
     - paragraphs.paragraphs_type.cgov_multimedia_row
     - paragraphs.paragraphs_type.cgov_primary_feature_row
     - paragraphs.paragraphs_type.cgov_secondary_feature_row
+    - paragraphs.paragraphs_type.cgov_title_first_feature_card_ro
   module:
     - entity_reference_revisions
 id: node.cgov_home_landing.field_landing_contents
@@ -41,6 +42,7 @@ settings:
       cgov_card_raw_html: cgov_card_raw_html
       cgov_content_block: cgov_content_block
       cgov_card_borderless: cgov_card_borderless
+      cgov_title_first_feature_card_ro: cgov_title_first_feature_card_ro
     target_bundles_drag_drop:
       body_section:
         weight: -15
@@ -87,12 +89,12 @@ settings:
       cgov_external_link:
         weight: 28
         enabled: false
-      cgov_card_borderless:
-        enabled: true
-        weight: 30
       cgov_internal_link:
         weight: 30
         enabled: false
+      cgov_card_borderless:
+        enabled: true
+        weight: 30
       cgov_two_item_feature_row:
         weight: 35
         enabled: false
@@ -129,4 +131,7 @@ settings:
       cgov_media_link:
         weight: 53
         enabled: false
+      cgov_title_first_feature_card_ro:
+        enabled: true
+        weight: 58
 field_type: entity_reference_revisions

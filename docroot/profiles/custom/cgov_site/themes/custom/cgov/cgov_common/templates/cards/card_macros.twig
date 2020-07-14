@@ -4,7 +4,6 @@
  * Theme macros for displaying cards.
  */
 #}
-
 {% macro featureCard(title, description, image, url) %}
 	<div class="feature-card">
 		<a href="{{ url }}">
@@ -19,6 +18,23 @@
 			{% endif %}
 		</a>
 	</div>
+{% endmacro %}
+{% macro titleFirstfeatureCard(title, description, image, url) %}
+	<a class="title-first-feature-card-link" href="{{ url }}">
+		<div class="title-first-feature-card">
+
+			<h3>{{ title }}</h3>
+			{% if image %}
+				<div class="image-hover">
+					{{- image -}}
+				</div>
+			{% endif %}
+			{% if description %}
+				<p class="title-first-feature-card-text">{{ description }}</p>
+			{% endif %}
+
+		</div>
+	</a>
 {% endmacro %}
 
 {% macro borderlessCard(title, description, image, url, button_text, button_alt, nid) %}
@@ -51,10 +67,10 @@
 
 {% macro thumbnailCard(title, list_description, image, url) %}
 	<div
-		class="row card-thumbnail">
+			class="row card-thumbnail">
 		{# TODO: What if no image? #}
 		<div
-			class="small-2 columns card-thumbnail-image">
+				class="small-2 columns card-thumbnail-image">
 			{# TODO: ESCAPE THE TITLE. USE ATTR CORRECTLY #}
 			<a href="{{url}}" class="image-hover" data-title="{{title}}">{{image}}</a>
 		</div>

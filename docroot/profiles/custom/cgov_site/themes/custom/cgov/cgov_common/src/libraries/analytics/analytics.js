@@ -116,7 +116,7 @@ $(document).ready(function () {
         var $this = $(this),
             isExpanded = $this.attr('aria-expanded') === 'true',
             tree = treeText($this.parents("li")).string,
-            linkText = $this.prev().text() //linkText no longer used now that it's being captured with the tree values;
+            linkText = $this.prev().text(); //linkText no longer used now that it's being captured with the tree values;
         NCIAnalytics.MegaMenuMobileAccordionClick(this, isExpanded, tree);
 
     }).on('click.analytics', '.lvl-1 a, .mobile-item a', function (e) {
@@ -192,7 +192,16 @@ $(document).ready(function () {
             NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
-
+    $('.title-first-feature-card-link').each(function (i, el) {
+        $(el).on('click.analytics', function (event) {
+            var $alternatingImageContainer = $(this);
+            var cardTitle = $alternatingImageContainer.find('h3').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'titleFirstFeatureCard';
+            var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
     $('.feature-primary .feature-card').each(function (i, el) {
         $(el).on('click.analytics', 'a', function (event) {
             var $this = $(this);
@@ -360,7 +369,7 @@ $(document).ready(function () {
     $('.accordion section').each(function (i, el) {
         $(el).on('click', 'h2', function (event) {
             var $this = $(this);
-            var accordionId = $this.closest('.accordion').attr('id')
+            var accordionId = $this.closest('.accordion').attr('id');
             var sectionId = $this.closest('section').attr('id');
             // Track only if the accordion wrapper has an ID
             if (accordionId) {
@@ -709,7 +718,7 @@ $(window).on('load',function () {
 
     //Sort Table Analytics
     //so userHasSorted so that analytics fires only on very first instance of sort
-    var userHasSorted = false
+    var userHasSorted = false;
     $('table[data-sortable]').on("click.analytics", "th", function () {
         if(userHasSorted){
             return
