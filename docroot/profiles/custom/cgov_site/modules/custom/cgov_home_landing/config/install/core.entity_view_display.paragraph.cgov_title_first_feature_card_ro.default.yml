@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_title_first_feature_card_ro.field_one_column_feature_card
+    - field.field.paragraph.cgov_title_first_feature_card_ro.field_two_column_feature_card
+    - paragraphs.paragraphs_type.cgov_title_first_feature_card_ro
+  module:
+    - entity_reference_revisions
+id: paragraph.cgov_title_first_feature_card_ro.default
+targetEntityType: paragraph
+bundle: cgov_title_first_feature_card_ro
+mode: default
+content:
+  field_one_column_feature_card:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: title_first_feature_card
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_two_column_feature_card:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: title_first_feature_card
+      link: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }
