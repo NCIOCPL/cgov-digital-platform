@@ -87,6 +87,54 @@
       field_override_card_longer_descr:
         - value: "Over the last 5 decades, mortality rates have declined for most cancers, largely due to improvements in prevention, detection, and treatment.  These advances have been fueled by breakthrough studies of complex environmental and genetic interactions that can lead to cancer, the identification of targets that drive cancer, and the development of effective interventions against those targets."
       ######## End Borderless card ###########
+      ######## Begin Title First Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_title_first_feature_card_ro"
+      ######## Begin First Title First Feature Card ###########
+      field_two_column_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+          field_override_card_title:
+            - value: 'Stories of Cancer Research'
+          field_override_card_description:
+            - value: 'Stories of survivors and scientists who represent the promise and progress in cancer research.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Ocean Sunset View Mykonos'
+      ######## End First Title First Feature Card ###########
+      ######## Begin Second Title First Feature Card ###########
+      field_one_column_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'Budget Proposal'
+          field_override_card_description:
+            - value: 'An investment of $X,XXX million to seize opportunities in cancer research, train the next generation of cancer scientists, and support the infrastructure to enable cutting-edge research to succeed.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Minnie'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ######## End Second Title First Feature Card ###########
+      ######## End Title First Feature Row ###########
       ######## Begin Raw HTML Block ###########
     - entity: 'paragraph'
       type: "cgov_card_raw_html"
