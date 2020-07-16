@@ -765,4 +765,11 @@ $(window).on('load',function () {
         NCIAnalytics.SpecialReportFileClick(this,  pageName);
       });
     });
+
+  // Tracks clicks of AP Button.
+  $('.ap-button-block').each(function (i, el) {
+    $(el).on('click.analytics', 'a', function (event) {
+      NCIAnalytics.SpecialReportButtonClick(this,  pageName);
+    });
+  });
 });
