@@ -197,7 +197,7 @@ $(document).ready(function () {
             var $alternatingImageContainer = $(this);
             var cardTitle = $alternatingImageContainer.find('h3').first().text().trim();
             var linkText = cardTitle;
-            var container = 'titleFirstFeatureCard';
+            var container = 'titleFirst';
             var containerIndex = i + 1;
             NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
