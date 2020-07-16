@@ -1,5 +1,11 @@
 @import "./breakpoints";
 @import "./colors";
+@import "environments/percussion";
+@import "variables";
+@import "mixins";
+@import "fonts";
+@import 'breakpoints';
+@import "placeholders";
 
 /* Special Report Raw HTML */
 .special-report-raw-html-container {
@@ -44,5 +50,72 @@
       float: none;
       margin: 1rem 0;
     }
+  }
+}
+
+/********************* BEGIN PDF Button styling ******************************************/
+
+.ap-button-block{
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  margin-bottom: 12px;
+  &.left{
+    justify-content: left;
+  }
+  .pdf:before {
+    content: "";
+    position: relative;
+    top: 9px;
+    left: -3px;
+    display: inline-block;
+    padding-right: 2.5em;
+    align-self: flex-start;
+    margin-left: -25px;
+    margin-bottom: -20px;
+    font-size: 12px;
+    @include svg-sprite(file-pdf-narrow-white-o-thick);
+    @include break(medium) {
+      top: 2px;
+      left: -3px;
+      margin-left: -17px;
+    }
+  }
+}
+
+
+a.ap-button {
+  line-height: 1.3em;
+  width: 290px;
+  top: 0.9px;
+  left: 2px;
+  background-color: #2B7BBA;
+  border-style: none none solid none;
+  border-bottom-color: #1B5A8C;
+  border-radius: 5px;
+  border-width: 3px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  font-size: 14px;
+  color: white;
+  flex-direction: column;
+  margin-bottom: 20px;
+  font-family: $montserrat-font-stack;
+  font-size: 14px;
+  padding-left: 39px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @include break(medium) {
+    padding-left: 32px;
+    margin-left: -9px;
+    padding-top: 5px;
+    padding-bottom: 8px;
+    text-align: center;
+    text-indent: 0;
+    width: 360px;
+    height: 42px;
   }
 }

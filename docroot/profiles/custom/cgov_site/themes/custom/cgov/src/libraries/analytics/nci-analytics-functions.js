@@ -1723,6 +1723,17 @@ var NCIAnalytics = {
       };
       clickParams.LogToOmniture();
     },
+  /* ********************************************************************** */
+  SpecialReportButtonClick: function (sender, pageName) {
+    var clickParams = new NCIAnalytics.ClickParams(sender,
+      'nciglobal', 'o', ' v');
+    clickParams.Events = [52];
+    clickParams.Props = {
+      66:  "filedownload_button",
+      67: pageName
+    };
+    clickParams.LogToOmniture();
+  },
 };
 
 /* End the giant NCIAnalytics object functions */
