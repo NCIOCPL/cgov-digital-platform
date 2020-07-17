@@ -56,3 +56,15 @@ function cgov_application_page_update_8003() {
     $installer->install(['cgov_glossary']);
   }
 }
+
+/**
+ * Update for R4R App Module Feature.
+ *
+ * Install the cgov_r4r module.
+ */
+function cgov_application_page_update_8004() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_r4r')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_r4r']);
+  }
+}
