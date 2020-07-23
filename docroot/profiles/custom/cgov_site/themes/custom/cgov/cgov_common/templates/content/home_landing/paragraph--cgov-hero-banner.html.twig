@@ -1,4 +1,9 @@
 {% set tabletSrc = file_url(content.field_tablet_hero['#items'].entity.uri.value) %}
+{% if content.field_mobile_hero|field_value is not empty %}
+  {% set mobileSrc = file_url(content.field_mobile_hero['#items'].entity.uri.value) %}
+{% else %}
+  {% set mobileSrc = tabletSrc %}
+{% endif %}
 
 {% set parent = paragraph.getParentEntity() %}
 {% set page_style = parent.field_page_style.value %}
@@ -15,7 +20,8 @@
     </div>
     {% endif %}
     <picture>
-      <source media="(max-width: 1024px)" srcset="{{ tabletSrc }}">
+      <source media="(max-width: 640px)" srcset="{{ mobileSrc }}">
+      <source media="(max-width: 1024px) and (min-width: 641px)" srcset="{{ tabletSrc }}">
       {{ content.field_desktop_hero }}
     </picture>
   </div>
