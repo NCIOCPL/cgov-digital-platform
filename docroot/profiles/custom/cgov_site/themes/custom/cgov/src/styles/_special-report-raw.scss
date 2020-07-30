@@ -1,0 +1,114 @@
+@import "./breakpoints";
+@import "./colors";
+@import "environments/percussion";
+@import "variables";
+@import "mixins";
+@import "fonts";
+@import 'breakpoints';
+@import "placeholders";
+
+/* Special Report Raw HTML */
+.special-report-raw-html-container {
+  padding: 20px 0.9375em 1.5em 0.9375em;
+  @include bp(small) {
+    padding-top: 0;
+  }
+  p {
+    color: $light-gray-text;
+    line-height: 26px;
+    @include bp(small) {
+      line-height: 25px;
+    }
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: bold;
+    @include bp(small) {
+      margin-top: 1em;
+      font-size: 24px;
+      line-height: 25px;
+    }
+  }
+  h2 > a {
+    //color: $dgrey00;
+    color: $very-dark-grey;
+    font-weight: bold;
+    &:hover {
+      color: $lcranberry;
+      text-decoration: none;
+    }
+  }
+  img {
+    float: right;
+    width: 35%;
+    margin: 0 0 1rem 1rem;
+    @include bp(small) {
+      display: block;
+      width: auto;
+      float: none;
+      margin: 1rem 0;
+    }
+  }
+}
+
+/********************* BEGIN PDF Button styling ******************************************/
+a.ap-button{
+  color: white;
+}
+
+.ap-button {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 25px 3px;
+  width: 290px;
+  line-height: 1.25;
+  text-align: left;
+  background-color: #2b7bba;
+  border-style: none;
+  border-radius: 5px;
+  border-bottom: solid #1b5a8c;
+  border-width: 3px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: $montserrat-font-stack;
+
+  @include break(medium){
+    padding: 5px 13px 5px 10px;
+    width: auto;
+  }
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: relative;
+    left: 4px;
+    @include svg-sprite(file-pdf-narrow-white-o-thick);
+    font-size: 12px;
+    margin-left: 2px;
+    width: 37px;
+    padding: 14px;
+
+    @include break(medium){
+      top: 1.5px;
+      width: 30px;
+      padding:0;
+      left: 0;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &-block{
+    text-align: center;
+      &.left{
+        text-align: left;
+      }
+      margin-bottom: 32px;
+  }
+}

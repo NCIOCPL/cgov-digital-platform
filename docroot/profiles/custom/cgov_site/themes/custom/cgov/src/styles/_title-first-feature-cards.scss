@@ -1,0 +1,68 @@
+@import "./breakpoints";
+@import "./colors";
+
+/* Title First Feature Cards */
+.title-first-feature-card-container {
+  @include flexcontainer();
+  padding: 20px 0.9375em 1.5em 0.9375em;
+  @include bp(small) {
+    padding: 20px 0.9375em 0 0.9375em;
+  }
+  .title-first-feature-card-link {
+    &:hover, &:active {
+      text-decoration: none;
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
+  .title-first-feature-card-left {
+    @include flex-order(1);
+    margin-right: 10px;
+    width: 66%;
+    @include bp(small) {
+      margin-right: 0;
+      margin-bottom: 20px;
+      width: auto;
+    }
+  }
+  .title-first-feature-card-right {
+    @include flex-order(2);
+    margin-left: 10px;
+    width: 33%;
+    @include bp(small) {
+      width: auto;
+      margin-left: 0;
+      margin-bottom: 12px;
+    }
+  }
+  .title-first-feature-card {
+    @include flex(1);
+    width: auto;
+    height: 100%;
+    border: 1px solid $lgrey03;
+    box-shadow: $special-report-box-shadow;
+    padding: 20px;
+    p.title-first-feature-card-text {
+      color: $light-gray-text;
+      line-height: 26px;
+      margin-top: 1em;
+      @include bp(small) {
+        line-height: 22px;
+      }
+    }
+  }
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: bold;
+    color: $very-dark-grey;
+    @include bp(small) {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+}
+

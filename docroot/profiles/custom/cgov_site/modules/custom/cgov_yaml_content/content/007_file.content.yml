@@ -68,3 +68,36 @@
           - 'file'
           - type: 'module'
             filename: 'drupal-config-schema.pdf'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Test PDF File name"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "test-file-url"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+  field_list_description: "File description."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions: 0
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'example.pdf'
+      alt: 'Test PDF File name'
+
+
+
+
+
+

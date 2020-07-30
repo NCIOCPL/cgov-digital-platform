@@ -90,6 +90,33 @@
   </li>
 {% endmacro %}
 
+
+{% macro list_item_title_desc_image_alternating(title, description, image, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item has-media" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item has-media" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item has-media" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item has-media" %}
+  {% endif %}
+  <a class = "alternating-image-list-container-link" href="{{ url }}">
+    <div class="{{ liClasslist }} alternating-image-list-item">
+      <div class="alternating-image-list-image">
+        {{ _self._output_list_image_unlinked(image) }}
+      </div>
+      <div class="title-and-desc title desc container alternating-image-list-text">
+        {# {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+        <a href="{{ url }}">{{ _self._output_list_desc_date(description, null) }}</a> #}
+        {{ _self._output_list_title_unlinked(title, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+        {{ _self._output_list_desc_date(description, null) }}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+
 {#
   Title and date.
   (TODO: No media link support added pending further development)
@@ -170,13 +197,22 @@
   Outputs the list item's image
  #}
 {% macro _output_list_image(image, url) %}
-    {% if image %}
-      <div class="list-item-image image container">
-        <a class="item-image image" href="{{ url }}">{{- image -}}</a>
-      </div>
-    {% endif %}
+  {% if image %}
+    <div class="list-item-image image container">
+      <a class="item-image image" href="{{ url }}">{{- image -}}</a>
+    </div>
+  {% endif %}
 {% endmacro %}
-
+{#
+  Outputs the list item's image unlinked
+ #}
+{% macro _output_list_image_unlinked(image) %}
+  {% if image %}
+    <div class="list-item-image image container">
+      <span class="item-image image">{{- image -}}</span>
+    </div>
+  {% endif %}
+{% endmacro %}
 {#
   Outputs the list item's title
  #}
@@ -185,6 +221,29 @@
   <a class="title" href="{{ url }}">
     {{- title -}}
   </a>
+  {% if media_link_type == "Infographic" or media_link_type == "Video" %}
+    <span class="media-type">({{ media_link_type|trans }})</span>
+  {% endif %}
+  {% if media_link_type == "File" %}
+    <span class="filetype {{file_type}}">
+      {% if file_type != "unknown" %}
+        {# Note, the spanish should have the word order reversed... #}
+        <span class="show-for-sr">{{ file_type }} {% trans %}file{% endtrans %}</span>
+      {% else %}
+        {{ file_ext }}<span class="show-for-sr"> {% trans %}file{% endtrans %}</span>
+      {% endif %}
+    </span>
+    <span class="filesize">({{ file_size }})</span>
+  {% endif %}
+  {% if has_title_heading %}</h3>{% endif %}
+{% endmacro %}
+
+{#
+  Outputs the list item's title
+ #}
+{% macro _output_list_title_unlinked(title, has_title_heading, media_link_type = null, file_type = null, file_size = null, file_ext = null) %}
+  {% if has_title_heading %}<h3>{% endif %}
+  <span class="title">{{- title -}}</span>
   {% if media_link_type == "Infographic" or media_link_type == "Video" %}
     <span class="media-type">({{ media_link_type|trans }})</span>
   {% endif %}
