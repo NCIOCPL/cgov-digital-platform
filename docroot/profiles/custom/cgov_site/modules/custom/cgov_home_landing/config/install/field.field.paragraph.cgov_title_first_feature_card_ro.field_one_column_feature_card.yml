@@ -1,0 +1,119 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_one_column_feature_card
+    - paragraphs.paragraphs_type.cgov_card_external
+    - paragraphs.paragraphs_type.cgov_card_internal
+    - paragraphs.paragraphs_type.cgov_title_first_feature_card_ro
+  module:
+    - entity_reference_revisions
+id: paragraph.cgov_title_first_feature_card_ro.field_one_column_feature_card
+field_name: field_one_column_feature_card
+entity_type: paragraph
+bundle: cgov_title_first_feature_card_ro
+label: 'One Column Feature Card'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      cgov_card_external: cgov_card_external
+      cgov_card_internal: cgov_card_internal
+    target_bundles_drag_drop:
+      body_section:
+        weight: 31
+        enabled: false
+      cgov_card_borderless:
+        weight: 32
+        enabled: false
+      cgov_card_external:
+        enabled: true
+        weight: 33
+      cgov_card_internal:
+        enabled: true
+        weight: 34
+      cgov_card_raw_html:
+        weight: 35
+        enabled: false
+      cgov_citation:
+        weight: 36
+        enabled: false
+      cgov_column_one:
+        weight: 37
+        enabled: false
+      cgov_column_two:
+        weight: 38
+        enabled: false
+      cgov_content_block:
+        weight: 39
+        enabled: false
+      cgov_cthp_block_card:
+        weight: 40
+        enabled: false
+      cgov_cthp_feature_card_external:
+        weight: 41
+        enabled: false
+      cgov_cthp_feature_card_internal:
+        weight: 42
+        enabled: false
+      cgov_cthp_guide_card:
+        weight: 43
+        enabled: false
+      cgov_cthp_overview_card:
+        weight: 44
+        enabled: false
+      cgov_cthp_raw_html_card:
+        weight: 45
+        enabled: false
+      cgov_cthp_research_card:
+        weight: 46
+        enabled: false
+      cgov_cthp_video_card:
+        weight: 47
+        enabled: false
+      cgov_dynamic_list:
+        weight: 48
+        enabled: false
+      cgov_external_link:
+        weight: 49
+        enabled: false
+      cgov_guide_row:
+        weight: 50
+        enabled: false
+      cgov_hero_banner:
+        weight: 51
+        enabled: false
+      cgov_internal_link:
+        weight: 52
+        enabled: false
+      cgov_list:
+        weight: 53
+        enabled: false
+      cgov_media_link:
+        weight: 54
+        enabled: false
+      cgov_multimedia_row:
+        weight: 55
+        enabled: false
+      cgov_primary_feature_row:
+        weight: 56
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: 57
+        enabled: false
+      cgov_title_first_feature_card_ro:
+        weight: 58
+        enabled: false
+      cgov_two_item_feature_row:
+        weight: 59
+        enabled: false
+      pdq_summary_section:
+        weight: 60
+        enabled: false
+field_type: entity_reference_revisions

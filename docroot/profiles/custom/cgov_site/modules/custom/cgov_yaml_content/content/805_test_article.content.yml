@@ -170,6 +170,66 @@
   status: 1
   moderation_state:
     value: 'published'
+  title: "[Lead IMG Crops] Title"
+  title__ES:
+      value: "[Lead IMG Crops] Title - ES"
+  field_page_description:
+    value: "[Lead IMG Crops] Page Description"
+  field_page_description__ES:
+    value: "[Lead IMG Crops] Page Descriptiomn - ES"
+  field_feature_card_description:
+    value: "[Lead IMG Crops] Card Description"
+  field_feature_card_description:
+    value: "[Lead IMG Crops] Card Description - ES"
+  field_card_title:
+    value: "[Lead IMG Crops] Card Title"
+  field_card_title__ES:
+    value: "[Lead IMG Crops] Card Title - ES"
+  field_browser_title:
+    value: "[Lead IMG Crops] Browser Title"
+  field_browser_title_ES:
+    value: "[Lead IMG Crops] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Zedd Octopus'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "lead-img-crops"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "lead-img-crops"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
   title: "[Lead Promo IMG] Title"
   title__ES:
       value: "[Lead Promo IMG] Title - ES"

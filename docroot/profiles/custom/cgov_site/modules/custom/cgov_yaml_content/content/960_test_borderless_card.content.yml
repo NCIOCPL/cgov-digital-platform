@@ -1,0 +1,162 @@
+
+
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Borderless Cards"
+  title__ES:
+      value: "Test Borderless Cards - ES"
+  field_page_description:
+    value: "Desc for Borderless Cards test."
+  field_page_description__ES:
+    value: "Desc for Borderless Cards test."
+  field_browser_title:
+    value: "Test Borderless Cards"
+  field_browser_title__ES:
+    value: "Test Borderless Cards - ES"
+  field_pretty_url:
+    value: "borderless-card"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  ### English Contents
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div">
+              <p>No Overrides</p>
+            </div>
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Lead"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article with Promo"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead Promo IMG] Title'
+      # field_override_card_longer_descr:
+      # field_override_card_title:
+      # field_override_image_promotional:
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article No Img"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[No IMG] Title'
+      # field_override_card_longer_descr:
+      # field_override_card_title:
+      # field_override_image_promotional:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div">
+              <p>Overrides</p>
+            </div>
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Long Desc"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_card_longer_descr:
+        - value: This is a much longer description that drones on and on until it starts frothing at the mouth.
+      # field_override_card_title:
+      # field_override_image_promotional:
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Title"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_card_title:
+        - value: Alternate Title
+      # field_override_card_title:
+      # field_override_image_promotional:
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Long Desc"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      # field_override_card_title:
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Override Placeholder'
+  ### Spanish Contents
+  # TODO
