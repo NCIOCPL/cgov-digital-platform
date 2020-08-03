@@ -134,6 +134,14 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
           }
         }
       }
+
+      // Clear out the main nav cache tag. This is pretty brute force here and
+      // could be more nuanced like the invalidate section cache tag. e.g. this
+      // term may be too deep in the tree, or may be hidden, so no need to
+      // clear the menu. However, we are blocking clearing the nav from Akamai
+      // this is really for *-cms users to see their changed before pushing
+      // live.
+      Cache::invalidateTags(['mainnav:' . $current_entity_lang]);
     }
   }
 }
@@ -179,6 +187,15 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
     foreach ($sectionsToClear as $sectionID) {
       invalidate_section_cache_tag($sectionID);
     }
+
+    // Clear out the main nav cache tag. This is pretty brute force here and
+    // could be more nuanced like the invalidate section cache tag. e.g. this
+    // term may be too deep in the tree, or may be hidden, so no need to
+    // clear the menu. However, we are blocking clearing the nav from Akamai
+    // this is really for *-cms users to see their changed before pushing
+    // live.
+    $current_entity_lang = $entity->get('langcode')->value;
+    Cache::invalidateTags(['mainnav:' . $current_entity_lang]);
   }
 
   // TODO: Figure out how to get pathauto to update all the aliases using
