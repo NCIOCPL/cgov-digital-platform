@@ -258,9 +258,11 @@ const markCurrent = () => {
     const nodeArray = Array.from(list.querySelectorAll(`.lvl-${linkDepth}`));
     for (let i = 0; i < nodeArray.length; i++) {
       const node = nodeArray[i];
+      //strip from item url so it's apples to apples
       const nodeLink = node
         .querySelector(".nav-item-title > a")
-        .getAttribute("href");
+        .getAttribute("href")
+        .replace("/espanol", "");
 
       if (nodeLink.indexOf(`/${activeLinkSlugs[linkDepth]}`) >= 0) {
         if (nodeLink === activeLinkPath) {
