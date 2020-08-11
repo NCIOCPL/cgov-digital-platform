@@ -288,7 +288,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     // This leverages the AliasManager caching.
     if ($matchedPath !== $request_path) {
       $index = array_search($request_path, $this->lookupMap[$langcode]);
-      if ($index !== FALSE && $index === 0) {
+      if ($index !== FALSE) {
         return $this->getAppPathByAlias($request_path, $langcode);
       }
       else {
