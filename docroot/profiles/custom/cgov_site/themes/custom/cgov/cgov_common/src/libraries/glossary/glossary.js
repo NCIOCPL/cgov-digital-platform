@@ -6,6 +6,22 @@
 import initialize from '@nciocpl/glossary-app';
 import { getCanonicalURL, getDocumentLanguage, getMetaData, parseUrl } from 'Utilities';
 
+const getAlternateLangLink = (alternateUrls, currLang) => {
+  if (!alternateUrls) {
+    return null;
+  }
+
+  const langs = Object.keys(alternateUrls).filter(langcode => langcode !== currLang);
+
+  if (langs.length !== 1) {
+    console.warn("Unexpected alternate language count, cannot set alternate base.");
+    return null;
+  }
+
+  const alternateLangHref = parseUrl(alternateUrls[langs[0]], document);
+  return (alternateLangHref.pathname.charAt(0) === "/") ? alternateLangHref.pathname : "/" + alternateLangHref.pathname;
+}
+
 const instanceConfig = window.glossaryAppSettings;
 
 const metaTags = getMetaData([
@@ -17,7 +33,12 @@ const metaTags = getMetaData([
 
 const language = getDocumentLanguage(document);
 
-const canonicalHref = parseUrl(getCanonicalURL(document), document);
+const drupalUrls = window.drupalUrls;
+if (!drupalUrls) {
+  throw new Error("GlossaryApp cannot be loaded - app urls cannot be found");
+}
+
+const canonicalHref = parseUrl(drupalUrls['canonical'], document);
 if (!canonicalHref) {
   throw new Error("GlossaryApp cannot be loaded - canonical URL not found");
 }
@@ -29,13 +50,7 @@ if(canonicalHref.pathname) {
   pathName = (canonicalHref.pathname.charAt(0) === "/") ? canonicalHref.pathname : "/" + canonicalHref.pathname;
 }
 
-const alternateLangLink = document.querySelector('link[rel="alternate"]:not([hreflang="' + language + '"])');
-const alternateLangHref = alternateLangLink ? parseUrl(alternateLangLink.href, document) : null;
-
-let altLanguageDictionaryBasePath = undefined;
-if(alternateLangHref) {
-  altLanguageDictionaryBasePath = (alternateLangHref.pathname.charAt(0) === "/") ? alternateLangHref.pathname : "/" + alternateLangHref.pathname;
-}
+let altLanguageDictionaryBasePath = getAlternateLangLink(drupalUrls['alternate'], language);
 
 const drupalConfig = {
   baseHost: window.location.protocol + "//" + window.location.hostname,

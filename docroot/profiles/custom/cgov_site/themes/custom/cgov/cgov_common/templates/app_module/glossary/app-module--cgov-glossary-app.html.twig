@@ -22,5 +22,7 @@
   {{ content['#markup']|raw }}
   <script>
     window.glossaryAppSettings = {{ configuration|json_encode|raw }}
+    window.drupalUrls = {{ urls|json_encode|raw }}
   </script>
+
 </div>
