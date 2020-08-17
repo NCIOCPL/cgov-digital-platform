@@ -97,6 +97,13 @@ const config = {
   ...validateAndGetBestBetsConfig(instanceConfig.bestbetsCollection)
 }
 
+// This is a temporary fix for removing the breadcrumb element that displays on Spanish and microsite search results
+// pages. REMOVE THIS when the sitewide fix for the breadcrumbs is implemented!
+let breadcrumbs = document.querySelector(".breadcrumbs");
+if(breadcrumbs !== null && breadcrumbs.parentNode) {
+  breadcrumbs.parentNode.removeChild(breadcrumbs);
+}
+
 const initializeSitewideSearchApp = () => {
   initialize(config);
 };
