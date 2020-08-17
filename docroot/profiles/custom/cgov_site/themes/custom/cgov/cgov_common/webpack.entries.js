@@ -42,5 +42,6 @@ module.exports = {
     __dirname,
     "src/entrypoints/glossary/GlossaryApp.js"
   ),
-  R4RApp: path.resolve(__dirname, "src/entrypoints/r4r/r4rApp.js")
+  R4RApp: path.resolve(__dirname, "src/entrypoints/r4r/r4rApp.js"),
+  SitewideSearchApp: path.resolve(__dirname, "src/entrypoints/sitewideSearch/SitewideSearchApp.js"),
 };

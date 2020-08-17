@@ -1,0 +1,38 @@
+# NCIConnect Sitewide Search App Module - Spanish
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: es
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "NCIConnect Resultados"
+  field_page_description:
+    value: "NCIConnect Resultados"
+  field_browser_title:
+    value: "NCIConnect Resultados"
+  field_pretty_url:
+    value: "nciconnect-resultados"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/buscar/resultados"
+  field_application_module:
+    - target_id: cgov_sitewide_search_app
+      data:
+        dropdownOptions: [20, 50]
+        searchCollection: "doc"
+        searchSiteFilter: "www.cancer.gov/rare-brain-spine-tumor/espanol"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: no_left_nav
+  field_search_engine_restrictions:
+    value: ExcludeSearch

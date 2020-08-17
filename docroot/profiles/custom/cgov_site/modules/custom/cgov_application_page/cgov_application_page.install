@@ -68,3 +68,15 @@ function cgov_application_page_update_8004() {
     $installer->install(['cgov_r4r']);
   }
 }
+
+/**
+ * Update for Sitewide Search App Module Feature.
+ *
+ * Install the cgov_sitewide_search module.
+ */
+function cgov_application_page_update_8005() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_sitewide_search')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_sitewide_search']);
+  }
+}
