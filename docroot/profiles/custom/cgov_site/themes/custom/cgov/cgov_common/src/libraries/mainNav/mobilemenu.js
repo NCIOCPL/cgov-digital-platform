@@ -1,3 +1,4 @@
+// phpcs:disable
 import $ from "jquery";
 import "jquery-touchswipe";
 import { lang as textTrans } from "Core/libraries/nciConfig/NCI.config";
@@ -245,11 +246,18 @@ const resizeHandler = () => {
   }
 };
 
+const slugifyUrl = (url) => {
+  // It used to be that some browsers remove the preceeding slash from the URL
+  // in the DOM.
+  const normalizedUrl = url.startsWith('/') ? url.toLowerCase() : ('/' + url.toLowerCase());
+  return normalizedUrl.split('/');
+}
+
 const markCurrent = () => {
+
   // retrieve the megamenu ul
   const MMenu = document.querySelector("#mega-nav .nav-menu");
-  const activeLinkPath = location.pathname.replace("/espanol", ""); // get the pathname of the current page
-  const activeLinkSlugs = activeLinkPath.split("/"); // chop up the pathname
+  const activeLinkSlugs = slugifyUrl(location.pathname); // chop up the pathname
   const activeLinkDepth = activeLinkSlugs.length - 1; // account for empty first item
 
   // @list ul of nav-items
@@ -258,32 +266,51 @@ const markCurrent = () => {
     const nodeArray = Array.from(list.querySelectorAll(`.lvl-${linkDepth}`));
     for (let i = 0; i < nodeArray.length; i++) {
       const node = nodeArray[i];
-      //strip from item url so it's apples to apples
-      const nodeLink = node
-        .querySelector(".nav-item-title > a")
-        .getAttribute("href")
-        .replace("/espanol", "");
+      const nodeLinkSlugs = slugifyUrl(
+        node
+          .querySelector(".nav-item-title > a")
+          .getAttribute("href")
+      );
 
-      if (nodeLink.indexOf(`/${activeLinkSlugs[linkDepth]}`) >= 0) {
-        if (nodeLink === activeLinkPath) {
+      // The node for /about-cancer/treatment/foo cannot possibly be
+      // current or active for /about-cancer/treatment current URL. So
+      // move along.
+      if (nodeLinkSlugs.length > activeLinkSlugs.length) {
+        continue;
+      }
+
+      // This is the same page.
+      if (activeLinkSlugs.length === nodeLinkSlugs.length) {
+        if (activeLinkSlugs.join('/') === nodeLinkSlugs.join('/')) {
           node.classList.add("current-page");
           return;
         } else {
-          // this is the section, add '.contains-current'
-          node.classList.add("contains-current");
-          if (activeLinkDepth > linkDepth && node.querySelector("ul")) {
-            searchTree(node.querySelector("ul"), linkDepth + 1);
-          }
+          // Same number of items, but not a match, no need to continue
+          // cause it is impossible for there to be a child.
+          continue;
         }
+      }
+
+      // So this *may* be the case where the path is open. So if the
+      // number of slugs for the active
+      if (nodeLinkSlugs.join('/') === activeLinkSlugs.slice(0,nodeLinkSlugs.length).join('/')) {
+        // this is the section, add '.contains-current'
+        node.classList.add("contains-current");
+        if (activeLinkDepth > linkDepth && node.querySelector("ul")) {
+          searchTree(node.querySelector("ul"), linkDepth + 1);
+        }
+        // searchTree flagged all the child items, so we are done and should
+        // stop looping.
         return;
       }
     }
+    // NOTE: You may also get to this point with no matches from a recursive
+    // searchTree call when the active URL is deeper than the max depth of
+    // the menu. This is ok.
   };
 
-  // When on home page, tree does not need traversal
-  if (activeLinkPath !== "/") {
-    searchTree(MMenu, 1);
-  }
+  searchTree(MMenu, 1);
+
 };
 
 export { $openPanelBtn, toggleMobileMenu };
