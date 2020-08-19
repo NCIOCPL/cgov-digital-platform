@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Expand theme implementation to display the glossary app_module.
+ * Default theme implementation to display the glossary app_module.
  *
  * Available variables:
  * - app_module_plugin_id: The ID of the app module implementation.
@@ -17,9 +17,12 @@
  */
 #}
 {{ attach_library('cgov_common/glossary-app') }}
+<noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="NCI-glossary-root">
   {{ content['#markup']|raw }}
   <script>
     window.glossaryAppSettings = {{ configuration|json_encode|raw }}
+    window.drupalUrls = {{ urls|json_encode|raw }}
   </script>
+
 </div>

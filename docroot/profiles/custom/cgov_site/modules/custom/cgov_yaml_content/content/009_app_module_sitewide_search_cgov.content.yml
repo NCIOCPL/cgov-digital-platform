@@ -1,0 +1,40 @@
+# NCI Sitewide Search App Module
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "NCI Search Results"
+  field_page_description:
+    value: "National Cancer Institute Search Results"
+  field_browser_title:
+    value: "NCI Search Results"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/search/results"
+  field_application_module:
+    - target_id: cgov_sitewide_search_app
+      data:
+        bestbetsCollection: "live"
+        dictionaryAudience: "Patient"
+        dictionaryName: "Cancer.gov"
+        dictionaryPath: "/publications/dictionaries/cancer-terms"
+        dropdownOptions: [20, 50]
+        searchCollection: "cgov"
+        searchSiteFilter: "all"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: no_left_nav
+  field_search_engine_restrictions:
+    value: ExcludeSearch
