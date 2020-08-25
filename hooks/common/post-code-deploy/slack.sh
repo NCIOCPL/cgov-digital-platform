@@ -10,6 +10,11 @@
 # Usage: post-code-deploy site target-env source-branch deployed-tag repo-url
 #                         repo-type
 
+## If this is ACSF then exit.
+if [[ $AH_SITE_GROUP -eq 'ncigov' ]]; then
+  exit;
+fi;
+
 site="$1"
 target_env="$2"
 source_branch="$3"
