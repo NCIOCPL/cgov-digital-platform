@@ -13,7 +13,7 @@
 set -ev
 
 ## If this is ACSF then exit.
-if [[ $AH_SITE_GROUP -eq 'ncigov' ]]; then
+if [[ $AH_SITE_GROUP == "ncigov" ]]; then
   exit;
 fi;
 
