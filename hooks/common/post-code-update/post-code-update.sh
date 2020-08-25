@@ -15,6 +15,11 @@
 
 set -ev
 
+## If this is ACSF then exit.
+if [[ $AH_SITE_GROUP == "ncigov" ]]; then
+  exit;
+fi;
+
 site="$1"
 target_env="$2"
 source_branch="$3"
