@@ -9,6 +9,13 @@
  * is read instead of this file (in normal circumstances).
  */
 
+use Drush\Drush;
+
+// Acquia rules disallow 'include/require' with dynamic arguments. We extend the
+// exception over all pasted Drupal settings.php comments so that we don't need
+// to change the PHPDoc headers to end with a full stop, or change # to //.
+// phpcs:disable
+
 // Include custom settings.php code from factory-hooks/pre-settings-php.
 if (function_exists('acsf_hooks_includes')) {
   foreach (acsf_hooks_includes('pre-settings-php') as $_acsf_include_file) {
@@ -78,10 +85,7 @@ if (function_exists('acsf_hooks_includes')) {
 # $config['system.performance']['fast_404']['paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
 # $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
 
-/**
- * Load services definition file.
- */
-$settings['container_yamls'][] = __DIR__ . '/services.yml';
+// phpcs:enable
 
 /**
  * Acquia Cloud Site Factory specific settings.
@@ -96,13 +100,22 @@ if (file_exists('/var/www/site-php')) {
   //   rather than the below 'local' variables which are in principle not
   //   guaranteed to stay defined. (We still define $env / $role for some
   //   existing customers' post-settings-php hooks that already use them.)
-  $site_settings = !empty($GLOBALS['gardens_site_settings']) ? $GLOBALS['gardens_site_settings'] : ['site' => '', 'env' => '', 'conf' => ['acsf_db_name' => '']];
+  $site_settings = !empty($GLOBALS['gardens_site_settings'])
+    ? $GLOBALS['gardens_site_settings']
+    : ['site' => '', 'env' => '', 'conf' => ['acsf_db_name' => '']];
   $env = $site_settings['env'];
   $role = $site_settings['conf']['acsf_db_name'];
 
-  $_acsf_include_file = "/var/www/site-php/{$site_settings['site']}.{$site_settings['env']}/D8-{$site_settings['env']}-{$site_settings['conf']['acsf_db_name']}-settings.inc";
+  $drupal_version = 8;
+  if (version_compare(\Drupal::VERSION, '9', '>=')) {
+    $drupal_version = 9;
+  }
+  $_acsf_include_file = "/var/www/site-php/{$site_settings['site']}.{$site_settings['env']}/D{$drupal_version}-{$site_settings['env']}-{$site_settings['conf']['acsf_db_name']}-settings.inc";
   if (file_exists($_acsf_include_file)) {
+    // Acquia rules disallow 'include/require' with dynamic arguments.
+    // phpcs:disable
     include $_acsf_include_file;
+    // phpcs:enable
     // Overwrite trusted_host_patterns setting, remove unnecessary hosts.
     // Allowed hosts for D8: https://www.drupal.org/node/2410395.
     // The overwrite doesn't cause any security problem because the valid hosts
@@ -180,35 +193,6 @@ if (file_exists('/var/www/site-php')) {
   if (!empty($site_settings['conf']) && is_array($site_settings['conf'])) {
     $config = $site_settings['conf'] + $config;
   }
-
-  // Set the twig cache directory / change the default from Acquia Hosting:
-  // - Make it specific per site. The default is set based on the environment,
-  //   meaning it is the same for every site. This wouldn't cause twig caches
-  //   to be reused across multiple sites (at least not since D8.6), but:
-  //   - Cache clears on a single site would cause all sites' twig files to be
-  //     deleted;
-  //   - Concurrent cache clears could throw exceptions (when simultaneously
-  //     removing the same subdirectories).
-  // - Acquia Hosting has a feature where a 'deployment identifier' can be part
-  //   of the directory name, which allows a cleanup script to more easily
-  //   remove stale twig cache files lingering on multiple web nodes. Site
-  //   Factory does not include this deployment identifier, so a new code
-  //   deployment will not force twig caches for all hosted websites to be
-  //   regenerated at the exact same moment. This implies that the Site Factory
-  //   infrastructure is responsible for cleaning up stale twig cache files.
-  // - To not clash with the Acquia Hosting cleanup script (which shouldn't run
-  //   for us, but just to be sure...), make the base directory different from
-  //   Acquia Hosting's default of "php_storage". (Core uses "php".)
-  // - Don't include 'twig'. (FileStorage by definition already takes care of
-  //   dedicated storage for a specific bin (called "twig") inside this
-  //   directory, which in practice means "/twig" already gets appended.)
-  if (isset($_ENV['AH_SITE_GROUP']) && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-    // For completeness: we don't need to take care of creating the directory.
-    // We don't care if the 'directory' value was / wasn't defined already, or
-    // if the companion value 'secret' was somehow not defined; Core has a
-    // fallback for 'secret'.
-    $settings['php_storage']['twig']['directory'] = "/mnt/tmp/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/php_storage_acsf/{$site_settings['conf']['acsf_db_name']}";
-  }
 }
 
 /**
@@ -241,9 +225,9 @@ if (isset($config_directories['vcs'])) {
   // directory is removed for now.
   // @see https://backlog.acquia.com/browse/CL-11815
   // @see https://github.com/drush-ops/drush/pull/1711
-  if (class_exists('\Drush\Drush') && \Drush\Drush::hasContainer()) {
+  if (class_exists('\Drush\Drush') && Drush::hasContainer()) {
     try {
-      $_tmp = \Drush\Drush::input()->getArgument('command');
+      $_tmp = Drush::input()->getArgument('command');
     }
     catch (InvalidArgumentException $e) {
       $_tmp = FALSE;
@@ -258,6 +242,9 @@ if (isset($config_directories['vcs'])) {
 // Include custom settings.php code from factory-hooks/post-settings-php.
 if (function_exists('acsf_hooks_includes')) {
   foreach (acsf_hooks_includes('post-settings-php') as $_acsf_include_file) {
+    // Acquia rules disallow 'include/require' with dynamic arguments.
+    // phpcs:disable
     include $_acsf_include_file;
+    // phpcs:enable
   }
 }

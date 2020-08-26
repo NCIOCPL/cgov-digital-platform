@@ -8,6 +8,12 @@
  * once per page.
  */
 
+use Acquia\Cloud\Environment\MultiSite\Config;
+use Acquia\SimpleRest\SimpleRestCreds;
+use Acquia\SimpleRest\SimpleRestMessage;
+use Acquia\SimpleRest\SimpleRestResponse;
+use Drush\Drush;
+
 // Load SimpleRest classes, needed for sending requests to the Site Factory.
 // @todo if we ever change/test gardens_site_data_alert_send(), we should move
 //   this include_once() into there. It is perfectly fine to execute in a
@@ -45,6 +51,11 @@ define('GARDENS_SITE_DATA_READ_FAILURE_TTL', 60);
 // is unreadable. Sitegroup + env need to be filled.
 define('GARDENS_SITE_JSON_ALERT_LOCK_TEMPLATE', '/mnt/tmp/%s.%s/.sites-json-alert');
 
+// The PHP configuration is used to switch between the new and the legacy
+// site.json usage. The new approach uses the interface provided by the
+// Acquia Cloud layer, the legacy approach uses the file deployed to gluster.
+define('GARDENS_SITE_JSON_LEGACY', empty(get_cfg_var('acsf.sites_json_on_ephemeral')));
+
 // This fallback to populate $_ENV should not be necessary on Acquia Hosting
 // anymore. Also, ah_site_info() is not a public API and not guaranteed to
 // keep existing. Still, we keep it for exotic environments which may be using
@@ -75,12 +86,17 @@ if (!isset($_ENV['AH_SITE_NAME']) || !isset($_ENV['AH_SITE_GROUP']) || !isset($_
  *   file.
  */
 function gardens_site_data_load_file() {
-  $json = @file_get_contents(gardens_site_data_get_filepath());
-  if ($json) {
-    // Get the map as arrays.
-    return json_decode($json, TRUE);
+  if (GARDENS_SITE_JSON_LEGACY) {
+    // Retrieve sites.json data from a gluster file.
+    $json = @file_get_contents(gardens_site_data_get_filepath());
+    return $json ? json_decode($json, TRUE) : FALSE;
   }
-  return FALSE;
+  else {
+    // Retrieve sites data using the interface provided by the Acquia Cloud
+    // layer.
+    $config = Config::getInstance();
+    return empty($config) ? FALSE : $config->all();
+  }
 }
 
 /**
@@ -99,8 +115,8 @@ function gardens_site_data_load_file() {
  */
 function gardens_site_data_get_site_from_server_info() {
   // First derive the 'site uri' (the base domain with possibly a sub path).
-  if (PHP_SAPI === 'cli' && class_exists('\Drush\Drush') && \Drush\Drush::hasContainer()) {
-    $acsf_drush_boot_manager = \Drush\Drush::bootstrapManager();
+  if (PHP_SAPI === 'cli' && class_exists('\Drush\Drush') && Drush::hasContainer()) {
+    $acsf_drush_boot_manager = Drush::bootstrapManager();
     if ($acsf_drush_boot_manager->getUri()) {
       $acsf_uri = $acsf_drush_boot_manager->getUri();
     }
@@ -108,7 +124,7 @@ function gardens_site_data_get_site_from_server_info() {
     // --sites-subdir option. By specifying the --acsf-install-uri option with
     // the value of the standard domain, we can catch that here and correct the
     // uri argument for drush site installs.
-    $acsf_drush_input = \Drush\Drush::input();
+    $acsf_drush_input = Drush::input();
     try {
       $acsf_install_uri = $acsf_drush_input->getOption('acsf-install-uri');
       if ($acsf_install_uri) {
@@ -157,11 +173,8 @@ function gardens_site_data_get_site_from_server_info() {
   // the result is either empty or a path with a leading slash.
   $path = strtolower(rtrim($path, '/'));
 
-  // Get data for the 'site uri' from APC or sites.json.
-  if (!GARDENS_SITE_DATA_USE_APC) {
-    $data = gardens_site_data_refresh_one($host . $path);
-  }
-  else {
+  // Get data for the 'site uri' from APC.
+  if (GARDENS_SITE_DATA_USE_APC && GARDENS_SITE_JSON_LEGACY) {
     // Check for data in APC: FALSE means no; 0 means "not found" cached in
     // APC; NULL means "sites.json read failure" cached in APC.
     $data = gardens_site_data_cache_get($host . $path);
@@ -205,6 +218,10 @@ function gardens_site_data_get_site_from_server_info() {
         }
       }
     }
+  }
+  // Get domain data.
+  else {
+    $data = gardens_site_data_refresh_one($host . $path);
   }
 
   if (is_array($data)) {
@@ -295,13 +312,13 @@ function gardens_site_data_build_data(array $site, array $map) {
 /**
  * Parses the entire JSON sites file and returns a result for a single domain.
  *
+ * Use gardens_site_data_refresh_one() for a faster near-equivalent.
+ *
  * @param string $domain
  *   A domain name to search for in the JSON.
  *
  * @return array
  *   A gardens site data structure, or zero if the domain was not found.
- *
- * @deprecated Use gardens_site_data_refresh_one() for a faster near-equivalent.
  */
 function gardens_site_data_get_site_from_file($domain) {
   $result = 0;
@@ -316,19 +333,28 @@ function gardens_site_data_get_site_from_file($domain) {
 }
 
 /**
- * Returns data for a single domain directly from the JSON file.
+ * Returns data for a single domain.
  *
  * Optionally also stores the data in APC.
  *
  * @param string $domain
- *   The domain name to look up in the JSON file.
+ *   The domain name to look up.
  *
  * @return array|int|null
  *   An array of site data, 0 if no site was found for the given domain, or NULL
  *   if a sites.json read failure was encountered.
  */
 function gardens_site_data_refresh_one($domain) {
-  $data = gardens_site_data_refresh_domains([$domain]);
+  if (GARDENS_SITE_JSON_LEGACY) {
+    // Using the legacy sites.json file from the gluster, and optionally also
+    // stores the data in APC.
+    $data = gardens_site_data_refresh_domains([$domain]);
+  }
+  else {
+    // Using interface provided by the Acquia Cloud layer, no APC cache handling
+    // in this case.
+    $data = gardens_site_data_from_multi_site_config([$domain]);
+  }
   return isset($data[$domain]) ? $data[$domain] : NULL;
 }
 
@@ -362,7 +388,10 @@ function gardens_site_data_refresh_domains(array $domains) {
     // key for a site is included in double quotes (apparently for fear of
     // having a file in illegal JSON format, which does not double-quote its
     // object keys...) so we may hit false positives.
+    // Acquia rules disallow exec() with dynamic arguments.
+    // phpcs:disable
     exec(sprintf("grep %s %s --no-filename --color=never --context=0", escapeshellarg($domain), escapeshellarg($location)), $output_array, $exit_code);
+    // phpcs:enable
     $result = trim(implode("\n", $output_array));
 
     if (empty($result)) {
@@ -476,6 +505,45 @@ function gardens_site_data_refresh_domains(array $domains) {
 }
 
 /**
+ * Returns data for the specified domains using hosting's php interface.
+ *
+ * @param array $domains
+ *   The domain names to look up in the domain registry.
+ *
+ * @return array
+ *   An array keyed by the specified domains, whose values are site data arrays
+ *   or 0 if no site was found for the given domain.
+ */
+function gardens_site_data_from_multi_site_config(array $domains) {
+  $data = [];
+  $config = Config::getInstance();
+  foreach ($domains as $domain) {
+    $domain = trim($domain);
+    if ($config) {
+      // Site config returns an associative array representation of one
+      // site object, selected by domain.
+      $found_site = $config->siteConfig($domain);
+      // Shared config returns an associative array with every key except sites.
+      $global_map_data = $config->sharedConfig();
+    }
+    // In case of missing data, set the results to zero and report the failure.
+    if (empty($found_site) || empty($global_map_data)) {
+      $data[$domain] = 0;
+      if (class_exists('Drupal') && \Drupal::hasService('logger.factory')) {
+        \Drupal::logger('acsf')->alert('Unable to extract site data for site @site.', ['@site' => $domain]);
+      }
+      elseif (function_exists('syslog')) {
+        syslog(LOG_ERR, sprintf('Unable to extract data for site %s.', $domain));
+      }
+    }
+    else {
+      $data[$domain] = gardens_site_data_build_data($found_site, $global_map_data);
+    }
+  }
+  return $data;
+}
+
+/**
  * Stores site info for a given domain in APC.
  *
  * @param string $domain
@@ -556,7 +624,11 @@ function gardens_site_data_sites_json_issue_type_get() {
       // To make sure we are only triggering an alert in case of a Gluster split
       // brain, redirect the stderr to stdout and look for the indicator
       // message: 'Input/output error'.
+      //
+      // Acquia rules disallow exec() with dynamic arguments.
+      // phpcs:disable
       exec(sprintf('head -n1 %s 2>&1', escapeshellarg($sites_json_path)), $output_array, $exit_code);
+      // phpcs:enable
       $output = implode('', $output_array);
       if ($exit_code !== 0 && strpos($output, 'Input/output error') !== FALSE) {
         $issue_type = 'gluster_split_brain';
@@ -718,7 +790,7 @@ function gardens_site_data_shared_creds_get($site, $env) {
   if (file_exists($ini_file)) {
     $data = parse_ini_file($ini_file, TRUE);
     if (!empty($data) && !empty($data['gardener'])) {
-      return new Acquia\SimpleRest\SimpleRestCreds($data['gardener']['username'],
+      return new SimpleRestCreds($data['gardener']['username'],
         $data['gardener']['password'],
         $data['gardener']['url']);
     }
@@ -756,17 +828,22 @@ function gardens_site_data_alert_send($scope, $issue_type) {
         'site_group' => $site,
         'site_env' => $env,
         'server' => $webnode,
-        'timestamp' => REQUEST_TIME,
+        // Instead of \Drupal::time()->getRequestTime() we're going to use
+        // time() here because there is no definite usage of \Drupal at this
+        // point in the bootstrap.
+        // Rest of the code above also does a class_exists() check against
+        // 'Drupal', probably due to the same reason.
+        'timestamp' => time(),
       ],
     ];
     $creds = gardens_site_data_shared_creds_get($site, $env);
-    $message = new Acquia\SimpleRest\SimpleRestMessage($site, $env);
+    $message = new SimpleRestMessage($site, $env);
     $response = $message->send('POST', $endpoint, $parameters, $creds);
   }
   catch (Exception $e) {
     $error_message = sprintf('Sending alert to Site Factory failed: %s', $e->getMessage());
     syslog(LOG_ERR, $error_message);
-    $response = new Acquia\SimpleRest\SimpleRestResponse($endpoint, 500, ['message' => $error_message]);
+    $response = new SimpleRestResponse($endpoint, 500, ['message' => $error_message]);
   }
 
   return $response;
