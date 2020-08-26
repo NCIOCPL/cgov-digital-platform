@@ -9,6 +9,93 @@
  * the 'db-copy' Acquia Hosting task which executes this hook.
  */
 
+/**
+ * Recursively removes a directory.
+ *
+ * @param string $dir
+ *   Directory that will be removed.
+ */
+function rmdir_r(string $dir) {
+  if (is_dir($dir)) {
+    // Acquia rules disallow exec() with dynamic arguments.
+    // phpcs:disable
+    shell_exec(sprintf('rm -rf %s', escapeshellarg($dir)));
+    // phpcs:enable
+  }
+}
+
+/**
+ * Creates a new directory if it doesn't exist already.
+ *
+ * Also, creates parent directories if needed.
+ *
+ * @param string $dir
+ *   Directory to create.
+ */
+function mkdir_p(string $dir) {
+  if (!file_exists($dir)) {
+    mkdir($dir, 0777, TRUE);
+  }
+}
+
+/**
+ * Returns Drush cache location based on site, environment and domain.
+ *
+ * @param string $site
+ *   Site name.
+ * @param string $env
+ *   Site environment.
+ * @param string $domain
+ *   Site domain.
+ *
+ * @return string
+ *   Drush cache location.
+ */
+function drush_cache_path(string $site, string $env, string $domain) {
+  return sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, md5($domain));
+}
+
+/**
+ * Runs Drush command. Exits with error code if something fails.
+ *
+ * @param string $site
+ *   Target site.
+ * @param string $env
+ *   Target environment.
+ * @param string $domain
+ *   Target domain.
+ * @param string $cmd
+ *   Command that will be run.
+ */
+function drush_exec(string $site, string $env, string $domain, string $cmd) {
+  $docroot = sprintf('/var/www/html/%s.%s/docroot', $site, $env);
+
+  $drush_cmd = sprintf(
+    'DRUSH_PATHS_CACHE_DIRECTORY=%1$s CACHE_PREFIX=%1$s AH_SITE_ENVIRONMENT=%2$s \drush8 -r %3$s -l %4$s -y %5$s 2>&1',
+    escapeshellarg(drush_cache_path($site, $env, $domain)),
+    escapeshellarg($env),
+    escapeshellarg($docroot),
+    escapeshellarg('https://' . $domain),
+    $cmd
+  );
+
+  fwrite(STDERR, "Executing: $drush_cmd;\n");
+  $result = 0;
+  $output = [];
+  // Acquia rules disallow exec() with dynamic arguments.
+  // phpcs:disable
+  exec($drush_cmd, $output, $result);
+  // phpcs:enable
+  print implode("\n", $output);
+
+  fwrite(STDERR, "Command execution returned status code: $result\n");
+
+  if ($result) {
+    rmdir_r(drush_cache_path($site, $env, $domain));
+    exit($result);
+  }
+}
+
 if (empty($argv[3])) {
   echo "Error: Not enough arguments.\n";
   exit(1);
@@ -56,35 +143,26 @@ foreach ($sites_json['sites'] as $site_domain => $site_info) {
     break;
   }
 }
+
 if (!$new_domain) {
   error('Could not find the domain that belongs to the site.');
 }
 
-// Create a cache directory for drush.
-$cache_directory = sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, md5($new_domain));
-shell_exec(sprintf('mkdir -p %s', escapeshellarg($cache_directory)));
+// Make directory drush will use for temporary cache.
+mkdir_p(drush_cache_path($site, $env, $new_domain));
+
+// Make absolutely sure Drupal will not pick up cached component locations
+// on boostrap when called by Drush cache-rebuild.
+// The following Drush cache-rebuild will repopulate this table.
+drush_exec($site, $env, $new_domain, 'sqlq "TRUNCATE TABLE cache_container;"');
+
+// Explicitly run a cache-rebuild before anything else.
+drush_exec($site, $env, $new_domain, 'cache-rebuild');
 
 // Execute the scrub. If we execute code on the update environment (as per
 // above), we must change AH_SITE_ENVIRONMENT to match the docroot during
 // execution; see sites.php.
-$command = sprintf(
-  'CACHE_PREFIX=%s AH_SITE_ENVIRONMENT=%s \drush8 -r %s -l %s -y acsf-site-scrub',
-  escapeshellarg($cache_directory),
-  escapeshellarg($env),
-  escapeshellarg($docroot),
-  escapeshellarg('https://' . $new_domain)
-);
-fwrite(STDERR, "Executing: $command;\n");
-
-$result = 0;
-$output = [];
-exec($command, $output, $result);
-print implode("\n", $output);
+drush_exec($site, $env, $new_domain, 'acsf-site-scrub');
 
 // Clean up the drush cache directory.
-shell_exec(sprintf('rm -rf %s', escapeshellarg($cache_directory)));
-
-if ($result) {
-  fwrite(STDERR, "Command execution returned status code: $result!\n");
-  exit($result);
-}
+rmdir_r(drush_cache_path($site, $env, $new_domain));
