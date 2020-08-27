@@ -46,12 +46,12 @@ class ClinicalTrialsApiProxyTest extends UnitTestCase {
   protected function setUp() {
     parent::setUp();
 
-    $this->configFactory = $this->getMock('\Drupal\Core\Config\ConfigFactoryInterface');
+    $this->configFactory = $this->createMock('\Drupal\Core\Config\ConfigFactoryInterface');
     $this->config = $this->getMockBuilder('\Drupal\Core\Config\ImmutableConfig')
       ->disableOriginalConstructor()
       ->getMock();
-    $this->logger = $this->getMock('\Psr\Log\LoggerInterface');
-    $this->client = $this->getMock('NCIOCPL\ClinicalTrialSearch\ClinicalTrialsApiInterface');
+    $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
+    $this->client = $this->createMock('NCIOCPL\ClinicalTrialSearch\ClinicalTrialsApiInterface');
   }
 
   /**

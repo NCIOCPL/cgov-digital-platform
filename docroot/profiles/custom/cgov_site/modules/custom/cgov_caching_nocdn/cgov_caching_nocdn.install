@@ -25,7 +25,7 @@ function cgov_caching_nocdn_install() {
  * Updates purge config to ensure purge plugin ids ID to be the same on each
  * environment.
  */
-function cgov_caching_cdn_update_8001() {
+function cgov_caching_nocdn_update_8001() {
   // Set config.
   $config_factory = \Drupal::service('config.factory');
   $config_installer = new CgovPurgeConfigInstaller($config_factory);

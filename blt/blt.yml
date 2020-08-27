@@ -100,5 +100,5 @@ cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
 tests:
   phpunit:
-    - { config: '${repo.root}/phpunit.xml', path: '${docroot}/modules/custom', class: null, file: null }
-    - { config: '${repo.root}/phpunit.xml', path: '${docroot}/profiles/custom/cgov_site', class: null, file: null }
+    - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
+    - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/profiles/custom/cgov_site' }

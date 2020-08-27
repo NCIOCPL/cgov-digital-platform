@@ -14,7 +14,7 @@ class AppModules {
    *   An array of loaded app module entities.
    */
   public static function getAllAppModules() {
-    return \Drupal::entityManager()->getStorage('app_module')->loadMultiple();
+    return \Drupal::entityTypeManager()->getStorage('app_module')->loadMultiple();
   }
 
   /**
@@ -27,7 +27,7 @@ class AppModules {
     $query = \Drupal::entityQuery('app_module')
       ->condition('status', TRUE)
       ->execute();
-    return \Drupal::entityManager()->getStorage('app_module')->loadMultiple($query);
+    return \Drupal::entityTypeManager()->getStorage('app_module')->loadMultiple($query);
   }
 
 }

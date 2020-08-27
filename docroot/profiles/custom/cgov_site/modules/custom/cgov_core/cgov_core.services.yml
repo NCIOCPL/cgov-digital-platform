@@ -57,3 +57,8 @@ services:
     class: Drupal\cgov_core\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+  cgov_core.embed_theme_negotiator:
+    class: Drupal\cgov_core\Theme\EntityEmbedPreviewThemeNegotiator
+    arguments: ['@current_user', '@config.factory', '@entity_type.manager']
+    tags:
+      - { name: theme_negotiator, priority: 600 }

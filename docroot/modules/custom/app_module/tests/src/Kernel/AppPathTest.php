@@ -18,6 +18,7 @@ class AppPathTest extends KernelTestBase {
   public static $modules = [
     'system',
     'user',
+    'path_alias',
   ];
 
   /**
@@ -35,8 +36,9 @@ class AppPathTest extends KernelTestBase {
     // These are special and cannot be installed as a dependency
     // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
+    $this->installEntitySchema('path_alias');
     $this->installSchema('system', ['sequences']);
-    $this->installConfig(['system', 'user']);
+    $this->installConfig(['system', 'user', 'path_alias']);
 
     // Install page and its dependencies.
     // This is so we do not have to install all the schemas.

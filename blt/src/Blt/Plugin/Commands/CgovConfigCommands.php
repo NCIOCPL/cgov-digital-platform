@@ -3,7 +3,7 @@
 namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\Exceptions\BltException;
-use Acquia\Blt\Robo\Commands\Setup\ConfigCommand;
+use Acquia\Blt\Robo\Commands\Drupal\ConfigCommand;
 
 /**
  * Defines commands in the "cgov" namespace.
