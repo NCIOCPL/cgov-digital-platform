@@ -27,6 +27,7 @@ class WorkflowTest extends KernelTestBase {
   public static $modules = [
     'system',
     'user',
+    'path_alias',
   ];
 
   /**
@@ -46,8 +47,9 @@ class WorkflowTest extends KernelTestBase {
     // These are special and cannot be installed as a dependency
     // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');
+    $this->installEntitySchema('path_alias');
     $this->installSchema('system', ['sequences']);
-    $this->installConfig(['system', 'user']);
+    $this->installConfig(['system', 'user', 'path_alias']);
 
     // Install core and its dependencies.
     // This ensures that the install hook will fire, which sets up
