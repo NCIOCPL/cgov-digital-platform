@@ -12,6 +12,12 @@
 .specialReport {
   &.main-content {
     padding: 0;
+    @include bp(small) {
+      .column, .columns {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
     background: #f7f8f3 url(/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/background-graphics/texture-ap2022.gif) top left;
   }
 
@@ -25,7 +31,6 @@
     @include break(small) {
       max-height: 384px;
       height: 57.8vw;
-      //height: unset;
     }
 
     @include break(medium) {
