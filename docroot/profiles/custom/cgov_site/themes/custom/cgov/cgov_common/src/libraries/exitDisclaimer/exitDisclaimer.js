@@ -31,6 +31,12 @@ function _initialize() {
 
 	// move the feature card exit notification within the dom to come right after the image in the feature card to meet design request, WCMSFEQ-282
 	$('.feature-card a.icon-exit-notification').insertAfter('.feature-card a:not([href^="/"]):not([href*=".gov"]) div img');
+
+	// move the exit link for alternating images
+  $('.alternating-image-list-container  a.icon-exit-notification').each(function() {
+    $(this).insertAfter($(this).prev().find('.alternating-image-list-text :header span')
+    );
+  });
 };
 
 let initialized = false;
