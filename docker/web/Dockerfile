@@ -12,30 +12,40 @@ FROM ubuntu:bionic
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update
 
+# Install add-apt-repository
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get install -yq software-properties-common
+
+# Add the PHP 7.3 repository
+RUN DEBIAN_FRONTEND=noninteractive \
+    add-apt-repository ppa:ondrej/php; \
+    DEBIAN_FRONTEND=noninteractive \
+    add-apt-repository ppa:ondrej/apache2
+
 # ...then install packages.
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq \
     apache2 \
     build-essential \
-    php7.2 \
-    libapache2-mod-php7.2 \
-    php7.2-bz2 \
-    php7.2-cli \
-    php7.2-common \
-    php7.2-curl \
-    php7.2-fpm \
-    php7.2-gd \
-    php7.2-json \
-    php7.2-mbstring \
-    php7.2-memcached \
-    php7.2-mysql \
-    php7.2-oauth \
-    php7.2-opcache \
-    php7.2-readline \
-    php7.2-sqlite3 \
-    php7.2-soap \
-    php7.2-xdebug \
-    php7.2-xml \
+    php7.3 \
+    libapache2-mod-php7.3 \
+    php7.3-bz2 \
+    php7.3-cli \
+    php7.3-common \
+    php7.3-curl \
+    php7.3-fpm \
+    php7.3-gd \
+    php7.3-json \
+    php7.3-mbstring \
+    php7.3-memcached \
+    php7.3-mysql \
+    php7.3-oauth \
+    php7.3-opcache \
+    php7.3-readline \
+    php7.3-sqlite3 \
+    php7.3-soap \
+    php7.3-xdebug \
+    php7.3-xml \
     mariadb-client \
     curl \
     git \
@@ -80,7 +90,7 @@ COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
 ## These are the PHP modules that are available to be
 ## loaded by the CLI & apache. This should be inline with
 ## the modules installed above.
-COPY ./build/php-conf /etc/php/7.2/mods-available
+COPY ./build/php-conf /etc/php/7.3/mods-available
 
 # Enable mod_rewrite 'cause we needs it.
 RUN a2enmod rewrite
