@@ -48,7 +48,7 @@
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/acquia_connector": "^1.16",
         "drupal/acquia_purge": "^1.0@beta",
-        "drupal/acsf": "^2.56",
+        "drupal/acsf": "^2.67",
         "drupal/address": "~1.0",
         "drupal/admin_toolbar": "^1.25",
         "drupal/adobe_dtm": "dev-8.x-1.x",
@@ -206,6 +206,9 @@
         "patches": {
             "acquia/blt": {
                 "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
+            },
+            "dmore/chrome-mink-driver": {
+                "Commit 863a1d33: Fixed PHP 7.3 warning": "patches/chrome-mink-driver/php-7.3-fix.patch"
             },
             "drush/drush": {
                 "drush-ops/drush#3145: Request URI is incorrect with subdirectories": "patches/drush/4136-request-uri-fix.patch"

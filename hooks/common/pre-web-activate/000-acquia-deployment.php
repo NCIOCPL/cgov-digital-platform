@@ -273,9 +273,30 @@ function get_wip_task_status($site, $env, $task_id) {
  * Contains the REST credentials that will be used when making Site Factory
  * requests.
  */
+// Class name doesn't match filename.
+// phpcs:disable
 class SimpleRestCreds {
+// phpcs:enable
+
+  /**
+   * The username to be used to contact Site Factory.
+   *
+   * @var string
+   */
   public $name;
+
+  /**
+   * The password to be used to contact Site Factory.
+   *
+   * @var string
+   */
   public $password;
+
+  /**
+   * The URL of the Site Factory.
+   *
+   * @var string
+   */
   public $url;
 
   /**
@@ -302,9 +323,33 @@ class SimpleRestCreds {
  * A simple class used to send REST requests to the Site Factory.
  */
 class SimpleRestMessage {
+
+  /**
+   * Maximum amount of retries before giving up sending a message.
+   *
+   * @var int
+   */
   private $retryMax = 3;
+
+  /**
+   * Number of seconds to wait before trying again after sending failed.
+   *
+   * @var int
+   */
   private $retryWait = 5;
+
+  /**
+   * The hosting sitegroup name.
+   *
+   * @var string
+   */
   private $site;
+
+  /**
+   * The hosting environment name.
+   *
+   * @var string
+   */
   private $env;
 
   /**

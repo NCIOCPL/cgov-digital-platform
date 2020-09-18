@@ -8,11 +8,11 @@
 if (!empty($_ENV['AH_SITE_ENVIRONMENT']) &&
   function_exists('gardens_site_data_get_filepath')) {
   // ===== Added by acsf-init, please do not delete. Section start. =====
-  $_acsf_infrastructure = include dirname(__FILE__) . '/acsf.settings.php';
-  if ($_acsf_infrastructure === 'acsf-infrastructure') {
-    return;
-  }
-  // ===== Added by acsf-init, please do not delete. Section end. =====
+$_acsf_infrastructure = include dirname(__FILE__) . '/acsf.settings.php';
+if ($_acsf_infrastructure === 'acsf-infrastructure') {
+  return;
+}
+// ===== Added by acsf-init, please do not delete. Section end. =====
 }
 
 /**

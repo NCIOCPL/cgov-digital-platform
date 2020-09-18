@@ -18,8 +18,14 @@ default:
     jarnaiz\JUnitFormatter\JUnitFormatterExtension:
         filename: report.xml
         outputDir: %paths.base%/build/tests
-    Bex\Behat\ScreenshotExtension:
-      screenshot_taking_mode: failed_steps
-      image_drivers:
-        local:
-          screenshot_directory: /tmp
+# When an error or warning occurs, possibly before a page is
+# rendered (e.g an issue with the step code), then an exception
+# is thrown from the chrome-mink-driver that it cannot get a
+# screenshot. Commenting out this for now as it is better to
+# see why the test failed.
+# https://gitlab.com/DMore/chrome-mink-driver/-/issues/72
+#    Bex\Behat\ScreenshotExtension:
+#      screenshot_taking_mode: failed_steps
+#      image_drivers:
+#        local:
+#          screenshot_directory: /tmp

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "650aa8bb6edcb595e72c1a497811da3a",
+    "content-hash": "1371ba12b09e05c8c87418fd845a9608",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -2227,16 +2227,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.10.3",
+            "version": "1.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5db60a4969eba0e0c197a19c077780aadbc43c5d"
+                "reference": "bfe91e31984e2ba76df1c1339681770401ec262f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5db60a4969eba0e0c197a19c077780aadbc43c5d",
-                "reference": "5db60a4969eba0e0c197a19c077780aadbc43c5d",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/bfe91e31984e2ba76df1c1339681770401ec262f",
+                "reference": "bfe91e31984e2ba76df1c1339681770401ec262f",
                 "shasum": ""
             },
             "require": {
@@ -2246,7 +2246,8 @@
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^7.5"
+                "phpstan/phpstan": "^0.12.20",
+                "phpunit/phpunit": "^7.5 || ^9.1.5"
             },
             "type": "library",
             "extra": {
@@ -2292,7 +2293,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2020-05-25T17:24:27+00:00"
+            "time": "2020-08-10T19:35:50+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -3141,42 +3142,44 @@
         },
         {
             "name": "drupal/acsf",
-            "version": "2.61.0",
+            "version": "2.67.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/acsf.git",
-                "reference": "8.x-2.61"
+                "reference": "8.x-2.67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/acsf-8.x-2.61.zip",
-                "reference": "8.x-2.61",
-                "shasum": "8d5aae9ce5577487d343fd0393557ca8a50deeae"
+                "url": "https://ftp.drupal.org/files/projects/acsf-8.x-2.67.zip",
+                "reference": "8.x-2.67",
+                "shasum": "6b13bb9d82215c787a025447f11262597b4e85d3"
             },
             "require": {
                 "drupal/acsf_duplication": "*",
                 "drupal/acsf_theme": "*",
                 "drupal/acsf_variables": "*",
-                "drupal/core": "~8.0",
+                "drupal/core": "^8 || ^9",
                 "ext-json": "*"
             },
             "require-dev": {
+                "acquia/coding-standards": "^0.4.0",
                 "drupal/acsf_variables": "*",
-                "drupal/coder": "8.3.1",
                 "drupal/samlauth": "^2.0.0-alpha1",
                 "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "~5.3",
-                "squizlabs/php_codesniffer": "*"
+                "phpunit/phpunit": "^7.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.61",
-                    "datestamp": "1570013286",
+                    "version": "8.x-2.67",
+                    "datestamp": "1596111564",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "branch-alias": {
+                    "dev-8.x-2.x": "2.x-dev"
                 }
             },
             "autoload": {
@@ -3239,16 +3242,16 @@
         },
         {
             "name": "drupal/acsf_duplication",
-            "version": "2.61.0",
+            "version": "2.67.0",
             "require": {
                 "drupal/acsf": "self.version",
-                "drupal/core": "~8.0"
+                "drupal/core": "^8 || ^9"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.61",
-                    "datestamp": "1570013286",
+                    "version": "8.x-2.67",
+                    "datestamp": "1596111564",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3309,17 +3312,17 @@
         },
         {
             "name": "drupal/acsf_theme",
-            "version": "2.61.0",
+            "version": "2.67.0",
             "require": {
                 "drupal/acsf": "self.version",
                 "drupal/acsf_variables": "*",
-                "drupal/core": "~8.0"
+                "drupal/core": "^8 || ^9"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.61",
-                    "datestamp": "1570013286",
+                    "version": "8.x-2.67",
+                    "datestamp": "1596111564",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3380,16 +3383,16 @@
         },
         {
             "name": "drupal/acsf_variables",
-            "version": "2.61.0",
+            "version": "2.67.0",
             "require": {
                 "drupal/acsf": "self.version",
-                "drupal/core": "~8.0"
+                "drupal/core": "^8 || ^9"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.61",
-                    "datestamp": "1570013286",
+                    "version": "8.x-2.67",
+                    "datestamp": "1596111564",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7431,16 +7434,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.18",
+            "version": "2.1.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "cfa3d44471c7f5bfb684ac2b0da7114283d78441"
+                "reference": "840d5603eb84cc81a6a0382adac3293e57c1c64c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/cfa3d44471c7f5bfb684ac2b0da7114283d78441",
-                "reference": "cfa3d44471c7f5bfb684ac2b0da7114283d78441",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/840d5603eb84cc81a6a0382adac3293e57c1c64c",
+                "reference": "840d5603eb84cc81a6a0382adac3293e57c1c64c",
                 "shasum": ""
             },
             "require": {
@@ -7485,7 +7488,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2020-06-16T20:11:17+00:00"
+            "time": "2020-08-08T21:28:19+00:00"
         },
         {
             "name": "eluceo/ical",
@@ -10543,6 +10546,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -15919,6 +15923,17 @@
         {
             "name": "webflo/drupal-core-require-dev",
             "version": "8.7.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webflo/drupal-core-require-dev.git",
+                "reference": "56eb5356cd7fd44a35856b5018265c5ff42fb521"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webflo/drupal-core-require-dev/zipball/56eb5356cd7fd44a35856b5018265c5ff42fb521",
+                "reference": "56eb5356cd7fd44a35856b5018265c5ff42fb521",
+                "shasum": ""
+            },
             "require": {
                 "behat/mink": "1.7.x-dev",
                 "behat/mink-goutte-driver": "^1.2",
@@ -17896,5 +17911,6 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
