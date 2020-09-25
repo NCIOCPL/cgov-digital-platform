@@ -2,13 +2,17 @@
 
 namespace Drupal\cgov_core;
 
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\file\Entity\File;
 use Drupal\views\ViewExecutable;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\Component\Utility\Html;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\TwigFunction;
 
 /**
  * Extend Drupal's Twig_Extension class.
@@ -30,6 +34,13 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $languageManager;
 
   /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * The current Request object.
    *
    * @var \Symfony\Component\HttpFoundation\Request
@@ -46,9 +57,10 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   /**
    * Constructs a new CgovNavigationManager class.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RequestStack $requestStack) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RendererInterface $renderer, RequestStack $requestStack) {
     $this->entityTypeManager = $entityTypeManager;
     $this->languageManager = $languageManager;
+    $this->renderer = $renderer;
     $this->requestStack = $requestStack;
     // Get current language.
     $this->langid = $this->languageManager->getCurrentLanguage()->getID();
@@ -72,6 +84,15 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       new \Twig_SimpleFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('strip_duplicate_leading_credit', [$this, 'stripDuplicateLeadingCredit'], ['is_safe' => ['html']]),
       new \Twig_SimpleFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
+      // This is borrowed from 'sfc' module based on discussions in
+      // https://www.drupal.org/project/drupal/issues/2660002. This should be
+      // used when you are going to be digging around in entity reference
+      // fields not using the field in the content variable. When you bypass
+      // this, cache bubbling is skipped and thus Drupal cannot keep track of
+      // what entities comprised the markup, and therefore cannot clear said
+      // rendered content out of its render cache when changes are made to
+      // the referenced entity.
+      new TwigFunction('bubble_cache', [$this, 'cache']),
     ];
   }
 
@@ -456,6 +477,76 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     }
 
     return($media_image_file);
+  }
+
+  /**
+   * Allows component plugins to quickly add caching to templates.
+   *
+   * Use this to ensure that cache metadata gets bubbled when you
+   * are referencing data instead of built fields.
+   * Simple example usage:
+   * @code
+   * {{ node.label() }}
+   * {{ bubble_cache(node) }}
+   * @endcode
+   *
+   * A more complex example from a list template:
+   * @code
+   * {% if content.field_override_title|field_value %}
+   *   {% set title = content.field_override_title|field_value %}
+   * {% else %}
+   *   {% set title = content.field_internal_link[0]["#node"].title.value %}
+   *   {{ bubble_cache(content.field_internal_link[0]["#node"]) }}
+   * {% endif %}
+   * @endcode
+   *
+   * You can also set other cache information as described in the
+   * $type parameter.
+   *
+   * @param mixed $arg
+   *   String, Object or Array.
+   * @param string $type
+   *   The type of metadata for string $args. Defaults to "tags".
+   *   Valid options are "contexts", "max-age", or "tags".
+   *
+   * @return mixed
+   *   The rendered output.
+   */
+  public function cache($arg, $type = 'tags') {
+    $build = [];
+    $metadata = new CacheableMetadata();
+    $scalars = [];
+
+    if (!is_array($arg)) {
+      $arg = [$arg];
+    }
+
+    foreach ($arg as $current) {
+      if (is_scalar($current)) {
+        $scalars[] = $current;
+      }
+      elseif ($current instanceof CacheableDependencyInterface) {
+        $metadata = CacheableMetadata::createFromObject($current)->merge($metadata);
+      }
+    }
+
+    if (!empty($scalars)) {
+      switch ($type) {
+        case 'contexts':
+          $metadata->addCacheContexts($scalars);
+          break;
+
+        case 'max-age':
+          $metadata->setCacheMaxAge($scalars[0]);
+          break;
+
+        default:
+          $metadata->addCacheTags($scalars);
+      }
+    }
+
+    $metadata->applyTo($build);
+    return $this->renderer->render($build);
   }
 
 }
