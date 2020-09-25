@@ -600,8 +600,12 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
   if ($entity->getEntityTypeId() === 'node' || $entity->getEntityTypeId() === 'media') {
     $tags = $view_mode == 'full' ? [$entity->bundle() . ':full'] : [];
     $tags[] = $entity->bundle() . ':all-view-modes';
-    $build['#cache'] = [
-      'tags' => Cache::mergeTags($entity->getCacheTags(), $tags),
-    ];
+    if (!empty($build['#cache']['tags'])) {
+      $build['#cache']['tags'] = Cache::mergeTags($build['#cache']['tags'], $tags);
+    }
+    else {
+      // The probability of this case being hit should be VERY small.
+      $build['#cache']['tags'] = Cache::mergeTags($entity->getCacheTags(), $tags);
+    }
   }
 }
