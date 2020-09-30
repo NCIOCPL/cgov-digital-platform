@@ -42,9 +42,9 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     // Create a new request stack to handle the various test requests.
     $this->stack = new RequestStack();
 
-    $this->appPathManager = $this->getMock('\Drupal\app_module\AppPathManagerInterface');
-    $this->entityTypeManager = $this->getMock('\Drupal\Core\Entity\EntityTypeManagerInterface');
-    $this->entityStorage = $this->getMock('\Drupal\Core\Entity\EntityStorageInterface');
+    $this->appPathManager = $this->createMock('\Drupal\app_module\AppPathManagerInterface');
+    $this->entityTypeManager = $this->createMock('\Drupal\Core\Entity\EntityTypeManagerInterface');
+    $this->entityStorage = $this->createMock('\Drupal\Core\Entity\EntityStorageInterface');
 
     // Return our storage mock.
     $this->entityTypeManager->expects($this->any())
@@ -362,7 +362,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
    */
   protected function setStorageMock($app_route_info, $expected_path, array $options, $matchRoute = TRUE) {
 
-    $plugin_instance = $this->getMock('\Drupal\app_module\Plugin\app_module\AppModulePluginInterface');
+    $plugin_instance = $this->createMock('\Drupal\app_module\Plugin\app_module\AppModulePluginInterface');
     // Mock the plugin.
     if ($matchRoute) {
       $plugin_instance->expects($this->any())
@@ -376,7 +376,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     }
 
     // Mock up an app module entity to be returned by storage.
-    $app_module_instance = $this->getMock('\Drupal\app_module\AppModuleInterface');
+    $app_module_instance = $this->createMock('\Drupal\app_module\AppModuleInterface');
     $app_module_instance->expects($this->any())
       ->method('getAppModulePlugin')
       ->willReturn($plugin_instance);

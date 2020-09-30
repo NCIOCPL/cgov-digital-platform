@@ -1,0 +1,69 @@
+diff --git a/.gitattributes b/.gitattributes
+index a37894e8..992cb526 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -15,13 +15,14 @@
+ #   - Validate with `git diff --check`.
+ #   - Deny applying with `git apply --whitespace=error-all`.
+ #   - Fix automatically with `git apply --whitespace=fix`.
+-
++*         text=auto eol=lf
+ *.config  text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.css     text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.dist    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.engine  text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
+ *.html    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=html
+ *.inc     text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
++*.info    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.install text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
+ *.js      text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.json    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+@@ -36,6 +37,7 @@
+ *.sh      text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
+ *.sql     text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.svg     text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
++*.test    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
+ *.theme   text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=php
+ *.twig    text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+ *.txt     text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2
+@@ -48,14 +50,40 @@
+ *.eot     -text diff
+ *.exe     -text diff
+ *.gif     -text diff
++*.GIF     -text diff
+ *.gz      -text diff
++*.GZ      -text diff
+ *.ico     -text diff
++*.ICO     -text diff
+ *.jpeg    -text diff
+ *.jpg     -text diff
++*.JPG     -text diff
+ *.otf     -text diff
+ *.phar    -text diff
+ *.png     -text diff
++*.PNG     -text diff
++*.phar    -text diff
++*.PHAR    -text diff
++*.exe     -text diff
++*.EXE     -text diff
+ *.svgz    -text diff
+ *.ttf     -text diff
++*.TTF     -text diff
++*.otf     -text diff
++*.OTF     -text diff
++*.eot     -text diff
++*.EOT     -text diff
+ *.woff    -text diff
+ *.woff2   -text diff
++*.WOFF2   -text diff
++*.swf     -text diff
++*.SWF     -text diff
++*.db      -text diff
++*.DB      -text diff
++*.tar     -text diff
++*.tgz     -text diff
++*.TAR     -text diff
++*.pdf     -text diff
++*.PDF     -text diff
++*.jar     -text diff
++*.JAR     -text diff

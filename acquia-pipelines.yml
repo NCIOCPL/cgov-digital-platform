@@ -16,24 +16,27 @@ events:
             script:
               - composer validate --no-check-all --ansi
               - composer install --ansi
+              ## Use our override
               - source ${SOURCE_DIR}/scripts/pipelines/setup_env
               ## Node is installed as part of setup_env
         - validate:
             type: script
             script:
-              - source ${SOURCE_DIR}/scripts/pipelines/validate
+              - source ${BLT_DIR}/scripts/pipelines/validate
         - setup-app:
             type: script
             script:
+              ## Use our override
               - source ${SOURCE_DIR}/scripts/pipelines/setup_app
         - tests:
             type: script
             script:
+              ## Use our override
               - source ${SOURCE_DIR}/scripts/pipelines/tests
         - build-artifact:
             type: script
             script:
-              - source ${SOURCE_DIR}/scripts/pipelines/build_artifact
+              - source ${BLT_DIR}/scripts/pipelines/build_artifact
   pr-merged:
     steps:
       - deploy:

@@ -25,7 +25,7 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
   protected function setUp() {
     parent::setUp();
 
-    $this->logger = $this->getMock('\Psr\Log\LoggerInterface');
+    $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
   }
 
   /**
@@ -33,7 +33,7 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
    */
   public function testGetWithMatch() {
 
-    $zip_lookup_svc = $this->getMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
+    $zip_lookup_svc = $this->createMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
     $zip_lookup_svc->expects($this->exactly(1))
       ->method('getGeocoordinates')
       ->with('20852')
@@ -63,7 +63,7 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
    */
   public function testGetWithoutMatch() {
 
-    $zip_lookup_svc = $this->getMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
+    $zip_lookup_svc = $this->createMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
     $zip_lookup_svc->expects($this->exactly(1))
       ->method('getGeocoordinates')
       ->with('11111')
@@ -87,7 +87,7 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
    */
   public function testGetBadZips() {
 
-    $zip_lookup_svc = $this->getMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
+    $zip_lookup_svc = $this->createMock('\Drupal\cgov_cts\ZipCodeLookupServiceInterface');
     $zip_lookup_svc->expects($this->never())
       ->method('getGeocoordinates');
 

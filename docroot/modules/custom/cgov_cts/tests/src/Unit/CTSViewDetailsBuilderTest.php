@@ -42,7 +42,7 @@ class CTSViewDetailsBuilderTest extends UnitTestCase {
     $this->manager = $this->getMockBuilder('\Drupal\cgov_cts\Services\CTSManager')
       ->disableOriginalConstructor()
       ->getMock();
-    $this->logger = $this->getMock('\Psr\Log\LoggerInterface');
+    $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
   }
 
   /**
