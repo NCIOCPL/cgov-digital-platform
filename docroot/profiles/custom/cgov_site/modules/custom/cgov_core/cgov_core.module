@@ -279,6 +279,8 @@ function cgov_core_page_attachments_alter(array &$attachments) {
     [
       '#tag' => 'script',
       '#value' => "window.CDEConfig = $settings;",
+      // Make sure this is the very first script block on the page.
+      '#weight' => -100,
     ],
     'CDEConfig',
   ];

@@ -21,11 +21,26 @@
           - vid: "cgov_site_sections"
             computed_path: "/search/results"
   field_application_module:
-    - target_id: cgov_sitewide_search_app
+    - target_id: cgov_js_only_app
       data:
-        dropdownOptions: [20, 50]
-        searchCollection: "doc"
-        searchSiteFilter: "www.cancer.gov/rare-brain-spine-tumor"
+        drupalConfig:
+          appName: "sitewide-search-app"
+          rootId: "NCI-sws-app-root"
+          initFnName: "window.SitewideSearchApp"
+          appCssUri: "https://react-app-dev.cancer.gov/sitewide-search-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/sitewide-search-app/develop/static/js/main.js"
+          removeHeadElements: []
+          validAppPaths: []
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          dropdownOptions: [20, 50]
+          searchCollection: "doc"
+          searchSiteFilter: "www.cancer.gov/rare-brain-spine-tumor"
+          searchEndpoint: "@@LITERAL@@window.CDEConfig.sitewideSearchConfig.searchApiServer"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:field_browser_title:value]"
   field_date_posted:
     value: "2016-06-23"
   field_date_reviewed:

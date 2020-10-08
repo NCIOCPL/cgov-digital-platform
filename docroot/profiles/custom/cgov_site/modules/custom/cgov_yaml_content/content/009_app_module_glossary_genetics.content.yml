@@ -36,23 +36,72 @@
   field_pretty_url__ES:
     value: 'diccionario-de-genetica'
   field_application_module:
-    - target_id: cgov_glossary_app
+    - target_id: cgov_js_only_app
       data:
-        analyticsName: 'Genetics'
-        audience: "HealthProfessional"
-        dictionaryIntroText: "<p>The NCI Dictionary of Genetics Terms contains technical definitions for <strong>{{term_count}}</strong> terms related to genetics. These definitions were developed by the PDQ® Cancer Genetics Editorial Board to support the evidence-based, peer-reviewed PDQ cancer genetics information summaries.</p>"
-        dictionaryName: "Genetics"
-        dictionaryTitle: "NCI Dictionary of Genetics Terms"
-        searchBoxTitle: "Search NCI's Dictionary of Genetics Terms"
+        drupalConfig:
+          appName: "glossary-app"
+          rootId: "NCI-glossary-app-root"
+          initFnName: "window.GlossaryApp"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
+          removeHeadElements:
+            - "canonical_url"
+            - "robots"
+            - "title_tag"
+            - "alternate"
+          validAppPaths:
+            - "\\\/expand\\\/.*"
+            - "\\\/search\\\/.*"
+            - "\\\/def\\\/.*"
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          analyticsName: 'Genetics'
+          audience: "HealthProfessional"
+          dictionaryName: "Genetics"
+          dictionaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
+          dictionaryIntroText: |
+            <p>The NCI Dictionary of Genetics Terms contains technical definitions for <strong>{{term_count}}</strong>
+              terms related to genetics. These definitions were developed by the PDQ® Cancer Genetics Editorial Board to
+              support the evidence-based, peer-reviewed PDQ cancer genetics information summaries.
+            </p>
+          dictionaryTitle: "NCI Dictionary of Genetics Terms"
+          searchBoxTitle: "Search NCI's Dictionary of Genetics Terms"
+          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
   field_application_module__ES:
-    - target_id: cgov_glossary_app
+    - target_id: cgov_js_only_app
       data:
-        analyticsName: 'Genetics'
-        audience: "HealthProfessional"
-        dictionaryIntroText: "<p>El diccionario de genética del NCI contiene mas de <strong>{{term_count}}</strong> términos relacionados con genética.</p>"
-        dictionaryName: "Genetics"
-        dictionaryTitle: "Diccionario de genética"
-        searchBoxTitle: "Busca diccionario de genética"
+        drupalConfig:
+          appName: "glossary-app"
+          rootId: "NCI-glossary-app-root"
+          initFnName: "window.GlossaryApp"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
+          removeHeadElements:
+            - "canonical_url"
+            - "robots"
+            - "title_tag"
+            - "alternate"
+          validAppPaths:
+            - "\\\/ampliar\\\/.*"
+            - "\\\/buscar\\\/.*"
+            - "\\\/def\\\/.*"
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          analyticsName: 'Genetics'
+          audience: "HealthProfessional"
+          dictionaryName: "Genetics"
+          dictionaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
+          dictionaryIntroText: |
+            <p>El diccionario de genética del NCI contiene mas de <strong>{{term_count}}</strong> términos relacionados
+               con genética.
+            </p>
+          dictionaryTitle: "Diccionario de genética"
+          searchBoxTitle: "Busca diccionario de genética"
+          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
   field_date_posted:
     value: "2011-02-02"
   field_date_reviewed:
