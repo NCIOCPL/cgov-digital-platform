@@ -36,23 +36,74 @@
   field_pretty_url__ES:
     value: 'diccionario'
   field_application_module:
-    - target_id: cgov_glossary_app
+    - target_id: cgov_js_only_app
       data:
-        analyticsName: 'CancerTerms'
-        audience: "Patient"
-        dictionaryName: "Cancer.gov"
-        dictionaryIntroText: "<p>The NCI Dictionary of Cancer Terms features <strong>{{term_count}}</strong> terms related to cancer and medicine.</p><p>We offer a widget that you can add to your website to let users look up cancer-related terms. <a href=\"/syndication/widgets\">Get NCI's Dictionary of Cancer Terms Widget</a>.</p>"
-        dictionaryTitle: "NCI Dictionary of Cancer Terms"
-        searchBoxTitle: "Search NCI's Dictionary of Cancer Terms"
+        drupalConfig:
+          appName: "glossary-app"
+          rootId: "NCI-glossary-app-root"
+          initFnName: "window.GlossaryApp"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
+          removeHeadElements:
+            - "canonical_url"
+            - "robots"
+            - "title_tag"
+            - "alternate"
+          validAppPaths:
+            - "\\\/expand\\\/.*"
+            - "\\\/search\\\/.*"
+            - "\\\/def\\\/.*"
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          analyticsName: 'CancerTerms'
+          audience: "Patient"
+          dictionaryName: "Cancer.gov"
+          dictionaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
+          dictionaryIntroText: |
+            <p>The NCI Dictionary of Cancer Terms features <strong>{{term_count}}</strong> terms related to cancer
+              and medicine.</p><p>We offer a widget that you can add to your website to let users look up
+              cancer-related terms. <a href=\"/syndication/widgets\">Get NCI's Dictionary of Cancer Terms Widget</a>.
+            </p>
+          dictionaryTitle: "NCI Dictionary of Cancer Terms"
+          searchBoxTitle: "Search NCI's Dictionary of Cancer Terms"
+          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
   field_application_module__ES:
-    - target_id: cgov_glossary_app
+    - target_id: cgov_js_only_app
       data:
-        analyticsName: 'CancerTerms'
-        audience: "Patient"
-        dictionaryName: "Cancer.gov"
-        dictionaryIntroText: "<p>El diccionario de cáncer del NCI contiene <strong>{{term_count}}</strong> términos relacionados con el cáncer y la medicina.</p><p>Ofrecemos un widget que usted puede añadir a su sitio web para que sus usuarios puedan buscar términos de cáncer. <a href=\"/espanol/sindicacion/widgets\">Obtenga el widget de términos de cáncer del Diccionario del NCI</a>.</p>"
-        dictionaryTitle: "Diccionario de cáncer"
-        searchBoxTitle: "Busca diccionario de cáncer"
+        drupalConfig:
+          appName: "glossary-app"
+          rootId: "NCI-glossary-app-root"
+          initFnName: "window.GlossaryApp"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
+          removeHeadElements:
+            - "canonical_url"
+            - "robots"
+            - "title_tag"
+            - "alternate"
+          validAppPaths:
+            - "\\\/ampliar\\\/.*"
+            - "\\\/buscar\\\/.*"
+            - "\\\/def\\\/.*"
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          analyticsName: 'CancerTerms'
+          audience: "Patient"
+          dictionaryName: "Cancer.gov"
+          dictionaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
+          dictionaryIntroText: |
+            <p>El diccionario de cáncer del NCI contiene <strong>{{term_count}}</strong> términos relacionados con
+              el cáncer y la medicina.</p><p>Ofrecemos un widget que usted puede añadir a su sitio web para que sus
+              usuarios puedan buscar términos de cáncer. <a href=\"/espanol/sindicacion/widgets\">Obtenga el widget de
+              términos de cáncer del Diccionario del NCI</a>.
+            </p>
+          dictionaryTitle: "Diccionario de cáncer"
+          searchBoxTitle: "Busca diccionario de cáncer"
+          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
   field_date_posted:
     value: "2011-02-02"
   field_date_reviewed:

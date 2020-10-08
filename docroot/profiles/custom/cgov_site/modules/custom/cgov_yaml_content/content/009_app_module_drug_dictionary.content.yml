@@ -1,0 +1,64 @@
+# NCI Drug Dictionary app module page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Drug Dictionary"
+  field_page_description:
+    value: "Find technical definitions and synonyms by letter for drugs/agents used to treat patients with cancer or conditions related to cancer. Each entry includes links to find associated clinical trials."
+  field_browser_title:
+    value: "NCI Drug Dictionary"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications/dictionaries'
+  field_pretty_url:
+    value: 'cancer-drug'
+  field_application_module:
+    - target_id: cgov_js_only_app
+      data:
+        drupalConfig:
+          appName: "drug-dictionary-app"
+          rootId: "NCI-dd-app-root"
+          initFnName: "window.DrugDictionaryApp"
+          appCssUri: "https://react-app-dev.cancer.gov/drug-dictionary-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/drug-dictionary-app/develop/static/js/main.js"
+          removeHeadElements:
+            - "canonical_url"
+            - "robots"
+            - "title_tag"
+            - "alternate"
+          validAppPaths:
+            ## Remember the / route it free
+            - "\\\/search\\\/.*"
+            - "\\\/expand\\\/.*"
+            - "\\\/def\\\/.*"
+        frontEndConfig:
+          analyticsName: "Drug"
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          apiEndpoint: "@@LITERAL@@window.CDEConfig.drugDictionaryConfig.apiServer"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:title]"
+          searchBoxTitle: "Search NCI's Drug Dictionary"
+          ctsDynamicListingPageBase: "https://www.cancer.gov/about-cancer/treatment/clinical-trials/intervention"
+          nciThesaurusConceptLink: "https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus"
+          dictionaryIntroText: |
+            The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents used to treat patients
+            with cancer or conditions related to cancer. Each drug entry includes links to check for clinical trials listed
+            in NCI's List of Cancer Clinical Trials.
+  field_date_posted:
+    value: "2011-02-02"
+  field_date_reviewed:
+    value: "2011-02-02"
+  field_date_updated:
+    value: "2011-02-02"
+  field_app_module_page_template:
+    value: left_nav

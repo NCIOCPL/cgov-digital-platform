@@ -42,7 +42,7 @@ class AppModuleReferenceSelectWidget extends OptionsSelectWidget {
 
     // Now setup the data form field.
     $data_value = isset($items[$delta]->data) ? $items[$delta]->data : [];
-    $data_value = json_encode($data_value, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
+    $data_value = json_encode($data_value, JSON_PRETTY_PRINT);
 
     $form_fields['data'] = [
       '#type' => 'textarea',
