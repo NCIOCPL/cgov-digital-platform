@@ -21,12 +21,12 @@ class PageOptionsManagerTest extends UnitTestCase {
    * @dataProvider dataForTests
    */
   public function testGetConfig($given, $expected) {
-    $mockContentEntityInterface = $this->getMock(ContentEntityInterface::class);
+    $mockContentEntityInterface = $this->createMock(ContentEntityInterface::class);
     $mockContentEntityInterface->expects($this->any())
       ->method('bundle')
       ->willReturn($given);
-    $mockRouteInterface = $this->getMock(RouteMatchInterface::class);
-    $mockParameterBag = $this->getMock(ParameterBagInterface::class);
+    $mockRouteInterface = $this->createMock(RouteMatchInterface::class);
+    $mockParameterBag = $this->createMock(ParameterBagInterface::class);
     $mockParameterBag->expects($this->any())
       ->method('all')
       ->willReturn([$given => $mockContentEntityInterface]);

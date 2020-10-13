@@ -38,6 +38,9 @@ function _cgov_site_section_install_permissions(CgovCoreTools $siteHelper) {
     'admin_ui' => [
       'access cgov_site_section_browser entity browser pages',
     ],
+    'site_admin' => [
+      'access main nav cache invalidation',
+    ]
   ];
 
   $siteHelper->addRolePermissions($perms);
@@ -66,4 +69,22 @@ function cgov_site_section_update_8001() {
     $installer = \Drupal::service('module_installer');
     $installer->install(['cgov_vocab_manager']);
   }
+}
+
+/**
+ * Update for Main Nav Caching Release.
+ *
+ * Install the permissions for existing site_admin role.
+ */
+function cgov_site_section_update_8002() {
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'site_admin' => [
+      'access main nav cache invalidation',
+    ],
+  ];
+
+  $siteHelper->addRolePermissions($perms);
 }

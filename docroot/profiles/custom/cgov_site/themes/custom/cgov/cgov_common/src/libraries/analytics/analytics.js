@@ -44,7 +44,7 @@ function getWidthForAnalytics() {
     return screen;
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Use the Adobe dynamic pageName value.
     var pageName = 'D=pageName';
@@ -87,8 +87,7 @@ $(document).ready(function() {
         .on('click.analytics', function (event) {
             var $this = $(this),
                 tree = [],
-                treeParents = $this.parent('li').parents('li')
-                ;
+                treeParents = $this.parent('li').parents('li');
             tree.push($this[0]);
             if (treeParents.children('a').length > 0) {
                 tree.push(treeParents.children('a')[0]);
@@ -117,8 +116,7 @@ $(document).ready(function() {
         var $this = $(this),
             isExpanded = $this.attr('aria-expanded') === 'true',
             tree = treeText($this.parents("li")).string,
-            linkText = $this.prev().text() //linkText no longer used now that it's being captured with the tree values
-            ;
+            linkText = $this.prev().text(); //linkText no longer used now that it's being captured with the tree values;
         NCIAnalytics.MegaMenuMobileAccordionClick(this, isExpanded, tree);
 
     }).on('click.analytics', '.lvl-1 a, .mobile-item a', function (e) {
@@ -130,8 +128,7 @@ $(document).ready(function() {
                 root = $this.closest(".lvl-1"),
                 heading = $.trim(root.children(":first").find('a').text()),
                 parent = $this.closest(".lvl-2"),
-                subHeading = parent[0] && parent.children(":first").find('a').get(0) !== this ? $.trim(parent.children(":first").find('a').text()) : heading
-                ;
+                subHeading = parent[0] && parent.children(":first").find('a').get(0) !== this ? $.trim(parent.children(":first").find('a').text()) : heading;
 
             //console.log("url: " + url + "\nlinkText: " + linkText  + "\nlinkUrl: " + linkUrl + "\nheading: " + heading + "\nsubHeading: " + subHeading);
             NCIAnalytics.MegaMenuMobileLinkClick(this, pageName, linkText, linkUrl, heading, subHeading);
@@ -162,6 +159,49 @@ $(document).ready(function() {
             NCIAnalytics.LogoClick(this)
         });
 
+    $('.borderless-container').each(function (i, el) {
+        $(el).on('click.analytics', 'a', function (event) {
+            var $this = $(this);
+            var $borderlessContainer = $(this).parents('.borderless-container');
+            var cardTitle = $borderlessContainer.find('h2').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'fullwidth';
+            var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
+
+    $('.special-report-raw-html-container').each(function (i, el) {
+        $(el).on('click.analytics','a', function (event) {
+            var $rawHTMLContainer = $(this).parents('.special-report-raw-html-container');
+            var cardTitle = $rawHTMLContainer.find('h2').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'rawHTML';
+            var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
+
+    $('.alternating-image-list-container-link').each(function (i, el) {
+        $(el).on('click.analytics', function (event) {
+            var $alternatingImageContainer = $(this);
+            var cardTitle = $alternatingImageContainer.find('h3').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'alternatingImage';
+            var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
+    $('.title-first-feature-card-link').each(function (i, el) {
+        $(el).on('click.analytics', function (event) {
+            var $alternatingImageContainer = $(this);
+            var cardTitle = $alternatingImageContainer.find('h3').first().text().trim();
+            var linkText = cardTitle;
+            var container = 'titleFirst';
+            var containerIndex = i + 1;
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+        });
+    });
     $('.feature-primary .feature-card').each(function (i, el) {
         $(el).on('click.analytics', 'a', function (event) {
             var $this = $(this);
@@ -297,8 +337,7 @@ $(document).ready(function() {
             heading = $.trim(root.children(":first").text()),
             parent = root.find(".level-1").is(".has-children") ? treeText($this.parents("li")).string : "",
             linkText = $this.text(),
-            depth = treeText($this.parents("li")).depth
-            ;
+            depth = treeText($this.parents("li")).depth;
         //console.log("url: " + url + "\nheading: " + heading  + "\nparent: " + parent + "\nlinkText: " + linkText + "\ndepth: " + depth);
         NCIAnalytics.SectionLinkClick(this, pageName, heading, linkText, depth, parent);
     });
@@ -308,8 +347,7 @@ $(document).ready(function() {
         $(el).on('click.analytics', 'a', function (event) {
 
             var $this = $(this),
-                video = $this.attr("data-analytics")
-                ;
+                video = $this.attr("data-analytics");
 
             NCIAnalytics.VideoSplashImageClick(this, video, pageName);
         });
@@ -318,8 +356,7 @@ $(document).ready(function() {
         $(el).on('click.analytics', 'a', function (event) {
             //event.preventDefault(); //uncomment when testing link clicks
             var $this = $(this),
-                file = $this.attr("data-analytics")
-                ;
+                file = $this.attr("data-analytics");
 
             NCIAnalytics.BRPiconClick(this, file, pageName);
         });
@@ -332,7 +369,7 @@ $(document).ready(function() {
     $('.accordion section').each(function (i, el) {
         $(el).on('click', 'h2', function (event) {
             var $this = $(this);
-            var accordionId = $this.closest('.accordion').attr('id')
+            var accordionId = $this.closest('.accordion').attr('id');
             var sectionId = $this.closest('section').attr('id');
             // Track only if the accordion wrapper has an ID
             if (accordionId) {
@@ -448,14 +485,14 @@ $(document).ready(function() {
     });
 
     // Track footer links.
-    $('footer.site-footer').on('click', 'a', function(e) {
+    $('footer.site-footer').on('click', 'a', function (e) {
         var $this = $(this);
         var $text = $this.text().trim();
         NCIAnalytics.FooterLink($this, $text);
     });
 
     // Track GovDelivery links. Look for data attribute only, no value needed.
-    $('#content a[href*="govdelivery.com"], a.news-govdelivery, a.blogRSS').on('click.analytics', function() {
+    $('#content a[href*="govdelivery.com"], a.news-govdelivery, a.blogRSS').on('click.analytics', function () {
         let $this = $(this);
         let $name = 'GovDelivery';
         if ($this.find('img, figure').length) {
@@ -463,12 +500,12 @@ $(document).ready(function() {
         }
         if ($('html[lang="es"]').length) {
             $name += 'Esp';
-        }            
+        }
         NCIAnalytics.GovDelivery($this, $name);
     });
 
     // Track callout box links if not GovDelivery.
-    $('[class*="callout-box"]').on('click.analyics', 'a', function() {
+    $('[class*="callout-box"]').on('click.analyics', 'a', function () {
         let $this = $(this);
         if (!$this[0].href.includes('govdelivery.com')) {
             let $title = $('h1').first().text().replace(/\s/g, '');
@@ -479,7 +516,7 @@ $(document).ready(function() {
 
     /** Data attribute tracking to replace hardcoded values.  */
     // Track misc container or raw HTML links. Attribute values: [title]|[linkName|[index].
-    $('a[data-indexed-link]').on('click.analytics', function() {
+    $('a[data-indexed-link]').on('click.analytics', function () {
         let $this = $(this);
         let $text = $this.text().trim();
         let $data = $this.data('indexed-link').split('|');
@@ -490,56 +527,53 @@ $(document).ready(function() {
     });
 
     // Track generic custom links. Attribute value: [text].
-    $('a[data-custom-link]').on('click.analytics', function() {
+    $('a[data-custom-link]').on('click.analytics', function () {
         let $this = $(this);
         let $data = $this.data('custom-link').trim();
         NCIAnalytics.CustomLink($this, $data);
     });
 
     // Track sitewide search submit.
-    $('#siteSearchForm').submit(function() {
+    $('#siteSearchForm').submit(function () {
         NCIAnalytics.SiteWideSearch(this);
     });
 
     // Track search submit on 404 page.
-    $('#pageNotFoundSearchForm').submit(function() {
+    $('#pageNotFoundSearchForm').submit(function () {
         NCIAnalytics.PageNotFound(this);
     });
-    
-}); //end document ready
+});//end document ready
 
 // Analytics for components generated by JavaScript
-$(window).on('load',function(){
+$(window).on('load',function () {
 
     // Use the Adobe dynamic pageName value.
     var pageName = 'D=pageName';
     var pathname = window.location.pathname;
 
-    $("#nvcgSlSectionNav button.toggle").on('click.analytics',function(event){
+    $("#nvcgSlSectionNav button.toggle").on('click.analytics',function (event) {
 
         var $this = $(this),
             root = $this.closest(".level-0"),
             heading = $.trim(root.children(":first").text()),
             tree = treeText($this.parents("li:not(.level-0)")).string,
-            isExpanded = $this.attr("aria-expanded") == "true"
-        ;
+            isExpanded = $this.attr("aria-expanded") == "true";
 
         //console.log("url: " + url + "\nisExpanded: " + isExpanded  + "\nheading: " + heading  + "\nparent: " + parent + "\nevent: " + event.type);
         NCIAnalytics.SectionAccordionClick(this,pageName,isExpanded,heading,tree);
     });
 
-    $('#section-menu-button').on('click.analytics',function(e){
+    $('#section-menu-button').on('click.analytics',function (e) {
         var sectionNav = $(".section-nav"),
             //sectionTitle = $.trim(sectionNav.find(".current-page").text()) //fetches current active element in the menu
-            sectionTitle = $(".section-nav .level-0 a:first").text()
-        ;
+            sectionTitle = $(".section-nav .level-0 a:first").text();
         if(!sectionNav.is(".open")){
             NCIAnalytics.SectionMenuButtonClick(this,sectionTitle);
         }
     });
 
     // Track the "post resume" link on /grants-training/training/at-nci/apply
-    $('#apply-training-post-resume').on('click.analytics', function(){
+    $('#apply-training-post-resume').on('click.analytics', function () {
         NCIAnalytics.GlobalLinkTrack({sender: this, label: 'post-resume'});
     });
 
@@ -550,23 +584,22 @@ $(window).on('load',function(){
     */
 
     // Track app download links
-    $('#app-download-iphone').on('click.analytics', function(){
+    $('#app-download-iphone').on('click.analytics', function () {
         NCIAnalytics.GlobalLinkTrack({sender: this, label: 'download-fyi-app_iphone'});
     });
-    $('#app-download-ipad').on('click.analytics', function(){
+    $('#app-download-ipad').on('click.analytics', function () {
         NCIAnalytics.GlobalLinkTrack({sender: this, label: 'download-fyi-app_ipad'});
     });
-    $('#app-download-android').on('click.analytics', function(){
+    $('#app-download-android').on('click.analytics', function () {
         NCIAnalytics.GlobalLinkTrack({sender: this, label: 'download-fyi-app_android'});
     });
-
 
     // On the /grants-training/training/contact page we want to
     // 1. Anchor click events to each of the items in the "On This Page" section
     // 2. Anchor click events to each of the email address links within the tables.
     if(pathname.indexOf("/grants-training/training/contact") != -1){
-        $('#cgvBody ul').eq(0).find('li').each(function(){
-            $(this).find('a').on('click', function(){
+        $('#cgvBody ul').eq(0).find('li').each(function () {
+            $(this).find('a').on('click', function () {
                 NCIAnalytics.GlobalLinkTrack({
                     sender:this, // html link element
                     label:$(this).text(), // text displayed to user
@@ -574,20 +607,20 @@ $(window).on('load',function(){
             });
         });
 
-        $('#cgvBody table tr td a').each(function(){ // each table
+        $('#cgvBody table tr td a').each(function () { // each table
             if($(this).attr('href').indexOf("mailto:") != -1){
-                $(this).on('click', function(){
+                $(this).on('click', function () {
                     NCIAnalytics.GlobalLinkTrack({
                         sender: this, // html link element
                         label: 'email-contact',
-                    }); 
+                    });
                 });
             }
         });
     }
 
     // Add tracking for previous and next links on PDQ pages
-    $(".previous-link, .next-link").on("click", "a", function() {
+    $(".previous-link, .next-link").on("click", "a", function () {
         var linkText = $(this).text();
         linkText = linkText.replace(/[<>]/,'').trim();
 
@@ -597,9 +630,9 @@ $(window).on('load',function(){
         });
     });
 
-    // 	Track "Go to Health Professional Version" and
+    //Track "Go to Health Professional Version" and
     // "Go to Patient Version" links on PDQ pages.
-    $(".pdq-hp-patient-toggle").on("click", "a", function() {
+    $(".pdq-hp-patient-toggle").on("click", "a", function () {
         NCIAnalytics.GlobalLinkTrack({
             sender: this, // html link element
             label: $(this).text() // text displayed to user
@@ -607,33 +640,33 @@ $(window).on('load',function(){
     });
 
     // Track clicks on blog archives accordion on all blog pages.
-    $("#blog-archive-accordion").on("click", "a", function() {
+    $("#blog-archive-accordion").on("click", "a", function () {
         NCIAnalytics.BlogArchiveLinkClick(this, pageName);
     });
 
     // Track the expand/collapse of the accordion
-    $("#blog-archive-accordion").on("click", "h3, h4", function(){
+    $("#blog-archive-accordion").on("click", "h3, h4", function () {
         var isClosing = !$(this).hasClass('ui-state-active');
         NCIAnalytics.BlogArchiveAccordionClick(this, pageName, isClosing);
     });
 
-    $(".blogRSS").on("click", function(){
+    $(".blogRSS").on("click", function () {
         NCIAnalytics.BlogSubscribeClick(this, pageName);
     });
 
-    $('#cgvBody.cgvblogpost').on("click", "a:not(.definition)",  function(){
+    $('#cgvBody.cgvblogpost').on("click", "a:not(.definition)",  function () {
         var $this = $(this);
         var linkText = $this.text();
         NCIAnalytics.BlogBodyLinkClick(this, linkText, pageName);
     });
 
-    $('#cgvBody').on("click", ".definition",  function(){
+    $('#cgvBody').on("click", ".definition",  function () {
         var linkText = this.innerText;
         var blogLink = $('#cgvBody').hasClass('cgvblogpost') ? true : false;
         NCIAnalytics.glossifiedTerm(this, linkText, blogLink);
     });
 
-    $('#nvcgRelatedResourcesArea').on("click", "a", function(){
+    $('#nvcgRelatedResourcesArea').on("click", "a", function () {
         var $this = $(this);
         var linkText = $this.text();
         var index = $this.closest('li').index() + 1;
@@ -641,8 +674,8 @@ $(window).on('load',function(){
     });
 
     // Track clicks on feature cards on blog posts.
-    $('.blog-feature .feature-card').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
+    $('.blog-feature .feature-card').each(function (i, el) {
+        $(el).on('click', 'a', function (event) {
             var $this = $(this);
             var linkText = $this.children('h3').text();
             var containerIndex = i + 1;
@@ -652,8 +685,8 @@ $(window).on('load',function(){
     });
 
     // Track clicks on featured posts section of Blog Right Rail.
-    $('.right-rail .managed.list.with-date li').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
+    $('.right-rail .managed.list.with-date li').each(function (i, el) {
+        $(el).on('click', 'a', function (event) {
             var $this = $(this);
             var linkText = $this.text();
             var containerIndex = i + 1;
@@ -663,8 +696,8 @@ $(window).on('load',function(){
     });
 
     // Track clicks on featured posts section of Blog Right Rail.
-    $('.right-rail .managed.list.without-date li').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
+    $('.right-rail .managed.list.without-date li').each(function (i, el) {
+        $(el).on('click', 'a', function (event) {
             var $this = $(this);
             var linkText = $this.text();
             var containerIndex = i + 1;
@@ -674,19 +707,19 @@ $(window).on('load',function(){
     });
 
     // Track Newer Post(s) link clicks on Blogs.
-    $('.blog-pager a.newer, .blog-post-newer a').on('click', function() {
+    $('.blog-pager a.newer, .blog-post-newer a').on('click', function () {
         NCIAnalytics.OlderNewerClick(this, 'Newer', pageName);
     });
 
     // Track Older Post(s) link clicks on Blogs.
-    $('.blog-pager a.older, .blog-post-older a').on('click', function() {
+    $('.blog-pager a.older, .blog-post-older a').on('click', function () {
         NCIAnalytics.OlderNewerClick(this, 'Older', pageName);
     });
 
     //Sort Table Analytics
     //so userHasSorted so that analytics fires only on very first instance of sort
-    var userHasSorted = false
-    $('table[data-sortable]').on("click.analytics", "th", function ()  {
+    var userHasSorted = false;
+    $('table[data-sortable]').on("click.analytics", "th", function () {
         if(userHasSorted){
             return
         }
@@ -694,21 +727,21 @@ $(window).on('load',function(){
         userHasSorted = true;
     });
 
-    $('.on-this-page a').on('click', function() {
+    $('.on-this-page a').on('click', function () {
         var $this = $(this);
         var linkText = $this.text();
         NCIAnalytics.OnThisPageClick($this, linkText, pageName);
     });
 
     // Tracks clicks of "In This Section" menu items on PDQ pages
-    $('.in-this-section a').on('click', function() {
+    $('.in-this-section a').on('click', function () {
         var $this = $(this);
         var linkText = $this.text();
         NCIAnalytics.InThisSectionClick($this, linkText, pageName);
     });
 
     // Tracks clicks on expand/collapse of the accordion sections within PDQ pages on mobile
-    $('.summary-sections').on('click', '.ui-accordion-header', function() {
+    $('.summary-sections').on('click', '.ui-accordion-header', function () {
         var $this = $(this);
         var linkText = $this.text();
         var isExpanded = $this.attr("aria-expanded") == "true";
@@ -716,7 +749,7 @@ $(window).on('load',function(){
     });
 
     // Track clicks on website url of profile panel pages.
-    $('div.profile-panel-content a').on("click", function(e) {
+    $('div.profile-panel-content a').on("click", function (e) {
         var $this = $(this);
         var href = e.target.href;
         var isPhoneNumber = href.match(/^tel\:./i);
@@ -725,4 +758,27 @@ $(window).on('load',function(){
 
         NCIAnalytics.ProfilePanelLinkClick($this, linkText, name);
     });
+
+    // Tracks clicks of "View and Print" link on infographic items.
+    $('.infographic-link').on('click', function () {
+        var $this = $(this);
+        var title = $this.attr('data-link_title');
+        var linkData = 'viewprint|inline|' + title;
+
+        NCIAnalytics.InfographicClick($this, linkData, pageName);
+    });
+
+    // Tracks clicks of AP PDF link.
+    $('.ap-file-block').each(function (i, el) {
+      $(el).on('click.analytics', 'a', function (event) {
+        NCIAnalytics.SpecialReportFileClick(this,  pageName);
+      });
+    });
+
+  // Tracks clicks of AP Button.
+  $('.ap-button-block').each(function (i, el) {
+    $(el).on('click.analytics', 'a', function (event) {
+      NCIAnalytics.SpecialReportButtonClick(this,  pageName);
+    });
+  });
 });

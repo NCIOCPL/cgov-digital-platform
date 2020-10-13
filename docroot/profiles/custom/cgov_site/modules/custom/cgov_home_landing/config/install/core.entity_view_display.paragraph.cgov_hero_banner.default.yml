@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.cgov_hero_banner.field_desktop_hero
+    - field.field.paragraph.cgov_hero_banner.field_mobile_hero
     - field.field.paragraph.cgov_hero_banner.field_tablet_hero
     - field.field.paragraph.cgov_hero_banner.field_tagline
     - paragraphs.paragraphs_type.cgov_hero_banner
@@ -22,6 +23,15 @@ content:
     third_party_settings: {  }
     type: image
     region: content
+  field_mobile_hero:
+    weight: 2
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
   field_tablet_hero:
     weight: 1
     label: hidden
@@ -32,7 +42,7 @@ content:
     type: image
     region: content
   field_tagline:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false

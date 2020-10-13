@@ -21,7 +21,7 @@ class PDQFieldStorageTest extends KernelTestBase {
    */
   public static $modules = [
     'user', 'system', 'file', 'field', 'image', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
-    'language', 'content_translation', 'pdq_core', 'paragraphs', 'rest', 'serialization', 'metatag',
+    'language', 'content_translation', 'pdq_core', 'paragraphs', 'rest', 'serialization', 'token', 'metatag',
   ];
 
   /**

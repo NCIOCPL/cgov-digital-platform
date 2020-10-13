@@ -32,6 +32,9 @@ class CgovImageTools {
 
       case "cgov_thumbnail":
         return "thumbnail";
+
+      case "cgov_borderless_card":
+        return "1x1";
     }
     return NULL;
   }

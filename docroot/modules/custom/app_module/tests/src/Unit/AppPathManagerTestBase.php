@@ -74,11 +74,11 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   protected function setUp() {
     parent::setUp();
 
-    $this->appPathStorage = $this->getMock('Drupal\app_module\AppPathStorageInterface');
-    $this->languageManager = $this->getMock('Drupal\Core\Language\LanguageManagerInterface');
-    $this->cache = $this->getMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->aliasManager = $this->getMock('Drupal\Core\Path\AliasManagerInterface');
-    $this->aliasStorage = $this->getMock('Drupal\Core\Path\AliasStorageInterface');
+    $this->appPathStorage = $this->createMock('Drupal\app_module\AppPathStorageInterface');
+    $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
+    $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
+    $this->aliasManager = $this->createMock('Drupal\Core\Path\AliasManagerInterface');
+    $this->aliasStorage = $this->createMock('Drupal\Core\Path\AliasStorageInterface');
 
     $this->appPathManager = new AppPathManager($this->aliasManager, $this->aliasStorage, $this->appPathStorage, $this->languageManager, $this->cache);
 

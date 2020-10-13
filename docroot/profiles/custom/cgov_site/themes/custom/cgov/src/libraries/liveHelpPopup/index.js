@@ -3,6 +3,7 @@ import * as DateUtility from 'Utilities/dateUtility';
 import basePaths from './settings';
 import ProactiveLiveHelp from './ProactiveLiveHelp';
 
+
 // Placeholder until this utility stops being used in common/contentpage
 // import './index.scss';
 
@@ -74,7 +75,7 @@ const verifyIsPastDate = date => {
     return dateEastern > endDate;
 }
 
-const verifyShouldLiveHelpRun = ({ startDate, endDate, popupID }) => {
+export const verifyShouldLiveHelpRun = ({ startDate, endDate, popupID }) => {
     const isLiveHelpAvailable = verifyLiveHelpIsCurrentlyAvailable();
     const isPastStartDate = verifyIsPastDate(startDate);
     const isNotPastEndDate = !verifyIsPastDate(endDate);
@@ -91,7 +92,7 @@ const verifyShouldLiveHelpRun = ({ startDate, endDate, popupID }) => {
 
 let isInitialized = false;
 
-const initialize = () => {
+export const initLiveHelp = () => {
     if(isInitialized) {
         return;
     }
@@ -126,7 +127,3 @@ const initialize = () => {
     }
 
 }
-
-export default initialize;
-
-

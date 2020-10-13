@@ -1,0 +1,38 @@
+# NCIConnect Sitewide Search App Module
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "Rare Brain and Spine Tumor Search Results"
+  field_page_description:
+    value: "Rare Brain and Spine Tumor Search Results"
+  field_browser_title:
+    value: "Rare Brain and Spine Tumor Search Results"
+  field_pretty_url:
+    value: "nciconnect-results"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/search/results"
+  field_application_module:
+    - target_id: cgov_sitewide_search_app
+      data:
+        dropdownOptions: [20, 50]
+        searchCollection: "doc"
+        searchSiteFilter: "www.cancer.gov/rare-brain-spine-tumor"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: no_left_nav
+  field_search_engine_restrictions:
+    value: ExcludeSearch

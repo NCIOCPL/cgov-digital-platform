@@ -252,7 +252,7 @@ a.arrow-link:focus
       h3 {
         color: $default-link-color;
       }
-      
+
     }
   }
 }
@@ -280,9 +280,8 @@ h6 {
   background: $page-margin-background;
 }
 
-// language bar
-.columns.utility,
-.language-bar {
+// hidden elements
+.columns.utility {
   display: none;
 }
 
@@ -306,6 +305,16 @@ h6 {
 // overcoming foundation class that hides utility bar for mobile
 .utility-background.micro-a {
   display: block !important;
+}
+
+// language bar
+// Override colors from _language_bar.scss
+.language-bar {
+  background: #fff;
+}
+
+.sitewide-language a {
+  color: $denim;
 }
 
 // menu bar

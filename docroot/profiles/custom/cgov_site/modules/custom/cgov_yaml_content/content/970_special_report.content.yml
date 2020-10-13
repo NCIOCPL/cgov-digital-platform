@@ -1,0 +1,287 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Annual Plan & Budget Proposal For Fiscal Year 2022"
+  title__ES:
+      value: "Spanish: NCI Annual Plan & Budget Proposal For Fiscal Year 2022"
+  field_page_description:
+    value: "Home and Landing Special Report"
+  field_page_description__ES:
+    value: "Spanish: Home and Landing Special Report "
+  field_browser_title:
+    value: "NCI Annual Plan"
+  field_browser_title__ES:
+    value: "Spanish - NCI Annual Plan"
+  field_pretty_url:
+    value: "special-report"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "special_report"
+  field_hero_banner:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_hero_banner"
+      field_desktop_hero:
+      - '#process':
+          callback: 'file'
+          args:
+            - 'image'
+            - type: 'module'
+              filename: 'apfy22-hero-desktop-placeholder.jpg'
+        alt: 'AP FY 2022 Hero'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'apfy22-hero-tablet-placeholder.jpg'
+          alt: 'AP FY 2022 Hero'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'apfy22-hero-mobile-placeholder.jpg'
+          alt: 'AP FY 2022 Hero'
+      field_tagline:
+          - value: ""
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="ap-file-block pdf">
+              <a href="/test-file-url" target="_blank">Annual Plan & Budget Proposal At A Glance</a>
+            </div>
+      ######## Borderless card ###########
+      type: "cgov_card_borderless"
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_button_alt:
+        value: "Button Alt"
+      field_button_text:
+        value: "Article With Lead"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_card_title:
+        - value: Alternate Title
+      field_override_card_longer_descr:
+        - value: "Over the last 5 decades, mortality rates have declined for most cancers, largely due to improvements in prevention, detection, and treatment.  These advances have been fueled by breakthrough studies of complex environmental and genetic interactions that can lead to cancer, the identification of targets that drive cancer, and the development of effective interventions against those targets."
+      ######## End Borderless card ###########
+      ######## Begin Title First Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_title_first_feature_card_ro"
+      ######## Begin First Title First Feature Card ###########
+      field_two_column_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+          field_override_card_title:
+            - value: 'Stories of Cancer Research'
+          field_override_card_description:
+            - value: 'Stories of survivors and scientists who represent the promise and progress in cancer research.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Ocean Sunset View Mykonos'
+      ######## End First Title First Feature Card ###########
+      ######## Begin Second Title First Feature Card ###########
+      field_one_column_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'Budget Proposal'
+          field_override_card_description:
+            - value: 'An investment of $X,XXX million to seize opportunities in cancer research, train the next generation of cancer scientists, and support the infrastructure to enable cutting-edge research to succeed.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Minnie'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ######## End Second Title First Feature Card ###########
+      ######## End Title First Feature Row ###########
+      ######## Begin Raw HTML Block ###########
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="row flex-columns">
+              <div class="medium-10 columns align-center">
+                <div class="special-report-raw-html-container">
+                  <h2>
+                    <a href="https://www.cancer.gov/">Driving Discovery</a>
+                  </h2>
+                  <p>
+                  <a href="/"><img src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/general/special-report-driving-discovery.png" alt="Driving Discovery"></a>
+                  <a href="https://www.cancer.gov/">NCI’s overarching strategy focuses on supporting a broad portfolio of research</a>. In this way we are tackling the problem of cancer from many different angles, including basic biological mechanisms of cancer, translating the knowledge gained into new tools and treatments, and disseminating those innovations into clinical practice.
+                  </p>
+                  <p>The following areas represent just a few of the many scientific opportunities that, with further investment, would catalyze additional progress in cancer research.</p>
+                </div>
+              </div>
+            </div>
+      ######## End Raw HTML Block ###########
+      ######## Begin Alternating Image List ###########
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image_alternating
+      field_list_items:
+        ######## Begin First List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Molecular Diagnostics'
+          field_override_list_description:
+            - value: 'Developing the next generation of biomarkers for cancer risk assessment, diagnosis, and treatment selection and monitoring. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed consectetur mi, venenatis scelerisque mi.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'AI approach outperformed human experts in identifying cervical precancer'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Cat-Cat'
+        ######## End First List Item ###########
+        ######## Begin Second List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Drug Resistance and Sensitivity'
+          field_override_list_description:
+            - value: 'Understanding why treatments work for some patients and not others and how cancers develop resistance to previously effective treatments. Developing new approaches, such as combination therapies, to prevent or delay treatment resistance.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Shady Grove Campus'
+        ######## End Second List Item ###########
+        ######## Begin Third List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Survivorship'
+          field_override_list_description:
+            - value: 'Research to improve the quality of life of cancer survivors, including addressing the short and long-term physical and psychological impacts of cancer and its treatment in children and adults. Lorem ipsum dolor sit amet, consectetur adipiscing.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'BRCA Exchange aggregates data on thousands of BRCA variants to inform understanding of cancer risk'
+        ######## End Third List Item ###########
+        ######## Begin Fourth List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Obesity'
+          field_override_list_description:
+            - value: 'Improving the understanding of how obesity increases the risk for cancer and developing tools and interventions to prevent more cancers and improve clinical care of patients. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_press_release'
+                    title: 'Leukemia - Ibrutinib plus rituximab superior to standard treatment for some patients with chronic leukemia'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Snuggles'
+        ######## End Fourth List Item ###########
+        ######## Begin Fifth List Item ###########
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Cat-Cat'
+          field_external_link:
+            - uri: 'https://www.google.com'
+         ######## End Fifth List Item ###########
+      ######## End Alternating Image List ###########
+       ######## AP Button Content Block ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+            <div class="ap-button-block"><a class="ap-button pdf" href="/test-file-url" target="_blank">Annual Plan & Budget Proposal At A Glance</a></div>
+######## End AP Button Content Block ###########

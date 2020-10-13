@@ -1,0 +1,112 @@
+@import "./breakpoints";
+@import "./colors";
+
+/* Borderless Cards */
+.borderless-container {
+  padding: 20px 0.9375em 1.5em 0.9375em;
+  @include bp(small) {
+    padding: 20px 0.9375em 0 0.9375em;
+  }
+  .borderless-card {
+    @include flexcontainer();
+    @include property-prefix(justify-content, space-between);
+    .borderless-text-container {
+      @include flex-order(1);
+      @include flex(1);
+      margin-right: 25px;
+      color: $light-gray-text;
+      line-height: 26px;
+      p {
+        color: $light-gray-text;
+        line-height: 26px;
+        @include bp(small) {
+          line-height: 25px;
+        }
+      }
+      @include bp(medium-up) {
+        width: 66%;
+      }
+      @include bp(small) {
+        @include flex-order(2);
+        width: 100%;
+        margin-right: 0;
+        line-height: 25px;
+      }
+    }
+    .borderless-image-container {
+      @include flex-order(2);
+      @include bp(medium-up) {
+        width: 33%;
+      }
+      @include bp(small) {
+        @include flex-order(1);
+        width: 100%;
+      }
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: bold;
+      @include bp(small) {
+        margin-top: 0;
+        font-size: 24px;
+        line-height: 25px;
+      }
+    }
+    h2 > a {
+      //color: $dgrey00;
+      color: $very-dark-grey;
+      font-weight: bold;
+      &:hover {
+        color: $lcranberry;
+        text-decoration: none;
+      }
+    }
+  }
+}
+.borderless-button,
+a.borderless-button {
+  @include button-base;
+  @include button-size($padding: false);
+  @include button-style($color-link, 5px);
+  padding: 14px 34px 14px 20px;
+  color: $white;
+  box-shadow: 0 3px 0 0 $button-box-shadow-color;
+  &:hover {
+    text-decoration: none;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    right: 5%;
+    top: 37%;
+    @include svg-sprite(chevron-white, $rotate: right);
+  }
+}
+
+//General utility styles
+.centered-container {
+  @include flexbox();
+  @include property-prefix(justify-content, center);
+  width: 100%;
+}
+.thick-top-margin {
+  margin-top: 2rem;
+}
+.thick-bottom-margin {
+  margin-bottom: 2rem;
+}
+
+.desktop-tablet-display {
+  @include bp(small) {
+    display: none;
+  }
+}
+
+.mobile-display {
+  display: none;
+  @include bp(small) {
+    display: block;
+  }
+}

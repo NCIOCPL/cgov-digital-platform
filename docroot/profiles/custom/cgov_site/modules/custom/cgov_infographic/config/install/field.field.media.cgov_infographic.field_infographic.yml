@@ -5,33 +5,40 @@ dependencies:
     - field.storage.media.field_infographic
     - media.type.cgov_infographic
   module:
+    - content_translation
     - image
+third_party_settings:
+  content_translation:
+    translation_sync:
+      alt: '0'
+      title: '0'
+      file: file
 id: media.cgov_infographic.field_infographic
 field_name: field_infographic
 entity_type: media
 bundle: cgov_infographic
-label: Infographic
-description: ''
+label: 'Infographic – Desktop Version'
+description: 'Desktop version of the infographic.'
 required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
+  file_directory: 'cgov_infographic/[date:custom:Y]-[date:custom:m]'
   file_extensions: 'png gif jpg jpeg'
-  alt_field: false
+  max_filesize: 256MB
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
   alt_field_required: false
   title_field: false
   title_field_required: false
-  max_resolution: ''
-  min_resolution: ''
   default_image:
-    uuid: null
+    uuid: ''
     alt: ''
     title: ''
     width: null
     height: null
-  file_directory: 'cgov_infographic/[date:custom:Y]-[date:custom:m]'
-  max_filesize: ''
   handler: 'default:file'
   handler_settings: {  }
 field_type: image

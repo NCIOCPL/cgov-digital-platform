@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.1x1
+  module:
+    - crop
+name: cgov_borderless_card
+label: 'Borderless Card Image'
+effects:
+  4249244a-971d-46f8-ad66-4228ee56c2f9:
+    uuid: 4249244a-971d-46f8-ad66-4228ee56c2f9
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 1x1
+  756cf212-82c1-478c-a100-6c1c1a18de86:
+    uuid: 756cf212-82c1-478c-a100-6c1c1a18de86
+    id: image_scale
+    weight: 2
+    data:
+      width: 610
+      height: null
+      upscale: false

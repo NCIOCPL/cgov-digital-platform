@@ -18,7 +18,7 @@ class TestKernelTest extends KernelTestBase {
    * @var array
    */
   public static $modules = ['user', 'system', 'field', 'node',
-    'text', 'filter', 'taxonomy', 'metatag',
+    'text', 'filter', 'taxonomy', 'token', 'metatag',
   ];
 
   /**

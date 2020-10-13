@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_glossary.module.
+ */
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function cgov_glossary_preprocess_app_module(&$variables) {
+  // If this is the entity
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if(is_object($node)) {
+    $variables['owner_node'] = $node;
+    $urls = [];
+    // This should have the canonical and hreflang items.
+    foreach ($node->uriRelationships() as $rel) {
+      if ($rel === 'canonical') {
+        $canonical_url = $node->toUrl($rel)->setAbsolute(TRUE);
+        $urls['canonical'] = $canonical_url->toString();
+
+        // Now go and get the other languages
+        /** @var \Drupal\Core\Url[] $urls */
+        $alternate_urls = array_map(
+          function ($language) use ($canonical_url) {
+            $url = clone $canonical_url;
+            return $url
+              ->setOption('language', $language);
+          },
+          $node->getTranslationLanguages()
+        );
+
+        if (count(array_keys($alternate_urls)) > 1) {
+          foreach ($alternate_urls as $langcode => $url) {
+            $urls['alternate'][$langcode] = $url->toString();
+          }
+        }
+      }
+    }
+    $variables['urls'] = $urls;
+  }
+}

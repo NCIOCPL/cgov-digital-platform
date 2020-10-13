@@ -3,7 +3,10 @@ status: true
 dependencies:
   config:
     - image.style.thumbnail
+    - workflows.workflow.editorial_workflow
+    - workflows.workflow.simple_workflow
   module:
+    - content_moderation
     - image
     - media
     - user
@@ -14,7 +17,6 @@ description: 'Find and moderate media.'
 tag: ''
 base_table: media_field_revision
 base_field: vid
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -664,6 +666,8 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -705,6 +709,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -746,6 +752,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -802,6 +810,8 @@ display:
               administrator: '0'
               admin_ui: '0'
             reduce: true
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -842,6 +852,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -879,6 +891,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

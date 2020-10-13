@@ -82,10 +82,6 @@ class ResponseCacheSubscriber implements EventSubscriberInterface {
 
     // Hard coding for now.
     switch ($status) {
-      case 404:
-        // 5min is a good time to wait for a 404.
-        return "300";
-
       case 302:
         // I get scared of 302 redirects, but hopefully the ones
         // that should not be cached are marked as such.

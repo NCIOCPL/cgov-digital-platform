@@ -9,19 +9,18 @@
  * @return {boolean}
  */
 export const checkNodeAncestryForClass = (node, className) => {
-	let hasAncestor = false;
+  let hasAncestor = false;
 
-	while(node && node.parentNode) {
-		if(node.classList.contains(className)) {
-			hasAncestor = true;
-			break;
-		}
-		node = node.parentNode;
-	}
+  while (node && node.parentNode) {
+    if (node.classList.contains(className)) {
+      hasAncestor = true;
+      break;
+    }
+    node = node.parentNode;
+  }
 
-	return hasAncestor;
+  return hasAncestor;
 };
-
 
 /**
  * Return an array of nodes that match a given selector string starting from a given node
@@ -35,19 +34,18 @@ export const checkNodeAncestryForClass = (node, className) => {
  * @returns {node[]}
  */
 export const getNodeArray = (selector, node = document) => {
-    const nodeList = node.querySelectorAll(selector);
-    return nodeList ? Array.from(nodeList) : []
+  const nodeList = node.querySelectorAll(selector);
+  return nodeList ? Array.from(nodeList) : [];
 };
-
 
 /**
  * @param {String} html - represents any number of sibling elements
  * @return {Array}
  */
-export const createFragment = html => {
-    const template = document.createElement('div');
-    template.innerHTML = html;
-    return Array.from(template.childNodes);
+export const createFragment = (html) => {
+  const template = document.createElement("div");
+  template.innerHTML = html;
+  return Array.from(template.childNodes);
 };
 
 /**
@@ -55,7 +53,8 @@ export const createFragment = html => {
  * @param {node} parent - target container
  * @return {node}
  */
-export const appendNodes = (nodes, parent) => nodes.map(node => parent.appendChild(node));
+export const appendNodes = (nodes, parent) =>
+  nodes.map((node) => parent.appendChild(node));
 
 /**
  * Given an array of arrays containing meta property attribute names and the corresponding value, will
@@ -74,21 +73,21 @@ export const appendNodes = (nodes, parent) => nodes.map(node => parent.appendChi
  * @return {Object}
  */
 export const getMetaData = (metaTags, document) => {
-	try {
-		const metaData = metaTags.reduce((acc, [propType, propName]) => {
-			const metaTag = document.querySelector(`meta[${propType}="${propName}"]`);
-			if(metaTag) {
-				acc[propName] = metaTag.getAttribute('content');
-			}
-			return acc;
-		}, {})
-		return metaData;
-	}
-	catch(err) {
-		// Until we start doing proper error handling, this will serve as a placeholder (BB 3/2018)
-		return console.log(err);
-	}
-}
+  try {
+    const metaData = metaTags.reduce((acc, [propType, propName]) => {
+      // phpcs:ignore
+      const metaTag = document.querySelector(`meta[${propType}="${propName}"]`);
+      if (metaTag) {
+        acc[propName] = metaTag.getAttribute("content");
+      }
+      return acc;
+    }, {});
+    return metaData;
+  } catch (err) {
+    // Until we start doing proper error handling, this will serve as a placeholder (BB 3/2018)
+    return console.log(err);
+  }
+};
 
 /**
  * TODO: Extend with extra checks, this is very specific to CGOV.
@@ -100,12 +99,14 @@ export const getDocumentLanguage = (document = window.document) => {
   // The fallback values were added during migration because a content-language attribute was not available
   // at the time this file was ported.
   const language = document.querySelector('meta[name="content-language"]')
-    ? document.querySelector('meta[name="content-language"]').getAttribute('content')
+    ? document
+        .querySelector('meta[name="content-language"]')
+        .getAttribute("content")
     : document.documentElement.lang
-      ? document.documentElement.lang
-      : 'en';
+    ? document.documentElement.lang
+    : "en";
   return language;
-}
+};
 
 /**
  * Retrieve the canonical URL from the document head
@@ -113,7 +114,8 @@ export const getDocumentLanguage = (document = window.document) => {
  * @param {HTMLElement} [document=window.document]
  * @return {string}
  */
-export const getCanonicalURL = (document = window.document) => document.querySelector("link[rel='canonical']").href;
+export const getCanonicalURL = (document = window.document) =>
+  document.querySelector("link[rel='canonical']").href;
 
 /**
  * Retrieve the URL from the document metadata og:url property
@@ -121,33 +123,56 @@ export const getCanonicalURL = (document = window.document) => document.querySel
  * @param {HTMLElement} [document=window.document]
  * @return {string}
  */
-export const getMetaURL = document => {
+export const getMetaURL = (document) => {
   // MIGRATION NOTE:
   // The elvis operator check is needed until the og:url metatag is available.
-  return document.querySelector("meta[property='og:url']")
-            && document.querySelector("meta[property='og:url']").getAttribute('content');
-}
+  return (
+    document.querySelector("meta[property='og:url']") &&
+    document.querySelector("meta[property='og:url']").getAttribute("content")
+  );
+};
 
 /**
  * On Some pages, the Page Options block is manually moved around the DOM based on the window width.
  * Using matchMedia keeps the JS in sync with the CSS in a way that window.width does not.
  */
 export const pageOptionsTransporter = () => {
-	// Page Options is manually moved on resize. Ugh.
-	const mediaQueryListener = window.matchMedia('(max-width: 1024px)');
-	const mqEventHandler = e => {
-		if(e.matches){
-			$("#PageOptionsControl1").appendTo("#blogPageOptionsInnerContainer");
-		}
-		else {
-			$("#PageOptionsControl1").appendTo("#blogPageOptionsOuterContainer");
-		}
-	}
-	mediaQueryListener.addListener(mqEventHandler)
-	// Initialize page options block in correct page location on load
-	// mediaQueryListeners don't automatically handle load events (they are for resizes primarily)
-	// so we need to manually invoke the handler. mediaQueryListener has a property .matches
-	// at all times which matches the event.matches property as well, so the callback works the same.
-	mqEventHandler(mediaQueryListener)
+  // Page Options is manually moved on resize. Ugh.
+  const mediaQueryListener = window.matchMedia("(max-width: 1024px)");
+  const mqEventHandler = (e) => {
+    if (e.matches) {
+      $("#PageOptionsControl1").appendTo("#blogPageOptionsInnerContainer");
+    } else {
+      $("#PageOptionsControl1").appendTo("#blogPageOptionsOuterContainer");
+    }
+  };
+  mediaQueryListener.addListener(mqEventHandler);
+  // Initialize page options block in correct page location on load
+  // mediaQueryListeners don't automatically handle load events (they are for resizes primarily)
+  // so we need to manually invoke the handler. mediaQueryListener has a property .matches
+  // at all times which matches the event.matches property as well, so the callback works the same.
+  mqEventHandler(mediaQueryListener);
+};
 
-}
+/**
+ * Parses a URL string into a URL object
+ * @param {string} url - the URL
+ * @param {document} document - the document objectß
+ */
+export const parseUrl = (url, document) => {
+  if (!url) {
+    return;
+  }
+
+  const tmpAnchor = document.createElement("a");
+  tmpAnchor.href = url;
+  return {
+    protocol: tmpAnchor.protocol,
+    host: tmpAnchor.host,
+    hostname: tmpAnchor.hostname,
+    port: tmpAnchor.port,
+    pathname: tmpAnchor.pathname,
+    search: tmpAnchor.search,
+    hash: tmpAnchor.hash,
+  };
+};

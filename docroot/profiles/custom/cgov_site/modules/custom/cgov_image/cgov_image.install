@@ -64,3 +64,14 @@ function cgov_image_update_8001() {
     $installer->install(['imagemagick']);
   }
 }
+
+/**
+ * Update for Special Report.
+ *
+ * Force installation of borderless card node.view_mode prior to view display.
+ */
+function cgov_image_update_8002() {
+    $service = \Drupal::service('features.manager');
+    $result = $service->import(['cgov_image']);
+}
+

@@ -1,0 +1,110 @@
+@import "./breakpoints";
+@import "./colors";
+
+/* Alternating Lists */
+.specialReport {
+}
+
+.alternating-image-list-container {
+  padding: 20px 0.9375em 1.5em 0.9375em;
+  color: $light-gray-text;
+  line-height: 26px;
+  @include bp(small) {
+    padding-top: 0;
+  }
+  p {
+    color: $light-gray-text;
+    line-height: 26px;
+    @include bp(small) {
+      line-height: 25px;
+    }
+  }
+
+  .icon-exit-notification{
+    font-size: 1rem ;
+  }
+}
+
+//Even Alternating Image Items
+.alternating-image-list-container > ul > a.alternating-image-list-container-link:nth-child(even) {
+  .alternating-image-list-image {
+    @include flex-order(2);
+
+  }
+  .alternating-image-list-text {
+    @include flex-order(1);
+    padding-right: 24px;
+
+
+  }
+}
+//Odd Alternating Image Items
+.alternating-image-list-container > ul > a.alternating-image-list-container-link:nth-child(odd) {
+  .alternating-image-list-image {
+    @include flex-order(1);
+    padding-right: 24px;
+
+  }
+  .alternating-image-list-text {
+    @include flex-order(2);
+
+  }
+}
+a.alternating-image-list-container-link {
+  h3 {
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 33px;
+    color: $very-dark-grey;
+    @include bp(small) {
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+    h3 {
+      color: $lcranberry;
+    }
+  }
+}
+
+.alternating-image-list-item {
+  @include flexcontainer();
+  @include property-prefix(justify-content, space-between);
+  margin-bottom: 50px;
+  @include bp(small) {
+    //padding: 15px 20px 20px 23px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid $lgrey03;
+    box-shadow: $alternating-image-box-phone-shadow;
+  }
+  .alternating-image-list-image {
+    @include flex(1);
+    width: 50%;
+    @include bp(small) {
+      display:none;
+      padding:0;
+    }
+
+  }
+  .alternating-image-list-text {
+    width: 50%;
+    @include flex(1);
+    @include bp(small) {
+      width: auto;
+      padding: 0;
+    }
+  }
+  a {
+    color: $light-gray-text;
+    &:hover {
+      text-decoration: none;
+      color: $light-gray-text;
+    }
+  }
+}
+

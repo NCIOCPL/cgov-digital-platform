@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cgov_card_borderless.field_button_alt
+    - field.field.paragraph.cgov_card_borderless.field_button_text
+    - field.field.paragraph.cgov_card_borderless.field_featured_item
+    - field.field.paragraph.cgov_card_borderless.field_override_card_longer_descr
+    - field.field.paragraph.cgov_card_borderless.field_override_card_title
+    - field.field.paragraph.cgov_card_borderless.field_override_image_promotional
+    - paragraphs.paragraphs_type.cgov_card_borderless
+id: paragraph.cgov_card_borderless.default
+targetEntityType: paragraph
+bundle: cgov_card_borderless
+mode: default
+content:
+  field_button_alt:
+    weight: 6
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_button_text:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_featured_item:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: borderless_card_image
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_override_card_longer_descr:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_override_card_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_override_image_promotional:
+    weight: 4
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+hidden: {  }

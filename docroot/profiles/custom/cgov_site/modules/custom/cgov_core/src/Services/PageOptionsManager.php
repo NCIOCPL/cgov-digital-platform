@@ -126,6 +126,10 @@ class PageOptionsManager implements PageOptionsManagerInterface {
       'twitter',
       'pinterest',
     ],
+    'cgov_application_page' => [
+      'email',
+      'twitter',
+    ],
     'pdq_cancer_information_summary' => [
       'resize',
       'print',

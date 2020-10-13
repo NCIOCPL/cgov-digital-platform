@@ -2,6 +2,11 @@
 {% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
 
 {% if content.field_internal_link[0] %}
+  {#
+   # Since we never output content.field_internal_link directly,
+   # we need to bubble the cache tag
+  #}
+  {{ bubble_cache(content.field_internal_link[0]["#node"]) }}
 
   {# ###### Setup Title ####### #}
   {% if content.field_override_title|field_value %}
@@ -28,7 +33,7 @@
 
   {# ###### Setup the URL ###### #}
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
-  
+
   {{ listItemMacros.list_item_title_date_desc(title, date, description, url, false) }}
 
 {% endif %}
