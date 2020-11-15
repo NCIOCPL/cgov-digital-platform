@@ -2,7 +2,9 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
+use Drupal\Core\Url;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
@@ -82,6 +84,8 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
    *   Array of breadcrumbs.
    */
   public function getBreadcrumbs() {
+    $config = $config = $this->getConfiguration();
+
     $navRoot = $this->navMgr->getNavRoot('field_breadcrumb_root');
     // We don't want to render anything if there is the current
     // request is not associated with the Site Section vocabulary tree.
@@ -122,13 +126,58 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
         ];
       }, $breadcrumbs);
 
-      // Requirement: If the only breadcrumb is the root, we
-      // don't want to render any breadcrumbs.
-      if (count($formattedBreadcrumbs) === 1 && $formattedBreadcrumbs[0]['href'] === '/') {
-        $formattedBreadcrumbs = [];
+      // Requirement: If the only breadcrumb is the root, we don't want to
+      // render any breadcrumbs, unless show home alone is set.
+      if (!empty($config['show_home_alone']) && $config['show_home_alone'] === 'show') {
+        $show_home_alone = TRUE;
+      }
+      else {
+        $show_home_alone = FALSE;
+      }
+
+      if (count($formattedBreadcrumbs) === 1 && $show_home_alone === FALSE) {
+
+        $homeUrl = Url::fromRoute('<front>')->toString();
+        $firstCrumbUrl = $this->cleanUrl($formattedBreadcrumbs[0]['href']);
+
+        if ($firstCrumbUrl === $homeUrl) {
+          $formattedBreadcrumbs = [];
+        }
       }
       return $formattedBreadcrumbs;
     }
+  }
+
+  /**
+   * Helper function to clean a url.
+   *
+   * @param string $url
+   *   The URL string to clean.
+   *
+   * @return string
+   *   The cleaned url, or '' if the string was null.
+   */
+  private function cleanUrl($url) {
+    if (!$url) {
+      return '';
+    }
+    // In some cases the alias will be /-0 usually in the case of the
+    // homepage because of how pathauto, aliases and <front> works.
+    // (Front already is /, so when generating an alias, / is already
+    // taken.)
+    $cleanUrl = preg_replace('/-\d+$/', '', $url);
+
+    // The URLs could end in slashes so we want to remove the trailing
+    // slashes, but only if it is not '/'.
+    if (
+      $cleanUrl !== '' &&
+      $cleanUrl !== '/' &&
+      substr($cleanUrl, -(strlen($cleanUrl))) === '/'
+    ) {
+      $cleanUrl = substr($cleanUrl, 0, strlen($cleanUrl) - 1);
+    }
+
+    return $cleanUrl;
   }
 
   /**
@@ -148,6 +197,37 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function getCacheMaxAge() {
     return 0;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockForm($form, FormStateInterface $form_state) {
+    $form = parent::blockForm($form, $form_state);
+
+    $config = $this->getConfiguration();
+
+    $form['show_home_alone'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Root Site Section Display'),
+      '#options' => [
+        'hide' => $this->t('Hide when only breadcrumb item'),
+        'show' => $this->t('Show when only breadcrumb item'),
+      ],
+      '#description' => $this->t('Select whether the root site section (e.g., Home or Página Principal) should display when it is the only breadcrumb.'),
+      '#default_value' => isset($config['show_home_alone']) ? $config['show_home_alone'] : 'hide',
+    ];
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    parent::blockSubmit($form, $form_state);
+    $values = $form_state->getValues();
+    $this->configuration['show_home_alone'] = $values['show_home_alone'];
   }
 
 }

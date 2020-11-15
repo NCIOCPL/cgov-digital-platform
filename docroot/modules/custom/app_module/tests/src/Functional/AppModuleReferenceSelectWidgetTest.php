@@ -62,9 +62,11 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
       ],
       'Save'
     );
-    /* TODO: Check that values are correct in text box.
-     * (It is HTML encoded so it will be annoying)
-     */
+
+    // Check that the JSON is correct after saving.
+    $expected = '{"a": "b", "c": ["d", "e"]]}';
+    $dataField = $assert->fieldExists('field_' . $this->fieldName . '[0][data]');
+    $this->assertEquals($expected, $dataField->getText());
 
     // Check validation.
     $this->drupalGet('node/add/' . $this->contentTypeName);

@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_js_app_module.module.
+ */
+
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+/*
+ * Adding CSS to ['#attached']['html_head_link'] will always be added before
+ * the CSS in libraries (e.g. Common.css). The issue is that most app modules
+ * override syles included in the Common and therefore need to come after.
+ *
+ * So cool. We just use hook_css_alter and add it right? Wrong. The libraries
+ * attachment is cached based on the theme name, and the list of libraries for
+ * the request.
+ *
+ * So cool. We will just use hook_library_info_build and add a library. Wrong.
+ * The libraries provided by the module are cached, and so only 1 app module's
+ * library/CSS would be added.
+ *
+ * So cool. We will use hook_library_info_alter to add the library that way.
+ * Wrong. Adding the library to the request works, but unfortunately, the
+ * assets of that library are being cached by extension.
+ *
+ * The final approach is to add an "empty" library to get the cache ID to be
+ * different instances. Then use css_alter to add the CSS. This seems to get
+ * around extension caching issues.
+ *
+ * NOTE 1: The library we add in info_alter is also added to the render array's
+ * attachments in JsOnlyAppModulePlugin::buildForRoute.
+ *
+ * NOTE 2: The module that adds the library is the module who's hooks are
+ * fired. So if we wanted to follow the pattern we have been where app_module
+ * implements the hooks, the base AppModulePluginBase provides a method to
+ * provide information to that hook, we cannot. This is because the hooks in
+ * app_module would never be called, instead it would be looking for the
+ * hooks in the module that implements the actual plugin.
+ *
+ *  NOTE 3: for the JS we have NONE of these issues.
+ */
+
+/**
+  * Implements hook_library_info_alter().
+  *
+  */
+function cgov_js_app_module_library_info_alter(array &$libraries, $extension) {
+  if ($extension !== 'cgov_js_app_module') {
+    return;
+  }
+
+  $request_query = \Drupal::request()->query;
+  $app_module_id = $request_query->get('app_module_id');
+
+  // We are not rendering an app module, so exit.
+  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
+    return;
+  }
+
+  $options = $request_query->get('app_module_data');
+
+  // Setup Library.
+  $libraries[$options['drupalConfig']['appName']] = [
+    'version' => -1,
+    'license' => [
+      'name' => 'NA',
+    ],
+    'css' => [],
+  ];
+
+}
+
+/**
+ * Implements hook_css_alter().
+ */
+function cgov_js_app_module_css_alter(array &$css, AttachedAssetsInterface $assets) {
+  $request_query = \Drupal::request()->query;
+  $app_module_id = $request_query->get('app_module_id');
+
+  // We are not rendering an app module, so exit.
+  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
+    return;
+  }
+
+  $options = $request_query->get('app_module_data');
+
+  $css[$options['drupalConfig']['appCssUri']] = [
+    'preprocess' => FALSE,
+    'weight' => 1000,
+    'group' => 1000,
+    'type' => 'file',
+    'data' => $options['drupalConfig']['appCssUri'],
+    'version' => -1,
+    'media' => 'all',
+    'browsers' => [
+      'IE' => TRUE,
+      '!IE' => TRUE,
+    ],
+  ];
+
+}

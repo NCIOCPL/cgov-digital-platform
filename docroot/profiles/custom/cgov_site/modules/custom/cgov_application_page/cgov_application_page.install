@@ -80,3 +80,15 @@ function cgov_application_page_update_8005() {
     $installer->install(['cgov_sitewide_search']);
   }
 }
+
+/**
+ * Update for JS-Only App Module Feature.
+ *
+ * Install the cgov_js_app_module module.
+ */
+function cgov_application_page_update_8006() {
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_js_app_module')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_js_app_module']);
+  }
+}
