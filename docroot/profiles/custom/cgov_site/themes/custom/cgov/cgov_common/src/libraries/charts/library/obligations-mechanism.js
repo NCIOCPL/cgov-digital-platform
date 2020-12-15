@@ -65,7 +65,7 @@ function initChart(Chart) {
                 },
                     {
                     name: 'Other Research',
-                    y: 3704429372,
+                    y: 506763422,
                     drilldown: 'Other Research'
                 }
             ]
