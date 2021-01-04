@@ -1423,7 +1423,7 @@ function initChart(Chart) {
     },
 
     title: {
-      text: 'Grant and Contract Awards by State and Institution, FY 2018'
+      text: 'Grant and Contract Awards by State and Institution, FY 2019'
     },
 
     credits: {
