@@ -18,14 +18,14 @@ function initChart(Chart) {
     series: [{
       name: 'Funding',
       data: [
-        ['R01 Traditional Grants', 58.0],
-        ['P01 Program Projects', 7.3],
-        ['R03 Small Grants', 0.4],
-        ['R21 Exploratory Phase I', 3.5],
-        ['R33 Exploratory Phase II', 0.6],
-        ['R35', 5.3],
-        ['SBIR/STTR', 5.6],
-        ['Other', 19.4]
+        ['R01 Traditional Grants', 1425515],
+        ['P01 Program Projects', 179123],
+        ['R03 Small Grants', 9735],
+        ['R21 Exploratory Phase I', 85575],
+        ['R33 Exploratory Phase II', 14993],
+        ['R35', 129232],
+        ['SBIR/STTR', 136670],
+        ['Other', 475313]
       ]
     }],
     responsive: {
