@@ -11,7 +11,7 @@ function initChart(Chart) {
       subtitle: { text: 'Fiscal Years 2010 - 2019' },
       plotOptions: {
         series: {
-          pointStart: 2009
+          pointStart: 2010
         }
       },
       series: [{
