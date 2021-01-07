@@ -33,11 +33,11 @@ var mapData = [{
   "state": "Alabama",
   "grants": {
     "number": 63,
-    "amount": 28109065
+    "amount": 32036913
   },
   "contracts": {
     "number": 0,
-    "amount": 0
+    "amount": 666907
   },
   "institutions": [{
     "name": "University of Alabama at Birmingham",
@@ -69,7 +69,7 @@ var mapData = [{
   "state": "Arizona",
   "grants": {
     "number": 59,
-    "amount": 16959632
+    "amount": 37531259
   },
   "contracts": {
     "number": 1,
