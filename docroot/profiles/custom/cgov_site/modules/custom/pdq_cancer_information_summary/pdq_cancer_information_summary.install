@@ -24,7 +24,6 @@ function pdq_cancer_information_summary_install() {
 
   // Install permissions for this module.
   pdq_cancer_information_summary_install_permissions($siteHelper);
-
 }
 
 /**
@@ -40,9 +39,23 @@ function pdq_cancer_information_summary_install_permissions(CgovCoreTools $siteH
     ],
     'pdq_importer' => [
       'restful get pdq_cis_api',
+      'restful patch pdq_cis_api',
       'restful post pdq_cis_api',
     ],
   ];
 
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Add a new permission to the pdq_importer role.
+ */
+function pdq_cancer_information_summary_update_8001() {
+
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Install the new permission.
+  $perms = ['pdq_importer' => ['restful patch pdq_cis_api']];
   $siteHelper->addRolePermissions($perms);
 }

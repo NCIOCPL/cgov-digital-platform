@@ -110,7 +110,7 @@ class PDQResource extends ResourceBase {
 
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException($this->t('No ID was provided'));
+      throw new BadRequestHttpException('No ID was provided');
     }
 
     // We got a node ID, so return the corresponding node's values.
@@ -207,6 +207,12 @@ class PDQResource extends ResourceBase {
     // nodes published in a separate pass after they've all been
     // stored, in order to minimize the window of time during which
     // older versions exist alongside newer.
+    // There is a long-standing bug in Drupal core, which fails to
+    // set the correct revision creation time and user for new
+    // revisions, so we do it here.
+    // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
+    $node->setRevisionCreationTime(\time());
+    $node->setRevisionUserId($this->currentUser->id());
     $node->moderation_state->value = 'draft';
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';

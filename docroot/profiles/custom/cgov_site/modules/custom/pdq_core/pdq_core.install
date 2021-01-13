@@ -36,7 +36,6 @@ function pdq_core_install() {
 
   // Install permissions for this module.
   pdq_core_install_permissions($siteHelper);
-
 }
 
 /**
@@ -53,6 +52,7 @@ function pdq_core_install_permissions(CgovCoreTools $siteHelper) {
     'pdq_importer' => [
       'restful delete pdq_api',
       'restful get pdq_api',
+      'restful patch pdq_api',
       'restful post pdq_api',
       'use pdq_workflow transition create_new_draft',
       'use pdq_workflow transition publish',
@@ -60,5 +60,19 @@ function pdq_core_install_permissions(CgovCoreTools $siteHelper) {
     ],
   ];
 
+  $siteHelper->addRolePermissions($perms);
+}
+
+
+/**
+ * Add a new permission to the pdq_importer role.
+ */
+function pdq_core_update_8001() {
+
+  // Get the helper service.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Install the new permission.
+  $perms = ['pdq_importer' => ['restful patch pdq_api']];
   $siteHelper->addRolePermissions($perms);
 }
