@@ -83,3 +83,8 @@ deleted, the node is kept with the English summary.
 Each content type has its own set of APIs for retrieving (`GET`) and
 storing (`POST`) PDQ content. Consult the documentation for each content
 type's module for details.
+
+## Cleanup
+Use `drush pdq:prune-summary-revisions` to remove older revisions of PDQ
+content, in order to free up space.
+

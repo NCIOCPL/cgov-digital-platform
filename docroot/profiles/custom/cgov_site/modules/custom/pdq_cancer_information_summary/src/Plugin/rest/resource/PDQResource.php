@@ -4,6 +4,7 @@ namespace Drupal\pdq_cancer_information_summary\Plugin\rest\resource;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
+use Drupal\pdq_cancer_information_summary\OrphanCleanup;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\rest\ModifiedResourceResponse;
@@ -28,7 +29,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PDQResource extends ResourceBase {
 
-
   /**
    * A current user instance.
    *
@@ -42,6 +42,13 @@ class PDQResource extends ResourceBase {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * Service for removing orphaned summary sections.
+   *
+   * @var \Drupal\pdq_cancer_information_summary\OrphanCleanup
+   */
+  protected $orphanCleanup;
 
   /**
    * Constructs a new PdqResource object.
@@ -60,6 +67,8 @@ class PDQResource extends ResourceBase {
    *   A current user instance.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Used to find and load node revisions.
+   * @param \Drupal\pdq_cancer_information_summary\OrphanCleanup $orphan_cleanup
+   *   Used to find and delete orphaned summary sections.
    */
   public function __construct(
     array $configuration,
@@ -68,17 +77,25 @@ class PDQResource extends ResourceBase {
     array $serializer_formats,
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
-    EntityTypeManagerInterface $entity_type_manager) {
+    EntityTypeManagerInterface $entity_type_manager,
+    OrphanCleanup $orphan_cleanup
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
+    $this->orphanCleanup = $orphan_cleanup;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+  ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -86,7 +103,8 @@ class PDQResource extends ResourceBase {
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
       $container->get('current_user'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('pdq_cancer_information_summary.orphan_cleanup')
     );
   }
 
@@ -114,7 +132,7 @@ class PDQResource extends ResourceBase {
 
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException($this->t('No ID was provided'));
+      throw new BadRequestHttpException('No ID was provided');
     }
 
     // We got a node ID, so return the corresponding node's values.
@@ -275,6 +293,12 @@ class PDQResource extends ResourceBase {
     // summaries published in a separate pass after they've all been
     // stored, in order to minimize the window of time during which
     // older versions exist alongside newer.
+    // There is a long-standing bug in Drupal core, which fails to
+    // set the correct revision creation time and user for new
+    // revisions, so we do it here.
+    // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
+    $node->setRevisionCreationTime(\time());
+    $node->setRevisionUserId($this->currentUser->id());
     $node->moderation_state->value = 'draft';
     $node->save();
     $verb = empty($nid) ? 'Created' : 'Updated';
@@ -285,6 +309,50 @@ class PDQResource extends ResourceBase {
 
     // Tell the caller the ID for the possibly new node.
     return new ModifiedResourceResponse(['nid' => $node->id()], $code);
+  }
+
+  /**
+   * Response to PATCH requests.
+   *
+   * Find and delete orphaned PDQ summary sections. See the `OrphanCleanup`
+   * class for details.
+   *
+   * @param string $command
+   *   Must be "prune"; this is needed because REST routing expects a token
+   *   at the end of the URI identifying the content item to be patched, but
+   *   we're doing the processing of batches of nodes, so the token is just
+   *   treated as a placeholder.
+   * @param int $max
+   *   The maximum number of deletions to be performed (we do these in batches
+   *   so we don't overload the poor Drupal server with everything at once.
+   *   Defaults to 1000.
+   *
+   * @return \Drupal\rest\ModifiedResourceResponse
+   *   Array in the form `[[entity-id, [revision-id, ...], ...]` identifying
+   *   the revisions which have been dropped for each entity.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function patch(string $command, int $max): ModifiedResourceResponse {
+
+    if ($command !== 'prune') {
+      throw new BadRequestHttpException('Unsupported patch command.');
+    }
+    if (empty($max)) {
+      $max = 1000;
+    }
+    $response = [];
+    $dropped = $this->orphanCleanup->dropOrphanedSummarySections($max);
+    $pids = array_keys($dropped);
+    sort($pids, SORT_NUMERIC);
+    foreach ($pids as $pid) {
+      $vids = $dropped[$pid];
+      sort($vids);
+      $response[] = [$pid, $vids];
+    }
+    return new ModifiedResourceResponse($response, 200);
   }
 
 }

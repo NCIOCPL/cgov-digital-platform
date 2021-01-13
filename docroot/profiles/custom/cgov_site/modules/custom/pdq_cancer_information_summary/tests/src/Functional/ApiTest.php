@@ -145,6 +145,7 @@ class ApiTest extends BrowserTestBase {
 
     // Store new English summary and capture the node ID.
     $payload = $this->store($this->english, 201);
+    $summary_sections_created = count($this->english['sections']);
     $nid = $this->english['nid'] = $this->spanish['nid'] = $payload['nid'];
 
     // Verify that the node ID lookup works correctly.
@@ -161,6 +162,7 @@ class ApiTest extends BrowserTestBase {
     $this->english['sections'][] = $section;
     $this->english['description'] = 'Revised test description';
     $payload = $this->store($this->english, 200);
+    $summary_sections_created += count($this->english['sections']);
     $this->assertEqual($payload['nid'], $nid, 'Uses same node');
 
     // Confirm that the values are still stored correctly.
@@ -170,6 +172,7 @@ class ApiTest extends BrowserTestBase {
 
     // Add the Spanish translation.
     $payload = $this->store($this->spanish, 200);
+    $summary_sections_created += count($this->spanish['sections']);
     $this->assertEqual($payload['nid'], $nid, 'Uses same node');
 
     // Verify that the node ID lookup still works correctly.
@@ -217,6 +220,7 @@ class ApiTest extends BrowserTestBase {
     $old_short_title = $this->english['short_title'];
     $this->english['short_title'] = 'New Short Title';
     $payload = $this->store($this->english, 200);
+    $summary_sections_created += count($this->english['sections']);
     $this->assertEqual($payload['nid'], $nid, 'Uses same node');
     $this->checkSiteSections($this->english, $old_short_title);
     $this->publish([[$nid, 'en']]);
@@ -264,6 +268,8 @@ class ApiTest extends BrowserTestBase {
     $this->spanish['title'] = 'Tres ratones ciegos';
     $this->store($this->english, 200);
     $this->store($this->spanish, 200);
+    $summary_sections_created += count($this->english['sections']);
+    $summary_sections_created += count($this->spanish['sections']);
     $this->publish();
     $h1 = "<h1>{$this->english['title']}</h1>";
     $page = $this->drupalGet("node/$nid");
@@ -280,6 +286,16 @@ class ApiTest extends BrowserTestBase {
 
     // Now it should be possible to delete the English summary.
     $this->delete($this->english, TRUE);
+
+    // Clean up orphaned summary sections. Since both nodes have been
+    // deleted, none of the summary section entities have parents, and
+    // should therefore be dropped. Now it's clear why we've been
+    // counting the summary section entities created along the way so
+    // carefully.
+    $url = $this->cisUrl . '/prune';
+    $response = $this->request('PATCH', $url, ['json' => 1000]);
+    $response = json_decode($response->getBody()->__toString());
+    $this->assertCount($summary_sections_created, $response);
   }
 
   /**

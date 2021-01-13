@@ -1,0 +1,6 @@
+services:
+  pdq_cancer_information_summary.commands:
+    class: \Drupal\pdq_cancer_information_summary\Commands\OrphanCleanupCommands
+    arguments: ['@pdq_cancer_information_summary.orphan_cleanup']
+    tags:
+      - { name: drush.command }
