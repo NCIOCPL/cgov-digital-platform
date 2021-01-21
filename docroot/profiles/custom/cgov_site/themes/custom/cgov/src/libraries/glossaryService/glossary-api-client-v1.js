@@ -47,11 +47,11 @@ class GlossaryApiClientV1 {
    * @param {object} params any additional query params
    */
   async getRequest(actionUri, params) {
-    const res = await this.client.get(actionUri, params);
+    const res = await this.client.get(actionUri, { params });
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`Recieved ${res.status} code while fetching definition`);
+      throw new Error(`Received ${res.status} code while fetching definition`);
     }
   }
 
