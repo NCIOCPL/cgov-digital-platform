@@ -12,6 +12,9 @@ See [PDQ Content Design](../../../../../../../wiki/PDQ-Content-Design) in the pr
 ## Testing
 **NOTE:** General information about running tests and project structure can be found in the root [TESTING.md](../../../../../../../TESTING.md) file. Please refer to that before reading further.
 
+## Cleanup
+Use `drush pdq:drop-orphaned-summary-sections` to remove orphaned PDQ summary sections.
+
 ### Unit Tests
 
 ### Functional Tests

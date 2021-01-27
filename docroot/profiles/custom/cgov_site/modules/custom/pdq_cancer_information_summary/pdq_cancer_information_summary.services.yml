@@ -1,0 +1,6 @@
+services:
+  pdq_cancer_information_summary.orphan_cleanup:
+    class: Drupal\pdq_cancer_information_summary\OrphanCleanup
+    arguments:
+      - '@entity_type.manager'
+      - '@database'

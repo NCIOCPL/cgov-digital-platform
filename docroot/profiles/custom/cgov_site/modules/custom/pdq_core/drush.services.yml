@@ -1,0 +1,6 @@
+services:
+  pdq_core.commands:
+    class: \Drupal\pdq_core\Commands\RevisionPrunerCommands
+    arguments: ['@entity_type.manager', '@pdq_core.revision_pruner']
+    tags:
+      - { name: drush.command }

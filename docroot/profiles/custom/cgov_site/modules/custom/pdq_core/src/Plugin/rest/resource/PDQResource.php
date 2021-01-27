@@ -4,6 +4,7 @@ namespace Drupal\pdq_core\Plugin\rest\resource;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
+use Drupal\pdq_core\RevisionPruner;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\rest\ModifiedResourceResponse;
@@ -43,6 +44,13 @@ class PDQResource extends ResourceBase {
   protected $entityTypeManager;
 
   /**
+   * Service for dropping older node revisions.
+   *
+   * @var \Drupal\pdq_core\RevisionPruner
+   */
+  protected $pruner;
+
+  /**
    * Constructs a new PdqResource object.
    *
    * @param array $configuration
@@ -59,6 +67,8 @@ class PDQResource extends ResourceBase {
    *   A current user instance.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Used to find and load node revisions.
+   * @param \Drupal\pdq_core\RevisionPruner $pruner
+   *   Eliminates unwanted node older revisions.
    */
   public function __construct(
     array $configuration,
@@ -67,11 +77,13 @@ class PDQResource extends ResourceBase {
     array $serializer_formats,
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
-    EntityTypeManagerInterface $entity_type_manager) {
+    EntityTypeManagerInterface $entity_type_manager,
+    RevisionPruner $pruner) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
+    $this->pruner = $pruner;
   }
 
   /**
@@ -85,7 +97,8 @@ class PDQResource extends ResourceBase {
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
       $container->get('current_user'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('pdq_core.revision_pruner')
     );
   }
 
@@ -111,7 +124,7 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function get($id) {
+  public function get(string $id): ResourceResponse {
 
     // Pass the work off to the catalog method if requested.
     if ($id === 'list') {
@@ -120,7 +133,7 @@ class PDQResource extends ResourceBase {
 
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException($this->t('No ID was provided'));
+      throw new BadRequestHttpException('No ID was provided');
     }
     $matches = $this->lookupCdrId($id);
     if (count($matches) === 0) {
@@ -153,7 +166,7 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function post(array $summaries) {
+  public function post(array $summaries): ModifiedResourceResponse {
 
     $errors = [];
     $success_count = 0;
@@ -161,16 +174,22 @@ class PDQResource extends ResourceBase {
     $storage = $this->entityTypeManager->getStorage('node');
     foreach ($summaries as $summary) {
       try {
-        list($nid, $lang) = $summary;
+        [$nid, $lang] = $summary;
         $vid = $storage->getLatestRevisionId($nid);
         if (empty($vid)) {
           $errors[] = [$nid, $lang, 'not found'];
         }
         else {
+          // There is a long-standing bug in Drupal core, which fails to
+          // set the correct revision creation time and user for new
+          // revisions, so we do it here.
+          // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
           $revision = $storage->loadRevision($vid);
           $translation = $revision->getTranslation($lang);
           $translation->moderation_state->value = 'published';
           $translation->setRevisionTranslationAffected(TRUE);
+          $translation->setRevisionCreationTime(\time());
+          $translation->setRevisionUserId($this->currentUser->id());
           $translation->save();
           $success_count++;
           $args = ['%vid' => $vid, '%nid' => $nid, '%lang' => $lang];
@@ -199,18 +218,16 @@ class PDQResource extends ResourceBase {
    *   The HTTP response object.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-   *   Throws exception expected.
-   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function delete($id) {
+  public function delete(string $id): ModifiedResourceResponse {
 
     // @todo: avoid deleting target of links from other content.
     // Make sure the client gave us something to look for.
     if (!$id) {
-      throw new BadRequestHttpException($this->t('No ID was provided'));
+      throw new BadRequestHttpException('No ID was provided');
     }
 
     // Make sure the CDR ID matches exactly one entity.
@@ -228,7 +245,7 @@ class PDQResource extends ResourceBase {
       throw new BadRequestHttpException($msg);
     }
     foreach ($matches as $match) {
-      list($nid, $langcode) = $match;
+      [$nid, $langcode] = $match;
       $node = Node::load($nid);
 
       // Apply deletion logic based on language.
@@ -241,7 +258,7 @@ class PDQResource extends ResourceBase {
       }
       else {
         if ($node->hasTranslation('es') && $id > 0) {
-          throw new BadRequestHttpException($this->t('Spanish translation exists'));
+          throw new BadRequestHttpException('Spanish translation exists');
         }
         $node->delete();
         $args = ['%cdrid' => $id, '%nid' => $node->id()];
@@ -265,7 +282,7 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function lookupCdrId($id) {
+  private function lookupCdrId($id): array {
     if (substr($id, 0, 3) === 'CDR') {
       $id = substr($id, 3);
     }
@@ -292,7 +309,7 @@ class PDQResource extends ResourceBase {
    *   values for `cdr_id`, `nid`, `vid`, `created`, `updated`,
    *   `langcode`, and `type`, wrapped in a ResourceResponse.
    */
-  private function catalog() {
+  private function catalog(): ResourceResponse {
     $join = 'd.nid = c.entity_id AND d.langcode = c.langcode';
     $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
     $query->join('node_field_data', 'd', $join);
@@ -316,6 +333,54 @@ class PDQResource extends ResourceBase {
     $response = new ResourceResponse($content);
     $response->addCacheableDependency(['#cache' => ['max-age' => 0]]);
     return $response;
+  }
+
+  /**
+   * Response to PATCH requests.
+   *
+   * Prune older revisions, leaving only the most recent published
+   * revisions in place for the specified nodes.
+   *
+   * @param string $command
+   *   Must be "prune"; this is needed because REST routing expects a token
+   *   at the end of the URI identifying the content item to be patched, but
+   *   we're doing the processing of batches of nodes, so the token is just
+   *   treated as a placeholder.
+   * @param array $request
+   *   Sequence of node IDs and optional number of published revisions to keep
+   *   for each language of the nodes to be pruned. Examples:
+   *     `['nodes' => [960, 982, 997], 'keep' => 2]`
+   *     `['nodes' => [960, 982, 997]]`.
+   *
+   * @return \Drupal\rest\ModifiedResourceResponse
+   *   Array in the form `[[node-id, [revision-id, ...], ...]` identifying
+   *   the revisions which have been dropped for each node.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function patch(string $command, array $request): ModifiedResourceResponse {
+
+    if ($command !== 'prune') {
+      throw new BadRequestHttpException('Unsupported patch command.');
+    }
+    if (empty($request['keep'])) {
+      $keep = 3;
+    }
+    else {
+      $keep = (int) $request['keep'];
+    }
+    if (empty($keep)) {
+      throw new BadRequestHttpException('Invalid keep value.');
+    }
+    $response = [];
+    $node_ids = $request['nodes'];
+    foreach ($node_ids as $nid) {
+      $dropped = $this->pruner->dropOldRevisions($nid, $keep);
+      $response[] = [$nid, $dropped];
+    }
+    return new ModifiedResourceResponse($response, 200);
   }
 
 }
