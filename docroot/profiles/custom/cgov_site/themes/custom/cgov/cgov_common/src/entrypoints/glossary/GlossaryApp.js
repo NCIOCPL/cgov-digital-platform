@@ -4,7 +4,7 @@
  */
 
 import initializeGlossaryApp from 'Libraries/glossary/glossary';
-import './GlossaryApp.scss';
+// import './GlossaryApp.scss';
 
 const onDOMContentLoaded = () => {
   initializeGlossaryApp();
