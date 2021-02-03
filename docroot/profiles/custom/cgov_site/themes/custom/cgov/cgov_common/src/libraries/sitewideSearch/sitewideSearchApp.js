@@ -3,8 +3,10 @@
  * Sets app config for initialization.
  */
 
+// #3003 remove glossary app module now that generic app modules exist
+// import initialize from '@nciocpl/sitewide-search-app';
 const initialize = () => {
-  throw new Error("This has been removed for due to issue #3003");
+  throw new Error("Replaced via #3003. This is now a generic app module");
 };
 
 import {
@@ -18,11 +20,11 @@ const instanceConfig = window.sitewideSearchAppSettings;
 
 const metaTags = getMetaData(
   [
-    ["name", "dcterms.subject"],
-    ["name", "dcterms.isPartOf"],
-    ["name", "dcterms.issued"],
-    ["property", "og:site_name"],
-    ["property", "og:title"]
+    ['name', 'dcterms.subject'],
+    ['name', 'dcterms.isPartOf'],
+    ['name', 'dcterms.issued'],
+    ['property', 'og:site_name'],
+    ['property', 'og:title']
   ],
   document
 );
@@ -96,17 +98,17 @@ const validateAndGetBestBetsConfig = bestbetsCollection => {
 };
 
 const drupalConfig = {
-  analyticsChannel: metaTags["dcterms.subject"],
-  analyticsContentGroup: metaTags["dcterms.isPartOf"],
-  analyticsPublishedDate: metaTags["dcterms.issued"],
+  analyticsChannel: metaTags['dcterms.subject'],
+  analyticsContentGroup: metaTags['dcterms.isPartOf'],
+  analyticsPublishedDate: metaTags['dcterms.issued'],
   apiBaseEndpoint: window.CDEConfig.general.apiServer,
   baseHost: window.location.protocol + "//" + window.location.hostname,
   basePath: pathName ? pathName : canonicalHref,
   rootId: "NCI-app-root",
   searchEndpoint: window.CDEConfig.sitewideSearchConfig.searchApiServer,
   language,
-  siteName: metaTags["og:site_name"],
-  title: metaTags["og:title"]
+  siteName: metaTags['og:site_name'],
+  title: metaTags['og:title']
 };
 
 const config = {

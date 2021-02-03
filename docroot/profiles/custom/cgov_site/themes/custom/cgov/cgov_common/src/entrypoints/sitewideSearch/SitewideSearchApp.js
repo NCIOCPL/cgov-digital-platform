@@ -4,7 +4,7 @@
  */
 
 import initializeSitewideSearchApp from "Libraries/sitewideSearch/sitewideSearchApp";
-import "./SitewideSearchApp.scss";
+// import "./SitewideSearchApp.scss";
 
 const onDOMContentLoaded = () => {
   initializeSitewideSearchApp();

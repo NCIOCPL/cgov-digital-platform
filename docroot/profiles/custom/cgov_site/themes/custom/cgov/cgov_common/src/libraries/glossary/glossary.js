@@ -3,7 +3,12 @@
  * Sets app config for initialization.
  */
 
-import initialize from '@nciocpl/glossary-app';
+// #3003 remove glossary app module now that generic app modules exist
+// import initialize from '@nciocpl/glossary-app';
+const initialize = () => {
+  throw new Error('Replaced via #3003. This is now a generic app module');
+};
+
 import { getCanonicalURL, getDocumentLanguage, getMetaData, parseUrl } from 'Utilities';
 
 const getAlternateLangLink = (alternateUrls, currLang) => {
