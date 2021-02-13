@@ -1,0 +1,15 @@
+<?php
+
+use Drupal\app_module\Entity\AppModule;
+
+function cgov_sitewide_search_uninstall() {
+
+  $storage = \Drupal::service('app_module.app_path_storage');
+  $paths = $storage->load(['app_module_id' => 'cgov_sitewide_search_app']);
+  if($paths) {
+    $storage->delete(['app_module_id' => 'cgov_sitewide_search_app']);
+  }
+
+  $app_module = AppModule::load('cgov_sitewide_search_app');
+  $app_module->delete();
+}
