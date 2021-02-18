@@ -17,6 +17,10 @@ module.exports = {
     __dirname,
     "src/entrypoints/specialReport/SpecialReport.js"
   ),
+  dcegConnect: path.resolve(
+      __dirname,
+      "src/entrypoints/dcegConnect/dcegConnect.js"
+  ),
   PDQ: path.resolve(__dirname, "src/entrypoints/pdq/PDQ.js"),
   Minilanding: path.resolve(
     __dirname,
@@ -35,6 +39,7 @@ module.exports = {
   Purple: path.resolve(__dirname, "src/variants/purple/entrypoints/Purple.js"),
   Blue: path.resolve(__dirname, "src/variants/blue/entrypoints/Blue.js"),
   Green: path.resolve(__dirname, "src/variants/green/entrypoints/Green.js"),
+  Connect: path.resolve(__dirname, "src/variants/connect/entrypoints/Connect.js"),
   CTHP: path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
   Event: path.resolve(__dirname, "src/entrypoints/event/Event.js"),
   CTSApp: path.resolve(__dirname, "src/entrypoints/cts/CTSApp.js"),

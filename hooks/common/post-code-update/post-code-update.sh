@@ -91,6 +91,13 @@ else
     blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
     ./scripts/utility/cgov_migration_load.sh
     ;;
+  DCEGCONNECT)
+    blt custom:install_cgov_yaml_content_by_module cgov_yaml_content -D drush.ansi=false
+    ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
+    ## drupal-entity.
+    drush pmu cgov_yaml_content
+    drush cset cgov_common.settings color_theme connect --no-interaction
+    ;;
   *)
     blt custom:install_cgov_yaml_content_by_module cgov_yaml_content -D drush.ansi=false
     ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting

@@ -131,3 +131,72 @@
 	// -webkit-order: $val;
 	order: $val;
 }
+
+
+@mixin bp-retina {
+	@media all and (-webkit-min-device-pixel-ratio: 2),
+	all and (min--moz-device-pixel-ratio: 2),
+	all and (-o-min-device-pixel-ratio: 2/1),
+	all and (min-device-pixel-ratio: 2),
+	all and (min-resolution: 192dpi),
+	all and (min-resolution: 2dppx) {
+		@content;
+	}
+}
+
+//Image background
+@mixin background-icon($image,$width,$height,$displayStyle:inline-block,
+$background-position:initial, $background-repeat: no-repeat,$container-height:$height) {
+	background-image: url($image);
+	background-size: $width $height;
+	background-repeat: $background-repeat;
+	background-position: $background-position;
+	display:  $displayStyle;
+	content:" ";
+	height:$container-height;
+
+}
+@mixin standard-background-icon($standard-image, $retina-image, $width, $height, $displayStyle:inline-block,
+$background-position:initial,$container-height:$height,
+$background-repeat: no-repeat, $no-width:false) {
+	@include background-icon($standard-image,$width,$height,
+					$displayStyle,$background-position,$background-repeat,$container-height);
+	@include bp-retina {
+		@include background-icon($retina-image,$width,$height,
+						$displayStyle,$background-position,$background-repeat,$container-height);
+	}
+
+	@if $no-width == false {
+		width: $width;
+		margin-right: auto;
+		margin-left:auto;
+	}
+}
+
+//Centered Emphasized text
+@mixin centered {
+	display: block;
+	position: relative;
+	text-align: center;
+	clear:both;
+	width:100%;
+}
+@mixin centered-inline {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	clear:both;
+	margin-left:auto;
+	margin-right:auto;
+	//width:100%;
+}
+@mixin centeredEm {
+	@include centered;
+	font-style: italic;
+}
+
+@mixin vertical-center {
+	line-height: normal;
+	vertical-align: middle;
+	display:inline-block;
+}
