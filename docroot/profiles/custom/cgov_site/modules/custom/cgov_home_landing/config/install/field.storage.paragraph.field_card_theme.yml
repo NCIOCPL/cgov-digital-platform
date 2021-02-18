@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_card_theme
+field_name: field_card_theme
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: default
+      label: Default
+    -
+      value: accent-warm
+      label: 'Accent Warm'
+    -
+      value: accent-cool
+      label: 'Accent Cool'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

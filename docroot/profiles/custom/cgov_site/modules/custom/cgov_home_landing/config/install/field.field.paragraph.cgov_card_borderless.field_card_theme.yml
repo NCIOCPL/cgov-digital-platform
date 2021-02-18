@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_card_theme
+    - paragraphs.paragraphs_type.cgov_card_borderless
+  module:
+    - options
+id: paragraph.cgov_card_borderless.field_card_theme
+field_name: field_card_theme
+entity_type: paragraph
+bundle: cgov_card_borderless
+label: 'Card Theme'
+description: 'Changes the background color of the card.'
+required: true
+translatable: false
+default_value:
+  -
+    value: default
+default_value_callback: ''
+settings: {  }
+field_type: list_string

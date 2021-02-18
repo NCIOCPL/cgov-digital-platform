@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_button_display
+field_name: field_button_display
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'yes'
+      label: 'Show Button'
+    -
+      value: 'no'
+      label: 'Hide Button'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
