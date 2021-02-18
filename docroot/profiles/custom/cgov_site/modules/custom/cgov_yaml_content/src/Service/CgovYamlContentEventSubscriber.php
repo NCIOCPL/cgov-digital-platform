@@ -529,6 +529,9 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    // Get out the BlockID if it was set.
+    $blockIDForRegion = isset($yamlContent['blockid__CONFIG']) ? $yamlContent['blockid__CONFIG']['value'] : self::generateRandomString(10);
+
     $theme = $this->themeManager->getActiveTheme();
     // We only want to create a block when a valid default region
     // is specified.
@@ -541,7 +544,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // We need to create a block to attach the block_content to
     // to place in a given theme region.
     $blockSettings = [
-      'id' => self::generateRandomString(10),
+      'id' => $blockIDForRegion,
       'plugin' => 'block_content:' . $savedEntity->uuid(),
       'provider' => 'block_content',
       'region' => $savedEntityRegion,
