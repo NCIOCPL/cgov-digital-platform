@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_button_display
+    - paragraphs.paragraphs_type.cgov_card_borderless
+  module:
+    - options
+id: paragraph.cgov_card_borderless.field_button_display
+field_name: field_button_display
+entity_type: paragraph
+bundle: cgov_card_borderless
+label: 'Button Display'
+description: 'Choose if your card displays a button or not. If it does, button text and alt text should be provided.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 'yes'
+default_value_callback: ''
+settings: {  }
+field_type: list_string
