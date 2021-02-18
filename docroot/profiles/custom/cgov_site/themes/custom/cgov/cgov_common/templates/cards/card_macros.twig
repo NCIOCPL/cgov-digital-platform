@@ -37,29 +37,56 @@
 	</a>
 {% endmacro %}
 
-{% macro borderlessCard(title, description, image, url, button_text, button_alt, nid) %}
-	<div class="row flex-columns borderless-container">
-		<div class="borderless-card medium-10 columns align-center">
-			<div class="borderless-text-container">
-				<h2 class="desktop-tablet-display">
-					<a href="{{ url }}">{{ title }}</a>
-				</h2>
-				{% if description %}
-					<p>{{ description }}</p>
+{% macro borderlessCard(title, description, image, url, button_text, button_alt, nid, image_orientation, show_button, theme, parentTheme) %}
+	{% if parentTheme == 'dceg_connect' %}
+		{% set dceg_connect = true %}
+		{% set text_class = 'landing-page-body' %}
+	{% else %}
+		{% set text_class = '' %}
+	{% endif %}
+
+	<div class = {{ theme }}>
+		<div class="row flex-columns borderless-container">
+			{% if show_button == 'no' %}
+			<a href="{{ url }}">
 				{% endif %}
-				<div class="centered-container thick-top-margin">
-					<a href="{{ url }}" title="{{ button_alt }}" class="borderless-button">{{ button_text }}</a>
+				<div class="borderless-card medium-10 columns align-center {{ image_orientation }}">
+					<div class="borderless-text-container">
+						<h1 class="desktop-tablet-display">
+							{% if show_button != 'no' %}
+								<a href="{{ url }}">
+							{% endif %}
+							{{ title }}
+							{% if show_button != 'no' %}
+								</a>
+							{% endif %}
+						</h1>
+						{% if description %}
+							<p class="{{ text_class }}">{{ description }}</p>
+						{% endif %}
+						{% if show_button != 'no' %}
+							<div class="centered-container thick-top-margin">
+								<a href="{{ url }}" title="{{ button_alt }}" class="borderless-button">{{ button_text }}</a>
+							</div>
+						{% endif %}
+					</div>
+					{% if image %}
+						<div class="image-hover borderless-image-container">
+							<h1 class="mobile-display">
+								{{ title }}
+							</h1>
+							{% if show_button != 'no' %}
+							<a href="{{ url }}">
+								{% endif %}
+								{{- image -}}
+								{% if show_button != 'no' %}
+							</a>
+							{% endif %}
+						</div>
+					{% endif %}
 				</div>
-			</div>
-			{% if image %}
-				<div class="image-hover borderless-image-container">
-					<h2 class="mobile-display">
-						<a href="{{ url }}">{{ title }}</a>
-					</h2>
-					<a href="{{ url }}">
-						{{- image -}}
-					</a>
-				</div>
+				{% if show_button == 'no' %}
+			</a>
 			{% endif %}
 		</div>
 	</div>

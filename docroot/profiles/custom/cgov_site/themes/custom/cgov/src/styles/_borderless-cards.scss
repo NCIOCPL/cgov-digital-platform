@@ -4,12 +4,26 @@
 /* Borderless Cards */
 .borderless-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
+
+
   @include bp(small) {
     padding: 20px 0.9375em 0 0.9375em;
   }
   .borderless-card {
     @include flexcontainer();
     @include property-prefix(justify-content, space-between);
+
+    &.borderless-image-left > .borderless-text-container {
+      @include flex-order(2);
+      margin-right: 0;
+    }
+    &.borderless-image-left > .borderless-image-container {
+      @include flex-order(1);
+      margin-right: 25px;
+      @include bp(small) {
+        margin-right: 0;
+      }
+    }
     .borderless-text-container {
       @include flex-order(1);
       @include flex(1);
@@ -85,6 +99,42 @@ a.borderless-button {
   }
 }
 
+//accent colors
+.accent-cool {
+  color: $white;
+  background-color: $capri;
+  .borderless-card {
+    color: $white;
+    .borderless-text-container {
+      p, p.landing-page-body {
+        color: $white;
+      }
+    }
+    h1, h1 > a {
+      color: $white;
+    }
+  }
+}
+.accent-warm {
+  background-color: $lemon;
+}
+
+
+.borderless-button-yellow,
+a.borderless-button-yellow {
+  @include button-base;
+  @include button-size($padding: false);
+  @include button-style($clementine, 5px);
+  font-family: $montserrat-font-stack;
+  font-size: 14px;
+  padding: 10px 10px 10px 11px;
+  color: $blueberry;
+  background-color: $lemon;
+  //box-shadow: 0 3px 0 0 $button-box-shadow-color;
+  &:hover {
+    text-decoration: none;
+  }
+}
 //General utility styles
 .centered-container {
   @include flexbox();

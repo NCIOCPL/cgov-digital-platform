@@ -8,15 +8,24 @@
 
 {% if content.field_featured_item[0] %}
 
+  {% set parentThemeField = drupal_field('field_page_style','node',nid) %}
+  {% if parentThemeField[0]['#markup'] is not empty %}
+    {% set parentTheme = parentThemeField[0]['#markup'] %}
+  {% endif %}
 
   {% set featured_item_node = content.field_featured_item[0]["#node"] %}
   {% set nid = featured_item_node.id %}
   {% set image_template = 'borderless_card_image' %}
   {% set featured_item_image_id = drupal_field('field_image_promotional', 'node', nid, image_template)|render|striptags|trim|number_format + 0 %}
 
+  {% set image_orientation = 'borderless-image-' ~ content.field_image_orientation|render|striptags|trim %}
+  {% set show_button = content.field_show_button|render|striptags|lower|trim %}
+  {% set theme = content.field_theme|render|striptags|lower|trim %}
 
-
-  {# ###### Setup Title ####### #}
+   {# image_orientation: {{ image_orientation }}<br />
+    show_button: {{ show_button }}<br />
+    theme: {{ theme }}#}
+  {#   ###### Setup Title ####### #}
 
   {% if content.field_override_card_title[0] is not empty %}
     {% set title = content.field_override_card_title[0]['#context'].value %}
@@ -57,6 +66,6 @@
     {% set button_alt = '' %}
   {% endif %}
 
-  {{ cardMacros.borderlessCard(title, description, image, url, button_text, button_alt, nid) }}
+  {{ cardMacros.borderlessCard(title, description, image, url, button_text, button_alt, nid, image_orientation, show_button, theme, parentTheme) }}
 
 {% endif %}

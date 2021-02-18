@@ -6,9 +6,12 @@ dependencies:
     - field.field.paragraph.cgov_card_borderless.field_button_alt
     - field.field.paragraph.cgov_card_borderless.field_button_text
     - field.field.paragraph.cgov_card_borderless.field_featured_item
+    - field.field.paragraph.cgov_card_borderless.field_image_orientation
     - field.field.paragraph.cgov_card_borderless.field_override_card_longer_descr
     - field.field.paragraph.cgov_card_borderless.field_override_card_title
     - field.field.paragraph.cgov_card_borderless.field_override_image_promotional
+    - field.field.paragraph.cgov_card_borderless.field_show_button
+    - field.field.paragraph.cgov_card_borderless.field_theme
     - paragraphs.paragraphs_type.cgov_card_borderless
   module:
     - entity_browser
@@ -47,6 +50,12 @@ content:
     third_party_settings: {  }
     type: entity_browser_entity_reference
     region: content
+  field_image_orientation:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_override_card_longer_descr:
     weight: 3
     settings:
@@ -77,6 +86,18 @@ content:
       open: false
     third_party_settings: {  }
     type: entity_browser_entity_reference
+    region: content
+  field_show_button:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_theme:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
 hidden:
   created: true
