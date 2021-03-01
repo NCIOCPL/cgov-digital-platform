@@ -20,10 +20,21 @@
     &.borderless-image-left > .borderless-image-container {
       @include flex-order(1);
       margin-right: 25px;
+      @include bp(medium-up){
+        @include flexbox();
+        @include property-prefix(justify-content, flex-start);
+      }
       @include bp(small) {
         margin-right: 0;
       }
     }
+    &.borderless-image-right > .borderless-image-container {
+      @include bp(medium-up){
+        @include flexbox();
+        @include property-prefix(justify-content, flex-end);
+      }
+    }
+
     .borderless-text-container {
       @include flex-order(1);
       @include flex(1);
@@ -77,6 +88,9 @@
         text-decoration: none;
       }
     }
+    h1, h1 > a {
+      font-weight: bold;
+    }
   }
 }
 .borderless-button,
@@ -118,8 +132,13 @@ a.borderless-button {
 .accent-warm {
   background-color: $lemon;
 }
-
-
+.default {
+  background-color: $white;
+}
+.main-content .borderless-container .borderless-button-yellow,
+.main-content .borderless-container a.borderless-button-yellow,
+.borderless-container .borderless-button-yellow,
+.borderless-container a.borderless-button-yellow,
 .borderless-button-yellow,
 a.borderless-button-yellow {
   @include button-base;
@@ -130,6 +149,7 @@ a.borderless-button-yellow {
   padding: 10px 10px 10px 11px;
   color: $blueberry;
   background-color: $lemon;
+  text-transform: uppercase;
   //box-shadow: 0 3px 0 0 $button-box-shadow-color;
   &:hover {
     text-decoration: none;

@@ -41,8 +41,13 @@
 	{% if parentTheme == 'dceg_connect' %}
 		{% set dceg_connect = true %}
 		{% set text_class = 'landing-page-body' %}
+		{% set card_container_class = '' %}
+	{% elseif parentTheme == 'special_report' %}
+		{% set text_class = '' %}
+		{% set card_container_class = 'medium-10' %}
 	{% else %}
 		{% set text_class = '' %}
+		{% set card_container_class = '' %}
 	{% endif %}
 
 	<div class = {{ theme }}>
@@ -50,7 +55,7 @@
 			{% if show_button == 'no' %}
 			<a href="{{ url }}">
 				{% endif %}
-				<div class="borderless-card medium-10 columns align-center {{ image_orientation }}">
+				<div class="borderless-card {{ card_container_class }} columns align-center {{ image_orientation }}">
 					<div class="borderless-text-container">
 						<h1 class="desktop-tablet-display">
 							{% if show_button != 'no' %}
