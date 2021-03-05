@@ -11,7 +11,7 @@
   }
   .borderless-card {
     @include flexcontainer();
-    @include property-prefix(justify-content, space-between);
+    //@include property-prefix(justify-content, space-between);
 
     &.borderless-image-left > .borderless-text-container {
       @include flex-order(2);
@@ -37,7 +37,8 @@
 
     .borderless-text-container {
       @include flex-order(1);
-      @include flex(1);
+      @include flex(1 1 auto);
+      @include property-prefix(flex-basis, auto);
       margin-right: 25px;
       color: $light-gray-text;
       line-height: 26px;
@@ -60,8 +61,14 @@
     }
     .borderless-image-container {
       @include flex-order(2);
+      @include flex(1 1 auto);
+      @include property-prefix(flex-basis, auto);
+      img {
+        @include property-prefix(align-self, flex-start);
+      }
       @include bp(medium-up) {
         width: 33%;
+
       }
       @include bp(small) {
         @include flex-order(1);
@@ -153,6 +160,7 @@ a.borderless-button-yellow {
   //box-shadow: 0 3px 0 0 $button-box-shadow-color;
   &:hover {
     text-decoration: none;
+    background-color: $clementine;
   }
 }
 //General utility styles

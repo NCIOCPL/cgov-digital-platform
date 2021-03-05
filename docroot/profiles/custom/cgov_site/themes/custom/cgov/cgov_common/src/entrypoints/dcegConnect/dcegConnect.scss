@@ -15,7 +15,7 @@
 
     .landing-page-body, p.landing-page-body {
       line-height: 24px;
-      size: 18px;
+      font-size: 18px;
       color: $asphalt;
     }
 
@@ -50,7 +50,7 @@
         }
         @include property-prefix(align-items, center);
 
-        @include bp(medium-down) {
+        @include bp(small) {
           @include property-prefix(align-items, flex-start);
         }
         @include bp(small) {
@@ -168,6 +168,10 @@
   @include flexbox();
   @include property-prefix(flex-direction,row);
   @include property-prefix(align-items,center);
+
+  @include bp(medium-up) {
+    width:45%;
+  }
   @include bp(small) {
     @include property-prefix(flex-direction,column);
   }
@@ -175,6 +179,9 @@
 
 .icon-text-text-container {
   margin-left: 32px;
+  @include bp(medium-up){
+    @include property-prefix(flex,1);
+  }
   @include bp(small){
     margin: 20px 0;
     text-align: center;

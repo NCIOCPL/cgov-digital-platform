@@ -153,13 +153,15 @@ $background-position:initial, $background-repeat: no-repeat,
 $container-height:$height,$tablet-container-height:$tablet-height,
 $mobile-container-height:$mobile-height) {
 	background-image: url($image);
-	background-size: $width $height;
 	background-repeat: $background-repeat;
 	background-position: $background-position;
 	display:  $displayStyle;
 	content:" ";
-	height:$container-height;
-	width: $width;
+	@include bp(large-up){
+		background-size: $width $height;
+		height:$container-height;
+		width: $width;
+	}
 	@include bp(medium){
 		background-size:$tablet-width $tablet-height;
 		width:$tablet-width;
