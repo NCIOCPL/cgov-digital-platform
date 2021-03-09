@@ -989,7 +989,37 @@ form button[type=submit]:hover {
   }
 }
 .navigation {
+  @include bp(large-up){
+    @include flexbox();
+    @include property-prefix(flex-direction, row);
+    @include property-prefix(justify-content, flex-start);
+    @include property-prefix(align-items, center);
+  }
+
   .borderless-button-yellow {
     margin: 1rem;
+    @include bp(medium-down){
+      display:none;
+    }
+  }
+  #mega-nav {
+    @include bp(large-up) {
+      //@include property-prefix(flex,1);
+    }
+  }
+}
+.mobile-menu-bar {
+  @include flexbox();
+  @include property-prefix(flex-direction, row);
+  @include property-prefix(justify-content, space-between);
+  @include property-prefix(align-items, center);
+
+  a.borderless-button-yellow, .borderless-button-yellow {
+    color: $blueberry;
+    width:auto;
+    display:inline-block;
+    @include bp(medium-down){
+      display:inline-block;
+    }
   }
 }
