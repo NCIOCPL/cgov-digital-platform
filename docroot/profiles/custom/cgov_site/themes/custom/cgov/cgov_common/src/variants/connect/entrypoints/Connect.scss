@@ -40,11 +40,12 @@ $header-logo-background-color: $fountain;
 //image
 $header-logo-padding: 21px 0 22px 0;
 $site-header-desktop-margin-bottom: 0;
-$site-logo-width: initial;
+$site-logo-width: auto;
 $site-logo-width-mobile: 292px;
 $site-logo-height: 50px;
 $site-logo-height-desktop: 50px;
-$site-logo-height-mobile: 32px;
+//$site-logo-height-mobile: 32px;
+$site-logo-height-mobile:auto;
 $site-logo-min-width: unset;
 $site-logo-max-width: 98%;
 
@@ -104,6 +105,7 @@ $default-header-color: $granite;
 
 //	Desktop Left Navigation
 $mega-menu-desktop-group-header-color: $fountain;
+$mega-menu-line-height: 18px;
 $section-navigation-desktop-active-background: $capri;
 $section-navigation-desktop-active-item-triangle: $capri;
 $section-navigation-desktop-active-subsection-background: $icicle;
@@ -356,6 +358,9 @@ h6 {
 header {
   background-color: $header-logo-background-color;
   padding: $header-logo-padding;
+}
+.nci-logo-page {
+  width: auto;
 }
 .nci-logo-pages img {
   width: $site-logo-width;
@@ -784,6 +789,7 @@ form button[type=submit]:hover {
   #mega-nav,
   #mega-nav li {
     background: none;
+    line-height: $mega-menu-line-height;
   }
   .nav-item>.nav-item-title>a {
     padding: $main-menu-desktop-item-padding;
@@ -1018,6 +1024,9 @@ form button[type=submit]:hover {
     color: $blueberry;
     width:auto;
     display:inline-block;
+    &:hover {
+      color: $blueberry;
+    }
     @include bp(medium-down){
       display:inline-block;
     }

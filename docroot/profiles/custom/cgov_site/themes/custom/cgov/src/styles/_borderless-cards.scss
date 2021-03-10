@@ -2,6 +2,9 @@
 @import "./colors";
 
 /* Borderless Cards */
+.borderless-container > a {
+  @include flexbox();
+}
 .borderless-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
 
@@ -10,7 +13,12 @@
     padding: 20px 0.9375em 0 0.9375em;
   }
   .borderless-card {
-    @include flexcontainer();
+   // @include flexcontainer();
+    @include flexbox();
+    @include bp(small){
+      @include property-prefix(flex-wrap,wrap);
+    }
+
     //@include property-prefix(justify-content, space-between);
 
     &.borderless-image-left > .borderless-text-container {
@@ -51,6 +59,7 @@
       }
       @include bp(medium-up) {
         width: 66%;
+
       }
       @include bp(small) {
         @include flex-order(2);
@@ -68,10 +77,10 @@
       }
       @include bp(medium-up) {
         width: 33%;
-
       }
       @include bp(small) {
         @include flex-order(1);
+        @include flex(1 1 100%);
         width: 100%;
       }
     }
@@ -161,6 +170,7 @@ a.borderless-button-yellow {
   &:hover {
     text-decoration: none;
     background-color: $clementine;
+    color: $blueberry;
   }
 }
 //General utility styles
