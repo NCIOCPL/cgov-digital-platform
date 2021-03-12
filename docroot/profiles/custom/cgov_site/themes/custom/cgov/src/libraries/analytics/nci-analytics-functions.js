@@ -83,13 +83,11 @@ var NCIAnalytics = {
 
             for (var i in this.Props) {
                 local_s['prop' + i] = this.Props[i];
-
                 if (local_s.linkTrackVars.length > 0)
                     local_s.linkTrackVars += ',';
 
                 local_s.linkTrackVars += 'prop' + i;
             }
-
             // add link page prop (prop67) to all link tracking calls when not already present; existing values are given preference
             if(!this.Props[67]) {
 
@@ -188,7 +186,6 @@ var NCIAnalytics = {
                 local_s.linkTrackEvents = (local_s.linkTrackEvents) ? local_s.linkTrackEvents + ',' + cleanEventsString : cleanEventsString;
                 local_s.events = (local_s.events) ? local_s.events + ',' + eventsString : eventsString;;
             }
-
             local_s.tl(sender, this.LinkType, this.LinkName);
 
             //Clear events and all props and eVars set in this click event image request
@@ -766,6 +763,31 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
+    HeaderJointheStudyLink: function(sender, headerName, linkName) {
+
+        var clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'HeaderLink-' + headerName);
+        clickParams.Props = {
+            66: linkName
+        };
+        clickParams.Events = [20];
+        clickParams.LogToOmniture();
+    },
+    //******************************************************************************************************
+    FooterJointheStudyLink: function(sender, footerName, linkName) {
+        var clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'JoinTheStudyFooterLink');
+        clickParams.Props = {
+            36: footerName,
+            66: linkName
+        };
+        clickParams.Evars = {
+            36: footerName
+        };
+        clickParams.Events = [16,20];
+        clickParams.LogToOmniture();
+    },
+    //******************************************************************************************************
     RightNavLink: function(sender, label) {
 
         var clickParams = new NCIAnalytics.ClickParams(sender,
@@ -820,7 +842,15 @@ var NCIAnalytics = {
         };
         clickParams.LogToOmniture();
     },
-
+    /* ********************************************************************** */
+    JoinTheStudyBodyLink: function(sender, name, index) {
+        let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'GovDelivery');
+        clickParams.Props = {
+            66: name + index,
+            67: pageName
+        };
+        clickParams.LogToOmniture();
+    },
     //******************************************************************************************************
     /**
      * Generic / global link tracking method
