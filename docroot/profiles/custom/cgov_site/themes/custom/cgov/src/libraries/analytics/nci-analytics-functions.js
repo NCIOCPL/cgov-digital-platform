@@ -781,6 +781,7 @@ var NCIAnalytics = {
         var clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'HeaderLink-' + headerName);
         clickParams.Props = {
+            53: headerName,
             54: headerName,
             55: headerName,
             56: pageName,
@@ -868,6 +869,7 @@ var NCIAnalytics = {
             66: name + index,
             67: pageName
         };
+        clickParams.Events = [20];
         clickParams.LogToOmniture();
     },
     //******************************************************************************************************
