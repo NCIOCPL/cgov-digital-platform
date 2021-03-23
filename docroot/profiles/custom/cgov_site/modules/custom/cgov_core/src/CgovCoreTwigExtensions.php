@@ -329,7 +329,8 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $base_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() .
         ltrim(base_path(), '/');
 
-    list($series_nid, $topic_tid) = $view->args;
+    $series_nid = $view->args[0];
+    $topic_tid = count($view->args) > 1 ? $view->args[1] : NULL;
 
     if ($series_nid) {
       if ($series_nid == 'all') {
@@ -355,6 +356,10 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       $term = $this->entityTypeManager->getStorage('taxonomy_term')->load($topic_tid);
       $topic_name = $term->getName();
       $topic_desc = $term->getDescription();
+    }
+    else {
+      $topic_name = NULL;
+      $topic_desc = NULL;
     }
 
     // Figure out the proper Title/Description to use.
