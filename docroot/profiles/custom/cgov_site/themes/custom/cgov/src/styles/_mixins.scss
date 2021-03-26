@@ -228,3 +228,17 @@ $background-repeat: no-repeat, $no-width:false) {
 	vertical-align: middle;
 	display:inline-block;
 }
+
+@mixin toggle-color($color, $bg-color) {
+	&[aria-expanded="false"] .toggle,
+	.toggle[aria-expanded="false"] {
+		color: $color;
+		background-color: $bg-color;
+	}
+
+	&[aria-expanded="true"] .toggle,
+	.toggle[aria-expanded="true"] {
+		color: $bg-color;
+		background-color: $color;
+	}
+}

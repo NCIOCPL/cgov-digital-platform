@@ -50,7 +50,7 @@ $site-logo-min-width: unset;
 $site-logo-max-width: 98%;
 
 //	Utility Bar NA
-$utility-background-color: $capri; //?
+$utility-background-color: $blueberry; //?
 $utility-text: $white;
 
 //	Main Navigation
@@ -165,11 +165,16 @@ $landing-page-guide-card-background: $dust;
 $landing-page-guide-card-link-color: $graphite;
 $landing-page-guide-card-link-hover-color: $fountain;
 $content-accordion-odd-rows-background: $dust;
-$content-accordion-odd-rows-plus-background: $white;
+$content-accordion-odd-rows-plus-background: $dust;
 $content-accordion-even-rows-background: $white;
 $content-accordion-even-rows-plus-background: $white;
 $content-accordion-odd-rows-minus-background: $jade;
 $content-accordion-even-rows-minus-background: $aqua;
+$plusminus-color-accordion-odd: $white;
+$plusminus-bg-color-accordion-odd: $fountain;
+$plusminus-color-accordion-even:$white;
+$plusminus-bg-color-accordion-even: $fountain;
+
 //	Plus/Minus Blog Archive
 //	Enlarge/View Infographic Button
 $enlarge-view-button-background: $capri;
@@ -220,8 +225,9 @@ $content-form-submit-button-hover-background: #clementine;
 //text color blueberry
 
 
-$content-pullquote-left-border: $granite; //?
-
+$content-pullquote-left-border: $fountain;
+$pullquote-text-color: $fountain;
+$pullquote-author-color: $fountain;
 
 $content-table-header-background: $icicle;
 $content-svg-guide-card-circle-arrow: chevron-circle-connect-theme;
@@ -249,7 +255,7 @@ $content-svg-external-link: external-link-connect-theme;
 .feature-primary a h3,
 ul.breadcrumbs>* a,
 .topic-feature a h3,
-.pullquote,
+
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
 .desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
 .multimedia .feature-card a h3,
@@ -259,6 +265,19 @@ li a {
   color: $default-link-color;
   &.borderless-button {
     color: $button-link-color;
+  }
+}
+
+.pullquote {
+  color: $pullquote-text-color;
+  .pullquote-text {
+    color: $pullquote-text-color;
+  }
+  .author {
+    color: $pullquote-author-color;
+  }
+  &.borderless-button {
+    color: $pullquote-text-color;
   }
 }
 
@@ -677,6 +696,13 @@ form button[type=submit]:hover {
 .ui-accordion-header.even .toggle[aria-expanded="true"],
 .ui-accordion-header.even[aria-expanded="true"] .toggle {
   color: $content-accordion-even-rows-minus-background;
+}
+.ui-accordion-header.odd {
+  @include toggle-color($plusminus-color-accordion-odd, $plusminus-bg-color-accordion-odd);
+}
+
+.ui-accordion-header.even {
+  @include toggle-color($plusminus-color-accordion-even, $plusminus-bg-color-accordion-even);
 }
 
 .pager__container {
