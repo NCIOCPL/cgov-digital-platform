@@ -87,6 +87,8 @@ $main-menu-mobile-tablet-svg-dictionary: book-connect-theme;
 
 //	Search Box and Search results (including magnifying glass)
 $main-menu-desktop-search-background: $blueberry; //need white border
+$main-menu-mobile-search-background: $blueberry;
+$main-menu-mobile-search-text:$white;
 $main-menu-desktop-search-color: $white;
 $main-menu-desktop-search-border-color: $white-half-transparent;
 $main-menu-desktop-search-border-width: 1px;
@@ -234,6 +236,9 @@ $content-svg-guide-card-circle-arrow: chevron-circle-connect-theme;
 $content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-connect-theme;
 $content-svg-external-link: external-link-connect-theme;
 
+//infographic
+$infographic-link-background-color: $dust;
+$infographic-text-color: $fountain;
 
 
 
@@ -708,10 +713,10 @@ form button[type=submit]:hover {
 .pager__container {
   .pager__navigation {
     .pager__button {
-      color: $search-results-pager-number-color;
+      color: $search-results-pager-number-color !important;
       &.active {
-        color: $search-results-pager-active-number-color;
-        background-color: $search-results-pager-active-background-color;
+        color: $search-results-pager-active-number-color !important;
+        background-color: $search-results-pager-active-background-color !important;
       }
     }
   }
@@ -947,6 +952,14 @@ form button[type=submit]:hover {
     width: $site-logo-width-mobile;
     height: $site-logo-height-mobile;
   }
+  #nvcgSlMainNav.searching {
+    #searchclear {
+      color:  $main-menu-mobile-search-text;
+    }
+    .search {
+      background-color: $main-menu-mobile-search-background;
+    }
+  }
   .nav-search {
     float: $main-menu-mobile-tablet-nav-search-float-tablet-down;
   }
@@ -1106,5 +1119,17 @@ form button[type=submit]:hover {
     @include bp(medium-down){
       display:inline-block;
     }
+  }
+}
+.embedded-entity[data-embed-button="cgov_infographic_button"] {
+  figcaption {
+    background-color: $infographic-link-background-color;
+  }
+}
+.infographic-link-container {
+  background-color: $infographic-link-background-color;
+  color: $infographic-text-color;
+  a {
+    color: $infographic-text-color;
   }
 }
