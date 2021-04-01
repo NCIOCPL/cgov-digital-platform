@@ -30,17 +30,7 @@ const drupalConfig = {
   rootId: "NCI-CTS-root"
 };
 
-//assumes import { ClinicalTrialsServiceFactory } from '@nciocpl/clinical-trials-search-client.js' is good to go
-const ctsSearch = () => {
-  const hostName = window.CDEConfig.ctsConfig.apiServer;
-  const service = ClinicalTrialsServiceFactory.create(hostName);
-  return service;
-};
-
 const instanceConfig = {
-  services: {
-    ctsSearch
-  },
   printCacheEndpoint: window.CDEConfig.ctsConfig.printCacheEndpoint,
   ctsHostname: window.CDEConfig.ctsConfig.ctsHostname
 };
