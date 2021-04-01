@@ -92,3 +92,23 @@ function cgov_application_page_update_8006() {
     $installer->install(['cgov_js_app_module']);
   }
 }
+
+/**
+ * Disable the drupal-based Glossary module.
+ */
+function cgov_application_page_update_8007() {
+  if (\Drupal::moduleHandler()->moduleExists('cgov_glossary')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['cgov_glossary'], FALSE);
+  }
+}
+
+/**
+ * Disable the drupal-based Sitewide Search module.
+ */
+function cgov_application_page_update_8008() {
+  if (\Drupal::moduleHandler()->moduleExists('cgov_sitewide_search')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['cgov_sitewide_search'], FALSE);
+  }
+}
