@@ -59,8 +59,7 @@ $main-menu-mobile-tablet-background-color: $dust;
 $main-menu-border-color: $white-half-transparent;
 $main-menu-border-width: 1px;
 //text labels?
-//$main-menu-desktop-active-item-border-bottom: $fountain;
-$main-menu-desktop-active-item-border-bottom: $white;
+$main-menu-desktop-active-item-border-bottom: $fountain;
 //$main-menu-link-color: $fountain;
 $main-menu-link-color: $white;
 $main-menu-link-hover-color: $fountain;
@@ -93,13 +92,14 @@ $main-menu-desktop-search-color: $white;
 $main-menu-desktop-search-border-color: $white-half-transparent;
 $main-menu-desktop-search-border-width: 1px;
 $main-menu-desktop-search-margin: 3px 0;
-$main-menu-desktop-item-padding: 14px 7px 14px;
+//$main-menu-desktop-item-padding: 14px 7px 14px;
+$main-menu-desktop-item-padding: 21px 7px 14px;
 //search-results-numbers
 $main-menu-desktop-svg-search-magnifying-glass: search-connect-theme;
 $search-results-pager-active-number-color:$white;
 $search-results-pager-active-background-color: $capri;
 $search-results-pager-number-color: $capri;
-
+$search-box-height: 55px;
 //	Home Page Hero/Interactive Gallery
 $landing-page-hero-text-tablet-background: $capri;
 
@@ -112,12 +112,12 @@ $default-header-color: $granite;
 
 //	Desktop Left Navigation
 $mega-menu-desktop-group-header-color: $fountain;
-$mega-menu-line-height: 18px;
+$mega-menu-line-height: 16px;
 $mega-menu-subnav-link-color: $fountain;
 $section-navigation-desktop-active-background: $capri;
 $section-navigation-desktop-active-item-triangle: $capri;
-$section-navigation-desktop-active-subsection-background: $icicle;
-$section-navigation-desktop-header-background: $capri;
+$section-navigation-desktop-active-subsection-background: $white;
+$section-navigation-desktop-header-background: $fountain;
 $section-navigation-desktop-active-color: $white;
 
 //	Mobile Section Navigation (Tongue)
@@ -126,7 +126,7 @@ $section-navigation-desktop-active-color: $white;
 $section-menu-mobile-tablet-top-background: $fountain;
 //menu-background-color dust
 //parent current page text color capri
-$section-menu-mobile-tablet-family-background: $icicle;
+$section-menu-mobile-tablet-family-background: $dust;
 $section-menu-mobile-tablet-current-page-plus-background: $fountain;
 $section-menu-mobile-tablet-current-page-plus-color: $white;
 $section-menu-mobile-tablet-current-page-minus-color: $fountain;
@@ -146,9 +146,12 @@ $default-link-color: $capri;
 $default-link-color-hover:  $blueberry;
 $button-link-color: $white;
 //	Feature Cards
-$landing-page-feature-card-background: $lemon;
-$landing-page-feature-card-link-color: $blueberry;
-
+//$landing-page-feature-card-background: $lemon;
+//$landing-page-feature-card-link-color: $blueberry;
+$landing-page-feature-card-background: $fountain;
+$landing-page-feature-card-link-color: $white;
+//multimedia
+$multimedia-card-background-color: $lemon;
 //	Page Options / Social Media Icons
 $page-options-mobile-tablet-background: $capri;
 $page-options-mobile-tablet-hover-background: $lemon;
@@ -260,7 +263,6 @@ $infographic-text-color: $fountain;
 .feature-primary a h3,
 ul.breadcrumbs>* a,
 .topic-feature a h3,
-
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
 .desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
 .multimedia .feature-card a h3,
@@ -272,7 +274,11 @@ li a {
     color: $button-link-color;
   }
 }
-
+.multimedia {
+  .multimedia-feature-card {
+    background-color: $multimedia-card-background-color;
+  }
+}
 .pullquote {
   color: $pullquote-text-color;
   .pullquote-text {
@@ -309,6 +315,7 @@ li a {
 .contentzone h6 a:hover,
 a .feature-card.cgvArticle a:hover h3,
 .main-content a.title:hover,
+.main-content a:hover,
 .card-thumbnail .card-thumbnail:hover a,
 .card-thumbnail .card-thumbnail:focus a,
 .topic-feature .feature-card a:hover h3,
@@ -606,6 +613,10 @@ figure a.article-image-enlarge:hover {
   color: $landing-page-feature-card-link-color;
 }
 
+.search {
+  height: $search-box-height;
+}
+
 .main-content .guide-card a.arrow-link,
 .main-content .guide-card a.arrow-link-white,
 .main-content a.definition,
@@ -716,7 +727,7 @@ form button[type=submit]:hover {
       color: $search-results-pager-number-color !important;
       &.active {
         color: $search-results-pager-active-number-color !important;
-        background-color: $search-results-pager-active-background-color !important;
+        background: $search-results-pager-active-background-color !important;
       }
     }
   }
@@ -825,7 +836,7 @@ form button[type=submit]:hover {
 
   #mega-nav .nav-item.contains-current>.nav-item-title>a,
   #mega-nav .nav-item.current-page>.nav-item-title>a {
-   border-bottom-color: $main-menu-desktop-active-item-border-bottom;
+    border-bottom-color: $main-menu-desktop-active-item-border-bottom;
 
   }
 
@@ -858,6 +869,11 @@ form button[type=submit]:hover {
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
   #mega-nav li.contains-current>div.nav-item-title>a {
     color: initial;
+  }
+  .menu.nav-menu>.nav-item>.nav-item-title>a.active,
+  .menu.nav-menu>.nav-item>.nav-item-title>a.open,
+  .menu.nav-menu>.nav-item>.nav-item-title>a:focus {
+    color: $main-menu-link-hover-color;
   }
 
   // Left navigation
@@ -958,6 +974,7 @@ form button[type=submit]:hover {
     }
     .search {
       background-color: $main-menu-mobile-search-background;
+      color:  $main-menu-mobile-search-text;
     }
   }
   .nav-search {
@@ -1061,7 +1078,7 @@ form button[type=submit]:hover {
     position: absolute;
     top:0;
     font-size: 30px;
-    transform: scale(0.6);
+    transform: scale(0.62);
     left:8%;
     //@include hCenter;
     @include svg-sprite($back-to-top-button);
