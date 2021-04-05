@@ -100,6 +100,7 @@ $search-results-pager-active-number-color:$white;
 $search-results-pager-active-background-color: $capri;
 $search-results-pager-number-color: $capri;
 $search-box-height: 55px;
+$search-placeholder-text-color: $white;
 //	Home Page Hero/Interactive Gallery
 $landing-page-hero-text-tablet-background: $capri;
 
@@ -147,11 +148,17 @@ $default-link-color-hover:  $blueberry;
 $button-link-color: $white;
 //	Feature Cards
 //$landing-page-feature-card-background: $lemon;
-//$landing-page-feature-card-link-color: $blueberry;
-$landing-page-feature-card-background: $fountain;
-$landing-page-feature-card-link-color: $white;
+$landing-page-feature-card-link-color: $blueberry;
+$landing-page-feature-card-background: $white;
+//$landing-page-feature-card-background: $fountain;
+//$landing-page-feature-card-link-color: $white;
 //multimedia
-$multimedia-card-background-color: $lemon;
+$multimedia-card-background-color: $white;
+//$multimedia-card-background-color: $lemon;
+
+//Managed List
+$managed-list-background-color: $dust;
+
 //	Page Options / Social Media Icons
 $page-options-mobile-tablet-background: $capri;
 $page-options-mobile-tablet-hover-background: $lemon;
@@ -163,10 +170,12 @@ $page-options-desktop-svg-facebook: facebook-connect-theme;
 $page-options-desktop-svg-twitter: twitter-connect-theme;
 $page-options-desktop-svg-pinterest: pinterest-connect-theme;
 //	Multimedia Row
-$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-blue.jpg") repeat; //?
+//$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-blue.jpg") repeat; //?
+$landing-page-multimedia-background: $white; //?
 
 //	Guide Card Row
-$landing-page-guide-card-background: $dust;
+//$landing-page-guide-card-background: $dust;
+$landing-page-guide-card-background: $white;
 $landing-page-guide-card-link-color: $graphite;
 $landing-page-guide-card-link-hover-color: $fountain;
 $content-accordion-odd-rows-background: $dust;
@@ -363,6 +372,13 @@ a.arrow-link:hover,
 a.arrow-link:focus
 {
   color: $default-link-color-hover;
+}
+
+
+.list.managed {
+  ul {
+    background: $managed-list-background-color;
+  }
 }
 
 .embedded-entity[data-entity-embed-display*="_feature_card"] {
@@ -829,6 +845,14 @@ form button[type=submit]:hover {
   }
   .search {
     margin: $main-menu-desktop-search-margin;
+    input::placeholder,
+    input::-webkit-input-placeholder,
+    input::-moz-placeholder,
+    input:-ms-input-placeholder,
+    input:-moz-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
   }
   #sitesearch {
     @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
@@ -975,6 +999,14 @@ form button[type=submit]:hover {
     .search {
       background-color: $main-menu-mobile-search-background;
       color:  $main-menu-mobile-search-text;
+      input::placeholder,
+      input::-webkit-input-placeholder,
+      input::-moz-placeholder,
+      input:-ms-input-placeholder,
+      input:-moz-placeholder {
+        color: $search-placeholder-text-color;
+        opacity: 1;
+      }
     }
   }
   .nav-search {
