@@ -106,8 +106,8 @@ $landing-page-hero-text-tablet-background: $capri;
 
 //	Page Body
 //Text container background color? white
-$page-margin-background: $dust;
-
+//$page-margin-background: $dust;
+$page-margin-background: $fountain;
 //	Body Headers (H1-H6)
 $default-header-color: $granite;
 
@@ -148,8 +148,12 @@ $default-link-color-hover:  $blueberry;
 $button-link-color: $white;
 //	Feature Cards
 //$landing-page-feature-card-background: $lemon;
-$landing-page-feature-card-link-color: $blueberry;
+//$landing-page-feature-card-link-color: $blueberry;
+$landing-page-feature-card-link-color: $capri;
+$landing-page-feature-card-link-hover-color: $blueberry;
 $landing-page-feature-card-background: $white;
+$landing-page-feature-card-desktop-border-top: solid 14px $lemon;
+$landing-page-feature-card-mobile-border-top: solid 3px $lemon;
 //$landing-page-feature-card-background: $fountain;
 //$landing-page-feature-card-link-color: $white;
 //multimedia
@@ -157,8 +161,10 @@ $multimedia-card-background-color: $white;
 //$multimedia-card-background-color: $lemon;
 
 //Managed List
-$managed-list-background-color: $dust;
-
+//$managed-list-background-color: $dust;
+$managed-list-background-color: $fountain;
+$managed-list-text-color: $white;
+$managed-list-text-hover-color: $white;
 //	Page Options / Social Media Icons
 $page-options-mobile-tablet-background: $capri;
 $page-options-mobile-tablet-hover-background: $lemon;
@@ -175,6 +181,8 @@ $landing-page-multimedia-background: $white; //?
 
 //	Guide Card Row
 //$landing-page-guide-card-background: $dust;
+
+$landing-page-guide-title-color: $white;
 $landing-page-guide-card-background: $white;
 $landing-page-guide-card-link-color: $graphite;
 $landing-page-guide-card-link-hover-color: $fountain;
@@ -379,6 +387,26 @@ a.arrow-link:focus
   ul {
     background: $managed-list-background-color;
   }
+  li.list-item:hover {
+    h3 > a,
+    a {
+      color: $managed-list-text-hover-color;
+      text-decoration: underline;
+    }
+  }
+  .title-and-desc{
+    h3 > a,
+    h3,
+    a,
+    .description {
+      color: $managed-list-text-color;
+    }
+    h3 > a:hover,
+    a:hover {
+      color: $managed-list-text-hover-color;
+      text-decoration: underline;
+    }
+  }
 }
 
 .embedded-entity[data-entity-embed-display*="_feature_card"] {
@@ -575,6 +603,12 @@ a.nav-dictionary::before {
 
 
 // content styles
+
+.guide-title {
+  h2 {
+    color: $landing-page-guide-title-color;
+  }
+}
 .guide-card .card {
   background: $landing-page-guide-card-background;
 }
@@ -618,20 +652,36 @@ figure a.article-image-enlarge:hover {
       background-color: $landing-page-feature-card-background;
 
       a:hover h3 {
-        color: $landing-page-feature-card-link-color;
+        color: $landing-page-feature-card-link-hover-color;
       }
     }
   }
 }
 
+
+
+
 .feature-primary .feature-card a h3,
-.main-content .feature-card a {
+.main-content .feature-card a,
+.feature-secondary .feature-card a h3,
+.feature-secondary .feature-card a
+{
   color: $landing-page-feature-card-link-color;
+  &:hover {
+    color: $landing-page-feature-card-link-hover-color;
+  }
 }
 
 .search {
   height: $search-box-height;
 }
+
+.node--type-cgov-home-landing {
+  .page-options, .floating-delighter {
+    display: none;
+  }
+}
+
 
 .main-content .guide-card a.arrow-link,
 .main-content .guide-card a.arrow-link-white,
@@ -963,6 +1013,13 @@ form button[type=submit]:hover {
   #nvcgSlMainNav #swKeyword {
     color: $main-menu-desktop-search-color;
   }
+
+  .feature-primary,
+  .feature-secondary {
+    .feature-card {
+      border-top: $landing-page-feature-card-desktop-border-top;
+    }
+  }
 }
 
 @include bp(medium-down) {
@@ -1063,6 +1120,12 @@ form button[type=submit]:hover {
 
   .page-options li:hover {
     background-color: $page-options-mobile-tablet-hover-background;
+  }
+  .feature-primary,
+  .feature-secondary {
+    .feature-card {
+      border-top: $landing-page-feature-card-mobile-border-top;
+    }
   }
 }
 
