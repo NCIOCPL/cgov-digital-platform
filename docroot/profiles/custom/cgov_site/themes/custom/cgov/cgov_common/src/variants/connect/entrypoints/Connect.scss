@@ -631,10 +631,6 @@ figure a.article-image-enlarge:hover {
   .card {
     &:not(.topic-feature){
       background-color: $landing-page-feature-card-background;
-
-      a:hover h3 {
-        color: $landing-page-feature-card-link-hover-color;
-      }
     }
   }
 }
@@ -1076,10 +1072,12 @@ form button[type=submit]:hover {
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:focus,
   #mega-nav li.contains-current>div.nav-item-title>a:active,
-  #mega-nav li.contains-current>div.nav-item-title>a:focus,
+  #mega-nav li.contains-current>div.nav-item-title>a:focus {
+    color: $hamburger-active-link-color;
+  }
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
-    color: $hamburger-active-link-color;
+    background: $section-menu-mobile-tablet-family-active-background;
   }
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
