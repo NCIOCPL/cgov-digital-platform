@@ -106,8 +106,8 @@ $landing-page-hero-text-tablet-background: $capri;
 
 //	Page Body
 //Text container background color? white
-//$page-margin-background: $dust;
-$page-margin-background: $fountain;
+$page-margin-background: $dust;
+$landing-page-page-margin-background: $fountain;
 //	Body Headers (H1-H6)
 $default-header-color: $granite;
 
@@ -128,6 +128,7 @@ $section-menu-mobile-tablet-top-background: $fountain;
 //menu-background-color dust
 //parent current page text color capri
 $section-menu-mobile-tablet-family-background: $dust;
+$section-menu-mobile-tablet-family-active-background: $blueberry;
 $section-menu-mobile-tablet-current-page-plus-background: $fountain;
 $section-menu-mobile-tablet-current-page-plus-color: $white;
 $section-menu-mobile-tablet-current-page-minus-color: $fountain;
@@ -141,6 +142,7 @@ $section-menu-mobile-tablet-current-page-background: $capri;
 $section-menu-mobile-tablet-current-page-color: $white;
 //page title click state backgorund blueberry
 
+$home-landing-h1-color: $white;
 //	Delighter N/A
 //	Link Color
 $default-link-color: $capri;
@@ -149,8 +151,10 @@ $button-link-color: $white;
 //	Feature Cards
 //$landing-page-feature-card-background: $lemon;
 //$landing-page-feature-card-link-color: $blueberry;
+$landing-page-feature-background-color: $fountain;
 $landing-page-feature-card-link-color: $capri;
 $landing-page-feature-card-link-hover-color: $blueberry;
+$landing-page-feature-description-color: $asphalt;
 $landing-page-feature-card-background: $white;
 $landing-page-feature-card-desktop-border-top: solid 14px $lemon;
 $landing-page-feature-card-mobile-border-top: solid 3px $lemon;
@@ -186,6 +190,7 @@ $landing-page-guide-title-color: $white;
 $landing-page-guide-card-background: $white;
 $landing-page-guide-card-link-color: $graphite;
 $landing-page-guide-card-link-hover-color: $fountain;
+$landing-page-standard-card-background-color: $white;
 $content-accordion-odd-rows-background: $dust;
 $content-accordion-odd-rows-plus-background: $dust;
 $content-accordion-even-rows-background: $white;
@@ -383,32 +388,6 @@ a.arrow-link:focus
 }
 
 
-.list.managed {
-  ul {
-    background: $managed-list-background-color;
-  }
-  li.list-item:hover {
-    h3 > a,
-    a {
-      color: $managed-list-text-hover-color;
-      text-decoration: underline;
-    }
-  }
-  .title-and-desc{
-    h3 > a,
-    h3,
-    a,
-    .description {
-      color: $managed-list-text-color;
-    }
-    h3 > a:hover,
-    a:hover {
-      color: $managed-list-text-hover-color;
-      text-decoration: underline;
-    }
-  }
-}
-
 .embedded-entity[data-entity-embed-display*="_feature_card"] {
   .feature-card {
     a {
@@ -512,11 +491,13 @@ header {
 .mobile-menu-bar>button:focus {
   color: $main-menu-link-color;
 }
-.menu.nav-menu>.nav-item>.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a
+.menu.nav-menu>.nav-item>.nav-item-title,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title
 {
   &:hover {
-    color: $main-menu-link-hover-color;
+    a {
+      color: $main-menu-link-hover-color;
+    }
   }
 }
 .menu.nav-menu>.nav-item>.nav-item-title>a.active,
@@ -658,7 +639,21 @@ figure a.article-image-enlarge:hover {
   }
 }
 
+.feature-primary-title,
+.feature-primary.list.managed,
+.row.feature-primary{
+  background-color: $landing-page-feature-background-color;
+}
 
+.feature-primary,
+.feature-secondary {
+  background-color: $landing-page-feature-background-color;
+  margin-bottom: 0;
+  padding-bottom: 1em;
+  p {
+    color: $landing-page-feature-description-color;
+  }
+}
 
 
 .feature-primary .feature-card a h3,
@@ -680,8 +675,46 @@ figure a.article-image-enlarge:hover {
   .page-options, .floating-delighter {
     display: none;
   }
+  h1 {
+    color: $home-landing-h1-color;
+  }
+  &.main-content {
+    background: $landing-page-page-margin-background;
+  }
+  .card {
+    background: $landing-page-standard-card-background-color;
+  }
+  .list.managed {
+    ul {
+      background: $managed-list-background-color;
+    }
+    li.list-item:hover {
+      h3 > a,
+      a {
+        color: $managed-list-text-hover-color;
+        text-decoration: underline;
+      }
+    }
+    .title-and-desc{
+      h3 > a,
+      h3,
+      a,
+      .description {
+        color: $managed-list-text-color;
+      }
+      h3 > a:hover,
+      a:hover {
+        color: $managed-list-text-hover-color;
+        text-decoration: underline;
+      }
+    }
+  }
 }
-
+.node--type-cgov-mini-landing {
+  .card {
+    background: $landing-page-standard-card-background-color;
+  }
+}
 
 .main-content .guide-card a.arrow-link,
 .main-content .guide-card a.arrow-link-white,
@@ -895,6 +928,7 @@ form button[type=submit]:hover {
   }
   .search {
     margin: $main-menu-desktop-search-margin;
+    .searchString,
     input::placeholder,
     input::-webkit-input-placeholder,
     input::-moz-placeholder,
@@ -941,8 +975,10 @@ form button[type=submit]:hover {
   }
   // overwriting hamburger menu style rules
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-  #mega-nav li.contains-current>div.nav-item-title>a {
-    color: initial;
+  #mega-nav li.contains-current>div.nav-item-title>a,
+  #mega-nav .nav-item.current-page>div.nav-item-title>a {
+   // color: initial;
+    color: $main-menu-link-hover-color;
   }
   .menu.nav-menu>.nav-item>.nav-item-title>a.active,
   .menu.nav-menu>.nav-item>.nav-item-title>a.open,
@@ -1013,12 +1049,12 @@ form button[type=submit]:hover {
   #nvcgSlMainNav #swKeyword {
     color: $main-menu-desktop-search-color;
   }
-
+  .feature-card {
+    border-top: $landing-page-feature-card-desktop-border-top;
+  }
   .feature-primary,
   .feature-secondary {
-    .feature-card {
-      border-top: $landing-page-feature-card-desktop-border-top;
-    }
+
   }
 }
 
@@ -1048,6 +1084,9 @@ form button[type=submit]:hover {
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
     height: $site-logo-height-mobile;
+  }
+  #nvcgSlMainNav #swKeyword {
+    color:$main-menu-mobile-search-text;
   }
   #nvcgSlMainNav.searching {
     #searchclear {
@@ -1093,6 +1132,9 @@ form button[type=submit]:hover {
 
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
+    &:active {
+      background: $section-menu-mobile-tablet-family-active-background;
+    }
   }
 
 
@@ -1121,11 +1163,18 @@ form button[type=submit]:hover {
   .page-options li:hover {
     background-color: $page-options-mobile-tablet-hover-background;
   }
+  .feature-primary-title,
+  .feature-primary.list.managed,
+  .row.feature-primary
+  {
+    background-color: $landing-page-feature-background-color;
+  }
+  .feature-card {
+    border-top: $landing-page-feature-card-mobile-border-top;
+  }
   .feature-primary,
   .feature-secondary {
-    .feature-card {
-      border-top: $landing-page-feature-card-mobile-border-top;
-    }
+
   }
 }
 

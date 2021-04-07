@@ -1,5 +1,3 @@
-{% set page_type = 'node--type-' ~ node.bundle|clean_class %}
-
 {% if 'special_report' == content.field_page_style[0]['#markup'] %}
 	{% set special_report = true %}
 {% endif %}
@@ -25,7 +23,7 @@
 
 	{% if special_report  %}
 
-		<div class="row report-container {{ page_type }}">
+		<div class="row report-container">
 			{{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
 			{{content.field_landing_contents}}
 			<div class="mobile-page-options">
@@ -39,7 +37,6 @@
 	{% else %}
 
 		{# Title Row #}
-		<div class="{{ page_type }}">
 			<div class="row">
 				{% if is_front == FALSE %}
 					<div class="large-7 columns">
@@ -52,6 +49,5 @@
 			<div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
 				{{content.field_landing_contents}}
 			</div>
-		</div>
 	{% endif %}
 {% endif %}

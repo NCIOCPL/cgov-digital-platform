@@ -1,6 +1,6 @@
 {{ attach_library('cgov_common/homelanding') }}
 {{ page.notification_banner }}
-
+{% set page_type = 'node--type-' ~ node.bundle|clean_class %}
 <header class="push" role="banner">
   <div id="nvcgSlSiteBanner" class="row">
      {{ page.site_banner }}
@@ -39,7 +39,7 @@
   </div><!-- END Global nav/utility bar/language -->
 
   <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content" id="content" tabindex="0">
+  <div class="main-content type {{ page_type }}" id="content" tabindex="0">
     {{ page.content }}
   </div>
 
