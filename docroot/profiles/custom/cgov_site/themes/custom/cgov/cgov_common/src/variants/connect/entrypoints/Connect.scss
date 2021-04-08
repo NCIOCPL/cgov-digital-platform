@@ -63,6 +63,7 @@ $main-menu-desktop-active-item-border-bottom: $fountain;
 //$main-menu-link-color: $fountain;
 $main-menu-link-color: $white;
 $main-menu-link-hover-color: $fountain;
+$main-menu-link-hover-background-color: $white;
 $main-menu-mobile-tablet-link-color: $granite;
 //	Mobile Hamburger Menu Navigation
 //hamburger-menu-background-color
@@ -129,6 +130,7 @@ $section-menu-mobile-tablet-top-background: $fountain;
 //parent current page text color capri
 $section-menu-mobile-tablet-family-background: $dust;
 $section-menu-mobile-tablet-family-active-background: $blueberry;
+$section-menu-mobile-tablet-family-active-color: $white;
 $section-menu-mobile-tablet-current-page-plus-background: $fountain;
 $section-menu-mobile-tablet-current-page-plus-color: $white;
 $section-menu-mobile-tablet-current-page-minus-color: $fountain;
@@ -481,9 +483,10 @@ header {
 }
 
 // menu bar
-
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
+  color: $main-menu-link-hover-color;
+}
 .menu.nav-menu>.nav-item>.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
 .mobile-menu-bar>a,
 .mobile-menu-bar>button,
 .mobile-menu-bar>a:focus,
@@ -495,6 +498,7 @@ header {
 #mega-nav .nav-menu>li.contains-current>div.nav-item-title
 {
   &:hover {
+    background: $main-menu-link-hover-background-color;
     a {
       color: $main-menu-link-hover-color;
     }
@@ -504,6 +508,7 @@ header {
 .menu.nav-menu>.nav-item>.nav-item-title>a.open,
 .menu.nav-menu>.nav-item>.nav-item-title>a:focus {
   color: $main-menu-link-hover-color;
+
 }
 
 
@@ -535,6 +540,7 @@ a.nav-dictionary::before {
 
 #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
 #mega-nav li.contains-current>div.nav-item-title>a,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
 .section-nav .level-1.contains-current.has-children>div a {
   color: $hamburger-section-menu-parent-item-link-color;
 }
@@ -667,13 +673,18 @@ figure a.article-image-enlarge:hover {
   height: $search-box-height;
 }
 
-.node--type-cgov-home-landing {
-  .page-options, .floating-delighter {
-    display: none;
-  }
+.node--type-cgov-home-landing:not(.dcegConnect) {
   h1 {
     color: $home-landing-h1-color;
   }
+}
+
+
+.node--type-cgov-home-landing {
+  .page-options, .page-options-container, .floating-delighter {
+    display: none;
+  }
+
   &.main-content {
     background: $landing-page-page-margin-background;
   }
@@ -1000,7 +1011,7 @@ form button[type=submit]:hover {
       background-color: $section-navigation-desktop-active-background;
     }
 
-    .has-children .contains-current {
+    .has-children.contains-current {
       >div.current-page a {
         color: $section-navigation-desktop-active-color;
       }
@@ -1063,11 +1074,17 @@ form button[type=submit]:hover {
       a {
         color: $main-menu-mobile-tablet-link-color;
       }
-      a:active, a:focus {
+     // a:focus,
+      a:active {
         background-color: $hamburger-active-link-background;
         color: $hamburger-active-link-color;
       }
     }
+  }
+ // .menu.nav-menu>.nav-item>.nav-item-title>a,
+ // #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
+  #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
+    //color: $main-menu-link-hover-color;
   }
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:focus,
@@ -1078,6 +1095,7 @@ form button[type=submit]:hover {
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
     background: $section-menu-mobile-tablet-family-active-background;
+    color: $hamburger-active-link-color;
   }
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
@@ -1086,6 +1104,15 @@ form button[type=submit]:hover {
   #nvcgSlMainNav #swKeyword {
     color:$main-menu-mobile-search-text;
   }
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
+  #nvcgSlMainNav.searching #swKeyword::placeholder,
+  #nvcgSlMainNav.searching #swKeyword::-webkit-input-placeholder,
+  #nvcgSlMainNav.searching #swKeyword::-ms-input-placeholder,
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+
   #nvcgSlMainNav.searching {
     #searchclear {
       color:  $main-menu-mobile-search-text;
@@ -1093,14 +1120,6 @@ form button[type=submit]:hover {
     .search {
       background-color: $main-menu-mobile-search-background;
       color:  $main-menu-mobile-search-text;
-      input::placeholder,
-      input::-webkit-input-placeholder,
-      input::-moz-placeholder,
-      input:-ms-input-placeholder,
-      input:-moz-placeholder {
-        color: $search-placeholder-text-color;
-        opacity: 1;
-      }
     }
   }
   .nav-search {
@@ -1132,6 +1151,7 @@ form button[type=submit]:hover {
     background: $section-menu-mobile-tablet-family-background;
     &:active {
       background: $section-menu-mobile-tablet-family-active-background;
+      color: $section-menu-mobile-tablet-family-active-color;
     }
   }
 
