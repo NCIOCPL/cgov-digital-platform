@@ -76,7 +76,7 @@ $hamburger-menu-mobile-tablet-not-current-page-minus-color: $fountain;
 $hamburger-menu-mobile-tablet-not-current-page-minus-background: $dust;
 $hamburger-menu-mobile-tablet-not-current-page-plus-color: $white;
 $hamburger-menu-mobile-tablet-not-current-page-plus-background: $fountain;
-$hamburger-section-menu-parent-item-link-color: $capri;
+$hamburger-section-menu-parent-item-link-color: $fountain;
 $hamburger-active-link-background: $blueberry;
 $hamburger-active-link-color: $white;
 $main-menu-mobile-tablet-nav-search-float-tablet-down: right; // necessary if mobile menu items decrease from the default 4 items
@@ -130,6 +130,7 @@ $section-menu-mobile-tablet-top-background: $fountain;
 //parent current page text color capri
 $section-menu-mobile-tablet-family-background: $dust;
 $section-menu-mobile-tablet-family-active-background: $blueberry;
+$section-menu-mobile-tablet-family-active-parent-color: $blueberry;
 $section-menu-mobile-tablet-family-active-color: $white;
 $section-menu-mobile-tablet-current-page-plus-background: $fountain;
 $section-menu-mobile-tablet-current-page-plus-color: $white;
@@ -504,6 +505,11 @@ header {
     }
   }
 }
+.menu.nav-menu>.nav-item>.nav-item-title>a:hover,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a:hover {
+  color: $main-menu-link-hover-color;
+}
+
 .menu.nav-menu>.nav-item>.nav-item-title>a.active,
 .menu.nav-menu>.nav-item>.nav-item-title>a.open,
 .menu.nav-menu>.nav-item>.nav-item-title>a:focus {
@@ -543,6 +549,7 @@ a.nav-dictionary::before {
 #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
 .section-nav .level-1.contains-current.has-children>div a {
   color: $hamburger-section-menu-parent-item-link-color;
+  outline:0;
 }
 
 .section-nav .level-1.contains-current div.current-page a {
@@ -1086,23 +1093,29 @@ form button[type=submit]:hover {
   #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
     //color: $main-menu-link-hover-color;
   }
+  //#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:focus,
+  //#mega-nav li.contains-current>div.nav-item-title>a:focus
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
-  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:focus,
-  #mega-nav li.contains-current>div.nav-item-title>a:active,
-  #mega-nav li.contains-current>div.nav-item-title>a:focus {
+  #mega-nav li.contains-current>div.nav-item-title>a:active
+   {
     color: $hamburger-active-link-color;
   }
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
-    background: $section-menu-mobile-tablet-family-active-background;
-    color: $hamburger-active-link-color;
+    //background: $section-menu-mobile-tablet-family-active-background;
+    color: $section-menu-mobile-tablet-family-active-parent-color;
   }
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
     height: $site-logo-height-mobile;
   }
-  #nvcgSlMainNav #swKeyword {
+  #nvcgSlMainNav #swKeyword,
+  #nvcgSlMainNav.searching #swKeyword
+  {
     color:$main-menu-mobile-search-text;
+    height: -webkit-fill-available;
+    height: available;
+
   }
   #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
   #nvcgSlMainNav.searching #swKeyword::placeholder,
