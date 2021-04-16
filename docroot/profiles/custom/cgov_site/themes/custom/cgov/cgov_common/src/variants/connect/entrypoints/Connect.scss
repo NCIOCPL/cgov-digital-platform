@@ -495,16 +495,7 @@ header {
 .mobile-menu-bar>button:focus {
   color: $main-menu-link-color;
 }
-.menu.nav-menu>.nav-item>.nav-item-title,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title
-{
-  &:hover {
-    background: $main-menu-link-hover-background-color;
-    a {
-      color: $main-menu-link-hover-color;
-    }
-  }
-}
+
 .menu.nav-menu>.nav-item>.nav-item-title>a:hover,
 #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a:hover {
   color: $main-menu-link-hover-color;
@@ -546,11 +537,18 @@ a.nav-dictionary::before {
 
 #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
 #mega-nav li.contains-current>div.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
-.section-nav .level-1.contains-current.has-children>div a {
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a{
   color: $hamburger-section-menu-parent-item-link-color;
   outline:0;
 }
+.section-nav .level-1.contains-current.has-children>div a {
+  color: $hamburger-section-menu-parent-item-link-color;
+  outline:0;
+  &:active {
+    color: $section-menu-mobile-tablet-family-active-color;
+  }
+}
+
 
 .section-nav .level-1.contains-current div.current-page a {
   color: $section-menu-mobile-tablet-current-page-color;
@@ -652,9 +650,6 @@ figure a.article-image-enlarge:hover {
 .feature-primary.list.managed,
 .row.feature-primary{
   background-color: $landing-page-feature-background-color;
-  .icon-exit-notification {
-    @include svg-sprite($content-svg-white-external-link);
-  } 
 }
 
 .feature-primary,
@@ -704,6 +699,9 @@ figure a.article-image-enlarge:hover {
   .list.managed {
     ul {
       background: $managed-list-background-color;
+      .icon-exit-notification {
+        @include svg-sprite($content-svg-white-external-link);
+      }
     }
     li.list-item:hover {
       h3 > a,
@@ -970,7 +968,16 @@ form button[type=submit]:hover {
     border-bottom-color: $main-menu-desktop-active-item-border-bottom;
 
   }
-
+  .menu.nav-menu>.nav-item>.nav-item-title,
+  #mega-nav .nav-menu>li.contains-current>div.nav-item-title
+  {
+    &:hover {
+      background: $main-menu-link-hover-background-color;
+      a {
+        color: $main-menu-link-hover-color;
+      }
+    }
+  }
   a.sub-nav-group-header {
     color: $mega-menu-desktop-group-header-color;
   }
@@ -1103,7 +1110,12 @@ form button[type=submit]:hover {
   }
 
   #mega-nav .current-page > div > a:hover {
-    color: $main-menu-mobile-tablet-link-color;
+    //color: $main-menu-mobile-tablet-link-color;
+    color: $main-menu-link-color;
+  }
+  #mega-nav .has-children.current-page > div > a:hover {
+    //color: $main-menu-mobile-tablet-link-color;
+   color: $main-menu-link-color;
   }
  // .menu.nav-menu>.nav-item>.nav-item-title>a,
  // #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
