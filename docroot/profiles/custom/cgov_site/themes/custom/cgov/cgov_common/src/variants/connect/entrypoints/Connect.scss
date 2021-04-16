@@ -1088,6 +1088,10 @@ form button[type=submit]:hover {
       }
     }
   }
+
+  #mega-nav .current-page > div > a:hover {
+    color: $main-menu-mobile-tablet-link-color;
+  }
  // .menu.nav-menu>.nav-item>.nav-item-title>a,
  // #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
   #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
@@ -1103,7 +1107,7 @@ form button[type=submit]:hover {
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
     //background: $section-menu-mobile-tablet-family-active-background;
-    color: $section-menu-mobile-tablet-family-active-parent-color;
+    color: $section-menu-mobile-tablet-family-active-color;
   }
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
@@ -1117,11 +1121,18 @@ form button[type=submit]:hover {
     height: available;
 
   }
+
   #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
   #nvcgSlMainNav.searching #swKeyword::placeholder,
   #nvcgSlMainNav.searching #swKeyword::-webkit-input-placeholder,
   #nvcgSlMainNav.searching #swKeyword::-ms-input-placeholder,
-  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
+  #nvcgSlMainNav.searching input::placeholder,
+  #nvcgSlMainNav.searching input:-moz-placeholder,
+  #nvcgSlMainNav.searching input::-webkit-input-placeholder,
+  #nvcgSlMainNav.searching input::-ms-input-placeholder,
+  #nvcgSlMainNav.searching input:-moz-placeholder
+  {
     color: $search-placeholder-text-color;
     opacity: 1;
   }
