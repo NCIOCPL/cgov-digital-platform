@@ -949,12 +949,31 @@ form button[type=submit]:hover {
   }
   .search {
     margin: $main-menu-desktop-search-margin;
-    .searchString,
-    input::placeholder,
-    input::-webkit-input-placeholder,
-    input::-moz-placeholder,
-    input:-ms-input-placeholder,
+    .searchString {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-webkit-input-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-moz-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input:-ms-input-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
     input:-moz-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-ms-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::placeholder {
       color: $search-placeholder-text-color;
       opacity: 1;
     }
@@ -1147,16 +1166,51 @@ form button[type=submit]:hover {
 
   }
 
-  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
-  #nvcgSlMainNav.searching #swKeyword::placeholder,
-  #nvcgSlMainNav.searching #swKeyword::-webkit-input-placeholder,
-  #nvcgSlMainNav.searching #swKeyword::-ms-input-placeholder,
-  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder,
-  #nvcgSlMainNav.searching input::placeholder,
-  #nvcgSlMainNav.searching input:-moz-placeholder,
-  #nvcgSlMainNav.searching input::-webkit-input-placeholder,
-  #nvcgSlMainNav.searching input::-ms-input-placeholder,
-  #nvcgSlMainNav.searching input:-moz-placeholder
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-webkit-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-ms-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-ms-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-webkit-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-ms-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-ms-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::placeholder
   {
     color: $search-placeholder-text-color;
     opacity: 1;
