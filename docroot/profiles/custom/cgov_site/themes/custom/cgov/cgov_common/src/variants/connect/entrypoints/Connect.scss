@@ -263,6 +263,7 @@ $content-table-header-background: $icicle;
 $content-svg-guide-card-circle-arrow: chevron-circle-connect-theme;
 $content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-connect-theme;
 $content-svg-external-link: external-link-connect-theme;
+$content-svg-fountain-external-link: external-link-fountain-connect-theme;
 $content-svg-white-external-link: external-link-white-connect-theme;
 //infographic
 $infographic-link-background-color: $dust;
@@ -752,12 +753,17 @@ figure a.article-image-enlarge:hover {
   }
 }
 
-.feature-card {
-  .icon-exit-notification {
+.feature-card
+{
+   a.icon-exit-notification {
     @include svg-sprite($content-svg-external-link);
   }
 }
 
+.feature-card .image-hover a.icon-exit-notification {
+  @include svg-sprite($content-svg-fountain-external-link);
+
+}
 .icon-exit-notification {
   @include svg-sprite($content-svg-external-link);
 }
@@ -1037,7 +1043,7 @@ form button[type=submit]:hover {
   .menu.nav-menu>.nav-item>.nav-item-title>a:focus,
   .menu.nav-menu>.nav-item>.nav-item-title:focus
   {
-    outline: 0;
+    outline: none;
   }
   // Left navigation
   .section-nav {
@@ -1151,7 +1157,7 @@ form button[type=submit]:hover {
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
     //background: $section-menu-mobile-tablet-family-active-background;
-    color: $section-menu-mobile-tablet-family-active-color;
+    //color: $section-menu-mobile-tablet-family-active-color;
   }
   .nci-logo-pages img {
     width: $site-logo-width-mobile;
@@ -1252,7 +1258,7 @@ form button[type=submit]:hover {
 
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
-    &:active {
+    &:active, &:focus {
       background: $section-menu-mobile-tablet-family-active-background;
       color: $section-menu-mobile-tablet-family-active-color;
       a {
@@ -1260,8 +1266,14 @@ form button[type=submit]:hover {
       }
     }
   }
-
-
+  .section-nav .level-1.contains-current.has-children:active>div>a {
+    color: $section-menu-mobile-tablet-family-active-color;
+  }
+  .section-nav .level-1.contains-current.has-children>div a {
+    &:active {
+      //color: $section-menu-mobile-tablet-family-active-color;
+    }
+  }
   .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
   .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
     background: $section-menu-mobile-tablet-current-page-plus-background;
