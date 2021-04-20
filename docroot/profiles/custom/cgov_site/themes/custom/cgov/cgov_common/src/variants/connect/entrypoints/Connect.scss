@@ -1259,7 +1259,36 @@ form button[type=submit]:hover {
   .section-nav div.current-page {
     background: $section-menu-mobile-tablet-current-page-background;
   }
-
+  .section-nav ul div {
+    padding: 0;
+  }
+  .section-nav .level-0>div {
+    padding: 0;
+  }
+  .section-nav .level-0>div>a {
+    margin:0;
+    padding-left:0.8888em;
+    padding-right: 3.3888em;
+    padding-bottom: 0.625em;
+    padding-top: 0.625em;
+  }
+  .section-nav ul div>a {
+    display: block;
+    padding: 14.5px 0;
+    margin: 0;
+    &:active, &:focus {
+      background: $section-menu-mobile-tablet-family-active-background;
+      color: $section-menu-mobile-tablet-family-active-color;
+    }
+  }
+  .section-nav .level-1>div>a {
+    margin:0;
+    padding-left: 1em;
+  }
+  .section-nav .level-2>div>a {
+    margin: 0;
+    padding-left: 1.875em;
+  }
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
     &:active, &:focus {
@@ -1270,12 +1299,15 @@ form button[type=submit]:hover {
       }
     }
   }
+  .section-nav .level-1.contains-current.has-children:active {
+    background: $section-menu-mobile-tablet-family-active-background;
+  }
   .section-nav .level-1.contains-current.has-children:active>div>a {
     color: $section-menu-mobile-tablet-family-active-color;
   }
   .section-nav .level-1.contains-current.has-children>div a {
-    &:active {
-      //color: $section-menu-mobile-tablet-family-active-color;
+    &:active, &:focus {
+      color: $section-menu-mobile-tablet-family-active-color;
     }
   }
   .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
