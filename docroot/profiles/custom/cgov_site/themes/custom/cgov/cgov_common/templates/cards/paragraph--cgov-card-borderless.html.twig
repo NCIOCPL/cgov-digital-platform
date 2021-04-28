@@ -21,7 +21,9 @@
   {% set image_orientation = 'borderless-image-' ~ content.field_image_orientation|render|striptags|trim %}
   {% set show_button = content.field_show_button|render|striptags|lower|trim %}
   {% set theme = content.field_theme|render|striptags|lower|trim %}
-
+  {% if theme == 'default' %}
+    {% set theme = '' %}
+  {% endif %}
    {# image_orientation: {{ image_orientation }}<br />
     show_button: {{ show_button }}<br />
     theme: {{ theme }}#}

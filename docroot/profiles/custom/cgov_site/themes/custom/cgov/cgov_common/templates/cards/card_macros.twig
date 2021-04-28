@@ -39,7 +39,6 @@
 
 {% macro borderlessCard(title, description, image, url, button_text, button_alt, nid, image_orientation, show_button, theme, parentTheme) %}
 	{% if parentTheme == 'dceg_connect' %}
-		{% set dceg_connect = true %}
 		{% set text_class = 'landing-page-body' %}
 		{% set card_container_class = '' %}
 	{% elseif parentTheme == 'special_report' %}
