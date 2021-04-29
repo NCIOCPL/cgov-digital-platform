@@ -50,21 +50,35 @@
 	{% endif %}
 
 	<div class = "{{ theme }}">
-		<div class="row flex-columns borderless-container">
+		<div class="row flex-columns {{ parentTheme }} borderless-container">
 			{% if show_button == 'no' %}
 			<a href="{{ url }}">
 				{% endif %}
 				<div class="borderless-card {{ card_container_class }} columns align-center {{ image_orientation }}">
 					<div class="borderless-text-container">
-						<h1 class="desktop-tablet-display">
-							{% if show_button != 'no' %}
+						{% if parentTheme == 'dceg_connect' %}
+							<h1 class="desktop-tablet-display">
+								{% if show_button != 'no' %}
 								<a href="{{ url }}">
-							{% endif %}
-							{{ title }}
-							{% if show_button != 'no' %}
+									{% endif %}
+									{{ title }}
+									{% if show_button != 'no' %}
 								</a>
-							{% endif %}
-						</h1>
+								{% endif %}
+							</h1>
+						{% else %}
+							<h2 class="desktop-tablet-display">
+								{% if show_button != 'no' %}
+								<a href="{{ url }}">
+									{% endif %}
+									{{ title }}
+									{% if show_button != 'no' %}
+								</a>
+								{% endif %}
+							</h2>
+						{% endif %}
+
+
 						{% if description %}
 							<p class="{{ text_class }}">{{ description }}</p>
 						{% endif %}
@@ -76,9 +90,16 @@
 					</div>
 					{% if image %}
 						<div class="image-hover borderless-image-container">
-							<h1 class="mobile-display">
-								{{ title }}
-							</h1>
+							{% if parentTheme == 'dceg_connect' %}
+								<h1 class="mobile-display">
+									{{ title }}
+								</h1>
+
+							{% else %}
+								<h2 class="mobile-display">
+									{{ title }}
+								</h2>
+							{% endif %}
 							{% if show_button != 'no' %}
 							<a href="{{ url }}">
 								{% endif %}
