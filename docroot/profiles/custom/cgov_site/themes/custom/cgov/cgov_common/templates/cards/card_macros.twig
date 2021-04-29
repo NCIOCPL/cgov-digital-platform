@@ -92,12 +92,23 @@
 						<div class="image-hover borderless-image-container">
 							{% if parentTheme == 'dceg_connect' %}
 								<h1 class="mobile-display">
+									{% if show_button != 'no' %}
+									<a href="{{ url }}">
+										{% endif %}
 									{{ title }}
+										{% if show_button != 'no' %}
+									</a>
+									{% endif %}
 								</h1>
-
 							{% else %}
 								<h2 class="mobile-display">
+									{% if show_button != 'no' %}
+									<a href="{{ url }}">
+										{% endif %}
 									{{ title }}
+										{% if show_button != 'no' %}
+									</a>
+									{% endif %}
 								</h2>
 							{% endif %}
 							{% if show_button != 'no' %}
