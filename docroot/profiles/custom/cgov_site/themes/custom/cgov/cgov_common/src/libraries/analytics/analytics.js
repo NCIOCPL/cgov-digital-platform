@@ -163,7 +163,7 @@ $(document).ready(function () {
         $(el).on('click.analytics', 'a', function (event) {
             var $this = $(this);
             var $borderlessContainer = $(this).parents('.borderless-container');
-            var cardTitle = $borderlessContainer.find('h2').first().text().trim();
+            var cardTitle = $borderlessContainer.find('h1').first().text().trim();
             var linkText = cardTitle;
             var container = 'fullwidth';
             var containerIndex = i + 1;
