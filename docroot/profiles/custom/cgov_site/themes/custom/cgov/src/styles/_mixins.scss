@@ -131,3 +131,114 @@
 	// -webkit-order: $val;
 	order: $val;
 }
+
+
+@mixin bp-retina {
+	@media all and (-webkit-min-device-pixel-ratio: 2),
+	all and (min--moz-device-pixel-ratio: 2),
+	all and (-o-min-device-pixel-ratio: 2/1),
+	all and (min-device-pixel-ratio: 2),
+	all and (min-resolution: 192dpi),
+	all and (min-resolution: 2dppx) {
+		@content;
+	}
+}
+
+//Image background
+@mixin background-icon($image,$width,$height,
+$tablet-width:$width,$tablet-height:$height,
+$mobile-width:$width,$mobile-height:$height,
+$displayStyle:inline-block,
+$background-position:initial, $background-repeat: no-repeat,
+$container-height:$height,$tablet-container-height:$tablet-height,
+$mobile-container-height:$mobile-height) {
+	background-image: url($image);
+	background-repeat: $background-repeat;
+	background-position: $background-position;
+	display:  $displayStyle;
+	content:" ";
+	@include bp(large-up){
+		background-size: $width $height;
+		height:$container-height;
+		width: $width;
+	}
+	@include bp(medium){
+		background-size:$tablet-width $tablet-height;
+		width:$tablet-width;
+		height:$tablet-container-height;
+	}
+	@include bp(small){
+		background-size:$mobile-width $mobile-height;
+		width:$mobile-width;
+		height:$mobile-container-height;
+	}
+
+}
+@mixin standard-background-icon($standard-image, $retina-image, $width, $height,
+$tablet-width:$width,$tablet-height:$height,
+$mobile-width:$width,$mobile-height:$height,
+$displayStyle:inline-block,
+$background-position:initial,
+$container-height:$height,
+$tablet-container-height:$tablet-height,
+$mobile-container-height:$mobile-height,
+$background-repeat: no-repeat, $no-width:false) {
+	@include background-icon($standard-image,$width,$height,$tablet-width,$tablet-height,
+					$mobile-width,$mobile-height,
+					$displayStyle,$background-position,$background-repeat,$container-height,
+					$tablet-container-height,$mobile-container-height);
+	@include bp-retina {
+		@include background-icon($retina-image,$width,$height,$tablet-width,$tablet-height,
+						$mobile-width,$mobile-height,
+						$displayStyle,$background-position,$background-repeat,$container-height,
+						$tablet-container-height,$mobile-container-height);
+	}
+
+	@if $no-width == false {
+		width: $width;
+		margin-right: auto;
+		margin-left:auto;
+	}
+}
+
+//Centered Emphasized text
+@mixin centered {
+	display: block;
+	position: relative;
+	text-align: center;
+	clear:both;
+	width:100%;
+}
+@mixin centered-inline {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	clear:both;
+	margin-left:auto;
+	margin-right:auto;
+	//width:100%;
+}
+@mixin centeredEm {
+	@include centered;
+	font-style: italic;
+}
+
+@mixin vertical-center {
+	line-height: normal;
+	vertical-align: middle;
+	display:inline-block;
+}
+
+@mixin toggle-color($color, $bg-color) {
+	&[aria-expanded="false"] .toggle,
+	.toggle[aria-expanded="false"] {
+		color: $color;
+		background-color: $bg-color;
+	}
+
+	&[aria-expanded="true"] .toggle,
+	.toggle[aria-expanded="true"] {
+		color: $bg-color;
+		background-color: $color;
+	}
+}
