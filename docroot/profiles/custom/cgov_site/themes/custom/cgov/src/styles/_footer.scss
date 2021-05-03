@@ -71,7 +71,26 @@
     line-height: 1.3em;
   }
 }
-
+.site-footer__buttons {
+  ul {
+    margin-top: 1em;
+  }
+  li {
+    @include bp(small) {
+      margin: 0;
+    }
+  }
+  a.borderless-button-yellow {
+    @include bp(small) {
+      margin: 0;
+    }
+  }
+}
+.site-footer__contact {
+  li {
+    font-weight: 700;
+  }
+}
 .site-footer__icons {
   max-width: 232px;
   margin: 0 auto;
@@ -297,5 +316,21 @@
   }
 }
 
+
+.dcegConnect_footer {
+  h1 {
+    margin-bottom: 5px;
+    @include bp(small) {
+      text-align:center;
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+
+  }
+  h4 {
+    margin-top: 0;
+
+  }
+}
 /********************* END Footer Styles ******************************************/
 
