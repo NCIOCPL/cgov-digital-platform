@@ -8,6 +8,11 @@
 
 {% if content.field_featured_item[0] %}
 
+  {% set parentThemeField = drupal_field('field_page_style','node',nid) %}
+  {% if parentThemeField[0]['#markup'] is not empty %}
+    {% set parentTheme = parentThemeField[0]['#markup'] %}
+  {% endif %}
+
   {% set featured_item_node = content.field_featured_item[0]["#node"] %}
   {% set nid = featured_item_node.id %}
   {% set image_template = 'borderless_card_image' %}
@@ -60,6 +65,6 @@
     {% set button_alt = '' %}
   {% endif %}
 
-  {{ cardMacros.borderlessCard(title, description, image, url, button_text, button_alt, nid, image_orientation, show_button, card_theme) }}
+  {{ cardMacros.borderlessCard(title, description, image, url, button_text, button_alt, nid, image_orientation, show_button, card_theme, parentTheme) }}
 
 {% endif %}

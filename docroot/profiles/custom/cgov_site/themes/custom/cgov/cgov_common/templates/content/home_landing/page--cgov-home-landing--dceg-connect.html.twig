@@ -1,0 +1,48 @@
+{{ attach_library('cgov_common/dcegconnect') }}
+{{ page.notification_banner }}
+{% set page_type = 'node--type-' ~ node.bundle|clean_class %}
+<header class="push" role="banner">
+  <div id="nvcgSlSiteBanner" class="row">
+     {{ page.site_banner }}
+  </div>
+</header>
+
+<div id="page">
+  <!-- Global nav/utilit bar/language  -->
+  <div class="fixedtotop">
+    <div class="headroom-area">
+      {{ page.language_bar }}
+      <!-- UTILITY NAV -->
+      <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
+        {{ page.utility_bar }}
+      </div>
+      <!-- END UTILITY NAV -->
+    </div>
+    <!-- end "headroom-area" -->
+    <!-- BEGIN NAVIGATION -->
+    <!-- Begin nav-search bar -->
+    <div class="nav-search-bar gradient header">
+      <div id="nvcgSlMainNav" class="row">
+        <div class="slot-item first-SI">
+          <div class="navigation">
+            {{ page.mobile_nav }}
+            {{ page.main_nav }}
+          </div>
+        </div>
+        {{ page.search_bar }}
+      </div>
+    </div>
+  </div>
+  <!-- End nav-search bar -->
+  <!-- END NAVIGATION -->
+
+  </div><!-- END Global nav/utility bar/language -->
+
+  <!-- Begin MAIN CONTENT AREA -->
+  <div class="main-content dcegConnect {{ page_type }}" id="content" tabindex="0">
+    {{ page.content }}
+  </div>
+
+</div>
+
+{{ page.footer }}
