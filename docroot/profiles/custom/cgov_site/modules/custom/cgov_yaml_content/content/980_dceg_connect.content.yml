@@ -1,0 +1,186 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "DCEG Connect"
+  field_page_description:
+    value: "DCEG Connect"
+  field_browser_title:
+    value: "DCEG Connect"
+  field_pretty_url:
+    value: "dceg-connect"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_page_style:
+    value: "dceg_connect"
+  field_landing_contents:
+      ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'What the Study is'
+      field_override_card_title:
+        - value: "What the study is"
+      field_override_card_longer_descr:
+        - value: "Connect for Cancer Prevention is one of the largest and most important cancer studies in the United States. By joining Connect, you will be a part of a community of researchers and 200,000 people from around the country, who, like you, want to contribute to  cancer research."
+      field_image_position:
+        - value: "left"
+      field_button_display:
+        - value: "no"
+      field_card_theme:
+        - value: "default"
+      ######## End Borderless card ###########
+      ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'How you can help'
+      field_override_card_title:
+        - value: "How you can help"
+      field_override_card_longer_descr:
+        - value: "While researchers have made important advances, there is more to learn to ease the burden of cancer on our families and our communities. Your participation in this study will give scientists the ability to look at how the way we live, our genes, and our medical history are connected to cancer."
+      field_image_position:
+        - value: "right"
+      field_button_display:
+        - value: "no"
+      field_card_theme:
+        - value: "accent-cool"
+      ######## End Borderless card ###########
+      ######## Begin Raw HTML Block ###########
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="default">
+                <div class="row flex-columns borderless-container">
+                    <div class="columns align-center">
+                        <h1 class="icon-text-container-title">
+                            Who can join
+                        </h1>
+                        <div class="icon-text-container">
+                            <div class="icon-text-container-left">
+                                <div class="icon-text-age-icon"></div>
+                                <div class="icon-text-text-container">40–65 years old and
+                                    have <strong>never been diagnosed with most kinds of
+                                        invasive cancers</strong></div>
+                            </div>
+                            <div class="icon-text-container-right">
+                                <div class="icon-text-health-system-icon"></div>
+                                <div class="icon-text-text-container">Member or patient of
+                                    <strong>participating health care systems</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      ######## End Raw HTML Block ###########
+      ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: '[Lead IMG Crops] Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Learning from everyone'
+      field_override_card_title:
+        - value: "Learning from everyone"
+      field_override_card_longer_descr:
+        - value: "Connect for Cancer Prevention will be most successful if a diverse group of participants from different environments and backgrounds join. This allows all people to benefit from our discoveries."
+      field_image_position:
+        - value: "left"
+      field_button_display:
+        - value: "no"
+      field_card_theme:
+        - value: "accent-warm"
+      ######## End Borderless card ###########
+      ######## Begin Raw HTML Block ###########
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+           <div class="default">
+               <div class="row flex-columns borderless-container">
+                   <div class="columns align-center">
+                       <h1 class="icon-text-container-title">
+                           Participating Health Care Systems
+                       </h1>
+                       <div class="icon-list-container">
+                           <div class="icon-list-first-column">
+                               <div class="dceg-logo-sh-vector"></div>
+                               <div class="dceg-logo-chicago-vector"></div>
+
+                           </div>
+                           <div class="icon-list-second-column">
+                               <div class="dceg-logo-hp-vector"></div>
+                               <div class="dceg-logo-marsh-vector"></div>
+                           </div>
+                           <div class="icon-list-third-column">
+                               <div class="dceg-logo-hf-vector"></div>
+                               <div class="dceg-logo-kp-vector"></div>
+                           </div>
+                       </div>
+                       <div class="icon-list-mobile-container">
+                           <div class="icon-list-mobile-first-column">
+                               <div class="dceg-logo-sh-vector"></div>
+                               <div class="dceg-logo-hf-vector"></div>
+                               <div class="dceg-logo-marsh-vector"></div>
+                           </div>
+                           <div class="icon-list-mobile-second-column">
+                               <div class="dceg-logo-hp-vector"></div>
+                               <div class="dceg-logo-chicago-vector"></div>
+                               <div class="dceg-logo-kp-vector"></div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+      ######## End Raw HTML Block ###########
