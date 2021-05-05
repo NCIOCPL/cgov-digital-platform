@@ -3,6 +3,8 @@
 @import '~Core/styles/variables';
 @import '~Core/styles/mixins';
 @import '~Core/styles/nci-foundation_variables';
+@import '~Core/styles/vendor/foundation/scss/foundation/components/global';
+@import '~Core/styles/vendor/foundation/scss/foundation/components/buttons';
 @import "~Core/styles/environments/percussion";
 @import '../styles/sprites/svg-sprite';
 
@@ -300,7 +302,7 @@ table tbody tr td a,
 li a {
   color: $default-link-color;
   &.borderless-button {
-    color: $button-link-color;
+   // color: $button-link-color;
   }
 }
 .multimedia {
@@ -758,7 +760,66 @@ figure a.article-image-enlarge:hover {
 .default-borderless-theme {
   background-color: $default-borderless-background;
 }
+.accent-cool {
+  .borderless-container {
+    .borderless-card {
+      h2 > a {
+        &:hover {
+          color: $white;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+.accent-warm {
+  .borderless-container {
+    .borderless-card {
+      h2 > a {
+        &:hover {
+          color: $granite;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
 
+.borderless-container {
+  .borderless-card {
+    .borderless-button,
+    a.borderless-button {
+      @include button-base;
+      @include button-size($padding: false);
+      @include button-style($clementine, 5px);
+      font-family: $montserrat-font-stack;
+      //font-size: 14px;
+      //padding: 10px 10px 10px 11px;
+      color: $blueberry;
+      background-color: $lemon;
+      text-transform: uppercase;
+      box-shadow: none;
+      //box-shadow: 0 3px 0 0 $button-box-shadow-color;
+      &:hover {
+        text-decoration: none;
+        background-color: $clementine;
+        color: $blueberry;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        right: 5%;
+        top: 37%;
+        @include svg-sprite(chevron-blue, $rotate: right);
+      }
+    }
+    h2 > a {
+      &:hover {
+        color: $capri;
+      }
+    }
+  }
+}
 .feature-card
 {
    a.icon-exit-notification {
