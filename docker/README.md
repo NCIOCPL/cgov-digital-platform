@@ -10,7 +10,8 @@ The configuration needed for running the CGov Digital Platform in a docker compo
 ### Quick Reference
 **Make sure your machine and project have been setup before starting**
 * **STARTING:** Run `docker-compose up -d` within this directory (`docker`) to start up the stack.
-* **STOPPING:** `docker-compose down` within this directory (`docker`) to start up the stack.
+* **STOPPING:** Run `docker-compose stop` within this directory (`docker`) to stop up the stack without removing the container. It can be restarted again.
+* **DESTROYING:** `docker-compose down` within this directory (`docker`) to stop and remove containers, networks, volumes, and images created by up.
 
 **NOTE:** Currently a `docker-compose down` blows away the database. This means every restart requires an [Initial Setup of Site](#Initial-Setup-of-Site).
 
