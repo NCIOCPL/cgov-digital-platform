@@ -46,7 +46,6 @@ $site-logo-width: auto;
 $site-logo-width-mobile: 292px;
 $site-logo-height: 50px;
 $site-logo-height-desktop: 50px;
-//$site-logo-height-mobile: 32px;
 $site-logo-height-mobile:auto;
 $site-logo-min-width: unset;
 $site-logo-max-width: 98%;
@@ -62,7 +61,6 @@ $main-menu-border-color: $white-half-transparent;
 $main-menu-border-width: 1px;
 //text labels?
 $main-menu-desktop-active-item-border-bottom: $fountain;
-//$main-menu-link-color: $fountain;
 $main-menu-link-color: $white;
 $main-menu-link-hover-color: $fountain;
 $main-menu-link-hover-background-color: $white;
@@ -95,7 +93,6 @@ $main-menu-desktop-search-color: $white;
 $main-menu-desktop-search-border-color: $white-half-transparent;
 $main-menu-desktop-search-border-width: 1px;
 $main-menu-desktop-search-margin: 3px 0;
-//$main-menu-desktop-item-padding: 14px 7px 14px;
 $main-menu-desktop-item-padding: 21px 7px 14px;
 //search-results-numbers
 $main-menu-desktop-svg-search-magnifying-glass: search-connect-theme;
@@ -156,8 +153,6 @@ $default-link-color: $capri;
 $default-link-color-hover:  $blueberry;
 $button-link-color: $white;
 //	Feature Cards
-//$landing-page-feature-card-background: $lemon;
-//$landing-page-feature-card-link-color: $blueberry;
 $landing-page-feature-background-color: $fountain;
 $landing-page-feature-card-link-color: $capri;
 $landing-page-feature-card-link-hover-color: $blueberry;
@@ -165,14 +160,10 @@ $landing-page-feature-description-color: $asphalt;
 $landing-page-feature-card-background: $white;
 $landing-page-feature-card-desktop-border-top: solid 14px $lemon;
 $landing-page-feature-card-mobile-border-top: solid 3px $lemon;
-//$landing-page-feature-card-background: $fountain;
-//$landing-page-feature-card-link-color: $white;
 //multimedia
 $multimedia-card-background-color: $white;
-//$multimedia-card-background-color: $lemon;
 
 //Managed List
-//$managed-list-background-color: $dust;
 $managed-list-background-color: $fountain;
 $managed-list-text-color: $white;
 $managed-list-text-hover-color: $white;
@@ -187,14 +178,12 @@ $page-options-desktop-svg-facebook: facebook-connect-theme;
 $page-options-desktop-svg-twitter: twitter-connect-theme;
 $page-options-desktop-svg-pinterest: pinterest-connect-theme;
 //	Multimedia Row
-//$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-blue.jpg") repeat; //?
 $landing-page-multimedia-background: $white; //?
 
 
 
 $default-borderless-background: $white;
 //	Guide Card Row
-//$landing-page-guide-card-background: $dust;
 
 $landing-page-guide-title-color: $white;
 $landing-page-guide-card-background: $white;
@@ -250,16 +239,6 @@ $content-form-submit-button-background: $lemon;
 $content-form-submit-button-border: #clementine;
 $content-form-submit-button-hover-background: #clementine;
 
-//	Exit Disclaimer Button
-//svg icon capri same as linked text
-
-//	Focus State
-//outline blueberry
-
-//	Join Study Now Button or CTA buttons
-//background clor lemon
-//hover backgorund color clementine
-//text color blueberry
 
 
 $content-pullquote-left-border: $fountain;
@@ -304,7 +283,6 @@ table tbody tr td a,
 li a {
   color: $default-link-color;
   &.borderless-button {
-   // color: $button-link-color;
   }
 }
 .multimedia {
@@ -472,7 +450,6 @@ header {
 
 // overcoming foundation class that hides utility bar for mobile
 .utility-background.micro-a {
-  // display: block !important;
 }
 
 // language bar
@@ -483,7 +460,6 @@ header {
   }
 }
 .language-bar {
-  //background: #fff;
   display: none;
 }
 
@@ -796,13 +772,10 @@ figure a.article-image-enlarge:hover {
       @include button-size($padding: false);
       @include button-style($clementine, 5px);
       font-family: $montserrat-font-stack;
-      //font-size: 14px;
-      //padding: 10px 10px 10px 11px;
       color: $blueberry;
       background-color: $lemon;
       text-transform: uppercase;
       box-shadow: none;
-      //box-shadow: 0 3px 0 0 $button-box-shadow-color;
       &:hover {
         text-decoration: none;
         background-color: $clementine;
@@ -929,8 +902,6 @@ form button[type=submit]:hover {
   }
 }
 //search pager
-
-
 
 // footer
 .site-footer {
@@ -1102,7 +1073,6 @@ form button[type=submit]:hover {
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
   #mega-nav li.contains-current>div.nav-item-title>a,
   #mega-nav .nav-item.current-page>div.nav-item-title>a {
-   // color: initial;
     color: $main-menu-link-hover-color;
   }
   .menu.nav-menu>.nav-item>.nav-item-title>a.active,
@@ -1196,7 +1166,7 @@ form button[type=submit]:hover {
       a {
         color: $main-menu-mobile-tablet-link-color;
       }
-     // a:focus,
+
       a:active {
         background-color: $hamburger-active-link-background;
         color: $hamburger-active-link-color;
@@ -1205,20 +1175,13 @@ form button[type=submit]:hover {
   }
 
   #mega-nav .current-page > div > a:hover {
-    //color: $main-menu-mobile-tablet-link-color;
     color: $main-menu-link-color;
   }
   #mega-nav .has-children.current-page > div > a:hover {
-    //color: $main-menu-mobile-tablet-link-color;
    color: $main-menu-link-color;
   }
- // .menu.nav-menu>.nav-item>.nav-item-title>a,
- // #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
-  #mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
-    //color: $main-menu-link-hover-color;
-  }
-  //#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:focus,
-  //#mega-nav li.contains-current>div.nav-item-title>a:focus
+
+
   #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
   #mega-nav li.contains-current>div.nav-item-title>a:active
    {
@@ -1226,7 +1189,6 @@ form button[type=submit]:hover {
   }
   .section-nav .level-1.contains-current.has-children>div a:active,
   .section-nav .level-1.contains-current.has-children>div a:focus {
-    //background: $section-menu-mobile-tablet-family-active-background;
     color: $section-menu-mobile-tablet-family-active-color;
   }
   .nci-logo-pages img {
@@ -1346,11 +1308,18 @@ form button[type=submit]:hover {
     display: block;
     padding: 14.5px 0;
     margin: 0;
-    &:active, &:focus {
-      background: $section-menu-mobile-tablet-family-active-background;
-      color: $section-menu-mobile-tablet-family-active-color;
+  }
+
+  .section-nav {
+    ul {
+      div>a:focus,
+      div>a:active {
+        background: $section-menu-mobile-tablet-family-active-background;
+        color: $section-menu-mobile-tablet-family-active-color;
+      }
     }
   }
+
   .section-nav .level-1>div>a {
     margin:0;
     padding-left: 1em;
@@ -1361,23 +1330,11 @@ form button[type=submit]:hover {
   }
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
-    &:active, &:focus {
-      background: $section-menu-mobile-tablet-family-active-background;
-      color: $section-menu-mobile-tablet-family-active-color;
-      a {
-        color: $section-menu-mobile-tablet-family-active-color;
-      }
-    }
-  }
-  .section-nav .level-1.contains-current.has-children:active {
-    background: $section-menu-mobile-tablet-family-active-background;
-  }
-  .section-nav .level-1.contains-current.has-children:active>div>a {
-    color: $section-menu-mobile-tablet-family-active-color;
   }
   .section-nav .level-1.contains-current.has-children>div a {
     &:active, &:focus {
       color: $section-menu-mobile-tablet-family-active-color;
+      background: $section-menu-mobile-tablet-family-active-background;
     }
   }
   .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
@@ -1435,7 +1392,6 @@ form button[type=submit]:hover {
   /* place on top of all other elements */
   z-index: 998;
   position: fixed;
-  // display: block;
   right: 0.5em;
   bottom: 1em;
   color: $body-font-color;
@@ -1451,12 +1407,8 @@ form button[type=submit]:hover {
     display: block;
     width: 100px;
     height: 76px;
-    // border: 4px solid $light-cyan;
     border: none;
-    //border-radius: 50%;
     background-color: transparent;
-    //background-color: $light-cyan;
-    //margin-bottom: 2px;
   }
   &::after {
     content: " ";
@@ -1466,7 +1418,6 @@ form button[type=submit]:hover {
     font-size: 30px;
     transform: scale(0.62);
     left:8%;
-    //@include hCenter;
     @include svg-sprite($back-to-top-button);
   }
   &:hover, &:focus {
@@ -1481,9 +1432,6 @@ form button[type=submit]:hover {
   }
   @include break(medium-down){
     margin-bottom: 77px;
-  }
-  @include break(small){
-    //margin-bottom: 104px;
   }
 }
 .navigation {
@@ -1500,11 +1448,7 @@ form button[type=submit]:hover {
       display:none;
     }
   }
-  #mega-nav {
-    @include bp(large-up) {
-      //@include property-prefix(flex,1);
-    }
-  }
+
 }
 .mobile-menu-bar {
   @include flexbox();
