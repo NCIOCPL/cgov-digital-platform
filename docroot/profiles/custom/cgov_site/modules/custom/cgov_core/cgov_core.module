@@ -611,3 +611,10 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
     }
   }
 }
+
+/**
+ * Implements field_widget_WIDGET_TYPE_form_alter().
+ */
+function cgov_core_field_widget_link_default_form_alter(&$element, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
+  $element['uri']['#description'] = t('Enter the full URL starting with https://');
+}
