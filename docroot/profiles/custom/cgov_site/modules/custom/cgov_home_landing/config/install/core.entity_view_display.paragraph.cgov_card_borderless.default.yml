@@ -3,12 +3,17 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.cgov_card_borderless.field_button_alt
+    - field.field.paragraph.cgov_card_borderless.field_button_display
     - field.field.paragraph.cgov_card_borderless.field_button_text
+    - field.field.paragraph.cgov_card_borderless.field_card_theme
     - field.field.paragraph.cgov_card_borderless.field_featured_item
+    - field.field.paragraph.cgov_card_borderless.field_image_position
     - field.field.paragraph.cgov_card_borderless.field_override_card_longer_descr
     - field.field.paragraph.cgov_card_borderless.field_override_card_title
     - field.field.paragraph.cgov_card_borderless.field_override_image_promotional
     - paragraphs.paragraphs_type.cgov_card_borderless
+  module:
+    - options
 id: paragraph.cgov_card_borderless.default
 targetEntityType: paragraph
 bundle: cgov_card_borderless
@@ -22,6 +27,13 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_button_display:
+    weight: 8
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
+    region: content
   field_button_text:
     weight: 5
     label: hidden
@@ -29,6 +41,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_card_theme:
+    weight: 9
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
     region: content
   field_featured_item:
     weight: 0
@@ -38,6 +57,13 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_entity_view
+    region: content
+  field_image_position:
+    weight: 7
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
     region: content
   field_override_card_longer_descr:
     weight: 3

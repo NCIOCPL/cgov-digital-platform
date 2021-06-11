@@ -161,9 +161,15 @@ $(document).ready(function () {
 
     $('.borderless-container').each(function (i, el) {
         $(el).on('click.analytics', 'a', function (event) {
-            var $this = $(this);
-            var $borderlessContainer = $(this).parents('.borderless-container');
-            var cardTitle = $borderlessContainer.find('h2').first().text().trim();
+            var $this = $(this),
+            $borderlessContainer = $(this).parents('.borderless-container'),
+                cardTitle = '';
+            if ($borderlessContainer.hasClass('dceg_connect')) {
+                cardTitle = $borderlessContainer.find('h1').first().text().trim();
+            }
+            else {
+                cardTitle = $borderlessContainer.find('h2').first().text().trim();
+            }
             var linkText = cardTitle;
             var container = 'fullwidth';
             var containerIndex = i + 1;
@@ -488,7 +494,32 @@ $(document).ready(function () {
     $('footer.site-footer').on('click', 'a', function (e) {
         var $this = $(this);
         var $text = $this.text().trim();
-        NCIAnalytics.FooterLink($this, $text);
+        //Check for Join the study link, send to FooterJointheStudyLink instead of FooterLink if found
+        if($this.hasClass('borderless-button-yellow')){
+            var linkName = 'dcegconnect_jointhestudy_footer';
+            NCIAnalytics.FooterJointheStudyLink($this, $text,linkName);
+        }
+        else {
+            NCIAnalytics.FooterLink($this, $text);
+        }
+    });
+
+    // Track header Join the Study link.
+    $('.navigation').on('click', 'a.borderless-button-yellow', function (e) {
+        var $this = $(this),
+            $text = $this.text().trim(),
+            linkName = 'dcegconnect_jointhestudy_header';
+        NCIAnalytics.HeaderJointheStudyLink($this, $text,linkName);
+    });
+
+    // Track Join the Study links in content.
+    $('#content a.borderless-button-yellow').each(function (i, el) {
+        $(el).on('click', function (event) {
+            var $this = $(this);
+            var name = 'dceg_connect_jointhestudy_body';
+            var index = i + 1;
+            NCIAnalytics.JoinTheStudyBodyLink($this, name, index);
+        });
     });
 
     // Track GovDelivery links. Look for data attribute only, no value needed.

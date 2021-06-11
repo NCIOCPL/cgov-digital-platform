@@ -1,0 +1,1482 @@
+@import '~Core/styles/breakpoints';
+@import '~Core/styles/colors';
+@import '~Core/styles/variables';
+@import '~Core/styles/mixins';
+@import '~Core/styles/nci-foundation_variables';
+@import '~Core/styles/vendor/foundation/scss/foundation/components/global';
+@import '~Core/styles/vendor/foundation/scss/foundation/components/buttons';
+@import "~Core/styles/environments/percussion";
+@import '../styles/sprites/svg-sprite';
+
+$cgov_path: "/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/dist/";
+
+// theme color palette
+// connect
+$blueberry:	#174C70;
+$capri:	#2A72A5;
+$clementine:	#f9a921;
+$dust:	#F3F5F8;
+$fountain:	#1C5E86;
+$granite:	#606060;
+$graphite:	#4d4d4d;
+$icicle:	#ebf6f2;
+$lemon:	#FFBF17;
+$white:	#ffffff;
+
+// utility shades
+$eggshell: #f2f0ef;
+$graphite: #4d4d4d;
+$storm: #666666;
+$asphalt: #2e2e2e;
+$aqua: #c7eae8;
+$jade: #97ccc6;
+$freeze: #c2e4e0;
+$space: #023c5a;
+$bronze: #c78005;
+$white-half-transparent: rgba(255, 255, 255, 0.5);
+$light-cyan: #389fbc;
+// theme assignments
+
+//	DOC Logo Header
+$header-logo-background-color: $fountain;
+//image
+$header-logo-padding: 21px 0 22px 0;
+$site-header-desktop-margin-bottom: 0;
+$site-logo-width: auto;
+$site-logo-width-mobile: 292px;
+$site-logo-height: 50px;
+$site-logo-height-desktop: 50px;
+$site-logo-height-mobile:auto;
+$site-logo-min-width: unset;
+$site-logo-max-width: 98%;
+
+//	Utility Bar NA
+$utility-background-color: $blueberry; //?
+$utility-text: $white;
+
+//	Main Navigation
+$main-menu-background-color: $capri;
+$main-menu-mobile-tablet-background-color: $dust;
+$main-menu-border-color: $white-half-transparent;
+$main-menu-border-width: 1px;
+//text labels?
+$main-menu-desktop-active-item-border-bottom: $fountain;
+$main-menu-link-color: $white;
+$main-menu-link-hover-color: $fountain;
+$main-menu-link-hover-background-color: $white;
+$main-menu-mobile-tablet-link-color: $granite;
+//	Mobile Hamburger Menu Navigation
+//hamburger-menu-background-color
+$hamburger-menu-mobile-tablet-current-page-background: $capri;
+$hamburger-menu-mobile-tablet-current-page-minus-color: $fountain;
+$hamburger-menu-mobile-tablet-current-page-minus-background: $dust;
+$hamburger-menu-mobile-tablet-current-page-plus-color: $white;
+$hamburger-menu-mobile-tablet-current-page-plus-background: $fountain; //?
+$hamburger-menu-mobile-tablet-not-current-page-minus-color: $fountain;
+$hamburger-menu-mobile-tablet-not-current-page-minus-background: $dust;
+$hamburger-menu-mobile-tablet-not-current-page-plus-color: $white;
+$hamburger-menu-mobile-tablet-not-current-page-plus-background: $fountain;
+$hamburger-section-menu-parent-item-link-color: $fountain;
+$hamburger-active-link-background: $blueberry;
+$hamburger-active-link-color: $white;
+$main-menu-mobile-tablet-nav-search-float-tablet-down: right; // necessary if mobile menu items decrease from the default 4 items
+$main-menu-mobile-tablet-svg-hamburger: menu-connect-theme;
+$main-menu-mobile-tablet-svg-info: info-connect-theme;
+$main-menu-mobile-tablet-svg-search: search-large-connect-theme;
+$main-menu-mobile-tablet-svg-dictionary: book-connect-theme;
+
+//	Search Box and Search results (including magnifying glass)
+$main-menu-desktop-search-background: $blueberry; //need white border
+$main-menu-mobile-search-background: $blueberry;
+$main-menu-mobile-search-text:$white;
+$main-menu-desktop-search-color: $white;
+$main-menu-desktop-search-border-color: $white-half-transparent;
+$main-menu-desktop-search-border-width: 1px;
+$main-menu-desktop-search-margin: 3px 0;
+$main-menu-desktop-item-padding: 21px 7px 14px;
+//search-results-numbers
+$main-menu-desktop-svg-search-magnifying-glass: search-connect-theme;
+$search-results-pager-active-number-color:$white;
+$search-results-pager-active-background-color: $capri;
+$search-results-pager-number-color: $capri;
+$search-box-height: 55px;
+$search-placeholder-text-color: $white;
+//	Home Page Hero/Interactive Gallery
+$landing-page-hero-text-tablet-background: $capri;
+
+//	Page Body
+//Text container background color? white
+$page-margin-background: $dust;
+$landing-page-page-margin-background: $fountain;
+//	Body Headers (H1-H6)
+$default-header-color: $granite;
+
+//	Desktop Left Navigation
+$mega-menu-desktop-group-header-color: $fountain;
+$mega-menu-line-height: 16px;
+$mega-menu-subnav-link-color: $fountain;
+$section-navigation-desktop-active-background: $capri;
+$section-navigation-desktop-active-item-triangle: $capri;
+$section-navigation-desktop-active-subsection-background: $white;
+$section-navigation-desktop-header-background: $fountain;
+$section-navigation-desktop-active-color: $white;
+$section-menu-desktop-family-active-color: $capri;
+$section-menu-desktop-family-link-color: $capri;
+//	Mobile Section Navigation (Tongue)
+
+
+$section-menu-mobile-tablet-top-background: $fountain;
+//menu-background-color dust
+//parent current page text color capri
+$section-menu-mobile-tablet-family-background: $dust;
+$section-menu-mobile-tablet-family-active-background: $blueberry;
+$section-menu-mobile-tablet-family-active-parent-color: $blueberry;
+$section-menu-mobile-tablet-family-active-color: $white;
+
+$section-menu-mobile-tablet-current-page-plus-background: $fountain;
+$section-menu-mobile-tablet-current-page-plus-color: $white;
+$section-menu-mobile-tablet-current-page-minus-color: $fountain;
+$section-menu-mobile-tablet-current-page-minus-background: $white;
+$section-menu-mobile-tablet-not-current-page-plus-background: $fountain; // this is not a valid css value, but will produce bad css rule and will result in defaulting to cancer.gov style
+$section-menu-mobile-tablet-not-current-page-plus-color: $white;
+$section-menu-mobile-tablet-not-current-page-minus-color: $fountain;
+$section-menu-mobile-tablet-not-current-page-minus-background: $white;
+
+$section-menu-mobile-tablet-current-page-background: $capri;
+$section-menu-mobile-tablet-current-page-color: $white;
+//page title click state backgorund blueberry
+
+$home-landing-h1-color: $white;
+//	Delighter N/A
+//	Link Color
+$default-link-color: $capri;
+$default-link-color-hover:  $blueberry;
+$button-link-color: $white;
+//	Feature Cards
+$landing-page-feature-background-color: $fountain;
+$landing-page-feature-card-link-color: $capri;
+$landing-page-feature-card-link-hover-color: $blueberry;
+$landing-page-feature-description-color: $asphalt;
+$landing-page-feature-card-background: $white;
+$landing-page-feature-card-desktop-border-top: solid 14px $lemon;
+$landing-page-feature-card-mobile-border-top: solid 3px $lemon;
+//multimedia
+$multimedia-card-background-color: $white;
+
+//Managed List
+$managed-list-background-color: $fountain;
+$managed-list-text-color: $white;
+$managed-list-text-hover-color: $white;
+//	Page Options / Social Media Icons
+$page-options-mobile-tablet-background: $capri;
+$page-options-mobile-tablet-hover-background: $lemon;
+$page-options-desktop-background: transparent;
+$page-options-desktop-svg-font-size: font-size-connect-theme;
+$page-options-desktop-svg-print: printer-connect-theme;
+$page-options-desktop-svg-email: mail-envelope-closed-connect-theme;
+$page-options-desktop-svg-facebook: facebook-connect-theme;
+$page-options-desktop-svg-twitter: twitter-connect-theme;
+$page-options-desktop-svg-pinterest: pinterest-connect-theme;
+//	Multimedia Row
+$landing-page-multimedia-background: $white; //?
+
+
+
+$default-borderless-background: $white;
+//	Guide Card Row
+
+$landing-page-guide-title-color: $white;
+$landing-page-guide-card-background: $white;
+$landing-page-guide-card-link-color: $graphite;
+$landing-page-guide-card-link-hover-color: $fountain;
+$landing-page-standard-card-background-color: $white;
+$content-accordion-odd-rows-background: $dust;
+$content-accordion-odd-rows-plus-background: $dust;
+$content-accordion-even-rows-background: $white;
+$content-accordion-even-rows-plus-background: $white;
+$content-accordion-odd-rows-minus-background: $jade;
+$content-accordion-even-rows-minus-background: $aqua;
+$plusminus-color-accordion-odd: $white;
+$plusminus-bg-color-accordion-odd: $fountain;
+$plusminus-color-accordion-even:$white;
+$plusminus-bg-color-accordion-even: $fountain;
+
+//	Plus/Minus Blog Archive
+//	Enlarge/View Infographic Button
+$enlarge-view-button-background: $capri;
+$enlarge-view-button-hover-background: $blueberry;
+$enlarge-view-button-hover-color: $white;
+
+//  back to top
+$back-to-top-button: back-to-top-button;
+//	Footer
+$footer-background: $capri;
+$footer-icons-hover-opacity: 1;
+$footer-svg-twitter: twitter-connect-theme;
+$footer-svg-twitter-hover: twitter-hover-connect-theme;
+$footer-svg-gov-delivery: gov-delivery-connect-theme;
+$footer-svg-gov-delivery-hover: gov-delivery-hover-connect-theme;
+$footer-svg-facebook: facebook-connect-theme;
+$footer-svg-facebook-hover: facebook-hover-connect-theme;
+$footer-svg-instagram: instagram-connect-theme;
+$footer-svg-instagram-hover: instagram-hover-connect-theme;
+$footer-svg-linkedin: linkedin-connect-theme;
+$footer-svg-linkedin-hover: linkedin-hover-connect-theme;
+$footer-svg-rss: rss-connect-theme;
+$footer-svg-rss-hover: rss-hover-connect-theme;
+$footer-svg-pinterest: pinterest-connect-theme;
+$footer-svg-pinterest-hover: pinterest-hover-connect-theme;
+$footer-svg-youtube: youtube-connect-theme;
+$footer-svg-youtube-hover: youtube-hover-connect-theme;
+
+//	Form Field Elements
+$content-form-radio-background: $capri;
+$content-form-radio-border: $capri;
+$content-form-select-box-dropdown-color: $capri;
+$content-form-select-box-dropdown-hover-color: $blueberry;
+$content-form-select-box-list-item-hover-background: $blueberry;
+$content-form-submit-button-background: $lemon;
+$content-form-submit-button-border: #clementine;
+$content-form-submit-button-hover-background: #clementine;
+
+
+
+$content-pullquote-left-border: $fountain;
+$pullquote-text-color: $fountain;
+$pullquote-author-color: $fountain;
+
+$content-table-header-background: $icicle;
+$content-svg-guide-card-circle-arrow: chevron-circle-connect-theme;
+$content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-connect-theme;
+$content-svg-external-link: external-link-connect-theme;
+$content-svg-fountain-external-link: external-link-fountain-connect-theme;
+$content-svg-white-external-link: external-link-white-connect-theme;
+//infographic
+$infographic-link-background-color: $dust;
+$infographic-text-color: $fountain;
+
+
+
+// default theme link color
+.main-content a,
+#cgvBody h2 a,
+#cgvBody h3 a,
+#cgvBody h4 a,
+#cgvBody h5 a,
+#cgvBody h6 a,
+.contentzone h2 a,
+.contentzone h3 a,
+.contentzone h4 a,
+.contentzone h5 a,
+.contentzone h6 a,
+.main-content .feature-card a,
+.feature-card.cgvArticle a h3,
+.section-nav .contains-current>div a,
+.feature-primary a h3,
+ul.breadcrumbs>* a,
+.topic-feature a h3,
+.desktop #blog-archive-accordion .ui-accordion-header .toggle,
+.desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
+.multimedia .feature-card a h3,
+.multimedia .multimedia-feature-card a h3,
+table tbody tr td a,
+li a {
+  color: $default-link-color;
+  &.borderless-button {
+  }
+}
+.multimedia {
+  .multimedia-feature-card {
+    background-color: $multimedia-card-background-color;
+  }
+}
+.pullquote {
+  color: $pullquote-text-color;
+  .pullquote-text {
+    color: $pullquote-text-color;
+  }
+  .author {
+    color: $pullquote-author-color;
+  }
+  &.borderless-button {
+    color: $pullquote-text-color;
+  }
+}
+
+// default theme link hover/active color (for items that change color rather than get underlined)
+#cgvBody h2 a:focus,
+#cgvBody h2 a:hover,
+#cgvBody h3 a:focus,
+#cgvBody h3 a:hover,
+#cgvBody h4 a:focus,
+#cgvBody h4 a:hover,
+#cgvBody h5 a:focus,
+#cgvBody h5 a:hover,
+#cgvBody h6 a:focus,
+#cgvBody h6 a:hover,
+.contentzone h2 a:focus,
+.contentzone h2 a:hover,
+.contentzone h3 a:focus,
+.contentzone h3 a:hover,
+.contentzone h4 a:focus,
+.contentzone h4 a:hover,
+.contentzoneh5 a:focus,
+.contentzone h5 a:hover,
+.contentzone h6 a:focus,
+.contentzone h6 a:hover,
+a .feature-card.cgvArticle a:hover h3,
+.main-content a.title:hover,
+.main-content a:hover,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.topic-feature .feature-card a:hover h3,
+.topic-feature .feature-card a:focus h3,
+.list .title a.title:hover,
+.list .title a.title:focus,
+.list .title a:hover,
+.list .title a:focus,
+.list.managed li.has-media:hover a,
+.list.managed li.has-media:focus a,
+.list.dynamic li.has-media:hover a,
+.list.dynamic li.has-media:focus a,
+.feature-card.cgvArticle a:hover h3,
+.sub-nav-group a.sub-nav-group-header:hover,
+.sub-nav-group a.sub-nav-group-header:focus,
+.card-thumbnail .card-thumbnail:hover a,
+.card-thumbnail .card-thumbnail:focus a,
+.multimedia-slot .feature-card:hover,
+.multimedia-slot .feature-card:focus,
+.multimedia-slot a:hover h3,
+.multimedia-slot a:focus h3,
+.multimedia .card:hover h3,
+.multimedia .card:focus h3,
+#cgvBody h3 a:hover,
+#cgvBody h2 a:hover,
+.post-title a:hover,
+.post-title a:focus,
+.feature-secondary a:hover,
+.feature-secondary a:focus,
+.feature-secondary a:hover h3,
+.feature-secondary a:focus h3,
+.blog-feature a:hover h3,
+.blog-feature a:focus h3,
+.landing-thumb-text h3 a:hover,
+.landing-thumb-text h3 a:focus,
+.title a.title:hover,
+.title a.title:focus,
+.title a:hover,
+.title a:focus,
+.page-options li a:hover,
+.page-options li a:focus,
+.contentzone table tbody tr td a:hover,
+.contentzone table tbody tr td a:focus,
+a.arrow-link:hover,
+a.arrow-link:focus
+{
+  color: $default-link-color-hover;
+}
+
+
+.embedded-entity[data-entity-embed-display*="_feature_card"] {
+  .feature-card {
+    a {
+      &:hover {
+        h3 {
+          color: $default-link-color-hover;
+        }
+      }
+
+      h3 {
+        color: $default-link-color;
+      }
+
+    }
+  }
+}
+
+// default header colors
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $default-header-color;
+}
+
+// header
+
+header {
+  background-color: $header-logo-background-color;
+  padding: $header-logo-padding;
+}
+.nci-logo-page {
+  width: auto;
+}
+.nci-logo-pages img {
+  width: $site-logo-width;
+  height: $site-logo-height;
+  min-width: $site-logo-min-width;
+  max-width: $site-logo-max-width;
+}
+
+// main content background
+.main-content {
+  background: $page-margin-background;
+}
+
+// hidden elements
+.columns.utility {
+  display: none;
+}
+
+// utility bar
+// style changes because its being treated as the section title rather than utility bar
+#microsite-a {
+  padding: 10px 0;
+  font-family: $montserrat-font-stack;
+  font-size: 20px;
+}
+
+.utility {
+  text-align: left;
+  color: $utility-text;
+}
+
+.utility-background {
+  background-color: $utility-background-color;
+  display:none !important; //No utility bar for this variant
+}
+
+// overcoming foundation class that hides utility bar for mobile
+.utility-background.micro-a {
+}
+
+// language bar
+// Override colors from _language_bar.scss
+.has-translated-content {
+  .language-bar {
+    display: none;
+  }
+}
+.language-bar {
+  display: none;
+}
+
+.sitewide-language a {
+  color: $default-link-color;
+}
+
+// menu bar
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
+  color: $main-menu-link-hover-color;
+}
+.menu.nav-menu>.nav-item>.nav-item-title>a,
+.mobile-menu-bar>a,
+.mobile-menu-bar>button,
+.mobile-menu-bar>a:focus,
+.mobile-menu-bar>a:hover,
+.mobile-menu-bar>button:focus {
+  color: $main-menu-link-color;
+}
+
+.menu.nav-menu>.nav-item>.nav-item-title>a:hover,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a:hover {
+  color: $main-menu-link-hover-color;
+}
+
+.menu.nav-menu>.nav-item>.nav-item-title>a.active,
+.menu.nav-menu>.nav-item>.nav-item-title>a.open,
+.menu.nav-menu>.nav-item>.nav-item-title>a:focus {
+  color: $main-menu-link-hover-color;
+
+}
+
+
+
+.nav-search-bar {
+  border-top: solid $main-menu-border-width $main-menu-border-color;
+  border-bottom: solid $main-menu-border-width $main-menu-border-color;
+}
+.nav-search-bar,
+#mega-nav {
+  background: $main-menu-background-color;
+}
+
+.nav-header.menu-btn::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-hamburger);
+}
+
+a.nav-contact::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-info);
+}
+
+button.nav-search::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-search);
+}
+
+a.nav-dictionary::before {
+  @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
+}
+
+#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+#mega-nav li.contains-current>div.nav-item-title>a,
+#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a{
+  color: $hamburger-section-menu-parent-item-link-color;
+  outline:0;
+}
+.section-nav .level-1.contains-current.has-children>div a {
+  color: $section-menu-desktop-family-link-color;
+  outline:0;
+  &:active {
+    color: $section-menu-desktop-family-active-color;
+  }
+}
+
+
+.section-nav .level-1.contains-current div.current-page a {
+  color: $section-menu-mobile-tablet-current-page-color;
+}
+
+#mega-nav .toggle[aria-expanded="true"],
+#mega-nav[aria-expanded="true"] .toggle {
+  color: $hamburger-menu-mobile-tablet-not-current-page-minus-color;
+  background: $hamburger-menu-mobile-tablet-not-current-page-minus-background;
+}
+
+#mega-nav .toggle[aria-expanded="false"],
+#mega-nav[aria-expanded="false"] .toggle {
+  background: $hamburger-menu-mobile-tablet-not-current-page-plus-background;
+  color: $hamburger-menu-mobile-tablet-not-current-page-plus-color;
+}
+
+.section-nav .level-1 .toggle[aria-expanded="true"],
+.section-nav .level-1[aria-expanded="true"] .toggle {
+  color: $section-menu-mobile-tablet-not-current-page-minus-color;
+  background: $section-menu-mobile-tablet-not-current-page-minus-background;
+}
+
+
+
+// mega menu
+
+#mega-nav .current-page {
+  background-color: $hamburger-menu-mobile-tablet-current-page-background;
+}
+
+#mega-nav .current-page>div .toggle[aria-expanded="true"],
+#mega-nav .current-page>div[aria-expanded="true"] .toggle {
+  background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
+  color: $hamburger-menu-mobile-tablet-current-page-minus-color;
+}
+
+#mega-nav .current-page>div .toggle[aria-expanded="false"],
+#mega-nav .current-page>div[aria-expanded="false"] .toggle {
+  background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
+  color: $hamburger-menu-mobile-tablet-current-page-plus-color;
+}
+
+
+
+// content styles
+
+.guide-title {
+  h2 {
+    color: $landing-page-guide-title-color;
+  }
+}
+.guide-card .card {
+  background: $landing-page-guide-card-background;
+}
+
+a.arrow-link-white:before,
+a.arrow-link:before {
+  @include svg-sprite($content-svg-guide-card-circle-arrow);
+}
+
+a.arrow-link-white:hover:before,
+a.arrow-link:hover:before {
+  @include svg-sprite($content-svg-guide-card-circle-arrow-hover);
+}
+
+.pullquote {
+  border-left-color: $content-pullquote-left-border;
+}
+
+table.table-default th {
+  background: $content-table-header-background;
+}
+
+a.infographic-view-full,
+a.video-view-full,
+figure a.article-image-enlarge {
+  background-color: $enlarge-view-button-background;
+}
+
+a.infographic-view-full:focus,
+a.infographic-view-full:hover,
+a.video-view-full:focus,
+a.video-view-full:hover,
+figure a.article-image-enlarge:focus,
+figure a.article-image-enlarge:hover {
+  background-color: $enlarge-view-button-hover-background;
+  color: $enlarge-view-button-hover-color;
+}
+
+.feature-primary {
+  .card {
+    &:not(.topic-feature){
+      background-color: $landing-page-feature-card-background;
+    }
+  }
+}
+
+.feature-primary-title,
+.feature-primary.list.managed,
+.row.feature-primary{
+  background-color: $landing-page-feature-background-color;
+}
+
+.feature-primary,
+.feature-secondary {
+  background-color: $landing-page-feature-background-color;
+  margin-bottom: 0;
+  padding-bottom: 1em;
+  p {
+    color: $landing-page-feature-description-color;
+  }
+}
+
+
+.feature-primary .feature-card a h3,
+.main-content .feature-card a,
+.feature-secondary .feature-card a h3,
+.feature-secondary .feature-card a
+{
+  color: $landing-page-feature-card-link-color;
+  &:hover {
+    color: $landing-page-feature-card-link-hover-color;
+  }
+}
+
+.search {
+  height: $search-box-height;
+}
+
+.node--type-cgov-home-landing:not(.dcegConnect) {
+  h1 {
+    color: $home-landing-h1-color;
+  }
+}
+
+
+.node--type-cgov-home-landing {
+  .page-options, .page-options-container, .floating-delighter {
+    display: none;
+  }
+
+  &.main-content {
+    background: $landing-page-page-margin-background;
+  }
+  .card {
+    background: $landing-page-standard-card-background-color;
+  }
+  .list.managed {
+    ul {
+      background: $managed-list-background-color;
+      .icon-exit-notification {
+        @include svg-sprite($content-svg-white-external-link);
+      }
+    }
+    li.list-item:hover {
+      h3 > a,
+      a {
+        color: $managed-list-text-hover-color;
+        text-decoration: underline;
+      }
+    }
+    .title-and-desc{
+      h3 > a,
+      h3,
+      a,
+      .description {
+        color: $managed-list-text-color;
+      }
+      h3 > a:hover,
+      a:hover {
+        color: $managed-list-text-hover-color;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.node--type-cgov-mini-landing {
+  .card {
+    background: $landing-page-standard-card-background-color;
+  }
+}
+
+.main-content .guide-card a.arrow-link,
+.main-content .guide-card a.arrow-link-white,
+.main-content a.definition,
+.multimedia .feature-card a,
+.search,
+.utility-background {
+  color: $landing-page-guide-card-link-color;
+}
+
+.main-content .guide-card a.arrow-link:hover {
+  color: $landing-page-guide-card-link-hover-color;
+}
+
+.multimedia-slot {
+  background: $landing-page-multimedia-background;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.default-borderless-theme {
+  background-color: $default-borderless-background;
+}
+.accent-cool {
+  .borderless-container {
+    .borderless-card {
+      h2 > a {
+        &:hover {
+          color: $white;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+.accent-warm {
+  .borderless-container {
+    .borderless-card {
+      h2 > a {
+        &:hover {
+          color: $granite;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.borderless-container {
+  .borderless-card {
+    .borderless-button,
+    a.borderless-button {
+      @include button-base;
+      @include button-size($padding: false);
+      @include button-style($clementine, 5px);
+      font-family: $montserrat-font-stack;
+      color: $blueberry;
+      background-color: $lemon;
+      text-transform: uppercase;
+      box-shadow: none;
+      &:hover {
+        text-decoration: none;
+        background-color: $clementine;
+        color: $blueberry;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        right: 5%;
+        top: 37%;
+        @include svg-sprite(chevron-blue, $rotate: right);
+      }
+    }
+    h2 > a {
+      &:hover {
+        color: $capri;
+      }
+    }
+  }
+}
+.feature-card
+{
+   a.icon-exit-notification {
+    @include svg-sprite($content-svg-external-link);
+  }
+}
+
+.feature-card .image-hover a.icon-exit-notification {
+  @include svg-sprite($content-svg-fountain-external-link);
+
+}
+.icon-exit-notification {
+  @include svg-sprite($content-svg-external-link);
+}
+
+// form elements
+.radio input[type=radio]:checked+label:before {
+  background-color: $content-form-radio-background;
+}
+
+.radio input[type=radio]+label:before {
+  border-color: $content-form-radio-border;
+}
+
+.ui-selectmenu-button span.ui-icon {
+  background-color: $content-form-select-box-dropdown-color;
+}
+
+.ui-selectmenu-button:focus span.ui-icon,
+.ui-selectmenu-button:hover span.ui-icon {
+  background-color: $content-form-select-box-dropdown-hover-color;
+}
+
+.ui-selectmenu-menu .ui-state-focus {
+  background: $content-form-select-box-list-item-hover-background;
+}
+
+.button.submit,
+.button[type=submit],
+form button.submit,
+form button[type=submit] {
+  background-color: $content-form-submit-button-background;
+  border-color: $content-form-submit-button-border;
+}
+
+.button.submit:focus,
+.button.submit:hover,
+.button[type=submit]:focus,
+.button[type=submit]:hover,
+form button.submit:focus,
+form button.submit:hover,
+form button[type=submit]:focus,
+form button[type=submit]:hover {
+  background-color: $content-form-submit-button-hover-background;
+}
+
+// accordion
+.ui-accordion-header.odd,
+.ui-accordion-header.odd.ui-state-active {
+  background: $content-accordion-odd-rows-background;
+}
+
+.ui-accordion-header.even,
+.ui-accordion-header.even.ui-state-active {
+  background: $content-accordion-even-rows-background;
+}
+
+.ui-accordion-header.odd .toggle[aria-expanded="false"],
+.ui-accordion-header.odd[aria-expanded="false"] .toggle {
+  background: $content-accordion-odd-rows-plus-background;
+}
+
+.ui-accordion-header.even .toggle[aria-expanded="false"],
+.ui-accordion-header.even[aria-expanded="false"] .toggle {
+  background: $content-accordion-even-rows-plus-background;
+}
+
+.ui-accordion-header.odd .toggle[aria-expanded="true"],
+.ui-accordion-header.odd[aria-expanded="true"] .toggle {
+  color: $content-accordion-odd-rows-minus-background;
+}
+
+.ui-accordion-header.even .toggle[aria-expanded="true"],
+.ui-accordion-header.even[aria-expanded="true"] .toggle {
+  color: $content-accordion-even-rows-minus-background;
+}
+.ui-accordion-header.odd {
+  @include toggle-color($plusminus-color-accordion-odd, $plusminus-bg-color-accordion-odd);
+}
+
+.ui-accordion-header.even {
+  @include toggle-color($plusminus-color-accordion-even, $plusminus-bg-color-accordion-even);
+}
+
+.pager__container {
+  .pager__navigation {
+    .pager__button {
+      color: $search-results-pager-number-color !important;
+      &.active {
+        color: $search-results-pager-active-number-color !important;
+        background: $search-results-pager-active-background-color !important;
+      }
+    }
+  }
+}
+//search pager
+
+// footer
+.site-footer {
+  background: $footer-background;
+}
+
+.site-footer__icons li:hover {
+  opacity: $footer-icons-hover-opacity;
+}
+
+.site-footer__icons .icon.twitter {
+  @include svg-sprite($footer-svg-twitter);
+}
+
+.site-footer__icons .icon.twitter:hover {
+  @include svg-sprite($footer-svg-twitter-hover);
+}
+
+.site-footer__icons .icon.govdelivery {
+  @include svg-sprite($footer-svg-gov-delivery);
+}
+
+.site-footer__icons .icon.govdelivery:hover {
+  @include svg-sprite($footer-svg-gov-delivery-hover);
+}
+
+.site-footer__icons .icon.facebook {
+  @include svg-sprite($footer-svg-facebook);
+}
+
+.site-footer__icons .icon.facebook:hover {
+  @include svg-sprite($footer-svg-facebook-hover);
+}
+
+.site-footer__icons .icon.instagram {
+  @include svg-sprite($footer-svg-instagram);
+}
+
+.site-footer__icons .icon.instagram:hover {
+  @include svg-sprite($footer-svg-instagram-hover);
+}
+
+.site-footer__icons .icon.linkedin {
+  @include svg-sprite($footer-svg-linkedin);
+}
+
+.site-footer__icons .icon.linkedin:hover {
+  @include svg-sprite($footer-svg-linkedin-hover);
+}
+
+.site-footer__icons .icon.rss {
+  @include svg-sprite($footer-svg-rss);
+}
+
+.site-footer__icons .icon.rss:hover {
+  @include svg-sprite($footer-svg-rss-hover);
+}
+
+.site-footer__icons .icon.youtube {
+  @include svg-sprite($footer-svg-youtube);
+}
+
+.site-footer__icons .icon.youtube:hover {
+  @include svg-sprite($footer-svg-youtube-hover);
+}
+
+@include break(large) {
+
+  //  changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
+  header {
+    margin-bottom: $site-header-desktop-margin-bottom;
+  }
+
+  // header
+  .nci-logo-pages {
+    img {
+      width: $site-logo-width;
+      height: $site-logo-height-desktop;
+    }
+  }
+
+  // utility
+  #microsite-a .utility span {
+    display: none;
+  }
+
+  //  main navigation and search
+  #swKeyword,
+  .search {
+    background-color: $main-menu-desktop-search-background;
+    border: solid $main-menu-desktop-search-border-color $main-menu-desktop-search-border-width;
+  }
+  .search {
+    margin: $main-menu-desktop-search-margin;
+    .searchString {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-webkit-input-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-moz-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input:-ms-input-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input:-moz-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::-ms-placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+    input::placeholder {
+      color: $search-placeholder-text-color;
+      opacity: 1;
+    }
+  }
+  #sitesearch {
+    @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
+  }
+
+  #mega-nav .nav-item.contains-current>.nav-item-title>a,
+  #mega-nav .nav-item.current-page>.nav-item-title>a {
+    border-bottom-color: $main-menu-desktop-active-item-border-bottom;
+
+  }
+  .menu.nav-menu>.nav-item>.nav-item-title,
+  #mega-nav .nav-menu>li.contains-current>div.nav-item-title
+  {
+    &:hover {
+      background: $main-menu-link-hover-background-color;
+      a {
+        color: $main-menu-link-hover-color;
+      }
+    }
+  }
+  a.sub-nav-group-header {
+    color: $mega-menu-desktop-group-header-color;
+  }
+
+  #mega-nav {
+    @include flexbox();
+  }
+  #mega-nav,
+  #mega-nav li {
+    background: none;
+    line-height: $mega-menu-line-height;
+  }
+
+  //Color of megamenu submenu links
+  .sub-nav-group ul {
+    li {
+      a {
+        color: $mega-menu-subnav-link-color;
+      }
+    }
+  }
+
+  .nav-item>.nav-item-title>a {
+    padding: $main-menu-desktop-item-padding;
+  }
+  // overwriting hamburger menu style rules
+  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
+  #mega-nav li.contains-current>div.nav-item-title>a,
+  #mega-nav .nav-item.current-page>div.nav-item-title>a {
+    color: $main-menu-link-hover-color;
+  }
+  .menu.nav-menu>.nav-item>.nav-item-title>a.active,
+  .menu.nav-menu>.nav-item>.nav-item-title>a.open,
+  .menu.nav-menu>.nav-item>.nav-item-title>a:focus {
+    color: $main-menu-link-hover-color;
+  }
+  .menu.nav-menu>.nav-item>.nav-item-title>a:focus,
+  .menu.nav-menu>.nav-item>.nav-item-title:focus
+  {
+    outline: none;
+  }
+  // Left navigation
+  .section-nav {
+    .current-page:after {
+      border-left-color: $section-navigation-desktop-active-item-triangle;
+    }
+
+    .level-0>div {
+      background-color: $section-navigation-desktop-header-background;
+    }
+
+    .level-1.contains-current {
+      background-color: $section-navigation-desktop-active-subsection-background;
+    }
+
+    div.current-page {
+      background-color: $section-navigation-desktop-active-background;
+    }
+
+    .has-children.contains-current {
+      >div.current-page a {
+        color: $section-navigation-desktop-active-color;
+      }
+    }
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .page-options li,
+  .page-options li:hover {
+    background-color: $page-options-desktop-background;
+  }
+
+  .page-options .page-options--resize a:before {
+    @include svg-sprite($page-options-desktop-svg-font-size, mq);
+  }
+
+  // desktop theme images
+  .page-options .page-options--print a:before {
+    @include svg-sprite($page-options-desktop-svg-print, mq);
+  }
+
+  .page-options .page-options--email a:before {
+    @include svg-sprite($page-options-desktop-svg-email, mq);
+  }
+
+  .page-options .social-share--facebook a:before {
+    @include svg-sprite($page-options-desktop-svg-facebook, mq);
+  }
+
+  .page-options .social-share--twitter a:before {
+    @include svg-sprite($page-options-desktop-svg-twitter, mq);
+  }
+
+  .page-options .social-share--pinterest a:before {
+    @include svg-sprite($page-options-desktop-svg-pinterest, mq);
+  }
+
+  // desktop main menu
+  #nvcgSlMainNav #swKeyword {
+    color: $main-menu-desktop-search-color;
+  }
+  .feature-card {
+    border-top: $landing-page-feature-card-desktop-border-top;
+  }
+  .feature-primary,
+  .feature-secondary {
+
+  }
+}
+
+@include bp(medium-down) {
+
+  #mega-nav {
+    background-color: $main-menu-mobile-tablet-background-color;
+    li {
+      background-color: $main-menu-mobile-tablet-background-color;
+      a {
+        color: $main-menu-mobile-tablet-link-color;
+      }
+
+      a:active {
+        background-color: $hamburger-active-link-background;
+        color: $hamburger-active-link-color;
+      }
+    }
+  }
+
+  #mega-nav .current-page > div > a:hover {
+    color: $main-menu-link-color;
+  }
+  #mega-nav .has-children.current-page > div > a:hover {
+   color: $main-menu-link-color;
+  }
+
+
+  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
+  #mega-nav li.contains-current>div.nav-item-title>a:active
+   {
+    color: $hamburger-active-link-color;
+  }
+  .section-nav .level-1.contains-current.has-children>div a:active,
+  .section-nav .level-1.contains-current.has-children>div a:focus {
+    color: $section-menu-mobile-tablet-family-active-color;
+  }
+  .nci-logo-pages img {
+    width: $site-logo-width-mobile;
+    height: $site-logo-height-mobile;
+  }
+
+  #nvcgSlMainNav.searching .mobile-menu-bar .menu-btn {
+    top: 0;
+  }
+  #nvcgSlMainNav #swKeyword,
+  #nvcgSlMainNav.searching #swKeyword
+  {
+    color:$main-menu-mobile-search-text;
+    height: -webkit-fill-available;
+    height: available;
+
+  }
+
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-webkit-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-ms-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::-ms-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching #swKeyword::placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-webkit-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-ms-input-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input:-moz-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::-ms-placeholder {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+  #nvcgSlMainNav.searching input::placeholder
+  {
+    color: $search-placeholder-text-color;
+    opacity: 1;
+  }
+
+  #nvcgSlMainNav.searching {
+    #searchclear {
+      color:  $main-menu-mobile-search-text;
+    }
+    .search {
+      background-color: $main-menu-mobile-search-background;
+      color:  $main-menu-mobile-search-text;
+    }
+  }
+  .nav-search {
+    float: $main-menu-mobile-tablet-nav-search-float-tablet-down;
+  }
+
+  .nav-menu a:active {
+    background-color: $hamburger-active-link-background;
+  }
+
+  // section navigation mobile (tongue)
+  #section-menu-button {
+    background-color: $section-menu-mobile-tablet-top-background;
+  }
+
+  .section-nav .level-0>div {
+    background:$section-menu-mobile-tablet-top-background;
+  }
+
+  .section-nav .level-0.contains-current>div a {
+    color: #fff;
+  }
+
+  .section-nav div.current-page {
+    background: $section-menu-mobile-tablet-current-page-background;
+  }
+  .section-nav ul div {
+    padding: 0;
+  }
+  .section-nav .level-0>div {
+    padding: 0;
+  }
+  .section-nav .level-0>div>a {
+    margin:0;
+    padding-left:0.8888em;
+    padding-right: 3.3888em;
+    padding-bottom: 0.625em;
+    padding-top: 0.625em;
+  }
+  .section-nav ul div>a {
+    display: block;
+    padding: 14.5px 0;
+    margin: 0;
+  }
+
+  .section-nav {
+    ul {
+      div>a:focus,
+      div>a:active {
+        background: $section-menu-mobile-tablet-family-active-background;
+        color: $section-menu-mobile-tablet-family-active-color;
+      }
+    }
+  }
+
+  .section-nav .level-1>div>a {
+    margin:0;
+    padding-left: 1em;
+  }
+  .section-nav .level-2>div>a {
+    margin: 0;
+    padding-left: 1.875em;
+  }
+  .section-nav .level-1.contains-current {
+    background: $section-menu-mobile-tablet-family-background;
+  }
+  .section-nav .level-1.contains-current.has-children>div a {
+    &:active, &:focus {
+      color: $section-menu-mobile-tablet-family-active-color;
+      background: $section-menu-mobile-tablet-family-active-background;
+    }
+  }
+  .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
+  .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-current-page-plus-background;
+    color: $section-menu-mobile-tablet-current-page-plus-color;
+  }
+
+  .section-nav .level-1.contains-current .toggle[aria-expanded="true"],
+  .section-nav .level-1.contains-current[aria-expanded="true"] .toggle {
+    color: $section-menu-mobile-tablet-current-page-minus-color;
+    background: $section-menu-mobile-tablet-current-page-minus-background;
+  }
+
+  .section-nav .level-1 .toggle[aria-expanded="false"],
+  .section-nav .level-1[aria-expanded="false"] .toggle {
+    background: $section-menu-mobile-tablet-not-current-page-plus-background;
+    color: $section-menu-mobile-tablet-not-current-page-plus-color;
+  }
+  // page options
+  .page-options li {
+    background-color: $page-options-mobile-tablet-background;
+  }
+
+  .page-options li:hover {
+    background-color: $page-options-mobile-tablet-hover-background;
+  }
+  .feature-primary-title,
+  .feature-primary.list.managed,
+  .row.feature-primary
+  {
+    background-color: $landing-page-feature-background-color;
+  }
+  .feature-card {
+    border-top: $landing-page-feature-card-mobile-border-top;
+  }
+  .feature-primary,
+  .feature-secondary {
+
+  }
+}
+
+@include bp(medium) {
+
+  .hero-text {
+    background: $landing-page-hero-text-tablet-background;
+  }
+
+  // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
+  .row>.page-options-container .page-options ul {
+    float: left !important;
+  }
+}
+.site-footer .back-to-top {
+  /* place on top of all other elements */
+  z-index: 998;
+  position: fixed;
+  right: 0.5em;
+  bottom: 1em;
+  color: $body-font-color;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px 5px 0;
+
+  text-shadow: none;
+
+  &::before {
+    content: " ";
+    display: block;
+    width: 100px;
+    height: 76px;
+    border: none;
+    background-color: transparent;
+  }
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top:0;
+    font-size: 30px;
+    transform: scale(0.62);
+    left:8%;
+    @include svg-sprite($back-to-top-button);
+  }
+  &:hover, &:focus {
+    color: $body-font-color;
+    text-decoration: none;
+  }
+}
+.header--fixedToTop {
+  margin-bottom: 61px;
+  @include break(large){
+    margin-bottom: 61px;
+  }
+  @include break(medium-down){
+    margin-bottom: 77px;
+  }
+}
+.navigation {
+  @include bp(large-up){
+    @include flexbox();
+    @include property-prefix(flex-direction, row);
+    @include property-prefix(justify-content, flex-start);
+    @include property-prefix(align-items, center);
+  }
+
+  .borderless-button-yellow {
+    margin: 9px 1rem 1rem 1rem;
+    @include bp(medium-down){
+      display:none;
+    }
+  }
+
+}
+.mobile-menu-bar {
+  @include flexbox();
+  @include property-prefix(flex-direction, row);
+  @include property-prefix(justify-content, space-between);
+  @include property-prefix(align-items, center);
+
+  a.borderless-button-yellow, .borderless-button-yellow {
+    color: $blueberry;
+    width:auto;
+    display:inline-block;
+    &:hover {
+      color: $blueberry;
+    }
+    @include bp(medium-down){
+      display:inline-block;
+    }
+  }
+}
+.embedded-entity[data-embed-button="cgov_infographic_button"] {
+  figcaption {
+    background-color: $infographic-link-background-color;
+  }
+}
+.infographic-link-container {
+  background-color: $infographic-link-background-color;
+  color: $infographic-text-color;
+  a {
+    color: $infographic-text-color;
+  }
+}

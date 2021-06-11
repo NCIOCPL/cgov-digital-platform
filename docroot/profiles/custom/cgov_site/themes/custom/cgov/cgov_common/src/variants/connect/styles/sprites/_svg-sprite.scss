@@ -1,0 +1,12 @@
+@import "svg-sprite-map";
+
+$sprite-path:(
+  svgPath: '~Core/../cgov_common/dist/images/sprites/svg-sprite-connect.svg'
+);
+
+$svg-sprite: map-merge(map-get($svg-icons, sprite),$sprite-path);
+
+// $svg-sprite: map-get($svg-icons, sprite) !default;
+$baseFontSize: 16px !default;
+
+@import '~Core/styles/sprites/mixins';

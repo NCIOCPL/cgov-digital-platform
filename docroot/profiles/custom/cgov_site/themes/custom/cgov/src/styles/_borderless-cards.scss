@@ -2,17 +2,54 @@
 @import "./colors";
 
 /* Borderless Cards */
+.borderless-container > a {
+  @include flexbox();
+  &:hover {
+    text-decoration: none;
+  }
+}
 .borderless-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
+
+
   @include bp(small) {
     padding: 20px 0.9375em 0 0.9375em;
   }
   .borderless-card {
-    @include flexcontainer();
-    @include property-prefix(justify-content, space-between);
+   // @include flexcontainer();
+    @include flexbox();
+    @include bp(small){
+      @include property-prefix(flex-wrap,wrap);
+    }
+
+    //@include property-prefix(justify-content, space-between);
+
+    &.borderless-image-left > .borderless-text-container {
+      @include flex-order(2);
+      margin-right: 0;
+    }
+    &.borderless-image-left > .borderless-image-container {
+      @include flex-order(1);
+      margin-right: 25px;
+      @include bp(medium-up){
+        @include flexbox();
+        @include property-prefix(justify-content, flex-start);
+      }
+      @include bp(small) {
+        margin-right: 0;
+      }
+    }
+    &.borderless-image-right > .borderless-image-container {
+      @include bp(medium-up){
+        @include flexbox();
+        @include property-prefix(justify-content, flex-end);
+      }
+    }
+
     .borderless-text-container {
       @include flex-order(1);
-      @include flex(1);
+      @include flex(1 1 auto);
+      @include property-prefix(flex-basis, auto);
       margin-right: 25px;
       color: $light-gray-text;
       line-height: 26px;
@@ -25,6 +62,7 @@
       }
       @include bp(medium-up) {
         width: 66%;
+
       }
       @include bp(small) {
         @include flex-order(2);
@@ -35,11 +73,17 @@
     }
     .borderless-image-container {
       @include flex-order(2);
+      @include flex(1 1 auto);
+      @include property-prefix(flex-basis, auto);
+      img {
+        @include property-prefix(align-self, flex-start);
+      }
       @include bp(medium-up) {
         width: 33%;
       }
       @include bp(small) {
         @include flex-order(1);
+        @include flex(1 1 100%);
         width: 100%;
       }
     }
@@ -63,6 +107,9 @@
         text-decoration: none;
       }
     }
+    h1, h1 > a {
+      font-weight: bold;
+    }
   }
 }
 .borderless-button,
@@ -85,6 +132,56 @@ a.borderless-button {
   }
 }
 
+//accent colors
+.accent-cool {
+  color: $white;
+  background-color: $capri;
+  .borderless-card {
+    color: $white;
+    .borderless-text-container {
+      p, p.landing-page-body {
+        color: $white;
+      }
+    }
+    h1,
+    h1 > a,
+    h2,
+    h2 >a {
+      color: $white;
+    }
+  }
+}
+.accent-warm {
+  background-color: $lemon;
+}
+.default-borderless-theme {
+  background-color: transparent;
+}
+.default {
+  background-color: $white;
+}
+.main-content .borderless-container .borderless-button-yellow,
+.main-content .borderless-container a.borderless-button-yellow,
+.borderless-container .borderless-button-yellow,
+.borderless-container a.borderless-button-yellow,
+.borderless-button-yellow,
+a.borderless-button-yellow {
+  @include button-base;
+  @include button-size($padding: false);
+  @include button-style($clementine, 5px);
+  font-family: $montserrat-font-stack;
+  font-size: 14px;
+  padding: 10px 10px 10px 11px;
+  color: $blueberry;
+  background-color: $lemon;
+  text-transform: uppercase;
+  //box-shadow: 0 3px 0 0 $button-box-shadow-color;
+  &:hover {
+    text-decoration: none;
+    background-color: $clementine;
+    color: $blueberry;
+  }
+}
 //General utility styles
 .centered-container {
   @include flexbox();
