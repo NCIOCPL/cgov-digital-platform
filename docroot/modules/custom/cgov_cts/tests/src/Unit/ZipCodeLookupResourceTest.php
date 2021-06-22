@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\cgov_cts\Unit;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
 use Drupal\cgov_cts\Plugin\rest\resource\ZipCodeLookupResource;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -20,11 +21,26 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
   protected $logger;
 
   /**
+   * Mock CacheContextsManager.
+   *
+   * @var \Drupal\Core\Cache\Context\CacheContextsManager|PHPUnit_Framework_MockObject_MockObject
+   */
+  protected $mockCacheContextsManager;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
 
+    // The cache context merging in the rest service requires the caching
+    // service, which requires the Drupal DI container to be available.
+    $this->mockCacheContextsManager = $this->createMock('Drupal\Core\Cache\Context\CacheContextsManager');
+    $container = new ContainerBuilder();
+    \Drupal::setContainer($container);
+    $container->set('cache_contexts_manager', $this->mockCacheContextsManager);
+
+    // Mock the logger.
     $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
   }
 
@@ -42,6 +58,14 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
         "long" => 1,
       ]);
 
+    // So this is really just fudging, and there needs to be some integration
+    // tests for these items. Mocking up the entire cache structure is really
+    // problemmatic. So we are going to just have to always hope that url.path
+    // is one of the valid Drupal tokens.
+    $this->mockCacheContextsManager->expects($this->exactly(1))
+      ->method('assertValidTokens')
+      ->willReturn(['url.path']);
+
     $resource = $this->getResourceInstance($zip_lookup_svc);
 
     $actual = $resource->get('20852');
@@ -56,6 +80,13 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
       $actual->getCacheableMetadata()->getCacheTags(),
       "Found zipcode 20852 cache tags correct"
     );
+
+    $this->assertEquals(
+      ['url.path'],
+      $actual->getCacheableMetadata()->getCacheContexts(),
+      "Found url.path cache context correct"
+    );
+
   }
 
   /**
