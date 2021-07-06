@@ -62,7 +62,7 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
     // tests for these items. Mocking up the entire cache structure is really
     // problemmatic. So we are going to just have to always hope that url.path
     // is one of the valid Drupal tokens.
-    $this->mockCacheContextsManager->expects($this->exactly(1))
+    $this->mockCacheContextsManager->expects($this->any())
       ->method('assertValidTokens')
       ->willReturn(['url.path']);
 
