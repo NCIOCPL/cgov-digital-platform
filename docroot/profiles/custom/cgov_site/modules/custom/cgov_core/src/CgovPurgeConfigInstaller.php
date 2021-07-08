@@ -94,7 +94,7 @@ class CgovPurgeConfigInstaller {
     foreach ($purgers as $purger) {
       // Check if the purgers are known.
       if (!array_key_exists($purger, self::PURGERS)) {
-        throw new Exception($purger . " is not a known purger.");
+        throw new \Exception($purger . " is not a known purger.");
       }
 
       // Add the plugin.
