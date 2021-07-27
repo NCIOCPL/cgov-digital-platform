@@ -154,28 +154,33 @@ function get_social_image_path_from_media($media_entity) {
   try {
     $social_img_style_name = 'cgov_social_media';
     // Use the Social Image Override if set.
-    if (!$media_entity->get('field_override_img_social_media')->isEmpty()) {
+    if ($media_entity) {
+      if (!$media_entity->get('field_override_img_social_media')->isEmpty()) {
 
-      // Get the Social Media Image.
-      $image_fid = $media_entity->field_override_img_social_media->target_id;
-      $file_storage = \Drupal::entityTypeManager()->getStorage('file');
-      $file = $file_storage->load($image_fid);
+        // Get the Social Media Image.
+        $image_fid = $media_entity->field_override_img_social_media->target_id;
+        $file_storage = \Drupal::entityTypeManager()->getStorage('file');
+        $file = $file_storage->load($image_fid);
 
-      // Get the Image URL.
-      $file_uri = $file->getFileUri();
-      $image_url_token = file_url_transform_relative(file_create_url($file_uri));
+        // Get the Image URL.
+        $file_uri = $file->getFileUri();
+        $image_url_token = file_url_transform_relative(file_create_url($file_uri));
 
-    }
-    // Use the normal image if cropped with social media crop.
-    else {
-      $image_fid = $media_entity->field_media_image->target_id;
-
-      // If there is no target, then return nothing.
-      if (!$image_fid) {
-        \Drupal::logger('cgov_metatag')->warning("Media Entity is missing required field_media_image: " . $media_entity->id());
-        return NULL;
       }
-      $image_url_token = find_styled_image_url($image_fid, $social_img_style_name);
+      // Use the normal image if cropped with social media crop.
+      else {
+        $image_fid = $media_entity->field_media_image->target_id;
+
+        // If there is no target, then return nothing.
+        if (!$image_fid) {
+          \Drupal::logger('cgov_metatag')->warning("Media Entity is missing required field_media_image: " . $media_entity->id());
+          return NULL;
+        }
+        $image_url_token = find_styled_image_url($image_fid, $social_img_style_name);
+      }
+    }
+    else {
+      $image_url_token = NULL;
     }
 
   }

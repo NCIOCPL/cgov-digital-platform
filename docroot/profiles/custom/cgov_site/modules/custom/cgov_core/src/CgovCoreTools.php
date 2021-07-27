@@ -487,7 +487,7 @@ class CgovCoreTools {
    */
   public function filterAccessForDependantEntity(ContentEntityInterface $entity, $field_name) {
     if (!$entity->hasField($field_name)) {
-      throw new Exception($field_name . " does not exist on entity");
+      throw new \Exception($field_name . " does not exist on entity");
     }
 
     $dependant = $entity->get($field_name)->entity;
