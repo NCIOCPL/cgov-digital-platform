@@ -22,10 +22,11 @@
     <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
     <ini name="memory_limit" value="-1"/>
+    <!-- These SIMPLETEST env vars must be commented out for the actual environment vars to be used. -->
     <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
-    <env name="SIMPLETEST_BASE_URL" value=""/>
+    <!--env name="SIMPLETEST_BASE_URL" value=""/-->
     <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
-    <env name="SIMPLETEST_DB" value=""/>
+    <!--env name="SIMPLETEST_DB" value=""/-->
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
     <env name="BROWSERTEST_OUTPUT_DIRECTORY" value=""/>
     <!-- To disable deprecation testing completely uncomment the next line. -->
@@ -49,13 +50,13 @@
       <file>./tests/TestSuites/FunctionalJavascriptTestSuite.php</file>
     </testsuite>
   </testsuites>
-  <listeners>
-    <!-- listener class="\Drupal\Tests\Listeners\DrupalListener">
-    </listener -->
-    <!-- The Symfony deprecation listener has to come after the Drupal listener -->
-    <!-- listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
-    </listener -->
-  </listeners>
+  <!-- The Symfony deprecation listener has to come after the Drupal listener COMMENT -->
+  <!--listeners>
+    <listener class="\Drupal\Tests\Listeners\DrupalListener">
+    </listener>
+    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+    </listener>
+  </listeners -->
   <!-- Filter for coverage reports. -->
   <filter>
     <whitelist>
@@ -65,7 +66,10 @@
       <directory>../modules</directory>
       <directory>../sites</directory>
       <!-- Exclude all test modules, tests etc -->
-      <exclude-pattern>*/tests/*</exclude-pattern>
+      <exclude>
+        <directory>*/tests/*</directory>
+        <directory>*/Tests/*</directory>
+      </exclude>
      </whitelist>
   </filter>
 </phpunit>
