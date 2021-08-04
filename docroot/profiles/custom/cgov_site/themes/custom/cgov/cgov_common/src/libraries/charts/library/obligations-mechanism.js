@@ -24,48 +24,48 @@ function initChart(Chart) {
             text: 'Percent Share of Total NCI Dollars'
         },
         subtitle: {
-            text: 'Fiscal Year 2019'
+            text: 'Fiscal Year 2020'
         },
         series: [{
             name: 'Dollars in Millions',
 
             data: [{
                     name: 'Research Project Grants',
-                    y: 2541699571,
+                    y: 2749367903,
                     drilldown: 'Research Project Grants'
                 },
                 {
                     name: 'Centers & SPORES',
-                    y: 655966379,
+                    y: 613771451,
                     drilldown: 'Centers & SPORES'
                 },
 
                 {
                     name: 'NRSA',
-                    y: 86977607
+                    y: 96424956
                 },
                 {
                     name: 'R&D Contracts',
-                    y: 768095181,
+                    y: 823012066,
                     drilldown: 'R&D Contracts'
                 },
                 {
                     name: 'Intramural Research',
-                    y: 964900769,
+                    y: 1072602400,
                     drilldown: 'Intramural Research'
                 },
                     {
                     name: 'Buildings and Facilities',
-                    y: 18000000
+                    y: 30000000
                 },
                 {
                     name: 'RMS',
-                    y: 449886979,
+                    y: 450036450,
                     drilldown: 'RMS'
                 },
                     {
                     name: 'Other Research',
-                    y: 506763422,
+                    y: 548133685,
                     drilldown: 'Other Research'
                 }
             ]
@@ -75,11 +75,12 @@ function initChart(Chart) {
                   {
                     name: 'Research Project Grants',
                     id: 'Research Project Grants',
-                    colors: ['#602968', '#995FA2', '#D0B9D7'],
+                    colors: ['#602968', '#995FA2', '#D0B9D7', '#DCD5E1'],
                     data: [
-                        {name: 'Non-Competing', y: 1801598220},
-                        {name: 'Administrative Supplements', y: 30715356},
-                        {name: 'Competing', y: 572715679}
+                        {name: 'Non-Competing', y: 1905787328},
+                        {name: 'Administrative Supplements', y: 30211732},
+                        {name: 'Competing', y: 662228214},
+                        {name: 'SBIT/STTR Grants', y: 151140629}
                     ]
                 },
 
@@ -88,10 +89,10 @@ function initChart(Chart) {
                     id: 'Centers & SPORES',
                     colors: ['#FF5F00', '#802F00', '#FFBF99', '#FFBF99'],
                     data: [
-                        {name: 'Cancer Centers Grants-P20/P30', y: 337081712},
-                        {name: 'SPOREs', y: 112795999},
-                        {name: 'Other P50s/P20s', y: 7423937},
-                        {name: 'Other Specialized Centers', y: 198664731}
+                        {name: 'Cancer Centers Grants-P20/P30', y: 381955514},
+                        {name: 'SPOREs', y: 113177200},
+                        {name: 'Other P50s/P20s', y: 7942623},
+                        {name: 'Other Specialized Centers', y: 110696114}
                     ]
                 },
 
@@ -100,9 +101,9 @@ function initChart(Chart) {
                     id: 'R&D Contracts',
                     colors: ['#1B5768', '#83C5D8', '#E2F0F4'],
                     data: [
-                        {name: 'R&D Contracts', y: 630327168},
-                        {name: 'SBIR Contracts', y: 34200374},
-                        {name: 'NIH Management Fund/SSF Assessment', y: 103567638}
+                        {name: 'R&D Contracts', y: 684898306},
+                        {name: 'SBIR Contracts', y: 23955859},
+                        {name: 'NIH Management Fund/SSF Assessment', y: 114157901}
                     ]
                 },
                 {
@@ -110,8 +111,8 @@ function initChart(Chart) {
                     id: 'Intramural Research',
                     colors: ['#5E1020', '#961932', '#C94C65'],
                     data: [
-                        {name: 'Program', y: 740140813},
-                        {name: 'NIH Management Fund/SSF Assessment', y: 224759956}
+                        {name: 'Program', y: 823065394},
+                        {name: 'NIH Management Fund/SSF Assessment', y: 249537006}
                     ]
                 },
                 {
@@ -119,44 +120,44 @@ function initChart(Chart) {
                     id: 'RMS',
                     colors: ['#770F3D', '#AD1658', '#F478AF'],
                     data: [
-                        {name: 'Research Management and Support (RMS)', y: 340979062},
-                        {name: 'SBIR RMS', y: 2999998},
-                        {name: 'NIH Management Fund/SSF Assessment', y: 105907919}
+                        {name: 'Research Management and Support (RMS)', y: 342523328},
+                        {name: 'SBIR RMS', y: 2892985},
+                        {name: 'NIH Management Fund/SSF Assessment', y: 104620137}
                     ]
                 },
                 {
                     name: 'Other Research',
                     id: 'Other Research',
-                    colors: ['#2A73A5','#1A4665','#3FA7F1','#319FBE','#83C5D8', '#E2F0F4', '#AAC7DB', '#70858C', '#1B5768', '#24748B'],
+                    colors: ['#2A73A5','#1A4665','#3FA7F1','#319FBE','#83C5D8', '#E2F0F4', '#AAC7DB', '#70858C', '#24748B', '#1B5768'],
                     data: [
-                        {name: 'Career Program', y: 506763422, drilldown: 'Career Program'},
-                        {name: 'Cancer Education Program-R25 (including BD2K)', y: 20459296},
-                        {name: 'Clinical Cooperative Groups-U10/UG1', y: 290137118},
-                        {name: 'PreDoc PostDoc Transition Awards-F99', y: 1827785},
-                        {name: 'Minority Biomedical Support-S06', y: 96830},
-                        {name: 'Research Pathway in Residency-R38', y: 358020},
-                        {name: 'Resource Grants-R24/U24/U2C', y: 1839210},
-                        {name: 'Intl Rsrch Training Grants Conference- D43/U2R', y: 104979535},
-                        {name: 'Cooperative Conference Agreements-U13', y: 814205},
-                        {name: 'Conference Grants-R13', y: 1260119}
+                        {name: 'Career Program', y: 96578305, drilldown: 'Career Program'},
+                        {name: 'Cancer Education Program-R25 (including BD2K)', y: 14877672},
+                        {name: 'Clinical Cooperative Groups-U10/UG1', y: 295621973},
+                        {name: 'PreDoc PostDoc Transition Awards-F99', y: 1959966},
+                        {name: 'Minority Biomedical Support-S06', y: 97866},
+                        {name: 'Research Pathway in Residency-R38', y: 713828},
+                        {name: 'Resource Grants-R24/U24/U2C', y: 134541158},
+                        {name: 'Intl Rsrch Training Grants Conference- D43/U2R', y: 1003655},
+                        {name: 'Cooperative Conference Agreements-U13/R13', y: 663753}
                     ]
                 },
                 {
                     name: 'Career Program',
                     id: 'Career Program',
-                    colors: ['#2A73A5','#1A4665','#3FA7F1','#319FBE','#83C5D8', '#E2F0F4', '#AAC7DB', '#70858C', '#1B5768', '#24748B'],
+                    colors: ['#2A73A5','#1A4665','#3FA7F1','#319FBE','#83C5D8', '#E2F0F4', '#AAC7DB', '#70858C', '#1B5768', '#24748B', '#5AB2CB'],
                     data: [
-                        {name: 'Post-Doc-Fellow Awards-K00', y: 4480191},
-                        {name: 'Temin & Minority Mentored Awards-K01/K43', y: 5346036},
-                        {name: 'Estab. Inv. Award-K05', y: 172247},
-                        {name: 'Preventive Oncology-K07', y: 9916207},
-                        {name: 'Clinical Investigator-K08', y: 30547484},
-                        {name: 'Clinical Oncology-K12', y: 15653263},
-                        {name: 'Transitional Career Development-K22', y: 9353712},
-                        {name: 'Mentored Patient Oriented RCDA-K23', y: 1688518},
-                        {name: 'Mid-Career Invest. & Patient Orient. Res-K24', y: 1512698},
-                        {name: 'Mentored Quant. Res Career-K25', y: 569778},
-                        {name: 'Pathway to Independence Awards-K99', y: 5517800}
+                        {name: 'Post-Doc-Fellow Awards-K00', y: 6019542},
+                        {name: 'Temin & Minority Mentored Awards-K01/K43', y: 5450807},
+                        {name: 'Estab. Inv. Award-K05', y: 0},
+                        {name: 'Preventive Oncology-K07', y: 7296818},
+                        {name: 'Clinical Investigator-K08', y: 41376183},
+                        {name: 'Clinical Oncology-K12', y: 15968136},
+                        {name: 'Transitional Career Development-K22', y: 9340487},
+                        {name: 'Mentored Patient Oriented RCDA-K23', y: 1179584},
+                        {name: 'Mid-Career Invest. & Patient Orient. Res-K24', y: 822239},
+                        {name: 'Mentored Quant. Res Career-K25', y: 425733},
+                        {name: 'Mentored Career Devel/Tem Intl Career-K43', y: 290482},
+                        {name: 'Pathway to Independence Awards-K99', y: 8408294}
                     ]
                 }
             ]
