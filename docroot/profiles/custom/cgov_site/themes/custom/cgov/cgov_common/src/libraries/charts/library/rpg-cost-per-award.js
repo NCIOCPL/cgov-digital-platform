@@ -8,22 +8,22 @@ function initChart(Chart) {
         type: 'NCI_averageCost'
       },
       title: { text: 'RPGs Average Cost' },
-      subtitle: { text: 'Fiscal Years 2010 - 2019' },
+      subtitle: { text: 'Fiscal Years 2011 - 2020' },
       plotOptions: {
         series: {
-          pointStart: 2010
+          pointStart: 2011
         }
       },
       series: [{
         name: 'No. Awards',
         type: 'column',
         yAxis: 0,
-        data: [5079, 5019, 5021, 4816, 4814, 4767, 4666, 4663, 4780, 4984]
+        data: [5019, 5021, 4816, 4814, 4767, 4666, 4663, 4780, 4984, 5070]
       }, {
         name: 'Total Funded (thousands)',
         type: 'column',
         yAxis: 1,
-        data: [2092729, 2088352, 2075295, 1924803, 1939623, 2019000, 2069000, 2195000, 2366530, 2456156],
+        data: [2088352, 2075295, 1924803, 1939623, 2019308, 2068869, 2195184, 2366530, 2456156, 2677206],
         tooltip: {
           valuePrefix: '$'
         }
