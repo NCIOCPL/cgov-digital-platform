@@ -6,8 +6,8 @@ function initChart(Chart) {
     new Chart(id, {
       chart: { type: 'NCI_column' },
       title: { text: 'Total Number of K Awards' },
-      subtitle: { text: 'Fiscal Years 2010 - 2019' },
-      plotOptions: { series: { pointStart: 2010 } },
+      subtitle: { text: 'Fiscal Years 2011 - 2020' },
+      plotOptions: { series: { pointStart: 2011 } },
       yAxis: [{
           min: 0,
           max: 600,
@@ -31,11 +31,11 @@ function initChart(Chart) {
       },
       series: [{
         name: 'Number of Awards',
-        data: [452, 438, 422, 387, 399, 401, 402, 398, 432, 446],
+        data: [438, 422, 387, 399, 401, 402, 398, 432, 446, 487],
         yAxis: 0
       }, {
         name: 'Whole Dollars',
-        data: [75084749, 73615323, 73164124, 67524782, 67524833, 68821271, 71600825, 71726936, 78338516, 84991000],
+        data: [73615323, 73164124, 67524782, 67524833, 68821271, 71600825, 71726936, 78338516, 84991000, 96578000],
         yAxis: 1,
         tooltip: {
           valuePrefix: '$'

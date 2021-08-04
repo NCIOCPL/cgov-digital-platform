@@ -20,8 +20,8 @@ var mapData = [{
   "code": "ak",
   "state": "Alaska",
   "grants": {
-    "number": 0,
-    "amount": 0
+    "number": 1,
+    "amount": 500651
   },
   "contracts": {
     "number": 0,
@@ -32,22 +32,23 @@ var mapData = [{
   "code": "al",
   "state": "Alabama",
   "grants": {
-    "number": 63,
-    "amount": 32036913
+    "number": 68,
+    "amount": 44667925
   },
   "contracts": {
-    "number": 0,
-    "amount": 666907
+    "number": 3,
+    "amount": 430000
   },
   "institutions": [{
     "name": "University of Alabama at Birmingham",
-    "y": 28109065,
+    "y": 34221926,
     "drilldown": "AL_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'AL_1',
       "data": [
-        ["grants", 28109065]
+        ["grants", 34201926],
+          ["contracts", 20000]
       ]
     }
   }]
@@ -56,35 +57,35 @@ var mapData = [{
   "code": "ar",
   "state": "Arkansas",
   "grants": {
-    "number": 14,
-    "amount": 5186322
+    "number": 18,
+    "amount": 6821319
   },
   "contracts": {
-    "number": 0,
-    "amount": 0
+    "number": 1,
+    "amount": 383213
   }
 },
 {
   "code": "az",
   "state": "Arizona",
   "grants": {
-    "number": 59,
-    "amount": 37531259
+    "number": 56,
+    "amount": 36386966
   },
   "contracts": {
-    "number": 1,
-    "amount": 1267397
+    "number": 2,
+    "amount": 872543
   },
   "institutions": [{
     "name": "University of Arizona",
-    "y": 18227029,
+    "y": 20348634,
     "drilldown": "AZ_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'AZ_1',
       "data": [
-        ["grants", 16959632],
-        ["contracts", 1267397]
+        ["grants", 19499250],
+        ["contracts", 849384]
        ]
     }
   }]
@@ -93,104 +94,126 @@ var mapData = [{
   "code": "ca",
   "state": "California",
   "grants": {
-    "number": 898,
-    "amount": 505460287
+    "number": 901,
+    "amount": 511810003
   },
   "contracts": {
-    "number": 23,
-    "amount": 22659474
+    "number": 21,
+    "amount": 23208033
   },
   "institutions": [{
     "name": "City of Hope's Beckman Research Institute",
-    "y": 44449448,
+    "y": 50570709,
     "drilldown": "CA_1",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_1",
       "data": [
-        ["grants", 44449448]
+        ["grants", 50570709]
       ]
     }
   }, {
     "name": "Stanford University",
-    "y": 61616170,
+    "y": 58752474,
     "drilldown": "CA_2",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_2",
       "data": [
-        ["grants", 61570849],
-        ["contracts", 45321]
+        ["grants", 58707637],
+        ["contracts", 44837]
       ]
     }
   }, {
     "name": "University of  California San Francisco",
-    "y": 98339307,
+    "y": 93702875,
     "drilldown": "CA_3",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_3",
       "data": [
-        ["grants", 93884608],
-        ["contracts", 4454699]
+        ["grants", 89195194],
+        ["contracts", 4507681]
       ]
     }
   }, {
     "name": "University of California Davis",
-    "y": 22743243,
+    "y": 23861811,
     "drilldown": "CA_4",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_4",
       "data": [
-        ["grants", 22743243]
+        ["grants", 23861811]
       ]
     }
   }, {
     "name": "University of California Los Angeles",
-    "y": 58216860,
+    "y": 49096603,
     "drilldown": "CA_5",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_5",
       "data": [
-        ["grants", 58216860]
+        ["grants", 49096603]
       ]
     }
   }, {
     "name": "University of California San Diego",
-    "y": 42060347,
+    "y": 45885119,
     "drilldown": "CA_6",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_6",
       "data": [
-        ["grants", 42060347]
+        ["grants", 45885119]
       ]
     }
   },
     {
      "name": "University of Southern California",
-    "y": 34403579,
+    "y": 33165612,
     "drilldown": "CA_7",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_7",
       "data": [
-        ["grants", 30064688],
-        ["contracts", 4338891]
+        ["grants", 29242720],
+        ["contracts", 3922892]
       ]
+    }
+  },
+                   {
+     "name": "University of California-Irvine",
+    "y": 16134223,
+    "drilldown": "CA_8",
+    "drilldown_data": {
+      "name": "Total",
+      "id": "CA_7",
+      "data": [
+        ["grants", 16134223]      ]
+    }
+  },
+                   {
+     "name": "Cedars-Sinai Medical Center",
+    "y": 17019819,
+    "drilldown": "CA_9",
+    "drilldown_data": {
+      "name": "Total",
+      "id": "CA_7",
+      "data": [
+        ["grants", 17019819]      ]
     }
   },
     {
     "name": "Kaiser Foundation Research Institute",
-    "y": 19607032,
-    "drilldown": "CA_8",
+    "y": 24123867,
+    "drilldown": "CA_10",
     "drilldown_data": {
       "name": "Total",
       "id": "CA_8",
       "data": [
-        ["grants", 19607032]
+        ["grants", 24123867]
       ]
     }
   }]
@@ -199,22 +222,22 @@ var mapData = [{
   "code": "co",
   "state": "Colorado",
   "grants": {
-    "number": 91,
-    "amount": 34792933
+    "number": 98,
+    "amount": 39883556
   },
   "contracts": {
-    "number": 2,
-    "amount": 2299989
+    "number": 4,
+    "amount": 871715
   },
   "institutions": [{
     "name": "University of Colorado Health Sciences Center",
-    "y": 26953288,
+    "y": 29329383,
     "drilldown": "CO_1",
     "drilldown_data": {
       "name": "Total",
       "id": "CO_1",
       "data": [
-        ["grants", 26953288]
+        ["grants", 29329383]
         ]
     }
   }]
@@ -223,22 +246,22 @@ var mapData = [{
   "code": "ct",
   "state": "Connecticut",
   "grants": {
-    "number": 106,
-    "amount": 52640196
+    "number": 121,
+    "amount": 62430224
   },
   "contracts": {
-    "number": 4,
-    "amount": 5863644
+    "number": 2,
+    "amount": 3566890
   },
   "institutions": [{
     "name": "Yale University",
-    "y": 48752733,
+    "y": 55708809,
     "drilldown": "CT_1",
     "drilldown_data": {
       "name": "Total",
       "id": "CT_1",
       "data": [
-        ["grants", 48752733]
+        ["grants", 55708809]
       ]
     }
   }]
@@ -248,31 +271,19 @@ var mapData = [{
   "state": "District Of Columbia",
   "grants": {
     "number": 65,
-    "amount": 30717894
+    "amount": 31809829
   },
   "contracts": {
-    "number": 19,
-    "amount": 20330493
-  },
-  "institutions": [{
-    "name": "Georgetown University",
-    "y": 16066986,
-    "drilldown": "DC_1",
-    "drilldown_data": {
-      "name": "Total",
-      "id": "DC_1",
-      "data": [
-        ["grants", 16066986]
-      ]
-    }
-  }]
+    "number": 6,
+    "amount":5782749
+  }
 },
 {
   "code": "de",
   "state": "Delaware",
   "grants": {
-    "number": 10,
-    "amount": 7293873
+    "number": 11,
+    "amount": 8507549
   },
   "contracts": {
     "number": 0,
@@ -283,47 +294,57 @@ var mapData = [{
   "code": "fl",
   "state": "Florida",
   "grants": {
-    "number": 189,
-    "amount": 84043318
+    "number": 195,
+    "amount": 88681302
   },
   "contracts": {
     "number": 3,
-    "amount": 1186589
+    "amount": 1868461
   },
   "institutions": [{
     "name": "H. Lee Moffitt Cancer Center & Research Institute",
-    "y": 31653152,
+    "y": 33059471,
     "drilldown": "FL_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'FL_1',
       "data": [
-        ["grants", 31653152]
+        ["grants", 33059471]
       ]
     }
-  }]
+  }],
+      "name": "University of Miami School of Medicine",
+    "y": 15411028,
+    "drilldown": "FL_2",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'FL_2',
+      "data": [
+        ["grants", 15411028]
+      ]
+    }
 },
 {
   "code": "ga",
   "state": "Georgia",
   "grants": {
-    "number": 109,
-    "amount": 46660508
+    "number": 124,
+    "amount": 52897830
   },
   "contracts": {
-    "number": 33,
-    "amount": 5929210
+    "number": 27,
+    "amount": 7133412
   },
   "institutions": [{
     "name": "Emory University",
-    "y": 32920747,
+    "y": 34831304,
     "drilldown": "GA_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'GA_1',
       "data": [
-        ["grants", 30016707],
-        ["contracts",  2904040]
+        ["grants", 31873225],
+        ["contracts",  2958079]
         ]
     }
   }]
@@ -332,24 +353,24 @@ var mapData = [{
   "code": "hi",
   "state": "Hawaii",
   "grants": {
-    "number": 18,
-    "amount": 12817922
+    "number": 17,
+    "amount": 13119588
   },
   "contracts": {
     "number": 1,
-    "amount": 1847682
+    "amount": 1685405
   }
 },
 {
   "code": "ia",
   "state": "Iowa",
   "grants": {
-    "number": 33,
-    "amount": 21550698
+    "number": 34,
+    "amount": 22992899
   },
   "contracts": {
-    "number": 2,
-    "amount": 4596776
+    "number": 1,
+    "amount": 4181294
   },
   "institutions": [{
     "name": "University of Iowa",
@@ -361,7 +382,7 @@ var mapData = [{
       "data": [
         ["grants", 17693634],
         ["contracts", 4596776]
-       ]
+      ]
     }
   }]
 },
@@ -369,46 +390,46 @@ var mapData = [{
   "code": "id",
   "state": "Idaho",
   "grants": {
-    "number": 0,
-    "amount": 0
+    "number": 1,
+    "amount": 86791
   },
   "contracts": {
     "number": 1,
-    "amount": 608511
+    "amount": 511597
   }
 },
 {
   "code": "il",
   "state": "Illinois",
   "grants": {
-    "number": 261,
-    "amount": 122563413
+    "number": 248,
+    "amount": 131086577
   },
   "contracts": {
     "number": 9,
-    "amount": 3537698
+    "amount": 7335284
   },
   "institutions": [{
     "name": "Northwestern University at Chicago",
-    "y": 46693206,
+    "y": 48087421,
     "drilldown": "IL_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'IL_1',
       "data": [
-        ["grants", 44809892],
-        ["contracts",1883314]
+        ["grants", 46368825],
+        ["contracts",1718596]
       ]
     }
   }, {
     "name": "University of Chicago",
-    "y": 40939500,
+    "y": 38166194,
     "drilldown": "IL_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'IL_2',
       "data": [
-        ["grants", 40939500]
+        ["grants", 38166194]
        ]
     }
   }]
@@ -417,33 +438,57 @@ var mapData = [{
   "code": "in",
   "state": "Indiana",
   "grants": {
-    "number": 76,
-    "amount": 30461863
+    "number": 75,
+    "amount": 32834751
   },
   "contracts": {
-    "number": 0,
-    "amount": 219814
+    "number": 1,
+    "amount": 121856
   },
   "institutions": [{
     "name": "Indiana University - Purdue Univ at Indianapolis",
-    "y": 18367130,
+    "y": 18904347,
     "drilldown": "IN_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'IN_1',
       "data": [
-        ["grants", 18147316],
-          ["contracts",219814]
+        ["grants", 18782491],
+          ["contracts",121856]
        ]
     }
   }]
 },
+               {
+  "code": "ia",
+  "state": "Iowa",
+  "grants": {
+    "number": 34,
+    "amount": 22992899
+  },
+  "contracts": {
+    "number": 1,
+    "amount": 4181294,
+  "institutions": [{
+    "name": "University of Iowa",
+    "y": 21565965,
+    "drilldown": "IA_1",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'IA_1',
+      "data": [
+        ["grants", 17384671],
+          ["contracts",4181294]
+       ]
+    }
+  }]
+}},
 {
   "code": "ks",
   "state": "Kansas",
   "grants": {
-    "number": 26,
-    "amount": 11998336
+    "number": 22,
+    "amount": 11847138
   },
   "contracts": {
     "number": 0,
@@ -454,22 +499,23 @@ var mapData = [{
   "code": "ky",
   "state": "Kentucky",
   "grants": {
-    "number": 50,
-    "amount": 21246792
+    "number": 48,
+    "amount": 20646373
   },
   "contracts": {
     "number": 2,
-    "amount": 3746725
+    "amount": 3326062
 },
     "institutions": [{
     "name": "University of Kentucky",
-    "y": 18279795,
+    "y": 20004828,
     "drilldown": "KY_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'KY_1',
       "data": [
-        ["grants", 18279795]
+        ["grants", 17078766]
+          ["contracts",2926062]
         ]
     }
   }]
@@ -478,89 +524,101 @@ var mapData = [{
   "code": "la",
   "state": "Louisiana",
   "grants": {
-    "number": 33,
-    "amount": 14444448
+    "number": 31,
+    "amount": 12351448
   },
   "contracts": {
-    "number": 1,
-    "amount": 1865938
+    "number": 3,
+    "amount": 1963048
   }
 },
 {
   "code": "ma",
   "state": "Massachusetts",
   "grants": {
-    "number": 688,
-    "amount": 387250776
+    "number": 713,
+    "amount": 413019240
   },
   "contracts": {
-    "number": 8,
-    "amount": 992491
+    "number": 7,
+    "amount": 2288808
   },
   "institutions": [{
     "name": "Beth Israel Deaconess Medical Center",
-    "y": 19366554,
+    "y": 20651984,
     "drilldown": "MA_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_1',
       "data": [
-        ["grants", 19366554]
+        ["grants", 20651984]
       ]
     }
   }, {
     "name": "Brigham and Women's Hospital",
-    "y": 54172687,
+    "y": 47129326,
     "drilldown": "MA_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_2',
       "data": [
-        ["grants", 54172687]
+        ["grants", 47129326]
       ]
     }
   }, {
     "name": "Dana-Farber Cancer Institute",
-    "y": 128278405,
+    "y": 135834647,
     "drilldown": "MA_3",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_3',
       "data": [
-        ["grants", 128278405]
+        ["grants", 135834647]
       ]
     }
   }, {
     "name": "Harvard University",
-    "y": 17703558,
+    "y": 18228785,
     "drilldown": "MA_4",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_4',
       "data": [
-        ["grants", 17703558]
+        ["grants", 18228785]
       ]
     }
   }, {
     "name": "Massachusetts General Hospital",
-    "y": 58632520,
+    "y": 64559376,
     "drilldown": "MA_5",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_5',
       "data": [
-        ["grants", 58632520]
+        ["grants", 64559376]
       ]
     }
   },{
     "name": "Massachusetts Institute of Technology",
-    "y": 19891833,
+    "y": 21496540,
     "drilldown": "MA_6",
     "drilldown_data": {
       "name": "Total",
       "id": 'MA_6',
       "data": [
-        ["grants", 19891833]
+        ["grants", 21496540]
+      ]
+    }
+  },{
+    "name": "Broad Institute",
+    "y": 15954184,
+    "drilldown": "MA_7",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'MA_7',
+      "data": [
+        ["grants", 15145134]
+          ["contracts", 809050]
       ]
     }
   }]
@@ -569,23 +627,23 @@ var mapData = [{
   "code": "md",
   "state": "Maryland",
   "grants": {
-    "number": 170,
-    "amount": 89796462
+    "number": 183,
+    "amount": 108767277
   },
   "contracts": {
-    "number": 44,
-    "amount": 579137174
+    "number": 56,
+    "amount": 640578174
   },
   "institutions": [{
     "name": "The Johns Hopkins University",
-    "y": 76296119,
+    "y": 89696486,
     "drilldown": "MD_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'MD_1',
       "data": [
-        ["grants", 69884144],
-        ["contracts", 6411975]
+        ["grants", 84127543],
+        ["contracts", 5568943]
          ]
     }
   }]
@@ -594,8 +652,8 @@ var mapData = [{
   "code": "me",
   "state": "Maine",
   "grants": {
-    "number": 12,
-    "amount": 5873691
+    "number": 15,
+    "amount": 10684289
   },
   "contracts": {
     "number": 0,
@@ -606,22 +664,22 @@ var mapData = [{
   "code": "mi",
   "state": "Michigan",
   "grants": {
-    "number": 216,
-    "amount": 102526223
+    "number": 218,
+    "amount": 110188206
   },
   "contracts": {
-    "number": 4,
-    "amount": 523107
+    "number": 0,
+    "amount": 93805
   },
   "institutions": [{
     "name": "University of Michigan at Ann Arbor",
-    "y": 67376941,
+    "y": 73971435,
     "drilldown": "MI_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'MI_1',
       "data": [
-        ["grants", 67376941]
+        ["grants", 73971435]
        ]
     }
   }]
@@ -630,34 +688,36 @@ var mapData = [{
   "code": "mn",
   "state": "Minnesota",
   "grants": {
-    "number": 163,
-    "amount": 109017613
+    "number": 150,
+    "amount": 97085861
   },
   "contracts": {
-    "number": 4,
-    "amount": 2869904
+    "number": 5,
+    "amount": 1100615
   },
   "institutions": [{
     "name": "Mayo Clinic in Rochester",
-    "y": 62999400,
+    "y": 49057530,
     "drilldown": "MN_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'MN_1',
       "data": [
-        ["grants", 60331419],
-        ["contracts", 2667981]
+        ["grants", 48168716],
+        ["contracts", 888814]
       ]
     }
   }, {
     "name": "University of Minnesota",
-    "y": 36886971,
+    "y": 38174887,
     "drilldown": "MN_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'MN_2',
       "data": [
-        ["grants", 36886971]
+        ["grants", 37963086]
+                  ["contracts", 211801]
+
       ]
     }
   }]
@@ -666,22 +726,22 @@ var mapData = [{
   "code": "mo",
   "state": "Missouri",
   "grants": {
-    "number": 131,
-    "amount": 68997217
+    "number": 139,
+    "amount": 73424239
   },
   "contracts": {
-    "number": 90,
-    "amount": 8384317
+    "number": 91,
+    "amount": 12012411
   },
   "institutions": [{
     "name": "Washington University",
-    "y": 57345684,
+    "y": 65665048,
     "drilldown": "MO_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'MO_1',
       "data": [
-        ["grants", 57345684]
+        ["grants", 65665048]
        ]
     }
   }]
@@ -690,8 +750,8 @@ var mapData = [{
   "code": "ms",
   "state": "Mississippi",
   "grants": {
-    "number": 3,
-    "amount": 356314
+    "number": 1,
+    "amount": 174129
   },
   "contracts": {
     "number": 0,
@@ -703,7 +763,7 @@ var mapData = [{
   "state": "Montana",
   "grants": {
     "number": 4,
-    "amount": 2570251
+    "amount": 2142882
   },
   "contracts": {
     "number": 0,
@@ -714,45 +774,47 @@ var mapData = [{
   "code": "nc",
   "state": "North Carolina",
   "grants": {
-    "number": 294,
-    "amount": 154638939
+    "number": 283,
+    "amount": 143871852
   },
   "contracts": {
     "number": 3,
-    "amount": 673536
+    "amount": 881032
   },
   "institutions": [{
     "name": "Duke University",
-    "y": 49149899,
+    "y": 45573239,
     "drilldown": "NC_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'NC_1',
       "data": [
-        ["grants", 49149899]
+        ["grants", 45573239]
       ]
     }
   }, {
     "name": "University of North Carolina at Chapel Hill",
-    "y": 66970860,
+    "y": 63832330,
     "drilldown": "NC_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'NC_2',
       "data": [
-        ["grants", 66970860]
+        ["grants", 63241660]
+                  ["contracts", 590670]
+
       ]
     }
   }, {
     "name": "Wake Forest University Health Sciences",
-    "y": 21090644,
+    "y": 22848651,
     "drilldown": "NC_3",
     "drilldown_data": {
       "name": "Total",
       "id": 'NC_3',
       "data": [
-        ["grants", 20942319],
-        ["contracts", 148325]
+        ["grants", 22753651],
+        ["contracts", 95000]
        ]
     }
   }]
@@ -761,8 +823,8 @@ var mapData = [{
   "code": "nd",
   "state": "North Dakota",
   "grants": {
-    "number": 1,
-    "amount": 168537
+    "number": 2,
+    "amount": 437031
   },
   "contracts": {
     "number": 0,
@@ -773,22 +835,22 @@ var mapData = [{
   "code": "ne",
   "state": "Nebraska",
   "grants": {
-    "number": 49,
-    "amount": 20988334
+    "number": 43,
+    "amount": 19206733
   },
   "contracts": {
-    "number": 17,
-    "amount": 493428
+    "number": 15,
+    "amount": 731379
   },
   "institutions": [{
     "name": "University of Nebraska Medical Center",
-    "y": 16626739,
+    "y": 16773988,
     "drilldown": "NE_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'NE_1',
       "data": [
-        ["grants", 16626739]
+        ["grants", 16773988]
         ]
     }
   }]
@@ -797,44 +859,69 @@ var mapData = [{
   "code": "nh",
   "state": "New Hampshire",
   "grants": {
-    "number": 34,
-    "amount": 18085623
+    "number": 37,
+    "amount": 20921702
   },
   "contracts": {
     "number": 1,
-    "amount": 1499588
-  }
+    "amount": 400000
   },
+               "institutions": [{
+    "name": "Dartmouth College",
+    "y": 14769813,
+    "drilldown": "NH_1",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'NH_1',
+      "data": [
+        ["grants", 14769813]
+        ]
+    }
+  }]
+},
 {
   "code": "nj",
   "state": "New Jersey",
   "grants": {
-    "number": 74,
-    "amount": 32867792
+    "number": 68,
+    "amount": 31877988
   },
   "contracts": {
-    "number": 3,
-    "amount": 7894468
-  }
+    "number": 1,
+    "amount": 6129864
+  },
+     "institutions": [{
+    "name": "RBHS - Cancer Institute of New Jersey",
+    "y": 15902672,
+    "drilldown": "NJ_1",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'NJ_1',
+      "data": [
+        ["grants", 15902672]
+        ]
+    }
+  }]
 },
+
 {
   "code": "nm",
   "state": "New Mexico",
   "grants": {
-    "number": 24,
-    "amount": 13924112
+    "number": 26,
+    "amount": 15629275
   },
   "contracts": {
     "number": 1,
-    "amount": 2760430
+    "amount": 2597703
   }
 },
 {
   "code": "nv",
   "state": "Nevada",
   "grants": {
-    "number": 4,
-    "amount": 1967244
+    "number": 3,
+    "amount": 2237299
   },
   "contracts": {
     "number": 0,
@@ -845,89 +932,116 @@ var mapData = [{
   "code": "ny",
   "state": "New York",
   "grants": {
-    "number": 735,
-    "amount": 382433170
+    "number": 807,
+    "amount": 454380486
   },
   "contracts": {
-    "number": 5,
-    "amount": 10421080
+    "number": 8,
+    "amount": 11170884
   },
   "institutions": [{
     "name": "Albert Einstein College of Medicine",
-    "y": 15383157,
+    "y": 20468044,
     "drilldown": "NY_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_1',
       "data": [
-        ["grants", 15383157]
+        ["grants", 20468044]
       ]
     }
   }, {
     "name": "Columbia University Health Sciences",
-    "y": 47500334,
+    "y": 50706130,
     "drilldown": "NY_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_2',
       "data": [
-        ["grants", 47500334]
+        ["grants", 50464140]
+        ["contracts", 241990]
+
       ]
     }
   }, {
-    "name": "Mount Sinai School of Medicine",
-    "y": 30498931,
+    "name": "Icahn School of Medicine at Mount Sinai",
+    "y": 39315843,
     "drilldown": "NY_3",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_3',
       "data": [
-        ["grants", 30498931]
+        ["grants", 39305843]
+                  ["contracts", 10000]
+
       ]
     }
   }, {
     "name": "New York University School of Medicine",
-    "y": 36741880,
+    "y": 44310374,
     "drilldown": "NY_4",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_4',
       "data": [
-        ["grants", 36741880]
+        ["grants", 44310374]
       ]
     }
   }, {
     "name": "Roswell Park Cancer Institute Corporation",
-    "y": 29729330,
+    "y": 26880306,
     "drilldown": "NY_5",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_5',
       "data": [
-        ["grants", 29729330]
+        ["grants", 26880306]
       ]
     }
   }, {
     "name": "Sloan-Kettering Institute for Cancer Research",
-    "y": 112372447,
+    "y": 123334719,
     "drilldown": "NY_6",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_6',
       "data": [
-        ["grants", 112372447]
+        ["grants", 123334719]
       ]
     }
-  }, {
-    "name": "Weill Medical Coll of Cornell Univ",
-    "y": 29617952,
+  },
+                   {
+    "name": "Montefiore Medical Center - Bronx, NY",
+    "y": 24709760,
     "drilldown": "NY_7",
     "drilldown_data": {
       "name": "Total",
       "id": 'NY_7',
       "data": [
-        ["grants", 29567957],
-        ["contracts", 49995]
+        ["grants", 24709760]
+      ]
+    }
+  },
+                   {
+    "name": "University of Rochester",
+    "y": 16542905,
+    "drilldown": "NY_8",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'NY_8',
+      "data": [
+        ["grants", 16542905]
+      ]
+    }
+  },{
+    "name": "Weill Medical Coll of Cornell Univ",
+    "y": 36756046,
+    "drilldown": "NY_9",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'NY_9',
+      "data": [
+        ["grants", 36756046],
       ]
     }
   }]
@@ -936,82 +1050,85 @@ var mapData = [{
   "code": "oh",
   "state": "Ohio",
   "grants": {
-    "number": 238,
-    "amount": 118977429
+    "number": 244,
+    "amount": 126836694
   },
   "contracts": {
-    "number": 0,
-    "amount": 159859
+    "number": 1,
+    "amount": 364920
   },
   "institutions": [{
     "name": "Case Western Reserve University",
-    "y": 31710175,
+    "y": 35713302,
     "drilldown": "OH_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'OH_1',
       "data": [
-        ["grants", 31710175]
+        ["grants", 35713302]
       ]
     }
   },
                    {
     "name": "Ohio State University",
-    "y": 41444624,
+    "y": 48240882,
     "drilldown": "OH_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'OH_2',
       "data": [
-        ["grants", 41284765],
-        ["contracts", 159859]
+        ["grants", 14242589],
+        ["contracts", 3714777]
       ]
     }
-  },{
-    "name": "The Research Institute at Nationwide Children's Hospital",
-    "y": 19345898,
-    "drilldown": "OH_3",
-    "drilldown_data": {
-      "name": "Total",
-      "id": 'OH_3',
-      "data": [
-        ["grants", 19345898]
-      ]
-    }
-  }]
-},
+  },
 {
   "code": "ok",
   "state": "Oklahoma",
   "grants": {
     "number": 34,
-    "amount": 15950933
+    "amount": 16216510
   },
   "contracts": {
     "number": 2,
-    "amount": 969980
+    "amount": 4112926
   }
 },
+                   {
+    "name": "University of Oklahoma Health Sciences",
+    "y": 17957366,
+    "drilldown": "OK_1",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'OK_1',
+      "data": [
+        ["grants", 14242589],
+        ["contracts", 3714777]
+      ]
+    }
+  },
 {
   "code": "or",
   "state": "Oregon",
   "grants": {
-    "number": 62,
-    "amount": 51505556
+    "number": 59,
+    "amount": 46932108
   },
   "contracts": {
-    "number": 20,
-    "amount": 540738
+    "number": 33,
+    "amount": 1709982
   },
   "institutions": [{
     "name": "Oregon Health and Science University",
-    "y": 47186907,
+    "y": 42201651,
     "drilldown": "OR_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'OR_1',
       "data": [
-        ["grants", 47186907]
+        ["grants", 42191651]
+        ["contracts", 10000]
+
       ]
     }
   }]
@@ -1020,79 +1137,92 @@ var mapData = [{
   "code": "pa",
   "state": "Pennsylvania",
   "grants": {
-    "number": 441,
-    "amount": 316111135
+    "number": 474,
+    "amount": 321815334
   },
   "contracts": {
-    "number": 56,
-    "amount": 2374112
+    "number": 31,
+    "amount": 2499775
   },
   "institutions": [{
     "name": "Children's Hosp of Philadelphia",
-    "y": 51012967,
+    "y": 57098331,
     "drilldown": "PA_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_1',
       "data": [
-        ["grants", 51012967]
+        ["grants", 57098331]
       ]
     }
   }, {
     "name": "ECOG-ACRIN Medical Research Foundation",
-    "y": 35626613,
+    "y": 30096745,
     "drilldown": "PA_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_2',
       "data": [
-        ["grants", 35626613]
+        ["grants", 30096745]
       ]
     }
   }, {
     "name": "NRG Oncology Foundation, INC",
-    "y": 29130178,
+    "y": 31167125,
     "drilldown": "PA_3",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_3',
       "data": [
-        ["grants", 29130178]
+        ["grants", 31167125]
       ]
     }
   },
                    {
     "name": "University of Pennsylvania",
-    "y": 81435270,
+    "y": 68897817,
     "drilldown": "PA_4",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_4',
       "data": [
-        ["grants", 81435270]
+        ["grants", 68897817]
       ]
     }
   }, {
     "name": "University of Pittsburgh",
-    "y": 40213041,
+    "y": 46833399,
     "drilldown": "PA_5",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_5',
       "data": [
-        ["grants", 40187098],
-        ["contracts", 25943]
+        ["grants", 46770717],
+        ["contracts", 62682]
       ]
     }
   }, {
     "name": "Wistar Institute",
-    "y": 19348403,
+    "y": 19546701,
     "drilldown": "PA_6",
     "drilldown_data": {
       "name": "Total",
       "id": 'PA_6',
       "data": [
-        ["grants", 19348403]
+        ["grants", 19546701]
+     ]
+    }
+  }]
+},
+                   {
+    "name": "Thomas Jefferson University",
+    "y": 19376594,
+    "drilldown": "PA_7",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'PA_7',
+      "data": [
+        ["grants", 19376594]
      ]
     }
   }]
@@ -1101,8 +1231,8 @@ var mapData = [{
   "code": "ri",
   "state": "Rhode Island",
   "grants": {
-    "number": 23,
-    "amount": 3830692
+    "number": 15,
+    "amount": 3497796
   },
   "contracts": {
     "number": 0,
@@ -1113,8 +1243,8 @@ var mapData = [{
   "code": "sc",
   "state": "South Carolina",
   "grants": {
-    "number": 59,
-    "amount": 27878456
+    "number": 63,
+    "amount": 32935920
   },
   "contracts": {
     "number": 0,
@@ -1122,13 +1252,13 @@ var mapData = [{
   },
   "institutions": [{
     "name": "Medical University of South Carolina",
-    "y": 17810813,
+    "y": 22882816,
     "drilldown": "SC_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'SC_1',
       "data": [
-        ["grants", 17810813]
+        ["grants", 22882816]
        ]
     }
   }]
@@ -1138,44 +1268,55 @@ var mapData = [{
   "state": "South Dakota",
   "grants": {
     "number": 3,
-    "amount": 895016
+    "amount": 1039369
   },
   "contracts": {
     "number": 2,
-    "amount": 54210
+    "amount": 3986764
   }
 },
 {
   "code": "tn",
   "state": "Tennessee",
   "grants": {
-    "number": 165,
-    "amount": 113019327
+    "number": 166,
+    "amount": 111564944
   },
   "contracts": {
-    "number": 0,
-    "amount": 0
+    "number": 6,
+    "amount": 5878460
   },
   "institutions": [{
     "name": "St. Jude Children's Research Hospital",
-    "y": 41227827,
+    "y": 42150658,
     "drilldown": "TN_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'TN_1',
       "data": [
-        ["grants", 41227827]
+        ["grants", 42150658]
       ]
     }
   }, {
     "name": "Vanderbilt University Medical Center",
-    "y": 48593988,
+    "y": 44301236,
     "drilldown": "TN_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'TN_2',
       "data": [
-        ["grants", 48593988]
+        ["grants", 44301236]
+      ]
+    }
+  }, {
+    "name": "Vanderbilt University",
+    "y": 15723574,
+    "drilldown": "TN_3",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'TN_3',
+      "data": [
+        ["grants", 15723574]
       ]
     }
   }]
@@ -1185,44 +1326,56 @@ var mapData = [{
   "state": "Texas",
   "grants": {
     "number": 523,
-    "amount": 269261009
+    "amount": 272089090
   },
   "contracts": {
-    "number": 4,
-    "amount": 5905334
+    "number": 5,
+    "amount": 2837385
   },
   "institutions": [{
     "name": "Baylor College of Medicine",
-    "y": 41972894,
+    "y": 44061774,
     "drilldown": "TX_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'TX_1',
       "data": [
-        ["grants", 41972894]
+        ["grants", 44061774]
       ]
     }
   }, {
     "name": "University of Texas, MD Anderson Cancer Center",
-    "y": 126714333,
+    "y": 130074855,
     "drilldown": "TX_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'TX_2',
       "data": [
-        ["grants", 121108999],
-          ["contracts",5605334]
+        ["grants", 128062250],
+          ["contracts",2012605]
       ]
     }
-  }, {
-    "name": "University of Texas, SW Medical Center at Dallas",
-    "y": 54379692,
+  },
+                   {
+    "name": "University of Texas Health Sciences Center",
+    "y": 14796387,
     "drilldown": "TX_3",
     "drilldown_data": {
       "name": "Total",
       "id": 'TX_3',
       "data": [
-        ["grants", 54379692]
+        ["grants", 14796387],
+      ]
+    }
+  }, {
+    "name": "UT Southwestern Medical Center",
+    "y": 14796387,
+    "drilldown": "TX_4",
+    "drilldown_data": {
+      "name": "Total",
+      "id": 'TX_4',
+      "data": [
+        ["grants", 14796387]
       ]
     }
   }]
@@ -1231,23 +1384,23 @@ var mapData = [{
   "code": "ut",
   "state": "Utah",
   "grants": {
-    "number": 72,
-    "amount": 27217721
+    "number": 75,
+    "amount": 32792335
   },
   "contracts": {
-    "number": 2,
-    "amount": 2096616
+    "number": 3,
+    "amount": 2549539
   },
   "institutions": [{
     "name": "University of Utah",
-    "y": 28544587,
+    "y": 34898834,
     "drilldown": "UT_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'UT_1',
       "data": [
-        ["grants", 26447971],
-        ["contracts", 2096616]
+        ["grants", 32497335],
+        ["contracts", 2401499]
      ]
     }
   }]
@@ -1256,22 +1409,22 @@ var mapData = [{
   "code": "va",
   "state": "Virginia",
   "grants": {
-    "number": 110,
-    "amount": 53666798
+    "number": 103,
+    "amount": 53470365
   },
   "contracts": {
-    "number": 8,
-    "amount": 8320715
+    "number": 16,
+    "amount": 42342521
   },
   "institutions": [{
     "name": "University of Virginia",
-    "y": 22458374,
+    "y": 21096782,
     "drilldown": "VA_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'VA_1',
       "data": [
-        ["grants", 22458374]
+        ["grants", 21096782]
      ]
     }
   }]
@@ -1280,46 +1433,46 @@ var mapData = [{
   "code": "vt",
   "state": "Vermont",
   "grants": {
-    "number": 9,
-    "amount": 3109791
+    "number": 7,
+    "amount": 4064637
   },
   "contracts": {
-    "number": 0,
-    "amount": 0
+    "number": 1,
+    "amount": 15000
   }
 },
 {
   "code": "wa",
   "state": "Washington",
   "grants": {
-    "number": 222,
-    "amount": 159115853
+    "number": 221,
+    "amount": 155240747
   },
   "contracts": {
-    "number": 2,
-    "amount": 5218561
+    "number": 3,
+    "amount": 5559755
   },
   "institutions": [{
     "name": "Fred Hutchinson Cancer Research Center",
-    "y": 110446239,
+    "y": 108960753,
     "drilldown": "WA_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'WA_1',
       "data": [
-        ["grants", 105505833],
-        ["contracts", 4940406]
+        ["grants", 104055491],
+        ["contracts", 4905262]
       ]
     }
   }, {
     "name": "University of Washington",
-    "y": 28718882,
+    "y": 24692319,
     "drilldown": "WA_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'WA_2',
       "data": [
-        ["grants", 28718882]
+        ["grants", 24692319]
        ]
     }
   }]
@@ -1328,34 +1481,34 @@ var mapData = [{
   "code": "wi",
   "state": "Wisconsin",
   "grants": {
-    "number": 100,
-    "amount": 57597756
+    "number": 104,
+    "amount": 68709264
   },
   "contracts": {
-    "number": 3,
-    "amount": 1258957
+    "number": 2,
+    "amount": 1275685
   },
   "institutions": [{
-    "name": "University of Wisconsin",
-    "y": 30293015,
+    "name": "University of Wisconsin - Madison",
+    "y": 39499081,
     "drilldown": "WI_1",
     "drilldown_data": {
       "name": "Total",
       "id": 'WI_1',
       "data": [
-        ["grants", 29061367],
-          ["contracts",1231648]
+        ["grants", 38300245],
+          ["contracts",1198836]
       ]
     }
   }, {
     "name": "Medical College of Wisconsin",
-    "y": 19903491,
+    "y": 18858447,
     "drilldown": "WI_2",
     "drilldown_data": {
       "name": "Total",
       "id": 'WI_2',
       "data": [
-        ["grants", 19903491]
+        ["grants", 18858447]
        ]
     }
   }]
@@ -1364,8 +1517,8 @@ var mapData = [{
   "code": "wv",
   "state": "West Virginia",
   "grants": {
-    "number": 10,
-    "amount": 4465386
+    "number": 6,
+    "amount": 2136317
   },
   "contracts": {
     "number": 0,
@@ -1423,7 +1576,7 @@ function initChart(Chart) {
     },
 
     title: {
-      text: 'Grant and Contract Awards by State and Institution, FY 2019'
+      text: 'Grant and Contract Awards by State and Institution, FY 2020'
     },
 
     credits: {
