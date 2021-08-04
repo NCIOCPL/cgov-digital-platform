@@ -8,13 +8,13 @@ function initChart(Chart) {
       type: 'NCI_bar'
     },
     title: { text: 'Extramural vs Intramural and RMS Funding' },
-    subtitle: { text: 'Fiscal Years 2015 - 2019' },
+    subtitle: { text: 'Fiscal Years 2016 - 2020' },
     tooltip: {
       pointFormat: '<div><span style="color:{point.color}">\u25CF</span> {series.name}: </div><div>${point.y}</div>'
     },
     plotOptions: {
       series: {
-        pointStart: 2015
+        pointStart: 2016
       }
     },
     xAxis: [{
@@ -33,41 +33,28 @@ function initChart(Chart) {
       name: 'Extramural',
       xAxis: 0,
       data: [
-        { y: 3687, drilldown: '2015E' },
         { y: 3911.9, drilldown: '2016E' },
         { y: 4309.7, drilldown: '2017E' },
         { y: 4539.8, drilldown: '2018E' },
-        { y: 4577.5, drilldown: '2019E' }
+        { y: 4577.5, drilldown: '2019E' },
+        { y: 4860.7, drilldown: '2020E' }
+
       ]
     },
     {
       name: 'IRP & RMS',
       data: [
-        { y: 1265.6, drilldown: '2015I' },
         { y: 1294.3, drilldown: '2016I' },
         { y: 1326.7, drilldown: '2017I' },
         { y: 1387.9, drilldown: '2018I' },
-        { y: 1414.8, drilldown: '2019I' }
+        { y: 1414.8, drilldown: '2019I' },
+        { y: 1522.6, drilldown: '2020I' }
+
       ]
     }],
     drilldown: {
       drillUpButton: { position: { y: 40, } },
       series: [ {
-        name: '2015 Extramural',
-        id: '2015E',
-        xAxis: 1,
-        data: [
-          ['Research Project Grants', 2092.6],
-          ['Cancer Centers', 288.7],
-          ['SPOREs', 102.7],
-          ['Other P50s/P20s', 5.8],
-          ['Other Specialized Centers', 112.28],
-          ['Other Research Grants', 410.1],
-          ['NRSA', 69.8],
-          ['R&D Contracts', 597.0],
-          ['Buildings & Facilities', 8.0]
-        ]
-      }, {
         name: '2016 Extramural',
         id: '2016E',
         xAxis: 1,
@@ -127,15 +114,20 @@ function initChart(Chart) {
           ['R&D Contracts', 768.1],
           ['Buildings & Facilities', 18.0]
         ]
-      },
-
-       {
-        name: '2015 IRP & RMS',
-        id: '2015I',
+      }, {
+        name: '2020 Extramural',
+        id: '2020E',
         xAxis: 1,
         data: [
-          ['Intramural Research', 843.2],
-          ['RMS', 422.5]
+          ['Research Project Grants', 2749.4],
+          ['Cancer Centers', 382.0],
+          ['SPOREs', 113.2],
+          ['Other P50s/P20s', 7.9],
+          ['Other Specialized Centers', 110.7],
+          ['Other Research Grants', 548.1],
+          ['NRSA', 32.1],
+          ['R&D Contracts', 823.0],
+          ['Buildings & Facilities', 30.0]
         ]
       }, {
         name: '2016 IRP & RMS',
@@ -146,7 +138,7 @@ function initChart(Chart) {
           ['RMS', 399.8]
         ]
       }, {
- name: '2017 IRP & RMS',
+        name: '2017 IRP & RMS',
         id: '2017I',
         xAxis: 1,
         data: [
@@ -169,7 +161,15 @@ function initChart(Chart) {
             ['Intramural Research', 964.9],
             ['RMS', 449.9]
           ]
-        }]
+        }, {
+        name: '2020 IRP & RMS',
+        id: '2020I',
+        xAxis: 1,
+        data: [
+          ['Intramural Research', 1072.6],
+          ['RMS', 450.0]
+        ]
+      },]
     }
   });
 

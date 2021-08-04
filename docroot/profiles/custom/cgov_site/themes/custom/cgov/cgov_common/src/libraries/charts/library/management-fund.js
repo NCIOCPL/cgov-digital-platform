@@ -8,12 +8,12 @@ function initChart(Chart) {
           type: 'NCI_pie'
       },
       title: {text: 'NIH Management Fund, Service & Supply Fund, and GSA Rent'},
-      subtitle: {text: 'Fiscal Year 2019'},
+      subtitle: {text: 'Fiscal Year 2020'},
       series: [{
           name: 'Amount',
           data: [
-              {name: 'NCI', y: 394852398, drilldown: 'NCI'},
-              {name: 'All Others',y: 1589193079}
+              {name: 'NCI', y: 408021409, drilldown: 'NCI'},
+              {name: 'All Others',y: 1667584649}
           ]
       }],
       drilldown: {
@@ -21,11 +21,11 @@ function initChart(Chart) {
               {name: 'NCI',
                 id: 'NCI',
                 data: [
-                  ['Clinical Center', 146225820],
-                  ['Center for Scientific Review', 26444914],
-                  ['Center for Information Technology', 30690142],
-                  ['Service and Supply Fund Assessment', 178058636],
-                  ['Other Research Services', 13432885],
+                  ['Clinical Center', 153676485],
+                  ['Center for Scientific Review', 22969143],
+                  ['Center for Information Technology', 33534007],
+                  ['Service and Supply Fund Assessment', 184918145],
+                  ['Other Research Services', 12923630],
                   ['Other OD', 0]
               ]}
           ]
