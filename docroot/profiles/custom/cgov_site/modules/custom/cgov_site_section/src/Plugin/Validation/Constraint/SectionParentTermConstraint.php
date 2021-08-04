@@ -16,9 +16,18 @@ use Drupal\Core\Entity\Plugin\Validation\Constraint\CompositeConstraintBase;
 class SectionParentTermConstraint extends CompositeConstraintBase {
 
   /**
-   * {@inheritdoc}
+   * Error message for duplicate roots.
+   *
+   * @var string
    */
-  public $sectionParentTerm = 'The site section cannot be saved. Please set the parent site section under the Relations tab.';
+  public $duplicateRootErrorMsg = 'The site section cannot be saved. Please set the parent site section under the Relations tab.';
+
+  /**
+   * Error message for duplicate parents.
+   *
+   * @var string
+   */
+  public $duplicateParentSetErrorMsg = 'The site section cannot be saved. Please select only one parent site section under the Relations tab.';
 
   /**
    * {@inheritdoc}
