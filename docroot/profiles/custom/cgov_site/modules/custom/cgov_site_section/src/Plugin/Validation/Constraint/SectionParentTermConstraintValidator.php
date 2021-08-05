@@ -25,11 +25,11 @@ class SectionParentTermConstraintValidator extends ConstraintValidator implement
   protected $context;
 
   /**
-   * The entity type manager.
+   * The term storage.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\taxonomy\TermStorageInterface
    */
-  protected $entityTypeManager;
+  protected $termStorage;
 
   /**
    * The language manager service.
@@ -47,7 +47,7 @@ class SectionParentTermConstraintValidator extends ConstraintValidator implement
    *   The language manager service.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, LanguageManagerInterface $language_manager) {
-    $this->entityTypeManager = $entity_type_manager;
+    $this->termStorage = $entity_type_manager->getStorage('taxonomy_term');;
     $this->languageManager = $language_manager;
   }
 
@@ -57,6 +57,47 @@ class SectionParentTermConstraintValidator extends ConstraintValidator implement
   public static function create(ContainerInterface $container) {
     return new static($container->get('entity.manager'), $container->get('language_manager'));
 
+  }
+
+  /**
+   * Gets all the target ids of the parents.
+   *
+   * @param mixed $formData
+   *   The data for the entity.
+   *
+   * @return mixed
+   *   An array of the target_ids of the parents.
+   */
+  private function getParentTargets($formData) {
+
+    // No parent was set.
+    if (!$formData['parent'] || !is_array($formData['parent'])) {
+      return [];
+    }
+
+    $parentTargets = array_map(function ($parent) {
+      return intval($parent['target_id']);
+    }, $formData['parent']);
+
+    return $parentTargets;
+  }
+
+  /**
+   * Gets the complete list of all the terms at the root level by language.
+   *
+   * @return mixed
+   *   Array of langcodes that have a root taxonomy term.
+   */
+  public function getLanguageRoots() {
+    // Find all root terms.
+    $vid = 'cgov_site_sections';
+    $terms = $this->termStorage->loadTree($vid, 0, 1);
+    $languageRoots = [];
+    foreach ($terms as $term) {
+      $languageRoots[$term->langcode] = $term->tid;
+    }
+
+    return $languageRoots;
   }
 
   /**
@@ -73,37 +114,36 @@ class SectionParentTermConstraintValidator extends ConstraintValidator implement
   public function validate($entity, Constraint $constraint) {
 
     $formData = $entity->getEntity()->toArray();
+
+    $parentItems = $this->getParentTargets($formData);
+
+    if (count($parentItems) > 1) {
+      // More than one parent, we can't check correctly, so error.
+      $this->context->addViolation($constraint->duplicateParentSetErrorMsg);
+    }
+    elseif (count($parentItems) === 1 && $parentItems[0] !== 0) {
+      // Has a parent that is not the root, this is ok, skipping extra work.
+      return;
+    }
+
+    // NOTE: If we are here, we are going to be a root term.
+    $languageRoots = $this->getLanguageRoots();
+
+    // This is the langcode of the entity trying to be saved.
     $langcode = $formData['langcode'][0]['value'];
+
+    // If this entity was saved before, we also want to know the previous
+    // language, since someone could be changing it.
+    $tid = NULL;
     if (isset($formData['tid'][0]['value'])) {
       $tid = $formData['tid'][0]['value'];
-      $currlangcode = $this->entityTypeManager->getStorage('taxonomy_term')->load($tid)->get('langcode')->value;
-    }
-    else {
-      $tid = $currlangcode = '';
-    }
-    // Get active languages in site.
-    $langcodes = $this->languageManager->getLanguages();
-    $langcodesList = array_keys($langcodes);
-    $vid = 'cgov_site_sections';
-
-    // Get existing terms.
-    $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vid);
-    $parentTermCount = 0;
-    foreach ($terms as $term) {
-      $existLangCodes[] = $term->langcode;
-      if ($term->depth == 0 && in_array($term->langcode, $langcodesList) && $tid != $term->tid) {
-        $parentTermCount++;
-      }
     }
 
-    // Get parent terms.
-    foreach ($formData['parent'] as $parents) {
-      $parentItems[] = $parents['target_id'];
-    }
-    if (in_array(0, $parentItems)) {
-      if ($parentTermCount >= 1 && in_array($langcode, $existLangCodes) && $langcode != $currlangcode) {
-        $this->context->addViolation($constraint->sectionParentTerm);
-      }
+    // If there is already a root term for the entities language, and
+    // the terms being saved is NOT that root term, then log a
+    // validation error.
+    if (array_key_exists($langcode, $languageRoots) && $languageRoots[$langcode] !== $tid) {
+      $this->context->addViolation($constraint->duplicateRootErrorMsg);
     }
   }
 
