@@ -83,13 +83,33 @@ class SectionParentTermConstraintValidatorTest extends KernelTestBase {
     $violations_dupe_en = $dupe_en_term->validate();
     $this->assertEqual($violations_dupe_en->count(), 1);
 
-    /* TODO: Test Case 4: Delete English Root and Recreate Successfully. */
-    /* TODO: Test Case N: Test Not Specified language */
+    // Test Case 4: Deleting the Root term.
+    $en_term->delete();
+    // Recreating the root term.
+    $en_term = Term::create([
+      'name' => 'en_lang',
+      'vid' => 'cgov_site_sections',
+      'langcode' => 'en',
+    ]);
+    $violations_en = $en_term->validate();
+    $this->assertEqual($violations_en->count(), 0);
+    $en_term->save();
+
+    /* Test for Not Specified language */
+    // Test Case 5: Test for Not Specified langauge and Creating.
+    $und_term = Term::create([
+      'name' => 'undefined_lang',
+      'vid' => 'cgov_site_sections',
+      'langcode' => 'und',
+    ]);
+    $violations_und = $und_term->validate();
+    $this->assertEqual($violations_und->count(), 0);
+    $und_term->save();
 
     // Enable Spanish Language.
     ConfigurableLanguage::createFromLangcode('es')->save();
 
-    // Test Case 5:  Successfully create Spanish with Existing English.
+    // Test Case 6:  Successfully create Spanish with Existing English.
     $es_term = Term::create([
       'name' => 'spanish_term',
       'vid' => 'cgov_site_sections',
@@ -99,7 +119,7 @@ class SectionParentTermConstraintValidatorTest extends KernelTestBase {
     $this->assertEqual($violations_es->count(), 0);
     $es_term->save();
 
-    // Test Case 6: Fail to create dupe Spanish.
+    // Test Case 7: Fail to create dupe Spanish.
     $dupe_es_term = Term::create([
       'name' => 'spanish_term',
       'vid' => 'cgov_site_sections',
@@ -111,7 +131,7 @@ class SectionParentTermConstraintValidatorTest extends KernelTestBase {
     // Enable German Language.
     ConfigurableLanguage::createFromLangcode('de')->save();
 
-    // Test Case 6: Successfully create non-profile language
+    // Test Case 8: Successfully create non-profile language
     // with Existing English.
     $de_term = Term::create([
       'name' => 'german_term',
@@ -121,6 +141,15 @@ class SectionParentTermConstraintValidatorTest extends KernelTestBase {
     $violations_de = $de_term->validate();
     $this->assertEqual($violations_de->count(), 0);
     $de_term->save();
+
+    // Test Case 9: Load and update the term
+    // with a different parent relation.
+    $en_term = Term::load($en_term->id());
+    $en_term->parent = ['target_id' => $es_term->id()];
+    $violations_en = $en_term->validate();
+    $this->assertEqual($violations_en->count(), 0);
+    $en_term->save();
+
   }
 
 }

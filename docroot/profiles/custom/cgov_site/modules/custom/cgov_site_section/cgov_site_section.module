@@ -172,10 +172,18 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   if ($entity->parent->target_id == 0 && $entity->langcode->value === 'en') {
     _cgov_site_section_attempt_set_front_page($entity);
   }
-
   // Save the term children if this term update meets the criteria.
   if (will_trigger_save_children($entity)) {
-    save_term_children($entity);
+    // Checking for any validation related errors.
+    if (!$entity->validate()) {
+      $validation_errors = $entity->validate();
+      if (count($validation_errors) !== 0) {
+        throw new Error($validation_errors[0]);
+      }
+    }
+    else {
+      save_term_children($entity);
+    }
   }
   // Determine if this term update meets the criteria for tag invalidation,
   // and invalidate.
@@ -271,6 +279,7 @@ function save_term_children(EntityInterface $updated_section_entity) {
 
   // Re-save the sections. This should trigger the presave above which will set
   // the computed_path to the new path.
+
   foreach ($subsections as $section) {
     $section->save();
   }
