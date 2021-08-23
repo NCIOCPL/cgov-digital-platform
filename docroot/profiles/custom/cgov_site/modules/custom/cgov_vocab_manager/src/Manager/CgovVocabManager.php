@@ -42,8 +42,9 @@ class CgovVocabManager {
         $first_element = FALSE;
       }
       else {
+
         $parent_link_url = Url::fromRoute('cgov_vocab_manager.overview_onelevel_form', [
-          'taxonomy_vocabulary' => $parent->getVocabularyId(),
+          'taxonomy_vocabulary' => $parent->bundle(),
           'parent_tid' => $parent->id(),
         ]);
       }
@@ -53,7 +54,7 @@ class CgovVocabManager {
     }
     // Add Root in so users can get back to main overview page.
     $parents_links[] = Link::fromTextAndUrl('Level 0 (Root)', Url::fromRoute('cgov_vocab_manager.overview_onelevel_form', [
-      'taxonomy_vocabulary' => $term->getVocabularyId(),
+      'taxonomy_vocabulary' => $term->bundle(),
       'parent_tid' => 0,
     ]));
     // Revert the order of the Url elements.
@@ -73,11 +74,11 @@ class CgovVocabManager {
    */
   public function getChildrenLink(Term $term, TermStorageInterface $storageController, RendererInterface $renderer) {
     // Count the number of children of the current term.
-    $children_count = count($storageController->loadChildren($term->id(), $term->getVocabularyId()));
+    $children_count = count($storageController->loadChildren($term->id(), $term->bundle()));
 
     // Generate the link.
     $link_manage_children_url = Url::fromRoute('cgov_vocab_manager.overview_onelevel_form', [
-      'taxonomy_vocabulary' => $term->getVocabularyId(),
+      'taxonomy_vocabulary' => $term->bundle(),
       'parent_tid' => $term->id(),
     ]);
     $link_manage_children_url_text = $this->formatPlural($children_count, '1 child', '@count children');
