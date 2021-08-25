@@ -61,7 +61,7 @@ EOMarkup;
   $result = $query->execute();
   if (count($result)) {
     $eid = array_shift($result);
-    $block = entity_load('block_content', $eid);
+    $block = \Drupal::entityTypeManager()->getStorage('block_content')->load($eid);
     $title = $block->info->value . " - " . $langcode;
     // Create translation if it doesn't already exist.
     if (!$block->hasTranslation($langcode)) {
@@ -71,7 +71,7 @@ EOMarkup;
         'field_raw_html' => ['value' => $syndication_message[$langcode], 'format' => 'raw_html'],
       ]);
       $block_translated->save();
-      drupal_set_message("Added Syndication Message block_content: $title");
+      \Drupal::messenger()->addStatus('Added Syndication Message block_content: ' . $title);
     }
   }
 }
