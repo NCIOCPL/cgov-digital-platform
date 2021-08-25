@@ -6,9 +6,11 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\CacheDecorator\CacheDecoratorInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityMalformedException;
+use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\RevisionableInterface;
-use Drupal\Core\Path\AliasManagerInterface;
-use Drupal\Core\Path\AliasStorageInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 
@@ -20,17 +22,16 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   /**
    * The alias manager service.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var \Drupal\path_alias\AliasManagerInterface
    */
   protected $aliasManager;
 
   /**
-   * The alias manager service.
+   * The Entity Type Manager service.
    *
-   * @var \Drupal\Core\Path\AliasStorageInterface
+   * @var \Drupal\Entity\EntityTypeManagerInterface
    */
-  protected $aliasStorage;
-
+  protected $entityTypeManager;
 
   /**
    * The app path storage service.
@@ -84,9 +85,9 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   /**
    * Constructs an AppPathManager.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
+   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
    *   The core alias manager service.
-   * @param \Drupal\Core\Path\AliasStorageInterface $alias_storage
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The core alias storage service.
    * @param \Drupal\app_module\AppPathStorageInterface $storage
    *   The app module path storage service.
@@ -97,13 +98,13 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
    */
   public function __construct(
     AliasManagerInterface $alias_manager,
-    AliasStorageInterface $alias_storage,
+    EntityTypeManagerInterface $entity_type_manager,
     AppPathStorageInterface $storage,
     LanguageManagerInterface $language_manager,
     CacheBackendInterface $cache
   ) {
     $this->aliasManager = $alias_manager;
-    $this->aliasStorage = $alias_storage;
+    $this->entityTypeManager = $entity_type_manager;
     $this->storage = $storage;
     $this->languageManager = $language_manager;
     $this->cache = $cache;
@@ -444,12 +445,67 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     // alias and call it a day.
     //
     // See \Drupal\path\Plugin\Field\FieldType\PathFieldItemList::computeValue.
-    $path = $this->aliasStorage->load([
-      'source' => $owner_source,
-      'langcode' => $langcode,
-    ]);
+    $path = $this->loadAlias($owner_source, $langcode);
 
     return $path;
+  }
+
+  /**
+   * This loads a path_alias entity.
+   *
+   * Drupal 9 does away with the old AliasStorage class, and there is no
+   * replacement for the old load function. The old function just made an
+   * entity query, so we will copy most of the old code to ensure continued
+   * functionality.
+   *
+   * @param string $path
+   *   The path, which used to be known as source, to load.
+   * @param string $langcode
+   *   The language to fetch.
+   *
+   * @return array|false
+   *   FALSE if the path could not be saved or an associative array containing
+   *   the following keys:
+   *   - source (string): The internal system path with a starting slash.
+   *   - alias (string): The URL alias with a starting slash.
+   *   - pid (int): Unique path alias identifier.
+   *   - langcode (string): The language code of the alias.
+   *   - original: For updates, an array with source, alias and langcode with
+   *     the previous values.
+   */
+  private function loadAlias($path, $langcode) {
+    // We cannot fetch the storage from the EntityTypeManager in the constructor
+    // because it causes a circular dependency in the service container.
+    $aliasStorage = $this->entityTypeManager->getStorage('path_alias');
+
+    $query = $aliasStorage->getQuery();
+    $query->accessCheck(FALSE);
+    $query->condition('path', $path, '=');
+    $query->condition('langcode', $langcode, '=');
+    $result = $query
+      ->sort('id', 'DESC')
+      ->range(0, 1)
+      ->execute();
+
+    if (count($result) > 0) {
+      $entities = $aliasStorage->loadMultiple($result);
+
+      /** @var \Drupal\path_alias\PathAliasInterface $path_alias */
+      $path_alias = reset($entities);
+      if ($path_alias) {
+        return [
+          'pid' => $path_alias
+            ->id(),
+          'source' => $path_alias
+            ->getPath(),
+          'alias' => $path_alias
+            ->getAlias(),
+          'langcode' => $path_alias
+            ->get('langcode')->value,
+        ];
+      }
+    }
+    return FALSE;
   }
 
   /**
