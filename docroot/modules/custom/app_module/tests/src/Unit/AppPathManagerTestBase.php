@@ -15,16 +15,16 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   /**
    * Alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit_Framework_MockObject_MockObject
    */
   protected $aliasManager;
 
   /**
    * Alias storage.
    *
-   * @var \Drupal\Core\Path\AliasStorageInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit_Framework_MockObject_MockObject
    */
-  protected $aliasStorage;
+  protected $entityTypeManager;
 
   /**
    * The app path manager.
@@ -55,6 +55,13 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   protected $cache;
 
   /**
+   * Entity Query Mock.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryInterface|\PHPUnit_Framework_MockObject_MockObject
+   */
+  protected $entityQuery;
+
+  /**
    * The internal cache key used by the alias manager.
    *
    * @var string
@@ -77,10 +84,47 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
     $this->appPathStorage = $this->createMock('Drupal\app_module\AppPathStorageInterface');
     $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
     $this->cache = $this->createMock('Drupal\Core\Cache\CacheBackendInterface');
-    $this->aliasManager = $this->createMock('Drupal\Core\Path\AliasManagerInterface');
-    $this->aliasStorage = $this->createMock('Drupal\Core\Path\AliasStorageInterface');
+    $this->aliasManager = $this->createMock('Drupal\path_alias\AliasManagerInterface');
+    $this->entityTypeManager = $this->createMock('Drupal\Core\Entity\EntityTypeManagerInterface');
+    $this->aliasStorage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
+    $this->entityQuery = $this->createMock('Drupal\Core\Entity\Query\QueryInterface');
 
-    $this->appPathManager = new AppPathManager($this->aliasManager, $this->aliasStorage, $this->appPathStorage, $this->languageManager, $this->cache);
+    $this->entityQuery
+      ->expects($this->any())
+      ->method('accessCheck')
+      ->with(FALSE)
+      ->willReturn($this->entityQuery);
+
+    $this->entityQuery
+      ->expects($this->any())
+      ->method('sort')
+      ->with('id', 'DESC')
+      ->willReturn($this->entityQuery);
+
+    $this->entityQuery
+      ->expects($this->any())
+      ->method('range')
+      ->with(0, 1)
+      ->willReturn($this->entityQuery);
+
+    $this->entityTypeManager
+      ->expects($this->any())
+      ->method('getStorage')
+      ->with('path_alias')
+      ->willReturn($this->aliasStorage);
+
+    $this->aliasStorage
+      ->expects($this->any())
+      ->method('getQuery')
+      ->willReturn($this->entityQuery);
+
+    $this->appPathManager = new AppPathManager(
+      $this->aliasManager,
+      $this->entityTypeManager,
+      $this->appPathStorage,
+      $this->languageManager,
+      $this->cache
+    );
 
   }
 

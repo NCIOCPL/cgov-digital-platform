@@ -102,14 +102,24 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
    */
   public function testGoodEntityNoAlias() {
 
-    $this->aliasStorage
+    $this->entityQuery
+      ->expects($this->at(1))
+      ->method('condition')
+      ->with('path', '/node/22', '=', NULL);
+
+    $this->entityQuery
+      ->expects($this->at(2))
+      ->method('condition')
+      ->with('langcode', 'en', '=', NULL);
+
+    $this->entityQuery
       ->expects($this->exactly(1))
-      ->method('load')
-      ->with([
-        'source' => '/node/22',
-        'langcode' => 'en',
-      ])
-      ->willReturn(FALSE);
+      ->method('execute')
+      ->willReturn([]);
+
+    $this->aliasStorage
+      ->expects($this->never())
+      ->method('loadMultiple');
 
     // Setup Storage.
     // Expected Load looking for an existing app path.
@@ -139,7 +149,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
    * Positive test for normal action.
    *
    * This is the most complicated. The was no app path found, so
-   * we need to create it and not juust update.
+   * we need to create it and not just update.
    */
   public function testGoodEntityNew() {
 
@@ -153,19 +163,29 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'langcode' => 'en',
     ];
 
-    // Alias storage to lookup alias.
+    $this->entityQuery
+      ->expects($this->at(1))
+      ->method('condition')
+      ->with('path', '/node/22', '=', NULL)
+      ->willReturn($this->entityQuery);
+
+    $this->entityQuery
+      ->expects($this->at(2))
+      ->method('condition')
+      ->with('langcode', 'en', '=', NULL)
+      ->willReturn($this->entityQuery);
+
+    $this->entityQuery
+      ->expects($this->exactly(1))
+      ->method('execute')
+      ->willReturn([123]);
+
     $this->aliasStorage
       ->expects($this->exactly(1))
-      ->method('load')
-      ->with([
-        'source' => '/node/22',
-        'langcode' => 'en',
-      ])
+      ->method('loadMultiple')
+      ->with([123])
       ->willReturn([
-        'pid' => 123,
-        'source' => '/node/22',
-        'alias' => '/test-alias',
-        'langcode' => 'en',
+        $this->getPathAliasMock('123', '/node/22', '/test-alias', 'en'),
       ]);
 
     // Setup Storage.
@@ -239,19 +259,27 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'langcode' => 'en',
     ];
 
-    // Alias storage to lookup alias.
+    $this->entityQuery
+      ->expects($this->at(1))
+      ->method('condition')
+      ->with('path', '/node/22', '=', NULL);
+
+    $this->entityQuery
+      ->expects($this->at(2))
+      ->method('condition')
+      ->with('langcode', 'en', '=', NULL);
+
+    $this->entityQuery
+      ->expects($this->exactly(1))
+      ->method('execute')
+      ->willReturn([123]);
+
     $this->aliasStorage
       ->expects($this->exactly(1))
-      ->method('load')
-      ->with([
-        'source' => '/node/22',
-        'langcode' => 'en',
-      ])
+      ->method('loadMultiple')
+      ->with([123])
       ->willReturn([
-        'pid' => 123,
-        'source' => '/node/22',
-        'alias' => '/test-alias',
-        'langcode' => 'en',
+        $this->getPathAliasMock('123', '/node22', '/test-alias', 'en'),
       ]);
 
     // Setup Storage.
@@ -378,7 +406,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
               return $app_module_field_list;
 
             default:
-              throw new Exception("Unknown field " . $field_name);
+              throw new \Exception("Unknown field " . $field_name);
           }
         }
       ));
@@ -410,7 +438,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
               return $app_module_data;
 
             default:
-              throw new Exception("Unknown field " . $field_name);
+              throw new \Exception("Unknown field " . $field_name);
           }
         }
       ));
@@ -486,7 +514,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
                 return $has_app_id;
 
               default:
-                throw new Exception("Unexpected field " . $field_name);
+                throw new \Exception("Unexpected field " . $field_name);
             }
           }
         )
@@ -494,6 +522,43 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     }
 
     return $entity;
+  }
+
+  /**
+   * Helper method to get content entity for negative tests.
+   */
+  private function getPathAliasMock($id, $path, $alias, $langcode) {
+    $pathAliasMock = $this->createMock('Drupal\path_alias\PathAliasInterface');
+    $pathAliasMock
+      ->expects($this->any())
+      ->method('id')
+      ->willReturn($id);
+
+    $pathAliasMock
+      ->expects($this->any())
+      ->method('getPath')
+      ->willReturn($path);
+
+    $pathAliasMock
+      ->expects($this->any())
+      ->method('getAlias')
+      ->willReturn($alias);
+
+    $langcodeMock = $this->getMockBuilder('\Drupal\Core\Field\FieldItemListInterface')
+      ->disableOriginalConstructor()
+      ->getMock();
+    $langcodeMock->expects($this->any())
+      ->method('__get')
+      ->with('value')
+      ->willReturn($langcode);
+
+    $pathAliasMock
+      ->expects($this->any())
+      ->method('get')
+      ->with('langcode')
+      ->willReturn($langcodeMock);
+
+    return $pathAliasMock;
   }
 
 }
