@@ -15,6 +15,9 @@ use Drupal\Core\File\FileSystem;
  */
 class RedirectImport extends FormBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected $filesystem;
 
   /**
@@ -118,12 +121,12 @@ class RedirectImport extends FormBase {
       $form_state->setErrorByName('file', $this->t('No file was found.'));
       return;
     }
-    drupal_set_message($this->t("Successfully uploaded redirect file."));
+    $this->messenger()->addStatus($this->t("Successfully uploaded redirect file."));
 
     ini_set('auto_detect_line_endings', TRUE);
     // Don't do anything if no valid file.
     if (!isset($this->file)) {
-      drupal_set_message($this->t('No valid file was found. No redirects will be imported.'), 'warning');
+      $this->messenger()->addWarning($this->t('No valid file was found. No redirects will be imported.'));
       return;
     }
 
