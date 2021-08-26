@@ -7,6 +7,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 
@@ -22,14 +23,30 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
    *
    * @var \Symfony\Component\Validator\Context\ExecutionContextInterface
    */
-
   protected $context;
+
+  /**
+   * Entity Type Manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('entity.manager')->getStorage('node'));
+    return new static($container->get('entity_type.manager'));
+  }
+
+  /**
+   * Constructs an UniqueCgovUrlConstraintValidator object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -115,7 +132,10 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
 
       // Query for the conditions.
       // The id could be NULL, cast it to 0 in that case.
-      $value_taken = (bool) \Drupal::entityQuery($entity_type_id)
+      $query = $this->entityTypeManager
+        ->getStorage($entity_type_id)
+        ->getQuery();
+      $value_taken = (bool) $query
         ->condition($id_key, (int) $entity->id(), '<>')
         ->condition($field_name, $value)
         ->notExists('field_pretty_url')
@@ -158,7 +178,10 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
 
     // Query for the conditions.
     // The id could be NULL, cast it to 0 in that case.
-    $value_taken = (bool) \Drupal::entityQuery($entity_type_id)
+    $query = $this->entityTypeManager
+      ->getStorage($entity_type_id)
+      ->getQuery();
+    $value_taken = (bool) $query
       ->condition($id_key, (int) $entity->id(), '<>')
       ->condition($section_field_name, $section_value)
       ->condition($pretty_url_field_name, $pretty_url_value)
