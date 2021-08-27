@@ -99,6 +99,13 @@ command-hooks:
 simplesamlphp: true
 cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
+
+validate:
+  deprecation:
+    modules: true
+    themes: true
+    profiles: true
+
 tests:
   phpunit:
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
