@@ -77,7 +77,9 @@ EOMarkup;
   $result = $query->execute();
   if (count($result)) {
     $eid = array_shift($result);
-    $block = entity_load('block_content', $eid);
+    $block = \Drupal::entityTypeManager()
+      ->getStorage('block_content')
+      ->load($eid);
     $title = $block->info->value . " - " . $langcode;
     // Create translation if it doesn't already exist.
     if (!$block->hasTranslation($langcode)) {
@@ -87,7 +89,7 @@ EOMarkup;
         'body' => ['value' => $public_use[$langcode], 'format' => 'full_html'],
       ]);
       $block_translated->save();
-      drupal_set_message("Added Public Use block_content: $title");
+      \Drupal::messenger()->addStatus("Added Public Use block_content: $title");
     }
   }
 }

@@ -18,7 +18,7 @@ services:
     class: Drupal\cgov_core\Services\CgovNavigationManager
     arguments:
       - '@path.current'
-      - '@path.alias_manager'
+      - '@path_alias.manager'
       - '@entity_type.manager'
       - '@entity_field.manager'
       - '@logger.channel.cgov_core'
@@ -46,7 +46,7 @@ services:
       - { name: event_subscriber }
   cgov_core.url_path_processor:
     class: Drupal\cgov_core\Plugin\PathProcessor\UrlProcessor
-    arguments: ['@path.alias_manager', '@language_manager', '@service_container']
+    arguments: ['@path_alias.manager', '@language_manager', '@service_container']
     tags:
       - { name: path_processor_outbound, priority: 600 }
   cgov_core.config_overrider:
