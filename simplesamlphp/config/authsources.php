@@ -1,22 +1,30 @@
 <?php
 
 // Determine which IDP to use in this environment.
-$idp = 'not set!';
-switch ( $_ENV['AH_SITE_ENVIRONMENT'] ) {
-  case '01live':
-  case '01update':
-    $idp = 'https://auth.nih.gov/IDP';
-    break;
+$secrets_file = sprintf('/mnt/files/%s.%s/secrets.settings.php', $_ENV['AH_SITE_GROUP'],$_ENV['AH_SITE_ENVIRONMENT']);
+if (file_exists($secrets_file)) {
+  require_once ($secrets_file);
 
-  case '01test':
-  case '01testup':
-    $idp = 'https://authtest.nih.gov/IDP';
-    break;
+  $idp = SamlSecrets::IDP_URI;
+}
+else {
+  $idp = 'not set!';
+  switch ( $_ENV['AH_SITE_ENVIRONMENT'] ) {
+    case '01live':
+    case '01update':
+      $idp = 'https://auth.nih.gov/IDP';
+      break;
 
-  case '01dev':
-  case '01dev':
-  default:
-    $idp = 'https://authdev.nih.gov/SAML2/IDP';
+    case '01test':
+    case '01testup':
+      $idp = 'https://authtest.nih.gov/IDP';
+      break;
+
+    case '01dev':
+      case '01dev':
+        default:
+        $idp = 'https://authdev.nih.gov/SAML2/IDP';
+  }
 }
 
 $config = [

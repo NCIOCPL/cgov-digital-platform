@@ -21,9 +21,7 @@ function cgov_saml_auth_config_simplesamlphp_auth_allow_login(array $attributes)
   $account = $external_auth->load($authname, 'simplesamlphp_auth');
 
   if (!$account) {
-    \Drupal::logger('cgov_saml_auth_config')->warning('Could not find SSO user: %authname', [
-      '%authname' => $authname,
-    ]);
+    \Drupal::logger('cgov_saml_auth_config')->warning('Could not find SSO user: ' . $authname);
     throw new AccessDeniedHttpException();
   }
   return TRUE;
