@@ -60,7 +60,7 @@ class UsersCommands extends BltTasks {
    *   TRUE if valid, FALSE if not.
    */
   protected function isAdminBlockValid($admin) {
-    // TODO: This should be more robust and check bad chars.
+    // @todo This should be more robust and check bad chars.
     return (
       array_key_exists('username', $admin) &&
       $admin['username'] != '' &&

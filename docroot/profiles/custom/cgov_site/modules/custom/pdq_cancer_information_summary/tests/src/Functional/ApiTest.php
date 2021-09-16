@@ -20,6 +20,13 @@ class ApiTest extends BrowserTestBase {
   protected $profile = 'cgov_site';
 
   /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'cgov_common';
+
+  /**
    * Basic authentication credentials.
    *
    * @var array

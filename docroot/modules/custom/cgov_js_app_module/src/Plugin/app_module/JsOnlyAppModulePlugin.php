@@ -8,7 +8,6 @@ use Drupal\Core\Url;
 use Drupal\Core\Utility\Token;
 use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 use Drupal\cgov_js_app_module\Render\JsAppModuleScriptMarkup;
-use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -345,7 +344,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
     $settings_to_output = !empty($options['frontEndConfig']) ? $options['frontEndConfig'] : [];
 
     if (gettype($settings_to_output) !== "array") {
-      throw new Exception("frontEndConfig can be empty, but if it exists it MUST be an array");
+      throw new \Exception("frontEndConfig can be empty, but if it exists it MUST be an array");
     }
 
     // Add in our known settings.
@@ -545,7 +544,8 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
     });
     $head_links_to_remove = array_filter($remove_elements, function ($el) {
       return ($el === "alternate");
-    });;
+    });
+    ;
 
     /* -----------
      * Remove head elements

@@ -5,7 +5,7 @@ namespace Cgov;
 use Cgov\Task\Paratest;
 
 /**
- * Trait ParatestTrait.
+ * Trait for Paratest classes.
  *
  * @package Acquia\Blt\Custom
  */

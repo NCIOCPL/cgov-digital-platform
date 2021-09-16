@@ -2,6 +2,7 @@
 
 namespace Drupal\app_module;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\CacheDecorator\CacheDecoratorInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -69,6 +70,13 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   protected $languageManager;
 
   /**
+   * Time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $timeSvc;
+
+  /**
    * Holds the map of paths per language.
    *
    * @var array
@@ -95,19 +103,23 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
    *   The language manager.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   Cache backend.
+   * @param \Drupal\Component\Datetime\TimeInterface $time_service
+   *   Time service.
    */
   public function __construct(
     AliasManagerInterface $alias_manager,
     EntityTypeManagerInterface $entity_type_manager,
     AppPathStorageInterface $storage,
     LanguageManagerInterface $language_manager,
-    CacheBackendInterface $cache
+    CacheBackendInterface $cache,
+    TimeInterface $time_service
   ) {
     $this->aliasManager = $alias_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->storage = $storage;
     $this->languageManager = $language_manager;
     $this->cache = $cache;
+    $this->timeSvc = $time_service;
   }
 
   /**
@@ -527,7 +539,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
       $this->cache->set(
         $this->cacheKey,
         $this->lookupMap,
-        $this->getRequestTime() + $twenty_four_hours,
+        $this->timeSvc->getRequestTime() + $twenty_four_hours,
         [AppPathStorageInterface::CACHE_TAG]
       );
     }
@@ -545,16 +557,6 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     $this->preloadedPathLookups = [];
     $this->cache->delete($this->cacheKey);
     $this->isInitialized = FALSE;
-  }
-
-  /**
-   * Wrapper method for REQUEST_TIME constant.
-   *
-   * @return int
-   *   The request time as an int.
-   */
-  protected function getRequestTime() {
-    return defined('REQUEST_TIME') ? REQUEST_TIME : (int) $_SERVER['REQUEST_TIME'];
   }
 
 }

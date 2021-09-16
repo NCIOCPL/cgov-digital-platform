@@ -45,11 +45,16 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
   /**
    * The installation profile to use with this test.
    *
-   * We need the 'cgov_site' profile because we are within that profile.
-   *
    * @var string
    */
   protected $profile = 'minimal';
+
+  /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * These are a set of default options for the plugin methods.

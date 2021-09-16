@@ -77,7 +77,7 @@ class AppModuleForm extends EntityForm {
       '#default_value' => $app_module->appModulePluginId(),
     ];
 
-    // TODO: You will need additional form elements for your custom properties.
+    // @todo You will need additional form elements for your custom properties.
     return $form;
   }
 
