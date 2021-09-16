@@ -7,7 +7,7 @@ services:
     arguments: ['@request_stack']
   app_module.app_path_manager:
     class: Drupal\app_module\AppPathManager
-    arguments: ['@path_alias.manager', '@entity_type.manager', '@app_module.app_path_storage', '@language_manager', '@cache.data']
+    arguments: ['@path_alias.manager', '@entity_type.manager', '@app_module.app_path_storage', '@language_manager', '@cache.data', '@datetime.time']
   app_module.app_path_storage:
     class: Drupal\app_module\AppPathStorage
     arguments: ['@database', '@module_handler']

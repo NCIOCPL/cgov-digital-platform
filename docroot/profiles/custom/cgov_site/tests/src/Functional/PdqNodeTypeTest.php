@@ -25,6 +25,13 @@ class PdqNodeTypeTest extends NodeTestBase {
   protected $profile = 'cgov_site';
 
   /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'cgov_common';
+
+  /**
    * Modules to enable.
    *
    * @var array

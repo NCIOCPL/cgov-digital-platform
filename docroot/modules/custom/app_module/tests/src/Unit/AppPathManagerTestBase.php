@@ -62,6 +62,13 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   protected $entityQuery;
 
   /**
+   * Time Service Mock.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit_Framework_MockObject_MockObject
+   */
+  protected $timeSvc;
+
+  /**
    * The internal cache key used by the alias manager.
    *
    * @var string
@@ -88,6 +95,7 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
     $this->entityTypeManager = $this->createMock('Drupal\Core\Entity\EntityTypeManagerInterface');
     $this->aliasStorage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
     $this->entityQuery = $this->createMock('Drupal\Core\Entity\Query\QueryInterface');
+    $this->timeSvc = $this->createMock('Drupal\Component\Datetime\TimeInterface');
 
     $this->entityQuery
       ->expects($this->any())
@@ -123,7 +131,8 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
       $this->entityTypeManager,
       $this->appPathStorage,
       $this->languageManager,
-      $this->cache
+      $this->cache,
+      $this->timeSvc
     );
 
   }

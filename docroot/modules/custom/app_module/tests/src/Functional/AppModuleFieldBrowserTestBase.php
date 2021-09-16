@@ -62,6 +62,13 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
   ];
 
   /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'classy';
+
+  /**
    * {@inheritdoc}
    *
    * Once installed, a content type with the desired field is created.

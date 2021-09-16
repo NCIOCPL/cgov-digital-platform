@@ -29,6 +29,13 @@ class ZipCodeLookupResourceTest extends BrowserTestBase {
   protected $profile = 'minimal';
 
   /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'classy';
+
+  /**
    * Tests the zip code lookup.
    *
    * This is pretty much testing that all the configs are in place, the unit
