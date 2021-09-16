@@ -70,7 +70,10 @@ class CachingAppModulePlugin extends AppModulePluginBase {
     if ($path == '/chicken') {
       $meta
         ->setCacheContexts(["url.query_args:chicken_param"])
-        ->setCacheTags(['caching_app_module_plugin', "caching_app_module_plugin:chicken"])
+        ->setCacheTags([
+          'caching_app_module_plugin',
+          "caching_app_module_plugin:chicken",
+        ])
         ->setCacheMaxAge(100);
     }
     else {
