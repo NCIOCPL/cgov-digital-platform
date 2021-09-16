@@ -70,7 +70,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     );
 
     // Content Entity with path, with app module field, not default.
-    /* @var \Drupal\node\NodeInterface */
+    /** @var \Drupal\node\NodeInterface */
     $test_entity = $this->getNegativeContentEntity(
       '\Drupal\node\NodeInterface',
       TRUE,
@@ -368,7 +368,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       ->method('getInternalPath')
       ->willReturn($route);
 
-    /* @var \Drupal\node\NodeInterface */
+    /** @var \Drupal\node\NodeInterface */
     $entity = $this->getMockBuilder('\Drupal\node\Entity\Node')
       ->disableOriginalConstructor()
       ->getMock();

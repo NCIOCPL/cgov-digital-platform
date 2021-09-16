@@ -19,7 +19,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
    * This is marked as final in order to ensure no one messes up
    * our logic for coordinating the building of the render array.
    *
-   * TODO: This should have an actual implements that allows for
+   * @todo This should have an actual implements that allows for
    * creating app module routes, ala .routing.yml files. That way
    * the arg loading and controller picking is handled here and
    * an app module developer only needs to make a .yml file, and
@@ -29,7 +29,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
   final public function buildForRoute($path, $options = []) {
 
     // Load builder.
-    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
@@ -45,7 +45,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
    * {@inheritdoc}
    */
   final public function getAppRouteId($path, array $options = []) {
-    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
@@ -64,7 +64,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
    */
   final public function getCacheInfoForRoute($path, array $options = []) {
 
-    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
@@ -82,7 +82,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
   final public function alterPageAttachments(array &$attachments, $path, array $options = []) {
     parent::alterPageAttachments($attachments, $path, $options);
 
-    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
@@ -99,7 +99,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
   final public function alterTokens(array &$replacements, array $context, $path, array $options = []) {
     parent::alterTokens($replacements, $context, $path, $options);
 
-    /* @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
