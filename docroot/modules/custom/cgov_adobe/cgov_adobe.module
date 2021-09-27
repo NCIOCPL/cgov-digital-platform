@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * @file
+ * Contains cgov_adobe.module.
+ *
+ * This is heavily borrowed from drupal/adobe_dtm, which does not support
+ * D9, and has a lot of extra features we do not need. So we needed to
+ * implement tag management for our needs in order to get to D9.
+ *
+ * NOTE: We do not support async, and will only implement it when we have
+ * the need for it. (Since we can't really test async right now)
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function cgov_adobe_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
+
+  switch ($route_name) {
+    // Main module help for the Cgov Adobe module.
+    case 'cgov_adobe.settings_form':
+    case 'help.page.cgov_adobe':
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t("This Adobe module allows the use of Adobe Systems' Launch to insert new tags into platform sites.") . '</p>';
+      break;
+  }
+
+  return $output;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function cgov_adobe_module_implements_alter(&$implementations, $hook) {
+  // This makes sure our page bottom attachment is the last to fire, and
+  // thus the last elements before the closing </body> tag.
+  $hooks = ['page_attachments', 'page_bottom'];
+
+  if (in_array($hook, $hooks)) {
+    $group = $implementations['cgov_adobe'];
+    unset($implementations['cgov_adobe']);
+    $implementations['cgov_adobe'] = $group;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function cgov_adobe_page_attachments(&$attachments) {
+  $cgov_adobe_attachments = &drupal_static('cgov_adobe_attachments');
+
+  if (is_null($cgov_adobe_attachments)) {
+    if ($embed_code = _cgov_adobe_embed_code_tag_array()) {
+      // Add embed code.
+      $attachments['#attached']['html_head'][] = $embed_code;
+    }
+  }
+  // Add cache tags to any pages so that when the config is updated,
+  // then the Drupal cache will clear. This is added to all pages
+  // when this module is enabled as we can change the paths that
+  // are allowed or disallowed.
+  $attachments['#cache']['tags'][] = 'config:cgov_adobe.settings';
+}
+
+/**
+ * Implements hook_page_bottom().
+ */
+function cgov_adobe_page_bottom(array &$page_bottom) {
+  // If we would add a script tag to the head, then add to
+  // the bottom as well.
+  if (_cgov_adobe_embed_code_tag_array()) {
+    $page_bottom['cgov_adobe'] = [
+      '#type'       => 'html_tag',
+      '#tag'        => 'script',
+      '#value'      => '_satellite.pageBottom();',
+      '#attributes' => [
+        'id'         => 'cgov-adobe-bottom',
+        'type' => 'text/javascript',
+      ],
+    ];
+  }
+}
+
+/**
+ * Determines whether Launch tags should be added or not, based on path settings.
+ *
+ * @return bool
+ *   TRUE if script should be add to the current path, otherwise FALSE.
+ */
+function _cgov_adobe_path_check() {
+  static $result;
+
+  if (!isset($result)) {
+    $config = \Drupal::config('cgov_adobe.settings');
+    $exclude_paths = $config->get('exclude_paths');
+
+    if (empty($exclude_paths)) {
+      $result = TRUE;
+    }
+    else {
+      $exclude_patterns = implode("\n", $exclude_paths);
+      $request = \Drupal::request();
+      $alias_manager = \Drupal::service('path.alias_manager');
+      $current_path = \Drupal::service('path.current');
+      $path_matcher = \Drupal::service('path.matcher');
+
+      // Compare the lowercase path alias (if any) and internal path.
+      $path = $current_path->getPath($request);
+      $path_alias = mb_strtolower($alias_manager->getAliasByPath($path));
+
+      // Since we are excluding paths, note the negation of matchPath below.
+      $result = !(
+        // Match alias.
+        $path_matcher->matchPath($path_alias, $exclude_patterns) ||
+        // Match actual route.
+        (($path != $path_alias) && $path_matcher->matchPath($path, $exclude_patterns))
+      );
+    }
+  }
+
+  return $result;
+}
+
+
+/**
+ * Returns tag array with embed code.
+ *
+ * @return array|bool
+ *   The tag array or FALSE if failed.
+ */
+function _cgov_adobe_embed_code_tag_array() {
+  $config = \Drupal::config('cgov_adobe.settings');
+  $enabled = $config->get('enabled');
+  $build_url = $config->get('launch_property_build_url');
+
+  // If cgov_adobe is disabled or the path check returns FALSE, return.
+  if (!$enabled || !_cgov_adobe_path_check()) {
+    return FALSE;
+  }
+
+  // Retrieve script URL based on specific connection type function.
+  $script = empty($build_url) ? FALSE : $build_url;
+
+  $tag = [
+    '#type'       => 'html_tag',
+    '#tag'        => 'script',
+    '#attributes' => [
+      'id'         => 'cgov-adobe-url',
+      'type'  => 'text/javascript',
+      'src'   => $script,
+    ],
+  ];
+
+  $attachment = [
+    $tag,
+    'cgov_adobe_tag',
+  ];
+
+  return $attachment;
+}
