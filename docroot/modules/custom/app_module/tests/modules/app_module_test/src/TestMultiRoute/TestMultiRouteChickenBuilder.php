@@ -35,7 +35,10 @@ class TestMultiRouteChickenBuilder extends MultiRouteAppModuleBuilderBase {
     $meta = new CacheableMetadata();
     $meta
       ->setCacheContexts(["url.query_args:chicken_param"])
-      ->setCacheTags(['test_multi_route_app_module_plugin', "test_multi_route_app_module_plugin:chicken"])
+      ->setCacheTags([
+        'test_multi_route_app_module_plugin',
+        "test_multi_route_app_module_plugin:chicken",
+      ])
       ->setCacheMaxAge(100);
     return $meta;
   }

@@ -72,7 +72,7 @@ class AppModuleReferenceSelectWidget extends OptionsSelectWidget {
     // Decode using data as an associative array.
     $test = json_decode($data, TRUE);
 
-    // TODO: When we move to PHP 7.3 we should use JSON_THROW_ON_ERROR
+    // @todo When we move to PHP 7.3 we should use JSON_THROW_ON_ERROR
     // in the json_decode statement so that we do not have to check
     // errors like this.
     $hasError = json_last_error() !== JSON_ERROR_NONE;

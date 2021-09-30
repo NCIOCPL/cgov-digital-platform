@@ -42,11 +42,14 @@ class AppModuleReferenceFieldFormatterTest extends AppModuleFieldBrowserTestBase
 
     // Submit the content creation form.
     $this->drupalPostForm(NULL, $edit, 'Save');
-    $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
+    $assert->pageTextContains((string) new FormattableMarkup(
+      '@type @title has been created',
+      ['@type' => $this->contentTypeName, '@title' => $title]
+    ));
 
     // Verity the web page is displaying the formatter. NOTE: Our formatter
     // right now just spits out the machine id of the app module.
-    // TODO: Fix this when we get real formatters.
+    // @todo Fix this when we get real formatters.
     $assert->pageTextContains('App Module: Test App Module Plugin');
   }
 

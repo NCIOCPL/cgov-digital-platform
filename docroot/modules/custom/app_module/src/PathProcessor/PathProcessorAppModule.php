@@ -63,9 +63,9 @@ class PathProcessorAppModule implements InboundPathProcessorInterface {
     // and parameters.
     $storage = $this->entityTypeManager->getStorage('app_module');
 
-    /* @var \Drupal\app_module\AppModuleInterface */
+    /** @var \Drupal\app_module\AppModuleInterface */
     $entity = $storage->load($appPath['app_module_id']);
-    /* @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
+    /** @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
     $plugin = $entity->getAppModulePlugin();
 
     // Clear up any trailing slashes.

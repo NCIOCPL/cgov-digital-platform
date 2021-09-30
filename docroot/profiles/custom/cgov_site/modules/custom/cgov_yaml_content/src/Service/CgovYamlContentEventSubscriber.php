@@ -9,8 +9,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\block\Entity\Block;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Theme\ThemeManagerInterface;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Utility\Token;
@@ -31,18 +31,18 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   protected $themeManager;
 
   /**
-   * Drupal Entity Query Factory.
-   *
-   * @var \Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entityQueryFactory;
-
-  /**
    * Drupal Entity Type Manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * Drupal File System.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
 
   /**
    * Drupal token service.
@@ -70,10 +70,10 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
    *   Theme Manager.
-   * @param \Drupal\Core\Entity\Query\QueryFactory $entityQueryFactory
-   *   Query factory.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Drupal Entity Type Manager.
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
+   *   Drupal file system wrapper.
    * @param \Drupal\Core\Utility\Token $token
    *   Drupal token service.
    * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
@@ -81,14 +81,14 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     ThemeManagerInterface $themeManager,
-    QueryFactory $entityQueryFactory,
     EntityTypeManagerInterface $entityTypeManager,
+    FileSystemInterface $fileSystem,
     Token $token,
     ContainerAwareEventDispatcher $dispatcher
     ) {
     $this->themeManager = $themeManager;
-    $this->entityQueryFactory = $entityQueryFactory;
     $this->entityTypeManager = $entityTypeManager;
+    $this->fileSystem = $fileSystem;
     $this->token = $token;
     $this->eventDispatcher = $dispatcher;
   }
@@ -198,7 +198,9 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     $fieldReferenceArray = [];
     $entity_type = $value['#process']['args'][0];
     $args = $value['#process']['args'][1];
-    $query = $this->entityQueryFactory->get($entity_type);
+    $query = $this->entityTypeManager
+      ->getStorage($entity_type)
+      ->getQuery();
     foreach ($args as $property => $value) {
       $query->condition($property, $value);
     }
@@ -257,10 +259,10 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       }
 
       // Create the destination directory if it does not already exist.
-      file_prepare_directory($destination, FILE_CREATE_DIRECTORY);
+      $this->fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY);
 
       // Save the file data or return an existing file.
-      $file = file_save_data($fileData, $destination . $filename, FILE_EXISTS_REPLACE);
+      $file = file_save_data($fileData, $destination . $filename, FileSystemInterface::EXISTS_REPLACE);
 
       // Use the newly created file id as the value.
       $processConfig['target_id'] = $file->id();

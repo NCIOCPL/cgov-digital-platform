@@ -8,7 +8,7 @@ use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
-use Drupal\Core\Path\AliasManagerInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -39,14 +39,14 @@ class UrlProcessor implements OutboundPathProcessorInterface {
   /**
    * An alias manager for looking up the system path.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var \Drupal\path_alias\AliasManagerInterface
    */
   protected $aliasManager;
 
   /**
    * Constructor.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
+   * @param \Drupal\path_alias\AliasManagerInterface $aliasManager
    *   An alias manager for looking up the system path.
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   Language manager.

@@ -10,14 +10,20 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class CGovImporterService.
+ * Class CgovImporterService.
  *
  * @package Drupal\cgov_redirect_manager
  */
-class CGovImporterService {
+class CgovImporterService {
 
+  /**
+   * {@inheritdoc}
+   */
   public static $messages = [];
 
+  /**
+   * {@inheritdoc}
+   */
   public static $options = [];
 
   /**
@@ -81,12 +87,12 @@ class CGovImporterService {
     if ($options['suppress_messages'] != 1) {
       // Messaging/logging is separated out in case we want to suppress these.
       foreach (self::$messages['warning'] as $warning) {
-        drupal_set_message($warning, 'warning');
+        \Drupal::messenger()->addWarning($warning);
       }
     }
 
     if (empty($data)) {
-      drupal_set_message(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv']), 'warning');
+      \Drupal::messenger()->addWarning(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv']));
     }
     else {
       if (PHP_SAPI == 'cli' && function_exists('drush_main')) {
@@ -99,7 +105,7 @@ class CGovImporterService {
         // This case should never happen...
       }
     }
-    drupal_set_message(t('Successfully imported "@count" items.', ['@count' => $count]));
+    \Drupal::messenger()->addStatus(t('Successfully imported "@count" items.', ['@count' => $count]));
   }
 
   /**
@@ -112,7 +118,7 @@ class CGovImporterService {
     else {
       $message = t('Finished with an error.');
     }
-    drupal_set_message($message, 'status');
+    \Drupal::messenger()->addStatus($message);
   }
 
   /**
@@ -213,7 +219,7 @@ class CGovImporterService {
     while ($line = self::readExpandLine($f, $options['delimiter'], $options['status_code'], $options['language'])) {
       $line_no++;
       if ($line_no == 1 && !$options['no_headers']) {
-        drupal_set_message(t('Skipping the header row.'));
+        \Drupal::messenger()->addStatus(t('Skipping the header row.'));
         continue;
       }
 
@@ -470,7 +476,7 @@ class CGovImporterService {
     $hash = Redirect::generateHash($path, $query, $row['language']);
 
     // Search for duplicate.
-    $redirects = \Drupal::entityManager()
+    $redirects = \Drupal::entityTypeManager()
       ->getStorage('redirect')
       ->loadByProperties(['hash' => $hash]);
     if (!empty($redirects)) {

@@ -5,9 +5,8 @@ namespace Drupal\cgov_blog\Services;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Path\AliasManagerInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -16,13 +15,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * Blog Manager Service.
  */
 class BlogManager implements BlogManagerInterface {
-
-  /**
-   * An entity query.
-   *
-   * @var Drupal\Core\Entity\Query\QueryFactory
-   */
-  protected $entityQuery;
 
   /**
    * The entity repository.
@@ -48,7 +40,7 @@ class BlogManager implements BlogManagerInterface {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var \Drupal\path_alias\AliasManagerInterface
    */
   protected $aliasManager;
 
@@ -70,15 +62,13 @@ class BlogManager implements BlogManagerInterface {
   /**
    * Constructor for BlogManager object.
    *
-   * @param \Drupal\Core\Entity\Query\QueryFactory $entity_query
-   *   An entity query.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_matcher
    *   The route matcher.
-   * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
+   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
    *   The path alias manager.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
@@ -86,7 +76,6 @@ class BlogManager implements BlogManagerInterface {
    *   An HTTP request.
    */
   public function __construct(
-    QueryFactory $entity_query,
     EntityRepositoryInterface $entity_repository,
     EntityTypeManagerInterface $entity_type_manager,
     RouteMatchInterface $route_matcher,
@@ -94,7 +83,6 @@ class BlogManager implements BlogManagerInterface {
     LanguageManagerInterface $language_manager,
     RequestStack $request_stack
   ) {
-    $this->entityQuery = $entity_query;
     $this->entityRepository = $entity_repository;
     $this->entityTypeManager = $entity_type_manager;
     $this->routeMatcher = $route_matcher;
@@ -371,7 +359,7 @@ class BlogManager implements BlogManagerInterface {
    *   Content type or bundle.
    */
   public function getNodesByPostedDateAsc($type) {
-    $query = $this->entityQuery->get('node');
+    $query = $this->entityTypeManager->getStorage('node')->getQuery();
     $query->condition('status', 1);
     $query->condition('type', $type);
     $query->condition('langcode', $this->getCurrentLang());
@@ -387,7 +375,7 @@ class BlogManager implements BlogManagerInterface {
    *   Content type or bundle.
    */
   public function getNodesByPostedDateDesc($type) {
-    $query = $this->entityQuery->get('node');
+    $query = $this->entityTypeManager->getStorage('node')->getQuery();
     $query->condition('status', 1);
     $query->condition('type', $type);
     $query->condition('langcode', $this->getCurrentLang());
