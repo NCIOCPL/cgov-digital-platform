@@ -19,9 +19,21 @@ use Drupal\Core\File\FileSystem;
  */
 class ICalendarController extends ControllerBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected $entity;
+  /**
+   * {@inheritdoc}
+   */
   protected $currentUser;
+  /**
+   * {@inheritdoc}
+   */
   public $request;
+  /**
+   * {@inheritdoc}
+   */
   protected $file;
 
   /**
@@ -48,7 +60,7 @@ class ICalendarController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')->getStorage('node'),
+      $container->get('entity_type.manager')->getStorage('node'),
       $container->get('current_user'),
       $container->get('request_stack'),
       $container->get('file_system')
@@ -108,7 +120,7 @@ class ICalendarController extends ControllerBase {
     $filename = 'cal-' . $nid . '.ics';
     $uri = 'public://' . $filename;
     $content = $vCalendar->render();
-    $file = file_save_data($content, $uri, FILE_EXISTS_REPLACE);
+    $file = file_save_data($content, $uri, EXISTS_REPLACE);
     if (empty($file)) {
       return new Response(
         'iCalendar Error, please contact the System Administrator'

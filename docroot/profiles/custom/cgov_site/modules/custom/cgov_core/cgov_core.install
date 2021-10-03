@@ -111,8 +111,8 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'select account cancellation method',
       'access user profiles',
       'administer account settings',
-      // Set DTM tag after site provisioning.
-      'administer adobe dynamic tag management',
+      // Set Launch tag after site provisioning.
+      'administer cgov adobe',
       // Set microsite theme colors after provisioning.
       'administer themes',
       'administer frontend globals',
@@ -254,4 +254,46 @@ function cgov_core_update_8004() {
   ];
 
   $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Update for Cgov Adobe. (Issue #3121)
+ */
+function cgov_core_update_8005() {
+
+  // Enable cgov adobe
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_adobe')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_adobe']);
+  }
+  // add role 'administer cgov adobe'
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  $perms = [
+    'site_admin' => [
+      'administer cgov adobe',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
+
+  // If adobe dtm does not exist, then we should bail.
+  if (!\Drupal::moduleHandler()->moduleExists('adobe_dtm')) {
+    return;
+  }
+
+  /* Copy launch tag from adobe_dtm settings to cgov_adobe settings. */
+  $launch_url = \Drupal::config('adobe_dtm.settings')->get('launch_property_build_url');
+
+  if ($launch_url) {
+  /* remove role 'administer adobe dynamic tag management', */
+  \Drupal::configFactory()->getEditable('cgov_adobe.settings')
+    ->set('launch_property_build_url', $launch_url)
+    ->save(TRUE);
+  }
+
+  // Uninstall Adobe DTM
+  if (\Drupal::moduleHandler()->moduleExists('adobe_dtm')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['adobe_dtm'], FALSE);
+  }
 }

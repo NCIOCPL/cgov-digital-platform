@@ -31,11 +31,17 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
   /**
    * The installation profile to use with this test.
    *
-   * We need the 'cgov_site' profile because we are within that profile.
-   *
    * @var string
    */
   protected $profile = 'minimal';
+
+  /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
+
 
   /**
    * A Request Stack.
@@ -103,7 +109,10 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
       NULL,
       'caching_app_module',
       'default',
-      ['caching_app_module_plugin', 'config:app_module.app_module.caching_app_module'],
+      [
+        'caching_app_module_plugin',
+        'config:app_module.app_module.caching_app_module',
+      ],
       ['url.query_args:app_module_route'],
       50
     );
@@ -127,7 +136,10 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
       NULL,
       'test_multi_route_app_module',
       'default',
-      ['test_multi_route_app_module_plugin', 'config:app_module.app_module.test_multi_route_app_module'],
+      [
+        'test_multi_route_app_module_plugin',
+        'config:app_module.app_module.test_multi_route_app_module',
+      ],
       ['url.query_args:app_module_route'],
       50
     );

@@ -11,9 +11,9 @@
  * Removes stale migration configs during uninstall.
  */
 function cgov_migration_uninstall() {
-  $query = db_select('config', 'c')
+  $query = \Drupal::database()->select('config', 'c')
     ->fields('c', ['name'])
-    ->condition('name', db_like('migrate_plus.') . '%', 'LIKE')
+    ->condition('name', \Drupal::database()->escapeLike('migrate_plus.') . '%', 'LIKE')
     ->execute();
 
   $config_names = $query->fetchAll();

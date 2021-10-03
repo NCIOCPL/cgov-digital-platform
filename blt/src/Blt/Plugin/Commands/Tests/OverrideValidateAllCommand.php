@@ -20,8 +20,8 @@ class OverrideValidateAllCommand extends ValidateAllCommand {
     $parent_status_code = parent::all();
 
     // To enable this command, set to TRUE in blt.yml.
-    if ($this->getConfigValue('validate.deprecation.profiles') == TRUE) {
-      $commands[] = 'tests:deprecated:profiles';
+    if ($this->getConfigValue('validate.deprecation') == TRUE) {
+      $commands[] = 'tests:deprecated';
     }
 
     $status_code = $this->invokeCommands($commands);

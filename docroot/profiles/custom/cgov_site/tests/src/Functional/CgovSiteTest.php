@@ -16,7 +16,19 @@ class CgovSiteTest extends BrowserTestBase {
 
   use SchemaCheckTestTrait;
 
+  /**
+   * Use our own profile instead of the default.
+   *
+   * @var string
+   */
   protected $profile = 'cgov_site';
+
+  /**
+   * The theme to use with this test.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * The admin user.
