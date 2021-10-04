@@ -82,7 +82,7 @@ At some point in time there will be multiple websites within our project. (e.g. 
 ## Software
 * db
   * OS:
-  * MariaDB
+  * MySQL
 * web
   * OS: Ubuntu Bionic
   * PHP 7.4
@@ -109,7 +109,7 @@ At some point in time there will be multiple websites within our project. (e.g. 
   * curl
   * git
   * vim
-  * MariaDB Client
+  * MySQL Client
 
 
 
