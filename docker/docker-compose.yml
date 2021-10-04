@@ -29,12 +29,9 @@ services:
       - db
 
   db:
-    build:
-      context: db
-    ## Map the backups folder.
-    ## TODO: Map mysql data file directory to persist db compose down commands.
+    image: mysql:5.7
     volumes:
-      - ./db/overrides/backups:/var/mysql/backups:delegated
+      - ./db/init:/docker-entrypoint-initdb.d
     env_file:
       - ./docker.env
     ports:
