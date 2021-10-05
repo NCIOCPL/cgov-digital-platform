@@ -7,6 +7,7 @@
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\app_module\Entity\AppModule;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Implements hook_theme().
@@ -82,9 +83,9 @@ function app_module_theme_suggestions_app_module(array $variables) {
  */
 
 /**
- * Implements hook_path_update().
+ * Implements hook_ENTITY_TYPE_update().
  */
-function app_module_path_update(array $path) {
+function app_module_path_alias_update(PathAliasInterface $path) {
   /* If the owner_pid can be found, then we should update the
    * owner_alias. ASSUMPTION: the source cannot change.
    */
@@ -92,9 +93,9 @@ function app_module_path_update(array $path) {
 }
 
 /**
- * Implements hook_path_delete().
+ * Implements hook_ENTITY_TYPE_delete().
  */
-function app_module_path_delete($path) {
+function app_module_path_alias_delete(PathAliasInterface $path) {
   /* If the owner_pid can be found, then we should delete
    * the item.
    */

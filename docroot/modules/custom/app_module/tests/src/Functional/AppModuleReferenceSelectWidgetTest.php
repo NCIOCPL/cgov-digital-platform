@@ -29,6 +29,8 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
    * - Tests the result.
    */
   public function testField() {
+    $this->setupAndAssertForTests();
+
     $assert = $this->assertSession();
     // Login with Admin and create a field.
     $this->drupalLogin($this->administratorAccount);
@@ -46,7 +48,7 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup(
       '@type @title has been created',
       ['@type' => $this->contentTypeName, '@title' => $title]
@@ -58,8 +60,7 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
     // Test resave app module json.
     $node = $this->getNodeByTitle($title);
     $this->drupalGet('node/' . $node->id() . '/edit');
-    $this->drupalPostForm(
-      NULL,
+    $this->submitForm(
       [
         'field_' . $this->fieldName . '[0][data]' => '{"a": "b", "c": ["d", "e"]]}',
       ],
@@ -83,7 +84,7 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains('Instance settings must be a valid JSON object.');
 
     // Check validation.
@@ -98,7 +99,7 @@ class AppModuleReferenceSelectWidgetTest extends AppModuleFieldBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains('Instance settings must be a valid JSON object.');
 
   }

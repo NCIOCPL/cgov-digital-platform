@@ -16,6 +16,7 @@ class AppModuleTemplateSuggestionsTest extends KernelTestBase {
    */
   protected static $modules = [
     'app_module',
+    'path_alias',
     'system',
   ];
 
