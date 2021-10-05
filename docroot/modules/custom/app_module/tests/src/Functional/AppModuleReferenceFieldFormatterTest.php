@@ -24,6 +24,8 @@ class AppModuleReferenceFieldFormatterTest extends AppModuleFieldBrowserTestBase
    * - Tests the result.
    */
   public function testField() {
+    $this->setupAndAssertForTests();
+
     $assert = $this->assertSession();
     // Login with Admin and create a field.
     $this->drupalLogin($this->administratorAccount);
@@ -41,7 +43,7 @@ class AppModuleReferenceFieldFormatterTest extends AppModuleFieldBrowserTestBase
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup(
       '@type @title has been created',
       ['@type' => $this->contentTypeName, '@title' => $title]

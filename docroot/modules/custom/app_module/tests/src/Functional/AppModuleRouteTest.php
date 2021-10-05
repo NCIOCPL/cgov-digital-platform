@@ -16,6 +16,8 @@ class AppModuleRouteTest extends AppModuleFieldBrowserTestBase {
    * Field example scenario tests.
    */
   public function testField() {
+    $this->setupAndAssertForTests();
+
     $assert = $this->assertSession();
     // Login with Admin and create a field.
     $this->drupalLogin($this->administratorAccount);
@@ -34,7 +36,7 @@ class AppModuleRouteTest extends AppModuleFieldBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup(
       '@type @title has been created',
       ['@type' => $this->contentTypeName, '@title' => $title]
