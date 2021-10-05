@@ -93,12 +93,18 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       'administer url aliases',
     ];
     $this->administratorAccount = $this->drupalCreateUser($permissions);
-    parent::drupalLogin($this->administratorAccount);
+  }
+
+  /**
+   * Helper function for setting up data and asserting form fields worked ok.
+   */
+  protected function setupAndAssertForTests() {
+    $this->drupalLogin($this->administratorAccount);
 
     // Create an app module type for selection.
     $this->appModuleId = strtolower($this->randomMachineName(10));
-    $this->drupalPostForm(
-      Url::fromRoute('entity.app_module.add_form'),
+    $this->drupalGet(Url::fromRoute('entity.app_module.add_form'));
+    $this->submitForm(
       [
         'label' => $this->appModuleId,
         'id' => $this->appModuleId,
@@ -114,8 +120,8 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       'name' => $this->contentTypeName,
       'type' => $this->contentTypeName,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and manage fields');
-    $this->assertText((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
+    $this->submitForm($edit, 'Save and manage fields');
+    $this->assertSession()->pageTextContains((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
 
     // Reset the permission cache.
     $create_permission = 'create ' . $this->contentTypeName . ' content';
@@ -130,7 +136,6 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       $edit_permission,
       'create url aliases',
     ]);
-
   }
 
   /**
@@ -163,23 +168,14 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
       'field_name' => $field_name,
       'label' => $field_name,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and continue');
+    $this->submitForm($edit, 'Save and continue');
 
     /* NOTE: We should not need a cardinality because it is not an input field. */
 
     // And now we save the field settings.
-    $this->drupalPostForm(NULL, [
+    $this->submitForm([
       'settings[target_type]' => 'app_module',
     ], 'Save field settings');
-    $this->verbose(
-      (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality 1',
-        [
-          '%field_name' => $field_name,
-          '%widget_type' => $widget_type,
-          '%cardinality' => "1",
-        ]
-      )
-    );
     $assert->pageTextContains((string) new FormattableMarkup('Updated field @name field settings.', ['@name' => $field_name]));
 
     // Set the widget type for the newly created field.
@@ -187,14 +183,14 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
     $edit = [
       'fields[field_' . $field_name . '][type]' => $widget_type,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Set the field formatter for the newly created field.
     $this->drupalGet('admin/structure/types/manage/' . $this->contentTypeName . '/display');
     $edit1 = [
       'fields[field_' . $field_name . '][type]' => $fieldFormatter,
     ];
-    $this->drupalPostForm(NULL, $edit1, 'Save');
+    $this->submitForm($edit1, 'Save');
 
     return $field_name;
   }

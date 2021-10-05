@@ -104,8 +104,7 @@ class AppModuleEntityTest extends BrowserTestBase {
     $this->drupalGet('/admin/structure/app_module');
     $this->clickLink('Add application module');
     $app_machine_name = 'my_app';
-    $this->drupalPostForm(
-      NULL,
+    $this->submitForm(
       [
         'label' => $app_machine_name,
         'id' => $app_machine_name,
@@ -123,8 +122,7 @@ class AppModuleEntityTest extends BrowserTestBase {
     $this->clickLink('Add application module');
     $app2_machine_name = 'app_module_2';
     $app2_label = 'App Module 2';
-    $this->drupalPostForm(
-      NULL,
+    $this->submitForm(
       [
         'label' => $app2_label,
         'id' => $app2_machine_name,
@@ -138,8 +136,8 @@ class AppModuleEntityTest extends BrowserTestBase {
 
     // Try to re-submit the same appmodule, and verify that we see an error
     // message and not a PHP error.
-    $this->drupalPostForm(
-      Url::fromRoute('entity.app_module.add_form'),
+    $this->drupalGet(Url::fromRoute('entity.app_module.add_form'));
+    $this->submitForm(
       [
         'label' => $app2_label,
         'id' => $app2_machine_name,
@@ -151,13 +149,13 @@ class AppModuleEntityTest extends BrowserTestBase {
 
     // 6) Verify that required links are present on respective paths.
     $this->drupalGet(Url::fromRoute('entity.app_module.collection'));
-    $this->assertLinkByHref('/admin/structure/app_module/add');
-    $this->assertLinkByHref('/admin/structure/app_module/app_module_2');
-    $this->assertLinkByHref('/admin/structure/app_module/app_module_2/delete');
+    $assert->linkByHrefExists('/admin/structure/app_module/add');
+    $assert->linkByHrefExists('/admin/structure/app_module/app_module_2');
+    $assert->linkByHrefExists('/admin/structure/app_module/app_module_2/delete');
 
     // Verify links on Edit Robot.
     $this->drupalGet('/admin/structure/app_module/app_module_2');
-    $this->assertLinkByHref('/admin/structure/app_module/app_module_2/delete');
+    $assert->linkByHrefExists('/admin/structure/app_module/app_module_2/delete');
 
     // Verify links on Delete Robot.
     $this->drupalGet('/admin/structure/app_module/app_module_2/delete');
@@ -166,7 +164,7 @@ class AppModuleEntityTest extends BrowserTestBase {
       '//a[@id="edit-cancel" and contains(@href, :path)]',
       [':path' => '/admin/structure/app_module']
     );
-    $this->assertEqual(count($cancel_button), 1, 'Found cancel button linking to list page.');
+    $this->assertCount(1, $cancel_button, 'Found cancel button linking to list page.');
 
   }
 

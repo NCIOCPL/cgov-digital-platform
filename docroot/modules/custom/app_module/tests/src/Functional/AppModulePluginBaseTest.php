@@ -46,7 +46,7 @@ class AppModulePluginBaseTest extends BrowserTestBase {
       '/',
       'test_app_module',
       [
-        'app_module_path' => '/',
+        'app_module_route' => '/',
         'params' => [],
       ],
       "Test default route."
@@ -57,7 +57,7 @@ class AppModulePluginBaseTest extends BrowserTestBase {
       '/chicken',
       'test_multi_route_app_module',
       [
-        'app_module_path' => '/chicken',
+        'app_module_route' => '/chicken',
         'params' => [],
       ],
       "Test chicken no params"
@@ -68,7 +68,7 @@ class AppModulePluginBaseTest extends BrowserTestBase {
       '/chicken/1234',
       'test_multi_route_app_module',
       [
-        'app_module_path' => '/chicken',
+        'app_module_route' => '/chicken',
         'params' => [
           'id' => '1234',
         ],
