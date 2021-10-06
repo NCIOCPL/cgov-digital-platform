@@ -116,7 +116,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
 
     foreach ($this->fieldsToTest as $fieldToTest) {
       $field_storage = FieldStorageConfig::loadByName('media', $fieldToTest["name"]);
-      $this->assertFalse($field_storage, "Media " . $fieldToTest["name"] . " field storage does not exist after uninstalling the CGov Media module.");
+      $this->assertEmpty($field_storage, "Media " . $fieldToTest["name"] . " field storage does not exist after uninstalling the CGov Media module.");
     }
 
   }
@@ -133,7 +133,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
    */
   private function assertFieldConfig($fieldName, $fieldLabel, $fieldType) {
     $field_storage = FieldStorageConfig::loadByName('media', $fieldName);
-    $this->assertTrue($field_storage, "Media $fieldName field storage exists.");
+    $this->assertNotEmpty($field_storage, "Media $fieldName field storage exists.");
   }
 
   /**
