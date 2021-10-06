@@ -13,7 +13,10 @@ use Drupal\taxonomy\Entity\Term;
  */
 function cgov_blog_token_info() {
   $info = [];
-  $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
+  $info['types']['cgov_tokens'] = [
+    'name' => t('Cancer.gov Tokens'),
+    'description' => t('Cancer.gov Tokens'),
+  ];
   $info['tokens']['cgov_tokens'] = [
     'blog-post-path' => [
       'name' => t('Blog Post Path'),
@@ -52,7 +55,7 @@ function cgov_blog_tokens($type, $tokens, array $data, array $options, Bubbleabl
         break;
 
       // Replace 'taxonomy/term/[tid]' with owner Site Section and Pretty URL.
-      // TODO: remove this case; dead code.
+      // @todo Remove this case; dead code.
       case 'blog-topic-path':
         if (!empty($data['term'])) {
           $replacements[$original] = _get_blog_topic_path($data['term'] ?: $replacements[$original]);
@@ -121,7 +124,7 @@ function _get_blog_topic_path($term) {
     try {
       $nid = $term->get('field_owner_blog')->first()->getValue()['target_id'];
       $name = $term->field_pretty_url->value;
-      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+      $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
       $path = $alias . '/' . $name;
     }
     catch (Exception $e) {
