@@ -261,7 +261,7 @@ function cgov_blog_taxonomy_term_update($term_entity) {
   /* When taxonomy term for blog categories is updated invalidate the
    *  corresponding blog series page.
    */
-  if ($term_entity->getVocabularyId() === "cgov_blog_topics") {
+  if ($term_entity->bundle() === "cgov_blog_topics") {
     $owner_blog = $term_entity->field_owner_blog;
     // Invalidate the cache tag for blog series node.
     if ($owner_blog->target_id > 0) {
