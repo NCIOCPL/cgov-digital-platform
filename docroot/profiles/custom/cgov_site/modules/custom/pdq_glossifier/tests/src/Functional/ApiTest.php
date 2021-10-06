@@ -234,7 +234,7 @@ class ApiTest extends BrowserTestBase {
     $client = $this->getHttpClient();
     $url = $this->url . '/refresh';
     $response = $client->request('POST', $url, $options);
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $count = count($this->glossary);
     $expected = "Stored $count glossary terms at ";
     $got = json_decode($response->getBody()->__toString())->message;
@@ -258,7 +258,7 @@ class ApiTest extends BrowserTestBase {
     $this->drupalLogin($user);
     $client = $this->getHttpClient();
     $response = $client->request('POST', $this->url, $options);
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $body = $response->getBody()->__toString();
     $matches = json_decode($body, TRUE);
     $msg = 'Received expected number of matches';
@@ -270,7 +270,7 @@ class ApiTest extends BrowserTestBase {
       $got = $matches[$i++];
       foreach ($expected as $name => $value) {
         $message = "$name field matches for term $i";
-        $this->assertEqual($got[$name], $value, $message);
+        $this->assertEquals($got[$name], $value, $message);
       }
     }
   }

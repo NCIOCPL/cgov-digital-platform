@@ -148,7 +148,7 @@ class ApiTest extends BrowserTestBase {
     // Attempt to create the Spanish summary first (should fail).
     $payload = $this->store($this->spanish, 400);
     $expected = 'New summary node must be the English version';
-    $this->assertEqual($payload['message'], $expected);
+    $this->assertEquals($payload['message'], $expected);
 
     // Store new English summary and capture the node ID.
     $payload = $this->store($this->english, 201);
@@ -157,11 +157,11 @@ class ApiTest extends BrowserTestBase {
 
     // Verify that the node ID lookup works correctly.
     $matches = $this->findNodes($this->english['cdr_id']);
-    $this->assertEqual($matches, [[$nid, 'en']]);
+    $this->assertEquals($matches, [[$nid, 'en']]);
 
     // Confirm that the values have been stored correctly.
     $values = $this->fetchNode($nid);
-    $this->assertFalse($values['en']['published'], 'Not yet published');
+    $this->assertEquals(0, $values['en']['published'], 'Not yet published');
     $this->checkValues($values, ['en']);
 
     // Store a modified revision (still unpublished).
@@ -170,28 +170,28 @@ class ApiTest extends BrowserTestBase {
     $this->english['description'] = 'Revised test description';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
-    $this->assertEqual($payload['nid'], $nid, 'Uses same node');
+    $this->assertEquals($payload['nid'], $nid, 'Uses same node');
 
     // Confirm that the values are still stored correctly.
     $values = $this->fetchNode($nid);
-    $this->assertFalse($values['en']['published'], 'Not yet published');
+    $this->assertEquals(0, $values['en']['published'], 'Not yet published');
     $this->checkValues($values, ['en']);
 
     // Add the Spanish translation.
     $payload = $this->store($this->spanish, 200);
     $summary_sections_created += count($this->spanish['sections']);
-    $this->assertEqual($payload['nid'], $nid, 'Uses same node');
+    $this->assertEquals($payload['nid'], $nid, 'Uses same node');
 
     // Verify that the node ID lookup still works correctly.
     $matches = $this->findNodes($this->spanish['cdr_id']);
-    $this->assertEqual($matches, [[$nid, 'es']]);
+    $this->assertEquals($matches, [[$nid, 'es']]);
     $matches = $this->findNodes($this->english['cdr_id']);
-    $this->assertEqual($matches, [[$nid, 'en']]);
+    $this->assertEquals($matches, [[$nid, 'en']]);
 
     // Confirm that the values have been stored correctly.
     $values = $this->fetchNode($nid);
-    $this->assertFalse($values['en']['published'], 'Not yet published');
-    $this->assertFalse($values['es']['published'], 'Not yet published');
+    $this->assertEquals(0, $values['en']['published'], 'Not yet published');
+    $this->assertEquals(0, $values['es']['published'], 'Not yet published');
     $this->checkValues($values, ['en', 'es']);
 
     // Make sure we haven't set the site sections yet.
@@ -205,8 +205,8 @@ class ApiTest extends BrowserTestBase {
     // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2249.
     $this->publish();
     $values = $this->fetchNode($nid);
-    $this->assertTrue($values['en']['published'], 'Published');
-    $this->assertTrue($values['es']['published'], 'Published');
+    $this->assertEquals(1, $values['en']['published'], 'Published');
+    $this->assertEquals(1, $values['es']['published'], 'Published');
     $this->checkValues($values, ['en', 'es']);
     $h1 = "<h1>{$this->english['title']}</h1>";
     $page = $this->drupalGet("node/$nid");
@@ -228,46 +228,46 @@ class ApiTest extends BrowserTestBase {
     $this->english['short_title'] = 'New Short Title';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
-    $this->assertEqual($payload['nid'], $nid, 'Uses same node');
+    $this->assertEquals($payload['nid'], $nid, 'Uses same node');
     $this->checkSiteSections($this->english, $old_short_title);
     $this->publish([[$nid, 'en']]);
     $this->checkSiteSections($this->english);
 
     // Verify the catalog API.
     $response = $this->request('GET', "$this->pdqUrl/list");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $values = json_decode($response->getBody()->__toString(), TRUE);
     $this->assertCount(2, $values, 'One entries in catalog');
 
     // Results are ordered by CDR ID, so this is the Spanish summary.
     $entry = array_pop($values);
     $this->assertCount(7, $entry, 'Catalog entry has 7 values');
-    $this->assertEqual($entry['cdr_id'], $this->spanish['cdr_id'],
+    $this->assertEquals($entry['cdr_id'], $this->spanish['cdr_id'],
       'CDR ID is correct');
-    $this->assertEqual($entry['nid'], $nid, 'Node ID is correct');
-    $this->assertEqual(preg_match('/^\d+$/', $entry['vid']), 1,
+    $this->assertEquals($entry['nid'], $nid, 'Node ID is correct');
+    $this->assertEquals(preg_match('/^\d+$/', $entry['vid']), 1,
       'Version ID is numeric');
-    $this->assertEqual($entry['langcode'], 'es', 'Language is Spanish');
-    $this->assertEqual($entry['type'], 'pdq_cancer_information_summary');
+    $this->assertEquals($entry['langcode'], 'es', 'Language is Spanish');
+    $this->assertEquals($entry['type'], 'pdq_cancer_information_summary');
     $pattern = '/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/';
-    $this->assertEqual(preg_match($pattern, $entry['created']), 1,
+    $this->assertEquals(preg_match($pattern, $entry['created']), 1,
       'Created is datetime');
-    $this->assertEqual(preg_match($pattern, $entry['changed']), 1,
+    $this->assertEquals(preg_match($pattern, $entry['changed']), 1,
       'Changed is datetime');
 
     // Same checks for the English summary.
     $entry = array_pop($values);
     $this->assertCount(7, $entry, 'Catalog entry has 7 values');
-    $this->assertEqual($entry['cdr_id'], $this->english['cdr_id'],
+    $this->assertEquals($entry['cdr_id'], $this->english['cdr_id'],
       'CDR ID is correct');
-    $this->assertEqual($entry['nid'], $nid, 'Node ID is correct');
-    $this->assertEqual(preg_match('/^\d+$/', $entry['vid']), 1,
+    $this->assertEquals($entry['nid'], $nid, 'Node ID is correct');
+    $this->assertEquals(preg_match('/^\d+$/', $entry['vid']), 1,
       'Version ID is numeric');
-    $this->assertEqual($entry['langcode'], 'en', 'Language is English');
-    $this->assertEqual($entry['type'], 'pdq_cancer_information_summary');
-    $this->assertEqual(preg_match($pattern, $entry['created']), 1,
+    $this->assertEquals($entry['langcode'], 'en', 'Language is English');
+    $this->assertEquals($entry['type'], 'pdq_cancer_information_summary');
+    $this->assertEquals(preg_match($pattern, $entry['created']), 1,
       'Created is datetime');
-    $this->assertEqual(preg_match($pattern, $entry['changed']), 1,
+    $this->assertEquals(preg_match($pattern, $entry['changed']), 1,
       'Changed is datetime');
 
     // Make sure changes are published correctly. Fails without patch for #2249.
@@ -346,7 +346,7 @@ class ApiTest extends BrowserTestBase {
    */
   private function store(array $values, $expected) {
     $response = $this->request('POST', $this->cisUrl, ['json' => $values]);
-    $this->assertEqual($response->getStatusCode(), $expected);
+    $this->assertEquals($response->getStatusCode(), $expected);
     return json_decode($response->getBody()->__toString(), TRUE);
   }
 
@@ -363,13 +363,13 @@ class ApiTest extends BrowserTestBase {
    */
   private function findNodes($cdr_id) {
     $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $pairs = json_decode($response->getBody()->__toString(), TRUE);
     $this->assertCount(1, $pairs, 'Only one node/language per summary');
     $this->assertCount(2, $pairs[0], 'Pair must have two items');
     list($nid, $language) = $pairs[0];
     $this->assertTrue(is_numeric($nid), 'Node ID is numeric');
-    $this->assertEqual($nid, (int) $nid, 'Node ID is an integer');
+    $this->assertEquals($nid, (int) $nid, 'Node ID is an integer');
     $this->assertContains($language, ['en', 'es'], 'Valid language code');
     return $pairs;
   }
@@ -387,9 +387,9 @@ class ApiTest extends BrowserTestBase {
    */
   private function fetchNode($nid) {
     $response = $this->request('GET', "$this->cisUrl/$nid");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $values = json_decode($response->getBody()->__toString(), TRUE);
-    $this->assertEqual($values['nid'], $nid);
+    $this->assertEquals($values['nid'], $nid);
     return $values;
   }
 
@@ -405,12 +405,12 @@ class ApiTest extends BrowserTestBase {
     $translations = ['en' => $this->english, 'es' => $this->spanish];
     foreach ($translations as $code => $expected) {
       if (in_array($code, $languages)) {
-        $this->assertEqual($values['nid'], $expected['nid'], 'Same node');
+        $this->assertEquals($values['nid'], $expected['nid'], 'Same node');
         $actual = $values[$code];
-        $this->assertTrue($actual['public_use'], 'Public use field set');
+        $this->assertEquals(1, $actual['public_use'], 'Public use field set');
         foreach ($this->fields as $name) {
           $message = "The '$name' field matches in the '$code' summary";
-          $this->assertEqual($actual[$name], $expected[$name], $message);
+          $this->assertEquals($actual[$name], $expected[$name], $message);
         }
       }
       else {
@@ -435,7 +435,7 @@ class ApiTest extends BrowserTestBase {
       ];
     }
     $response = $this->request('POST', $this->pdqUrl, ['json' => $summaries]);
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $errors = json_decode($response->getBody()->__toString(), TRUE)['errors'];
     $this->assertEmpty($errors);
   }
@@ -454,16 +454,16 @@ class ApiTest extends BrowserTestBase {
     $cdr_id = $summary['cdr_id'];
     $response = $this->request('DELETE', "$this->pdqUrl/$cdr_id");
     if ($success_expected) {
-      $this->assertEqual($response->getStatusCode(), 204);
+      $this->assertEquals($response->getStatusCode(), 204);
       $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
-      $this->assertEqual($response->getStatusCode(), 404);
+      $this->assertEquals($response->getStatusCode(), 404);
     }
     else {
       $nodes = $this->findNodes($cdr_id);
-      $this->assertEqual($nodes, [[$summary['nid'], $summary['language']]]);
-      $this->assertEqual($response->getStatusCode(), 400);
+      $this->assertEquals($nodes, [[$summary['nid'], $summary['language']]]);
+      $this->assertEquals($response->getStatusCode(), 400);
       $payload = json_decode($response->getBody()->__toString(), TRUE);
-      $this->assertEqual($payload['message'], 'Spanish translation exists');
+      $this->assertEquals($payload['message'], 'Spanish translation exists');
     }
   }
 
@@ -485,14 +485,14 @@ class ApiTest extends BrowserTestBase {
       $url = "espanol/$url";
     }
     $expected = $this->drupalGet($url);
-    $this->assertResponse(200);
+    $this->assertSession()->statusCodeEquals(200);
     $url = ltrim($summary['url'], '/');
     if ($summary['language'] === 'es') {
       $url = "espanol/$url";
     }
     $actual = $this->drupalGet($url);
-    $this->assertResponse(200);
-    $this->assertEqual($actual, $expected);
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertEquals($actual, $expected);
   }
 
   /**
@@ -533,13 +533,13 @@ class ApiTest extends BrowserTestBase {
 
       // Language for the site section needs to match the summary's language.
       $section_langcode = $section->get('langcode')->value;
-      $this->assertEqual($section_langcode, $language, $lang_ok);
+      $this->assertEquals($section_langcode, $language, $lang_ok);
 
       // The 'pretty URL' field is a misnomer. It's really the piece of the
       // summary's URL for this node in the terminology hierarchy.
       $token = array_pop($tokens);
       $pretty_url = $section->get('field_pretty_url')->value;
-      $this->assertEqual($pretty_url, $token, 'pretty url is correct');
+      $this->assertEquals($pretty_url, $token, 'pretty url is correct');
 
       // We need the term's name for all tokens.
       $name = $section->getName();
@@ -550,17 +550,17 @@ class ApiTest extends BrowserTestBase {
 
         // For the last token in the URL, fields have different assignments.
         $path = $section->get('computed_path')->value;
-        $this->assertEqual($name, $nav_label, 'nav label is correct');
-        $this->assertEqual($path, $url, 'computed path is correct');
+        $this->assertEquals($name, $nav_label, 'nav label is correct');
+        $this->assertEquals($path, $url, 'computed path is correct');
         $tail = FALSE;
       }
       else {
-        $this->assertEqual($name, $token, 'section name matches url token');
+        $this->assertEquals($name, $token, 'section name matches url token');
       }
       $section = Term::load($section->get('parent')->target_id);
     }
-    $this->assertEqual($section->get('parent')->target_id, 0, 'found root');
-    $this->assertEqual($section->get('langcode')->value, $language, $lang_ok);
+    $this->assertEquals($section->get('parent')->target_id, 0, 'found root');
+    $this->assertEquals($section->get('langcode')->value, $language, $lang_ok);
   }
 
 }

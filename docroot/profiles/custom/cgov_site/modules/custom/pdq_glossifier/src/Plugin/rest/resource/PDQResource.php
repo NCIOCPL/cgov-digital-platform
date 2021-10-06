@@ -91,7 +91,7 @@ class PDQResource extends ResourceBase {
    * See https://github.com/NCIOCPL/cgov-digital-platform/wiki/Glossifier-service-API
    * for detailed information about the API.
    *
-   * @param array $request
+   * @param array $data
    *   Contains HTML fragment, dictionary list, and language list.
    *
    * @return \Drupal\rest\ResourceResponse
@@ -100,7 +100,11 @@ class PDQResource extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws exception expected.
    */
-  public function post(array $request) {
+  public function post(array $data) {
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $request = $data;
+
     $this->terms = $this->loadTerms();
     $fragment = $request['fragment'];
     $languages = $request['languages'];
@@ -135,7 +139,7 @@ class PDQResource extends ResourceBase {
       $this->logger->debug('Loaded %count glossary terms', $args);
       return $normalized;
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       throw new PreconditionFailedHttpException('Glossary not found');
     }
   }
