@@ -157,7 +157,7 @@ class PDQResource extends ResourceBase {
    * call is almost certain to fail with a memory error.
    * Groups of 25 at a time should be safe.
    *
-   * @param array $summaries
+   * @param array $data
    *   Sequence of node ID + language code pairs.
    *
    * @return \Drupal\rest\ModifiedResourceResponse
@@ -166,7 +166,10 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function post(array $summaries): ModifiedResourceResponse {
+  public function post(array $data): ModifiedResourceResponse {
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $summaries = $data;
 
     $errors = [];
     $success_count = 0;
@@ -197,7 +200,7 @@ class PDQResource extends ResourceBase {
           $this->logger->debug($msg, $args);
         }
       }
-      catch (Exception $e) {
+      catch (\Exception $e) {
         $message = $e->getMessage() ?? 'unexpected failure';
         $errors[] = [$nid, $lang, $message];
       }
@@ -224,7 +227,7 @@ class PDQResource extends ResourceBase {
    */
   public function delete(string $id): ModifiedResourceResponse {
 
-    // @todo: avoid deleting target of links from other content.
+    // @todo Avoid deleting target of links from other content.
     // Make sure the client gave us something to look for.
     if (!$id) {
       throw new BadRequestHttpException('No ID was provided');
@@ -341,12 +344,12 @@ class PDQResource extends ResourceBase {
    * Prune older revisions, leaving only the most recent published
    * revisions in place for the specified nodes.
    *
-   * @param string $command
+   * @param string $id
    *   Must be "prune"; this is needed because REST routing expects a token
    *   at the end of the URI identifying the content item to be patched, but
    *   we're doing the processing of batches of nodes, so the token is just
    *   treated as a placeholder.
-   * @param array $request
+   * @param array $data
    *   Sequence of node IDs and optional number of published revisions to keep
    *   for each language of the nodes to be pruned. Examples:
    *     `['nodes' => [960, 982, 997], 'keep' => 2]`
@@ -360,7 +363,14 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
    */
-  public function patch(string $command, array $request): ModifiedResourceResponse {
+  public function patch(string $id, array $data): ModifiedResourceResponse {
+    // Drupal 9 requires this param to match the name in the canonical url
+    // defined on the RestResource, let's make this more readable.
+    $command = $id;
+
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $request = $data;
 
     if ($command !== 'prune') {
       throw new BadRequestHttpException('Unsupported patch command.');

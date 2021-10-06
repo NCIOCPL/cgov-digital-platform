@@ -81,7 +81,7 @@ class PDQGlossifierRefresh extends ResourceBase {
    *
    * Store a fresh set of PDQ dictionary information.
    *
-   * @param array $terms
+   * @param array $data
    *   Contains a keyed array of PDQ glossary terms, serialized as JSON.
    *
    * @return \Drupal\rest\ResourceResponse
@@ -90,7 +90,11 @@ class PDQGlossifierRefresh extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws exception expected.
    */
-  public function post(array $terms) {
+  public function post(array $data) {
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $terms = $data;
+
     $now = date('Y-m-d H:i:s');
     $fields = ['terms' => json_encode($terms), 'updated' => $now];
     $conn = Database::getConnection();
