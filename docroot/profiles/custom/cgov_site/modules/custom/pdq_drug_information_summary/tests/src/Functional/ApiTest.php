@@ -112,47 +112,47 @@ class ApiTest extends BrowserTestBase {
 
     // Verify that the node ID lookup works correctly.
     $matches = $this->findNodes($this->drug['cdr_id']);
-    $this->assertEqual($matches, [[$nid, 'en']]);
+    $this->assertEquals($matches, [[$nid, 'en']]);
 
     // Confirm that the values have been stored correctly.
     $values = $this->fetchNode($nid);
-    $this->assertFalse($values['published'], 'Not yet published');
+    $this->assertEquals(0, $values['published'], 'Not yet published');
     $this->checkValues($values);
 
     // Store a modified revision (still unpublished).
     $this->drug['description'] = 'Revised drug description';
     $payload = $this->store($this->drug, 200);
-    $this->assertEqual($payload['nid'], $nid, 'Uses same node');
+    $this->assertEquals($payload['nid'], $nid, 'Uses same node');
 
     // Confirm that the values are still stored correctly.
     $values = $this->fetchNode($nid);
-    $this->assertFalse($values['published'], 'Not yet published');
+    $this->assertEquals(0, $values['published'], 'Not yet published');
     $this->checkValues($values);
 
     // Publish the summaries and make sure they're still intact.
     $this->publish();
     $values = $this->fetchNode($nid);
-    $this->assertTrue($values['published'], 'Published');
+    $this->assertEquals(1, $values['published'], 'Published');
     $this->checkValues($values);
 
     // Verify the catalog API.
     $response = $this->request('GET', "$this->pdqUrl/list");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $values = json_decode($response->getBody()->__toString(), TRUE);
     $this->assertCount(1, $values, 'One entry in catalog');
     $values = array_pop($values);
     $this->assertCount(7, $values, 'Catalog entry has 7 values');
-    $this->assertEqual($values['cdr_id'], $this->drug['cdr_id'],
+    $this->assertEquals($values['cdr_id'], $this->drug['cdr_id'],
       'CDR ID is correct');
-    $this->assertEqual($values['nid'], $nid, 'Node ID is correct');
-    $this->assertEqual(preg_match('/^\d+$/', $values['vid']), 1,
+    $this->assertEquals($values['nid'], $nid, 'Node ID is correct');
+    $this->assertEquals(preg_match('/^\d+$/', $values['vid']), 1,
       'Version ID is numeric');
-    $this->assertEqual($values['langcode'], 'en');
-    $this->assertEqual($values['type'], 'pdq_drug_information_summary');
+    $this->assertEquals($values['langcode'], 'en');
+    $this->assertEquals($values['type'], 'pdq_drug_information_summary');
     $pat = '/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/';
-    $this->assertEqual(preg_match($pat, $values['created']), 1,
+    $this->assertEquals(preg_match($pat, $values['created']), 1,
       'Created is datetime');
-    $this->assertEqual(preg_match($pat, $values['changed']), 1,
+    $this->assertEquals(preg_match($pat, $values['changed']), 1,
       'Changed is datetime');
 
     // Make sure the pathauto mechanism is behaving correctly.
@@ -211,7 +211,7 @@ class ApiTest extends BrowserTestBase {
    */
   private function store(array $values, $expected) {
     $response = $this->request('POST', $this->disUrl, ['json' => $values]);
-    $this->assertEqual($response->getStatusCode(), $expected);
+    $this->assertEquals($response->getStatusCode(), $expected);
     return json_decode($response->getBody()->__toString(), TRUE);
   }
 
@@ -228,14 +228,14 @@ class ApiTest extends BrowserTestBase {
    */
   private function findNodes($cdr_id) {
     $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $pairs = json_decode($response->getBody()->__toString(), TRUE);
     $this->assertCount(1, $pairs, 'Only one node/language per CDR ID');
     $this->assertCount(2, $pairs[0], 'Pair must have two items');
     list($nid, $language) = $pairs[0];
     $this->assertTrue(is_numeric($nid), 'Node ID is numeric');
-    $this->assertEqual($nid, (int) $nid, 'Node ID is an integer');
-    $this->assertEqual($language, 'en', 'Correct language code');
+    $this->assertEquals($nid, (int) $nid, 'Node ID is an integer');
+    $this->assertEquals($language, 'en', 'Correct language code');
     return $pairs;
   }
 
@@ -252,9 +252,9 @@ class ApiTest extends BrowserTestBase {
    */
   private function fetchNode($nid) {
     $response = $this->request('GET', "$this->disUrl/$nid");
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $values = json_decode($response->getBody()->__toString(), TRUE);
-    $this->assertEqual($values['nid'], $nid);
+    $this->assertEquals($values['nid'], $nid);
     return $values;
   }
 
@@ -267,11 +267,11 @@ class ApiTest extends BrowserTestBase {
   private function checkValues(array $values) {
     $expected = $this->drug;
     $actual = $values;
-    $this->assertEqual($values['nid'], $expected['nid'], 'Same node');
-    $this->assertFalse($actual['public_use'], 'Public use field unset');
+    $this->assertEquals($values['nid'], $expected['nid'], 'Same node');
+    $this->assertEquals(0, $actual['public_use'], 'Public use field unset');
     foreach ($this->fields as $name) {
       $message = "The '$name' field matches in the drug summary";
-      $this->assertEqual($actual[$name], $expected[$name], $message);
+      $this->assertEquals($actual[$name], $expected[$name], $message);
     }
   }
 
@@ -281,7 +281,7 @@ class ApiTest extends BrowserTestBase {
   private function publish() {
     $drugs = [[$this->drug['nid'], 'en']];
     $response = $this->request('POST', $this->pdqUrl, ['json' => $drugs]);
-    $this->assertEqual($response->getStatusCode(), 200);
+    $this->assertEquals($response->getStatusCode(), 200);
     $errors = json_decode($response->getBody()->__toString(), TRUE)['errors'];
     $this->assertEmpty($errors, 'Release of drug summary succeeds');
   }
@@ -295,9 +295,9 @@ class ApiTest extends BrowserTestBase {
   private function delete(array $drug) {
     $cdr_id = $drug['cdr_id'];
     $response = $this->request('DELETE', "$this->pdqUrl/$cdr_id");
-    $this->assertEqual($response->getStatusCode(), 204);
+    $this->assertEquals($response->getStatusCode(), 204);
     $response = $this->request('GET', "$this->pdqUrl/$cdr_id");
-    $this->assertEqual($response->getStatusCode(), 404);
+    $this->assertEquals($response->getStatusCode(), 404);
   }
 
   /**
@@ -315,11 +315,11 @@ class ApiTest extends BrowserTestBase {
     $nid = $drug['nid'];
     $url = "node/$nid";
     $expected = $this->drupalGet($url);
-    $this->assertResponse(200);
+    $this->assertSession()->statusCodeEquals(200);
     $url = ltrim($drug['url'], '/');
     $actual = $this->drupalGet($url);
-    $this->assertResponse(200);
-    $this->assertEqual($actual, $expected);
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertEquals($actual, $expected);
   }
 
 }

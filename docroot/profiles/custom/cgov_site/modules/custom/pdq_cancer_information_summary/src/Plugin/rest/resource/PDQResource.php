@@ -199,7 +199,7 @@ class PDQResource extends ResourceBase {
    * Cancer Information Summary document and its Spanish translation
    * document in the same node.
    *
-   * @param array $summary
+   * @param array $data
    *   The summary document values.
    *
    * @return \Drupal\rest\ModifiedResourceResponse
@@ -210,7 +210,10 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    */
-  public function post(array $summary) {
+  public function post(array $data) {
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $summary = $data;
 
     // Extract the bits we'll use frequently.
     $nid = $summary['nid'] ?? '';
@@ -285,7 +288,10 @@ class PDQResource extends ResourceBase {
 
     // The syndication field is not translatable.
     if ($language == 'en') {
-      $syndication = ['syndicate' => 1, 'keywords' => $summary['keywords'] ?? ''];
+      $syndication = [
+        'syndicate' => 1,
+        'keywords' => $summary['keywords'] ?? '',
+      ];
       $node->set('field_hhs_syndication', $syndication);
     }
 
@@ -317,12 +323,12 @@ class PDQResource extends ResourceBase {
    * Find and delete orphaned PDQ summary sections. See the `OrphanCleanup`
    * class for details.
    *
-   * @param string $command
+   * @param string $id
    *   Must be "prune"; this is needed because REST routing expects a token
    *   at the end of the URI identifying the content item to be patched, but
    *   we're doing the processing of batches of nodes, so the token is just
    *   treated as a placeholder.
-   * @param int $max
+   * @param int $data
    *   The maximum number of deletions to be performed (we do these in batches
    *   so we don't overload the poor Drupal server with everything at once.
    *   Defaults to 1000.
@@ -335,7 +341,14 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
    */
-  public function patch(string $command, int $max): ModifiedResourceResponse {
+  public function patch(string $id, int $data): ModifiedResourceResponse {
+    // Drupal 9 requires this param to match the name in the canonical url
+    // defined on the RestResource, let's make this more readable.
+    $command = $id;
+
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $max = $data;
 
     if ($command !== 'prune') {
       throw new BadRequestHttpException('Unsupported patch command.');

@@ -156,7 +156,7 @@ class PDQResource extends ResourceBase {
    *
    * See https://stackoverflow.com/questions/630453/put-vs-post-in-rest
    *
-   * @param array $drug
+   * @param array $data
    *   The drug summary document values.
    *
    * @return \Drupal\rest\ModifiedResourceResponse
@@ -167,7 +167,10 @@ class PDQResource extends ResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function post(array $drug) {
+  public function post(array $data) {
+    // Drupal 9 requires this param to be named $data, let's make this more
+    // readable.
+    $drug = $data;
 
     // Extract the bits we'll use more than once.
     $nid = $drug['nid'] ?? '';
