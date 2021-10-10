@@ -28,7 +28,7 @@ class CgovSiteTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'cgov_common';
 
   /**
    * The admin user.
