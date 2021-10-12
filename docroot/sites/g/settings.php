@@ -188,6 +188,12 @@ if (file_exists('/var/www/site-php')) {
     $settings['file_private_path'] = $site_settings['file_private_path'];
   }
 
+  // Do not override the public path if the customer has defined its value
+  // in a pre-settings-php hook.
+  if (empty($settings['file_public_path']) && !empty($site_settings['file_public_path'])) {
+    $settings['file_public_path'] = $site_settings['file_public_path'];
+  }
+
   // Propagate all configuration values in ACSF per-site storage into Drupal's
   // configuration.
   if (!empty($site_settings['conf']) && is_array($site_settings['conf'])) {
