@@ -35,7 +35,7 @@ class PageOptionsManagerTest extends UnitTestCase {
       ->willReturn($mockParameterBag);
     $pageOptionsManager = new PageOptionsManager($mockRouteInterface);
     $pageOptionsConfig = $pageOptionsManager->getConfig();
-    $this->assertArrayEquals($pageOptionsConfig, $expected);
+    $this->assertEquals($pageOptionsConfig, $expected);
 
   }
 
