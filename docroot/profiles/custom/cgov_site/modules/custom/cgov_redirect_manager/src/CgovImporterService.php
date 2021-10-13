@@ -328,7 +328,7 @@ class CgovImporterService {
       $query = isset($parsed_url['query']) ? $parsed_url['query'] : NULL;
 
       /** @var \Drupal\redirect\Entity\Redirect $redirect */
-      $redirectEntityManager = \Drupal::service('entity.manager')
+      $redirectEntityManager = \Drupal::service('entity_type.manager')
         ->getStorage('redirect');
       $redirect = $redirectEntityManager->create();
       $redirect->setSource($path, $query);
