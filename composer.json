@@ -29,11 +29,15 @@
     },
     "require": {
         "acquia/acsf-tools": "dev-9.x-dev",
-        "acquia/blt": "^11",
-        "acquia/blt-require-dev": "11.x-dev",
+        "acquia/blt": "^12",
+        "acquia/blt-acsf": "^1.0",
+        "acquia/blt-behat": "^1.1",
+        "acquia/blt-drupal-test": "^1.0",
+        "acquia/blt-phpcs": "^1.0",
+        "acquia/blt-simplesamlphp": "^1.0",
         "acquia/memcache-settings": "^1.0",
         "behat/mink-selenium2-driver": "dev-master as 1.3.x-dev",
-        "brianium/paratest": "^2.2",
+        "brianium/paratest": "^6.3",
         "composer/installers": "^1.9.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/acquia_connector": "^3.0.4",
@@ -44,8 +48,9 @@
         "drupal/akamai": "3.x-dev@dev",
         "drupal/config_perms": "^2",
         "drupal/console": "^1.9.7",
-        "drupal/core": "^8.9",
-        "drupal/core-composer-scaffold": "^8.9",
+        "drupal/core": "^9.2",
+        "drupal/core-composer-scaffold": "^9.2",
+        "drupal/core-recommended": "^9.2",
         "drupal/ctools": "^3.7.0",
         "drupal/devel": "^4.1",
         "drupal/entity_browser": "^2.6.0",
@@ -79,7 +84,7 @@
         "drupal/twig_tweak": "^2.9.0",
         "drupal/viewsreference": "^2.0-beta2",
         "drupal/yaml_content": "^1.0-alpha7",
-        "drush/drush": "^9.0.0",
+        "drush/drush": "^10.2.2",
         "eluceo/ical": "^0.15.0",
         "kint-php/kint": "^3.3",
         "nciocpl/clinical-trial-search-client.php": "dev-master",
@@ -91,8 +96,9 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/core-dev": "^8.9",
-        "mglaman/drupal-check": "^1.1"
+        "drupal/core-dev": "^9.2",
+        "mglaman/drupal-check": "^1.1",
+        "phpspec/prophecy-phpunit": "^2"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -199,12 +205,6 @@
             ]
         },
         "patches": {
-            "acquia/blt": {
-                "NCIOCPL#48": "patches/blt/issue-48-fix-behat-chrome-invocation.patch"
-            },
-            "drush/drush": {
-                "drush-ops/drush#3145: Request URI is incorrect with subdirectories": "patches/drush/4136-request-uri-fix.patch"
-            },
             "drupal/core": {
                 "2952990 : Missing schema for display_options.defaults.sitename_title": "https://www.drupal.org/files/issues/2018-03-14/views-schema-2952990-2.patch",
                 "3048288 : Avoid bogus MethodNotAllowedException; see https://github.com/NCIOCPL/cgov-digital-platform/issues/1716": "https://www.drupal.org/files/issues/2019-04-15/route-method-exception-path-fix-3048288.patch",
