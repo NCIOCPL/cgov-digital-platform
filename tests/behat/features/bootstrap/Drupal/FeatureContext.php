@@ -4,6 +4,7 @@ namespace Drupal;
 
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 /**
  * FeatureContext class defines custom step definitions for Behat.
@@ -99,4 +100,16 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
     $this->getSession()->executeScript("$instance.setData(\"$text\");");
   }
 
+  /**
+   * Work around https://github.com/jhedstrom/drupalextension/issues/486
+   *
+   * @BeforeScenario
+   */
+  public function beforeJavascriptScenario(BeforeScenarioScope $scope) {
+    $mink_context = $scope->getEnvironment()->getContext('Drupal\DrupalExtension\Context\MinkContext');
+    if (!$mink_context) {
+      return;
+    }
+    $mink_context->setMinkParameter('ajax_timeout', 15);
+  }
 }
