@@ -5,19 +5,19 @@ PASSED=1
 if [ "$STAGED" != "" ]
 then
     echo "Checking compliance with Drupal coding standards ..."
-    ./vendor/bin/blt tests:phpcs:sniff:files "$STAGED"
+    ./vendor/bin/blt validate:phpcs:staged
     if [ $? != 0 ]
     then
         PASSED=0
     fi
     echo "Checking validity of TWIG templates ..."
-    ./vendor/bin/blt tests:twig:lint:files "$STAGED"
+    ./vendor/bin/blt validate:twig:lint:files "$STAGED"
     if [ $? != 0 ]
     then
         PASSED=0
     fi
     echo "Checking validity of YAML configuration files ..."
-    ./vendor/bin/blt tests:yaml:lint:files "$STAGED"
+    ./vendor/bin/blt validate:yaml:lint:files "$STAGED"
     if [ $? != 0 ]
     then
         PASSED=0

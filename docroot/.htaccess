@@ -128,13 +128,13 @@ AddEncoding gzip svgz
   RewriteRule .* - [R=403]
 
   # Redirect common PHP files to their new locations.
-  RewriteCond %{REQUEST_URI} ^(.*)?/(install.php) [OR]
-  RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild.php)
+  RewriteCond %{REQUEST_URI} ^(.*)?/(install\.php) [OR]
+  RewriteCond %{REQUEST_URI} ^(.*)?/(rebuild\.php)
   RewriteCond %{REQUEST_URI} !core
   RewriteRule ^ %1/core/%2 [L,QSA,R=301]
 
   # Rewrite install.php during installation to see if mod_rewrite is working
-  RewriteRule ^core/install.php core/install.php?rewrite=ok [QSA,L]
+  RewriteRule ^core/install\.php core/install.php?rewrite=ok [QSA,L]
 
   # Pass all requests not referring directly to files in the filesystem to
   # index.php.
@@ -150,13 +150,13 @@ AddEncoding gzip svgz
   # Allow access to PHP files in /core (like authorize.php or install.php):
   RewriteCond %{REQUEST_URI} !/core/[^/]*\.php$
   # Allow access to test-specific PHP files:
-  RewriteCond %{REQUEST_URI} !/core/modules/system/tests/https?.php
+  RewriteCond %{REQUEST_URI} !/core/modules/system/tests/https?\.php
   # Allow access to simplesaml paths.
   RewriteCond %{REQUEST_URI} !^/simplesaml
   # Allow access to Statistics module's custom front controller.
   # Copy and adapt this rule to directly execute PHP files in contributed or
   # custom modules or to run another PHP application in the same directory.
-  RewriteCond %{REQUEST_URI} !/core/modules/statistics/statistics.php$
+  RewriteCond %{REQUEST_URI} !/core/modules/statistics/statistics\.php$
   # ACSF requirement: allow access to apc_rebuild.php.
   RewriteCond %{REQUEST_URI} !/sites/g/apc_rebuild.php$
   # Deny access to any other PHP files that do not match the rules above.

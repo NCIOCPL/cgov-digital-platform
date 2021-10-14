@@ -52,6 +52,10 @@ modules:
   01live:
     enable: [syslog, acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
     uninstall: [dblog, cgov_caching_nocdn]
+## If this is not set, blt drupal:install will iterate through the sites in the sites folder.
+## For now we set it to default, so it does not try installing simpletest, or god forbid "g".
+multisites:
+  - default
 cm:
   strategy: features
   allow-overrides: true
@@ -101,7 +105,7 @@ cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
 
 validate:
-  deprecation: true
+  deprecation: false
 
 tests:
   phpunit:

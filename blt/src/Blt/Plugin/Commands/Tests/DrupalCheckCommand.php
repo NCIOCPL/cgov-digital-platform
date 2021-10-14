@@ -6,25 +6,27 @@ use Acquia\Blt\Robo\BltTasks;
 use Acquia\Blt\Robo\Exceptions\BltException;
 
 /**
- * Defines commands in the "tests:validation:*" namespace.
+ * Defines commands in the "validate:deprecated" namespace.
  */
 class DrupalCheckCommand extends BltTasks {
 
   /**
    * Executes the deprecation-validate command.
    *
-   * @command tests:deprecated
+   * @command validate:deprecated
    */
   public function validateDeprecated() {
-    $this->validateDeprecatedModules();
-    $this->validateDeprecatedProfiles();
-    $this->validateDeprecatedThemes();
+    if ($this->getConfigValue('validate.deprecation') == TRUE) {
+      $this->validateDeprecatedModules();
+      $this->validateDeprecatedProfiles();
+      $this->validateDeprecatedThemes();
+    }
   }
 
   /**
    * Executes the deprecation-validate command.
    *
-   * @command tests:deprecated:modules
+   * @command validate:deprecated:modules
    */
   public function validateDeprecatedModules() {
     $this->runDrupalCheck('modules');
@@ -33,7 +35,7 @@ class DrupalCheckCommand extends BltTasks {
   /**
    * Executes the deprecation-validate command.
    *
-   * @command tests:deprecated:themes
+   * @command validate:deprecated:themes
    */
   public function validateDeprecatedThemes() {
     $this->runDrupalCheck('themes');
@@ -42,7 +44,7 @@ class DrupalCheckCommand extends BltTasks {
   /**
    * Executes the deprecation-validate command.
    *
-   * @command tests:deprecated:profiles
+   * @command validate:deprecated:profiles
    */
   public function validateDeprecatedProfiles() {
     $this->runDrupalCheck('profiles');
