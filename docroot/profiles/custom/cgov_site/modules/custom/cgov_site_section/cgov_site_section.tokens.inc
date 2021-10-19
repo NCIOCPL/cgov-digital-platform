@@ -14,7 +14,10 @@ use Drupal\taxonomy\Entity\Term;
  */
 function cgov_site_section_token_info() {
   $info = [];
-  $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
+  $info['types']['cgov_tokens'] = [
+    'name' => t('Cancer.gov Tokens'),
+    'description' => t('Cancer.gov Tokens'),
+  ];
   $info['tokens']['cgov_tokens'] = [
     'cgov-computed-path' => [
       'name' => t('Computed Path'),
@@ -137,7 +140,7 @@ function _get_taxonomy_field_token(array $data, $fieldname) {
      */
     else {
       $nid = $node->id();
-      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $nid);
+      $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
       $parent['node'] = _get_valid_parent($alias);
 
       // Recurse through this method until a field value is found.
@@ -169,7 +172,7 @@ function _get_valid_parent($alias) {
 
   // Trim the last section of the current alias and get the 'node/<nid>' path.
   $parentAlias = preg_replace('#\/[^/]*$#', '', $alias);
-  $parentPath = \Drupal::service('path.alias_manager')->getPathByAlias($parentAlias);
+  $parentPath = \Drupal::service('path_alias.manager')->getPathByAlias($parentAlias);
 
   // Return node if matches, otherwise run through this method again.
   if (preg_match('/node\/(\d+)/', $parentPath, $matches)) {

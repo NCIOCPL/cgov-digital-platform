@@ -103,14 +103,12 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
   public function testGoodEntityNoAlias() {
 
     $this->entityQuery
-      ->expects($this->at(1))
+      ->expects($this->exactly(2))
       ->method('condition')
-      ->with('path', '/node/22', '=', NULL);
-
-    $this->entityQuery
-      ->expects($this->at(2))
-      ->method('condition')
-      ->with('langcode', 'en', '=', NULL);
+      ->withConsecutive(
+        ['path', '/node/22', '='],
+        ['langcode', 'en', '='],
+      );
 
     $this->entityQuery
       ->expects($this->exactly(1))
@@ -164,16 +162,16 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     ];
 
     $this->entityQuery
-      ->expects($this->at(1))
+      ->expects($this->exactly(2))
       ->method('condition')
-      ->with('path', '/node/22', '=', NULL)
-      ->willReturn($this->entityQuery);
-
-    $this->entityQuery
-      ->expects($this->at(2))
-      ->method('condition')
-      ->with('langcode', 'en', '=', NULL)
-      ->willReturn($this->entityQuery);
+      ->withConsecutive(
+        ['path', '/node/22', '='],
+        ['langcode', 'en', '=']
+      )
+      ->willReturnOnConsecutiveCalls(
+        $this->entityQuery,
+        $this->entityQuery
+      );
 
     $this->entityQuery
       ->expects($this->exactly(1))
@@ -260,14 +258,12 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     ];
 
     $this->entityQuery
-      ->expects($this->at(1))
+      ->expects($this->exactly(2))
       ->method('condition')
-      ->with('path', '/node/22', '=', NULL);
-
-    $this->entityQuery
-      ->expects($this->at(2))
-      ->method('condition')
-      ->with('langcode', 'en', '=', NULL);
+      ->withConsecutive(
+        ['path', '/node/22', '='],
+        ['langcode', 'en', '=']
+      );
 
     $this->entityQuery
       ->expects($this->exactly(1))

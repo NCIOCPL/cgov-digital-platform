@@ -10,7 +10,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class CgovImporterService.
+ * Service that imports redirections in bulk.
  *
  * @package Drupal\cgov_redirect_manager
  */
@@ -328,7 +328,7 @@ class CgovImporterService {
       $query = isset($parsed_url['query']) ? $parsed_url['query'] : NULL;
 
       /** @var \Drupal\redirect\Entity\Redirect $redirect */
-      $redirectEntityManager = \Drupal::service('entity.manager')
+      $redirectEntityManager = \Drupal::service('entity_type.manager')
         ->getStorage('redirect');
       $redirect = $redirectEntityManager->create();
       $redirect->setSource($path, $query);
@@ -400,7 +400,7 @@ class CgovImporterService {
     if (!isset($parsed['scheme'])) {
       // Check for aliases *including* named anchors/query strings.
       $alias = self::addLeadingSlash($destination);
-      $normal_path = \Drupal::service('path.alias_manager')
+      $normal_path = \Drupal::service('path_alias.manager')
         ->getPathByAlias($alias);
       if ($alias != $normal_path) {
         return FALSE;
@@ -408,7 +408,7 @@ class CgovImporterService {
       // Check for aliases *excluding* named anchors/query strings.
       if (isset($parsed['path'])) {
         $alias = self::addLeadingSlash($parsed['path']);
-        $normal_path = \Drupal::service('path.alias_manager')
+        $normal_path = \Drupal::service('path_alias.manager')
           ->getPathByAlias($alias);
         if ($alias != $normal_path) {
           return FALSE;

@@ -104,7 +104,7 @@ function _cgov_adobe_path_check() {
     else {
       $exclude_patterns = implode("\n", $exclude_paths);
       $request = \Drupal::request();
-      $alias_manager = \Drupal::service('path.alias_manager');
+      $alias_manager = \Drupal::service('path_alias.manager');
       $current_path = \Drupal::service('path.current');
       $path_matcher = \Drupal::service('path.matcher');
 

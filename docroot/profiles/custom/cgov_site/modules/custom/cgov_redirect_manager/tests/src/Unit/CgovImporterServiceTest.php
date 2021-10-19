@@ -11,7 +11,7 @@ use org\bovigo\vfs\vfsStream;
  *
  * @group cgov_core
  */
-class TestUnitTest extends UnitTestCase {
+class CgovImporterServiceTest extends UnitTestCase {
 
   /**
    * Tests truthy.

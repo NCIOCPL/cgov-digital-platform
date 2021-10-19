@@ -29,6 +29,13 @@ class AppPathTest extends KernelTestBase {
   protected $storage;
 
   /**
+   * Node storage.
+   *
+   * @var \Drupal\node\NodeStorageInterface
+   */
+  protected $nodeStorage;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp() {
@@ -38,12 +45,13 @@ class AppPathTest extends KernelTestBase {
     $this->installEntitySchema('user');
     $this->installEntitySchema('path_alias');
     $this->installSchema('system', ['sequences']);
-    $this->installConfig(['system', 'user', 'path_alias']);
+    $this->installConfig(['system', 'user']);
 
     // Install page and its dependencies.
     // This is so we do not have to install all the schemas.
     \Drupal::service('module_installer')->install(['app_node_test']);
     $this->storage = \Drupal::service('app_module.app_path_storage');
+    $this->nodeStorage = \Drupal::entityTypeManager()->getStorage('node');
   }
 
   /**
@@ -68,11 +76,8 @@ class AppPathTest extends KernelTestBase {
       'field_application_module' => [
         'target_id' => 'dummy_app_module',
       ],
-      'path' => [
-        'alias' => '/test-node-1',
-      ],
+      'path' => ['alias' => '/test-node-1'],
     ]);
-
     $node1->save();
 
     // Assert app path was created.
@@ -80,7 +85,9 @@ class AppPathTest extends KernelTestBase {
     $this->assertEquals($app_path_1['owner_alias'], '/test-node-1');
 
     // 2. Change alias.
-    $node1->path->alias = '/test-node-1-updated';
+    $this->nodeStorage->resetCache();
+    $node1 = Node::load($node1->id());
+    $node1->get('path')->alias = '/test-node-1-updated';
     $node1->save();
 
     // Assert app path was updated.
@@ -132,6 +139,7 @@ class AppPathTest extends KernelTestBase {
     $this->assertEquals($app_path_1['app_module_data'], $data);
 
     // Reload the node to make sure that the data survived.
+    $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
     $this->assertEquals($node1->field_application_module->data, $data);
 
@@ -144,6 +152,7 @@ class AppPathTest extends KernelTestBase {
     $this->assertEquals($app_path_1['app_module_data']['key1'], 'new-value1');
 
     // Reload the node to make sure that the data survived.
+    $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
     $this->assertEquals($node1->field_application_module->data, $data2);
 

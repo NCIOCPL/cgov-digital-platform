@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\cgov_core\NavItem;
@@ -19,7 +20,7 @@ use Drupal\cgov_core\NavItem;
  *  category = @Translation("Cgov Digital Platform"),
  * )
  */
-class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
+class MainNav extends BlockBase implements ContainerFactoryPluginInterface, TrustedCallbackInterface {
 
   const MOBILE_NAV_MAX_DEPTH = 3;
 
@@ -74,6 +75,13 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
       $container->get('cgov_core.cgov_navigation_manager'),
       $container->get('language_manager')
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return ['preRender'];
   }
 
   /**
@@ -226,7 +234,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     // Get the current language, as that is our cache tag.
     $langcode = $this->languageManager->getCurrentLanguage()->getId();
     $build = [
-      // TODO: Change from markup to an actual object/theme.
+      // @todo Change from markup to an actual object/theme.
       '#type' => 'markup',
       '#pre_render' => [
         static::class . '::preRender',
@@ -255,7 +263,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface {
     // We are not cached and should render.
     $navTree = self::getMainNav();
 
-    // TODO: Change from markup to an actual object/theme.
+    // @todo Change from markup to an actual object/theme.
     $build['#markup'] = $navTree;
 
     return $build;

@@ -155,7 +155,7 @@ class CGovFieldStorageTest extends KernelTestBase {
 
     foreach ($this->fieldsToTest as $fieldToTest) {
       $field_storage = FieldStorageConfig::loadByName('node', $fieldToTest["name"]);
-      $this->assertFalse($field_storage, "Node " . $fieldToTest["name"] . " field storage does not exist after uninstalling the CGov Core module.");
+      $this->assertEmpty($field_storage, "Node " . $fieldToTest["name"] . " field storage does not exist after uninstalling the CGov Core module.");
     }
 
   }
@@ -172,7 +172,7 @@ class CGovFieldStorageTest extends KernelTestBase {
    */
   private function assertFieldConfig($fieldName, $fieldLabel, $fieldType) {
     $field_storage = FieldStorageConfig::loadByName('node', $fieldName);
-    $this->assertTrue($field_storage, "Node $fieldName field storage exists.");
+    $this->assertNotEmpty($field_storage, "Node $fieldName field storage exists.");
   }
 
   /**

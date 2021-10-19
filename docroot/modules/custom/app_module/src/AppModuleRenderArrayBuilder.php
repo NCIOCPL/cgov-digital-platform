@@ -4,6 +4,7 @@ namespace Drupal\app_module;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * cases that can be identified. The most important part of this is to handle
  * cache tags and theming of the app_module wrapper.
  */
-class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterface {
+class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterface, TrustedCallbackInterface {
 
   /**
    * Symfony\Component\HttpFoundation\RequestStack definition.
@@ -33,6 +34,13 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
     RequestStack $request_stack
   ) {
     $this->requestStack = $request_stack;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return ['preRender'];
   }
 
   /**

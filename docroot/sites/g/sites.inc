@@ -265,6 +265,19 @@ function gardens_site_data_get_private_files_directory($db_role) {
 }
 
 /**
+ * Returns the location of the public files directory.
+ *
+ * @param string $db_role
+ *   The site's db role.
+ *
+ * @return string
+ *   The public files directory location.
+ */
+function gardens_site_data_get_public_files_directory($db_role) {
+  return "sites/g/files/{$db_role}/files";
+}
+
+/**
  * Fully refreshes the APC cached site/domain data, rewriting every key.
  */
 function gardens_site_data_refresh_all() {
@@ -290,10 +303,9 @@ function gardens_site_data_refresh_all() {
  *   A data structure containing information about a single site.
  */
 function gardens_site_data_build_data(array $site, array $map) {
-  // All sites use a conventional public file path.
   $db_name = $site['conf']['acsf_db_name'];
-
   $private_files_directory = gardens_site_data_get_private_files_directory($db_name);
+  $public_files_directory = gardens_site_data_get_public_files_directory($db_name);
 
   return [
     'dir' => "g/files/{$site['name']}",
@@ -305,6 +317,7 @@ function gardens_site_data_build_data(array $site, array $map) {
       'flags' => !empty($site['flags']) ? $site['flags'] : [],
       'conf' => !empty($site['conf']) ? $site['conf'] : [],
       'file_private_path' => file_exists($private_files_directory) ? $private_files_directory : NULL,
+      'file_public_path' => file_exists($public_files_directory) ? $public_files_directory : NULL,
     ],
   ];
 }

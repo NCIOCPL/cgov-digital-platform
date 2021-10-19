@@ -173,7 +173,7 @@ class CgovImageFieldStorageTest extends KernelTestBase {
    */
   private function assertFieldConfig($fieldName, $fieldLabel, $fieldType) {
     $field_storage = FieldStorageConfig::loadByName('node', $fieldName);
-    $this->assertTrue($field_storage, "Node $fieldName field storage exists.");
+    $this->assertNotEmpty($field_storage, "Node $fieldName field storage exists.");
   }
 
   /**

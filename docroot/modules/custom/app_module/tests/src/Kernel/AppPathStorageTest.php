@@ -16,7 +16,7 @@ class AppPathStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['system', 'app_module'];
+  public static $modules = ['system', 'path_alias', 'app_module'];
 
   /**
    * Gets the path storage.

@@ -90,10 +90,14 @@ function drush_exec(string $site, string $env, string $domain, string $cmd) {
 
   fwrite(STDERR, "Command execution returned status code: $result\n");
 
+  // In case the returned status code ($result) is not 0, we'll remove the drush
+  // cache directory and halt the execution of the whole script.
   if ($result) {
     rmdir_r(drush_cache_path($site, $env, $domain));
     exit($result);
   }
+
+  return $output;
 }
 
 if (empty($argv[3])) {
@@ -151,10 +155,18 @@ if (!$new_domain) {
 // Make directory drush will use for temporary cache.
 mkdir_p(drush_cache_path($site, $env, $new_domain));
 
-// Make absolutely sure Drupal will not pick up cached component locations
-// on boostrap when called by Drush cache-rebuild.
-// The following Drush cache-rebuild will repopulate this table.
-drush_exec($site, $env, $new_domain, 'sqlq "TRUNCATE TABLE cache_container;"');
+// Check for the availability of the 'cache_container' table.
+fwrite(STDERR, "Checking the availability of 'cache_container' table.\n");
+$cache_table_check = drush_exec($site, $env, $new_domain, 'sqlq "SHOW TABLES LIKE \'cache_container\';"');
+$cache_table_check = array_shift($cache_table_check);
+// An empty value/string means that no 'cache_container' table was found.
+if (!empty($cache_table_check)) {
+  // Make absolutely sure Drupal will not pick up cached component locations
+  // on boostrap when called by Drush cache-rebuild.
+  // The following Drush cache-rebuild will repopulate this table.
+  fwrite(STDERR, "Table was found. Deleting all data from the 'cache_container' table.\n");
+  drush_exec($site, $env, $new_domain, 'sqlq "TRUNCATE TABLE cache_container;"');
+}
 
 // Explicitly run a cache-rebuild before anything else.
 drush_exec($site, $env, $new_domain, 'cache-rebuild');

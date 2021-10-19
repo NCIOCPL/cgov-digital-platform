@@ -46,7 +46,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     php7.4-soap \
     php7.4-xdebug \
     php7.4-xml \
-    mariadb-client \
+    mysql-client-5.7 \
     curl \
     git \
     imagemagick \
@@ -120,10 +120,7 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN npm install -g npm@6.12
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
-
-# Make composer faster
-RUN composer global require "hirak/prestissimo:^0.3"
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
 ## Install Drush Launcher (runs local drush instances)
 RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
@@ -136,8 +133,8 @@ RUN curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal \
 RUN php --version; composer --version; drupal --version; drush --drush-launcher-version
 
 ## Enable BLT function
-COPY ./build/blt.sh /tmp/blt.sh
-RUN cat /tmp/blt.sh >> ~/.bashrc
+RUN curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.0.3/blt.phar \
+  && chmod +x /usr/local/bin/blt
 
 ## Turn off xdebug as it uses resources that could be best used
 ## elsewhere. Once the container is up you can use

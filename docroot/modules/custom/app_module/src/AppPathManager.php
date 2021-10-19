@@ -12,6 +12,7 @@ use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\path_alias\AliasManagerInterface;
+use Drupal\path_alias\PathAliasInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 
@@ -234,19 +235,20 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   /**
    * {@inheritdoc}
    */
-  public function updateAliasFromPath(array $path) {
+  public function updateAliasFromPath(PathAliasInterface $path) {
+
     // Nothing to see here. Exit.
-    if ($path['alias'] === $path['original']['alias']) {
+    if ($path->getAlias() === $path->original->getAlias()) {
       return;
     }
 
-    $app_path = $this->storage->load(['owner_pid' => $path['pid']]);
+    $app_path = $this->storage->load(['owner_pid' => $path->id()]);
 
     if ($app_path) {
       $this->storage->save(
         $app_path['owner_pid'],
         $app_path['owner_source'],
-        $path['alias'],
+        $path->getAlias(),
         $app_path['app_module_id'],
         $app_path['app_module_data'],
         $app_path['langcode'],
@@ -259,8 +261,8 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   /**
    * {@inheritdoc}
    */
-  public function deleteByPath(array $path) {
-    $this->storage->delete(['owner_pid' => $path['pid']]);
+  public function deleteByPath(PathAliasInterface $path) {
+    $this->storage->delete(['owner_pid' => $path->id()]);
   }
 
   /**

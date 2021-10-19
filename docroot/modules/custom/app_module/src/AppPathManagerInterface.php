@@ -3,6 +3,7 @@
 namespace Drupal\app_module;
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Find and register app module paths.
@@ -35,20 +36,18 @@ interface AppPathManagerInterface {
   /**
    * Updates an app path's alias from a path info.
    *
-   * @param array $path
-   *   The array structure is identical to that of the return value of
-   *   \Drupal\Core\Path\PathInterface::save().
+   * @param Drupal\path_alias\PathAliasInterface $path
+   *   A path alias.
    */
-  public function updateAliasFromPath(array $path);
+  public function updateAliasFromPath(PathAliasInterface $path);
 
   /**
    * Delete's an app path based on a path info.
    *
-   * @param array $path
-   *   The array structure is identical to that of the return value of
-   *   \Drupal\Core\Path\PathInterface::save().
+   * @param Drupal\path_alias\PathAliasInterface $path
+   *   The removed path alias.
    */
-  public function deleteByPath(array $path);
+  public function deleteByPath(PathAliasInterface $path);
 
   /**
    * Given a requested path, return the path it most closely matches.

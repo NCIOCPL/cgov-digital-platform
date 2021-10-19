@@ -252,7 +252,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
     }
 
     $this->assertFalse(isset($build['#app_module_info']), "App module was cleared out of build.");
-    $this->assertEqual(
+    $this->assertEquals(
       $build['content'],
       $content,
       "Content has been built"
@@ -281,15 +281,15 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
     $build = $this->builder->build($entity, []);
 
     // Tests.
-    $this->assertEqual($build['#app_module_info']['path'], $app_module_path ?? '/', "Path is correct.");
-    $this->assertEqual($build['#app_module_id'], $app_module_id, "App module id is set");
-    $this->assertEqual($build['#app_route_id'], $app_route_id, "App module route id is set");
+    $this->assertEquals($build['#app_module_info']['path'], $app_module_path ?? '/', "Path is correct.");
+    $this->assertEquals($build['#app_module_id'], $app_module_id, "App module id is set");
+    $this->assertEquals($build['#app_route_id'], $app_route_id, "App module route id is set");
     // The TRUE option at the end tells the assertion to ignore order.
     $this->assertEquals($build['#cache']['contexts'], $contexts, "Cache contexts are equal", 0.0, 10, TRUE);
-    $this->assertEquals($build['#cache']['tags'], $tags, "Cache tags are equal", 0.0, 10, TRUE);
-    $this->assertEqual($build['#cache']['max-age'], $max_age);
+    $this->assertEqualsCanonicalizing($build['#cache']['tags'], $tags, "Cache tags are equal", 0.0, 10, TRUE);
+    $this->assertEquals($build['#cache']['max-age'], $max_age);
     $this->assertNotNull($build['#pre_render'], "Pre-render callback is not null");
-    $this->assertEqual($build['#theme'], "app_module", "Theme is set");
+    $this->assertEquals($build['#theme'], "app_module", "Theme is set");
     $this->stack->pop();
   }
 
