@@ -54,7 +54,8 @@ class CgovUtilCommands extends DrushCommands {
     $kernel->setSitePath(DrupalKernel::findSitePath($request));
 
     // Prepare a NULL request.
-    $kernel->prepareLegacyRequest($request);
+    $kernel->boot();
+    $kernel->preHandle($request);
 
     // This code is the bit that actually clears the cache
     // bins. Luckily deleting a bin that may not exist (DB)

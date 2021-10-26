@@ -19,6 +19,7 @@ use Drupal\views\ViewExecutable;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Implements hook_block_build_alter().
@@ -443,6 +444,17 @@ function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $enti
   // elements.
   $tmp_weight = 0;
   foreach (Element::children($build['actions']['primary']) as $element) {
+    // Force all buttons to English so there is less mixing of English
+    // and Spanish in the UI.
+    if (
+      (!empty($build['actions']['primary'][$element]['#title'])) &&
+      ($build['actions']['primary'][$element]['#title'] instanceof TranslatableMarkup)
+    ) {
+      $untranslatedString = $build['actions']['primary'][$element]['#title']->getUntranslatedString();
+      $arguments = $build['actions']['primary'][$element]['#title']->getArguments();
+      $edit = $build['actions']['primary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
+    }
+
     $build['actions']['primary'][$element]['#weight'] = $tmp_weight + 100;
     $tmp_weight++;
   }
@@ -450,6 +462,17 @@ function cgov_core_moderation_sidebar_alter(array &$build, EntityInterface $enti
   if (!empty($build['actions']['secondary'])) {
     $tmp_weight = 0;
     foreach (Element::children($build['actions']['secondary']) as $element) {
+      // Force all buttons to English so there is less mixing of English
+      // and Spanish in the UI.
+      if (
+        (!empty($build['actions']['secondary'][$element]['#title'])) &&
+        ($build['actions']['secondary'][$element]['#title'] instanceof TranslatableMarkup)
+      ) {
+        $untranslatedString = $build['actions']['secondary'][$element]['#title']->getUntranslatedString();
+        $arguments = $build['actions']['secondary'][$element]['#title']->getArguments();
+        $edit = $build['actions']['secondary'][$element]['#title'] = new FormattableMarkup($untranslatedString, $arguments);
+      }
+
       $build['actions']['secondary'][$element]['#weight'] = $tmp_weight + 100;
       $tmp_weight++;
     }

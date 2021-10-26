@@ -40,13 +40,17 @@ if [[ $target_env =~ ^ode\d* ]]; then
   target_env="ode";
 fi
 
+## Stop BLT from attempting to prompt if we want to send feedback. (This was noticed in
+## our ODE deployment after BLT 12)
+blt blt:telemetry:disable --no-interaction
+
 # This variable must be the word true for it to update instead of reinstall
 if [[ $PRESERVE_ON_REDEPLOY == "true" ]]; then
   ## Just do a drupal update and update translations
   blt deploy:update --environment=$target_env -v --no-interaction -D drush.ansi=false
 
   ## Reload translation pack.
-  blt cgov:locales:translate -D drush.ansi=false
+  blt cgov:locales:translate --no-interaction -D drush.ansi=false
 
   ## Setup some default JS globals.
   cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
@@ -61,10 +65,10 @@ else
   blt artifact:install:drupal --environment=$target_env -v --no-interaction -D drush.ansi=false
 
   ## Load our test users.
-  blt cgov:user:load-all -D cgov.drupal_users_file=$users_file -D drush.ansi=false
+  blt cgov:user:load-all -D cgov.drupal_users_file=$users_file --no-interaction -D drush.ansi=false
 
   ## Reload translation pack.
-  blt cgov:locales:translate -D drush.ansi=false
+  blt cgov:locales:translate --no-interaction -D drush.ansi=false
 
   ## Setup some default JS globals.
   cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
@@ -92,7 +96,7 @@ else
     ./scripts/utility/cgov_migration_load.sh
     ;;
   *)
-    blt custom:install_cgov_yaml_content_by_module cgov_yaml_content -D drush.ansi=false
+    blt custom:install_cgov_yaml_content_by_module cgov_yaml_content --no-interaction -D drush.ansi=false
     ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
     ## drupal-entity.
     drush pmu cgov_yaml_content
