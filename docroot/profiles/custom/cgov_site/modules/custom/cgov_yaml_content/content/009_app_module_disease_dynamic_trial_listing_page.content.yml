@@ -1,0 +1,88 @@
+# Disease Dynamic Listing Page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "Disease Dynamic Trial Listing Page"
+  field_page_description:
+    value: "Disease Dynamic Trial Listing View Page "
+  field_browser_title:
+    value: "Disease Dynamic Trial Listing Page"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/about-cancer/treatment/clinical-trials"
+  field_pretty_url:
+    value: 'disease'
+  field_application_module:
+    - target_id: cgov_js_only_app
+      data:
+        drupalConfig:
+          appName: "clinical-trials-listing-app-disease"
+          rootId: "NCI-trial-listing-app-root"
+          initFnName: "window.ClinicalTrialsListingApp"
+          appCssUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/js/main.js"
+          removeHeadElements: 
+           - "canonical_url"
+           - "robots"
+           - "title_tag"
+           - "og_title"
+           - "og_url"
+           - "og_description"
+           - "description"
+          validAppPaths: []
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          cisBannerImgUrlLarge: "https://www.cancer.gov/app-modules/clinical-trials-listing-app/clinical-trials-listing-app.v2.1.0/images/cts-cis-banner-xl.jpeg"
+          cisBannerImgUrlSmall: "https://www.cancer.gov/app-modules/clinical-trials-listing-app/clinical-trials-listing-app.v2.1.0/images/cts-cis-banner-smartphone.jpeg"
+          ctsApiHostname: "@@LITERAL@@window.CDEConfig.ctsConfig.apiServer"
+          ctsPort: null
+          ctsProtocol: "https"
+          dynamicListingPatterns: {
+              Disease: {
+                browserTitle: "{{disease_label}} Clinical Trials",
+                introText: "<p>Clinical trials are research studies that involve people. The clinical trials on this list are for {{disease_normalized}}. All trials on the list are NCI-supported clinical trials, which are sponsored or otherwise financially supported by NCI.<\/p><p>NCI\u2019s <a href=\"\/about-cancer\/treatment\/clinical-trials\/what-are-trials\">basic information about clinical trials<\/a> explains the types and phases of trials and how they are carried out. Clinical trials look at new ways to prevent, detect, or treat disease. You may want to think about taking part in a clinical trial. Talk to your doctor for help in deciding if one is right for you.<\/p>",
+                metaDescription: "NCI supports clinical trials studying new and more effective ways to detect and treat cancer. Find clinical trials for {{disease_normalized}}.",
+                noTrialsHtml: "<p>There are no NCI-supported clinical trials for {{disease_normalized}} at this time. You can try a <a href=\"\/about-cancer\/treatment\/clinical-trials\/search\">new search<\/a> or <a href=\"\/contact\">contact our Cancer Information Service<\/a> to talk about options for clinical trials.<\/p>",
+                pageTitle: "{{disease_label}} Clinical Trials"
+              },
+              DiseaseTrialType: {
+                browserTitle: "{{trial_type_label}} Clinical Trials for {{disease_label}}",
+                introText: "<p>Clinical trials are research studies that involve people. The clinical trials on this list are for {{disease_normalized}} {{trial_type_normalized}}. All trials on the list are NCI-supported clinical trials, which are sponsored or otherwise financially supported by NCI.<\/p><p>NCI\u2019s <a href=\"\/about-cancer\/treatment\/clinical-trials\/what-are-trials\">basic information about clinical trials<\/a> explains the types and phases of trials and how they are carried out. Clinical trials look at new ways to prevent, detect, or treat disease. You may want to think about taking part in a clinical trial. Talk to your doctor for help in deciding if one is right for you.<\/p>",
+                metaDescription: "NCI supports clinical trials studying new and more effective ways to detect and treat cancer. Find {{trial_type_normalized}} clinical trials for {{disease_normalized}}.",
+                noTrialsHtml: "<p>There are no NCI-supported clinical trials for {{disease_normalized}} {{trial_type_normalized}} at this time. You can try a <a href=\"\/about-cancer\/treatment\/clinical-trials\/search\">new search<\/a> or <a href=\"\/contact\">contact our Cancer Information Service<\/a> to talk about options for clinical trials.<\/p>",
+                pageTitle: "{{trial_type_label}} Clinical Trials for {{disease_label}}"
+            },
+             DiseaseTrialTypeIntervention: {
+                browserTitle: "{{trial_type_label}} Clinical Trials for {{disease_label}} Using {{intervention_label}}",
+                introText: "<p>Clinical trials are research studies that involve people. The clinical trials on this list are testing {{trial_type_normalized}} methods for {{disease_normalized}} that use {{intervention_normalized}}. All trials on the list are NCI-supported clinical trials, which are sponsored or otherwise financially supported by NCI.<\/p><p>NCI\u2019s <a href=\"\/about-cancer\/treatment\/clinical-trials\/what-are-trials\">basic information about clinical trials<\/a> explains the types and phases of trials and how they are carried out. Clinical trials look at new ways to prevent, detect, or treat disease. You may want to think about taking part in a clinical trial. Talk to your doctor for help in deciding if one is right for you.<\/p>",
+                metaDescription: "NCI supports clinical trials studying new and more effective ways to detect and treat cancer. Find clinical trials testing {{intervention_normalized}} in the {{trial_type_normalized}} of {{disease_normalized}}.",
+                noTrialsHtml: "<p>There are no NCI-supported clinical trials for {{disease_normalized}} {{trial_type_normalized}} using {{intervention_normalized}} at this time. You can try a <a href=\"\/about-cancer\/treatment\/clinical-trials\/search\">new search<\/a> or <a href=\"\/contact\">contact our Cancer Information Service<\/a> to talk about options for clinical trials.<\/p>",
+                pageTitle: "{{trial_type_label}} Clinical Trials for {{disease_label}} Using {{intervention_label}}"
+            }
+          }
+          detailedViewPagePrettyUrlFormatter: "/clinicaltrials/{{nci_id}}"
+          itemsPerPage: 25
+          language: "en"
+          listingApiEndpoint: "@@LITERAL@@window.CDEConfig.ctsConfig.listingApiServer"
+          liveHelpUrl: "https://livehelp.cancer.gov/app/chat/chat_landing?_icf_22=92"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:field_browser_title:value]"
+          trialListingPageType: "Disease"
+  field_date_posted:
+    value: "2017-06-13"
+  field_date_reviewed:
+    value: "2017-06-13"
+  field_date_updated:
+    value: "2017-06-13"
+  field_app_module_page_template:
+    value: left_nav
