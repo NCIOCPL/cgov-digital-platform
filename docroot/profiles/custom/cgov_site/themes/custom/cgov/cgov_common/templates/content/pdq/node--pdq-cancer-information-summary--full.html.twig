@@ -9,7 +9,9 @@
     {{ drupal_block('page_options') }}
     <div id="cgvBody">
       <div class="summary-sections">
-        {{ content.otp_toc }}
+        {% if node.field_pdq_suppress_otp.value == '0' %}
+          {{ content.otp_toc }}
+        {% endif %}
         <div class="accordion">
           {{ content.field_summary_sections }}
         </div>
