@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pdq_intro_text
+    - node.type.pdq_cancer_information_summary
+  module:
+    - node
+    - text
+id: node.pdq_cancer_information_summary.field_pdq_intro_text
+field_name: field_pdq_intro_text
+entity_type: node
+bundle: pdq_cancer_information_summary
+label: 'Intro Text'
+description: 'Optional introductory section displayed at the top of the summary without a title.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

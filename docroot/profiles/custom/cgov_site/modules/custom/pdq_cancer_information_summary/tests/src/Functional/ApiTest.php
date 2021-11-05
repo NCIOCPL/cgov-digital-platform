@@ -59,6 +59,7 @@ class ApiTest extends BrowserTestBase {
     ],
     'svpc' => 0,
     'suppress_otp' => 0,
+    'intro_text' => '<p><em>Look!</em></p>',
   ];
 
   /**
@@ -87,6 +88,7 @@ class ApiTest extends BrowserTestBase {
     ],
     'svpc' => 1,
     'suppress_otp' => 1,
+    'intro_text' => '<p><em>¡Mira!</em></p>',
   ];
 
   /**
@@ -110,6 +112,7 @@ class ApiTest extends BrowserTestBase {
     'url',
     'svpc',
     'suppress_otp',
+    'intro_text',
   ];
 
   /**
@@ -176,6 +179,7 @@ class ApiTest extends BrowserTestBase {
     $this->english['description'] = 'Revised test description';
     $this->english['svpc'] = 1;
     $this->english['suppress_otp'] = 1;
+    $this->english['intro_text'] = '<p>Oh, look!</p>';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
     $this->assertEquals($payload['nid'], $nid, 'Uses same node');
