@@ -3,6 +3,7 @@
 namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
+use Acquia\Blt\Robo\Exceptions\BltException;
 
 /**
  * A library of convenience commands.
@@ -24,9 +25,43 @@ class SlevenCommands extends BltTasks {
       'custom:install_cgov_yaml_content_by_module' => [
         'module' => 'cgov_yaml_content',
       ],
+      'cgov:load-fe-globals' => [],
     ];
 
     $this->invokeCommands($commands);
+  }
+
+  /**
+   * Loads the front-enf globals.
+   *
+   * @command cgov:load-fe-globals
+   */
+  public function loadFrontendGlobals() {
+    // Read the config.
+    $front_end_globals_path = $this->getConfigValue('cgov.front_end_globals_file');
+
+    if (!file_exists($front_end_globals_path)) {
+      throw new BltException("Could not read the front-end globals config.");
+    }
+
+    // Parse the JSON.
+    $configArr = json_decode(
+      file_get_contents($front_end_globals_path),
+      TRUE
+    );
+
+    // Re-encode it to remove newlines.
+    $configStr = json_encode($configArr, JSON_FORCE_OBJECT);
+
+    // Call drush with json.
+    $task = $this->taskDrush()
+      ->drush('config:set')
+      ->rawArg('cgov_core.frontend_globals')
+      ->rawArg('config_object')
+      ->rawArg("'" . $configStr . "'")
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
   }
 
   /**
