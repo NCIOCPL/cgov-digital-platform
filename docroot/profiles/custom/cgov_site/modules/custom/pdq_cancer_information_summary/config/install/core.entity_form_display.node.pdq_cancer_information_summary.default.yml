@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_pdq_suppress_otp
     - field.field.node.pdq_cancer_information_summary.field_pdq_url
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
@@ -65,6 +66,13 @@ content:
     region: content
   field_pdq_is_svpc:
     weight: 101
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_pdq_suppress_otp:
+    weight: 102
     settings:
       display_label: true
     third_party_settings: {  }

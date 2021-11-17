@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pdq_suppress_otp
+    - node.type.pdq_cancer_information_summary
+id: node.pdq_cancer_information_summary.field_pdq_suppress_otp
+field_name: field_pdq_suppress_otp
+entity_type: node
+bundle: pdq_cancer_information_summary
+label: 'Hide "On This Page" Section'
+description: "Flag indicating whether the list of top-level sections with jump links should not be displayed for this summary's page."
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

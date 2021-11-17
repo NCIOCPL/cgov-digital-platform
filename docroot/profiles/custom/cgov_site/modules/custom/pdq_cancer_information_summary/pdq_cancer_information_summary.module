@@ -161,15 +161,20 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
   }
 
   if (!empty($build['field_summary_sections']['#items'])) {
-    // Copy summary sections into a new "field" using TOC display.
-    $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
-      'type' => 'entity_reference_revisions_entity_view',
-      'settings' => [
-        'view_mode' => 'otp_toc',
-        'link' => 'link',
-      ],
-    ]);
-    $build['otp_toc']['#theme'] = 'field__otp_toc';
+
+    // Make sure the field isn't being suppressed.
+    if ($entity->field_pdq_suppress_otp->value == '0') {
+
+      // Copy summary sections into a new "field" using TOC display.
+      $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
+        'type' => 'entity_reference_revisions_entity_view',
+        'settings' => [
+          'view_mode' => 'otp_toc',
+          'link' => 'link',
+        ],
+      ]);
+      $build['otp_toc']['#theme'] = 'field__otp_toc';
+    }
   }
 }
 

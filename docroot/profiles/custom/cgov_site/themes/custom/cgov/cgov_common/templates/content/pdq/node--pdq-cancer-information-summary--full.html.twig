@@ -10,7 +10,7 @@
     <div id="cgvBody">
       <div class="summary-sections">
         {{ content.otp_toc }}
-        <div class="accordion">
+        <div class="{{ content.otp_toc is not empty ? 'accordion' : '' }}">
           {{ content.field_summary_sections }}
         </div>
       </div>
