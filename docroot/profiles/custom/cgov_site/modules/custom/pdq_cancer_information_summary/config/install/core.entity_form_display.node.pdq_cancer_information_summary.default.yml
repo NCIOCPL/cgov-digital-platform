@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
+    - field.field.node.pdq_cancer_information_summary.field_pdq_is_svpc
     - field.field.node.pdq_cancer_information_summary.field_meta_tags
     - field.field.node.pdq_cancer_information_summary.field_page_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
@@ -61,6 +62,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: cgov_syndication_widget
+    region: content
+  field_pdq_is_svpc:
+    weight: 101
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_page_description:
     weight: 15

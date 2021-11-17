@@ -57,6 +57,7 @@ class ApiTest extends BrowserTestBase {
       ['id' => '_1', 'title' => 'Section 1', 'html' => '<p>one</p>'],
       ['id' => '_2', 'title' => 'Section 2', 'html' => '<p>two</p>'],
     ],
+    'svpc' => 0,
   ];
 
   /**
@@ -83,6 +84,7 @@ class ApiTest extends BrowserTestBase {
       ['id' => '_1', 'title' => "Secci\u{f3}n 1", 'html' => '<p>Uno</p>'],
       ['id' => '_2', 'title' => "Secci\u{f3}n 2", 'html' => '<p>Dos</p>'],
     ],
+    'svpc' => 1,
   ];
 
   /**
@@ -104,6 +106,7 @@ class ApiTest extends BrowserTestBase {
     'summary_type',
     'updated_date',
     'url',
+    'svpc',
   ];
 
   /**
@@ -168,6 +171,7 @@ class ApiTest extends BrowserTestBase {
     $section = ['id' => '_3', 'title' => 'Section 3', 'html' => '<p>3</p>'];
     $this->english['sections'][] = $section;
     $this->english['description'] = 'Revised test description';
+    $this->english['svpc'] = 1;
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
     $this->assertEquals($payload['nid'], $nid, 'Uses same node');
@@ -237,7 +241,7 @@ class ApiTest extends BrowserTestBase {
     $response = $this->request('GET', "$this->pdqUrl/list");
     $this->assertEquals($response->getStatusCode(), 200);
     $values = json_decode($response->getBody()->__toString(), TRUE);
-    $this->assertCount(2, $values, 'One entries in catalog');
+    $this->assertCount(2, $values, 'Two entries in catalog');
 
     // Results are ordered by CDR ID, so this is the Spanish summary.
     $entry = array_pop($values);

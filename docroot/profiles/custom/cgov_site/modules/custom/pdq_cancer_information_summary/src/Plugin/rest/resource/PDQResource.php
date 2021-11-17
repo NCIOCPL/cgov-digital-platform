@@ -171,6 +171,7 @@ class PDQResource extends ResourceBase {
           'url' => $translation->field_pdq_url->value,
           'published' => $translation->status->value,
           'sections' => $sections,
+          'svpc' => $translation->field_pdq_is_svpc->value,
         ];
       }
     }
@@ -285,6 +286,7 @@ class PDQResource extends ResourceBase {
     $node->set('field_page_description', $summary['description']);
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', 1);
+    $node->set('field_pdq_is_svpc', $summary['svpc']);
 
     // The syndication field is not translatable.
     if ($language == 'en') {
