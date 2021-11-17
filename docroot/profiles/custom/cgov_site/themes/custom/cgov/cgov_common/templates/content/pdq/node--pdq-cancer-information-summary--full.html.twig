@@ -9,6 +9,9 @@
     {{ drupal_block('page_options') }}
     <div id="cgvBody">
       <div class="summary-sections">
+        {% if node.field_pdq_intro_text.value is not empty %}
+          {{ node.field_pdq_intro_text.value|raw }}
+        {% endif %}
         {{ content.otp_toc }}
         <div class="{{ content.otp_toc is not empty ? 'accordion' : '' }}">
           {{ content.field_summary_sections }}
