@@ -262,3 +262,35 @@ function pdq_cancer_information_summary_update_9002(&$sandbox) {
     \Drupal::logger($bundle)->notice("Created $count rows in $suppress_otp_table.");
   }
 }
+
+/**
+ * Add new field for optional introductory text section without a title.
+ */
+function pdq_cancer_information_summary_update_9003(&$sandbox) {
+
+  // Make sure the field is installed.
+  _pdq_cancer_information_summary_install_node_field('field_pdq_intro_text');
+
+  // Make sure it shows up on the form.
+  $name = 'core.entity_form_display.node.pdq_cancer_information_summary.default';
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($name);
+  $content = $config->get('content');
+  $hidden = $config->get('hidden');
+  $weight = $content['field_summary_sections']['weight'] ?? 1000;
+  $content['field_pdq_intro_text'] = [
+    'weight' => $weight - 1,
+    'settings' => [
+      'display_label' => TRUE,
+      'rows' => 5,
+      'placeholder' => '',
+    ],
+    'third_party_settings' => [],
+    'type' => 'text_textarea',
+    'region' => 'content',
+  ];
+  unset($hidden['field_pdq_intro_text']);
+  $config->set('content', $content);
+  $config->set('hidden', $hidden);
+  $config->save();
+  \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_pdq_intro_text on the edit form.');
+}
