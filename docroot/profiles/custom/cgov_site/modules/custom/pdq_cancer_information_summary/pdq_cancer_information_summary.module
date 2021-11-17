@@ -160,7 +160,7 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
     return;
   }
 
-  if (isset($build['field_summary_sections'])) {
+  if (!empty($build['field_summary_sections']['#items'])) {
     // Copy summary sections into a new "field" using TOC display.
     $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
       'type' => 'entity_reference_revisions_entity_view',
