@@ -32,7 +32,7 @@ const config = {
           {
             loader: MiniCssExtractPlugin.loader
           },
-          "css-loader",
+          "css-loader?url=false",
           "postcss-loader",
           "sass-loader"
         ]
