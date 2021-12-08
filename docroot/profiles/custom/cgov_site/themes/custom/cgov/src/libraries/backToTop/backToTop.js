@@ -8,8 +8,7 @@ function _initialize() {
 	const duration = 500;
 
 	const $element = $('.back-to-top');
-	const $headroom = $('.headroom-area');
-	
+
 	var handleScroll = function(){
 		// using pageYOffset for IE11 - https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
 		if (window.pageYOffset > offset) {
@@ -23,22 +22,17 @@ function _initialize() {
 
 	var throttledHandleScroll = throttle(100,handleScroll);
 
-	window.addEventListener('scroll', throttledHandleScroll, { 
+	window.addEventListener('scroll', throttledHandleScroll, {
 		capture: true,
 		passive: true
 	});
 
 	$element.click(function (e) {
 		e.preventDefault();
-		// freeze Headroom
-		$headroom.addClass('frozen');
 		// animate to top
 		$('html, body').animate({
 			scrollTop: 0
-		}, 400, function () {
-			// animation complete; unfreeze Headroom
-			$headroom.removeClass('frozen');
-		});
+		}, 400);
 	});
 }
 
