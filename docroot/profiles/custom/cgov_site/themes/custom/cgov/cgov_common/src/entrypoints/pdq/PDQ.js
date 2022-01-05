@@ -77,12 +77,13 @@ const citAnchorLinks = () => {
 
 const buildAudioLinks = () => {
   const audioEl = document.querySelectorAll('[templatename="pdqSnMediaAudioPlayer"]')[0];
-  const audioId = audioEl.getAttribute("objectid").replace(/^CDR0+/i, '');
-  const server = CDEConfig.general.mediaServer;
-  const audioPath = server + '/pdq/media/audio/' + audioId + '.mp3';
-  const audioPronunciation = audioEl.parentElement.textContent.replace('Placeholder slot\n', '');
+  const audioId = audioEl ? audioEl.getAttribute("objectid")?.replace(/^CDR0+/i, '') : false;
 
-  if(audioId){
+  if (audioId) {
+    const server = CDEConfig.general.mediaServer;
+    const audioPath = server + '/pdq/media/audio/' + audioId + '.mp3';
+    const audioPronunciation = audioEl.parentElement.textContent.replace('Placeholder slot\n', '');
+
     audioEl.parentElement.innerHTML = '<a href="' + audioPath + '" class="CDR_audiofile"><span class="show-for-sr">listen</span></a>' + audioPronunciation;
 
     // The audioplayer setup is called only once on page load, so we need to
