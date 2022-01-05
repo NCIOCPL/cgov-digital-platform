@@ -1886,8 +1886,10 @@ NCIAnalytics.buildPageDetail = function () {
     // find name of current pdq section
     hash = hash.replace(/#?(section|link)\//g, '');
     hash = hash.replace(/#/g, '');
+    // Escape any special characters in the id we are looking for.
+    hash = hash.replace(/([\!\"\#\$\%\&\'\(\)\*\+\,\.\/\:\;\<\=\>\?\@\[\\\]\^\`\{\|\}\~])/g, '\\$1');
     if (hash) {
-        selector = document.querySelector('#' + hash + ' h2');
+        const selector = document.querySelector('#' + hash + ' h2');
         if(selector) {
             return_val = selector.textContent.toLowerCase();
         }
