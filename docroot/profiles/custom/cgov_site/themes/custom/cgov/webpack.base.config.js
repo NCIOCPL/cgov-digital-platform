@@ -32,7 +32,19 @@ const config = {
           {
             loader: MiniCssExtractPlugin.loader
           },
-          "css-loader?url=false",
+          {
+            loader: "css-loader",
+            options: {
+              url: (uri, resourcePath) => {
+                // Ignore absolute paths.
+                if (uri.startsWith('/')) {
+                  return false;
+                }
+
+                return true;
+              }
+            }
+          },
           "postcss-loader",
           "sass-loader"
         ]
@@ -44,8 +56,8 @@ const config = {
             loader: "file-loader",
             options: {
               outputPath: "../images/sprites",
-              name: "[name].[ext]",
-              emitFile: false
+              name: "[name].[ext]?v=[hash]",
+              emitFile: false,
             }
           }
         ]
