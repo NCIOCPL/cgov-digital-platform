@@ -12,7 +12,9 @@ const themeConfig = {
       Utilities: path.resolve(__dirname, "..", "src", "utilities"),
       Polyfills: path.resolve(__dirname, "..", "src", "polyfills"),
       Styles: path.resolve(__dirname, "src", "styles"),
-      Libraries: path.resolve(__dirname, "src", "libraries")
+      Libraries: path.resolve(__dirname, "src", "libraries"),
+      // This is used to reference sprites.
+      ImageDist: path.resolve(__dirname, "dist/images"),
     }
   },
   output: {
