@@ -5,17 +5,10 @@
  */
 
 module.exports = {
-  cgov_common: {
     variants: [
       'purple',
       'blue',
       'green',
       'connect'
     ]
-  }
-  // Add additional sub-themes here
-  // ,
-  // cgov_purple: {
-  //   variants: []
-  // }
 };
