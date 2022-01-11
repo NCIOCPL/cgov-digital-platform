@@ -1,3 +1,5 @@
+const path = require('path');
+
 /*****************************************
  * SVG Sprite Generation
  ****************************************/
@@ -13,12 +15,11 @@ module.exports = {
     },
     mode: {
         css: {       // Activate the «css» mode
-            dest: './',
-            sprite: 'images/sprites/svg-sprite.svg',
+            sprite: path.resolve(__dirname, './dist/images/sprites/svg-sprite.svg'),
             render: {
                 scss: {
-                    dest: "../src/styles/sprites/_svg-sprite-map.scss",
-                    template: 'src/styles/sprites/sprite-template.scss'
+                    dest: path.resolve(__dirname, "./src/styles/sprites/_svg-sprite-map.scss"),
+                    template: path.resolve(__dirname, '../src/styles/sprites/sprite-template.scss'),
                 }
             },
             layout:"vertical",

@@ -77,13 +77,13 @@ paratest:
     procs: 4
 command-hooks:
   frontend-reqs:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov/cgov_common'
     command: 'npm ci'
   frontend-assets:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov/cgov_common'
     command: 'npm run build'
   frontend-test:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov'
+    dir: '${docroot}/profiles/custom/cgov_site/themes/custom/cgov/cgov_common'
     command: null
   pre-commit:
     dir: '${docroot}'
