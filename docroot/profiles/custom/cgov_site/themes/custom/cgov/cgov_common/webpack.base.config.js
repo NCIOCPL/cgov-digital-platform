@@ -71,7 +71,7 @@ const config = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "static/js")
+          from: path.resolve(__dirname, "../static/js")
         }
       ]
     })
