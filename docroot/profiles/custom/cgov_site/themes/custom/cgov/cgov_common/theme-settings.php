@@ -55,4 +55,18 @@ function cgov_common_form_system_theme_settings_alter(&$form) {
     '#description' => t('Does the site include translated content?'),
     '#default_value' => theme_get_setting('has_translations'),
   );
+    /* ------------ 'Mobile navigation level settings' ----------- */
+    $form['mobile_nav_levels'] = array(
+      '#type' => 'details',
+      '#title' => ('Mobile navigation levels settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#open' => TRUE,
+    );
+    $form['mobile_nav_levels']['mobile_levels_to_display'] = array(
+      '#type' => 'number',
+      '#title' => t('Mobile navigation levels to display'),
+      '#description' => t('Number of levels to display in the mobile nav'),
+      '#default_value' => theme_get_setting('mobile_levels_to_display'),
+    );
 }

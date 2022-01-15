@@ -7,3 +7,37 @@ cgov_site_section.main_nav_cache_form:
     _permission: 'access main nav cache invalidation'
   options:
     _admin_route: TRUE
+
+# Set up route for Fetching the section nav items.
+cgov_site_section.get_section_nav:
+  path: '/taxonomy/term/{taxonomy_term}/section-nav'
+  defaults:
+    _controller: '\Drupal\cgov_site_section\Controller\CgovNavTreeController::getSectionNav'
+    _title: 'section nav route'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+    taxonomy_term: \d+
+  options:
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term
+        bundle:
+          - cgov_site_sections
+
+# Set up route for Fetching the mobile nav items.
+cgov_site_section.get_mobile_nav:
+  path: '/taxonomy/term/{taxonomy_term}/mobile-nav'
+  defaults:
+    _controller: '\Drupal\cgov_site_section\Controller\CgovNavTreeController::getMobileNav'
+    _title: 'mobile nav route'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+    taxonomy_term: \d+
+  options:
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term
+        bundle:
+          - cgov_site_sections
