@@ -1,0 +1,999 @@
+## This file contains a bunch of tests for the mobile-nav and section-nav
+## routes. This should handle most of the oddball permutations and combos
+## for navigation.
+##
+## MN == Main Nav Root | SN == Section Nav Root
+## Tree Structure:
+## Root (MN)
+##   A
+##     A.1 (SN)
+##       A.1.1
+##         A.1.1.1
+##           A.1.1.1.1
+##             A.1.1.1.1.1
+##               A.1.1.1.1.1.1
+##       A.1.2
+##     A.2 (SN, Depth 2)
+##       A.2.1 (SN)
+##         A.2.1.1
+##       A.2.2 (SN, Hide In Section Nav)
+##         A.2.2.1
+##     A.3 (SN)
+##       A.3.1 (Hide in Section Nav)
+##         A.3.1.1
+##       A.3.2 (Hide in Mobile Nav)
+##         A.3.2.1
+##     A.4 (Landing page is different folder)
+##  B
+##    B.1 (No landing page)
+##      B.1.1
+##    B.2 (Unpublished landing page)
+##      B.2.1
+##    B.3 (SR Root, No landing page)
+##      B.3.1
+##    B.4 (SR Root, Unpublished landing page)
+##      B.4.1
+
+- entity: "taxonomy_term"
+  tid: 1500000
+  vid: "cgov_site_sections"
+  name: "Nav API Test Root"
+  field_pretty_url:
+    value: "api-test"
+  field_main_nav_root:
+    value: true
+  ## Let's make sure this does not show up in navs
+  ## anywhere
+  field_navigation_display_options:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_section_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            name: "Home"
+
+## A is the "Normal" branch
+- entity: "taxonomy_term"
+  tid: 1500001
+  vid: "cgov_site_sections"
+  name: "A"
+  field_pretty_url:
+    value: "a"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test"
+- entity: "taxonomy_term"
+  tid: 1500002
+  vid: "cgov_site_sections"
+  name: "A.1"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a"
+- entity: "taxonomy_term"
+  tid: 1500003
+  vid: "cgov_site_sections"
+  name: "A.1.1"
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1"
+- entity: "taxonomy_term"
+  tid: 1500004
+  vid: "cgov_site_sections"
+  name: "A.1.1.1"
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1/1"
+- entity: "taxonomy_term"
+  tid: 1500005
+  vid: "cgov_site_sections"
+  name: "A.1.1.1.1"
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1/1/1"
+- entity: "taxonomy_term"
+  tid: 1500006
+  vid: "cgov_site_sections"
+  name: "A.1.1.1.1.1"
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1/1/1/1"
+- entity: "taxonomy_term"
+  tid: 1500007
+  vid: "cgov_site_sections"
+  name: "A.1.1.1.1.1.1"
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1/1/1/1/1"
+- entity: "taxonomy_term"
+  tid: 1500008
+  vid: "cgov_site_sections"
+  name: "A.1.2"
+  weight: 1
+  field_pretty_url:
+    value: "2"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/1"
+## Test some section nav depths
+- entity: "taxonomy_term"
+  tid: 1500009
+  vid: "cgov_site_sections"
+  name: "A.2"
+  weight: 1
+  field_section_nav_root:
+    value: true
+  field_levels_to_display:
+    value: 2
+  field_pretty_url:
+    value: "2"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a"
+- entity: "taxonomy_term"
+  tid: 1500010
+  vid: "cgov_site_sections"
+  name: "A.2.1"
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/2"
+- entity: "taxonomy_term"
+  tid: 1500011
+  vid: "cgov_site_sections"
+  name: "A.2.1.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/2/1"
+- entity: "taxonomy_term"
+  tid: 1500012
+  vid: "cgov_site_sections"
+  name: "A.2.2"
+  weight: 1
+  field_section_nav_root:
+    value: true
+  field_navigation_display_options:
+    - value: 'hide_in_section_nav'
+  field_pretty_url:
+    value: "2"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/2"
+- entity: "taxonomy_term"
+  tid: 1500013
+  vid: "cgov_site_sections"
+  name: "A.2.2.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/2/2"
+
+## Section tests some hidden items
+- entity: "taxonomy_term"
+  tid: 1500014
+  vid: "cgov_site_sections"
+  name: "A.3"
+  weight: 2
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "3"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a"
+- entity: "taxonomy_term"
+  tid: 1500015
+  vid: "cgov_site_sections"
+  name: "A.3.1"
+  field_navigation_display_options:
+    - value: 'hide_in_section_nav'
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/3"
+- entity: "taxonomy_term"
+  tid: 1500016
+  vid: "cgov_site_sections"
+  name: "A.3.1.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/3/1"
+- entity: "taxonomy_term"
+  tid: 1500017
+  vid: "cgov_site_sections"
+  name: "A.3.2"
+  weight: 1
+  field_navigation_display_options:
+    - value: 'hide_in_mobile_nav'
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "2"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/3"
+- entity: "taxonomy_term"
+  tid: 1500018
+  vid: "cgov_site_sections"
+  name: "A.3.2.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a/3/2"
+## B should test a lot of gotcha cases
+- entity: "taxonomy_term"
+  tid: 1500019
+  vid: "cgov_site_sections"
+  name: "B"
+  weight: 1
+  field_pretty_url:
+    value: "b"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test"
+## No landing
+- entity: "taxonomy_term"
+  tid: 1500020
+  vid: "cgov_site_sections"
+  name: "B.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b"
+- entity: "taxonomy_term"
+  tid: 1500021
+  vid: "cgov_site_sections"
+  name: "B.1.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b/1"
+## Unpublished Landing
+- entity: "taxonomy_term"
+  tid: 1500022
+  vid: "cgov_site_sections"
+  name: "B.2"
+  weight: 1
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "2"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b"
+- entity: "taxonomy_term"
+  tid: 1500023
+  vid: "cgov_site_sections"
+  name: "B.2.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b/2"
+## SR No landing
+- entity: "taxonomy_term"
+  tid: 1500024
+  vid: "cgov_site_sections"
+  name: "B.3"
+  weight: 2
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "3"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b"
+- entity: "taxonomy_term"
+  tid: 1500025
+  vid: "cgov_site_sections"
+  name: "B.3.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b/3"
+## SR Unpublished Landing
+- entity: "taxonomy_term"
+  tid: 1500026
+  vid: "cgov_site_sections"
+  name: "B.4"
+  weight: 3
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "4"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b"
+- entity: "taxonomy_term"
+  tid: 1500027
+  vid: "cgov_site_sections"
+  name: "B.4.1"
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "1"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/b/4"
+########################
+## Landing Page Content
+########################
+
+## Root (MN)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Nav API Test - Landing"
+  field_page_description:
+    value: "Nav API Test - Landing"
+  field_browser_title:
+    value: "Nav API Test - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test'
+##   A
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A - Landing"
+  field_page_description:
+    value: "A - Landing"
+  field_browser_title:
+    value: "A - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a'
+##     A.1 (SN)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1 - Landing"
+  field_page_description:
+    value: "A.1 - Landing"
+  field_browser_title:
+    value: "A.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1'
+##       A.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.1 - Landing"
+  field_page_description:
+    value: "A.1.1 - Landing"
+  field_browser_title:
+    value: "A.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/1'
+##         A.1.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.1.1 - Landing"
+  field_page_description:
+    value: "A.1.1.1 - Landing"
+  field_browser_title:
+    value: "A.1.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/1/1'
+##           A.1.1.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.1.1.1 - Landing"
+  field_page_description:
+    value: "A.1.1.1.1 - Landing"
+  field_browser_title:
+    value: "A.1.1.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/1/1/1'
+##             A.1.1.1.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.1.1.1.1 - Landing"
+  field_page_description:
+    value: "A.1.1.1.1.1 - Landing"
+  field_browser_title:
+    value: "A.1.1.1.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/1/1/1/1'
+##               A.1.1.1.1.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.1.1.1.1.1 - Landing"
+  field_page_description:
+    value: "A.1.1.1.1.1.1 - Landing"
+  field_browser_title:
+    value: "A.1.1.1.1.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/1/1/1/1/1'
+##       A.1.2
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.1.2 - Landing"
+  field_page_description:
+    value: "A.1.2 - Landing"
+  field_browser_title:
+    value: "A.1.2 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/1/2'
+##     A.2 (SN, Depth 2)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.2 - Landing"
+  field_page_description:
+    value: "A.2 - Landing"
+  field_browser_title:
+    value: "A.2 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/2'
+##       A.2.1 (SN)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.2.1 - Landing"
+  field_page_description:
+    value: "A.2.1 - Landing"
+  field_browser_title:
+    value: "A.2.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/2/1'
+##         A.2.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.2.1.1 - Landing"
+  field_page_description:
+    value: "A.2.1.1 - Landing"
+  field_browser_title:
+    value: "A.2.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/2/1/1'
+##       A.2.2 (SN, Hide In Section Nav)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.2.2 - Landing"
+  field_page_description:
+    value: "A.2.2 - Landing"
+  field_browser_title:
+    value: "A.2.2 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/2/2'
+##         A.2.2.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.2.2.1 - Landing"
+  field_page_description:
+    value: "A.2.2.1 - Landing"
+  field_browser_title:
+    value: "A.2.2.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/2/2/1'
+##     A.3 (SN)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.3 - Landing"
+  field_page_description:
+    value: "A.3 - Landing"
+  field_browser_title:
+    value: "A.3 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/3'
+##       A.3.1 (Hide in Section Nav)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.3.1 - Landing"
+  field_page_description:
+    value: "A.3.1 - Landing"
+  field_browser_title:
+    value: "A.3.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/3/1'
+##         A.3.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.3.1.1 - Landing"
+  field_page_description:
+    value: "A.3.1.1 - Landing"
+  field_browser_title:
+    value: "A.3.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/3/1/1'
+##       A.3.2 (Hide in Mobile Nav)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.3.2 - Landing"
+  field_page_description:
+    value: "A.3.2 - Landing"
+  field_browser_title:
+    value: "A.3.2 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/3/2'
+##         A.3.2.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "A.3.2.1 - Landing"
+  field_page_description:
+    value: "A.3.2.1 - Landing"
+  field_browser_title:
+    value: "A.3.2.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/a/3/2/1'
+##  B
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "B - Landing"
+  field_page_description:
+    value: "B - Landing"
+  field_browser_title:
+    value: "B - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b'
+##    B.1 (No landing page)
+##      B.1.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "B.1.1 - Landing"
+  field_page_description:
+    value: "B.1.1 - Landing"
+  field_browser_title:
+    value: "B.1.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/1/1'
+##    B.2 (Unpublished landing page)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'draft'
+  title: "B.2 - Landing"
+  field_page_description:
+    value: "B.2 - Landing"
+  field_browser_title:
+    value: "B.2 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/2'
+##      B.2.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "B.2.1 - Landing"
+  field_page_description:
+    value: "B.2.1 - Landing"
+  field_browser_title:
+    value: "B.2.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/2/1'
+##    B.3 (SR Root, No landing page)
+##      B.3.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "B.3.1 - Landing"
+  field_page_description:
+    value: "B.3.1 - Landing"
+  field_browser_title:
+    value: "B.3.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/3/1'
+##    B.4 (SR Root, Unpublished landing page)
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'draft'
+  title: "B.4 - Landing"
+  field_page_description:
+    value: "B.4 - Landing"
+  field_browser_title:
+    value: "B.4 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/4'
+##      B.4.1
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "B.4.1 - Landing"
+  field_page_description:
+    value: "B.4.1 - Landing"
+  field_browser_title:
+    value: "B.4.1 - Landing"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/api-test/b/4/1'
+
+###############################
+### A.4 Section with landing outside section
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "A.4"
+  weight: 3
+  field_section_nav_root:
+    value: true
+  field_pretty_url:
+    value: "4"
+  field_landing_page:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_mini_landing'
+            title: 'B.4.1 - Landing'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/api-test/a"
