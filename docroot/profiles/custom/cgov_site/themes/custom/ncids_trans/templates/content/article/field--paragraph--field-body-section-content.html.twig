@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * Theme override for Article Body Section Content.
+ *
+ * This template is here to reduce unnessesary <divs> wrapping
+ * the content.
+ */
+#}
+{% for item in items %}
+  {{- item.content -}}
+{% endfor %}

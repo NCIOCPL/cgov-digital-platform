@@ -1,0 +1,63 @@
+{{ attach_library('cgov_common/event') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+{% set eventStart = content.field_event_start_date[0]['#attributes']["datetime"] %}
+{% set eventEnd = content.field_event_end_date[0]['#attributes']["datetime"] %}
+{% set isValidEventDate = eventStart|date('Y-m-d') < eventEnd|date('Y-m-d') %}
+{% set isMultiYearEvent = eventStart|date('Y') <  eventEnd|date('Y') %}
+
+<div class="event-list-item">
+    {# Title #}
+    <h3 class="event-title">
+        <a class="title" href="{{ url }}">{{ label }}</a>
+    </h3>
+
+    {# Series name #}
+    {% if content.field_event_series|field_value %}
+        <h4 class="event-series">{{ content.field_event_series }}</h4>
+    {% endif %}
+
+    {# List description #}
+    <p class="event-description">{{ content.field_list_description }}</p>
+
+    {# Date/time range #}
+    <div class="event-info">
+        <div class="event-date-time">
+            {% if isValidEventDate %}
+                {% if isMultiYearEvent %}
+                    {{ eventStart|date('F j, Y') }}
+                    &ndash;
+                    {{ eventEnd|date('F j, Y') }}
+                {% else %}
+                    {{ eventStart|date('F j') }}
+                    &ndash;
+                    {{ eventEnd|date('F j, Y') }}
+                {% endif %}
+            {% else %}
+                {{ eventStart|date('F j, Y') }}
+                {% if content.field_all_day_event[0]['#markup'] == "Off" %}
+                    &vert;
+                    {{ eventStart|date('g:i A') }}
+                    &ndash;
+                    {{ eventEnd|date('g:i A') }}
+                {% endif %}
+            {% endif %}
+        </div>
+
+        {# Location info #}
+        {% if content.field_venue|field_value or content.field_room|field_value or content.field_city_state|field_value %}
+            <div class="event-location">
+                {% if content.field_room|field_value %}
+                    <span class="event-location-venue">{{ content.field_venue }}</span>
+                {% endif %}
+                {% if content.field_room|field_value %}
+                    <span class="event-location-room">{{ content.field_room }}</span>
+                {% endif %}
+                {% if content.field_city_state|field_value %}
+                    <span class="event-location-city-state">{{ content.field_city_state }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

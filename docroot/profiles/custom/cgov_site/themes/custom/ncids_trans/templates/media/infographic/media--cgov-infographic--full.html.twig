@@ -1,0 +1,25 @@
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{% import '@cgov_common/media/infographic/infographic_macros.twig' as infographicMacros %}
+
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+  <div class="resize-content">
+    <h1>{{ name }}</h1>
+    {{ drupal_block('page_options') }}
+
+    <div id="cgvBody">
+      {{ content.body }}
+
+      {% set classes = "image-center-full" %}
+
+      {{ infographicMacros.infographicImage(classes, content) }}
+
+      <footer>
+        {{ contentPageMacros.displayDates(media,content) }}
+        {% if media.field_public_use.value == '1' %}
+          {{ drupal_region('public_use') }}
+        {% endif %}
+      </footer>
+    </div>
+  </div>
+</article>

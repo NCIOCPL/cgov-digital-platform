@@ -1,0 +1,23 @@
+{{ attach_library('cgov_common/minilanding') }}
+<article>
+
+  {# TODO: Public archive banner ??? #}
+
+  {# TODO: Add the banner field #}
+  <!-- Banner Area -->
+  {{content.field_banner_image}}
+  <!-- End Banner Area -->
+
+  <div class="resize-content">
+
+    <!-- PAGE TITLE -->
+    <h1>{{ node.label }}</h1>
+    <!-- END PAGE TITLE -->
+    {{ drupal_block('page_options') }}
+
+    <!-- Contents -->
+    {{content.field_landing_contents}}
+    <!-- End Contents -->
+
+  </div>
+</article>

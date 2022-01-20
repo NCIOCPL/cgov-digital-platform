@@ -1,0 +1,21 @@
+{% import '@cgov_common/cards/card_macros.twig' as cardMacros %}
+
+{# ###### Setup Title ####### #}
+{% if content.field_card_title|field_value %}
+  {% set title = content.field_card_title|field_value %}
+{% else %}
+  {% set title = content.field_browser_title|field_value %}
+{% endif %}
+
+{# ####### Set description ###### #}
+{% set description = content.field_feature_card_description|field_value %}
+
+{# ####### Set Image ######## #}
+{% if content.field_image_promotional|field_value %}
+  {% set image = content.field_image_promotional|field_value %}
+{% elseif content.field_image_article|field_value %}
+  {% set image = content.field_image_article|field_value %}
+{% endif %}
+
+
+{{ cardMacros.featureCard(title, description, image, url) }}
