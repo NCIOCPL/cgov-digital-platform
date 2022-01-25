@@ -11,7 +11,9 @@ const legacyImports = {
   Core: path.resolve(__dirname, '../../cgov/src'),
   Utilities: path.resolve(__dirname, '../../cgov/src/utilities'),
   Polyfills: path.resolve(__dirname, '../../cgov/src/polyfills'),
-  Styles: path.resolve(__dirname, '../../cgov/cgov_common/src/styles'),
+  // The only thing in styles is the sprite. So we can point this at our
+  // local copy.
+  Styles: path.resolve(__dirname, './src/styles'),
   Libraries: path.resolve(__dirname, '../../cgov/cgov_common/src/libraries'),
   // This is used to reference sprites.
   ImageDist: path.resolve(__dirname, "../dist/images"),
