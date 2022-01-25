@@ -51,9 +51,6 @@ if [[ $PRESERVE_ON_REDEPLOY == "true" ]]; then
 
   ## Reload translation pack.
   blt cgov:locales:translate --no-interaction -D drush.ansi=false
-
-  ## Setup some default JS globals.
-  cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
 else
   ## Clear last install out of Memcache.
   ## Drush CR will not work on a non-existant site. Drush CC will not find the memcached
@@ -71,7 +68,7 @@ else
   blt cgov:locales:translate --no-interaction -D drush.ansi=false
 
   ## Setup some default JS globals.
-  cat FrontendGlobals.json | drush config:set cgov_core.frontend_globals config_object -
+  blt cgov:load-fe-globals --environment=$target_env --no-interaction -D drush.ansi=false
 
   ## Execute a migration.
   case $MIGRATION in

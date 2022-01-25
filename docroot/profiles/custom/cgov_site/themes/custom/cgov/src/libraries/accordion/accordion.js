@@ -22,6 +22,11 @@ export function doAccordion(target, opts) {
 		header: "h2",
 		collapsible: true,
 		active: false,
+    create: function (event, ui) {
+      // dispatch the event on the target.
+      const custom = new Event('nci.accordion.create', { bubbles: true });
+      event.target.dispatchEvent(custom);
+    },
 		/* override default functionality of accordion that only allows for a single pane to be open
 			* original source: http://stackoverflow.com/questions/15702444/jquery-ui-accordion-open-multiple-panels-at-once */
 		beforeActivate: function (event, ui) {
