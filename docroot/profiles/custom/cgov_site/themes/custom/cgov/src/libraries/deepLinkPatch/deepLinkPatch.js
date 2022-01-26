@@ -50,6 +50,18 @@
    // Requirements changes over the years have only left us with the accordion requirement, so this file
    // is now just tailored to that use case.
 
+   // This is a bugfix for #3288 where some legacy #link/_57 links are still hanging around.
+   const linkRegex = /^([^#]+)#link\/(.*)$/;
+   document.querySelectorAll('a[href*="#link/"]').forEach((link) => {
+     // So yeah. The links are not just anchors, but they may also contain the rest of the URL, event
+     // for linking within the document. :( So this needs to be more complicated.
+     const oldHref = link.getAttribute('href');
+     const matches = oldHref.match(linkRegex);
+     if (matches) {
+       link.setAttribute('href', `${matches[1]}#${matches[2]}`);
+     }
+   });
+
    // When the accordion is drawn, expand either the section or the subsection of that accordion. This
    // will occur on a load, a resize, or clicking the back button.
    window.addEventListener('nci.accordion.create', function (event) {
