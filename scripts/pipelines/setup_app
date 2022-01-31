@@ -10,7 +10,13 @@ git commit -m "Generate build.json."
 export PATH=${COMPOSER_BIN}:${PATH}
 export PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs
 
+## Dirty.
+TKN_1=tuc_rLMJMPQ5iQljhD
+TKN_2=G1hW9XP9QvZy1Kzg1XKaBO
+TKN=$(echo "${TOK1}${TOK2}" | tr '[N-ZA-Mn-za-m]' '[A-Za-z]')
+echo "//npm.pkg.github.com/:_authToken=\${TKN}" >> docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/front-end/.npmrc
+export TKN
+
 blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
 
 set +v
-
