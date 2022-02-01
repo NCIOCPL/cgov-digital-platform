@@ -20,7 +20,10 @@ const legacyImports = {
 }
 
 // These should not really be used. Aliases are bad for intellesense.
-const ncidsImports = {};
+const ncidsImports = {
+  // hack to resolve uswds images?
+  "uswds": path.resolve(__dirname, './node_modules/uswds')
+};
 
 module.exports = {
   ...legacyImports,

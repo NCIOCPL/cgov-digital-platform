@@ -39,6 +39,9 @@ const config = {
                 // Ignore absolute paths.
                 if (uri.startsWith('/')) {
                   return false;
+                } else if (uri.startsWith('../img')) {
+                  // Temp hack for ncids
+                  return false;
                 }
 
                 return true;

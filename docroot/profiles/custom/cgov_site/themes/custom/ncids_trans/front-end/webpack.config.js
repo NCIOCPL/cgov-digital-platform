@@ -81,8 +81,12 @@ const config = {
             options: {
               url: {
                 filter: (uri, resourcePath) => {
-                  // Ignore absolute paths.
+
+                  // Ignore absolute paths. (Legacy stuff)
                   if (uri.startsWith('/')) {
+                    return false;
+                  } else if (uri.startsWith('../img')) {
+                    // Temp hack for ncids
                     return false;
                   }
                   return true;
@@ -106,9 +110,17 @@ const config = {
           // Call the sass loader to process any .scss file called from .js/ts.
           // NOTE: subsequent calls to other sass partials from this call will
           // be resolved through node-sass and NOT webpack.
-          'sass-loader'
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                includePaths: [path.resolve(__dirname, './node_modules')],
+              }
+            }
+          }
         ]
       },
+      // Legacy Sprites Here
       // This rule handles rewriting the sprite URI for url() calls in the sass/css files.
       {
         test: /\/svg-sprite\.svg$/,
@@ -118,6 +130,20 @@ const config = {
           filename: "[name][ext]?v=[hash]",
           publicPath: '../images/sprites/',
         }
+      },
+      // NCIDS/USWDS Sprites (assume other svgs that actually exist)
+      {
+        test: /\.svg$/,
+        // Temporarily let's inline these things.
+        dependency: { not: ['url'] },
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
       }
     ]
   },
