@@ -1,23 +1,8 @@
 <?php
 
 // Determine which IDP to use in this environment.
-$idp = 'not set!';
-switch ( $_ENV['AH_SITE_ENVIRONMENT'] ) {
-  case '01live':
-  case '01update':
-    $idp = 'https://auth.nih.gov/IDP';
-    break;
-
-  case '01test':
-  case '01testup':
-    $idp = 'https://authtest.nih.gov/IDP';
-    break;
-
-  case '01dev':
-  case '01dev':
-  default:
-    $idp = 'https://authdev.nih.gov/SAML2/IDP';
-}
+require_once(dirname(__DIR__) . '/CgovIdpTools.php');
+$idp = \CgovIdpTools::getIdpEntityId();
 
 $config = [
 

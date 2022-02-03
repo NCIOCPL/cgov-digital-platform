@@ -4,12 +4,13 @@
  * SAML IDP loader.
  *
  * Environment-specific IDP metadata is stored in:
- * /mnt/files/$_ENV['AH_SITE_GROUP'],$_ENV['AH_SITE_ENVIRONMENT']/saml/config/saml20-idp-remote.php
+ * /mnt/files/$_ENV['AH_SITE_GROUP'],$_ENV['AH_SITE_ENVIRONMENT']/saml/idp-metadata/
  *
- * This file is responsible for loading it transparently.
+ * This file is responsible for making sure the correct site's data is loaded.
  */
 
-$idpFile = sprintf('/mnt/files/%s.%s/saml/config/saml20-idp-remote.php', $_ENV['AH_SITE_GROUP'],$_ENV['AH_SITE_ENVIRONMENT']);
-if (file_exists($idpFile)) {
-  require_once ($idpFile);
-}
+// CgovIdpTools is magically autoloaded for this use, so no need to require it.
+$idpFile = \CgovIdpTools::getIdpFilepath();
+
+require ($idpFile);
+
