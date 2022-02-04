@@ -2,6 +2,9 @@
 
 set -ev
 
+npm --version
+node --version
+
 # Create and preserve build.json for tracking which commit was deployed.
 echo -e "{\n\t\"git-commit\": \"${PIPELINE_GIT_HEAD_REF}\",\n\t\"pipeline-job\": \"${PIPELINE_JOB_ID}\"\n}" > build.json
 git add build.json
