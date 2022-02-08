@@ -85,7 +85,7 @@ const config = {
                   // Ignore absolute paths. (Legacy stuff)
                   if (uri.startsWith('/')) {
                     return false;
-                  } else if (uri.startsWith('../img')) {
+                  } else if (uri.includes('/usa-icons-bg/')) {
                     // Temp hack for ncids
                     return false;
                   }
