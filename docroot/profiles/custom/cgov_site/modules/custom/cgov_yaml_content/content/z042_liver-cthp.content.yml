@@ -1,0 +1,140 @@
+## TESTS:
+### CTHP
+
+- entity: "node"
+  type: "cgov_cthp"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Liver and Bile Duct Cancer—Patient Version"
+  title__ES:
+    value: "Cáncer de hígado y de conducto biliar—Versión para pacientes"
+  field_page_description:
+    value: "Liver cancer includes hepatocellular carcinoma (HCC) and bile duct cancer (cholangiocarcinoma). Risk factors for HCC include chronic infection with hepatitis B or C and cirrhosis of the liver. Explore the links on this page to learn more about liver cancer treatment, prevention, screening, statistics, research, and clinical trials."
+  field_page_description__ES:
+    value: "El cáncer de hígado incluye el carcinoma hepatocelular y el cáncer de vías biliares (colangiocarcinoma). Los factores de riesgo para el carcinoma hepatocelular incluyen la infección crónica de hepatitis B o C, y la cirrosis del hígado. Para obtener más información sobre tratamiento, prevención, exámenes de detección, estadísticas, investigación y ensayos clínicos relacionados con el cáncer de hígado, consulte los enlaces en esta página."
+  field_card_title:
+    value: "Overview"
+  field_card_title__ES:
+    value: "Aspectos generales"
+  field_browser_title:
+    value: "Liver and Bile Duct Cancer—Patient Version"
+  field_browser_title__ES:
+    value: "Cáncer de hígado y de conducto biliar—Versión para pacientes"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/types/liver'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/tipos/higado'
+  field_audience:
+    value: "patient"
+  field_audience__ES:
+    value: "patient"
+  field_audience_toggle:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Go to Health Professional Version'
+  field_audience_toggle__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_cthp'
+            title: 'Vaya a la versión para profesionales de salud'
+######## BEGIN ENGLISH CTHP CARDS ########
+  field_cthp_cards:
+    - entity: 'paragraph'
+      type: "cgov_cthp_overview_card"
+      field_cthp_card_title:
+        - value: 'Overview'
+      field_cthp_card_theme:
+        - value: 'cthp-overview'
+      field_cthp_overview_card_text:
+        - format: "streamlined"
+          value: |
+            <p>Liver cancer includes hepatocellular carcinoma (HCC) and bile duct cancer (cholangiocarcinoma). Risk factors for HCC include chronic infection with hepatitis B or C and cirrhosis of the liver. Explore the links on this page to learn more about liver cancer treatment, prevention, screening, statistics, research, and clinical trials.</p>
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Treatment'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_pdq_link_heading:
+        - value: "PDQ Treatment Information for Patients"
+      field_cthp_pdq_links:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'pdq_cancer_information_summary'
+                title: 'Liver and Bile Duct Cancer–Patient Version'
+######## End English CTHP Cards ##############
+######## BEGIN SPANISH CTHP CARDS ########
+  field_cthp_cards__ES:
+    - entity: 'paragraph'
+      type: "cgov_cthp_overview_card"
+      field_cthp_card_title:
+        - value: 'Aspectos generales'
+      field_cthp_card_theme:
+        - value: 'cthp-overview'
+      field_cthp_overview_card_text:
+        - format: "streamlined"
+          value: |
+            <p>El cáncer de hígado incluye el carcinoma hepatocelular y el cáncer de vías biliares (colangiocarcinoma). Los factores de riesgo para el carcinoma hepatocelular incluyen la infección crónica de hepatitis B o C, y la cirrosis del hígado. Para obtener más información sobre tratamiento, prevención, exámenes de detección, estadísticas, investigación y ensayos clínicos relacionados con el cáncer de hígado, consulte los enlaces en esta página.</p>
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Tratamiento'
+      field_cthp_card_theme:
+        - value: 'cthp-treatment'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre tratamiento"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Causas y prevención'
+      field_cthp_card_theme:
+        - value: 'cthp-causes'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre prevención"
+    - entity: 'paragraph'
+      type: "cgov_cthp_guide_card"
+      field_cthp_card_title:
+        - value: 'Exámenes de detección'
+      field_cthp_card_theme:
+        - value: 'cthp-screening'
+      field_cthp_pdq_link_heading:
+        - value: "Información de PDQ para pacientes sobre exámenes de detección"
+    - entity: 'paragraph'
+      type: "cgov_cthp_block_card"
+      field_cthp_card_title:
+        - value: 'Cómo hacer frente al cáncer'
+      field_cthp_card_theme:
+        - value: 'cthp-general'
+      field_cthp_block_card_content:
+        - '#process':
+            callback: 'reference'
+            args:
+              - 'block_content'
+              - type: 'content_block'
+                info: 'Coping With Cancer CTHP Block Card - Spanish'
+    - entity: 'paragraph'
+      type: "cgov_cthp_research_card"
+      field_cthp_card_title:
+        - value: 'Investigación'
+      field_cthp_card_theme:
+        - value: 'cthp-research'
+######## End Spanish CTHP Cards ##############
