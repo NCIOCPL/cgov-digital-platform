@@ -84,6 +84,9 @@ COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
 ## the modules installed above.
 COPY ./build/php-conf /etc/php/7.4/mods-available
 
+## Install PhantomJS locally.
+COPY ./build/usr/bin/phantomjs /usr/bin
+
 # Enable mod_rewrite 'cause we needs it.
 RUN a2enmod rewrite
 
