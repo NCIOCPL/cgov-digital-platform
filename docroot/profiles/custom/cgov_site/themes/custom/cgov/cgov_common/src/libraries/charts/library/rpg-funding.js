@@ -14,18 +14,18 @@ function initChart(Chart) {
       }
     },
     colors: ['#80378B', '#602968', '#B387B9', '#532C68', '#D0B9D7', '#5A4F79', '#DCD5E1', '#995FA2'],
-    title: { text: 'Percent Share of Total RPG Funds, FY 20' },
+    title: { text: 'Percent Share of Total RPG Funds, FY 21' },
     series: [{
       name: 'Funding',
       data: [
-        ['R01/R37', 1626674],
-        ['P01 Program Projects', 187766],
-        ['R03 Small Grants', 11688],
-        ['R21 Exploratory Phase I', 92517],
-        ['R33 Exploratory Phase II', 19351],
-        ['R35', 145771],
-        ['SBIR/STTR', 151140],
-        ['Other', 442295]
+        ['R01/R37', 1723346.39],
+        ['P01 Program Projects', 196613.35],
+        ['R03 Small Grants', 8382.87],
+        ['R21 Exploratory Phase I', 89334.25],
+        ['R33 Exploratory Phase II', 16534.97],
+        ['R35', 158472.18],
+        ['SBIR/STTR', 158269.50],
+        ['Other', 374797.05]
       ]
     }],
     responsive: {
@@ -40,7 +40,7 @@ function initChart(Chart) {
             itemWidth: 150
           }
         }
-      },{
+      }, {
         condition: {
           minWidth: 597
         },
