@@ -98,14 +98,14 @@ Chart.prototype = function () {
           console.time("Highcharts Load Time");
           window.fetchingHighcharts = true;
           $.when(
-              $.getScript('https://code.highcharts.com/highcharts.src.js')
+                $.getScript('https://code.highcharts.com/9.0/highcharts.src.js')
           ).then(function () {
               console.log("loading Highchart plug-ins");
               return $.when(
-                  $.getScript('https://code.highcharts.com/modules/exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/offline-exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/accessibility.js'),
-                  $.getScript('https://code.highcharts.com/modules/drilldown.js')
+                  $.getScript('https://code.highcharts.com/9.0/modules/exporting.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/offline-exporting.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/accessibility.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/drilldown.js')
               ).done(function () {
                   console.log("Highcharts plug-ins loaded");
                   window.fetchingHighcharts = false;
@@ -153,8 +153,8 @@ Chart.prototype = function () {
                   console.time("Highmaps Load Time");
                   // this is starting to look like a callback pyramid of doom
                   $.when(
-                      $.getScript('https://code.highcharts.com/maps/modules/map.js'),
-                      $.getScript('https://code.highcharts.com/mapdata/countries/us/us-all.js')
+                      $.getScript('https://code.highcharts.com/9.0/maps/modules/map.js'),
+                      $.getScript('https://code.highcharts.com/9.0/mapdata/countries/us/us-all.js')
                   ).done(function () {
                       console.timeEnd("Highmaps Load Time");
                       Highcharts.setOptions({
