@@ -98,14 +98,14 @@ Chart.prototype = function () {
           console.time("Highcharts Load Time");
           window.fetchingHighcharts = true;
           $.when(
-              $.getScript('https://code.highcharts.com/highcharts.src.js')
+              $.getScript('https://code.highcharts.com/9.0/highcharts.src.js')
           ).then(function () {
               console.log("loading Highchart plug-ins");
               return $.when(
-                  $.getScript('https://code.highcharts.com/modules/exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/offline-exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/accessibility.js'),
-                  $.getScript('https://code.highcharts.com/modules/drilldown.js')
+                  $.getScript('https://code.highcharts.com/9.0/modules/exporting.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/offline-exporting.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/accessibility.js'),
+                  $.getScript('https://code.highcharts.com/9.0/modules/drilldown.js')
               ).done(function () {
                   console.log("Highcharts plug-ins loaded");
                   window.fetchingHighcharts = false;
