@@ -297,3 +297,15 @@ function cgov_core_update_8005() {
     $installer->uninstall(['adobe_dtm'], FALSE);
   }
 }
+
+/**
+ * Update for CGov Tools. (Issue #3225)
+ */
+function cgov_core_update_8006() {
+
+  // Enable CGov Tools.
+  if (!\Drupal::moduleHandler()->moduleExists('cgov_tools')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_tools']);
+  }
+}
