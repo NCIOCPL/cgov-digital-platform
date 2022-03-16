@@ -156,6 +156,7 @@ class AppPathStorage implements AppPathStorageInterface {
           'owner_source' => $result['owner_source'],
           'owner_alias' => $result['owner_alias'],
           'app_module_id' => $result['app_module_id'],
+          // phpcs:ignore
           'app_module_data' => unserialize($result['app_module_data']),
           'langcode' => $result['langcode'],
         ];
@@ -192,6 +193,7 @@ class AppPathStorage implements AppPathStorageInterface {
           'owner_source' => $record['owner_source'],
           'owner_alias' => $record['owner_alias'],
           'app_module_id' => $record['app_module_id'],
+          // phpcs:ignore
           'app_module_data' => unserialize($record['app_module_data']),
           'langcode' => $record['langcode'],
         ];
