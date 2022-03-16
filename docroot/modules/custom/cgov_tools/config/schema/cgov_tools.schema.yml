@@ -1,0 +1,12 @@
+# Schema for the entity reference 'default' selection handler settings.
+entity_reference_selection.cgov_unpublished:
+  type: entity_reference_selection
+  label: 'Default selection handler settings'
+  mapping:
+    allowed_bundles:
+      type: sequence
+      label: 'types'
+      nullable: true
+      sequence:
+        type: string
+        label: 'Bundle'
