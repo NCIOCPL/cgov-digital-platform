@@ -48,9 +48,9 @@
         "drupal/akamai": "3.x-dev@dev",
         "drupal/config_perms": "^2",
         "drupal/console": "^1.9.7",
-        "drupal/core": "~9.2.9",
-        "drupal/core-composer-scaffold": "~9.2.9",
-        "drupal/core-recommended": "~9.2.9",
+        "drupal/core": "~9.2.16",
+        "drupal/core-composer-scaffold": "~9.2.16",
+        "drupal/core-recommended": "~9.2.16",
         "drupal/ctools": "^3.7.0",
         "drupal/devel": "^4.1",
         "drupal/entity_browser": "^2.6.0",
@@ -96,7 +96,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/core-dev": "~9.2.9",
+        "drupal/core-dev": "~9.2.16",
         "mglaman/drupal-check": "^1.1",
         "phpspec/prophecy-phpunit": "^2"
     },
@@ -106,7 +106,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "simplesamlphp/composer-module-installer": true,
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/console-extend-plugin": true,
+            "acquia/blt": true,
+            "acquia/blt-phpcs": true,
+            "drupal/core-composer-scaffold": true
+        }
     },
     "autoload": {
         "classmap": [
