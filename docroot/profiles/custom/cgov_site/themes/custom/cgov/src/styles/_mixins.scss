@@ -4,6 +4,11 @@
 	height: $height;
 }
 
+/***************************************
+* What does it do: vendor prefixed placeholders?
+* Notes: Remove, unnecessary
+* Usage count: 1
+****************************************/
 @mixin placeholder {
 	&:-moz-placeholder { @content; }
 	&::-moz-placeholder { @content; }
@@ -11,12 +16,23 @@
 	&::-webkit-input-placeholder { @content; }
 }
 
+/***************************************
+* What does it do: sets transition
+* Notes: Remove...no need, should be declared as a theme global variable
+* Usage count: 5, (megamenu, hero, nav, utilitynav, icons)
+****************************************/
 @mixin transition($transitions...) {
 	-webkit-transition: $transitions;
 	-moz-transition: $transitions;
 	-o-transition: $transitions;
 	transition: $transitions;
 }
+
+/***************************************
+* What does it do: sets transition-delay
+* Notes: Remove
+* Usage count: 0
+****************************************/
 @mixin transition-delay($transition-delay) {
 	-webkit-transition-delay: $transition-delay;
 	-moz-transition-delay: $transition-delay;
@@ -24,6 +40,11 @@
 	transition-delay: $transition-delay;
 }
 
+/***************************************
+* What does it do: vendor prefixes transform
+* Notes: Remove...no need, handled by autoprefix and widely supported 
+* Usage count: 2ish, (megamenu, slick, header, mixins)
+****************************************/
 @mixin transform($transforms...) {
 	-webkit-transform: $transforms;
 	-moz-transform: $transforms;
@@ -31,6 +52,12 @@
 	-o-transform: $transforms;
 	transform: $transforms;
 }
+
+/***************************************
+* What does it do: vendor prefixes transform-origin
+* Notes: Remove...no need, handled by autoprefix and widely supported 
+* Usage count: 1 (mixins)
+****************************************/
 @mixin transform-origin($transform-origin) {
 	-webkit-transform-origin: $transform-origin;
 	-moz-transform-origin: $transform-origin;
@@ -39,22 +66,42 @@
 	transform-origin: $transform-origin;
 }
 
+/***************************************
+* What does it do: vendor prefixes box-shadow
+* Notes: Remove...no need, handled by autoprefix and widely supported 
+* Usage count: 17
+****************************************/
 @mixin box-shadow($shadows...) {
 	-webkit-box-shadow: $shadows;
 	-moz-box-shadow: $shadows;
 	box-shadow: $shadows;
 }
 
+/***************************************
+* What does it do: horizontal centering for absolute positioning
+* Notes: Remove...heinous
+* Usage count: 1 (backToTop)
+****************************************/
 @mixin hCenter {
 	left: 50%;
 	transform: translateX(-50%);
 }
 
+/***************************************
+* What does it do: vertical centering for absolute positioning
+* Notes: Remove...heinous
+* Usage count: 2ish (PDQ, images(enlarge infographic placeholder) )
+****************************************/
 @mixin vCenter {
 	top: 50%;
 	transform: translateY(-50%);
 }
 
+/***************************************
+* What does it do: places call to action corner on cards
+* Notes: probably should be included as a cards feature
+* Usage count: (Homelanding, Special Report, blogs)
+****************************************/
 @mixin call-to-action-corner() {
 	text-transform: uppercase;
 	position: absolute;
@@ -71,6 +118,11 @@
 		translate(100%, -1px)); // -1px to fix rendering issues
 }
 
+/***************************************
+* What does it do: removes padding from card and adds internal padding
+* Notes: probably should be included as a cards feature
+* Usage count: 7 (Homelanding, Special Report, embedded-entity, topicFeature)
+****************************************/
 @mixin card-clickable {
 	// the following classes are to remove padding from the card and give it to the anchor tag so that the whole card is clickable
 	.columns {
@@ -82,6 +134,11 @@
 	}
 }
 
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Remove, handled by autoprefixer
+* Usage count: 4 in forms
+****************************************/
 //Vendor prefixes
 @mixin prefix($property, $value, $vendors: webkit moz ms o) {
 	@if $vendors {
@@ -92,6 +149,11 @@
 	#{$property}: #{$value};
 }
 
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Remove, handled by autoprefixer, used primarily for previously unsupported flex properties
+* Usage count: 4 (dcegConnect, Connect, alternating-lists, borderless cards)
+****************************************/
 @mixin property-prefix($property, $value, $vendors: webkit moz ms o) {
 	@if $vendors {
 		@each $vendor in $vendors {
@@ -101,6 +163,11 @@
 	#{$property}: #{$value};
 }
 
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Remove and replace, handled by autoprefixer
+* Usage count: 4 (dcegConnect, Connect, alternating-lists, borderless cards)
+****************************************/
 //Flex mixins
 @mixin flexbox() {
 	display: -webkit-box;
@@ -109,6 +176,12 @@
 	display: -webkit-flex;
 	display: flex;
 }
+
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Remove, handled by autoprefixer, used primarily for previously unsupported flex properties
+* Usage count: 5 (alternating-lists, borderless cards, title-first-feature-cards)
+****************************************/
 @mixin flex($values) {
 	-webkit-box-flex: $values;
 	-moz-box-flex:  $values;
@@ -116,6 +189,12 @@
 	-ms-flex:  $values;
 	flex:  $values;
 }
+
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Replace, handled by autoprefixer, used primarily for previously unsupported flex properties
+* Usage count: 5 (dcegConnect, alternating-lists, borderless cards, title-first-feature-cards)
+****************************************/
 @mixin flexcontainer() {
 	@include flexbox();
 	@include property-prefix(flex-direction,row);
@@ -124,6 +203,12 @@
 		@include property-prefix(flex-direction,column);
 	}
 }
+
+/***************************************
+* What does it do: vendor prefixing
+* Notes: Remove, handled by autoprefixer, used primarily for previously unsupported flex properties
+* Usage count: 5 (alternating-lists, borderless cards, title-first-feature-cards)
+****************************************/
 @mixin flex-order($val) {
 	-webkit-box-ordinal-group: $val;
 	-moz-box-ordinal-group: $val;
@@ -132,7 +217,11 @@
 	order: $val;
 }
 
-
+/***************************************
+* What does it do: retina display detection
+* Notes: Remove, meh
+* Usage count: 1, used in background image
+****************************************/
 @mixin bp-retina {
 	@media all and (-webkit-min-device-pixel-ratio: 2),
 	all and (min--moz-device-pixel-ratio: 2),
@@ -144,6 +233,12 @@
 	}
 }
 
+
+/***************************************
+* What does it do: background icon 
+* Notes: Really kind of overkill, move to dcegConnect
+* Usage count: 1 in standard-background-icon below
+****************************************/
 //Image background
 @mixin background-icon($image,$width,$height,
 $tablet-width:$width,$tablet-height:$height,
@@ -174,6 +269,12 @@ $mobile-container-height:$mobile-height) {
 	}
 
 }
+
+/***************************************
+* What does it do: background icon sizing
+* Notes: Really kind of overkill, move to dcegConnect
+* Usage count: 11 in dcegConnect only
+****************************************/
 @mixin standard-background-icon($standard-image, $retina-image, $width, $height,
 $tablet-width:$width,$tablet-height:$height,
 $mobile-width:$width,$mobile-height:$height,
@@ -201,6 +302,15 @@ $background-repeat: no-repeat, $no-width:false) {
 	}
 }
 
+
+
+
+/***************************************
+* What does it do: centered tect with icon
+* Notes: only used in DCEG Connect (dcegConnect.scss), just move it there, no re-use or need
+* Usage count: 1
+****************************************/
+
 //Centered Emphasized text
 @mixin centered {
 	display: block;
@@ -209,6 +319,12 @@ $background-repeat: no-repeat, $no-width:false) {
 	clear:both;
 	width:100%;
 }
+
+/***************************************
+* What does it do: centered text inline
+* Notes: Remove!
+* Usage count: 0
+****************************************/
 @mixin centered-inline {
 	display: inline-block;
 	position: relative;
@@ -218,17 +334,33 @@ $background-repeat: no-repeat, $no-width:false) {
 	margin-right:auto;
 	//width:100%;
 }
+
+/***************************************
+* What does it do: italicizes
+* Notes: why???
+* Usage count: 0
+****************************************/
 @mixin centeredEm {
 	@include centered;
 	font-style: italic;
 }
 
+/***************************************
+* What does it do: tries to vertically center something
+* Notes: unused
+* Usage count: 0
+****************************************/
 @mixin vertical-center {
 	line-height: normal;
 	vertical-align: middle;
 	display:inline-block;
 }
 
+/***************************************
+* What does it do: swaps color of toggle button in an accordion
+* Notes: Only used in Connect theme.  Also redeclared in _buttons!?!
+* Usage count: 1, duped in _buttons.scss
+****************************************/
 @mixin toggle-color($color, $bg-color) {
 	&[aria-expanded="false"] .toggle,
 	.toggle[aria-expanded="false"] {
