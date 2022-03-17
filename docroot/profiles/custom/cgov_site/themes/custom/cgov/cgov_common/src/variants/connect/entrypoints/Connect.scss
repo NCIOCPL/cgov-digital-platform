@@ -1,27 +1,27 @@
-@import '~Core/styles/breakpoints';
-@import '~Core/styles/colors';
-@import '~Core/styles/variables';
-@import '~Core/styles/mixins';
-@import '~Core/styles/nci-foundation_variables';
-@import '~Core/styles/vendor/foundation/scss/foundation/components/global';
-@import '~Core/styles/vendor/foundation/scss/foundation/components/buttons';
+@import "~Core/styles/breakpoint-mixins";
+@import "~Core/styles/colors";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/nci-foundation_variables";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/buttons";
 @import "~Core/styles/environments/percussion";
-@import '../styles/sprites/svg-sprite';
+@import "../styles/sprites/svg-sprite";
 
 $cgov_path: "/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/dist/";
 
 // theme color palette
 // connect
-$blueberry:	#174C70;
-$capri:	#2A72A5;
-$clementine:	#f9a921;
-$dust:	#F3F5F8;
-$fountain:	#1C5E86;
-$granite:	#606060;
-$graphite:	#4d4d4d;
-$icicle:	#ebf6f2;
-$lemon:	#FFBF17;
-$white:	#ffffff;
+$blueberry: #174c70;
+$capri: #2a72a5;
+$clementine: #f9a921;
+$dust: #f3f5f8;
+$fountain: #1c5e86;
+$granite: #606060;
+$graphite: #4d4d4d;
+$icicle: #ebf6f2;
+$lemon: #ffbf17;
+$white: #ffffff;
 
 // utility shades
 $eggshell: #f2f0ef;
@@ -46,7 +46,7 @@ $site-logo-width: auto;
 $site-logo-width-mobile: 292px;
 $site-logo-height: 50px;
 $site-logo-height-desktop: 50px;
-$site-logo-height-mobile:auto;
+$site-logo-height-mobile: auto;
 $site-logo-min-width: unset;
 $site-logo-max-width: 98%;
 
@@ -88,7 +88,7 @@ $main-menu-mobile-tablet-svg-dictionary: book-connect-theme;
 //	Search Box and Search results (including magnifying glass)
 $main-menu-desktop-search-background: $blueberry; //need white border
 $main-menu-mobile-search-background: $blueberry;
-$main-menu-mobile-search-text:$white;
+$main-menu-mobile-search-text: $white;
 $main-menu-desktop-search-color: $white;
 $main-menu-desktop-search-border-color: $white-half-transparent;
 $main-menu-desktop-search-border-width: 1px;
@@ -96,7 +96,7 @@ $main-menu-desktop-search-margin: 3px 0;
 $main-menu-desktop-item-padding: 21px 7px 14px;
 //search-results-numbers
 $main-menu-desktop-svg-search-magnifying-glass: search-connect-theme;
-$search-results-pager-active-number-color:$white;
+$search-results-pager-active-number-color: $white;
 $search-results-pager-active-background-color: $capri;
 $search-results-pager-number-color: $capri;
 $search-box-height: 55px;
@@ -124,7 +124,6 @@ $section-menu-desktop-family-active-color: $capri;
 $section-menu-desktop-family-link-color: $capri;
 //	Mobile Section Navigation (Tongue)
 
-
 $section-menu-mobile-tablet-top-background: $fountain;
 //menu-background-color dust
 //parent current page text color capri
@@ -150,7 +149,7 @@ $home-landing-h1-color: $white;
 //	Delighter N/A
 //	Link Color
 $default-link-color: $capri;
-$default-link-color-hover:  $blueberry;
+$default-link-color-hover: $blueberry;
 $button-link-color: $white;
 //	Feature Cards
 $landing-page-feature-background-color: $fountain;
@@ -180,8 +179,6 @@ $page-options-desktop-svg-pinterest: pinterest-connect-theme;
 //	Multimedia Row
 $landing-page-multimedia-background: $white; //?
 
-
-
 $default-borderless-background: $white;
 //	Guide Card Row
 
@@ -198,7 +195,7 @@ $content-accordion-odd-rows-minus-background: $jade;
 $content-accordion-even-rows-minus-background: $aqua;
 $plusminus-color-accordion-odd: $white;
 $plusminus-bg-color-accordion-odd: $fountain;
-$plusminus-color-accordion-even:$white;
+$plusminus-color-accordion-even: $white;
 $plusminus-bg-color-accordion-even: $fountain;
 
 //	Plus/Minus Blog Archive
@@ -236,10 +233,8 @@ $content-form-select-box-dropdown-color: $capri;
 $content-form-select-box-dropdown-hover-color: $blueberry;
 $content-form-select-box-list-item-hover-background: $blueberry;
 $content-form-submit-button-background: $lemon;
-$content-form-submit-button-border: #clementine;
-$content-form-submit-button-hover-background: #clementine;
-
-
+$content-form-submit-button-border: $clementine;
+$content-form-submit-button-hover-background: $clementine;
 
 $content-pullquote-left-border: $fountain;
 $pullquote-text-color: $fountain;
@@ -255,8 +250,6 @@ $content-svg-white-external-link: external-link-white-connect-theme;
 $infographic-link-background-color: $dust;
 $infographic-text-color: $fountain;
 
-
-
 // default theme link color
 .main-content a,
 #cgvBody h2 a,
@@ -271,9 +264,9 @@ $infographic-text-color: $fountain;
 .contentzone h6 a,
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
-.section-nav .contains-current>div a,
+.section-nav .contains-current > div a,
 .feature-primary a h3,
-ul.breadcrumbs>* a,
+ul.breadcrumbs > * a,
 .topic-feature a h3,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
 .desktop #blog-archive-accordion .ui-accordion-header.ui-state-active .toggle,
@@ -282,8 +275,6 @@ ul.breadcrumbs>* a,
 table tbody tr td a,
 li a {
   color: $default-link-color;
-  &.borderless-button {
-  }
 }
 .multimedia {
   .multimedia-feature-card {
@@ -371,11 +362,9 @@ a .feature-card.cgvArticle a:hover h3,
 .contentzone table tbody tr td a:hover,
 .contentzone table tbody tr td a:focus,
 a.arrow-link:hover,
-a.arrow-link:focus
-{
+a.arrow-link:focus {
   color: $default-link-color-hover;
 }
-
 
 .embedded-entity[data-entity-embed-display*="_feature_card"] {
   .feature-card {
@@ -389,7 +378,6 @@ a.arrow-link:focus
       h3 {
         color: $default-link-color;
       }
-
     }
   }
 }
@@ -445,7 +433,7 @@ header {
 
 .utility-background {
   background-color: $utility-background-color;
-  display:none !important; //No utility bar for this variant
+  display: none !important; //No utility bar for this variant
 }
 
 // overcoming foundation class that hides utility bar for mobile
@@ -468,31 +456,28 @@ header {
 }
 
 // menu bar
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a {
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a {
   color: $main-menu-link-hover-color;
 }
-.menu.nav-menu>.nav-item>.nav-item-title>a,
-.mobile-menu-bar>a,
-.mobile-menu-bar>button,
-.mobile-menu-bar>a:focus,
-.mobile-menu-bar>a:hover,
-.mobile-menu-bar>button:focus {
+.menu.nav-menu > .nav-item > .nav-item-title > a,
+.mobile-menu-bar > a,
+.mobile-menu-bar > button,
+.mobile-menu-bar > a:focus,
+.mobile-menu-bar > a:hover,
+.mobile-menu-bar > button:focus {
   color: $main-menu-link-color;
 }
 
-.menu.nav-menu>.nav-item>.nav-item-title>a:hover,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a:hover {
+.menu.nav-menu > .nav-item > .nav-item-title > a:hover,
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a:hover {
   color: $main-menu-link-hover-color;
 }
 
-.menu.nav-menu>.nav-item>.nav-item-title>a.active,
-.menu.nav-menu>.nav-item>.nav-item-title>a.open,
-.menu.nav-menu>.nav-item>.nav-item-title>a:focus {
+.menu.nav-menu > .nav-item > .nav-item-title > a.active,
+.menu.nav-menu > .nav-item > .nav-item-title > a.open,
+.menu.nav-menu > .nav-item > .nav-item-title > a:focus {
   color: $main-menu-link-hover-color;
-
 }
-
-
 
 .nav-search-bar {
   border-top: solid $main-menu-border-width $main-menu-border-color;
@@ -519,20 +504,19 @@ a.nav-dictionary::before {
   @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
 }
 
-#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-#mega-nav li.contains-current>div.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a{
+#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+#mega-nav li.contains-current > div.nav-item-title > a,
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a {
   color: $hamburger-section-menu-parent-item-link-color;
-  outline:0;
+  outline: 0;
 }
-.section-nav .level-1.contains-current.has-children>div a {
+.section-nav .level-1.contains-current.has-children > div a {
   color: $section-menu-desktop-family-link-color;
-  outline:0;
+  outline: 0;
   &:active {
     color: $section-menu-desktop-family-active-color;
   }
 }
-
 
 .section-nav .level-1.contains-current div.current-page a {
   color: $section-menu-mobile-tablet-current-page-color;
@@ -556,27 +540,23 @@ a.nav-dictionary::before {
   background: $section-menu-mobile-tablet-not-current-page-minus-background;
 }
 
-
-
 // mega menu
 
 #mega-nav .current-page {
   background-color: $hamburger-menu-mobile-tablet-current-page-background;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="true"],
-#mega-nav .current-page>div[aria-expanded="true"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="true"],
+#mega-nav .current-page > div[aria-expanded="true"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
   color: $hamburger-menu-mobile-tablet-current-page-minus-color;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="false"],
-#mega-nav .current-page>div[aria-expanded="false"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="false"],
+#mega-nav .current-page > div[aria-expanded="false"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
   color: $hamburger-menu-mobile-tablet-current-page-plus-color;
 }
-
-
 
 // content styles
 
@@ -623,7 +603,7 @@ figure a.article-image-enlarge:hover {
 
 .feature-primary {
   .card {
-    &:not(.topic-feature){
+    &:not(.topic-feature) {
       background-color: $landing-page-feature-card-background;
     }
   }
@@ -631,7 +611,7 @@ figure a.article-image-enlarge:hover {
 
 .feature-primary-title,
 .feature-primary.list.managed,
-.row.feature-primary{
+.row.feature-primary {
   background-color: $landing-page-feature-background-color;
 }
 
@@ -645,12 +625,10 @@ figure a.article-image-enlarge:hover {
   }
 }
 
-
 .feature-primary .feature-card a h3,
 .main-content .feature-card a,
 .feature-secondary .feature-card a h3,
-.feature-secondary .feature-card a
-{
+.feature-secondary .feature-card a {
   color: $landing-page-feature-card-link-color;
   &:hover {
     color: $landing-page-feature-card-link-hover-color;
@@ -667,9 +645,10 @@ figure a.article-image-enlarge:hover {
   }
 }
 
-
 .node--type-cgov-home-landing {
-  .page-options, .page-options-container, .floating-delighter {
+  .page-options,
+  .page-options-container,
+  .floating-delighter {
     display: none;
   }
 
@@ -693,7 +672,7 @@ figure a.article-image-enlarge:hover {
         text-decoration: underline;
       }
     }
-    .title-and-desc{
+    .title-and-desc {
       h3 > a,
       h3,
       a,
@@ -796,27 +775,25 @@ figure a.article-image-enlarge:hover {
     }
   }
 }
-.feature-card
-{
-   a.icon-exit-notification {
+.feature-card {
+  a.icon-exit-notification {
     @include svg-sprite($content-svg-external-link);
   }
 }
 
 .feature-card .image-hover a.icon-exit-notification {
   @include svg-sprite($content-svg-fountain-external-link);
-
 }
 .icon-exit-notification {
   @include svg-sprite($content-svg-external-link);
 }
 
 // form elements
-.radio input[type=radio]:checked+label:before {
+.radio input[type="radio"]:checked + label:before {
   background-color: $content-form-radio-background;
 }
 
-.radio input[type=radio]+label:before {
+.radio input[type="radio"] + label:before {
   border-color: $content-form-radio-border;
 }
 
@@ -834,21 +811,21 @@ figure a.article-image-enlarge:hover {
 }
 
 .button.submit,
-.button[type=submit],
+.button[type="submit"],
 form button.submit,
-form button[type=submit] {
+form button[type="submit"] {
   background-color: $content-form-submit-button-background;
   border-color: $content-form-submit-button-border;
 }
 
 .button.submit:focus,
 .button.submit:hover,
-.button[type=submit]:focus,
-.button[type=submit]:hover,
+.button[type="submit"]:focus,
+.button[type="submit"]:hover,
 form button.submit:focus,
 form button.submit:hover,
-form button[type=submit]:focus,
-form button[type=submit]:hover {
+form button[type="submit"]:focus,
+form button[type="submit"]:hover {
   background-color: $content-form-submit-button-hover-background;
 }
 
@@ -883,11 +860,17 @@ form button[type=submit]:hover {
   color: $content-accordion-even-rows-minus-background;
 }
 .ui-accordion-header.odd {
-  @include toggle-color($plusminus-color-accordion-odd, $plusminus-bg-color-accordion-odd);
+  @include toggle-color(
+    $plusminus-color-accordion-odd,
+    $plusminus-bg-color-accordion-odd
+  );
 }
 
 .ui-accordion-header.even {
-  @include toggle-color($plusminus-color-accordion-even, $plusminus-bg-color-accordion-even);
+  @include toggle-color(
+    $plusminus-color-accordion-even,
+    $plusminus-bg-color-accordion-even
+  );
 }
 
 .pager__container {
@@ -969,7 +952,6 @@ form button[type=submit]:hover {
 }
 
 @include break(large) {
-
   //  changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
   header {
     margin-bottom: $site-header-desktop-margin-bottom;
@@ -992,7 +974,8 @@ form button[type=submit]:hover {
   #swKeyword,
   .search {
     background-color: $main-menu-desktop-search-background;
-    border: solid $main-menu-desktop-search-border-color $main-menu-desktop-search-border-width;
+    border: solid $main-menu-desktop-search-border-color
+      $main-menu-desktop-search-border-width;
   }
   .search {
     margin: $main-menu-desktop-search-margin;
@@ -1029,14 +1012,12 @@ form button[type=submit]:hover {
     @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
   }
 
-  #mega-nav .nav-item.contains-current>.nav-item-title>a,
-  #mega-nav .nav-item.current-page>.nav-item-title>a {
+  #mega-nav .nav-item.contains-current > .nav-item-title > a,
+  #mega-nav .nav-item.current-page > .nav-item-title > a {
     border-bottom-color: $main-menu-desktop-active-item-border-bottom;
-
   }
-  .menu.nav-menu>.nav-item>.nav-item-title,
-  #mega-nav .nav-menu>li.contains-current>div.nav-item-title
-  {
+  .menu.nav-menu > .nav-item > .nav-item-title,
+  #mega-nav .nav-menu > li.contains-current > div.nav-item-title {
     &:hover {
       background: $main-menu-link-hover-background-color;
       a {
@@ -1066,23 +1047,22 @@ form button[type=submit]:hover {
     }
   }
 
-  .nav-item>.nav-item-title>a {
+  .nav-item > .nav-item-title > a {
     padding: $main-menu-desktop-item-padding;
   }
   // overwriting hamburger menu style rules
-  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-  #mega-nav li.contains-current>div.nav-item-title>a,
-  #mega-nav .nav-item.current-page>div.nav-item-title>a {
+  #mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+  #mega-nav li.contains-current > div.nav-item-title > a,
+  #mega-nav .nav-item.current-page > div.nav-item-title > a {
     color: $main-menu-link-hover-color;
   }
-  .menu.nav-menu>.nav-item>.nav-item-title>a.active,
-  .menu.nav-menu>.nav-item>.nav-item-title>a.open,
-  .menu.nav-menu>.nav-item>.nav-item-title>a:focus {
+  .menu.nav-menu > .nav-item > .nav-item-title > a.active,
+  .menu.nav-menu > .nav-item > .nav-item-title > a.open,
+  .menu.nav-menu > .nav-item > .nav-item-title > a:focus {
     color: $main-menu-link-hover-color;
   }
-  .menu.nav-menu>.nav-item>.nav-item-title>a:focus,
-  .menu.nav-menu>.nav-item>.nav-item-title:focus
-  {
+  .menu.nav-menu > .nav-item > .nav-item-title > a:focus,
+  .menu.nav-menu > .nav-item > .nav-item-title:focus {
     outline: none;
   }
   // Left navigation
@@ -1091,7 +1071,7 @@ form button[type=submit]:hover {
       border-left-color: $section-navigation-desktop-active-item-triangle;
     }
 
-    .level-0>div {
+    .level-0 > div {
       background-color: $section-navigation-desktop-header-background;
     }
 
@@ -1104,13 +1084,13 @@ form button[type=submit]:hover {
     }
 
     .has-children.contains-current {
-      >div.current-page a {
+      > div.current-page a {
         color: $section-navigation-desktop-active-color;
       }
     }
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -1153,12 +1133,10 @@ form button[type=submit]:hover {
   }
   .feature-primary,
   .feature-secondary {
-
   }
 }
 
 @include bp(medium-down) {
-
   #mega-nav {
     background-color: $main-menu-mobile-tablet-background-color;
     li {
@@ -1178,17 +1156,15 @@ form button[type=submit]:hover {
     color: $main-menu-link-color;
   }
   #mega-nav .has-children.current-page > div > a:hover {
-   color: $main-menu-link-color;
+    color: $main-menu-link-color;
   }
 
-
-  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a:active,
-  #mega-nav li.contains-current>div.nav-item-title>a:active
-   {
+  #mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a:active,
+  #mega-nav li.contains-current > div.nav-item-title > a:active {
     color: $hamburger-active-link-color;
   }
-  .section-nav .level-1.contains-current.has-children>div a:active,
-  .section-nav .level-1.contains-current.has-children>div a:focus {
+  .section-nav .level-1.contains-current.has-children > div a:active,
+  .section-nav .level-1.contains-current.has-children > div a:focus {
     color: $section-menu-mobile-tablet-family-active-color;
   }
   .nci-logo-pages img {
@@ -1200,12 +1176,10 @@ form button[type=submit]:hover {
     top: 0;
   }
   #nvcgSlMainNav #swKeyword,
-  #nvcgSlMainNav.searching #swKeyword
-  {
-    color:$main-menu-mobile-search-text;
+  #nvcgSlMainNav.searching #swKeyword {
+    color: $main-menu-mobile-search-text;
     height: -webkit-fill-available;
     height: available;
-
   }
 
   #nvcgSlMainNav.searching #swKeyword:-moz-placeholder {
@@ -1252,19 +1226,18 @@ form button[type=submit]:hover {
     color: $search-placeholder-text-color;
     opacity: 1;
   }
-  #nvcgSlMainNav.searching input::placeholder
-  {
+  #nvcgSlMainNav.searching input::placeholder {
     color: $search-placeholder-text-color;
     opacity: 1;
   }
 
   #nvcgSlMainNav.searching {
     #searchclear {
-      color:  $main-menu-mobile-search-text;
+      color: $main-menu-mobile-search-text;
     }
     .search {
       background-color: $main-menu-mobile-search-background;
-      color:  $main-menu-mobile-search-text;
+      color: $main-menu-mobile-search-text;
     }
   }
   .nav-search {
@@ -1280,11 +1253,11 @@ form button[type=submit]:hover {
     background-color: $section-menu-mobile-tablet-top-background;
   }
 
-  .section-nav .level-0>div {
-    background:$section-menu-mobile-tablet-top-background;
+  .section-nav .level-0 > div {
+    background: $section-menu-mobile-tablet-top-background;
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -1294,17 +1267,17 @@ form button[type=submit]:hover {
   .section-nav ul div {
     padding: 0;
   }
-  .section-nav .level-0>div {
+  .section-nav .level-0 > div {
     padding: 0;
   }
-  .section-nav .level-0>div>a {
-    margin:0;
-    padding-left:0.8888em;
+  .section-nav .level-0 > div > a {
+    margin: 0;
+    padding-left: 0.8888em;
     padding-right: 3.3888em;
     padding-bottom: 0.625em;
     padding-top: 0.625em;
   }
-  .section-nav ul div>a {
+  .section-nav ul div > a {
     display: block;
     padding: 14.5px 0;
     margin: 0;
@@ -1312,27 +1285,28 @@ form button[type=submit]:hover {
 
   .section-nav {
     ul {
-      div>a:focus,
-      div>a:active {
+      div > a:focus,
+      div > a:active {
         background: $section-menu-mobile-tablet-family-active-background;
         color: $section-menu-mobile-tablet-family-active-color;
       }
     }
   }
 
-  .section-nav .level-1>div>a {
-    margin:0;
+  .section-nav .level-1 > div > a {
+    margin: 0;
     padding-left: 1em;
   }
-  .section-nav .level-2>div>a {
+  .section-nav .level-2 > div > a {
     margin: 0;
     padding-left: 1.875em;
   }
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
   }
-  .section-nav .level-1.contains-current.has-children>div a {
-    &:active, &:focus {
+  .section-nav .level-1.contains-current.has-children > div a {
+    &:active,
+    &:focus {
       color: $section-menu-mobile-tablet-family-active-color;
       background: $section-menu-mobile-tablet-family-active-background;
     }
@@ -1364,27 +1338,21 @@ form button[type=submit]:hover {
   }
   .feature-primary-title,
   .feature-primary.list.managed,
-  .row.feature-primary
-  {
+  .row.feature-primary {
     background-color: $landing-page-feature-background-color;
   }
   .feature-card {
     border-top: $landing-page-feature-card-mobile-border-top;
   }
-  .feature-primary,
-  .feature-secondary {
-
-  }
 }
 
 @include bp(medium) {
-
   .hero-text {
     background: $landing-page-hero-text-tablet-background;
   }
 
   // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
-  .row>.page-options-container .page-options ul {
+  .row > .page-options-container .page-options ul {
     float: left !important;
   }
 }
@@ -1414,28 +1382,48 @@ form button[type=submit]:hover {
     content: " ";
     display: block;
     position: absolute;
-    top:0;
+    top: 0;
     font-size: 30px;
     transform: scale(0.62);
-    left:8%;
+    left: 8%;
     @include svg-sprite($back-to-top-button);
   }
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: $body-font-color;
     text-decoration: none;
   }
 }
 .header--fixedToTop {
   margin-bottom: 61px;
-  @include break(large){
+  @include break(large) {
     margin-bottom: 61px;
   }
-  @include break(medium-down){
+  @include break(medium-down) {
     margin-bottom: 77px;
   }
 }
+
+a.borderless-button-yellow {
+  @include button-base;
+  @include button-size($padding: false);
+  @include button-style($clementine, 5px);
+  font-family: $montserrat-font-stack;
+  font-size: 14px;
+  padding: 10px 10px 10px 11px;
+  color: $blueberry;
+  background-color: $lemon;
+  text-transform: uppercase;
+  border: 0 none;
+  &:hover {
+    text-decoration: none;
+    background-color: $clementine;
+    color: $blueberry;
+  }
+}
+
 .navigation {
-  @include bp(large-up){
+  @include bp(large-up) {
     @include flexbox();
     @include property-prefix(flex-direction, row);
     @include property-prefix(justify-content, flex-start);
@@ -1444,11 +1432,10 @@ form button[type=submit]:hover {
 
   .borderless-button-yellow {
     margin: 9px 1rem 1rem 1rem;
-    @include bp(medium-down){
-      display:none;
+    @include bp(medium-down) {
+      display: none;
     }
   }
-
 }
 .mobile-menu-bar {
   @include flexbox();
@@ -1456,15 +1443,16 @@ form button[type=submit]:hover {
   @include property-prefix(justify-content, space-between);
   @include property-prefix(align-items, center);
 
-  a.borderless-button-yellow, .borderless-button-yellow {
+  a.borderless-button-yellow,
+  .borderless-button-yellow {
     color: $blueberry;
-    width:auto;
-    display:inline-block;
+    width: auto;
+    display: inline-block;
     &:hover {
       color: $blueberry;
     }
-    @include bp(medium-down){
-      display:inline-block;
+    @include bp(medium-down) {
+      display: inline-block;
     }
   }
 }
@@ -1478,5 +1466,60 @@ form button[type=submit]:hover {
   color: $infographic-text-color;
   a {
     color: $infographic-text-color;
+  }
+}
+
+/********************* BEGIN PDF Button styling ******************************************/
+.ap-button {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 25px 3px;
+  width: 290px;
+  line-height: 1.25;
+  text-align: left;
+  background-color: $color-link;
+  border-style: none;
+  border-radius: 5px;
+  border-bottom: solid $button-box-shadow-color;
+  border-width: 3px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: $montserrat-font-stack;
+
+  @include break(medium) {
+    padding: 5px 13px 5px 10px;
+    width: auto;
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    left: 4px;
+    @include svg-sprite(file-pdf-narrow-white-o-thick, mq);
+    font-size: 12px;
+    margin-left: 2px;
+    margin-right: 12px;
+    padding: 14px 11px;
+
+    @include break(medium) {
+      top: 1px;
+      left: 0;
+      margin-right: 8px;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &-block {
+    text-align: center;
+    &.left {
+      text-align: left;
+    }
+    margin-bottom: 32px;
   }
 }

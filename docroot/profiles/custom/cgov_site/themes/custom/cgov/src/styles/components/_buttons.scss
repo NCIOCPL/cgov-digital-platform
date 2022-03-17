@@ -1,3 +1,4 @@
+@import './buttons-mixins';
 //
 // Button Variables
 //
@@ -277,21 +278,6 @@ $plusminus-bg-color-nav-greyish: #d4d2e3;
 $plusminus-color-nav-current: white;
 $plusminus-bg-color-nav-current: #12738a;
 
-
-// color mixin
-@mixin toggle-color($color, $bg-color) {
-	&[aria-expanded="false"] .toggle,
-	.toggle[aria-expanded="false"] {
-		color: $color;
-		background-color: $bg-color;
-	}
-
-	&[aria-expanded="true"] .toggle,
-	.toggle[aria-expanded="true"] {
-		color: $bg-color;
-		background-color: $color;
-	}
-}
 
 .toggle {
 	// BEGIN reset

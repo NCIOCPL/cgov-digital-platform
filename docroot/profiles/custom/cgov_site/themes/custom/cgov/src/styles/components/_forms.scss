@@ -1,4 +1,5 @@
 @use 'sass:math';
+@import './forms-mixins';
 
 //
 // Form Variables
@@ -94,13 +95,7 @@ $custom-form-checkbox-checked-text-color: $custom-form-radiocheck-border-color;
 $custom-form-checkbox-checked-text-color-disabled: #ccc;
 $custom-form-checkbox-radius: 0;
 
-@mixin input-placeholder() {
-	font-family: $input-placeholder-font-family;
-	color: $input-placeholder-font-color;
-	font-size: $input-placeholder-font-size;
-	font-style: $input-placeholder-font-style;
-	opacity: 1;
-}
+
 
 /* Placeholder text styling */
 input {
@@ -423,40 +418,6 @@ select {
 	}
 }
 
-@mixin radiocheck($type) {
-	input[type="#{$type}"] {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-
-		+ label {
-			position: relative;
-			margin-left: $custom-form-radiocheck-size + $custom-form-radiocheck-spacing;
-
-			&:before {
-				content: "";
-				position: absolute;
-				left: -($custom-form-radiocheck-size + $custom-form-radiocheck-spacing);
-
-				display: inline-block;
-				text-align: center;
-				border-style: solid;
-
-				margin-right: $custom-form-radiocheck-spacing;
-				width: $custom-form-radiocheck-size;
-				height: $custom-form-radiocheck-size;
-				background-color: $custom-form-radiocheck-bg-color;
-				border-width: $custom-form-radiocheck-border-size;
-				border-color: $custom-form-radiocheck-border-color;
-			}
-		}
-		&:disabled {
-			+ label:before {
-				border-color: $custom-form-radiocheck-border-color-disabled;
-			}
-		}
-	}
-}
 /* Custom radio and checkbox styling
  * Note that these do not get applied to IE8 and below.
  */

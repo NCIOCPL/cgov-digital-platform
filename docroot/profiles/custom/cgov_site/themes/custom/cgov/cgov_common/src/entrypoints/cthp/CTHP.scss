@@ -2,7 +2,7 @@
 @import "~Core/styles/variables";
 @import "~Core/styles/mixins";
 @import "~Core/styles/fonts";
-@import "~Core/styles/breakpoints";
+@import "~Core/styles/breakpoint-mixins";
 @import "~Styles/sprites/svg-sprite";
 @import "~Core/styles/nci-foundation_variables";
 @import "~Core/styles/nci-foundation_mixins";
@@ -573,6 +573,9 @@ figure.cthp-mm-video-playlist {
     .cthp-dropdown {
       &.more-info {
         ul {
+          // originally added as a hack pertaining to how CSSNano handles z-indexes. Leaving it in in case
+          // there may be a case where a video exists in the module directly below the dropdown in content
+          z-index: 11 !important;
           li {
             align-items: center;
             display: flex;
@@ -584,14 +587,17 @@ figure.cthp-mm-video-playlist {
               &.icon-exit-notification {
                 background-repeat: no-repeat;
                 flex: none;
-                vertical-align: middle;
-                width: 30px;
+                padding: 7px 9px;
               }
             }
 
             &:hover {
               a {
                 color: $white;
+
+                &.icon-exit-notification {
+                  @include svg-sprite(external-link-white);
+                }
               }
             }
           }
