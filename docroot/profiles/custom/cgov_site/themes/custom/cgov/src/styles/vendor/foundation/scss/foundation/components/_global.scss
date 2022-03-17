@@ -6,6 +6,12 @@
 
 $experimental: true !default;
 
+
+/***************************************
+* What does it do: border-radius
+* Notes: Remove!!
+* Usage count: :( 44
+****************************************/
 // We use this to control border radius.
 @mixin radius($radius:$global-radius) {
   @if $radius {
@@ -16,6 +22,11 @@ $experimental: true !default;
   }
 }
 
+/***************************************
+* What does it do: more border-radius
+* Notes: Remove!!
+* Usage count: 26, mostly in forms and buttons
+****************************************/
 // We use this to create equal side border radius on elements.
 @mixin side-radius($side, $radius:$global-radius) {
   @if $side == left {
@@ -60,6 +71,11 @@ $experimental: true !default;
   }
 }
 
+/***************************************
+* What does it do: makes css triangles
+* Notes: Remove, just use a box shadow
+* Usage count: 2
+****************************************/
 // We can control whether or not we have inset shadows edges.
 @mixin inset-shadow($active:true) {
   @if $experimental {
@@ -74,6 +90,12 @@ $experimental: true !default;
     box-shadow: $shiny-edge-size $shiny-edge-active-color inset; } }
 }
 
+
+/***************************************
+* What does it do: css transitions
+* Notes: Remove, well supported now
+* Usage count: 2
+****************************************/
 // We use this to add transitions to elements
 @mixin single-transition($property:all, $speed:300ms, $ease:ease-out) {
   @if $experimental {
@@ -83,6 +105,12 @@ $experimental: true !default;
   transition: $property $speed $ease;
 }
 
+
+/***************************************
+* What does it do: I'm literally crying right now.  Box sizing
+* Notes: Remove!!  this is a global thing now
+* Usage count: 7
+****************************************/
 // We use this to add box-sizing across browser prefixes
 @mixin box-sizing($type:border-box) {
   @if $experimental {
@@ -92,6 +120,11 @@ $experimental: true !default;
   box-sizing: $type;
 }
 
+/***************************************
+* What does it do: makes css triangles
+* Notes: Remove, just use a clearfix class 
+* Usage count: 8
+****************************************/
 // We use this to create equilateral triangles
 @mixin css-triangle($triangle-size, $triangle-color, $triangle-direction) {
   content: "";
@@ -117,6 +150,12 @@ $experimental: true !default;
   }
 }
 
+
+/***************************************
+* What does it do: clearfix reset
+* Notes: Remove, just use a clearfix class 
+* Usage count: 8
+****************************************/
 // We use this to do clear floats
 @mixin clearfix() {
   *zoom:1;
@@ -125,6 +164,12 @@ $experimental: true !default;
 }
 
 
+
+/***************************************
+* What does it do: glow effect using shadow
+* Notes: Move to forms, but why?
+* Usage count: 1
+****************************************/
 // We use this to add a glowing effect to block elements
 @mixin block-glowing-effect($selector:focus, $fade-time:300ms, $glowing-effect-color:fade-out($primary-color, .25)) {
   @if $experimental {
@@ -161,6 +206,13 @@ $base-line-height: 150% !default;
 // This is the default html and body font-size for the base em value.
 $em-base: 16px !default;
 
+
+
+/***************************************
+* What does it do: strips unit
+* Notes: Remove! Why is this like this?  Also redefined everywhere
+* Usage count: 1 in header
+****************************************/
 // It strips the unit of measure and returns it
 @function strip-unit($num) {
   @return math.div($num, ($num * 0 + 1));
@@ -182,6 +234,12 @@ $em-base: 16px !default;
   @return $value;
 }
 
+
+/***************************************
+* What does it do: returns em values
+* Notes: multiple copies of this function everywhere
+* Usage count: depends on what file it's in
+****************************************/
 @function em-calc($values, $base-value: $em-base) {
   $max: length($values);
 
@@ -205,6 +263,9 @@ $em-base: 16px !default;
 // @function remCalc($pxWidth) {
 //   @return $pxWidth / $rem-base * 1rem;
 // }
+
+/****************************  Below should be the real contents of this particular file  **************************************/
+
 
 // We use these to control various global styles
 $body-bg: #fff !default;
@@ -262,6 +323,9 @@ $large: "only screen and (min-width:#{$large-screen})" !default;
 $landscape: "only screen and (orientation: landscape)" !default;
 $portrait: "only screen and (orientation: portrait)" !default;
 
+
+
+/****************************  UNUSED, REMOVE BELOW **************************************/
 // Used to provide media query values for javascript components.
 meta.foundation-mq-small {
   font-family: $small;
@@ -278,6 +342,8 @@ meta.foundation-mq-large {
   width: $large-screen;
 }
 
+/****************************  ^^^ REMOVE ^^^ **************************************/
+
 //We use this as cursors values for enabling the option of having custom cursors in the whole site's stylesheet
 $cursor-crosshair-value: crosshair !default;
 $cursor-default-value: default !default;
@@ -285,6 +351,9 @@ $cursor-pointer-value: pointer !default;
 $cursor-help-value: help !default;
 $cursor-text-value: text !default;
 
+
+
+/****************************  Below is/should be handled by _reset  **************************************/
 
 @if $include-html-global-classes {
 
