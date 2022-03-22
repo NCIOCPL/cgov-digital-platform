@@ -292,22 +292,12 @@ a.learn-more {
     flex-grow: 1;
     justify-content: flex-start;
 
-    a.arrow-link-white {
-      /* targets 'Resources For' guide card to match 'About Cancer' li styling */
-      &::before {
-        @include svg-sprite(chevron-circle-lt-blue, $rotate: right);
-      }
-      &:hover::before {
-        @include svg-sprite(chevron-circle-red, $rotate: right);
-      }
-    }
     .card__view-more {
       /* targets last li to separate list from 'learn/view more' links  */
 
       padding: 3em 0 0.5em;
       margin-bottom: 0;
 
-      a.arrow-link-white,
       a.arrow-link {
         /* targets last li item and adds dk blue chevron */
         &::before {
