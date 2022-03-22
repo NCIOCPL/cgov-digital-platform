@@ -26,24 +26,12 @@ a.arrow-link {
 	  }
 }
 
-a.arrow-link-white {
-	@extend a.arrow-link;
-	padding-right: 26px;
-}
-
-@include bp(medium-up) {
-	a.arrow-link-white {
-		&::before {
-			@include svg-sprite(chevron-circle-white, $rotate:right);
-		}
-	}
-}
 /**** Styles for arrow links inside version toggle button ****/
 a.toggle-arrow-link {
 	&::after {
 		content: "";
 		position: absolute;
-		right: 2%;					
+		right: 2%;
 		@include svg-sprite(chevron-circle-white,$rotate:right);
 	}
 	@media only screen and (max-width: 709px) {
