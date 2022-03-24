@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Global Foundation Mixins
 //
@@ -161,7 +163,7 @@ $em-base: 16px !default;
 
 // It strips the unit of measure and returns it
 @function strip-unit($num) {
-  @return $num / ($num * 0 + 1);
+  @return math.div($num, ($num * 0 + 1));
 }
 
 // New Syntax, allows to optionally calculate on a different base value to counter compounding effect of em's.
@@ -175,7 +177,7 @@ $em-base: 16px !default;
 // em-calc((16px, 32px, 48), 8px);
 
 @function convert-to-em($value, $base-value: $em-base)  {
-  $value: strip-unit($value) / strip-unit($base-value) * 1em;
+  $value: math.div(strip-unit($value), strip-unit($base-value)) * 1em;
   @if ($value == 0em) { $value: 0; } // Turn 0em into 0
   @return $value;
 }

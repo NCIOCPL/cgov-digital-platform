@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Form Variables
 //
@@ -477,7 +479,7 @@ span {
 }
 
 span.radio input[type="radio"], span.checkbox input[type="checkbox"] {
-	margin-top: $custom-form-radiocheck-size / 2;
+	margin-top: math.div($custom-form-radiocheck-size, 2);
 }
 
 .radio {
@@ -502,7 +504,7 @@ span.radio input[type="radio"], span.checkbox input[type="checkbox"] {
 	@include radiocheck('checkbox');
 
 	input[type="checkbox"] {
-		margin-top: $custom-form-radiocheck-size / 2;
+		margin-top: math.div($custom-form-radiocheck-size, 2);
 
 		+ label:before {
 			@include radius($custom-form-checkbox-radius);
@@ -702,7 +704,7 @@ fieldset fieldset .legend
 	}
 
 	.checkbox {
-	
+
 		label {
 			line-height: 1.4em;
 			word-wrap: break-word;
@@ -710,7 +712,7 @@ fieldset fieldset .legend
 	}
 
 	@include bp(medium-down) {
-	
+
 		.row {
 			display: flex;
 			flex-direction: column;
@@ -744,13 +746,13 @@ fieldset fieldset .legend
 		fieldset {
 			.row:first-child{
 				flex-direction: row;
-	
+
 				.columns {
 					margin: 0;
 				}
 			}
 		}
-		
+
 
 		.label.right, label.right {
 			text-align: left;
@@ -759,13 +761,13 @@ fieldset fieldset .legend
 		.checkbox {
 			width: 100%;
 		}
-		
+
 		.genetics-form__options {
-	
+
 			.columns {
 				flex-direction: column;
 			}
-		}    
+		}
 	}
 
 	@include bp(xtra-small) {

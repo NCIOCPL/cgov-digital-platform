@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Icons
 //
@@ -15,7 +17,7 @@ $text-icon-help-border-size: 2px;
 	display: inline-block;
 	height: em-calc($text-icon-help-size, 16px);
 	width: em-calc($text-icon-help-size, 16px);
-	padding: (em-calc($text-icon-help-size, 16px) - 1em) / 2 - em-calc($text-icon-help-border-size, 16px)/2;
+	padding: math.div((em-calc($text-icon-help-size, 16px) - 1em), 2) - math.div(em-calc($text-icon-help-border-size, 16px), 2);
 	text-align: center;
 	border: $text-icon-help-border-size solid $color-link;
 	border-radius: 1em;
