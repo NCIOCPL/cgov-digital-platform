@@ -48,9 +48,9 @@ gulp.task("variant_sprites", async () => {
         }
       };
 
-      spriteConfig.mode.css = Object.assign(
+      spriteConfig.mode.view = Object.assign(
         {},
-        spriteConfig.mode.css,
+        spriteConfig.mode.view,
         variantOverrides
       );
 
