@@ -1,0 +1,194 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "SBIR Home Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_browser_title:
+    value: "SBIR"
+  field_pretty_url:
+    value: ""
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_page_style:
+    value: "standard"
+  field_date_posted: "2021-11-10"
+  field_date_reviewed: "2021-11-10"
+  field_date_updated: "2021-11-10"
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_landing_contents:
+    ######## Begin Raw HTML Block ###########
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="accent-neutral">
+              <div class="row flex-columns borderless-container">
+                <div class="borderless-card">
+                  <div class="columns align-center">
+                    <div class="sbir-home-header-container">
+                      <!-- Tagline -->
+                      <div class="sbir-home-header-content">
+                        <div class="sbir-page-title">
+                          <p><strong>Funding for small businesses</strong><br /> <span>with  next-generation cancer technologies.</span></p>
+                        </div>
+                        <div><a href="#" title="Read more about something" class="borderless-button">GET STARTED</a></div>
+                      </div>
+                      <!-- End Tagline -->
+                      <!-- Image -->
+                      <div class="sbir-home-header-image">
+                        <img src="https://ncigovcdode446.prod.acquia-sites.com/sites/default/files/cgov_image/media_image/2021-11/hero-blue_0.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      ######## End Raw HTML Block ###########
+      ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Anemia and Cancer Treatment'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Placeholder Collaboration Image'
+      field_override_card_title:
+        - value: "Highlight section for specific, timely funding opportunities"
+      field_override_card_longer_descr:
+        - value: "Timely highlight of new funding opportunity. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      field_image_position:
+        - value: "left"
+      field_button_display:
+        - value: "yes"
+      field_button_text:
+        - value: "Read More"
+      field_card_theme:
+        - value: "accent-warm"
+      ######## End Borderless card ###########
+      ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Cgov Article - English'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Placeholder Vaccine'
+      field_override_card_title:
+        - value: "Success Story: NovaRx"
+      field_override_card_longer_descr:
+        - value: "Using SBIR funding from 2002 to the present, San Diego-based NovaRx Corp. was able to successfully transition its vaccine platform technology from years of early research to clinical trials that have shown promising results. NovaRx is developing several vaccines using this platform technology, including Lucanix™, a vaccine for non-small-cell lung cancer that will soon begin recruiting for phase III clinical trials."
+      field_image_position:
+        - value: "right"
+      field_button_display:
+        - value: "yes"
+      field_button_text:
+        - value: "Read More"
+      field_card_theme:
+        - value: "accent-cool"
+    ######## End Borderless card ###########
+    ######## Begin content block ###########
+    - entity: 'paragraph'
+      type: "cgov_content_block"
+      field_html_content:
+        - format: "full_html"
+          value: |
+              <div class="row flex-columns borderless-container">
+                <div class="borderless-card sbir-information-sessions-container">
+                  <div class="columns align-center">
+                    <div class="sbir-information-sessions">
+                      <!-- Title -->
+                      <div class="centered-container">
+                        <h2>Information Sessions</h2>
+                      </div>
+                      <!-- Content -->
+                      <div class="sbir-information-sessions-content-container">
+                        <div class="sbir-information-session-content-left">
+                          <div class="sbir-information-sessions-icon"></div>
+                          <div class="sbir-information-sessions-text">
+                            <p><strong>NCI Cancer Centers Webinar</strong><br />
+                            September 8, 2021<br />
+                            1:00 PM - 2:30 PM</p>
+                          </div>
+                        </div>
+                        <div class="sbir-information-session-content-right">
+                          <div class="sbir-information-sessions-icon"></div>
+                          <div class="sbir-information-sessions-text">
+                            <p><strong>NCI SBIR x FDA Contract<br />
+                            Solicitation Webinar</strong><br />
+                            August 24, 2021<br />
+                            2:00 PM - 3:00 PM</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    ######## End content block ###########
+    ######## Borderless card ###########
+    - entity: 'paragraph'
+      type: "cgov_card_borderless"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_cthp'
+                title: 'Breast Cancer—Patient Version'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Test Circle Image PNG'
+      field_override_card_title:
+        - value: "Success Story: Naviscan"
+      field_override_card_longer_descr:
+        - value: "With help from NCI’s Small Business Innovative Research (SBIR) office providing phase I and II funding, Naviscan, Inc., based in San Diego, CA, was able to turn a hunch into a prototype of the company’s flagship product PEM Flex® PET Scanner. The PEM Flex® PET Scanner now allows physicians to visualize breast tumors about the size of a grain of rice."
+      field_image_position:
+        - value: "left"
+      field_button_display:
+        - value: "yes"
+      field_button_text:
+        - value: "Read More"
+      field_card_theme:
+        - value: "accent-cool"
+    ######## End Borderless card ###########
+
