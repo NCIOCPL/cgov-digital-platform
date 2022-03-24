@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /********************* BEGIN Content Styles ******************************************/
 
 .main-content {
@@ -213,7 +215,7 @@ li {
 			top: 0.25em; // to reposition after floating
 			margin: 0 -0.2em;
 			font-size: 1.1em;
-			line-height: (1em / 1.1);
+			line-height: math.div(1em, 1.1);
 		}
 
 	}
