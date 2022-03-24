@@ -134,7 +134,7 @@ a.borderless-button {
 
 //accent colors
 .accent-cool {
-  color: $white;
+  //color: $white;
   background-color: $capri;
   .borderless-card {
     color: $white;
@@ -149,11 +149,34 @@ a.borderless-button {
     h2 >a {
       color: $white;
     }
+    h1 > a,
+    h2 > a {
+      &:hover {
+        color: $white;
+        //color: $verydarkblue;
+        text-decoration: underline;
+      }
+    }
   }
 }
 .accent-warm {
-  background-color: $lemon;
+  background-color: $white;
 }
+.accent-warm,
+.accent-cool,
+.accent-neutral {
+  .borderless-card {
+    .borderless-button,
+    a.borderless-button {
+      @include button-style($darkblue, 5px);
+      &:hover {
+        text-decoration: none;
+        background-color: $lighterblue;
+      }
+    }
+  }
+}
+
 .default-borderless-theme {
   background-color: transparent;
 }
