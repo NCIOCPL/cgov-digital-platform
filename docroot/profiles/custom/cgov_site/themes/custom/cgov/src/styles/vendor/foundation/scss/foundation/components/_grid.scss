@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Grid Variables
 //
@@ -12,7 +14,7 @@ $total-columns: 12 !default;
 //
 
 @function gridCalc($colNumber, $totalColumns) {
-  @return percentage(($colNumber / $totalColumns));
+  @return percentage(math.div($colNumber, $totalColumns));
 }
 
 //
@@ -25,8 +27,8 @@ $total-columns: 12 !default;
   // use @include grid-row(nest); to include a nested row
   @if $behavior == nest {
     width: auto;
-    margin-#{$default-float}: -($column-gutter/2);
-    margin-#{$opposite-direction}: -($column-gutter/2);
+    margin-#{$default-float}: -(math.div($column-gutter, 2));
+    margin-#{$opposite-direction}: -(math.div($column-gutter, 2));
     margin-top: 0;
     margin-bottom: 0;
     max-width: none;
@@ -76,8 +78,8 @@ $total-columns: 12 !default;
   // Gutter padding whenever a column isn't set to collapse
   // (use $collapse:null to do nothing)
   @else if $collapse == false {
-    padding-left: $column-gutter / 2;
-    padding-right: $column-gutter / 2;
+    padding-left: math.div($column-gutter, 2);
+    padding-right: math.div($column-gutter, 2);
   }
 
   // If a column number is given, calculate width
@@ -119,7 +121,7 @@ $total-columns: 12 !default;
     &.collapse {
        > .column,
        > .columns { @include grid-column($collapse:true); }
-    
+
       .row {margin-left:0; margin-right:0;}
     }
 

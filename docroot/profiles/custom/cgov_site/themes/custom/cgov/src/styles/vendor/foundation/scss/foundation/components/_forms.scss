@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Form Variables
 //
@@ -64,17 +66,17 @@ $glowing-effect-color: $input-focus-border-color !default;
 
 // We use this mixin to give us form styles for rows inside of forms
 @mixin form-row-base {
-  .row { margin: 0 ((-$form-spacing) / 2);
+  .row { margin: 0 math.div((-$form-spacing), 2);
 
     .column,
-    .columns { padding: 0 $form-spacing / 2; }
+    .columns { padding: 0 math.div($form-spacing, 2); }
 
     // Use this to collapse the margins of a form row
     &.collapse { margin: 0;
 
       .column,
       .columns { padding: 0; }
-      input { 
+      input {
         -moz-border-radius-bottom#{$opposite-direction}: 0;
         -moz-border-radius-top#{$opposite-direction}: 0;
         -webkit-border-bottom-#{$opposite-direction}-radius: 0;
@@ -86,7 +88,7 @@ $glowing-effect-color: $input-focus-border-color !default;
   input.column,
   input.columns,
   textarea.column,
-  textarea.columns { padding-#{$default-float}: $form-spacing / 2; }
+  textarea.columns { padding-#{$default-float}: math.div($form-spacing, 2); }
 }
 
 // We use this mixin to give all basic form elements their style
@@ -102,7 +104,7 @@ $glowing-effect-color: $input-focus-border-color !default;
   display: block;
   font-size: $input-font-size;
   margin: 0 0 $form-spacing 0;
-  padding: $form-spacing / 2;
+  padding: math.div($form-spacing, 2);
   height: ($input-font-size + ($form-spacing * 1.5) - em-calc(1));
   width: 100%;
   @include box-sizing(border-box);
@@ -140,7 +142,7 @@ $glowing-effect-color: $input-focus-border-color !default;
   }
   @else if $alignment == inline {
     margin: 0 0 $form-spacing 0;
-    padding: $form-spacing / 2 + em-calc($input-border-width * 2) 0;
+    padding: math.div($form-spacing, 2) + em-calc($input-border-width * 2) 0;
   }
 }
 

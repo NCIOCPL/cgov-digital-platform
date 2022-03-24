@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '~Core/styles/breakpoints';
 // @import '~Core/styles/fonts';
 @import '~Core/styles/variables';
@@ -25,7 +26,7 @@
 						width: nth(map-get($nav-item, width), $bp) + nth($nav-item-width-add, $bp);
 					};
 				}
-				line-height: $nav-max-lines / map-get($nav-item, lines) + 0em;
+				line-height: math.div($nav-max-lines, map-get($nav-item, lines)) + 0em;
 			}
 		}
 	}
@@ -258,7 +259,7 @@
 		> li {
 			margin-top:0;
 			> ul {
-				width: 100%/3 - 2%;
+				width: math.div(100%, 3) - 2%;
 				margin-right: -4px;
 
 				&:first-child {
