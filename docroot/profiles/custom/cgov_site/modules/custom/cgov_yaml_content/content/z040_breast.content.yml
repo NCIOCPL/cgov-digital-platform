@@ -155,6 +155,39 @@
                   - 'node'
                   - type: 'pdq_cancer_information_summary'
                     title: 'Genetics of Breast and Gynecologic Cancers (PDQ®)–Health Professional Version'
+        ## External Links
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Title"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Title"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.hhs.gov'
         ## Media Links
         - entity: 'paragraph'
           type: "cgov_media_link"
