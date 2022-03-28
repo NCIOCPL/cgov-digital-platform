@@ -3,6 +3,11 @@
 @import "./environments/percussion";
 @import "./breakpoints";
 
+.sbir-mobile-menu-bar {
+  @include flexbox();
+  @include property-prefix(justify-content, space-between);
+}
+
 .sbir-page-title {
   font-family: $montserrat-font-stack;
   font-size: 34px;
