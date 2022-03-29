@@ -24,38 +24,35 @@
     line-height: 33px;
   }
 }
-.sbir-home-header-container {
+.sbir-home-header {
   @include flexbox();
   @include bp(small) {
     @include property-prefix(flex-direction, column);
   }
 }
-
-.sbir-home-header-image {
+.sbir-home-header__image {
   @include bp(small) {
     margin-top: 8px;
     width: 66%;
   }
 }
 
-.sbir-information-sessions-container {
+.sbir-information-sessions {
   width: 100%;
 }
-.sbir-information-sessions {
+.sbir-information-sessions__inner-container {
   @include flexbox();
   @include property-prefix(flex-direction, column);
   @include property-prefix(align-items, center);
   width: 100%;
 }
-
-.sbir-information-sessions-content-container {
+.sbir-information-sessions__content-container {
   @include flexbox();
   @include property-prefix(justify-content, space-between);
   color: $light-gray-text;
   @include bp(large-up) {
     width: 76%;
   }
-
   @include bp(medium-down) {
     width: 100%;
   }
@@ -64,18 +61,18 @@
     margin-top: 16px;
   }
 }
-.sbir-information-session-content-left,
-.sbir-information-session-content-right {
+.sbir-information-sessions__content-container__left,
+.sbir-information-sessions__content-container__right {
   @include flexbox();
   @include property-prefix(align-items, center);
   @include bp(small) {
     @include property-prefix(flex-direction, column);
   }
 }
-.sbir-information-sessions-icon {
+.sbir-information-sessions__icon {
   @include standard-background-icon($icons + 'event-placeholder-icon.png',$icons + 'event-placeholder-icon.png',74px,74px,74px,74px,74px,74px,inline-table,center);
 }
-.sbir-information-sessions-text {
+.sbir-information-sessions__text {
   @include bp(large-up) {
     margin-left: 26px;
   }
