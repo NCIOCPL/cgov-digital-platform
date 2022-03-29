@@ -1,96 +1,96 @@
 // Set up appearance for proactive live help messages.
 .ProactiveLiveHelpPrompt {
-	position: fixed;
-	top:40%;
-	left:50%;
-	padding: 20px 15px 12px 15px;
-	width:400px;
-	border: 6px solid #2A7CB8;
-	z-index: 1000;
-	transform: translateY(-50%) translateX(-50%);
-	font:normal .875em $montserrat-font-stack;
-	color:#606060;
-	background: #fff url($backgrounds + 'proactive-chat-woman.jpg') no-repeat bottom right;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  padding: 20px 15px 12px 15px;
+  width: 400px;
+  border: 6px solid #2a7cb8;
+  z-index: 1000;
+  transform: translateY(-50%) translateX(-50%);
+  font: normal 0.875em $montserrat-font-stack;
+  color: $dgrey00;
+  background: #fff url($backgrounds + "proactive-chat-woman.jpg") no-repeat
+    bottom right;
 
-	#bar button {
-		background: #086F89;
-		color: #ffffff;
-		border: none;
-        margin: 0;
-        min-height: 0;
-		font:bold 1.1em $montserrat-font-stack;
-		padding: .35em 1.8em;
-		border-radius: .2em;
-		cursor: pointer;
-		-webkit-appearance: none;
-		-moz-appearance: none;
+  #bar button {
+    background: #086f89;
+    color: #ffffff;
+    border: none;
+    margin: 0;
+    min-height: 0;
+    font: bold 1.1em $montserrat-font-stack;
+    padding: 0.35em 1.8em;
+    border-radius: 0.2em;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
 
-	}
+  h2 {
+    margin: 0;
+    width: 95%;
+  }
 
-	h2 {
-		margin:0;
-		width: 95%;
-	}
+  form {
+    margin-bottom: 0;
+  }
 
-	form {
-		margin-bottom: 0;
-	}
+  .content {
+    width: 60%;
+    font-size: 17px;
 
-	.content {
-		width:60%;
-		font-size: 17px;
+    p {
+      margin-top: 12px;
+      line-height: 1.12;
+    }
+  }
 
-		p {
-			margin-top: 12px;
-			line-height: 1.12;
-		}
-	}
+  .live-help {
+    content: " ";
+    @include svg-sprite(live-help-logo);
+    font-size: 60%;
+    margin-left: 20px;
+    margin-top: 12px;
+  }
 
-	.live-help {
-		content: " ";
-		@include svg-sprite(live-help-logo);
-		font-size: 60%;
-		margin-left: 20px;
-		margin-top: 12px;
-	}
+  .spanish-livehelp {
+    .live-help {
+      @include svg-sprite(live-help-logo-spanish);
+      font-size: 60%;
+      margin: 10px 35px 0 25px;
+    }
+  }
 
-	.spanish-livehelp {
-		.live-help {
-			@include svg-sprite(live-help-logo-spanish);
-			font-size: 60%;
-			margin: 10px 35px 0 25px;
-		}
-	}
+  .close {
+    position: absolute;
+    text-indent: -2000%; // Move the text portion very, very far offscreen.
+    right: 10px;
+    top: 10px;
+    display: inline-block;
+    @include svg-sprite(close-blue);
+  }
 
-	.close {
-		position: absolute;
-		text-indent: -2000%; // Move the text portion very, very far offscreen.
-		right: 10px;
-		top: 10px;
-		display: inline-block;
-		@include svg-sprite(close-blue);
-	}
+  @include bp(small) {
+    width: 300px;
+    background-size: 53%;
+    background-position: 115% 100%;
 
-	@include bp(small) {
-		width: 300px;
-		background-size: 53%;
-		background-position: 115% 100%;
+    input {
+      padding: 0.35em 1.3em;
+    }
 
-		input {
-			padding: .35em 1.3em;
-		}
+    h2 {
+      width: 73%;
+    }
 
-		h2 {
-			width: 73%;
-		}
+    .content {
+      width: 73%;
+      font-size: 15px;
 
-		.content {
-			width:73%;
-			font-size: 15px;
-
-			p {
-				line-height: 1.2;
-			}
-		}
-	}
+      p {
+        line-height: 1.2;
+      }
+    }
+  }
 }
