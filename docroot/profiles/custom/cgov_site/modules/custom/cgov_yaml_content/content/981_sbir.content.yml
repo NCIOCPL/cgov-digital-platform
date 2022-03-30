@@ -33,6 +33,30 @@
       field_raw_html:
         - format: "raw_html"
           value: |
+            <style type'"text/css">
+            .sbir-page-title {
+              font-family: Montserrat, "Avant Garde", Arial, sans-serif;
+              font-size: 34px;
+              line-height: 41px;
+              margin-bottom: 0.75em;
+            }
+            .sbir-home-header {
+              display: flex;
+            }
+            @media only screen and (max-width:640px) {
+              .sbir-page-title {
+                font-size: 28px;
+                line-height: 33px;
+              }
+              .sbir-home-header {
+                flex-direction: column;
+              }
+              .sbir-home-header__image {
+                margin-top: 8px;
+                width: 66%;
+              }
+            }
+            </style>
             <div class="accent-neutral">
               <div class="row flex-columns borderless-container">
                 <div class="borderless-card">
@@ -126,6 +150,78 @@
       field_html_content:
         - format: "full_html"
           value: |
+            <style type'"text/css">
+            .sbir-information-sessions {
+              width: 100%;
+            }
+            .sbir-information-sessions__inner-container {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              width: 100%;
+            }
+            .sbir-information-sessions__content-container {
+              display: flex;
+              justify-content: space-between;
+              color: #666666;
+            }
+            .sbir-information-sessions__content-container__left,
+            .sbir-information-sessions__content-container__right {
+               display: flex;
+               align-items: center;
+            }
+            .sbir-information-sessions__icon {
+              background-size: 74px 74px;
+              background-image: url("/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/event-placeholder-icon.png");
+              height: 74px;
+              width: 74px;
+              background-repeat: no-repeat;
+              background-position: center;
+              display: inline-table;
+              content: " ";
+              margin-right: auto;
+              margin-left: auto;
+            }
+            .white-background {
+              background: #fff;
+            }
+             @media only screen and (min-width:1025px) {
+                .sbir-information-sessions__content-container {
+                  width: 76%;
+                }
+                .sbir-information-sessions__text {
+                  margin-left: 26px;
+                }
+            }
+             @media only screen and (max-width:1024px) {
+                .sbir-information-sessions__content-container {
+                  width: 100%;
+                }
+                .sbir-information-sessions__text {
+                  margin-left: 16px;
+                }
+            }
+            @media only screen and (min-width:641px) {
+               .sbir-information-sessions__text {
+                 margin-left: 16px;
+                 width: 65%;
+               }
+             }
+            @media only screen and (max-width:640px) {
+              .sbir-information-sessions__content-container {
+                flex-direction: column;
+                margin-top: 16px;
+              }
+            .sbir-information-sessions__content-container__left,
+            .sbir-information-sessions__content-container__right {
+               flex-direction: column;
+              }
+             .sbir-information-sessions__text {
+                text-align: center;
+                margin: 16px 0;
+            }
+            }`
+            </style>
             <div class="white-background">
               <div class="row flex-columns borderless-container">
                 <div class="borderless-card sbir-information-sessions">
