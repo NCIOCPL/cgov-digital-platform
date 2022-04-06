@@ -28,11 +28,7 @@ import "Core/libraries/enlarge/enlarge";
 import "Core/libraries/preventEnter/jquery.nci.prevent_enter";
 
 import { buildOTP, makeOutline } from "Core/libraries/pageOutline/NCI.page";
-import search from "Libraries/search/search";
-import mobilemenu from "Libraries/mainNav/mobilemenu";
-import sectionNav from "Libraries/sectionNav/sectionNav";
 import exitDisclaimer from "Libraries/exitDisclaimer/exitDisclaimer";
-import backToTop from "Core/libraries/backToTop/backToTop";
 import { makeAllAccordions } from "Core/libraries/accordion/accordion";
 import tableToggle from "Core/libraries/tableToggle/tableToggle";
 import flexVideo from "Core/libraries/videoPlayer/flexVideo";
@@ -46,10 +42,7 @@ import {
 } from "Core/libraries/liveHelpPopup";
 import ProactiveLiveHelp from "Core/libraries/liveHelpPopup/ProactiveLiveHelp";
 import sortablejs from "Core/libraries/sortableTables";
-import pageOptions from "Libraries/pageOptions";
 
-import SiteWideSearch from "Libraries/sitewideSearch/sitewideSearch";
-import megaMenuModule from "Libraries/megamenu/megamenu";
 import DeepLinkPatch from "Core/libraries/deepLinkPatch/deepLinkPatch";
 import linkAudioPlayer from "Core/libraries/linkAudioPlayer/linkAudioPlayer";
 import videoCarousel from "Core/libraries/videoCarousel/video-carousel";
@@ -66,36 +59,11 @@ const shouldShowFloatingDelighters = window.CDEConfig.showFloatingDelighters;
 
 //DOM Ready event
 const onDOMContentLoaded = () => {
-  // /*** BEGIN header component ***/
-
-  // Menu stuff
-  mobilemenu();
-  megaMenuModule();
-
-  // This initializes jQuery UI Autocomplete on the site-wide search widget.
-  SiteWideSearch();
-
-  backToTop();
-
-  /*** BEGIN mobile nav ("off-canvas flyout functionality") ***/
-
-  // OCEPROJECT-3098 HACK to fix the Spanish mega menu on the Spanish homepage
-  if (/^\/espanol\/?$/.test(location.pathname)) {
-    $("#mega-nav .contains-current").removeClass("contains-current");
-  }
-
-  sectionNav();
-
-  search.init();
-
-  /*** END mobile nav ***/
 
   /*** BEGIN Exit Disclaimer
    * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
    ***/
   exitDisclaimer();
-
-  pageOptions();
 
   /*** BEGIN table toggling
    * This allows for toggling between tables.
