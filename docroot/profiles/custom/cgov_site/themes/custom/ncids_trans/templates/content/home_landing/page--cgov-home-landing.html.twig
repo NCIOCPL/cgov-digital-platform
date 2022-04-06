@@ -1,15 +1,16 @@
 {{ attach_library('ncids_trans/homelanding') }}
 {% set page_type = 'node--type-' ~ node.bundle|clean_class %}
 
-{{page.ncids_banner}}
+{{ page.ncids_banner }}
 <!-- NOTIFICATIONS HERE -->
-{{page.ncids_header}}
+{{ page.ncids_header }}
 
-
-<div id="page">
-  <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content type {{ page_type }}" id="content" tabindex="0">
-    {{ page.content }}
+<div id="page" class="grid-container">
+  <div class="grid-row">
+    <!-- Begin MAIN CONTENT AREA -->
+    <div class="main-content type {{ page_type }}" id="content" tabindex="0">
+      {{ page.content }}
+    </div>
   </div>
 </div>
 {{ page.ncids_footer }}

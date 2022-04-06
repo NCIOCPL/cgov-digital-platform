@@ -1,32 +1,32 @@
-{{ page.notification_banner }}
 {% set page_type = 'node--type-' ~ node.bundle|clean_class %}
 
-{{page.ncids_banner}}
+{{ page.ncids_banner }}
 <!-- NOTIFICATIONS HERE -->
-{{page.ncids_header}}
+{{ page.ncids_header }}
 
-<div id="page">
-
-  <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content {{ page_type }}" id="content" tabindex="0">
-    <div class="row general-page-body-container collapse">
-      <div class="large-12 columns">
+<div id="page" class="grid-container">
+  <div class="grid-row">
+    <!-- Begin MAIN CONTENT AREA -->
+    <div class="main-content {{ page_type }}" id="content" tabindex="0">
+      <div class="row general-page-body-container collapse">
+        <div class="large-12 columns">
+          <div class="row">
+            {{ page.ncids_breadcrumb }}
+          </div> <!-- END "row" -->
+        </div> <!-- END "large-12 columns" -->
         <div class="row">
-          {{ page.ncids_breadcrumb }}
-        </div> <!-- END "row" -->
-      </div> <!-- END "large-12 columns" -->
-      <div class="row">
-        <!--    SECTION NAVIGATION -->
-        {% if page.ncids_sidenav %}
+          <!-- SECTION NAVIGATION -->
+          {% if page.ncids_sidenav %}
             {{ page.ncids_sidenav }}
-        {% endif %}
-        {# TODO: technically if there is no left nav we change some of the classes below. #}
-        <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
-          {{ page.content }}
+          {% endif %}
+          {# TODO: technically if there is no left nav we change some of the classes below. #}
+          <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
+            {{ page.content }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-dsadasdas
+
 {{ page.ncids_footer }}
