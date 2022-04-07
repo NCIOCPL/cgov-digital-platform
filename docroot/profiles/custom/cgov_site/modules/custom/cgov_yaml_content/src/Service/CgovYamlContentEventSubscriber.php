@@ -526,16 +526,27 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // processed yaml content array. We need to pull it from here. (If
     // it exists).
     $yamlContent = $event->getContentData();
-    $savedEntityRegion = isset($yamlContent['region__CONFIG']) ? $yamlContent['region__CONFIG']['value'] : NULL;
-    if (!$savedEntityRegion) {
+    $fullRegionName = isset($yamlContent['region__CONFIG']) ? $yamlContent['region__CONFIG']['value'] : NULL;
+    if (!$fullRegionName) {
       return;
     }
 
-    $theme = $this->themeManager->getActiveTheme();
+    // Allow the dev to reference the region as <theme_id>:<region_id>
+    // or just <region_id>. This allows us to import blocks into
+    // multiple themes rather than just the default.
+    $splitRegionName = explode(':', $fullRegionName);
+
+    if (count($splitRegionName) > 2) {
+      return $this->throwParamError('Unable to add block to region. Check region name.', "", $fullRegionName);
+    }
+
+    $savedEntityRegion = count($splitRegionName) === 1 ? $splitRegionName[0] : $splitRegionName[1];
+    $themeName = count($splitRegionName) === 1 ? $this->themeManager->getActiveTheme()->getName() : $splitRegionName[0];
+
     // We only want to create a block when a valid default region
     // is specified.
-    $regions = $theme->getRegions();
-    $isValidRegion = in_array($savedEntityRegion, $regions);
+    $regions = system_region_list($themeName);
+    $isValidRegion = array_key_exists($savedEntityRegion, $regions);
     if (!$isValidRegion) {
       return;
     }
@@ -547,7 +558,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       'plugin' => 'block_content:' . $savedEntity->uuid(),
       'provider' => 'block_content',
       'region' => $savedEntityRegion,
-      'theme' => $theme->getName(),
+      'theme' => $themeName,
       'weight' => 0,
       'status' => TRUE,
       'settings' => [
