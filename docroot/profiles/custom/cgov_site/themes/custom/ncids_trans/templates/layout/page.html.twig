@@ -1,27 +1,25 @@
-{% set page_type = 'node--type-' ~ node.bundle|clean_class %}
-
 {{ page.ncids_banner }}
 <!-- NOTIFICATIONS HERE -->
 {{ page.ncids_header }}
 
 <div id="page" class="grid-container">
-  <div class="grid-row">
-    <!-- Begin MAIN CONTENT AREA -->
-    <div class="main-content {{ page_type }}" id="content" tabindex="0">
-      <div class="row general-page-body-container collapse">
-        <div class="large-12 columns">
-          <div class="row">
-            {{ page.ncids_breadcrumb }}
-          </div> <!-- END "row" -->
-        </div> <!-- END "large-12 columns" -->
-        <div class="row">
+  <!-- Begin MAIN CONTENT AREA -->
+  <div class="main-content" id="content">
+    <div class="general-page-body-container collapse">
+      {{ page.ncids_breadcrumb }}
+
+      <div class="grid-row grid-gap">
+        <div class="desktop:grid-col-3">
           <!-- SECTION NAVIGATION -->
           {% if page.ncids_sidenav %}
             {{ page.ncids_sidenav }}
           {% endif %}
-          {# TODO: technically if there is no left nav we change some of the classes below. #}
-          <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
-            {{ page.content }}
+        </div>
+        <div class="{% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
+          <div class="legacy">
+            <main class="contentzone has-section-nav" id="main-content">
+              {{ page.content }}
+            </main>
           </div>
         </div>
       </div>
