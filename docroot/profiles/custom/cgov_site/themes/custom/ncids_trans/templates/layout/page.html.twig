@@ -3,24 +3,22 @@
 {{ page.ncids_header }}
 
 <div id="page" class="grid-container">
-  <!-- Begin MAIN CONTENT AREA -->
   <div class="main-content" id="content">
     <div class="general-page-body-container collapse">
       {{ page.ncids_breadcrumb }}
 
       <div class="grid-row grid-gap">
-        <div class="desktop:grid-col-3">
+        {% if page.ncids_sidenav %}
           <!-- SECTION NAVIGATION -->
-          {% if page.ncids_sidenav %}
+          <div class="desktop:grid-col-3">
             {{ page.ncids_sidenav }}
-          {% endif %}
-        </div>
-        <div class="{% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
-          <div class="legacy">
-            <main class="contentzone has-section-nav" id="main-content">
-              {{ page.content }}
-            </main>
           </div>
+        {% endif %}
+        <div class="legacy {% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
+          <!-- Begin MAIN CONTENT AREA -->
+          <main class="contentzone has-section-nav" id="main-content">
+            {{ page.content }}
+          </main>
         </div>
       </div>
     </div>

@@ -6,10 +6,12 @@
 {{ page.ncids_header }}
 
 <div id="page" class="grid-container">
-  <div class="grid-row">
-    <!-- Begin MAIN CONTENT AREA -->
-    <div class="main-content specialReport {{ page_type }}" id="content" tabindex="0">
-      {{ page.content }}
+  <div class="main-content specialReport {{ page_type }}" id="content">
+    <div class="legacy">
+      <!-- Begin MAIN CONTENT AREA -->
+      <main id="main-content">
+        {{ page.content }}
+      </main>
     </div>
   </div>
 </div>

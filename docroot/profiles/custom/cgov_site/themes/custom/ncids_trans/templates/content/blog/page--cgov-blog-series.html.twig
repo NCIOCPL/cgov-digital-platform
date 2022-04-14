@@ -5,23 +5,24 @@
 {{ page.ncids_header }}
 
 <div id="page" class="grid-container">
-  <div class="grid-row">
-    <!-- Begin MAIN CONTENT AREA -->
-    <div class="main-content" id="content" tabindex="0">
-      <div class="row general-page-body-container collapse">
-        <div class="large-12 columns">
-          <div class="row">
-            {{ page.ncids_breadcrumb }}
-            <div id="blogPageOptionsOuterContainer">
-              {{ drupal_block('page_options') }}
-            </div>
-          </div> <!-- END "row" -->
-        </div> <!-- END "large-12 columns" -->
-        <div class="row">
-          {% if page.ncids_sidenav %}
+  <div class="main-content" id="content">
+    <div class="general-page-body-container collapse">
+      {{ page.ncids_breadcrumb }}
+      <div id="blogPageOptionsOuterContainer">
+        {{ drupal_block('page_options') }}
+      </div>
+
+      <div class="grid-row grid-gap">
+        {% if page.ncids_sidenav %}
+          <div class="desktop:grid-col-3">
             {{ page.ncids_sidenav }}
-          {% endif %}
-          {{ page.content }}
+          </div>
+        {% endif %}
+        <div class="legacy {% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
+          <!-- Begin MAIN CONTENT AREA -->
+          <main id="main-content">
+            {{ page.content }}
+          </main>
         </div>
       </div>
     </div>
