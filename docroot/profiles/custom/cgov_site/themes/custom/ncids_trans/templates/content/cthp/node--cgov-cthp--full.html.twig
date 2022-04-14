@@ -8,22 +8,17 @@
 {% set toggleText = (isPatient ? 'Go to Health Professional Version' : 'Go to Patient Version')|trans %}
 
 <div class="cthp-content">
-  <div class="row">
-    <div class="large-12 columns resize-content cthp-padding">
-      <!-- PAGE TITLE -->
-      <h1>{{ node.label }}</h1>
-      <!-- END PAGE TITLE -->
-      {{ drupal_block('page_options') }}
-      <div id="nvcgSlCTHPIntro">
-        {% if showToggle %}
-          <div class="cthp-version-toggle no-resize">
-            <a class="toggle-arrow-link" href="{{ url }}">{{ toggleText }}</a>
-          </div>
-        {% endif %}
-      </div>
-      {{ content.field_cthp_cards }}
+  <div class="resize-content position-relative">
+    <!-- PAGE TITLE -->
+    <h1>{{ node.label }}</h1>
+    <!-- END PAGE TITLE -->
+    <div id="nvcgSlCTHPIntro">
+      {% if showToggle %}
+        <div class="cthp-version-toggle no-resize">
+          <a class="toggle-arrow-link" href="{{ url }}">{{ toggleText }}</a>
+        </div>
+      {% endif %}
     </div>
-
+    {{ content.field_cthp_cards }}
   </div>
 </div>
-{# End Title Row#}

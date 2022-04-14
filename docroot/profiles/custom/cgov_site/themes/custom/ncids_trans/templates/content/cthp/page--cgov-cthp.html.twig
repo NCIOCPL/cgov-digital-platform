@@ -4,14 +4,15 @@
 <!-- NOTIFICATIONS HERE -->
 {{ page.ncids_header }}
 
-<div id="page" class="grid-container">
-  <div class="main-content {{ (node.field_audience.value == "patient")? 'cthp-patient-content' : 'cthp-hp-content' }}"
-       id="content">
-    <div class="cthp-padding">
-      {{ page.ncids_breadcrumb }}
-    </div>
+<div id="page">
+  <div class="grid-container">
+    {{ page.ncids_breadcrumb }}
+  </div>
 
-    <div class="legacy">
+  <div class="main-content  {{ (node.field_audience.value == "patient")? 'cthp-patient-content' : 'cthp-hp-content' }}"
+       id="content">
+
+    <div class="legacy grid-container">
       <!-- Begin MAIN CONTENT AREA -->
       <main id="main-content">
         {{ page.content }}
