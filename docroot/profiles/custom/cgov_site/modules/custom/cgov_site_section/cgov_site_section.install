@@ -88,3 +88,15 @@ function cgov_site_section_update_8002() {
 
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Update for Mobile navigation level settings.
+ *
+ * Set default value for Mobile navigation levels to display.
+ */
+function cgov_site_section_update_8003() {
+  // Set default value for mobile_levels_to_display.
+  $config = \Drupal::service('config.factory')->getEditable('cgov_common.settings');
+  $config->set('mobile_levels_to_display', 4);
+  $config->save();
+}
