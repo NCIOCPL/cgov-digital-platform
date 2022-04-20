@@ -38,6 +38,13 @@ figure {
     @extend %enlarge-infographic;
   }
 
+  &.image-small,
+  &.image-medium,
+  &.image-center {
+    float: none;
+    width: 100%;
+    margin: 0 0 1em 0;
+  }
   /* image right 25% width */
   &.image-right-small {
     float: right;
@@ -102,6 +109,14 @@ figure {
     &.image-left-small,
     &.image-right-medium,
     &.image-left-medium,
+    &.image-center {
+      float: none;
+      width: 100%;
+      margin: 0 0 1em 0;
+    }
+
+    &.image-small,
+    &.image-medium,
     &.image-center {
       float: none;
       width: 100%;
@@ -173,11 +188,11 @@ table figure {
 }
 
 .infographic-link-container {
-      display: none;
-      @include break(tablet-ls) {
-        display: block;
-      }
-    }
+  display: none;
+  @include break(tablet-ls) {
+    display: block;
+  }
+}
 
 // replacement for download data images
 a.data-download-btn {
