@@ -332,7 +332,7 @@ class CgovNavigationManager {
    * @param string $testFieldName
    *   Name of field to check for root status.
    *
-   * @return \Drupal\cgov_core\NavItemInterface|null
+   * @return \Drupal\cgov_core\NavItem|null
    *   Nav Item representing nav root term.
    */
   public function getNavRoot(string $testFieldName) {
