@@ -1,9 +1,3 @@
-// HACK to fix header spacing on factsheets only
-// Added by OCEPROJECT-3099, should be removed by OCEPROJECT-1983
-body.cgvfactsheet h2 p {
-	line-height: inherit;
-	margin: inherit;
-}
 
 // HACK for custom styling of the "Funding Announcements" card (currently on '/grants-training')
 // Added by OCEPROJECT-3031, should be removed by ??? (funding announcements becoming a dynamic list?)
@@ -33,8 +27,6 @@ body.cgvfactsheet h2 p {
 	}
 }
 
-
-
 // Hack to change spacing for thumbnail cards on Cancer Topic pages. They should have the styling of 3/9 columns instead of 2/10. Modifying widths of 2/10 for this specific instance. When the html is changed to 3/9, this hack can come out.
 @include bp(medium-up) {
 	.cgvtopicpage .card-thumbnail .small-2 {
@@ -46,6 +38,7 @@ body.cgvfactsheet h2 p {
 }
 
 
+
 // Hack to take away padding from Blog pages when in mobile. When the new classes are added, small-3, small-9, this should not be necessary anymore.
 @include bp(small) {
 	.medium-9 .post-info {
@@ -54,11 +47,25 @@ body.cgvfactsheet h2 p {
 	}
 }
 
-
-
 // Hotfix for OCEPROJECT-3933. The button min-width of 130px doesn't work in this instance because the container its in can be smaller than that.
 // Applies to /publications/dictionaries/cancer-drug.
 // HTML needs to be changed for this widget
 .dictionary-search .button {
 	min-width: inherit;
 }
+
+// This is a hack to rehide the comment policy on pages that aren't blog post pages with comments.
+// The redundant rule is being left in the blog partial until a final approach is determined (some
+// backend issues may need to be resolved). If you find this comment unchanged in 6 months, just
+// sigh, shake your head, and remove the redundant rule. BB 4/2018.
+
+// NOTE: The comment below about all.js is out of date and possibly predates the encapsulation of the
+// page specific templates. This feature now only works on BlogPostPages
+.blog-comment-policy {
+	display: none;
+	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
+	// @see all.js
+}
+
+
+

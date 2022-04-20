@@ -1,8 +1,8 @@
-@import '~Core/styles/breakpoint-mixins';
-@import '~Core/styles/colors';
-@import '~Core/styles/variables';
+@import "~Core/styles/colors";
+@import "~Core/styles/variables";
+@import "~Core/styles/breakpoint-mixins";
 @import "~Core/styles/environments/percussion";
-@import '../styles/sprites/svg-sprite';
+@import "../styles/sprites/svg-sprite";
 
 $cgov_path: "/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/dist/";
 
@@ -96,7 +96,8 @@ $landing-page-feature-card-link-color: $denim;
 $landing-page-guide-card-background: $marshmallow;
 $landing-page-guide-card-link-color: $graphite;
 $landing-page-guide-card-link-hover-color: $bronze;
-$landing-page-multimedia-background: url($cgov_path + "images/multimedia-background-blue.jpg") repeat;
+$landing-page-multimedia-background: url($cgov_path+"images/multimedia-background-blue.jpg")
+  repeat;
 $feature-secondary-background: $marshmallow;
 $content-view-button-background: $cobalt;
 $content-view-button-hover-background: $clementine;
@@ -119,8 +120,9 @@ $content-table-header-background: $icicle;
 $content-svg-guide-card-circle-arrow: chevron-circle-blue-theme;
 $content-svg-guide-card-circle-arrow-hover: chevron-circle-hover-blue-theme;
 $content-svg-external-link: external-link-blue-theme;
-$footer-background: url($backgrounds + "hexagon_molecular_structure_footer.png") no-repeat 130% 00px,
-linear-gradient(45deg, $cobalt, $aegean);
+$footer-background: url($backgrounds+"hexagon_molecular_structure_footer.png")
+    no-repeat 130% 00px,
+  linear-gradient(45deg, $cobalt, $aegean);
 $footer-icons-hover-opacity: 1;
 $footer-svg-twitter: twitter-blue-theme;
 $footer-svg-twitter-hover: twitter-hover-blue-theme;
@@ -139,8 +141,6 @@ $footer-svg-pinterest-hover: pinterest-hover-blue-theme;
 $footer-svg-youtube: youtube-blue-theme;
 $footer-svg-youtube-hover: youtube-hover-blue-theme;
 
-
-
 // default theme link color
 .main-content a,
 #cgvBody h2 a,
@@ -155,9 +155,9 @@ $footer-svg-youtube-hover: youtube-hover-blue-theme;
 .contentzone h6 a,
 .main-content .feature-card a,
 .feature-card.cgvArticle a h3,
-.section-nav .contains-current>div a,
+.section-nav .contains-current > div a,
 .feature-primary a h3,
-ul.breadcrumbs>* a,
+ul.breadcrumbs > * a,
 .topic-feature a h3,
 .pullquote,
 .desktop #blog-archive-accordion .ui-accordion-header .toggle,
@@ -236,8 +236,7 @@ a .feature-card.cgvArticle a:hover h3,
 .contentzone table tbody tr td a:hover,
 .contentzone table tbody tr td a:focus,
 a.arrow-link:hover,
-a.arrow-link:focus
-{
+a.arrow-link:focus {
   color: $default-link-color-hover;
 }
 
@@ -253,7 +252,6 @@ a.arrow-link:focus
       h3 {
         color: $default-link-color;
       }
-
     }
   }
 }
@@ -319,17 +317,17 @@ h6 {
 }
 
 // menu bar
-.menu.nav-menu>.nav-item>.nav-item-title>a.active,
-.menu.nav-menu>.nav-item>.nav-item-title>a.open,
-.menu.nav-menu>.nav-item>.nav-item-title>a:focus,
-.menu.nav-menu>.nav-item>.nav-item-title>a,
-#mega-nav .nav-menu>li.contains-current>div.nav-item-title>a,
-.mobile-menu-bar>a,
-.mobile-menu-bar>button,
-.mobile-menu-bar>a:focus,
-.mobile-menu-bar>a:hover,
-.mobile-menu-bar>button:focus,
-.mobile-menu-bar>button:hover {
+.menu.nav-menu > .nav-item > .nav-item-title > a.active,
+.menu.nav-menu > .nav-item > .nav-item-title > a.open,
+.menu.nav-menu > .nav-item > .nav-item-title > a:focus,
+.menu.nav-menu > .nav-item > .nav-item-title > a,
+#mega-nav .nav-menu > li.contains-current > div.nav-item-title > a,
+.mobile-menu-bar > a,
+.mobile-menu-bar > button,
+.mobile-menu-bar > a:focus,
+.mobile-menu-bar > a:hover,
+.mobile-menu-bar > button:focus,
+.mobile-menu-bar > button:hover {
   color: $main-menu-link-color;
 }
 
@@ -355,9 +353,9 @@ a.nav-dictionary::before {
   @include svg-sprite($main-menu-mobile-tablet-svg-dictionary);
 }
 
-#mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-#mega-nav li.contains-current>div.nav-item-title>a,
-.section-nav .level-1.contains-current.has-children>div a {
+#mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+#mega-nav li.contains-current > div.nav-item-title > a,
+.section-nav .level-1.contains-current.has-children > div a {
   color: $hamburger-section-menu-parent-item-link-color;
 }
 
@@ -383,22 +381,20 @@ a.nav-dictionary::before {
   background: $section-menu-mobile-tablet-not-current-page-minus-background;
 }
 
-
-
 // mega menu
 
 #mega-nav .current-page {
   background-color: $hamburger-menu-mobile-tablet-current-page-background;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="true"],
-#mega-nav .current-page>div[aria-expanded="true"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="true"],
+#mega-nav .current-page > div[aria-expanded="true"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-minus-background;
   color: $hamburger-menu-mobile-tablet-current-page-minus-color;
 }
 
-#mega-nav .current-page>div .toggle[aria-expanded="false"],
-#mega-nav .current-page>div[aria-expanded="false"] .toggle {
+#mega-nav .current-page > div .toggle[aria-expanded="false"],
+#mega-nav .current-page > div[aria-expanded="false"] .toggle {
   background-color: $hamburger-menu-mobile-tablet-current-page-plus-background;
   color: $hamburger-menu-mobile-tablet-current-page-plus-color;
 }
@@ -450,7 +446,7 @@ figure a.article-image-enlarge:hover {
 
 .feature-primary {
   .card {
-    &:not(.topic-feature){
+    &:not(.topic-feature) {
       background-color: $landing-page-feature-card-background;
 
       a:hover h3 {
@@ -495,11 +491,11 @@ figure a.article-image-enlarge:hover {
 }
 
 // form elements
-.radio input[type=radio]:checked+label:before {
+.radio input[type="radio"]:checked + label:before {
   background-color: $content-form-radio-background;
 }
 
-.radio input[type=radio]+label:before {
+.radio input[type="radio"] + label:before {
   border-color: $content-form-radio-border;
 }
 
@@ -517,21 +513,21 @@ figure a.article-image-enlarge:hover {
 }
 
 .button.submit,
-.button[type=submit],
+.button[type="submit"],
 form button.submit,
-form button[type=submit] {
+form button[type="submit"] {
   background-color: $content-form-submit-button-background;
   border-color: $content-form-submit-button-border;
 }
 
 .button.submit:focus,
 .button.submit:hover,
-.button[type=submit]:focus,
-.button[type=submit]:hover,
+.button[type="submit"]:focus,
+.button[type="submit"]:hover,
 form button.submit:focus,
 form button.submit:hover,
-form button[type=submit]:focus,
-form button[type=submit]:hover {
+form button[type="submit"]:focus,
+form button[type="submit"]:hover {
   background-color: $content-form-submit-button-hover-background;
 }
 
@@ -632,7 +628,6 @@ form button[type=submit]:hover {
 }
 
 @include break(large) {
-
   //  changed from padding to margin so that collapses with conjunction with the margin-top of .micro-a on the utility bar
   header {
     margin-bottom: 20px;
@@ -661,8 +656,8 @@ form button[type=submit]:hover {
     @include svg-sprite($main-menu-desktop-svg-search-magnifying-glass, mq);
   }
 
-  #mega-nav .nav-item.contains-current>.nav-item-title>a,
-  #mega-nav .nav-item.current-page>.nav-item-title>a {
+  #mega-nav .nav-item.contains-current > .nav-item-title > a,
+  #mega-nav .nav-item.current-page > .nav-item-title > a {
     border-bottom-color: $main-menu-desktop-active-item-border-bottom;
   }
 
@@ -676,8 +671,8 @@ form button[type=submit]:hover {
   }
 
   // overwriting hamburger menu style rules
-  #mega-nav .lvl-1.contains-current.has-children>.nav-item-title>a,
-  #mega-nav li.contains-current>div.nav-item-title>a {
+  #mega-nav .lvl-1.contains-current.has-children > .nav-item-title > a,
+  #mega-nav li.contains-current > div.nav-item-title > a {
     color: initial;
   }
 
@@ -687,7 +682,7 @@ form button[type=submit]:hover {
       border-left-color: $section-navigation-desktop-active-item-triangle;
     }
 
-    .level-0>div {
+    .level-0 > div {
       background-color: $section-navigation-desktop-header-background;
     }
 
@@ -700,13 +695,13 @@ form button[type=submit]:hover {
     }
 
     .has-children .contains-current {
-      >div.current-page a {
+      > div.current-page a {
         color: $section-navigation-desktop-active-color;
       }
     }
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -760,11 +755,11 @@ form button[type=submit]:hover {
     background-color: $aegean;
   }
 
-  .section-nav .level-0>div {
+  .section-nav .level-0 > div {
     background: $aegean;
   }
 
-  .section-nav .level-0.contains-current>div a {
+  .section-nav .level-0.contains-current > div a {
     color: #fff;
   }
 
@@ -775,7 +770,6 @@ form button[type=submit]:hover {
   .section-nav .level-1.contains-current {
     background: $section-menu-mobile-tablet-family-background;
   }
-
 
   .section-nav .level-1.contains-current .toggle[aria-expanded="false"],
   .section-nav .level-1.contains-current[aria-expanded="false"] .toggle {
@@ -806,7 +800,62 @@ form button[type=submit]:hover {
   }
 
   // trying to limit rule for this to landing pages and not article pages, where it shouldn't float
-  .row>.page-options-container .page-options ul {
+  .row > .page-options-container .page-options ul {
     float: left !important;
+  }
+}
+
+/********************* BEGIN PDF Button styling ******************************************/
+.ap-button {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 25px 3px;
+  width: 290px;
+  line-height: 1.25;
+  text-align: left;
+  background-color: $color-link;
+  border-style: none;
+  border-radius: 5px;
+  border-bottom: solid $button-box-shadow-color;
+  border-width: 3px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: $montserrat-font-stack;
+
+  @include break(medium) {
+    padding: 5px 13px 5px 10px;
+    width: auto;
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    left: 4px;
+    @include svg-sprite(file-pdf-narrow-white-o-thick, mq);
+    font-size: 12px;
+    margin-left: 2px;
+    margin-right: 12px;
+    padding: 14px 11px;
+
+    @include break(medium) {
+      top: 1px;
+      left: 0;
+      margin-right: 8px;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &-block {
+    text-align: center;
+    &.left {
+      text-align: left;
+    }
+    margin-bottom: 32px;
   }
 }
