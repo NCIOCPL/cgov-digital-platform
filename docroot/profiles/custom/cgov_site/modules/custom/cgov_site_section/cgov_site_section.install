@@ -25,6 +25,15 @@ function cgov_site_section_install() {
   // Install permissions for this module.
   _cgov_site_section_install_permissions($siteHelper);
 
+  // Loop through all the block types and
+  // Enable the simple workflow.
+  foreach ([
+    'ncids_mega_menu_content',
+  ] as $block_type) {
+    // Add workflow.
+    $siteHelper->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+  }
+
 }
 
 /**
@@ -99,4 +108,34 @@ function cgov_site_section_update_8003() {
   $config = \Drupal::service('config.factory')->getEditable('cgov_common.settings');
   $config->set('mobile_levels_to_display', 4);
   $config->save();
+}
+
+/**
+ * Update for Mega Menu API.
+ *
+ * Set enable workflow on mega menu.
+ */
+function cgov_site_section_update_8004() {
+
+  // Enable our json_data_field module, which the following features require.
+  if (!\Drupal::moduleHandler()->moduleExists('json_data_field')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['json_data_field']);
+  }
+
+  // Import the new mega menu configurations.
+  $featuresManager = \Drupal::service('features.manager');
+  $featuresManager->import(['cgov_site_section']);
+
+  // Set enable workflow on mega menu.
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Loop through all the block types and
+  // Enable the simple workflow.
+  foreach ([
+     'ncids_mega_menu_content',
+  ] as $block_type) {
+     // Add workflow.
+    $siteHelper->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+  }
 }
