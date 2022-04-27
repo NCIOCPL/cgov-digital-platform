@@ -1,0 +1,46 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.ncids_mega_menu_content
+    - field.field.block_content.ncids_mega_menu_content.body
+    - field.field.block_content.ncids_mega_menu_content.field_yaml_content
+  module:
+    - content_moderation
+    - json_data_field
+id: block_content.ncids_mega_menu_content.default
+targetEntityType: block_content
+bundle: ncids_mega_menu_content
+mode: default
+content:
+  field_yaml_content:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: yaml_textarea
+    region: content
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  body: true

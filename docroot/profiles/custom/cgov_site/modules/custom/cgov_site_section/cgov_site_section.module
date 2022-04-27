@@ -177,6 +177,29 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
 /**
  * Implements hook_ENTITY_TYPE_update().
  *
+ * If a mega menu block is updated then clean out the
+ * mega-menu-block cache tag.
+ */
+function cgov_site_section_block_content_update(EntityInterface $entity) {
+
+  if ($entity->bundle() !== 'ncids_mega_menu_content') {
+    return;
+  }
+
+  // Make sure to clear out the mega-menu-block cache tag
+  // if the block status is updated OR
+  // if the field_yaml_content data is updated.
+  if (($entity->original->status->value !== $entity->status->value) ||
+    ($entity->original->field_yaml_content->value !== $entity->field_yaml_content->value)) {
+    // Clear out the mega-menu-block cache tag.
+    Cache::invalidateTags(['mega-menu-block:' . $entity->id()]);
+  }
+
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
  * If a term has either changed its parent or pretty url name,
  * then we need to cascade those changes to any subsections and
  * pages within those subsections.
@@ -246,6 +269,12 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
     // live.
     $current_entity_lang = $entity->get('langcode')->value;
     Cache::invalidateTags(['mainnav:' . $current_entity_lang]);
+  }
+
+  // Make sure to clear out the mega-menu-section cache tag
+  // if the field_ncids_mega_menu_contents data is updated.
+  if ($entity->original->field_ncids_mega_menu_contents->target_id !== $entity->field_ncids_mega_menu_contents->target_id) {
+    Cache::invalidateTags(['mega-menu-section:' . $entity->id()]);
   }
 
   // TODO: Figure out how to get pathauto to update all the aliases using
@@ -982,6 +1011,25 @@ function cgov_site_section_link_alter(&$variables) {
           'cgov_vocab_manager.cgov_vocab_manager_form',
           $url->getRouteParameters()
         );
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function cgov_site_section_block_content_presave(EntityInterface $entity) {
+  if ($entity->bundle() !== 'ncids_mega_menu_content') {
+     return;
+  }
+
+  // Call the validations.
+  $violations = $entity->validate();
+  if ($violations->count() > 0) {
+    foreach ($violations as $violation) {
+      if ($violation->getPropertyPath() !== 'moderation_state') {
+        throw new \Exception($violation->getMessage());
       }
     }
   }
