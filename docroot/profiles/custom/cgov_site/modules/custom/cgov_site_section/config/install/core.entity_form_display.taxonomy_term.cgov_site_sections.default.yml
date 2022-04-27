@@ -11,6 +11,7 @@ dependencies:
     - field.field.taxonomy_term.cgov_site_sections.field_mega_menu_content
     - field.field.taxonomy_term.cgov_site_sections.field_navigation_display_options
     - field.field.taxonomy_term.cgov_site_sections.field_navigation_label
+    - field.field.taxonomy_term.cgov_site_sections.field_ncids_mega_menu_contents
     - field.field.taxonomy_term.cgov_site_sections.field_pretty_url
     - field.field.taxonomy_term.cgov_site_sections.field_section_nav_root
     - taxonomy.vocabulary.cgov_site_sections
@@ -30,14 +31,14 @@ content:
       rows: 5
     third_party_settings: {  }
   field_breadcrumb_root:
-    weight: 8
+    weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_channel:
-    weight: 14
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -45,7 +46,7 @@ content:
     type: string_textfield
     region: content
   field_content_group:
-    weight: 15
+    weight: 14
     settings:
       size: 60
       placeholder: ''
@@ -53,7 +54,7 @@ content:
     type: string_textfield
     region: content
   field_landing_page:
-    weight: 10
+    weight: 9
     settings:
       match_operator: CONTAINS
       size: 60
@@ -63,21 +64,21 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_levels_to_display:
-    weight: 9
+    weight: 8
     settings:
       placeholder: (1-5)
     third_party_settings: {  }
     type: number
     region: content
   field_main_nav_root:
-    weight: 6
+    weight: 5
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_mega_menu_content:
-    weight: 11
+    weight: 10
     settings:
       match_operator: CONTAINS
       size: 60
@@ -87,7 +88,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_navigation_display_options:
-    weight: 13
+    weight: 12
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
@@ -100,6 +101,16 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_ncids_mega_menu_contents:
+    weight: 11
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_pretty_url:
     weight: 3
     settings:
@@ -109,7 +120,7 @@ content:
     type: string_textfield
     region: content
   field_section_nav_root:
-    weight: 7
+    weight: 6
     settings:
       display_label: true
     third_party_settings: {  }

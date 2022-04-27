@@ -986,3 +986,18 @@ function cgov_site_section_link_alter(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function cgov_site_section_block_content_presave(EntityInterface $entity) {
+  if ($entity->bundle() !== 'ncids_mega_menu_content') {
+     return;
+  }
+
+  // Call the validations.
+  $violations = $entity->validate();
+  if ($violations->count() > 1) {
+    throw new \Exception($violations[1]->getMessage());
+  }
+}

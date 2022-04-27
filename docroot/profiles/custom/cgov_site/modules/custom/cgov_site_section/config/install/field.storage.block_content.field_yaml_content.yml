@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - json_data_field
+id: block_content.field_yaml_content
+field_name: field_yaml_content
+entity_type: block_content
+type: json_data
+settings:
+  json_schema_file: 'module://cgov_site_section/schema/megamenu.json'
+  size: 4194304
+module: json_data_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
