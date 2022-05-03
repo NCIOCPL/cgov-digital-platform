@@ -63,7 +63,7 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
           break;
 
         case 'cgov-trans-org-name':
-          $replacements[$original] = t('National Cancer Institute');
+          $replacements[$original] = t('NCI');
           break;
 
         case 'cgov-og-site-name':

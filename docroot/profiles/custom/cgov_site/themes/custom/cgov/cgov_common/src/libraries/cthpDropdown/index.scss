@@ -1,5 +1,5 @@
 @import '~Core/styles/variables';
-@import '~Core/styles/breakpoints';
+@import '~Core/styles/breakpoint-mixins';
 @import '~Styles/sprites/svg-sprite';
 
 .cthp-dropdown.more-info {
@@ -10,8 +10,8 @@
         display: none;
     }
     .list.more-info li::before {
-        color: #2e2e2e;
-        content: "•";
+        color: $asphalt;
+        content: "&bull";
         display: inline;
         float: left;
         font-size: 1.1em;
@@ -83,7 +83,7 @@
             padding-right: calc(6% + 26.25px);
             cursor: pointer;
             text-align: left;
-            border: 1px solid #ccc;
+            border: 1px solid $lgrey03;
             user-select: none;
             transition: background-color 150ms ease-in;
 
@@ -101,7 +101,7 @@
             }
 
             &:hover {
-                color: #bb0e3d;
+                color: $lcranberry
             }
         }
 
@@ -115,34 +115,36 @@
             margin:0;
             padding:0;
             box-shadow: 2px 3px 2px 0 rgba(0,0,0,0.3), -2px 3px 2px 0 rgba(0,0,0,0.3);
-            border-left: 1px solid #ccc;
-            border-right: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
+            border-left: 1px solid $lgrey03;
+            border-right: 1px solid $lgrey03;
+            border-bottom: 1px solid $lgrey03;
 
             li {
                 width: 100%;
-                background-color: #fff;
-                color: #606060;
+                background-color: white;
+                color: $dgrey00;
                 cursor: pointer;
                 padding: 0;
                 margin: 0;
 
                 &:hover {
-                    background-color: #286ea7;
+                    background-color: $navyblue;
+                    color: white;
 
                     a {
                         color: #808080;
 
                         &:hover {
-                            color: #fff;
+                            color: white;
                             display: inline-block;
                             position: relative;
                             z-index: 1;
-
-                            > span.filetype.pdf {
-                                @include svg-sprite(file-pdf-white-o-thick,$type:mq);
-                            }
                         }
+
+                        > span.filetype.pdf {
+                          @include svg-sprite(file-pdf-white-o-thick,$type:mq);
+                        }
+
                     }
                 }
 
@@ -151,7 +153,7 @@
                 }
 
                 a {
-                    color: #2e2e2e;
+                    color: $asphalt;
                     text-decoration: none;
                     display: inline-block;
                     width: 100%;

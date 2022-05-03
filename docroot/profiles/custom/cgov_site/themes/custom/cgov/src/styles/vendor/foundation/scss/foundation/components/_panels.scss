@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 //
 // Panel Variables
 //
@@ -53,7 +55,7 @@ $callout-panel-link-color: #fff !default;
 
       // reset header line-heights for panels
       h1,h2,h3,h4,h5,h6 {
-        line-height: 1; margin-bottom: em-calc(20) / 2;
+        line-height: 1; margin-bottom: math.div(em-calc(20), 2);
         &.subheader { line-height: 1.4; }
       }
     }

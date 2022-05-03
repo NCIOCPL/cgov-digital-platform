@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /********************* BEGIN Header Styles ******************************************/
 // desktop (general)
 header {
@@ -54,8 +56,8 @@ header {
 	@include bp(medium) {
 		img {
 			width: 70%;
-			min-width: ($logo-width-mobile / 100%) * (640px - $logo-padding-mobile); // this calculates the width that the logo would be at largest point in the mobile breakpoint, IF there were no scrollbar (should be 640px - $padding-mobile - <scrollbar width>)
-			max-width: ($logo-width-desktop / 100%) * (strip-unit($row-width)*$em-base - $logo-padding-desktop); // this calculates the width that the logo is at the smallest point in the desktop breakpoint
+			min-width: math.div($logo-width-mobile, 100%) * (640px - $logo-padding-mobile); // this calculates the width that the logo would be at largest point in the mobile breakpoint, IF there were no scrollbar (should be 640px - $padding-mobile - <scrollbar width>)
+			max-width: math.div($logo-width-desktop, 100%) * (strip-unit($row-width)*$em-base - $logo-padding-desktop); // this calculates the width that the logo is at the smallest point in the desktop breakpoint
 		}
 
 		a {
@@ -122,7 +124,7 @@ button.nav-search::before {
 	}
 
 	a {
-		color: #bb0e3d;
+		color: $lcranberry;
 		padding-left: 113px;
 		padding-top: 16px;
 		display: block;
@@ -174,6 +176,7 @@ button.nav-search::before {
 			color: #fff;
 			text-transform: uppercase;
 			text-align: center;
+      box-shadow: none;
 
 			&:hover, &:focus {
 				color: #fff;

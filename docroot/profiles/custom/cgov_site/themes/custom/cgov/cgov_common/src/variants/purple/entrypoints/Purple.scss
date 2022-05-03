@@ -1,4 +1,4 @@
-@import '~Core/styles/breakpoints';
+@import '~Core/styles/breakpoint-mixins';
 @import '~Core/styles/colors';
 @import '~Core/styles/variables';
 @import "~Core/styles/environments/percussion";
@@ -219,12 +219,10 @@ a.arrow-link:focus,
   background-color: #fff;
 }
 
-a.arrow-link-white:hover:before,
 a.arrow-link:hover:before {
   @include svg-sprite(chevron-circle-purple);
 }
 
-a.arrow-link-white:hover:before,
 a.arrow-link:hover:before {
   @include svg-sprite(chevron-circle-purple-hover);
 }
@@ -310,7 +308,6 @@ figure a.article-image-enlarge {
 }
 
 .main-content .guide-card a.arrow-link,
-.main-content .guide-card a.arrow-link-white,
 .main-content a.definition,
 .multimedia .feature-card a,
 .search {

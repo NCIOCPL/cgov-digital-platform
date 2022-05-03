@@ -1,5 +1,12 @@
-@import "./breakpoints";
+@import "./variables";
 @import "./colors";
+@import "./mixins";
+@import "./breakpoint-mixins";
+
+@import "~Styles/sprites/svg-sprite";
+@import "./nci-foundation_variables";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/buttons";
 
 /* Borderless Cards */
 .borderless-container > a {
@@ -11,15 +18,14 @@
 .borderless-container {
   padding: 20px 0.9375em 1.5em 0.9375em;
 
-
   @include bp(small) {
     padding: 20px 0.9375em 0 0.9375em;
   }
   .borderless-card {
-   // @include flexcontainer();
+    // @include flexcontainer();
     @include flexbox();
-    @include bp(small){
-      @include property-prefix(flex-wrap,wrap);
+    @include bp(small) {
+      @include property-prefix(flex-wrap, wrap);
     }
 
     //@include property-prefix(justify-content, space-between);
@@ -31,7 +37,7 @@
     &.borderless-image-left > .borderless-image-container {
       @include flex-order(1);
       margin-right: 25px;
-      @include bp(medium-up){
+      @include bp(medium-up) {
         @include flexbox();
         @include property-prefix(justify-content, flex-start);
       }
@@ -40,7 +46,7 @@
       }
     }
     &.borderless-image-right > .borderless-image-container {
-      @include bp(medium-up){
+      @include bp(medium-up) {
         @include flexbox();
         @include property-prefix(justify-content, flex-end);
       }
@@ -62,7 +68,6 @@
       }
       @include bp(medium-up) {
         width: 66%;
-
       }
       @include bp(small) {
         @include flex-order(2);
@@ -107,7 +112,8 @@
         text-decoration: none;
       }
     }
-    h1, h1 > a {
+    h1,
+    h1 > a {
       font-weight: bold;
     }
   }
@@ -138,14 +144,15 @@ a.borderless-button {
   .borderless-card {
     color: $white;
     .borderless-text-container {
-      p, p.landing-page-body {
+      p,
+      p.landing-page-body {
         color: $white;
       }
     }
     h1,
     h1 > a,
     h2,
-    h2 >a {
+    h2 > a {
       color: $white;
     }
     h1 > a,

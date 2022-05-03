@@ -1,4 +1,4 @@
-@import "~Core/styles/breakpoints";
+@import "~Core/styles/breakpoint-mixins";
 @import "~Core/styles/colors";
 @import "~Core/styles/variables";
 @import "~Core/styles/environments/percussion";
@@ -424,12 +424,10 @@ a.nav-dictionary::before {
   background: $landing-page-guide-card-background;
 }
 
-a.arrow-link-white:before,
 a.arrow-link:before {
   @include svg-sprite($content-svg-guide-card-circle-arrow);
 }
 
-a.arrow-link-white:hover:before,
 a.arrow-link:hover:before {
   @include svg-sprite($content-svg-guide-card-circle-arrow-hover);
 }
@@ -494,7 +492,6 @@ figure a.article-image-enlarge:hover {
 }
 
 .main-content .guide-card a.arrow-link,
-.main-content .guide-card a.arrow-link-white,
 .main-content a.definition,
 .multimedia .feature-card a,
 .search,

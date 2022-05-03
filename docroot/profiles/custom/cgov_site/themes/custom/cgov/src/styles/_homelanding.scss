@@ -2,7 +2,7 @@
 @import "variables";
 @import "mixins";
 @import "fonts";
-@import 'breakpoints';
+@import 'breakpoint-mixins';
 @import "placeholders";
 @import "sprites/svg-sprite";
 @import "nci-foundation_mixins";
@@ -31,7 +31,7 @@
 }
 .feature-primary {
 	margin-bottom: 1em;
-	
+
 	a {
 		&, h3 {
 			color: $white;
@@ -75,7 +75,7 @@
 
 @include bp(medium-down) {
 	.feature-primary-title {
-		background: #14819b;
+		background: $dteal;
 	}
 /* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
 	.row.feature-primary {
@@ -134,7 +134,7 @@
 		margin-bottom: 0;
 	}
 	.feature-primary .card {
-		background: #14819b;
+		background: $dteal;
 	}
 	.feature-primary .columns a, .feature-secondary .columns a {
 		padding-bottom: 15px;
@@ -208,7 +208,7 @@
 		li {
 			margin-top: 0.25em;
 			margin-bottom: 0.25em;
-			
+
 		}
 
         ul.cancer-types li {
@@ -270,20 +270,12 @@ a.learn-more {
 		flex-grow: 1;
 		justify-content: flex-start;
 
-		a.arrow-link-white { /* targets 'Resources For' guide card to match 'About Cancer' li styling */
-		&::before {
-			@include svg-sprite(chevron-circle-lt-blue, $rotate:right);
-			}
-		&:hover::before {
-			@include svg-sprite(chevron-circle-red, $rotate:right);
-			  }
-		}
 		.card__view-more { /* targets last li to separate list from 'learn/view more' links  */
-			
-			padding: 3em 0 .5em; 
+
+			padding: 3em 0 .5em;
 			margin-bottom: 0;
 
-			a.arrow-link-white, a.arrow-link { /* targets last li item and adds dk blue chevron */
+			a.arrow-link { /* targets last li item and adds dk blue chevron */
 				&::before {
 					@include svg-sprite(chevron-circle-dk-blue, $rotate:right);
 				}
@@ -298,16 +290,16 @@ a.learn-more {
 			@include break(tablet-ls) {
 				margin-top: auto;
 			}
-		
+
 		}
 	}
 }
 
-/* Upon resizing the browser window up from the mobile (accordion) view, 
-a div with a clearfix class is added that wraps around the ul of each card. 
-A height of 100% is added to force this clearfix div to be same height as 
+/* Upon resizing the browser window up from the mobile (accordion) view,
+a div with a clearfix class is added that wraps around the ul of each card.
+A height of 100% is added to force this clearfix div to be same height as
 parent accordion in all breakpoints. */
-.guide-card--home .clearfix { 
+.guide-card--home .clearfix {
 	flex-grow: 1;
 	height: 100%; /* forces entire clearfix div to be 100%  */
 	ul {
@@ -320,7 +312,7 @@ parent accordion in all breakpoints. */
 
 //removes spacing at the end of the card row (the color from card row should flow directly into the color of the footer), but keeps spacing between card rows
 //targets multimedia row when there is no thumbnail content
-.nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child, 
+.nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child,
 .nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
 {margin-bottom:0;}
 
@@ -351,7 +343,7 @@ parent accordion in all breakpoints. */
 
 		@extend %card-link-hover;
 		}
-	
+
 }
 @include bp(small) {
 	.multimedia-slot {
@@ -412,7 +404,7 @@ parent accordion in all breakpoints. */
 	.card:last-of-type {
 		padding-right: 0;
 	}
-	
+
 	h3 a {
 		@extend %card-link-hover;
 	}

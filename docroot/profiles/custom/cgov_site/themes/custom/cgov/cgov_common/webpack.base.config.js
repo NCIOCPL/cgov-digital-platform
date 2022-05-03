@@ -56,7 +56,7 @@ const config = {
             loader: "file-loader",
             options: {
               outputPath: "../images/sprites",
-              name: "[name].[ext]?v=[hash]",
+              name: "[name].[ext]",
               emitFile: false,
             }
           }

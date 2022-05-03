@@ -1,7 +1,7 @@
 @import "~Core/styles/environments/percussion";
 @import "~Core/styles/variables";
 @import "~Core/styles/mixins";
-@import "~Core/styles/breakpoints";
+@import "~Core/styles/breakpoint-mixins";
 @import "~Core/styles/placeholders";
 @import "~Styles/sprites/svg-sprite";
 @import "~Core/styles/nci-foundation_mixins";
@@ -9,6 +9,11 @@
 @import "~Core/styles/thumbnailcards";
 @import "~Core/styles/hero";
 @import "~Core/styles/cards";
+
+
+@import '~Core/styles/borderless-cards';
+@import '~Core/styles/alternating-lists';
+@import '~Core/styles/title-first-feature-cards';
 
 /********************* BEGIN Home Page Styles ******************************************/
 h1 {
@@ -83,7 +88,7 @@ p:not(.site-name):not(.site-link) {
 
 @include bp(medium-down) {
   .feature-primary-title {
-    background: #14819b;
+    background: $dteal;
   }
   /* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
   .row.feature-primary {
@@ -143,7 +148,7 @@ p:not(.site-name):not(.site-link) {
     margin-bottom: 0;
   }
   .feature-primary .card {
-    background: #14819b;
+    background: $dteal;
   }
   .feature-primary .columns a,
   .feature-secondary .columns a {
@@ -292,22 +297,12 @@ a.learn-more {
     flex-grow: 1;
     justify-content: flex-start;
 
-    a.arrow-link-white {
-      /* targets 'Resources For' guide card to match 'About Cancer' li styling */
-      &::before {
-        @include svg-sprite(chevron-circle-lt-blue, $rotate: right);
-      }
-      &:hover::before {
-        @include svg-sprite(chevron-circle-red, $rotate: right);
-      }
-    }
     .card__view-more {
       /* targets last li to separate list from 'learn/view more' links  */
 
       padding: 3em 0 0.5em;
       margin-bottom: 0;
 
-      a.arrow-link-white,
       a.arrow-link {
         /* targets last li item and adds dk blue chevron */
         &::before {

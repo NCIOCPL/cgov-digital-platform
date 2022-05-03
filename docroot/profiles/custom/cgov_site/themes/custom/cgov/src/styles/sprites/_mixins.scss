@@ -1,3 +1,5 @@
+ @use 'sass:math';
+
  /**
  * The following variable and function originate from the sass-mq library.
  * If you have already included it, you can eliminate the below
@@ -26,7 +28,7 @@ $mq-base-font-size: 16px !default;
   } @else if unit($px) == em {
     @return $px;
   }
-  @return ($px / $base-font-size) * 1em;
+  @return math.div($px, $base-font-size) * 1em;
 }
 
 
@@ -68,17 +70,6 @@ $svg-sprite: map-get($svg-icons, sprite) !default;
 /// @param {string} $icon - The name of the icon
 @function icon_height($icon) {
   @return mq-px2em(sprite-attr($icon, height));
-}
-
-/// Assign the correct SVG background image and dimensions to the element
-@mixin spriteBG {
-  display: inline-block;
-  background-image: url(map-get($svg-sprite, svgPath));
-  background-size: mq-px2em(map-get($svg-sprite, width)) mq-px2em(map-get($svg-sprite, height));
-}
-
-%sprite {
-  @include spriteBG;
 }
 
 // generic transform
@@ -125,32 +116,14 @@ $svg-sprite: map-get($svg-icons, sprite) !default;
 
   $rotation: null;
 
-  @if $type == all {
-    // Shares the backgrounds
-    @extend %sprite;
-  } @else {
-    @include spriteBG;
-  }
-
+  display: inline-block;
+  background: url(map-get($svg-sprite, svgPath) + "#" + $icon) center/cover no-repeat;
   $iconMap: icon-attr($icon);
 
   // Outputs dimensions in em
   @if $type == all or $type == size {
     width: mq-px2em(map-get($iconMap, width));
     height: mq-px2em(map-get($iconMap, height));
-  }
-
-  // Outputs background position in em
-  @if $type == all or $type == bg or $type == mq {
-    //background-position: mq-px2em(map-get($iconMap, x) - 5) mq-px2em(map-get($iconMap, y) - 5);
-    //background-position: map-get($iconMap, x) map-get($iconMap, y);
-    //-100 * (position + padding) / (sprite height - icon height - 1)  * -1 is for 1px padding within the original svg assest
-
-    $bgX: -100 * (map-get($iconMap, x) - map-get($svg-sprite, padding)) / (map-get($svg-sprite, width) - map-get($iconMap, width) - 1);
-    $bgY: -100 * (map-get($iconMap, y) - map-get($svg-sprite, padding)) / (map-get($svg-sprite, height) - map-get($iconMap, height) - 1);
-    $bgPos: unquote('#{$bgX}% #{$bgY}%');
-    background-position: $bgPos;
-
   }
 
   @if type_of($rotate) == string {

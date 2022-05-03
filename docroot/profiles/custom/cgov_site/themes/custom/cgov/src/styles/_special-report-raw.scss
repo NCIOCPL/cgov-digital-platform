@@ -1,10 +1,10 @@
-@import "./breakpoints";
+@import "./breakpoint-mixins";
 @import "./colors";
 @import "environments/percussion";
 @import "variables";
 @import "mixins";
 @import "fonts";
-@import 'breakpoints';
+@import 'breakpoint-mixins';
 @import "placeholders";
 
 /* Special Report Raw HTML */
@@ -66,10 +66,10 @@ a.ap-button{
   width: 290px;
   line-height: 1.25;
   text-align: left;
-  background-color: #2b7bba;
+  background-color: $color-link;
   border-style: none;
   border-radius: 5px;
-  border-bottom: solid #1b5a8c;
+  border-bottom: solid $button-box-shadow-color;
   border-width: 3px;
   color: white;
   text-decoration: none;
@@ -89,14 +89,13 @@ a.ap-button{
     @include svg-sprite(file-pdf-narrow-white-o-thick);
     font-size: 12px;
     margin-left: 2px;
-    width: 37px;
-    padding: 14px;
+    margin-right: 12px;
+    padding: 14px 11px;
 
     @include break(medium){
-      top: 1.5px;
-      width: 30px;
-      padding:0;
+      top: 1px;
       left: 0;
+      margin-right: 8px;
     }
   }
 

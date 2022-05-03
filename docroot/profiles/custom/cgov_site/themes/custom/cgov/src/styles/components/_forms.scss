@@ -1,3 +1,7 @@
+@use 'sass:math';
+@import './forms-mixins';
+@import "~Core/styles/checkbox"; 
+
 //
 // Form Variables
 //
@@ -12,7 +16,7 @@ $form-spacing: em-calc(16);
 $form-label-display: inline-block;
 // $form-label-font-size: em-calc(14);
 $form-label-font-weight: normal;
-$form-label-font-color: #606060;
+$form-label-font-color: $dgrey00;
 $form-label-line-height: 1em;
 // $form-label-bottom-margin: em-calc(3);
 // $input-font-family: inherit;
@@ -92,13 +96,7 @@ $custom-form-checkbox-checked-text-color: $custom-form-radiocheck-border-color;
 $custom-form-checkbox-checked-text-color-disabled: #ccc;
 $custom-form-checkbox-radius: 0;
 
-@mixin input-placeholder() {
-	font-family: $input-placeholder-font-family;
-	color: $input-placeholder-font-color;
-	font-size: $input-placeholder-font-size;
-	font-style: $input-placeholder-font-style;
-	opacity: 1;
-}
+
 
 /* Placeholder text styling */
 input {
@@ -421,40 +419,6 @@ select {
 	}
 }
 
-@mixin radiocheck($type) {
-	input[type="#{$type}"] {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-
-		+ label {
-			position: relative;
-			margin-left: $custom-form-radiocheck-size + $custom-form-radiocheck-spacing;
-
-			&:before {
-				content: "";
-				position: absolute;
-				left: -($custom-form-radiocheck-size + $custom-form-radiocheck-spacing);
-
-				display: inline-block;
-				text-align: center;
-				border-style: solid;
-
-				margin-right: $custom-form-radiocheck-spacing;
-				width: $custom-form-radiocheck-size;
-				height: $custom-form-radiocheck-size;
-				background-color: $custom-form-radiocheck-bg-color;
-				border-width: $custom-form-radiocheck-border-size;
-				border-color: $custom-form-radiocheck-border-color;
-			}
-		}
-		&:disabled {
-			+ label:before {
-				border-color: $custom-form-radiocheck-border-color-disabled;
-			}
-		}
-	}
-}
 /* Custom radio and checkbox styling
  * Note that these do not get applied to IE8 and below.
  */
@@ -477,7 +441,7 @@ span {
 }
 
 span.radio input[type="radio"], span.checkbox input[type="checkbox"] {
-	margin-top: $custom-form-radiocheck-size / 2;
+	margin-top: math.div($custom-form-radiocheck-size, 2);
 }
 
 .radio {
@@ -502,7 +466,7 @@ span.radio input[type="radio"], span.checkbox input[type="checkbox"] {
 	@include radiocheck('checkbox');
 
 	input[type="checkbox"] {
-		margin-top: $custom-form-radiocheck-size / 2;
+		margin-top: math.div($custom-form-radiocheck-size, 2);
 
 		+ label:before {
 			@include radius($custom-form-checkbox-radius);
@@ -702,7 +666,7 @@ fieldset fieldset .legend
 	}
 
 	.checkbox {
-	
+
 		label {
 			line-height: 1.4em;
 			word-wrap: break-word;
@@ -710,7 +674,7 @@ fieldset fieldset .legend
 	}
 
 	@include bp(medium-down) {
-	
+
 		.row {
 			display: flex;
 			flex-direction: column;
@@ -744,13 +708,13 @@ fieldset fieldset .legend
 		fieldset {
 			.row:first-child{
 				flex-direction: row;
-	
+
 				.columns {
 					margin: 0;
 				}
 			}
 		}
-		
+
 
 		.label.right, label.right {
 			text-align: left;
@@ -759,13 +723,13 @@ fieldset fieldset .legend
 		.checkbox {
 			width: 100%;
 		}
-		
+
 		.genetics-form__options {
-	
+
 			.columns {
 				flex-direction: column;
 			}
-		}    
+		}
 	}
 
 	@include bp(xtra-small) {
