@@ -14,7 +14,7 @@ function initChart(Chart) {
     colors: ['#1B5768', '#70858C', '#E2F0F4', '#83C5D8', '#319FBE', '#123A46', '#5090A2', '#00181D', '#5AB2CB', '#24748B'],
     chart: { type: 'NCI_pie' },
     title: { text: 'Percent of Total Research Career Awards Funded' },
-    subtitle: { text: 'Fiscal Year 2020' },
+    subtitle: { text: 'Fiscal Year 2021' },
     legend: {
       layout: 'horizontal',
       align: 'center',
@@ -53,18 +53,18 @@ function initChart(Chart) {
     series: [{
       name: 'Funding',
       data: [
-        ['K00 Post-Doc-Fellow Awards', 6020],
-        ['K01 Research Scientist Development Award', 5451],
+        ['K00 Post-Doc-Fellow Awards', 7211],
+        ['K01 Research Scientist Development Award', 5573],
         ['K05 Research Scientist Award', 0],
-        ['K07 Preventive Oncology', 7297],
-        ['K08 Clinical Investigator', 41376],
-        ['K12 Institutional Clinical Oncology Research', 15968],
-        ['K22 Transitional Career Development', 9340],
-        ['K23 Patient-Oriented Career', 1180],
-        ['K24 Patient-Oriented Career - Mid Career', 822],
-        ['K25 Mentored Quantitative Research Career Development Award', 426],
-        ['K43 Mentored Career Devel/Temin Intl Career', 290],
-        ['K99 NIH Pathway to Independence Awards', 8408]
+        ['K07 Preventive Oncology', 4965],
+        ['K08 Clinical Investigator', 48479],
+        ['K12 Institutional Clinical Oncology Research', 14507],
+        ['K22 Transitional Career Development', 9723],
+        ['K23 Patient-Oriented Career', 535],
+        ['K24 Patient-Oriented Career - Mid Career', 354],
+        ['K25 Mentored Quantitative Research Career Development Award', 157],
+        ['K43 Mentored Career Devel/Temin Intl Career', 551],
+        ['K99 NIH Pathway to Independence Awards', 10600]
       ]
     }]
   });
