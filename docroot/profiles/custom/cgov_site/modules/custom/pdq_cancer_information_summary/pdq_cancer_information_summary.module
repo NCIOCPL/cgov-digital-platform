@@ -17,7 +17,10 @@ function pdq_cancer_information_summary_field_widget_form_alter(
   &$element,
   FormStateInterface $form_state,
   $context) {
-  $map = ['field_pdq_section_html' => ['raw_html']];
+  $map = [
+    'field_pdq_section_html' => ['raw_html'],
+    'field_pdq_intro_text' => ['raw_html'],
+  ];
   $form_helper = \Drupal::service('cgov_core.form_tools');
   $form_helper->allowTextFormats($map, $element, $context);
 }
@@ -160,16 +163,21 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
     return;
   }
 
-  if (isset($build['field_summary_sections'])) {
-    // Copy summary sections into a new "field" using TOC display.
-    $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
-      'type' => 'entity_reference_revisions_entity_view',
-      'settings' => [
-        'view_mode' => 'otp_toc',
-        'link' => 'link',
-      ],
-    ]);
-    $build['otp_toc']['#theme'] = 'field__otp_toc';
+  if (!empty($build['field_summary_sections']['#items'])) {
+
+    // Make sure the field isn't being suppressed.
+    if ($entity->field_pdq_suppress_otp->value == '0') {
+
+      // Copy summary sections into a new "field" using TOC display.
+      $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
+        'type' => 'entity_reference_revisions_entity_view',
+        'settings' => [
+          'view_mode' => 'otp_toc',
+          'link' => 'link',
+        ],
+      ]);
+      $build['otp_toc']['#theme'] = 'field__otp_toc';
+    }
   }
 }
 

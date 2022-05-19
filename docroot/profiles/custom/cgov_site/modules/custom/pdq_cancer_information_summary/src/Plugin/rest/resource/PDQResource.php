@@ -171,6 +171,9 @@ class PDQResource extends ResourceBase {
           'url' => $translation->field_pdq_url->value,
           'published' => $translation->status->value,
           'sections' => $sections,
+          'svpc' => $translation->field_pdq_is_svpc->value,
+          'suppress_otp' => $translation->field_pdq_suppress_otp->value,
+          'intro_text' => $translation->field_pdq_intro_text->value,
         ];
       }
     }
@@ -285,6 +288,9 @@ class PDQResource extends ResourceBase {
     $node->set('field_page_description', $summary['description']);
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', 1);
+    $node->set('field_pdq_is_svpc', $summary['svpc'] ?? 0);
+    $node->set('field_pdq_suppress_otp', $summary['suppress_otp'] ?? 0);
+    $node->set('field_pdq_intro_text', $summary['intro_text'] ?? '');
 
     // The syndication field is not translatable.
     if ($language == 'en') {

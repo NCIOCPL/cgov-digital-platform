@@ -1,5 +1,9 @@
 <?php
 
+use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * @file
  * Contains pdq_cancer_information_summary.install.
@@ -58,4 +62,235 @@ function pdq_cancer_information_summary_update_8001() {
   // Install the new permission.
   $perms = ['pdq_importer' => ['restful patch pdq_cis_api']];
   $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Install new node field.
+ *
+ * @param string $name
+ */
+function _pdq_cancer_information_summary_install_node_field($name) {
+  $dir = new FileStorage(__DIR__ . '/config/install/');
+  if (!FieldStorageConfig::loadByName('node', $name)) {
+    $record = $dir->read("field.storage.node.$name");
+    FieldStorageConfig::create($record)->save();
+    \Drupal::logger('pdq_cancer_information_summary')->notice("Installed storage config for $name.");
+  }
+  else {
+    \Drupal::logger('pdq_cancer_information_summary')->notice("Storage config for $name already installed.");
+  }
+  if (!FieldConfig::loadByName('node', 'pdq_cancer_information_summary', $name)) {
+    $record = $dir->read("field.field.node.pdq_cancer_information_summary.$name");
+    FieldConfig::create($record)->save();
+    \Drupal::logger('pdq_cancer_information_summary')->notice("Installed field config for $name.");
+  }
+  else {
+    \Drupal::logger('pdq_cancer_information_summary')->notice("Field config for $name already installed.");
+  }
+}
+
+/**
+ * Add new field to indentify "Single-view patient content" summaries.
+ *
+ * Creates the field's database table rows for existing summaries.
+ */
+function pdq_cancer_information_summary_update_9001(&$sandbox) {
+
+  // Make sure the field is installed.
+  _pdq_cancer_information_summary_install_node_field('field_pdq_is_svpc');
+
+  // Make sure it shows up on the form.
+  $name = 'core.entity_form_display.node.pdq_cancer_information_summary.default';
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($name);
+  $content = $config->get('content');
+  $hidden = $config->get('hidden');
+  $weight = $content['field_summary_sections']['weight'] ?? 1000;
+  $content['field_pdq_is_svpc'] = [
+    'weight' => $weight - 1,
+    'settings' => ['display_label' => TRUE],
+    'third_party_settings' => [],
+    'type' => 'boolean_checkbox',
+    'region' => 'content',
+  ];
+  unset($hidden['field_pdq_is_svpc']);
+  $config->set('content', $content);
+  $config->set('hidden', $hidden);
+  $config->save();
+  \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_pdq_is_svpc on the edit form.');
+
+  // Make sure software querying the field doesn't get back a NULL.
+  $db = \Drupal::database();
+  $bundle = 'pdq_cancer_information_summary';
+  $fields = [
+    'bundle',
+    'deleted',
+    'entity_id',
+    'revision_id',
+    'langcode',
+    'delta',
+    'field_pdq_is_svpc_value',
+  ];
+  $prefixes = ['node', 'node_revision'];
+  foreach ($prefixes as $prefix) {
+    $cdr_id_table = "{$prefix}__field_pdq_cdr_id";
+    $svpc_table = "{$prefix}__field_pdq_is_svpc";
+    $results = $db->select($svpc_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $found = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      $found[$key] = $key;
+    }
+    $results = $db->select($cdr_id_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $records = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      if (!array_key_exists($key, $found)) {
+        $records[] = [
+          'bundle' => $bundle,
+          'deleted' => 0,
+          'entity_id' => $result->entity_id,
+          'revision_id' => $result->revision_id,
+          'langcode' => $result->langcode,
+          'delta' => 0,
+          'field_pdq_is_svpc_value' => 0,
+        ];
+      }
+    }
+    $insert = $db->insert($svpc_table)->fields($fields);
+    foreach ($records as $record) {
+      $insert->values($record);
+    }
+    $insert->execute();
+    $count = count($records);
+    \Drupal::logger($bundle)->notice("Created $count rows in $svpc_table.");
+  }
+}
+
+/**
+ * Add new field to suppress display of "On This Page" section.
+ *
+ * Creates the field's database table rows for existing summaries.
+ */
+function pdq_cancer_information_summary_update_9002(&$sandbox) {
+
+  // Make sure the field is installed.
+  _pdq_cancer_information_summary_install_node_field('field_pdq_suppress_otp');
+
+  // Make sure it shows up on the form.
+  $name = 'core.entity_form_display.node.pdq_cancer_information_summary.default';
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($name);
+  $content = $config->get('content');
+  $hidden = $config->get('hidden');
+  $weight = $content['field_summary_sections']['weight'] ?? 1000;
+  $content['field_pdq_suppress_otp'] = [
+    'weight' => $weight - 1,
+    'settings' => ['display_label' => TRUE],
+    'third_party_settings' => [],
+    'type' => 'boolean_checkbox',
+    'region' => 'content',
+  ];
+  unset($hidden['field_pdq_suppress_otp']);
+  $config->set('content', $content);
+  $config->set('hidden', $hidden);
+  $config->save();
+  \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_pdq_suppress_otp on the edit form.');
+
+  // Make sure software querying the field doesn't get back a NULL.
+  $db = \Drupal::database();
+  $bundle = 'pdq_cancer_information_summary';
+  $fields = [
+    'bundle',
+    'deleted',
+    'entity_id',
+    'revision_id',
+    'langcode',
+    'delta',
+    'field_pdq_suppress_otp_value',
+  ];
+  $prefixes = ['node', 'node_revision'];
+  foreach ($prefixes as $prefix) {
+    $cdr_id_table = "{$prefix}__field_pdq_cdr_id";
+    $suppress_otp_table = "{$prefix}__field_pdq_suppress_otp";
+    $results = $db->select($suppress_otp_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $found = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      $found[$key] = $key;
+    }
+    $results = $db->select($cdr_id_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $records = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      if (!array_key_exists($key, $found)) {
+        $records[] = [
+          'bundle' => $bundle,
+          'deleted' => 0,
+          'entity_id' => $result->entity_id,
+          'revision_id' => $result->revision_id,
+          'langcode' => $result->langcode,
+          'delta' => 0,
+          'field_pdq_suppress_otp_value' => 0,
+        ];
+      }
+    }
+    $insert = $db->insert($suppress_otp_table)->fields($fields);
+    foreach ($records as $record) {
+      $insert->values($record);
+    }
+    $insert->execute();
+    $count = count($records);
+    \Drupal::logger($bundle)->notice("Created $count rows in $suppress_otp_table.");
+  }
+}
+
+/**
+ * Add new field for optional introductory text section without a title.
+ */
+function pdq_cancer_information_summary_update_9003(&$sandbox) {
+
+  // Make sure the field is installed.
+  _pdq_cancer_information_summary_install_node_field('field_pdq_intro_text');
+
+  // Make sure it shows up on the form.
+  $name = 'core.entity_form_display.node.pdq_cancer_information_summary.default';
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($name);
+  $content = $config->get('content');
+  $hidden = $config->get('hidden');
+  $weight = $content['field_summary_sections']['weight'] ?? 1000;
+  $content['field_pdq_intro_text'] = [
+    'weight' => $weight - 1,
+    'settings' => [
+      'display_label' => TRUE,
+      'rows' => 5,
+      'placeholder' => '',
+    ],
+    'third_party_settings' => [],
+    'type' => 'text_textarea',
+    'region' => 'content',
+  ];
+  unset($hidden['field_pdq_intro_text']);
+  $config->set('content', $content);
+  $config->set('hidden', $hidden);
+  $config->save();
+  \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_pdq_intro_text on the edit form.');
 }

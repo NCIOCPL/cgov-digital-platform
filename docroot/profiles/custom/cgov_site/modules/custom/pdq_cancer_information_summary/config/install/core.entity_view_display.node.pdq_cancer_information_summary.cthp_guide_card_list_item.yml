@@ -11,7 +11,10 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_page_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_cancer_information_summary.field_pdq_intro_text
+    - field.field.node.pdq_cancer_information_summary.field_pdq_is_svpc
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_pdq_suppress_otp
     - field.field.node.pdq_cancer_information_summary.field_pdq_url
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
@@ -23,6 +26,11 @@ targetEntityType: node
 bundle: pdq_cancer_information_summary
 mode: cthp_guide_card_list_item
 content:
+  content_moderation_control:
+    weight: -20
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   field_browser_title:
     weight: 2
     label: hidden
@@ -35,11 +43,14 @@ hidden:
   field_date_posted: true
   field_date_updated: true
   field_hhs_syndication: true
+  field_pdq_is_svpc: true
   field_meta_tags: true
   field_page_description: true
   field_pdq_audience: true
   field_pdq_cdr_id: true
+  field_pdq_intro_text: true
   field_pdq_summary_type: true
+  field_pdq_suppress_otp: true
   field_pdq_url: true
   field_public_use: true
   field_summary_sections: true

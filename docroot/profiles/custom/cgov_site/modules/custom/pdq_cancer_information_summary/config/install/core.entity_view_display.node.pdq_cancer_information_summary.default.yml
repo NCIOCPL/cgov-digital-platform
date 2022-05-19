@@ -10,7 +10,10 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_page_description
     - field.field.node.pdq_cancer_information_summary.field_pdq_audience
     - field.field.node.pdq_cancer_information_summary.field_pdq_cdr_id
+    - field.field.node.pdq_cancer_information_summary.field_pdq_intro_text
+    - field.field.node.pdq_cancer_information_summary.field_pdq_is_svpc
     - field.field.node.pdq_cancer_information_summary.field_pdq_summary_type
+    - field.field.node.pdq_cancer_information_summary.field_pdq_suppress_otp
     - field.field.node.pdq_cancer_information_summary.field_pdq_url
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
@@ -22,6 +25,7 @@ dependencies:
     - datetime
     - entity_reference_revisions
     - options
+    - text
     - user
 id: node.pdq_cancer_information_summary.default
 targetEntityType: node
@@ -29,12 +33,12 @@ bundle: pdq_cancer_information_summary
 mode: default
 content:
   content_moderation_control:
-    weight: -20
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   field_browser_title:
-    weight: 101
+    weight: 2
     label: above
     settings:
       link_to_entity: false
@@ -42,7 +46,7 @@ content:
     type: string
     region: content
   field_date_updated:
-    weight: 103
+    weight: 3
     label: above
     settings:
       format_type: cgov_display_date
@@ -51,7 +55,7 @@ content:
     type: datetime_default
     region: content
   field_page_description:
-    weight: 104
+    weight: 4
     label: above
     settings:
       link_to_entity: false
@@ -59,14 +63,14 @@ content:
     type: string
     region: content
   field_pdq_audience:
-    weight: 108
+    weight: 7
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_pdq_cdr_id:
-    weight: 106
+    weight: 6
     label: above
     settings:
       thousand_separator: ''
@@ -74,15 +78,22 @@ content:
     third_party_settings: {  }
     type: number_integer
     region: content
+  field_pdq_intro_text:
+    weight: 7
+    label: above
+    settings: { }
+    third_party_settings: { }
+    type: text_default
+    region: content
   field_pdq_summary_type:
-    weight: 105
+    weight: 5
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_pdq_url:
-    weight: 110
+    weight: 9
     label: above
     settings:
       link_to_entity: false
@@ -91,7 +102,7 @@ content:
     region: content
   field_summary_sections:
     type: entity_reference_revisions_entity_view
-    weight: 109
+    weight: 8
     label: above
     settings:
       view_mode: default
@@ -99,13 +110,15 @@ content:
     third_party_settings: {  }
     region: content
   links:
-    weight: 100
+    weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   field_date_posted: true
   field_hhs_syndication: true
+  field_pdq_is_svpc: true
+  field_pdq_suppress_otp: true
   field_meta_tags: true
   field_public_use: true
   langcode: true
