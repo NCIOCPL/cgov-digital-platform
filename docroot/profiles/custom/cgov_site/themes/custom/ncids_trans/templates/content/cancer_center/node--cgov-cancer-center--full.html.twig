@@ -1,0 +1,67 @@
+{{ attach_library('ncids_trans/cancer-center') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+  <div class="resize-content">
+    {{ drupal_block('page_options') }}
+    <div id="nvcgSlProfilePanel" class="profile-panel">
+      <div class="slot-item only-SI">
+        <!-- start profile panel content -->
+        <div class="profile-panel-image">
+          {{ content.field_image_promotional }}
+        </div>
+        <div class="profile-panel-content">
+          <h1>{{ node.label }}</h1>
+          {% if content.field_parent_institution[0] or content.field_institution_type[0] %}
+            <div class="profile-title">
+              {{ content.field_parent_institution }}
+              {% if content.field_parent_institution[0] and content.field_institution_type[0] %}
+                <br/>
+              {% endif %}
+            {{ content.field_institution_type }}
+            </div>
+          {%- endif -%}
+          {%- if content.field_org_head_name[0] -%}
+            <p>
+              {{ content.field_org_head_name|field_value }}
+              {%- if content.field_org_head_title[0] -%}
+                , {{ content.field_org_head_title }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+
+          {% if content.field_address[0] %}
+            {{ content.field_address }}
+          {% endif %}
+
+          {% if content.field_phone_number_1[0] or content.field_phone_number_2[0]%}
+          <p>
+            {% if content.field_phone_label_1[0] and content.field_phone_number_1[0] %}
+                {{- content.field_phone_label_1|field_value -}}: <a href="tel:{{- content.field_phone_number_1|field_value -}}" rel="nofollow">{{ content.field_phone_number_1 }}</a><br />
+            {% endif %}
+            {% if content.field_phone_label_2[0] and content.field_phone_number_2[0] %}
+                {{ content.field_phone_label_2|field_value -}}: <a href="tel:{{- content.field_phone_number_2|field_value -}}" rel="nofollow">{{ content.field_phone_number_2 }}</a>
+            {% endif %}
+          </p>
+          {% endif %}
+
+          {% if content.field_website_title[0] and content.field_website_url[0] %}
+            <p>
+              <a href="{{- content.field_website_url|field_value -}}">{{ content.field_website_title }}</a>
+            </p>
+          {% endif %}
+        </div>
+        <!-- end profile panel content -->
+      </div>
+    </div>
+    <!-- END Profile Panel slot -->
+    <div id="cgvBody">
+      {{ content.body }}
+    </div>
+  </div>
+
+  <footer class="article-footer">
+    {{ content.field_related_resources }}
+    {{ contentPageMacros.displayDates(node, content) }}
+  </footer>
+</article>

@@ -1,0 +1,37 @@
+name: NCIDS Transitional Theme
+type: theme
+description: 'Cgov Digital Platform theme for incremental NCIDS rollout'
+package: CGov Digital Platform
+core_version_requirement: ^9
+base theme: stark
+## NOTE: Our Theme has no Global Libraries. See the various page templates.
+ckeditor_stylesheets:
+  - dist/css/ckeditor.css
+regions:
+  ## NCIDS Page Regions
+  ncids_banner: "Website Banner"
+  ncids_site_alerts: "Site Alert Area"
+  ncids_header: "Site Header"
+  ncids_breadcrumb: Breadcrumb
+  ncids_sidenav: "Section Navigation"
+  ncids_footer: Footer
+  ## Special Drupal Regions
+  content: Content
+  ## Legacy inner page regions
+  press_release_contact: "Contact Us - Press Release" # legacy
+  bio_press_info: "Press Information for Journalists" # legacy
+  sidebar: Sidebar # legacy for blogs
+  public_use: "Public Use" # legacy
+  syndication: "Syndication" # legacy
+  page_not_found: "Page Not Found" # legacy
+  ## Remove these at end of MVP
+  notification_banner: "Notification Banner" # nvcgSINotificationArea / nvcgColo ??
+  site_banner: "Site Banner" # nvcgSISiteBanner
+  language_bar: "Language Bar"
+  utility_bar: "Utility Bar" # nvcgSIUtilityBar
+  mobile_nav: "Mobile Nav"
+  main_nav: "Main Navigation" # nvcgSlMainNav
+  search_bar: "Search Bar"
+  breadcrumb: Breadcrumb # cgvSIBreadcrumb
+  section_nav: "Section Navigation"
+  footer: Footer # nvcgSlFooter
