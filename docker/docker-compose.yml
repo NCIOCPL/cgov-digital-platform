@@ -17,6 +17,12 @@ services:
       - ./web/runtime/php_cli.ini:/etc/php/7.4/cli/php.ini
       ## Block git repo management within the container
       - ./web/runtime/container-hooks:/var/www/scripts/hooks
+      ## Npmrc for package installation.
+      ## https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
+      ## You should only need read:packages if you are not someone
+      ## that works with it frequently enough to know what this
+      ## iss. (For read-only don't follow the npm login steps)
+      - ~/.npmrc:/root/.npmrc
     env_file:
       - ./docker.env
     ports:

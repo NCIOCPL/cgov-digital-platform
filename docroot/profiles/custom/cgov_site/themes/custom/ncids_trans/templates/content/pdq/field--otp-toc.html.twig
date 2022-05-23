@@ -1,0 +1,10 @@
+{% if items|length > 0 %}
+<nav class="on-this-page" role="navigation">
+  <h6>{% trans %}On This Page{% endtrans %}</h6>
+  <ul>
+    {% for item in items %}
+      {{ item.content }}
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}

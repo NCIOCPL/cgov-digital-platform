@@ -1,0 +1,246 @@
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '~Core/styles/breakpoint-mixins';
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+@import "~Core/styles/nci-foundation_mixins";
+@import "~Core/styles/nci-foundation_variables";
+@import "~Core/styles/thumbnailcards";
+@import "~Core/styles/institutions";
+
+// We need to make sure that foundation does not generate any markup that would
+// be in Common.scss. This is for borderless cards.
+$include-html-classes: false;
+$include-html-button-classes: false;
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/buttons";
+
+@import '~Core/styles/borderless-cards';
+@import '~Core/styles/alternating-lists';
+
+.feature-primary {
+  .card {
+    padding: 0;
+  }
+}
+
+div.row.feature-primary.flex-columns {
+  display: flex;
+  float: none;
+}
+.feature-card {
+  div {
+    margin-bottom: 1em;
+  }
+
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .image-hover {
+    position: relative;
+    img {
+      width: 100%;
+    }
+	}
+
+}
+
+.infographic {
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+
+  figcaption {
+    padding: 0.5em 1em;
+  }
+}
+
+.infographic-enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
+
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
+
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: .6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+}
+
+@include bp(small) {
+  .feature-primary {
+    flex-direction: column;
+    .card {
+      margin: 1.25em 0;
+      background: $white;
+    }
+  }
+  .feature-card {
+
+    a {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .image-hover {
+      float: left;
+      width: 30%;
+    }
+    h3, p {
+      float: right;
+      width: 68%;
+    }
+  }
+  .card-thumbnail img {
+    display: none;
+  }
+}
+
+@include bp(medium-up) {
+  // moved over from _hacks.scss
+  .card-thumbnail .small-2 {
+		width: 25%;
+	}
+	.card-thumbnail .small-10 {
+		width: 75%;
+  }
+
+  // moved over from TopicPage.scss
+  .card-thumbnail-image {
+    padding-left: 0;
+  }
+  .card-thumbnail .small-10.card-thumbnail-text > h3 {
+    margin-top: .5em;
+  }
+}
+
+@include bp(large-up) {
+
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+	}
+
+  .row {
+    .gutter {
+      &.large-4 {
+        width: 32%;
+        margin-left: 2%;
+      }
+      &.large-6{
+        width: 48.5%;
+        margin-left: 3%;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// PDQ summary list styling ported from InnerPage.scss
+.contentzone {
+  .PDQ-list {
+    padding-left: 0;
+
+    li {
+      background-image: none;
+      margin-left: 0;
+      padding-left: 0;
+
+      &::before {
+        content: none;
+      }
+    }
+
+    ul {
+      margin-left: 0;
+      margin-top: 3px;
+      padding-left: 20px;
+
+      > li {
+        display: inline;
+
+        &::before {
+          content: "|";
+          float: none;
+          padding-left: 20px;
+          padding-right: 5px;
+          top: 0;
+        }
+
+        &:first-child::before {
+          content: none;
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+// controls spacing of images on the nci organization page. Mark Cramer [OCEPROJECT-3322]
+.nci-organization {
+  .large-5 figure {
+    margin: 1.25em auto;
+  }
+
+  .nci-organization__pattern {
+    display: flex;
+    height: 230px;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+    }
+
+    span {
+      margin: 20px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      line-height: 1.3em;
+      color: #fff;
+      font-family: Montserrat,Avant Garde,Arial,sans-serif;
+    }
+
+    @include bp(small) {
+      span {
+        font-size: 2.1em;
+      }
+    }
+
+    @include bp(xtra-small) {
+
+      span {
+        font-size: 8vw;
+      }
+    }
+  }
+}
+/********************* END Mini Landing Page Styles ******************************************/

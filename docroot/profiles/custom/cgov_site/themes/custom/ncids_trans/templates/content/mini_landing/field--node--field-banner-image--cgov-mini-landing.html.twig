@@ -1,0 +1,11 @@
+{# This template has a more specific name given that it is:
+ # A) A common name
+ # B) We could hoist this field to be used by others.
+ #}
+{% for item in items %}
+  <div id="cgvBodyHeader" class="row banner-slot">
+    <div class="large-12 columns body-banner">
+      {{ item.content }}
+    </div>
+  </div>
+{% endfor %}
