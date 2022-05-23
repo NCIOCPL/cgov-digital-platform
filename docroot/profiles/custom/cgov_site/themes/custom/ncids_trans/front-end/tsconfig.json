@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"outDir": "./dist/",
+		"baseUrl": ".",
+		"sourceMap": true,
+		"strict": true,
+		"noImplicitReturns": true,
+		"noImplicitAny": true,
+		"module": "es6",
+		"moduleResolution": "node",
+		"target": "es6",
+		// For now, until EVERYTHING is typescripot, we need to allow Js.
+		"allowJs": true,
+		// We have to duplicate the WebPack aliases in here for VSCode and TS.
+		// These paths are all relative to the baseUrl, which is src.
+		"paths": {
+			"Core/*": ["../../cgov/src/*"],
+			"Utilities/*": ["../../cgov/src/utilities/*"],
+			"Polyfills/*": ["../../cgov/src/polyfills/*"],
+			// The only thing in styles is the sprite. So we can point this at our
+			// local copy.
+			"Styles/*": ["./src/styles/*"],
+			"Libraries/*": ["../../cgov/cgov_common/src/libraries/*"],
+			// This is used to reference sprites.
+			"ImageDist/*": ["../dist/images/*"]
+		}
+	},
+	"include": ["./src/**/*"]
+}

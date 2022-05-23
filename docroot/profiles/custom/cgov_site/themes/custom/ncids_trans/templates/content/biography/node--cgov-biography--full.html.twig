@@ -1,0 +1,80 @@
+{{ attach_library('ncids_trans/biography') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+<article>
+    <div class="resize-content">
+        {{ drupal_block('page_options') }}
+        <div id="nvcgSlProfilePanel" class="profile-panel">
+          <div class="slot-item only-SI">
+            <div class="profile-panel-image">
+              {{ content.field_image_promotional }}
+            </div>
+            <div class="profile-panel-content">
+              <h1>
+                  {{ node.label }}
+              </h1>
+
+              {{ content.field_title }}
+
+              {% if content.field_org_name_1|field_value or content.field_org_name_2|field_value %}
+                <div class="profile-orgs">
+                  <div class="profile-org">
+                    {% if content.field_org_url_1|field_value %}
+                      <a href="{{- content.field_org_url_1|field_value -}}">{{ content.field_org_name_1 }}</a>
+                    {% else %}
+                      {{ content.field_org_name_1 }}
+                    {% endif %}
+                  </div>
+
+                  {% if content.field_org_name_2|field_value %}
+                    <div class="profile-org">
+                      {% if content.field_org_url_2|field_value %}
+                        <a href="{{- content.field_org_url_2|field_value -}}">{{ content.field_org_name_2 }}</a>
+                      {% else %}
+                        {{ content.field_org_name_2 }}
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if content.field_campus|field_value or content.field_office_location|field_value %}
+              <p>
+                {{ content.field_campus }}
+                {{ (content.field_campus|field_value and content.field_office_location|field_value)? '|' : '' }}
+                {{ content.field_office_location }}
+              </p>
+              {% endif %}
+
+              {% if content.field_phone_number|field_value or content.field_email_address|field_value %}
+              <div class="profile-contact-info">
+                {{ content.field_phone_number}}
+                {{ (content.field_phone_number|field_value and content.field_email_address|field_value)? '<span class="contact-divider">|</span>': '' }}
+                {{ content.field_email_address }}
+              </div>
+              {% endif %}
+
+              {% if content.field_twitter_handle|field_value or content.field_linkedin_handle|field_value or content.field_scientific_publications|field_value %}
+                <div class="profile-panel-social-media">
+                  {{ content.field_twitter_handle }}
+                  {{ content.field_linkedin_handle }}
+                  {{ content.field_scientific_publications }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div><!-- End profile-panel -->
+
+        <div id="cgvBody">
+          {{ content.body }}
+          {% if node.field_display_bio_press_info.value == '1' %}
+            {{ drupal_region('bio_press_info') }}
+          {% endif %}
+        </div>
+
+        <footer class="article-footer">
+          {{ content.field_related_resources }}
+          {{ contentPageMacros.displayDates(node, content) }}
+        </footer>
+    </div>
+</article>

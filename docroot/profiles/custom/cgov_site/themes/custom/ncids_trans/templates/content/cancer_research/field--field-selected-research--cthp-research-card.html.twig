@@ -1,0 +1,10 @@
+{% for item in items|slice(0, 4) %}
+  {{ item.content }}
+{%- endfor -%}
+
+{% if items|length > 4 %}
+  {% set url = path('entity.node.canonical', {'node':  node_id}) %}
+  <a href="{{ url }}" class="arrow-link">
+    {% trans %}View more research{% endtrans %}
+  </a>
+{% endif %}

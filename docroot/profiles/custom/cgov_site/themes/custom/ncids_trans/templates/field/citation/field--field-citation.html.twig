@@ -1,0 +1,22 @@
+<div id="cgvCitationSl">
+	<div>
+    <h6>
+      {% if items|length == 1 %}
+        {% trans %}
+          Selected Reference
+        {% endtrans %}
+      {% else %}
+        {% trans %}
+          Selected References
+        {% endtrans %}
+      {% endif %}
+    </h6>
+    <ol class="article-citation">
+      {% for item in items %}
+        <li id="r{{ loop.index }}">
+          {{ item.content }}
+        </li>
+      {% endfor %}
+    </ol>
+	</div>
+</div>

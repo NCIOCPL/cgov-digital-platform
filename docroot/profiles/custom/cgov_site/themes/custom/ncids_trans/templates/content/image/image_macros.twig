@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying article images.
+ */
+#}
+
+
+{# Renders an article image  #}
+{% macro articleImage(classes, image, enlarge_uri, credit, caption, link_text = 'Enlarge') %}
+
+  {# Set up the classes for the figure #}
+  {% set attr = create_attribute() %}
+  {% set attr = attr.addClass(classes) %}
+  {% set attr = attr.addClass('centered-set') %}
+
+  {# Links to infographics also use this macro but need a different class to allow them to use a chevron sprite.
+  We're cheating and hooking on to an unrelated variable that tells us whether this is an infographic or not. #}
+  {% set classForSpriteSelection = link_text == 'View Infographic' ? 'infographic-view-full' : 'article-image-enlarge' %}
+
+  <figure{{ attr }}>
+      <div class="centered-element">
+        {{ image }}
+        {% if enlarge_uri %}
+          <a href="{{enlarge_uri}}"
+            target="_blank"
+            class="{{classForSpriteSelection}} no-resize"
+          >{{ link_text|trans }}</a>
+        {% endif %}
+      </div>
+      {% if caption|render|striptags|trim or credit  %}
+        <figcaption>
+          <div class="caption-container no-resize">
+            {% if has_content(caption) %}
+              {{ caption }}
+            {% endif %}
+            {% if credit %}
+              <div class="image-photo-credit">{% trans %}Credit{% endtrans %}: {{ strip_duplicate_leading_credit(credit) }}</div>
+            {% endif %}
+          </div>
+        </figcaption>
+      {% endif %}
+  </figure>
+
+{% endmacro %}

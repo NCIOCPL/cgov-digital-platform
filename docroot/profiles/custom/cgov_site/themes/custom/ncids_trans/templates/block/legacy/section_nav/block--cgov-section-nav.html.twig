@@ -1,0 +1,47 @@
+{% set nav_tree = content['#nav_tree']%}
+{% set catch_cache = content|render %}
+{% macro nav_level(links) %}
+  {% import _self as macros %}
+  {% for link in links %}
+    <li class="{{ link.class }}">
+      <div class="{{ link.isCurrentSectionLandingPage ? 'current-page' : '' }}">
+        <a href="{{ link.href }}">{{ link.label }}</a>
+        {# Sadly, for legacy reasons, we need to defer to the FE code for injecting buttons #}
+        {# TODO: Post-migration refactor to move template generating to templates.  %}
+        {# {% if link.children|length > 0 %}
+          <button class="toggle" aria-expanded="{{ link.isExpanded ? 'true' : 'false' }}" type="button">
+            <span class="show-for-sr">{{ link.isExpanded ? 'Collapse' : 'Expand' }}</span>
+          </button>
+        {% endif %} #}
+      </div>
+      {% if link.children|length > 0 %}
+        <ul style="display:{{ link.isExpanded ? 'block;' : 'none;'}}">
+          {{ macros.nav_level(link.children) }}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+{% if nav_tree.label %}
+  <div id="nvcgSlSectionNav" class="medium-3 columns local-navigation">
+    <div class="slot-item only-SI">
+      <div class="section-nav">
+        <ul>
+          <li class="{{ nav_tree.class }}">
+            <div class="{{ nav_tree.isCurrentSectionLandingPage ? 'current-page' : '' }}">
+              <a href="{{ nav_tree.href }}">{{ nav_tree.label }}</a>
+            </div>
+            {% if nav_tree.children|length > 0 %}
+              <ul>
+                {{ macros.nav_level(nav_tree.children) }}
+              </ul>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}
+

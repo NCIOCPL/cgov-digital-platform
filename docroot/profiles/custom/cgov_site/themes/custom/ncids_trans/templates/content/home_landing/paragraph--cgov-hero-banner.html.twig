@@ -1,0 +1,29 @@
+{% set tabletSrc = file_url(content.field_tablet_hero['#items'].entity.uri.value) %}
+{% if content.field_mobile_hero|field_value is not empty %}
+  {% set mobileSrc = file_url(content.field_mobile_hero['#items'].entity.uri.value) %}
+{% else %}
+  {% set mobileSrc = tabletSrc %}
+{% endif %}
+
+{% set parent = paragraph.getParentEntity() %}
+{% set page_style = parent.field_page_style.value %}
+
+<div class="slot-item only-SI large-12 columns hero">
+  <div class="rawHtml">
+    {% if content.field_tagline|field_value is not empty %}
+    <div class="row">
+    {% if page_style != 'special_report'%}
+      <div class="hero-text columns large-12">
+        <p>{{ content.field_tagline }}</p>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    <picture>
+      <source media="(max-width: 640px)" srcset="{{ mobileSrc }}">
+      <source media="(max-width: 1024px) and (min-width: 641px)" srcset="{{ tabletSrc }}">
+      {{ content.field_desktop_hero }}
+    </picture>
+  </div>
+  </div>
+
