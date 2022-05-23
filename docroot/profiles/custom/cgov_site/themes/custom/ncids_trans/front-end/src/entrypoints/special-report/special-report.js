@@ -1,0 +1,1 @@
+import './special-report.scss';

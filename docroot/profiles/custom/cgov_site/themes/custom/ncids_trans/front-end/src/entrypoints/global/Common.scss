@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+/* ~Core is aliased to 'docroot/profiles/custom/cgov_site/themes/custom/cgov/src/' */
+
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '~Core/styles/breakpoint-mixins';
+@import "~Core/styles/placeholders";
+
+/****************** VENDOR LIBRARIES SECTION ********************/
+/***  BEGIN RESET STYLES ***/
+@import "~Core/styles/reset";
+/***  END RESET STYLES ***/
+/***  BEGIN FOUNDATION STYLES ***/
+
+/****************** NCI UTILITIES ********************/
+@import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
+
+@import "~Core/styles/equalheights"; //added flexbox height support
+
+@import "~Core/styles/nci-foundation";
+/* @import "grid"; */ /* using this for override of foundation media screen if necessary */
+/***  END FOUNDATION STYLES ***/
+/***  BEGIN FOUNDATION OVERRIDE STYLES ***/
+@import "~Core/styles/foundation_overrides";
+/***  END FOUNDATION OVERRIDE STYLES ***/
+
+/***  BEGIN SLICK STYLES ***/
+@import "~Core/libraries/carousel/slick";
+
+
+/***  BEGIN SLICK STYLES ***/
+
+/***  BEGIN JQUERY UI STYLES ***/
+@import "~Core/styles/jqueryui";
+/***  END JQUERY UI STYLES ***/
+/***  BEGIN JQUERY UI OVERRIDE STYLES ***/
+@import "~Core/styles/jqueryui_overrides";
+/***  END JQUERY UI OVERRIDE STYLES ***/
+/****************** END VENDOR LIBRARIES SECTION ********************/
+
+
+/****************** NCI COMPONENTS SECTION ********************/
+// these styles override and extend Foundation SASS partials
+@import "~Core/styles/components/global";
+@import "~Core/styles/components/buttons";
+@import "~Core/styles/components/forms";
+@import "~Core/styles/components/icons";
+
+/****************** END NCI COMPONENTS SECTION ********************/
+@import "~Core/styles/general";
+@import "~Core/styles/header";
+@import "~Core/styles/language_bar";
+@import "~Core/styles/utilitynav";
+@import "~Core/styles/search";
+@import "~Core/styles/footer";
+@import "~Core/styles/mainContent";
+@import "~Core/styles/images";
+@import "~Core/libraries/backToTop/backToTop";
+
+@import "~Core/styles/font_resizer";
+
+@import "~Core/styles/embedded-entity";
+@import "~Core/styles/banners";
+@import "~Core/styles/bodybanner";
+@import "~Core/libraries/accordion/accordion";
+@import "~Core/styles/tables";
+@import "~Core/libraries/modal/modal";
+@import "~Core/libraries/carousel/carousel";
+
+@import "~Core/styles/contentTemplate";
+
+
+@import "~Core/styles/news";
+@import "~Core/styles/onthispage";
+
+@import "~Core/styles/ebookButtons";
+@import "~Core/styles/materials_to_share";
+@import "~Core/styles/lists";
+@import "~Core/styles/managed-lists";
+
+@import "~Core/styles/topicFeature";
+
+@import "~Core/styles/videos";
+@import "~Core/libraries/tooltips/referenceTooltip";
+@import "~Core/styles/errorPage";
+@import "~Core/styles/contact";
+
+@import "~Core/styles/nav";
+@import "~Core/styles/pagination";
+
+@import "~Core/styles/image-video-carousel";
+@import "~Core/styles/flexVideoPreview";
+
+@import "~Core/styles/arrowLinks";
+
+
+@import "~Core/styles/popups";
+@import '~Core/styles/tableSort';
+
+
+/****************** NCI ENHANCEMENTS SECTION ********************/
+@import "~Core/libraries/liveHelpPopup/popupPartial";
+/****************** END NCI ENHANCEMENTS SECTION ********************/
+
+
+/* !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!  END RESPONSIVE STYLES SECTION  !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-! */
+
+/* PRINT STYLES --------------------------------- */
+@import "~Core/styles/print";
+/* END PRINT STYLES ----------------------------- */
+
+/* HACK STYLES */
+@import "~Core/styles/hacks";
+/* END HACK STYLES */
+
+
+// May need to be last last thing.  Move to drupal???
+// Overrides for the Moderation Sidebar module.
+body {
+  .ui-dialog.ui-dialog-off-canvas {
+    z-index: 9998;
+  }
+
+  .ui-dialog-off-canvas #drupal-off-canvas .button,
+  .ui-dialog-off-canvas #drupal-off-canvas  button {
+    min-height: 0;
+  }
+
+  .ui-dialog-off-canvas {
+    box-sizing: border-box;
+  }
+}
+
+
+
+@import "~Core/styles/drupal";
+
+// These are some imports from partials that were being pulled in through JS,
+@import "~Libraries/pageOptions/index.scss";
+@import "~Libraries/megamenu/megamenu.scss";
+@import "~Libraries/floatingDelighter/index.scss";

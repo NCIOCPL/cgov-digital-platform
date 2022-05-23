@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * Theme override to display article body field.
+ *
+ * This template handles a single section using a normal display,
+ * and when there are multiple sections it displays the "On This
+ * Page" navigation.
+ */
+#}
+{% if items | length > 1 %}
+  {# Only add accordion and OTP nav if there are multiple sections. #}
+  <div class="accordion">
+  {# TODO: Find a way to ensure there will be at least 1 link before drawing. #}
+  <nav class="on-this-page hide-otp-on-collapse" role="navigation">
+    {# See admin/config/regional/translate for Spanish string. #}
+    <h6>{% trans %}On This Page{% endtrans %}</h6>
+    <ul>
+      {% for item in items %}
+        {% if item.content['#paragraph'].field_body_section_heading.value %}
+        <li>
+          <a href="#{{ item.content['#paragraph'].field_body_section_heading.value | striptags | clean_id }}">
+            {# We have to apply the raw filter in order to render what is a simple format field as actual markup #}
+            {{- item.content['#paragraph'].field_body_section_heading.value|raw -}}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
+{# Paragraphs with only one section will not be wrapped in sections and not draw OTP. #}
+{# However, in the course of migrating, there may be instances where a single paragraph has a full article body with
+multiple sections expecting OTP to be drawn by the javascript method. The legacy method is still supported with OTP in
+Common.js #}
+{% for item in items %}
+  {% if items | length > 1 %}
+    {% if schema_org_type %}
+      <section itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    {% else %}
+      <section>
+    {% endif %}
+  {% else %}
+    {% if schema_org_type %}
+      <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    {% endif %}
+  {% endif %}
+    {{ item.content }}
+  {% if items | length > 1 %}
+    </section>
+  {% else %}
+    {% if schema_org_type %}
+      </div>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% if items | length > 1 %}
+  </div>
+{% endif %}

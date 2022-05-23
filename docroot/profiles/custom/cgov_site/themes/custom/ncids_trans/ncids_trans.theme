@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the ncids_trans theme.
+ *
+ * This is copied over from cgov_common
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\Core\Language\LanguageInterface;
+
+// Global variables for later use.
+global $_theme_name, $_path_to_ncids_trans;
+$_theme_name = \Drupal::theme()->getActiveTheme()->getName();
+$_path_to_ncids_trans = drupal_get_path('theme', 'ncids_trans');
+
+/**
+ * Allows us to have node based page templates.
+ *
+ * @param array $suggestions
+ *   The list of theme suggestions to augment.
+ * @param array $variables
+ *   Collection of variables.
+ */
+function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+
+    // If $node is the NID instead of Node object, get Node object.
+    // This happens on route 'entity.node.revision' due to the issue:
+    // See https://www.drupal.org/project/drupal/issues/2730631 .
+    if (!$node instanceof Node) {
+      $node = Node::load($node);
+    }
+
+    // Add theme suggestion of 'page__article', 'page__biography', etc.
+    $content_type = $node->bundle();
+    $suggestions[] = 'page__' . $content_type;
+
+    // Add theme suggestion for special report template if appropriate.
+    if ($node->bundle() == "cgov_home_landing") {
+      $page_template = $node->field_page_style->value;
+      if ($page_template !== null) {
+        $suggestions[] = 'page__' . $content_type . '__' . $page_template;
+      }
+    }
+  }
+
+  // ADD SUGGESTIONS FOR CUSTOM 401/403/404 PAGE TEMPLATES.
+  // 1) Get Request Object.
+  $request = \Drupal::request();
+
+  // 2) If there is HTTP Exception..
+  if ($exception = $request->attributes->get('exception')) {
+    // 3) Get the status code.
+    $status_code = $exception->getStatusCode();
+    // 4) Get the current langauge.
+    $language = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)
+      ->getId();
+    if (in_array($status_code, [401, 403, 404])) {
+      $suggestions[] = 'page__' . $status_code;
+      $suggestions[] = 'page__' . $status_code . '_' . $language;
+    }
+  }
+}
+
+
+/**
+ * Allows us to add the container's view mode to field suggestions.
+ *
+ * @param array $suggestions
+ *   The list of theme suggestions to augment.
+ * @param array $variables
+ *   Collection of variables.
+ */
+function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+  $element = $variables['element'];
+  $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
+}
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Add theme variant class name to page body for CSS and JS entrypoint.
+ */
+function ncids_trans_preprocess_html(&$variables) {
+
+  $hasTranslations = theme_get_setting('has_translations');
+  if ($hasTranslations) {
+    $variables['attributes']['class'][] = 'has-translated-content';
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function ncids_trans_preprocess_node(&$variables) {
+  // URL query parameters.
+  $params = [
+    'month',
+    'topic',
+    'year',
+  ];
+
+  // Add any parameter values to the $variables get property.
+  foreach ($params as $param) {
+    $variables['get'][$param] = $_GET[$param] ?? '';
+  }
+
+  // is_front is normally only available in page templates.
+  // This is to subvert that expectation.
+  // (NOTE: An exception might be thrown.)
+  try {
+    $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  } catch (Exception $e) {
+    // If the database is not yet available, set the default value.
+    $variables['is_front'] = FALSE;
+  }
+}
+
+/**
+ * Preprocess function for field templates.
+ */
+function ncids_trans_preprocess_field(&$variables) {
+  // Check for selected research field.
+  if ($variables['element']['#field_name'] == 'field_selected_research') {
+    // Get the node ID for use in field templates.
+    $nid = $variables['element']['#object']->id();
+    $variables['node_id'] = $nid;
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function ncids_trans_page_attachments_alter(&$attachments) {
+  foreach ($attachments['#attached']['html_head'] as $key => $item) {
+    if (isset($item[0]["#attributes"]["name"]) && $item[0]["#attributes"]["name"] == 'viewport') {
+      $attachments['#attached']['html_head'][$key][0]["#attributes"]["content"] = "width=device-width, user-scalable=yes, initial-scale=1, minimum-scale=1";
+    }
+  }
+}

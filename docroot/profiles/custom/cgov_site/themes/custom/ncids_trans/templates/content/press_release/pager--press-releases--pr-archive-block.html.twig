@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Theme override to display a pager.
+ *
+ * Available variables:
+ * - heading_id: Pagination heading ID.
+ * - items: List of pager items.
+ *   The list is keyed by the following elements:
+ *   - first: Item for the first page; not present on the first page of results.
+ *   - previous: Item for the previous page; not present on the first page
+ *     of results.
+ *   - next: Item for the next page; not present on the last page of results.
+ *   - last: Item for the last page; not present on the last page of results.
+ *   - pages: List of pages, keyed by page number.
+ *   Sub-sub elements:
+ *   items.first, items.previous, items.next, items.last, and each item inside
+ *   items.pages contain the following elements:
+ *   - href: URL with appropriate query parameters for the item.
+ *   - attributes: A keyed list of HTML attributes for the item.
+ *   - text: The visible text used for the item link, such as "‹ Previous"
+ *     or "Next ›".
+ * - current: The page number of the current page.
+ * - ellipses: If there are more pages than the quantity allows, then an
+ *   ellipsis before or after the listed pages may be present.
+ *   - previous: Present if the currently visible list of pages does not start
+ *     at the first page.
+ *   - next: Present if the visible list of pages ends before the last page.
+ *
+ * @see template_preprocess_pager()
+ */
+#}
+{% if items %}
+    <nav aria-labelledby="pagination-heading" class="pager" role="navigation">
+        <h4 class="visually-hidden" id="pagination-heading">Pagination</h4>
+        <ul
+            class="pager__items">
+            {# Print previous item if we are not on the first page. #}
+            {% if items.previous %}
+                <li class=" pager__item pager__item--previous">
+                    <a href="{{ items.previous.href }}" rel="prev" {{ items.previous.attributes|without('href', 'title', 'rel') }} title="Go to previous page">
+                        <span class="visually-hidden">Previous page</span>
+                        <span aria-hidden="true">&lt;&nbsp;{{- 'Previous'|t -}}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {# Now generate the actual pager piece. #}
+            {% for key, item in items.pages %}
+                {% set itemClass = (current == key)? 'pager__item is-active' : 'pager__item' %}
+                <li class="{{- itemClass -}}">
+                    {% if current == key %}
+                      <span class="visually-hidden">Current Page</span>
+                    {% else %}
+                      <span class="visually-hidden">Page</span>
+                    {% endif %}
+                    <a href="{{ item.href }}" {{ item.attributes|without('href', 'title') }}>
+                      {{- key -}}
+                    </a>
+                </li>
+            {% endfor %}
+
+            {# Print next item if we are not on the last page. #}
+            {% if items.next %}
+                <li class="pager__item  pager__item--next">
+                    <a href="{{ items.next.href }}" rel="next" {{ items.next.attributes|without('href', 'title', 'rel') }} title="Go to next page">
+                        <span class="visually-hidden">Next page</span>
+                        <span aria-hidden="true">{{- 'Next'|t -}}&nbsp;&gt;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
