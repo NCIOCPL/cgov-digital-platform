@@ -1,0 +1,14 @@
+<div class="ic-carousel">
+  {% if content.field_carousel_image_title|field_value %}
+    <div class="row">
+      <div class="ic-carousel-title">
+        <h4>{{ content.field_carousel_image_title }}</h4>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="slider">
+      {{ content.field_carousel_images }}
+    </div>
+  </div>
+</div>

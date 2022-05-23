@@ -1,0 +1,147 @@
+## This was copied over from cgov_common.
+jqueryandui:
+  js:
+    dist/js/jqueryandui.js: { preprocess: true }
+  dependencies:
+    - core/jquery
+
+## Remove Legacy Global once done with updating libraries.
+legacy-global:
+  css:
+    theme:
+      dist/css/Common.css: { preprocess: false }
+  js:
+    dist/js/Common.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/jqueryandui
+
+ncids-global:
+  css:
+    theme:
+      dist/css/ncids-common.css: { preprocess: false }
+  js:
+    dist/js/ncids-common.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/jqueryandui
+
+#####################
+## NOTE: In the libraries below notice how there is a dependency on the global library.
+## This is because attach_library does not care about order. If we add the dependencies
+## here, then when both the global and specific libraries are attached then the ordering
+## will be correct.
+article:
+  css:
+    theme:
+      dist/css/article.css: { preprocess: false }
+  js:
+    dist/js/article.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+home-landing:
+  css:
+    theme:
+      dist/css/home-landing.css: { preprocess: false }
+  js:
+    dist/js/home-landing.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+special-report:
+  css:
+    theme:
+      dist/css/special-report.css: { preprocess: false }
+  js:
+    dist/js/special-report.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+pdq:
+  css:
+    theme:
+      dist/css/pdq.css: { preprocess: false }
+  js:
+    dist/js/pdq.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+minilanding:
+  css:
+    theme:
+      dist/css/mini-landing.css: { preprocess: false }
+  js:
+    dist/js/mini-landing.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+cancer-center:
+  css:
+    theme:
+      dist/css/cancer-center.css: { preprocess: false }
+  js:
+    dist/js/cancer-center.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+biography:
+  css:
+    theme:
+      dist/css/biography.css: { preprocess: false }
+  js:
+    dist/js/biography.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+event:
+  css:
+    theme:
+      dist/css/event.css: { preprocess: false }
+  js:
+    dist/js/event.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+blog-post:
+  css:
+    theme:
+      dist/css/blog-post.css: { preprocess: false }
+  js:
+    dist/js/blog-post.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+blog-series:
+  css:
+    theme:
+      dist/css/blog-series.css: { preprocess: false }
+  js:
+    dist/js/blog-series.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+cthp:
+  css:
+    theme:
+      dist/css/cthp.css: { preprocess: false }
+  js:
+    dist/js/cthp.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+cts-app:
+  css:
+    theme:
+      dist/css/cts-app.css: { preprocess: false }
+  js:
+    dist/js/cts-app.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+r4r-app:
+  css:
+    theme:
+      dist/css/r4r-app.css: { preprocess: false }
+  js:
+    dist/js/r4r-app.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global

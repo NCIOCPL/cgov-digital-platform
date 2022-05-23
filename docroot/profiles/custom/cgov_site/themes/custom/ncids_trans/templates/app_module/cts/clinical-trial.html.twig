@@ -1,0 +1,357 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a clinical_trial.
+ *
+ * Available variables:
+ * - content: The content of this clinical_trial page.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ * - trial: The clinical trial object to display.
+ * - inclusion_criteria: A boolean to display inclusion criteria.
+ * - exclusion_criteria: A boolean to display exclusion criteria.
+ * - usa_study_sites: The grouped USA study sites to display.
+ * - canada_study_sites: The grouped Canadian study sites to display.
+ * - other_study_sites: The grouped other study sites to display.
+ * - trial_objectives: The trial objective text to display.
+ * - trial_phase: The trial phase text to display.
+ * - trial_type: The trial type text to display.
+ * - secondary_ids: The secondary IDs text to display.
+ *
+ * @see template_preprocess_clinical_trial()
+ *
+ * @ingroup themeable
+ */
+#}
+<article class="trial-description-page">
+  <div class="trial-description-page__header">
+    <h1>
+      {{ trial.BriefTitle}}
+    </h1>
+    <div class="trial-description-page__description">
+      <div class="trial-description-page__content">
+        {% set trial_status_class = '' %}
+        {% if trial.CurrentTrialStatus|lower == "active" %}
+          {% set trial_status_class = "active" %}
+        {% elseif trial.CurrentTrialStatus|lower == "enrolling by invitation" %}
+          {% set trial_status_class = "invite" %}
+        {% elseif trial.CurrentTrialStatus|lower == "temporarily closed" or trial.CurrentTrialStatus|lower == "temporarily closed to accrual" or trial.CurrentTrialStatus|lower == "temporarily closed to accrual and intervention" %}
+          {% set trial_status_class = "closed" %}
+        {% elseif trial.CurrentTrialStatus|lower == "not yet active" or trial.CurrentTrialStatus|lower == "in review" or trial.CurrentTrialStatus|lower == "approved" %}
+          {% set trial_status_class = "not-active" %}
+        {% endif %}
+        <div class="trial-status-indicator {{ trial_status_class }}">
+          <span class="show-for-sr">Trial </span>Status: {{ trial.CurrentTrialStatus }}
+        </div>
+        <div class="cts-accordion ">
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-1-content"
+            >
+              <span>Description</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-1-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {{ trial.BriefSummary }}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-2-content"
+            >
+              <span>Eligibility Criteria</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-2-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {% if inclusion_criteria %}
+              <h3>Inclusion Criteria</h3>
+              <ul>
+                {% for criterion in trial.EligibilityInfo.UnstructuredCriteria %}
+                  {% if criterion.IsInclusionCriterion %}
+                    <li>{{ criterion.Description }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if exclusion_criteria %}
+              <h3>Exclusion Criteria</h3>
+              <ul>
+                {% for criterion in trial.EligibilityInfo.UnstructuredCriteria %}
+                  {% if criterion.IsInclusionCriterion == false %}
+                    <li>{{ criterion.Description }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-3-content"
+            >
+              <span>Locations &amp; Contacts</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-3-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {% if usa_study_sites or canada_study_sites or other_study_sites %}
+              {% if usa_study_sites %}
+                {% for key,value in usa_study_sites %}
+                  <div class="location-state">
+                    <h4>{{ key }}</h4>
+                    {% for key,value in value %}
+                      <div class="location-city">
+                        <h5>{{ key }}</h5>
+                        {% for item in value %}
+                          <div class="location">
+                            {% if item.Name is not empty %}
+                              <strong class="location-name">{{ item.Name }}</strong>
+                            {% endif %}
+                            {% if item.RecruitmentStatus is not empty %}
+                              <div>Status: {{ item.RecruitmentStatus }}</div>
+                            {% endif %}
+                            {% if item.ContactName is not empty %}
+                              <div>Contact: {{ item.ContactName }}</div>
+                            {% endif %}
+                            {% if item.ContactPhone is not empty %}
+                              <div>Phone: {{ item.ContactPhone }}</div>
+                            {% endif %}
+                            {% if item.ContactEmail is not empty %}
+                              <div>
+                                Email:
+                                <a href="mailto:{{ item.ContactEmail }}">{{ item.ContactEmail }}</a>
+                              </div>
+                            {% endif %}
+                          </div>
+                          {% endfor %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% if canada_study_sites %}
+                {% for key,value in canada_study_sites %}
+                  <div class="location-state">
+                    <h4>{{ key }}</h4>
+                    {% for key,value in value %}
+                      <div class="location-city">
+                        <h5>{{ key }}</h5>
+                        {% for item in value %}
+                          <div class="location">
+                            {% if item.Name is not empty %}
+                              <strong class="location-name">{{ item.Name }}</strong>
+                            {% endif %}
+                            {% if item.RecruitmentStatus is not empty %}
+                              <div>Status: {{ item.RecruitmentStatus }}</div>
+                            {% endif %}
+                            {% if item.ContactName is not empty %}
+                              <div>Contact: {{ item.ContactName }}</div>
+                            {% endif %}
+                            {% if item.ContactPhone is not empty %}
+                              <div>Phone: {{ item.ContactPhone }}</div>
+                            {% endif %}
+                            {% if item.ContactEmail is not empty %}
+                              <div>
+                                Email:
+                                <a href="mailto:{{ item.ContactEmail|raw }}">{{ item.ContactEmail }}</a>
+                              </div>
+                            {% endif %}
+                          </div>
+                          {% endfor %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% if other_study_sites %}
+                {% for key,value in other_study_sites %}
+                  <div class="location-state">
+                    <h4>{{ key }}</h4>
+                    {% for key,value in value %}
+                      <div class="location-city">
+                        <h5>{{ key }}</h5>
+                        {% for item in value %}
+                          <div class="location">
+                            {% if item.Name is not empty %}
+                              <strong class="location-name">{{ item.Name }}</strong>
+                            {% endif %}
+                            {% if item.RecruitmentStatus is not empty %}
+                              <div>Status: {{ item.RecruitmentStatus }}</div>
+                            {% endif %}
+                            {% if item.ContactName is not empty %}
+                              <div>Contact: {{ item.ContactName }}</div>
+                            {% endif %}
+                            {% if item.ContactPhone is not empty %}
+                              <div>Phone: {{ item.ContactPhone }}</div>
+                            {% endif %}
+                            {% if item.ContactEmail is not empty %}
+                              <div>
+                                Email:
+                                <a href="mailto:{{ item.ContactEmail }}">{{ item.ContactEmail }}</a>
+                              </div>
+                            {% endif %}
+                          </div>
+                          {% endfor %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% else %}
+              {% if trial.CurrentTrialStatus|lower == "not yet active" or trial.CurrentTrialStatus|lower == "in review" or trial.CurrentTrialStatus|lower == "approved" %}
+                <p>Location information is not yet available.</p>
+              {% else %}
+                <p>See trial information on <a href="https://www.clinicaltrials.gov/show/{{ trial.NCTID }}" target="_blank">ClinicalTrials.gov</a> for a list of participating sites.</p>
+              {% endif %}
+            {% endif %}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+          <button
+            class="cts-accordion__button"
+            aria-expanded="true"
+            aria-controls="component-unique-id-4-content"
+          >
+            <span>Trial Objectives and Outline</span>
+          </button>
+          </h2>
+          <div
+            id="component-unique-id-4-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {% if trial_objectives %}
+              {{ trial_objectives|raw }}
+            {% endif %}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-5-content"
+            >
+              <span>Trial Phase &amp; Type</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-5-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {% if trial_phase %}
+              <p className="trial-phase">
+                <strong class="field-label">Trial Phase</strong>
+                {{ trial_phase }}
+              </p>
+            {% endif %}
+            {% if trial_type %}
+              <p className="trial-type">
+                <strong  class="field-label">Trial Type</strong>
+                {{ trial_type }}
+              </p>
+            {% endif %}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-6-content"
+            >
+              <span>Lead Organization</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-6-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            {% if trial.LeadOrganizationName %}
+              <p class="lead-org">
+                <strong>Lead Organization</strong>
+                <br>
+                {{ trial.LeadOrganizationName }}
+              </p>
+            {% endif %}
+            {% if trial.PrincipalInvestigator %}
+              <p class="investigator">
+                Principal Investigator
+                <br>
+                {{ trial.PrincipalInvestigator }}
+              </p>
+            {% endif %}
+          </div>
+          <h2 class="cts-accordion__heading" aria-expanded="true">
+            <button
+              class="cts-accordion__button"
+              aria-expanded="true"
+              aria-controls="component-unique-id-7-content"
+            >
+              <span>Trial IDs</span>
+            </button>
+          </h2>
+          <div
+            id="component-unique-id-7-content"
+            class="cts-accordion__content"
+            aria-hidden="false"
+          >
+            <ul class="trial-ids">
+              {% if trial.ProtocolID %}
+                <li><strong>Primary ID </strong>{{trial.ProtocolID}}</li>
+              {% endif %}
+              {% if secondary_ids %}
+                <li><strong>Secondary IDs </strong>{{ secondary_ids}}</li>
+              {% endif %}
+              {% if trial.NCTID %}
+                <li>
+                  <strong>Clinicaltrials.gov ID </strong
+                  ><a
+                    href="http://clinicaltrials.gov/show/{{ trial.NCTID }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ trial.NCTID }}</a
+                  >
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="trial-description-page__aside">
+      <div class="cts-delighter-container">
+        <div class="delighter cts-livehelp">
+          <a href="/contact">
+            <h4>Have a question?<br />We're here to help</h4>
+            <p>
+              <strong>Chat with us:</strong> LiveHelp<br />
+              <strong>Call us:</strong>1-800-4-CANCER<br />(1-800-422-6237)
+            </p>
+          </a>
+        </div>
+        <div class="delighter cts-which">
+          <a href="/about-cancer/treatment/clinical-trials/search/trial-guide">
+            <h4>Which trials are right for you?</h4>
+            <p>
+              Use the checklist in our guide to gather the information you'll
+              need.
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

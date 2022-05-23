@@ -1,0 +1,276 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying list items.
+ *
+ * Trying to account for all the various stylings of list items is
+ * challenging. So this macros file does not attempts to unify the
+ * each style into one method, but provides a method for each style
+ * so that nodes, internal, & external paragraph links can generate
+ * the same markup, and at least reduce duplication for the same
+ * style. (In a perfect world, and we will try, Views should call
+ * this as well.)
+ */
+#}
+
+{#
+  Title only lists.
+
+  Used in:
+    * Managed Lists
+    * Related Resources
+    * CTHP Guide Card More Information
+    * CTHP Cancer Research Card
+#}
+{% macro list_item_title(title, url, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item title-only" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item title-only" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item title-only" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item title-only" %}
+  {% endif %}
+  <li class="{{ liClasslist }}">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, false, media_link_type, file_type, file_size, file_ext) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title and Description.
+
+  Used in:
+    * Managed Lists
+#}
+{% macro list_item_title_desc(title, description, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item title-desc" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item title-desc" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item title-desc" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item title-desc" %}
+  {% endif %}
+  <li class="{{ liClasslist }}">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+      {{ _self._output_list_desc_date(description, null) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title, description, and image.
+
+  Used in:
+    * Managed Lists
+
+  (Replaces old "Thumbnail Card" as well)
+#}
+{% macro list_item_title_desc_image(title, description, image, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item has-media" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item has-media" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item has-media" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item has-media" %}
+  {% endif %}
+  <li class="{{ liClasslist }}">
+    {{ _self._output_list_image(image, url) }}
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+      {{ _self._output_list_desc_date(description, null) }}
+    </div>
+  </li>
+{% endmacro %}
+
+
+{% macro list_item_title_desc_image_alternating(title, description, image, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item has-media" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item has-media" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item has-media" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item has-media" %}
+  {% endif %}
+  <a class = "alternating-image-list-container-link" href="{{ url }}">
+    <div class="{{ liClasslist }} alternating-image-list-item">
+      <div class="alternating-image-list-image">
+        {{ _self._output_list_image_unlinked(image) }}
+      </div>
+      <div class="title-and-desc title desc container alternating-image-list-text">
+        {# {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+        <a href="{{ url }}">{{ _self._output_list_desc_date(description, null) }}</a> #}
+        {{ _self._output_list_title_unlinked(title, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+        {{ _self._output_list_desc_date(description, null) }}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+
+{#
+  Title and date.
+  (TODO: No media link support added pending further development)
+
+  Used in:
+    * Press Release Archive View
+#}
+{% macro list_item_title_date(title, date, url, has_title_heading) %}
+  <li class="general-list-item general list-item title-desc">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(null, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{#
+  Title, date, and description.
+
+  Used in:
+    * Cancer Research Pages
+#}
+{% macro list_item_title_date_desc(title, date, description, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+  {% if media_link_type == 'Infographic' %}
+    {% set liClasslist = "infographic-list-item infographic list-item title-desc" %}
+  {% elseif media_link_type == 'Video' %}
+    {% set liClasslist = "video-list-item video list-item title-desc" %}
+  {% elseif media_link_type == 'File' %}
+    {% set liClasslist = "file-list-item file list-item title-desc" %}
+  {% else %}
+    {% set liClasslist = "general-list-item general list-item title-desc" %}
+  {% endif %}
+  <li class="{{ liClasslist }}">
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+      {{ _self._output_list_desc_date(description, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+
+{#
+  Title 
+  
+  Used in:
+    * CTHP Research Block
+#}
+{% macro list_item_cthp_research_media(title, date, url, has_title_heading, media_link_type, file_type, file_size, file_ext)%}
+  <p>
+    {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+  </p>
+{% endmacro %}
+
+
+{#
+  Title, description, and image.
+
+  (TODO: No media link support added pending further development)
+
+  Used in:
+    * News & Events Press Release Listing View
+#}
+{% macro list_item_title_date_desc_image(title, date, description, image, url, has_title_heading) %}
+  <li class="general-list-item general list-item has-media">
+    {{ _self._output_list_image(image, url) }}
+    <div class="title-and-desc title desc container">
+      {{ _self._output_list_title(title, url, has_title_heading) }}
+      {{ _self._output_list_desc_date(description, date) }}
+    </div>
+  </li>
+{% endmacro %}
+
+{############################
+         Components
+#############################}
+
+{#
+  Outputs the list item's image
+ #}
+{% macro _output_list_image(image, url) %}
+  {% if image %}
+    <div class="list-item-image image container">
+      <a class="item-image image" href="{{ url }}">{{- image -}}</a>
+    </div>
+  {% endif %}
+{% endmacro %}
+{#
+  Outputs the list item's image unlinked
+ #}
+{% macro _output_list_image_unlinked(image) %}
+  {% if image %}
+    <div class="list-item-image image container">
+      <span class="item-image image">{{- image -}}</span>
+    </div>
+  {% endif %}
+{% endmacro %}
+{#
+  Outputs the list item's title
+ #}
+{% macro _output_list_title(title, url, has_title_heading, media_link_type = null, file_type = null, file_size = null, file_ext = null) %}
+  {% if has_title_heading %}<h3>{% endif %}
+  <a class="title" href="{{ url }}">
+    {{- title -}}
+  </a>
+  {% if media_link_type == "Infographic" or media_link_type == "Video" %}
+    <span class="media-type">({{ media_link_type|trans }})</span>
+  {% endif %}
+  {% if media_link_type == "File" %}
+    <span class="filetype {{file_type}}">
+      {% if file_type != "unknown" %}
+        {# Note, the spanish should have the word order reversed... #}
+        <span class="show-for-sr">{{ file_type }} {% trans %}file{% endtrans %}</span>
+      {% else %}
+        {{ file_ext }}<span class="show-for-sr"> {% trans %}file{% endtrans %}</span>
+      {% endif %}
+    </span>
+    <span class="filesize">({{ file_size }})</span>
+  {% endif %}
+  {% if has_title_heading %}</h3>{% endif %}
+{% endmacro %}
+
+{#
+  Outputs the list item's title
+ #}
+{% macro _output_list_title_unlinked(title, has_title_heading, media_link_type = null, file_type = null, file_size = null, file_ext = null) %}
+  {% if has_title_heading %}<h3>{% endif %}
+  <span class="title">{{- title -}}</span>
+  {% if media_link_type == "Infographic" or media_link_type == "Video" %}
+    <span class="media-type">({{ media_link_type|trans }})</span>
+  {% endif %}
+  {% if media_link_type == "File" %}
+    <span class="filetype {{file_type}}">
+      {% if file_type != "unknown" %}
+        {# Note, the spanish should have the word order reversed... #}
+        <span class="show-for-sr">{{ file_type }} {% trans %}file{% endtrans %}</span>
+      {% else %}
+        {{ file_ext }}<span class="show-for-sr"> {% trans %}file{% endtrans %}</span>
+      {% endif %}
+    </span>
+    <span class="filesize">({{ file_size }})</span>
+  {% endif %}
+  {% if has_title_heading %}</h3>{% endif %}
+{% endmacro %}
+
+{#
+  Outputs the list item's description and/or date.
+ #}
+{% macro _output_list_desc_date(description, date) %}
+  <div class="description">
+    {% if date %}
+      <div class="date">{{ date }}</div>
+    {% endif %}
+    {% if description %}
+      <p class="body">{{ description }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
