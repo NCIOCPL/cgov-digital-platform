@@ -1,0 +1,278 @@
+@charset "utf-8";
+/*************************************************************
+This file is used by CKEditor in order to display CGov Styles and Embedded components.
+Items should be added or removed based on if it would be used in the WYSIWYG. This was
+created as a copy paste from Common.scss.
+
+Additional items may be found at the end when we need to override styles from our
+CSS modules.
+**************************************************************/
+
+// Noto is pulled into the front-end via a tag in the head block. So we need to include
+// it here for editing.
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i);
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '~Core/styles/breakpoint-mixins';
+@import "~Core/styles/placeholders";
+
+/****************** VENDOR LIBRARIES SECTION ********************/
+/***  BEGIN RESET STYLES ***/
+@import "~Core/styles/reset";
+/***  END RESET STYLES ***/
+/***  BEGIN FOUNDATION STYLES ***/
+
+/****************** NCI UTILITIES ********************/
+@import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
+
+@import "~Core/styles/equalheights"; //added flexbox height support
+
+@import "~Core/styles/nci-foundation";
+/* @import "grid"; */ /* using this for override of foundation media screen if necessary */
+/***  END FOUNDATION STYLES ***/
+/***  BEGIN FOUNDATION OVERRIDE STYLES ***/
+@import "~Core/styles/foundation_overrides";
+/***  END FOUNDATION OVERRIDE STYLES ***/
+/***  BEGIN SLICK STYLES ***/
+@import "~Core/libraries/carousel/slick";
+/***  BEGIN SLICK STYLES ***/
+/***  BEGIN JQUERY UI STYLES ***/
+@import "~Core/styles/jqueryui";
+/***  END JQUERY UI STYLES ***/
+/***  BEGIN JQUERY UI OVERRIDE STYLES ***/
+@import "~Core/styles/jqueryui_overrides";
+/***  END JQUERY UI OVERRIDE STYLES ***/
+/****************** END VENDOR LIBRARIES SECTION ********************/
+
+
+/****************** NCI COMPONENTS SECTION ********************/
+// these styles override and extend Foundation SASS partials
+@import "~Core/styles/components/global";
+@import "~Core/styles/components/buttons";
+@import "~Core/styles/components/forms-mixins";
+@import "~Core/styles/components/icons";
+
+/****************** END NCI COMPONENTS SECTION ********************/
+
+@import "~Core/styles/general";
+@import "~Core/styles/header";
+@import "~Core/styles/language_bar";
+@import "~Core/styles/utilitynav";
+
+@import "~Core/styles/search";
+
+@import "~Core/styles/footer";
+
+@import "~Core/styles/mainContent";
+@import "~Core/styles/images";
+@import "~Core/styles/embedded-entity";
+@import "~Core/styles/banners";
+@import "~Core/styles/bodybanner";
+@import "~Core/libraries/accordion/accordion";
+@import "~Core/styles/tables";
+@import "~Core/styles/font_resizer";
+@import "~Core/libraries/carousel/carousel";
+@import "~Core/libraries/backToTop/backToTop";
+@import "~Core/styles/contentTemplate";
+@import "~Core/styles/news";
+@import "~Core/styles/onthispage";
+@import "~Core/styles/institutions";
+@import "~Core/styles/ebookButtons";
+@import "~Core/styles/materials_to_share";
+@import "~Core/styles/lists";
+@import "~Core/styles/managed-lists";
+@import "~Core/styles/topicFeature";
+@import "~Core/styles/videos";
+@import "~Core/libraries/tooltips/referenceTooltip";
+@import "~Core/styles/errorPage";
+@import "~Core/styles/contact";
+// TODO: POST-MIGRATION: Couple nav styles with nav libraries.
+@import "~Core/styles/nav";
+@import "~Core/styles/pagination";
+@import "~Core/styles/image-video-carousel";
+@import "~Core/styles/flexVideoPreview";
+@import "~Core/styles/arrowLinks";
+
+@import "~Core/styles/checkbox";
+@import "~Core/styles/popups";
+@import '~Core/styles/tableSort';
+
+// @import "~Core/styles/spinner";
+@import "~Core/libraries/modal/modal";
+
+/****************** NCI ENHANCEMENTS SECTION ********************/
+@import "~Core/libraries/liveHelpPopup/popupPartial";
+// @import "AppModuleSpecific/cts/NCI.Delighters";
+/****************** END NCI ENHANCEMENTS SECTION ********************/
+
+
+/* !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!  END RESPONSIVE STYLES SECTION  !-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-! */
+
+/* PRINT STYLES --------------------------------- */
+@import "~Core/styles/print";
+/* END PRINT STYLES ----------------------------- */
+
+/* HACK STYLES */
+@import "~Core/styles/hacks";
+
+@include bp(large-up) {
+	.cthp-card-container .cthp-dropdown.more-info {
+		// CSSNano minifiews z-indexes. Until we remove it, it means CSS files that don't
+		// go through the same entry point will have issues with z-index mismatches after minification.
+		// In order to get a z-index for the drop-down higher than other elements on the page (specifically
+		// the youtube thumbnail in the current case) the rule for the z-index on this element has to be in the
+		// same stylesheet as the elements we want it to sit above.
+		// See nvcg.scss for the z-index on this element.
+
+		ul {
+			z-index: 11 !important;
+		}
+	}
+}
+/* END HACK STYLES */
+
+// This is a partial waiting to be made, it comes from the PDQ page, but at least
+// some of the styles (.brand-fda) are being used in InnerPages
+// (https://www.cancer.gov/about-cancer/treatment/drugs/raloxifenehydrochloride for
+// example). I'm moving it here to fix issues for QA and make sure it's not easily ignored.
+// Nothing in this file should remain as floating code for long. Partials only. (BB - 2/2018)
+
+/* new styles */
+.trial-sites h4 {
+	background: #E6E6E2;
+	padding: 3px 0;
+	/* font-size: 16px; */
+}
+.trial-sites h5 {
+	color: #993333;
+	font-size: 15px;
+	margin: 10px 0;
+}
+.trial-sites h6 {
+	/* font-size: 14px; */
+	font-style: normal;
+	margin: 5px 0 10px;
+}
+.trial-sites .two-columns {
+	margin: 0 30px;
+}
+.definition-term {
+	line-height: 1em;
+}
+.definition-term-image {
+	display: inline-block;
+	vertical-align: middle;
+}
+figure.definition-image {
+	width: 25%;
+	display: block;
+}
+table.drug-combination {
+	margin-left: 0px; //removed 20px per OCEPROJECT-2527
+	width: 100%;
+
+	td {
+		padding: 5px;
+
+		&.drug-combo-letter {
+			text-align: right;
+			font-weight: bold;
+		}
+	}
+}
+.two-columns.brand-fda {
+	width: 60%;
+}
+.brand-fda .column1 {
+	font-weight: bold;
+}
+table.table-default tfoot td {
+	border: none;
+	font-style: normal;
+	margin: 0;
+	padding: 8px 10px;
+	background: $caption-background;
+	font-size: 14px;
+	line-height: 1.5em;
+	font-family: $montserrat-font-stack;
+}
+.dis-disclaimer {
+}
+/* end new styles */
+
+
+// Temporary hack to allow blog-intro-text to be used on topic pages until templates are adjusted BB 3/2018
+.key-intro {
+	// The following two styles are contextual, they can either be implemented or overriden depending
+	// on whether we keep them here. I prefer implemented which is why they are commented out but not
+	// outright deleted yet.
+	// width: 100%;
+	// margin-bottom: 1em;
+	padding: 1em 1.25em;
+	border-left: 3px solid $purple;
+	background-color: $white03;
+
+	p {
+		margin: 0;
+		padding-bottom: 1em;
+		font-size: 0.8em;
+		font-family: $montserrat-font-stack;
+	}
+	p:last-child {
+		padding: 0;
+	}
+}
+
+// This is a hack to rehide the comment policy on pages that aren't blog post pages with comments.
+// The redundant rule is being left in the blog partial until a final approach is determined (some
+// backend issues may need to be resolved). If you find this comment unchanged in 6 months, just
+// sigh, shake your head, and remove the redundant rule. BB 4/2018.
+
+// NOTE: The comment below about all.js is out of date and possibly predates the encapsulation of the
+// page specific templates. This feature now only works on BlogPostPages
+.blog-comment-policy {
+	display: none;
+	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
+	// @see all.js
+}
+
+/*********************************************************************************
+            Overrides for CKEditor
+**********************************************************************************/
+
+body {
+  background-color: #f9f9f8;
+  padding: 0 0 0 20px;
+}
+
+// Override the override that doesn't render Lists with bulletting.
+ul {
+  list-style: inherit;
+}
+
+li {
+  // 28px is one of two default bullet left margin standards on cgov.
+  margin-left: 28px;
+}
+
+body.cke_editable {
+  .video-preview--container {
+    // https://github.com/NCIOCPL/cgov-digital-platform/issues/1586
+    // The img element is wrapped in another container in the ckeditor.
+    // Because the existing css uses a direct descendent selector, it is
+    // broken in CKEditor. This is not the ideal fix, but for the purposes
+    // of not touching existing code until after migration, I'm patching it here.
+    // Ideally we can test a cleaner selector in the flexVideoPreview.scss (using a nice
+    // BEM selector ideally) after migration.
+    .field--type-image > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      margin-top: -9.4%;
+    }
+  }
+}

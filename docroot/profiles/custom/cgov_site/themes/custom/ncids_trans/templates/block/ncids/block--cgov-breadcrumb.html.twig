@@ -1,0 +1,19 @@
+{% set title = drupal_token('current-page:title') %}
+{% if content.breadcrumbs|length > 0 %}
+  <nav class="usa-breadcrumb usa-breadcrumb--wrap" aria-label="{{'Breadcrumbs'|t}}">
+    <ol class="usa-breadcrumb__list">
+      {% for breadcrumb in content.breadcrumbs if breadcrumb.href %}
+        <li class="usa-breadcrumb__list-item">
+          <a href="{{ breadcrumb.href|e }}" class="usa-breadcrumb__link">
+            <span>{{ breadcrumb.label|e }}</span>
+          </a>
+        </li>
+      {% endfor %}
+      {% if title|default %}
+        <li class="usa-breadcrumb__list-item usa-current" aria-current="page">
+          <span>{{title}}</span>
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
+{% endif %}

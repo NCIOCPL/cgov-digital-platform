@@ -1,0 +1,361 @@
+###############################################################################
+# This file holds the theme blocks for the cgov_common theme. cgov_common is a
+# mix of content blocks and code-based blocks. All the code based blocks will
+# be in the profiles/custom/cgov_site/config/install.
+###############################################################################
+
+#### Header blocks
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Site Banner Block - English"
+  info__ES:
+    value: "CGov Site Banner Block - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:site_banner"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="contentid-911584 slot-item only-SI nci-logo-pages large-12 columns">
+          <a href="/"><img
+              src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/logos/nci-logo-full.svg"
+              alt="National Cancer Institute" width="60%"></a>
+          </div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="contentid-911584 slot-item only-SI nci-logo-pages large-12 columns">
+          <a href="/"><img
+              src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/logos/nci-logo-full-es.svg"
+              alt="National Cancer Institute" width="60%"></a>
+          </div>
+
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Site Mobile Menu Nav- English"
+  info__ES:
+    value: "CGov Site Mobile Menu Nav - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:mobile_nav"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="mobile-menu-bar"><button type="button" class="open-panel nav-header menu-btn">Menu</button><a href="/global/contact" class="nav-contact">Contact</a><a href="/publications/dictionaries/cancer-terms" class="nav-dictionary">Dictionary</a><button type="button" class="nav-search">Search</button></div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="mobile-menu-bar"><button type="button" class="open-panel nav-header menu-btn">Menú</button><a href="/espanol/global/contactenos" class="nav-contact">Contacto</a><a href="/espanol/publicaciones/diccionario" class="nav-dictionary">Diccionario</a><button type="button" class="nav-search">Buscar</button></div>
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Site Search Bar- English"
+  info__ES:
+    value: "CGov Site Search Bar - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:search_bar"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item last-SI">
+          <div class="rawHtml">
+            <div class="search" role="search">
+              <form
+                action="/search/results"
+                method="get"
+                id="siteSearchForm"
+                name="siteSearchForm"
+              >
+                <label class="show-for-sr" for="swKeyword">Search</label>
+                <input
+                  placeholder="search"
+                  class="searchString ui-autocomplete-input"
+                  id="swKeyword"
+                  maxlength="255"
+                  name="swKeyword"
+                  onblur="bSearchBoxBool=false;"
+                  onfocus="bSearchBoxBool=true;"
+                  value=""
+                  autocomplete="off"
+                  type="text"
+                  aria-autocomplete="list"
+                  aria-haspopup="true"
+                >
+                <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                  <span class="show-for-sr">Search</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item last-SI">
+          <div class="rawHtml">
+            <div class="search" role="search">
+              <form
+                action="/espanol/buscar/resultados"
+                method="get"
+                id="siteSearchForm"
+                name="siteSearchForm"
+              >
+                <label class="show-for-sr" for="swKeyword">Buscar</label>
+                <input
+                  placeholder="buscar"
+                  class="searchString ui-autocomplete-input"
+                  id="swKeyword"
+                  maxlength="255"
+                  name="swKeyword"
+                  onblur="bSearchBoxBool=false;"
+                  onfocus="bSearchBoxBool=true;"
+                  value=""
+                  autocomplete="off"
+                  type="text"
+                  aria-autocomplete="list"
+                  aria-haspopup="true"
+                >
+                <button class="searchSubmit" id="sitesearch" onclick="return siteSearchSubmit();" type="submit">
+                  <span class="show-for-sr">Buscar</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+### Utility Bar
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "Cgov Utility Bar- English"
+  info__ES:
+    value: "Cgov Utility bar - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:utility_bar"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item only-SI row utility">
+          <div class="rawHtml">
+            <div class="large-12 columns utility">
+              <span><a href="/contact">1-800-4-CANCER</a></span>
+              <span><a href="https://livehelp.cancer.gov" onclick="window.open('https://livehelp.cancer.gov/', 'LiveHelp','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); return false;">Live Chat</a></span>
+              <span><a href="/publications">Publications</a></span>
+              <span id="utility-dictionary" class="link"> <a href="/publications/dictionaries/cancer-terms">Dictionary</a></span>
+            </div>
+          </div>
+        </div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="slot-item only-SI row utility">
+          <div class="rawHtml">
+            <div class="large-12 columns utility">
+              <span><a href="/espanol/contactenos">1-800-422-6237</a></span>
+              <span><a href="https://livehelp-es.cancer.gov" onclick="window.open('https://livehelp-es.cancer.gov/', 'LiveHelp-es','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); return false;">Chat en vivo</a></span>
+              <span><a href="/espanol/publicaciones">Publicaciones</a></span>
+              <span id="utility-dictionary"><a href="/espanol/publicaciones/diccionario">Diccionario</a></span>
+            </div>
+          </div>
+        </div>
+
+### Footer
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGov Footer Block - English"
+  info__ES:
+    value: "CGov Footer Block - SPANISH"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:footer"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="site-footer__container">
+        <div class="site-footer__header">
+        <h1>National Cancer Institute <span>at the National Institutes of Health</span></h1>
+        </div>
+        <div class="site-footer__nav">
+        <div class="site-footer__icons">
+        <h2>FOLLOW US</h2>
+        <ul>
+        <li><a class="facebook icon" href="https://www.cancer.gov/social-media#facebook"> <span class="show-for-sr">Facebook</span> </a></li>
+        <li><a class="twitter icon" href="https://www.cancer.gov/social-media#twitter"> <span class="show-for-sr">Twitter</span> </a></li>
+        <li><a class="instagram icon no-exit-notification" href="http://instagram.com/nationalcancerinstitute"> <span class="show-for-sr">Instagram</span> </a></li>
+        <li><a class="youtube icon" href="https://www.cancer.gov/social-media#youTube"> <span class="show-for-sr">YouTube</span></a></li>
+        <li><a class="linkedin icon" href="https://www.cancer.gov/social-media#linkedIn"> <span class="show-for-sr">LinkedIn</span> </a></li>
+        <li><a class="govdelivery icon" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new "> <span class="show-for-sr">GovDelivery</span> </a></li>
+        <li><a class="rss icon" href="https://www.cancer.gov/syndication/rss" title=""> <span class="show-for-sr">RSS</span> </a></li>
+        </ul>
+        </div>
+        <div class="site-footer__contact">
+        <h2>CONTACT INFORMATION</h2>
+        <ul>
+        <li><a href="https://www.cancer.gov/contact" title="">Contact Us</a></li>
+        <li><a href="https://livehelp.cancer.gov">LiveHelp Online Chat</a></li>
+        </ul>
+        </div>
+        <div class="site-footer__info">
+        <h2>MORE INFORMATION</h2>
+        <ul>
+        <li><a href="https://www.cancer.gov/about-website" title="">About This Website</a></li>
+        <li><a href="https://www.cancer.gov/espanol" title="">Cancer.gov en español</a></li>
+        <li><a href="https://www.cancer.gov/multimedia" title="">Multimedia</a></li>
+        <li><a href="https://www.cancer.gov/publications" title="">Publications</a></li>
+        <li><a href="https://www.cancer.gov/about-website/sitemap" title="">Site Map</a></li>
+        <li><a href="https://www.cancer.gov/digital-standards" title="">Digital Standards for NCI Websites</a></li>
+        </ul>
+        </div>
+        <div class="site-footer__policies">
+        <h2>POLICIES</h2>
+        <ul>
+        <li><a href="https://www.cancer.gov/policies/accessibility" title="">Accessibility</a></li>
+        <li><a href="https://www.cancer.gov/policies/comments" title="">Comment Policy</a></li>
+        <li><a href="https://www.cancer.gov/policies/disclaimer" title="">Disclaimer</a></li>
+        <li><a href="https://www.cancer.gov/policies/foia" title="">FOIA</a></li>
+        <li><a href="https://www.cancer.gov/policies/privacy-security" title="">Privacy &amp; Security</a></li>
+        <li><a href="https://www.cancer.gov/policies/copyright-reuse" title="">Reuse &amp; Copyright</a></li>
+        <li><a href="https://www.cancer.gov/syndication" title="">Syndication Services</a></li>
+        <li><a href="https://www.cancer.gov/policies/linking" title="">Website Linking</a></li>
+        </ul>
+        </div>
+        </div>
+        <div class="site-footer__agencies">
+        <ul>
+        <li><a href="http://www.hhs.gov/">U.S. Department of Health and Human Services</a></li>
+        <li><a href="http://www.nih.gov">National Institutes of Health</a></li>
+        <li><a href="https://www.cancer.gov/">National Cancer Institute</a></li>
+        <li><a href="http://usa.gov">USA.gov</a></li>
+        </ul>
+        </div>
+        <div class="site-footer__tagline">
+        <h4>NIH ... Turning Discovery Into Health <sup>®</sup></h4>
+        </div>
+        <a class="back-to-top" href="#top">TOP</a>
+        </div>
+  field_raw_html__ES:
+  - format: "raw_html"
+    value: |
+      <div class="site-footer__container">
+      <div class="site-footer__header">
+      <h1>Instituto Nacional del Cáncer <span>de los Institutos Nacionales de la Salud de EE. UU.</span></h1>
+      </div>
+      <div class="site-footer__nav">
+      <div class="site-footer__icons">
+      <h2>SÍGANOS EN</h2>
+      <ul>
+      <li><a class="facebook icon no-exit-notification" href="https://www.cancer.gov/espanol/redes-sociales" title=""> <span class="show-for-sr">Facebook</span></a></li>
+      <li><a class="twitter icon no-exit-notification" href="https://www.cancer.gov/espanol/redes-sociales" title=""><span class="show-for-sr">Twitter</span></a></li>
+      <li><a class="instagram icon no-exit-notification" href="https://www.cancer.gov/social-media#instagram"> <span class="show-for-sr">Instagram</span></a></li>
+      <li><a class="youtube icon no-exit-notification" href="https://www.cancer.gov/espanol/redes-sociales" title=""><span class="show-for-sr">YouTube</span></a></li>
+      <li><a class="linkedin icon" href="https://www.cancer.gov/social-media#linkedIn"> <span class="show-for-sr">LinkedIn</span> </a></li>
+      <li><a class="govdelivery icon" href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new"> <span class="show-for-sr">GovDelivery</span></a></li>
+      <li><a class="rss icon" href="https://www.cancer.gov/espanol/sindicacion/rss" title=""> <span class="show-for-sr">RSS</span> </a></li>
+      </ul>
+      </div>
+      <div class="site-footer__contact">
+      <h2>Información de contacto</h2>
+      <ul>
+      <li><a href="https://www.cancer.gov/espanol/contactenos" title="">Comuníquese con nosotros</a></li>
+      <li><a href="https://livehelp-es.cancer.gov/">LiveHelp chat en vivo</a></li>
+      </ul>
+      </div>
+      <div class="site-footer__info">
+      <h2>MÁS INFORMACIÓN</h2>
+      <ul>
+      <li><a href="https://www.cancer.gov/espanol/acerca-sitio" title="">Acerca de este sitio web</a></li>
+      <li><a href="https://www.cancer.gov/">Cancer.gov in English</a></li>
+      <li><a href="https://www.cancer.gov/espanol/multimedia" title="">Multimedia</a></li>
+      <li><a href="https://www.cancer.gov/espanol/publicaciones/educacion-para-pacientes" title="">Publicaciones</a></li>
+      <li><a href="https://www.cancer.gov/espanol/acerca-sitio/mapa-sitio" title="">Mapa del sitio</a></li>
+      </ul>
+      </div>
+      <div class="site-footer__policies">
+      <h2>POLÍTICAS</h2>
+      <ul>
+      <li><a href="https://www.cancer.gov/espanol/politicas/accesibilidad" title="">Accesibilidad</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/comentarios" title="">Política de comentarios</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/exoneracion" title="">Exoneración</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/foia" title="">Ley de libre acceso a la información (FOIA)</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/confidencialidad-seguridad" title="">Política de confidencialidad y seguridad</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/derechos-de-autor-y-uso" title="">Derechos de autor</a></li>
+      <li><a href="https://www.cancer.gov/espanol/sindicacion" title="">Servicios de sindicación de contenidos</a></li>
+      <li><a href="https://www.cancer.gov/espanol/politicas/enlaces" title="">Política de enlaces a sitios web</a></li>
+      </ul>
+      </div>
+      </div>
+      <div class="site-footer__agencies">
+      <ul>
+      <li><a href="http://www.hhs.gov/">Departamento de Salud y Servicios Humanos de EE. UU.</a></li>
+      <li><a href="http://www.nih.gov">Institutos Nacionales de la Salud</a></li>
+      <li><a href="https://www.cancer.gov/espanol">Instituto Nacional del Cáncer</a></li>
+      <li class="last"><a href="http://www.usa.gov/gobiernousa/index.shtml">GobiernoUSA.gov</a></li>
+      </ul>
+      </div>
+      <div class="site-footer__tagline">
+      <h4>NIH ... Transformación de Descubrimientos en Salud <sup>®</sup></h4>
+      </div>
+      <a class="back-to-top" href="#top">SUBIR</a>
+      </div>
+
+########## Page Not Found ################
+- entity: "block_content"
+  type: "raw_html_block"
+  info: "CGOV 404 Page Not Found - English"
+  info__ES:
+    value: "CGOV 404 Page Not Found - Spanish"
+  langcode: en
+  status: 1
+  region__CONFIG:
+    value: "cgov_common:page_not_found"
+  field_raw_html:
+    - format: "raw_html"
+      value: |
+        <div class="error-content-english">
+          <h1>Page Not Found</h1>
+          <p>We can't find the page you're looking for.</p>
+          <p>Visit the <a href="/">homepage</a>, browse by <a href="/types" title="">cancer type</a>, or use the search below.</p>
+          <p>Have a question? <a href="/contact" title="">Get in touch</a>.</p>
+        </div>
+        <div class="error-searchbar">
+          <div id="error-form">
+            <form action="/search/results"
+              method="get"
+              id="pageNotFoundSearchForm"
+              name="pageNotFoundSearchForm"
+              data-language="en"
+              _lpchecked="1">
+              <label class="show-for-sr" for="nfKeyword">Search</label>
+              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+              <button class="searchSubmit" id="nf-search__button" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+  field_raw_html__ES:
+    - format: "raw_html"
+      value: |
+        <div class="error-content-spanish">
+          <h1>No se encontró la página</h1>
+          <p> No podemos encontrar la página que busca.</p>
+          <p>Visite la <a href="/espanol">página principal</a>, busque por <a href="/espanol/tipos">tipo de cáncer</a>, o use la casilla de búsqueda en la parte de abajo de esta página.</p>
+          <p>¿Tiene una pregunta? <a href="/espanol/contactenos">Contáctenos</a>.</p>
+        </div>
+        <div class="error-searchbar">
+          <div id="error-form">
+            <form action="/espanol/buscar/resultados"
+              method="get"
+              id="pageNotFoundSearchForm"
+              name="pageNotFoundSearchForm"
+              data-language="en"
+              _lpchecked="1">
+              <label class="show-for-sr" for="nfKeyword">Search</label>
+              <input class="searchString ui-autocomplete-input" id="nfKeyword" maxlength="255" name="swKeyword" onblur="bSearchBoxBool=false;" onfocus="bSearchBoxBool=true;" value="" autocomplete="off" aria-autocomplete="list" aria-haspopup="true" type="text">
+              <button class="searchSubmit" id="nf-search__button" type="submit">Buscar</button>
+            </form>
+          </div>
+        </div>

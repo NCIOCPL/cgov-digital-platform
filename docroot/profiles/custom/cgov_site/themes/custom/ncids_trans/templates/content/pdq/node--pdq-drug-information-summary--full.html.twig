@@ -1,0 +1,20 @@
+{{ attach_library('ncids_trans/pdq') }}
+{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+<!-- ********************************* BEGIN Page Content ********************************** -->
+
+<article>
+  <div class="resize-content">
+    <h1>{{- node.label -}}</h1>
+    {{ drupal_block('page_options') }}
+    <div id="cgvBody" class="pdqdruginfosummary">
+      {{ content.body }}
+    </div>
+  </div>
+
+  <footer class="article-footer">
+    {{- contentPageMacros.displayDates(node, content) -}}
+    {% if node.field_public_use.value == '1' %}
+      {{ drupal_region('public_use') }}
+    {% endif %}
+  </footer>
+</article>

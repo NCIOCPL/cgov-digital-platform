@@ -1,0 +1,1 @@
+import './biography.scss';
