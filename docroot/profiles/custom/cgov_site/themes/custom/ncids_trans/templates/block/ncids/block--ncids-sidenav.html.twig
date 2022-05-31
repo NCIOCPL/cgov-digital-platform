@@ -1,49 +1,73 @@
-<nav aria-label="Secondary navigation example">
-  <ul class="usa-sidenav usa-sidenav--nci-sidenav">
-    <li class="usa-sidenav__item">
-      <a href="#">Level 1</a>
-    </li>
-    <li class="usa-sidenav__item">
-      <a href="#" class="usa-current usa-current--nci-ancestor">Level 1</a>
+{% set nav_tree = content['#nav_tree']%}
+
+{#
+  This draws a sibling node in the tree, that is one that is not in the
+  active path, but is a sibling to another item that is in the active
+  path.
+#}
+{% macro draw_sibling(navItem) %}
+  {% set link_attribs = create_attribute({
+      'href': navItem.href,
+      'data-menu-id': navItem.id
+    })
+  %}
+  {% if navItem.children|length > 0 %}
+    {% set link_attribs = link_attribs.addClass('nci-has-children') %}
+  {% endif %}
+  <li class="usa-sidenav__item">
+    <a {{link_attribs}}>{{navItem.label}}</a>
+  </li>
+{% endmacro %}
+
+{#
+  This draws a term that is in the active path. This means that it will
+  usually draw children if they exist.
+#}
+{% macro draw_active(navItem) %}
+  {% set link_attribs = create_attribute({
+      'href': navItem.href,
+      'data-menu-id': navItem.id,
+      'class': ['usa-current']
+    })
+  %}
+
+  {% if navItem.navstate == 'ancestor' %}
+    {% set link_attribs = link_attribs.addClass('usa-current--nci-ancestor') %}
+  {% elseif navItem.navstate == 'current' %}
+    {% set link_attribs = link_attribs.setAttribute('aria-current', 'page') %}
+  {% endif %}
+
+  <li class="usa-sidenav__item">
+    <a {{link_attribs}}>{{navItem.label}}</a>
+    {% if navItem.children|length > 0 %}
       <ul class="usa-sidenav__sublist">
-        <li class="usa-sidenav__item">
-          <a href="#" class="nci-has-children">Level 2</a>
-        </li>
-        <li class="usa-sidenav__item">
-          <a href="#" class="usa-current usa-current--nci-ancestor">
-            Level 2
-          </a>
-          <ul class="usa-sidenav__sublist">
-            <li class="usa-sidenav__item">
-              <a href="#" class="usa-current usa-current--nci-ancestor">
-                Level 3
-              </a>
-              <ul class="usa-sidenav__sublist">
-                <li class="usa-sidenav__item">
-                  <a href="#" class="usa-current usa-current--nci-ancestor">
-                    Level 4
-                  </a>
-                  <ul class="usa-sidenav__sublist">
-                    <li class="usa-sidenav__item">
-                      <a
-                        href="#"
-                        class="usa-current usa-current--nci-ancestor"
-                      >
-                        Level 5
-                      </a>
-                      <ul class="usa-sidenav__sublist">
-                        <li class="usa-sidenav__item">
-                          <a href="#" class="usa-current">Level 6</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+        {% for child in navItem.children %}
+          {{ _self.draw_level(child) }}
+        {% endfor %}
       </ul>
-    </li>
-  </ul>
-</nav>
+    {% endif %}
+
+  </li>
+{% endmacro %}
+
+{#
+  This determines if a level of the tree is in the active navigation path,
+  and draws the appropriate type of item.
+#}
+{% macro draw_level(navItem) %}
+  {% if navItem.navstate == 'ancestor' or navItem.navstate == 'current' %}
+   {{ _self.draw_active(navItem) }}
+  {% else %}
+    {{ _self.draw_sibling(navItem) }}
+  {% endif %}
+{% endmacro %}
+
+{# ------ Main rendering here ------ #}
+{% import _self as macros %}
+{% if nav_tree|length > 0 %}
+  <nav aria-label="{{ 'Secondary navigation'|t }}">
+    <ul class="usa-sidenav usa-sidenav--nci-sidenav">
+      {{ _self.draw_level(nav_tree) }}
+    </ul>
+  </nav>
+{% endif %}

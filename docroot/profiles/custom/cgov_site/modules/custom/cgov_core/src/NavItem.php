@@ -301,6 +301,18 @@ class NavItem {
   }
 
   /**
+   * Determines if this node is navigable.
+   *
+   * For now this really just means it has a URL.
+   *
+   * @return bool
+   *   True if this item is navigable, false if not.
+   */
+  public function isNavigable() {
+    return isset($this->href);
+  }
+
+  /**
    * Get immediate descendent NavItems.
    *
    * Optional, pass an array of class properties
@@ -317,6 +329,104 @@ class NavItem {
       return $this->navMgr->newNavItem($term);
     }, $allChildTerms);
     return $navItems;
+  }
+
+  /**
+   * Gets a navigation tree, based on this node.
+   *
+   * This implements all our filtering and visibility rules.
+   *
+   * @param int $maxDepth
+   *   The maximum depth of the tree.
+   * @param string $visibilityFilter
+   *   The visibility to filter for. (e.g., hide_in_mobile_nav)
+   * @param bool $includeRootInTree
+   *   Indicator to include the root in the tree or not. (Default: TRUE)
+   *
+   * @return mixed
+   *   This returns the tree as an array.
+   */
+  public function getAsNavTree($maxDepth, $visibilityFilter, $includeRootInTree = TRUE) {
+    $tree = $this->getNavNode($this, $visibilityFilter, $maxDepth, 1);
+
+    if (!$includeRootInTree) {
+      return $tree['children'];
+    }
+    else {
+      return $tree;
+    }
+  }
+
+  /**
+   * Gets the node (id, url, label, children) for a Nav Item.
+   *
+   * @param \Drupal\cgov_core\NavItem $navItem
+   *   The navigation item to turn into a tree node.
+   * @param string $visibilityFilter
+   *   The visibility to filter for. (e.g., hide_in_mobile_nav)
+   * @param int $maxDepth
+   *   The maximum depth of the tree.
+   * @param int $currentDepth
+   *   The current level we are working on.
+   *
+   * @return mixed
+   *   The nav tree.
+   */
+  private function getNavNode(NavItem $navItem, $visibilityFilter, $maxDepth, $currentDepth) {
+
+    $children = [];
+
+    if ($currentDepth < $maxDepth) {
+      // The children are what we will display. God PHP has ugly array
+      // functions. Remove items that should not show in the main nav.
+      $filteredChildren = array_filter(
+        $navItem->getChildren(),
+        fn($item) => (!(
+          ($visibilityFilter && $item->hasDisplayRule($visibilityFilter)) ||
+          !$item->isNavigable()
+        ))
+      );
+
+      // Sort them by the weight.
+      usort($filteredChildren, ['self', "sortItemsByWeight"]);
+
+      // Map them to a nice pretty array.
+      $children = array_map(
+        fn($item) => $this->getNavNode($item, $visibilityFilter, $maxDepth, $currentDepth + 1),
+        $filteredChildren
+      );
+    }
+
+    return [
+      'id' => $navItem->getTerm()->id(),
+      'label' => $navItem->getLabel(),
+      'href' => $navItem->getHref(),
+      'weight' => $navItem->getWeight(),
+      'children' => $children,
+    ];
+  }
+
+  /**
+   * Generic sorting function to sort by Term weight.
+   *
+   * It's equivalent to reverse sort, since higher weights should
+   * appear first.
+   *
+   * @param \Drupal\cgov_core\NavItem $firstItem
+   *   Nav item.
+   * @param \Drupal\cgov_core\NavItem $secondItem
+   *   Nav item.
+   *
+   * @return int
+   *   Sort result.
+   */
+  public static function sortItemsByWeight(NavItem $firstItem, NavItem $secondItem) {
+    $firstWeight = $firstItem->getWeight();
+    $secondWeight = $secondItem->getWeight();
+    if ($firstWeight === $secondWeight) {
+      return 0;
+    }
+    return ($firstWeight < $secondWeight) ? -1 : 1;
   }
 
 }
