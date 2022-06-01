@@ -1,10 +1,12 @@
-<section class="usa-banner usa-banner--nci-banner" aria-label="Official government website">
+{% set translation_link = content['#translation_link']%}
+<section id="usa-banner" class="usa-banner usa-banner--nci-banner" aria-label="{{ 'Official government website'|t }}">
   <header class="usa-banner__header">
     <div class="usa-banner__inner">
       <div class="usa-banner__header-text">
-        An official website of the United States government
+        {{ 'An official website of the United States government'|t }}
       </div>
-      <button href="/" class="usa-button usa-button--nci-small">Español</button>
+      {# This will be the language toggle link #}
+      {{ translation_link }}
     </div>
   </header>
 </section>
