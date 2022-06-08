@@ -98,8 +98,8 @@ class AppModulePluginBaseTest extends BrowserTestBase {
     // Get the match.
     $route_info = $plugin->matchRoute($app_module_path, []);
 
-    // Assert equals.
-    $this->assertEquals($route_info, $expected, $message, 0.0, 10, TRUE);
+    // Assert equals, don't care about array order.
+    $this->assertEqualsCanonicalizing($route_info, $expected, $message);
   }
 
 }
