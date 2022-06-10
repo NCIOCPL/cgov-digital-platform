@@ -99,7 +99,7 @@ class AppModulePluginBaseTest extends BrowserTestBase {
     $route_info = $plugin->matchRoute($app_module_path, []);
 
     // Assert equals.
-    $this->assertEquals($route_info, $expected, $message, 0.0, 10, TRUE);
+    $this->assertEquals($route_info, $expected, $message);
   }
 
 }
