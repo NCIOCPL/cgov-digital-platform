@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 /**
@@ -60,6 +60,15 @@ function main($argv, $argc) {
     exit(0);
   }
 
+  $lockfile = get_lockfile($site, $env);
+  try {
+    $lock = new \FileLock($lockfile);
+  }
+  catch (\Exception $e) {
+    printf("Lock could not be acquired - another process is updating themes for this environment %s.%s on %s. Aborting.\n", $site, $env, gethostname());
+    exit(1);
+  }
+
   $verbose = FALSE;
   if (in_array('-v', $argv) || in_array('--verbose', $argv)) {
     $verbose = TRUE;
@@ -94,7 +103,10 @@ function main($argv, $argc) {
         $task_id = $response->body['task_id'];
         if ($task_id == 'NA') {
           printf("VCS theming is not configured for %s.%s\n", $site, $env);
-          exit;
+          exit(0);
+        }
+        else {
+          $lock->write($task_id . "\n");
         }
 
         // Wait here until the themes are deployed.
@@ -122,6 +134,67 @@ function main($argv, $argc) {
       // Failed to deploy the theme files.
       printf("Failed to deploy theme files to %s for %s.%s\n", $webnode, $site, $env);
       exit(1);
+    }
+  } 
+  else {
+    printf("INFO: Nothing to do - themes appear deployed and no force flag was set.  No lockfile was found from another process.  No error status is returned.\n");
+  }
+}
+
+/**
+ * Class FileLock
+ *
+ * Acquires a file-based lock and automatically clears it.
+ */
+class FileLock {
+  /**
+   * The lock filename.
+   *
+   * @var string
+   */
+  var $lockFile = '';
+
+  /**
+   * The lock file pointer.
+   *
+   * @var false|resource
+   */
+  var $fp;
+
+  /**
+   * FileLock constructor.
+   *
+   * @param string $lock_filename
+   *   A filename to use for the lock.
+   */
+  public function __construct($lock_filename) {
+    $this->lockFile = $lock_filename;
+    $this->fp = fopen($lock_filename, 'w');
+    if (!flock($this->fp, LOCK_EX | LOCK_NB)) {
+      throw new \Exception('Unable to acquire lock for theme distribution.');
+    }
+  }
+
+  /**
+   * Write data into the lockfile.
+   *
+   * Can be used to add debugging data into the lockfile.
+   *
+   * @param string $contents
+   */
+  public function write($contents) {
+    fwrite($this->fp, $contents);
+    fflush($this->fp);
+  }
+
+  /**
+   * Removes the lockfile when this object goes out of scope.
+   */
+  public function __destruct() {
+    flock($this->fp, LOCK_UN);
+    fclose($this->fp);
+    if (file_exists($this->lockFile)) {
+      unlink($this->lockFile);
     }
   }
 }
@@ -186,7 +259,49 @@ function get_shared_creds($site, $env) {
  *   The site registry path.
  */
 function get_registry_file($site, $env) {
-  return sprintf('/mnt/files/%s.%s/files-private/sites.json', $site, $env);
+  return sprintf('/var/www/site-php/%s.%s/multisite-config.json', $site, $env);
+}
+
+/**
+ * Get the lockfile path (should only be the live env for both live and update)
+ *
+ * @param string $site
+ *   The sitegroup (application) of this script.
+ * @param string $env
+ *   The current environment of this script.
+ *
+ * @return string
+ *   The name of the live environment.
+ */
+function get_lockfile($site, $env) {
+  $live_env = get_live_env(get_registry_file($site, $env));
+  // Note: lockfile is per server
+  // Note: some risk of this lockfile getting cleaned out by hosting automated
+  // ephemeral wipe, but that would be unlucky.  In order to prevent that, we'd
+  // need a protected file location in ephemeral.
+  printf("INFO: live env%s\n", $live_env);
+  return sprintf('/mnt/tmp/%s.%s/%s-%s-themedistribute.lock', $site, $live_env, $site, $live_env);
+}
+
+/**
+ * Gets the live environment corresponding to the current environment.
+ *
+ * In effect, if this hook runs from the live environment (eg. 01live), it will
+ * return that same environment.  If run from update (eg. 01update), it will
+ * return the corresponding live environment.
+ *
+ * @param string $registry_path
+ *   The filename of the sites.json site registry.
+ *
+ * @return string
+ *   An environment name.
+ */
+function get_live_env($registry_path) {
+  $data = json_decode(file_get_contents($registry_path));
+  if (empty($data->cloud->env)) {
+    throw new \Exception('Unable to locate live environment for registry path ' . $registry_path);
+  }
+  return $data->cloud->env;
 }
 
 /**
