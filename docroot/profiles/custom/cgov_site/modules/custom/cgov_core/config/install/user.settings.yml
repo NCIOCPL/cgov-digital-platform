@@ -1,15 +1,15 @@
 anonymous: Anonymous
 verify_mail: true
 notify:
-  cancel_confirm: false
-  password_reset: false
-  status_activated: false
+  cancel_confirm: true
+  password_reset: true
+  register_admin_created: true
+  register_no_approval_required: true
+  register_pending_approval: true
+  status_activated: true
   status_blocked: false
   status_canceled: false
-  register_admin_created: false
-  register_no_approval_required: false
-  register_pending_approval: false
-register: admin_only
+register: visitors_admin_approval
 cancel_method: user_cancel_block
 password_reset_timeout: 86400
 password_strength: true
