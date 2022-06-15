@@ -25,8 +25,8 @@ drush:
   default_alias: '${drush.aliases.local}'
 modules:
   local:
-    enable: [dblog, devel, seckit, views_ui, cgov_yaml_content]
-    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge, akamai]
+    enable: [dblog, devel, views_ui, cgov_yaml_content]
+    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, seckit, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge, akamai]
   ci:
     enable: {  }
     uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, akamai]
