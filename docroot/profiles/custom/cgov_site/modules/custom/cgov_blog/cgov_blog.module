@@ -9,6 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Cache\Cache;
+use Drupal\node\NodeInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 
 /**
  * Implements hook_form_alter().
@@ -183,15 +186,23 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] == 'cgov_breadcrumb') {
 
-    $year = \Drupal::request()->query->get('year');
-    $topic = \Drupal::request()->query->get('topic');
+    // Get year parameter.
+    $year_param = \Drupal::request()->query->get('year');
+    // Sanitize query string inputs to prevent string injection.
+    $year = Xss::filter($year_param);
+    $year = Html::escape($year);
+
+    // Get topic parameter.
+    $topic_param = \Drupal::request()->query->get('topic');
+    // Sanitize query string inputs to prevent string injection.
+    $topic = Xss::filter($topic_param);
+    $topic = Html::escape($topic);
+
     // Proceed only if the view contains query params.
     if (!empty($topic) || !empty($year)) {
-      $nid = \Drupal::routeMatch()->getRawParameter('node');
-      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
-
+      $node = \Drupal::routeMatch()->getParameter('node');
       // If Blog Series content type, add nav link for the current language.
-      if ($node->bundle() === 'cgov_blog_series') {
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
         $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
         $section = $node->field_site_section->entity;
@@ -210,14 +221,17 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] === 'language_block:language_content') {
 
-    $topic = \Drupal::request()->query->get('topic');
+    // Get topic parameter.
+    $topic_param = \Drupal::request()->query->get('topic');
+    // Sanitize query string inputs to prevent string injection.
+    $topic = Xss::filter($topic_param);
+    $topic = Html::escape($topic);
     // Proceed only if the view contains topic query param.
     if (!empty($topic)) {
-      $nid = \Drupal::routeMatch()->getRawParameter('node');
-      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+      $node = \Drupal::routeMatch()->getParameter('node');
 
       // If Blog Series content type, add nav link for the current language.
-      if ($node->bundle() === 'cgov_blog_series') {
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         // Get the query parameter and current and opposite languages.
         $lang_current = (\Drupal::languageManager()->getCurrentLanguage()->getId());
         $lang_toggled = $lang_current != 'en' ? 'en' : 'es';

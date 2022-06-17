@@ -7,6 +7,9 @@
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Implements hook_token_info().
@@ -139,10 +142,35 @@ function _get_blog_topic_path($term) {
  * Get the blog series title base of the url params..
  */
 function _get_blog_series_title($node) {
+
+  // Get year parameter.
   $year = \Drupal::request()->query->get('year');
-  $topic = \Drupal::request()->query->get('topic');
+
+  // Get topic parameter.
+  $topic_param = \Drupal::request()->query->get('topic');
+  // Sanitize query string inputs to prevent string injection.
+  $topic = Xss::filter($topic_param);
+  $topic = Html::escape($topic);
+
+  // Get month parameter.
   $month = \Drupal::request()->query->get('month');
+
+  // Throw an exception if the year is invalid.
+  if (isset($year) && (!is_numeric($year) || $year < 0)) {
+    throw new BadRequestHttpException('year is invalid');
+  }
+  // Throw an exception if the month is invalid.
+  if (isset($month) && (!is_numeric($month) || $month < 1 || $month > 12)) {
+    throw new BadRequestHttpException('month is invalid');
+  }
+
+  // Make sure For topic, only alphanumeric characters should be
+  // allowed, plus colon ( : ) and hyphen ( - ).
+  if (!empty($topic) && !preg_match('/^[a-zA-Z0-9:-]*$/', $topic)) {
+    throw new BadRequestHttpException('month is invalid');
+  }
 
   $blogManager = \Drupal::service('cgov_blog.blog_manager');
   return $blogManager->getBlogSeriesTitle($month, $year, $topic, $node);
+
 }
