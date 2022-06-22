@@ -65,6 +65,29 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
   }
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * This is to add the home/landing page style to the node templates.
+ */
+function ncids_trans_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $node = $variables['elements']['#node'];
+
+  if ($node->bundle() !== "cgov_home_landing") {
+    return $suggestions;
+  }
+
+  $style = $node->field_page_style->value;
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  // We only want to add a suggestion if it is the full display mode for now.
+  // Otherwise we will get multiple template choices for views and other
+  // things we don't need.
+  if ($sanitized_view_mode === 'full') {
+    $suggestions[] = 'node__' . $node->bundle() . '__' . $style . '__' . $sanitized_view_mode;
+  }
+  return $suggestions;
+}
 
 /**
  * Allows us to add the container's view mode to field suggestions.
