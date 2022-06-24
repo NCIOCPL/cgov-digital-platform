@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Cache\Cache;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_form_alter().
@@ -183,15 +184,18 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] == 'cgov_breadcrumb') {
 
+    // Year and topic are evaluated for presence, but are not output;
+    // there is therefore no need to sanitize them.
     $year = \Drupal::request()->query->get('year');
     $topic = \Drupal::request()->query->get('topic');
+
+
     // Proceed only if the view contains query params.
     if (!empty($topic) || !empty($year)) {
-      $nid = \Drupal::routeMatch()->getRawParameter('node');
-      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+      $node = \Drupal::routeMatch()->getParameter('node');
 
       // If Blog Series content type, add nav link for the current language.
-      if ($node->bundle() === 'cgov_blog_series') {
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
         $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
         $section = $node->field_site_section->entity;
@@ -210,14 +214,16 @@ function cgov_blog_preprocess_block(&$variables) {
    */
   if ($variables['plugin_id'] === 'language_block:language_content') {
 
+    // Topic is evaluated for presence, and checked for an exact match.
+    // As it is not output, there is no need for sanitation.
     $topic = \Drupal::request()->query->get('topic');
+
     // Proceed only if the view contains topic query param.
     if (!empty($topic)) {
-      $nid = \Drupal::routeMatch()->getRawParameter('node');
-      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+      $node = \Drupal::routeMatch()->getParameter('node');
 
       // If Blog Series content type, add nav link for the current language.
-      if ($node->bundle() === 'cgov_blog_series') {
+      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         // Get the query parameter and current and opposite languages.
         $lang_current = (\Drupal::languageManager()->getCurrentLanguage()->getId());
         $lang_toggled = $lang_current != 'en' ? 'en' : 'es';
