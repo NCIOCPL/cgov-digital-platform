@@ -7,6 +7,7 @@
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\taxonomy\Entity\Term;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Implements hook_token_info().
@@ -139,10 +140,19 @@ function _get_blog_topic_path($term) {
  * Get the blog series title base of the url params..
  */
 function _get_blog_series_title($node) {
+  $hasTopic = \Drupal::request()->query->get('topic') != NULL;
   $year = \Drupal::request()->query->get('year');
-  $topic = \Drupal::request()->query->get('topic');
   $month = \Drupal::request()->query->get('month');
 
+  // The only allowed characters in dates are numbers. Once we eliminate
+  // everything else, there's no need to do further checks.
+  if($year != NULL && (!is_numeric($year) || $year < 0)) {
+      throw new BadRequestHttpException('year is invalid');
+  }
+  if($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
+      throw new BadRequestHttpException('month is invalid');
+  }
+
   $blogManager = \Drupal::service('cgov_blog.blog_manager');
-  return $blogManager->getBlogSeriesTitle($month, $year, $topic, $node);
+  return $blogManager->getBlogSeriesTitle($month, $year, $hasTopic, $node);
 }
