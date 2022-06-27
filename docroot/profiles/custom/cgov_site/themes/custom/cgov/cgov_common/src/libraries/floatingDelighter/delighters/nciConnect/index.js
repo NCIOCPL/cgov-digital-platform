@@ -1,5 +1,3 @@
-import './index.scss';
-
 export const nciConnect = {
     href: '/rare-brain-spine-tumor/refer-participate/clinical-studies',
     innerHTML: `
