@@ -1,5 +1,3 @@
-import '../../cts.scss';
-
 export const cts = {
     href: '/about-cancer/treatment/clinical-trials/search',
     innerHTML: `

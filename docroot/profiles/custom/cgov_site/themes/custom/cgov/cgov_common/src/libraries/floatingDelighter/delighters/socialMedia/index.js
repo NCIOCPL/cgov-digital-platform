@@ -1,5 +1,3 @@
-import '../../socialMedia.scss';
-
 export const socialMedia = {
     href: '/news-events/events/social-media',
     innerHTML: `
