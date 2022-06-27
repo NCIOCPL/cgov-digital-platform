@@ -7,6 +7,13 @@
 @import "~Core/styles/nci-foundation_mixins";
 @import "~Core/styles/nci-foundation_variables";
 
+// We need to make sure that foundation does not generate any markup that would
+// be in Common.scss. This is for borderless cards.
+$include-html-classes: false;
+$include-html-button-classes: false;
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/buttons";
+
 @import '~Core/styles/borderless-cards';
 @import '~Core/styles/alternating-lists';
 @import '~Core/styles/title-first-feature-cards';

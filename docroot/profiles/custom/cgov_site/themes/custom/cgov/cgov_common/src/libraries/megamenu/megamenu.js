@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import MegaMenu from 'Core/external/jquery-accessibleMegaMenu';
 import { debounce } from 'throttle-debounce';
-import './megamenu.scss';
 
 function _initialize() {
 	/*** BEGIN Mega Menu init

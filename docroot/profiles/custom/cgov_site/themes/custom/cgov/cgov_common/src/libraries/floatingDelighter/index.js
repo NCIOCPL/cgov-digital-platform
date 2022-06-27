@@ -2,7 +2,6 @@ import {
     getDelighterSettings,
     buildDelighter,
 } from './utilities';
-import './index.scss';
 import rules from './rules';
 
 let isInitialized = false;
