@@ -1,5 +1,4 @@
 import { getNodeArray } from 'Core/utilities';
-import './index.scss';
 import { lang } from 'Core/libraries/nciConfig/NCI.config';
 
 
