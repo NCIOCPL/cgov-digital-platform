@@ -125,3 +125,9 @@ elseif (getenv('AH_SITE_ENVIRONMENT')) {
   $config['store.sql.password'] = $creds['pass'];
   $config['store.sql.prefix'] = 'simplesaml';
 }
+
+/**
+ * Set Session Timeout.
+ */
+//$config['session.duration'] = 1 * (60 * 60); // 1 hours.
+$config['session.duration'] = (5 * 60); // 5 minutes
