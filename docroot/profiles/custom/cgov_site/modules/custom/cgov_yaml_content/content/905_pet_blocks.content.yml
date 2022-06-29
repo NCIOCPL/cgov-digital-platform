@@ -1,0 +1,88 @@
+- entity: "media"
+  bundle: "cgov_contextual_image"
+  name: "Didi - With Ball"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'image_carousel_didi_ball.jpg'
+      alt: 'Didi with ball'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        <p>Didi with a ball much bigger than her head.</p>
+
+- entity: "media"
+  bundle: "cgov_contextual_image"
+  name: "Didi - In Bed"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'image_carousel_didi_bed.jpg'
+      alt: 'Didi in bed'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        <p>Didi asleep and cozy in bed.</p>
+
+- entity: "media"
+  bundle: "cgov_contextual_image"
+  name: "Didi - The bear"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'image_carousel_didi_bear.jpg'
+      alt: 'Didi as Bear'
+  field_caption:
+    - format: "streamlined"
+      value: |
+        <p>If you go down in the woods today, you're sure of a big surprise. If you go down in the woods today, you'd better go in disguise. For every bear that ever there was will gather there for certain because today's the day the teddy bears have their picnic.</p>
+
+- entity: "block_content"
+  type: "cgov_image_carousel"
+  info: "Carousel of Didi"
+  info__ES:
+    value: "Carousel of Didi - ES"
+  field_carousel_image_title:
+    value: "Didi in 3 Poses"
+  field_carousel_image_title__ES:
+    value: "Didi in 3 Poses - ES"
+  field_carousel_images:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_contextual_image'
+            name: 'Didi - With Ball'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_contextual_image'
+            name: 'Didi - In Bed'
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_contextual_image'
+            name: 'Didi - The bear'

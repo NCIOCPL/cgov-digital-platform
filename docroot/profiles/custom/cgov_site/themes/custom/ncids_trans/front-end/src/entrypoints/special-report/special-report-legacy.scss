@@ -1,0 +1,1108 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+@import "~Core/styles/environments/percussion";
+@import "../../legacy/styles/variables";
+@import "~Core/styles/mixins";
+@import '../../legacy/styles/breakpoint-mixins';
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite";
+@import "~Core/styles/nci-foundation_mixins";
+@import "../../legacy/styles/nci-foundation_variables";
+
+// We need to make sure that foundation does not generate any markup that would
+// be in Common.scss. This is for borderless cards.
+$include-html-classes: false;
+$include-html-button-classes: false;
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "~Core/styles/vendor/foundation/scss/foundation/components/buttons";
+
+@import '~Core/styles/borderless-cards';
+@import '~Core/styles/alternating-lists';
+@import '~Core/styles/title-first-feature-cards';
+@import '~Core/styles/special-report-raw';
+
+/********************* BEGIN Hero styling (mobile first!!!!) ******************************************/
+
+.specialReport {
+  &.main-content {
+    padding: 0;
+    @include bp(small) {
+      .column, .columns {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  .row.hero-slot {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    overflow: hidden;
+      max-height: 384px;
+
+    @include break(small) {
+      max-height: 384px;
+      height: 57.8vw;
+    }
+
+    @include break(medium) {
+      max-height: 384px;
+      height: 37.5vw;
+
+    }
+
+    @include break(large) {
+      max-height: 540px;
+      height: 540px;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+      height: 155px;
+      background: linear-gradient(to bottom, rgba(#000, 0), rgba(#000, 0.8));
+
+      @include break(medium) {
+        height: 185px;
+      }
+
+      @include break(large) {
+        height: 450px;
+      }
+    }
+  }
+
+  picture {
+    width: 100%;
+    height: 100%;
+    img {
+      width:100%;
+      height: auto;
+
+      @include break(large) {
+        object-fit: cover;
+        width: auto;
+        height: 100%;
+      }
+
+			// This is a hack as we do not support widescreen, but the hero was
+			// originally built to be fluid past 1440. Leaving it as just large
+			// broke the centering.
+      @media only screen and (min-width: 1441px) {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  h1 {
+    display: block;
+    width: 70%;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    @include break(small) {
+      bottom: 15px;
+    }
+    @include break(medium) {
+      bottom: 15px;
+      text-transform: uppercase;
+      font-size: 45px;
+      line-height: 1.11;
+      width: 95%;
+    }
+    @include break(large) {
+      bottom: 115px;
+      width: 85%;
+      max-width: 1000px;
+    }
+  }
+
+  .columns.hero {
+    padding: 0;
+    height: 100%;
+
+    .rawHtml {
+      height: 100%;
+    }
+  }
+}
+
+/********************* BEGIN PDF Block styling ******************************************/
+.ap-file-block {
+  display: none;
+  font-family: $montserrat-font-stack;
+  @include break(medium) {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+    height: 96px;
+    justify-content: center;
+    align-items: center;
+
+    &.pdf {
+      a {
+        color: #4b8cc1;
+        font-size: 0.8em;
+
+        &:before {
+          content: "";
+          position: relative;
+          top: 0.6em;
+          display: inline-block;
+          margin-left: 5px;
+          margin-right: 6px;
+          padding: 14px 12px;
+          @include svg-sprite(file-pdf-blue-o-thick);
+        }
+      }
+    }
+  }
+}
+
+/********************* BEGIN Special Report Container styling ******************************************/
+
+.report-container {
+  background-color: white;
+  border: #036;
+  height: auto;
+  position: relative;
+  min-height: 500px;
+  @include bp(xtra-small) {
+    padding-top: 1rem;
+  }
+  @include break(large) {
+    margin-top: -96px;
+  }
+
+  .row::after {
+    clear: both;
+  }
+
+  .row::after,
+  .row::before {
+    content: " ";
+    display: table;
+  }
+}
+
+/********************* BEGIN Additional Card Styles ******************************************/
+
+.borderless-container {
+  width: 100%;
+}
+
+
+/********************* BEGIN Home Page Styles ******************************************/
+
+// overriding default spacing for p tags for the home/landing pages
+// The top margin for the p-tag causes extra spacing above the carousel
+// and has been excluded from this rule (VE, WCMSFEQ-390)
+p:not(.site-name):not(.site-link) {
+  margin: 0.5em 0;
+}
+
+.ui-accordion .ui-accordion-header,
+.ui-accordion div.ui-accordion-content {
+  margin-left: -32px;
+  margin-right: -32px;
+}
+
+.ui-accordion div.ui-accordion-content {
+  padding: 10px 10px 10px 21px;
+}
+
+/* BEGIN FEATURE AND SECONDARY PRIMARY CARDS ROW */
+.feature-primary .rawHtml,
+.feature-primary .rawHtml .featured-text {
+  height: 100%;
+}
+
+.feature-primary {
+  margin-bottom: 1em;
+
+  a {
+    &,
+    h3 {
+      color: $white;
+    }
+  }
+
+  h3 {
+    font-weight: normal;
+    color: $white;
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+
+  .card {
+    background: $dteal;
+  }
+
+  .featured-text {
+    // featured-text is used for the funding opportunities box
+    padding: 15px;
+    background: $white;
+    color: $color-link !important;
+    // this is needed to overcome padding that was put in cards anchor tag
+    a {
+      padding: 0 !important; //needed to overcome specificity
+      color: $color-link;
+      @extend %card-link-hover;
+    }
+
+    h3 {
+      color: $header-font-color;
+    }
+
+    p {
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  @include card-clickable;
+}
+
+@include bp(medium-down) {
+  .feature-primary-title {
+    background: $dteal;
+  }
+  /* fix for white space appearing on feature card row in tablet view mtn 6-22-17 */
+  .row.feature-primary {
+    max-width: 64.5em;
+    background: $dteal;
+  }
+  .feature-primary-title h3 {
+    font-size: 1.375em;
+    color: white;
+    padding: 0.625em 30px;
+    margin: 0em;
+  }
+}
+
+@include bp(large-up) {
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+  .feature-primary-title {
+    display: none;
+  }
+}
+
+.feature-secondary {
+  margin-bottom: 1em;
+
+  .card {
+    background: $white;
+  }
+
+  h3 {
+    font-size: 1.375em;
+    line-height: 1.272;
+  }
+
+  a {
+    h3 {
+      font-weight: normal;
+      color: $color-link;
+    }
+
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+
+    @extend %card-link-hover;
+  }
+
+  p {
+    margin-bottom: 0;
+    color: $body-font-color;
+    font-size: em-calc(18px);
+    line-height: 1.167em;
+  }
+
+  @include card-clickable;
+}
+
+@include bp(small) {
+  .feature-primary {
+    margin-bottom: 0;
+  }
+  .feature-primary .card {
+    background: $dteal;
+  }
+  .feature-primary .columns a,
+  .feature-secondary .columns a {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    overflow: auto;
+  }
+  .feature-primary .image-hover,
+  .feature-secondary .image-hover {
+    float: left;
+    width: 30%;
+  }
+  .feature-primary h3,
+  .feature-secondary h3 {
+    margin-top: 0;
+    float: right;
+    width: 70%;
+    font-size: 1.13em;
+    line-height: 1.111em;
+  }
+
+  .feature-primary a:hover h3,
+  .feature-primary a:hover h3 {
+    color: white;
+  }
+  .feature-primary p,
+  .feature-secondary p,
+  .card-thumbnail img {
+    display: none;
+  }
+  /* the portal pages needed these items to not hit the edge of screen on mobile only */
+  .feature-primary h3,
+  .feature-primary p,
+  .feature-secondary h3,
+  .feature-secondary p,
+  .other-sites-carousel h3,
+  .row.card-thumbnail h4,
+  .row.card-thumbnail h3,
+  .row.card-thumbnail p {
+    padding-left: 15px;
+  }
+  .feature-primary .featured-text {
+    display: none;
+  }
+}
+
+/* END FEATURE AND SECONDARY PRIMARY CARDS ROW */
+
+/* BEGIN SLOTTED AND INLINE FEATURE CARDS */
+
+@import "~Core/styles/topicFeature";
+
+.blog-feature {
+  a {
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
+}
+
+/* END SLOTTED AND INLINE FEATURE CARDS */
+
+/* BEGIN GUIDE CARDS ROW */
+.guide-card {
+  margin-bottom: 1em;
+
+  .card {
+    padding: em-calc(38px 32px);
+
+    ul {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.5em;
+    }
+
+    a {
+      font-size: em-calc(18px);
+      line-height: em-calc(22px, 18px);
+    }
+
+    li {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+
+    ul.cancer-types li {
+      background: none;
+      float: left;
+      width: 2.5em;
+      padding-right: 0;
+      margin: 0;
+
+      a {
+        @extend %card-link-hover;
+      }
+
+      a,
+      span {
+        line-height: 2.046; // line height needs to be 45px
+        font-size: 22px; // for browsers that don't know 'rem'
+        font-size: 1.375rem;
+      }
+    }
+
+    // this was done because the columns were becoming too narrow in tablet and had to stack before they reached mobile.
+    @include bp("(max-width: 765px)") {
+      width: 100%;
+    }
+  }
+}
+
+@include bp(small) {
+  .guide-card {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+
+    .card {
+      background: #1d5e86;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin: 0;
+
+      h2 {
+        line-height: 1.111em;
+        font-size: 1.125em;
+      }
+    }
+  }
+}
+
+@import "~Core/styles/arrowLinks";
+
+a.learn-more {
+  margin-top: 1em;
+  /* adding padding per #OCECREATIV-783 --sjc */
+}
+
+/* Class previously used to target homepage only with blue tint on 'Resources for' */
+.guide-card--home {
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ul {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
+
+    .card__view-more {
+      /* targets last li to separate list from 'learn/view more' links  */
+
+      padding: 3em 0 0.5em;
+      margin-bottom: 0;
+
+      a.arrow-link {
+        /* targets last li item and adds dk blue chevron */
+        &::before {
+          @include svg-sprite(chevron-circle-dk-blue, $rotate: right);
+        }
+
+        &:hover::before {
+          @include svg-sprite(chevron-circle-red, $rotate: right);
+        }
+      }
+
+      @include break(medium) {
+        padding: 2em 0 0;
+        margin-top: auto; /* align links to bottom */
+      }
+      @include break(tablet-ls) {
+        margin-top: auto;
+      }
+    }
+  }
+}
+
+/* Upon resizing the browser window up from the mobile (accordion) view,
+  a div with a clearfix class is added that wraps around the ul of each card.
+  A height of 100% is added to force this clearfix div to be same height as
+  parent accordion in all breakpoints. */
+.guide-card--home .clearfix {
+  flex-grow: 1;
+  height: 100%; /* forces entire clearfix div to be 100%  */
+  ul {
+    height: 100%; /* forces ul to be same height as parent clearfix inserted by jquery-ui accordion  */
+  }
+}
+
+/* END GUIDE CARDS ROW */
+
+/* BEGIN MULTIMEDIA ROW */
+
+//removes spacing at the end of the card row (the color from card row should flow directly into the color of the footer), but keeps spacing between card rows
+//targets multimedia row when there is no thumbnail content
+//TODO: div:last-of-type is the slot-item, but not all the slot-items have been preserved with the migration
+.nvcgSlBodyLayout > div:last-of-type .multimedia-slot:last-child,
+.nvcgSlBodyLayout > div:last-of-type .guide-card //targets same issue on nci connect guide card row
+{
+  margin-bottom: 0;
+}
+
+.multimedia-slot {
+  background: #099;
+  margin-bottom: 1em;
+  padding: 1em 0;
+
+  a {
+    &:hover,
+    &:focus {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
+
+  .feature-card {
+    background: $white;
+    padding-bottom: 1em;
+
+    h3,
+    p,
+    ul {
+      padding: 0 15px;
+    }
+
+    h3 {
+      font-size: 1.375em;
+      font-weight: normal;
+      line-height: 1.272;
+      color: $color-link;
+    }
+
+    @extend %card-link-hover;
+  }
+}
+
+@include bp(small) {
+  .multimedia-slot {
+    p,
+    ul {
+      display: none;
+    }
+
+    .equalheight {
+      .slot-item {
+        margin-right: 15px;
+      }
+
+      &:last-child .slot-item {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@include bp(medium-down) {
+  .multimedia-slot {
+    padding: 1em;
+  }
+}
+
+@include bp(large-up) {
+  /* equal height cards for desktop, visually push a div to the bottom of it's container */
+  .equalheight {
+    overflow: hidden;
+  }
+  .equalheight .push-to-bottom-desktop {
+    height: 100%;
+  }
+
+  // Pushing the last element to the bottom of the card using margin-top: auto in a flex container
+  // had a bug in Firefox only when overflow was hidden. This fixes it.
+  .guide-card--home {
+    .equalheight {
+      overflow: inherit;
+    }
+  }
+}
+
+.multimedia {
+  .card {
+    background: none;
+    opacity: 1;
+    padding-left: 0;
+
+    a {
+      color: $body-font-color;
+    }
+
+    &:hover {
+      h3 {
+        color: $lcranberry;
+      }
+    }
+  }
+
+  // The last of the feature guide cards needs to right align to the edge of the container, mirroring the
+  // left side.
+  .card:last-of-type {
+    padding-right: 0;
+  }
+
+  h3 a {
+    @extend %card-link-hover;
+  }
+}
+
+@include bp(medium-down) {
+  /* Multimedia row does need padding in tablet */
+  .multimedia h3,
+  .multimedia p {
+    padding-left: 15px;
+  }
+}
+
+.multimedia-feature-card {
+  background: $white;
+  padding-bottom: 1em;
+  position: relative;
+
+  a {
+    color: $body-font-color;
+
+    &:before {
+      @include call-to-action-corner();
+    }
+  }
+
+  h3 {
+    font-size: 1.375em;
+    font-weight: normal;
+    line-height: 1.272;
+    color: $color-link;
+  }
+
+  h3,
+  p,
+  ul {
+    padding: 0 15px;
+  }
+
+  &.cgvInfographic.non-playable {
+    a:before {
+      content: "Infographic";
+
+      html[lang="es"] & {
+        content: "Infograf\00ed a";
+      }
+    }
+  }
+
+  &.gloVideo.non-playable {
+    a:before {
+      content: "Video";
+
+      html[lang="es"] & {
+        content: "Video";
+      }
+    }
+  }
+
+  &.gloVideoCarousel.non-playable {
+    a:before {
+      content: "Video Playlist";
+
+      html[lang="es"] & {
+        content: "Lista de reproducci\00f3 n de videos";
+      }
+    }
+  }
+
+  &.non-playable {
+    a.mm-additional-info:before {
+      content: none;
+
+      html[lang="es"] & {
+        content: none;
+      }
+    }
+  }
+}
+
+@include bp(small) {
+  .multimedia-feature-card h3,
+  .multimedia-slot .feature-card h3 {
+    font-size: 1em;
+    line-height: 1.125em;
+    word-wrap: break-word;
+  }
+}
+
+// these rules are to fix the autoheight problems in multimedia row
+%autoheight-fix {
+  height: 100%;
+}
+
+.multimedia-feature-card,
+.multimedia .feature-card {
+  //@extend %autoheight-fix;
+  a {
+    display: block;
+    //height: 100%;
+  }
+}
+
+.card > .slot-item {
+  @extend %autoheight-fix;
+}
+
+.multimedia-slot .equalheight .slot-item {
+  background-color: $white;
+}
+
+/* END MULIMEDIA ROW */
+
+/* BEGIN Director's Row */
+
+.directors-row {
+  h3 {
+    color: $white;
+  }
+}
+
+.infographic {
+  position: relative;
+  /* allows for appearance of equal height cards on home page */
+  background: $white;
+
+  figcaption {
+    padding: 0.5em 1em;
+  }
+}
+
+.infographic-enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $white;
+
+  a {
+    position: relative;
+    color: $white;
+    padding: 1em 2em 1em 1em;
+    display: block;
+    /* TODO: add this image to the sprite */
+    background-color: #403f3f;
+    @extend %card-link-hover;
+
+    &::before {
+      @include svg-sprite(chevron-white);
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0.6em;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+}
+
+.home-director-stories {
+  background: $white;
+  padding: 0.5em 1em 0.2em;
+  margin-top: -10px;
+}
+
+@include bp(medium-down) {
+  .home-director-stories,
+  .infographic {
+    background: none;
+  }
+}
+
+/* END Director's Row */
+// adding a position relative to feature card images so exit disclaimer notification icon can be positioned to its bottom right
+.feature-card {
+  .image-hover {
+    position: relative;
+  }
+}
+
+/* News & events Item list */
+.press-releases-list {
+  .list-item {
+    margin: 2.5em 0;
+
+    &:first-child {
+      margin-top: 1.875em;
+    }
+  }
+
+  .container {
+    .body {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+.list {
+  // News & Events press releases listing
+  &.dynamic {
+    li {
+      &.has-media {
+        .list-item-image {
+          @include break(medium) {
+            padding-right: 0;
+
+            + .title-and-desc {
+              padding-left: 20px;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.managed {
+    @extend .row;
+    max-width: 62.5em;
+    margin: 0 auto;
+
+    h2 {
+      margin-left: 15px;
+    }
+
+    ul {
+      @extend .card-thumbnail;
+      padding: 1em 0;
+
+      li {
+        &.has-media {
+          > .container {
+            padding: 0 mq-px2em(15px);
+          }
+
+          .list-item-image {
+            @include break(medium) {
+              width: 16.7%;
+            }
+          }
+
+          .title-and-desc {
+            margin-left: 0;
+            padding-left: 15px;
+
+            @include break(medium) {
+              margin-left: 16.7%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/********************* END Home Page Styles ******************************************/
+
+/* BEGIN Social Media section */
+.row.social-media-title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.social-media-row {
+  display: flex;
+  margin-bottom: 2em;
+
+  &:before,
+  &after {
+    display: none;
+  }
+}
+
+.social-media-card {
+  flex-grow: 1;
+  flex-basis: 23%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2%;
+  background: white;
+
+  .social-media-text h3 {
+    text-align: center;
+  }
+}
+
+.social-media-card:last-child {
+  margin-right: 0;
+}
+
+.social-media-card .social-media-icon {
+  width: 80%;
+  margin-top: 30px;
+}
+
+.social-media-card .social-media-text {
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+.social-media-card .social-media-icon img {
+  display: block;
+  margin: 0 auto;
+}
+
+.social-media-row .icon-exit-notification {
+  font-size: 15px;
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1024px) {
+  .row.social-media-title {
+    padding-left: 33px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .row.social-media-title {
+    background: white;
+    padding-left: 33px;
+    margin-bottom: 0;
+  }
+
+  .social-media-row {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+  .social-media-card {
+    flex-grow: 0;
+    flex-basis: auto;
+    width: 100%;
+    margin: 0;
+    padding: 15px 0;
+    flex-direction: row;
+    align-items: stretch;
+
+    &:first-child {
+      padding-top: 30px;
+    }
+
+    &:last-child {
+      padding-bottom: 30px;
+    }
+  }
+
+  .social-media-card .social-media-icon {
+    margin-top: 0;
+    width: 180px;
+
+    a img {
+      width: 104px;
+      height: auto;
+    }
+  }
+  .social-media-card .social-media-text {
+    margin-bottom: 0;
+    flex-grow: 1;
+    padding-right: 30px;
+  }
+  .social-media-card .social-media-text h3 {
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .social-media-card {
+    padding: 0;
+    margin: 15px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  .social-media-card .social-media-icon {
+    align-self: flex-start;
+
+    a img {
+      height: 85px;
+      width: auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 460px) {
+  .social-media-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .social-media-card {
+    flex: 0 1 auto;
+    width: 50%;
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  .social-media-card .social-media-icon {
+    align-self: inherit;
+    width: 100%;
+
+    a img {
+      max-width: none;
+      height: 100px;
+      width: auto;
+    }
+  }
+  .social-media-card .social-media-text {
+    padding-right: 0;
+    width: 100%;
+  }
+  .social-media-card .social-media-text h3 {
+    margin-top: 20px;
+  }
+  .social-media-card .social-media-text p {
+    display: none;
+  }
+  .row.social-media-title {
+    padding-left: 0;
+    margin: 25px 0;
+  }
+  .social-media-title h2 {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+@media only screen and (min-width: 461px) and (max-width: 900px) {
+  .social-media-card .social-media-text h3 {
+    margin-top: 20px;
+    text-align: left;
+  }
+}
+
+/* END Social Media section */

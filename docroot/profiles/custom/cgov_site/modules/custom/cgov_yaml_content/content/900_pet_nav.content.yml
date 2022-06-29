@@ -53,3 +53,21 @@
           - "taxonomy_term"
           - vid: "cgov_site_sections"
             computed_path: "/pets"
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Didi"
+  field_navigation_label:
+    value: "Didi Noodles"
+  field_pretty_url:
+    value: "didi"
+  field_navigation_display_options:
+    value:
+    - value: 'hide_in_main_nav'
+    - value: 'hide_in_mobile_nav'
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/pets"
