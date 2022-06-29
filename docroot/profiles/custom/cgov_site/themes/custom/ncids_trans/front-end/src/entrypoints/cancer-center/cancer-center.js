@@ -1,1 +1,0 @@
-import './cancer-center.scss';
