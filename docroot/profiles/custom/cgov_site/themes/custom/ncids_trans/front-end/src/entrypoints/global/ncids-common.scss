@@ -1,20 +1,96 @@
-
-
 @charset "utf-8";
 
-// Import ncids tokens so we can use it in other definitions.
-$theme-image-path: 'uswds/dist/img';
-
 // Required
+// This is the normalizer and generates styles, so we want this here.
+// No other entrypoint should have this UNLESS the page it is included
+// on does not have ncids-common.
 @import '@nciocpl/ncids-css/scss/lib/normalize';
-@import '@nciocpl/ncids-css/scss/packages/required';
-@import '@nciocpl/ncids-css/scss/packages/global';
 
-// Dependencies
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+// Commenting this out for now as we don't want to generate utility
+// classes. Past not generating them, IDK if there is a purpose for
+// having this. Utility classes cost about 200K in CSS, we should
+// just use the mixin functions ourselves.
+//@import '@nciocpl/ncids-css/scss/packages/utilities'; // page options responsive display\
+
+// The global NCIDS/USWDS packages that generate markup.
+@import '@nciocpl/ncids-css/scss/packages/global';
 @import 'uswds/dist/scss/base/accessibility'; // header
 @import 'uswds/dist/scss/elements/typography/content'; // usa-prose, usa-intro(lede/lead)
-@import '@nciocpl/ncids-css/scss/packages/utilities'; // page options responsive display
 @import 'uswds/dist/scss/components/icon'; // page options icon sizes
 
-// Components
+// The specific Component imports. Nothing in this list SHOULD reference
+// NCIDS or USWDS. It should come from ../../lib/components.
+@import '@nciocpl/ncids-css/scss/components/usa-skipnav/usa-skipnav';
 @import '../../lib/components/usa-banner/usa-banner';
+@import '@nciocpl/ncids-css/scss/components/usa-site-alert/all';
+@import '@nciocpl/ncids-css/scss/components/usa-breadcrumb/breadcrumb';
+@import '../../lib/components/usa-sidenav/usa-sidenav';
+@import '@nciocpl/ncids-css/scss/components/usa-footer/nci-big';
+@import '../../lib/components/cgdp-page-options/cgdp-page-options';
+
+// TODO Keep as last import for now, there is a ordering bug
+@import '@nciocpl/ncids-css/scss/components/nci-header/nci-extended';
+
+// NOTE: Checkout _variables and _nci-foundation_variables for mapping NCIDS
+// colors and stuff to foundation and other legacy variables.
+
+/*****************************************************************************
+ **
+ ** Legacy Starts Here
+ **
+ ****************************************************************************/
+
+/** Legacy mixin things **/
+@import "~Core/styles/environments/percussion";
+@import "../../legacy/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '../../legacy/styles/breakpoint-mixins';
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
+
+// Equalheights looks to only be used by Home/Landing at first glance, so we need to
+// check and see where it is being used. The names used in the partial should not
+// clash with USWDS
+@import "~Core/styles/equalheights"; //added flexbox height support
+// We are moving foundation outside of legacy as the thought is
+@import "../../legacy/styles/nci-foundation";
+
+// This appears to be the "vendor" css for slick carousel.
+// There is one errant other nci-sites thing in here, but it looks like it is the
+// base styles. We will treat it this way.
+@import "~Core/libraries/carousel/slick";
+
+// This is our version of jQueryUI. Hopefully as we remove the dependency on
+// jQuery UI we should be be removing the classes here.
+@import "../../legacy/styles/jqueryui";
+// We used to have an overrides file for the jqueryui here. However, there were
+// competing specificity scores for things like <p> cause they are now .cgdpl p
+// and that is the same as say, .ui-accordion-header > p. We are going to hope
+// that anything cancer.gov specific having to do with our overrides should
+// go in legacy.
+
+// May need to be last last thing.  Move to drupal???
+// Overrides for the Moderation Sidebar module.
+// IDK which one is right here as the drupal partial is
+// trying to target the moderation sidebar as well
+body {
+  .ui-dialog.ui-dialog-off-canvas {
+    z-index: 9998;
+  }
+
+  .ui-dialog-off-canvas #drupal-off-canvas .button,
+  .ui-dialog-off-canvas #drupal-off-canvas  button {
+    min-height: 0;
+  }
+
+  .ui-dialog-off-canvas {
+    box-sizing: border-box;
+  }
+}
+
+@import "~Core/styles/drupal";

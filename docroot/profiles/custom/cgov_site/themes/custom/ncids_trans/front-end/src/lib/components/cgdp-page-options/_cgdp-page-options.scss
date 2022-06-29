@@ -1,0 +1,16 @@
+// In the prototype the following set of utility classes displayed page options
+// correctly. We don't want the added weight of the utiltity clasess, so we have
+// made a style to use the utility mixins to do the same.
+// Original Classes:
+// grid-col-auto display-none tablet:display-flex flex-align-center margin-left-auto
+.cgdp-page-options {
+	@include u-display('none');
+	@include u-flex('align-center');
+	@include u-margin-left(auto);
+	@include grid-col(auto);
+
+	// tablet
+	@include at-media(tablet) {
+		@include u-display('flex');
+	}
+}
