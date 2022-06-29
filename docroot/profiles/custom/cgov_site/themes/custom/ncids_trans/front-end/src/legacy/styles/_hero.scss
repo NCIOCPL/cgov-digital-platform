@@ -1,0 +1,117 @@
+/* BEGIN Hero Section */
+.row .hero {
+	position: relative;
+	padding-left: 0;
+	padding-right: 0;
+	@include box-shadow(0 11px 15.2px 0.8px rgba(0, 0, 0, 0.4));
+	//adding styles for hero <picture> elements
+	.row {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 0;
+		margin-bottom: 0;
+		max-width: 62.5em;
+		.hero-text {
+			left: auto;
+			padding: 0 0 0 38px;
+		}
+	}
+	//end new picture element styles
+}
+
+.hero-slot {
+	margin-bottom: 1em;
+}
+
+.hero-inner-page {
+	position: relative;
+	margin-bottom: 1em;
+	padding-left: 0;
+	padding-right: 0;
+}
+.hero-text {
+	position: absolute;
+	top: 49px;
+	left: 90px;
+	color: $white;
+	// Since we had to make the hero fixed, The text needed to be bumped out a bit.
+	width: 30%;
+	font-size: 1.55em;
+	font-weight: bold;
+
+	p {
+		line-height: 1.1;
+		margin-top: 0.7em;
+		font-weight: bold;
+	}
+
+	a {
+		color: $white;
+
+		&:hover, &:focus {
+			text-decoration: none;
+		}
+	}
+}
+
+@include bp(medium-down){
+	.hero-text {
+		position: absolute;
+		bottom: 0;
+		color: white;
+		background-color: rgba(10, 21, 28, 0.8);
+		font-size: 1.2em;
+		font-weight: bold;
+		width: 100%;
+		padding: 0 0.8em;
+		left: 0;
+		top: auto;
+	}
+	.hero-text p {
+		line-height: 1;
+		margin: 0.2em;
+	}
+}
+
+/* Used on Cancer Types hero */
+.hero-call-to-action {
+	display: inline-block;
+	font-size: 18px;
+
+	&:hover, &:focus {
+		&::after {
+			transform: translateX(.5em) rotate(90deg);
+		}
+	}
+
+	&::after {
+		content:'';
+		font-size: .85em;
+		@include svg-sprite(chevron-white, $rotate:right);
+		@include transition(transform 0.4s ease-in-out);
+	}
+}
+
+@include bp(small) {
+	.hero-slot {
+		display: none;
+	}
+}
+@include bp(large-up){
+	// Removed the max-width of 1350 which makes the page look weird.
+	.row .large-4.gutter {
+		width: 32%;
+		margin-left: 2%;
+	}
+	.row .large-6.gutter {
+		width: 48.5%;
+		margin-left: 2%;
+	}
+	.row .gutter:first-child {
+		margin-left: 0;
+	}
+}
+
+
+/* END Hero Section */
