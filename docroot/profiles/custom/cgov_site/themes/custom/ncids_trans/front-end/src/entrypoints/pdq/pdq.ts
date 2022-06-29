@@ -1,5 +1,19 @@
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
 import './pdq.scss';
+import './pdq-legacy.scss';
+
+declare global {
+	/** This is the general CDE Configuration Information */
+	interface CDEConfig_General {
+		/** This is the media server url */
+		mediaServer: string;
+	}
+	/** This is our configuration object that Drupal places in the head for various apis. */
+	interface CDEConfig {
+		/** This is the general page information. */
+		general: CDEConfig_General;
+	}
+}
 
 const onDOMContentLoaded = () => {
 	// move health professional/patient toggle up to article head
@@ -16,19 +30,23 @@ document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
 const moveToggle = () => {
 	const toggle = document.querySelector('#cgvBody .pdq-hp-patient-toggle');
 	if (toggle) {
-		const pageTitle = document.querySelector('#main h1');
-		pageTitle.insertAdjacentElement('afterend', toggle);
+		// Updating as #main goes away in NCIDS.
+		const pageTitle = document.querySelector('main h1');
+		pageTitle?.insertAdjacentElement('afterend', toggle);
 	}
 };
 
 // fix citation anchor links
 // if you see console errors that say something like: '#section_1.3 h2' is not a valid selector, they're coming from analytics.
 const citAnchorLinks = () => {
-	document.getElementById('cgvBody').addEventListener('click', (e) => {
-		if (e.target.hash && e.target.hash.match('#cit/')) {
+	document.getElementById('cgvBody')?.addEventListener('click', (e) => {
+		const anchor = e.target as HTMLAnchorElement;
+		if (anchor === null) return;
+
+		if (anchor.hash && anchor.hash.match('#cit/')) {
 			e.preventDefault();
-			const anchor = e.target.hash.replace('#cit/', '');
-			window.location.hash = anchor;
+			const newLocation = anchor.hash.replace('#cit/', '');
+			window.location.hash = newLocation;
 		}
 	});
 };
@@ -43,9 +61,9 @@ const buildAudioLinks = () => {
 
 	if (audioId) {
 		const server = window.CDEConfig?.general?.mediaServer;
-		if (server) {
+		if (server && audioEl.parentElement) {
 			const audioPath = server + '/pdq/media/audio/' + audioId + '.mp3';
-			const audioPronunciation = audioEl.parentElement.textContent.replace(
+			const audioPronunciation = audioEl.parentElement.textContent?.replace(
 				'Placeholder slot\n',
 				''
 			);

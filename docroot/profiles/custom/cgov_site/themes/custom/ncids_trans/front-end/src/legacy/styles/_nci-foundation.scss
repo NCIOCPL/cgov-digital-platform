@@ -1,0 +1,86 @@
+// I should not have to document where Foundation is used, but it is everywhere.
+// This import is being done as a copy since we need to remove elements or possible
+// scope some elements as legacy.
+
+@import
+  "../../../../../cgov/src/styles/nci-foundation_mixins",
+  "./nci-foundation_variables";
+
+// So we are going to include all the foundation class generation variables here.
+// This way we can easily comment out, but more so, clearly specify what is going
+// on.
+// While this is the default, we are going to reaffirm that here.
+$include-html-classes: true;
+
+// These have been pulled out of nci-foundation_variables to make it easier to
+// copy into the transition-hacks/_nci-foundation-legacy-classes.
+// If it is set to true here, it should be false in the legacy version of this
+// file.
+$include-print-styles: false;
+$include-html-global-classes: false;
+$include-html-button-classes: false;
+$include-html-form-classes: false;
+$include-html-label-classes: false;
+$include-html-inline-list-classes: $include-html-classes;
+$include-html-grid-classes: $include-html-classes;
+$include-html-visibility-classes: $include-html-classes;
+$include-html-custom-form-classes: $include-html-classes;
+$include-html-media-classes: $include-html-classes;
+$include-html-section-classes: $include-html-classes;
+$include-html-orbit-classes: $include-html-classes;
+$include-html-reveal-classes: $include-html-classes;
+$include-html-joyride-classes: $include-html-classes;
+$include-html-clearing-classes: $include-html-classes;
+$include-html-alert-classes: $include-html-classes;
+$include-html-nav-classes: $include-html-classes;
+$include-html-top-bar-classes: $include-html-classes;
+$include-html-panel-classes: $include-html-classes;
+$include-html-pricing-classes: $include-html-classes;
+$include-html-progress-classes: $include-html-classes;
+$include-html-magellan-classes: $include-html-classes;
+$include-html-tooltip-classes: $include-html-classes;
+$include-html-table-classes: false;
+
+// Don't generate the _type.scss classes. These are things like H1, H2, H3, etc. We
+// want these to be scoped as legacy, so we will set these here, so any mixins are
+// available, and then generate only those definitions we want to keep. E.g. we
+// probably want the NCIDS prose styles instead...
+$include-html-type-classes: false;
+
+@import
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/global",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/grid",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/visibility",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/block-grid",
+  "./foundation/components/type",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/buttons",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/forms",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/button-groups",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/dropdown-buttons",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/split-buttons",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/flex-video",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/section",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/top-bar",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/orbit",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/reveal",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/joyride",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/clearing",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/alert-boxes",
+// For the Redesign MVP we have no need for breadcrumbs as this component will be pulled in from ncids.
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/breadcrumbs",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/custom-forms",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/keystrokes",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/labels",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/inline-lists",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/pagination",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/panels",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/pricing-tables",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/progress-bars",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/side-nav",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/sub-nav",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/switch",
+//  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/magellan",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/tables",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/thumbs",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/tooltips",
+  "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/dropdown";

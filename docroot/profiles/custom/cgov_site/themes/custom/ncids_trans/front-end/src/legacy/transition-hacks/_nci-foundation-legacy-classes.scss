@@ -1,0 +1,72 @@
+/**************************************************************************
+ * What am I?
+ * I am a big ol hack. We had been generating default HTML stylings using
+ * the _types partial and the $include-html-type-classes variable being
+ * true. But we moved foundation outside of the legacy definition to save
+ * kilobytes. We need *some* of the styles though. TBH, a lot of the
+ * original will be removed from here. For example, we probably just want
+ * to set the default link style using NCIDS, so we could remove that.
+ * Heading tags are a problem as we want our own. So that is another thing
+ * that will probably be removed. So know that the foundation _types
+ * partial was what this started as, but we will be hacking as we go.
+ * Someday, maybe soon, this will not be needed anymore and just replaced
+ * with elements from usa-prose, or other NCIDS partials.
+ *
+ * Adding to the above, we need variables, we can't just add some of these
+ * things on their own.
+ ************************************************************************/
+
+@import
+ "../../../../../cgov/src/styles/nci-foundation_mixins",
+ "../styles/nci-foundation_variables";
+
+// Turn off any HTML generation here and we will turn them on below when
+// that partial would generate classes that conflict with NCIDS.
+// If it is set to true here, it should be false in the other version of this
+// file.
+$include-html-classes: false;
+$include-print-styles: false;
+$include-html-global-classes: false;
+$include-html-button-classes: false;
+$include-html-form-classes: false;
+$include-html-label-classes: false;
+$include-html-inline-list-classes: $include-html-classes;
+$include-html-grid-classes: $include-html-classes;
+$include-html-visibility-classes: $include-html-classes;
+$include-html-custom-form-classes: $include-html-classes;
+$include-html-media-classes: $include-html-classes;
+$include-html-section-classes: $include-html-classes;
+$include-html-orbit-classes: $include-html-classes;
+$include-html-reveal-classes: $include-html-classes;
+$include-html-joyride-classes: $include-html-classes;
+$include-html-clearing-classes: $include-html-classes;
+$include-html-alert-classes: $include-html-classes;
+$include-html-nav-classes: $include-html-classes;
+$include-html-top-bar-classes: $include-html-classes;
+$include-html-panel-classes: $include-html-classes;
+$include-html-pricing-classes: $include-html-classes;
+$include-html-progress-classes: $include-html-classes;
+$include-html-magellan-classes: $include-html-classes;
+$include-html-tooltip-classes: $include-html-classes;
+$include-html-table-classes: true;
+$include-html-type-classes: true;
+
+@import
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/global",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/grid",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/visibility",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/block-grid",
+ "../styles/foundation/components/type",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/buttons",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/forms",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/button-groups",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/dropdown-buttons",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/split-buttons",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/flex-video",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/inline-lists",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/pagination",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/panels",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/tables",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/thumbs",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/tooltips",
+ "../../../../../cgov/src/styles/vendor/foundation/scss/foundation/components/dropdown";
