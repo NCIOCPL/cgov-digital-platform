@@ -15,11 +15,11 @@ module.exports = {
 	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
 	'home-landing': path.resolve(
 		__dirname,
-		'src/entrypoints/home-landing/home-landing.js'
+		'src/entrypoints/home-landing/home-landing.ts'
 	),
 	'special-report': path.resolve(
 		__dirname,
-		'src/entrypoints/special-report/special-report.js'
+		'src/entrypoints/special-report/special-report.ts'
 	),
 	pdq: path.resolve(__dirname, 'src/entrypoints/pdq/pdq.ts'),
 	'mini-landing': path.resolve(

@@ -29,6 +29,27 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/noticias'
+  field_hero_banner:
+    - entity: 'paragraph'
+      type: 'cgov_hero_banner'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_desktop.jpeg'
+          alt: 'hand on shoulder'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_tablet.jpeg'
+          alt: 'hand on shoulder'
+      field_tagline:
+        value: "Image from About Cancer for Positioning"
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########
@@ -92,3 +113,78 @@
               ### the options are serialized. So set this through the UI and find what it put in the DB.
               data: |
                 a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <ul class="list no-bullets">
+                  <li class="general-list-item list-item more">
+                      <div class="image container">&nbsp;</div>
+                      <div class="title container">
+                        <a class="arrow-link news-footer" href="/news-events/press-releases/2022">All NCI news</a>
+                      </div>
+                  </li>
+                </ul>
+      field_secondary_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <style type="text/css">
+                  @media only screen and (max-width: 640px) {
+                    .ui-accordion .rawHtml div.ui-accordion-content {
+                      margin: 0;
+                    }
+                  }
+                </style>
+                <!-- News Landing Page Raw HTML - Media Resources -->
+                <div class="row card">
+                  <h2>Media Resources</h2>
+                  <ul>
+                      <li><a href="/news-events/media-resources" data-indexed-link="Media Resources|NewsEventsRight|1">Resources & Contacts</a></li>
+                      <li><a href="https://visualsonline.cancer.gov/" data-indexed-link="Media Resources|NewsEventsRight|1">Images and B-roll</a></li>
+                      <li><a href="/about-nci/budget/fact-book" data-indexed-link="Media Resources|NewsEventsRight|1">NCI Budget Data</a></li>
+                  </ul>
+
+                  <ul>
+                      <li><a href="/news-events/press-releases/2022" data-indexed-link="Media Resources|NewsEventsRight|1">News Releases</a></li>
+                      <li class="news-share"><a class="news-govdelivery" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new" data-indexed-link="Media Resources|NewsEventsRight|1">Subscribe to NCI News Releases</a></li>
+                  </ul>
+
+                  <ul>
+                      <li class="news-share"><a class="news-twitter" href="/social-media#twitter" data-indexed-link="Media Resources|NewsEventsRight|1">@NCIMedia</a></li>
+                      <li class="news-share"><a class="news-youtube" href="http://www.youtube.com/ncigov" data-indexed-link="Media Resources|NewsEventsRight|1">NCI YouTube</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <!-- News Landing Page Raw HTML - Blog -->
+                <div class="row card">
+                  <h2>Cancer Currents Blog</h2>
+                  <div>
+                      Find the latest news and research updates from the National Cancer Institute.
+                      <ul>
+                        <li><a href="/news-events/cancer-currents-blog" data-indexed-link="Cancer Currents|NewsEventsRight|2">Latest posts</a><br /> </li>
+                        <li class="news-share"><a class="news-govdelivery" href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new" data-indexed-link="Cancer Currents|NewsEventsRight|3">Subscribe</a></li>
+                      </ul>
+                  </div>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <!-- News Landing Page Raw HTML - Events -->
+                <div class="row card">
+                  <h2>Events</h2>
+                  <ul>
+                      <li><a href="/news-events/events/scientific-meetings" data-indexed-link="Events|NewsEventsRight|3">Scientific Meetings and Lectures</a></li>
+                      <li><a href="/news-events/events/conferences" data-indexed-link="Events|NewsEventsRight|3">Conferences</a></li>
+                      <li><a href="/news-events/events/social-media" data-indexed-link="Events|NewsEventsRight|3">Social Media Events</a></li>
+                  </ul>
+                </div>
