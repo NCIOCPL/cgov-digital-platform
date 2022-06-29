@@ -24,7 +24,7 @@ module.exports = {
 	pdq: path.resolve(__dirname, 'src/entrypoints/pdq/pdq.ts'),
 	'mini-landing': path.resolve(
 		__dirname,
-		'src/entrypoints/mini-landing/mini-landing.js'
+		'src/entrypoints/mini-landing/mini-landing.ts'
 	),
 	'cancer-center': path.resolve(
 		__dirname,

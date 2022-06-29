@@ -1,6 +1,7 @@
 import patternInjector from 'Core/libraries/patternInjector';
 import patternSettings from 'Core/libraries/patternInjector/configs/nciOrgPatternSettings.js';
 import './mini-landing.scss';
+import './mini-landing-legacy.scss';
 
 const onDOMContentLoaded = () => {
 	// We only want to run the pattern injector on the home page.
