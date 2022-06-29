@@ -45,7 +45,13 @@ ul li ul {
   margin-left: 0;
 }
 
-// Moved slick outside of legacy.
+// This appears to be the "vendor" css for slick carousel.
+// There is one errant other nci-sites thing in here, but it looks like it is the
+// base styles. We will treat it this way. The dots for the DOC carousel on the
+// home page require .cgdpl or else the ul/li classes compte with them. We can
+// chalk this up to something to clean up when we rebuild the carousel as these
+// dots are only for the carousel.
+@import "~Core/libraries/carousel/slick";
 
 // Moved jQuery UI to outside of legacy. Those names seemed to be specific
 // enough they will not conflict with ncids. The overrides on the other
@@ -134,16 +140,8 @@ ul li ul {
 // NOTE: There was some stuff for .bcrumbs, which looks like for breadcrumbs,
 // but that all was removed cause we have ncids breadcrumbs now.
 
-// In a purely evil game of where's waldo, this little nugget is from
-// paragraph--cgov-guide-row.html.twig. This appears for a guide card row.
-// See https://www.cancer.gov/about-cancer and look for "Your Guide to
-// Cancer" for an example.
-// TODO: Move to home-landing.scss when that is implemented.
-@include bp(small) {
-  .guide-title h2 {
-    display: none;
-  }
-}
+// Removed a style for .guide-title that had been in general. This got moved
+// to home-landing entrypoint.
 
 // TODO: This should be moved out for the mini-landing page story.
 // Also we modified the SASS to nest, so it should be checked.
@@ -237,9 +235,8 @@ ul li ul {
 @import "~Core/styles/tables";
 @import "~Core/libraries/modal/modal";
 
-// This seems to be for the homepage carousel.
-// TODO: Move to home/landing?
-@import "~Core/libraries/carousel/carousel";
+// Moved carousel to home/landing since it looks like it is only for the
+// carousels on the home/landing pages.
 
 @import "~Core/styles/contentTemplate";
 
