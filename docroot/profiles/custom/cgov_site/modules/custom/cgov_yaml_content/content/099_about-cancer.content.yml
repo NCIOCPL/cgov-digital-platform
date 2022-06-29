@@ -29,6 +29,28 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/cancer'
+  ## Hero
+  field_hero_banner:
+    - entity: 'paragraph'
+      type: 'cgov_hero_banner'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_desktop.jpeg'
+          alt: 'hand on shoulder'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_tablet.jpeg'
+          alt: 'hand on shoulder'
+      field_tagline:
+        value: "NCI is the nation's trusted source for cancer information"
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########

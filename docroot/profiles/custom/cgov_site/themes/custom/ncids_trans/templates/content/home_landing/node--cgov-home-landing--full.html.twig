@@ -1,53 +1,21 @@
-{% if 'special_report' == content.field_page_style[0]['#markup'] %}
-	{% set special_report = true %}
-{% endif %}
-{% if 'dceg_connect' == content.field_page_style[0]['#markup'] %}
-	{% set dceg_connect = true %}
-{% endif %}
+{# To be clear, this is the "standard" style. #}
+<div id="nvcgSlHeroHeader" class="row hero-slot">
+  {{ content.field_hero_banner }}
+</div>
 
 
-{% if dceg_connect %}
-	{{ content.field_landing_contents }}
-{% else %}
+{# Title Row #}
+<div class="row">
+  <div class="large-7 columns" style="min-height: 61.031px">
+    {% set hr_attribs = create_attribute({}) %}
+    {% if is_front == TRUE %}
+      {% set hr_attribs = hr_attribs.addClass('show-for-sr') %}
+    {% endif %}
+    <h1 {{hr_attribs}}>{{ node.label }}</h1>
 
-	<div id="nvcgSlHeroHeader" class="row hero-slot">
-		{% if special_report  %}
-			<h1>{{node.label}}</h1>
-		{% endif %}
-		{{ content.field_hero_banner }}
-	</div>
-
-
-	{# ####### Set description ###### #}
-
-
-	{% if special_report  %}
-
-		<div class="row report-container">
-			{{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
-			{{content.field_landing_contents}}
-			<div class="mobile-page-options">
-				<hr>
-				<p>{{ 'Share this page'|t |upper }}</p>
-				{{ drupal_block('page_options', {additionalClasses: 'bottom-options large-5 columns'}) }}
-			</div>
-		</div>
-
-
-	{% else %}
-
-		{# Title Row #}
-			<div class="row">
-				{% if is_front == FALSE %}
-					<div class="large-7 columns">
-						<h1>{{ node.label }}</h1>
-					</div>
-				{% endif %}
-				{{ drupal_block('page_options', {additionalClasses: 'large-5 columns'}) }}
-			</div>
-			{# End Title Row#}
-			<div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
-				{{content.field_landing_contents}}
-			</div>
-	{% endif %}
-{% endif %}
+  </div>
+</div>
+{# End Title Row#}
+<div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
+  {{content.field_landing_contents}}
+</div>

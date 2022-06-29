@@ -31,6 +31,45 @@
           - vid: 'cgov_site_sections'
             computed_path: '/'
             langcode: 'es'
+  ## Hero
+  field_hero_banner:
+    - entity: 'paragraph'
+      type: 'cgov_hero_banner'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'NCA50_homepage_banner_1350x297_desktop.jpeg'
+          alt: 'Doctor and patient high five'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'NCA50_homepage_banner_1000x343_tablet.jpeg'
+          alt: 'Doctor and patient high five'
+  field_hero_banner__ES:
+    - entity: 'paragraph'
+      type: 'cgov_hero_banner'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'NCA50_homepage_banner_1350x297_Spanish.jpeg'
+          alt: 'NADA NOS DETENDRÁ LEY NACIONAL DEL CÁNCER 50 AÑOS. Un médico y un paciente chocan las palmas de las manos'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'NCA50_homepage_banner_1000x343_Spanish.jpeg'
+          alt: 'NADA NOS DETENDRÁ LEY NACIONAL DEL CÁNCER 50 AÑOS. Un médico y un paciente chocan las palmas de las manos'
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########
@@ -260,6 +299,157 @@
                   - type: 'cgov_article'
                     title: 'Feelings and Cancer'
     ######## End Thumbnail List ##############
+    ######## Home Page Carousel ############
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <!--
+            If we update or change the order of the DOC rotator please update the code snippet to be in the correct order. The order is determined by the position in the HTML below.
+            data-indexed-link="LINK_TITLE|DOC Rotator|1" in each of the code snippets. The numbers are for analytics purposes, not position.
+            -->
+
+            <div class="row carousel-title">
+                <div class="large-6 columns">
+                    <h2>NCI Divisions, Offices, and Centers</h2>
+                </div>
+                <div class="large-6 columns arrows arrows-for-other-nci-sites clearfix">
+                    <button type="button" class="previous"> <span
+                            style="position: absolute; bottom: 0; right: 0; clip: rect(1px, 1px, 1px, 1px);">Previous</span>
+                    </button>
+                    <button type="button" class="next"> <span
+                            style="position: absolute; bottom: 0; right: 0; clip: rect(1px, 1px, 1px, 1px);">Next</span> </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="slider other-nci-sites">
+                        <div>
+                            <div class="image-hover"> <a href="http://ccr.cancer.gov/" class="green-arrows container"
+                                    data-indexed-link="Center for Cancer Research|DOC Rotator|7">
+                                    <p class="site-name">Center for Cancer Research</p>
+                                    <p class="site-link">Visit CCR Site</p>
+                                </a> </div>
+                        </div>
+
+                        <div>
+                            <div class="image-hover"> <a href="/about-nci/organization/dcb" class="blue-circles container"
+                                    data-indexed-link="Division of Cancer Biology|DOC Rotator|1">
+                                    <p class="site-name">Division of Cancer Biology</p>
+                                    <p class="site-link">Visit DCB Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://cancercontrol.cancer.gov/" class="red-triangles container"
+                                    data-indexed-link="Division of Cancer Control and Population Sciences|DOC Rotator|2">
+                                    <p class="site-name">Division of Cancer Control and Population Sciences</p>
+                                    <p class="site-link">Visit DCCPS Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://dceg.cancer.gov/" class="blue-triangles container"
+                                    data-indexed-link="Division of Cancer Epidemiology and Genetics|DOC Rotator|3">
+                                    <p class="site-name">Division of Cancer Epidemiology and Genetics</p>
+                                    <p class="site-link">Visit DCEG Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://prevention.cancer.gov/" class="green-plaid container"
+                                    data-indexed-link="Division of Cancer Prevention|DOC Rotator|4">
+                                    <p class="site-name">Division of Cancer Prevention</p>
+                                    <p class="site-link">Visit DCP Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://dctd.cancer.gov/" class="orange-waves container"
+                                    data-indexed-link="Division of Cancer Treatment and Diagnosis|DOC Rotator|5">
+                                    <p class="site-name">Division of Cancer Treatment and Diagnosis</p>
+                                    <p class="site-link">Visit DCTD Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="https://deainfo.nci.nih.gov/" class="purple-circles container"
+                                    data-indexed-link="Division of Extramural Activities|DOC Rotator|6">
+                                    <p class="site-name">Division of Extramural Activities</p>
+                                    <p class="site-link">Visit DEA Site</p>
+                                </a> </div>
+                        </div>
+
+                        <div>
+                            <div class="image-hover"> <a href="/grants-training/training/about" class="red-squares container"
+                                    data-indexed-link="Center for Cancer Training|DOC Rotator|9">
+                                    <p class="site-name">Center for Cancer Training</p>
+                                    <p class="site-link">Visit CCT Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="/about-nci/organization/ccg" class="orange-plaid container"
+                                    data-indexed-link="Center for Cancer Genomics|DOC Rotator|10">
+                                    <p class="site-name">Center for Cancer Genomics</p>
+                                    <p class="site-link">Visit CCG Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="/about-nci/organization/cgh" class="pink-triangles container"
+                                    data-indexed-link="Center for Global Health|DOC Rotator|11">
+                                    <p class="site-name">Center for Global Health</p>
+                                    <p class="site-link">Visit CGH Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="/about-nci/organization/crchd" class="yellow-hexagons container"
+                                    data-indexed-link="Center to Reduce Cancer Health Disparities|DOC Rotator|12">
+                                    <p class="site-name">Center to Reduce Cancer Health Disparities</p>
+                                    <p class="site-link">Visit CRCHD Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="https://cbiit.nci.nih.gov/" class="navy-squares container"
+                                    data-indexed-link="Center for Biomedical Informatics and Information Technology|DOC Rotator|13">
+                                    <p class="site-name">Center for Biomedical Informatics and Information Technology</p>
+                                    <p class="site-link">Visit CBIIT Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://cssi.cancer.gov/" class="emerald-xes container"
+                                    data-indexed-link="Center for Strategic Scientific Initiatives|DOC Rotator|14">
+                                    <p class="site-name">Center for Strategic Scientific Initiatives</p>
+                                    <p class="site-link">Visit CSSI Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="/about-nci/organization/ccct" class="fuchsia-waves container"
+                                    data-indexed-link="Coordinating Center for Clinical Trials|DOC Rotator|15">
+                                    <p class="site-name">Coordinating Center for Clinical Trials</p>
+                                    <p class="site-link">Visit CCCT Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://sbir.cancer.gov/" class="slate-grid container"
+                                    data-indexed-link="SBIR Development Center|DOC Rotator|16">
+                                    <p class="site-name">SBIR Development Center</p>
+                                    <p class="site-link">Visit SBIR Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="https://techtransfer.cancer.gov/" class="red-squares container"
+                                    data-indexed-link="Technology Transfer Center|DOC Rotator|17">
+                                    <p class="site-name">Technology Transfer Center</p>
+                                    <p class="site-link">Visit TTC Site</p>
+                                </a> </div>
+                        </div>
+                        <div>
+                            <div class="image-hover"> <a href="http://frederick.cancer.gov/" class="blue-dots container"
+                                    data-indexed-link="Frederick National Laboratory for Cancer Research|DOC Rotator|8">
+                                    <p class="site-name">Frederick National Laboratory for Cancer Research</p>
+                                    <p class="site-link">Visit FNLCR Site</p>
+                                </a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    ######## Home Page Carousel End ############
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Begin Feature Row ###########

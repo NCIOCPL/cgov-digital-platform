@@ -2,6 +2,7 @@ import patternInjector from 'Core/libraries/patternInjector';
 import carouselPatternSettings from 'Core/libraries/patternInjector/configs/homePageCarouselPatternSettings.js';
 import carousel from 'Core/libraries/carousel/carousel';
 import './home-landing.scss';
+import './home-landing-legacy.scss';
 
 const onDOMContentLoaded = () => {
 	// We only want to run the pattern injector on the home page.
