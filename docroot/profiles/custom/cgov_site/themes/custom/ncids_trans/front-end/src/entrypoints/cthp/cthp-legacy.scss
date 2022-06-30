@@ -1,0 +1,592 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+@import "~Core/styles/environments/percussion";
+@import "../../legacy/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
+@import '../../legacy/styles/breakpoint-mixins';
+@import "~Styles/sprites/svg-sprite";
+@import "../../legacy/styles/nci-foundation_variables";
+@import "~Core/styles/nci-foundation_mixins";
+
+@import '~Libraries/cthpDropdown/index.scss';
+
+/********** BEGIN Cancer Type Home Page Styles ******************************************/
+.image-right-medium {
+  position: relative;
+}
+
+.bgWhite {
+  background-color: #fff;
+}
+
+.cthp-intro-multimedia {
+  background: white;
+
+  .image-right-medium {
+    margin-left: 0;
+  }
+
+  figure {
+    .video {
+      float: right;
+      width: 40%;
+      margin: 0 0 2.5em 0;
+      @include bp(small) {
+        width: 100%;
+        margin: 0 0 1em 0;
+      }
+    }
+  }
+}
+
+.cthp-body {
+  float: left;
+  width: 55%;
+  display: block;
+  clear: left;
+
+  h2 {
+    margin-top: 2px;
+    float: left;
+    width: 55%;
+  }
+
+  @include bp(small) {
+    float: none;
+    width: 100%;
+  }
+}
+
+.cthp-title {
+  margin-top: 0;
+  @include bp(large-up) {
+    margin: 0;
+  }
+}
+
+.cthp-intro-multimedia {
+  .clearfix {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    margin-left: 15px;
+
+    @include bp(small) {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0.9375em;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      margin-left: 0;
+    }
+  }
+}
+
+.cthp-content {
+  @include bp(small) {
+    background: white;
+  }
+
+  h1 {
+		// Removed colors for font.
+    @include bp(large-up) {
+      min-height: 39px;
+      padding-right: 12px;
+      width: 58%;
+    }
+  }
+
+  &.ui-accordion {
+    .ui-accordion-header {
+      color: white;
+      font-weight: bold;
+      margin-left: -30px;
+      margin-right: -30px;
+    }
+    div.ui-accordion-content {
+      margin-left: -12px;
+      margin-right: -12px;
+    }
+  }
+
+  .cardBody {
+    padding: 0.625em 0.8em;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+
+    @include bp(small) {
+      padding: 0;
+    }
+  }
+}
+
+.cthp-pdq-label {
+  margin-top: 0;
+}
+
+.cardBody {
+  p {
+    font-size: 1em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  > a {
+    &:last-child {
+      margin-bottom: 1.25em;
+    }
+
+    &.arrow-link {
+      min-height: 24px;
+    }
+  }
+}
+
+// Foundation grid components need to be overwritten
+.cthp-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -0.9375em 1em;
+  width: 100%;
+
+  @include bp(small) {
+    display: block;
+    margin-top: 0;
+    padding-left: 0.9375em;
+    padding-right: 0;
+  }
+
+  @include bp(medium) {
+    margin-left: 0;
+  }
+
+  .equalheight {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cthpCard {
+    padding: inherit;
+    width: 49%;
+    margin: 0.5em 0;
+
+    @include bp(small) {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+@include bp(small) {
+  .cthp-card-container img {
+    display: none;
+  }
+
+  // Override so that youtube preview images are still visible in CTHP accordion
+  .cthp-card-container .video-preview--container img {
+    display: inherit;
+  }
+
+  .cthp-intro-multimedia h2 {
+    text-transform: uppercase;
+  }
+}
+
+.cthpCard .cardBody ul li {
+  list-style-type: none;
+  padding-left: 0.9375em;
+}
+
+.cthpCard a + .cardBody ul li,
+.cthpCard .cardBody br + ul li {
+  padding-left: 0;
+}
+
+.cthp-overview .cardBody {
+  p {
+    margin-top: 2px;
+    a:before {
+      content: none;
+    }
+  }
+}
+
+.cthpCard .rawHtml .cardBody {
+  p {
+    margin-top: 2px;
+  }
+  a:last-child {
+    margin-bottom: 20px;
+  }
+}
+
+// In any case (raw blocks or not) where multiple arrow-link stack.
+.cthpCard .cardBody {
+  a.arrow-link + .arrow-link {
+    margin-top: 8px;
+  }
+}
+
+.cthp-overview .ui-accordion-content .cardBody p:last-child {
+  margin-bottom: 20px;
+}
+
+.cthp-research .cardBody {
+  p {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    a {
+      display: inline-block;
+      padding-left: 0.9375em;
+    }
+  }
+  br {
+    display: none;
+  }
+
+  a {
+    &:not(.cthp-mm-text-area) {
+      &.arrow-link {
+        margin-top: 19px;
+      }
+    }
+  }
+}
+
+.more-info-list ul li:before,
+.cthp-pdq-label ul li:before,
+.cardBody ul li:before,
+.cardBody p a:not(.icon-exit-notification):before {
+  content: "\2022";
+  display: inline-block;
+  position: relative;
+  left: -0.5em;
+  top: 0.1em;
+  margin: 0 -0.2em;
+  font-size: 1.1em;
+  color: $default-text;
+}
+
+.main-content a.viewAll {
+  color: $body-font-color;
+}
+
+.main-content a.viewAll:hover,
+.main-content a.viewAll:focus {
+  text-decoration: none;
+}
+
+.guide h2 {
+  color: #fff;
+}
+
+.cthp-version-toggle {
+  position: relative;
+  float: left;
+  color: #fff;
+  margin: 0 50% 20px 0;
+
+  a {
+    display: block;
+    white-space: nowrap;
+    color: $body-font-color;
+    padding: 0.625em 3.6em 0.625em 0.7em;
+
+    /**** Sprite is now drawn in _arrowLinks.scss ****/
+    /**** TODO: get svg-sprite() to work outside of StyleSheets/ folder path ****/
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 709px) {
+  .cthp-version-toggle {
+    display: inline-block;
+    float: none;
+    margin-right: 0;
+    //background-color: #f7f8f3;
+
+    a {
+      padding: 0 40px 0 0;
+      white-space: normal;
+      &:hover,
+      &:focus {
+        color: #bd153c;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 710px) {
+  .cthp-version-toggle {
+    a {
+      background-color: #82368c;
+      color: white;
+      &:hover,
+      &:focus {
+        background-color: #75307e;
+        color: white;
+      }
+    }
+  }
+}
+
+@include bp(small) {
+  .cthp-content {
+    .cthp-version-toggle {
+      background-color: white;
+    }
+  }
+}
+
+@include bp(large-up) {
+  .cthp-version-toggle {
+    margin: 0px;
+    right: 16px;
+    top: 20px;
+		position: absolute;
+
+  }
+}
+
+.bp20 {
+  padding-bottom: 1.25em;
+}
+
+.alphalist {
+  padding: 1.2em 0;
+  overflow: auto;
+
+  li {
+    float: left;
+    font-size: 1.625em;
+    font-family: $montserrat-font-stack;
+    margin-right: 1em;
+    color: $body-font-color;
+  }
+}
+
+@include bp(small) {
+  .cthp-card-container .cthp-mm-infographic img {
+    display: block;
+  }
+}
+
+.cthpCard {
+  > div {
+    > h2 {
+      + div {
+        &:hover {
+          img {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    @include bp(small) {
+      margin-bottom: 0;
+    }
+  }
+
+  + div {
+    li {
+      a {
+        &.arrow-link {
+          :hover {
+            color: $lcranberry;
+          }
+        }
+      }
+    }
+  }
+
+  li {
+    a {
+      span {
+        &.filetype {
+          margin-right: 4px;
+        }
+        &.filesize {
+          @include bp(medium-down) {
+            color: $default-text;
+          }
+        }
+      }
+    }
+  }
+
+  h2 {
+    color: #fff;
+    padding: 0.47em 0.6em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  // a) This anonymous div wrapping the rawHTML block in certain cards is a big red flag
+  //  so we need to hack around it.
+  // b) There is a legit bug in ie11 around nested flexboxes and autoscaling of images.
+  // This hack references https://github.com/philipwalton/flexbugs/issues/75
+  > .equalheight {
+    > div,
+    > .clearfix > div {
+      min-height: 1px;
+    }
+  }
+}
+
+/** Begin CTHP Overview styling */
+/* Align top of Overview Card with top of first guide/feature card */
+@include bp(small) {
+  #nvcgSlCTHPCards.cthp-card-container {
+    margin-top: 0;
+  }
+}
+@include bp(large-up) {
+  #nvcgSlCTHPCards.cthp-card-container {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+/* TODO: Clean up names and update Percussion template html to fix last-minute style change
+/* Move double high back above first 2 cards */
+.large-6.columns.cthp-overview-doublehigh {
+  width: 100%;
+}
+
+/* Align the slotted media image inside the Overview Card */
+.cthp-overview-doublehigh .cthp-intro-multimedia figure {
+  padding-top: 16px;
+}
+
+/* Format card title */
+h2.cthp-overview-title {
+  color: #ffffff;
+  padding: 0.47em 0.6em;
+  margin: -5px -15px 0;
+  text-transform: uppercase;
+}
+/* Fix spacing in Overview Card to line up with first guide/feature card */
+.cthp-overview-doublehigh .cthp-body p {
+  margin: 0.625em 0 1.25em;
+}
+/* Fix alignment of card on all screens */
+.cthp-overview-doublehigh {
+  padding: 0 1.875em 1.313em 0;
+}
+@include bp(small) {
+  .cthp-overview-doublehigh {
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+}
+@include bp(medium) {
+  .cthp-overview-doublehigh {
+    padding-right: 0;
+  }
+}
+
+.doublehigh-expand {
+  pointer-events: none;
+  @include bp(small) {
+    display: none;
+  }
+}
+
+/** End CTHP Overview styling */
+
+/** Begin CTHP Card styling */
+
+/* TODO: update CTHP home and guide Percussion templates with a cleaner image hover class. This is a dirty fix for Devon Rex pre-go-live*/
+.cthpCard .cardBody,
+.cthpCard .cardBody:hover,
+.cthpCard .cardBody:hover p,
+.cthp-content .cardBody:hover,
+.cthp-content .rxbodyfield:hover {
+  background-color: white;
+}
+
+/* Don't change color below multimedia figures on hover */
+.cthp-fi-video figure,
+figure.cthp-mm-video-player,
+figure.cthp-mm-video-playlist {
+  margin-bottom: 0;
+}
+/* End CTHP Card styling */
+
+// These are horribly brittle rules to make the CTHP elements line up with the megamenu.
+// They are in fact not working correctly at desktop on PROD, so inevitably will be revisited.
+// The next person to touch this, not under migration pressure, who does not refactor this
+// heavily to be a better codebase will be haunted by me.
+// @include bp(medium-up) {
+//   .bcrumbs {
+//     padding-left: 0 !important;
+//   }
+// }
+// @include bp(large-up) {
+//   .cthp-padding {
+//     padding-left: em-calc(8px);
+//   }
+// }
+// @include bp(small) {
+//   .row .tp20 {
+//     margin-top: 0;
+//   }
+// }
+
+// Need to override CTHP dropdown library styling for external links so that external link icon doesn't repeat
+@include bp(large-up) {
+  .cthp-card-container {
+    .cthp-dropdown {
+      &.more-info {
+        ul {
+          // originally added as a hack pertaining to how CSSNano handles z-indexes. Leaving it in in case
+          // there may be a case where a video exists in the module directly below the dropdown in content
+          z-index: 11 !important;
+          li {
+            align-items: center;
+            display: flex;
+
+            a {
+              flex: 1 1 auto;
+              width: auto;
+
+              &.icon-exit-notification {
+                background-repeat: no-repeat;
+                flex: none;
+                padding: 7px 9px;
+              }
+            }
+
+            &:hover {
+              a {
+                color: $white;
+
+                &.icon-exit-notification {
+                  @include svg-sprite(external-link-white);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+/********** END Cancer Type Home Page Styles ******************************************/
