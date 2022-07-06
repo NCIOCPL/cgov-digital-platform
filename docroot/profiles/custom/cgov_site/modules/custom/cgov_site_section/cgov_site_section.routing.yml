@@ -41,3 +41,20 @@ cgov_site_section.get_mobile_nav:
         type: entity:taxonomy_term
         bundle:
           - cgov_site_sections
+
+# Set up route for Fetching the megamenu info.
+cgov_site_section.get_mega_menu:
+  path: '/taxonomy/term/{taxonomy_term}/mega-menu'
+  defaults:
+    _controller: '\Drupal\cgov_site_section\Controller\CgovMegaMenuController::getMegaMenu'
+    _title: 'mega menu route'
+  methods: [GET]
+  requirements:
+    _permission: 'access content'
+    taxonomy_term: \d+
+  options:
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term
+        bundle:
+          - cgov_site_sections
