@@ -284,9 +284,10 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
     $this->assertEquals($build['#app_module_info']['path'], $app_module_path ?? '/', "Path is correct.");
     $this->assertEquals($build['#app_module_id'], $app_module_id, "App module id is set");
     $this->assertEquals($build['#app_route_id'], $app_route_id, "App module route id is set");
-    // The TRUE option at the end tells the assertion to ignore order.
-    $this->assertEquals($build['#cache']['contexts'], $contexts, "Cache contexts are equal", 0.0, 10, TRUE);
-    $this->assertEqualsCanonicalizing($build['#cache']['tags'], $tags, "Cache tags are equal", 0.0, 10, TRUE);
+
+    // We don't care what order these two arrays in.
+    $this->assertEqualsCanonicalizing($build['#cache']['contexts'], $contexts, "Cache contexts are equal");
+    $this->assertEqualsCanonicalizing($build['#cache']['tags'], $tags, "Cache tags are equal");
     $this->assertEquals($build['#cache']['max-age'], $max_age);
     $this->assertNotNull($build['#pre_render'], "Pre-render callback is not null");
     $this->assertEquals($build['#theme'], "app_module", "Theme is set");
