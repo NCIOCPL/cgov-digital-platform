@@ -516,3 +516,51 @@
   field_date_display_mode:
     - value: 'posted'
     - value: 'updated'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Breadcrumb tests ':;<>?`~!@#$%^&*()_+/|"
+  field_page_description:
+    value: "Breadcrumb Test Description"
+  field_card_title:
+    value: "Breadcrumb Test Title"
+  field_browser_title:
+    value: "Breadcrumb Test Browser Title"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Lead Placeholder'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "breadcrumb-test"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'

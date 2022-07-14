@@ -4,6 +4,7 @@ import './ncids-common-legacy.scss';
 // NCIDS Imports
 import usaBannerInit from '../../lib/components/usa-banner';
 import usaSidenavInit from '../../lib/components/usa-sidenav';
+import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import usaFooterInit from '../../lib/components/usa-footer';
 
 /* *********************************************************************
@@ -102,8 +103,12 @@ const onDOMContentLoaded = () => {
 	/* NCIDS Event Handlers will come first. */
 	// Initialize the Banner/Language toggle.
 	usaBannerInit();
+
 	// Initialize the Sidenav
 	usaSidenavInit();
+
+	// Init Breadcrumbs
+	usaBreadcrumbInit();
 
 	// Init the footer
 	usaFooterInit();
