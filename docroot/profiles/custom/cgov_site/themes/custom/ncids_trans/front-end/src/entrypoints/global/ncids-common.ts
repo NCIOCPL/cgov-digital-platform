@@ -4,6 +4,7 @@ import './ncids-common-legacy.scss';
 // NCIDS Imports
 import usaBannerInit from '../../lib/components/usa-banner';
 import usaSidenavInit from '../../lib/components/usa-sidenav';
+import usaFooterInit from '../../lib/components/usa-footer';
 
 /* *********************************************************************
  * There is a LOT of legacy junk going on in here. We do want this to be
@@ -103,6 +104,9 @@ const onDOMContentLoaded = () => {
 	usaBannerInit();
 	// Initialize the Sidenav
 	usaSidenavInit();
+
+	// Init the footer
+	usaFooterInit();
 
 	/*** BEGIN Exit Disclaimer
 	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
