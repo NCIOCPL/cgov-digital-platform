@@ -1,4 +1,3 @@
-{% set title = drupal_token('current-page:title') %}
 {% if content.breadcrumbs|length > 0 %}
   <nav class="usa-breadcrumb usa-breadcrumb--wrap" aria-label="{{'Breadcrumbs'|t}}">
     <ol class="usa-breadcrumb__list">
@@ -9,9 +8,9 @@
           </a>
         </li>
       {% endfor %}
-      {% if title|default %}
+      {% if content.currentPageTitle|default %}
         <li class="usa-breadcrumb__list-item usa-current" aria-current="page">
-          <span>{{title}}</span>
+          <span>{{content.currentPageTitle}}</span>
         </li>
       {% endif %}
     </ol>

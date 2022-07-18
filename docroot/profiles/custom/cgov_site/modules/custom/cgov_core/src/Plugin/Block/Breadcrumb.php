@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Utility\Token;
+use Drupal\Core\Render\Markup;
 
 /**
  * Provides a 'Breadcrumb' block.
@@ -30,7 +32,14 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
   protected $navMgr;
 
   /**
-   * Constructs an LanguageBar object.
+   * Drupal Token Service.
+   *
+   * @var \Drupal\Core\Utility\Token
+   */
+  protected $tokenSvc;
+
+  /**
+   * Constructs an Breadcrumb object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -40,15 +49,19 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin implementation definition.
    * @param \Drupal\cgov_core\Services\CgovNavigationManager $navigationManager
    *   Cgov navigation service.
+   * @param \Drupal\Core\Utility\Token $tokenSvc
+   *   Drupal token service.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    CgovNavigationManager $navigationManager
+    CgovNavigationManager $navigationManager,
+    Token $tokenSvc
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
+    $this->tokenSvc = $tokenSvc;
   }
 
   /**
@@ -59,7 +72,8 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('cgov_core.cgov_navigation_manager')
+      $container->get('cgov_core.cgov_navigation_manager'),
+      $container->get('token')
     );
   }
 
@@ -185,9 +199,11 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     $breadcrumbs = $this->getBreadcrumbs();
+    $currentPageTitle = $this->tokenSvc->replace("[current-page:title]", [], []);
     $build = [
       '#type' => 'block',
       'breadcrumbs' => $breadcrumbs,
+      'currentPageTitle' => Markup::create($currentPageTitle),
     ];
     return $build;
   }
