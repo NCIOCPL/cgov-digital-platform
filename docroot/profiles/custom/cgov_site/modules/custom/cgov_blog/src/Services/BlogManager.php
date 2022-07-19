@@ -304,7 +304,9 @@ class BlogManager implements BlogManagerInterface {
    * Get Blog Series topic based on field_pretty_url.
    */
   public function getSeriesTopicByUrl() {
-    // Get collection of associated topics and the filter from the URL.
+
+    // Retrieve the collection of associated topics and filter to match
+    // against the topic query string parameter.
     $rtn = NULL;
     $filter = $this->requestStack->getCurrentRequest()->query->get('topic');
     $topics = $this->getSeriesTopics();
@@ -391,24 +393,24 @@ class BlogManager implements BlogManagerInterface {
    *   Month value.
    * @param string $year
    *   Year value.
-   * @param string $topic
-   *   Topic value.
+   * @param bool $includeTopic
+   *   Should the title include the topic?
    * @param object $node
    *   Node object.
    *
    * @return string
    *   Blog series title.
    */
-  public function getBlogSeriesTitle($month, $year, $topic, $node) {
+  public function getBlogSeriesTitle($month, $year, $includeTopic, $node) {
 
     $title = "";
     // If url has topic or year add them to the title.
-    if ($topic or $year) {
+    if ($includeTopic or $year) {
       if ($year) {
         $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
         $title .= ' ' . $year . ' - ';
       }
-      if ($topic) {
+      if ($includeTopic) {
         $topic_text = $this->getSeriesTopicByUrl();
         $topic_text = (!empty($topic_text) ? $topic_text->getName() : '');
         $title .= $topic_text . ' - ';

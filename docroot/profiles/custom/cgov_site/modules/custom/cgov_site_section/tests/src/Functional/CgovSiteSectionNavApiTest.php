@@ -6,6 +6,8 @@ use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\node\Entity\Node;
+use Drupal\block_content\Entity\BlockContent;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Test the cgov site section nav api.
@@ -44,9 +46,20 @@ class CgovSiteSectionNavApiTest extends BrowserTestBase {
   }
 
   /**
+   * The function that the test runner will call.
+   *
+   * This is done this way so that there is only 1 install of Drupal to run
+   * the tests in this file.
+   */
+  public function testApis() {
+    $this->trySiteNavApi();
+    $this->tryMegamenuApi();
+  }
+
+  /**
    * Tests for a the section nav json api.
    */
-  public function testSiteNavApi() {
+  public function trySiteNavApi() {
     // Create published landing page node.
     $published_node = Node::create([
       'type' => 'cgov_article',
@@ -136,6 +149,66 @@ class CgovSiteSectionNavApiTest extends BrowserTestBase {
     // Verify the section nav json response status code.
     $this->drupalGet('taxonomy/term/' . $term_3_id . '/mobile-nav');
     $this->assertSession()->statusCodeEquals(400);
+  }
+
+  /**
+   * Tests for a the megamenu json api.
+   */
+  public function tryMegamenuApi() {
+    // Loading a YAML file or a YAML string.
+    $yaml_file = \Drupal::service('extension.list.module')->getPath('cgov_site_section') . '/tests/JsonDataFieldTestData.yml';
+    $yaml_file_data = file_get_contents($yaml_file);
+    $yaml = new Parser();
+    $yaml_data = $yaml->parse($yaml_file_data);
+
+    // Create published megamenu block.
+    // Custom block ID must be a number that is not in the database.
+    $max_id = (int) \Drupal::entityQueryAggregate('block_content')
+      ->accessCheck(FALSE)
+      ->aggregate('id', 'max')
+      ->execute()[0]['id_max'];
+    $test_id = $max_id + mt_rand(1000, 1000000);
+    $info = $this->randomMachineName();
+    $block_array = [
+      'info' => $info,
+      'field_yaml_content' => ['value' => $yaml_data],
+      'type' => 'ncids_mega_menu_content',
+      'id' => $test_id,
+    ];
+    $published_block = BlockContent::create($block_array);
+    $published_block->enforceIsNew(TRUE);
+    $published_block->save();
+    $published_block_id = $published_block->id();
+
+    // Create site section term 1.
+    $term_1 = Term::create([
+      'name' => $this->randomMachineName(),
+      'field_ncids_mega_menu_contents' => [
+        'target_id' => $published_block_id,
+      ],
+      'vid' => 'cgov_site_sections',
+      'status' => 1,
+    ]);
+    $term_1->save();
+    $term_1_id = $term_1->id();
+
+    // Create site section term 2.
+    $term_2 = Term::create([
+      'name' => $this->randomMachineName(),
+      'vid' => 'cgov_site_sections',
+      'status' => 1,
+    ]);
+    $term_2->save();
+    $term_2_id = $term_2->id();
+
+    // Assert the megamenu json api URL.
+    // Verify the megamenu json response status code.
+    $this->drupalGet('taxonomy/term/' . $term_1_id . '/mega-menu');
+    $this->assertSession()->statusCodeEquals(200);
+
+    // Verify the megamenu json response status code.
+    $this->drupalGet('taxonomy/term/' . $term_2_id . '/mega-menu');
+    $this->assertSession()->statusCodeEquals(404);
   }
 
 }
