@@ -62,11 +62,8 @@ ul li ul {
 // appropriate scss file.
 @import "../../legacy/styles/jqueryui_overrides";
 
-// The following used to be in the jquery_override, and was marked as being
-// only for blogs on the blog series page. Now the archive links are on blog
-// posts as well, so it probably applies there as well. This should get moved
-// out of this file though!
-// TODO: Move the following to the appropriate Blog entry points.
+// The following used to be in the jquery_override, it was wrapping blocks, but
+// it looks like it is the CSS for the accordions on desktop.
 .desktop {
   clear: both;
 
@@ -82,37 +79,6 @@ ul li ul {
       position: absolute;
       top: 50%;
       margin-top: -0.5em;
-    }
-  }
-
-  #blog-archive-accordion {
-    #archive,
-    .ui-accordion .ui-accordion-header.ui-state-active,
-    .ui-state-default,
-    .ui-widget-content .ui-state-default,
-    .ui-widget-header .ui-state-default {
-      background-image: none;
-      background-color: white;
-    }
-    ul li {
-      margin-top: 5px;
-      margin-bottom: 5px;
-      font-family: $montserrat-font-stack;
-    }
-
-    .ui-accordion-header {
-      .toggle {
-        color: #454545;
-        background-color: white;
-      }
-      &.ui-state-active .toggle {
-        color: $dteal;
-      }
-    }
-    @include bp(medium-down) {
-      .ui-accordion .ui-accordion-header {
-        margin-right: 0 !important;
-      }
     }
   }
 }

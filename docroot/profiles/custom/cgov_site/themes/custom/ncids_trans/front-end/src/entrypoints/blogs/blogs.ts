@@ -1,26 +1,36 @@
-import './blog-series.scss';
-import $ from 'jquery';
+import './blogs.scss';
+import './blogs-legacy.scss';
+
+import * as $ from 'jquery';
 import { doAccordion } from 'Core/libraries/accordion/accordion';
+
+// Cheating here and just copying in the jqueryui type since TS is not pulling it in.
+interface AccordionUIParams {
+	newHeader: JQuery;
+	oldHeader: JQuery;
+	newPanel: JQuery;
+	oldPanel: JQuery;
+}
 
 const initializeAccordions = () => {
 	// Make accordions work
-	var $target = $('#blog-archive-accordion');
+	const $target = $('#blog-archive-accordion');
 	doAccordion($target, {
-		header: 'h3',
+		header: 'h2',
 		//Override the beforeActivate just to add Analytics tracking for blog archive accordion
-		beforeActivate: function (event, ui) {
-			var icons = $(this).accordion('option', 'icons');
+		beforeActivate: function (event: unknown, ui: AccordionUIParams) {
+			const icons = $(this).accordion('option', 'icons');
 			// The accordion believes a panel is being opened
-			var currHeader;
+			let currHeader;
 			if (ui.newHeader[0]) {
 				currHeader = ui.newHeader;
 				// The accordion believes a panel is being closed
 			} else {
 				currHeader = ui.oldHeader;
 			}
-			var currContent = currHeader.next('.ui-accordion-content');
+			const currContent = currHeader.next('.ui-accordion-content');
 			// Since we've changed the default behavior, this detects the actual status
-			var isPanelSelected = currHeader.attr('aria-selected') == 'true';
+			const isPanelSelected = currHeader.attr('aria-selected') == 'true';
 
 			// Toggle the panel's header
 			currHeader
@@ -57,17 +67,17 @@ const initializeAccordions = () => {
 	});
 
 	doAccordion($('#blog-archive-accordion-year'), {
-		header: 'h4',
+		header: 'h3',
 	});
 
 	// This little blurb is searching for the parent accordion elements of the currently selected archive link and expanding the
 	// accordion to that element. This keeps the accordion collapsed on the elements not currently being viewed.
-	var selectedArchiveLink = $('#blog-archive-accordion')
+	const selectedArchiveLink = $('#blog-archive-accordion')
 		.find("a[href='" + location.pathname + location.search + "']")
 		.parent();
 	if (selectedArchiveLink.length > 0) {
 		selectedArchiveLink.addClass('current-archive-link');
-		var indexOfLink = selectedArchiveLink.parent().prev().index() / 2;
+		const indexOfLink = selectedArchiveLink.parent().prev().index() / 2;
 		$('#blog-archive-accordion-year').accordion(
 			'option',
 			'active',
