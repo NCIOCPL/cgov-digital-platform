@@ -30,14 +30,7 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/cancer-center/cancer-center.ts'
 	),
-	'blog-post': path.resolve(
-		__dirname,
-		'src/entrypoints/blog-post/blog-post.js'
-	),
-	'blog-series': path.resolve(
-		__dirname,
-		'src/entrypoints/blog-series/blog-series.js'
-	),
+	blogs: path.resolve(__dirname, 'src/entrypoints/blogs/blogs.ts'),
 	biography: path.resolve(__dirname, 'src/entrypoints/biography/biography.ts'),
 	cthp: path.resolve(__dirname, 'src/entrypoints/cthp/cthp.ts'),
 	event: path.resolve(__dirname, 'src/entrypoints/event/event.ts'),

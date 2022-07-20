@@ -1,8 +1,34 @@
-@import "~Core/styles/variables";
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+@import "../../legacy/styles/variables";
 @import "~Core/styles/mixins";
-@import "~Core/styles/breakpoint-mixins";
-@import "~Core/styles/blogs";
+@import '../../legacy/styles/breakpoint-mixins';
+
+// The following is required so that we can get our heading styles for the blog
+// archive.
+@import "~Core/styles/nci-foundation_mixins";
+@import "../../legacy/styles/nci-foundation_variables";
+$include-html-classes: false;
+$include-html-type-classes: false;
+@import "~Core/styles/vendor/foundation/scss/foundation/components/global";
+@import "../../legacy/styles/foundation/components/type";
+
+@import "../../legacy/styles/blogs";
 @import "~Core/styles/equalheights";
+
+.list.dynamic {
+  .title-and-desc {
+    // I wish we were using BEM
+    a.title {
+      font-size: 1.5em;
+    }
+    a {
+      font-size: 16px;
+    }
+  }
+}
 
 .card {
   padding: .9375em;
@@ -46,11 +72,7 @@
   .image-hover {
 		position: relative;
 	}
-  
-}
 
-#main {
-  padding-left: 1.6em !important;
 }
 
 #cgov-blog-post-pagination {
@@ -66,28 +88,28 @@
       &.align-right {
         margin: 0 0 2.5em 0;
       }
-  
+
     &.align-left {
       margin-right: 2.5em;
     }
-  
+
     &.align-right {
       margin-left: 2.5em;
     }
-  
+
     &.align-center {
       margin: 2.5em auto;
     }
-  
+
     figure.image-medium {
       background-color: transparent;
     }
-  } 
+  }
 }
 
 @include bp(medium-up) {
 	// set width of blog intro text for tablet and desktop, depending on size of image
-	.embedded-entity[data-entity-embed-display*="_medium"] + .blog-intro-text { 
+	.embedded-entity[data-entity-embed-display*="_medium"] + .blog-intro-text {
 		width: 60%;
 	}
 	.embedded-entity[data-entity-embed-display*="_small"] + .blog-intro-text {
@@ -109,9 +131,6 @@
 	}
 	.row .gutter:first-child {
 		margin-left: 0;
-  }
-  #PageOptionsControl1 {
-    right: calc(-25% - 3.125em);
   }
   .contentzone:last-child {
     width:100%;
