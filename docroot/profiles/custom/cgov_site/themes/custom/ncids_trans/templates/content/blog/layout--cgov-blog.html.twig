@@ -1,12 +1,16 @@
-
 <!-- ********************************* BEGIN Main Blog Page Layout Region ********************************** -->
-<div class="medium-9 columns contentzone" id="main" tabindex="0" role="main">
-  {{ content.first }}
+<div class="cgdpl desktop:grid-col-9">
+  <main id="main-content" class="contentzone">
+    {{ content.first }}
+  </main>
+  {# Other page options probably goes here -- cgdpl may conflict. #}
 </div>
 <!-- ********************************* END Main Blog Page Layout Region ********************************** -->
 
 <!-- ********************************* BEGIN Blog Page Right Rail ********************************** -->
-<div id="nvcgSlListBlogRTRail" class="medium-3 columns right right-rail">
-  {{ content.second }}
+<div class="cgdpl desktop:grid-col-3">
+  <div id="nvcgSlListBlogRTRail" class="right-rail">
+    {{ content.second }}
+  </div>
 </div>
 <!-- ********************************* END Blog Page Right Rail ********************************** -->
