@@ -1,0 +1,368 @@
+/* Someone found !important and really liked it. So we need to make an
+   override of this file for the redesign blogs. */
+
+// The following used to be in the jquery_override, and was marked as being
+// only for blogs on the blog series page. Now the archive links are on blog
+// posts as well, so it probably applies there as well.
+.desktop {
+	#blog-archive-accordion {
+
+		#archive,
+		.ui-accordion .ui-accordion-header.ui-state-active,
+		.ui-state-default,
+		.ui-widget-content .ui-state-default,
+		.ui-widget-header .ui-state-default {
+			background-image: none;
+			background-color: white;
+		}
+		ul li {
+			margin-top: 5px;
+			margin-bottom: 5px;
+			font-family: $montserrat-font-stack;
+		}
+
+		.ui-accordion-header {
+
+			.toggle {
+				color: color($theme-text-color);
+				background-color: white;
+			}
+			&.ui-state-active .toggle {
+				color: $dteal;
+			}
+		}
+		@include bp(medium-down) {
+			.ui-accordion .ui-accordion-header {
+				margin-right: 0 !important;
+			}
+		}
+	}
+}
+
+/********** BEGIN Blogs Styles ******************************************/
+/*Begin Blog Subscribe Button CSS*/
+.subscribeRSS {
+	margin-bottom: 10px;
+}
+
+.subscribeRSS a.blogRSS span {
+	// padding-left: 5px;
+	display: inline-block;
+}
+/*End Blog Subscribe Button CSS*/
+
+// blog comment policy
+.blog-comment-policy {
+	display: none;
+	// made visible by JavaScript if an element matching `#cgvCommentsSl` exists (i.e., if comments are enabled)
+	// @see all.js
+}
+
+/*Begin Blog Content CSS*/
+.blog-post-publishing-info {
+	font-size: 12px;
+}
+p.blog-post-publishing-info {
+	margin-top: 0;
+}
+.blog.body-banner:before {
+	@include call-to-action-corner();
+	content: "Blog";
+}
+.blog-post {
+	padding-top: 16px;
+
+	&:first-child {
+		border-top: none;
+		margin-top: 0;
+		padding-top: 0;
+	}
+	h3 {
+		margin: 0;
+		width: 70%;
+		float: left;
+	}
+	h3.no-comments {
+		width: 100%;
+	}
+	.post-info .post-title > a {
+		display: block;
+		float: right;
+
+		// @TODO: Remove once IntenseDebate has been correctly implemented to replace Disqus
+		.blog-list & {
+			display: none;
+		}
+	}
+	// this was done to override the padding that foundation rows get. The requirement was no left padding for the images on the blog results page, ie /news-events/cancer-currents-blog
+	.post-thumb {
+		padding-left: 0;
+	}
+	.post-thumb img {
+		max-width: 100%;
+	}
+}
+
+.cgvblogseries {
+	.list {
+		a.title {
+			font-size: 1.5em;
+		}
+	}
+}
+
+@include bp(small) {
+	.post-thumb {
+		display: none;
+	}
+}
+
+.blog-list {
+	margin-top: 24px;
+}
+.blog-pager {
+	border-top: 1px solid #bdbdbd;
+	padding-top: 24px;
+
+	a {
+		display: block;
+
+		&.newer {
+			float: right;
+		}
+		&.older {
+			float: left;
+		}
+	}
+}
+.post-title {
+	> h3 {
+		font-weight: normal;
+	}
+	a {
+		text-decoration: none;
+
+		&:hover, &:focus {
+			text-decoration: none;
+			color: $lcranberry;
+		}
+	}
+}
+// comment-count is a span element. This style is unused. The icon is not even on the server
+//a.comment-count {
+//	background: url($icons + "comment-icon.png") no-repeat;
+//	padding-left: 26px;
+//	height: 22px;
+//}
+.date-author {
+	padding-top: 10px;
+}
+.blog-post-older {
+	float: left;
+	width: 50%;
+    padding-right: 0.3em;
+}
+.blog-post-newer {
+	width: 50%;
+	text-align: right;
+	float: right;
+    padding-left: 0.3em;
+}
+.blog-post-older p,
+.blog-post-newer p {
+	margin-top: 0;
+}
+
+.cgvblogpost {
+	figure.image-right-medium {
+		margin-left: 1em;
+		padding-left: 2.5em;
+		background-color: transparent;
+	}
+}
+
+.blog-intro-text {
+	width: 100%;
+	margin-bottom: 1em;
+	padding: 1em 1.25em;
+	border-left: 3px solid $purple;
+	background-color: $white03;
+	font-size: 0.8em;
+	font-family: $montserrat-font-stack;
+
+	p {
+		margin: 0;
+		padding-bottom: 1em;
+
+		&:last-child {
+			padding: 0;
+		}
+	}
+}
+
+.right-rail {
+	// Mobile and tablet get spacing.
+	margin-top: 1.25em;
+	padding-left: 0;
+
+	@include at-media(desktop) {
+		// Desktop does not get spacing.
+		margin-top: 0;
+	}
+
+	.slot-item {
+		// shadowing around each box in the right rail
+		// Mobile first.
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+		border-radius: 1px;
+		padding: 0.25em 1em 0.1em 1em;
+		margin-bottom: 1em;
+
+		// USWDS breakpoint for desktop is 1024. Legacy bp() mixin is 1025.
+		// Since we use USWDS grid for the page layout, the page was not
+		// reflowing correctly for `bp(medium)` which is basically between
+		// 641 and 1024. This should be 640 to 1023. The next 2 media queries
+		// are from USWDS and allow the page to display correctly.
+		@include at-media(tablet) {
+			float: left;
+			width: 30%;
+			margin: 10px;
+		}
+
+		@include at-media(desktop) {
+			float: none;
+			width: 100%;
+			margin-bottom: 1em;
+		}
+
+		.list h2 {
+			margin: .5em 0;
+			font-size: 1.125em;
+			line-height: 1.215em;
+		}
+	}
+
+	.managed.list {
+		margin-bottom: 0.35em;
+
+		ul > li {
+			margin: 0;
+			padding: 0.15em 0;
+		}
+
+		p.title {
+			margin: 0.5em 0;
+		}
+
+		a.title {
+			font-size: 1em;
+		}
+
+		.byline {
+			margin-bottom: 0.4em;
+			//padding-bottom: 0.5em;
+
+			p {
+				margin: 0;
+				font-size: 0.85em;
+			}
+		}
+
+		.current-categories-link {
+			// on-state styling for categories list
+			border-left: 3px solid #82368d;
+    		background-color: $white03;
+			margin-left: -1.1em;
+			margin-right: -1.1em;
+			padding: 0.15em 1em;
+		}
+	}
+}
+
+@include bp(medium-up) {
+	// set width of blog intro text for tablet and desktop, depending on size of image
+	figure.image-right-medium + .blog-intro-text {
+		width: 60%;
+	}
+	figure.image-right-small + .blog-intro-text {
+		width: 75%;
+	}
+}
+
+@include bp(large-up) {
+	// REDESIGN NOTE: So on the old site the section nav was on pages and
+	// only showed up on mobile. In the redesign we will not have it on
+	// the page.
+  .contentzone {
+    // if the right rail is missing, set the contentzone width to 100
+    &:last-child {
+      width:100%;
+    }
+  }
+}
+
+@include bp(small) {
+	// remove extra padding (used for intro text on desktop/tablet only)
+	.cgvblogpost {
+		figure.image-right-medium {
+			padding-left: 0;
+			margin-left: 0;
+		}
+	}
+}
+
+#blog-cards {
+	.columns {
+		// overwrite foundation default behavior of floating last column to the right, WCMSFEQ-506
+		float: left !important;
+	}
+}
+
+@include bp(medium-down) {
+	// hide blog feature cards on tablet/mobile
+	#blog-cards {
+		display: none;
+	}
+}
+
+// @include bp(medium) {
+// 	#nvcgSlListBlogRTRail {
+// 		.block-region-second {
+// 			> .slot-item {
+// 				float: left;
+// 				width: 30%;
+// 				margin: 10px;
+// 			}
+// 		}
+// 	}
+// }
+
+.current-archive-link{
+	color: $asphalt !important;
+	border-left: 3px solid #82368d;
+    margin-left: -13px;
+    padding-left: 10px;
+    background-color: $white03;
+}
+
+.current-archive-link a {
+     pointer-events: none;
+     color: $asphalt;
+}
+
+.blog-feature {
+	margin-bottom: 1em;
+
+	h3 {
+		font-weight: normal;
+		color: $color-link;
+		font-size: 0.95em;
+		line-height: 1.272;
+	}
+}
+
+.card.blog-feature {
+	border: 1px solid $yetAnotherGrey;
+	background-color: $white;
+	box-shadow: 0 0 9px 1px rgba($black,.15);
+}
