@@ -1,0 +1,3 @@
+
+Closes #{issue}
+Closes #{issue}

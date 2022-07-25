@@ -1,0 +1,34 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  pull_request:
+    #branches: [ "main" ]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+
+  # use commitlint to verify git commit messages
+  # settings are in commitlint.config.js        
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v5
+
+  # custom script to verify pull request body
+  check_pr_text:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/github-script@v6
+          with:
+            script: |
+              const prBody = context.payload.pull_request.body
+              //console.log(prBody)
+              const issueRegex = /(?:Close|Closes|Closed|Fix|Fixes|Fixed|Resolve|Resolves|Resolved) \#\d+/;
+              if (prBody.match(issueRegex) === null) {
+                core.setFailed('Please include "Closes #issue" in your pull request body.')
+              }
