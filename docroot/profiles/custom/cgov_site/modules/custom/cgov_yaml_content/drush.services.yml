@@ -1,0 +1,6 @@
+services:
+  cgov_yaml_content.commands:
+    class: \Drupal\cgov_yaml_content\Commands\YamlContentCommands
+    arguments: ['@config.factory', '@uuid']
+    tags:
+      - { name: drush.command }
