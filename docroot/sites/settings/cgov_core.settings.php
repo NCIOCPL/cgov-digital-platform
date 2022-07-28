@@ -73,3 +73,10 @@ else {
 // Outlook doesn't adhere to standards, so accommodating and using
 // CRLF line-endings.
 $settings['mail_line_endings'] = "\r\n";
+
+// Define unwanted routes to disable and show access denied.
+$settings['disallow_routes'] = [
+  'user.reset.login',
+  'user.reset',
+  'user.reset.form',
+];

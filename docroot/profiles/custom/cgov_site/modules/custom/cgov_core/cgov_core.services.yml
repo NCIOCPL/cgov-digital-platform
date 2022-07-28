@@ -62,3 +62,7 @@ services:
     arguments: ['@current_user', '@config.factory', '@entity_type.manager']
     tags:
       - { name: theme_negotiator, priority: 600 }
+  cgov_core.disallowed_route_subscriber:
+    class: Drupal\cgov_core\Routing\DisallowedRouteSubscriber
+    tags:
+      - { name: event_subscriber }
