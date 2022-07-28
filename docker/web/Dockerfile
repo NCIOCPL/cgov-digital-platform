@@ -12,6 +12,18 @@ FROM ubuntu:bionic
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get update
 
+# Install curl so we can get the SSL certificate
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get install -yq \
+  curl
+
+# Get the NIH Root certificates and install them so we work on VPN
+# Download from https://ocio.nih.gov/Smartcard/Pages/PKI_chain.aspx
+RUN mkdir /usr/local/share/ca-certificates/nih \
+  && curl -o /usr/local/share/ca-certificates/nih/NIH-DPKI-ROOT-1A-base64.crt https://ocio.nih.gov/Smartcard/Documents/Certificates/NIH-DPKI-ROOT-1A-base64.cer \
+  && curl -o /usr/local/share/ca-certificates/nih/NIH-DPKI-CA-1A-base64.crt https://ocio.nih.gov/Smartcard/Documents/Certificates/NIH-DPKI-CA-1A-base64.cer \
+  && update-ca-certificates
+
 # Install add-apt-repository
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get install -yq software-properties-common
@@ -47,7 +59,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php7.4-xdebug \
   php7.4-xml \
   mysql-client-5.7 \
-  curl \
   git \
   imagemagick \
   vim \
