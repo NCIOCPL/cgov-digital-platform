@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountProxy;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -120,7 +121,7 @@ class ICalendarController extends ControllerBase {
     $filename = 'cal-' . $nid . '.ics';
     $uri = 'public://' . $filename;
     $content = $vCalendar->render();
-    $file = file_save_data($content, $uri, EXISTS_REPLACE);
+    $file = file_save_data($content, $uri, FileSystemInterface::EXISTS_REPLACE);
     if (empty($file)) {
       return new Response(
         'iCalendar Error, please contact the System Administrator'
