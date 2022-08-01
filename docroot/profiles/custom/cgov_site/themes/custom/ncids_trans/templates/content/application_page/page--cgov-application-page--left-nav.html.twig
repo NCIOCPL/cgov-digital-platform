@@ -19,7 +19,8 @@
   {# This is not a NCIDS class. It should be in legacy. #}
   {# Killed general-page-body-container #}
   <div class="grid-row grid-gap">
-    <div class="cgdpl grid-col-12">
+    {{ page.ncids_sidenav }}
+    <div class="cgdpl {% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
       {# This content div is to support a lot of legacy JS #}
       <div id="content" class="{{ page_type }}">
         <main class="contentzone has-section-nav" id="main-content">

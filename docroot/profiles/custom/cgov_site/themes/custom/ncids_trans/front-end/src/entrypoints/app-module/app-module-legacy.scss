@@ -1,0 +1,117 @@
+// fixed spacing issues with the sound, pause, and resume button
+#NCI-glossary-app-root,
+#NCI-sws-app-root {
+	.btnAudio {
+		&:before {
+			width: 30px;
+			height: 30px;
+		}
+		&.paused,
+		&.playing {
+			&:before {
+				width: 20px;
+				height: 20px;
+			}
+		}
+		padding: 0;
+		height: initial;
+		width: 30px;
+	}
+	.pronunciation {
+		.pronunciation__term {
+			margin-right: 5px;
+		}
+
+		.pronunciation__key {
+			margin-left: 10px;
+		}
+	}
+
+	.dictionary-list-container {
+		.dictionary-list{
+			dt {
+				margin: 0;
+			}
+			a {
+				margin-right: 5px;
+			}
+
+			.pronunciation {
+				.pronunciation__key {
+					margin-left: 5px;
+				}
+			}
+		}
+
+		// Setting to 24px inline with line-height
+		.btnAudio {
+			&:before {
+				width: 24px;
+				height: 24px;
+			}
+			&.paused,
+			&.playing {
+				&:before {
+					width: 14px;
+					height: 14px;
+				}
+			}
+			padding: 0;
+			height: initial;
+			width: 30px;
+		}
+	}
+
+
+}
+
+// reduces padding between the "locations" label and descriptive text
+// in the trial listing app root
+#NCI-trial-listing-app-root {
+	.ct-list-item__body {
+		margin: 0.25em 0;
+	}
+}
+
+// increases spacing between the numbers for page navigation
+#NCI-trial-listing-app-root,
+#NCI-sws-app-root {
+	.pager__navigation li {
+		margin-left: 0;
+	}
+}
+
+#NCI-sws-app-root {
+	.results__feature--bestbet--definition {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	// increases spacing between number and arrows for page selector
+	.pager__select {
+		margin: 0 16px 0 16px;
+		padding: 0.5em 2em 0.5em 0.75em;
+	}
+}
+
+// fixed spacing issue with toggle button in CTS Advanced search field
+#NCI-CTS-root {
+	.cts-toggle {
+		padding-right: 3px;
+	}
+
+	.cts-toggle__label {
+		height: 32px;
+	}
+}
+
+#NCI-dd-app-root {
+	//Override _mainContent.scss for only this use case
+	.search-results-alias-list {
+		li {
+			margin: 0 16px 0 0;
+			&::before {
+				display: none;
+			}
+		}
+	}
+}
