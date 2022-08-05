@@ -1,0 +1,68 @@
+# NCI-Supported Clinical Trials for Coronavirus manual listing page
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "NCI-Supported Clinical Trials for Coronavirus"
+  field_page_description:
+    value: "List of ongoing clinical trials for coronavirus disease 2019 (COVID-19) supported by the National Cancer Institute. Some trials may be specifically for people with cancer who also have coronavirus disease."
+  field_browser_title:
+    value: "NCI-Supported Clinical Trials for Coronavirus"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/about-cancer/treatment/clinical-trials"
+  field_pretty_url:
+    value: 'covid-19'
+  field_application_module:
+    - target_id: cgov_js_only_app
+      data:
+        drupalConfig:
+          appName: "manual-trial-listing-app-covid-19"
+          rootId: "NCI-trial-listing-app-root"
+          initFnName: "window.ClinicalTrialsListingApp"
+          appCssUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/js/main.js"
+          removeHeadElements: 
+           - "canonical_url"
+           - "robots"
+           - "title_tag"
+           - "og_title"
+           - "og_url"
+           - "og_description"
+           - "description"
+          validAppPaths: []
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          browserTitle: "NCI-Supported Clinical Trials for Coronavirus"
+          ctsApiEndpoint: "@@LITERAL@@window.CDEConfig.ctsConfig.apiServer"
+          itemsPerPage: 25
+          introText: "<p><a class=\"definition\" data-glossary-id=\"CDR0000045961\" href=\"\/publications\/dictionaries\/cancer-terms\/def\/clinical-trial\">Clinical trials<\/a> are research studies that involve people. Through clinical trials, doctors find new ways to improve treatments and the <a class=\"definition\" data-glossary-id=\"CDR0000045417\" href=\"\/publications\/dictionaries\/cancer-terms\/def\/quality-of-life\">quality of life<\/a> for people with disease.<\/p> <p>NCI supports clinical trials to test promising treatments for patients with coronavirus disease 2019 (COVID-19) and to learn more about the disease's effects on the body. Some of the trials are specifically for patients with cancer. Your doctor can help you decide if a trial is right for you.<\/p>"
+          metaDescription: "List of ongoing clinical trials for coronavirus disease 2019 (COVID-19) supported by the National Cancer Institute. Some trials may be specifically for people with cancer who also have coronavirus disease."
+          noTrialsHtml: "<p><strong>There are currently no available trials.</strong></p>"
+          pageTitle: "NCI-Supported Clinical Trials for Coronavirus"
+          detailedViewPagePrettyUrlFormatter: "/clinicaltrials/{{nci_id}}"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:field_browser_title:value]"
+          trialListingPageType: "Manual"
+          requestFilters: {
+            diseases.nci_thesaurus_concept_id: [
+                 "C171133" 
+            ]
+          }
+  field_date_posted:
+    value: "2017-06-13"
+  field_date_reviewed:
+    value: "2017-06-13"
+  field_date_updated:
+    value: "2017-06-13"
+  field_app_module_page_template:
+    value: left_nav
