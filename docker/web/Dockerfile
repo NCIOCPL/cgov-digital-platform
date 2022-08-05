@@ -60,9 +60,13 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php7.4-xml \
   mysql-client-5.7 \
   git \
+  clamav \
   imagemagick \
   vim \
   zip
+
+# Update ClamAV
+RUN freshclam
 
 # Install google chrome (for some reason, tacking on gnupg to previous list failed).
 # https://github.com/NCIOCPL/cgov-digital-platform/issues/48
