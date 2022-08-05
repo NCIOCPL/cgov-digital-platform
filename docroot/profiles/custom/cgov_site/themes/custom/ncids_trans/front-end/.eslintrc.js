@@ -10,9 +10,21 @@ module.exports = {
 	rules: {},
 	overrides: [
 		{
-			files: ['src/**/*.ts'],
+			files: ['src/**/*.ts', 'src/**/*.tsx'],
 			extends: '@nciocpl/eslint-config-vanilla-ts',
-			rules: {},
+			rules: {
+				'@typescript-eslint/no-unused-vars': [
+					'error',
+					{ varsIgnorePattern: 'CgdpJsx' },
+				],
+			},
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
+				jsxPragma: 'CgdpJsx.createElement',
+				jsxFragmentName: 'CgdpJsx.Fragment',
+			},
 		},
 		{
 			files: ['src/**/*.js'],
