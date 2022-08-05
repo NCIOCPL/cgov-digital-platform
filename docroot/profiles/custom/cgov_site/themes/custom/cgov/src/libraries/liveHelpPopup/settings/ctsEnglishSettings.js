@@ -28,10 +28,10 @@ const ctsEnglishSettings = {
         <h2 class="title">Need Help Finding a Clinical Trial?</h2>
         <div class="content">
             <p>Information Specialists are available to help you search and answer your questions.</p>
-            <form action="https://${server}/app/chat/chat_landing" target="_blank" id="proactive-chat-form" method="POST">
-                <input name="_icf_22" style="display: none !important;" type="text" value="2174">
-                <button id="chat-button" type="submit">Chat Now</button>
-            </form>
+            <div id="chat-button" class="proactive-chat-button">
+                <a href="https://${server}" onclick="window.open('https://${server}','LiveHelp','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); event.preventDefault();"
+                   id="proactive-chat-link">Chat Now</a>
+            </div>
             <div class="live-help"></div>
         </div>
     `,
