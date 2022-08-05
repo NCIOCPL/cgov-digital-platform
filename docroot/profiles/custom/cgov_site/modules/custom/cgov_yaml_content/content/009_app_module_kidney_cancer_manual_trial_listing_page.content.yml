@@ -1,0 +1,69 @@
+# Clinical Trials to Treat Kidney (Renal Cell) Cancer
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "Clinical Trials to Treat Kidney (Renal Cell) Cancer"
+  field_page_description:
+    value: "Find clinical trials to treat kidney cancer."
+  field_browser_title:
+    value: "Clinical Trials to Treat Kidney (Renal Cell) Cancer"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/about-cancer/treatment/clinical-trials"
+  field_pretty_url:
+    value: 'kidney-cancer'
+  field_application_module:
+    - target_id: cgov_js_only_app
+      data:
+        drupalConfig:
+          appName: "manual-trial-listing-app-kidney-cancer"
+          rootId: "NCI-trial-listing-app-root"
+          initFnName: "window.ClinicalTrialsListingApp"
+          appCssUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/css/main.css"
+          appJsUri: "https://react-app-dev.cancer.gov/clinical-trials-listing-app/develop/static/js/main.js"
+          removeHeadElements: 
+           - "canonical_url"
+           - "robots"
+           - "title_tag"
+           - "og_title"
+           - "og_url"
+           - "og_description"
+           - "description"
+          validAppPaths: []
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          browserTitle: "NCI-Supported Clinical Trials for Coronavirus"
+          ctsApiEndpoint: "@@LITERAL@@window.CDEConfig.ctsConfig.apiServer"
+          itemsPerPage: 25
+          metaDescription: "Find clinical trials to treat kidney cancer."
+          noTrialsHtml: "<p><strong>There are currently no available trials.</strong></p>"
+          pageTitle: "Clinical Trials to Treat Kidney (Renal Cell) Cancer"
+          detailedViewPagePrettyUrlFormatter: "/clinicaltrials/{{nci_id}}"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:field_browser_title:value]"
+          trialListingPageType: "Manual"
+          requestFilters: {
+            diseases.nci_thesaurus_concept_id: [
+                "C4033",
+                "C9385"
+            ],
+            primary_purpose: "treatment"
+          }
+  field_date_posted:
+    value: "2017-06-13"
+  field_date_reviewed:
+    value: "2017-06-13"
+  field_date_updated:
+    value: "2017-06-13"
+  field_app_module_page_template:
+    value: left_nav
