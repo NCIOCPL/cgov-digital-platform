@@ -171,9 +171,10 @@ function activatePromptAnalytics () {
 
 
     // Set up analytics handler for "Chat Now" button.
-    var form = $(".ProactiveLiveHelpPrompt #proactive-chat-form");
+    // var form = $(".ProactiveLiveHelpPrompt #proactive-chat-form");
+    var form = $(".ProactiveLiveHelpPrompt #proactive-chat-link");
     if (!!form) {
-        form.on('submit.PLH',function () {
+        form.on('click.PLH',function () {
           //debugger
             if (NCIAnalytics && NCIAnalytics.RecordProactiveChatPromptClick)
                 NCIAnalytics.RecordProactiveChatPromptClick(this);

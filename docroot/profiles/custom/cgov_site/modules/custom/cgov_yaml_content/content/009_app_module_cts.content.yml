@@ -1,30 +1,56 @@
-# Placeholder article for related resource link target in 011_article_coping_self_image
+# Clinical Trials Search app
 
 - entity: "node"
   type: "cgov_application_page"
   langcode: en
   status: 1
   moderation_state:
-    value: 'published'
+    value: "published"
   title: "Find NCI-Supported Clinical Trials"
   field_page_description:
     value: "Find an NCI-supported clinical trial—and learn how to locate other research studies—that may be right for you or a loved one."
   field_browser_title:
     value: "Find NCI-Supported Clinical Trials"
   field_site_section:
-    - '#process':
-        callback: 'reference'
+    - "#process":
+        callback: "reference"
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            computed_path: '/about-cancer/treatment/clinical-trials/search'
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/about-cancer/treatment/clinical-trials/search"
   field_application_module:
-    - target_id: cgov_cts_app
+    - target_id: cgov_js_only_app
+      data:
+       drupalConfig:
+        appName: "clinical-trials-search-app"
+        rootId: "NCI-CTS-root"
+        initFnName: "window.CTSApp"
+        appCssUri: "https://react-app-dev.cancer.gov/clinical-trials-search-app/develop/static/css/main.css"
+        appJsUri: "https://react-app-dev.cancer.gov/clinical-trials-search-app/develop/static/js/main.js"
+        removeHeadElements:
+           - "canonical_url"
+           - "robots"
+           - "title_tag"
+           - "og_title"
+           - "og_url"
+           - "og_description"
+           - "description"
+        validAppPaths: []
+       frontEndConfig:
+        analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+        analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+        analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+        analyticsName: "Clinical Trials"
+        ctsApiEndpointV2: "@@LITERAL@@window.CDEConfig.ctsConfig.apiServer"
+        printApiBase: "@@LITERAL@@window.CDEConfig.ctsConfig.printApiBase"
+        zipConversionEndpoint: "@@LITERAL@@window.CDEConfig.ctsConfig.zipConversionEndpoint"
+        language: "en"
+        siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
   field_date_posted:
-    value: "2016-06-23"
+    value: "2017-06-13"
   field_date_reviewed:
-    value: "2016-06-23"
+    value: "2017-06-13"
   field_date_updated:
-    value: "2016-06-23"
+    value: "2017-06-13"
   field_app_module_page_template:
     value: no_left_nav

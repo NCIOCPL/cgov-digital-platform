@@ -35,15 +35,15 @@ const ctsSpanishSettings = {
         '/espanol/cancer/tratamiento/estudios-clinicos/patrocinados-por-nci',
     ],
     popupDelaySeconds: 30, // Number of seconds to delay before displaying the popup.
+
     popupID: 'Spanish-CTSPrompt',
     popupBody: `
         <h2 class="title">¿Necesita ayuda en encontrar un estudio clínico?</h2>
         <div class="content spanish-livehelp">
             <p>Especialistas de Información están disponibles para ayudarle en hacer una búsqueda y contestar a sus preguntas.</p>
-            <form action="https://${server}/app/chat/chat_landing" target="_blank" id="proactive-chat-form" method="POST">
-                <input name="_icf_22" style="display: none !important;" type="text" value="2174">
-                <button id="chat-button" type="submit">Iniciar Chat</button>
-            </form>
+            <div id="chat-button" class="proactive-chat-button">
+                <a href="https://${server}" onclick="window.open('https://${server}','LiveHelp','scrollbars=yes,resizable=yes,menubar=yes,toolbar=yes,location=yes,width=650,height=600'); event.preventDefault();" id="proactive-chat-link">Iniciar Chat</a>
+            </div>
             <div class="live-help"></div>
         </div>
     `,

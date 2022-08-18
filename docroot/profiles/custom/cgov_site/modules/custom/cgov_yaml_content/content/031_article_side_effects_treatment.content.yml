@@ -78,7 +78,7 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            computed_path: '/espanol/cancer/tratamiento'
+            computed_path: '/cancer/tratamiento'
   field_image_article:
     - target_type: 'media'
       '#process':
@@ -263,6 +263,90 @@
     value: "2019-04-30"
   field_date_updated:
     value: "2019-04-30"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_public_use: 1
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "EN Cancer Drugs - Test"
+  title__ES:
+    value: "ES Cancer Medicamentos - Test"
+  field_page_description:
+    value: "Cancer Drugs in English - Page desc"
+  field_page_description__ES:
+    value:  "Cancer Medicamentos in Spanish - Page desc"
+  field_card_title:
+    value: "EN Cancer Drugs - Card Title"
+  field_card_title__ES:
+    value: "ES Cancer Medicamentos - Card Title"
+  field_browser_title:
+    value: "ES Cancer Drugs - Browser Title"
+  field_browser_title__ES:
+    value: "ES Cancer Medicamentos - Browser Title"
+  field_pretty_url:
+    value: "drugs-en"
+  field_pretty_url__ES:
+    value: "medicamentos"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/tratamiento'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Drugs EN'
+  field_image_article__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Drug ES'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Tennis Rules"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Tennis Rules and Regulations</p>
+            <p>Points played in good faith are counted. All points played in good faith stand. For example, if after losing a point, a player discovers that the net was four inches too high, the point stands. If a point is played from the wrong court, there is no replay. If during a point, a player realizes that a mistake was made at the beginning (for example, service from the wrong court), the player shall continue playing the point. Corrective action may be taken only after a point has been completed. Shaking hands at the end of a match is an acknowledgment by the players that the match is over.</p>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "Formulacion y aprobacion de medicamentos"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Lista de sumarios del NCI con informaci&oacute;n sobre medicamentos para el c&aacute;ncer. Estos sumarios tienen informaci&oacute;n en ingl&eacute;s sobre medicamentos utilizados en el tratamiento del c&aacute;ncer y sobre combinaciones de medicamentos.</p>
+            <p>o del músculo del pecho después de la mastectomía. (La mayoría de las mastectomías se efectúan usando una técnica llamada mastectomía con preservación de piel, en la que se conserva la mayor parte de la piel del seno para usarla en la reconstrucción del mismo).</p>
+  field_date_posted:
+    value: "2022-08-01"
+  field_date_reviewed:
+    value: "2022-08-01"
+  field_date_updated:
+    value: "2022-08-01"
   field_date_display_mode:
     - value: 'reviewed'
   field_public_use: 1
