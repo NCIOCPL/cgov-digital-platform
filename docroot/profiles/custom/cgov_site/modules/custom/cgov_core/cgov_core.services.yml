@@ -66,3 +66,10 @@ services:
     class: Drupal\cgov_core\Routing\DisallowedRouteSubscriber
     tags:
       - { name: event_subscriber }
+  cache_context.nci_primary_nav_active_path:
+    class: Drupal\cgov_core\NciPrimaryNavCacheContext
+    calls:
+      - [setContainer, ['@service_container']]
+    arguments: ['@request_stack']
+    tags:
+      - { name: cache.context}

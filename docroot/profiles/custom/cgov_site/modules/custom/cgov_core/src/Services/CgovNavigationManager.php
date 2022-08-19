@@ -53,7 +53,7 @@ class CgovNavigationManager {
   protected $closestSiteSection;
 
   /**
-   * Array of ancestors from root to current.
+   * Array of ancestors from current to root.
    *
    * We initialize it as an empty array to save a few
    * extra guard checks for methods that loop over this
@@ -164,9 +164,9 @@ class CgovNavigationManager {
    */
   public function getCurrentPathAlias() {
     $this->initialize();
-    /* @var string */
+    /** @var string */
     $path = $this->currentPath->getPath();
-    /* @var string */
+    /** @var string */
     $aliasedPath = $this->pathAliasManager->getAliasByPath($path);
     return $aliasedPath;
   }
@@ -185,12 +185,12 @@ class CgovNavigationManager {
    */
   public function getClosestSiteSection() {
     $this->initialize();
-    /* @var \Drupal\taxonomy\TermInterface|null */
+    /** @var \Drupal\taxonomy\TermInterface|null */
     $siteSection = NULL;
     $pathFragments = explode('/', trim($this->currentPathAlias, '/'));
     for ($i = 0; $i <= count($pathFragments); $i++) {
       $pathTest = '/' . implode('/', array_slice($pathFragments, 0, count($pathFragments) - $i));
-      /* @var \Drupal\taxonomy\TermInterface */
+      /** @var \Drupal\taxonomy\TermInterface */
       $siteSection = $this->getSiteSectionByComputedPath($pathTest);
       if ($siteSection) {
         break;
@@ -212,9 +212,12 @@ class CgovNavigationManager {
    */
   public function getSiteSectionByComputedPath(string $path) {
     $this->initialize();
-    /* @var \Drupal\taxonomy\TermStorageInterface */
+    /** @var \Drupal\taxonomy\TermStorageInterface */
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $queryResults = $termStorage->loadByProperties(['computed_path' => $path, 'langcode' => $this->interfaceLanguage]);
+    $queryResults = $termStorage->loadByProperties([
+      'computed_path' => $path,
+      'langcode' => $this->interfaceLanguage,
+    ]);
     if (count($queryResults) === 0) {
       return;
     }
@@ -224,7 +227,7 @@ class CgovNavigationManager {
     // returned by loadByProperties will either be empty or have exactly
     // one key value pair.
     $tid = array_keys($queryResults)[0];
-    /* @var \Drupal\taxonomy\TermInterface */
+    /** @var \Drupal\taxonomy\TermInterface */
     $term = $queryResults[$tid];
     return $term;
   }
@@ -251,9 +254,9 @@ class CgovNavigationManager {
    */
   public function getTermAncestry(TermInterface $term) {
     $this->initialize();
-    /* @var \Drupal\taxonomy\TermInterface[] */
+    /** @var \Drupal\taxonomy\TermInterface[] */
     $ancestry = [$term];
-    /* @var \Drupal\taxonomy\TermInterface */
+    /** @var \Drupal\taxonomy\TermInterface */
     $parentTerm = $this->getParentTerm($term);
     while ($parentTerm !== NULL) {
       $ancestry[] = $parentTerm;
@@ -273,14 +276,14 @@ class CgovNavigationManager {
    */
   public function getParentTerm(TermInterface $term) {
     $this->initialize();
-    /* @var \Drupal\taxonomy\TermStorageInterface */
+    /** @var \Drupal\taxonomy\TermStorageInterface */
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
-    /* @var \Drupal\Core\Entity\EntityInterface[] */
+    /** @var \Drupal\Core\Entity\EntityInterface[] */
     $parents = $termStorage->loadParents($term->id());
     // Load parents return an associative array where key is $tid
     // obviating the need to query the term itself for its id.
     if (count(array_keys($parents))) {
-      /* @var \Drupal\taxonomy\TermInterface */
+      /** @var \Drupal\taxonomy\TermInterface */
       return $parents[array_keys($parents)[0]];
     }
   }
@@ -301,7 +304,7 @@ class CgovNavigationManager {
    */
   public function isValidSiteSectionField(string $fieldName) {
     $this->initialize();
-    /* @var \Drupal\Core\Field\FieldDefinitionInterface[] */
+    /** @var \Drupal\Core\Field\FieldDefinitionInterface[] */
     $definitions = $this->entityFieldManager->getFieldDefinitions('taxonomy_term', 'cgov_site_sections');
     return isset($definitions[$fieldName]);
   }
@@ -324,6 +327,75 @@ class CgovNavigationManager {
   }
 
   /**
+   * Returns the active path for a primary nav.
+   *
+   * This is used by the NciPrimaryNavCacheContext.
+   *
+   * @return string
+   *   This should be a string 'root_id:active_section_id',
+   *   or 'root_id' if no active section.
+   */
+  public function getPrimaryNavActivePath() {
+    $this->initialize();
+
+    $navRoot = $this->findNavRootTerm('field_main_nav_root');
+
+    // Handle the odd case where it has not been set.
+    if (!$navRoot) {
+      return '';
+    }
+
+    // Get the index of the root, the next item in the array would ve the next
+    // menu item that would get highlighted.
+    $idxRoot = array_search($navRoot, $this->fullAncestry);
+    if ($idxRoot !== FALSE) {
+      if (($idxRoot - 1) >= 0) {
+        // Make sure the child is not set as display in main nav false.
+        $activeChild = $this->fullAncestry[$idxRoot - 1];
+        $displayRules = $activeChild->field_navigation_display_options->getValue();
+
+        if (
+          array_search('hide_in_main_nav', $displayRules) === FALSE &&
+          $this->getUrlForLanding($activeChild) !== NULL
+          ) {
+          // This items is navigable and not hidden in the nav, it will be
+          // set as active.
+          return $navRoot->id() . '|' . $activeChild->id();
+        }
+      }
+      return (string) $navRoot->id();
+    }
+
+    // This should not get hit. The previous $navRoot existence
+    // check should catch it.
+    return '';
+  }
+
+  /**
+   * Get Nav Root Term.
+   *
+   * Provide the appropriate field for which you
+   * want the nav root Term. eg 'field_breadcrumb_root'.
+   *
+   * @param string $testFieldName
+   *   Name of field to check for root status.
+   *
+   * @return \Drupal\taxonomy\TermInterface|null
+   *   The term matching the nav root condition.
+   */
+  protected function findNavRootTerm(string $testFieldName) {
+    $this->initialize();
+    if ($this->isValidSiteSectionField($testFieldName)) {
+      foreach ($this->fullAncestry as $term) {
+        $isNavRoot = $term->{$testFieldName}->value;
+        if ($isNavRoot) {
+          return $term;
+        }
+      }
+    }
+  }
+
+  /**
    * Get Nav Root Term.
    *
    * Provide the appropriate field for which you
@@ -337,14 +409,9 @@ class CgovNavigationManager {
    */
   public function getNavRoot(string $testFieldName) {
     $this->initialize();
-    if ($this->isValidSiteSectionField($testFieldName)) {
-      foreach ($this->fullAncestry as $term) {
-        $isNavRoot = $term->{$testFieldName}->value;
-        if ($isNavRoot) {
-          $navItem = $this->newNavItem($term);
-          return $navItem;
-        }
-      }
+    $rootTerm = $this->findNavRootTerm($testFieldName);
+    if ($rootTerm) {
+      return $this->newNavItem($rootTerm);
     }
   }
 
