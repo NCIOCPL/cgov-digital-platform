@@ -6,6 +6,7 @@ import usaBannerInit from '../../lib/components/usa-banner';
 import usaSidenavInit from '../../lib/components/usa-sidenav';
 import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import usaFooterInit from '../../lib/components/usa-footer';
+import usaSiteAlertInit from '../../lib/components/usa-site-alert';
 
 /* *********************************************************************
  * There is a LOT of legacy junk going on in here. We do want this to be
@@ -112,6 +113,9 @@ const onDOMContentLoaded = () => {
 
 	// Init the footer
 	usaFooterInit();
+
+	//Init the site alert
+	usaSiteAlertInit();
 
 	/*** BEGIN Exit Disclaimer
 	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
