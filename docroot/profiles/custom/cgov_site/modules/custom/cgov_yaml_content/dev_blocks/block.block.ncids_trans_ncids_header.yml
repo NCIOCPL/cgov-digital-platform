@@ -14,10 +14,17 @@ provider: null
 plugin: ncids_header
 settings:
   id: ncids_header
-  label: 'NCIDS Header'
+  label: 'NCIDS Header - English'
   provider: cgov_core
   label_display: '0'
   home_page_title: 'National Cancer Institute Home Page'
-  search_results_page:
+  search_results_page: 'entity:node/5000'
   autosuggest_collection: cgov
-visibility: {}
+visibility:
+  language:
+    id: language
+    langcodes:
+      en: en
+    negate: false
+    context_mapping:
+      language: '@language.current_language_context:language_interface'
