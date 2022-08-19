@@ -1,7 +1,6 @@
 <?php
 use Drupal\system\Form\ThemeSettingsForm;
 
-
 /**
  * Implements hook_form_system_theme_settings_alter().
  *
@@ -18,6 +17,13 @@ function ncids_trans_form_system_theme_settings_alter(&$form) {
   $form['theme_settings']['#open'] = FALSE;
   $form['logo']['#open'] = FALSE;
   $form['favicon']['#open'] = FALSE;
+
+  // Modify the allowed types of logos. We only want to allow SVGs.
+  // So while the Drupal community argues if SVGs *can* be used, we will
+  // *only* allow them. (SVGs scale better and use less bandwith)
+  $form['logo']['settings']['logo_upload']['#upload_validators'] = [
+    'file_validate_extensions' => ['svg'],
+  ];
 
   /* ------------ 'Has Translations' button ----------- */
   /* --- This was copied from the cgov_common theme --- */

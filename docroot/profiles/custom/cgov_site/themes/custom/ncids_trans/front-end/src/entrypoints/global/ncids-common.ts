@@ -7,6 +7,7 @@ import usaSidenavInit from '../../lib/components/usa-sidenav';
 import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import usaFooterInit from '../../lib/components/usa-footer';
 import usaSiteAlertInit from '../../lib/components/usa-site-alert';
+import nciHeaderInit from '../../lib/components/nci-header';
 
 // CGDP Imports
 import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
@@ -107,6 +108,9 @@ const onDOMContentLoaded = () => {
 	/* NCIDS Event Handlers will come first. */
 	// Initialize the Banner/Language toggle.
 	usaBannerInit();
+
+	// Init the header.
+	nciHeaderInit();
 
 	// Initialize the Sidenav
 	usaSidenavInit();

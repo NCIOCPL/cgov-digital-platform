@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - cgov_core
+    - language
+  theme:
+    - ncids_trans
+id: ncids_trans_ncids_header_es
+theme: ncids_trans
+region: ncids_header
+weight: 0
+provider: null
+plugin: ncids_header
+settings:
+  id: ncids_header
+  label: 'NCIDS Header - Spanish'
+  provider: cgov_core
+  label_display: '0'
+  home_page_title: 'Página principal del Instituto Nacional del Cáncer'
+  search_results_page: 'entity:node/5001'
+  autosuggest_collection: cgov
+visibility:
+  language:
+    id: language
+    langcodes:
+      es: es
+    negate: false
+    context_mapping:
+      language: '@language.current_language_context:language_interface'
