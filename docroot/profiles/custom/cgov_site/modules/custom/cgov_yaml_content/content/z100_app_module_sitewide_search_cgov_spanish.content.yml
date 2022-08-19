@@ -1,23 +1,24 @@
-# NCI Sitewide Search App Module
+# NCI Sitewide Search App Module - Spanish
 
 - entity: "node"
+  nid: 5001
   type: "cgov_application_page"
-  langcode: en
+  langcode: es
   status: 1
   moderation_state:
     value: "published"
-  title: "NCI Search Results"
+  title: "Resultados"
   field_page_description:
-    value: "National Cancer Institute Search Results"
+    value: "Cancer.gov Resultados"
   field_browser_title:
-    value: "NCI Search Results"
+    value: "Resultados"
   field_site_section:
     - "#process":
         callback: "reference"
         args:
           - "taxonomy_term"
           - vid: "cgov_site_sections"
-            computed_path: "/search/results"
+            computed_path: "/buscar/resultados"
   field_application_module:
     - target_id: cgov_js_only_app
       data:
@@ -37,7 +38,7 @@
           bestbetsEndpoint: "@@LITERAL@@window.CDEConfig.sitewideSearchConfig.bestBetsApiServer"
           dictionaryAudience: "Patient"
           dictionaryName: "Cancer.gov"
-          dictionaryUrl: "@@NOENCODE@@/publications/dictionaries/cancer-terms"
+          dictionaryUrl: "@@NOENCODE@@/espanol/publicaciones/diccionario"
           glossaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
           dropdownOptions: [20, 50]
           searchCollection: "cgov"

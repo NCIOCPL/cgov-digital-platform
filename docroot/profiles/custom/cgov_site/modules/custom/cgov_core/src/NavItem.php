@@ -24,7 +24,7 @@ class NavItem {
   /**
    * Term this NavItem was generated from.
    *
-   * @var Drupal\taxonomy\TermInterface
+   * @var \Drupal\taxonomy\TermInterface
    */
   protected $term;
 
@@ -106,7 +106,7 @@ class NavItem {
   /**
    * Calculated href path for this NavItem.
    *
-   * @var string
+   * @var \Drupal\Core\Url
    */
   protected $href;
 
@@ -207,9 +207,9 @@ class NavItem {
   /**
    * Retrieve raw megamenu html markup.
    *
-   * The markup for megamenus are stored in content
-   * blocks as URI encoded raw html. We need to
-   * retrieve it and unencode the html.
+   * NOTE: This is for the Legacy cgov_common theme, NOT NCIDS.
+   * The markup for megamenus are stored in content blocks as URI encoded raw
+   * html. We need to retrieve it and unencode the html.
    *
    * @return string
    *   Megamenu content block markup.
@@ -224,6 +224,16 @@ class NavItem {
       return $megamenuMarkupDecoded;
     }
     return "";
+  }
+
+  /**
+   * Indicates if this NavItem has NCIDS megamenu contents.
+   *
+   * @return bool
+   *   True if there is data, false if not.
+   */
+  public function hasNcidsMegaMenu() {
+    return !$this->term->field_ncids_mega_menu_contents->isEmpty();
   }
 
   /**
@@ -249,7 +259,7 @@ class NavItem {
   /**
    * Return the term.
    *
-   * @return enttity
+   * @return \Drupal\taxonomy\TermInterface
    *   Site Section Term.
    */
   public function getTerm() {
@@ -402,6 +412,7 @@ class NavItem {
       'label' => $navItem->getLabel(),
       'href' => $navItem->getHref(),
       'weight' => $navItem->getWeight(),
+      'hasNcidsMegaMenu' => $navItem->hasNcidsMegaMenu(),
       'children' => $children,
     ];
   }
