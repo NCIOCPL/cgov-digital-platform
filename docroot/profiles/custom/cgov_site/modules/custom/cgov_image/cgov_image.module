@@ -9,6 +9,8 @@ use Drupal\crop\Entity\Crop;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\file\Entity\File;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Implements hook_ENTITY_TYPE_view().
@@ -205,4 +207,36 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
   ];
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ */
+function cgov_image_media_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
+    return;
+  }
+
+  // Make sure site admin should be able to delete
+  // Cgov_image or cgov_contextual_image media items.
+  if (!in_array('site_admin', $account->getRoles())) {
+    // Restrict image manager to delete published
+    // Cgov_image or cgov_contextual_image media items.
+    if ($operation == 'delete' && in_array('image_manager', $account->getRoles()) && $entity->isPublished()) {
+      return AccessResult::forbidden();
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function cgov_image_entity_type_alter(array &$entity_types) {
+  // Adding custom media translation handler class.
+  if (isset($entity_types['media'])) {
+    if ($entity_types['media']->isTranslatable()) {
+      $entity_types['media']->setHandlerClass('translation', 'Drupal\cgov_image\CustomMediaTranslationHandler');
+    }
+  }
 }
