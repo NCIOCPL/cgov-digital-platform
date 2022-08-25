@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Theme macros for displaying page options.
+ */
+#}
+
+{#
+  Page options macro.
+#}
+{% macro page_options(position) %}
+
+{% set page_options_attribs = create_attribute({
+    'class': ['cgdp-page-options']
+  })
+%}
+
+{% if position == "top" %}
+  {% set page_options_attribs = page_options_attribs.addClass("cgdp-page-options--top") %}
+  {% set aria_label = "Page options top"|t %}
+  {% set page_options_attribs = page_options_attribs.setAttribute("aria-label", aria_label) %}
+{% elseif position == "bottom" %}
+  {% set page_options_attribs = page_options_attribs.addClass("cgdp-page-options--bottom") %}
+  {% set aria_label = "Page options bottom"|t %}
+  {% set page_options_attribs = page_options_attribs.setAttribute("aria-label", aria_label) %}
+{% endif %}
+
+{% set url = drupal_token('current-page:url') %}
+
+<div {{ page_options_attribs }}>
+  <button class="usa-button usa-button--unstyled" onclick="window.print()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="usa-icon" role="img" aria-labelledby="print-title">
+      <title id="print-title">{{aria_label}}</title>
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+    </svg>
+  </button>
+  <a class="usa-button usa-button--unstyled" href="mailto:?subject=Information from the National Cancer Institute Web Site &body=I found this information on www.cancer.gov and I'd like to share it with you: {{ url }}%0D%0A%0D%0ANCI's Web site, www.cancer.gov, provides accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research. If you have questions or need additional information, we invite you to contact NCI's LiveHelp instant messaging service at https://livehelp.cancer.gov, or call the NCI's Contact Center 1-800-4-CANCER (1-800-422-6237) (toll-free from the United States).">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="usa-icon" role="img" aria-labelledby="email-title">
+        <title id="email-title">{{aria_label}}</title>
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+    </svg>
+  </a>
+</div>
+{% endmacro %}

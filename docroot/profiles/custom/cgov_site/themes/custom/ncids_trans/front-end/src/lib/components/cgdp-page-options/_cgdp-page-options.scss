@@ -7,10 +7,23 @@
 	@include u-display('none');
 	@include u-flex('align-center');
 	@include u-margin-left(auto);
-	@include grid-col(auto);
+	gap: units(1.5);
+
+    &--bottom {
+      @include u-margin-bottom(1);
+    }
 
 	// tablet
 	@include at-media(tablet) {
 		@include u-display('flex');
+	}
+
+	.usa-icon {
+		@include u-display('flex');
+		@include u-font-size('body', 9);
+	}
+
+	@media print {
+		@include u-display('none');
 	}
 }

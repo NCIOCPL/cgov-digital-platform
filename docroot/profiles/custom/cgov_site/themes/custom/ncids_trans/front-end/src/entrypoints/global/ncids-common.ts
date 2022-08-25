@@ -8,6 +8,9 @@ import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import usaFooterInit from '../../lib/components/usa-footer';
 import usaSiteAlertInit from '../../lib/components/usa-site-alert';
 
+// CGDP Imports
+import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
+
 /* *********************************************************************
  * There is a LOT of legacy junk going on in here. We do want this to be
  * typescript, but that also means we need types for things that have
@@ -116,6 +119,8 @@ const onDOMContentLoaded = () => {
 
 	//Init the site alert
 	usaSiteAlertInit();
+	// Init the page options
+	cgdpPageOptionsInit();
 
 	/*** BEGIN Exit Disclaimer
 	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
