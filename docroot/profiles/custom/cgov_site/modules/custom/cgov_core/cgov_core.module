@@ -20,6 +20,7 @@ use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_block_build_alter().
@@ -205,6 +206,9 @@ function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     if (isset($form['actions']) && isset($form['actions']['reset_alphabetical'])) {
       unset($form['actions']['reset_alphabetical']);
     }
+  }
+  if(isset($form['field_pretty_url'])) {
+    $form['#attached']['library'][] = 'cgov_core/cgov_core';
   }
 }
 
@@ -642,4 +646,23 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
  */
 function cgov_core_field_widget_link_default_form_alter(&$element, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
   $element['uri']['#description'] = t('Enter the full URL starting with https://');
+}
+
+/**
+ * Implements field_widget_WIDGET_TYPE_form_alter().
+ */
+function cgov_core_field_widget_entity_browser_entity_reference_form_alter(&$element, FormStateInterface $form_state, $context) {
+  // Add an attribute to widget form elements for all fields of name field_site_section.
+  $field_definition = $context['items']->getFieldDefinition();
+  if ($field_definition->getName() == 'field_site_section') {
+    // Be sure not to overwrite existing attributes.
+    if (!empty($element['current']['items'])) {
+      // Get term ID.
+      $tid = str_replace('taxonomy_term:', '', $element['current']['items'][0]['#attributes']['data-entity-id']);
+      // Load site section taxonomy term.
+      $site_section_term = Term::load($tid);
+      $element['current']['items'][0]['#attributes']['site-section-data-path'] = $site_section_term->computed_path->value;
+    }
+  }
+
 }
