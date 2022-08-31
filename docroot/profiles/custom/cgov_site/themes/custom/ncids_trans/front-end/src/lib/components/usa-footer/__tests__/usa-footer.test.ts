@@ -193,16 +193,18 @@ describe('usa-footer', () => {
 		// Create the footer JS
 		footerInit();
 
-		const input = screen.getByRole('textbox');
-		const button = screen.getByRole('button', { name: 'Sign up' });
-
 		// Change to valid email address
+		const input = screen.getByRole('textbox');
 		input.setAttribute('value', 'test@test.com');
 
 		// Click the submit button
-		fireEvent.click(button);
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		window.HTMLFormElement.prototype.submit = () => {};
+		const button = screen.getByRole('button', { name: 'Sign up' });
+		fireEvent.submit(button);
 
 		// Valid form submission
+		expect(spy).toHaveBeenCalledTimes(1);
 		expect(spy).toHaveBeenCalledWith('Form:Complete', 'Form:Complete', {
 			formType: 'EmailSignUp',
 			status: 'Complete',
