@@ -2,7 +2,7 @@ export const usaFooterDomMock = (): string => {
 	return `
 		<footer class="usa-footer usa-footer--nci-big" id="nci-footer" aria-label="Footer">
 			<div class="grid-container usa-footer__return-to-top">
-				<a href="#">Return to top</a>
+				<a href="#">Back To Top</a>
 			</div>
 			<div class="usa-footer__primary-section">
 				<div class="grid-container">

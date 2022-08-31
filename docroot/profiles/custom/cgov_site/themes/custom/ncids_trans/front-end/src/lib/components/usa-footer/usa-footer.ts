@@ -40,12 +40,7 @@ const trackForm = (eventName: string, status: string) => {
 const getLinkText = (event: Event): string => {
 	const target = event.currentTarget as HTMLAnchorElement;
 	const targetTextContent = target.textContent as string;
-	const parentElement = target.parentElement as HTMLElement;
 	const errorMsg = '_ERROR_';
-
-	if (parentElement.classList.contains('usa-footer__return-to-top')) {
-		return 'ReturnToTop';
-	}
 
 	return targetTextContent.trim() || errorMsg;
 };
@@ -60,14 +55,12 @@ const getSectionText = (event: Event): string => {
 	const grandparentElement = parentElement.parentElement as HTMLElement;
 	const errorMsg = '_ERROR_';
 
-	if (parentElement.classList.contains('usa-footer__return-to-top')) {
-		return 'ReturnToTop';
-	}
-
+	// Return 'OrganizationArea' if address link clicked
 	if (parentElement.matches('address')) {
 		return 'OrganizationArea';
 	}
 
+	// Return collapse heading if secondary navigation link clicked
 	if (parentElement.classList.contains('usa-footer__secondary-link')) {
 		const section = target.closest('section') as HTMLElement;
 		const sectionChild =
@@ -76,19 +69,22 @@ const getSectionText = (event: Event): string => {
 		return sectionChild.textContent || errorMsg;
 	}
 
+	// Return heading of contact info if link clicked
 	if (grandparentElement.classList.contains('usa-footer__contact-info')) {
 		const section = target.closest('.usa-footer__contact-links') as HTMLElement;
 		const sectionFirstChild = section.firstElementChild as HTMLElement;
 		return (<string>sectionFirstChild.textContent).trim() || errorMsg;
 	}
 
+	// Return heading of social media icon area if link clicked
 	if (target.classList.contains('usa-social-link')) {
 		const section = target.closest('.usa-footer__social-links') as HTMLElement;
 		const sectionFirstChild = section.firstElementChild as HTMLElement;
 		return (<string>sectionFirstChild.textContent).trim() || errorMsg;
 	}
 
-	return errorMsg;
+	// Otherwise return link text or error message
+	return (<string>target.textContent).trim() || errorMsg;
 };
 
 /**
