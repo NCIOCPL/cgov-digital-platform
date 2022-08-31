@@ -51,9 +51,9 @@ describe('usa-footer', () => {
 		// Click Return to top
 		fireEvent.click(link[0]);
 		expect(spy).toHaveBeenCalledWith('Footer:LinkClick', 'Footer:LinkClick', {
-			linkText: 'ReturnToTop',
+			linkText: 'Back To Top',
 			location: 'Footer',
-			section: 'ReturnToTop',
+			section: 'Back To Top',
 		});
 
 		// Click secondary link
