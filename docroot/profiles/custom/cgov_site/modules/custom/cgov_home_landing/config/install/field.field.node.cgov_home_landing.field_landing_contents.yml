@@ -30,7 +30,6 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       cgov_primary_feature_row: cgov_primary_feature_row
       cgov_guide_row: cgov_guide_row
@@ -43,64 +42,35 @@ settings:
       cgov_content_block: cgov_content_block
       cgov_card_borderless: cgov_card_borderless
       cgov_title_first_feature_card_ro: cgov_title_first_feature_card_ro
+    negate: 0
     target_bundles_drag_drop:
       body_section:
         weight: -15
         enabled: false
+      cgov_card_borderless:
+        weight: 30
+        enabled: true
       cgov_card_external:
         weight: -14
         enabled: false
       cgov_card_internal:
         weight: -13
         enabled: false
-      cgov_primary_feature_row:
-        enabled: true
-        weight: 0
-      cgov_guide_row:
-        enabled: true
-        weight: 1
-      cgov_secondary_feature_row:
-        enabled: true
-        weight: 2
-      cgov_multimedia_row:
-        enabled: true
-        weight: 3
-      cgov_list:
-        enabled: true
-        weight: 4
-      cgov_column_one:
-        enabled: true
-        weight: 5
-      cgov_column_two:
-        enabled: true
-        weight: 6
       cgov_card_raw_html:
-        enabled: true
         weight: 7
-      cgov_content_block:
         enabled: true
-        weight: 8
       cgov_citation:
         weight: 23
         enabled: false
-      cgov_dynamic_list:
-        weight: 27
-        enabled: false
-      cgov_external_link:
-        weight: 28
-        enabled: false
-      cgov_internal_link:
-        weight: 30
-        enabled: false
-      cgov_card_borderless:
+      cgov_column_one:
+        weight: 5
         enabled: true
-        weight: 30
-      cgov_two_item_feature_row:
-        weight: 35
-        enabled: false
-      pdq_summary_section:
-        weight: 36
-        enabled: false
+      cgov_column_two:
+        weight: 6
+        enabled: true
+      cgov_content_block:
+        weight: 8
+        enabled: true
       cgov_cthp_block_card:
         weight: 39
         enabled: false
@@ -125,13 +95,43 @@ settings:
       cgov_cthp_video_card:
         weight: 46
         enabled: false
+      cgov_dynamic_list:
+        weight: 27
+        enabled: false
+      cgov_external_link:
+        weight: 28
+        enabled: false
+      cgov_guide_row:
+        weight: 1
+        enabled: true
       cgov_hero_banner:
         weight: 50
         enabled: false
+      cgov_internal_link:
+        weight: 30
+        enabled: false
+      cgov_list:
+        weight: 4
+        enabled: true
       cgov_media_link:
         weight: 53
         enabled: false
-      cgov_title_first_feature_card_ro:
+      cgov_multimedia_row:
+        weight: 3
         enabled: true
+      cgov_primary_feature_row:
+        weight: 0
+        enabled: true
+      cgov_secondary_feature_row:
+        weight: 2
+        enabled: true
+      cgov_title_first_feature_card_ro:
         weight: 58
+        enabled: true
+      cgov_two_item_feature_row:
+        weight: 35
+        enabled: false
+      pdq_summary_section:
+        weight: 36
+        enabled: false
 field_type: entity_reference_revisions

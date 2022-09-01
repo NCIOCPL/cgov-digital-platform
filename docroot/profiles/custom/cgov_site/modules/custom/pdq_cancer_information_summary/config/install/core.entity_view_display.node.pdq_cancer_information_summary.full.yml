@@ -19,107 +19,107 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
     - node.type.pdq_cancer_information_summary
-  enforced:
-    module:
-      - pdq_core
   module:
     - datetime
     - entity_reference_revisions
     - options
     - text
     - user
+  enforced:
+    module:
+      - pdq_core
 id: node.pdq_cancer_information_summary.full
 targetEntityType: node
 bundle: pdq_cancer_information_summary
 mode: full
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   field_browser_title:
-    weight: 101
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 101
     region: content
   field_date_updated:
-    weight: 103
+    type: datetime_default
     label: above
     settings:
-      format_type: cgov_display_date
       timezone_override: ''
+      format_type: cgov_display_date
     third_party_settings: {  }
-    type: datetime_default
+    weight: 103
     region: content
   field_page_description:
-    weight: 104
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 104
     region: content
   field_pdq_audience:
-    weight: 108
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 108
     region: content
   field_pdq_cdr_id:
-    weight: 106
+    type: number_integer
     label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    type: number_integer
+    weight: 106
     region: content
   field_pdq_intro_text:
-    weight: 109
-    label: above
-    settings: { }
-    third_party_settings: { }
     type: text_default
-    region: content
-  field_pdq_summary_type:
-    weight: 105
     label: above
     settings: {  }
     third_party_settings: {  }
+    weight: 109
+    region: content
+  field_pdq_summary_type:
     type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
     region: content
   field_pdq_url:
-    weight: 111
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 111
     region: content
   field_summary_sections:
     type: entity_reference_revisions_entity_view
-    weight: 110
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 110
     region: content
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   field_date_posted: true
   field_hhs_syndication: true
+  field_meta_tags: true
   field_pdq_is_svpc: true
   field_pdq_suppress_otp: true
-  field_meta_tags: true
   field_public_use: true
   langcode: true

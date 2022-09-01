@@ -34,22 +34,22 @@ mode: borderless_card_image
 content:
   field_image_article:
     type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: image_crop_borderless_card
+      link: false
+    third_party_settings: {  }
     weight: 1
     region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_borderless_card
-      link: false
-    third_party_settings: {  }
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 0
-    region: content
     label: hidden
     settings:
       view_mode: image_crop_borderless_card
       link: false
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   body: true
   content_moderation_control: true

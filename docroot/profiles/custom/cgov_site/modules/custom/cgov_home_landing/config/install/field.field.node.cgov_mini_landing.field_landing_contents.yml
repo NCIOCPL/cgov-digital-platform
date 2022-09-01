@@ -25,7 +25,6 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       cgov_two_item_feature_row: cgov_two_item_feature_row
       cgov_list: cgov_list
@@ -33,47 +32,48 @@ settings:
       cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
+    negate: 0
     target_bundles_drag_drop:
-      cgov_content_block:
-        enabled: true
-        weight: 1
-      cgov_two_item_feature_row:
-        enabled: true
-        weight: 2
-      cgov_primary_feature_row:
-        enabled: false
-        weight: -21
-      cgov_guide_row:
-        enabled: false
-        weight: -20
-      cgov_secondary_feature_row:
-        enabled: false
-        weight: -19
-      cgov_list:
-        enabled: true
-        weight: 3
-      cgov_column_one:
-        enabled: false
-        weight: -17
-      cgov_column_two:
-        enabled: false
-        weight: -16
       body_section:
         weight: -15
         enabled: false
+      cgov_card_borderless:
+        weight: 4
+        enabled: true
       cgov_card_external:
         weight: -14
         enabled: false
       cgov_card_internal:
         weight: -13
         enabled: false
-      cgov_card_borderless:
-        weight: 4
-        enabled: true
       cgov_card_raw_html:
         weight: 5
         enabled: true
-      cgov_dynamic_list:
+      cgov_column_one:
+        weight: -17
+        enabled: false
+      cgov_column_two:
+        weight: -16
+        enabled: false
+      cgov_content_block:
+        weight: 1
         enabled: true
+      cgov_dynamic_list:
         weight: 6
+        enabled: true
+      cgov_guide_row:
+        weight: -20
+        enabled: false
+      cgov_list:
+        weight: 3
+        enabled: true
+      cgov_primary_feature_row:
+        weight: -21
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: -19
+        enabled: false
+      cgov_two_item_feature_row:
+        weight: 2
+        enabled: true
 field_type: entity_reference_revisions

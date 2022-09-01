@@ -9,40 +9,40 @@ type: content_moderation
 type_settings:
   states:
     archive_requested:
-      published: false
-      default_revision: false
       label: 'Archive Requested'
       weight: 1
-    archived:
       published: false
-      default_revision: true
+      default_revision: false
+    archived:
       label: Archived
       weight: 2
+      published: false
+      default_revision: true
     draft:
       label: Draft
-      published: false
-      default_revision: false
       weight: -4
-    editing:
       published: false
       default_revision: false
+    editing:
       label: Editing
       weight: -1
-    post_publication_review:
       published: false
       default_revision: false
+    post_publication_review:
       label: 'Post-Publication Review'
       weight: 0
-    published:
-      label: Published
-      published: true
-      default_revision: true
-      weight: -2
-    review:
       published: false
       default_revision: false
+    published:
+      label: Published
+      weight: -2
+      published: true
+      default_revision: true
+    review:
       label: Review
       weight: -3
+      published: false
+      default_revision: false
   transitions:
     approve:
       label: Publish

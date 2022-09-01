@@ -20,34 +20,36 @@ bundle: cgov_contextual_image
 mode: image_reference_field_form
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   field_caption:
-    weight: 2
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 2
     region: content
   name:
     type: string
-    weight: 0
-    region: content
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
+    region: content
   thumbnail:
     type: image
-    weight: 1
     label: hidden
     settings:
-      image_style: thumbnail
       image_link: ''
-    region: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   created: true
   field_accessible_version: true

@@ -1,18 +1,21 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - cgov_core
   module:
     - file
     - image
     - node
+  enforced:
+    module:
+      - cgov_core
 id: node.field_banner_image
 field_name: field_banner_image
 entity_type: node
 type: image
 settings:
+  target_type: file
+  display_field: false
+  display_default: false
   uri_scheme: public
   default_image:
     uuid: ''
@@ -20,9 +23,6 @@ settings:
     title: ''
     width: null
     height: null
-  target_type: file
-  display_field: false
-  display_default: false
 module: image
 locked: false
 cardinality: 1

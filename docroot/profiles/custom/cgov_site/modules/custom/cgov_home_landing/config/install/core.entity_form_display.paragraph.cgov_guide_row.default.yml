@@ -13,16 +13,17 @@ bundle: cgov_guide_row
 mode: default
 content:
   field_container_heading:
+    type: string_textfield
     weight: 0
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_guide_cards:
     type: entity_reference_paragraphs
     weight: 1
+    region: content
     settings:
       title: Card
       title_plural: Cards
@@ -31,7 +32,6 @@ content:
       form_display_mode: default
       default_paragraph_type: cgov_content_block
     third_party_settings: {  }
-    region: content
 hidden:
   created: true
   status: true

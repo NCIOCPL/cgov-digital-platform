@@ -32,47 +32,47 @@ bundle: cgov_blog_post
 mode: embedded_feature_card_no_image
 content:
   field_browser_title:
-    weight: 3
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
   field_card_title:
-    weight: 2
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 2
     region: content
   field_feature_card_description:
-    weight: 4
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 4
     region: content
   field_image_article:
     type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: image_crop_thumbnail
+      link: false
+    third_party_settings: {  }
     weight: 0
     region: content
-    label: hidden
-    settings:
-      view_mode: image_crop_thumbnail
-      link: false
-    third_party_settings: {  }
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 1
-    region: content
     label: hidden
     settings:
       view_mode: image_crop_thumbnail
       link: false
     third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   body: true
   content_moderation_control: true

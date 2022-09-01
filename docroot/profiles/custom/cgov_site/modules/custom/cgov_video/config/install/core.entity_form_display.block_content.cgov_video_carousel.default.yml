@@ -12,13 +12,13 @@ bundle: cgov_video_carousel
 mode: default
 content:
   field_youtube_playlist_id:
+    type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   info:
     type: string_textfield
     weight: 0
@@ -37,8 +37,8 @@ content:
   moderation_state:
     type: moderation_state_default
     weight: 100
-    settings: {  }
     region: content
+    settings: {  }
     third_party_settings: {  }
   translation:
     weight: 4

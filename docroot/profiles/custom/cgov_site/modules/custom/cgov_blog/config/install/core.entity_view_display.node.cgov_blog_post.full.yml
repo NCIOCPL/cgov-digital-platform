@@ -36,105 +36,105 @@ bundle: cgov_blog_post
 mode: full
 content:
   body:
-    label: hidden
     type: text_default
-    weight: 6
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 6
     region: content
   content_moderation_control:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
   field_author:
-    weight: 3
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
   field_blog_series:
     type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
     weight: 10
     region: content
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
   field_blog_topics:
     type: entity_reference_label
-    weight: 11
-    region: content
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
+    weight: 11
+    region: content
   field_citation:
     type: entity_reference_revisions_entity_view
-    weight: 12
-    region: content
     label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 12
+    region: content
   field_date_posted:
-    weight: 2
+    type: datetime_default
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
     third_party_settings: {  }
-    type: datetime_default
+    weight: 2
     region: content
   field_image_article:
     type: entity_reference_entity_view
-    weight: 4
-    region: content
     label: hidden
     settings:
       view_mode: image_display_article_medium
       link: false
     third_party_settings: {  }
+    weight: 4
+    region: content
   field_intro_text:
-    weight: 5
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 5
     region: content
   field_public_use:
-    weight: 8
+    type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 8
     region: content
   field_recommended_content:
     type: entity_reference_revisions_entity_view
-    weight: 9
-    region: content
     label: hidden
     settings:
       view_mode: recommended_content_card
       link: ''
     third_party_settings: {  }
+    weight: 9
+    region: content
   field_related_resources:
     type: entity_reference_revisions_entity_view
-    weight: 7
-    region: content
     label: hidden
     settings:
       view_mode: list_item_title
       link: ''
     third_party_settings: {  }
-  links:
-    weight: 1
+    weight: 7
     region: content
+  links:
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   field_browser_title: true
   field_card_title: true
