@@ -13,7 +13,9 @@ bundle: cgov_column_two
 mode: default
 content:
   field_main_contents:
+    type: entity_reference_paragraphs
     weight: 0
+    region: content
     settings:
       title: Item
       title_plural: Items
@@ -22,11 +24,10 @@ content:
       form_display_mode: default
       default_paragraph_type: cgov_card_raw_html
     third_party_settings: {  }
-    type: entity_reference_paragraphs
-    region: content
   field_secondary_contents:
     type: entity_reference_paragraphs
     weight: 1
+    region: content
     settings:
       title: Item
       title_plural: Items
@@ -35,7 +36,6 @@ content:
       form_display_mode: default
       default_paragraph_type: cgov_card_raw_html
     third_party_settings: {  }
-    region: content
 hidden:
   created: true
   status: true

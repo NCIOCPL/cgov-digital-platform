@@ -18,10 +18,6 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
     - node.type.pdq_cancer_information_summary
-  enforced:
-    module:
-      - cgov_syndication
-      - pdq_core
   module:
     - cgov_syndication
     - content_moderation
@@ -29,6 +25,10 @@ dependencies:
     - paragraphs_asymmetric_translation_widgets
     - path
     - text
+  enforced:
+    module:
+      - cgov_syndication
+      - pdq_core
 id: node.pdq_cancer_information_summary.default
 targetEntityType: node
 bundle: pdq_cancer_information_summary
@@ -41,98 +41,99 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_browser_title:
+    type: string_textfield
     weight: 10
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_date_posted:
+    type: datetime_default
     weight: 13
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: datetime_default
-    region: content
   field_date_updated:
-    weight: 14
-    settings: {  }
-    third_party_settings: {  }
     type: datetime_default
+    weight: 14
     region: content
-  field_hhs_syndication:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+  field_hhs_syndication:
     type: cgov_syndication_widget
+    weight: 100
     region: content
-  field_pdq_is_svpc:
-    weight: 101
-    settings:
-      display_label: true
+    settings: {  }
     third_party_settings: {  }
-    type: boolean_checkbox
+  field_page_description:
+    type: string_textfield
+    weight: 15
     region: content
-  field_pdq_suppress_otp:
-    weight: 102
     settings:
-      display_label: true
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: boolean_checkbox
+  field_pdq_audience:
+    type: options_select
+    weight: 16
     region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pdq_cdr_id:
+    type: number
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_pdq_intro_text:
+    type: text_textarea
     weight: 25
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
+  field_pdq_is_svpc:
+    type: boolean_checkbox
+    weight: 101
     region: content
-  field_page_description:
-    weight: 15
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_pdq_audience:
-    weight: 16
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_pdq_cdr_id:
-    weight: 11
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: number
-    region: content
-  field_pdq_summary_type:
-    weight: 12
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_pdq_url:
-    weight: 27
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_public_use:
-    weight: 17
     settings:
       display_label: true
     third_party_settings: {  }
-    type: boolean_checkbox
+  field_pdq_summary_type:
+    type: options_select
+    weight: 12
     region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_pdq_suppress_otp:
+    type: boolean_checkbox
+    weight: 102
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_pdq_url:
+    type: string_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_public_use:
+    type: boolean_checkbox
+    weight: 17
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_summary_sections:
     type: paragraphs_classic_asymmetric
     weight: 26
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -141,7 +142,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   langcode:
     type: language_select
     weight: 1
@@ -152,8 +152,8 @@ content:
   moderation_state:
     type: moderation_state_default
     weight: 8
-    settings: {  }
     region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -163,24 +163,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 5
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 9
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -198,17 +198,17 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 2
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 50
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   field_meta_tags: true

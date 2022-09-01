@@ -19,37 +19,37 @@ dependencies:
     - field.field.node.pdq_cancer_information_summary.field_public_use
     - field.field.node.pdq_cancer_information_summary.field_summary_sections
     - node.type.pdq_cancer_information_summary
+  module:
+    - user
   enforced:
     module:
       - pdq_cancer_information_summary
-  module:
-    - user
 id: node.pdq_cancer_information_summary.teaser
 targetEntityType: node
 bundle: pdq_cancer_information_summary
 mode: teaser
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   field_browser_title: true
   field_date_posted: true
   field_date_updated: true
   field_hhs_syndication: true
-  field_pdq_is_svpc: true
   field_meta_tags: true
   field_page_description: true
   field_pdq_audience: true
   field_pdq_cdr_id: true
   field_pdq_intro_text: true
+  field_pdq_is_svpc: true
   field_pdq_summary_type: true
   field_pdq_suppress_otp: true
   field_pdq_url: true

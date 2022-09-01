@@ -31,35 +31,37 @@ bundle: cgov_video
 mode: video_display_cthp_multimedia
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   field_caption:
-    weight: 2
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 2
     region: content
   field_media_oembed_video:
     type: oembed
-    weight: 1
     label: hidden
     settings:
       max_width: 0
       max_height: 0
     third_party_settings: {  }
+    weight: 1
     region: content
   thumbnail:
     type: image
-    weight: 0
     label: hidden
     settings:
-      image_style: ''
       image_link: ''
-    region: content
+      image_style: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   body: true
   created: true

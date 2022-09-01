@@ -35,68 +35,74 @@ bundle: cgov_infographic
 mode: default
 content:
   content_moderation_control:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
-  created:
-    label: hidden
-    type: timestamp
-    weight: 2
+    weight: 0
     region: content
+  created:
+    type: timestamp
+    label: hidden
     settings:
       date_format: medium
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
+    weight: 2
+    region: content
   field_caption:
-    weight: 7
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 7
     region: content
   field_infographic:
-    weight: 4
+    type: image
     label: above
     settings:
-      image_style: ''
       image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
-    type: image
+    weight: 4
     region: content
   field_infographic_mobile:
-    weight: 5
+    type: image
     label: hidden
     settings:
-      image_style: ''
       image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
-    type: image
+    weight: 5
     region: content
   field_meta_tags:
-    weight: 6
+    type: metatag_empty_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: metatag_empty_formatter
+    weight: 6
     region: content
   thumbnail:
     type: image
-    weight: 3
     label: hidden
     settings:
-      image_style: thumbnail
       image_link: ''
-    region: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
-  uid:
-    label: hidden
-    type: author
-    weight: 1
+    weight: 3
     region: content
+  uid:
+    type: author
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   body: true
   field_accessible_version: true

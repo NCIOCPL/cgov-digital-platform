@@ -23,65 +23,12 @@ base_table: node_field_data
 base_field: nid
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'access content'
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: true
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: none
-        options:
-          offset: 0
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            title: title
-          info:
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
+      title: 'Blog RSS'
       fields:
         edit_node:
           id: edit_node
@@ -90,6 +37,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          plugin_id: entity_link_edit
           label: Edit
           exclude: false
           alter:
@@ -134,8 +83,6 @@ display:
           text: edit
           output_url_as_text: false
           absolute: false
-          entity_type: node
-          plugin_id: entity_link_edit
         nid:
           id: nid
           table: node_field_data
@@ -143,6 +90,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: field
           label: NID
           exclude: false
           alter:
@@ -197,9 +147,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: node
-          entity_field: nid
-          plugin_id: field
         title:
           id: title
           table: node_field_data
@@ -207,6 +154,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Title
           exclude: false
           alter:
@@ -262,7 +210,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_list_description:
           id: field_list_description
           table: node__field_list_description
@@ -270,6 +217,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'List Description'
           exclude: false
           alter:
@@ -325,7 +273,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_page_description:
           id: field_page_description
           table: node__field_page_description
@@ -333,6 +280,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Meta Description'
           exclude: false
           alter:
@@ -388,7 +336,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_date_posted:
           id: field_date_posted
           table: node__field_date_posted
@@ -396,6 +343,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Posted Date'
           exclude: false
           alter:
@@ -452,7 +400,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_image_article:
           id: field_image_article
           table: node__field_image_article
@@ -460,6 +407,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Lead Image'
           exclude: false
           alter:
@@ -515,7 +463,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_image_promotional:
           id: field_image_promotional
           table: node__field_image_promotional
@@ -523,6 +470,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Promotional Image'
           exclude: false
           alter:
@@ -578,7 +526,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_blog_series:
           id: field_blog_series
           table: node__field_blog_series
@@ -586,6 +533,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Blog Series'
           exclude: false
           alter:
@@ -641,7 +589,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_blog_series_1:
           id: field_blog_series_1
           table: node__field_blog_series
@@ -649,6 +596,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Blog Series ID'
           exclude: false
           alter:
@@ -703,7 +651,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_blog_topics:
           id: field_blog_topics
           table: node__field_blog_topics
@@ -711,6 +658,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Blog Topics'
           exclude: false
           alter:
@@ -766,7 +714,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_blog_topics_1:
           id: field_blog_topics_1
           table: node__field_blog_topics
@@ -774,6 +721,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Blog Topics ID'
           exclude: false
           alter:
@@ -828,7 +776,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         langcode:
           id: langcode
           table: node_field_data
@@ -836,6 +783,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          entity_field: langcode
+          plugin_id: field
           label: 'Node Translation language'
           exclude: false
           alter:
@@ -892,9 +842,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: node
-          entity_field: langcode
-          plugin_id: field
         langcode_1:
           id: langcode_1
           table: node_field_revision
@@ -902,6 +849,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: node
+          entity_field: langcode
+          plugin_id: field
           label: 'Revision Translation language'
           exclude: false
           alter:
@@ -958,77 +908,28 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: node
-          entity_field: langcode
-          plugin_id: field
-      filters:
-        status:
-          value: '1'
-          table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-          group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          value:
-            cgov_blog_post: cgov_blog_post
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        langcode:
-          id: langcode
-          table: node_field_data
-          field: langcode
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: in
-          value:
-            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-            operator_limit_selection: false
-            operator_list: {  }
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: node
-          entity_field: langcode
-          plugin_id: language
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
       sorts:
         nid:
           id: nid
@@ -1037,13 +938,14 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
           entity_type: node
           entity_field: nid
           plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: nid
+          exposed: false
         field_date_posted_value:
           id: field_date_posted_value
           table: node__field_date_posted
@@ -1051,17 +953,13 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: datetime
           order: DESC
-          exposed: false
           expose:
             label: ''
+            field_identifier: field_date_posted_value
+          exposed: false
           granularity: second
-          plugin_id: datetime
-      title: 'Blog RSS'
-      header: {  }
-      footer: {  }
-      empty: {  }
-      relationships: {  }
       arguments:
         field_blog_series_target_id:
           id: field_blog_series_target_id
@@ -1070,6 +968,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1086,8 +985,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1099,7 +998,6 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
         field_blog_topics_target_id:
           id: field_blog_topics_target_id
           table: node__field_blog_topics
@@ -1107,6 +1005,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1123,8 +1022,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1136,7 +1035,110 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            cgov_blog_post: cgov_blog_post
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        langcode:
+          id: langcode
+          table: node_field_data
+          field: langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: langcode
+          plugin_id: language
+          operator: in
+          value:
+            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            title: title
+          default: '-1'
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: true
+          replica: false
+          query_tags: {  }
+      relationships: {  }
+      header: {  }
+      footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -1155,17 +1157,17 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   block_1:
-    display_plugin: block
     id: block_1
     display_title: 'Debug All'
+    display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
-      display_description: ''
       arguments: {  }
       defaults:
         arguments: false
+      display_description: ''
       rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -1181,13 +1183,11 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   block_2:
-    display_plugin: block
     id: block_2
     display_title: 'Debug Series Filter'
+    display_plugin: block
     position: 2
     display_options:
-      display_extenders: {  }
-      display_description: ''
       arguments:
         field_blog_series_target_id:
           id: field_blog_series_target_id
@@ -1196,6 +1196,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1212,8 +1213,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1225,10 +1226,11 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
       defaults:
         arguments: false
+      display_description: ''
       rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -1245,13 +1247,11 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   block_3:
-    display_plugin: block
     id: block_3
     display_title: 'Debug Series Topic Filter'
+    display_plugin: block
     position: 2
     display_options:
-      display_extenders: {  }
-      display_description: ''
       arguments:
         field_blog_series_target_id:
           id: field_blog_series_target_id
@@ -1260,6 +1260,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1276,8 +1277,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1289,7 +1290,6 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
         field_blog_series_target_id_1:
           id: field_blog_series_target_id_1
           table: node__field_blog_series
@@ -1297,6 +1297,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1313,8 +1314,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1326,10 +1327,11 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
       defaults:
         arguments: false
+      display_description: ''
       rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -1346,13 +1348,11 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   block_4:
-    display_plugin: block
     id: block_4
     display_title: 'Debug Topic Filter'
+    display_plugin: block
     position: 2
     display_options:
-      display_extenders: {  }
-      display_description: ''
       arguments:
         field_blog_topics_target_id:
           id: field_blog_topics_target_id
@@ -1361,6 +1361,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1377,8 +1378,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1390,10 +1391,11 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
       defaults:
         arguments: false
+      display_description: ''
       rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -1410,12 +1412,17 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   feed_1:
-    display_plugin: feed
     id: feed_1
     display_title: 'RSS All'
+    display_plugin: feed
     position: 5
     display_options:
-      display_extenders: {  }
+      arguments: {  }
+      style:
+        type: rss
+        options:
+          grouping: {  }
+          description: 'News and research updates from the National Cancer Institute'
       row:
         type: rss_fields
         options:
@@ -1427,17 +1434,12 @@ display:
           guid_field_options:
             guid_field: nid
             guid_field_is_permalink: false
-      display_description: ''
-      path: PublishedContent/RSS/syndication/rss/blog.rss
-      arguments: {  }
       defaults:
         arguments: false
+      display_description: ''
       rendering_language: '***LANGUAGE_language_interface***'
-      style:
-        type: rss
-        options:
-          grouping: {  }
-          description: 'News and research updates from the National Cancer Institute'
+      display_extenders: {  }
+      path: PublishedContent/RSS/syndication/rss/blog.rss
     cache_metadata:
       max-age: -1
       contexts:
@@ -1453,25 +1455,11 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   feed_2:
-    display_plugin: feed
     id: feed_2
     display_title: 'RSS Series'
+    display_plugin: feed
     position: 5
     display_options:
-      display_extenders: {  }
-      row:
-        type: rss_fields
-        options:
-          title_field: title
-          link_field: title
-          description_field: field_page_description
-          creator_field: edit_node
-          date_field: field_date_posted
-          guid_field_options:
-            guid_field: nid
-            guid_field_is_permalink: false
-      display_description: ''
-      path: PublishedContent/RSS/syndication/rss/blog-series.rss
       arguments:
         field_blog_series_target_id:
           id: field_blog_series_target_id
@@ -1480,6 +1468,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: numeric
           default_action: default
           exception:
             value: all
@@ -1496,8 +1485,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -1509,15 +1498,28 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
-      defaults:
-        arguments: false
-      rendering_language: '***LANGUAGE_language_interface***'
       style:
         type: rss
         options:
           grouping: {  }
           description: 'News and research updates from the National Cancer Institute'
+      row:
+        type: rss_fields
+        options:
+          title_field: title
+          link_field: title
+          description_field: field_page_description
+          creator_field: edit_node
+          date_field: field_date_posted
+          guid_field_options:
+            guid_field: nid
+            guid_field_is_permalink: false
+      defaults:
+        arguments: false
+      display_description: ''
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
+      path: PublishedContent/RSS/syndication/rss/blog-series.rss
     cache_metadata:
       max-age: -1
       contexts:
@@ -1534,12 +1536,16 @@ display:
         - 'config:field.storage.node.field_list_description'
         - 'config:field.storage.node.field_page_description'
   feed_3:
-    display_plugin: feed
     id: feed_3
     display_title: 'RSS Series Topic'
+    display_plugin: feed
     position: 5
     display_options:
-      display_extenders: {  }
+      style:
+        type: rss
+        options:
+          grouping: {  }
+          description: 'News and research updates from the National Cancer Institute'
       row:
         type: rss_fields
         options:
@@ -1552,13 +1558,9 @@ display:
             guid_field: nid
             guid_field_is_permalink: false
       display_description: ''
-      path: PublishedContent/RSS/syndication/rss/blog-series-topic.rss
       rendering_language: '***LANGUAGE_language_interface***'
-      style:
-        type: rss
-        options:
-          grouping: {  }
-          description: 'News and research updates from the National Cancer Institute'
+      display_extenders: {  }
+      path: PublishedContent/RSS/syndication/rss/blog-series-topic.rss
     cache_metadata:
       max-age: -1
       contexts:

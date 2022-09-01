@@ -1,19 +1,19 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - node
   enforced:
     module:
       - cgov_press_release
-  module:
-    - node
 id: node.field_press_release_type
 field_name: field_press_release_type
 entity_type: node
 type: string
 settings:
   max_length: 255
-  is_ascii: false
   case_sensitive: false
+  is_ascii: false
 module: core
 locked: false
 cardinality: 1

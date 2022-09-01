@@ -25,35 +25,37 @@ bundle: cgov_image
 mode: image_display_article_full
 content:
   field_caption:
-    weight: 1
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 1
     region: content
   field_credit:
-    weight: 2
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 2
     region: content
   field_display_enlarge:
     type: list_key
-    weight: 3
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 3
+    region: content
   field_media_image:
-    weight: 0
+    type: image
     label: hidden
     settings:
-      image_style: cgov_article
       image_link: ''
+      image_style: cgov_article
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
-    type: image
+    weight: 0
     region: content
 hidden:
   content_moderation_control: true
