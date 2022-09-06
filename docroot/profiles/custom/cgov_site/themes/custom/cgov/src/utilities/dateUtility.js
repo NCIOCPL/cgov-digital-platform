@@ -65,20 +65,23 @@ export function findObservedHoliday(holiday) {
     /*
         When a federal holiday falls on a Saturday, it is usually observed on the preceding Friday.
         When the holiday falls on a Sunday, it is usually observed on the following Monday.
-        */
+    */
 
-    var dayOfWeek = holiday.getDay();
+    // Local copy so we don't modify the date for the caller.
+    var observedDate = new Date(holiday);
+
+    var dayOfWeek = observedDate.getDay();
 
     if (dayOfWeek == 6) {
         // Holiday fell on a Saturday, is observed on Friday
-        holiday.setDate(holiday.getDate() - 1);
+        observedDate.setDate(observedDate.getDate() - 1);
     }
     else if (dayOfWeek == 0) {
         // Holiday fell on a Sunday, is observed on Monday
-        holiday.setDate(holiday.getDate() + 1)
+        observedDate.setDate(observedDate.getDate() + 1)
     }
 
-    return holiday;
+    return observedDate;
 }
 
 export function isHoliday(dateEastern) {
@@ -219,7 +222,7 @@ export function isDaylightSavingsTime (localDate) {
     dstStart.setUTCHours(7, 0, 0, 0);
     dstStart.setUTCMonth(2); // March
     dstStart.setUTCDate(1);
-    // Find the first Sunday in March        
+    // Find the first Sunday in March
     while (dstStart.getDay() != SUNDAY) {
         dstStart.setUTCDate(dstStart.getUTCDate() + 1);
     }
