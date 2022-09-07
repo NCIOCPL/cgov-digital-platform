@@ -1,64 +1,35 @@
-{# CHANGE THIS TO ncids-global when updateing for ncids #}
-{{ attach_library('ncids_trans/legacy-global') }}
+{{ attach_library('ncids_trans/ncids-global') }}
 
-{{ page.notification_banner }}
 
-<header class="push" role="banner">
-  <div id="nvcgSlSiteBanner" class="row">
-     {{ page.site_banner }}
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+{# Hide this block on print #}
+<div class="grid-container">
+  <div class="grid-row flex-no-wrap">
+    <div class="grid-col-10">
+      {# What if no breadcrumbs? #}
+      {{ page.ncids_breadcrumb }}
+    </div>
   </div>
-</header>
+</div>
 
-<div id="page">
-  <!-- Global nav/utility bar/language  -->
-  <div class="fixedtotop">
-    <div class="headroom-area">
-      {{ page.language_bar }}
-      <!-- UTILITY NAV -->
-      <div id="nvcgSlUtilityBar" class="utility-background hide-for-medium-down">
-        {{ page.utility_bar }}
-      </div>
-      <!-- END UTILITY NAV -->
-    </div>
-    <!-- end "headroom-area" -->
-    <!-- BEGIN NAVIGATION -->
-    <!-- Begin nav-search bar -->
-    <div class="nav-search-bar gradient header">
-      <div id="nvcgSlMainNav" class="row">
-        <div class="slot-item first-SI">
-          <div class="navigation">
-            {{ page.mobile_nav }}
-            {{ page.main_nav }}
-          </div>
-        </div>
-        {{ page.search_bar }}
-      </div>
-    </div>
-    <!-- End nav-search bar -->
-    <!-- END NAVIGATION -->
-  </div><!-- END Global nav/utility bar/language -->
-
-  <!-- Begin MAIN CONTENT AREA -->
-  <div class="main-content" id="content" tabindex="0">
-    <div class="row general-page-body-container collapse">
-      <div class="large-12 columns">
-        <div class="row">
-          {{ page.breadcrumb }}
-        </div> <!-- END "row" -->
-      </div> <!-- END "large-12 columns" -->
-      <div class="row">
-        <!--    SECTION NAVIGATION -->
-        {% if page.section_nav %}
-            {{ page.section_nav }}
-        {% endif %}
-        <div class="medium-9 columns contentzone has-section-nav" id="main" tabindex="0" role="main">
+<div id="page" class="grid-container">
+  {# This is not a NCIDS class. It should be in legacy. #}
+  {# Killed general-page-body-container #}
+  <div class="grid-row grid-gap">
+    <div class="cgdpl grid-col-12">
+      {# This content div is to support a lot of legacy JS #}
+      <div id="content" class="{{ page_type }}">
+        <main class="contentzone has-section-nav" id="main-content">
           <div class="error-page">
             {{ page.page_not_found }}
           </div>
-        </div>
+        </main>
       </div>
     </div>
   </div>
 </div>
 
-{{ page.footer }}
+{{ page.ncids_footer }}
