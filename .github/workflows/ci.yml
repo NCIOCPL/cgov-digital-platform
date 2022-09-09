@@ -111,6 +111,9 @@ jobs:
           ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
           export PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs
           blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+      - name: Run Front-end Tests
+        run: |
+          blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
       - name: Behat Tests
         timeout-minutes: 120
         run: |
