@@ -30,6 +30,10 @@ events:
             script:
               ## Use our override
               - source ${SOURCE_DIR}/scripts/pipelines/setup_app
+        - test-front-end:
+            type: script
+            script:
+              - source ${SOURCE_DIR}/scripts/pipelines/tests_front_end
         - tests:
             type: script
             script:
