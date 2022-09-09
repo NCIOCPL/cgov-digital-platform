@@ -37,7 +37,7 @@ export default class ProactiveLiveHelp {
         popupElement.id = this.options.popupID;
         popupElement.classList.add('ProactiveLiveHelpPrompt');
         popupElement.innerHTML = popupMarkup;
-        document.querySelector('body').appendChild(popupElement);
+        document.querySelector('#nci-modal-area').appendChild(popupElement);
 
         const popupLiveHelpHandler = () => {
           // the popeup should close upon opening a chat.
