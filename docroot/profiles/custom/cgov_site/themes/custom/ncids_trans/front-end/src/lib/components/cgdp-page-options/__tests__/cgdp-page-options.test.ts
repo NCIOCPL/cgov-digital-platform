@@ -9,7 +9,10 @@ import pageOptionsInit from '../cgdp-page-options';
 
 jest.mock('../../../core/analytics/eddl-util');
 
-describe('usa-banner', () => {
+describe('cgdp-page-options', () => {
+	beforeEach(() => {
+		window.print = jest.fn();
+	});
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
@@ -24,8 +27,11 @@ describe('usa-banner', () => {
       </div>
 		`;
 
+		// Mock function of window.print()
+		const printSpy = jest.spyOn(window, 'print').mockImplementation();
+
 		// Lets make a spy to ensure that trackOther is called correctly
-		const spy = jest.spyOn(eddlUtil, 'trackOther');
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
 
 		// Inject the HTML into the dom.
 		document.body.insertAdjacentHTML('beforeend', pageOption);
@@ -37,7 +43,9 @@ describe('usa-banner', () => {
 
 		fireEvent.click(print);
 
-		expect(spy).toHaveBeenCalledWith(
+		expect(printSpy).toHaveBeenCalledTimes(1);
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'PageOptions:LinkClick',
 			'PageOptions:LinkClick',
 			{
@@ -55,8 +63,11 @@ describe('usa-banner', () => {
       </div>
 		`;
 
+		// Mock function of window.print()
+		const printSpy = jest.spyOn(window, 'print').mockImplementation();
+
 		// Lets make a spy to ensure that trackOther is called correctly
-		const spy = jest.spyOn(eddlUtil, 'trackOther');
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
 
 		// Inject the HTML into the dom.
 		document.body.insertAdjacentHTML('beforeend', pageOption);
@@ -68,7 +79,9 @@ describe('usa-banner', () => {
 
 		fireEvent.click(print);
 
-		expect(spy).toHaveBeenCalledWith(
+		expect(printSpy).toHaveBeenCalledTimes(1);
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'PageOptions:LinkClick',
 			'PageOptions:LinkClick',
 			{
@@ -95,9 +108,9 @@ describe('usa-banner', () => {
 		// Create the banner JS
 		pageOptionsInit();
 
-		const print = screen.getByRole('link');
+		const email = screen.getByRole('link');
 
-		fireEvent.click(print);
+		fireEvent.click(email);
 
 		expect(spy).toHaveBeenCalledWith(
 			'PageOptions:LinkClick',
@@ -126,9 +139,9 @@ describe('usa-banner', () => {
 		// Create the banner JS
 		pageOptionsInit();
 
-		const print = screen.getByRole('link');
+		const email = screen.getByRole('link');
 
-		fireEvent.click(print);
+		fireEvent.click(email);
 
 		expect(spy).toHaveBeenCalledWith(
 			'PageOptions:LinkClick',
