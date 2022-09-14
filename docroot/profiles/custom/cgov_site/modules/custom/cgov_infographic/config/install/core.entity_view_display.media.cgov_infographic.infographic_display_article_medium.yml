@@ -34,53 +34,57 @@ mode: infographic_display_article_medium
 content:
   field_accessible_version:
     type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
     weight: 3
     region: content
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
   field_caption:
     type: text_default
-    weight: 4
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 4
+    region: content
   field_image_promotional:
     type: entity_reference_entity_view
-    weight: 0
-    region: content
     label: hidden
     settings:
       view_mode: image_crop_article
       link: false
     third_party_settings: {  }
+    weight: 0
+    region: content
   field_infographic:
     type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: cgov_article
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
     weight: 2
     region: content
-    label: hidden
-    settings:
-      image_style: cgov_article
-      image_link: ''
-    third_party_settings: {  }
   field_infographic_mobile:
     type: image
-    weight: 1
-    region: content
     label: hidden
     settings:
-      image_style: ''
       image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 1
+    region: content
   name:
     type: string
-    weight: 5
-    region: content
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 5
+    region: content
 hidden:
   body: true
   content_moderation_control: true

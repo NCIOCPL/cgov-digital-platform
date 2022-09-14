@@ -23,13 +23,15 @@ bundle: cgov_image
 mode: image_display_inline
 content:
   field_media_image:
-    weight: 0
+    type: image
     label: hidden
     settings:
-      image_style: cgov_article
       image_link: ''
+      image_style: cgov_article
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
-    type: image
+    weight: 0
     region: content
 hidden:
   content_moderation_control: true

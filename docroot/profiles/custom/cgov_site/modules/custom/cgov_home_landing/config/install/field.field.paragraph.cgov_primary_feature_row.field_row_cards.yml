@@ -22,25 +22,25 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       cgov_card_internal: cgov_card_internal
       cgov_card_external: cgov_card_external
       cgov_card_raw_html: cgov_card_raw_html
+    negate: 0
     target_bundles_drag_drop:
-      cgov_card_internal:
-        enabled: true
-        weight: 1
-      cgov_card_external:
-        enabled: true
-        weight: 2
-      cgov_card_raw_html:
-        enabled: true
-        weight: 3
-      cgov_primary_feature_row:
-        weight: -8
-        enabled: false
       body_section:
         weight: -7
+        enabled: false
+      cgov_card_external:
+        weight: 2
+        enabled: true
+      cgov_card_internal:
+        weight: 1
+        enabled: true
+      cgov_card_raw_html:
+        weight: 3
+        enabled: true
+      cgov_primary_feature_row:
+        weight: -8
         enabled: false
 field_type: entity_reference_revisions

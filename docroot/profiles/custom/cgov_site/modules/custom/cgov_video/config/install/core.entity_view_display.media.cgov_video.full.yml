@@ -34,88 +34,90 @@ bundle: cgov_video
 mode: full
 content:
   body:
-    weight: 3
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 3
     region: content
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   field_caption:
-    weight: 2
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 2
     region: content
   field_date_display_mode:
-    weight: 7
+    type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 7
     region: content
   field_date_posted:
-    weight: 4
+    type: cgov_date_formatter
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    type: cgov_date_formatter
+    weight: 4
     region: content
   field_date_reviewed:
-    weight: 5
+    type: cgov_date_formatter
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    type: cgov_date_formatter
+    weight: 5
     region: content
   field_date_updated:
-    weight: 6
+    type: cgov_date_formatter
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    type: cgov_date_formatter
+    weight: 6
     region: content
   field_media_oembed_video:
     type: oembed
-    weight: 1
     label: hidden
     settings:
       max_width: 0
       max_height: 0
     third_party_settings: {  }
+    weight: 1
     region: content
   field_related_resources:
     type: entity_reference_revisions_entity_view
-    weight: 8
-    region: content
     label: hidden
     settings:
       view_mode: list_item_title
       link: ''
     third_party_settings: {  }
+    weight: 8
+    region: content
   thumbnail:
     type: image
-    weight: 0
     label: hidden
     settings:
-      image_style: ''
       image_link: ''
-    region: content
+      image_style: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   created: true
   field_browser_title: true

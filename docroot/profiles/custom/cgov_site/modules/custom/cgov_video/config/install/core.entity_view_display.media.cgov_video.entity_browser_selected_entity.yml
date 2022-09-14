@@ -31,29 +31,31 @@ mode: entity_browser_selected_entity
 content:
   field_media_oembed_video:
     type: string
-    weight: 3
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 3
     region: content
   name:
     type: string
-    weight: 1
-    region: content
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 1
+    region: content
   thumbnail:
     type: image
-    weight: 2
     label: hidden
     settings:
-      image_style: thumbnail
       image_link: ''
-    region: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 2
+    region: content
 hidden:
   body: true
   content_moderation_control: true

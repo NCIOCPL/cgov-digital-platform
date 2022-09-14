@@ -33,28 +33,28 @@ bundle: cgov_blog_post
 mode: blog_post_title_date_author_desc
 content:
   field_author:
-    weight: 1
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 1
     region: content
   field_date_posted:
     type: datetime_default
-    weight: 0
-    region: content
     label: hidden
     settings:
       timezone_override: ''
       format_type: cgov_display_date
     third_party_settings: {  }
+    weight: 0
+    region: content
   field_list_description:
-    weight: 2
+    type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 2
     region: content
 hidden:
   body: true

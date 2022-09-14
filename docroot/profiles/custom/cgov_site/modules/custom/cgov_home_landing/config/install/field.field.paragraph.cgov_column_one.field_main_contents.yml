@@ -23,19 +23,13 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
       cgov_list: cgov_list
       cgov_content_block: cgov_content_block
+    negate: 0
     target_bundles_drag_drop:
-      cgov_card_raw_html:
-        enabled: true
-        weight: 4
-      cgov_column_one:
-        weight: -16
-        enabled: false
       body_section:
         weight: -15
         enabled: false
@@ -45,19 +39,25 @@ settings:
       cgov_card_internal:
         weight: -13
         enabled: false
+      cgov_card_raw_html:
+        weight: 4
+        enabled: true
+      cgov_column_one:
+        weight: -16
+        enabled: false
+      cgov_content_block:
+        weight: 1
+        enabled: true
+      cgov_dynamic_list:
+        weight: 3
+        enabled: true
+      cgov_list:
+        weight: 2
+        enabled: true
       cgov_primary_feature_row:
         weight: -12
         enabled: false
       cgov_secondary_feature_row:
         weight: -11
         enabled: false
-      cgov_list:
-        weight: 2
-        enabled: true
-      cgov_dynamic_list:
-        weight: 3
-        enabled: true
-      cgov_content_block:
-        weight: 1
-        enabled: true
 field_type: entity_reference_revisions
