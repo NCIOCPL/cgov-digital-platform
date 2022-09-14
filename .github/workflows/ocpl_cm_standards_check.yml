@@ -1,0 +1,14 @@
+# This is a basic workflow to help you get started with Actions
+
+name: OCPL Configuration Management Standards Check
+
+on:
+  pull_request:
+    #branches: [ "main" ]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+
+  # check pull requests
+  commitlint_remote:
+    uses: NCIOCPL/.github/workflows/ocpl_cm_standards_check.yml@workflow/v1
