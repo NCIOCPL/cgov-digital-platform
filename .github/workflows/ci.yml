@@ -1,0 +1,166 @@
+name: Main CI Workflow
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - 'hotfix/**'
+      - 'release/**'
+      - 'feature/**'
+      - 'prototype/**'
+    tags:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+    name: Build, Test and Upload Artifacts
+    ## TODO: Change this to Ubuntu 20, but this requires mysql changes.
+    runs-on: ubuntu-18.04
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+    steps:
+      - name: Setup variables
+        id: set_vars
+        run: |
+          ## PUSH
+          if [ "${{ github.event_name }}" == "push" ]; then
+            BUILD_NAME=$(sed -E 's/refs\/(heads|tags)\///; s/\//__/g;' <<< $GITHUB_REF)
+            BRANCH_NAME=$(sed -E 's/refs\/(heads|tags)\///;' <<< $GITHUB_REF)
+            COMMIT_HASH=$(echo "${GITHUB_SHA}")
+          ## PULL_REQUEST
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            BUILD_NAME=$(echo "pr-${{ github.event.pull_request.number }}")
+            BRANCH_NAME=$(echo "pr-${{ github.event.pull_request.number }}")
+            COMMIT_HASH=$(echo "${{ github.event.pull_request.head.sha }}")
+          else
+            ## ERROR
+            exit 1
+          fi
+          ## For step checks and artifact deployment path.
+          ## Same for push and PR
+          export REPO_FULL=${{ github.repository }}
+          export REPO_RE='([^/]+)/(.*)'
+          [[ "$REPO_FULL" =~ $REPO_RE ]]
+          REPO_OWNER=$(echo "${BASH_REMATCH[1]}")
+          REPO_NAME=$(echo "${BASH_REMATCH[2]}")
+          ## Set step outputs for later use
+          echo ::set-output name=build_name::${BUILD_NAME}
+          echo ::set-output name=branch_name::${BRANCH_NAME}
+          echo ::set-output name=commit_hash::${COMMIT_HASH}
+          echo ::set-output name=repo_owner::${REPO_OWNER}
+          echo ::set-output name=repo_name::${REPO_NAME}
+      ## This clones and checks out.
+      - name: Checkout branch from Github
+        uses: actions/checkout@v2
+      ## Setup node and npm caching.
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.0'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: Install NPM 8
+        run: |
+          npm install -g npm@8.1.0
+      ## Setup PHP and Composer Caching
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          ## This list of extensions matches those we install with our docker file, then I removed
+          ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
+          extensions: bz2, curl, gd, json, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
+          tools: composer:v2
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Composer install
+        run: |
+          composer install
+      ## Install BLT and Drush Launchers
+      - name: Install BLT and Drush Launchers
+        run: |
+          curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar && chmod +x /usr/local/bin/drush
+          curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.0.3/blt.phar && chmod +x /usr/local/bin/blt
+      ## Create MySQL databases
+      - name: Turn on MySQL and Create DBs
+        run: |
+          sudo /etc/init.d/mysql start
+      - name: Setup Env
+        run: |
+          ## The setup env script does a few things we cannot.
+          mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS drupal"
+          mysql -u root -proot -e "GRANT ALL ON drupal.* to 'drupal'@'%' IDENTIFIED BY 'drupal'"
+          mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest"
+          mysql -u root -proot -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+          ## We don't set git info for right now as we are in the NCIOCPL origin right now.
+      - name: Validate
+        run: |
+          blt validate --define drush.alias='${drush.aliases.ci}' --ansi --verbose --no-interaction
+      - name: Setup App
+        run: |
+          ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
+          export PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs
+          blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+      - name: Behat Tests
+        timeout-minutes: 120
+        run: |
+          ## Behat tests will run the server
+          blt tests:behat:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+      - name: PHP Unit Tests
+        timeout-minutes: 120
+        run: |
+          ## Setup Simpletest info for kernel & functional tests
+          export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
+          export SIMPLETEST_DB=mysql://simpletest:simpletest@localhost/simpletest
+
+          ## PHP Unit tests do not start the server
+          ## drush rs is equivelent to blt tests:server:start, except it allows us to bind to all ips on the box.
+          ## blt was not letting us bind to those IPs we wanted.
+          drush rs 0.0.0.0:8888 &
+          blt custom:paratest  --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+          blt tests:server:kill --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+      - name: Build Artifact
+        env:
+          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+        run: |
+          blt deploy:check-dirty --ansi --verbose --no-interaction
+          blt artifact:build -D deploy.dir=${NEW_BUILD_DIR} -D deploy.docroot=${NEW_BUILD_DIR}/docroot --ansi --verbose --no-interaction
+      - name: Create Build Information
+        env:
+          BUILD_INFO: ${{ toJson(steps.set_vars.outputs) }}
+          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+        run: |
+          echo $BUILD_INFO
+          echo $BUILD_INFO > ${NEW_BUILD_DIR}/build.json
+      - name: Setup SSH Keys and known_hosts
+        run: |
+          mkdir -p $HOME/.ssh
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.ACE_SSH_KEY }}"
+          echo ${{ secrets.ACE_KNOWN_HOST }} >> $HOME/.ssh/known_hosts
+      - name: Setup Git User Name
+        run: |
+          git config --global user.name "Github Actions"
+      - name: Push Artifact to Acquia
+        run: ./.github/scripts/push_acquia_git.sh
+        shell: bash
+        env:
+          ACE_GIT_SUBSCRIPTION: ${{ secrets.ACE_GIT_SUBSCRIPTION }}
+          ACE_GIT_HOST: ${{ secrets.ACE_GIT_HOST }}
+          ARTIFACT_GIT_DIR: ${{ format('{0}{1}', runner.temp, '/artifact-git') }}
+          ACE_BRANCH_NAME: ${{ format('gh-build-{0}', steps.set_vars.outputs.build_name) }}
+          NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+          ## This also uses available envs:
+          ## - GITHUB_REF
+          ## - GITHUB_RUN_ID
+          ## - GITHUB_RUN_NUMBER
