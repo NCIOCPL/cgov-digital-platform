@@ -85,7 +85,7 @@ At some point in time there will be multiple websites within our project. (e.g. 
   * MySQL
 * web
   * OS: Ubuntu Bionic
-  * PHP 7.4
+  * PHP 8.0
     * bz2
     * cli
     * common
@@ -121,7 +121,7 @@ TODO:
 1. Setup the xdebug.ini overrides (VSCode & PHPStorm)
 1. Edit docker.env and set `XDEBUG_SAPI` to `apache2` in order to enable the XDEBUG module for apache. (If you *really* need to debug
   command line, then set it to `cli`.)
-    1. Check /etc/php/7.2/apache2/conf.d/xdebug.ini
+    1. Check /etc/php/8.0/apache2/conf.d/xdebug.ini
 2. Setup the docker-compose.override.yml.sample
 3. Test & document
 
