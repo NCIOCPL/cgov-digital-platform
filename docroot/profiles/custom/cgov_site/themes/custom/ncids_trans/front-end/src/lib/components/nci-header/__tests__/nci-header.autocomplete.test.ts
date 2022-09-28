@@ -1,13 +1,15 @@
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, screen } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as nock from 'nock';
+
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 import headerInit from '../nci-header';
+
 import { nciHeaderAutosuggestDom } from './nci-header.autosuggest.dom';
 import { headerWithDataMenuId as nciHeaderWithoutSearchCollection } from './nci-header.mega-menu.dom';
 import { headerWithoutSearch } from './nci-header.without-search.dom';
-import * as nock from 'nock';
-import userEvent from '@testing-library/user-event';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -18,6 +20,10 @@ describe('nci-header - autocomplete analytics', () => {
 		consoleError = jest.spyOn(console, 'error').mockImplementation(() => {
 			return null;
 		});
+		window.ncidsNavInfo = {
+			nav: { id: '309', menu_type: 'mobile-nav' },
+			item_id: 309,
+		};
 	});
 
 	beforeAll(() => {

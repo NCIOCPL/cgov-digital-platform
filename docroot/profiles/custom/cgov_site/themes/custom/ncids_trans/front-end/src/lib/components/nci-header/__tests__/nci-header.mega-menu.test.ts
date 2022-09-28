@@ -30,6 +30,12 @@ describe('nci-header - mega menu analytics', () => {
 		jest.restoreAllMocks();
 	});
 
+	// Mock stub out mobile menu stuff so tests don't break.
+	window.ncidsNavInfo = {
+		nav: { id: 'this_is_bogus', menu_type: 'mobile-nav' },
+		item_id: 'this_too_is_bogus',
+	};
+
 	it('handles mega menu item click with base path', async () => {
 		const scope = nock('http://localhost')
 			.get('/nano/taxonomy/term/1234/mega-menu')

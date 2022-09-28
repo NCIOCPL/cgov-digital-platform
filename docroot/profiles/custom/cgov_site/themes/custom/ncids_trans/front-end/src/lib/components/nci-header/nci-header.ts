@@ -6,16 +6,31 @@ import {
 import { CgdpMobileMenuAdaptor } from './cgdp-mobile-menu';
 import CgdpMegaMenuAdaptor from './cgdp-mega-menu/cgdp-megamenu-adapter';
 import CgdpAutocompleteAdapter from './cgdp-autocomplete/cgdp-autocomplete-adapter';
+import { DrupalNavApiReference } from './cgdp-mobile-menu/types';
+
 import {
 	primaryNavLinkClickHandler,
 	megaMenuOpenHandler,
 	megaMenuLinkClickHandler,
 } from './mega-menu-analytics-handlers';
 import { searchSubmitHandler } from './auto-suggest-analytics-handlers';
+
 declare global {
 	interface CDEConfig {
 		sitewideSearchConfig: {
 			searchApiServer: string;
+		};
+	}
+}
+
+declare global {
+	interface Window {
+		/** Defines the mobile navigation information for the current page. */
+		ncidsNavInfo: {
+			/** The navigation to display */
+			nav: DrupalNavApiReference;
+			/** The selected menu item in the nav menu */
+			item_id: string | number;
 		};
 	}
 }
@@ -85,7 +100,6 @@ const initialize = () => {
 		console.error('Cannot find nci header element.');
 		return;
 	}
-	const mobileMenuSource = new CgdpMobileMenuAdaptor();
 
 	// A microsite, or language, under www.cancer.gov would need
 	// to have a baseUrl like /nano.
@@ -99,6 +113,22 @@ const initialize = () => {
 	});
 
 	const megaMenuSource = new CgdpMegaMenuAdaptor(client);
+
+	// We need to get the menu information off the window.
+	if (!window.ncidsNavInfo) {
+		console.error('Mobile nav information missing on page');
+		return;
+	}
+
+	// This is a little dicey here as the nav info could be bad.
+	// todo: add a bit more checks to make sure the nav info is the right shape.
+	const mobileMenuSource = new CgdpMobileMenuAdaptor(
+		false,
+		client,
+		window.ncidsNavInfo?.item_id?.toString(),
+		window.ncidsNavInfo.nav,
+		document.documentElement.lang as 'en' | 'es'
+	);
 
 	// NOTE: this is on the document. This is because the nci-header does not
 	// care about the contents once it is show. It is completed decoupled.
