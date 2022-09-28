@@ -17,7 +17,8 @@ const initialize = () => {
 		console.error('Cannot find nci header element.');
 		return;
 	}
-	const mobileMenuSource = new CgdpMobileMenuAdaptor();
+
+	const mobileMenuSource = new CgdpMobileMenuAdaptor(false);
 
 	// This is the client that can be used for both the MobileMenuAdapter and the
 	// MegaMenuAdapter.
