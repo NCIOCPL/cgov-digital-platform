@@ -41,8 +41,9 @@
         "drupal/akamai": "3.x-dev@dev",
         "drupal/config_perms": "^2",
         "drupal/console": "^1.9.7",
-        "drupal/core-composer-scaffold": "~9.4.0",
-        "drupal/core-recommended": "~9.4.0",
+        "drupal/core": "~9.4.7",
+        "drupal/core-composer-scaffold": "~9.4.7",
+        "drupal/core-recommended": "~9.4.7",
         "drupal/ctools": "^3.7.0",
         "drupal/devel": "^4.1",
         "drupal/entity_browser": "^2.6.0",
@@ -88,7 +89,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/core-dev": "~9.4.0",
+        "drupal/core-dev": "~9.4.7",
         "mglaman/drupal-check": "^1.1",
         "phpspec/prophecy-phpunit": "^2"
     },
@@ -159,7 +160,8 @@
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.saml.patch",
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.https.patch",
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.hsts.patch",
-            "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.acsf.patch"
+            "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.acsf.patch",
+            "cd docroot && patch -p1 <../patches/drupal-scaffold/default.settings.php.translations.patch"
         ]
     },
     "scripts-descriptions": {
