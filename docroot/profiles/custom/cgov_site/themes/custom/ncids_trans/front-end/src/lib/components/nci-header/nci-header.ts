@@ -17,7 +17,8 @@ const initialize = () => {
 		console.error('Cannot find nci header element.');
 		return;
 	}
-	const mobileMenuSource = new CgdpMobileMenuAdaptor();
+
+	const mobileMenuSource = new CgdpMobileMenuAdaptor(false);
 
 	// A microsite, or language, under www.cancer.gov would need
 	// to have a baseUrl like /nano.

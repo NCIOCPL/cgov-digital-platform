@@ -10,6 +10,7 @@
 use Drupal\node\Entity\Node;
 use Drupal\Core\Language\LanguageInterface;
 
+
 // Global variables for later use.
 global $_theme_name, $_path_to_ncids_trans;
 $_theme_name = \Drupal::theme()->getActiveTheme()->getName();
@@ -162,5 +163,37 @@ function ncids_trans_page_attachments_alter(&$attachments) {
     if (isset($item[0]["#attributes"]["name"]) && $item[0]["#attributes"]["name"] == 'viewport') {
       $attachments['#attached']['html_head'][$key][0]["#attributes"]["content"] = "width=device-width, user-scalable=yes, initial-scale=1, minimum-scale=1";
     }
+  }
+
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'script',
+      '#value' => _ncids_trans_get_initial_nav_info(),
+      '#attributes' => [
+        'id' => 'ncids-nav-info',
+      ],
+      // Ensure this block is before the script file.
+      '#weight' => -10,
+    ],
+    'ncids-nav-info',
+  ];
+}
+
+/**
+ * @todo
+ * @return string
+ */
+function _ncids_trans_get_initial_nav_info() {
+  /** @var \Drupal\cgov_core\Services\CgovNavigationManager $nav_manager */
+  $nav_manager = \Drupal::service('cgov_core.cgov_navigation_manager');
+  $nav_manager->getClosestSiteSection();
+  $navRoot = $nav_manager->getNavRoot('field_section_nav_root') ?? $nav_manager->getNavRoot('field_main_nav_root');
+  $type = $nav_manager->getNavRoot('field_section_nav_root') ? 'section-nav' : 'mobile-nav';
+
+  if ($navRoot && $navRoot->isNavigable()) {
+    $section_root_tid = $navRoot->getTerm()->id(); //11646
+    return 'window.ncidsNavInfo = {"id": "'.$section_root_tid.'", "menu_type": "' . $type . '"};';
+  } else {
+    return '[]';
   }
 }
