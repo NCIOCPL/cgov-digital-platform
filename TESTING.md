@@ -12,10 +12,10 @@ As a full Drupal stack is required, test must be run inside of the container.
 ## Running tests
 
 To make testing work you must:
-* run it inside of our [docker stack](./docker/README.md).
-* ensure that you have already completed [3. Initial Setup of Site](./docker/README.md#3-initial-setup-of-site)
+* run it inside of our [docker stack](https://github.com/NCIOCPL/cgov-digital-platform/wiki/Onboarding).
+* ensure that you have already completed [3. Get your Drupal Site Up and Running](https://github.com/NCIOCPL/cgov-digital-platform/wiki/Onboarding#3-get-your-drupal-site-up-and-running)
 
-Run `blt test:phpunit`
+Run `blt custom:paratest`
 
 ## Making Tests
 
