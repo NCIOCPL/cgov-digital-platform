@@ -3,7 +3,7 @@
 This project provides the Cancer.gov Digital Platform. A Drupal based Acquia BLT integrated solution with dependencies managed by [Composer](https://getcomposer.org/).
 
 ## Running the Development Environment
-See [Docker Instructions](docker/README.md)
+See [Onboarding Instructions](https://github.com/NCIOCPL/cgov-digital-platform/wiki/Onboarding)
 
 ## Running cgov Tests
 See [Testing Instructions](TESTING.md)
