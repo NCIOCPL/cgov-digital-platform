@@ -19,13 +19,14 @@ const initialize = () => {
 	}
 	const mobileMenuSource = new CgdpMobileMenuAdaptor();
 
+	// A microsite, or language, under www.cancer.gov would need
+	// to have a baseUrl like /nano.
+	const baseURL = headerEl.dataset.basePath ?? '/';
+
 	// This is the client that can be used for both the MobileMenuAdapter and the
 	// MegaMenuAdapter.
 	const client = axios.create({
-		// todo: the baseUrl should be set to the base url of the site.
-		// A microsite, or language, under www.cancer.gov would need
-		// to have a baseUrl like /nano.
-		baseURL: '/',
+		baseURL,
 		responseType: 'json',
 	});
 
