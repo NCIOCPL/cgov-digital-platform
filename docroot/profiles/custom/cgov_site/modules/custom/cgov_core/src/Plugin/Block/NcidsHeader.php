@@ -340,6 +340,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     return Cache::mergeContexts(
       parent::getCacheContexts(),
       [
+        'url.site',
         'languages:language_interface',
         'nci_primary_nav_active_path',
       ]

@@ -7,6 +7,7 @@ import * as eddlUtil from '../../../core/analytics/eddl-util';
 
 import headerInit from '../nci-header';
 import { headerWithDataMenuId } from './nci-header.mega-menu.dom';
+import { headerWithDataMenuIdBasePath } from './nci-header.mega-menu-basepath.dom';
 
 import * as nock from 'nock';
 
@@ -27,6 +28,35 @@ describe('nci-header - mega menu analytics', () => {
 		nock.cleanAll();
 		nock.enableNetConnect();
 		jest.restoreAllMocks();
+	});
+
+	it('handles mega menu item click with base path', async () => {
+		const scope = nock('http://localhost')
+			.get('/nano/taxonomy/term/1234/mega-menu')
+			.once()
+			.replyWithFile(200, __dirname + '/data/mega-menu-content.json');
+
+		// Add the header to the body
+		document.body.appendChild(headerWithDataMenuIdBasePath());
+
+		// Init the header
+		headerInit();
+
+		// Get the button from the primary nav.
+		const primaryNavItem = await screen.findByRole('button', {
+			name: 'First Section',
+		});
+
+		// Open the menu by clicking the button.
+		fireEvent.click(primaryNavItem);
+
+		const mmPrimary = await screen.findByRole('link', {
+			name: 'primary label',
+		});
+
+		expect(mmPrimary).toBeInTheDocument();
+
+		scope.done();
 	});
 
 	it('handles mega menu item clicks', async () => {
