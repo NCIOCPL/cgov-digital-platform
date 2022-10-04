@@ -109,7 +109,6 @@ jobs:
       - name: Setup App
         run: |
           ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
-          export PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs
           blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
       - name: Behat Tests
         timeout-minutes: 120
