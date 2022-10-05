@@ -1,0 +1,10 @@
+diff --git docroot/sites/default/default.settings.php docroot/sites/default/default.settings.php
+index f3dca008fa..ec1fb8aa08 100644
+--- docroot/sites/default/default.settings.php
++++ docroot/sites/default/default.settings.php
+@@ -794,3 +794,5 @@
+ # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+ #   include $app_root . '/' . $site_path . '/settings.local.php';
+ # }
++$config['locale.settings']['translation']['use_source'] = 'local';
++$config['locale.settings']['translation']['path'] = DRUPAL_ROOT . '/translations';
