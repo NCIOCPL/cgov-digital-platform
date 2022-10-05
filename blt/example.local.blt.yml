@@ -14,3 +14,12 @@ drupal:
 #drush:
 #  aliases:
 #    local: local.mysite.dev
+
+tests.run-server: true
+tests.drupal.sudo-run-tests: false
+tests.chrome.args: '--disable-dev-shm-usage --no-gpu'
+# The local.hostname must be set to 127.0.0.1:8888 because we are using drush runserver to test the site.
+project.local.hostname: 127.0.0.1:8888
+drush.debug: false
+## Stop phpunit from trying to write to root.
+reports.localDir: /tmp
