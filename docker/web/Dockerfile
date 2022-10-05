@@ -62,29 +62,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
   git \
   imagemagick \
   vim \
-  zip
-
-# Install google chrome (for some reason, tacking on gnupg to previous list failed).
-# https://github.com/NCIOCPL/cgov-digital-platform/issues/48
-# See also https://hub.docker.com/r/selenium/node-chrome/~/dockerfile/
-RUN apt install gnupg -y
-RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
-  && apt-get update -qqy \
-  && apt-get -qqy install google-chrome-stable \
-  && rm /etc/apt/sources.list.d/google-chrome.list \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-
-# Install the chrome webdriver.
-# Using 'latest' in download URL no longer works, apparently.
-RUN CD_VERSION=2.44 && echo "Using chromedriver version: "$CD_VERSION \
-  && curl -o /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CD_VERSION/chromedriver_linux64.zip \
-  && rm -rf /opt/selenium/chromedriver \
-  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
-  && rm /tmp/chromedriver_linux64.zip \
-  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-latest \
-  && chmod 755 /opt/selenium/chromedriver-latest \
-  && ln -fs /opt/selenium/chromedriver-latest /usr/bin/chromedriver
+  zip \
+  chromium-chromedriver
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
