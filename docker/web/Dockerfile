@@ -63,6 +63,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
   imagemagick \
   vim \
   zip \
+  autoconf libtool m4 pkg-config nasm \
+  libpng-dev \
   chromium-chromedriver
 
 # Copy up the available sites config. The startup script
