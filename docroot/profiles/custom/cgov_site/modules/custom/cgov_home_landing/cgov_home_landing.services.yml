@@ -1,0 +1,6 @@
+services:
+  cgov_home_landing.twig.CgovHomeLandingPageTwigExtension:
+    class: Drupal\cgov_home_landing\CgovHomeLandingPageTwigExtension
+    arguments: ['@request_stack']
+    tags:
+      - { name: twig.extension }
