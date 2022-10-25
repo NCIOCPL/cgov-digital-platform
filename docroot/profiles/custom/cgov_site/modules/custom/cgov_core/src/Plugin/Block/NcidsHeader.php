@@ -6,6 +6,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -17,6 +18,7 @@ use Drupal\link\LinkItemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\cgov_core\NavItem;
+use Drupal\Core\File\FileUrlGenerator;
 
 /**
  * Provides a 'NCIDS Header' block.
@@ -72,6 +74,20 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
   protected $requestContext;
 
   /**
+   * The File URL Generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGenerator
+   */
+  protected $fileUrlGenerator;
+
+  /**
+   * The Entity Type Manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs an NCIDS Header object.
    *
    * @param array $configuration
@@ -92,6 +108,10 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    *   The path validator.
    * @param \Drupal\Core\Routing\RequestContext $request_context
    *   The request context.
+   * @param \Drupal\Core\File\FileUrlGenerator $file_url_generator
+   *   The file url generator.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
     array $configuration,
@@ -102,7 +122,9 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     ConfigFactoryInterface $config_factory,
     AliasManagerInterface $alias_manager,
     PathValidatorInterface $path_validator,
-    RequestContext $request_context
+    RequestContext $request_context,
+    FileUrlGenerator $file_url_generator,
+    EntityTypeManagerInterface $entity_type_manager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
@@ -111,6 +133,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     $this->aliasManager = $alias_manager;
     $this->pathValidator = $path_validator;
     $this->requestContext = $request_context;
+    $this->fileUrlGenerator = $file_url_generator;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -126,7 +150,9 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       $container->get('config.factory'),
       $container->get('path_alias.manager'),
       $container->get('path.validator'),
-      $container->get('router.request_context')
+      $container->get('router.request_context'),
+      $container->get('file_url_generator'),
+      $container->get('entity_type.manager')
     );
   }
 
@@ -138,6 +164,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       'home_page_title' => 'Home Page',
       'search_results_page' => '',
       'autosuggest_collection' => '',
+      'logo_use_custom' => FALSE,
     ];
   }
 
@@ -193,11 +220,52 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    */
   private function getLogo() {
     $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    $baseUrl = theme_get_setting('logo.url');
 
-    // @todo We should make a svg_symbol theme hook and return that.
-    // The templates would then output the <svg><use> bit for us.
-    return $baseUrl . '#' . $langcode;
+    $desktop_logo = sprintf('module://cgov_core/assets/images/logos/logo_%s_desktop.svg', $langcode === 'es' ? 'es' : 'en');
+    $mobile_logo = sprintf('module://cgov_core/assets/images/logos/logo_%s_mobile.svg', $langcode === 'es' ? 'es' : 'en');
+
+    // Load the custom logos.
+    if ($this->configuration['logo_use_custom']) {
+      // Both should be set, but both might not, so check.
+      if (!empty($this->configuration['logo_desktop_uri'])) {
+        $desktop_logo = $this->configuration['logo_desktop_uri'];
+      }
+      if (!empty($this->configuration['logo_mobile_uri'])) {
+        $mobile_logo = $this->configuration['logo_mobile_uri'];
+      }
+    }
+
+    try {
+      $desktop_url = $this->fileUrlGenerator->generate($desktop_logo);
+      $mobile_url = $this->fileUrlGenerator->generate($mobile_logo);
+
+      return [
+        '#type' => 'html_tag',
+        '#tag' => 'picture',
+        'child' => [
+          [
+            '#type' => 'html_tag',
+            '#tag' => 'source',
+            '#attributes' => [
+              'media' => '(min-width: 1024px)',
+              'srcset' => $desktop_url->toString(),
+            ],
+          ],
+          [
+            '#type' => 'html_tag',
+            '#tag' => 'img',
+            '#attributes' => [
+              'src' => $mobile_url->toString(),
+              'alt' => '',
+            ],
+          ],
+        ],
+      ];
+    }
+    catch (\Exception $err) {
+      // @todo Try/catch this.
+      return [];
+    }
   }
 
   /**
@@ -579,7 +647,77 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       '#required' => FALSE,
     ];
 
+    /* *******************************
+     * Logo Mess Starts Here
+     * Much of this is repurposed from core theme settings.
+     * *******************************/
+
+    $form['logo'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('NCIDS Header Logo'),
+      '#description' => $this->t('Configures the settings for the NCIDS Header Logo.'),
+    ];
+
+    $form['logo']['use_custom_logo'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use a custom logo?'),
+      '#default_value' => $this->configuration['logo_use_custom'],
+    ];
+    $form['logo']['logos'] = [
+      '#type' => 'container',
+      '#states' => [
+        // Hide the logo upload fields when using the default logo.
+        'invisible' => [
+          'input[name="settings[logo][use_custom_logo]"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+    $form['logo']['logos']['desktop_logo_upload'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Upload desktop logo image'),
+      '#description' => $this->t("Use this field to upload your desktop logo."),
+      '#upload_validators' => [
+        'file_validate_extensions' => ['svg'],
+      ],
+      '#upload_location' => 'public://ncids_header/logos/',
+    ];
+    if (isset($this->configuration['logo_desktop_fid'])) {
+      $form['logo']['logos']['desktop_logo_upload']['#default_value'] = [$this->configuration['logo_desktop_fid']];
+    }
+
+    $form['logo']['logos']['mobile_logo_upload'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Upload mobile logo image'),
+      '#description' => $this->t("Use this field to upload your mobile logo."),
+      '#upload_validators' => [
+        'file_validate_extensions' => ['svg'],
+      ],
+      '#upload_location' => 'public://ncids_header/logos/',
+    ];
+    if (isset($this->configuration['logo_mobile_fid'])) {
+      $form['logo']['logos']['mobile_logo_upload']['#default_value'] = [$this->configuration['logo_mobile_fid']];
+    }
+
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockValidate($form, FormStateInterface $form_state) {
+    $logo_config = $form_state->getValue('logo');
+    $use_custom_logo = $logo_config['use_custom_logo'];
+    if ($use_custom_logo) {
+      $logos = $logo_config['logos'];
+      // Now we need to check the logos.
+      if (
+        empty($logos) ||
+        empty($logos['desktop_logo_upload']) ||
+        empty($logos['mobile_logo_upload'])
+      ) {
+        $form_state->setError($form['logo']['logos'], $this->t('If you use a custom logo you must supply both logos.'));
+      }
+    }
   }
 
   /**
@@ -590,9 +728,56 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     $this->configuration['home_page_title'] = $header_config['home_page_title'];
     $this->configuration['search_results_page'] = $header_config['search_results_page'];
     $this->configuration['autosuggest_collection'] = $header_config['autosuggest_collection'];
+
+    $logo_config = $form_state->getValue('logo');
+    $this->configuration['logo_use_custom'] = $logo_config['use_custom_logo'];
+
+    // Don't use the default, but upload logos.
+    if ($this->configuration['logo_use_custom']) {
+      $file_storage = $this->entityTypeManager->getStorage('file');
+
+      // So a couple of things here:
+      // 1. The managed_file element will take in a file id as a default value,
+      //    which allows the editor to see the previously selected file, and
+      //    even provides a link to the file. So we to save the fid in the
+      //    config.
+      // 2. I do not want to load the 2 file entities every single time the
+      //    header is loaded. So we also need to save the file URI in the
+      //    config.
+      // Finally, while I do have guards to not blow up if a file is not loaded,
+      // I don't know how this could happen. The validator above should make
+      // sure there are files.
+      if (isset($logo_config['logos']['desktop_logo_upload'][0])) {
+        $fid = $logo_config['logos']['desktop_logo_upload'][0];
+        /** @var \Drupal\file\FileInterface */
+        $file = $file_storage->load($fid);
+        $this->configuration['logo_desktop_fid'] = $fid;
+        $this->configuration['logo_desktop_uri'] = $file->getFileUri();
+      }
+      else {
+        $this->configuration['logo_desktop_fid'] = '';
+        $this->configuration['logo_desktop_uri'] = '';
+      }
+      if (isset($logo_config['logos']['mobile_logo_upload'][0])) {
+        $fid = $logo_config['logos']['mobile_logo_upload'][0];
+        /** @var \Drupal\file\FileInterface */
+        $file = $file_storage->load($fid);
+        $this->configuration['logo_mobile_fid'] = $fid;
+        $this->configuration['logo_mobile_uri'] = $file->getFileUri();
+      }
+      else {
+        $this->configuration['logo_mobile_fid'] = '';
+        $this->configuration['logo_mobile_uri'] = '';
+      }
+    }
+    /* NOTE: We are not going to deal with cases in which someone set custom
+     * logos, then unchecked the box, then checked it again and expects the
+     * logo files to be cleared out. Also we are not going to worry about
+     * deleting old logo files when new ones are uploaded. If this becomes a
+     * problem, we will deal with the user that is constantly changing the
+     * site's logos. :)
+     */
   }
 
   /* TODO: Add BlockForm to setup the search bits */
-  /* I guess we have an English and a Spanish block? */
-
 }
