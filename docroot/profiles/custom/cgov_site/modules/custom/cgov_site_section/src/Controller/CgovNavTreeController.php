@@ -470,7 +470,7 @@ class CgovNavTreeController extends ControllerBase {
    */
   public function getParentTerm(TermInterface $term) {
     /** @var \Drupal\taxonomy\TermStorageInterface */
-    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $term_storage = $this->entityTypeManager()->getStorage('taxonomy_term');
     /** @var \Drupal\Core\Entity\EntityInterface[] */
     $parents = $term_storage->loadParents($term->id());
     // Load parents return an associative array where key is $tid
