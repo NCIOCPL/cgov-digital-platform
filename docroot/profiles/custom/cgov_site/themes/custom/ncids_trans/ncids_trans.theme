@@ -184,15 +184,15 @@ function ncids_trans_page_attachments_alter(&$attachments) {
  * @return string
  */
 function _ncids_trans_get_initial_nav_info() {
+
   /** @var \Drupal\cgov_core\Services\CgovNavigationManager $nav_manager */
   $nav_manager = \Drupal::service('cgov_core.cgov_navigation_manager');
-  $nav_manager->getClosestSiteSection();
-  $navRoot = $nav_manager->getNavRoot('field_section_nav_root') ?? $nav_manager->getNavRoot('field_main_nav_root');
-  $type = $nav_manager->getNavRoot('field_section_nav_root') ? 'section-nav' : 'mobile-nav';
 
-  if ($navRoot && $navRoot->isNavigable()) {
-    $section_root_tid = $navRoot->getTerm()->id(); //11646
-    return 'window.ncidsNavInfo = {"id": "'.$section_root_tid.'", "menu_type": "' . $type . '"};';
+  $nav_info = $nav_manager->getClosestNavForMobile();
+
+  if ($nav_info) {
+    $nav_js = '{ id: "' . $nav_info['initial_nav']['id'] .'", menu_type: "' . $nav_info['initial_nav']['menu_type'] . '"}';
+    return 'window.ncidsNavInfo = { nav: ' . $nav_js . ', item_id: ' . $nav_info['initial_item'] . '};';
   } else {
     return '[]';
   }
