@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\cgov_core\NavItem;
 use Drupal\Core\File\FileUrlGenerator;
+use Drupal\file\FileUsage\FileUsageInterface;
 
 /**
  * Provides a 'NCIDS Header' block.
@@ -88,6 +89,13 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
+   * File usage service.
+   *
+   * @var \Drupal\file\FileUsage\FileUsageInterface
+   */
+  protected $fileUsageSvc;
+
+  /**
    * Constructs an NCIDS Header object.
    *
    * @param array $configuration
@@ -112,6 +120,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    *   The file url generator.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\file\FileUsage\FileUsageInterface $file_usage_svc
+   *   The file usage service.
    */
   public function __construct(
     array $configuration,
@@ -124,7 +134,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     PathValidatorInterface $path_validator,
     RequestContext $request_context,
     FileUrlGenerator $file_url_generator,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
+    FileUsageInterface $file_usage_svc
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
@@ -135,6 +146,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     $this->requestContext = $request_context;
     $this->fileUrlGenerator = $file_url_generator;
     $this->entityTypeManager = $entity_type_manager;
+    $this->fileUsageSvc = $file_usage_svc;
   }
 
   /**
@@ -152,7 +164,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       $container->get('path.validator'),
       $container->get('router.request_context'),
       $container->get('file_url_generator'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('file.usage')
     );
   }
 
@@ -751,8 +764,11 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
         $fid = $logo_config['logos']['desktop_logo_upload'][0];
         /** @var \Drupal\file\FileInterface */
         $file = $file_storage->load($fid);
+        $file->setPermanent();
+        $file->save();
         $this->configuration['logo_desktop_fid'] = $fid;
         $this->configuration['logo_desktop_uri'] = $file->getFileUri();
+        $this->fileUsageSvc->add($file, 'cgov_core', 'block', $this->getPluginId());
       }
       else {
         $this->configuration['logo_desktop_fid'] = '';
@@ -762,8 +778,11 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
         $fid = $logo_config['logos']['mobile_logo_upload'][0];
         /** @var \Drupal\file\FileInterface */
         $file = $file_storage->load($fid);
+        $file->setPermanent();
+        $file->save();
         $this->configuration['logo_mobile_fid'] = $fid;
         $this->configuration['logo_mobile_uri'] = $file->getFileUri();
+        $this->fileUsageSvc->add($file, 'cgov_core', 'block', $this->getPluginId());
       }
       else {
         $this->configuration['logo_mobile_fid'] = '';
