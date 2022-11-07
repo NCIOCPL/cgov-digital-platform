@@ -1,3 +1,4 @@
+import axios, { Axios } from 'axios';
 import type {
 	MobileMenuAdaptor,
 	MobileMenuData,
@@ -10,6 +11,7 @@ import type {
   - response can be slow, needs better ux
   - what do if api fails
   - MobileMenuData and MobileMenuItem should probably not be so different
+  - move types to own file
  */
 
 /**
@@ -38,15 +40,23 @@ type DrupalParentInfo = {
  */
 type DrupalSectionNav = {
 	nav: DrupalMenuItem;
-	parent_info: DrupalParentInfo;
+	parent_info?: DrupalParentInfo;
 };
 
 /**
  * @todo jsdoc
  */
 type NCIDSNavInfo = {
+	nav: NCIDSNavInfoNav;
+	item_id: string | number;
+};
+
+/**
+ * @todo jsdoc
+ */
+type NCIDSNavInfoNav = {
 	id: string | number;
-	menu_type: string; // todo can ts convert to menuType?
+	menu_type: string;
 };
 
 /**
@@ -66,30 +76,30 @@ declare let window: ExtendedWindow;
  */
 class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	/**
+	 * Instance of an axios client.
+	 */
+	client: Axios;
+
+	/**
 	 * Data menu id - requested id of data to display.
 	 * @protected
 	 */
 	protected initialNavMenuId?: string | number;
 
 	/**
-	 * Fetched menu data from api, converted to required type for adaptor.
+	 * Fetched menu data from api.
 	 * @protected
 	 */
-	protected cgdpMenuData: MobileMenuData = {
-		id: '',
-		label: '',
-		path: '',
-		langcode: '',
-		hasChildren: false,
-		items: [],
-		parent: null,
+	protected cgdpMenuData: DrupalSectionNav = {
+		nav: {
+			children: [],
+			//children?: DrupalMenuItem[]; // whomp whomp no dice
+			id: '',
+			label: '',
+			langcode: 'en',
+			path: '',
+		},
 	};
-
-	/**
-	 * Fetched parent data from api.
-	 * @protected
-	 */
-	protected parentNav?: NCIDSNavInfo;
 
 	/**
 	 * `.usa-sidenav` element if one is found; does not exist on home and landing pages
@@ -98,16 +108,31 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	protected sidenav: HTMLElement | null;
 
 	/**
-	 * @Bryan this is your tree.
+	 * Fetched menu data from api, converted to required type for adaptor.
 	 * @todo jsdoc
 	 */
-	currentNav?: MobileMenuData;
+	// navTree: MobileMenuData = {
+	// 	id: '',
+	// 	label: '',
+	// 	path: '',
+	// 	langcode: '',
+	// 	hasChildren: false,
+	// 	items: [],
+	// 	parent: null,
+	// };
 
-	/**
-	 * @todo jsdoc
-	 * @todo wouldn't it be nice if MobileMenuData was just a MobileMenuItem[] in the package?
-	 */
-	currentNavParent: null | MobileMenuItem | MobileMenuData = null;
+	navTree: DrupalMenuItem = {
+		children: [],
+		//children?: DrupalMenuItem[]; // whomp whomp no dice
+		id: '',
+		label: '',
+		langcode: 'en',
+		path: '',
+	};
+
+	parent: DrupalMenuItem | null = null;
+
+	displayedData: MobileMenuData | null = null;
 
 	/**
 	 * Initial nav info, on default is atttached to html_head.
@@ -120,12 +145,19 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	 */
 	useUrlForNavigationId: boolean;
 
-	constructor(useUrlForNavigationId: boolean) {
+	/**
+	 * @jsdoc
+	 * @param useUrlForNavigationId
+	 * @param {Axios} client an axios client
+	 */
+	constructor(useUrlForNavigationId: boolean, client: Axios) {
 		this.useUrlForNavigationId = useUrlForNavigationId;
 		this.ncidsNavInfo = window.ncidsNavInfo;
+		console.log('this.ncidsNavInfo', this.ncidsNavInfo);
 		this.sidenav = document.querySelector(
 			'.usa-sidenav [aria-current=page][data-menu-id]'
 		);
+		this.client = client;
 	}
 
 	/**
@@ -133,9 +165,7 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	 * @return Returned ID should be the nav id that we want to display.
 	 */
 	async getInitialMenuId(): Promise<string | number> {
-		return this.sidenav
-			? this.sidenav.getAttribute('data-menu-id') || this.ncidsNavInfo?.id
-			: this.ncidsNavInfo?.id;
+		return this.ncidsNavInfo.item_id.toString();
 	}
 
 	/**
@@ -150,130 +180,151 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 			Organizations: https://ncigovcdode479.prod.acquia-sites.com/taxonomy/term/11482/section-nav
 			Mobile Nav : https://ncigovcdode479.prod.acquia-sites.com/taxonomy/term/309/mobile-nav
 		 */
-		if (!id) {
-			throw new Error('Could not find `id`');
-		}
 		this.initialNavMenuId = id;
 
 		// Get mobile menu or section nav data
-		if (!this.cgdpMenuData.id) {
+		if (!this.cgdpMenuData.nav.id) {
 			const url = window.location.origin;
 			this.cgdpMenuData = await this.fetchFromPath(
-				`${url}/taxonomy/term/${this.ncidsNavInfo.id}/${this.ncidsNavInfo.menu_type}`
+				`${url}/taxonomy/term/${this.ncidsNavInfo.nav.id}/${this.ncidsNavInfo.nav.menu_type}`
 			);
 		}
 
-		return this.createMobileMenuData();
+		const data = await this.createMobileMenuData();
+		this.displayedData = await this.convertMenuData(data);
+		console.log('displayed data', this.displayedData);
+
+		return this.displayedData;
 	}
 
 	/**
 	 * @todo
 	 * @param path
 	 */
-	async fetchFromPath(path: string): Promise<MobileMenuData> {
-		// todo use axios instead? https://stackoverflow.com/a/67560073/1389807
-		return fetch(path)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`HTTP error! Status: ${response.status}`);
-				}
-
-				return response.json();
-			})
-			.then((menuItem: DrupalSectionNav) => {
-				console.log('api', menuItem);
-				this.convertParentItem(menuItem.parent_info);
-				return this.convertMenuData(menuItem.nav);
-			});
+	async fetchFromPath(path: string): Promise<DrupalSectionNav> {
+		try {
+			const res = await this.client.get(path);
+			// Axios will throw for anything non-200.
+			//const data = this.convertMenuData(res.data);
+			const data = res.data;
+			console.log('api', data);
+			return data;
+		} catch (error: unknown) {
+			// This conditional will be hit for any status >= 300.
+			if (axios.isAxiosError(error) && error.response) {
+				throw new Error(
+					`Mobile menu unexpected status ${error.response.status} fetching ${path}`
+				);
+			}
+			throw new Error(`Could not fetch mobile menu for ${path}.`);
+		}
 	}
 
 	/**
 	 * @todo jsdoc
 	 * @return MobileMenuData object that should display on selection.
 	 */
-	async createMobileMenuData(): Promise<MobileMenuData> {
+	async createMobileMenuData(): Promise<DrupalMenuItem> {
 		console.log('ok but show data for', this.initialNavMenuId);
+		console.log('parent', this.parent);
 
-		// Return parent when user clicks back
-		// Note: back should always have the same id as parent
-		// todo raising an event would have been much better
-		if (this.currentNav?.parent?.id === this.initialNavMenuId) {
-			this.currentNav =
-				(this.currentNav?.parent as MobileMenuData) || this.cgdpMenuData;
-			this.currentNavParent =
-				(this.currentNav?.parent as MobileMenuData) || null;
+		// tree root, just display that data
+		if (this.cgdpMenuData.nav.id === this.initialNavMenuId) {
+			console.log('showing data for root');
+			this.navTree = this.cgdpMenuData.nav;
+			this.parent = null;
 
-			console.log('go back currentNav', this.currentNav);
-			console.log('go back currentNavParent', this.currentNavParent);
-			console.log('go back this.parentNav ', this.parentNav);
-			console.log('go back ncidsNavInfo', this.ncidsNavInfo);
-
-			// If there are parent with items already, just show that.
-			if (this.currentNav.items && this.currentNav.items.length) {
-				console.log('has items');
-				return this.currentNav as MobileMenuData;
+			if (this.ncidsNavInfo.nav.menu_type === 'section-nav') {
+				this.parent = this.cgdpMenuData.parent_info?.parent_link_item || null;
+			} else {
+				this.parent = null;
 			}
 
-			// If there is a parent nav item (home does not have one), and it does not match our original fetch parent, fetch data again.
-			if (this.parentNav !== this.ncidsNavInfo) {
-				console.log('fetch new');
+			return this.navTree;
+		}
 
-				this.ncidsNavInfo = this.parentNav || this.ncidsNavInfo;
+		// check for back, parent item
+		if (this.parent && this.parent.id == this.initialNavMenuId) {
+			console.log('go back');
+			this.navTree = this.parent;
 
-				// todo this is duped
-				const url = window.location.origin;
-				this.cgdpMenuData = await this.fetchFromPath(
-					`${url}/taxonomy/term/${this.ncidsNavInfo.id}/${this.ncidsNavInfo.menu_type}`
+			// todo blame type errors for this mess
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			this.ncidsNavInfo.nav =
+				this.cgdpMenuData.parent_info?.parent_nav || this.ncidsNavInfo.nav;
+
+			const url = window.location.origin;
+			const newData = await this.fetchFromPath(
+				`${url}/taxonomy/term/${this.ncidsNavInfo.nav.id}/${this.ncidsNavInfo.nav.menu_type}`
+			);
+
+			console.log('newData', newData);
+			///
+			if (newData.nav.children) {
+				console.log('new data(newData.nav.children', newData.nav.children);
+				const children = newData.nav.children.filter(
+					(child: DrupalMenuItem) => {
+						if (child.children && child.children.length) {
+							const grandchildren = child.children.filter(
+								(grandchild: DrupalMenuItem) => {
+									return grandchild.id === this.initialNavMenuId;
+								}
+							);
+
+							if (grandchildren) {
+								return grandchildren[0];
+							}
+						}
+
+						return child.id === this.initialNavMenuId;
+					}
 				);
 
-				console.log('new data', this.cgdpMenuData);
-				this.currentNav = this.cgdpMenuData;
+				if (children.length) {
+					// matching child data found, display that
+					console.log('new data children found', children);
+					this.parent = children[0];
+					return this.navTree;
+				}
+			}
+			///
+			this.parent = newData.nav;
+
+			return this.navTree;
+		}
+
+		// if the initial id is a child of the current tree, parent should be set to current and current should be set to new
+		if (this.navTree.children && this.navTree.children.length) {
+			const children = this.navTree.children.filter((child: DrupalMenuItem) => {
+				return child.id === this.initialNavMenuId;
+			});
+
+			if (children.length) {
+				// matching child data found, display that
+				this.parent = this.navTree;
+				this.navTree = children[0];
+				return this.navTree;
 			}
 		}
 
-		// mobile nav or child of mobile nav
-		if (this.ncidsNavInfo.menu_type === 'mobile-nav') {
-			return this.displayMobileNavChild();
+		// if the initial id is a child of the current tree, parent should be set to current and current should be set to new
+		if (this.cgdpMenuData.nav.children) {
+			this.navTree = this.cgdpMenuData.nav;
+			const children = this.navTree.children.filter((child: DrupalMenuItem) => {
+				return child.id === this.initialNavMenuId;
+			});
+
+			if (children.length) {
+				// matching child data found, display that
+				this.parent = this.navTree;
+				this.navTree = children[0];
+				return this.navTree;
+			}
 		}
 
-		// section nav or child of section nav
-		if (this.ncidsNavInfo.menu_type === 'section-nav') {
-			return this.displaySectionNavChild();
-		}
-
-		console.log('displayed data', this.cgdpMenuData);
-		return this.cgdpMenuData;
-	}
-
-	/**
-	 * @todo
-	 * @param drupalMenuItem
-	 */
-	convertParentItem(drupalMenuItem: DrupalParentInfo) {
-		const hasChildren = !!(
-			drupalMenuItem.parent_link_item &&
-			drupalMenuItem.parent_link_item.children.length
-		);
-
-		this.currentNavParent =
-			drupalMenuItem && drupalMenuItem.parent_nav
-				? {
-						id: drupalMenuItem.parent_link_item.id,
-						label: drupalMenuItem.parent_link_item.label,
-						path:
-							drupalMenuItem.parent_link_item.path === '/-0'
-								? '/'
-								: drupalMenuItem.parent_link_item.path,
-						langcode: drupalMenuItem.parent_link_item.langcode,
-						hasChildren: hasChildren,
-						items: hasChildren ? drupalMenuItem.parent_link_item.children : [],
-				  }
-				: null;
-
-		this.parentNav =
-			drupalMenuItem && drupalMenuItem.parent_nav
-				? drupalMenuItem.parent_nav
-				: undefined;
+		console.log('you found another edge case, lucky you');
+		return this.navTree;
 	}
 
 	/**
@@ -281,129 +332,43 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	 * @param drupalMenuItem
 	 * @return Converted DrupalMenuItem object to MobileMenuData type.
 	 */
-	convertMenuData(drupalMenuItem: DrupalMenuItem): MobileMenuData {
-		const childrenItems =
-			drupalMenuItem.children && drupalMenuItem.children.length
-				? drupalMenuItem.children.map((child: DrupalMenuItem) =>
-						this.convertMenuData(child)
-				  )
-				: [];
+	async convertMenuData(
+		drupalMenuItem: DrupalMenuItem
+	): Promise<MobileMenuData> {
+		const hasChildrenItems =
+			drupalMenuItem.children && drupalMenuItem.children.length;
+
+		const childrenItems = hasChildrenItems
+			? drupalMenuItem.children.map((child: DrupalMenuItem) => {
+					return this.convertMenuItem(child);
+			  })
+			: [];
 
 		return {
 			id: drupalMenuItem.id,
 			label: drupalMenuItem.label,
 			path: drupalMenuItem.path === '/-0' ? '/' : drupalMenuItem.path,
 			langcode: drupalMenuItem.langcode,
-			hasChildren: !!(childrenItems && childrenItems.length),
+			hasChildren: !!hasChildrenItems,
 			items: childrenItems,
-			parent: this.currentNavParent,
+			parent:
+				drupalMenuItem.path !== '/' && drupalMenuItem.path !== '/espanol'
+					? (this.parent as unknown as MobileMenuItem)
+					: null,
 		};
 	}
 
-	/**
-	 * @todo
-	 */
-	displayMobileNavChild(): MobileMenuData {
-		console.log('is mobile nav', this.currentNav);
-		this.currentNav = this.currentNav || this.cgdpMenuData;
+	convertMenuItem(drupalMenuItem: DrupalMenuItem): MobileMenuItem {
+		const hasChildrenItems =
+			drupalMenuItem.children && drupalMenuItem.children.length;
 
-		const children = this.currentNav.items.filter((child) => {
-			return child.id === this.initialNavMenuId;
-		});
-
-		console.log('children', children);
-
-		if (children && children.length) {
-			const matched = children[0] as MobileMenuData;
-
-			this.currentNavParent =
-				matched.parent || this.currentNav || this.cgdpMenuData;
-
-			this.currentNav = {
-				hasChildren: matched.hasChildren,
-				id: matched.id,
-				items: matched.items,
-				label: matched.label,
-				langcode: matched.langcode,
-				parent: this.currentNavParent,
-				path: matched.path,
-			};
-		} else {
-			const matchedPath = this.currentNav.items.filter((child) => {
-				// Direct descendents of mobile nav on load will return mobile-nav, and there is so sidenav to read for an initial id.
-				return child.path === window.location.pathname;
-			});
-
-			// try again but with path for nested non roots without sidenavs for initial id
-			console.log('found from path', matchedPath);
-			if (matchedPath && matchedPath.length && !this.sidenav) {
-				const matched = matchedPath[0] as MobileMenuData;
-				this.currentNavParent = this.cgdpMenuData;
-				this.currentNav = {
-					hasChildren: matched.hasChildren,
-					id: matched.id,
-					items: matched.items,
-					label: matched.label,
-					langcode: matched.langcode,
-					parent: this.currentNavParent,
-					path: matched.path,
-				};
-			} else {
-				// display mobile nav
-				this.currentNavParent = null;
-				this.currentNav = this.cgdpMenuData;
-			}
-		}
-
-		console.log('displayed data', this.currentNav);
-		return this.currentNav;
-	}
-
-	/**
-	 * @todo
-	 */
-	displaySectionNavChild(): MobileMenuData {
-		console.log('is section nav');
-		this.currentNav = this.currentNav || this.cgdpMenuData;
-
-		// todo fix all this junk up
-		const id = this.initialNavMenuId;
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		const children = this.currentNav.items.filter(function f(child) {
-			if (child.id === id) return true;
-
-			if (child.hasChildren) {
-				return ((child as MobileMenuData).items = (
-					child as MobileMenuData
-				).items.filter(f)).length;
-			}
-		});
-
-		console.log('children', children);
-
-		if (children && children.length) {
-			const matched = children[0] as MobileMenuData;
-
-			this.currentNavParent = this.currentNav || this.cgdpMenuData; // what
-
-			this.currentNav = {
-				hasChildren: matched.hasChildren,
-				id: matched.id,
-				items: matched.items,
-				label: matched.label,
-				langcode: matched.langcode,
-				parent: this.currentNavParent,
-				path: matched.path,
-			};
-		} else {
-			console.log('else');
-			this.currentNavParent = this.cgdpMenuData;
-			this.currentNav = this.cgdpMenuData;
-		}
-
-		console.log('displayed data', this.currentNav);
-		return this.currentNav;
+		return {
+			id: drupalMenuItem.id,
+			label: drupalMenuItem.label,
+			path: drupalMenuItem.path === '/-0' ? '/' : drupalMenuItem.path,
+			langcode: drupalMenuItem.langcode,
+			hasChildren: !!hasChildrenItems,
+		};
 	}
 }
 

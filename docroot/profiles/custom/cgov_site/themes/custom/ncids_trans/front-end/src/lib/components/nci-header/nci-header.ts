@@ -18,8 +18,6 @@ const initialize = () => {
 		return;
 	}
 
-	const mobileMenuSource = new CgdpMobileMenuAdaptor(false);
-
 	// A microsite, or language, under www.cancer.gov would need
 	// to have a baseUrl like /nano.
 	const baseURL = headerEl.dataset.basePath ?? '/';
@@ -32,6 +30,7 @@ const initialize = () => {
 	});
 
 	const megaMenuSource = new CgdpMegaMenuAdaptor(client);
+	const mobileMenuSource = new CgdpMobileMenuAdaptor(false, client);
 
 	// NOTE: this is on the document. This is because the nci-header does not
 	// care about the contents once it is show. It is completed decoupled.
