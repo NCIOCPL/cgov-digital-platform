@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_entity_field_storage_info().
@@ -754,7 +755,9 @@ function cgov_site_section_entity_type_build(array &$entity_types) {
  * Implements hook_entity_bundle_field_info_alter().
  *
  * Validates that the Pretty URL Field on Nodes and Site Sections
- * matches the required pattern.
+ * matches the required pattern. And also Validates that new site section 
+ * should not be able to be created at the root.
+ * 
  */
 function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
   if (($entity_type->id() == 'taxonomy_term' || $entity_type->id() == 'node' || $entity_type->id() == 'media') && !empty($fields['field_pretty_url'])) {
@@ -765,6 +768,11 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
       ],
     ]
     );
+    if ($bundle === 'cgov_site_sections') {
+      if (isset($fields['parent'])) {
+        $fields['parent']->addConstraint('SectionParentTerm', []);
+      }
+    }
   }
 }
 

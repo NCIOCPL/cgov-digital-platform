@@ -99,6 +99,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
     $events = [];
     $events[YamlContentEvents::ENTITY_PRE_SAVE][] = ['addFileToCrop'];
+    $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['sectionParentValidator'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addSpanishTranslations'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['addToRegion'];
     $events[YamlContentEvents::ENTITY_POST_SAVE][] = ['handlePostSaveEvents'];
@@ -336,6 +337,31 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       }
     }
     return $fields;
+  }
+
+  /**
+   * Add Site Section Validator.
+   *
+   * @param \Drupal\yaml_content\Event\EntityPostSaveEvent $event
+   *   The event fired before entity field data is imported and assigned.
+   */
+  public function sectionParentValidator(EntityPostSaveEvent $event) {
+    $yamlContent = $event->getContentData();
+    if (isset($yamlContent['entity']) &&  $yamlContent['entity'] === 'taxonomy_term') {
+      $primaryNavUrlCheck = 0;
+      if (isset($yamlContent['field_ncids_mega_menu_contents'])) {
+        foreach ($yamlContent['field_ncids_mega_menu_contents'] as $subContent) {
+          foreach ($subContent['field_yaml_content'] as $subcontentItem) {
+            if (isset($subcontentItem['value']['primary_nav_url'])) {
+              $primaryNavUrlCheck = 1;
+            }
+          }
+        }
+      }
+      if (!$primaryNavUrlCheck && !isset($yamlContent['parent']) && $yamlContent['vid'] === 'cgov_site_sections') {
+        return $this->throwParamError('The site section cannot be saved. Please set the parent site section under the Relations tab.', $yamlContent['entity']);
+      }
+    }
   }
 
   /**
