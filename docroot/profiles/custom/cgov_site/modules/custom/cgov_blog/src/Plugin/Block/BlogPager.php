@@ -112,6 +112,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
+  /**
    * Get an array of field collections to use for Blog Post pagination links.
    *
    * @param string $cid
