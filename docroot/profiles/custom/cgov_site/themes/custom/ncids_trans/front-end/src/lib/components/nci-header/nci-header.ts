@@ -7,6 +7,19 @@ import {
 	megaMenuOpenHandler,
 	megaMenuLinkClickHandler,
 } from './mega-menu-analytics-handlers';
+import { DrupalNavApiReference } from './cgdp-mobile-menu/types';
+
+declare global {
+	interface Window {
+		/** Defines the mobile navigation information for the current page. */
+		ncidsNavInfo: {
+			/** The navigation to display */
+			nav: DrupalNavApiReference;
+			/** The selected menu item in the nav menu */
+			item_id: string | number;
+		};
+	}
+}
 
 /**
  * Wires up a usa-sidenav for the cdgp requirements.
@@ -30,7 +43,23 @@ const initialize = () => {
 	});
 
 	const megaMenuSource = new CgdpMegaMenuAdaptor(client);
-	const mobileMenuSource = new CgdpMobileMenuAdaptor(false, client);
+
+	// We need to get the menu information off the window.
+	if (!window.ncidsNavInfo) {
+		console.error('Mobile nav information missing on page');
+		return;
+	}
+
+	// This is a little dicey here as the nav info could be bad.
+	// todo: add a bit more checks to make sure the nav info is the right shape.
+	const mobileMenuSource = new CgdpMobileMenuAdaptor(
+		false,
+		client,
+		window.ncidsNavInfo?.item_id?.toString(),
+		window.ncidsNavInfo.nav,
+		// todo: get the language from the <html> element.
+		'en'
+	);
 
 	// NOTE: this is on the document. This is because the nci-header does not
 	// care about the contents once it is show. It is completed decoupled.
