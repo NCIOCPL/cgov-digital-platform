@@ -437,7 +437,7 @@ class CgovNavTreeController extends ControllerBase {
     // The for loop is ugly because we want to stop if:
     // 1. There are no more elements in the array.
     // 2. We have not gone past the max depth for the nav.
-    for ($idx = 1; $idx < count($branch) && $idx + 1 < $max_depth; $idx++) {
+    for ($idx = 1; $idx < count($branch) && $idx < $max_depth; $idx++) {
       $curr_term = $branch[$idx];
 
       // 1. Check to make sure it is not hidden in the $menu_type.
