@@ -98,6 +98,17 @@ const footerLinkAnalyticsHandler = () => (event: Event) => {
 };
 
 /**
+ * Click handler for back to top click.
+ */
+const backToTopAnalyticsHandler = () => () => {
+	trackOther('RightEdge:LinkClick', 'RightEdge:LinkClick', {
+		linkText: 'Back To Top',
+		location: 'Right Edge',
+		section: 'Back To Top',
+	});
+};
+
+/**
  * Click handler for collapse events.
  */
 const footerCollapseAnalyticsHandler = () => (event: Event) => {
@@ -147,8 +158,16 @@ const initialize = (): void => {
 		NCIBigFooter.create(footerElement);
 	}
 
-	// All link clicks in the footer
-	const navLinks = footerElement.querySelectorAll('a');
+	// set up listener for backToTop
+	const backToTopLink = footerElement.querySelector(
+		'.usa-footer__nci-return-to-top a'
+	) as HTMLAnchorElement;
+	backToTopLink.addEventListener('click', backToTopAnalyticsHandler());
+
+	// All link clicks in the footer(primary and secondary sections)
+	const navLinks = footerElement.querySelectorAll(
+		'.usa-footer__primary-section a, .usa-footer__secondary-section a'
+	);
 	navLinks.forEach((link) => {
 		link.addEventListener('click', footerLinkAnalyticsHandler());
 	});
