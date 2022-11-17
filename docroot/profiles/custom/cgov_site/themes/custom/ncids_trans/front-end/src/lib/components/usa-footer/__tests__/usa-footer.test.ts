@@ -142,11 +142,15 @@ describe('usa-footer', () => {
 		fireEvent.click(input);
 
 		// Analytics sent for clicking into input field
-		expect(spy).toHaveBeenCalledWith('Form:Start', 'Form:Start', {
-			formType: 'EmailSignUp',
-			status: 'Start',
-			location: 'Footer',
-		});
+		expect(spy).toHaveBeenCalledWith(
+			'Footer:EmailForm:Start',
+			'Footer:EmailForm:Start',
+			{
+				formType: 'EmailSignUp',
+				status: 'Start',
+				location: 'Footer',
+			}
+		);
 
 		// Should have only been called once
 		expect(spy).toHaveBeenCalledTimes(1);
@@ -174,11 +178,15 @@ describe('usa-footer', () => {
 		fireEvent.click(button);
 
 		// Invalid form submission
-		expect(spy).toHaveBeenCalledWith('Form:Error', 'Form:Error', {
-			formType: 'EmailSignUp',
-			status: 'Error',
-			location: 'Footer',
-		});
+		expect(spy).toHaveBeenCalledWith(
+			'Footer:EmailForm:Error',
+			'Footer:EmailForm:Error',
+			{
+				formType: 'EmailSignUp',
+				status: 'Error',
+				location: 'Footer',
+			}
+		);
 	});
 
 	it('sends the correct analytics for form submission', () => {
@@ -205,11 +213,15 @@ describe('usa-footer', () => {
 
 		// Valid form submission
 		expect(spy).toHaveBeenCalledTimes(1);
-		expect(spy).toHaveBeenCalledWith('Form:Complete', 'Form:Complete', {
-			formType: 'EmailSignUp',
-			status: 'Complete',
-			location: 'Footer',
-		});
+		expect(spy).toHaveBeenCalledWith(
+			'Footer:EmailForm:Complete',
+			'Footer:EmailForm:Complete',
+			{
+				formType: 'EmailSignUp',
+				status: 'Complete',
+				location: 'Footer',
+			}
+		);
 	});
 
 	it('sends the correct analytics for a bad html', () => {
