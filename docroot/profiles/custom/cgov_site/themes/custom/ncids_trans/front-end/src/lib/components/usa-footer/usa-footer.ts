@@ -130,17 +130,17 @@ let trackSubscribeStart = true;
 const footerSubscribeStartHandler = () => () => {
 	if (!trackSubscribeStart) return;
 	trackSubscribeStart = false;
-	trackForm('Form:Start', 'Start');
+	trackForm('Footer:EmailForm:Start', 'Start');
 };
 
 /** Onsubmit handler for subscribe form. */
 const footerSubscribeCompleteHandler = () => () => {
-	trackForm('Form:Complete', 'Complete');
+	trackForm('Footer:EmailForm:Complete', 'Complete');
 };
 
 /** On error handler for subscribe form. */
 const footerSubscribeErrorHandler = () => () => {
-	trackForm('Form:Error', 'Error');
+	trackForm('Footer:EmailForm:Error', 'Error');
 };
 
 /**
