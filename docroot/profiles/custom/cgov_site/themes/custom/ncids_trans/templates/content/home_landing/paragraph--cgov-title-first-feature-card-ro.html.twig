@@ -1,0 +1,20 @@
+{% if (content.field_two_column_feature_card['#items']|length > 0) or
+(content.field_one_column_feature_card['#items']|length > 0)
+%}
+  <div class="row flex-columns">
+    <div class="medium-10 columns align-center">
+      <div class="title-first-feature-card-container">
+        {% if (content.field_two_column_feature_card['#items']|length > 0) %}
+          <div class="title-first-feature-card-left">
+            {{ content.field_two_column_feature_card }}
+          </div>
+        {% endif %}
+        {% if (content.field_one_column_feature_card['#items']|length > 0) %}
+          <div class="title-first-feature-card-right">
+            {{ content.field_one_column_feature_card }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

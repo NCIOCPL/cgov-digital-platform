@@ -1,13 +1,8 @@
 @use 'sass:math';
 
-@import "~Core/styles/breakpoint-mixins";
-@import "~Core/styles/variables";
-@import "~Core/styles/colors";
-@import "~Core/styles/mixins";
-
 .nav-menu .nav-item {
   $nav-max-lines: 1;
-  
+
   html[lang="es"] & {
     $nav-item-list: (
       //(width:(bp1  , bp2  ), lines: # )
@@ -56,7 +51,7 @@
     );
     $nav-item-width-add: (5.5px, 9px);
 
-    
+
 
     @mixin nav-item-spacing($nav-item-list, $nav-item-width) {
       // calculate maximum number of lines

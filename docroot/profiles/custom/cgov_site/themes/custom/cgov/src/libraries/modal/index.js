@@ -34,16 +34,16 @@ export default class Modal{
     this.initialized = false;
 
     // Save a reference to the passed config
-    this.config = { 
-      targetModal, 
-      modal, 
-      disableScroll, 
-      openTrigger, 
-      closeTrigger, 
-      onCreate, 
-      onShow, 
-      onClose, 
-      awaitCloseAnimation, 
+    this.config = {
+      targetModal,
+      modal,
+      disableScroll,
+      openTrigger,
+      closeTrigger,
+      onCreate,
+      onShow,
+      onClose,
+      awaitCloseAnimation,
       content
     }
 
@@ -62,7 +62,7 @@ export default class Modal{
     if (!this.initialized) {
       this.createModal();
     }
-    
+
     return this;
   }
 
@@ -80,7 +80,13 @@ export default class Modal{
         ${this.config.modal ? `</div>` : ''}
       </div>`
     ;
-    document.body.insertAdjacentHTML('beforeend',modalMarkup);
+
+    // Part of the ncids transition we have to force an area for modals to go
+    // so that they will get the correct wrapping classes. For existing items,
+    // they can continu going into the body.
+    const modalContainer = document.getElementById('nci-modal-area') || document.body;
+
+    modalContainer.insertAdjacentHTML('beforeend',modalMarkup);
     // save a reference to the modal element
     this.modal = document.getElementById(this.config.targetModal);
     // save a reference to the modal content element
@@ -88,7 +94,7 @@ export default class Modal{
 
     // store reference to the bottom close button for use in resize event
     this.bottomCloseButton = document.querySelector(`#${this.config.targetModal} .modal__btn-close--bottom`);
-    
+
     // create callback
     this.config.onCreate(this.modal);
     // init complete
@@ -114,7 +120,7 @@ export default class Modal{
 
     // open callback
     this.config.onShow(this.modal);
-    
+
   }
 
   closeModal(){
@@ -161,7 +167,7 @@ export default class Modal{
     this.modal.addEventListener('touchstart', this.onClick);
     this.modal.addEventListener('click', this.onClick);
     document.addEventListener('keydown', this.onKeydown);
-    window.addEventListener('resize', this.throttleResize, { 
+    window.addEventListener('resize', this.throttleResize, {
       capture: true,
       passive: true
     });
@@ -171,7 +177,7 @@ export default class Modal{
     this.modal.removeEventListener('touchstart', this.onClick);
     this.modal.removeEventListener('click', this.onClick);
     document.removeEventListener('keydown', this.onKeydown);
-    window.removeEventListener('resize', this.throttleResize, { 
+    window.removeEventListener('resize', this.throttleResize, {
       capture: true,
       passive: true
     });

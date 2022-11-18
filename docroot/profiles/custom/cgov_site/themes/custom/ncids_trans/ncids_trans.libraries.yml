@@ -1,0 +1,137 @@
+## This was copied over from cgov_common.
+jqueryandui:
+  js:
+    dist/js/jqueryandui.js: { preprocess: true }
+  dependencies:
+    - core/jquery
+
+ncids-global:
+  css:
+    theme:
+      dist/css/ncids-common.css: { preprocess: false }
+  js:
+    dist/js/ncids-common.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/jqueryandui
+
+#####################
+## NOTE: In the libraries below notice how there is a dependency on the global library.
+## This is because attach_library does not care about order. If we add the dependencies
+## here, then when both the global and specific libraries are attached then the ordering
+## will be correct.
+article:
+  css:
+    theme:
+      dist/css/article.css: { preprocess: false }
+  js:
+    dist/js/article.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+home-landing:
+  css:
+    theme:
+      dist/css/home-landing.css: { preprocess: false }
+  js:
+    dist/js/home-landing.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+special-report:
+  css:
+    theme:
+      dist/css/special-report.css: { preprocess: false }
+  js:
+    dist/js/special-report.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+pdq:
+  css:
+    theme:
+      dist/css/pdq.css: { preprocess: false }
+  js:
+    dist/js/pdq.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+mini-landing:
+  css:
+    theme:
+      dist/css/mini-landing.css: { preprocess: false }
+  js:
+    dist/js/mini-landing.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+cancer-center:
+  css:
+    theme:
+      dist/css/cancer-center.css: { preprocess: false }
+  js:
+    dist/js/cancer-center.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+biography:
+  css:
+    theme:
+      dist/css/biography.css: { preprocess: false }
+  js:
+    dist/js/biography.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+event:
+  css:
+    theme:
+      dist/css/event.css: { preprocess: false }
+  js:
+    dist/js/event.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+blogs:
+  css:
+    theme:
+      dist/css/blogs.css: { preprocess: false }
+  js:
+    dist/js/blogs.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+cthp:
+  css:
+    theme:
+      dist/css/cthp.css: { preprocess: false }
+  js:
+    dist/js/cthp.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+cts-app:
+  css:
+    theme:
+      dist/css/cts-app.css: { preprocess: false }
+  js:
+    dist/js/cts-app.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/legacy-global
+
+r4r-app:
+  css:
+    theme:
+      dist/css/r4r-app.css: { preprocess: false }
+  js:
+    dist/js/r4r-app.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+app-module:
+  css:
+    theme:
+      dist/css/app-module.css: { preprocess: false }
+  js:
+    dist/js/app-module.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global

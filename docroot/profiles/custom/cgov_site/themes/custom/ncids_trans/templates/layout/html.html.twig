@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head-placeholder token="{{ placeholder_token|raw }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <link rel="preconnect" href="https://static.cancer.gov" />
+    {# TODO: REMOVE THIS AT THE END OF MVP #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,500;0,600;1,300;1,500;1,600&family=Roboto+Mono:ital,wght@0,300;0,700;1,300;1,700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/apple-touch-icon.png?v=1" />
+    <link rel="icon" type="image/png" href="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/favicon-32x32.png?v=1" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/favicon-16x16.png?v=1" sizes="16x16" />
+    <link rel="mask-icon" href="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/safari-pinned-tab.svg?v=1" color="#c0143c" />
+    <link rel="shortcut icon" href="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/favicon.ico?v=1" />
+    <meta name="apple-mobile-web-app-title" content="Cancer.gov" />
+    <meta name="application-name" content="Cancer.gov" />
+    <meta name="msapplication-config" content="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/icons/favicons/browserconfig.xml?v=1" />
+    <css-placeholder token="{{ placeholder_token|raw }}">
+    <js-placeholder token="{{ placeholder_token|raw }}">
+  </head>
+  <body{{ attributes }}>
+    {#
+      Keyboard navigation/accessibility link to main content section in
+      page.html.twig.
+    #}
+    <a href="#main-content" class="usa-skipnav">
+      {{ 'Skip to main content'|t }}
+    </a>
+    {{ page_top }}
+    {{ page }}
+    <js-bottom-placeholder token="{{ placeholder_token|raw }}">
+    {{ page_bottom }}
+  </body>
+</html>

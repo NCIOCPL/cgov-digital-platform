@@ -1,0 +1,19 @@
+{# TODO: Refactor this into a generic template #}
+{% if content.field_card_title|field_value %}
+  {% set title = content.field_card_title|field_value %}
+{% else %}
+  {% set title = content.field_browser_title|field_value %}
+{% endif %}
+{% set infographic_url = path('entity.media.canonical', {'media': media.mid[0].value }) %}
+
+<div class="multimedia-feature-card cgvInfographic non-playable">
+  <a href="{{ infographic_url }}">
+    <div class="image-hover">
+      {{ content.field_image_promotional }}
+		</div>
+   	<h3>{{ title }}</h3>
+    {% if content.field_feature_card_description|field_value %}
+   	  <p>{{content.field_feature_card_description}}</p>
+    {% endif %}
+  </a>
+</div>

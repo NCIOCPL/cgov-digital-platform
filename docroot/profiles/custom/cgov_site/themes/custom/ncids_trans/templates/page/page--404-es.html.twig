@@ -1,0 +1,35 @@
+{{ attach_library('ncids_trans/ncids-global') }}
+
+
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+{# Hide this block on print #}
+<div class="grid-container">
+  <div class="grid-row flex-no-wrap">
+    <div class="grid-col-10">
+      {# What if no breadcrumbs? #}
+      {{ page.ncids_breadcrumb }}
+    </div>
+  </div>
+</div>
+
+<div id="page" class="grid-container">
+  {# This is not a NCIDS class. It should be in legacy. #}
+  {# Killed general-page-body-container #}
+  <div class="grid-row grid-gap">
+    <div class="cgdpl grid-col-12">
+      {# This content div is to support a lot of legacy JS #}
+      <div id="content" class="{{ page_type }}">
+        <main class="contentzone has-section-nav" id="main-content">
+          <div class="error-page">
+            {{ page.page_not_found }}
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ page.ncids_footer }}

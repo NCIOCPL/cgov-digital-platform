@@ -1,0 +1,21 @@
+{# To be clear, this is the "standard" style. #}
+<div id="nvcgSlHeroHeader" class="row hero-slot">
+  {{ content.field_hero_banner }}
+</div>
+
+
+{# Title Row #}
+<div class="row">
+  <div class="large-7 columns" style="min-height: 61.031px">
+    {% set hr_attribs = create_attribute({}) %}
+    {% if is_front == TRUE %}
+      {% set hr_attribs = hr_attribs.addClass('show-for-sr') %}
+    {% endif %}
+    <h1 {{hr_attribs}}>{{ node.label }}</h1>
+
+  </div>
+</div>
+{# End Title Row#}
+<div id="nvcgSlBodyLayout" class="nvcgSlBodyLayout">
+  {{content.field_landing_contents}}
+</div>

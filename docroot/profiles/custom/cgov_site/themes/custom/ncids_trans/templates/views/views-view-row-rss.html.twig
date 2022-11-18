@@ -1,0 +1,49 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an item in a views RSS feed.
+ *
+ * Available variables:
+ * - title: RSS item title.
+ * - link: RSS item link.
+ * - description: RSS body text.
+ * - item_elements: RSS item elements to be rendered as XML (pubDate, creator,
+ *   guid).
+ * ADDED TO TEMPLATE:
+ * - elements[key].value: hashed version of item_elements version with key set
+ * - elements[key].attributes: hashed version of item_elements version with key set
+ *
+ * @see template_preprocess_views_view_row_rss()
+ *
+ * @ingroup themeable
+ *
+ * CONFIGURATION:
+ *   Title: Node Title
+ *   Link: ignored (will get from NID)
+ *   Description: ignored (will get from NID)
+ *   Creator: ignored (will get from NID)
+ *   Publication date field:  Date Posted (use custom format 'r')
+ *   GUID: NID, uncheck GUID is permalink
+ *   The NID will be used to get information not available to the twig field.
+ *
+ */
+#}
+{#- Make handy array by key instead of index. -#}
+{%- set elements = [] -%}
+{%- for item in item_elements -%}
+  {%- set elements = elements|merge({ (item.key) : {'value' : (item.value|trim), 'attributes' : (item.attributes) } } ) -%}
+{%- endfor -%}
+{%- set nid = elements['guid'].value -%}
+
+{#- Get proper translated path - views has Core issues that return wrong path for translations -#}
+{%- set pubdate = elements['pubDate'].value -%}
+{%- set link = get_translated_absolute_path(nid) -%}
+{%- set description = get_list_description(nid) -%}
+<item>
+  <title>{{ title }}</title>
+  <link>{{ link }}</link>
+  <guid isPermaLink="true">{{ link }}</guid>
+  <pubDate>{{ pubdate }}</pubDate>
+  <description>{{ description }}</description>
+  {{ get_enclosure(nid) }}
+</item>

@@ -1,0 +1,414 @@
+// This file is, well, interesting. Why this is not in general or global, IDK.
+// This probably at one time was for page layout stuff, then stuff got added
+// then it kind of spun out of control. So we are going to remove the items
+// related to .main-content and .general-page-body-container, both of which
+// we deleted. We need to look at the .contentzone items, which is adding
+// in padding on the right and left of the main content column, which we
+// don't want. Finally we will leave the rest until we figure out the best
+// place for it to go. (e.g. definition link styles and date styling for
+// articles.
+
+@use 'sass:math';
+
+/********************* BEGIN Content Styles ******************************************/
+
+/* h3 links should have a default of cranberry & no underline for link hovers */
+#cgvBody h3 {
+  a:hover, a:focus {
+    text-decoration: none;
+    color: $lcranberry
+  }
+}
+
+a:hover, a:focus {
+	text-decoration: underline;
+}
+
+a.definition,
+a.definition:hover, a.definition:focus {
+	color: $body-font-color;
+	text-decoration: none;
+	border-bottom: thin dotted;
+}
+a.definition:hover, a.definition:focus {
+	border-bottom: thin solid;
+}
+
+// Who knows what that first child is that does not have a correct width.
+// TODO: Does this still need to be here?
+div.row > div.contentzone:first-child {
+	width: 100%;
+}
+
+/* Research Areas with Table of Contents */
+
+/*the -1em for right margin is due to the fact that it has to touch the edge whereas the container it is in has padding for the edge. */
+
+.featured-zone {
+	background-color: $dteal;
+	padding: 0 0 1.25em 1.25em;
+	overflow: hidden;
+	/*because in some pages content within box have floated elements */
+	margin-right: -1em;
+	padding: 1em;
+}
+.featured-zone,
+.featured-zone h1,
+.featured-zone h2,
+.featured-zone h3,
+.featured-zone h4,
+.featured-zone a {
+	color: white;
+}
+.toc-container {
+	padding-right: 0;
+	margin-right: -2em;
+	padding: 1em;
+}
+@include bp(medium-down){
+	/* hide the TOC on small/medium screens. The accordion serves the same purpose */
+	.toc-container {
+		display: none;
+	}
+	.feature-zone-image img {
+		display: block;
+		margin: 0 auto;
+	}
+	.featured-zone {
+		margin-right: 0;
+	}
+}
+
+#my-toc {
+	background-color: #fff;
+	padding: 25px 0 30px 35px;
+	overflow: hidden;
+	padding-right: 0;
+}
+#my-toc h2 {
+	color: $header-font-color;
+	margin: 0 0 10px;
+	font-size: 1.5em;
+}
+/* hide default TOC header */
+
+#my-toc h4 {
+	display: none;
+}
+#my-toc ul {
+	margin: 0 1em;
+	list-style-type: disc;
+	color: $color-link;
+}
+#my-toc li {
+	padding-left: 0;
+	margin-left: 0;
+	line-height: 20px;
+	margin-bottom: 5px;
+}
+#my-toc ul a {
+	color: $color-link;
+	font-weight: bold;
+}
+
+@include bp(large-up){
+	/* large screen styles for TOC */
+	#my-toc {
+		margin: 10px 0 0 10px;
+	}
+}
+
+/* BEGIN general content page styles */
+ul,
+.contentzone ul,
+.rawHtml ul {
+	&.no-bullets {
+		@extend %no-bullets;
+	}
+}
+ol {
+	list-style-type: decimal;
+
+	&.lower-alpha {
+		list-style-type: lower-alpha;
+	}
+	&.lower-roman {
+		list-style-type: lower-roman;
+	}
+	&.upper-alpha {
+		list-style-type: upper-alpha;
+	}
+	&.upper-roman {
+		list-style-type: upper-roman;
+	}
+}
+.contentzone ul,
+.contentzone ol,
+.rawHtml ul,
+.rawHtml ol {
+	margin-bottom: 1em;
+}
+.contentzone ol li,
+.rawHtml ol li {
+	margin-left: 38px;
+}
+.contentzone li,
+.rawHtml li {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: 28px; // supposed to be 16px, accounting for negative margin used on :before bullet
+
+li {
+		margin-left: 32px;
+	}
+}
+.contentzone ul.no-bullets > li,
+.contentzone ol.no-bullets > li,
+.rawHtml ul.no-bullets > li,
+.rawHtml ol.no-bullets > li {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	margin-left: 0;
+}
+.contentzone ul.no-description > li,
+.contentzone ul.no-description > li {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+.contentzone ul,
+.rawHtml ul {
+	& > li {
+		list-style-type: none;
+		// WARNING: do not add 'position: relative;' without serious testing of lists next to floated, interactive elements
+
+		&:before {
+			content: "\2022";
+			display: inline;
+			position: relative;
+			float: left; // to remove the bullet from the current stacking context, and allow block-level elements to flow up and around
+			left: -0.5em;
+			top: 0.25em; // to reposition after floating
+			margin: 0 -0.2em;
+			font-size: 1.1em;
+			line-height: math.div(1em, 1.1);
+		}
+
+	}
+}
+
+.toptoc ul > li:before {
+	content: none;
+	display: none;
+}
+
+table.no-bullet-padding ul {
+	margin: 0;
+	padding: 0;
+	& > li {
+		margin: 0;
+		padding: 0 0 0 10px;
+	}
+}
+/*the -1em for right margin is due to the fact that it has to touch the edge whereas the container it is in has padding for the edge. */
+.key-facts {
+	background: #d7f9fa;
+	float: right;
+	width: 40%;
+	padding: 0 1em;
+	margin: 1em -1em 1em 1em;
+}
+
+/* END general content page styles */
+
+#cgvDate {
+	margin:1.5em 0 1em;
+}
+
+.contentzone .document-dates {
+	margin-top: 1.5em;
+	ul > li {
+		margin: 0;
+		display: block;
+		&:before {
+			content: none;
+			display: none;
+		}
+	}
+
+	&.horizontal ul > li {
+		display: inline;
+		&:before {
+			content: "|";
+			position: relative;
+			float: none;
+			display: inline;
+			left: 0;
+			top: -0.1em;
+			margin: 0 0.4em;
+			font-size: 1em;
+		}
+		&:first-child:before {
+			content: none;
+			display: none;
+		}
+	}
+}
+
+.press-release-date-contact {
+	margin-bottom: 1em;
+
+	.document-dates {
+		margin-top: 0;
+		float: left;
+	}
+
+	.media-contact {
+		float: right;
+		text-align: right;
+
+		@include bp(small) {
+			float: left;
+			text-align: left;
+			width: 100%;
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+}
+
+.press-release-date-contact.row.collapse {
+	margin-bottom: 1em;
+}
+
+.media-contact-info {
+	display: inline;
+}
+@include bp(small){
+	.media-contact-info {
+		display: block;
+	}
+}
+
+@include bp(medium-down) {
+	.contentzone .document-dates,
+	.contentzone .document-dates.horizontal {
+		ul > li {
+			display: block;
+			&:before {
+				content: none;
+				display: none;
+			}
+		}
+	}
+}
+
+.article-citation	li p{
+	display: inline; }
+
+hr.ps-divider {
+	border: solid #7d7d7d;
+	border-width: 1px 0 0;
+}
+
+.public-use {
+	padding: 0;
+	font-style: italic;
+	clear: both;
+
+	@include bp(medium-down){
+		font-size: .875em;
+	}
+}
+
+.public-use, .syndication p {
+	margin-top: 0;
+}
+
+/* Add spacing above syndication class to prevent image/text from jutting against horizontal rule */
+.syndication {
+    padding-top: 1.1em;
+}
+
+/* this is to prevent the border from writing over a floated element */
+.syndication {
+	overflow: hidden; }
+
+@include bp(medium-down){
+	.syndication{
+		font-size: 0.875em;
+	}
+}
+
+/* icon that goes with syndication image */
+.syndication {
+  > div {
+    padding-left: calc(57px + 0.9375em);
+    background: transparent url($icons+"syndication.png") center left no-repeat;
+  }
+}
+
+/* Separator line for right above the public use and/or syndication text blocks */
+#nvcgSlPublicUse,
+#nvcgSlSyndication {
+
+	/*
+	// Remove border
+	@include bp(medium-up) {
+		border-top: 1px solid #7d7d7d;
+	}
+	*/
+
+	// Or add margin
+	border-top: 1px solid #7d7d7d;
+	@include bp(small) {
+		margin-top: 1.25em;
+	}
+
+}
+
+#nvcgSlPublicUse + #nvcgSlSyndication {
+     border-top: none;
+}
+
+/* hidden elements */
+
+.hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+.hide-desktop {
+	display: none;
+}
+::-webkit-input-placeholder {
+	color: #fff;
+}
+:-moz-placeholder {
+	/* Firefox 18- */
+	color: #fff;
+}
+::-moz-placeholder {
+	/* Firefox 19+ */
+	color: #fff;
+}
+:-ms-input-placeholder {
+	color: #fff;
+}
+
+.scrollable-y {
+	overflow-y: auto;
+}
+.scrollable-x {
+	overflow-x: auto;
+}
+.scrollable {
+	overflow: auto;
+}
+/********************* END Content Styles ******************************************/

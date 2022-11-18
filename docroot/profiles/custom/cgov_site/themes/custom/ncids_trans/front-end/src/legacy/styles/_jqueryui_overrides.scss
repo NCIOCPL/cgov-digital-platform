@@ -1,0 +1,234 @@
+/*
+ * This file contains our set of hacks to jQuery UI components.
+ * As we remove components, we should remove our hacks.
+ */
+
+/* general */
+.ui-widget {
+  font-family: inherit;
+  /* jquery-ui.css:832 sets this to 'Verdana,Arial,sans-serif' */
+  font-size: inherit;
+  /* jquery-ui.css:832 sets this to '1.1em' */
+}
+
+/* accordion */
+.ui-accordion {
+  // accordion header
+  .ui-accordion-header {
+    padding: 14.5px 70px 14.5px 20px;
+    margin: 0 -0.9375em;
+    border: none;
+    background-color: #bcedf2;
+    color: $header-font-color;
+    margin: 0 -0.9375em;
+    min-height: 50px;
+    font-size: 1.125em;
+    background-image: none;
+
+    // override icons
+    .ui-accordion-header-icon {
+      top: 0;
+      left: auto;
+      right: 0;
+      background-image: none;
+      margin-top: 0;
+    }
+  }
+
+  &.columns .ui-accordion-header {
+    margin: 0;
+  }
+
+  // accordion content
+  .ui-accordion-content {
+    border: 0;
+    padding: 10px 20px;
+
+    @include bp(medium-up) {
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+  }
+}
+.ui-accordion-header {
+  &.ui-state-active {
+    background-color: #cceefa;
+    color: $header-font-color;
+    border: none;
+
+    .toggle {
+      background-color: white;
+      color: #8fd4db;
+    }
+  }
+
+  /* accordion zebra styling */
+  &.odd,
+  &.odd.ui-state-active {
+    background-color: #bcedf2;
+  }
+  &.even,
+  &.even.ui-state-active {
+    background-color: #dbf4f6;
+  }
+
+  &:first-child {
+    border-top-width: 0;
+  }
+
+  > p {
+    margin: 0;
+    line-height: inherit;
+  }
+}
+
+/* selectmenu */
+// variables
+$ui-selectmenu-padding-topbottom: 0.5em;
+
+$ui-selectmenu-maxitems: 7;
+
+.ui-selectmenu-button {
+  padding: 0;
+  color: $body-font-color;
+  background-color: #f2f2f3;
+  vertical-align: middle;
+  overflow: hidden;
+
+  span.ui-icon {
+    position: relative;
+    background-image: none;
+    background-color: #2b7bba;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 2 * $ui-selectmenu-padding-topbottom;
+
+    &::before {
+      content: '';
+      position: absolute;
+      @include svg-sprite(chevron-white);
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%) rotate(180deg);
+      font-size: 0.6em;
+    }
+  }
+  span.ui-selectmenu-text {
+    padding: 0.5em;
+    line-height: 1;
+    margin-right: 32px;
+    //text-align: center;
+  }
+  &:hover span.ui-icon,
+  &:focus span.ui-icon {
+    background-image: none;
+    background-color: #2b7bba;
+  }
+}
+
+.ui-menu {
+  .ui-state-active {
+    border: none;
+    background: transparent none !important;
+    color: inherit;
+    font-weight: bold;
+  }
+}
+
+.ui-selectmenu-menu {
+  .ui-menu {
+    padding-bottom: 0;
+    max-height: $ui-selectmenu-maxitems *
+      (1em + (2 * $ui-selectmenu-padding-topbottom)) + em-calc(4px);
+    .ui-menu-item-wrapper {
+      padding: 3px 0.5em;
+    }
+  }
+  .ui-menu-item {
+    padding: 0.5em 0 0.5em 0.5em;
+    line-height: 1;
+  }
+  .ui-state-focus {
+    color: #fff;
+    background: $navyblue;
+    &:last-child {
+      margin: -2px 0 0; //prevent triggering scrollbar on last element hover
+    }
+  }
+  .ui-state-active {
+    font-weight: normal;
+  }
+}
+/* Stop drop downs from bleeding through megamenu*/
+.ui-selectmenu-menu.ui-front.ui-selectmenu-open {
+  z-index: 998 !important;
+}
+
+/* autocomplete */
+.ui-autocomplete {
+  .ui-menu-item {
+    background-color: $beige;
+    background-color: rgba($beige, 0.9);
+    color: $body-font-color;
+    padding: 3px 1em 3px 0.4em;
+    list-style: none;
+
+    &:before {
+      content: none;
+      display: none;
+    }
+
+    .ui-menu-item-wrapper {
+      padding: 0;
+      margin: 0;
+    }
+
+    @include bp(medium-down) {
+      background-color: transparent;
+      border-bottom: 1px solid $body-font-color;
+      padding: 0.2em 1em;
+
+      .dictionary-search & {
+        padding-left: 0.5em;
+      }
+    }
+  }
+
+  .ui-state-focus {
+    color: #fff;
+    background: $navyblue;
+  }
+
+  @include bp(medium-down) {
+    z-index: 99999; // this is so that the autocomplete is never covered by another element
+    background-color: rgb(233, 234, 232);
+    background-color: rgba(230, 232, 230, 0.9);
+    background-image: none !important;
+    font-size: $swKeywordFontSize;
+    width: auto !important;
+    right: 20px;
+
+    .dictionary-search & {
+      height: auto;
+      font-size: 1em;
+    }
+  }
+}
+
+.ui-widget-content {
+  //background-image: url($jqueryui + "ui-bg_flat_75_ffffff_40x100.png");
+
+  .ui-state-hover,
+  .ui-state-focus {
+    background-image: none;
+  }
+}
+.ui-state-default .ui-icon {
+  background-image: url($jqueryui + 'ui-icons_888888_256x240.png');
+}
+[class^='ui-corner-'],
+[class*=' ui-corner-'] {
+  border-radius: 0;
+}
+/* end override of default location for jquery ui images */

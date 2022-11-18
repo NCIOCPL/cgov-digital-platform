@@ -1,6 +1,6 @@
 import NCIModal from 'Core/libraries/modal';
 
-let modal = new NCIModal();
+let modal = null;
 
 /**
  * Triggers a Modal popup, ensuring that only a single Modal is happening
@@ -9,6 +9,10 @@ let modal = new NCIModal();
  * @param {Function} postinit a callback function to trigger any event wireups once it has been added to the DOM.
  */
 const triggerModal = (content, postinit = () => {}) => {
+
+  if (modal === null) {
+    modal = new NCIModal();
+  }
 
   modal.setContent(content);
   modal.showModal();

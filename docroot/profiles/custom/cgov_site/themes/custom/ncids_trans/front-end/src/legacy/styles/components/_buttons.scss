@@ -1,0 +1,409 @@
+/*****************************************************************************
+ * This file is here because:
+ * 1. There is an issue with the .toggle selector below where it references
+ *    & after another selector, which means .cgdpl is getting stuck AFTER
+ *    the other selector and not before .toggle as we need it to be.
+ * 2. This file cannot be hoisted outside of .cgdpl because of a `form button`
+ *    rule that breaks the NCIDS header.
+ ****************************************************************************/
+
+ @import '../../../../../../cgov/src/styles/components/buttons-mixins';
+//
+// Button Variables
+//
+
+// We use these to build padding for buttons.
+
+$button-med: em-calc(6px);
+// $button-tny: em-calc(7);
+// $button-sml: em-calc(9);
+// $button-lrg: em-calc(16);
+
+// We use this to control the display property.
+
+// $button-display: inline-block;
+// $button-margin-bottom: em-calc(20);
+
+// We use these to control button text styles.
+
+$button-font-family: $montserrat-font-stack;
+$button-font-color: #fff;
+// $button-font-color-alt: #333;
+$button-font-med: em-calc(16);
+// $button-font-tny: em-calc(11);
+// $button-font-sml: em-calc(13);
+// $button-font-lrg: em-calc(20);
+$button-font-weight: bold;
+$button-font-align: center;
+
+// We use these to control button background styles.
+
+$button-background-color-submit: #620788;
+$button-background-color-reset: transparent;
+$button-background-color-otheraction:#319ebd;
+
+// We use these to control various hover effects.
+
+$button-function-factor: 10%;
+
+// We use these to control button border styles.
+
+$button-border-width: 0;
+$button-border-style: none;
+
+// We use this to set the default radius used throughout the core.
+
+$button-radius: $global-radius;
+// $button-round: $global-rounded;
+
+// We use this to set default opacity for disabled buttons.
+
+// $button-disabled-opacity: 0.6;
+
+//
+// Button Groups
+//
+
+// Sets the margin for the right side by default, and the left margin if right-to-left direction is used
+
+// $button-bar-margin-opposite: em-calc(10);
+
+//
+// Dropdown Button Variables
+//
+
+// We use these to set the color of the pip in dropdown buttons
+
+// $dropdown-button-pip-color: #fff;
+// $dropdown-button-pip-color-alt: #333;
+
+// We use these to style tiny dropdown buttons
+
+// $dropdown-button-padding-tny: $button-tny * 5;
+// $dropdown-button-pip-size-tny: $button-tny;
+// $dropdown-button-pip-opposite-tny: $button-tny * 2;
+// $dropdown-button-pip-top-tny: -$button-tny / 2 + em-calc(1);
+
+// We use these to style small dropdown buttons
+
+// $dropdown-button-padding-sml: $button-sml * 5;
+// $dropdown-button-pip-size-sml: $button-sml;
+// $dropdown-button-pip-opposite-sml: $button-sml * 2;
+// $dropdown-button-pip-top-sml: -$button-sml / 2 + em-calc(1);
+
+// We use these to style medium dropdown buttons
+
+// $dropdown-button-padding-med: $button-med * 4 + em-calc(3);
+// $dropdown-button-pip-size-med: $button-med - em-calc(3);
+// $dropdown-button-pip-opposite-med: $button-med * 2;
+// $dropdown-button-pip-top-med: -$button-med / 2 + em-calc(2);
+
+// We use these to style large dropdown buttons
+
+// $dropdown-button-padding-lrg: $button-lrg * 4;
+// $dropdown-button-pip-size-lrg: $button-lrg - em-calc(6);
+// $dropdown-button-pip-opposite-lrg: $button-lrg + em-calc(12);
+// $dropdown-button-pip-top-lrg: -$button-lrg / 2 + em-calc(3);
+
+//
+// Split Button Variables
+//
+
+// We use these to control different shared styles for Split Buttons
+
+// $split-button-function-factor: 15%;
+// $split-button-pip-color: #fff;
+// $split-button-pip-color-alt: #333;
+// $split-button-active-bg-tint: rgba(0, 0, 0, 0.1);
+
+// We use these to control tiny split buttons
+
+// $split-button-padding-tny: $button-tny * 9;
+// $split-button-span-width-tny: $button-tny * 6.5;
+// $split-button-pip-size-tny: $button-tny;
+// $split-button-pip-top-tny: $button-tny * 2;
+// $split-button-pip-default-float-tny: em-calc(-5);
+
+// We use these to control small split buttons
+
+// $split-button-padding-sml: $button-sml * 7;
+// $split-button-span-width-sml: $button-sml * 5;
+// $split-button-pip-size-sml: $button-sml;
+// $split-button-pip-top-sml: $button-sml * 1.5;
+// $split-button-pip-default-float-sml: em-calc(-9);
+
+// We use these to control medium split buttons
+
+// $split-button-padding-med: $button-med * 6.4;
+// $split-button-span-width-med: $button-med * 4;
+// $split-button-pip-size-med: $button-med - em-calc(3);
+// $split-button-pip-top-med: $button-med * 1.5;
+// $split-button-pip-default-float-med: em-calc(-9);
+
+// We use these to control large split buttons
+
+// $split-button-padding-lrg: $button-lrg * 6;
+// $split-button-span-width-lrg: $button-lrg * 3.75;
+// $split-button-pip-size-lrg: $button-lrg - em-calc(6);
+// $split-button-pip-top-lrg: $button-lrg + em-calc(5);
+// $split-button-pip-default-float-lrg: em-calc(-9);
+
+form a.button,
+form a.button:hover {
+	text-decoration: none;
+}
+
+.contentzone form button,
+.contentzone .button {
+	min-width: 130px;
+}
+
+form button,
+.button {
+	@include button-base;
+	@include button-size($padding:false);
+	@include button-style($radius:true);
+	-webkit-appearance: none;
+	  -moz-appearance: none;
+	appearance: none;
+	margin-right: 28px;
+	padding: 5px 12px 5px;
+	font-size: 1em;
+	min-height: 39px;
+
+	&[type=submit],
+	&.submit {
+		@include button-style($bg:$button-background-color-submit);
+	}
+	&[type=reset],
+	&.reset {
+		@include button-style($bg:$button-background-color-reset);
+		color: $color-link;
+		box-shadow: none;
+		font-weight: normal;
+		&:hover {
+			color: $color-link;
+			text-decoration: underline;
+		}
+	}
+	&.action {
+		@include button-style($bg:$button-background-color-otheraction);
+	}
+
+	&.startover {
+		position: relative;
+		padding-left: ($button-med * 2) + em-calc(23px) + 0.25em;
+
+		&:before {
+			content: "";
+			position: absolute;
+			left: 0.5em;
+			@include svg-sprite(undo-white);
+		}
+	}
+
+	&.left-align {
+		text-align: left;
+		padding-left: em-calc(12);
+	}
+	&.right-align {
+		text-align: right;
+		padding-right: em-calc(12);
+	}
+
+	&[disabled],
+	&.disabled {
+		&[type=submit],
+		&.submit {
+			@include button-style($bg:$button-background-color-submit, $disabled:true);
+		}
+		&[type=reset],
+		&.reset {
+			@include button-style($bg:$button-background-color-reset, $disabled:true);
+		}
+		&.action {
+			@include button-style($bg:$button-background-color-otheraction, $disabled:true);
+		}
+	}
+}
+
+// if the button class is used in an anchor instead of input, it needs different padding
+a.button {
+	padding-top: 9px;
+}
+
+// The "New Search" link of the Genetics Directory result used to be styled
+// as a button but was changed to a link.  This link needs to set the
+// font specificly
+a.search-link {
+	font-family: $montserrat-font-stack;
+}
+
+@media only screen {
+	form button,
+	form .button {
+		@include box-shadow(0 2px 4px 0 rgba(0, 0, 0, 0.05) inset);
+
+		@include single-transition(background-color);
+
+		&.radius {
+			@include button-style($bg:false, $radius:true);
+		}
+	}
+}
+
+@include bp(medium-up) {
+	form button,
+	form .button {
+		@include button-base($style:false, $display:inline-block);
+		@include button-size($padding:false, $full-width:false);
+	}
+}
+
+
+
+//
+// Plus/Minus (Expand/Collapse) buttons
+//
+
+// variables
+$plusminus-desktop-color-collapsed: $grey27;
+$plusminus-desktop-color-expanded: $dteal;
+
+// accordion
+$plusminus-color-accordion-odd: white;
+$plusminus-bg-color-accordion-odd: #8fd4db;
+
+$plusminus-color-accordion-even: white;
+$plusminus-bg-color-accordion-even: #b2dcdf;
+
+// navigation
+$plusminus-color-nav-default: white;
+$plusminus-bg-color-nav-default: #c3c1b4;
+
+$plusminus-color-nav-greyish: white;
+$plusminus-bg-color-nav-greyish: #d4d2e3;
+
+$plusminus-color-nav-current: white;
+$plusminus-bg-color-nav-current: #12738a;
+
+
+.toggle {
+	// BEGIN reset
+	display: inline-block;
+	cursor: pointer;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	@include box-shadow(none);
+	// END reset
+
+	position: absolute;
+	right: 4%;
+	top: 50%;
+	margin-top: -0.5em;
+	overflow: visible;
+	font-family: Arial, sans-serif; // must be Arial for pretty +/- characters
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1;
+	text-indent: 0;
+	text-align: center;
+	height: 1em;
+	width: 1em;
+
+	&:after {
+		display: block;
+		height: 1em;
+		width: 100%;
+		line-height: 1;
+	}
+}
+
+// We cannot define this in the block above since & is actually .cgdp .toggle.
+[aria-expanded="false"] .toggle:after,
+.toggle[aria-expanded="false"]:after {
+  content: "+";
+}
+[aria-expanded="true"] .toggle:after,
+.toggle[aria-expanded="true"]:after {
+  content: "\2212"; /* "2212" is Unicode for the minus sign */
+}
+
+@include bp(medium-down) {
+	// MOBILE: general plus/minus buttons
+	.toggle {
+		right: 0;
+		top: 0;
+		margin-top: 0;
+		font-size: 2em;
+		height: 100%;
+		width: 50px;
+
+		&:after {
+			position: absolute;
+			top: 50%;
+			margin-top: -0.5em;
+		}
+	}
+
+	.ui-accordion-header.odd {
+		@include toggle-color($plusminus-color-accordion-odd, $plusminus-bg-color-accordion-odd);
+	}
+
+	.ui-accordion-header.even {
+		@include toggle-color($plusminus-color-accordion-even, $plusminus-bg-color-accordion-even);
+	}
+
+	// MOBILE: "hamburger" plus/minus buttons
+	#mega-nav .toggle {
+		font-size: 2.5em;
+		@include box-shadow(-15px 0px 15px -15px rgba(0, 0, 0, 0.6) inset);
+	}
+
+	#mega-nav {
+		@include toggle-color($plusminus-color-nav-default, $plusminus-bg-color-nav-default);
+
+		.current-page > div {
+			@include toggle-color($plusminus-color-nav-current, $plusminus-bg-color-nav-current);
+		}
+	}
+	.section-nav {
+		@include toggle-color($plusminus-color-nav-default, $plusminus-bg-color-nav-default);
+
+		.level-1.contains-current {
+			@include toggle-color($plusminus-color-nav-greyish, $plusminus-bg-color-nav-greyish);
+		}
+		.has-children > .current-page {
+			@include toggle-color($plusminus-color-nav-current, $plusminus-bg-color-nav-current);
+		}
+	}
+}
+
+@include bp(large-up) {
+	// DESKTOP: general plus/minus buttons
+	.toggle {
+		font-size: 1.25em;
+		margin-top: -0.625em;
+	}
+  // We cannot define this in the block above since & is actually .cgdp .toggle.
+  [aria-expanded="false"] .toggle,
+  .toggle[aria-expanded="false"] {
+    color: $plusminus-desktop-color-collapsed;
+  }
+  [aria-expanded="true"] .toggle,
+  .toggle[aria-expanded="true"] {
+    color: $plusminus-desktop-color-expanded;
+  }
+
+}
+
+	// Full page (.desktop) accordions general plus/minus buttons
+.desktop .ui-accordion-header.odd {
+	@include toggle-color($plusminus-color-accordion-odd, $plusminus-bg-color-accordion-odd);
+}
+
+.desktop .ui-accordion-header.even {
+	@include toggle-color($plusminus-color-accordion-even, $plusminus-bg-color-accordion-even);
+}
