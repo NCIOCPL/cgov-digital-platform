@@ -153,6 +153,7 @@ jobs:
       - name: Setup Git User Name
         run: |
           git config --global user.name "Github Actions"
+          git config --global user.email "webcommauto@users.noreply.github.com"
       - name: Push Artifact to Acquia
         run: ./.github/scripts/push_acquia_git.sh
         shell: bash
