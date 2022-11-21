@@ -23,18 +23,14 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            computed_path: '/publications/dictionaries'
+            computed_path: '/publications/dictionaries/genetics-dictionary'
   field_site_section__ES:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            computed_path: '/publicaciones'
-  field_pretty_url:
-    value: 'genetics-dictionary'
-  field_pretty_url__ES:
-    value: 'diccionario-de-genetica'
+            computed_path: '/publicaciones/diccionarios/diccionario-genetica'
   field_application_module:
     - target_id: cgov_js_only_app
       data:
@@ -42,7 +38,7 @@
           appName: "glossary-app"
           rootId: "NCI-glossary-app-root"
           initFnName: "window.GlossaryApp"
-          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main-legacy.css"
           appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
           removeHeadElements:
             - "canonical_url"
@@ -68,7 +64,7 @@
             </p>
           dictionaryTitle: "NCI Dictionary of Genetics Terms"
           searchBoxTitle: "Search NCI's Dictionary of Genetics Terms"
-          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
+          languageToggleSelector: "@@NOENCODE@@#lang-toggle"
   field_application_module__ES:
     - target_id: cgov_js_only_app
       data:
@@ -76,7 +72,7 @@
           appName: "glossary-app"
           rootId: "NCI-glossary-app-root"
           initFnName: "window.GlossaryApp"
-          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main.css"
+          appCssUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/css/main-legacy.css"
           appJsUri: "https://react-app-dev.cancer.gov/glossary-app/develop/static/js/main.js"
           removeHeadElements:
             - "canonical_url"
@@ -101,7 +97,7 @@
             </p>
           dictionaryTitle: "Diccionario de genética"
           searchBoxTitle: "Busca diccionario de genética"
-          languageToggleSelector: "@@NOENCODE@@#LangList1 a"
+          languageToggleSelector: "@@NOENCODE@@#lang-toggle"
   field_date_posted:
     value: "2011-02-02"
   field_date_reviewed:
