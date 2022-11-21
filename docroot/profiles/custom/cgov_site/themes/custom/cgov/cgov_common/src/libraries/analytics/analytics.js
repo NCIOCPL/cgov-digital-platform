@@ -57,11 +57,6 @@ $(document).ready(function () {
         NCIAnalytics[type](target, ...args);
     });
 
-    // FLOATING DELIGHTER MODULE
-    registerCustomEventListener('NCI.floating-delighter.click', target => {
-        NCIAnalytics.HomePageDelighterClick(target, 'hp_find', hostname + trimmedPathname);
-    });
-
     // If the screen is resized past a different breakpoint, track the variable and event
     function trackViewPortResize() {
         var viewPortResized = getWidthForAnalytics();
