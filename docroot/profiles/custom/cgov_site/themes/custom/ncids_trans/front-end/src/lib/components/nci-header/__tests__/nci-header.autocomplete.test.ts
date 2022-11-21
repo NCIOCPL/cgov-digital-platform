@@ -51,7 +51,6 @@ describe('nci-header - autocomplete analytics', () => {
 			general: {
 				mediaServer: 'http://example.org',
 			},
-			showFloatingDelighters: true,
 			sitewideSearchConfig: {
 				searchApiServer: 'http://localhost',
 			},

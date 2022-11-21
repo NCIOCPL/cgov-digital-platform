@@ -25,6 +25,8 @@ declare global {
 
 declare global {
 	interface Window {
+		/** The instance of the CDE config object. */
+		CDEConfig: CDEConfig;
 		/** Defines the mobile navigation information for the current page. */
 		ncidsNavInfo: {
 			/** The navigation to display */

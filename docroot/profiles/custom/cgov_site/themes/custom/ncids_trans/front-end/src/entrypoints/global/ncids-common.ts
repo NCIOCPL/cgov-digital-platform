@@ -23,15 +23,7 @@ import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
 // For the CDEConfig, as we migrate stuff to TS, each module that has
 // things on the CDEConfig should define those individual items.
 declare global {
-	/** This is our configuration object that Drupal places in the head for various apis. */
-	interface CDEConfig {
-		/** This is for Libraries/floatingDelighter. */
-		showFloatingDelighters: boolean;
-	}
-
 	interface Window {
-		/** This is our configuration object that Drupal places in the head for various apis. */
-		CDEConfig: CDEConfig;
 		/** Helper functions for live help. Why it is on the window, IDK. */
 		MDUX: {
 			verifyShouldLiveHelpRun: unknown;
@@ -95,13 +87,9 @@ import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
 import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
 import glossaryPopups from 'Libraries/popups/glossaryPopups';
 import imageCarousel from 'Core/libraries/imageCarousel/image-carousel';
-import floatingDelighter from 'Libraries/floatingDelighter';
 import charts from 'Libraries/charts';
 
 DeepLinkPatch();
-
-// Check if floatingDelighters are enabled on the global config
-const shouldShowFloatingDelighters = window.CDEConfig.showFloatingDelighters;
 
 //DOM Ready event
 const onDOMContentLoaded = () => {
@@ -205,11 +193,6 @@ const onDOMContentLoaded = () => {
 	glossaryPopups();
 
 	imageCarousel();
-
-	// Check global config as to whether floatingDelighters should be instantiated (#2229)
-	if (shouldShowFloatingDelighters) {
-		floatingDelighter();
-	}
 
 	charts();
 };
