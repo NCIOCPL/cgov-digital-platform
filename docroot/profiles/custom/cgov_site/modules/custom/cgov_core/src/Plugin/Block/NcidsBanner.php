@@ -91,6 +91,7 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
       // Replace the default drupal link classes with NCIDS classes.
       // Set the hreflang attribute.
       $link['attributes'] = [
+        'id' => 'lang-toggle',
         'class' => ['usa-button', 'usa-button--nci-small'],
         'hreflang' => $link['language']->getId(),
       ];
