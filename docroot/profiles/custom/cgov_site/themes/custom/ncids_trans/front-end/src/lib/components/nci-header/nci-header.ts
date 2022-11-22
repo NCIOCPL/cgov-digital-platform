@@ -14,6 +14,11 @@ import {
 	megaMenuLinkClickHandler,
 } from './mega-menu-analytics-handlers';
 import { searchSubmitHandler } from './auto-suggest-analytics-handlers';
+import {
+	mobileMenuCloseHandler,
+	mobileMenuLinkClickHandler,
+	mobileMenuOpenHandler,
+} from './mobile-menu-analytics-handlers';
 
 declare global {
 	interface CDEConfig {
@@ -40,7 +45,7 @@ declare global {
 /**
  * Initializes the autocomplete, and someday the search form.
  */
-const initializeSearch = () => {
+const initializeSearch = (lang: 'en' | 'es') => {
 	// TODO: Handle the use case for analytics when there is no autocomplete.
 
 	// So there must be a collection in order to have an autocomplete.
@@ -63,10 +68,6 @@ const initializeSearch = () => {
 		console.error(`CDEConfig searchApiServer must be provided`);
 		return;
 	}
-
-	// Default to English is somehow we are missing the lang, but we should not.
-	const lang =
-		document.documentElement.lang === '' ? 'en' : document.documentElement.lang;
 
 	const client = axios.create({
 		baseURL: searchApiServer,
@@ -103,6 +104,12 @@ const initialize = () => {
 		return;
 	}
 
+	// Default to English is somehow we are missing the lang, but we should not.
+	// Note we only support en or es. If a page is in de, then it will use en.
+	const lang: 'en' | 'es' = (
+		document.documentElement.lang === 'es' ? 'es' : 'en'
+	) as 'en' | 'es';
+
 	// A microsite, or language, under www.cancer.gov would need
 	// to have a baseUrl like /nano.
 	const baseURL = headerEl.dataset.basePath ?? '/';
@@ -129,7 +136,7 @@ const initialize = () => {
 		client,
 		window.ncidsNavInfo?.item_id?.toString(),
 		window.ncidsNavInfo.nav,
-		document.documentElement.lang as 'en' | 'es'
+		lang
 	);
 
 	// NOTE: this is on the document. This is because the nci-header does not
@@ -152,6 +159,21 @@ const initialize = () => {
 		primaryNavLinkClickHandler,
 		true
 	);
+	headerEl.addEventListener(
+		'nci-header:mobile-menu:open',
+		mobileMenuOpenHandler,
+		true
+	);
+	headerEl.addEventListener(
+		'nci-header:mobile-menu:close',
+		mobileMenuCloseHandler,
+		true
+	);
+	headerEl.addEventListener(
+		'nci-header:mobile-menu:linkclick',
+		mobileMenuLinkClickHandler,
+		true
+	);
 
 	NCIExtendedHeaderWithMegaMenu.create(headerEl, {
 		mobileMenuSource,
@@ -160,7 +182,7 @@ const initialize = () => {
 
 	// The autocomplete for the sitewide search is actually a separate element.
 	// At this time the header is not needed.
-	initializeSearch();
+	initializeSearch(lang);
 };
 
 export default initialize;
