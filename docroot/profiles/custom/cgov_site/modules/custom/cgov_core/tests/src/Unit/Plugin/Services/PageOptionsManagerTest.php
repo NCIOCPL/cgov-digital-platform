@@ -54,12 +54,8 @@ class PageOptionsManagerTest extends UnitTestCase {
       'article node' => [
         'cgov_article',
         [
-          'resize' => TRUE,
           'print' => TRUE,
           'email' => TRUE,
-          'facebook' => TRUE,
-          'twitter' => TRUE,
-          'pinterest' => TRUE,
         ],
       ],
     ];
