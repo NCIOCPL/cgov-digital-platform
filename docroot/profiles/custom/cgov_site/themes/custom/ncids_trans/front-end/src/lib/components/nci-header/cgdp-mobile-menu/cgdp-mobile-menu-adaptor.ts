@@ -21,7 +21,7 @@ const locale: { [resname: string]: { en: string; es: string } } = {
 	},
 	back: {
 		en: 'Back',
-		es: 'Espalda',
+		es: 'Anterior',
 	},
 };
 
