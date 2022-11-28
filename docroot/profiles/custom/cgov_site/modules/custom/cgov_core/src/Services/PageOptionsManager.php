@@ -17,137 +17,89 @@ class PageOptionsManager implements PageOptionsManagerInterface {
    */
   protected $routeMatcher;
 
+  /**
+   * The linter made me comment. IDK what this is.
+   *
+   * @var mixed
+   */
   protected $pageOptionsConfig = [];
 
   /**
-   * TODO:.
-   *
-   * In future revisions, available options will be moved to the nodes
-   * themselves, rather than be hardcoded here.
+   * These are the page options available for the content types.
    *
    * @var array
    */
   private static $nodeOptions = [
     'cgov_article' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_cancer_center' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_biography' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_blog_post' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_blog_series' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_cancer_research' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_cthp' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_event' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_home_landing' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_infographic' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_mini_landing' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_press_release' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_video' => [
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'cgov_application_page' => [
       'email',
-      'twitter',
     ],
     'pdq_cancer_information_summary' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
     'pdq_drug_information_summary' => [
-      'resize',
       'print',
       'email',
-      'facebook',
-      'twitter',
-      'pinterest',
     ],
   ];
 
+  /**
+   * List of valid types.
+   *
+   * @var mixed
+   */
   private static $optionConfigs = [
     'facebook' => TRUE,
     'twitter' => TRUE,
