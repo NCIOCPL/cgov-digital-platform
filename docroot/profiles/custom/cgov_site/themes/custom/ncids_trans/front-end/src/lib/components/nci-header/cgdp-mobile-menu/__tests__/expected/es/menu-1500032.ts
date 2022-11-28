@@ -16,7 +16,7 @@ export default {
 	parent: {
 		id: '1500031',
 		langcode: 'es',
-		label: 'Espalda',
+		label: 'Anterior',
 		path: '/espanol/api-test-es/c/1/1',
 		hasChildren: true,
 	},
