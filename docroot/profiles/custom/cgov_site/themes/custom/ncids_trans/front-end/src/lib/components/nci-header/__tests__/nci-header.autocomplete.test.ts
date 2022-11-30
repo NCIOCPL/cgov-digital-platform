@@ -79,25 +79,65 @@ describe('nci-header - autocomplete analytics', () => {
 
 		headerInit();
 
-		await user.click(screen.getByRole('combobox'));
+		// Click on search
+		const combobox = screen.getByRole('combobox');
+		await user.click(combobox);
+
+		// Search "can" and select the first option
 		await user.keyboard('can');
 		const terms = await screen.findAllByRole('option');
 		await user.click(terms[0]);
 
+		// Click submit
 		const searchButton = await screen.findByRole('button', {
 			name: 'search',
 		});
-		await fireEvent.submit(searchButton);
-		expect(spy).toHaveBeenCalledWith(
+		fireEvent.submit(searchButton);
+
+		// Clear and click on search
+		await user.click(combobox);
+		await user.clear(combobox);
+
+		// Search "cancer" and do not select an option
+		await user.keyboard('canc');
+		await screen.findAllByRole('option');
+
+		// Click submit
+		const searchButton2 = await screen.findByRole('button', {
+			name: 'search',
+		});
+		fireEvent.submit(searchButton2);
+
+		// todo search for "types" and get none because it doesn't exist
+
+		expect(spy).toHaveBeenNthCalledWith(
+			0,
 			'HeaderSearch:Submit',
 			'HeaderSearch:Submit',
 			{
 				formType: 'SitewideSearch',
 				searchTerm: 'breast cancer',
-				autoSuggestUsage: true,
+				autoSuggestUsage: 'Selected',
 				charactersTyped: 'can',
 				numCharacters: 3,
-				numSuggestsSelected: 0,
+				numSuggestsSelected: 1,
+				suggestItems: 10,
+				suggestOptionValue: 'breast cancer',
+				location: 'Header',
+			}
+		);
+
+		expect(spy).toHaveBeenNthCalledWith(
+			0,
+			'HeaderSearch:Submit',
+			'HeaderSearch:Submit',
+			{
+				formType: 'SitewideSearch',
+				searchTerm: 'breast cancer',
+				autoSuggestUsage: 'Selected',
+				charactersTyped: 'can',
+				numCharacters: 3,
+				numSuggestsSelected: 1,
 				suggestItems: 10,
 				suggestOptionValue: 'breast cancer',
 				location: 'Header',
