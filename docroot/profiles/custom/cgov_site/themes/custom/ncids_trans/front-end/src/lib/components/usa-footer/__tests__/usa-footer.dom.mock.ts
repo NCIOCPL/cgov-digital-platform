@@ -12,7 +12,7 @@ export const usaFooterDomMock = (): string => {
 								<div class="grid-row grid-gap-4">
 									<div class="mobile-lg:grid-col-6 desktop:grid-col-4">
 										<section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-											<h4 class="usa-footer__primary-link">About</h4>
+											<div class="usa-footer__primary-link">About</div>
 											<ul class="usa-list usa-list--unstyled">
 												<li class="usa-footer__secondary-link">
 													<a href="/about-website">About this Website</a>
@@ -31,7 +31,7 @@ export const usaFooterDomMock = (): string => {
 									</div>
 									<div class="mobile-lg:grid-col-6 desktop:grid-col-4">
 										<section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-											<h4 class="usa-footer__primary-link">Resources</h4>
+											<div class="usa-footer__primary-link">Resources</div>
 											<ul class="usa-list usa-list--unstyled">
 												<li class="usa-footer__secondary-link">
 													<a href="/contact">Contact Us</a>
@@ -53,7 +53,7 @@ export const usaFooterDomMock = (): string => {
 									</div>
 									<div class="mobile-lg:grid-col-6 desktop:grid-col-4">
 										<section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-											<h4 class="usa-footer__primary-link">Policies</h4>
+											<div class="usa-footer__primary-link">Policies</div>
 											<ul class="usa-list usa-list--unstyled">
 												<li class="usa-footer__secondary-link">
 													<a href="/policies/accessibility">Accessibility</a>
@@ -75,7 +75,7 @@ export const usaFooterDomMock = (): string => {
 									</div>
 									<div class="mobile-lg:grid-col-6 desktop:grid-col-4">
 										<section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-											<h4 class="usa-footer__primary-link"></h4>
+											<div class="usa-footer__primary-link"></div>
 											<ul class="usa-list usa-list--unstyled">
 												<li class="usa-footer__secondary-link">
 													<a data-testid="bad-collapse"></a>
