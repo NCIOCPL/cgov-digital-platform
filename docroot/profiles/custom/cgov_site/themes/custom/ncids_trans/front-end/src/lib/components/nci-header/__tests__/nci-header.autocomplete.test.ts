@@ -13,6 +13,22 @@ import { headerWithoutSearch } from './nci-header.without-search.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
 
+const response = {
+	results: [
+		{ term: 'breast cancer' },
+		{ term: 'lung cancer' },
+		{ term: 'cervical cancer' },
+		{ term: 'ovarian cancer' },
+		{ term: 'prostate cancer' },
+		{ term: 'skin cancer' },
+		{ term: 'liver cancer' },
+		{ term: 'colon cancer' },
+		{ term: 'pancreatic cancer' },
+		{ term: 'bone cancer' },
+	],
+	total: 1173,
+};
+
 describe('nci-header - autocomplete analytics', () => {
 	let consoleError: jest.SpyInstance;
 
@@ -43,7 +59,7 @@ describe('nci-header - autocomplete analytics', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('checks autocomplete analytics', async () => {
+	it('sends correct analytics when no options offered', async () => {
 		const user = userEvent.setup();
 		const spy = jest.spyOn(eddlUtil, 'trackOther');
 
@@ -59,47 +75,151 @@ describe('nci-header - autocomplete analytics', () => {
 		const scope = nock('http://localhost')
 			.get('/Autosuggest/cgov/en/can')
 			.once()
-			.reply(200, {
-				results: [
-					{ term: 'breast cancer' },
-					{ term: 'lung cancer' },
-					{ term: 'cervical cancer' },
-					{ term: 'ovarian cancer' },
-					{ term: 'prostate cancer' },
-					{ term: 'skin cancer' },
-					{ term: 'liver cancer' },
-					{ term: 'colon cancer' },
-					{ term: 'pancreatic cancer' },
-					{ term: 'bone cancer' },
-				],
-				total: 1173,
-			});
+			.reply(200, response);
 
 		document.body.appendChild(nciHeaderAutosuggestDom());
 
 		headerInit();
 
-		await user.click(screen.getByRole('combobox'));
-		await user.keyboard('can');
-		const terms = await screen.findAllByRole('option');
-		await user.click(terms[0]);
+		// Click on search
+		const combobox = await screen.findByRole('combobox');
+		await user.click(combobox);
 
-		const searchButton = await screen.findByRole('button', {
-			name: 'search',
-		});
-		await fireEvent.submit(searchButton);
+		// Search "ca"
+		await user.keyboard('ca');
+
+		// Click submit
+		fireEvent.submit(
+			await screen.findByRole('button', {
+				name: 'search',
+			})
+		);
+
+		expect(spy).toHaveBeenCalledWith(
+			'HeaderSearch:Submit',
+			'HeaderSearch:Submit',
+			{
+				formType: 'SitewideSearch',
+				searchTerm: 'ca',
+				autoSuggestUsage: 'None',
+				charactersTyped: null,
+				numCharacters: null,
+				numSuggestsSelected: null,
+				suggestItems: 0,
+				location: 'Header',
+			}
+		);
+
+		scope.isDone();
+	});
+
+	it('sends correct analytics when options are offered', async () => {
+		const user = userEvent.setup();
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		(window as Partial<Window>).CDEConfig = {
+			general: {
+				mediaServer: 'http://example.org',
+			},
+			sitewideSearchConfig: {
+				searchApiServer: 'http://localhost',
+			},
+		};
+
+		const scope = nock('http://localhost')
+			.get('/Autosuggest/cgov/en/can')
+			.once()
+			.reply(200, response);
+
+		document.body.appendChild(nciHeaderAutosuggestDom());
+
+		headerInit();
+
+		// Click on search
+		const combobox = await screen.findByRole('combobox');
+		await user.click(combobox);
+
+		// Search "can" and don't select an option
+		await user.keyboard('can');
+		const options = await screen.findAllByRole('option');
+
+		// Make sure we have options as expected
+		expect(options[0]).toHaveTextContent('breast cancer');
+
+		// Click submit
+		fireEvent.submit(
+			await screen.findByRole('button', {
+				name: 'search',
+			})
+		);
+
+		expect(spy).toHaveBeenCalledWith(
+			'HeaderSearch:Submit',
+			'HeaderSearch:Submit',
+			{
+				formType: 'SitewideSearch',
+				searchTerm: 'can',
+				autoSuggestUsage: 'Offered',
+				charactersTyped: null,
+				numCharacters: null,
+				numSuggestsSelected: null,
+				suggestItems: 10,
+				location: 'Header',
+			}
+		);
+
+		scope.isDone();
+	});
+
+	it('sends correct analytics when option is selected', async () => {
+		const user = userEvent.setup();
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		(window as Partial<Window>).CDEConfig = {
+			general: {
+				mediaServer: 'http://example.org',
+			},
+			sitewideSearchConfig: {
+				searchApiServer: 'http://localhost',
+			},
+		};
+
+		const scope = nock('http://localhost')
+			.get('/Autosuggest/cgov/en/can')
+			.once()
+			.reply(200, response);
+
+		document.body.appendChild(nciHeaderAutosuggestDom());
+
+		headerInit();
+
+		// Click on search
+		const combobox = await screen.findByRole('combobox');
+		await user.click(combobox);
+
+		// Search "can" and select the first option
+		await user.keyboard('can');
+		const options = await screen.findAllByRole('option');
+		await user.click(options[0]);
+
+		// Click submit
+		fireEvent.submit(
+			await screen.findByRole('button', {
+				name: 'search',
+			})
+		);
+
 		expect(spy).toHaveBeenCalledWith(
 			'HeaderSearch:Submit',
 			'HeaderSearch:Submit',
 			{
 				formType: 'SitewideSearch',
 				searchTerm: 'breast cancer',
-				autoSuggestUsage: true,
+				autoSuggestUsage: 'Selected',
 				charactersTyped: 'can',
 				numCharacters: 3,
-				numSuggestsSelected: 0,
+				numSuggestsSelected: 1,
 				suggestItems: 10,
-				suggestOptionValue: 'breast cancer',
 				location: 'Header',
 			}
 		);

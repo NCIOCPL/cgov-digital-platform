@@ -83,14 +83,10 @@ const initializeSearch = (lang: 'en' | 'es') => {
 		autocompleteSource: ACSource,
 		maxOptionsCount: 10,
 		minCharCount: 3,
-		// TODO: Translate the placeholder.
 		minPlaceholderMsg: minPlaceholderMsg,
 		listboxClasses: 'listboxWidth',
 	});
 
-	// const acForm = document.getElementsByClassName('nci-header-search');
-	// const acFormEl = acForm[0] as HTMLFormElement;
-	// TODO: Change this to inputEl when ncids is updated.
 	inputEl.addEventListener(
 		'nci-autocomplete:formSubmission',
 		searchSubmitHandler
