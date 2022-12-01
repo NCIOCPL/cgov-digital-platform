@@ -691,6 +691,20 @@ class CgovNavigationManager {
   public function isTermInActivePath(TermInterface $term) {
     $this->initialize();
     $termId = $term->id();
+    return $this->isTermIdInActivePath($termId);
+  }
+
+  /**
+   * Get active path status for Term by its ID.
+   *
+   * @param string|int $termId
+   *   The ID of the term.
+   *
+   * @return bool
+   *   TRUE if given term is in active path.
+   */
+  public function isTermIdInActivePath($termId) {
+    $this->initialize();
     $isInActivePath = FALSE;
     foreach ($this->fullAncestry as $ancestor) {
       $ancestorId = $ancestor->id();

@@ -62,51 +62,6 @@ class NcidsSidenav extends BlockBase implements ContainerFactoryPluginInterface 
   }
 
   /**
-   * Determines if a path is within a given url.
-   *
-   * We use arrays here because we need to check the path components, and not
-   * just a string.
-   *
-   * @param string $path
-   *   The path to check.
-   * @param string $url
-   *   The url to check against.
-   *
-   * @return bool
-   *   TRUE is the path is part of, or equal to, the URL.
-   */
-  private function isInPath($path, $url) {
-
-    // So let's make sure the paths end with a slash. We don't want partial
-    // string matches, but we want to know if the directories match.
-    $path = $path . '/';
-    $url = $url . '/';
-
-    // This is the current page.
-    if ($path === $url) {
-      return TRUE;
-    }
-
-    // The homepage is always part of every URL on the site. NOTE: See above
-    // where we add a trailing slash. / will become //.
-    if ($path === '//') {
-      return TRUE;
-    }
-
-    // If the URL is shorter than the path, the URL cannot begin with that
-    // path.
-    if (strlen($url) < strlen($path)) {
-      return FALSE;
-    }
-
-    // Let's make the URL string the same length as the path.
-    $urlChop = substr($url, 0, strlen($path));
-
-    // If the path is part of the URL, then this should return true.
-    return $urlChop === $path;
-  }
-
-  /**
    * Helper function to add current/ancestor state to nav based on current url.
    *
    * This modifies the tree in place.
@@ -118,17 +73,37 @@ class NcidsSidenav extends BlockBase implements ContainerFactoryPluginInterface 
    */
   private function setActivePaths(array &$treeNode, $currentPath) {
 
-    if ($this->isInPath($treeNode['href'], $currentPath)) {
+    if ($this->navMgr->isTermIdInActivePath($treeNode['id'])) {
       if ($treeNode['href'] === $currentPath) {
+        // On our site we have some weird navigation use cases for the
+        // CTHP sections. In these cases, one of the children of this
+        // node will have the same URL. In these cases the child should
+        // be the current state. Technical the URL can show up multiple
+        // places in the tree, but we are not going to go crazy looking
+        // all over for the deepest page.
+        for ($i = 0; $i < count($treeNode['children']); $i++) {
+          if ($treeNode['children'][$i]['href'] === $currentPath) {
+            // Set the current node as an ancestor.
+            $treeNode['navstate'] = 'ancestor';
+            // Set the child as the current.
+            $treeNode['children'][$i]['navstate'] = 'current';
+            // Stop processing as we are not going to find anything
+            // active deeper.
+            return;
+          }
+        }
+
+        // We must not have a child with the same URL, so we need to
+        // mark this page as the current one.
         $treeNode['navstate'] = 'current';
       }
       else {
         $treeNode['navstate'] = 'ancestor';
-      }
+        // Handle Children.
+        for ($i = 0; $i < count($treeNode['children']); $i++) {
+          $this->setActivePaths($treeNode['children'][$i], $currentPath);
+        }
 
-      // Handle Children.
-      for ($i = 0; $i < count($treeNode['children']); $i++) {
-        $this->setActivePaths($treeNode['children'][$i], $currentPath);
       }
     }
   }
