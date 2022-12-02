@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required.scss';
+@forward 'uswds-global';
+
+@forward 'usa-layout-grid';
+@forward 'nci-no-print'; //print styling
+
+// The specific Component imports. Nothing in this list SHOULD reference
+// NCIDS or USWDS. It should come from ../../lib/components.
+@forward 'usa-skipnav';
+@forward '../../lib/components/usa-banner';
+@forward '../../lib/components/usa-site-alert';
+@forward '../../lib/components/usa-footer';
+
+// TODO Keep as last import for now, there is a ordering bug
+@forward '../../lib/components/nci-header';
