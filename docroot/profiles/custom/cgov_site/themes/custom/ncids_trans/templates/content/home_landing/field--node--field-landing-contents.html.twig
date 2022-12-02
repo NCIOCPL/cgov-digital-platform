@@ -1,0 +1,42 @@
+{% set page_style = getHomeLandingStyle() %}
+{% if (page_style == "ncids_without_title") or (page_style == "ncids_with_title") %} 
+    {% if items | length > 0 %}
+        <div class="grid-container">
+            {% for item in items %}
+                {{ item.content }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+    {%
+    set title_classes = [
+        label_display == 'visually_hidden' ? 'visually-hidden',
+    ]
+    %}
+    {% if label_hidden %}
+        {% if multiple %}
+            <div{{ attributes }}>
+            {% for item in items %}
+                <div{{ item.attributes }}>{{ item.content }}</div>
+            {% endfor %}
+            </div>
+        {% else %}
+            {% for item in items %}
+            <div{{ attributes }}>{{ item.content }}</div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+    <div{{ attributes }}>
+        <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+        {% if multiple %}
+        <div>
+        {% endif %}
+        {% for item in items %}
+        <div{{ item.attributes }}>{{ item.content }}</div>
+        {% endfor %}
+        {% if multiple %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endif %}

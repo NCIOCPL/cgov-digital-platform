@@ -1,0 +1,24 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+.cgdp-title-area {
+    @include u-padding-y(6);
+    @include u-text('center');
+    .cgdp-title-area__subheading {
+        @include u-font(body, 8);
+
+        @include at-media(tablet-lg) {
+            @include u-font(body, 10);
+        }
+    }
+}
+
+.cgdp-page-title {
+    //Might be 15 and 11?
+    @include u-font(heading, 10);
+
+    @include at-media(tablet-lg) {
+        @include u-font(heading, 12);
+    }
+}
