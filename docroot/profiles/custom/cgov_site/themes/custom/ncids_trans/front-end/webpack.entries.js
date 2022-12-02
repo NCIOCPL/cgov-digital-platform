@@ -10,6 +10,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/global/ncids-common.ts'
 	),
+	'ncids-minimal': path.resolve(
+		__dirname,
+		'src/entrypoints/global/ncids-minimal.ts'
+	),
 	ckeditor: path.resolve(__dirname, 'src/entrypoints/ckeditor/ckeditor.js'),
 	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
 	'home-landing': path.resolve(
@@ -19,6 +23,10 @@ module.exports = {
 	'special-report': path.resolve(
 		__dirname,
 		'src/entrypoints/special-report/special-report.ts'
+	),
+	'ncids-home-landing': path.resolve(
+		__dirname,
+		'src/entrypoints/ncids-home-landing/ncids-home-landing.ts'
 	),
 	pdq: path.resolve(__dirname, 'src/entrypoints/pdq/pdq.ts'),
 	'mini-landing': path.resolve(

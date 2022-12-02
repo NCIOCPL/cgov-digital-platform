@@ -14,6 +14,13 @@ ncids-global:
   dependencies:
     - ncids_trans/jqueryandui
 
+ncids-minimal:
+  css:
+    theme:
+      dist/css/ncids-minimal.css: { preprocess: false }
+  js:
+    dist/js/ncids-minimal.js: { preprocess: false }
+
 #####################
 ## NOTE: In the libraries below notice how there is a dependency on the global library.
 ## This is because attach_library does not care about order. If we add the dependencies
@@ -36,6 +43,15 @@ home-landing:
     dist/js/home-landing.js: { preprocess: false }
   dependencies:
     - ncids_trans/ncids-global
+
+ncids-home-landing:
+  css:
+    theme:
+      dist/css/ncids-home-landing.css: { preprocess: false }
+  js:
+    dist/js/ncids-home-landing.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-minimal
 
 special-report:
   css:
