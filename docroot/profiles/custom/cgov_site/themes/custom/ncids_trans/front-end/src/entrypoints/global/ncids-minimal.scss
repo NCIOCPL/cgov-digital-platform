@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+// Required
+// This is the normalizer and generates styles, so we want this here.
+// No other entrypoint should have this UNLESS the page it is included
+// on does not have ncids-common.
+@import '@nciocpl/ncids-css/scss/lib/normalize';
+
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@import '../cgdp-required.scss';
+
+// Commenting this out for now as we don't want to generate utility
+// classes. Past not generating them, IDK if there is a purpose for
+// having this. Utility classes cost about 200K in CSS, we should
+// just use the mixin functions ourselves.
+//@import '@nciocpl/ncids-css/scss/packages/utilities'; // page options responsive display\
+
+// The global NCIDS/USWDS packages that generate markup.
+@import '@nciocpl/ncids-css/scss/packages/global';
+@import 'uswds/dist/scss/base/accessibility'; // header
+@import 'uswds/dist/scss/elements/typography/content'; // usa-prose, usa-intro(lede/lead)
+@import 'uswds/dist/scss/components/icon'; // page options icon sizes
+@import '@nciocpl/ncids-css/scss/utilities/no-print'; //print styling
+
+// The specific Component imports. Nothing in this list SHOULD reference
+// NCIDS or USWDS. It should come from ../../lib/components.
+@import '@nciocpl/ncids-css/scss/components/usa-skipnav/usa-skipnav';
+@import '../../lib/components/usa-banner/usa-banner';
+@import '../../lib/components/usa-site-alert/usa-site-alert';
+@import '../../lib/components/usa-footer/usa-footer';
+
+// TODO Keep as last import for now, there is a ordering bug
+@import '../../lib/components/nci-header/nci-header';
