@@ -32,7 +32,9 @@ export default class ProactiveLiveHelp {
 
     // Create the pop up.
     const popupMarkup = `
-            <a class="close">X</a>
+            <a class="close">
+              <span class="usa-sr-only">${(this.options.popupID === "Spanish-CTSPrompt") ? "Cerrar" : "Close" }</span>
+            </a>
             ${this.options.popupBody}
         `;
     const popupElement = document.createElement("div");
