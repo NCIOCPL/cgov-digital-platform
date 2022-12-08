@@ -1,0 +1,125 @@
+- entity: "media"
+  bundle: "cgov_image"
+  name: "What is the BRCA Exchange Infographic Crops"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'brca-challenge-infographic-article.png'
+      alt: "BRCA Challenge"
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 899
+                height: 1484
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 356
+                y: 567
+                width: 188
+                height: 141
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 361
+                y: 569
+                width: 182
+                height: 137
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 3
+                width: 899
+                height: 1199
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 899
+                height: 899
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 194
+                width: 899
+                height: 506
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+  
+- entity: media
+  langcode: en
+  bundle: cgov_infographic
+  status: 1
+  moderation_state: 
+    value: published
+  name: 'What is the BRCA Exchange?'
+  field_page_description: 
+    value: 'What is the BRCA Exchange?'
+  field_card_title: 
+    value: 'NCI at a Glance'
+  field_browser_title:
+    value: 'What is the BRCA Exchange?'
+  field_list_description: 
+    value: 'The BRCA Exchange aggregates “big data” on BRCA1 and BRCA2 genetic variants to expand our understanding of how each variant affects the gene''s function.'
+  field_feature_card_description: 
+    value: 'The BRCA Exchange aggregates “big data” on BRCA1 and BRCA2 genetic variants to expand our understanding of how each variant affects the gene''s function.'
+  body:
+    - format: full_html
+      value: |
+        <p>A long-term demonstration project initiated by the Global Alliance for Genomics and Health (GA4GH) to enhance sharing of BRCA1/BRCA2 data.</p>
+  field_infographic:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'BRCA-challenge-infographic.png'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_date_posted: 
+    value: '2019-01-09'
+  field_date_updated: 
+    value: '2019-01-07'
+  field_date_reviewed: 
+    value: '2019-01-07'
+  field_public_use: 
+    value: 1
+  field_search_engine_restrictions: 
+    value: IncludeSearch
+  field_pretty_url: 
+    value: 'brca-exchange-infographic'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - taxonomy_term
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/causes-prevention/genetics'
