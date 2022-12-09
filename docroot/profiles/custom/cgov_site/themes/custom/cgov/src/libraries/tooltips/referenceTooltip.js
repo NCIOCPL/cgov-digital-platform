@@ -26,7 +26,9 @@ function _initialize() {
 
             function show() {
                 if (!tooltipNode.parentNode || tooltipNode.parentNode.nodeType === 11) {
-                    document.body.appendChild(tooltipNode);
+                    const modalContainer = 
+                        document.getElementById("nci-modal-area") || document.body;
+                    modalContainer.appendChild(tooltipNode);
                     checkFlip = true;
                 }
                 $(tooltipNode).stop().animate({
@@ -36,12 +38,12 @@ function _initialize() {
             }
 
             function hide() {
-                if (tooltipNode && tooltipNode.parentNode == document.body) {
+                if (tooltipNode && tooltipNode.parentNode) {
                     hideTimer = setTimeout(function () {
                         $(tooltipNode).animate({
                             opacity: 0
                         }, 100, function () {
-                            document.body.removeChild(tooltipNode);
+                            tooltipNode.remove();
                         });
                     }, 100);
                 }
