@@ -29,6 +29,7 @@
   .alternating-image-list-text {
     @include flex-order(1);
     padding-right: 24px;
+    padding-left: 4px;
 
 
   }
@@ -63,6 +64,16 @@ a.alternating-image-list-container-link {
     h3 {
       color: $lcranberry;
     }
+  }
+  outline: none;
+  &:focus {
+    span.title {
+      outline: 0.25rem solid #2491ff;
+    }
+
+  }
+  .title-and-desc {
+    padding-top: 5px;
   }
 }
 
