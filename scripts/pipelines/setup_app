@@ -9,8 +9,6 @@ git commit -m "Generate build.json."
 
 export PATH=./docker/web/build/usr/bin:${COMPOSER_BIN}:${PATH}
 
-
 blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
 
 set +v
-

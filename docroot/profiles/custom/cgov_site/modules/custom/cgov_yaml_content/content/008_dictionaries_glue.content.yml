@@ -1,0 +1,126 @@
+#########################
+## Setup Site Sections ##
+#########################
+
+####### English #########
+## The following cgov_site_section terms already exist.
+## /publications
+## /publications/dictionaries
+## /publications/dictionaries/cancer-terms
+## /publications/dictionaries/cancer-drug
+## /publications/dictionaries/genetics-dictionary
+
+####### Spanish #########
+## The following cgov_site_section terms already exist.
+## /publicaciones
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Diccionarios del NCI"
+  langcode: es
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "diccionarios"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/publicaciones"
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Diccionario de cáncer"
+  langcode: es
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "diccionario-cancer"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/publicaciones/diccionarios"
+- entity: "taxonomy_term"
+  vid: "cgov_site_sections"
+  name: "Diccionario de genética"
+  langcode: es
+  field_section_nav_root:
+    value: false
+  field_pretty_url:
+    value: "diccionario-genetica"
+  parent:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/publicaciones/diccionarios"
+
+#########################
+##    Landing Pages    ##
+#########################
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Publications"
+  title__ES:
+    value: 'Publicaciones'
+  field_page_description:
+    value: "Publications"
+  field_page_description__ES:
+    value: "Publicaciones"
+  field_browser_title:
+    value: "Publications"
+  field_browser_title__ES:
+    value: "Publicaciones"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publicaciones'
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCI Dictionaries"
+  title__ES:
+    value: 'Diccionarios del NCI'
+  field_page_description:
+    value: "NCI Dictionaries"
+  field_page_description__ES:
+    value: "Diccionarios del NCI"
+  field_browser_title:
+    value: "NCI Dictionaries"
+  field_browser_title__ES:
+    value: "Diccionarios del NCI"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publications/dictionaries'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/publicaciones/diccionarios'

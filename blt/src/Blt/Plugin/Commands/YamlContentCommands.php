@@ -29,8 +29,26 @@ class YamlContentCommands extends BltTasks {
       'cgov:install:site-sections' => [],
       'cgov:enable-module' => ['moduleName' => $module],
       'custom:import_cgov_yaml_content' => ['module' => $module],
+      'cgov:import-dev-blocks' => [],
     ];
     $this->invokeCommands($commands);
+  }
+
+  /**
+   * Import default yaml content from Cgov module.
+   *
+   * @command cgov:import-dev-blocks
+   */
+  public function importCgovDevBlocks() {
+    $this->say("***************************************************************");
+    $this->say("***** Importing Development Blocks ! *****");
+    $this->say("***************************************************************");
+    /** @var \Acquia\Blt\Robo\Tasks\DrushTask $task */
+    $task = $this->taskDrush()
+      ->drush('cgov:load-dev-blocks')
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
   }
 
   /**

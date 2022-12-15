@@ -1,0 +1,20 @@
+{% import '@cgov_common/listing/list_item_macros.twig' as listItemMacros %}
+
+{# ###### Setup Description ####### #}
+{% if content.field_list_description|field_value %}
+  {% set description = content.field_list_description|field_value %}
+{% elseif content.field_page_description|field_value %}
+  {% set description = content.field_page_description|field_value %}
+{# Else no description #}
+{% endif %}
+
+{# ###### Setup Img ######## #}
+{% if content.field_image_promotional[0] %}
+  {% set image = content.field_image_promotional[0] %}
+{% elseif content.field_image_article[0] %}
+  {% set image = content.field_image_article[0] %}
+{# Else no image #}
+{% endif %}
+
+{## Render List Item ##}
+{{ listItemMacros.list_item_title_date_desc_image(label, content.field_date_posted, description, image, url, true) }}

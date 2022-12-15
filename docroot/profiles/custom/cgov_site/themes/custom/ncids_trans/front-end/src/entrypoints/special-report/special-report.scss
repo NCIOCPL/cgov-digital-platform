@@ -1,0 +1,14 @@
+@import '@nciocpl/ncids-css/scss/packages/required';
+@import '@nciocpl/ncids-css/scss/packages/global';
+
+@import "~Core/styles/environments/percussion";
+@import "~Core/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/breakpoint-mixins";
+
+// This should probably use some sort of breakpoint for the min-width.
+@include bp(medium-up) {
+	#main-content {
+		background-color: color('base-lightest');
+	}
+}

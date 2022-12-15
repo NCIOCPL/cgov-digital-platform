@@ -1,0 +1,18 @@
+{# Until further notice, this is the only video carousel display mode, but using
+the full specifier just in case requirements 'evolve'. #}
+<div class="yt-carousel" data-playlist-id="{{ content.field_youtube_playlist_id|field_value }}">
+  <div class="row">
+    <div class="columns small-12">
+      <h4 class="show-for-sr">{{ block_description }}</h4>
+      <figure class="yt-carousel-selected video center">
+        <div id="ytplayer" class="flex-video widescreen" data-video-id data-video-title ytc-index="0">
+          <div>
+            <p>
+              <a href target="_blank" title>Please enable Javacsript to view this content</a>
+            </p>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>

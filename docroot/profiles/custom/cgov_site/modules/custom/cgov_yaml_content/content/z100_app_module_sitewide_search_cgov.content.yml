@@ -1,0 +1,58 @@
+# NCI Sitewide Search App Module
+
+- entity: "node"
+  nid: 5000
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "NCI Search Results"
+  field_page_description:
+    value: "National Cancer Institute Search Results"
+  field_browser_title:
+    value: "NCI Search Results"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/search/results"
+  field_application_module:
+    - target_id: cgov_js_only_app
+      data:
+        drupalConfig:
+          appName: "sitewide-search-app"
+          rootId: "NCI-sws-app-root"
+          initFnName: "window.SitewideSearchApp"
+          appCssUri: "https://react-app-dev.cancer.gov/sitewide-search-app/develop/static/css/main-legacy.css"
+          appJsUri: "https://react-app-dev.cancer.gov/sitewide-search-app/develop/static/js/main.js"
+          removeHeadElements: []
+          validAppPaths: []
+        frontEndConfig:
+          analyticsChannel: "@@TOKEN@@[cgov_tokens:cgov-analytics-channel]"
+          analyticsContentGroup: "@@TOKEN@@[cgov_tokens:cgov-analytics-group]"
+          analyticsPublishedDate: "@@TOKEN@@[node:field_date_posted:date:short]"
+          bestbetsCollection: "live"
+          bestbetsEndpoint: "@@LITERAL@@window.CDEConfig.sitewideSearchConfig.bestBetsApiServer"
+          dictionaryAudience: "Patient"
+          dictionaryName: "Cancer.gov"
+          dictionaryUrl: "@@NOENCODE@@/publications/dictionaries/cancer-terms"
+          glossaryEndpoint: "@@LITERAL@@window.CDEConfig.glossaryConfig.apiServer"
+          dropdownOptions: [20, 50]
+          searchCollection: "cgov"
+          searchSiteFilter: "all"
+          searchEndpoint: "@@LITERAL@@window.CDEConfig.sitewideSearchConfig.searchApiServer"
+          siteName: "@@TOKEN@@[cgov_tokens:cgov-trans-org-name]"
+          title: "@@TOKEN@@[node:field_browser_title:value]"
+  field_date_posted:
+    value: "2016-06-23"
+  field_date_reviewed:
+    value: "2016-06-23"
+  field_date_updated:
+    value: "2016-06-23"
+  field_app_module_page_template:
+    value: no_left_nav
+  field_search_engine_restrictions:
+    value: ExcludeSearch

@@ -1,0 +1,32 @@
+{{ attach_library('ncids_trans/ncids-global') }}
+{{ attach_library('ncids_trans/cthp') }}
+{% import '@ncids_trans/layout/page_options_macros.twig' as pageOptionsMacros %}
+
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+<div class="grid-container">
+  <div class="grid-row flex-no-wrap">
+    <div class="grid-col-10">
+      {# What if no breadcrumbs? #}
+      {{ page.ncids_breadcrumb }}
+    </div>
+  </div>
+</div>
+
+<div id="page">
+  <!-- Begin MAIN CONTENT AREA -->
+  <div class="main-content type {{ (node.field_audience.value == "patient")? 'cthp-patient-content' : 'cthp-hp-content' }}" id="main-content">
+    <div class="cgdpl">
+      {# This content div is for the CTHP accordions #}
+      <div id="content">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{# TODO: Page options at bottom of CTHP? #}
+
+{{ page.ncids_footer }}

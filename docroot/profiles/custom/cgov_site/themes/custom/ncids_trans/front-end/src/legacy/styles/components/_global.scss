@@ -1,0 +1,39 @@
+// This is a mix of utility classes and some default things and some reset things
+// We are deleting the stuff that is not really needed and leaving in things that
+// we do need. These should then be scoped to the legacy block and die as things
+// are replaced.
+
+a:hover { cursor: $cursor-pointer-value; }
+
+// Miscellaneous useful HTML classes
+.left         { float: left !important; }
+.right        { float: right !important; }
+.text-left    { text-align: left !important; }
+.text-right   { text-align: right !important; }
+.text-center  { text-align: center !important; }
+.text-justify { text-align: justify !important; }
+.hide         { display: none; }
+
+// Font smoothing
+// Antialiased font smoothing works best for light text on a dark background.
+// Apply to single elements instead of globally to body.
+// Note this only applies to webkit-based desktop browsers on the Mac.
+.antialiased { -webkit-font-smoothing: antialiased; }
+
+// Get rid of gap under images by making them display: inline-block; by default
+img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+//
+// Global resets for forms
+//
+
+// Make sure textarea takes on height automatically
+textarea { height: auto; min-height: 50px; }
+
+// Make select elements 100% width by default
+select { width: 100%; }

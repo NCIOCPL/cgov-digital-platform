@@ -1,0 +1,64 @@
+<header id="nci-header" class="nci-header nci-header--extended" data-base-path="{{path('<front>')}}">
+	<div class="nci-header__navbar">
+		<div class="nci-logo" id="extended-mega-logo">
+			<a href="{{path('<front>')}}" aria-label="{{content.home_page_title}}">
+				{{content.site_logo}}
+			</a>
+		</div>
+
+		<div class="nci-header-nav__secondary">
+			<button class="usa-button nci-header-mobilenav__open-btn">{{ 'Menu'|t }}</button>
+
+			{% if content.search_results_url is not empty %}
+				<form class="nci-header-search" method="get" action="{{content.search_results_url}}" role="search">
+					<label class="usa-sr-only" for="nci-header-search__field">
+						{{'Search'|t}}
+					</label>
+
+					{% set input_attribs = create_attribute({})%}
+					{% if content.autosuggest_collection is not empty %}
+						{% set input_attribs = input_attribs.setAttribute('data-autosuggest-collection', content.autosuggest_collection) %}
+					{% endif %}
+					<input class="usa-input" id="nci-header-search__field" type="search" name="swKeyword" {{input_attribs}}/>
+					<button class="usa-button nci-header-search__search-button" type="submit" aria-label="{{ 'Search' | t }}">
+						<span class="nci-header-search__label" aria-hidden="true">{{ 'Search' | t }}</span>
+						<svg class="usa-icon" xmlns="http://www.w3.org/2000/svg" role="img" viewbox="0 0 24 24" aria-hidden="true">
+							<path d="M0 0h24v24H0z" fill="none"/>
+							<path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+						</svg>
+					</button>
+				</form>
+			{% endif %}
+		</div>
+	</div>
+
+	{% if content.navitems|length > 0 %}
+		<nav aria-label="{{'Primary navigation'|t}}" class="nci-header-nav">
+			<div class="nci-header-nav__inner">
+				<ul class="nci-header-nav__primary">
+					{% for navitem in content.navitems %}
+						<li class="nci-header-nav__primary-item">
+							{% set link_attribs = create_attribute({
+                  'href': navitem.href,
+                  'class': ['nci-header-nav__primary-link']
+                })
+              %}
+							{% if navitem.hasNcidsMegaMenu %}
+								{% set link_attribs = link_attribs.setAttribute('data-menu-id', navitem.id) %}
+							{% else %}
+								{% set link_attribs = link_attribs.setAttribute('data-megamenu-disabled', 'true') %}
+							{% endif %}
+							{% if navitem.navstate == 'ancestor' or navitem.navstate == 'current' %}
+								{% set link_attribs = link_attribs.addClass('usa-current') %}
+							{% endif %}
+							<a {{link_attribs}}>
+								<span>{{navitem.label}}</span>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</nav>
+	{% endif %}
+
+</header>

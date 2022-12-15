@@ -16,8 +16,18 @@ on:
 jobs:
   build:
     name: Build, Test and Upload Artifacts
-    ## TODO: Change this to Ubuntu 20, but this requires mysql changes.
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
+    services:
+      ## Ubuntu 20 comes with mysql 8, so we need a separate service
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+          MYSQL_USER: drupal
+          MYSQL_PASSWORD: drupal
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     steps:
@@ -91,17 +101,12 @@ jobs:
         run: |
           curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar && chmod +x /usr/local/bin/drush
           curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.0.3/blt.phar && chmod +x /usr/local/bin/blt
-      ## Create MySQL databases
-      - name: Turn on MySQL and Create DBs
-        run: |
-          sudo /etc/init.d/mysql start
       - name: Setup Env
         run: |
-          ## The setup env script does a few things we cannot.
-          mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS drupal"
-          mysql -u root -proot -e "GRANT ALL ON drupal.* to 'drupal'@'%' IDENTIFIED BY 'drupal'"
-          mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS simpletest"
-          mysql -u root -proot -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+          ## The mynci service creates the drupal DB, we need to make the
+          ## simpletest DB for the phpunit tests by hand here.
+          mysql -u root -proot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS simpletest"
+          mysql -u root -proot --protocol=TCP -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
           ## We don't set git info for right now as we are in the NCIOCPL origin right now.
       - name: Validate
         run: |
@@ -110,6 +115,9 @@ jobs:
         run: |
           ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
           blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+      - name: Run Front-end Tests
+        run: |
+          blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
       - name: Behat Tests
         timeout-minutes: 120
         run: |
@@ -120,7 +128,8 @@ jobs:
         run: |
           ## Setup Simpletest info for kernel & functional tests
           export SIMPLETEST_BASE_URL=http://127.0.0.1:8888
-          export SIMPLETEST_DB=mysql://simpletest:simpletest@localhost/simpletest
+          ## This URI should be good until GitHub changes to use IPV6 or something stupid.
+          export SIMPLETEST_DB=mysql://simpletest:simpletest@127.0.0.1:3306/simpletest
 
           ## PHP Unit tests do not start the server
           ## drush rs is equivelent to blt tests:server:start, except it allows us to bind to all ips on the box.
@@ -150,6 +159,7 @@ jobs:
       - name: Setup Git User Name
         run: |
           git config --global user.name "Github Actions"
+          git config --global user.email "webcommauto@users.noreply.github.com"
       - name: Push Artifact to Acquia
         run: ./.github/scripts/push_acquia_git.sh
         shell: bash
