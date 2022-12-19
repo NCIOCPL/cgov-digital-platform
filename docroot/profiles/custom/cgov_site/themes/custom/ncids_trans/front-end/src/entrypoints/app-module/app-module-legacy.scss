@@ -76,20 +76,29 @@
 
 // reduces padding between the "locations" label and descriptive text
 // in the trial listing app root
+// Changed padding-top and margin for .list for focus cutoff
 #NCI-trial-listing-app-root {
 	margin-bottom: 24px;
 	.ct-list-item__body {
 		margin: 0.25em 0;
 	}
+	.paging-section__pager {
+		padding-top: 1em;
+	}
+	.list {
+		margin: 1em 0 1em;
+	}
+}
+
+// Issue 3683
+// Adds margin to all the pager containers at lower viewport widths 
+.pager__container ol.pager__navigation > li {
+	margin: 2px;
 }
 
 // increases spacing between the numbers for page navigation
 #NCI-trial-listing-app-root,
 #NCI-sws-app-root {
-	.pager__navigation li {
-		margin-left: 2px;
-		margin-right: 2px;
-	}
 	.pager__navigation button {
 		padding-left: 4px;
 		padding-right: 4px;
@@ -105,6 +114,10 @@
 	.pager__select {
 		margin: 0 16px 0 16px;
 		padding: 0.5em 2em 0.5em 0.75em;
+	}
+
+	.pager__container {
+		display: block;
 	}
 }
 
