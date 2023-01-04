@@ -12,6 +12,7 @@ import {
 	primaryNavLinkClickHandler,
 	megaMenuOpenHandler,
 	megaMenuLinkClickHandler,
+	logoClickHandler,
 } from './mega-menu-analytics-handlers';
 import { searchSubmitHandler } from './auto-suggest-analytics-handlers';
 import {
@@ -175,6 +176,10 @@ const initialize = () => {
 		mobileMenuSource,
 		megaMenuSource,
 	});
+
+	const logo = document.getElementById('extended-mega-logo');
+	// Can add similar if statement as seen on line 99 if needed.
+	logo?.addEventListener('click', logoClickHandler, true);
 
 	// The autocomplete for the sitewide search is actually a separate element.
 	// At this time the header is not needed.
