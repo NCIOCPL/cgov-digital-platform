@@ -103,6 +103,9 @@ describe('nci-header - mega menu analytics', () => {
 		const pnNoMMLink = await screen.findByText('Third Section');
 		fireEvent.click(pnNoMMLink);
 
+		const logo = document.getElementsByClassName('nci-logo')[0];
+		fireEvent.click(logo);
+
 		// NOTE: You need to wait for the menu to open in order to do this
 		// check. The await screen.findByText
 		expect(spy).toHaveBeenNthCalledWith(
@@ -172,6 +175,15 @@ describe('nci-header - mega menu analytics', () => {
 				primaryNavItem: 'Third Section',
 				listHeadingNumber: 0,
 				listItemNumber: 0,
+			}
+		);
+		expect(spy).toHaveBeenNthCalledWith(
+			6,
+			'Header:LinkClick',
+			'Header:LinkClick',
+			{
+				headerLink: 'Logo',
+				location: 'Header',
 			}
 		);
 
