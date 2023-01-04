@@ -59,3 +59,13 @@ export const primaryNavLinkClickHandler = (event: Event) => {
 		listItemNumber: 0,
 	});
 };
+
+/**
+ * Click handler for NCI logo.
+ */
+export const logoClickHandler = () => {
+	trackOther('Header:LinkClick', 'Header:LinkClick', {
+		headerLink: 'Logo',
+		location: 'Header',
+	});
+};
