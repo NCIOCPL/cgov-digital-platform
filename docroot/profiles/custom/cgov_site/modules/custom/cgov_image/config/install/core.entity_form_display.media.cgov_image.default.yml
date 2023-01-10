@@ -7,6 +7,8 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_display_enlarge
     - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_ncids_promo_art_16x9
+    - field.field.media.cgov_image.field_ncids_promo_art_4x3
     - field.field.media.cgov_image.field_original_source
     - field.field.media.cgov_image.field_override_img_featured
     - field.field.media.cgov_image.field_override_img_panoramic
@@ -14,11 +16,14 @@ dependencies:
     - field.field.media.cgov_image.field_override_img_thumbnail
     - image.style.thumbnail
     - media.type.cgov_image
+    - workflows.workflow.simple_workflow
   module:
     - content_moderation
     - image
     - image_widget_crop
     - text
+_core:
+  default_config_hash: WAU5pu6ncAnrz3LoW4P5G4FsGaqAeekRABtnmLyv3zw
 id: media.cgov_image.default
 targetEntityType: media
 bundle: cgov_image
@@ -75,6 +80,38 @@ content:
         - 3x4
         - 4x3
         - thumbnail
+      warn_multiple_usages: false
+      show_crop_area: false
+      show_default_crop: true
+    third_party_settings: {  }
+  field_ncids_promo_art_16x9:
+    type: image_widget_crop
+    weight: 26
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - 16x9
+      crop_types_required:
+        - 16x9
+      warn_multiple_usages: false
+      show_crop_area: false
+      show_default_crop: true
+    third_party_settings: {  }
+  field_ncids_promo_art_4x3:
+    type: image_widget_crop
+    weight: 27
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - 4x3
+      crop_types_required:
+        - 4x3
       warn_multiple_usages: false
       show_crop_area: false
       show_default_crop: true

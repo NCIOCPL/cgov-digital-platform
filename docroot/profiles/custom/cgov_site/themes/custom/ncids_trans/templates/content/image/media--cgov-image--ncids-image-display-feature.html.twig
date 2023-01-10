@@ -1,0 +1,11 @@
+{% set desktop_uri = content.desktop_uri[0] %}
+{% set mobile_uri = content.mobile_uri[0] %}
+<picture>
+  <source srcset="{{mobile_uri}}" media="(min-width: 640px)">
+  <source srcset="{{desktop_uri}}" media="(min-width: 1024px)">
+  {% if content.field_ncids_promo_art_16x9[0] %}
+    {{ content.field_ncids_promo_art_16x9 }}
+  {% else %}
+    {{ content.field_media_image }}
+  {% endif %}
+</picture>

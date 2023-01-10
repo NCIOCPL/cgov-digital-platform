@@ -206,3 +206,53 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
 }
+
+/**
+ * Implements hook_entity_view_alter().
+ *
+ */
+function cgov_image_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  // Restrict only to cgov_image bundle.
+  if ($entity == NULL || $entity->bundle() != 'cgov_image') {
+    return;
+  }
+
+  // Only for ncids_image_display_feature view mode.
+  if ($build['#view_mode'] == 'ncids_image_display_feature' ) {
+    // Mobile URI -- 1024px > breakpoint >= 640 (Tablet Large and Tablet).
+    if (isset($build['field_ncids_promo_art_4x3']['#items']) && count($build['field_ncids_promo_art_4x3']['#items'])) {
+      $build['mobile_uri'] = $build['field_ncids_promo_art_4x3']['#items']->view([
+        'type' => 'image_url',
+        'settings' => [
+          'image_style' => 'cgov_featured_4x3',
+        ],
+      ]);
+    }
+    else {
+      $build['mobile_uri'] = $build['field_media_image']['#items']->view([
+        'type' => 'image_url',
+        'settings' => [
+          'image_style' => 'cgov_featured_4x3',
+        ],
+      ]);
+    }
+    // Desktop URI -- breakpoints >= 1024px (Widescreen and Desktop).
+    if (isset($build['field_ncids_promo_art_16x9']['#items']) && count($build['field_ncids_promo_art_16x9']['#items'])) {
+      $build['desktop_uri'] = $build['field_ncids_promo_art_16x9']['#items']->view([
+        'type' => 'image_url',
+        'settings' => [
+          'image_style' => 'cgov_featured_16x9',
+        ],
+      ]);
+    }
+    else {
+      $build['desktop_uri'] = $build['field_media_image']['#items']->view([
+        'type' => 'image_url',
+        'settings' => [
+          'image_style' => 'cgov_featured_16x9',
+        ],
+      ]);
+    }
+  }
+
+}
