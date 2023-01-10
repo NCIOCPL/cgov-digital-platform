@@ -1,0 +1,181 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Internal Feature Card Test Page"
+  title__ES:
+      value: "NCIDS Spanish Internal Feature Card Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-internal-feature-card-test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_without_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Internal Feature Card Test'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'Internal Card Title Override'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Internal Feature Card Test - 16x9 Override'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'Internal Card Title Override'
+          field_override_card_description:
+            - value: 'Internal Card Description Override'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Internal Feature Card Test - 4x3 Override'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'Internal Card Title Override'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead Promo IMG] Title'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'Internal Card Title Override'
+          field_override_card_description:
+            - value: 'Internal Card Description Override'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead Promo IMG] Title'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Override Placeholder'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'Internal Card Title Override'
+          field_override_card_description:
+            - value: 'Internal Card Description Override'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_description:
+            - value: 'Internal Card Description Override - Small Lead Article Image being scaled up'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph' 
+          type: "ncids_feature_card_internal"
+          field_featured_item: 
+            - target_type: 'node' 
+              '#process': 
+                callback: 'reference' 
+                args: 
+                  - 'node' 
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+    ######## End Feature Row ###########
+    
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="grid-container">
+              <div class="usa-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ullamcorper dignissim cras tincidunt lobortis. Sapien pellentesque habitant morbi tristique senectus et. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Lectus sit amet est placerat in egestas. Vitae proin sagittis nisl rhoncus mattis rhoncus. Tincidunt ornare massa eget egestas purus viverra accumsan. Ipsum faucibus vitae aliquet nec. Lacus laoreet non curabitur gravida arcu ac. Interdum varius sit amet mattis vulputate. Viverra mauris in aliquam sem fringilla ut. Amet consectetur adipiscing elit ut aliquam.
+              </div>
+            </div>
+    ######## End Placeholder ############
