@@ -1,5 +1,22 @@
 import $ from 'jquery';
 const CDEConfig = window.CDEConfig || {};
+
+const legacyFilterSet = (_, el) => {
+  return /^https?\:\/\/([a-zA-Z0-9\-]+\.)+/i.test(el.href)
+    && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+gov/i.test(el.href)
+    && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acquia-sites\.com/i.test(el.href)
+    && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acsitefactory\.com/i.test(el.href)
+    && el.href !== ""
+    && el.href.indexOf(location.protocol + '//' + location.hostname) !== 0
+    && !$(el).hasClass('add_this_btn')
+    && !$(el).hasClass('toolbar-item') // Drupal admin toolbar selector
+    && !$(el).hasClass('no-exit-notification');
+}
+
+const ncidsFilterSet = (_, el) => {
+  return legacyFilterSet(_, el) && Boolean(el.closest('.cgdpl'));
+}
+
 /*** BEGIN Exit Disclaimer
  * This script looks for URLs where the href points to websites
  * not in the federal domain (.gov) and if it finds one, it appends
@@ -7,23 +24,14 @@ const CDEConfig = window.CDEConfig || {};
  * disclaimer page.
  * Changed code to exclude the exit icon from images within the anchor tag.
  ***/
-function _initialize() {
+function _initialize(filterSetName) {
+  const filterSet = filterSetName === 'ncids' ? ncidsFilterSet : legacyFilterSet;
   const lang = $('html').attr('lang') || 'en';
   const path = CDEConfig.exitDisclaimerHref && CDEConfig.exitDisclaimerHref[lang];
   const altText = lang === 'es' ? 'Notificaci\u00F3n de salida' : 'Exit Disclaimer';
 
 	// Looks for all non .gov links (that do not include an image immediately inside the anchor tag) and adds external link href aftr the link.
-	$("a[href]:not(:has(>img))").filter(function () {
-    return /^https?\:\/\/([a-zA-Z0-9\-]+\.)+/i.test(this.href)
-      && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+gov/i.test(this.href)
-      && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acquia-sites\.com/i.test(this.href)
-      && !/^https?\:\/\/([a-zA-Z0-9\-]+\.)+acsitefactory\.com/i.test(this.href)
-      && this.href !== ""
-      && this.href.indexOf(location.protocol + '//' + location.hostname) !== 0
-      && !$(this).hasClass('add_this_btn')
-      && !$(this).hasClass('toolbar-item') // Drupal admin toolbar selector
-      && !$(this).hasClass('no-exit-notification');
-	}).after($(
+	$("a[href]:not(:has(>img))").filter(filterSet).after($(
 		'<a class="icon-exit-notification" title="' + altText + '" href="' + path + '">' +
 		'<span class="show-for-sr">' + altText + '</span>' +
 		'</a>'
@@ -40,11 +48,11 @@ function _initialize() {
 };
 
 let initialized = false;
-export default function() {
+export default function(filterSetName) {
 	if(initialized)
 		return;
 
 	initialized = true;
-	_initialize();
+	_initialize(filterSetName);
 }
 /*** END Exit Disclaimer ***/
