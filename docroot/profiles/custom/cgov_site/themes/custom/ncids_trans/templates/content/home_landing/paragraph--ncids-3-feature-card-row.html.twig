@@ -1,0 +1,11 @@
+{% if (content.field_row_cards['#items']|length > 0) %}
+  {{ content.field_container_heading }}
+
+  <div class="usa-section usa-section--light">
+    <div class="grid-container">                
+      <ul class="nci-card-group">
+        {{ content.field_row_cards }}
+      </ul>
+    </div>
+  </div>
+{% endif %}
