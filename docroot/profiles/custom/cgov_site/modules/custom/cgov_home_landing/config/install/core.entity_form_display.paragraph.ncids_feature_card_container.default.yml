@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_feature_card_container.field_container_header
+    - field.field.paragraph.ncids_feature_card_container.field_ncids_feature_cards
+    - paragraphs.paragraphs_type.ncids_feature_card_container
+  module:
+    - paragraphs
+id: paragraph.ncids_feature_card_container.default
+targetEntityType: paragraph
+bundle: ncids_feature_card_container
+mode: default
+content:
+  field_container_header:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ncids_feature_cards:
+    type: entity_reference_paragraphs
+    weight: 1
+    region: content
+    settings:
+      title: 'Feature Cards'
+      title_plural: 'Feature Cards'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ncids_card_feature_internal
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_feature_card_container.field_container_header
+    - field.field.paragraph.ncids_feature_card_container.field_ncids_feature_cards
+    - paragraphs.paragraphs_type.ncids_feature_card_container
+  module:
+    - entity_reference_revisions
+id: paragraph.ncids_feature_card_container.default
+targetEntityType: paragraph
+bundle: ncids_feature_card_container
+mode: default
+content:
+  field_container_header:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_ncids_feature_cards:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }
