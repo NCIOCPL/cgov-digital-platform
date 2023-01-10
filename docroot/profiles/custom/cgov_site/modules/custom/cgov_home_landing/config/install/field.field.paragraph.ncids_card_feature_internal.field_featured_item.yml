@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_item
+    - paragraphs.paragraphs_type.ncids_card_feature_internal
+id: paragraph.ncids_card_feature_internal.field_featured_item
+field_name: field_featured_item
+entity_type: paragraph
+bundle: ncids_card_feature_internal
+label: 'Featured Item'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: cgov_all_selection
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
