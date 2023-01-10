@@ -160,3 +160,19 @@
 		</div>
 	</div>
 {% endmacro %}
+
+{% macro ncidsFeatureCard(title, description, image, url) %}
+	<div class="ncids-card-feature">
+		<a href="{{ url }}">
+			{% if image %}
+				<div class="image-hover">
+					{{- image -}}
+				</div>
+			{% endif %}
+			<h3>{{ title }}</h3>
+			{% if description %}
+				<p>{{ description }}</p>
+			{% endif %}
+		</a>
+	</div>
+{% endmacro %}
