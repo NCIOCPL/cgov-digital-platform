@@ -1,0 +1,7 @@
+{% if items | length > 0 %}
+  {% for item in items %}
+  <li class="nci-card desktop:grid-col-4">
+    {{ item.content }}
+  </li>
+  {% endfor %}
+{% endif %}
