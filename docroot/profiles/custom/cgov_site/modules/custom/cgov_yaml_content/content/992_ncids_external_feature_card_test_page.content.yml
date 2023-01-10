@@ -1,0 +1,148 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS External Feature Card Test Page"
+  title__ES:
+      value: "NCIDS Spanish External Feature Card Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-external-feature-card-test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_without_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'Image using 16x9 and 4x3 Override Fields'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'This is a use case of the card using the images crops for 16x9 and 4x3'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Feature Card Cat'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'This uses the 4x3 crop and the 16x9 override'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Feature Card Cat 16x9 Override'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'Image using 16x9 crop and 4x3 Override Fields'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Feature Card Cat 4x3 Override'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+    ######## End Feature Row ###########
+    
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="grid-container">
+              <div class="usa-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ullamcorper dignissim cras tincidunt lobortis. Sapien pellentesque habitant morbi tristique senectus et. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Lectus sit amet est placerat in egestas. Vitae proin sagittis nisl rhoncus mattis rhoncus. Tincidunt ornare massa eget egestas purus viverra accumsan. Ipsum faucibus vitae aliquet nec. Lacus laoreet non curabitur gravida arcu ac. Interdum varius sit amet mattis vulputate. Viverra mauris in aliquam sem fringilla ut. Amet consectetur adipiscing elit ut aliquam.
+              </div>
+            </div>
+    ######## End Placeholder ############
