@@ -117,7 +117,7 @@ const onDOMContentLoaded = () => {
 	/*** BEGIN Exit Disclaimer
 	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
 	 ***/
-	exitDisclaimer();
+	exitDisclaimer('ncids');
 
 	/*** BEGIN table toggling
 	 * This allows for toggling between tables.
