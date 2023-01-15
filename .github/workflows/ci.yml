@@ -78,10 +78,10 @@ jobs:
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
           ## This list of extensions matches those we install with our docker file, then I removed
           ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
-          extensions: bz2, curl, gd, json, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
+          extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
           tools: composer:v2
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -99,8 +99,8 @@ jobs:
       ## Install BLT and Drush Launchers
       - name: Install BLT and Drush Launchers
         run: |
-          curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar && chmod +x /usr/local/bin/drush
-          curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.0.3/blt.phar && chmod +x /usr/local/bin/blt
+          curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar && chmod +x /usr/local/bin/drush
+          curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar && chmod +x /usr/local/bin/blt
       - name: Setup Env
         run: |
           ## The mynci service creates the drupal DB, we need to make the

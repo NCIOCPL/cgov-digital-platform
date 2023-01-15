@@ -31,7 +31,7 @@ At some point in time there will be multiple websites within our project. (e.g. 
   * MySQL
 * web
   * OS: Ubuntu Bionic
-  * PHP 7.4
+  * PHP 8.0
     * bz2
     * cli
     * common
