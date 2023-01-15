@@ -28,7 +28,7 @@ RUN mkdir /usr/local/share/ca-certificates/nih \
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get install -yq software-properties-common
 
-# Add the PHP 7.3 repository
+# Add the PHP repository
 RUN DEBIAN_FRONTEND=noninteractive \
   add-apt-repository ppa:ondrej/php; \
   DEBIAN_FRONTEND=noninteractive \
@@ -39,25 +39,24 @@ RUN DEBIAN_FRONTEND=noninteractive \
   apt-get install -yq \
   apache2 \
   build-essential \
-  php7.4 \
-  libapache2-mod-php7.4 \
-  php7.4-bz2 \
-  php7.4-cli \
-  php7.4-common \
-  php7.4-curl \
-  php7.4-fpm \
-  php7.4-gd \
-  php7.4-json \
-  php7.4-mbstring \
-  php7.4-memcached \
-  php7.4-mysql \
-  php7.4-oauth \
-  php7.4-opcache \
-  php7.4-readline \
-  php7.4-sqlite3 \
-  php7.4-soap \
-  php7.4-xdebug \
-  php7.4-xml \
+  php8.0 \
+  libapache2-mod-php8.0 \
+  php8.0-bz2 \
+  php8.0-cli \
+  php8.0-common \
+  php8.0-curl \
+  php8.0-fpm \
+  php8.0-gd \
+  php8.0-mbstring \
+  php8.0-memcached \
+  php8.0-mysql \
+  php8.0-oauth \
+  php8.0-opcache \
+  php8.0-readline \
+  php8.0-sqlite3 \
+  php8.0-soap \
+  php8.0-xdebug \
+  php8.0-xml \
   mysql-client-5.7 \
   git \
   clamav \
@@ -78,7 +77,7 @@ COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
 ## These are the PHP modules that are available to be
 ## loaded by the CLI & apache. This should be inline with
 ## the modules installed above.
-COPY ./build/php-conf /etc/php/7.4/mods-available
+COPY ./build/php-conf /etc/php/8.0/mods-available
 
 # Enable mod_rewrite 'cause we needs it.
 RUN a2enmod rewrite
@@ -119,7 +118,7 @@ RUN npm install -g npm@8.1.0
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
 ## Install Drush Launcher (runs local drush instances)
-RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
+RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar \
   && chmod +x /usr/local/bin/drush
 
 ## Install Drupal console
@@ -129,7 +128,7 @@ RUN curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal \
 RUN php --version; composer --version; drupal --version; drush --drush-launcher-version
 
 ## Enable BLT function
-RUN curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.0.3/blt.phar \
+RUN curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar \
   && chmod +x /usr/local/bin/blt
 
 ## Turn off xdebug as it uses resources that could be best used
