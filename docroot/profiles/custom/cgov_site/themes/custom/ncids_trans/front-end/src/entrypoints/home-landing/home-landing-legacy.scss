@@ -683,6 +683,12 @@ parent accordion in all breakpoints. */
 		max-width: 62.5em;
 		margin: 0 auto;
 
+		// This was added back in when we turned on NCIDS Widescreen. This is the max width
+		// before some images stop growing and extra padding appears.
+		@include break(xlarge) {
+			max-width: 1275px;
+		}
+
 		h2 {
 			margin-left: 15px;
 		}
