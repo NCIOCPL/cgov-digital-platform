@@ -100,6 +100,8 @@ elseif (getenv('AH_SITE_ENVIRONMENT')) {
   $config['logging.handler'] = 'file';
   $config['loggingdir'] = dirname(getenv('ACQUIA_HOSTING_DRUPAL_LOG'));
   $config['logging.logfile'] = 'simplesamlphp-' . date('Ymd') . '.log';
+  // Set secure cookies on Acquia
+  $config['session.cookie.secure'] = true;
 
   // TODO: For ACSF, this needs be loaded from sites.json. We need to detect ACE vs. ACSF and load accordingly.
   $creds_json = file_get_contents('/var/www/site-php/' . $_ENV['AH_SITE_GROUP'] . '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/creds.json');
