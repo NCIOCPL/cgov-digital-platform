@@ -7,6 +7,8 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_display_enlarge
     - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_ncids_promo_art_16x9
+    - field.field.media.cgov_image.field_ncids_promo_art_4x3
     - field.field.media.cgov_image.field_original_source
     - field.field.media.cgov_image.field_override_img_featured
     - field.field.media.cgov_image.field_override_img_panoramic
@@ -79,6 +81,22 @@ content:
       show_crop_area: false
       show_default_crop: true
     third_party_settings: {  }
+  field_ncids_promo_art_16x9:
+    type: image_image
+    weight: 12
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_ncids_promo_art_4x3:
+    type: image_image
+    weight: 13
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
   field_original_source:
     type: string_textfield
     weight: 4
@@ -128,7 +146,7 @@ content:
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -142,13 +160,13 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 13
+    weight: 15
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   translation:
-    weight: 12
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
