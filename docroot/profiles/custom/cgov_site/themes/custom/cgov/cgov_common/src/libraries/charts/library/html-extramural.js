@@ -1,5 +1,5 @@
 // <div style="min-width: 310px; height: 400px; margin: 0 auto;" id="NCI-Chart__html-extramural"></div>
-
+import extramuralFundsData from './data/html-extramural.json';
 const id = 'NCI-Chart__html-extramural';
 
 function initChart(Chart) {
