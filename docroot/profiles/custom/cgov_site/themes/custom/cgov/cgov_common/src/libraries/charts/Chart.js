@@ -178,9 +178,6 @@ Chart.prototype = function () {
       console.log("applying base theme");
       // theme settings for NCI
       var theme = {
-          lang: {
-              thousandsSep: ','
-          },
           colors: this.settings.colors,
           chart: {
               backgroundColor: {
