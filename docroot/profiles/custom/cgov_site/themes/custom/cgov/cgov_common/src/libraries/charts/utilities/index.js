@@ -57,3 +57,20 @@ export const getShouldLoadChartWrapper = (pathName, rules) => {
 
     return false
 };
+
+/**
+ * buildAxisData - Builds out axis data labels by running against provided formatter
+ *
+ * @param {[]} axisData
+ * @param labelFormatter
+ * @returns {*}
+ */
+export function buildAxisData(axisData, labelFormatter) {
+  for (let i = 0; i < axisData.length; i++) {
+    if (axisData[i].labels.hasFormatter) {
+      delete axisData[i].labels.hasFormatter;
+      axisData[i].labels.formatter = labelFormatter[i].formatter;
+    }
+  }
+  return axisData;
+};
