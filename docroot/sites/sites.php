@@ -42,8 +42,8 @@
 //   - because AH_SITE_NAME may not be correct in some cases, e.g. when our
 //     post-db-copy/000-acquia_required_scrub.php hook executes acsf-site-scrub.
 if (isset($_ENV['AH_SITE_NAME']) && isset($_ENV['AH_SITE_ENVIRONMENT'])
-  && strpos(__FILE__, realpath("/var/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/docroot")) !== 0
-  && strpos(__FILE__, realpath("/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/livedev/docroot")) !== 0
+  && strpos(__FILE__, (string) realpath("/var/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/docroot")) !== 0
+  && strpos(__FILE__, (string) realpath("/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/livedev/docroot")) !== 0
 ) {
   return;
 }
@@ -106,7 +106,7 @@ if (!is_acquia_host()) {
 // on unrelated environments (above). We keep it only in case removing it would
 // have an effect in exotic unknown cases.
 if (!function_exists('gardens_site_data_load_file')) {
-  require_once dirname(__FILE__) . '/g/sites.inc';
+  require_once __DIR__ . '/g/sites.inc';
 }
 
 // Prevents to run further if the sites.json file doesn't exists.

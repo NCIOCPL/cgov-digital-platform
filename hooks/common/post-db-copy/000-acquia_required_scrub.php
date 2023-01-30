@@ -52,7 +52,7 @@ function mkdir_p(string $dir) {
  *   Drush cache location.
  */
 function drush_cache_path(string $site, string $env, string $domain) {
-  return sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, md5($domain));
+  return sprintf('/mnt/tmp/%s.%s/drush_tmp_cache/%s', $site, $env, hash('sha256', $domain));
 }
 
 /**
