@@ -66,31 +66,23 @@ class SimpleRestMessage {
 
   /**
    * Maximum amount of retries before giving up sending a message.
-   *
-   * @var int
    */
-  private $retryMax = 3;
+  private int $retryMax = 3;
 
   /**
    * Number of seconds to wait before trying again after sending failed.
-   *
-   * @var int
    */
-  private $retryWait = 5;
+  private int $retryWait = 5;
 
   /**
    * The hosting sitegroup name.
-   *
-   * @var string
    */
-  private $site;
+  private string $site;
 
   /**
    * The hosting environment name.
-   *
-   * @var string
    */
-  private $env;
+  private string $env;
 
   /**
    * Creates a new instance of SimpleRestMessage.
@@ -145,7 +137,7 @@ class SimpleRestMessage {
     // If we are sending parameters, set the query string or POST fields here.
     $query_string = '';
     if ($method != 'GET' && !empty($parameters)) {
-      $data_string = json_encode($parameters);
+      $data_string = json_encode($parameters, JSON_THROW_ON_ERROR);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
       curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json',
@@ -172,7 +164,7 @@ class SimpleRestMessage {
     }
 
     $response_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    $response_body = json_decode($response, TRUE);
+    $response_body = json_decode($response, TRUE, 512, JSON_THROW_ON_ERROR);
 
     if (!is_array($response_body)) {
       $response_body = [];

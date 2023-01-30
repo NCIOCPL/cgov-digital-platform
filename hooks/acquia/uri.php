@@ -10,7 +10,7 @@ $env = $argv[2];
 $db_role = $argv[3];
 
 // Get the db connection.
-require dirname(__FILE__) . '/../acquia/db_connect.php';
+require __DIR__ . '/../acquia/db_connect.php';
 $connection = get_db($site, $env, $db_role);
 // Get the site name from the database.
 $result = execute_query($connection, 'SELECT value FROM acsf_variables WHERE name = "acsf_site_info"');

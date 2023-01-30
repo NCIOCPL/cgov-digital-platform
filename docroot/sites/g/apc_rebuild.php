@@ -23,7 +23,7 @@ if (empty($_GET['token']) || $_GET['token'] !== $token) {
   die('Invalid.');
 }
 
-require_once dirname(__FILE__) . '/sites.inc';
+require_once __DIR__ . '/sites.inc';
 
 if (!empty($_GET['domains'])) {
   $domains = explode(',', $_GET['domains']);

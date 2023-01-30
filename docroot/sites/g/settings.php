@@ -107,8 +107,11 @@ if (file_exists('/var/www/site-php')) {
   $role = $site_settings['conf']['acsf_db_name'];
 
   $drupal_version = 8;
-  if (version_compare(\Drupal::VERSION, '9', '>=')) {
+  if (version_compare(\Drupal::VERSION, '9', '>=') && version_compare(\Drupal::VERSION, '10', '<')) {
     $drupal_version = 9;
+  }
+  elseif (version_compare(\Drupal::VERSION, '10', '>=')) {
+    $drupal_version = 10;
   }
   $_acsf_include_file = "/var/www/site-php/{$site_settings['site']}.{$site_settings['env']}/D{$drupal_version}-{$site_settings['env']}-{$site_settings['conf']['acsf_db_name']}-settings.inc";
   if (file_exists($_acsf_include_file)) {
