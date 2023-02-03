@@ -91,10 +91,7 @@ $include-html-button-classes: false;
         height: 100%;
       }
 
-			// This is a hack as we do not support widescreen, but the hero was
-			// originally built to be fluid past 1440. Leaving it as just large
-			// broke the centering.
-      @media only screen and (min-width: 1441px) {
+			@include break(xlarge) {
         object-fit: cover;
         height: 100%;
         width: 100%;
@@ -130,6 +127,11 @@ $include-html-button-classes: false;
       width: 85%;
       max-width: 1000px;
     }
+		@include break(xlarge) {
+			bottom: 115px;
+			width: 85%;
+			max-width: 1275px;
+		}
   }
 
   .columns.hero {
@@ -881,10 +883,18 @@ a.learn-more {
     }
   }
 
+	// Added this in to fix home pages when implementing NCIDS widescreen.
+	// This rule had been in the megamenu.scss of all places, so it should
+	// work globally. Adding it to legacy as it really is legacy and should
+	// go away when all NCIDS gets put into place.
   &.managed {
     @extend .row;
     max-width: 62.5em;
     margin: 0 auto;
+
+		@include break(xlarge) {
+			max-width: 1275px;
+		}
 
     h2 {
       margin-left: 15px;

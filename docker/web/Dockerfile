@@ -60,12 +60,16 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php7.4-xml \
   mysql-client-5.7 \
   git \
+  clamav \
   imagemagick \
   vim \
   zip \
   autoconf libtool m4 pkg-config nasm \
   libpng-dev \
   chromium-chromedriver
+
+# Update ClamAV
+RUN freshclam
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.

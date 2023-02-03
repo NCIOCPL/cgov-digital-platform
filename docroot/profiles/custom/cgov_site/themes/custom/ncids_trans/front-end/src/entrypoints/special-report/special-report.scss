@@ -12,3 +12,16 @@
 		background-color: color('base-lightest');
 	}
 }
+
+// Added this in to fix home pages when implementing NCIDS widescreen.
+// This rule had been in the megamenu.scss of all places, so it should
+// work globally. Adding it to legacy as it really is legacy and should
+// go away when all NCIDS gets put into place.
+@include bp(xtra-large) {
+	.row {
+		// 1275 appears to be the max width before the image of the feature
+		// card of the multimedia row stops grow. This appears to be the
+		// widest card.
+		max-width: 1275px;
+	}
+}
