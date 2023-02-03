@@ -12,9 +12,15 @@
 		margin-top: 0;
 		margin-bottom: 0;
 		max-width: 62.5em;
+		@include bp(xtra-large){
+			max-width: 1275px;
+		}
 		.hero-text {
 			left: auto;
-			padding: 0 0 0 38px;
+			padding: 0 0 0 8px;
+			@include bp(xtra-large){
+				padding-left: 20px;
+			}
 		}
 	}
 	//end new picture element styles
@@ -35,8 +41,7 @@
 	top: 49px;
 	left: 90px;
 	color: $white;
-	// Since we had to make the hero fixed, The text needed to be bumped out a bit.
-	width: 30%;
+	width: 23%;
 	font-size: 1.55em;
 	font-weight: bold;
 
@@ -99,7 +104,9 @@
 	}
 }
 @include bp(large-up){
-	// Removed the max-width of 1350 which makes the page look weird.
+	.row.hero-slot {
+		max-width: 1350px;
+	}
 	.row .large-4.gutter {
 		width: 32%;
 		margin-left: 2%;

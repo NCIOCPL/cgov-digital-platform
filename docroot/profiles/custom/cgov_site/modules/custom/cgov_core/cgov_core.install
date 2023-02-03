@@ -297,3 +297,27 @@ function cgov_core_update_8005() {
     $installer->uninstall(['adobe_dtm'], FALSE);
   }
 }
+
+/**
+ * Update for Clam AV. (Issue #3755)
+ */
+function cgov_core_update_9001() {
+  // Enable clam_av
+  if (!\Drupal::moduleHandler()->moduleExists('clamav')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['clamav']);
+
+    // Make extra sure all our settings are in place.
+    $config = \Drupal::configFactory()->getEditable('clamav.settings');
+    $config->set('enabled', true);
+    $config->set('outage_action', 1);
+    $config->set('scan_mode', 1);
+    $config->set('verbosity', 0);
+    $config->set('mode_executable', [
+      'executable_path' => '/usr/bin/clamscan',
+      'executable_parameters' => '',
+    ]);
+    $config->save();
+
+  }
+}
