@@ -118,11 +118,22 @@ jobs:
       - name: Run Front-end Tests
         run: |
           blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
-      - name: Behat Tests
+      - name: Cypress Tests
         timeout-minutes: 120
+        working-directory: ./tests/cypress
+        env:
+          ELECTRON_EXTRA_LAUNCH_ARGS: '--disable-gpu'
+          NUM_THREADS: 3
         run: |
-          ## Behat tests will run the server
-          blt tests:behat:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+          npm ci
+          # Run the builtin Drush Web server
+          drush rs 0.0.0.0:8888 &
+          npm run blt:tests:cypress -- -t $NUM_THREADS
+          # Kill the builtin Drush Web Server
+          blt tests:server:kill --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+      - name: Reset parallel-weights
+        run: |
+          git checkout -- tests/cypress/cypress/parallel-weights.json
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |
