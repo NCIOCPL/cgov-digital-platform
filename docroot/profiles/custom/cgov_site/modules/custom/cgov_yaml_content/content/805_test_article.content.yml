@@ -971,3 +971,241 @@
     value: "2023-02-02"
   field_date_display_mode:
     - value: 'none'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog 1x1 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog 1x1 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+  field_ncids_promo_art_1x1:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_1x1.png'
+      alt: '1x1 Override Image'
+  
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog 16x9 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog 16x9 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+  field_ncids_promo_art_16x9:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_16x9.png'
+      alt: '16x9 Override Image'

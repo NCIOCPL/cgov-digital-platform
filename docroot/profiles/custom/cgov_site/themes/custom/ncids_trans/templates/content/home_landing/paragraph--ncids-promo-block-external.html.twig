@@ -1,0 +1,60 @@
+{% set sourceAttribsSection = create_attribute({
+    'class': 'usa-section'
+    }) 
+%}
+{% set sourceAttribsDiv = create_attribute({
+    'class': 'nci-promo-block'
+    }) 
+%}
+
+{# ###### Setup section and div classes ####### #}
+{% if content.field_image_position_promo[0]['#markup'] == 'left' %}
+    {% set sourceAttribsSection = sourceAttribsSection.setAttribute('label', 'Promoblock With Image Left') %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-promo-block--with-image') %}
+{% elseif content.field_image_position_promo[0]['#markup'] == 'right' %}
+    {% set sourceAttribsSection = sourceAttribsSection.setAttribute('label', 'Promoblock With Image Right') %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-alternating-right') %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-promo-block--with-image') %}
+{% endif %}
+
+{# ###### Setup Theme ####### #}
+{% if content.field_ncids_theme[0]['#markup'] == 'dark' %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-promo-block--dark') %}
+{% endif %}
+
+{# ###### Setup image if its not 'no-img' option ####### #}
+{% if content.field_image_position_promo[0]['#markup'] == 'left' or content.field_image_position_promo[0]['#markup'] == 'right' %}
+    {% set image = content.field_override_image_promotional %}
+{% endif %}
+
+<section {{ sourceAttribsSection }}>
+    <div class="tablet-lg:grid-container-widescreen">
+        <div {{ sourceAttribsDiv }}>
+            {% if content.field_image_position_promo[0]['#markup'] == 'left' or content.field_image_position_promo[0]['#markup'] == 'right' %}
+                {% set renderImage = image|render %}
+                {% if renderImage %}
+                    {{- image -}}
+                {% else %}
+                    {% set sourceAttribs = create_attribute({
+                        'media': '(min-width: 880px)'
+                    })
+                    %}
+                    <picture class="nci-promo-block__image">
+                        <source {{ sourceAttribs }} srcset="/{{ directory }}/dist/images/placeholders/placeholder_1x1.png">
+                        <img src="/{{ directory }}/dist/images/placeholders/placeholder-16x9.png" alt="No Image Placeholder">				
+                    </picture>
+                {% endif %}
+            {% endif %}
+            {# {{ content.field_override_image_promotional }} #}
+            <div class="nci-promo-block__content">
+                <h2 class="nci-promo-block__heading">{{ content.field_override_title[0] }}</h2>
+                <p class="nci-promo-block__text">
+                    {{ content.field_override_description[0] }}
+                </p>
+                <a href="{{ content.field_featured_url[0]['#url'] }}" alt="{{ content.field_button_alt[0] }}" class="usa-button usa-button--secondary">
+                    {{ content.field_button_text[0] }}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
