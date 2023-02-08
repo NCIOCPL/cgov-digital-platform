@@ -1,0 +1,91 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_image_browser
+    - field.field.paragraph.ncids_promo_block_external.field_ncids_theme
+    - field.field.paragraph.ncids_promo_block_external.field_image_position_promo
+    - field.field.paragraph.ncids_promo_block_external.field_featured_url
+    - field.field.paragraph.ncids_promo_block_external.field_override_title
+    - field.field.paragraph.ncids_promo_block_external.field_override_description
+    - field.field.paragraph.ncids_promo_block_external.field_override_image_promotional
+    - field.field.paragraph.ncids_promo_block_external.field_button_text
+    - field.field.paragraph.ncids_promo_block_external.field_button_alt
+    - paragraphs.paragraphs_type.ncids_promo_block_external
+  module:
+    - entity_browser
+    - link
+    - options
+id: paragraph.ncids_promo_block_external.default
+targetEntityType: paragraph
+bundle: ncids_promo_block_external
+mode: default
+content:
+  field_ncids_theme:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_image_position_promo:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_featured_url:
+    type: link_separate
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_override_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_override_description:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_override_image_promotional:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: ncids_image_display_promo
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_button_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_button_alt:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+hidden: {  }

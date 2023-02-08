@@ -59,6 +59,13 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
 
+  if ($view_mode === 'ncids_image_display_promo'){
+    _cgov_image_handle_ncids_promo(
+      $build,
+      $entity,
+      $display
+    );
+  }
 }
 
 /**
@@ -313,4 +320,38 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
   //   return;
   // }
   return $crop_state;
+}
+
+/**
+ * Handle images for NCIDS Promo Block.
+ *
+ * NCIDS Promo Block requires both a 16x9 and a 1x1 
+ * image. This method must determines where to source the image 
+ * from, either override field for that aspect ratio or the
+ * crop on the field_media_image.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ */
+function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+
+  // The 4x3 image will be used in the picture element's source element. 
+  // There is no drupal render type for a source element.
+  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.  
+  if (!isset($build['field_ncids_promo_art_1x1']['#items']) || count($build['field_ncids_promo_art_1x1']['#items']) === 0) {
+    $build['uri_1x1'] = $build['field_media_image']['#items']->view([
+      'type' => 'image_url',
+      'settings' => [
+        'image_style' => 'ncids_promo_1x1',
+      ],
+    ]);
+  }
 }
