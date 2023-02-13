@@ -67,35 +67,12 @@ else
   ## Setup some default JS globals.
   blt cgov:load-fe-globals --environment=$target_env --no-interaction -D drush.ansi=false
 
-  ## Execute a migration.
-  case $MIGRATION in
-  CGOV)
-    blt cgov:install:site-sections --no-interaction -D drush.ansi=false  # This (of course) loads the site sections and megamenus.
-    ./scripts/utility/cgov_migration_load.sh
-    ;;
-  DCEG)
-    blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
-    ./scripts/utility/cgov_migration_load.sh
-    ;;
-  NANO)
-    blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
-    ./scripts/utility/cgov_migration_load.sh
-    ;;
-  MYPART)
-    blt cgov:install:site-sections --no-interaction -D drush.ansi=false   # This (of course) loads the site sections and megamenus.
-    ./scripts/utility/cgov_migration_load.sh
-    ;;
-  NCICONNECT)
-    blt cgov:install:site-sections --no-interaction   # This (of course) loads the site sections and megamenus.
-    ./scripts/utility/cgov_migration_load.sh
-    ;;
-  *)
-    blt custom:install_cgov_yaml_content_by_module cgov_yaml_content --no-interaction -D drush.ansi=false
-    ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
-    ## drupal-entity.
-    drush pmu cgov_yaml_content
-    ;;
-  esac
+  ## Load ODE Content
+  blt custom:install_cgov_yaml_content_by_module cgov_yaml_content --no-interaction -D drush.ansi=false
+
+  ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
+  ## drupal-entity.
+  drush pmu cgov_yaml_content
 fi
 
 set +v
