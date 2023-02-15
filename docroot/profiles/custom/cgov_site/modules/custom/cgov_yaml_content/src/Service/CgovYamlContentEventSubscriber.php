@@ -165,7 +165,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $fields[$key] = $this->translateParagraphs($value);
     }
 
-    $isParagraph = $fields['entity'] === 'paragraph';
+    $isParagraph = array_key_exists('entity', $fields) && $fields['entity'] === 'paragraph';
     if ($isParagraph) {
       $fields = $this->createParagraph($fields);
     }
