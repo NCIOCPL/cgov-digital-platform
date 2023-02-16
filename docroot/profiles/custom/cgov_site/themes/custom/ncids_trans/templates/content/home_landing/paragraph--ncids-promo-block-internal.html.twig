@@ -1,0 +1,84 @@
+{% if content.field_featured_item[0] %}
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
+  {% set nid = featured_item_node.id %}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_title[0] %}
+    {% set title = content.field_override_title[0] %}
+  {% elseif featured_item_node.field_card_title[0] %}
+    {% set title = featured_item_node.field_card_title[0].value %}
+  {% else %}
+    {% set title = featured_item_node.field_browser_title[0].value %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% if content.field_override_description[0] %}
+    {% set description = content.field_override_description[0] %}
+  {% elseif featured_item_node.field_feature_card_description[0] %}
+    {% set description = featured_item_node.field_feature_card_description[0].value %}
+  {% elseif featured_item_node.field_list_description[0] %}
+    {% set description = featured_item_node.field_list_description[0].value %}
+  {% endif %}
+  {# Else no description #}
+
+  {% set url = path('entity.node.canonical', {'node' : nid}) %}
+
+
+  {% set sourceAttribsSection = create_attribute({
+    'class': 'usa-section'
+    }) 
+  %}
+  {% set sourceAttribsDiv = create_attribute({
+    'class': 'nci-promo-block nci-promo-block--with-image'
+    }) 
+  %}
+  
+  {# ###### Setup section and div classes ####### #}
+  {% if content.field_image_position_promo[0]['#markup'] == 'left' %}
+    {% set sourceAttribsSection = sourceAttribsSection.setAttribute('label', 'Promoblock With Image Left') %}
+  {% else %}
+    {% set sourceAttribsSection = sourceAttribsSection.setAttribute('label', 'Promoblock With Image Right') %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-alternating-right') %}
+  {% endif %}
+
+  {% if content.field_ncids_theme[0]['#markup'] == 'dark' %}
+    {% set sourceAttribsDiv = sourceAttribsDiv.addClass('nci-promo-block--dark') %}
+  {% endif %}
+  
+  {# ###### Setup image if its not 'no-img' option ####### #}
+  {% if content.field_image_position_promo[0]['#markup'] == 'left' or content.field_image_position_promo[0]['#markup'] == 'right' %}
+    {% set image = content.field_featured_item %}
+    {% if content.field_override_image_promotional[0] %}
+      {% set image = content.field_override_image_promotional %}
+    {% endif %}
+  {% endif %}
+
+
+
+
+
+
+
+
+
+
+  <section {{ sourceAttribsSection }}>
+    <div class="tablet-lg:grid-container-widescreen">
+      <div {{ sourceAttribsDiv }}>
+        {% if content.field_image_position_promo[0]['#markup'] == 'left' or content.field_image_position_promo[0]['#markup'] == 'right' %}
+          {{- image -}}
+        {% endif %}
+        {# {{ content.field_override_image_promotional }} #}
+        <div class="nci-promo-block__content">
+          <h2 class="nci-promo-block__heading">{{ title }}</h2>
+          <p class="nci-promo-block__text">
+            {{ description }}
+          </p>
+          <a href="{{ url }}" alt="{{ content.field_button_alt[0] }}" class="usa-button usa-button--secondary">
+            {{ content.field_button_text[0] }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}

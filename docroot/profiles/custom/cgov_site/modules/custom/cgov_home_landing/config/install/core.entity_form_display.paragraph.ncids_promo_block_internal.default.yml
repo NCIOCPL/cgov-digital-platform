@@ -1,0 +1,99 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_image_browser
+    - field.field.paragraph.ncids_promo_block_internal.field_ncids_theme
+    - field.field.paragraph.ncids_promo_block_internal.field_image_position_promo
+    - field.field.paragraph.ncids_promo_block_internal.field_featured_item
+    - field.field.paragraph.ncids_promo_block_internal.field_override_title
+    - field.field.paragraph.ncids_promo_block_internal.field_override_description
+    - field.field.paragraph.ncids_promo_block_internal.field_override_image_promotional
+    - field.field.paragraph.ncids_promo_block_internal.field_button_text
+    - field.field.paragraph.ncids_promo_block_internal.field_button_alt
+    - paragraphs.paragraphs_type.ncids_promo_block_internal
+  module:
+    - entity_browser
+    - link
+    - options
+id: paragraph.ncids_promo_block_internal.default
+targetEntityType: paragraph
+bundle: ncids_promo_block_internal
+mode: default
+content:
+  field_ncids_theme: 
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_image_position_promo:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_featured_item:
+    type: entity_browser_entity_reference
+    weight: 2
+    region: content
+    settings:
+      entity_browser: cgov_content_browser
+      field_widget_display: label
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_override_card_title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_override_card_description:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_override_image_promotional:
+    type: entity_browser_entity_reference
+    weight: 5
+    region: content
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_button_text:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_button_alt:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
