@@ -1101,6 +1101,62 @@
                 width: 956
                 height: 1701
 
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test"
+  title__ES:
+      value: "[Internal Promo Block] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
 - entity: "media"
   bundle: "cgov_image" 
   name: "Promo Block Dog 1x1 Override" 
@@ -1182,7 +1238,63 @@
           - type: 'module'
             filename: 'promo_block_dog_1x1.png'
       alt: '1x1 Override Image'
-  
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test - 1x1 Override"
+  title__ES:
+      value: "[Internal Promo Block - 1x1 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block - 1x1 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block - 1x1 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block - 1x1 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block - 1x1 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block - 1x1 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block - 1x1 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog 1x1 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-1x1-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-1x1-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
 - entity: "media"
   bundle: "cgov_image" 
   name: "Promo Block Dog 16x9 Override" 
@@ -1264,3 +1376,59 @@
           - type: 'module'
             filename: 'promo_block_dog_16x9.png'
       alt: '16x9 Override Image'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test - 16x9 Override"
+  title__ES:
+      value: "[Internal Promo Block - 16x9 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block - 16x9 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block - 16x9 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block - 16x9 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block - 16x9 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block - 16x9 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block - 16x9 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog 16x9 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-16x9-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-16x9-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'

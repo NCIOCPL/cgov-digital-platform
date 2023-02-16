@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_image_position_promo
+    - paragraphs.paragraphs_type.ncids_promo_block_internal
+  module:
+    - options
+id: paragraph.ncids_promo_block_internal.field_image_position_promo
+field_name: field_image_position_promo
+entity_type: paragraph
+bundle: ncids_promo_block_internal
+label: 'Image Position'
+description: 'Select if your NCIDS Promo Block displays an image, and whether that image displays left, right, or no-img.'
+required: true
+translatable: false
+default_value:
+  -
+    value: right
+default_value_callback: ''
+settings: {  }
+field_type: list_string
