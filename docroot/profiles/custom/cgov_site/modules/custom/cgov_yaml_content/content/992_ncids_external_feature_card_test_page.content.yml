@@ -130,6 +130,25 @@
             - value: 'External Card Title'
           field_override_card_description:
             - value: 'External Card Description'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'Image has no crop -> Show placeholder'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Find a Clinical Trial'
     ######## End Feature Row ###########
     
   ## SPANISH CONTENTS HERE

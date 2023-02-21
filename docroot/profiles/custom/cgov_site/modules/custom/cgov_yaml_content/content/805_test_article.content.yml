@@ -971,3 +971,59 @@
     value: "2023-02-02"
   field_date_display_mode:
     - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Find a Clinical Trial Test Article"
+  title__ES:
+      value: "[Find a Clinical Trial] Title - ES"
+  field_page_description:
+    value: "[Find a Clinical Trial] Page Description"
+  field_page_description__ES:
+    value: "[Find a Clinical Trial] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Find a Clinical Trial] Card Title"
+  field_card_title__ES:
+    value: "[Find a Clinical Trial] Card Title - ES"
+  field_browser_title:
+    value: "[Find a Clinical Trial] Browser Title"
+  field_browser_title_ES:
+    value: "[Find a Clinical Trial] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Find a Clinical Trial'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "clinical-trial-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "clinical-trial-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'

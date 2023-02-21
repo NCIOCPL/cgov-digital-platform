@@ -236,15 +236,81 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
  */
 function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
 
+  if (
+    (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0)) || 
+    (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
+  ) {
+    // if true === if there are crops applied to field_media_image
+    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+      unset($build['field_media_image']);
+      unset($build['field_ncids_promo_art_4x3']);
+      unset($build['field_ncids_promo_art_16x9']);
+      return;
+    }
+  }
+  
   // The 4x3 image will be used in the picture element's source element. 
   // There is no drupal render type for a source element.
   // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.  
-  if (!isset($build['field_ncids_promo_art_4x3']['#items']) || count($build['field_ncids_promo_art_4x3']['#items']) === 0) {
-    $build['uri_4x3'] = $build['field_media_image']['#items']->view([
-      'type' => 'image_url',
-      'settings' => [
-        'image_style' => 'ncids_featured_4x3',
-      ],
-    ]);
+  $build['uri_4x3'] = $build['field_media_image']['#items']->view([
+    'type' => 'image_url',
+    'settings' => [
+      'image_style' => 'ncids_featured_4x3',
+    ],
+  ]);
+}
+
+
+/**
+ * Handle images for NCIDS Feature Cards.
+ *
+ * NCIDS Feature Cards requires both a 16x9 and a 4x3 
+ * image. This method must determines where to source the image 
+ * from, either override field for that aspect ratio or the
+ * crop on the field_media_image.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ */
+function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  // Get the image style for the field_media_image. Guarding against a
+  // misconfigured view mode.
+  $crop_image_display = $display->get('content')['field_media_image'];
+
+  // Get the image style, so we can find the crop.
+  $image_style = $crop_image_display['settings']['image_style'];
+
+  // TODO: Check the display interface to see which style.
+  // Then we can find the manual crop for that style.
+  $image_helper = \Drupal::service('cgov_image.image_tools');
+  $crop = $image_helper->findCropByStyle($image_style);
+
+  // Make sure we have an image.
+  $cropped_field = $entity->field_media_image;
+  if (
+    $cropped_field == NULL ||
+    $cropped_field->target_id == NULL
+  ) {
+    unset($build['field_media_image']);
+    return;
   }
+
+  $file = File::load($cropped_field->target_id);
+  $file_uri = $file->getFileUri();
+
+  $crop_state = Crop::cropExists($file_uri, $crop);
+  // If we don't have a crop we should strip the image out.
+  // if (!$crop_state) {
+  //   unset($build['field_media_image']);
+  //   return;
+  // }
+  return $crop_state;
 }
