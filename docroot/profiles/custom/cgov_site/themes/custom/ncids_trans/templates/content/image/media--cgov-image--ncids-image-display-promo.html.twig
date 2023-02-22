@@ -1,20 +1,30 @@
-{{ devel_breakpoint() }}
-<picture class="nci-promo-block__image">
+{% if content.field_ncids_promo_art_16x9 and content.field_ncids_promo_art_1x1 and content.field_media_image %}
+  <picture class="nci-promo-block__image">
+    {% set sourceAttribs = create_attribute({
+        'media': '(min-width: 880px)'
+      }) 
+    %}
+    {% if content.field_ncids_promo_art_1x1[0] %}
+      {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.field_ncids_promo_art_1x1[0]|render) %}
+    {% elseif content.uri_1x1[0] %}
+      {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.uri_1x1[0]|render) %}
+    {% endif %}
+    {% if sourceAttribs.srcset %}
+      <source {{ sourceAttribs }}>
+    {% endif %}
+    {% if content.field_ncids_promo_art_16x9[0] %}
+      {{ content.field_ncids_promo_art_16x9 }}
+    {% elseif content.field_media_image[0] %}
+      {{ content.field_media_image }}
+    {% endif %}
+  </picture>
+{% else %}
   {% set sourceAttribs = create_attribute({
-      'media': '(min-width: 880px)'
-    }) 
+    'media': '(min-width: 880px)'
+  })
   %}
-  {% if content.field_ncids_promo_art_1x1[0] %}
-    {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.field_ncids_promo_art_1x1[0]|render) %}
-  {% elseif content.uri_1x1[0] %}
-    {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.uri_1x1[0]|render) %}
-  {% endif %}
-  {% if sourceAttribs.srcset %}
-    <source {{ sourceAttribs }}>
-  {% endif %}
-  {% if content.field_ncids_promo_art_16x9[0] %}
-    {{ content.field_ncids_promo_art_16x9 }}
-  {% else %}
-    {{ content.field_media_image }}
-  {% endif %}
-</picture>
+  <picture class="nci-promo-block__image">
+    <source {{ sourceAttribs }} srcset="/{{ directory }}/dist/images/placeholders/placeholder_1x1.png">
+    <img src="/{{ directory }}/dist/images/placeholders/placeholder-16x9.png" alt="No Image Placeholder">				
+  </picture>
+{% endif %}

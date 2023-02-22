@@ -43,6 +43,26 @@
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
+        - value: "right" 
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Find a Clinical Trial Test Article'
+      field_override_description:
+        - value: 'Featured Items image has no crops -> show placeholder'
+      field_button_text:
+        - value: 'Learn More'
+      field_button_alt:
+        - value: 'Button Alt Text'  
+    - entity: 'paragraph'
+      type: "ncids_promo_block_internal"
+      field_ncids_theme:
+        - value: "dark"
+      field_image_position_promo:
         - value: "left" 
       field_featured_item:
         - target_type: 'node'

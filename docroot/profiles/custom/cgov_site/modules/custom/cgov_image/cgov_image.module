@@ -346,12 +346,22 @@ function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, 
   // The 4x3 image will be used in the picture element's source element. 
   // There is no drupal render type for a source element.
   // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.  
-  if (!isset($build['field_ncids_promo_art_1x1']['#items']) || count($build['field_ncids_promo_art_1x1']['#items']) === 0) {
-    $build['uri_1x1'] = $build['field_media_image']['#items']->view([
-      'type' => 'image_url',
-      'settings' => [
-        'image_style' => 'ncids_promo_1x1',
-      ],
-    ]);
+  if (
+    (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0)) || 
+    (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
+  ) {
+    // if true === if there are crops applied to field_media_image
+    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+      unset($build['field_media_image']);
+      unset($build['field_ncids_promo_art_1x1']);
+      unset($build['field_ncids_promo_art_16x9']);
+      return;
+    }
   }
+  $build['uri_1x1'] = $build['field_media_image']['#items']->view([
+    'type' => 'image_url',
+    'settings' => [
+      'image_style' => 'ncids_promo_1x1',
+    ],
+  ]);
 }
