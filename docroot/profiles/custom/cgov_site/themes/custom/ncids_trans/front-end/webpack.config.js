@@ -35,6 +35,7 @@ module.exports = (env, argv) => {
 			alias,
 		},
 		externals: {
+			axios: 'axios',
 			jquery: 'jQuery',
 			jQuery: 'jQuery',
 			'jquery-ui': 'jQuery.ui',
@@ -193,6 +194,13 @@ module.exports = (env, argv) => {
 				patterns: [
 					{
 						from: path.resolve(__dirname, './static/js'),
+						to: './js',
+					},
+					{
+						from: path.resolve(
+							__dirname,
+							'node_modules/axios/dist/axios.min.js'
+						),
 						to: './js',
 					},
 				],

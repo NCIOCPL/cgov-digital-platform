@@ -5,6 +5,10 @@ jqueryandui:
   dependencies:
     - core/jquery
 
+axios:
+  js:
+    dist/js/axios.min.js: { preprocess: true }
+
 ncids-global:
   css:
     theme:
@@ -13,6 +17,7 @@ ncids-global:
     dist/js/ncids-common.js: { preprocess: false }
   dependencies:
     - ncids_trans/jqueryandui
+    - ncids_trans/axios
 
 #####################
 ## NOTE: In the libraries below notice how there is a dependency on the global library.
