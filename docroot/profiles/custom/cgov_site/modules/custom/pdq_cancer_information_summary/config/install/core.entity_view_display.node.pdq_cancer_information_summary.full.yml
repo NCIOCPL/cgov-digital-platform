@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.pdq_cancer_information_summary.field_browser_title
+    - field.field.node.pdq_cancer_information_summary.field_cthp_card_title
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
@@ -45,6 +46,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_cthp_card_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
     region: content
   field_date_updated:
     type: datetime_default

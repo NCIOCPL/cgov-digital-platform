@@ -1,3 +1,9 @@
 <li>
-  <a href="{{ url }}">{{ content.field_browser_title }}</a>
+  <a href="{{ url }}">
+    {%- if content.field_cthp_card_title -%}
+      {{- content.field_cthp_card_title -}}
+    {%- else -%}
+      {{- content.field_browser_title -}}
+    {%- endif -%}
+  </a>
 </li>
