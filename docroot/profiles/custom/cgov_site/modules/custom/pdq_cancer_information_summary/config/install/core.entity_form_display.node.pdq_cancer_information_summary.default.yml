@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.pdq_cancer_information_summary.field_browser_title
+    - field.field.node.pdq_cancer_information_summary.field_cthp_card_title
     - field.field.node.pdq_cancer_information_summary.field_date_posted
     - field.field.node.pdq_cancer_information_summary.field_date_updated
     - field.field.node.pdq_cancer_information_summary.field_hhs_syndication
@@ -41,6 +42,14 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_browser_title:
+    type: string_textfield
+    weight: 10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cthp_card_title:
     type: string_textfield
     weight: 10
     region: content
@@ -124,11 +133,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_public_use:
-    type: boolean_checkbox
+    type: options_select
     weight: 17
     region: content
-    settings:
-      display_label: true
+    settings: { }
     third_party_settings: {  }
   field_summary_sections:
     type: paragraphs_classic_asymmetric

@@ -165,7 +165,8 @@ class PDQResource extends ResourceBase {
           'summary_type' => $translation->field_pdq_summary_type->value,
           'posted_date' => $translation->field_date_posted->value,
           'updated_date' => $translation->field_date_updated->value,
-          'short_title' => $translation->field_browser_title->value,
+          'browser_title' => $translation->field_browser_title->value,
+          'cthp_card_title' => $translation->field_cthp_card_title->value,
           'description' => $translation->field_page_description->value,
           'public_use' => $translation->field_public_use->value,
           'url' => $translation->field_pdq_url->value,
@@ -284,7 +285,8 @@ class PDQResource extends ResourceBase {
     $node->set('field_pdq_summary_type', $summary['summary_type']);
     $node->set('field_date_posted', $summary['posted_date'] ?? $today);
     $node->set('field_date_updated', $summary['updated_date'] ?? $today);
-    $node->set('field_browser_title', $summary['short_title']);
+    $node->set('field_browser_title', $summary['browser_title']);
+    $node->set('field_cthp_card_title', $summary['cthp_card_title']) ?? $summary['browser_title'];
     $node->set('field_page_description', $summary['description']);
     $node->set('field_summary_sections', $sections);
     $node->set('field_public_use', 1);
