@@ -19,7 +19,6 @@ class SlevenCommands extends BltTasks {
 
     $commands = [
       'drupal:install' => [],
-      'drupal:toggle:modules' => [],
       'cgov:user:load-all' => [],
       'cgov:locales:translate' => [],
       'custom:install_cgov_yaml_content_by_module' => [
