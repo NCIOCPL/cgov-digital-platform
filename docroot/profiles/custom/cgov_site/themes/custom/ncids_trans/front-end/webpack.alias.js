@@ -19,13 +19,6 @@ const legacyImports = {
   ImageDist: path.resolve(__dirname, "../dist/images"),
 }
 
-// These should not really be used. Aliases are bad for intellesense.
-const ncidsImports = {
-  // hack to resolve uswds images?
-  "uswds": path.resolve(__dirname, './node_modules/uswds')
-};
-
 module.exports = {
   ...legacyImports,
-  ...ncidsImports,
 };
