@@ -1,6 +1,10 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
-@import '../cgdp-required.scss';
+@use '../cgdp-required.scss';
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+//$theme-link-color: uswds.$theme-link-color;
 
 @import "~Core/styles/environments/percussion";
 @import "../../legacy/styles/variables";
