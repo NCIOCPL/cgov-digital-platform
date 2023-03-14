@@ -91,9 +91,6 @@ module.exports = (env, argv) => {
 										// Ignore absolute paths. (Legacy stuff)
 										if (uri.startsWith('/')) {
 											return false;
-										} else if (uri.includes('/usa-icons-bg/')) {
-											// Temp hack for ncids
-											return false;
 										}
 										return true;
 									},
@@ -122,7 +119,16 @@ module.exports = (env, argv) => {
 							loader: 'sass-loader',
 							options: {
 								sassOptions: {
-									includePaths: [path.resolve(__dirname, './node_modules')],
+									includePaths: [
+										path.resolve(
+											__dirname,
+											'./node_modules/@nciocpl/ncids-css/packages'
+										),
+										path.resolve(
+											__dirname,
+											'./node_modules/@nciocpl/ncids-css/uswds-packages'
+										),
+									],
 									sourceMap: true,
 								},
 							},

@@ -1,0 +1,27 @@
+/* ----------------------------------------------------------------------------
+ * This sets up uswds variables by the platform. This file is only required
+ * once for a sass entrypoint. Any subsequent uses after that of uswds-core
+ * will use the overrides defined here whenever uswds-core is reference.
+ *
+ * Obviously, this should be the first thing referenced in your sass entrypoint
+ *
+ * ONE FINAL NOTE: This should NEVER output any css. It should only setup
+ * vars and mixins.
+ * ------------------------------------------------------------------------- */
+
+@use "uswds-core" with (
+	$theme-image-path: "@nciocpl/ncids-css/uswds-img",
+	$theme-show-notifications: false,
+	$theme-show-compile-warnings: false,
+	$theme-utility-breakpoints: (
+		"card": false,
+		"card-lg": false,
+		"mobile": false,
+		"mobile-lg": true,
+		"tablet": true,
+		"tablet-lg": true,
+		"desktop": true,
+		"desktop-lg": false,
+		"widescreen": true
+	)
+);
