@@ -1,15 +1,14 @@
 @charset "utf-8";
 
-// Required
-// This is the normalizer and generates styles, so we want this here.
-// No other entrypoint should have this UNLESS the page it is included
-// on does not have ncids-common.
-@import '@nciocpl/ncids-css/scss/lib/normalize';
-
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
-@import '../cgdp-required.scss';
+@forward '../cgdp-required';
 
+// This must be the first one after the required and nothing in between.
+// This is the normalizer, font stuff, elements, accessibility.
+@forward 'uswds-global';
+
+/* -------------- Change below here  ------------------------ */
 // Commenting this out for now as we don't want to generate utility
 // classes. Past not generating them, IDK if there is a purpose for
 // having this. Utility classes cost about 200K in CSS, we should
@@ -17,24 +16,23 @@
 //@import '@nciocpl/ncids-css/scss/packages/utilities'; // page options responsive display\
 
 // The global NCIDS/USWDS packages that generate markup.
-@import '@nciocpl/ncids-css/scss/packages/global';
-@import 'uswds/dist/scss/base/accessibility'; // header
-@import 'uswds/dist/scss/elements/typography/content'; // usa-prose, usa-intro(lede/lead)
-@import 'uswds/dist/scss/components/icon'; // page options icon sizes
-@import '@nciocpl/ncids-css/scss/utilities/no-print'; //print styling
+// We either don't need this, or we do.
+//@import 'uswds/dist/scss/elements/typography/content'; // usa-prose, usa-intro(lede/lead)
+@forward 'usa-layout-grid';
+@forward 'nci-no-print'; //print styling
 
 // The specific Component imports. Nothing in this list SHOULD reference
 // NCIDS or USWDS. It should come from ../../lib/components.
-@import '@nciocpl/ncids-css/scss/components/usa-skipnav/usa-skipnav';
-@import '../../lib/components/usa-banner/usa-banner';
-@import '../../lib/components/usa-site-alert/usa-site-alert';
-@import '../../lib/components/usa-breadcrumb/usa-breadcrumb';
-@import '../../lib/components/usa-sidenav/usa-sidenav';
-@import '../../lib/components/cgdp-page-options/cgdp-page-options';
-@import '../../lib/components/usa-footer/usa-footer';
+@forward 'usa-skipnav';
+@forward '../../lib/components/usa-banner';
+@forward '../../lib/components/usa-site-alert';
+@forward '../../lib/components/usa-breadcrumb';
+@forward '../../lib/components/usa-sidenav';
+@forward '../../lib/components/cgdp-page-options';
+@forward '../../lib/components/usa-footer';
 
 // TODO Keep as last import for now, there is a ordering bug
-@import '../../lib/components/nci-header/nci-header';
+@forward '../../lib/components/nci-header';
 
 // NOTE: Checkout _variables and _nci-foundation_variables for mapping NCIDS
 // colors and stuff to foundation and other legacy variables.
@@ -44,6 +42,9 @@
  ** Legacy Starts Here
  **
  ****************************************************************************/
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
 
 /** Legacy mixin things **/
 @import "~Core/styles/environments/percussion";

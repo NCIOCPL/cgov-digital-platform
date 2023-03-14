@@ -1,5 +1,7 @@
-@import '@nciocpl/ncids-css/scss/components/nci-header/nci-extended';
-@import '@nciocpl/ncids-css/scss/components/nci-autocomplete/nci-autocomplete';
+// This line is here so we can use the USWDS mixins.
+@use 'uswds-core' as *;
+@forward 'nci-header';
+@forward 'nci-autocomplete';
 
 #nci-header {
 	.nci-autocomplete {

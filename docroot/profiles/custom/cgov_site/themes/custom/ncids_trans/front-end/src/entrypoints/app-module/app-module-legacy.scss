@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 // fixed spacing issues with the sound, pause, and resume button
 #NCI-glossary-app-root,
 #NCI-sws-app-root {
@@ -91,7 +93,7 @@
 }
 
 // Issue 3683
-// Adds margin to all the pager containers at lower viewport widths 
+// Adds margin to all the pager containers at lower viewport widths
 .pager__container ol.pager__navigation > li {
 	margin: 2px;
 }
@@ -110,6 +112,11 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
+
+	.result__list-item {
+		@include u-font-family('body');
+	}
+
 	// increases spacing between number and arrows for page selector
 	.pager__select {
 		margin: 0 16px 0 16px;
