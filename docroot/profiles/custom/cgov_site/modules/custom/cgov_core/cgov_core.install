@@ -321,3 +321,14 @@ function cgov_core_update_9001() {
 
   }
 }
+
+/**
+ * Remove Clam AV. (Issue #3781)
+ */
+function cgov_core_update_9002() {
+  if (\Drupal::moduleHandler()->moduleExists('clamav')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['clamav'], FALSE);
+  }
+}
+

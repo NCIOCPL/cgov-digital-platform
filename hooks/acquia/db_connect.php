@@ -37,7 +37,7 @@ function error($message) {
 function get_db($site, $env, $db_role) {
   $link = FALSE;
   $creds_file = "/var/www/site-php/{$site}.{$env}/creds.json";
-  $creds = json_decode(file_get_contents($creds_file), TRUE);
+  $creds = json_decode(file_get_contents($creds_file), TRUE, 512, JSON_THROW_ON_ERROR);
   if (isset($creds['databases'][$db_role]['db_url_ha']) && is_array($creds['databases'][$db_role]['db_url_ha'])) {
     $db_uri = reset($creds['databases'][$db_role]['db_url_ha']);
     $db_info = url_to_connection_info($db_uri);

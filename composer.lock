@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "682fd8ede581e30921207a9248c65462",
+    "content-hash": "618f1026f1b40f20bf4da84b0fc7556b",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -4180,38 +4180,38 @@
         },
         {
             "name": "drupal/acquia_connector",
-            "version": "3.0.4",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/acquia_connector.git",
-                "reference": "3.0.4"
+                "reference": "4.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/acquia_connector-3.0.4.zip",
-                "reference": "3.0.4",
-                "shasum": "318f9a85c9e24565d9a347d467d53d99644d7bc3"
+                "url": "https://ftp.drupal.org/files/projects/acquia_connector-4.0.3.zip",
+                "reference": "4.0.3",
+                "shasum": "c4e186b65b508ce251ee01eb482af0808dfb99cc"
             },
             "require": {
-                "drupal/core": "^8.9 || ^9",
+                "drupal/core": ">=8.9 <11.0.0-stable",
                 "ext-json": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.0.4",
-                    "datestamp": "1632414112",
+                    "version": "4.0.3",
+                    "datestamp": "1676495534",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
                 },
                 "branch-alias": {
-                    "dev-3.x": "3.x-dev"
+                    "dev-4.x": "4.x-dev"
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9 || ^10"
+                        "drush.services.yml": ">=9"
                     }
                 }
             },
@@ -4223,10 +4223,6 @@
                 {
                     "name": "acquia",
                     "homepage": "https://www.drupal.org/user/1231722"
-                },
-                {
-                    "name": "blueminds",
-                    "homepage": "https://www.drupal.org/user/128652"
                 },
                 {
                     "name": "Dane Powell",
@@ -4241,12 +4237,20 @@
                     "homepage": "https://www.drupal.org/user/45640"
                 },
                 {
+                    "name": "kaynen",
+                    "homepage": "https://www.drupal.org/user/733308"
+                },
+                {
                     "name": "kolafson",
                     "homepage": "https://www.drupal.org/user/822402"
                 },
                 {
                     "name": "Mark Trapp",
                     "homepage": "https://www.drupal.org/user/212019"
+                },
+                {
+                    "name": "mglaman",
+                    "homepage": "https://www.drupal.org/user/2416470"
                 },
                 {
                     "name": "vlad.pavlovic",
@@ -4318,37 +4322,38 @@
         },
         {
             "name": "drupal/acsf",
-            "version": "2.69.0",
+            "version": "2.73.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/acsf.git",
-                "reference": "8.x-2.69"
+                "reference": "8.x-2.73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/acsf-8.x-2.69.zip",
-                "reference": "8.x-2.69",
-                "shasum": "649186e899e719f8886ab385706bf56e6afe1183"
+                "url": "https://ftp.drupal.org/files/projects/acsf-8.x-2.73.zip",
+                "reference": "8.x-2.73",
+                "shasum": "9aeec52b48c14ab714f5265406eac23e10b347dd"
             },
             "require": {
                 "drupal/acsf_duplication": "*",
                 "drupal/acsf_theme": "*",
                 "drupal/acsf_variables": "*",
-                "drupal/core": "^8 || ^9",
+                "drupal/core": "^8 || ^9 || ^10",
                 "ext-json": "*"
             },
             "require-dev": {
-                "acquia/coding-standards": "^0.4.0",
+                "acquia/coding-standards": "^1.0",
                 "drupal/acsf_variables": "*",
-                "drupal/samlauth": "^2.0.0-alpha1",
+                "drupal/samlauth": "^3.3",
                 "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "^7.0"
+                "phpunit/phpunit": "^8.0",
+                "rector/rector": "0.13.x-dev"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.69",
-                    "datestamp": "1612957028",
+                    "version": "8.x-2.73",
+                    "datestamp": "1662552839",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4370,20 +4375,16 @@
             "authors": [
                 {
                     "name": "Acquia",
-                    "homepage": "https://www.drupal.org/user/14023",
+                    "homepage": "https://www.drupal.org/user/1231722",
                     "email": "support@acquia.com"
-                },
-                {
-                    "name": "Rok Žlender",
-                    "homepage": "https://www.drupal.org/user/61873"
-                },
-                {
-                    "name": "acquia",
-                    "homepage": "https://www.drupal.org/user/1231722"
                 },
                 {
                     "name": "acquia.sf.ci",
                     "homepage": "https://www.drupal.org/user/3285763"
+                },
+                {
+                    "name": "Alan Evans",
+                    "homepage": "https://www.drupal.org/user/14023"
                 },
                 {
                     "name": "attila.fekete",
@@ -4406,8 +4407,16 @@
                     "homepage": "https://www.drupal.org/user/419643"
                 },
                 {
+                    "name": "nishat.baig",
+                    "homepage": "https://www.drupal.org/user/3729641"
+                },
+                {
                     "name": "roderik",
                     "homepage": "https://www.drupal.org/user/8841"
+                },
+                {
+                    "name": "Rok Žlender",
+                    "homepage": "https://www.drupal.org/user/61873"
                 }
             ],
             "description": "Connects a site with Acquia Cloud Site Factory.",
@@ -4418,16 +4427,16 @@
         },
         {
             "name": "drupal/acsf_duplication",
-            "version": "2.69.0",
+            "version": "2.73.0",
             "require": {
                 "drupal/acsf": "^2",
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.69",
-                    "datestamp": "1612957028",
+                    "version": "8.x-2.73",
+                    "datestamp": "1662552839",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4440,20 +4449,16 @@
             ],
             "authors": [
                 {
-                    "name": "Alan Evans",
-                    "homepage": "https://www.drupal.org/user/14023"
-                },
-                {
-                    "name": "Rok Žlender",
-                    "homepage": "https://www.drupal.org/user/61873"
-                },
-                {
                     "name": "acquia",
                     "homepage": "https://www.drupal.org/user/1231722"
                 },
                 {
                     "name": "acquia.sf.ci",
                     "homepage": "https://www.drupal.org/user/3285763"
+                },
+                {
+                    "name": "Alan Evans",
+                    "homepage": "https://www.drupal.org/user/14023"
                 },
                 {
                     "name": "attila.fekete",
@@ -4476,8 +4481,16 @@
                     "homepage": "https://www.drupal.org/user/419643"
                 },
                 {
+                    "name": "nishat.baig",
+                    "homepage": "https://www.drupal.org/user/3729641"
+                },
+                {
                     "name": "roderik",
                     "homepage": "https://www.drupal.org/user/8841"
+                },
+                {
+                    "name": "Rok Žlender",
+                    "homepage": "https://www.drupal.org/user/61873"
                 }
             ],
             "description": "Helper module for duplicating Acquia Cloud Site Factory sites.",
@@ -4488,17 +4501,17 @@
         },
         {
             "name": "drupal/acsf_theme",
-            "version": "2.69.0",
+            "version": "2.73.0",
             "require": {
                 "drupal/acsf": "^2",
                 "drupal/acsf_variables": "*",
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.69",
-                    "datestamp": "1612957028",
+                    "version": "8.x-2.73",
+                    "datestamp": "1662552839",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4511,20 +4524,16 @@
             ],
             "authors": [
                 {
-                    "name": "Alan Evans",
-                    "homepage": "https://www.drupal.org/user/14023"
-                },
-                {
-                    "name": "Rok Žlender",
-                    "homepage": "https://www.drupal.org/user/61873"
-                },
-                {
                     "name": "acquia",
                     "homepage": "https://www.drupal.org/user/1231722"
                 },
                 {
                     "name": "acquia.sf.ci",
                     "homepage": "https://www.drupal.org/user/3285763"
+                },
+                {
+                    "name": "Alan Evans",
+                    "homepage": "https://www.drupal.org/user/14023"
                 },
                 {
                     "name": "attila.fekete",
@@ -4547,8 +4556,16 @@
                     "homepage": "https://www.drupal.org/user/419643"
                 },
                 {
+                    "name": "nishat.baig",
+                    "homepage": "https://www.drupal.org/user/3729641"
+                },
+                {
                     "name": "roderik",
                     "homepage": "https://www.drupal.org/user/8841"
+                },
+                {
+                    "name": "Rok Žlender",
+                    "homepage": "https://www.drupal.org/user/61873"
                 }
             ],
             "description": "Handles VCS-based themes on Acquia Cloud Site Factory.",
@@ -4559,16 +4576,16 @@
         },
         {
             "name": "drupal/acsf_variables",
-            "version": "2.69.0",
+            "version": "2.73.0",
             "require": {
                 "drupal/acsf": "^2",
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.69",
-                    "datestamp": "1612957028",
+                    "version": "8.x-2.73",
+                    "datestamp": "1662552839",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4581,20 +4598,16 @@
             ],
             "authors": [
                 {
-                    "name": "Alan Evans",
-                    "homepage": "https://www.drupal.org/user/14023"
-                },
-                {
-                    "name": "Rok Žlender",
-                    "homepage": "https://www.drupal.org/user/61873"
-                },
-                {
                     "name": "acquia",
                     "homepage": "https://www.drupal.org/user/1231722"
                 },
                 {
                     "name": "acquia.sf.ci",
                     "homepage": "https://www.drupal.org/user/3285763"
+                },
+                {
+                    "name": "Alan Evans",
+                    "homepage": "https://www.drupal.org/user/14023"
                 },
                 {
                     "name": "attila.fekete",
@@ -4617,8 +4630,16 @@
                     "homepage": "https://www.drupal.org/user/419643"
                 },
                 {
+                    "name": "nishat.baig",
+                    "homepage": "https://www.drupal.org/user/3729641"
+                },
+                {
                     "name": "roderik",
                     "homepage": "https://www.drupal.org/user/8841"
+                },
+                {
+                    "name": "Rok Žlender",
+                    "homepage": "https://www.drupal.org/user/61873"
                 }
             ],
             "description": "Stores sensitive variables in a single place for easy scrubbing.",
@@ -7146,188 +7167,6 @@
                 "source": "https://git.drupalcode.org/project/metatag",
                 "issues": "https://www.drupal.org/project/issues/metatag",
                 "docs": "https://www.drupal.org/docs/8/modules/metatag"
-            }
-        },
-        {
-            "name": "drupal/migrate_file",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/migrate_file.git",
-                "reference": "2.0.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_file-2.0.0.zip",
-                "reference": "2.0.0",
-                "shasum": "84bc9aea018baa263cd24d0a6194a30b79f60801"
-            },
-            "require": {
-                "drupal/core": "^8 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1605920047",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "drclaw",
-                    "homepage": "https://www.drupal.org/user/823702"
-                }
-            ],
-            "description": "Additional support for migrating files including downloading remote files and using remote uris (without download)",
-            "homepage": "https://www.drupal.org/project/migrate_file",
-            "keywords": [
-                "Drupal"
-            ],
-            "support": {
-                "source": "http://cgit.drupalcode.org/migrate_file",
-                "issues": "https://www.drupal.org/project/issues/migrate_file"
-            }
-        },
-        {
-            "name": "drupal/migrate_plus",
-            "version": "5.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/migrate_plus.git",
-                "reference": "8.x-5.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-5.3.zip",
-                "reference": "8.x-5.3",
-                "shasum": "3cf6dde235d7604ee49be2986812c0ee5e2982f6"
-            },
-            "require": {
-                "drupal/core": "^9.1"
-            },
-            "require-dev": {
-                "drupal/migrate_example_advanced_setup": "*",
-                "drupal/migrate_example_setup": "*"
-            },
-            "suggest": {
-                "ext-soap": "*",
-                "sainsburys/guzzle-oauth2-plugin": "3.0 required for the OAuth2 authentication plugin"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-5.3",
-                    "datestamp": "1650658156",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Mike Ryan",
-                    "homepage": "https://www.drupal.org/u/mikeryan",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Lucas Hedding",
-                    "homepage": "https://www.drupal.org/u/heddn",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "mikeryan",
-                    "homepage": "https://www.drupal.org/user/4420"
-                }
-            ],
-            "description": "Enhancements to core migration support.",
-            "homepage": "https://www.drupal.org/project/migrate_plus",
-            "support": {
-                "source": "https://git.drupalcode.org/project/migrate_plus",
-                "issues": "https://www.drupal.org/project/issues/migrate_plus",
-                "slack": "#migrate"
-            }
-        },
-        {
-            "name": "drupal/migrate_tools",
-            "version": "5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/migrate_tools.git",
-                "reference": "8.x-5.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_tools-8.x-5.1.zip",
-                "reference": "8.x-5.1",
-                "shasum": "2c1a9d35d318a0e1de30a99fbf64bedd4e65cee1"
-            },
-            "require": {
-                "drupal/core": "^9.1",
-                "drupal/migrate_plus": "^5",
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "drupal/migrate_source_csv": "^3.0",
-                "drush/drush": "^10"
-            },
-            "suggest": {
-                "drush/drush": "^9 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-5.1",
-                    "datestamp": "1640378500",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                },
-                "drush": {
-                    "services": {
-                        "drush.services.yml": "^9 || ^10"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Mike Ryan",
-                    "homepage": "https://www.drupal.org/u/mikeryan",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Lucas Hedding",
-                    "homepage": "https://www.drupal.org/u/heddn",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "mikeryan",
-                    "homepage": "https://www.drupal.org/user/4420"
-                }
-            ],
-            "description": "Tools to assist in developing and running migrations.",
-            "homepage": "http://drupal.org/project/migrate_tools",
-            "support": {
-                "source": "https://git.drupalcode.org/project/migrate_tools",
-                "issues": "https://www.drupal.org/project/issues/migrate_tools",
-                "slack": "#migrate"
             }
         },
         {

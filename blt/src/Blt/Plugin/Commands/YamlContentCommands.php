@@ -26,7 +26,6 @@ class YamlContentCommands extends BltTasks {
    */
   public function installCgovYamlContentByModule($module) {
     $commands = [
-      'cgov:install:site-sections' => [],
       'cgov:enable-module' => ['moduleName' => $module],
       'custom:import_cgov_yaml_content' => ['module' => $module],
       'cgov:import-dev-blocks' => [],
