@@ -1,0 +1,614 @@
+## Factbook Chart Data
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "AIDS Funding History"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "aids-funding.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-aids-funding.json'
+      alt: 'Aids Funding History'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Historical Budget Comparison"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "bypass-appropriations.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-bypass-appropriations.json'
+      alt: 'Historical Budget Comparison'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Grant and Contract Awards by State and Institution"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "grants-contracts.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-grants-contracts.json'
+      alt: 'Grant and Contract Awards by State and Institution'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Comparison of Dollars, Positions, and Space"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "html-amount.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-html-amount.json'
+      alt: 'Comparison of Dollars, Positions, and Space'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Total Number of K Awards"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "html-bar.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-html-bar.json'
+      alt: 'Total Number of K Awards'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Percent of Total Research Career Awards Funded"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "kawards-pie.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-kawards-pie.json'
+      alt: 'Percent of Total Research Career Awards Funded'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Extramural Funds"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "html-extramural.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-html-extramural.json'
+      alt: 'Extramural Funds'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "National Research Service Awards (NRSAs) Predoctoral and Postdoctoral Trainees"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "html-nrsa.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-html-nrsa.json'
+      alt: 'National Research Service Awards (NRSAs) Predoctoral and Postdoctoral Trainees'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "NIH Management Fund, Service & Supply Fund, and GSA Rent"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "management-fund.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-management-fund.json'
+      alt: 'NIH Management Fund, Service & Supply Fund, and GSA Rent'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Cancer Moonshot and Carryover - Obligations by Mechanism"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "moonshot-obligations.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-moonshot-obligations.json'
+      alt: 'Cancer Moonshot and Carryover - Obligations by Mechanism'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "RPGs Number of Awards"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "number-rpg-awards.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-number-rpg-awards.json'
+      alt: 'RPGs Number of Awards'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "RPGs Average Cost"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "rpg-cost-per-award.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-rpg-cost-per-award.json'
+      alt: 'RPGs Average Cost'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Percent Share of Total RPG Funds"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "rpg-funding.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-rpg-funding.json'
+      alt: 'Percent Share of Total RPG Funds'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Percent Share of Total NCI Dollars"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "obligations-mechanism.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-obligations-mechanism.json'
+      alt: 'Percent Share of Total NCI Dollars'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Program Structure"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "program-structure.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-program-structure.json'
+      alt: 'Program Structure'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Extramural vs Intramural and RMS Funding"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "rms-funding.json"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-rms-funding.json'
+      alt: 'Extramural vs Intramural and RMS Funding'
+
+- entity: "media"
+  bundle: "cgov_file"
+  name: "Sample Factbook Data Download"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "sample-download-data.xlsx"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-nci/budget/fact-book'
+  field_list_description: "File description. This file has no description; it is indescribable."
+  field_browser_title: "File Browser title"
+  field_search_engine_restrictions:
+    value: ExcludeSearch
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Field intentionally blank'
+  field_media_file:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'file'
+          - type: 'module'
+            filename: 'factbook-sample-download-data.xlsx'
+      alt: 'Sample Factbook Data Download'
+
