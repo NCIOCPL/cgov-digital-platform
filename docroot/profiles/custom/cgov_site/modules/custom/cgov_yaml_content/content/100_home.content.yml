@@ -457,67 +457,227 @@
       type: "cgov_primary_feature_row"
       field_container_heading:
         - value: "Contenido especial"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Título anulado'
+          field_override_card_description:
+            - value: 'Descripción anulada'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_card_description:
+            - value: 'Descripción de la tarjeta externa'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
       ## Cards here
     ######## End Feature Row ###########
     ######## Begin Guide Row ###########
     - entity: 'paragraph'
       type: "cgov_guide_row"
-      field_container_heading:
-        - value: "Su guía de información del cáncer"
       field_guide_cards:
         - entity: 'paragraph'
-          type: "cgov_card_raw_html"
-          field_raw_html:
-            - format: "raw_html"
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "Recursos para"
+          field_html_content:
+            - format: "full_html"
               value: |
-                <div class="contentid-1100555 slot-item first-SI equalheight large-4 columns card gutter">
-                  <h2>
-                    Aspectos básicos del cáncer
-                  </h2>
-                  <ul>
-                  <li><a class="arrow-link" href="/espanol/cancer/naturaleza/que-es" title="">&iquest;Qu&eacute; es el c&aacute;ncer?</a></li>
-                  <li><a class="arrow-link" href="/espanol/cancer/causas-prevencion" title="">Causas y prevenci&oacute;n</a></li>
-                  <li><a class="arrow-link" href="/espanol/cancer/causas-prevencion/riesgo" title="">Factores de riesgo</a></li>
-                  <li><a class="arrow-link" href="/espanol/cancer/deteccion" title="">Detecci&oacute;n</a></li>
-                  </ul>
-                </div>
+                <ul>
+                  <li><a class="arrow-link" href="#">Pacientes</a></li>
+                  <li><a class="arrow-link" href="#">Personas a cargo del paciente</a></li>
+                  <li><a class="arrow-link" href="#">Profesionales de salud</a></li>
+                  <li><a class="arrow-link" href="#">Investigadores</a></li>
+                  <li><a a="a" class="arrow-link" href="#">Socios internacionales</a></li>
+                  <li class="card__view-more"><a class="arrow-link" href="#">Ver todos los recursos</a></li>
+                </ul>
         - entity: 'paragraph'
-          type: "cgov_card_raw_html"
-          field_raw_html:
-            - format: "raw_html"
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "El cáncer"
+          field_html_content:
+            - format: "full_html"
               value: |
-                <div class="contentid-1100554 slot-item equalheight large-4 columns card gutter">
-                  <h2>
-                    Recién diagnosticado
-                  </h2>
-                  <ul>
-                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion" title="">Diagn&oacute;stico y estadificaci&oacute;n</a></li>
-                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion/pronostico" title="">Pron&oacute;stico</a></li>
-                    <li><a class="arrow-link" href="/espanol/cancer/diagnostico-estadificacion/sintomas" title="">S&iacute;ntomas</a></li>
-                    <li><a class="arrow-link" href="/espanol/cancer/sobrellevar" title="">C&oacute;mo hacer frente al c&aacute;ncer</a></li>
-                    <li><a class="arrow-link" href="/espanol/cancer/manejo-del-cancer/servicios" title="">Encuentre a un doctor o centro de tratamiento</a></li>
-                  </ul>
-                </div>
+                <ul>
+                  <li><a class="arrow-link" href="#">¿Qué es el cáncer?</a></li>
+                  <li><a class="arrow-link" href="#">Causas y prevención</a></li>
+                  <li><a class="arrow-link" href="#">Diagnóstico y estadificación</a></li>
+                  <li><a class="arrow-link" href="#">El pronóstico del cáncer</a></li>
+                  <li><a class="arrow-link" href="#">Tratamiento del cáncer</a></li>
+                  <li><a class="arrow-link" href="#">Efectos secundarios del tratamiento</a></li>
+                  <li><a class="arrow-link" href="#">Estadísticas del cáncer</a></li>
+                  <li><a class="arrow-link" href="#">Cómo hacer frente al cáncer</a></li>
+                  <li><a class="arrow-link" href="#">Búsqueda de estudios clínicos (en inglés)</a></li>
+                  <li class="card__view-more"><a class="arrow-link" href="#">Aprenda más sobre el cáncer</a></li>
+                </ul>
         - entity: 'paragraph'
-          type: "cgov_card_raw_html"
-          field_raw_html:
-            - format: "raw_html"
+          type: "cgov_content_block"
+          field_content_heading:
+            - value: "Encuentre un tipo de cáncer"
+          field_html_content:
+            - format: "full_html"
               value: |
-                <div class="contentid-936298 slot-item last-SI equalheight large-4 columns card gutter">
-                  <h2>
-                    Tratamiento
-                  </h2>
-                  <ul>
-                    <li><a class="arrow-link" href="/espanol/cancer/tratamiento/tipos" title="">Tipos de tratamiento</a></li>
-                    <li><a href="/espanol/cancer/tratamiento/efectos-secundarios" class="arrow-link" title="">Efectos secundarios</a></li>
-                    <li><a href="/espanol/cancer/tratamiento/estudios-clinicos" class="arrow-link" title="">Gu&iacute;a para entender y participar en estudios cl&iacute;nicos</a></li>
-                    <li><a href="/espanol/cancer/tratamiento/medicamentos" class="arrow-link" title="">Medicamentos para el c&aacute;ncer</a></li>
-                    <li><a href="/espanol/cancer/tratamiento/mca" class="arrow-link sys_folderid=" title="">Medicina complementaria y alternativa</a></li>
-                    <li><a href="/espanol/cancer/tratamiento" class="arrow-link" title="">Aprenda m&aacute;s sobre el tratamiento</a></li>
-                    </ul>
-                </div>
+                <ul class="card__row-layout">
+                  <li><a class="arrow-link" href="#">Colorrectal</a></li>
+                  <li><a class="arrow-link" href="#">Infantiles</a></li>
+                  <li><a class="arrow-link" href="#">Leucemia</a></li>
+                  <li><a class="arrow-link" href="#">Linfoma</a></li>
+                  <li><a class="arrow-link" href="#">Metastático</a></li>
+                  <li><a class="arrow-link" href="#">Páncreas</a></li>
+                  <li><a class="arrow-link" href="#">Próstata</a></li>
+                  <li><a class="arrow-link" href="#">Pulmón</a></li>
+                  <li><a class="arrow-link" href="#">Seno (mama)</a></li>
+                  <li class="card__view-more"><a class="arrow-link" href="#">Ver todos los tipos de cáncer</a></li>
+                </ul>
     ######## End Guide Row ###########
-    ######## Begin Secondary Card Row ###########
+    ######## Social Media Row ###########
     - entity: 'paragraph'
-      type: "cgov_secondary_feature_row"
-    ######## End Secondary Card Row ###########
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <!-- Begin Social Media row -->
+            <div class="row social-media-title">
+              <h2>Síganos en</h2>
+            </div>
+            <div class="social-media-row row">
+              <div class="social-media-card">
+                  <div class="social-media-icon"><a href="https://twitter.com/nciespanol" data-indexed-link="Join the Conversation|Join the Conversation|1"><img src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/social-media/twitter/twitter-circle-icon.svg" alt="Twitter logo"></a></div>
+                  <div class="social-media-text">
+                    <h3><a href="https://twitter.com/nciespanol" data-indexed-link="Join the Conversation|Join the Conversation|1">Twitter</a></h3>
+                  </div>
+              </div>
+              <div class="social-media-card">
+                  <div class="social-media-icon"><a href="https://www.facebook.com/cancer.govEspanol" data-indexed-link="Join the Conversation|Join the Conversation|2"><img src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/social-media/facebook/facebook-circle-icon.svg" alt="Facebook logo"></a></div>
+                  <div class="social-media-text">
+                    <h3><a href="https://www.facebook.com/cancer.govEspanol" data-indexed-link="Join the Conversation|Join the Conversation|2">Facebook</a></h3>
+                  </div>
+              </div>
+              <div class="social-media-card">
+                  <div class="social-media-icon"><a href="https://www.youtube.com/playlist?list=PLYKy4VbxNln7Cy6K2hZvwHLIZAElio5ai" data-indexed-link="Join the Conversation|Join the Conversation|3"><img src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/social-media/youtube/youtube-circle-icon.svg" alt="YouTube logo"></a></div>
+                  <div class="social-media-text">
+                    <h3><a href="https://www.youtube.com/playlist?list=PLYKy4VbxNln7Cy6K2hZvwHLIZAElio5ai" data-indexed-link="Join the Conversation|Join the Conversation|3">YouTube</a></h3>
+                  </div>
+              </div>
+              <div class="social-media-card">
+                  <div class="social-media-icon"><a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" data-indexed-link="Join the Conversation|Join the Conversation|4"><img src="/profiles/custom/cgov_site/themes/custom/cgov/static/images/design-elements/social-media/gov-delivery/govdelivery-circle-icon.svg" alt="GovDelivery logo"></a></div>
+                  <div class="social-media-text">
+                    <h3><a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" data-indexed-link="Join the Conversation|Join the Conversation|4">GovDelivery</a></h3>
+                  </div>
+              </div>
+            </div>
+            <!-- End Social Media row -->
+    ######## End Social Nedia Row ###########
+
+    ######## MULTIMEDIA Row ##############
+    - entity: 'paragraph'
+      type: "cgov_multimedia_row"
+      field_mm_media_item:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Estimulación inmunitaria no específica'
+                langcode: es
+      field_mm_feature_card:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    ######### End MM Row ##############
+    ######## Begin Thumbnail List ##############
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: list_item_title_desc_image
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Título anulado'
+          field_override_list_description:
+            - value: 'Descripción anulada'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_list_description:
+            - value: 'Descripción de la tarjeta externa'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            - value: 'Título anulado'
+          field_override_list_description:
+            - value: 'Descripción anulada'
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'

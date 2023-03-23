@@ -99,6 +99,22 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'oropharynx image'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_image_promotional__ES:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
   body:
     - format: "full_html"
       value: |
