@@ -131,6 +131,10 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function createParagraph(array $fieldData) {
     $paragraph = Paragraph::create($fieldData);
     $paragraph->langcode = 'es';
+    $dereferencedFields = $this->handleProcessDirectives($fieldData, $paragraph);
+    foreach ($dereferencedFields as $fieldName => $fieldValue) {
+      $paragraph->{$fieldName} = $fieldValue;
+    }
     $paragraph->save();
     $paragraphEntityReferenceFields = [
       'target_id' => $paragraph->id(),
