@@ -50,6 +50,27 @@
           alt: 'hand on shoulder'
       field_tagline:
         value: "Image from About Cancer for Positioning"
+  field_hero_banner__ES:
+    - entity: 'paragraph'
+      type: 'cgov_hero_banner'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_desktop.jpeg'
+          alt: 'hand on shoulder'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Hero_image_aboutcancer_tablet.jpeg'
+          alt: 'hand on shoulder'
+      field_tagline:
+        value: "Imagen de El Cáncer para posicionamiento"
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########
@@ -122,7 +143,7 @@
                   <li class="general-list-item list-item more">
                       <div class="image container">&nbsp;</div>
                       <div class="title container">
-                        <a class="arrow-link news-footer" href="/news-events/press-releases/2022">All NCI news</a>
+                        <a class="arrow-link news-footer" href="/news-events/press-releases/2019">All NCI news</a>
                       </div>
                   </li>
                 </ul>
@@ -186,5 +207,150 @@
                       <li><a href="/news-events/events/scientific-meetings" data-indexed-link="Events|NewsEventsRight|3">Scientific Meetings and Lectures</a></li>
                       <li><a href="/news-events/events/conferences" data-indexed-link="Events|NewsEventsRight|3">Conferences</a></li>
                       <li><a href="/news-events/events/social-media" data-indexed-link="Events|NewsEventsRight|3">Social Media Events</a></li>
+                  </ul>
+                </div>
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_primary_feature_row"
+      field_container_heading:
+        - value: "Noticias destacadas"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_internal"
+          field_override_card_title:
+            - value: 'Overridden Title'
+          field_override_card_description:
+            - value: 'Overridden description'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_card_description:
+            - value: 'Descripción de la tarjeta externa'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.google.com'
+      ## Cards here
+    ######## End Feature Row ###########
+    - entity: 'paragraph'
+      type: "cgov_column_two"
+      field_main_contents:
+        - entity: 'paragraph'
+          type: "cgov_dynamic_list"
+          field_list_title:
+            value: "Últimos comunicados de prensa"
+          field_source_view:
+            - target_id: press_releases
+              display_id: pr_home_block
+              ### the options are serialized. So set this through the UI and find what it put in the DB.
+              data: |
+                a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <ul class="list no-bullets">
+                  <li class="general-list-item list-item more">
+                      <div class="image container">&nbsp;</div>
+                      <div class="title container">
+                        <a class="arrow-link news-footer" href="/espanol/noticias/comunicados-de-prensa/2019">Todas las noticias del NCI</a>
+                      </div>
+                  </li>
+                </ul>
+      field_secondary_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <style type="text/css">
+                  @media only screen and (max-width: 640px) {
+                    .ui-accordion .rawHtml div.ui-accordion-content {
+                      margin: 0;
+                    }
+                  }
+                </style><!-- Noticias Landing Page Raw HTML - Blog -->
+                <div class="row card">
+                  <h2>Blog Temas y relatos</h2>
+                  <div>
+                      Las últimas noticias e investigaciones del Instituto Nacional del Cáncer.
+                      <ul>
+                        <li><a href="/espanol/noticias/temas-y-relatos-blog" data-indexed-link="Blog Temas y relatos|NewsEventsRight|3">Blogs más recientes</a><br /></li>
+                        <li class="news-share"><a class="news-govdelivery" href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" data-indexed-link="Blog Temas y relatos|NewsEventsRight|3">Suscríbase</a></li>
+                      </ul>
+                  </div>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <!-- Noticias Landing Page Raw HTML - Media Resources -->
+                <div class="row card">
+                  <h2>Recursos para medios de comunicación </h2>
+                  <ul>
+                      <li><a href="/news-events/media-resources/contacts" data-indexed-link="Recursos para medios de comunicacion|NewsEventsRight|1">Contactos para los medios</a></li>
+                      <li><a href="https://visualsonline.cancer.gov/collection.cfm?groupid=2" data-indexed-link="Recursos para medios de comunicacion|NewsEventsRight|1">Material de archivo para los medios</a></li>
+                      <li><a href="https://visualsonline.cancer.gov/" data-indexed-link="Recursos para medios de comunicacion|NewsEventsRight|1">Imágenes del NCI</a></li>
+                  </ul>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <!-- Noticias Landing Page Raw HTML - Social Media -->
+                <div class="news-share">
+                  <div class="row card">
+                      <h2>Redes sociales</h2>
+                      <ul>
+                        <li><a class="news-twitter" href="https://twitter.com/@nciespanol" data-indexed-link="Redes sociales|NewsEventsRight|2">@NCIespanol</a></li>
+                        <li><a class="news-facebook" href="http://www.facebook.com/cancer.govespanol" data-indexed-link="Redes sociales|NewsEventsRight|2">NCI en Facebook</a></li>
+                        <li><a class="news-youtube" href="https://www.youtube.com/playlist?list=PLYKy4VbxNln7Cy6K2hZvwHLIZAElio5ai" data-indexed-link="Redes sociales|NewsEventsRight|2">NCI en YouTube</a></li>
+                        <li><a class="news-govdelivery" href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" data-indexed-link="Redes sociales|NewsEventsRight|2">Suscríbase a los comunicados de prensa del NCI</a></li>
+                        <li><a class="news-events" href="/espanol/noticias/eventos/redes-sociales" data-indexed-link="Redes sociales|NewsEventsRight|2">Eventos</a></li>
+                      </ul>
+                  </div>
+                </div>
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <!-- Noticias Landing Page Raw HTML - Archive -->
+                <div class="row card">
+                  <h2>Archivo</h2>
+
+                  <ul>
+                      <li><a href="/espanol/noticias/comunicados-de-prensa/2019" data-indexed-link="Archivo|NewsEventsRight|4">2019</a></li>
+                      <li><a href="/espanol/noticias/comunicados-de-prensa/2018" data-indexed-link="Archivo|NewsEventsRight|4">2018</a></li>
+                      <li><a href="/espanol/noticias/comunicados-de-prensa/2017" data-indexed-link="Archivo|NewsEventsRight|4">2017</a></li>
                   </ul>
                 </div>
