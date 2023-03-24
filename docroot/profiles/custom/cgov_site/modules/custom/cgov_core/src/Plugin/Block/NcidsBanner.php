@@ -3,9 +3,9 @@
 namespace Drupal\cgov_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,11 +30,11 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
   protected $languageManager;
 
   /**
-   * The path matcher.
+   * The Route Matcher.
    *
-   * @var \Drupal\Core\Path\PathMatcherInterface
+   * @var \Drupal\Core\Routing\RouteMatchInterface
    */
-  protected $pathMatcher;
+  protected $routeMatch;
 
   /**
    * Constructs a LanguageBlock object.
@@ -47,13 +47,19 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin implementation definition.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
-   * @param \Drupal\Core\Path\PathMatcherInterface $path_matcher
-   *   The path matcher.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   The route Matcher.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LanguageManagerInterface $language_manager, PathMatcherInterface $path_matcher) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    LanguageManagerInterface $language_manager,
+    RouteMatchInterface $route_match
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->languageManager = $language_manager;
-    $this->pathMatcher = $path_matcher;
+    $this->routeMatch = $route_match;
   }
 
   /**
@@ -65,7 +71,7 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
       $plugin_id,
       $plugin_definition,
       $container->get('language_manager'),
-      $container->get('path.matcher')
+      $container->get('current_route_match')
     );
   }
 
@@ -76,9 +82,8 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
     $build = [
       '#theme' => 'block',
     ];
-    $route_name = $this->pathMatcher->isFrontPage() ? '<front>' : '<current>';
     $type = 'language_content';
-    $links = $this->languageManager->getLanguageSwitchLinks($type, Url::fromRoute($route_name));
+    $links = $this->languageManager->getLanguageSwitchLinks($type, Url::fromRouteMatch($this->routeMatch));
 
     if (isset($links->links) && count($links->links) > 0) {
       // We have no UX that specifies there can be more than 1 language
