@@ -28,6 +28,67 @@
 
 - entity: "media"
   bundle: "cgov_video"
+  name: "Nonspecific Immune Stimulation"
+  name__ES:
+    value: "Estimulación inmunitaria no específica"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url:
+    value: "nonspecific-immune-stimulation-video"
+  field_pretty_url__ES:
+    value: "estimulacion-inmunitaria-noespecifica-video"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer/treatment/types/immunotherapy'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/cancer/tratamiento/tipos/inmunoterapia'
+
+  body:
+    - format: "full_html"
+      value: |
+        <div class="rxbodyfield">
+          <p><span>How is the immune system used to fight cancer? This animation explains one type of immunotherapy that boosts the ability of the body’s immune system to rid the body of cancer.</span></p>
+        </div>
+  body__ES:
+    - format: "full_html"
+      value: |
+        <div class="rxbodyfield">
+          <p>¿Cómo se usa el sistema inmunitario para combatir el cáncer? Este video describe un tipo de inmunoterapia que refuerza la capacidad que tiene el sistema inmunitario del cuerpo para eliminar el cáncer del cuerpo.</p>
+        </div>
+  field_caption:
+    - format: "simple"
+      value: |
+        Learn about nonspecific immune stimulation, one type of immunotherapy used to treat cancer.
+  field_caption__ES:
+    - format: "simple"
+      value: |
+        Infórmese sobre la estimulación inmunitaria no específica, un tipo de inmunoterapia que se usa para tratar el cáncer.
+  field_page_description:
+    value: "META: Immunotherapy uses the body's immune system to fight cancer. This animation explains one type of immunotherapy called nonspecific immune stimulation that is used to treat cancer."
+  field_page_description__ES:
+    value: "META: La inmunoterapia usa el sistema inmunitario del cuerpo para combatir el cáncer. En este video se describe un tipo de inmunoterapia llamada estimulación inmunitaria no específica que se usa para tratar el cáncer."
+  field_browser_title:
+    value: "Nonspecific Immune Stimulation"
+  field_browser_title__ES:
+    value: "Estimulación inmunitaria no específica"
+  field_media_oembed_video:
+    value: "https://www.youtube.com/watch?v=zKgCtZ4Sz7w"
+  field_media_oembed_video__ES:
+    value: "https://www.youtube.com/watch?v=SAEN932tBEU"
+
+- entity: "media"
+  bundle: "cgov_video"
   name: "Unpublished Video"
   langcode: en
   status: 0

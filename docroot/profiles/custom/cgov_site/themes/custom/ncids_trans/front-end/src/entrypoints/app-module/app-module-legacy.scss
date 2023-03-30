@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 // fixed spacing issues with the sound, pause, and resume button
 #NCI-glossary-app-root,
 #NCI-sws-app-root {
@@ -23,10 +25,12 @@
       padding-top: 4px;
     }
 		.pronunciation__term {
+			@include u-font-family('body');
 			margin-right: 5px;
 		}
 
 		.pronunciation__key {
+			@include u-font-family('body');
 			margin-left: 10px;
 			padding-top: 4px;
       padding-bottom: 4px;
@@ -72,6 +76,10 @@
 
 #NCI-glossary-app-root {
 	margin-bottom: 39px;
+
+	.ncids-radio__label {
+		font-weight: 400;
+	}
 }
 
 // reduces padding between the "locations" label and descriptive text
@@ -85,13 +93,20 @@
 	.paging-section__pager {
 		padding-top: 1em;
 	}
+	.pager__container {
+		.pager__navigation {
+			.pager__button {
+				@include u-font-family('body');
+			}
+		}
+	}
 	.list {
 		margin: 1em 0 1em;
 	}
 }
 
 // Issue 3683
-// Adds margin to all the pager containers at lower viewport widths 
+// Adds margin to all the pager containers at lower viewport widths
 .pager__container ol.pager__navigation > li {
 	margin: 2px;
 }
@@ -106,10 +121,21 @@
 }
 
 #NCI-sws-app-root {
+	.definition__toggle {
+		button {
+			@include u-font-family('body');
+		}
+	}
+
 	.results__feature--bestbet--definition {
 		margin-left: 0;
 		margin-right: 0;
 	}
+
+	.result__list-item {
+		@include u-font-family('body');
+	}
+
 	// increases spacing between number and arrows for page selector
 	.pager__select {
 		margin: 0 16px 0 16px;
@@ -130,6 +156,14 @@
 
 	.cts-toggle__label {
 		height: 32px;
+	}
+
+	.pager__container {
+		.pager__navigation {
+			.pager__button {
+				@include u-font-family('body');
+			}
+		}
 	}
 }
 
