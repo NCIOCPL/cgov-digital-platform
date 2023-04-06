@@ -1,4 +1,9 @@
 @charset "utf-8";
+
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
 /*************************************************************
 This file is used by CKEditor in order to display CGov Styles and Embedded components.
 Items should be added or removed based on if it would be used in the WYSIWYG. This was
@@ -8,9 +13,6 @@ Additional items may be found at the end when we need to override styles from ou
 CSS modules.
 **************************************************************/
 
-// Noto is pulled into the front-end via a tag in the head block. So we need to include
-// it here for editing.
-@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i);
 @import "~Core/styles/environments/percussion";
 @import "~Core/styles/variables";
 @import "~Core/styles/mixins";
@@ -132,6 +134,22 @@ CSS modules.
 }
 /* END HACK STYLES */
 
+/* copying sub and sup styling from USWDS for use as nci classes */
+.sup,
+.sub {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+.sub {
+    bottom: -.25em
+}
+.sup {
+    top: -.5em
+}
+
+
 // This is a partial waiting to be made, it comes from the PDQ page, but at least
 // some of the styles (.brand-fda) are being used in InnerPages
 // (https://www.cancer.gov/about-cancer/treatment/drugs/raloxifenehydrochloride for
@@ -196,8 +214,6 @@ table.table-default tfoot td {
 	font-size: 14px;
 	line-height: 1.5em;
 	font-family: $montserrat-font-stack;
-}
-.dis-disclaimer {
 }
 /* end new styles */
 
