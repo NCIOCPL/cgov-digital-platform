@@ -10,7 +10,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/global/ncids-common.ts'
 	),
-	ckeditor: path.resolve(__dirname, 'src/entrypoints/ckeditor/ckeditor.js'),
+	ckeditor: path.resolve(
+		__dirname,
+		'src/entrypoints/ckeditor-trans/ckeditor-trans.js'
+	),
 	article: path.resolve(__dirname, 'src/entrypoints/article/article.ts'),
 	'home-landing': path.resolve(
 		__dirname,
