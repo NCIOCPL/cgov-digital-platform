@@ -1,0 +1,236 @@
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Content for usa-prose"
+  title__ES:
+      value: "Test Content for usa-prose - ES"
+  field_page_description:
+    value: "Test page for usa-prose content"
+  field_page_description__ES:
+    value: "Test page for usa-prose content - ES"
+  field_browser_title:
+    value: "Test Content for usa-prose"
+  field_browser_title_ES:
+    value: "Test Content for usa-prose - ES"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "test-usa-prose"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "test-usa-prose"
+  field_date_posted:
+    value: "2018-03-20"
+  field_date_reviewed:
+    value: "2017-03-20"
+  field_date_updated:
+    value: "2016-03-20"
+  field_date_display_mode:
+    - value: 'updated'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>Lorem ipsum<sup>1</sup> dolor sit<sub>2</sub> amet, <strong>consectetur adipiscing elit,</strong> sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <em>Ut enim ad minim veniam</em>, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <s>Duis aute irure dolor in reprehenderit</s> in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  field_intro_text__ES:
+    - format: "streamlined"
+      value: |
+        <p>Lorem ipsum<sup>1</sup> dolor sit<sub>2</sub> amet, <strong>consectetur adipiscing elit,</strong> sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <em>Ut enim ad minim veniam</em>, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <s>Duis aute irure dolor in reprehenderit</s> in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Normal Heading"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Condimentum vitae sapien pellentesque habitant morbi tristique senectus et. Ac turpis egestas sed tempus urna. Nibh ipsum consequat nisl vel. In tellus integer feugiat scelerisque varius morbi enim. Est placerat in egestas erat imperdiet. Porttitor lacus luctus accumsan tortor posuere. Pharetra pharetra massa massa ultricies mi quis. <s>Congue eu consequat ac felis</s>. Gravida quis blandit turpis cursus in hac habitasse platea. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl.</p>
+            <ul>
+              <li>Diam ut venenatis tellus in metus. Rutrum tellus pellentesque eu tincidunt tortor aliquam.</li>
+              <li>Id ornare arcu odio ut sem nulla pharetra diam sit.</li>
+              <li>Tellus elementum sagittis vitae et leo duis.</li>
+            </ul>
+            <ol>
+              <li>Semper auctor neque vitae tempus quam pellentesque nec.</li>
+              <li>Egestas erat imperdiet sed euismod.</li>
+              <li>Posuere ac ut consequat semper viverra.</li>
+              <li>Quis hendrerit dolor magna eget est lorem ipsum dolor.</li>
+            </ol>
+            <h3>Body Content H3</h3>
+            <p>Varius quam quisque id diam. Scelerisque viverra mauris in aliquam. Pellentesque elit ullamcorper dignissim cras. Convallis aenean et tortor at risus viverra adipiscing at in. Sollicitudin aliquam ultrices sagittis orci a. Faucibus purus in massa tempor. Nunc id cursus metus aliquam eleifend mi in nulla. Amet venenatis urna cursus eget nunc scelerisque viverra mauris. Interdum posuere lorem ipsum dolor sit amet. Ridiculus mus mauris vitae ultricies leo. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing.</p>
+            <table align="left" border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+              <caption>Example Table</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Column 1</th>
+                  <th scope="col">Column 2</th>
+                  <th scope="col">Column 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Entry 1</td>
+                  <td>Entry 2</td>
+                  <td>Entry 3</td>
+                </tr>
+                <tr>
+                  <td>Entry 4</td>
+                  <td>Entry 5</td>
+                  <td>Entry 6</td>
+                </tr>
+              </tbody>
+            </table>
+            <h4>Body Content H4</h4>
+            <p>Quisque sagittis purus sit amet volutpat consequat mauris nunc. Libero id faucibus nisl tincidunt eget nullam. Id ornare arcu odio ut sem nulla pharetra diam sit. Interdum posuere lorem ipsum dolor.</p>
+            <h5>Body Content H5</h5>
+            <p>Donec et odio pellentesque diam. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Diam maecenas ultricies mi eget. Eu consequat ac felis donec et. Aliquam sem fringilla ut morbi. Eget nullam non nisi est sit amet facilisis magna. Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Donec ultrices tincidunt arcu non sodales neque sodales. Enim blandit volutpat maecenas volutpat blandit. Quis vel eros donec ac odio tempor. Ut consequat semper viverra nam libero justo laoreet sit amet. Massa placerat duis ultricies lacus sed turpis tincidunt id. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Et malesuada fames ac turpis egestas.</p>
+            <table align="center" border="2" cellpadding="2" cellspacing="2" style="width: 750px;">
+              <caption>Table Example 2</caption>
+              <thead>
+                <tr>
+                  <th scope="row">Column 1</th>
+                  <th scope="col">Column 2</th>
+                  <th scope="col">Column 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Entry 1</th>
+                  <td>Entry 2</td>
+                  <td>Entry 3</td>
+                </tr>
+                <tr>
+                  <th scope="row">Entry 4</th>
+                  <td>Entry 5</td>
+                  <td>Entry 6</td>
+                </tr>
+              </tbody>
+            </table>
+            <h6>Body Content H6</h6>
+            <table align="right" border="1" cellpadding="1" cellspacing="1" style="width: 625px;">
+              <tbody>
+                <tr>
+                  <td>Row 1, Column 1</td>
+                  <td>Row 1, Column 2</td>
+                  <td>Row 1, Column 3</td>
+                </tr>
+                <tr>
+                  <td>Row 2, Column 1</td>
+                  <td>Row 2, Column 2</td>
+                  <td>Row 2, Column 3</td>
+                </tr>
+                <tr>
+                  <td>Row 3, Column 1</td>
+                  <td>Row 3, Column 2</td>
+                  <td>Row 3, Column 3</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Orci ac auctor augue mauris. Dolor magna eget est lorem. Dictum varius duis at consectetur. Lacus viverra vitae congue eu. Volutpat diam ut venenatis tellus in metus vulputate eu scelerisque. Laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Quisque egestas diam in arcu cursus. Lectus magna fringilla urna porttitor rhoncus dolor. Sapien pellentesque habitant morbi tristique senectus et netus et. Turpis massa tincidunt dui ut ornare. Eget duis at tellus at urna condimentum. Eget magna fermentum iaculis eu non diam phasellus. Sed nisi lacus sed viverra tellus in hac habitasse.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Heading with <em>Italics</em>"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Lorem ipsum<sub>1</sub> dolor sit<sup>2</sup> amet, <strong>consectetur adipiscing elit</strong>, sed do eiusmod tempor incididunt ut <em>labore et dolore magna aliqua</em>. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae.</p>
+            <p>Condimentum vitae sapien pellentesque habitant morbi tristique senectus et. Ac turpis egestas sed tempus urna. Nibh ipsum consequat nisl vel. In tellus integer feugiat scelerisque varius morbi enim. Est placerat in egestas erat imperdiet. Porttitor lacus luctus accumsan tortor posuere. Pharetra pharetra massa massa ultricies mi quis. <s>Congue eu consequat ac felis</s>. Gravida quis blandit turpis cursus in hac habitasse platea. Tincidunt ornare massa eget egestas purus viverra accumsan in nisl.</p>
+            <ul>
+              <li>Diam ut venenatis tellus in metus. Rutrum tellus pellentesque eu tincidunt tortor aliquam.</li>
+              <li>Id ornare arcu odio ut sem nulla pharetra diam sit.</li>
+              <li>Tellus elementum sagittis vitae et leo duis.</li>
+            </ul>
+            <ol>
+              <li>Semper auctor neque vitae tempus quam pellentesque nec.</li>
+              <li>Egestas erat imperdiet sed euismod.</li>
+              <li>Posuere ac ut consequat semper viverra.</li>
+              <li>Quis hendrerit dolor magna eget est lorem ipsum dolor.</li>
+            </ol>
+            <h3>Body Content H3</h3>
+            <p>Varius quam quisque id diam. Scelerisque viverra mauris in aliquam. Pellentesque elit ullamcorper dignissim cras. Convallis aenean et tortor at risus viverra adipiscing at in. Sollicitudin aliquam ultrices sagittis orci a. Faucibus purus in massa tempor. Nunc id cursus metus aliquam eleifend mi in nulla. Amet venenatis urna cursus eget nunc scelerisque viverra mauris. Interdum posuere lorem ipsum dolor sit amet. Ridiculus mus mauris vitae ultricies leo. Neque ornare aenean euismod elementum nisi quis eleifend quam adipiscing.</p>
+            <table align="left" border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+              <caption>Example Table</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Column 1</th>
+                  <th scope="col">Column 2</th>
+                  <th scope="col">Column 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Entry 1</td>
+                  <td>Entry 2</td>
+                  <td>Entry 3</td>
+                </tr>
+                <tr>
+                  <td>Entry 4</td>
+                  <td>Entry 5</td>
+                  <td>Entry 6</td>
+                </tr>
+              </tbody>
+            </table>
+            <h4>Body Content H4</h4>
+            <p>Quisque sagittis purus sit amet volutpat consequat mauris nunc. Libero id faucibus nisl tincidunt eget nullam. Id ornare arcu odio ut sem nulla pharetra diam sit. Interdum posuere lorem ipsum dolor.</p>
+            <h5>Body Content H5</h5>
+            <p>Donec et odio pellentesque diam. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Diam maecenas ultricies mi eget. Eu consequat ac felis donec et. Aliquam sem fringilla ut morbi. Eget nullam non nisi est sit amet facilisis magna. Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Donec ultrices tincidunt arcu non sodales neque sodales. Enim blandit volutpat maecenas volutpat blandit. Quis vel eros donec ac odio tempor. Ut consequat semper viverra nam libero justo laoreet sit amet. Massa placerat duis ultricies lacus sed turpis tincidunt id. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Et malesuada fames ac turpis egestas.</p>
+            <table align="center" border="2" cellpadding="2" cellspacing="2" style="width: 750px;">
+              <caption>Table Example 2</caption>
+              <thead>
+                <tr>
+                  <th scope="row">Column 1</th>
+                  <th scope="col">Column 2</th>
+                  <th scope="col">Column 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Entry 1</th>
+                  <td>Entry 2</td>
+                  <td>Entry 3</td>
+                </tr>
+                <tr>
+                  <th scope="row">Entry 4</th>
+                  <td>Entry 5</td>
+                  <td>Entry 6</td>
+                </tr>
+              </tbody>
+            </table>
+            <h6>Body Content H6</h6>
+            <table align="right" border="1" cellpadding="1" cellspacing="1" style="width: 625px;">
+              <tbody>
+                <tr>
+                  <td>Row 1, Column 1</td>
+                  <td>Row 1, Column 2</td>
+                  <td>Row 1, Column 3</td>
+                </tr>
+                <tr>
+                  <td>Row 2, Column 1</td>
+                  <td>Row 2, Column 2</td>
+                  <td>Row 2, Column 3</td>
+                </tr>
+                <tr>
+                  <td>Row 3, Column 1</td>
+                  <td>Row 3, Column 2</td>
+                  <td>Row 3, Column 3</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Orci ac auctor augue mauris. Dolor magna eget est lorem. Dictum varius duis at consectetur. Lacus viverra vitae congue eu. Volutpat diam ut venenatis tellus in metus vulputate eu scelerisque. Laoreet suspendisse interdum consectetur libero id faucibus nisl tincidunt. Quisque egestas diam in arcu cursus. Lectus magna fringilla urna porttitor rhoncus dolor. Sapien pellentesque habitant morbi tristique senectus et netus et. Turpis massa tincidunt dui ut ornare. Eget duis at tellus at urna condimentum. Eget magna fermentum iaculis eu non diam phasellus. Sed nisi lacus sed viverra tellus in hac habitasse.</p>
