@@ -931,6 +931,20 @@ display:
         options: {  }
       empty: {  }
       sorts:
+        field_date_posted_value:
+          id: field_date_posted_value
+          table: node__field_date_posted
+          field: field_date_posted_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: field_date_posted_value
+          exposed: false
+          granularity: second
         nid:
           id: nid
           table: node_field_data
@@ -946,20 +960,6 @@ display:
             label: ''
             field_identifier: nid
           exposed: false
-        field_date_posted_value:
-          id: field_date_posted_value
-          table: node__field_date_posted
-          field: field_date_posted_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: datetime
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: field_date_posted_value
-          exposed: false
-          granularity: second
       arguments:
         field_blog_series_target_id:
           id: field_blog_series_target_id
