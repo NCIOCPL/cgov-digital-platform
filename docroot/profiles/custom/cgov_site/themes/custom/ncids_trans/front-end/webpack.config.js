@@ -201,6 +201,10 @@ module.exports = (env, argv) => {
 						from: path.resolve(__dirname, './static/js'),
 						to: './js',
 					},
+					{
+						from: path.resolve(__dirname, './static/images/placeholders'),
+						to: './images/placeholders',
+					},
 				],
 			}),
 			new MiniCssExtractPlugin({
