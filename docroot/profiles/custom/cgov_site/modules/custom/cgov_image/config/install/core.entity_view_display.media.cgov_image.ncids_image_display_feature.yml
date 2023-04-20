@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.image_crop_enlarged
+    - core.entity_view_mode.media.ncids_image_display_feature
     - field.field.media.cgov_image.field_accessible_version
     - field.field.media.cgov_image.field_caption
     - field.field.media.cgov_image.field_credit
@@ -15,21 +15,44 @@ dependencies:
     - field.field.media.cgov_image.field_override_img_panoramic
     - field.field.media.cgov_image.field_override_img_social_media
     - field.field.media.cgov_image.field_override_img_thumbnail
+    - image.style.ncids_featured_16x9
     - media.type.cgov_image
   module:
     - image
-id: media.cgov_image.image_crop_enlarged
+id: media.cgov_image.ncids_image_display_feature
 targetEntityType: media
 bundle: cgov_image
-mode: image_crop_enlarged
+mode: ncids_image_display_feature
 content:
   field_media_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ncids_featured_16x9
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_ncids_promo_art_16x9:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ncids_featured_16x9
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_ncids_promo_art_4x3:
     type: image_url
     label: hidden
     settings:
-      image_style: cgov_enlarged
+      image_style: ncids_featured_4x3
     third_party_settings: {  }
-    weight: 0
+    weight: 2
     region: content
 hidden:
   content_moderation_control: true
@@ -38,8 +61,6 @@ hidden:
   field_caption: true
   field_credit: true
   field_display_enlarge: true
-  field_ncids_promo_art_16x9: true
-  field_ncids_promo_art_4x3: true
   field_original_source: true
   field_override_img_featured: true
   field_override_img_panoramic: true

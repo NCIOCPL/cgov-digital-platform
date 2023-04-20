@@ -35,7 +35,8 @@ function cgov_promo_paragraph_access(EntityInterface $entity, $operation, Accoun
 function cgov_promo_field_widget_form_alter(&$element, &$form_state, $context) {
   if (
     array_key_exists('#paragraph_type', $element) &&
-    $element['#paragraph_type'] == 'cgov_card_external'
+    ($element['#paragraph_type'] == 'cgov_card_external' ||
+    $element['#paragraph_type'] == 'ncids_feature_card_external')
   ) {
     // Make the autocomplete do nothing.
     $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;
