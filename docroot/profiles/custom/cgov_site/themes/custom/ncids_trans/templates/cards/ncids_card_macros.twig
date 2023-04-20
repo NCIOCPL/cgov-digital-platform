@@ -1,0 +1,32 @@
+{# TODO: split into ncids_card_macros.twig #}
+{% macro ncidsFeatureCard(title, description, image, url, directory, id, entity_type) %}
+	{% set renderImage = image|render %}
+	{% import _self as self %}
+    {% set titleID = "#{entity_type}-#{id}" %}
+	{# pass in node id? *check xdebug* aria-labelledby#}
+	<a href="{{ url }}" aria-labelledby="{{ titleID }}">
+		{{ self.imagePlaceholder(image, directory) }}
+		<div class="nci-card__body">
+			<span class="nci-card__title" id="{{titleID}}">{{ title }}</span>
+			{% if description %}
+				<p class="nci-card__description">{{ description }}</p>
+			{% endif %}
+		</div>
+	</a>
+{% endmacro %}
+
+{% macro imagePlaceholder(image, directory) %}
+	{% set renderImage = image|render %}
+	{% if renderImage %}
+		{{- image -}}
+	{% else %}
+		{% set sourceAttribs = create_attribute({
+			'media': '(min-width: 880px)'
+		})
+		%}
+		<picture class="nci-card__image">
+			<source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_featured_4x3') }}">
+			<img src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">				
+		</picture>
+	{% endif %}
+{% endmacro %}
