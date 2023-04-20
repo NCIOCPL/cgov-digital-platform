@@ -1,0 +1,20 @@
+{% if (content.field_row_cards['#items']|length > 0) %}
+  {% if content.field_container_heading[0] %}
+    <section class="usa-section usa-section--light cgdp-feature-card-row">
+      <div class="grid-container">     
+      {{ content.field_container_heading }}
+        <ul class="nci-card-group">
+          {{ content.field_row_cards }}
+        </ul>
+      </div>
+    </section>
+  {% else %}
+    <div class="usa-section usa-section--light cgdp-feature-card-row">
+      <div class="grid-container">
+        <ul class="nci-card-group">
+          {{ content.field_row_cards }}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
