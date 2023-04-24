@@ -67,6 +67,13 @@ class BlogTopicTitle extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+
+    if ($this->inPreview) {
+      return [
+        '#markup' => $this->t('Blog Archive'),
+      ];
+    }
+
     $topic_title = $this->getTopicTitle();
     $build = [
       'topic_title' => $topic_title,

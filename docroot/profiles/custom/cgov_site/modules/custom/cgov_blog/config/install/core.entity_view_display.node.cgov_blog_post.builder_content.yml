@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.full
+    - core.entity_view_mode.node.builder_content
     - field.field.node.cgov_blog_post.body
     - field.field.node.cgov_blog_post.field_author
     - field.field.node.cgov_blog_post.field_blog_series
@@ -30,10 +30,10 @@ dependencies:
     - options
     - text
     - user
-id: node.cgov_blog_post.full
+id: node.cgov_blog_post.builder_content
 targetEntityType: node
 bundle: cgov_blog_post
-mode: full
+mode: builder_content
 content:
   body:
     type: text_default

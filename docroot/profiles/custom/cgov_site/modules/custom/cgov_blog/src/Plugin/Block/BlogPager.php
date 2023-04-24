@@ -65,6 +65,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+
+    if ($this->inPreview) {
+      return [
+        '#markup' => $this->t('Blog Archive'),
+      ];
+    }
+
     // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
       $content_id = $curr_entity->id();

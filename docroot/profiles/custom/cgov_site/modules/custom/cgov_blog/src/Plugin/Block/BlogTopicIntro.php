@@ -67,6 +67,13 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
+
+    if ($this->inPreview) {
+      return [
+        '#markup' => $this->t('Blog Archive'),
+      ];
+    }
+
     $topic_intro = $this->getTopicIntro();
     $build = [
       'topic_intro' => $topic_intro,

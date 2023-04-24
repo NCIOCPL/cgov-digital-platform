@@ -63,6 +63,13 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+
+    if ($this->inPreview) {
+      return [
+        '#markup' => $this->t('Blog Archive'),
+      ];
+    }
+
     $build = [];
     $series = $this->blogManager->getSeriesEntity();
 
