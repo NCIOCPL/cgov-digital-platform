@@ -1,0 +1,64 @@
+## Blog Series for promo image edge cases
+- entity: "node"
+  type: "cgov_blog_series"
+  title: 'Blog Series for promo image edge cases'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_page_description:
+    value: 'Is used to test blogs representing promo image edge cases'
+  field_browser_title:
+    value: 'Blog Series for promo image edge cases'
+  field_card_title:
+    value: 'Blog Series for promo image - card title'
+  field_feature_card_description:
+    value: 'Blog Series for promo image - feature card description'
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_about_blog:
+    value: 'Simply dummy text of the printing and typesetting industry. It has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/promo-images-blog'
+  field_banner_image:
+  field_allow_comments: 1
+  field_blog_series_shortname:
+    - value: 'blog-promo-image'
+  field_archive_group_by:
+    - value: 'month'
+  field_archive_back_years:
+    - value: '7'
+  field_num_display_posts:
+    - value: '15'
+  field_recommended_content_header:
+    - value: 'Recommended Content'
+  ## Test blog series with varios promo images blogs Español
+  title__ES:
+    value: 'Spanish Blog Series for promo image edge cases'
+  field_browser_title__ES:
+    value: 'Spanish Blog Series for promo image edge cases'
+  field_card_title__ES:
+    value: 'Spanish Blog Series for promo image - card title'
+  field_feature_card_description__ES:
+    value: 'Spanish Blog Series for promo image - feature card description'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/noticias/esp-promo-images-blog'
+  field_about_blog__ES:
+    value: 'Blog que presenta las noticias y las últimas investigaciones del Instituto Nacional del Cáncer.'
+  field_allow_comments__ES:
+    value: 0
+  field_archive_group_by__ES:
+    value: 'year'
+  field_blog_series_shortname__ES:
+    value: 'spanish-blog-promo-image'

@@ -1,0 +1,209 @@
+#######
+# TESTS:
+# Image with crops and no thumbnail override
+# Different Translated Image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "environment-earth-day"
+  name__ES:
+    value: "environment-earth-day - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'environment-earth-day.jpg'
+      alt: 'environment-earth-day'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 800
+                height: 484
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 77
+                y: 0
+                width: 645
+                height: 483
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 77
+                y: 0
+                width: 645
+                height: 483
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 218
+                y: 0
+                width: 362
+                height: 483
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 158
+                y: 0
+                width: 483
+                height: 483
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 16
+                width: 800
+                height: 450
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 264
+                y: 0
+                width: 272
+                height: 483
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'environment-earth-day-spanish-image.jpg'
+      alt: 'environment-earth-day -es'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 771
+                height: 480
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 65
+                y: 0
+                width: 640
+                height: 480
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 65
+                y: 0
+                width: 640
+                height: 480
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 205
+                y: 0
+                width: 360
+                height: 480
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 145
+                y: 0
+                width: 480
+                height: 480
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 23
+                width: 771
+                height: 433
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 250
+                y: 0
+                width: 270
+                height: 480
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+## RSS feed Blog Post pages
+## Blog post Lead Image and Promo Image No Overrides
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post Lead Image and Promo Image No Overrides"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post Lead Image and Promo Image No Overrides'
+  field_feature_card_description:
+    value: 'Blog post Lead Image and Promo Image No Overrides'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'environment-earth-day'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'environment-earth-day'
+  field_list_description:
+  field_page_description:
+    value: 'Blog post Lead Image and Promo Image No Overrides'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post Lead Image and Promo Image No Overrides
+  title__ES:
+    value: "Blog post Lead Image and Promo Image No Override ES"
+  field_browser_title__ES:
+    value: 'Blog post Lead Image and Promo Image No Overrides ES'
+  field_page_description__ES:
+    value: 'Blog post Lead Image and Promo Image No Overrides ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+
