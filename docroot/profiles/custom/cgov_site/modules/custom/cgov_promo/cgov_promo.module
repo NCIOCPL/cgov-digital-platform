@@ -21,7 +21,8 @@ use Drupal\Core\Session\AccountInterface;
 function cgov_promo_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
   $bundle = $entity->bundle();
 
-  if ($bundle === 'cgov_card_internal' && $operation === 'view') {
+  if (($bundle === 'cgov_card_internal' || $bundle === 'ncids_feature_card_internal') && 
+  $operation === 'view') {
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
 
