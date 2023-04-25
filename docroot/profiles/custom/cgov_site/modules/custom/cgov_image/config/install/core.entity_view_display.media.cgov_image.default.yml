@@ -7,6 +7,7 @@ dependencies:
     - field.field.media.cgov_image.field_credit
     - field.field.media.cgov_image.field_display_enlarge
     - field.field.media.cgov_image.field_media_image
+    - field.field.media.cgov_image.field_ncids_promo_art_1x1
     - field.field.media.cgov_image.field_ncids_promo_art_16x9
     - field.field.media.cgov_image.field_ncids_promo_art_4x3
     - field.field.media.cgov_image.field_original_source
@@ -72,6 +73,17 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_ncids_promo_art_1x1:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 15
     region: content
   field_original_source:
     type: string
