@@ -1,0 +1,151 @@
+#######
+# TESTS:
+# Image with crops and thumbnail override
+# Diff Translated Image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "nature lake mountain"
+  name__ES:
+    value: "nature lake mountain - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'nature-lake-mountain.jpg'
+      alt: 'nature lake mountain'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 853
+                height: 480
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 106
+                y: 0
+                width: 640
+                height: 480
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 106
+                y: 0
+                width: 640
+                height: 480
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 246
+                y: 0
+                width: 360
+                height: 480
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 186
+                y: 0
+                width: 480
+                height: 480
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 853
+                height: 480
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 291
+                y: 0
+                width: 270
+                height: 480
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'panorama-nature.jpg'
+      alt: 'panorama nature'
+  field_override_img_thumbnail__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'sun_tree_mountain.jpg'
+      alt: 'del mar en el ocaso'
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+## RSS feed Blog Post pages
+## Blog post Lead Image with Override and No Promo
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post Lead Image with Override and No Promo"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post Lead Image with Override and No Promo'
+  field_feature_card_description:
+    value: 'Blog post Lead Image with Override and No Promo'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'nature lake mountain'
+  field_image_promotional:
+  field_list_description:
+  field_page_description:
+    value: 'Blog post Lead Image with Override and No Promo'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post Lead Image with Override and No Promo
+  title__ES:
+    value: "Blog post Lead Image with Override and No Promo ES"
+  field_browser_title__ES:
+    value: 'Blog post Lead Image with Override and No Promo ES'
+  field_page_description__ES:
+    value: 'Blog post Lead Image with Override and No Promo ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch

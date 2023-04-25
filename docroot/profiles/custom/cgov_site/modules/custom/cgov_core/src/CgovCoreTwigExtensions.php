@@ -154,16 +154,16 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
       return NULL;
     }
 
+    $enclosure = NULL;
     // Image style to use when rendering images.
     $thumbnail_image_style = 'cgov_thumbnail';
-
     $media_image_file = $this->getNodeImageFile($nid);
-    $image_info = $this->getImageData($media_image_file, $thumbnail_image_style);
-
-    $enclosure = "<enclosure url='" . $image_info['absolute_uri'] .
-      "' length='" . $image_info['filesize'] .
-      "' type='" . $image_info['mimetype'] . "' />";
-
+    if ($media_image_file != NULL) {
+      $image_info = $this->getImageData($media_image_file, $thumbnail_image_style);
+      $enclosure = "<enclosure url='" . $image_info['absolute_uri'] .
+        "' length='" . $image_info['filesize'] .
+        "' type='" . $image_info['mimetype'] . "' />";
+    }
     return $enclosure;
   }
 
@@ -345,7 +345,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
           print "<!-- ERROR: No NID $series_nid with '{$this->langid}' Translation -->";
           return NULL;
         }
-        $series_name = $node->label();;
+        $series_name = $node->label();
         $series_desc = $node->field_about_blog->value;
         $series_link = $node->toUrl('canonical', ['absolute' => TRUE])->toString();
       }
@@ -413,74 +413,36 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    *   The specified node or NULL
    */
   public function getNodeImageFile($nid) {
-    // Set $debug=TRUE to show displayed image source in comments.
-    $debug = FALSE;
-
     $node = $this->getTranslatedNodeById($nid);
     if (!$node) {
       return NULL;
     }
-
     // Check for available images to display.
     $media_image_file = NULL;
-
-    // Check if there is a lead image specified, if so use it.
-    if ($node->hasField('field_image_article')) {
-      $lead_media_field = $this->getTranslationIfExists($node->get('field_image_article')->entity);
-      // Check if promo image is present.
-      if ($lead_media_field) {
-        $media_image_file = $this->getTranslationIfExists($lead_media_field->get('field_media_image')->entity);
-        $displaying = 'article image';
-        $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
-        $displaying .= '/' . ($lead_media_field ? $lead_media_field->language()->getID() : '');
-        $displaying .= '/' . ($media_image_file ? $media_image_file->language()->getID() : '');
-
-        // Check for overridden thumbnail image.
-        $media_image_thumbnail_file = $this->getTranslationIfExists($lead_media_field->get('field_override_img_thumbnail')->entity);
-        if ($media_image_thumbnail_file) {
-          $media_image_file = $media_image_thumbnail_file;
-          $displaying = 'lead thumbnail override image';
-          $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
-          $displaying .= '/' . ($lead_media_field ? $lead_media_field->language()->getID() : '');
-          $displaying .= '/' . ($media_image_file ? $media_image_file->language()->getID() : '');
-        }
-      }
-    }
-
     // Check if there is a promotional image specified, if so use it.
-    if ($node->hasField('field_image_promotional')) {
-      $promo_media_field = $this->getTranslationIfExists($node->get('field_image_promotional')->entity);
-      // Check if promo image is present.
-      if ($promo_media_field) {
-        $media_image_file = $this->getTranslationIfExists($promo_media_field->get('field_media_image')->entity);
-        $displaying = 'promo image';
-        $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
-        $displaying .= '/' . ($promo_media_field ? $promo_media_field->language()->getID() : '');
-        $displaying .= '/' . ($media_image_file ? $media_image_file->language()->getID() : '');
+    if ($node->hasField('field_image_promotional') && isset($node->field_image_promotional->entity)) {
+      $media_entity = $node->field_image_promotional->entity;
+      $promo_media_entity = $this->getTranslationIfExists($media_entity);
+      if (isset($promo_media_entity->field_override_img_thumbnail->entity)) {
+        $media_image_file = $promo_media_entity->field_override_img_thumbnail->entity;
+      }
+      elseif (isset($promo_media_entity->field_media_image->entity)) {
+        // @todo Check if crop exist.
+        $media_image_file = $promo_media_entity->field_media_image->entity;
 
-        // Check for overridden thumbnail image.
-        $media_image_thumbnail_file = $this->getTranslationIfExists($promo_media_field->get('field_override_img_thumbnail')->entity);
-        if ($media_image_thumbnail_file) {
-          $media_image_file = $media_image_thumbnail_file;
-          $displaying = 'promo thumbnail override image';
-          $displaying .= ' NODE/IMG/FILE:' . $node->language()->getID();
-          $displaying .= '/' . ($lead_media_field ? $lead_media_field->language()->getID() : '');
-          $displaying .= '/' . ($media_image_file ? $media_image_file->language()->getID() : '');
-        }
       }
     }
-
-    if ($debug) {
-      print "<!-- image source: $displaying -->";
-    }
-
-    if (!$media_image_file) {
-      if ($debug) {
-        $displaying = 'NO IMAGE';
+    elseif ($node->hasField('field_image_article') &&  isset($node->field_image_article->entity)) {
+      $media_entity = $node->field_image_article->entity;
+      $lead_media_field = $this->getTranslationIfExists($media_entity);
+      // Check if override image is present.
+      if (isset($lead_media_field->field_override_img_thumbnail->entity)) {
+        $media_image_file = $lead_media_field->field_override_img_thumbnail->entity;
       }
-      return FALSE;
+      elseif (isset($lead_media_field->field_media_image->entity)) {
+        $media_image_file = $lead_media_field->field_media_image->entity;
+      }
     }
-
     return($media_image_file);
   }
 
