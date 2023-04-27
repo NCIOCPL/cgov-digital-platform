@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_ncids_theme
+    - paragraphs.paragraphs_type.ncids_promo_block_external
+  module:
+    - options
+id: paragraph.ncids_promo_block_external.field_ncids_theme
+field_name: field_ncids_theme
+entity_type: paragraph
+bundle: ncids_promo_block_external
+label: Theme
+description: 'Changes the background color of the promo block.'
+required: true
+translatable: false
+default_value:
+  -
+    value: nci-promo-block--dark
+default_value_callback: ''
+settings: {  }
+field_type: list_string

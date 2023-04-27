@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_image_position_promo
+field_name: field_image_position_promo
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: nci-alternating-right
+      label: 'Image Right'
+    -
+      value: left
+      label: 'Image Left'
+    -
+      value: no-img
+      label: 'No Image'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
