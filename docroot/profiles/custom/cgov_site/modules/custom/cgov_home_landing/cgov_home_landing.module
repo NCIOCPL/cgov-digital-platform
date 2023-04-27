@@ -18,5 +18,14 @@ function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $cont
   ];
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
+
+  // Makes autocomplete do nothing
+  if (
+    array_key_exists('#paragraph_type', $element) &&
+    ($element['#paragraph_type'] == 'ncids_promo_block_external')
+  ) {
+    // Make the autocomplete do nothing.
+    $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;
+  }
 }
 

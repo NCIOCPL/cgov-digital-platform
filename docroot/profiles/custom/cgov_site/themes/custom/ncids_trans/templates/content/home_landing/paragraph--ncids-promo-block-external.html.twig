@@ -1,0 +1,56 @@
+{# ###### Setup Image Position & Image ####### #}
+{% set image_position = paragraph.field_image_position_promo.value %}
+{% if image_position == 'no-img' %}
+    {% set image_position = '' %}
+{% elseif image_position == 'left' %}
+    {% set image_position = 'nci-promo-block--with-image' %}
+    {% set image = content.field_override_image_promotional %}
+{% else %}
+    {% set image_position = 'nci-promo-block--with-image nci-alternating-right' %}
+    {% set image = content.field_override_image_promotional %}
+{% endif %}
+
+{# ###### Setup Theme ####### #}
+{% set promo_theme = paragraph.field_ncids_theme.value %}
+{% if promo_theme == 'light' %}
+    {% set promo_theme = '' %}
+{% endif %}
+
+{# ###### Setup button ####### #}
+{% set externalUrl = paragraph.field_featured_url.uri %}
+{% set button_alt = paragraph.field_button_alt.value %}
+
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+{% set titleID = "#{entity_type}-#{id}" %}
+
+<section class="usa-section" aria-labelledby="{{ titleID }}">
+    <div class="tablet-lg:grid-container-widescreen">
+        <div class="nci-promo-block {{ image_position }} {{ promo_theme }}">
+            {% if image_position %}
+                {% set renderImage = image|render %}
+                {% if renderImage %}
+                    {{- image -}}
+                {% else %}
+                    {% set sourceAttribs = create_attribute({
+                        'media': '(min-width: 880px)'
+                    })
+                    %}
+                    <picture class="nci-promo-block__image">
+                        <source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_promo_1x1') }}">
+                        <img src="{{ get_placeholder_image('ncids_promo_16x9') }}" alt="No Image Placeholder">				
+                    </picture>
+                {% endif %}
+            {% endif %}
+            <div class="nci-promo-block__content">
+                <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ paragraph.field_override_title.value }}</h2>
+                <p class="nci-promo-block__text">
+                    {{ paragraph.field_override_description.value }}
+                </p>
+                <a class="usa-button usa-button--secondary" href="{{ externalUrl }}" aria-label="{{ button_alt }}">
+                    {{ paragraph.field_button_text.value }}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
