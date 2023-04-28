@@ -3,8 +3,13 @@ status: true
 dependencies:
   config:
     - taxonomy.vocabulary.cgov_biography_campuses
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
 id: taxonomy_term.cgov_biography_campuses
 target_entity_type_id: taxonomy_term
 target_bundle: cgov_biography_campuses
 default_langcode: site_default
-language_alterable: false
+language_alterable: true
