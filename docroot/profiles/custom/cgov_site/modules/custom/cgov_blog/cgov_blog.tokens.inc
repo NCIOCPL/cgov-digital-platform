@@ -8,6 +8,7 @@
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Drupal\cgov_blog\Services\BlogManager;
 
 /**
  * Implements hook_token_info().
@@ -146,13 +147,13 @@ function _get_blog_series_title($node) {
 
   // The only allowed characters in dates are numbers. Once we eliminate
   // everything else, there's no need to do further checks.
-  if($year != NULL && (!is_numeric($year) || $year < 0)) {
-      throw new BadRequestHttpException('year is invalid');
+  if ($year != NULL && (!is_numeric($year) || $year < 0)) {
+    throw new BadRequestHttpException('year is invalid');
   }
-  if($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
-      throw new BadRequestHttpException('month is invalid');
+  if ($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
+    throw new BadRequestHttpException('month is invalid');
   }
 
   $blogManager = \Drupal::service('cgov_blog.blog_manager');
-  return $blogManager->getBlogSeriesTitle($month, $year, $hasTopic, $node);
+  return $blogManager->getBlogSeriesTitle($month, $year, $hasTopic, $node, BlogManager::BROWSER_TITLE);
 }

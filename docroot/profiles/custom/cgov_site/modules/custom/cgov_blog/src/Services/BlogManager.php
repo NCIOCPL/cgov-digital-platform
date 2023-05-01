@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class BlogManager implements BlogManagerInterface {
 
+  const BROWSER_TITLE = 'field_browser_title';
+  const PAGE_TITLE = 'title';
+
   /**
    * The entity repository.
    *
@@ -397,31 +400,45 @@ class BlogManager implements BlogManagerInterface {
    *   Should the title include the topic?
    * @param object $node
    *   Node object.
+   * @param string $requestedTitle
+   *   Title Field.
    *
    * @return string
    *   Blog series title.
    */
-  public function getBlogSeriesTitle($month, $year, $includeTopic, $node) {
+  public function getBlogSeriesTitle($month, $year, $includeTopic, $node, $requestedTitle = self::PAGE_TITLE) {
 
-    $title = "";
+    // Get the text to prepend the title with based on the archive being viewed.
+    $pre_title = "";
     // If url has topic or year add them to the title.
     if ($includeTopic or $year) {
       if ($year) {
-        $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
-        $title .= ' ' . $year . ' - ';
+        $pre_title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
+        $pre_title .= ' ' . $year . ' - ';
       }
       if ($includeTopic) {
         $topic_text = $this->getSeriesTopicByUrl();
         $topic_text = (!empty($topic_text) ? $topic_text->getName() : '');
-        $title .= $topic_text . ' - ';
+        $pre_title .= $topic_text . ' - ';
       }
+
+    }
+
+    // Return the full title based on which presentation is being asked for.
+    if ($requestedTitle === self::BROWSER_TITLE) {
+      return $pre_title . $node->$requestedTitle->value;
+    }
+    elseif ($requestedTitle === self::PAGE_TITLE) {
       // Show card title if not empty. Otherwise show browser title field.
-      $title .= ($node->field_card_title->value) ? $node->field_card_title->value : $node->field_browser_title->value;
+      if ($pre_title !== "") {
+        return $pre_title . ($node->field_card_title->value) ? $node->field_card_title->value : $node->field_browser_title->value;
+      }
+      else {
+        return $node->title->value;
+      }
     }
-    else {
-      $title = $node->getTitle();
-    }
-    return $title;
+
+    return "";
   }
 
   /**
