@@ -1,0 +1,76 @@
+{% if content.field_featured_item[0] %}
+  {% set featured_item_node = paragraph.field_featured_item.entity %}
+  {% set nid = featured_item_node.id %}
+
+  {# ###### Setup Title ####### #}
+  {% set title = paragraph.field_override_title.value %}
+  {% if title is empty %}
+    {% set title = featured_item_node.field_card_title[0].value %}
+    {% if title is empty %}
+      {% set title = featured_item_node.field_browser_title[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% set description = paragraph.field_override_description.value %}
+  {% if description is empty %}
+    {% set description = featured_item_node.field_feature_card_description[0].value %}
+    {% if description is empty %}
+      {% set description = featured_item_node.field_list_description[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {# Else no description #}
+
+  {% set url = path('entity.node.canonical', {'node' : nid}) %}
+  {# ###### Setup button classes and labels ####### #}
+  {% set button_alt = paragraph.field_button_alt.value %}
+
+  {# ###### Setup Image Position & Image ####### #}
+  {% set image_position = paragraph.field_image_position_promo.value %}
+  {% if image_position == 'no-img' %}
+    {% set image_position = '' %}
+  {% elseif image_position == 'left' %}
+    {% set image_position = 'nci-promo-block--with-image' %}
+    {% set image = content.field_featured_item %}
+    {% if content.field_override_image_promotional[0] %}
+      {% set image = content.field_override_image_promotional %}
+    {% endif %}
+  {% else %}
+    {% set image_position = 'nci-promo-block--with-image nci-alternating-right' %}
+    {% set image = content.field_featured_item %}
+    {% if content.field_override_image_promotional[0] %}
+      {% set image = content.field_override_image_promotional %}
+    {% endif %}
+  {% endif %}
+  
+  {# ###### Setup Theme ####### #}
+  {% set promo_theme = paragraph.field_ncids_theme.value %}
+  {% if promo_theme == 'light' %}
+      {% set promo_theme = '' %}
+  {% endif %}
+
+  {% set id = paragraph.id() %}
+  {% set entity_type = paragraph.entityTypeID %}
+  {% set titleID = "#{entity_type}-#{id}" %}
+  <section class="usa-section" aria-labelledby="{{ titleID }}">
+    <div class="tablet-lg:grid-container-widescreen">
+      <div class="nci-promo-block {{ image_position }} {{ promo_theme }}">
+        {% if image_position %}
+          {{- image -}}
+        {% endif %}
+        <div class="nci-promo-block__content">
+          <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ title }}</h2>
+          {% if description %}
+            <p class="nci-promo-block__text">
+              {{ description }}
+            </p>
+          {% endif %}
+          <a class="usa-button usa-button--secondary" href="{{ url }}" aria-label="{{ button_alt }}">
+            {{ paragraph.field_button_text.value }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
