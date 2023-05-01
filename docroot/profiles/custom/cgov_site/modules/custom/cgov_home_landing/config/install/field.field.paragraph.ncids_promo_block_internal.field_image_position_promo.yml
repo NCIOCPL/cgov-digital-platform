@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_image_position_promo
+    - paragraphs.paragraphs_type.ncids_promo_block_internal
+  module:
+    - options
+id: paragraph.ncids_promo_block_internal.field_image_position_promo
+field_name: field_image_position_promo
+entity_type: paragraph
+bundle: ncids_promo_block_internal
+label: 'Image Position'
+description: 'Select whether to display an image left or right, or no image. When adding multiple Promo Blocks, recommend alternating the image display and adding no more than 2-3 blocks together.'
+required: true
+translatable: false
+default_value:
+  -
+    value: left
+default_value_callback: ''
+settings: {  }
+field_type: list_string
