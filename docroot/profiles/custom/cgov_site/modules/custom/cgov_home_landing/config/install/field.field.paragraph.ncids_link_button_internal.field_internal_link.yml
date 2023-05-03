@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_internal_link
+    - paragraphs.paragraphs_type.ncids_link_button_internal
+id: paragraph.ncids_link_button_internal.field_internal_link
+field_name: field_internal_link
+entity_type: paragraph
+bundle: ncids_link_button_internal
+label: 'Link'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: cgov_all_selection
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
