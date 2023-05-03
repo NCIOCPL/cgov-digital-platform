@@ -49,6 +49,10 @@ function cgov_home_landing_paragraph_access(EntityInterface $entity, $operation,
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
 
+  if ($bundle === 'ncids_link_button_internal' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_internal_link');
+  }
+
   // We have no skin in the game.
   return AccessResult::neutral();
 }
