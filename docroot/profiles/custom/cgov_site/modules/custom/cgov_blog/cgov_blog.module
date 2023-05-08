@@ -197,9 +197,12 @@ function cgov_blog_preprocess_block(&$variables) {
       // If Blog Series content type, add nav link for the current language.
       if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        /** @var \Drupal\node\NodeInterface $node */
         $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
-        $section = $node->field_site_section->entity;
-        $label = $section->field_navigation_label->value ?? $section->name->value;
+        // As field_site_section is a required field, we are not checking for null.
+        /** @var \Drupal\taxonomy\Entity\Term $section */
+        $section = $node->get('field_site_section')->entity;
+        $label = $section->field_navigation_label->value ?? $section->get('name')->value;
         $variables['content']['breadcrumbs'][] = [
           'href' => $node->toUrl()->toString(),
           'label' => $label,
@@ -242,11 +245,13 @@ function cgov_blog_preprocess_block(&$variables) {
         foreach ($terms as $term) {
           if ($term->hasTranslation($lang_current)) {
             // Get field value for current page language.
+            /** @var \Drupal\taxonomy\Entity\Term $term_current */
             $term_current = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_current);
             $pretty_url_current = $term_current->get('field_topic_pretty_url')->value;
 
             // If query parameter matches, replace with correct parameter.
             if ($pretty_url_current == $topic) {
+              /** @var \Drupal\taxonomy\Entity\Term $term_toggled */
               $term_toggled = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_toggled);
               $pretty_url_toggled = $term_toggled->get('field_topic_pretty_url')->value;
               $variables['content']['#links'][$lang_toggled]['query']['topic'] = $pretty_url_toggled;

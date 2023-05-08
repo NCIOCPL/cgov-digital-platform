@@ -3,7 +3,7 @@
 namespace Drupal\app_module\EventSubscriber;
 
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -19,10 +19,10 @@ class AppModuleRouteNormalizerBlockRequestSubscriber implements EventSubscriberI
   /**
    * Sets the disable route normalizer flag if app module request.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The Event to process.
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *   The response event, which contains the current request.
    */
-  public function onKernelRequest(GetResponseEvent $event) {
+  public function onKernelRequest(RequestEvent $event) {
     $request = $event->getRequest();
 
     if ($request->query->get('app_module_route')) {

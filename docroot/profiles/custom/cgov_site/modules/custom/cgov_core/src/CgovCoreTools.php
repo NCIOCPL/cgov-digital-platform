@@ -169,8 +169,10 @@ class CgovCoreTools {
   public function attachMediaTypeToWorkflow($type_name, $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('media', $type_name);
-    $workflow->save(TRUE);
+    /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface $typePlugin */
+    $typePlugin = $workflow->getTypePlugin();
+    $typePlugin->addEntityTypeAndBundle('media', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -181,8 +183,10 @@ class CgovCoreTools {
   public function attachBlockContentTypeToWorkflow($type_name, $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('block_content', $type_name);
-    $workflow->save(TRUE);
+    /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface $typePlugin */
+    $typePlugin = $workflow->getTypePlugin();
+    $typePlugin->addEntityTypeAndBundle('block_content', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -500,6 +504,7 @@ class CgovCoreTools {
     // Gets the dependant's AccessResult. This access check was lifted from
     // EntityReferenceFormatterBase, and is the same check call that would
     // hide the content item.
+    /** @var \Drupal\Core\Access\AccessResult $access_result */
     $access_result = $dependant->access('view', NULL, TRUE);
 
     if ($access_result->isAllowed()) {

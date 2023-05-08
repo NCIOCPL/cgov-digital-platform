@@ -58,7 +58,7 @@ class NavItem {
    *
    * @var bool
    */
-  protected $isBreadCrumbRoot;
+  protected $isBreadcrumbRoot;
 
   /**
    * TRUE if this is nav root for section navs.
@@ -219,7 +219,9 @@ class NavItem {
     $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
     $hasMegamenu = count($referencedEntities) > 0;
     if ($hasMegamenu) {
-      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('field_raw_html')->value;
+      /** @var \Drupal\block_content\Entity\BlockContent $blockEntity */
+      $blockEntity = $megamenuFieldEntityReference->entity;
+      $megamenuMarkupEncoded = $blockEntity->get('field_raw_html')->value;
       $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
       return $megamenuMarkupDecoded;
     }
@@ -328,7 +330,7 @@ class NavItem {
    * Optional, pass an array of class properties
    * with boolean values to filter children against.
    *
-   * @return \Drupal\cgov_core\NavItemInterface[]
+   * @return mixed
    *   Filtered array of direct descendents.
    */
   public function getChildren() {

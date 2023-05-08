@@ -24,7 +24,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * Cgov core site helper tools.
    *
-   * @var Drupal\cgov_core\CgovCoreTools
+   * @var \Drupal\cgov_core\CgovCoreTools
    */
   protected $cgovCoreTools;
 
@@ -64,7 +64,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
    *   The entity type manager service.
    * @param \Drupal\Core\Entity\EntityRepository $entity_repository
    *   Entity repository.
-   * @param Drupal\cgov_core\CgovCoreTools $cgov_core_tools
+   * @param \Drupal\cgov_core\CgovCoreTools $cgov_core_tools
    *   Cgov core site helper tools.
    */
   public function __construct(
@@ -101,7 +101,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * Gets the current entity if there is one.
    *
-   * @return Drupal\Core\Entity\ContentEntityInterface
+   * @return \Drupal\Core\Entity\ContentEntityInterface
    *   The retrieved entity, or FALSE if none found.
    */
   private function getCurrEntity() {
@@ -118,12 +118,11 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * Create a new node storage instance.
    *
-   * @return Drupal\Core\Entity\EntityStorageInterface
+   * @return \Drupal\Core\Entity\EntityStorageInterface
    *   The node storage or NULL.
    */
   private function getNodeStorage() {
-    $node_storage = $this->entityTypeManager->getStorage('node');
-    return isset($node_storage) ? $node_storage : NULL;
+    return $this->entityTypeManager->getStorage('node');
   }
 
   /**
@@ -138,7 +137,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
     if ($current = $this->getCurrEntity()) {
       $content_type = $current->bundle();
       $lang = $current->language()->getId();
-      if (!isset($content_type)) {
+      if (empty($content_type)) {
         return $build;
       }
     }
@@ -153,9 +152,10 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
 
         // Load the Blog Series node for the current language.
         if ($series_node) {
+          /** @var \Drupal\node\NodeInterface $series_node */
           $series_node = $this->entityRepository->getTranslationFromContext($series_node, $lang);
-          $allow_comments = intval($series_node->field_allow_comments->value);
-          $shortname = $series_node->field_blog_series_shortname->value;
+          $allow_comments = intval($series_node->get('field_allow_comments')->value);
+          $shortname = $series_node->get('field_blog_series_shortname')->value;
 
           /* If allow comments is TRUE and shortname value is set,
            * draw Disqus embed tag.

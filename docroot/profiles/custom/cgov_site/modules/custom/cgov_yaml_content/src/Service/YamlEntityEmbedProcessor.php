@@ -90,6 +90,7 @@ class YamlEntityEmbedProcessor {
 
       // Only process if the UUID is process. We may find already processed
       // fields in translations or some other nonsense...
+      /** @var \DOMWrap\Document $drupalEntityEl */
       if ($drupalEntityEl->getAttr('data-entity-uuid') === "#process") {
         $entityType = $drupalEntityEl->getAttr('data-entity-type');
         if (!$entityType) {

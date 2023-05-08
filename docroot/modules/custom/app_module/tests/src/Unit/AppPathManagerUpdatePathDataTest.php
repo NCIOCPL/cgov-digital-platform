@@ -102,10 +102,8 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
    */
   public function testGoodEntityNoAlias() {
 
-    $this->entityQuery
-      ->expects($this->exactly(2))
-      ->method('condition')
-      ->withConsecutive(
+    /* @phpstan-ignore-next-line */
+    $this->entityQuery->expects($this->exactly(2))->method('condition')->withConsecutive(
         ['path', '/node/22', '='],
         ['langcode', 'en', '='],
       );
@@ -161,10 +159,8 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'langcode' => 'en',
     ];
 
-    $this->entityQuery
-      ->expects($this->exactly(2))
-      ->method('condition')
-      ->withConsecutive(
+    /* @phpstan-ignore-next-line */
+    $this->entityQuery->expects($this->exactly(2))->method('condition')->withConsecutive(
         ['path', '/node/22', '='],
         ['langcode', 'en', '=']
       )
@@ -257,10 +253,8 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       'langcode' => 'en',
     ];
 
-    $this->entityQuery
-      ->expects($this->exactly(2))
-      ->method('condition')
-      ->withConsecutive(
+    /* @phpstan-ignore-next-line */
+    $this->entityQuery->expects($this->exactly(2))->method('condition')->withConsecutive(
         ['path', '/node/22', '='],
         ['langcode', 'en', '=']
       );
@@ -364,7 +358,6 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       ->method('getInternalPath')
       ->willReturn($route);
 
-    /** @var \Drupal\node\NodeInterface */
     $entity = $this->getMockBuilder('\Drupal\node\Entity\Node')
       ->disableOriginalConstructor()
       ->getMock();

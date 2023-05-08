@@ -21,8 +21,9 @@ trait CGovWorkflowAttachmentTrait {
   public function attachContentTypeToWorkflow($type_name, $workflow_name) {
     $workflows = \Drupal::entityTypeManager()->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
-    $workflow->save(TRUE);
+    /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface $typePlugin */
+    $typePlugin = $workflow->getTypePlugin();
+    $typePlugin->addEntityTypeAndBundle('node', $type_name);
+    $workflow->save();
   }
-
 }

@@ -64,9 +64,9 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
         }
 
         if (!empty($entity->get('field_site_section')->first())) {
+          $tid = $entity->get('field_site_section')->first()->getValue()['target_id'];
           try {
-            $tid = $entity->get('field_site_section')->first()->getValue()['target_id'];
-            $term = Term::load($tid);
+            $term = !empty($tid) ? Term::load($tid) : '';
             if (!$term) {
               \Drupal::logger('cgov_site_section')
                 ->notice('Could not load the term for tid: ' . $tid . " for entity " . $entity->id());
@@ -166,7 +166,7 @@ function _get_taxonomy_field_token(array $data, $fieldname) {
  *   Node object.
  */
 function _get_valid_parent($alias) {
-  if (!isset($alias) || trim($alias) === '') {
+  if (empty($alias) || trim($alias) === '') {
     return NULL;
   }
 

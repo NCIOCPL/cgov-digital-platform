@@ -88,7 +88,7 @@ class CGovFieldStorageTest extends KernelTestBase {
   /**
    * Sets up the test environment.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     // These are special and cannot be installed as a dependency
@@ -142,6 +142,7 @@ class CGovFieldStorageTest extends KernelTestBase {
     // Test the field persistance when it has been removed from all nodes.
     foreach ($this->fieldsToTest as $fieldToTest) {
       // Remove from our content type.
+      /** @var \Drupal\Core\Entity\EntityInterface $field */
       $field = FieldConfig::loadByName('node', 'ponies', $fieldToTest["name"]);
       $field->delete();
 
@@ -178,7 +179,7 @@ class CGovFieldStorageTest extends KernelTestBase {
   /**
    * Adds a new field to our new content type by name.
    *
-   * @param Drupal\node\NodeTypeInterface $type
+   * @param \Drupal\node\NodeTypeInterface $type
    *   The node type to attach the field.
    * @param string $fieldName
    *   The machine name of the field to attach.

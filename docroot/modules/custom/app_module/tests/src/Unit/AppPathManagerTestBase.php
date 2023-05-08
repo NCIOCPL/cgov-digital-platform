@@ -15,14 +15,14 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   /**
    * Alias manager.
    *
-   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\path_alias\AliasManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $aliasManager;
 
   /**
    * Alias storage.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $entityTypeManager;
 
@@ -36,35 +36,42 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   /**
    * Application path storage.
    *
-   * @var \Drupal\app_module\AppPathStorageInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\app_module\AppPathStorageInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $appPathStorage;
 
   /**
    * Language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $languageManager;
 
   /**
    * Cache backend.
    *
-   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Cache\CacheBackendInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $cache;
 
   /**
+   * Alias storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $aliasStorage;
+
+  /**
    * Entity Query Mock.
    *
-   * @var \Drupal\Core\Entity\Query\QueryInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Entity\Query\QueryInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $entityQuery;
 
   /**
    * Time Service Mock.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Component\Datetime\TimeInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $timeSvc;
 
@@ -85,7 +92,7 @@ abstract class AppPathManagerTestBase extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->appPathStorage = $this->createMock('Drupal\app_module\AppPathStorageInterface');

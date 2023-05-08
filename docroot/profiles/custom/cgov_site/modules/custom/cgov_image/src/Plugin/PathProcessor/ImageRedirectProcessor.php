@@ -7,6 +7,7 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 
 /**
  * Redirect media/{image} request to raw file.
@@ -21,13 +22,23 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
   protected $currentRoute;
 
   /**
+   * The file URL generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Routing\ResettableStackedRouteMatchInterface $currentRoute
    *   The current route.
+   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
+   *   File url generator.
    */
-  public function __construct(ResettableStackedRouteMatchInterface $currentRoute) {
+  public function __construct(ResettableStackedRouteMatchInterface $currentRoute, FileUrlGeneratorInterface $file_url_generator) {
     $this->currentRoute = $currentRoute;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -65,8 +76,10 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
     $options['language'] = $languageObject;
 
     // Redirect to the media type's underlying file.
-    $file_uri = $entity->field_media_image->entity->getFileUri();
-    $image_file_path = file_url_transform_relative(file_create_url($file_uri));
+    /** @var \Drupal\file\Entity\File $file_entity */
+    $file_entity = $entity->get('field_media_image')->entity;
+    $file_uri = $file_entity->getFileUri();
+    $image_file_path = $this->fileUrlGenerator->generateString($file_uri);
     return $image_file_path;
   }
 

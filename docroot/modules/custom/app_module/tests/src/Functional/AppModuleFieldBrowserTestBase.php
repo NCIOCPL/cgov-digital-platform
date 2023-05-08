@@ -73,7 +73,7 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
    *
    * Once installed, a content type with the desired field is created.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Install Drupal.
     parent::setUp();
 
@@ -125,9 +125,9 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
 
     // Reset the permission cache.
     $create_permission = 'create ' . $this->contentTypeName . ' content';
-    $this->checkPermissions([$create_permission], TRUE);
+    $this->checkPermissions([$create_permission]);
     $edit_permission = 'edit any ' . $this->contentTypeName . ' content';
-    $this->checkPermissions([$edit_permission], TRUE);
+    $this->checkPermissions([$edit_permission]);
 
     // Now that we have a new content type, create a user that has privileges
     // on the content type.

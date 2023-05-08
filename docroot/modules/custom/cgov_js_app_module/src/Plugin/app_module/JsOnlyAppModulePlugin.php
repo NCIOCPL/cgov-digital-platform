@@ -319,7 +319,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
           $drupal_urls['canonical'] = parse_url($canonical_url->toString());
 
           // Now go and get the other languages.
-          /** @var \Drupal\Core\Url[] $urls */
+          /** @var \Drupal\Core\Url[] $alternate_urls */
           $alternate_urls = array_map(
             function ($language) use ($canonical_url) {
               $url = clone $canonical_url;

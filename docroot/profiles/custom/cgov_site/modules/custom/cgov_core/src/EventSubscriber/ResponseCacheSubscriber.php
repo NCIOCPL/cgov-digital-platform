@@ -5,7 +5,7 @@ namespace Drupal\cgov_core\EventSubscriber;
 use Drupal\Core\Config\ConfigFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
  * Class to handle setting cache directives on some responses.
@@ -36,7 +36,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface {
   /**
    * Set http cache control headers.
    */
-  public function setHeaderCacheControl(FilterResponseEvent $event) {
+  public function setHeaderCacheControl(ResponseEvent $event) {
     $config = $this->configFactory->get('system.performance');
 
     $response = $event->getResponse();

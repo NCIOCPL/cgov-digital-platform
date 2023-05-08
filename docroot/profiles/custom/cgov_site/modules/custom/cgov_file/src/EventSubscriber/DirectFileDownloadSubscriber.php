@@ -12,8 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Event subscriber to handle direct downloads for file aliases requests.
@@ -112,10 +112,10 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
   /**
    * Handles the request, and serves out the content.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
 
     if ($this->currentRoute->getRouteName() !== 'entity.media.canonical') {
       return;
@@ -136,7 +136,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
     // Get the ID of the requested file by its field delta.
     if (is_numeric($delta)) {
-      $values = $entity->field_media_file->getValue();
+      $values = $entity->get('field_media_file')->getValue();
 
       if (isset($values[$delta])) {
         $fid = $values[$delta]['target_id'];
@@ -146,7 +146,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
       }
     }
     else {
-      $fid = $entity->field_media_file->target_id;
+      $fid = $entity->get('field_media_file')->target_id;
     }
 
     // If media has no file item.
@@ -309,6 +309,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     if ($restriction[0]['value'] == 'ExcludeSearch') {
       return TRUE;
     }
+    return FALSE;
   }
 
   /**

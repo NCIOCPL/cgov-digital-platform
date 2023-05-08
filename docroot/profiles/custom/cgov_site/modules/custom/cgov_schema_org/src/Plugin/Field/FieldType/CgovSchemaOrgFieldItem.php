@@ -56,8 +56,7 @@ class CgovSchemaOrgFieldItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $page_itemtype = $this->get('page_itemtype');
-    return empty($page_itemtype);
+    return empty($this->get('page_itemtype')) ? TRUE : FALSE;
   }
 
 }

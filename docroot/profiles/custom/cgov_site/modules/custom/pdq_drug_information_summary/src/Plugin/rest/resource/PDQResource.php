@@ -193,6 +193,7 @@ class PDQResource extends ResourceBase {
 
     // Fill in the values for the drug summary.
     $today = date('Y-m-d');
+    /** @var \Drupal\node\Entity\Node $node */
     $node->setTitle(($drug['title']));
     $node->setOwnerId($this->currentUser->id());
     $node->set('body', ['value' => $drug['body'], 'format' => 'raw_html']);

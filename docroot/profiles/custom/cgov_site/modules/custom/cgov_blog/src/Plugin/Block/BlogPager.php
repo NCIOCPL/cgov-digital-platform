@@ -65,8 +65,11 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    $content_id = NULL;
+    $content_type = NULL;
     // If our entity exists, get the nid (content id) and bundle (content type).
     if ($curr_entity = $this->blogManager->getCurrentEntity()) {
+      /** @var \Drupal\Core\Entity\ContentEntityBase $curr_entity */
       $content_id = $curr_entity->id();
       $content_type = $curr_entity->bundle();
     }
@@ -132,7 +135,8 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
 
     // Create series filter.
     $filter_node = $this->blogManager->getNodeFromNid($cid);
-    $filter_series = $filter_node->field_blog_series->target_id;
+    /** @var \Drupal\node\NodeInterface $filter_node */
+    $filter_series = $filter_node->get('field_blog_series')->target_id;
 
     // Initialize the links list in case there aren't any published posts.
     $blog_links = [];
@@ -140,12 +144,13 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
     // Build a collection of blog link objects.
     foreach ($blog_post_nids as $nid) {
       $node = $this->blogManager->getNodeFromNid($nid);
-      $node_series = $node->field_blog_series->target_id;
+      /** @var \Drupal\node\NodeInterface $node */
+      $node_series = $node->get('field_blog_series')->target_id;
 
       if ($node_series == $filter_series) {
         $blog_links[] = [
           'nid' => $nid,
-          'date' => $node->field_date_posted->value,
+          'date' => $node->get('field_date_posted')->value,
           'title' => $node->title->value,
         ];
       }

@@ -45,6 +45,7 @@ class CgovSyndicationWidget extends WidgetBase implements ContainerFactoryPlugin
       FormStateInterface $form_state
   ) {
     $item = $items[$delta];
+    /* @phpstan-ignore-next-line */
     $open = $item->syndicate || !empty($item->keywords);
     $element += [
       '#type' => 'details',

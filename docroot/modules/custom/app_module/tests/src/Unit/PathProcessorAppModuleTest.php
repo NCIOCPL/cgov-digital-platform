@@ -34,9 +34,23 @@ class PathProcessorAppModuleTest extends UnitTestCase {
   protected $pathProcessor;
 
   /**
+   * The Entity storage service.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $entityStorage;
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $stack;
+
+  /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a new request stack to handle the various test requests.

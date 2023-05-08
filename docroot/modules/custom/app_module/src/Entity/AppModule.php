@@ -76,8 +76,6 @@ class AppModule extends ConfigEntityBase implements AppModuleInterface {
 
   /**
    * Gets the app module plugin identifier.
-   *
-   * @var string
    */
   public function appModulePluginId() {
     return $this->app_module_plugin_id;

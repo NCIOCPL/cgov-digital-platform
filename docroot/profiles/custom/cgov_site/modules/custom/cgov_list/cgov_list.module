@@ -106,8 +106,8 @@ function cgov_list_allowed_values_function(
 function cgov_list_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $bundle = $entity->bundle();
   if ($bundle === 'cgov_list') {
-
-    $list_item_mode = $entity->field_list_item_style->value;
+    /** @var \Drupal\paragraphs\Entity\Paragraph $entity */
+    $list_item_mode = $entity->get('field_list_item_style')->value;
 
     // Only rebuild the items if there are some.
     if (
@@ -128,7 +128,8 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
   // as much as possible, we are going to extract and flatten the pertinent data
   // for conditional formatting here. Translations will be done in templates.
   if ($bundle === 'cgov_media_link') {
-    $media = $entity->field_media_link->entity;
+    /** @var \Drupal\paragraphs\Entity\Paragraph $entity */
+    $media = $entity->get('field_media_link')->entity;
     $mediaBundle = $media->bundle();
 
     if ($mediaBundle === 'cgov_infographic') {
@@ -147,8 +148,10 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
       $build['media_link_type'] = [
         '#plain_text' => 'File',
       ];
-      $file = $media->field_media_file->entity;
+      /** @var \Drupal\media\Entity\Media $media */
+      $file = $media->get('field_media_file')->entity;
       // ##### Format file size.
+      /** @var \Drupal\file\Entity\File $file */
       $fileSize = (int) $file->getSize();
       $formattedFileSize = format_bytes($fileSize, 0);
       $build['media_link_file_size'] = [

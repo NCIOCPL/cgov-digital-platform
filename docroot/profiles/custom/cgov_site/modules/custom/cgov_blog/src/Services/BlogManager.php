@@ -111,6 +111,7 @@ class BlogManager implements BlogManagerInterface {
    */
   public function getSeriesEntity() {
     $seriesEntity = [];
+    /** @var \Drupal\Core\Entity\EntityInterface $currEntity */
     $currEntity = $this->getCurrentEntity();
     $currBundle = $currEntity->bundle();
 
@@ -121,7 +122,8 @@ class BlogManager implements BlogManagerInterface {
         break;
 
       case 'cgov_blog_post':
-        $seriesEntity = $currEntity->field_blog_series->entity;
+        /** @var \Drupal\node\NodeInterface $currEntity */
+        $seriesEntity = $currEntity->get('field_blog_series')->entity;
         $seriesEntity = $this->getCurrentTranslation($seriesEntity);
         break;
 
@@ -161,30 +163,19 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Create a node object given an nid.
-   *
-   * @param string $nid
-   *   A node ID.
-   *
-   * @return Drupal\Core\Entity\EntityStorageInterface
-   *   The node storage or NULL.
+   * {@inheritdoc}
    */
   public function getNodeFromNid($nid) {
     $storage = $this->entityTypeManager->getStorage('node');
-    $nodeLoad = (isset($storage)) ? $storage->load($nid) : NULL;
+    $nodeLoad = $storage->load($nid);
     $nodeLoad = $this->getCurrentTranslation($nodeLoad);
     return $nodeLoad;
   }
 
   /**
-   * Get a single topic taxonomy object.
-   *
-   * @param string $tid
-   *   A taxonomy term ID.
-   * @param string $lang
-   *   A language code (optional).
+   * {@inheritdoc}
    */
-  public function loadBlogTopic($tid, $lang = FALSE) {
+  public function loadBlogTopic($tid, $lang = NULL) {
     $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
     $topic = $taxonomy_storage->load($tid) ?? NULL;
 
@@ -214,7 +205,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get the Blog Series ID.
+   * {@inheritdoc}
    */
   public function getSeriesId() {
     $series = $this->getSeriesEntity();
@@ -226,10 +217,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * The URL path for the blog series.
-   *
-   * @param mixed $queryParams
-   *   An associative array of the URL query parameter.
+   * {@inheritdoc}
    */
   public function getSeriesPath($queryParams = []) {
     $series = $this->getSeriesEntity();
@@ -238,7 +226,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get the Blog Featured content nodes.
+   * {@inheritdoc}
    */
   public function getSeriesFeaturedPosts() {
     $featured_posts = [];
@@ -301,7 +289,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Get Blog Series topic based on field_pretty_url.
+   * {@inheritdoc}
    */
   public function getSeriesTopicByUrl() {
 
@@ -335,12 +323,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * The the URL path for a node based on NID.
-   *
-   * @param string $nid
-   *   Node ID of content item.
-   * @param string $lang
-   *   Optional langcode.
+   * {@inheritdoc}
    */
   public function getBlogPathFromNid($nid, $lang = NULL) {
     $node = $this->getNodeFromNid($nid);
@@ -355,10 +338,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Return query results based on date posted.
-   *
-   * @param string $type
-   *   Content type or bundle.
+   * {@inheritdoc}
    */
   public function getNodesByPostedDateAsc($type) {
     $query = $this->entityTypeManager->getStorage('node')->getQuery();
@@ -371,10 +351,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Return query results based on date posted.
-   *
-   * @param string $type
-   *   Content type or bundle.
+   * {@inheritdoc}
    */
   public function getNodesByPostedDateDesc($type) {
     $query = $this->entityTypeManager->getStorage('node')->getQuery();
@@ -387,19 +364,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Return the title for blog series..
-   *
-   * @param string $month
-   *   Month value.
-   * @param string $year
-   *   Year value.
-   * @param bool $includeTopic
-   *   Should the title include the topic?
-   * @param object $node
-   *   Node object.
-   *
-   * @return string
-   *   Blog series title.
+   * {@inheritdoc}
    */
   public function getBlogSeriesTitle($month, $year, $includeTopic, $node) {
 
@@ -425,15 +390,7 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Return list of terms for series..
-   *
-   * @param string $series_id
-   *   The series node id.
-   * @param string $language_id
-   *   The series language.
-   *
-   * @return array
-   *   Blog series terms.
+   * {@inheritdoc}
    */
   public function getBlogTopicsForSeries($series_id, $language_id) {
 
@@ -451,6 +408,7 @@ class BlogManager implements BlogManagerInterface {
         if ($term->langcode != $language_id) {
           $term_object = $taxonomy_storage->load($term->tid);
           if ($term_object->hasTranslation($language_id)) {
+            /** @var \Drupal\taxonomy\Entity\Term $translated_term */
             $translated_term = $term_object->getTranslation($language_id);
             $term_data[$term->tid] = $translated_term->getName();
           }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CGovPlatform\Tests;
+namespace CgovPlatform\Tests;
 
 /**
  * A custom class containing schema exclusions test cases.

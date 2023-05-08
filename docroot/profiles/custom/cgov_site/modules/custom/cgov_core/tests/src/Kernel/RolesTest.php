@@ -23,9 +23,9 @@ class RolesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
-    parent::setup();
+    parent::setUp();
     // These are special and cannot be installed as a dependency
     // for this module. So we have to install their bits separately.
     $this->installEntitySchema('user');

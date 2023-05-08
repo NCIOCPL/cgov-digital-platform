@@ -104,7 +104,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
   private function drawArchiveData($years_back, $group_by) {
     // Get an array of years and months.
     $archive_dates = $this->getMonthsAndYears();
-    $min_year = intval(date('Y') - $years_back);
+    $min_year = intval((int) date('Y') - (int) $years_back);
 
     // Get data based on group_by setting.
     if ($group_by == 'month') {
@@ -153,12 +153,12 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
      * Get node dates where field_blog_series matches the filter series.
      */
     foreach ($nids as $nid) {
+      /** @var \Drupal\node\NodeInterface $node */
       $node = $this->blogManager->getNodeFromNid($nid);
-      $field_blog_series = $node->field_blog_series->target_id;
-
+      $field_blog_series = !empty($node->get('field_blog_series')) ? $node->get('field_blog_series')->target_id : '';
       // Get the date posted field, then split for the link values.
       if ($field_blog_series == $filter_series) {
-        $dates[] = $node->field_date_posted->value;
+        $dates[] = $node->get('field_date_posted')->value;
       }
     }
 

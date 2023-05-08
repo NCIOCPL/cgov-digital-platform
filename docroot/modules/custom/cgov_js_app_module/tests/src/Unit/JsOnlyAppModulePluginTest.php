@@ -13,14 +13,14 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
   /**
    * Language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $languageManager;
 
   /**
    * The token service.
    *
-   * @var Drupal\Core\Utility\Token|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Utility\Token|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $tokenService;
 
@@ -59,7 +59,7 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');

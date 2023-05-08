@@ -40,7 +40,7 @@ class CgovVocabManagerForm extends FormBase {
   /**
    * The entity manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -112,7 +112,7 @@ class CgovVocabManagerForm extends FormBase {
   /**
    * Returns the title for the whole page.
    *
-   * @param string $taxonomy_vocabulary
+   * @param mixed $taxonomy_vocabulary
    *   The name of the vocabulary.
    *
    * @return string
@@ -209,6 +209,7 @@ class CgovVocabManagerForm extends FormBase {
         continue;
       }
       // Count entries after the current page.
+      /* @phpstan-ignore-next-line */
       elseif ($page_entries > $page_increment && isset($complete_tree)) {
         $after_entries++;
         continue;
@@ -277,6 +278,7 @@ class CgovVocabManagerForm extends FormBase {
         // Verify this is a term for the current page and set at the current
         // depth.
         if (is_array($user_input['terms'][$key]) && is_numeric($user_input['terms'][$key]['term']['tid'])) {
+          /* @phpstan-ignore-next-line */
           $current_page[$key]->depth = $user_input['terms'][$key]['term']['depth'];
         }
         else {
@@ -298,6 +300,7 @@ class CgovVocabManagerForm extends FormBase {
     // Get the IDs of the terms edited on the current page which have pending
     // revisions.
     $edited_term_ids = array_map(function ($item) {
+      /* @phpstan-ignore-next-line */
       return $item->tid;
     }, $current_page);
     $pending_term_ids = array_intersect($this->storageController->getTermIdsWithPendingRevisions(), $edited_term_ids);
@@ -358,16 +361,17 @@ class CgovVocabManagerForm extends FormBase {
         'operations' => [],
         'weight' => $update_tree_access->isAllowed() ? [] : NULL,
       ];
-      /** @var $term \Drupal\Core\Entity\EntityInterface */
+
       $term = $this->entityRepository->getTranslationFromContext($term);
       $form['terms'][$key]['#term'] = $term;
       $indentation = [];
-      if (isset($term->depth) && $term->depth > 0) {
+      if (isset($term->depth) && ($term->depth > 0)) {
         $indentation = [
           '#theme' => 'indentation',
           '#size' => $term->depth,
         ];
       }
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       $form['terms'][$key]['term'] = [
         '#prefix' => !empty($indentation) ? $this->renderer->render($indentation) : '',
         '#type' => 'link',
@@ -421,6 +425,7 @@ class CgovVocabManagerForm extends FormBase {
       $update_tree_access = $update_tree_access->andIf($update_access);
 
       if ($update_tree_access->isAllowed()) {
+
         $form['terms'][$key]['weight'] = [
           '#type' => 'weight',
           '#delta' => $delta,

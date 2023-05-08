@@ -49,6 +49,14 @@ class CgovAdobeRenderTest extends BrowserTestBase {
   protected $contentTypeName;
 
   /**
+   * The author account.
+   *
+   * @var mixed
+   */
+  protected $authorAccount;
+
+
+  /**
    * The administrator account.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -60,7 +68,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
    *
    * Once installed, a content type with the desired field is created.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Install Drupal.
     parent::setUp();
 
@@ -90,14 +98,15 @@ class CgovAdobeRenderTest extends BrowserTestBase {
       'name' => $this->contentTypeName,
       'type' => $this->contentTypeName,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and manage fields');
-    $this->assertText((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
+
+    $this->submitForm($edit, 'Save and manage fields');
+    $this->assertSession()->pageTextContains((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
 
     // Reset the permission cache.
     $create_permission = 'create ' . $this->contentTypeName . ' content';
-    $this->checkPermissions([$create_permission], TRUE);
+    $this->checkPermissions([$create_permission]);
     $edit_permission = 'edit any ' . $this->contentTypeName . ' content';
-    $this->checkPermissions([$edit_permission], TRUE);
+    $this->checkPermissions([$edit_permission]);
 
     // Now that we have a new content type, create a user that has privileges
     // on the content type.
@@ -137,7 +146,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
         'path[0][alias]' => $detail['alias'],
       ];
       // Submit the content creation form.
-      $this->drupalPostForm(NULL, $edit, 'Save');
+      $this->submitForm($edit, 'Save');
     }
     $this->drupalGet('node/add/' . $this->contentTypeName);
 
@@ -145,8 +154,8 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->drupalLogin($this->administratorAccount);
 
     // Setup Adobe Config.
-    $this->drupalPostForm(
-      Url::fromRoute('cgov_adobe.settings_form'),
+    $this->drupalGet(Url::fromRoute('cgov_adobe.settings_form'));
+    $this->submitForm(
       [
         'enabled' => 1,
         'launch_property_build_url' => '//example.org/launch.js',
@@ -234,8 +243,8 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->drupalLogin($this->administratorAccount);
 
     // Setup Adobe Config.
-    $this->drupalPostForm(
-      Url::fromRoute('cgov_adobe.settings_form'),
+    $this->drupalGet(Url::fromRoute('cgov_adobe.settings_form'));
+    $this->submitForm(
       [
         'enabled' => 0,
         'launch_property_build_url' => '//example.org/launch.js',
@@ -258,8 +267,8 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->drupalLogin($this->administratorAccount);
 
     // Setup Adobe Config.
-    $this->drupalPostForm(
-      Url::fromRoute('cgov_adobe.settings_form'),
+    $this->drupalGet(Url::fromRoute('cgov_adobe.settings_form'));
+    $this->submitForm(
       [
         'enabled' => 1,
         'launch_property_build_url' => '//example.org/launch.js',

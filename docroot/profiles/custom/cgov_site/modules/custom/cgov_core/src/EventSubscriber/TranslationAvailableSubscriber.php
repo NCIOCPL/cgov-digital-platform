@@ -7,8 +7,8 @@ use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Event subscriber to handle untranslated URL requests.
@@ -70,10 +70,10 @@ class TranslationAvailableSubscriber implements EventSubscriberInterface {
   /**
    * Validates that this request can be handled.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
 
     $valid_routes = [
       'entity.node.canonical',
@@ -95,6 +95,7 @@ class TranslationAvailableSubscriber implements EventSubscriberInterface {
 
     // Now that we are here, we are at the point where we should be
     // returning a 404 if we do not like what we see.
+    /** @var \Drupal\Core\Entity\ContentEntityBase $entity */
     $entity = $this->getCurrEntity();
 
     // This is not content, so this request does not apply.
@@ -114,7 +115,7 @@ class TranslationAvailableSubscriber implements EventSubscriberInterface {
   /**
    * Gets the current entity if there is one.
    *
-   * @return Drupal\Core\Entity\ContentEntityInterface
+   * @return mixed
    *   The retrieved entity, or FALSE if none found.
    */
   private function getCurrEntity() {

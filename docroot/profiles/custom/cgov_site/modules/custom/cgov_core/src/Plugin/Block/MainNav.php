@@ -109,17 +109,15 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
 
   /**
    * Get Main Nav NavItems.
-   *
-   * @return array
-   *   Multidimensional main nav.
    */
   public static function getMainNav() {
+    $renderTree = '';
     $navMgr = \Drupal::Service('cgov_core.cgov_navigation_manager');
     $navRoot = $navMgr->getNavRoot('field_main_nav_root');
     if ($navRoot) {
       $renderTree = self::renderMainNav($navRoot);
-      return $renderTree;
     }
+    return $renderTree;
   }
 
   /**

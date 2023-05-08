@@ -28,7 +28,7 @@ class AppPathStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->storage = $this->container->get('app_module.app_path_storage');
   }

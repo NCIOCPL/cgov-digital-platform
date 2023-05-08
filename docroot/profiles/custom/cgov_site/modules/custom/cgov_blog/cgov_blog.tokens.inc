@@ -93,12 +93,13 @@ function _get_blog_post_path($node) {
     try {
       // Get the owner series and translation if exists.
       $seriesEntity = $node->field_blog_series->entity;
+      /** @var \Drupal\node\NodeInterface $seriesEntity */
       $seriesEntity = $entityRepository->getTranslationFromContext($seriesEntity, $lang);
 
       // Get the computed path of the series and pretty URL if not empty.
-      $tid = $seriesEntity->field_site_section->target_id;
+      $tid = $seriesEntity->get('field_site_section')->target_id;
       $path = Term::load($tid)->get('computed_path')->value;
-      $purl = $seriesEntity->field_pretty_url->value;
+      $purl = $seriesEntity->get('field_pretty_url')->value;
       if (!empty($purl)) {
         $path .= ('/' . $purl);
       }
@@ -123,6 +124,7 @@ function _get_blog_topic_path($term) {
   $path = FALSE;
   if (!empty($term->field_pretty_url->value)) {
     try {
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       $nid = $term->get('field_owner_blog')->first()->getValue()['target_id'];
       $name = $term->field_pretty_url->value;
       $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);

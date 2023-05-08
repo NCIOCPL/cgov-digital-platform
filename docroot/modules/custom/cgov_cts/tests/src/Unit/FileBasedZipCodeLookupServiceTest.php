@@ -14,9 +14,7 @@ class FileBasedZipCodeLookupServiceTest extends UnitTestCase {
    * Tests lookup.
    */
   public function testZipCodeLookup() {
-    $container = $this->createMock('\Symfony\Component\DependencyInjection\ContainerInterface');
-    $svc = FileBasedZipCodeLookupService::create($container);
-
+    $svc = FileBasedZipCodeLookupService::create();
     $actual = $svc->getGeocoordinates('20850');
     $this->assertEquals(
       ['lat' => 39.087, 'long' => -77.168],
@@ -29,9 +27,7 @@ class FileBasedZipCodeLookupServiceTest extends UnitTestCase {
    * Tests lookup.
    */
   public function testZipCodeLookupNotFound() {
-    $container = $this->createMock('\Symfony\Component\DependencyInjection\ContainerInterface');
-    $svc = FileBasedZipCodeLookupService::create($container);
-
+    $svc = FileBasedZipCodeLookupService::create();
     $actual = $svc->getGeocoordinates('00000');
     $this->assertEquals(
       NULL,

@@ -11,7 +11,8 @@
 function cgov_schema_org_preprocess_html(&$variables) {
   $entity = _cgov_schema_org_get_curr_entity();
   if ($entity && $entity->hasField('field_schema_org_data')) {
-    $schemaOrgType = $entity->field_schema_org_data->page_itemtype;
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    $schemaOrgType = $entity->get('field_schema_org_data')->getValue()[0]['page_itemtype'];
     if ($schemaOrgType == 'faq_page') {
       $variables['html_attributes']['itemscope'] = TRUE;
       $variables['html_attributes']['itemtype'] = 'https://schema.org/FAQPage';

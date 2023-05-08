@@ -49,6 +49,7 @@ function cgov_embedded_block_form_alter(
  */
 function _cgov_embedded_block_handle_new($form, FormStateInterface $form_state) {
   $form_object = $form_state->getFormObject();
+  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
   $entity = $form_object->getEntity();
   // We should not add the block, instead go to listing page.
   $form_state->setRedirectUrl($entity->toUrl('collection'));

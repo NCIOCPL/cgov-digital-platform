@@ -35,8 +35,9 @@ class ValidJsonSchemaConstraintValidator extends ConstraintValidator {
     $response_data = json_decode($data);
 
     // Get the json_data_field JsonSchema file.
+    /* @phpstan-ignore-next-line */
     $field_storage_settings = $value->getFieldDefinition()->getSettings();
-
+    /* @phpstan-ignore-next-line */
     $field_name = $value->getFieldDefinition()->id();
 
     if (empty($field_storage_settings)) {

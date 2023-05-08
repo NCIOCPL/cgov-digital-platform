@@ -42,7 +42,6 @@ class ApiTest extends BrowserTestBase {
     'nid' => NULL,
     'title' => 'Test English Summary',
     'browser_title' => 'Test Browser Title',
-    'cthp_card_title' => 'Test Card Title',
     'description' => 'Test description',
     'language' => 'en',
     'url' => '/types/lymphoma/hp/adult-hodgkin-treatment-pdq',
@@ -69,7 +68,6 @@ class ApiTest extends BrowserTestBase {
     'nid' => NULL,
     'title' => "Resumen en espa\u{f1}ol",
     'browser_title' => "T\u{ed}tulo corto",
-    'cthp_card_title' => 'Hakuna matata',
     'description' => "Descripci\u{f3}n",
     'language' => 'es',
     'url' => '/tipos/linfoma/pro/tratamiento-hodgkin-adultos-pdq',
@@ -100,7 +98,6 @@ class ApiTest extends BrowserTestBase {
     'title',
     'sections',
     'browser_title',
-    'cthp_card_title',
     'summary_type',
     'updated_date',
     'url',
@@ -126,7 +123,7 @@ class ApiTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
@@ -174,7 +171,6 @@ class ApiTest extends BrowserTestBase {
     $this->english['svpc'] = 1;
     $this->english['suppress_otp'] = 1;
     $this->english['intro_text'] = '<p>Oh, look!</p>';
-    $this->english['cthp_card_title'] = 'No worries!';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
     $this->assertEquals($payload['nid'], $nid, 'Uses same node');

@@ -9,11 +9,6 @@ use Drupal\system\Form\ThemeSettingsForm;
  */
 function cgov_common_form_system_theme_settings_alter(&$form) {
   global $base_url;
-
-  if (isset($form_id)) {
-    return;
-  }
-
   // close default detail boxes
   $form['theme_settings']['#open'] = FALSE;
   $form['logo']['#open'] = FALSE;
