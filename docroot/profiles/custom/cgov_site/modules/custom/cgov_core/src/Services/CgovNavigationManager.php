@@ -271,7 +271,7 @@ class CgovNavigationManager {
    * @param \Drupal\taxonomy\TermInterface $term
    *   Term to retrieve parent from.
    *
-   * @return \Drupal\taxonomy\TermInterface
+   * @return \Drupal\taxonomy\TermInterface|null
    *   Parent of provided term.
    */
   public function getParentTerm(TermInterface $term) {
@@ -286,6 +286,7 @@ class CgovNavigationManager {
       /** @var \Drupal\taxonomy\TermInterface */
       return $parents[array_keys($parents)[0]];
     }
+    return NULL;
   }
 
   /**
@@ -393,6 +394,7 @@ class CgovNavigationManager {
         }
       }
     }
+    return NULL;
   }
 
   /**
@@ -413,6 +415,7 @@ class CgovNavigationManager {
     if ($rootTerm) {
       return $this->newNavItem($rootTerm);
     }
+    return NULL;
   }
 
   /**
@@ -670,7 +673,7 @@ class CgovNavigationManager {
    * @param \Drupal\taxonomy\TermInterface $term
    *   Base Term to wrap.
    *
-   * @return \Drupal\cgov_core\NavItemInterface
+   * @return \Drupal\cgov_core\NavItem
    *   Nav Item wrapping given Term.
    */
   public function newNavItem(TermInterface $term) {
@@ -815,7 +818,7 @@ class CgovNavigationManager {
     if ($landingPage) {
       // Set the entity in the correct language for display.
       if ($this->isTranslatableInterface($landingPage)) {
-        $landingPage = $this->entityRepository->getTranslationFromContext($landingPage, $this->interfaceLanguage->getId());
+        $landingPage = $this->entityRepository->getTranslationFromContext($landingPage, $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId());
       }
       $access = $landingPage->access('view', NULL, TRUE);
       if ($access->isAllowed()) {

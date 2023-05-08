@@ -47,6 +47,7 @@ class CgovImporterService {
    */
   protected $logger;
 
+
   /**
    * Constructs a Google Analytics Counter object.
    *
@@ -73,7 +74,7 @@ class CgovImporterService {
    *
    * @param mixed $file
    *   Either a Drupal file object (ui) or a path to a file (drush).
-   * @param str[] $options
+   * @param array $options
    *   User-supplied default flags.
    */
   public static function import($file, array $options) {
@@ -90,14 +91,13 @@ class CgovImporterService {
         \Drupal::messenger()->addWarning($warning);
       }
     }
-
     if (empty($data)) {
-      \Drupal::messenger()->addWarning(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv']));
+      \Drupal::messenger()->addWarning(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . \Drupal::service('extension.list.module')->getPath('path_redirect_import') . '/redirect-example-file.csv']));
     }
     else {
       if (PHP_SAPI == 'cli' && function_exists('drush_main')) {
         foreach ($data as $redirect_array) {
-          self::save($redirect_array, $options['override'], []);
+          self::save($redirect_array, $options['override']);
           $count++;
         }
       }
@@ -192,12 +192,8 @@ class CgovImporterService {
    *
    * @param mixed $file
    *   A Drupal file object.
-   * @param str[] $options
+   * @param array $options
    *   User-passed defaults.
-   *
-   * @return str[]
-   *   Keyed array of redirects, in the format
-   *    [source, redirect, status_code, language].
    */
   protected static function read($file, array $options = []) {
 
@@ -266,7 +262,7 @@ class CgovImporterService {
   /**
    * Check for problematic data and remove or clean up.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    *
@@ -307,7 +303,7 @@ class CgovImporterService {
   /**
    * Save an individual redirect entity, if no redirect already exists.
    *
-   * @param str[] $redirect_array
+   * @param array $redirect_array
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    * @param bool $override
@@ -327,10 +323,12 @@ class CgovImporterService {
       $path = isset($parsed_url['path']) ? $parsed_url['path'] : NULL;
       $query = isset($parsed_url['query']) ? $parsed_url['query'] : NULL;
 
-      /** @var \Drupal\redirect\Entity\Redirect $redirect */
+
       $redirectEntityManager = \Drupal::service('entity_type.manager')
         ->getStorage('redirect');
+
       $redirect = $redirectEntityManager->create();
+      /** @var \Drupal\redirect\Entity\Redirect $redirect */
       $redirect->setSource($path, $query);
     }
     // Currently, the Redirect module's setRedirect function assumes
@@ -421,7 +419,7 @@ class CgovImporterService {
   /**
    * Check for infinite loops.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    */
@@ -460,7 +458,7 @@ class CgovImporterService {
   /**
    * Check if a redirect already exists for this source path.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    *
@@ -506,7 +504,7 @@ class CgovImporterService {
   /**
    * Retrieve languages in the system.
    *
-   * @return str[]
+   * @return array
    *   A list of langcodes known to the system.
    */
   protected static function validLanguages() {

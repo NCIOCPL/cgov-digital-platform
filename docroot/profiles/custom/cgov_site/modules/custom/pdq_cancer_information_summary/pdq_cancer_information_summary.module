@@ -46,7 +46,7 @@ function pdq_cancer_information_summary_node_update(EntityInterface $entity) {
 /**
  * Check to see whether we need to add site sections for a summary.
  *
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   Reference to the PDQ Cancer Information Summary just saved.
  */
 function _pdq_cis_needs_site_sections(EntityInterface $entity) {
@@ -56,6 +56,7 @@ function _pdq_cis_needs_site_sections(EntityInterface $entity) {
     return FALSE;
   }
 
+  /** @var \Drupal\node\Entity\Node $entity */
   // Don't do anything for unpublished summary revisions.
   if (!$entity->get('status')->value) {
     return FALSE;
@@ -83,11 +84,11 @@ function _pdq_cis_needs_site_sections(EntityInterface $entity) {
 /**
  * Common code to add site_section terms.
  *
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   Reference to the PDQ Cancer Information Summary just saved.
  */
 function _pdq_cis_add_site_sections(EntityInterface $entity) {
-
+  /** @var \Drupal\node\Entity\Node $entity */
   // Collect the values we need from the summary.
   $langcode = $entity->get('langcode')->value;
   $url = $entity->get('field_pdq_url')->value;
@@ -162,11 +163,11 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
   if ($entity->bundle() != 'pdq_cancer_information_summary' || ($view_mode != 'full' && $view_mode != 'default')) {
     return;
   }
-
+  /** @var \Drupal\node\Entity\Node $entity */
   if (!empty($build['field_summary_sections']['#items'])) {
 
     // Make sure the field isn't being suppressed.
-    if ($entity->field_pdq_suppress_otp->value == '0') {
+    if ($entity->get('field_pdq_suppress_otp')->value == '0') {
 
       // Copy summary sections into a new "field" using TOC display.
       $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
@@ -191,7 +192,7 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
  * @param string $url
  *   The optional value to match for the pretty url field.
  *
- * @return Drupal\taxonomy\Entity\Term
+ * @return \Drupal\taxonomy\Entity\Term|false
  *   Reference to site section term, if found; else NULL.
  */
 function _pdq_cis_load_site_section($langcode, $parent = 0, $url = '') {

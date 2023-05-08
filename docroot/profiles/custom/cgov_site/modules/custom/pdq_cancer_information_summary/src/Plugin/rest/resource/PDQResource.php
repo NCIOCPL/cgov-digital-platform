@@ -141,17 +141,19 @@ class PDQResource extends ResourceBase {
       $msg = $this->t('Node @id not found', ['@id' => $id]);
       throw new NotFoundHttpException($msg);
     }
+
     $fields = [
       'nid' => $node->id(),
       'created' => date('c', $node->getCreatedTime()),
-      'keywords' => $node->field_hhs_syndication->keywords,
+      'keywords' => $node->field_hhs_syndication->getValue()[0]['keywords'],
     ];
     foreach (['en', 'es'] as $code) {
       if ($node->hasTranslation($code)) {
+        /** @var \Drupal\node\Entity\Node $translation */
         $translation = $node->getTranslation($code);
         $sections = [];
-        foreach ($translation->field_summary_sections as $section) {
-          $s = Paragraph::load($section->target_id);
+        foreach ($translation->get('field_summary_sections') as $section) {
+          $s = Paragraph::load($section->getValue()['target_id']);
           $sections[] = [
             'id' => $s->field_pdq_section_id->value,
             'title' => $s->field_pdq_section_title->value,
@@ -160,21 +162,21 @@ class PDQResource extends ResourceBase {
         }
         $fields[$code] = [
           'title' => $translation->getTitle(),
-          'cdr_id' => $translation->field_pdq_cdr_id->value,
-          'audience' => $translation->field_pdq_audience->value,
-          'summary_type' => $translation->field_pdq_summary_type->value,
-          'posted_date' => $translation->field_date_posted->value,
-          'updated_date' => $translation->field_date_updated->value,
-          'browser_title' => $translation->field_browser_title->value,
-          'cthp_card_title' => $translation->field_cthp_card_title->value,
-          'description' => $translation->field_page_description->value,
-          'public_use' => $translation->field_public_use->value,
-          'url' => $translation->field_pdq_url->value,
-          'published' => $translation->status->value,
+          'cdr_id' => $translation->get('field_pdq_cdr_id')->value,
+          'audience' => $translation->get('field_pdq_audience')->value,
+          'summary_type' => $translation->get('field_pdq_summary_type')->value,
+          'posted_date' => $translation->get('field_date_posted')->value,
+          'updated_date' => $translation->get('field_date_updated')->value,
+          'browser_title' => $translation->get('field_browser_title')->value,
+          'cthp_card_title' => $translation->get('field_cthp_card_title')->value,
+          'description' => $translation->get('field_page_description')->value,
+          'public_use' => $translation->get('field_public_use')->value,
+          'url' => $translation->get('field_pdq_url')->value,
+          'published' => $translation->get('status')->value,
           'sections' => $sections,
-          'svpc' => $translation->field_pdq_is_svpc->value,
-          'suppress_otp' => $translation->field_pdq_suppress_otp->value,
-          'intro_text' => $translation->field_pdq_intro_text->value,
+          'svpc' => $translation->get('field_pdq_is_svpc')->value,
+          'suppress_otp' => $translation->get('field_pdq_suppress_otp')->value,
+          'intro_text' => $translation->get('field_pdq_intro_text')->value,
         ];
       }
     }
@@ -244,6 +246,7 @@ class PDQResource extends ResourceBase {
       /** @var \Drupal\Core\Entity\ContentEntityStorageBase $storage */
       $storage = $this->entityTypeManager->getStorage('node');
       $vid = $storage->getLatestRevisionId($nid);
+      /** @var \Drupal\node\Entity\Node $node */
       $node = $storage->loadRevision($vid);
       if ($node->hasTranslation($language)) {
         $node = $node->getTranslation($language);
@@ -276,6 +279,7 @@ class PDQResource extends ResourceBase {
     }
 
     // Fill in the values for the summary.
+    /** @var \Drupal\node\Entity\Node $node */
     $today = date('Y-m-d');
     $node->setTitle(($summary['title']));
     $node->setOwnerId($this->currentUser->id());

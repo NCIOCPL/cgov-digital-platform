@@ -286,6 +286,7 @@ class JsonDataFieldItemTest extends KernelTestBase {
       // The MySql map contains type:size. Remove the type part.
       return explode(':', $map[$type])[1];
     }
+    return '';
   }
 
   /**

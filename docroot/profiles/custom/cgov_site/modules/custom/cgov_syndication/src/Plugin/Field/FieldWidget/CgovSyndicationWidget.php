@@ -45,7 +45,8 @@ class CgovSyndicationWidget extends WidgetBase implements ContainerFactoryPlugin
       FormStateInterface $form_state
   ) {
     $item = $items[$delta];
-    $open = $item->syndicate || !empty($item->keywords);
+    /** @var \Drupal\cgov_syndication\Plugin\Field\FieldType\CgovSyndicationFieldItem $item */
+    $open = $item->get('syndicate')->getValue() || !empty($item->get('keywords')->getValue());
     $element += [
       '#type' => 'details',
       '#collapsible' => TRUE,

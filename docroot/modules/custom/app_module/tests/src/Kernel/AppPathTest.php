@@ -4,6 +4,7 @@ namespace Drupal\Tests\app_module\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
+use Drupal\path_alias\Entity\PathAlias;
 
 /**
  * Integration tests for App Path class.
@@ -38,7 +39,7 @@ class AppPathTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setup();
     // These are special and cannot be installed as a dependency
     // for this module. So we have to install their bits separately.
@@ -87,7 +88,11 @@ class AppPathTest extends KernelTestBase {
     // 2. Change alias.
     $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
-    $node1->get('path')->alias = '/test-node-1-updated';
+    PathAlias::create([
+      'path' => "/node/" . $node1->id(),
+      'alias' => '/test-node-1-updated',
+      'langcode' => $node1->get('langcode')->value,
+    ])->save();
     $node1->save();
 
     // Assert app path was updated.
@@ -141,10 +146,11 @@ class AppPathTest extends KernelTestBase {
     // Reload the node to make sure that the data survived.
     $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
-    $this->assertEquals($node1->field_application_module->data, $data);
-
+    $this->assertEquals($node1->get('field_application_module')->first()->get('data')->getValue(), $data);
     // 2. Change data.
-    $node1->field_application_module->data = $data2;
+    // Access to an undefined property data.
+    /* @phpstan-ignore-next-line */
+    $node1->get('field_application_module')->data = $data2;
     $node1->save();
 
     // Assert app path data was updated.
@@ -154,7 +160,7 @@ class AppPathTest extends KernelTestBase {
     // Reload the node to make sure that the data survived.
     $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
-    $this->assertEquals($node1->field_application_module->data, $data2);
+    $this->assertEquals($node1->get('field_application_module')->first()->get('data')->getValue(), $data2);
 
   }
 

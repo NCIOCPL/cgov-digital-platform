@@ -62,7 +62,7 @@ class CleanupTest extends KernelTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions =
       CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
@@ -102,7 +102,8 @@ class CleanupTest extends KernelTestBase {
    * of each job that we are left with EXACTLY the revisions we expect.
    */
   public function testPruneOldRevisions() {
-
+    /** @var \Drupal\node\NodeStorage $nodeStorage */
+    $nodeStorage = $this->storage;
     // Run each test case, verifying what's left after a purge.
     $cases = $this->getTestCases();
     foreach ($cases as $values) {
@@ -129,8 +130,9 @@ class CleanupTest extends KernelTestBase {
 
           // Otherwise, load it and make sure we have the translation we need.
           else {
-            $vid = $this->storage->getLatestRevisionId($nid);
+            $vid = $nodeStorage->getLatestRevisionId($nid);
             $revision = $this->storage->loadRevision($vid);
+            /** @var \Drupal\node\Entity\Node $revision */
             if ($revision->hasTranslation($langcode)) {
               $translation = $revision->getTranslation($langcode);
             }
@@ -138,6 +140,7 @@ class CleanupTest extends KernelTestBase {
               $translation = $revision->addTranslation($langcode);
             }
           }
+          /** @var \Drupal\node\Entity\Node $translation */
           $translation->setRevisionCreationTime(\time());
           $translation->setRevisionUserId($this->uid);
           $translation->setTitle($title);
@@ -147,9 +150,11 @@ class CleanupTest extends KernelTestBase {
 
         // Now publish the draft(s).
         foreach ($languages as $langcode) {
-          $vid = $this->storage->getLatestRevisionId($nid);
-          $revision = $this->storage->loadRevision($vid);
+          $vid = $nodeStorage->getLatestRevisionId($nid);
+          $revision = $nodeStorage->loadRevision($vid);
+          /** @var \Drupal\node\Entity\Node $revision */
           $translation = $revision->getTranslation($langcode);
+          /** @var \Drupal\node\Entity\Node $translation */
           $translation->moderation_state->value = 'published';
           $translation->setRevisionTranslationAffected(TRUE);
           $translation->setRevisionCreationTime(\time());
@@ -160,8 +165,8 @@ class CleanupTest extends KernelTestBase {
 
         // Prune the unwanted revisions and verify the results.
         $this->pruner->dropOldRevisions($nid, self::REVISIONS_TO_KEEP);
-        $node = $this->storage->load($nid);
-        $kept = $this->storage->revisionIds($node);
+        $node = $nodeStorage->load($nid);
+        $kept = $nodeStorage->revisionIds($node);
         $expected_english = array_slice($published['en'], -self::REVISIONS_TO_KEEP);
         $expected_spanish = array_slice($published['es'], -self::REVISIONS_TO_KEEP);
         $expected = array_merge($expected_english, $expected_spanish);

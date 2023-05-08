@@ -24,7 +24,7 @@ class TestKernelTest extends KernelTestBase {
   /**
    * Sets up the test environment.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
     $this->installSchema('system', 'sequences');

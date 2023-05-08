@@ -20,7 +20,7 @@ function cgov_syndication_preprocess_html(&$variables) {
       $canonical = $node->toUrl('canonical')->toString();
       $prod_url = \rtrim($tools->getProdUrl(), '/');
       $variables['syndication_canonical'] = "$prod_url$canonical";
-      $keywords = $node->field_hhs_syndication->keywords;
+      $keywords = $node->get('field_hhs_syndication')->first()?->get('keywords')->getString();
       $variables['syndication_keywords'] = $keywords;
       $description = $node->field_page_description->value;
       $variables['syndication_description'] = $description;

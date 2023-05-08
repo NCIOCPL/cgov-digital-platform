@@ -21,14 +21,13 @@ class CgovSyndicationController extends NodeViewController {
   /**
    * Return an HTML rendering of a syndicated content item to HHS.
    *
-   * @param Drupal\node\Entity\Node $node
+   * @param mixed $node
    *   Content item to be syndicated.
    *
    * @return array
    *   The render array for the node.
    */
-  public function publish(Node $node) {
-
+  public function publish($node) {
     // Make sure we have a syndicatable piece of content.
     $bundles = ['cgov_article', 'pdq_cancer_information_summary'];
     if (empty($node) || !in_array($node->bundle(), $bundles)) {

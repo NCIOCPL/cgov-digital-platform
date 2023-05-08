@@ -4,17 +4,19 @@ namespace Drupal\cgov_home_landing;
 
 use Twig\TwigFunction;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\Extension\AbstractExtension;
+
 
 /**
- * Extend Drupal's Twig_Extension class.
+ * Extend Drupal's AbstractExtension class.
  */
-class CgovHomeLandingPageTwigExtension extends \Twig_Extension {
+class CgovHomeLandingPageTwigExtension extends AbstractExtension {
 
 
   /**
-   * The current Request object.
+   * The current RequestStack object.
    *
-   * @var \Symfony\Component\HttpFoundation\Request
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $requestStack;
 

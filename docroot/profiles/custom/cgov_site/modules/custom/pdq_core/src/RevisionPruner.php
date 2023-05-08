@@ -64,8 +64,10 @@ class RevisionPruner {
       $revision = $storage->loadRevision($vid);
       foreach ($languages as $langcode) {
         if ($kept[$langcode] < $keep) {
+          /** @var \Drupal\node\Entity\Node $revision */
           if ($revision->hasTranslation($langcode)) {
             $translation = $revision->getTranslation($langcode);
+            /** @var \Drupal\node\Entity\Node $translation */
             if ($translation->isRevisionTranslationAffected()) {
               if ($translation->isPublished()) {
                 $wanted = TRUE;

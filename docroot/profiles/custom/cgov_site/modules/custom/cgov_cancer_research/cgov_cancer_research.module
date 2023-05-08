@@ -27,10 +27,11 @@ function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $ent
   // When grabbing the node we need to get the correct translation.
   $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
   $node = $build['field_internal_link']['#items']->entity;
+  /** @var \Drupal\node\NodeInterface $node */
   $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
 
   if ($node->bundle() === "cgov_blog_post") {
-    $date_to_display = $node->field_date_posted->view([
+    $date_to_display = $node->get('field_date_posted')->view([
       'type' => 'datetime_default',
       'settings' => [
         'timezone_override' => '',
@@ -39,10 +40,10 @@ function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $ent
     ]);
     $date_to_display['#title'] = t('Posted', [], ['context' => 'CGov UI']);
   }
-  elseif ($node->field_date_display_mode !== NULL) {
-    $date_posted = $node->field_date_posted;
+  elseif ($node->get('field_date_display_mode') !== NULL) {
+    $date_posted = $node->get('field_date_posted');
     if ($date_posted !== NULL) {
-      $date_posted = $node->field_date_posted->view([
+      $date_posted = $node->get('field_date_posted')->view([
         'type' => 'cgov_date_formatter',
         'settings' => [
           'timezone_override' => '',
@@ -52,9 +53,9 @@ function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $ent
       ]);
     }
 
-    $date_reviewed = $node->field_date_reviewed;
+    $date_reviewed = $node->get('field_date_reviewed');
     if ($date_reviewed !== NULL) {
-      $date_reviewed = $node->field_date_reviewed->view([
+      $date_reviewed = $node->get('field_date_reviewed')->view([
         'type' => 'cgov_date_formatter',
         'settings' => [
           'timezone_override' => '',
@@ -64,9 +65,9 @@ function cgov_cancer_research_paragraph_view(array &$build, EntityInterface $ent
       ]);
     }
 
-    $date_updated = $node->field_date_updated;
+    $date_updated = $node->get('field_date_updated');
     if ($date_updated !== NULL) {
-      $date_updated = $node->field_date_updated->view([
+      $date_updated = $node->get('field_date_updated')->view([
         'type' => 'cgov_date_formatter',
         'settings' => [
           'timezone_override' => '',

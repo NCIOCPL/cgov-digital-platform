@@ -8,8 +8,8 @@ use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Event subscriber to handle requiring logins for protecting the CMS.
@@ -85,10 +85,10 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
   /**
    * Forces users to login, or hides login.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
 
     // Check the host.
     $request = $event->getRequest();
@@ -115,10 +115,10 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
   /**
    * Redirects the user to the login page.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  private function redirectToLogin(GetResponseEvent $event) {
+  private function redirectToLogin(RequestEvent $event) {
     if ($this->currentUser->isAnonymous() && !$this->isLoginRoute()) {
       // This is not a login route, so take them there.
       // TODO: Set the user back to the original route.
@@ -131,6 +131,7 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
       $response->setSharedMaxAge(0);
       $response->headers->addCacheControlDirective('must-revalidate', TRUE);
       $response->headers->addCacheControlDirective('no-store', TRUE);
+      /** @var \Symfony\Contracts\EventDispatcher\Event $event */
       $event->stopPropagation();
     }
 

@@ -19,7 +19,7 @@ class PageOptionsTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->container = new ContainerBuilder();
     \Drupal::setContainer($this->container);

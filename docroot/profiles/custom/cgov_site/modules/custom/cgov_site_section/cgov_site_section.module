@@ -53,6 +53,7 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
 
   // Convert the URL to lowercase as we only want lowercased items and
   // the server is case-sensitive.
+  /** @var \Drupal\taxonomy\Entity\Term $entity */
   if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
     $entity->set('field_pretty_url', strtolower($field_pretty_url));
@@ -105,6 +106,7 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
    *  to any subsections and pages within those subsections.
    *
    */
+  /** @var \Drupal\node\Entity\Node $entity */
   if (
     $entity->getEntityTypeId() === 'node' &&
     $entity->hasField('field_site_section')
@@ -181,7 +183,7 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
  * mega-menu-block cache tag.
  */
 function cgov_site_section_block_content_update(EntityInterface $entity) {
-
+  /** @var \Drupal\block_content\Entity\BlockContent $entity */
   if ($entity->bundle() !== 'ncids_mega_menu_content') {
     return;
   }
@@ -189,8 +191,8 @@ function cgov_site_section_block_content_update(EntityInterface $entity) {
   // Make sure to clear out the mega-menu-block cache tag
   // if the block status is updated OR
   // if the field_yaml_content data is updated.
-  if (($entity->original->status->value !== $entity->status->value) ||
-    ($entity->original->field_yaml_content->value !== $entity->field_yaml_content->value)) {
+  if (($entity->original->get('status')->value !== $entity->get('status')->value) ||
+    ($entity->original->get('field_yaml_content')->value !== $entity->get('field_yaml_content')->value)) {
     // Clear out the mega-menu-block cache tag.
     Cache::invalidateTags(['mega-menu-block:' . $entity->id()]);
   }
@@ -213,13 +215,13 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
   }
-
+  /** @var \Drupal\taxonomy\Entity\Term $entity */
   // We only set the front page for English nodes without a parent.
   // NOTE: this does not account for the case when the root becomes a
   // child of another node. It is possible, but the amount of complexity
   // that check would add is not worth it.
   // NOTE2: target_id can be an int and it can be a string.
-  if ($entity->parent->target_id == 0 && $entity->langcode->value === 'en') {
+  if ($entity->parent->target_id == 0 && $entity->get('langcode')->value === 'en') {
     _cgov_site_section_attempt_set_front_page($entity);
   }
 
@@ -273,7 +275,7 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
 
   // Make sure to clear out the mega-menu-section cache tag
   // if the field_ncids_mega_menu_contents data is updated.
-  if ($entity->original->field_ncids_mega_menu_contents->target_id !== $entity->field_ncids_mega_menu_contents->target_id) {
+  if ($entity->original->get('field_ncids_mega_menu_contents')->target_id !== $entity->get('field_ncids_mega_menu_contents')->target_id) {
     Cache::invalidateTags(['mega-menu-section:' . $entity->id()]);
   }
 
@@ -295,7 +297,7 @@ function get_sections_to_clear(EntityInterface $section_entity) {
   // Get the current set of section IDs that display this item.
   // Includes this term itself if its a nav root.
   $sectionsToClear = get_rendering_sections($section_entity);
-
+  /** @var \Drupal\taxonomy\Entity\Term $section_entity */
   // If this section changed parents, or visibility, invalidate
   // the cache tags for the original rendering sections as well.
   if (entity_fields_modified([
@@ -311,8 +313,8 @@ function get_sections_to_clear(EntityInterface $section_entity) {
   // If this section changed from being a section nav root to not,
   // we need to invalidate pages having its old section nav root ID.
   if (isset($section_entity->original)) {
-    if ($section_entity->field_section_nav_root->value == 0 &&
-      $section_entity->original->field_section_nav_root->value == 1) {
+    if ($section_entity->get('field_section_nav_root')->value == 0 &&
+      $section_entity->original->get('field_section_nav_root')->value == 1) {
       $sectionsToClear[] = $section_entity->id();
     }
  }
@@ -343,14 +345,17 @@ function get_mobile_nav_to_clear(EntityInterface $section_entity) {
     'parent',
     'field_navigation_display_options',
   ], $section_entity)) {
+    // Ignoring next line because of original.
+    /* @phpstan-ignore-next-line */
     $originalRenderingSections = get_rendering_sections($section_entity->original);
     $sectionsToClear = array_merge($sectionsToClear, $originalRenderingSections);
   }
 
   // If this section changed from being a section nav root to not,
   // we need to invalidate pages having its old section nav root ID.
-  if ($section_entity->field_main_nav_root->value == 0 &&
-    $section_entity->original->field_main_nav_root->value == 1) {
+  /** @var \Drupal\taxonomy\Entity\Term $section_entity */
+  if ($section_entity->get('field_main_nav_root')->value == 0 &&
+    $section_entity->original->get('field_main_nav_root')->value == 1) {
     $sectionsToClear[] = $section_entity->id();
   }
 
@@ -472,6 +477,7 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
   $values = [];
   // Invalidation check for Nodes.
   if ($entityType === 'node') {
+    /** @var \Drupal\node\Entity\Node $updated_entity */
     // Exit early if this entity doesn't have site sections.
     if (!$updated_entity->hasField('field_site_section')|| empty($updated_entity->get('field_site_section')->first())) {
       return FALSE;
@@ -515,9 +521,14 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
   // Invalidation Check for Site Sections.
   if ($entityType === 'taxonomy_term' &&
     $updated_entity->bundle() == 'cgov_site_sections') {
-
+    /** @var \Drupal\taxonomy\Entity\Term $original_entity */
+    // Store the original entity for comparison.
+    // Ignoring next line because of original.
+    /* @phpstan-ignore-next-line */
+    $original_entity = $updated_entity->original;
+    /** @var \Drupal\taxonomy\Entity\Term $updated_entity */
     // Early exit. Yes,trigger a cache invalidation if weight modified.
-    $weightModified = $updated_entity->original->getWeight() !== $updated_entity->getWeight();
+    $weightModified = $original_entity->getWeight() !== $updated_entity->getWeight();
     if ($weightModified) {
       return TRUE;
     }
@@ -536,7 +547,7 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
       in_array('hide_in_section_nav', $displayOptions) : FALSE;
 
     // Get the display options for the original entity.
-    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = $original_entity->field_navigation_display_options->getValue();
     $originalOptions = array_column($originalOptions, 'value');
     $originalIsHidden = !empty($originalOptions)
       ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
@@ -583,32 +594,35 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
 function should_invalidate_mobile_nav(EntityInterface $updated_entity) {
 
   $entityType = $updated_entity->getEntityTypeId();
-
+  $values =  [];
+  /** @var \Drupal\taxonomy\Entity\Term $updated_entity */
   // Invalidation Check for Site Sections.
   if ($entityType === 'taxonomy_term' &&
     $updated_entity->bundle() == 'cgov_site_sections') {
-
+    /** @var \Drupal\taxonomy\Entity\Term $original */
+    // Store the original entity for comparison.
+    $original = $updated_entity->original;
     // Early exit. Yes,trigger a cache invalidation if weight modified.
-    $weightModified = $updated_entity->original->getWeight() !== $updated_entity->getWeight();
+    $weightModified = $original->getWeight() !== $updated_entity->getWeight();
     if ($weightModified) {
       return TRUE;
     }
 
     // Get the field main nav root value.
     $main_nav_root = TRUE;
-    if ($updated_entity->field_main_nav_root->value) {
+    if ($updated_entity->get('field_main_nav_root')->value) {
       $main_nav_root = FALSE;
     }
 
     // Exit early if this section was previously and is currently hidden.
     // Get the display options for this entity.
-    $displayOptions = $updated_entity->field_navigation_display_options->getValue();
+    $displayOptions = $updated_entity->get('field_navigation_display_options')->getValue();
     $displayOptions = array_column($displayOptions, 'value');
     $isHidden = !empty($displayOptions) ?
       in_array('hide_in_mobile_nav', $displayOptions) : FALSE;
 
     // Get the display options for the original entity.
-    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = $original->get('field_navigation_display_options')->getValue();
     $originalOptions = array_column($originalOptions, 'value');
     $originalIsHidden = !empty($originalOptions)
       ? in_array('hide_in_mobile_nav', $originalOptions) : FALSE;
@@ -646,6 +660,7 @@ function should_invalidate_mobile_nav(EntityInterface $updated_entity) {
  */
 function entity_fields_modified(array $fields, EntityInterface $entity) {
 
+  /** @var \Drupal\Core\Entity\ContentEntityBase $entity */
   // Exit early if no fields were passed.
   if (empty($fields)) {
     return FALSE;
@@ -653,10 +668,10 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
   // Store the original entity for comparison.
   $original = $entity->original;
   // If entity status has been modified exit and return true.
-  if (isset($entity->original) && ($entity->status->getString() !== $entity->original->status->getString())) {
+  if (isset($entity->original) && ($entity->get('status')->getString() !== $original->get('status')->getString())) {
     return TRUE;
   }
-  if ($entity->original == null && $entity->status->getString() == "1" ) {
+  if ($entity->original == null && $entity->get('status')->getString() == "1" ) {
     return TRUE;
   }
   // Setup closures for comparison functions.
@@ -709,7 +724,8 @@ function _cgov_site_section_attempt_set_front_page(EntityInterface $site_section
    * have an update hook for node checking if it is a landing then updating
    * the section. That is too convoluted.
    */
-  $home_page_id = $site_section->field_landing_page->target_id;
+  /** @var \Drupal\taxonomy\Entity\Term $site_section */
+  $home_page_id = $site_section->get('field_landing_page')->target_id;
   if ($home_page_id === NULL) {
     return;
   }
@@ -1025,6 +1041,7 @@ function cgov_site_section_block_content_presave(EntityInterface $entity) {
   }
 
   // Call the validations.
+  /** @var \Drupal\block_content\Entity\BlockContent $entity */
   $violations = $entity->validate();
   if ($violations->count() > 0) {
     foreach ($violations as $violation) {

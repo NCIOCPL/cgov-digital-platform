@@ -172,6 +172,8 @@ class CgovDateFormatter extends DateTimeDefaultFormatter {
   protected function viewValue(FieldItemInterface $item) {
     // The text value has no text format assigned to it, so the user input
     // should equal the output, including newlines.
+    // Access to an undefined property value.
+    /* @phpstan-ignore-next-line */
     return nl2br(Html::escape($item->value));
   }
 

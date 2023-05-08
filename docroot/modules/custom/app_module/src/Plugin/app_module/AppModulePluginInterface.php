@@ -64,7 +64,7 @@ interface AppModulePluginInterface extends PluginInspectionInterface {
    *   an example route info array.
    *   NOTE: the array key 'app_module_route' is REQUIRED!
    *
-   * @throws InvalidArgumentException
+   * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
    *   Thrown if $path does not begin with a slash(/).
    */
   public function matchRoute($path, array $options = []);

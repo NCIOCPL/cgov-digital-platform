@@ -2,6 +2,8 @@
 
 namespace Drupal\app_module\Plugin\app_module;
 
+use Drupal\Core\Cache\CacheableMetadata;
+
 /**
  * This is the basis for most app modules.
  *
@@ -123,5 +125,10 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
       return [];
     }
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  abstract protected function getBuilderForRoute($path);
 
 }

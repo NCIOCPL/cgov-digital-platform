@@ -28,17 +28,17 @@ class ValidJsonSchemaConstraintValidator extends ConstraintValidator {
     if (empty($value->value)) {
       return;
     }
-
     // Get the YAML input data entered by user.
     // Converts the input array to object.
     $data = json_encode($value->value);
     $response_data = json_decode($data);
 
     // Get the json_data_field JsonSchema file.
+    /** @var \Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem $value */
     $field_storage_settings = $value->getFieldDefinition()->getSettings();
-
-    $field_name = $value->getFieldDefinition()->id();
-
+    /** @var \Drupal\field\Entity\FieldConfig  $fieldConfig */
+    $fieldConfig = $value->getFieldDefinition();
+    $field_name = $fieldConfig->id();
     if (empty($field_storage_settings)) {
       return;
     }

@@ -188,7 +188,9 @@ class PDQResource extends ResourceBase {
           // revisions, so we do it here.
           // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
           $revision = $storage->loadRevision($vid);
+          /** @var \Drupal\node\Entity\Node $revision */
           $translation = $revision->getTranslation($lang);
+          /** @var \Drupal\node\Entity\Node $translation */
           $translation->moderation_state->value = 'published';
           $translation->setRevisionTranslationAffected(TRUE);
           $translation->setRevisionCreationTime(\time());
@@ -307,7 +309,7 @@ class PDQResource extends ResourceBase {
   /**
    * Return a catalog of the PDQ content in the Drupal CMS.
    *
-   * @return \Drupal\Rest\ResourceResponse
+   * @return \Drupal\rest\ResourceResponse
    *   Sequence of key-indexed arrays, each of which contains
    *   values for `cdr_id`, `nid`, `vid`, `created`, `updated`,
    *   `langcode`, and `type`, wrapped in a ResourceResponse.

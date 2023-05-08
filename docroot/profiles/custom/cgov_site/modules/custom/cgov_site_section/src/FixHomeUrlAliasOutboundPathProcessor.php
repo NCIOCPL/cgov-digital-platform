@@ -28,6 +28,13 @@ use Symfony\Component\HttpFoundation\Request;
 class FixHomeUrlAliasOutboundPathProcessor implements OutboundPathProcessorInterface {
 
   /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $config;
+
+  /**
    * Constructs a FixHomeUrlAliasOutboundPathProcessor object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config

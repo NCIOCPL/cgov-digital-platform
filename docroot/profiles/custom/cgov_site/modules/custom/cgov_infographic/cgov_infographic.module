@@ -64,6 +64,7 @@ function cgov_infographic_media_view(array &$build,
   if ($entity == NULL || $entity->bundle() != 'cgov_infographic') {
     return;
   }
+
   // Constrain view modes to mobile image displays.
   $allowedViewModes = [
     'full',
@@ -78,12 +79,16 @@ function cgov_infographic_media_view(array &$build,
 
   // If we're rendering an infographic, populate / override the mobile
   // alt with the desktop version. (Note:field_infograpic is a required field.)
-  $infographic_desktop_alt = $entity->get('field_infographic')->alt;
+   /** @var \Drupal\media\Entity\Media $entity */
+  $infographic_desktop_alt = $entity->get('field_infographic')->first()->get('alt')->getValue();
 
   if (!empty($infographic_desktop_alt)) {
     // Set the mobile alt tag for this render to the desktop version.
+     /** @var \Drupal\media\Entity\Media $entity */
     $mobile = $entity->get('field_infographic_mobile');
     if ($mobile) {
+      // Access to an undefined property alt.
+      /* @phpstan-ignore-next-line */
       $mobile->alt = $infographic_desktop_alt;
     }
   }

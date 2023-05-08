@@ -75,7 +75,7 @@ function cgov_application_page_theme_suggestions_page_alter(array &$suggestions,
   $entity = _cgov_application_page_get_curr_entity();
   if ($entity && $entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_application_page") {
     $content_type = $entity->bundle();
-    $page_template = $entity->field_app_module_page_template->value;
+    $page_template = $entity->get('field_app_module_page_template')->value;
     if ($page_template !== NULL) {
       $suggestions[] = 'page__' . $content_type . '__' . $page_template;
     }

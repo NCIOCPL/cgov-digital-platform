@@ -40,7 +40,7 @@ class CgovVocabManagerForm extends FormBase {
   /**
    * The entity manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -112,7 +112,7 @@ class CgovVocabManagerForm extends FormBase {
   /**
    * Returns the title for the whole page.
    *
-   * @param string $taxonomy_vocabulary
+   * @param mixed $taxonomy_vocabulary
    *   The name of the vocabulary.
    *
    * @return string
@@ -160,9 +160,6 @@ class CgovVocabManagerForm extends FormBase {
    *   The form structure.
    */
   public function buildForm(array $form, FormStateInterface $form_state, VocabularyInterface $taxonomy_vocabulary = NULL, int $parent_tid = NULL) {
-    // @todo Remove global variables when https://www.drupal.org/node/2044435 is
-    //   in.
-    global $pager_page_array, $pager_total, $pager_total_items;
 
     $form_state->set(['taxonomy', 'vocabulary'], $taxonomy_vocabulary);
     $vocabulary_hierarchy = $this->storageController->getVocabularyHierarchyType($taxonomy_vocabulary->id());
@@ -194,9 +191,9 @@ class CgovVocabManagerForm extends FormBase {
     $term_deltas = [];
 
     $tree_args = $this->getTreeArgs($taxonomy_vocabulary);
-
     $tree = $this->storageController->loadTree($tree_args['vid'], $tree_args['parent'], $tree_args['max_depth'], $tree_args['load_entities']);
     $tree_index = 0;
+    $complete_tree  = NULL;
     do {
       // In case this tree is completely empty.
       if (empty($tree[$tree_index])) {
@@ -260,10 +257,10 @@ class CgovVocabManagerForm extends FormBase {
 
     // Because we didn't use a pager query, set the necessary pager variables.
     $total_entries = $before_entries + $page_entries + $after_entries;
+
     $pager_total_items[0] = $total_entries;
     $pager_page_array[0] = $page;
     $pager_total[0] = ceil($total_entries / $page_increment);
-
     // If this form was already submitted once, it's probably hit a validation
     // error. Ensure the form is rebuilt in the same order as the user
     // submitted.
@@ -277,6 +274,9 @@ class CgovVocabManagerForm extends FormBase {
         // Verify this is a term for the current page and set at the current
         // depth.
         if (is_array($user_input['terms'][$key]) && is_numeric($user_input['terms'][$key]['term']['tid'])) {
+          // Ignoring next line because of access to undefined on depth.
+          // Cannot access property $depth on int|object.
+          /* @phpstan-ignore-next-line */
           $current_page[$key]->depth = $user_input['terms'][$key]['term']['depth'];
         }
         else {
@@ -298,6 +298,9 @@ class CgovVocabManagerForm extends FormBase {
     // Get the IDs of the terms edited on the current page which have pending
     // revisions.
     $edited_term_ids = array_map(function ($item) {
+      // Ignoring next line because of access to undefined on tid.
+      // $item is returning set of raw objects.
+      /* @phpstan-ignore-next-line */
       return $item->tid;
     }, $current_page);
     $pending_term_ids = array_intersect($this->storageController->getTermIdsWithPendingRevisions(), $edited_term_ids);
@@ -358,16 +361,17 @@ class CgovVocabManagerForm extends FormBase {
         'operations' => [],
         'weight' => $update_tree_access->isAllowed() ? [] : NULL,
       ];
-      /** @var $term \Drupal\Core\Entity\EntityInterface */
+
       $term = $this->entityRepository->getTranslationFromContext($term);
       $form['terms'][$key]['#term'] = $term;
       $indentation = [];
-      if (isset($term->depth) && $term->depth > 0) {
+      if (isset($term->depth) && ($term->depth > 0)) {
         $indentation = [
           '#theme' => 'indentation',
           '#size' => $term->depth,
         ];
       }
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       $form['terms'][$key]['term'] = [
         '#prefix' => !empty($indentation) ? $this->renderer->render($indentation) : '',
         '#type' => 'link',
@@ -421,6 +425,7 @@ class CgovVocabManagerForm extends FormBase {
       $update_tree_access = $update_tree_access->andIf($update_access);
 
       if ($update_tree_access->isAllowed()) {
+
         $form['terms'][$key]['weight'] = [
           '#type' => 'weight',
           '#delta' => $delta,

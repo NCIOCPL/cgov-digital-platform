@@ -34,7 +34,7 @@ class CgovGlossifier extends CKEditorPluginBase {
     return [
       'Cgov_glossifier' => [
         'label' => t('Glossify'),
-        'image' => drupal_get_path('module', 'pdq_glossifier') . '/js/plugins/cgov_glossifier/icons/button.png',
+        'image' => \Drupal::service('extension.list.module')->getPath('pdq_glossifier') . '/js/plugins/cgov_glossifier/icons/button.png',
       ],
     ];
   }
@@ -45,7 +45,7 @@ class CgovGlossifier extends CKEditorPluginBase {
   public function getFile() {
     // Make sure that the path to the plugin.js matches the file structure of
     // the CKEditor plugin you are implementing.
-    return drupal_get_path('module', 'pdq_glossifier') . '/js/plugins/cgov_glossifier/plugin.js';
+    return \Drupal::service('extension.list.module')->getPath('pdq_glossifier') . '/js/plugins/cgov_glossifier/plugin.js';
   }
 
   /**

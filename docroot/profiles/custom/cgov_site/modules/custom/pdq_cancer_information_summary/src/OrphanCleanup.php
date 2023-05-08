@@ -123,7 +123,6 @@ class OrphanCleanup {
       }
       $results = $query->execute();
       foreach ($results as $result) {
-        $entity = $storage->load($paragraph_id);
         $storage->deleteRevision($result->revision_id);
         $dropped[$result->id][] = (int) $result->revision_id;
       }

@@ -299,9 +299,9 @@ class AppPathManagerGetPathTest extends AppPathManagerTestBase {
         ]
       ));
 
-    $this->appPathStorage->expects($this->exactly(2))
-      ->method('load')
-      ->withConsecutive(
+    // Call to deprecated method withConsecutive() of class PHPUnit.
+    /* @phpstan-ignore-next-line */
+    $this->appPathStorage->expects($this->exactly(2))->method('load')->withConsecutive(
         [
           [
             'owner_alias' => '/short',

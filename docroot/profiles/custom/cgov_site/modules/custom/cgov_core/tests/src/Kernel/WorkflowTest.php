@@ -48,7 +48,7 @@ class WorkflowTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
@@ -95,12 +95,12 @@ class WorkflowTest extends KernelTestBase {
     $node->moderation_state->value = 'published';
     $node->save();
     $translation = $node->addTranslation('es', ['title' => 'Spanish title']);
-    $this->assertEquals($translation->moderation_state->value, 'draft');
+    $this->assertEquals($translation->get('moderation_state')->value, 'draft');
     $translation->save();
     $tests = [['draft', 0], ['review', 0], ['editing', 1], ['archived', 1]];
     foreach ($tests as $test) {
       list($state, $expected_violations) = $test;
-      $translation->moderation_state->value = $state;
+      $translation->set('moderation_state', $state);
       $violations = $translation->validate();
       $negative = $expected_violations ? ' not' : '';
       $message = "Moderation state '$state' should$negative be available";

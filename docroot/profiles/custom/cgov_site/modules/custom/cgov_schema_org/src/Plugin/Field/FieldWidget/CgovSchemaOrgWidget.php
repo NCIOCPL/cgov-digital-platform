@@ -48,7 +48,8 @@ class CgovSchemaOrgWidget extends WidgetBase implements ContainerFactoryPluginIn
       'faq_page',
     ];
     $item = $items[$delta];
-    $open = in_array($item->page_itemtype, $page_types) ? 1 : 0;
+    /** @var \Drupal\Core\Field\FieldItemBase $item */
+    $open = in_array($item->get('page_itemtype')->getValue(), $page_types) ? 1 : 0;
     $element += [
       '#type' => 'details',
       '#collapsible' => TRUE,
