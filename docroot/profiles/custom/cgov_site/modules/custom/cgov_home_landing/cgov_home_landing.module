@@ -5,6 +5,10 @@
  * Contains cgov_home_landing.module.
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
  /**
   * Implements hook_field_widget_form_alter().
   *
@@ -29,3 +33,22 @@ function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $cont
   }
 }
 
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * We need to filter out the paragraph list items that have no links.
+ * They can have no link because:
+ *   A) A content editor did not add a link to the list item.
+ *   B) An anon user is view the page and the link is unpublished.
+ *   C) Migrate entered a target_id, but it points to non-existant content.
+ */
+function cgov_home_landing_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  $bundle = $entity->bundle();
+
+  if ($bundle === 'ncids_promo_block_internal' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
+  }
+
+  // We have no skin in the game.
+  return AccessResult::neutral();
+}
