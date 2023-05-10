@@ -1,6 +1,9 @@
 {% if content.field_featured_item[0] %}
-  {% set featured_item_node = paragraph.field_featured_item.entity %}
-  {% set nid = featured_item_node.id %}
+  {# 
+   # The Field Formatter takes care of the translations of the featured item. featured_item_node should
+   # be used to call the featured item. 
+   #}
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
 
   {# ###### Setup Title ####### #}
   {% set title = paragraph.field_override_title.value %}
@@ -22,7 +25,7 @@
 
   {# Else no description #}
 
-  {% set url = path('entity.node.canonical', {'node' : nid}) %}
+  {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
   {# ###### Setup button classes and labels ####### #}
   {% set button_alt = paragraph.field_button_alt.value %}
 
