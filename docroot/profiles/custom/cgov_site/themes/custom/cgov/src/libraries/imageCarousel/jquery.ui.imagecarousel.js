@@ -78,6 +78,7 @@
             // Draw Controls
             this.controls.$prevButton = $('<button>', {
                 "class": 'previous',
+                "aria-label": this.options.previousText,
                 type: 'button'
             }).append('<span>', {
                 "class": "ic-arrow-button",
@@ -85,7 +86,9 @@
             })
 
             this.controls.$nextButton = $('<button>', {
-                "class": 'next'
+                "class": 'next',
+                "aria-label": this.options.nextText,
+                type: 'button'
             }).append('<span>', {
                 "class": "ic-arrow-button",
                 text: this.options.nextText
