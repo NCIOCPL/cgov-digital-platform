@@ -2,19 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_image_desc_guide_cards
-    - paragraphs.paragraphs_type.cgov_card_raw_html
+    - field.storage.paragraph.field_link_buttons
+    - paragraphs.paragraphs_type.ncids_link_button_external
     - paragraphs.paragraphs_type.ncids_guide_card_img_desc
-    - paragraphs.paragraphs_type.ncids_2_guide_card_row
+    - paragraphs.paragraphs_type.ncids_link_button_internal
   module:
     - entity_reference_revisions
-id: paragraph.ncids_2_guide_card_row.field_image_desc_guide_cards
-field_name: field_image_desc_guide_cards
+id: paragraph.ncids_guide_card_img_desc.field_link_buttons
+field_name: field_link_buttons
 entity_type: paragraph
-bundle: ncids_2_guide_card_row
-label: 'Cards'
-description: ''
-required: false
+bundle: ncids_guide_card_img_desc
+label: 'Links for Guide Card Buttons'
+description: 'The link buttons to display. Minimum of two, maximum of 6.'
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -22,8 +22,8 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      ncids_guide_card_img_desc: ncids_guide_card_img_desc
-      cgov_card_raw_html: cgov_card_raw_html
+      ncids_link_button_external: ncids_link_button_external
+      ncids_link_button_internal: ncids_link_button_internal
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -39,8 +39,8 @@ settings:
         weight: 37
         enabled: false
       cgov_card_raw_html:
-        weight: 70
-        enabled: true
+        weight: 38
+        enabled: false
       cgov_citation:
         weight: 39
         enabled: false
@@ -122,10 +122,13 @@ settings:
       ncids_feature_card_container:
         weight: 65
         enabled: false
-      ncids_guide_card_img_desc:
+      ncids_link_button_external:
+        weight: 67
+        enabled: true
+      ncids_link_button_internal:
         weight: 66
         enabled: true
       pdq_summary_section:
-        weight: 67
+        weight: 68
         enabled: false
 field_type: entity_reference_revisions
