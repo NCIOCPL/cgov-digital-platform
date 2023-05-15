@@ -1157,6 +1157,62 @@
   field_date_display_mode:
     - value: 'none'
 
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Guide Card Test"
+  title__ES:
+      value: "[Guide Card] Title - ES"
+  field_page_description:
+    value: "[Guide Card] Page Description"
+  field_page_description__ES:
+    value: "[Guide Card] Page Descriptiomn - ES"
+  field_feature_card_description:
+    value: "[Guide Card] Feature Card Description"
+  field_feature_card_description__ES:
+    value: "[Guide Card] Feature Card Description - ES"
+  field_browser_title:
+    value: "[Guide Card] Browser Title"
+  field_browser_title__ES:
+    value: "[Guide Card] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
 - entity: "media"
   bundle: "cgov_image" 
   name: "Promo Block Dog 1x1 Override" 
