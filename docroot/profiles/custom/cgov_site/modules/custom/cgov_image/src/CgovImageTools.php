@@ -31,6 +31,7 @@ class CgovImageTools {
       case "cgov_panoramic":
       case "ncids_featured_16x9":
       case "ncids_promo_16x9":
+      case "ncids_guide_card_16x9":
         return "16x9";
 
       case "cgov_thumbnail":
