@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_2_guide_card_row.field_image_desc_guide_cards
+    - paragraphs.paragraphs_type.ncids_2_guide_card_row
+  module:
+    - paragraphs
+id: paragraph.ncids_2_guide_card_row.default
+targetEntityType: paragraph
+bundle: ncids_2_guide_card_row
+mode: default
+content:
+  field_image_desc_guide_cards:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Card
+      title_plural: Cards
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
