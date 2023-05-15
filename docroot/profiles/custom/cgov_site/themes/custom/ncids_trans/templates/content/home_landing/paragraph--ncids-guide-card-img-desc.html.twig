@@ -7,15 +7,22 @@
 {# ###### Setup Img ######## #}
 {% set image = content.field_image_guide_card[0] %}
 
-<h2 class="nci-guide-card__header">{{ header }}</h2>
-<div class="nci-guide-card nci-guide-card--with-image-and-description">
+{# ###### Unqique header id for label ######## #}
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+{% set titleID = "#{entity_type}-#{id}" %}
+
+<h2 class="nci-guide-card__header" id="{{ titleID }}">{{ header }}</h2>
+<div aria-labelledby="{{ titleID }}"
+     class="nci-guide-card nci-guide-card--with-image-and-description"
+     data-eddl-landing-item="guide_card">
     <div class="nci-guide-card__wrapper">
         <picture class="nci-guide-card__image">
             {% set renderImage = image|render %}
             {% if renderImage %}
                 {{- image -}}
             {% else %}
-                <img src="{{ get_placeholder_image('ncids_guide_card_16x9') }}" alt="No Image Placeholder">				
+                <img src="{{ get_placeholder_image('ncids_guide_card_16x9') }}" alt="No Image Placeholder">
             {% endif %}
         </picture>
         <div class="nci-guide-card__body">
