@@ -2,13 +2,13 @@
 {% macro ncidsFeatureCard(title, description, image, url, directory, id, entity_type, link_type) %}
 	{% set renderImage = image|render %}
 	{% import _self as self %}
-    {% set titleID = "#{entity_type}-#{id}" %}
+  {% set titleID = "#{entity_type}-#{id}" %}
 	{# pass in node id? *check xdebug* aria-labelledby#}
 
 	<a href="{{ url }}" aria-labelledby="{{ titleID }}" data-eddl-landing-item="feature_card" data-eddl-landing-item-link-type="{{ link_type }}">
 		{{ self.imagePlaceholder(image, directory) }}
 		<div class="nci-card__body">
-			<span class="nci-card__title" id="{{titleID}}">{{ title }}</span>
+			<span class="nci-card__title" id="{{ titleID }}">{{ title }}</span>
 			{% if description %}
 				<p class="nci-card__description">{{ description }}</p>
 			{% endif %}

@@ -1,7 +1,7 @@
 {% if content.field_internal_link[0] %}
-  {# 
+  {#
    # The Field Formatter takes care of the translations of the featured item. featured_item_node should
-   # be used to call the featured item. 
+   # be used to call the featured item.
    #}
    {% set featured_item_node = content.field_internal_link[0]["#node"] %}
 
@@ -14,7 +14,10 @@
   {% endif %}
 
   {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
-  <a href="{{ url }}" alt="{{ paragraph.field_button_alt.value }}" class="usa-button usa-button--outline usa-button--secondary">
+  <a aria-label="{{ paragraph.field_button_alt.value }}"
+     class="usa-button usa-button--outline usa-button--secondary"
+     data-eddl-landing-item-link-type="Internal"
+     href="{{ url }}">
     {{ buttonText }}
   </a>
 {% endif %}
