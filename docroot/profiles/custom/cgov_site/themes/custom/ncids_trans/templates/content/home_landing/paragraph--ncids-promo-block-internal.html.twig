@@ -1,7 +1,7 @@
 {% if content.field_featured_item[0] %}
-  {# 
+  {#
    # The Field Formatter takes care of the translations of the featured item. featured_item_node should
-   # be used to call the featured item. 
+   # be used to call the featured item.
    #}
   {% set featured_item_node = content.field_featured_item[0]["#node"] %}
 
@@ -46,7 +46,7 @@
       {% set image = content.field_override_image_promotional %}
     {% endif %}
   {% endif %}
-  
+
   {# ###### Setup Theme ####### #}
   {% set promo_theme = paragraph.field_ncids_theme.value %}
   {% if promo_theme == 'light' %}
@@ -56,9 +56,10 @@
   {% set id = paragraph.id() %}
   {% set entity_type = paragraph.entityTypeID %}
   {% set titleID = "#{entity_type}-#{id}" %}
-  <section class="usa-section" aria-labelledby="{{ titleID }}">
+
+  <section class="usa-section" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
     <div class="tablet-lg:grid-container-widescreen">
-      <div class="nci-promo-block {{ image_position }} {{ promo_theme }}">
+      <div class="nci-promo-block {{ image_position }} {{ promo_theme }}" data-eddl-landing-item="promo_block">
         {% if image_position %}
           {{- image -}}
         {% endif %}
@@ -69,7 +70,7 @@
               {{ description }}
             </p>
           {% endif %}
-          <a class="usa-button usa-button--secondary" href="{{ url }}" aria-label="{{ button_alt }}">
+          <a class="usa-button usa-button--secondary" href="{{ url }}" aria-label="{{ button_alt }}" data-eddl-landing-item-link-type="Internal">
             {{ paragraph.field_button_text.value }}
           </a>
         </div>
