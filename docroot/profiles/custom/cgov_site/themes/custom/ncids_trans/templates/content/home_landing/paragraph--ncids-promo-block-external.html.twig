@@ -24,9 +24,9 @@
 {% set entity_type = paragraph.entityTypeID %}
 {% set titleID = "#{entity_type}-#{id}" %}
 
-<section class="usa-section" aria-labelledby="{{ titleID }}">
+<section class="usa-section" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
     <div class="tablet-lg:grid-container-widescreen">
-        <div class="nci-promo-block {{ image_position }} {{ promo_theme }}">
+        <div class="nci-promo-block {{ image_position }} {{ promo_theme }}" data-eddl-landing-item="promo_block">
             {% if image_position %}
                 {% set renderImage = image|render %}
                 {% if renderImage %}
@@ -38,7 +38,7 @@
                     %}
                     <picture class="nci-promo-block__image">
                         <source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_promo_1x1') }}">
-                        <img src="{{ get_placeholder_image('ncids_promo_16x9') }}" alt="No Image Placeholder">				
+                        <img src="{{ get_placeholder_image('ncids_promo_16x9') }}" alt="No Image Placeholder">
                     </picture>
                 {% endif %}
             {% endif %}
@@ -47,7 +47,7 @@
                 <p class="nci-promo-block__text">
                     {{ paragraph.field_override_description.value }}
                 </p>
-                <a class="usa-button usa-button--secondary" href="{{ externalUrl }}" aria-label="{{ button_alt }}">
+                <a class="usa-button usa-button--secondary" href="{{ externalUrl }}" aria-label="{{ button_alt }}" data-eddl-landing-item-link-type="External">
                     {{ paragraph.field_button_text.value }}
                 </a>
             </div>
