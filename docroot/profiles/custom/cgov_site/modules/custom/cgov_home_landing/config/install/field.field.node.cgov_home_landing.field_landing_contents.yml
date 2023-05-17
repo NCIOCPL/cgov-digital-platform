@@ -15,6 +15,7 @@ dependencies:
     - paragraphs.paragraphs_type.cgov_primary_feature_row
     - paragraphs.paragraphs_type.cgov_secondary_feature_row
     - paragraphs.paragraphs_type.cgov_title_first_feature_card_ro
+    - paragraphs.paragraphs_type.ncids_inline_video
   module:
     - entity_reference_revisions
 id: node.cgov_home_landing.field_landing_contents
@@ -42,6 +43,7 @@ settings:
       cgov_content_block: cgov_content_block
       cgov_card_borderless: cgov_card_borderless
       cgov_title_first_feature_card_ro: cgov_title_first_feature_card_ro
+      ncids_inline_video: ncids_inline_video
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -131,7 +133,10 @@ settings:
       cgov_two_item_feature_row:
         weight: 35
         enabled: false
-      pdq_summary_section:
+      ncids_inline_video:
         weight: 36
+        enabled: true
+      pdq_summary_section:
+        weight: 37
         enabled: false
 field_type: entity_reference_revisions
