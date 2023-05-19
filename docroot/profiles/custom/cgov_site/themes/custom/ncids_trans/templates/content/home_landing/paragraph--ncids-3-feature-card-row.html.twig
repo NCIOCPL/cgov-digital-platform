@@ -1,20 +1,13 @@
 {% if (content.field_row_cards['#items']|length > 0) %}
-  {% if content.field_container_heading[0] %}
-    <section class="usa-section usa-section--light cgdp-feature-card-row" data-eddl-landing-row>
-      <div class="grid-container">
-      {{ content.field_container_heading }}
-        <ul class="nci-card-group">
-          {{ content.field_row_cards }}
-        </ul>
-      </div>
-    </section>
-  {% else %}
-    <div class="usa-section usa-section--light cgdp-feature-card-row" data-eddl-landing-row>
-      <div class="grid-container">
-        <ul class="nci-card-group">
-          {{ content.field_row_cards }}
-        </ul>
-      </div>
+  {% set id = paragraph.id() %}
+  {% set entity_type = paragraph.entityTypeID %}
+  {% set heading_id = "#{entity_type}-#{id}-heading" %}
+  <section class="usa-section usa-section--light cgdp-feature-card-row" aria-labelledby="{{heading_id}}" data-eddl-landing-row>
+    <div class="grid-container">
+      <h2 id="{{heading_id}}" class="cgdp-feature-card-row__heading">{{ content.field_container_heading }}</h2>
+      <ul class="nci-card-group">
+        {{ content.field_row_cards }}
+      </ul>
     </div>
-  {% endif %}
+  </section>
 {% endif %}
