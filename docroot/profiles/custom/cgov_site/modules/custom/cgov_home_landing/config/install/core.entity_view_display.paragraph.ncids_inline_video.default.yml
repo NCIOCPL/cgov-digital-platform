@@ -4,8 +4,6 @@ dependencies:
   config:
     - field.field.paragraph.ncids_inline_video.field_featured_video
     - paragraphs.paragraphs_type.ncids_inline_video
-  module:
-    - entity_reference_revisions
 id: paragraph.ncids_inline_video.default
 targetEntityType: paragraph
 bundle: ncids_inline_video
@@ -15,8 +13,8 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: default
-      link: ''
+      view_mode: video_display_ncids_inline
+      link: false
     third_party_settings: {  }
     weight: 0
     region: content
