@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_video_browser
+    - field.field.paragraph.ncids_inline_video.field_featured_video
+    - paragraphs.paragraphs_type.ncids_inline_video
+  module:
+    - entity_browser
+    - paragraphs
+id: paragraph.ncids_inline_video.default
+targetEntityType: paragraph
+bundle: ncids_inline_video
+mode: default
+content:
+  field_featured_video:
+    type: entity_browser_entity_reference
+    weight: 0
+    region: content
+    settings:
+      entity_browser: cgov_video_browser
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings:
+        view_mode: entity_browser_selected_entity
+      selection_mode: selection_append
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true
+  
