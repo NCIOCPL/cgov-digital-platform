@@ -1,1 +1,0 @@
-import './ckeditor-trans.scss';
