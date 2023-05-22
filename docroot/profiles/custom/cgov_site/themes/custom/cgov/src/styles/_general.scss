@@ -480,19 +480,29 @@ div.previous-next-links {
   }
 }
 
-/* copying sub and sup styling from USWDS for use as nci classes */
-.sup,
-.sub {
-	font-size: 75%;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
-}
-.sub {
-    bottom: -.25em
-}
+
+/* fix for Chrome problem with rendering sup tags */
 .sup {
-    top: -.5em
+  font-size: 80%;
+  position: relative;
+  bottom: 0.6em;
+  vertical-align: text-top; //[WCMSFEQ-980] Added vertical-align:text-top to sup styling to remove white line appearing at bottom of pages in IE
+}
+.sub {
+  font-size: 80%;
+  position: relative;
+  bottom: -0.2em;
+}
+// NCIDS should not style the sub/sup elements as USWDS does that for us, but
+// we need these elements for cgov_common and for ckeditor.
+$generate-sub-sup-element-styles: true !default;
+@if $generate-sub-sup-element-styles {
+  sup {
+    @extend .sup;
+  }
+  sub {
+    @extend .sub;
+  }
 }
 
 /* BEGIN columns by css instead of tables */
