@@ -201,7 +201,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     // Remove querystring, if present (eg: path/image.jpg?h=98765az)
     $relative_imagestyle_uri = strtok($relative_imagestyle_uri, '?');
     // Add HTTP scheme (HTTP[S]) and hostname.
-    $absolute_imagestyle_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() . ltrim(base_path(), '/') . $relative_imagestyle_uri;
+    $absolute_imagestyle_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() . $relative_imagestyle_uri;
 
     // Get the filesystem path (not web path) to the imagestyle
     // file so we can get filesize.
@@ -329,7 +329,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $base_url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost() .
         ltrim(base_path(), '/');
 
-    $series_nid = $view->args[0];
+    $series_nid = !empty($view->args) ? $view->args[0] : '';
     $topic_tid = count($view->args) > 1 ? $view->args[1] : NULL;
 
     if ($series_nid) {
