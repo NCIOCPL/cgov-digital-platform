@@ -6,7 +6,9 @@
         {% set hr_attribs = create_attribute({}) %}
         {# @TODO: Change this to the nci- page title class when it is made #}
         <h1 {{hr_attribs.addClass('cgdp-title-area__page-title')}}>{{ node.label }}</h1>
-        <span class="cgdp-title-area__subheading">This is the page's tagline which may get up to multiple lines in length.</span>
+        {% if node.field_page_subheading.value %}
+          <span class="cgdp-title-area__subheading">{{ node.field_page_subheading.value }}</span>
+        {% endif %}
     </div>
   </div>
   {# End Title Row#}
