@@ -6,42 +6,78 @@
 @forward '../../lib/components/cgdp-guide-card-row';
 @use 'uswds-core' as *;
 
-.cgdp-title-area {
-    @include u-padding-y(6);
-    @include u-text('center');
-    .cgdp-title-area__subheading {
-        @include u-font(body, 8);
-
-        @include at-media(tablet-lg) {
-            @include u-font(body, 10);
-        }
-    }
+// The background of the home/landing is a light gray.
+main {
+	@include u-bg('base-lightest');
 }
 
-.cgdp-title-area__page-title {
-    //Might be 15 and 11?
-    @include u-font(heading, 10);
-
-    @include at-media(tablet-lg) {
-        @include u-font(heading, 12);
-    }
-}
- 
-//*Keep these two rules at the bottom of this file*
-// Special Rule for first usa-section
+// This is a special rule for the first item in the main container to give
+// similar visual spacing other items on the page. When a non-hero element is
+// the first item, it should get double spacing to not butt up against the nav.
+// Additionally when an item comes after the hero it should get double spacing
+// above as the hero has no padding/margain.
 $section-padding-height-double: 4;
 $section-padding-height-double-mobile: 3;
-main > .usa-section:nth-child(-n + 2):not(.nci-hero) {
+main > .usa-section:nth-child(-n + 2):not(.nci-hero, .usa-section--cgdp-no-top) {
 	@include u-padding-top($section-padding-height-double-mobile);
 	@include at-media('tablet') {
 		@include u-padding-top($section-padding-height-double);
 	}
 }
 
-// Special Rule for last page section
-main > section:last-of-type {
+// The last usa-section on the page will only visually have half the spacing,
+// so we need to add some padding underneath. This has some quirky edge cases,
+// but should be good for most. E.g., only a hero is on the page, that would
+// get half spacing. OR, the final element in the main does not use usa-section,
+// such as a badly made rawhtml block.
+main {
+	@include u-padding-bottom($theme-section-padding-height-mobile);
+	@include at-media('tablet') {
+		@include u-padding-bottom($theme-section-padding-height);
+	}
+}
+
+// Begin NCIDS Landing with Title Title and Tagline Styles
+.cgdp-title-area {
+	// Need a smidge more padding top?
+	@include u-text('center');
+
+	&__page-title {
+		//Might be 15 and 11?
+		@include u-font(heading, 'xl');
+		@include u-margin-top(3);
+		@include u-margin-bottom(0);
+
+		@include at-media(tablet-lg) {
+				@include u-font(heading, '3xl');
+		}
+	}
+
+	&__subheading {
+		@include u-display('block');
+		@include u-font(body, 'md');
+		@include u-margin-top(1);
+
+		@include at-media(tablet-lg) {
+			@include u-margin-top(1.5);
+			@include u-font(body, 'xl');
+		}
+	}
+}
+
+.usa-section--cgdp-white {
+	@include u-bg('white');
+}
+
+.usa-section--cgdp-no-top {
+	@include u-padding-top(0);
+}
+
+.usa-section--cgdp-double-bottom {
 	@include u-padding-bottom($section-padding-height-double-mobile);
 	@include at-media('tablet') {
 		@include u-padding-bottom($section-padding-height-double);
 	}
 }
+
+// End Title and Tagline Styles
