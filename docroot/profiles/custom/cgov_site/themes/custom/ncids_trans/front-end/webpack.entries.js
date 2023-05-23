@@ -46,4 +46,5 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/app-module/app-module.ts'
 	),
+	video: path.resolve(__dirname, 'src/entrypoints/video/video.ts'),
 };

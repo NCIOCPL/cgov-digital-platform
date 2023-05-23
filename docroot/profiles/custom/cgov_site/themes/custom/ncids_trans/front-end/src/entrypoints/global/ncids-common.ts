@@ -69,7 +69,6 @@ import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
 import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
 import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
-import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 import formControls from 'Core/libraries/formControls/formControls';
 import tooltips from 'Core/libraries/tooltips/referenceTooltip';
 
@@ -83,8 +82,7 @@ import sortablejs from 'Core/libraries/sortableTables';
 
 import DeepLinkPatch from 'Core/libraries/deepLinkPatch/deepLinkPatch';
 import linkAudioPlayer from 'Core/libraries/linkAudioPlayer/linkAudioPlayer';
-import videoCarousel from 'Core/libraries/videoCarousel/video-carousel';
-import { GoogleAPIKey } from 'Core/libraries/nciConfig/NCI.config';
+
 import glossaryPopups from 'Libraries/popups/glossaryPopups';
 import imageCarousel from 'Core/libraries/imageCarousel/image-carousel';
 import charts from 'Libraries/charts';
@@ -129,13 +127,6 @@ const onDOMContentLoaded = () => {
 	tableToggle();
 
 	/*** END table toggling ***/
-
-	/*** BEGIN video embedding
-	 * This enables the embedding of YouTube videos and playlists as iframes.
-	 ***/
-	flexVideo();
-
-	videoCarousel.apiInit(GoogleAPIKey);
 
 	/*** BEGIN form controls ***/
 	formControls();

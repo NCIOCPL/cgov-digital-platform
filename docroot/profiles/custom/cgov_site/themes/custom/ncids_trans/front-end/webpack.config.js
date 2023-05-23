@@ -28,13 +28,11 @@ module.exports = (env, argv) => {
 			// For some reason without the node_modules path, node_modules was not in the resolution
 			// paths. The is probably because the code sources are in a tree of folders outside of
 			// this module, meaning outside of our package.json.
-			modules: [
-				path.resolve(__dirname, '../src'),
-				path.resolve(__dirname, './node_modules'),
-			],
+			modules: [path.resolve(__dirname, '../src'), path.resolve(__dirname, './node_modules')],
 			alias,
 		},
 		externals: {
+			axios: 'axios',
 			jquery: 'jQuery',
 			jQuery: 'jQuery',
 			'jquery-ui': 'jQuery.ui',
@@ -50,10 +48,7 @@ module.exports = (env, argv) => {
 					test: /\.js$/,
 					use: 'babel-loader',
 					exclude: /node_modules/,
-					include: [
-						path.resolve(__dirname, '../../cgov/src'),
-						path.resolve(__dirname, '../../cgov/cgov_common/src'),
-					],
+					include: [path.resolve(__dirname, '../../cgov/src'), path.resolve(__dirname, '../../cgov/cgov_common/src')],
 				},
 				{
 					// Allow semi-legacy entry points. This stuff is going to
@@ -119,16 +114,7 @@ module.exports = (env, argv) => {
 							loader: 'sass-loader',
 							options: {
 								sassOptions: {
-									includePaths: [
-										path.resolve(
-											__dirname,
-											'./node_modules/@nciocpl/ncids-css/packages'
-										),
-										path.resolve(
-											__dirname,
-											'./node_modules/@nciocpl/ncids-css/uswds-packages'
-										),
-									],
+									includePaths: [path.resolve(__dirname, './node_modules/@nciocpl/ncids-css/packages'), path.resolve(__dirname, './node_modules/@nciocpl/ncids-css/uswds-packages')],
 									sourceMap: true,
 								},
 							},
@@ -199,6 +185,13 @@ module.exports = (env, argv) => {
 				patterns: [
 					{
 						from: path.resolve(__dirname, './static/js'),
+						to: './js',
+					},
+					{
+						from: path.resolve(
+							__dirname,
+							'node_modules/axios/dist/axios.min.js'
+						),
 						to: './js',
 					},
 					{
