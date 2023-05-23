@@ -56,11 +56,11 @@ jobs:
           REPO_OWNER=$(echo "${BASH_REMATCH[1]}")
           REPO_NAME=$(echo "${BASH_REMATCH[2]}")
           ## Set step outputs for later use
-          echo ::set-output name=build_name::${BUILD_NAME}
-          echo ::set-output name=branch_name::${BRANCH_NAME}
-          echo ::set-output name=commit_hash::${COMMIT_HASH}
-          echo ::set-output name=repo_owner::${REPO_OWNER}
-          echo ::set-output name=repo_name::${REPO_NAME}
+          echo "build_name=${BUILD_NAME}" >> $GITHUB_OUTPUT
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
+          echo "repo_owner=${REPO_OWNER}" >> $GITHUB_OUTPUT
+          echo "repo_name=${REPO_NAME}" >> $GITHUB_OUTPUT
       ## This clones and checks out.
       - name: Checkout branch from Github
         uses: actions/checkout@v2
@@ -86,7 +86,7 @@ jobs:
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
