@@ -1,0 +1,9 @@
+{% if items | length > 0 %}
+  <ul class="nci-cta-strip">
+    {% for item in items %}
+    <li>
+      {{ item.content }}
+    </li>
+    {% endfor %}
+  </ul>
+{% endif %}
