@@ -1,10 +1,14 @@
-{# Title Row #}
-<div class="cgdp-title-area">
-    {% set hr_attribs = create_attribute({}) %}
-    {# @TODO: Change this to the nci- page title class when it is made #}
-    <h1 {{hr_attribs.addClass('cgdp-title-area__page-title')}}>{{ node.label }}</h1>
-    <span class="cgdp-title-area__subheading">This is the page's tagline which may get up to multiple lines in length.</span>
-</div>
-{# End Title Row#}
-{{content.field_landing_contents}}
-
+<!-- Begin MAIN CONTENT AREA -->
+<main class="main-content type {{ page_type }}" id="main-content">
+  {# Title Row #}
+  <div class="usa-section usa-section--cgdp-no-top usa-section--cgdp-double-bottom">
+    <div class="grid-container cgdp-title-area">
+        {% set hr_attribs = create_attribute({}) %}
+        {# @TODO: Change this to the nci- page title class when it is made #}
+        <h1 {{hr_attribs.addClass('cgdp-title-area__page-title')}}>{{ node.label }}</h1>
+        <span class="cgdp-title-area__subheading">This is the page's tagline which may get up to multiple lines in length.</span>
+    </div>
+  </div>
+  {# End Title Row#}
+  {{content.field_landing_contents}}
+</main>
