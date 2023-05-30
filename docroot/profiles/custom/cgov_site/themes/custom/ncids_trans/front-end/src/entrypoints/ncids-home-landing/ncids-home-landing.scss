@@ -6,42 +6,57 @@
 @forward '../../lib/components/cgdp-guide-card-row';
 @use 'uswds-core' as *;
 
+// R2.1 Spacing Fix:
+// We are reducing spacing between two components that have the same 
+// usa-section--<color_theme>. By reducing the margin and adding padding above the
+// component, we are able to preserve the boxshadow on the components and
+// have correct spacing between components. 
+// Note: This rule is applied IF the row element has the same usa-section--<color_theme> 
+$section-padding-height-mobile-half: 1.5;
+$section-padding-height-half: 2;
+.usa-section--light + .usa-section--light,
+.usa-section--dark + .usa-section--dark,
+.usa-section:not(.usa-section--light, .usa-section--dark) + .usa-section:not(.usa-section--light, .usa-section--dark) {
+    @include u-margin-top(-$section-padding-height-mobile-half);
+    @include u-padding-top($section-padding-height-mobile-half);
+    @include at-media('tablet') {
+        @include u-margin-top(-$section-padding-height-half);
+        @include u-padding-top($section-padding-height-half);
+    }
+}
+// End R2.1 Spacing Fix
+
+// Begin NCIDS Landing with Title Title and Tagline Styles
 .cgdp-title-area {
-    @include u-padding-y(6);
+    // Need a smidge more padding top?
     @include u-text('center');
-    .cgdp-title-area__subheading {
-        @include u-font(body, 8);
+
+    &__page-title {
+        //Might be 15 and 11?
+        @include u-font(heading, 'xl');
+        @include u-margin-top(3);
+        @include u-margin-bottom(0);
 
         @include at-media(tablet-lg) {
-            @include u-font(body, 10);
+                @include u-font(heading, '3xl');
+        }
+    }
+
+    &__subheading {
+        @include u-display('block');
+        @include u-font(body, 'md');
+        @include u-margin-top(1);
+
+        @include at-media(tablet-lg) {
+            @include u-margin-top(1.5);
+            @include u-font(body, 'xl');
         }
     }
 }
+// End Title and Tagline Styles
 
-.cgdp-title-area__page-title {
-    //Might be 15 and 11?
-    @include u-font(heading, 10);
-
-    @include at-media(tablet-lg) {
-        @include u-font(heading, 12);
-    }
-}
- 
-//*Keep these two rules at the bottom of this file*
-// Special Rule for first usa-section
-$section-padding-height-double: 4;
-$section-padding-height-double-mobile: 3;
-main > .usa-section:nth-child(-n + 2):not(.nci-hero) {
-	@include u-padding-top($section-padding-height-double-mobile);
-	@include at-media('tablet') {
-		@include u-padding-top($section-padding-height-double);
-	}
-}
-
-// Special Rule for last page section
-main > section:last-of-type {
-	@include u-padding-bottom($section-padding-height-double-mobile);
-	@include at-media('tablet') {
-		@include u-padding-bottom($section-padding-height-double);
-	}
+// Removes padding from NCIDS with title's title and subheading container
+// and from the NCIDS Hero
+.usa-section--cgdp-no-top {
+    @include u-padding-top(0);
 }

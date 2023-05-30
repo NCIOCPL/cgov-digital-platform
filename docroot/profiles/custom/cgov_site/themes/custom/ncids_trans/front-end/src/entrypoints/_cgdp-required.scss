@@ -9,6 +9,13 @@
  * vars and mixins.
  * ------------------------------------------------------------------------- */
 
+// These are USWDS setting overrides for different scss entry points. These
+// overrides should default to the NCIDS/USWDS defaults. (or future defaults
+// in the event of a bug or change request)
+// Please name these $override-<theme_setting_name>.
+$override-theme-section-padding-height: 4 !default;
+$override-theme-section-padding-height-mobile: 3 !default;
+
 @use "uswds-core" with (
 	$theme-image-path: "@nciocpl/ncids-css/uswds-img",
 	$theme-show-notifications: false,
@@ -23,5 +30,7 @@
 		"desktop": true,
 		"desktop-lg": false,
 		"widescreen": true
-	)
+	),
+	$theme-section-padding-height: $override-theme-section-padding-height,
+	$theme-section-padding-height-mobile: $override-theme-section-padding-height-mobile,
 );
