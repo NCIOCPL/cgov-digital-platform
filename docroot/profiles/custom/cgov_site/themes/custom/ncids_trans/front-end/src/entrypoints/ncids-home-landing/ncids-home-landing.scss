@@ -8,11 +8,6 @@
 @forward '../../lib/components/nci-hero';
 @use 'uswds-core' as *;
 
-// The background of the home/landing is a light gray.
-main {
-	@include u-bg('base-lightest');
-}
-
 // This is a special rule for the first item in the main container to give
 // similar visual spacing other items on the page. When a non-hero element is
 // the first item, it should get double spacing to not butt up against the nav.
@@ -27,32 +22,63 @@ main {
 // 		@include u-padding-top($section-padding-height-double);
 // 	}
 // }
-$section-padding-height-double: 4;
-$section-padding-height-double-mobile: 3;
-main > .usa-section:nth-child(-n + 1):not(.usa-section--cgdp-no-top) {
-	@include u-padding-top($section-padding-height-double-mobile);
+//$section-padding-height-double: 4;
+//$section-padding-height-double-mobile: 3;
+// main > .usa-section:nth-child(-n + 1):not(.usa-section--cgdp-no-top) {
+// 	@include u-padding-top($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-top($section-padding-height-double);
+// 	}
+// }
+
+// main > .usa-section:nth-last-child(-n + 1) {
+// 	@include u-padding-bottom($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-bottom($section-padding-height-double);
+// 	}
+// }
+
+// .usa-section:not(.nci-hero--cgdp-hero) {
+// 	@include u-padding-top($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-top($section-padding-height-double);
+// 	}
+// 	@include u-padding-bottom($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-bottom($section-padding-height-double);
+// 	}
+// }
+
+.usa-section--light + .usa-section--light,
+.usa-section--dark + .usa-section--dark, 
+.usa-section:not(.usa-section--light, .usa-section--dark) + .usa-section.usa-section:not(.usa-section--light, .usa-section--dark) {	
+	@include u-margin-top(-$theme-section-padding-height-mobile);
 	@include at-media('tablet') {
-		@include u-padding-top($section-padding-height-double);
+		@include u-margin-top(-$theme-section-padding-height);
 	}
 }
 
-main > .usa-section:nth-child(-n + 1):not(.usa-section--cgdp-no-top):has(ul.nci-cta-strip) {
-	@include u-padding-bottom($section-padding-height-double-mobile);
-	@include at-media('tablet') {
-		@include u-padding-bottom($section-padding-height-double);
-	}
+.usa-section--cgdp-no-top {
+	@include u-padding-top(0);
 }
+
+// main > .usa-section:nth-child(-n + 1):not(.usa-section--cgdp-no-top):has(ul.nci-cta-strip) {
+// 	@include u-padding-bottom($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-bottom($section-padding-height-double);
+// 	}
+// }
 // The last usa-section on the page will only visually have half the spacing,
 // so we need to add some padding underneath. This has some quirky edge cases,
 // but should be good for most. E.g., only a hero is on the page, that would
 // get half spacing. OR, the final element in the main does not use usa-section,
 // such as a badly made rawhtml block.
-main {
-	@include u-padding-bottom($theme-section-padding-height-mobile);
-	@include at-media('tablet') {
-		@include u-padding-bottom($theme-section-padding-height);
-	}
-}
+// main {
+// 	@include u-padding-bottom($theme-section-padding-height-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-bottom($theme-section-padding-height);
+// 	}
+// }
 
 // Begin NCIDS Landing with Title Title and Tagline Styles
 .cgdp-title-area {
@@ -82,19 +108,16 @@ main {
 	}
 }
 
-.usa-section--cgdp-white {
-	@include u-bg('white');
-}
+// .usa-section--cgdp-white {
+// 	@include u-bg('white');
+// }
 
-.usa-section--cgdp-no-top {
-	@include u-padding-top(0);
-}
 
-.usa-section--cgdp-double-bottom {
-	@include u-padding-bottom($section-padding-height-double-mobile);
-	@include at-media('tablet') {
-		@include u-padding-bottom($section-padding-height-double);
-	}
-}
+// .usa-section--cgdp-double-bottom {
+// 	@include u-padding-bottom($section-padding-height-double-mobile);
+// 	@include at-media('tablet') {
+// 		@include u-padding-bottom($section-padding-height-double);
+// 	}
+// }
 
 // End Title and Tagline Styles
