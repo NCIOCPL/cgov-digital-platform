@@ -1,0 +1,212 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Hero with Button Test Page"
+  title__ES:
+      value: "NCIDS Spanish Hero with Button Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_page_subheading:
+    value: "Subheading Test"
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-hero-button-test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_with_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'NCI is the nation''s leader in cancer research'
+      field_link_button:
+        - entity: 'paragraph' 
+          type: "ncids_link_button_internal"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+          field_button_alt:
+            - value: "Internal Button Alt Text"
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'widescreen.jpg'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'desktop.jpg'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet_large.jpg'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet.jpg'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile_large.jpg'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile.jpg'
+    - entity: 'paragraph'
+      type: "ncids_promo_block_internal"
+      field_ncids_theme:
+        - value: "nci-promo-block--dark"
+      field_image_position_promo:
+        - value: "left" 
+      field_override_title:
+        - value: 'NCI Bottom Line: A Blog about Grants and More'
+      field_override_description:
+        - value: 'Stay informed about NCI grants and funding policies.'
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Feelings and Cancer'
+      field_button_text:
+        - value: 'Read the Blog'
+      field_button_alt:
+        - value: 'Button Alt Text'  
+    - entity: 'paragraph'
+      type: "ncids_promo_block_internal"
+      field_ncids_theme:
+        - value: "nci-promo-block--dark"
+      field_image_position_promo:
+        - value: "nci-alternating-right" 
+      field_override_title:
+        - value: 'Find funding for training with out new chatbot'
+      field_override_description:
+        - value: 'Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate et velit'
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Guide Card Test'
+      field_button_text:
+        - value: 'Get Started'
+      field_button_alt:
+        - value: 'Button Alt Text'  
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'El NCI es el líder nacional de investigación del cáncer'
+      field_link_button:
+        - entity: 'paragraph' 
+          type: "ncids_link_button_internal"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+          field_button_alt:
+            - value: "Internal Button Alt Text"
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'widescreen.jpg'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'desktop.jpg'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet_large.jpg'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet.jpg'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile_large.jpg'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile.jpg'
+    ######## End Placeholder ############
