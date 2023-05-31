@@ -41,7 +41,7 @@ export const landingClickTracker = (
 	linkText: string,
 	linkArea: string,
 	totalLinks: number,
-	linkPosition: number
+	linkPosition: number | string
 ) => {
 	/** Total number of rows on the landing page overall. */
 	const pageRows = Array.from(
