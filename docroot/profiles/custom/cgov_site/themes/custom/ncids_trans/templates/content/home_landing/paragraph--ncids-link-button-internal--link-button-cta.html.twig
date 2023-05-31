@@ -1,7 +1,7 @@
 {% if content.field_internal_link[0] %}
-  {# 
+  {#
    # The Field Formatter takes care of the translations of the featured item. featured_item_node should
-   # be used to call the featured item. 
+   # be used to call the featured item.
    #}
    {% set featured_item_node = content.field_internal_link[0]["#node"] %}
 
@@ -21,7 +21,7 @@
     })
     %}
   {% endif %}
-  <a href="{{ url }}" {{ ariaAttribs }} class="usa-button">
+  <a href="{{ url }}" {{ ariaAttribs }} class="usa-button" data-eddl-landing-item-link-type="Internal">
     {{ buttonText }}
   </a>
 {% endif %}
