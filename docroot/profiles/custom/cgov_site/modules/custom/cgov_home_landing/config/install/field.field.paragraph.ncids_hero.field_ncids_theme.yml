@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_ncids_theme
+    - paragraphs.paragraphs_type.ncids_hero
+  module:
+    - options
+id: paragraph.ncids_hero.field_ncids_theme
+field_name: field_ncids_theme
+entity_type: paragraph
+bundle: ncids_hero
+label: Theme
+description: 'Changes the background color of the tagline box. Consider color contrast with hero background image.'
+required: true
+translatable: false
+default_value:
+  -
+    value: light
+default_value_callback: ''
+settings: {  }
+field_type: list_string

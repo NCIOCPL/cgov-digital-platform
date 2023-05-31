@@ -1,0 +1,9 @@
+{% if paragraph.field_button_alt.value %}
+    {% set ariaAttribs = create_attribute({
+        'aria-label': paragraph.field_button_alt.value
+    })
+    %}
+{% endif %}
+<a href="{{ paragraph.field_external_link.uri }}" {{ ariaAttribs }} class="nci-hero__cta-button usa-button">
+    {{ paragraph.field_button_text.value }}
+</a>
