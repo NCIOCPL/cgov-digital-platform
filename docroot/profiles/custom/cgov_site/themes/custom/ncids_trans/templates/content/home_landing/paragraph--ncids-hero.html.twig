@@ -25,8 +25,8 @@
 {% if content.field_link_button[0] %}
   {% set buttonClassName = "nci-hero__cta--with-button" %}
 {% endif %}
-<section class="usa-section usa-section--light usa-section--cgdp-no-top" aria-labelledby="{{ titleID }}">
-  <div class="nci-hero {{ ctaClassName }}">
+<section class="usa-section usa-section--light usa-section--cgdp-no-top" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
+  <div class="nci-hero {{ ctaClassName }}" data-eddl-landing-item="hero">
     <picture class="nci-hero__image">
       <source media='(min-width: 1024px)' srcset="{{ widescreenSrc }}">
       <source media='(min-width: 880px)' srcset="{{ desktopSrc }}">
