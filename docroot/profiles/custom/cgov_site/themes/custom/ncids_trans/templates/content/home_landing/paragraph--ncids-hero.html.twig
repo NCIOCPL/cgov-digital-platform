@@ -1,0 +1,52 @@
+{% if content.field_widescreen_hero[0] %}
+  {% set widescreenSrc = file_url(content.field_widescreen_hero['#items'].entity.uri.value) %}
+{% endif %}
+{% if content.field_desktop_hero[0] %}
+  {% set desktopSrc = file_url(content.field_desktop_hero['#items'].entity.uri.value) %}
+{% endif %}
+{% if content.field_tablet_large_hero[0] %}
+  {% set tabletlgSrc = file_url(content.field_tablet_large_hero['#items'].entity.uri.value) %}
+{% endif %}
+{% if content.field_tablet_hero[0] %}
+  {% set tabletSrc = file_url(content.field_tablet_hero['#items'].entity.uri.value) %}
+{% endif %}
+{% if content.field_mobile_large_hero[0] %}
+  {% set mobilelgSrc = file_url(content.field_mobile_large_hero['#items'].entity.uri.value) %}
+{% endif %}
+{% set image_mobile = content.field_mobile_hero[0] %}
+
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+{% set titleID = "#{entity_type}-#{id}" %}
+
+{% if content.field_cta_link_buttons[0] %}
+  {% set ctaClassName = "nci-hero--with-cta-strip" %}
+{% endif %}
+{% if content.field_link_button[0] %}
+  {% set buttonClassName = "nci-hero__cta--with-button" %}
+{% endif %}
+<section class="usa-section usa-section--light usa-section--cgdp-no-top" aria-labelledby="{{ titleID }}">
+  <div class="nci-hero {{ ctaClassName }}">
+    <picture class="nci-hero__image">
+      <source media='(min-width: 1024px)' srcset="{{ widescreenSrc }}">
+      <source media='(min-width: 880px)' srcset="{{ desktopSrc }}">
+      <source media='(min-width: 640px)' srcset="{{ tabletlgSrc }}">
+      <source media='(min-width: 480px)' srcset="{{ tabletSrc }}">
+      <source media='(min-width: 320px)' srcset="{{ mobilelgSrc }}">
+      {{- image_mobile -}}
+    </picture>
+    <div class="nci-hero__cta-container">
+      <div class="nci-hero__cta {{ buttonClassName }}">
+        <h2 class="nci-hero__cta-tagline" id="{{ id }}">{{ paragraph.field_tagline.value }}</h2>
+        {{ content.field_link_button }}
+      </div>
+    </div>
+    {% if content.field_cta_link_buttons[0] %}
+      <div class="nci-hero__nci-cta-strip-container">
+        <div class="grid-container">
+          {{ content.field_cta_link_buttons }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>

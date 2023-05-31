@@ -1,1 +1,23 @@
 @forward 'nci-cta-strip';
+@use 'uswds-core' as *;
+
+// This is a workaround for the CTA Strip styling in a hero to remove
+// usa-section from the CTA Strip. We are manually applying usa-section
+// styling to the CTA Strip until we remove it from the DS.
+// {ToDo} Remove once the DS ticket #1013 has been completed.
+.nci-cta-strip {
+    background-color: #06162d;
+    color: color($theme-text-reverse-color);
+
+    a {
+        color: color($theme-link-reverse-color);
+    
+        &:hover {
+          color: color($theme-link-reverse-hover-color);
+        }
+    
+        &:active {
+          color: color($theme-link-reverse-active-color);
+        }
+    }
+}
