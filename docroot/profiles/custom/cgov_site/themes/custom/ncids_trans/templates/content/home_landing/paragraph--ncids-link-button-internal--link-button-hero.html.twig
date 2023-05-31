@@ -1,0 +1,27 @@
+{% if content.field_internal_link[0] %}
+  {# 
+   # The Field Formatter takes care of the translations of the featured item. featured_item_node should
+   # be used to call the featured item. 
+   #}
+   {% set featured_item_node = content.field_internal_link[0]["#node"] %}
+
+  {% set buttonText = paragraph.field_button_text.value %}
+  {% if buttonText is empty %}
+    {% set buttonText = featured_item_node.field_card_title[0].value %}
+    {% if buttonText is empty %}
+      {% set buttonText = featured_item_node.field_browser_title[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
+
+  {% if paragraph.field_button_alt.value %}
+    {% set ariaAttribs = create_attribute({
+        'aria-label': paragraph.field_button_alt.value
+    })
+    %}
+  {% endif %}
+  <a href="{{ url }}" {{ ariaAttribs }} class="nci-hero__cta-button usa-button">
+    {{ buttonText }}
+  </a>
+{% endif %}
