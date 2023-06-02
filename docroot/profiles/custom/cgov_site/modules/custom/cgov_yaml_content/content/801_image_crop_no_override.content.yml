@@ -1,0 +1,187 @@
+#######
+# TESTS:
+# Image with crops and no thumbnail override
+# Same Translated Image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "gratisography-colorful-kittenfree"
+  name__ES:
+    value: "gratisography-colorful-kittenfree - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'gratisography-colorful-kittenfree.jpg'
+      alt: 'gratisography-colorful-kittenfree'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 798
+                height: 525
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 98
+                y: 0
+                width: 700
+                height: 525
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 49
+                y: 0
+                width: 700
+                height: 525
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 404
+                y: 0
+                width: 393
+                height: 525
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 231
+                y: 0
+                width: 525
+                height: 525
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 798
+                height: 449
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 180
+                y: 0
+                width: 295
+                height: 525
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+## RSS feed Blog Post pages
+## Blog post Lead Image with No Override and No Promo
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post Lead Image with No Override and No Promo"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post Lead Image with No Override and No Promo'
+  field_feature_card_description:
+    value: 'Blog post Lead Image with No Override and No Promo'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'gratisography-colorful-kittenfree'
+  field_image_promotional:
+  field_list_description:
+  field_page_description:
+    value: 'Blog post Lead Image with No Override and No Promo'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post Lead Image with No Override and No Promo
+  title__ES:
+    value: "Blog post Lead Image with No Override and No Promo ES"
+  field_browser_title__ES:
+    value: 'Blog post Lead Image with No Override and No Promo ES'
+  field_page_description__ES:
+    value: 'Blog post Lead Image with No Override and No Promo ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+## Blog post No Lead Image and Promo Image No Overrides
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post No Lead Image and Promo Image No Overrides"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post No Lead Image and Promo Image No Overrides'
+  field_feature_card_description:
+    value: 'Blog post No Lead Image and Promo Image No Overrides'
+  field_image_article:
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'gratisography-colorful-kittenfree'
+  field_list_description:
+  field_page_description:
+    value: 'Blog post No Lead Image and Promo Image No Overrides'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post No Lead Image and Promo Image No Overrides
+  title__ES:
+    value: "Blog post No Lead Image and Promo Image No Overrides ES"
+  field_browser_title__ES:
+    value: 'Blog post No Lead Image and Promo Image No Overrides ES'
+  field_page_description__ES:
+    value: 'Blog post No Lead Image and Promo Image No Overrides ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+
+

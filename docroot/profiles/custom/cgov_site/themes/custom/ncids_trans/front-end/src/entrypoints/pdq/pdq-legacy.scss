@@ -370,8 +370,13 @@ table.drug-combination {
   }
 }
 
+// Bugfix 3818 - ncids normalization causes scrollbars because of changed lineheight
+// clear the float and change overflow auto to remove scrollbar
+// changes mirrored for ckeditor
 .two-columns.brand-fda {
   width: 60%;
+  overflow: hidden;
+  clear: both;
 }
 
 .brand-fda .column1 {

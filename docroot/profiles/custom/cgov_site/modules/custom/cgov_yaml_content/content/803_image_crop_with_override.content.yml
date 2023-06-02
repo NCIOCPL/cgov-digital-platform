@@ -1,0 +1,244 @@
+#######
+# TESTS:
+# Image with crops and thumbnail override
+# Same Translated Image
+#
+- entity: "media"
+  bundle: "cgov_image"
+  name: "beautiful rain forest"
+  name__ES:
+    value: "beautiful rain forest - ES"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'beautiful-rain-forest.jpg'
+      alt: 'beautiful rain forest'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 798
+                height: 533
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 43
+                y: 0
+                width: 710
+                height: 533
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 44
+                y: 0
+                width: 710
+                height: 533
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 199
+                y: 0
+                width: 399
+                height: 533
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 132
+                y: 0
+                width: 533
+                height: 533
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 41
+                width: 798
+                height: 449
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 249
+                y: 0
+                width: 299
+                height: 533
+  field_override_img_thumbnail:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'abstract-color-wood-bridge-hill-rain-forest.jpg'
+      alt: 'abstract color wood bridge hill rain forest'
+  field_credit:
+    value: "iStock"
+  field_credit__ES:
+    value: ""
+## RSS feed Blog Post pages
+## Blog post Lead Image and Promo Image With Overrides
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post Lead Image and Promo Image With Overrides"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post Lead Image and Promo Image With Overrides'
+  field_feature_card_description:
+    value: 'Blog post Lead Image and Promo Image With Overrides'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'beautiful rain forest'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'beautiful rain forest'
+  field_list_description:
+  field_page_description:
+    value: 'Blog post Lead Image and Promo Image With Overrides'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post Lead Image and Promo Image With Overrides
+  title__ES:
+    value: "Blog post Lead Image and Promo Image With Overrides ES"
+  field_browser_title__ES:
+    value: 'Blog post Lead Image and Promo Image With Overrides ES'
+  field_page_description__ES:
+    value: 'Blog post Lead Image and Promo Image With Overrides ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+## Blog post No Lead Image and Promo Image With Overrides
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog post No Lead Image and Promo Image With Overrides"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog post No Lead Image and Promo Image With Overrides'
+  field_feature_card_description:
+    value: 'Blog post No Lead Image and Promo Image With Overrides'
+  field_image_article:
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'beautiful rain forest'
+  field_list_description:
+  field_page_description:
+    value: 'Blog post No Lead Image and Promo Image With Overridess'
+  field_date_posted:
+    value: "2023-05-05"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog post No Lead Image and Promo Image With Overrides
+  title__ES:
+    value: "Blog post No Lead Image and Promo Image With Overrides ES"
+  field_browser_title__ES:
+    value: 'Blog post No Lead Image and Promo Image With Overrides ES'
+  field_page_description__ES:
+    value: 'Blog post No Lead Image and Promo Image With Overrides ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+## Blog Post No Lead and No Promo ( Posted date older than published)
+- entity: "node"
+  type: "cgov_blog_post"
+  title:
+    value: "Blog Post No Lead and No Promo"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Blog Series for promo image edge cases'
+  body:
+  field_browser_title:
+    value: 'Blog Post No Lead and No Promo'
+  field_feature_card_description:
+    value: 'Blog Post No Lead and No Promo'
+  field_image_article:
+  field_image_promotional:
+  field_list_description:
+  field_page_description:
+    value: 'Blog Post No Lead and No Promo'
+  field_date_posted:
+    value: "2019-01-09"
+  field_pretty_url:
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_blog_topics:
+  ## Espanol Blog Post No Lead and No Promo
+  title__ES:
+    value: "Blog Post No Lead and No Promo ES"
+  field_browser_title__ES:
+    value: 'Blog Post No Lead and No Promo ES'
+  field_page_description__ES:
+    value: 'Blog Post No Lead and No Promo ES'
+  field_search_engine_restrictions__ES:
+    value: IncludeSearch
+
