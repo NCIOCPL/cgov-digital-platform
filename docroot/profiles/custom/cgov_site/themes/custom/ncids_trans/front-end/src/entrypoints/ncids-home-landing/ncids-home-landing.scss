@@ -7,14 +7,79 @@
 @forward '../../lib/components/nci-cta-strip';
 @forward '../../lib/components/nci-hero';
 @forward '../../lib/components/cgdp-inline-video';
+
+/* ------------------------------------------------------------------------- */
+/* Output select utility classes for raw html blocks                         */
+/* ------------------------------------------------------------------------- */
+@use 'uswds-core';
+uswds-core.$output-these-utilities: (
+	'padding',
+	'box-shadow',
+	'font',
+	'background-color',
+	'font-weight',
+	'border-color',
+	'line-height',
+	'justify-content',
+);
+// Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
+// the smallest possible aspect classes.
+uswds-core.$add-aspect-settings: (
+  output: false,
+  responsive: false,
+  active: false,
+  focus: false,
+  hover: false,
+  visited: false,
+);
+uswds-core.$background-color-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false, // Undo default
+	visited: false,
+);
+uswds-core.$box-shadow-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false, // Undo default
+	visited: false,
+);
+uswds-core.$border-color-settings: (
+	output: true,
+	responsive: false, // Undo default
+	active: false,
+	focus: false,
+	hover: false, // Undo default
+	visited: false,
+);
+uswds-core.$justify-content-settings: (
+	output: true,
+	responsive: true, // Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false,
+);
+
+@forward "uswds-utilities";
+/* ------------------------------------------------------------------------- */
+/* End utility classes for raw html blocks                                   */
+/* ------------------------------------------------------------------------- */
+
+// We re-import core so that we do not need to namespace core for every call
+// below.
 @use 'uswds-core' as *;
 
 // R2.1 Spacing Fix:
-// We are reducing spacing between two components that have the same 
+// We are reducing spacing between two components that have the same
 // usa-section--<color_theme>. By reducing the margin and adding padding above the
 // component, we are able to preserve the boxshadow on the components and
-// have correct spacing between components. 
-// Note: This rule is applied IF the row element has the same usa-section--<color_theme> 
+// have correct spacing between components.
+// Note: This rule is applied IF the row element has the same usa-section--<color_theme>
 $section-padding-height-mobile-half: 1.5;
 $section-padding-height-half: 2;
 .usa-section--light + .usa-section--light,
