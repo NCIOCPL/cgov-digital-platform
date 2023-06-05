@@ -20,6 +20,9 @@
 {% set externalUrl = paragraph.field_featured_url.uri %}
 {% set button_alt = paragraph.field_button_alt.value %}
 
+{# ###### Setup Description ####### #}
+{% set description = paragraph.field_override_description.value %}
+
 {% set id = paragraph.id() %}
 {% set entity_type = paragraph.entityTypeID %}
 {% set titleID = "#{entity_type}-#{id}" %}
@@ -44,9 +47,11 @@
             {% endif %}
             <div class="nci-promo-block__content">
                 <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ paragraph.field_override_title.value }}</h2>
-                <p class="nci-promo-block__text">
-                    {{ paragraph.field_override_description.value }}
-                </p>
+                {% if description %}
+                    <p class="nci-promo-block__text">
+                        {{ description }}
+                    </p>
+                {% endif %}
                 <a class="usa-button usa-button--secondary" href="{{ externalUrl }}" aria-label="{{ button_alt }}" data-eddl-landing-item-link-type="External">
                     {{ paragraph.field_button_text.value }}
                 </a>
