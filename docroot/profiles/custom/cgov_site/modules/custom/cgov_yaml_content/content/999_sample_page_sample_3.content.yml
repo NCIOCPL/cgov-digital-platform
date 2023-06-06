@@ -1,0 +1,555 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "This is My Landing Page Title"
+  title__ES:
+      value: "Landing Page with Title - Spanish"
+  field_page_description:
+    value: "Landing Page with Title Meta Description"
+  field_page_description__ES:
+    value: "Landing Page with Title Meta Description - Spanish"
+  field_browser_title:
+    value: "Landing Page with Title"
+  field_browser_title__ES:
+    value: "Landing Page with Title - Spanish"
+  field_pretty_url:
+    value: "sample-page-3"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_with_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'This is my homepage hero tagline'
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-wide.png'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-desktop.png'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-tabletlarge.png'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-tablet.png'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-mobilelarge.png'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-mobile.png'
+    - entity: 'paragraph'
+      type: "ncids_2_guide_card_row"
+      field_image_desc_guide_cards:
+        - entity: 'paragraph'
+          type: "ncids_guide_card_img_desc"
+          field_container_heading:
+            - value: "NCI Research Areas"
+          field_guide_card_description:
+            - value: "This is the guide card description for this set of links related to NCI''s research areas."
+          field_link_buttons:
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Research Areas Placeholder'
+            field_button_text:
+              - value: "Cancer Biology Research with Long Title"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Research Areas Placeholder'
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Research Areas Placeholder'
+            field_button_text:
+              - value: "Research on Causes of Cancer"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Research Areas Placeholder'
+            field_button_text:
+              - value: "Cancer Prevention Research"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Research Areas Placeholder'
+            field_button_text:
+              - value: "Cancer Treatment Research"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph' 
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://nationalcancerplan.cancer.gov/'
+            field_button_text:
+              - value: "National Cancer Plan"
+            field_button_alt:
+              - value: "External Button Alt"
+        - entity: 'paragraph'
+          type: "ncids_guide_card_img_desc"
+          field_container_heading:
+            - value: "NCI's Role in Cancer Research & Infrastructure Long Titles"
+          field_guide_card_description:
+            - value: "This is a longer guide card description for this set of links. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          field_link_buttons:
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'NCI''s Role in Cancer Research Placeholder'
+            field_button_text:
+              - value: "Intramural Research"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'NCI''s Role in Cancer Research Placeholder'
+            field_button_text:
+              - value: "Extramural Research"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'NCI''s Role in Cancer Research Placeholder'
+            field_button_text:
+              - value: "Cancer Research Workforce with a Longer Title"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+    - entity: 'paragraph'
+      type: "ncids_promo_block_internal"
+      field_ncids_theme:
+        - value: "light"
+      field_image_position_promo:
+        - value: "left" 
+      field_override_description:
+        - value: 'Relaxation and imagery exercises to help reduce pain and stress from cancer and its treatment.'
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Learning to Relax'
+      field_button_text:
+        - value: 'Learn More'
+      field_button_alt:
+        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'  
+    - entity: 'paragraph'
+      type: "ncids_promo_block_external"
+      field_ncids_theme:
+        - value: "light"
+      field_image_position_promo:
+        - value: "left" 
+      field_featured_url:
+        - uri: 'https://www.google.com'
+      field_override_title:
+        - value: 'Promo Block for Coping with Cancer with a Really Long Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference' 
+            args:
+              - 'media' 
+              - bundle: 'cgov_image' 
+                name: 'Promo Block Dog 1x1 Override'
+      field_button_text:
+        - value: 'Learn More about Coping'
+      field_button_alt:
+        - value: 'Button Alt Text'  
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "This is the required feature card heading"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_mini_landing'
+                    title: 'Coping with Cancer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://nationalcancerplan.cancer.gov/'
+          field_override_card_title:
+            - value: 'National Cancer Plan with a Long Title for Analytics Testing'
+          field_override_card_description:
+            - value: 'Everyone has a role to play in the fight against cancer. Learn more and get involved.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Sample Page External Feature Card Image'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Feelings and Cancer'
+    
+    ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'This is my homepage hero tagline'
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-wide.png'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-desktop.png'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-tabletlarge.png'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-tablet.png'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-mobilelarge.png'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-homepage-mobile.png'
+    - entity: 'paragraph'
+      type: "ncids_2_guide_card_row"
+      field_image_desc_guide_cards:
+        - entity: 'paragraph'
+          type: "ncids_guide_card_img_desc"
+          field_container_heading:
+            - value: "Áreas de investigación"
+          field_guide_card_description:
+            - value: "This is the guide card description for this set of links related to NCI''s research areas."
+          field_link_buttons:
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Áreas de investigación Placeholder'
+            field_button_text:
+              - value: "Investigación sobre la biología del cáncer"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Áreas de investigación Placeholder'
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Áreas de investigación Placeholder'
+            field_button_text:
+              - value: "Investigación de la genómica del Cancer"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Áreas de investigación Placeholder'
+            field_button_text:
+              - value: "Prevención"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'Áreas de investigación Placeholder'
+            field_button_text:
+              - value: "Investigación sobre el tratamiento del cáncer"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+        - entity: 'paragraph'
+          type: "ncids_guide_card_img_desc"
+          field_container_heading:
+            - value: "El papel que desempeña el NCI en la investigación del cáncer"
+          field_guide_card_description:
+            - value: "This is a longer guide card description for these set of links. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          field_link_buttons:
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'El papel que desempeña el NCI en la investigación del cáncer Placeholder'
+            field_button_text:
+              - value: "El programa interno"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph'
+            type: "ncids_link_button_internal"
+            field_internal_link:
+              - target_type: 'node'
+                '#process':
+                  callback: 'reference'
+                  args:
+                    - 'node'
+                    - type: 'cgov_article'
+                      title: 'El papel que desempeña el NCI en la investigación del cáncer Placeholder'
+            field_button_text:
+              - value: "El programa externo tratamiento del cáncer"
+            field_button_alt:
+              - value: "Internal Button Alt Text"
+          - entity: 'paragraph' 
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://nationalcancerplan.cancer.gov/'
+            field_button_text:
+              - value: "National Cancer Plan"
+    - entity: 'paragraph'
+      type: "ncids_promo_block_internal"
+      field_ncids_theme:
+        - value: "light"
+      field_image_position_promo:
+        - value: "left" 
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Aprenda a relajarse'
+      field_button_text:
+        - value: 'Learn More'
+      field_button_alt:
+        - value: 'Learn More about Relaxation Techniques for Coping with Cancer'  
+    - entity: 'paragraph'
+      type: "ncids_promo_block_external"
+      field_ncids_theme:
+        - value: "light"
+      field_image_position_promo:
+        - value: "nci-alternating-right" 
+      field_featured_url:
+        - uri: 'https://www.google.com'
+      field_override_title:
+        - value: 'Promo Block for Coping with Cancer with a Really Long Title'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference' 
+            args:
+              - 'media' 
+              - bundle: 'cgov_image' 
+                name: 'Promo Block Dog 1x1 Override'
+      field_button_text:
+        - value: 'Learn More in Spanish'
+      field_button_alt:
+        - value: 'Cómo hacer frente al cancer'  
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "This is the required feature card heading"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_mini_landing'
+                    title: 'Cómo hacer frente al cáncer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://nationalcancerplan.cancer.gov/'
+          field_override_card_title:
+            - value: 'National Cancer Plan with a Long Title for Analytics Testing'
+          field_override_card_description:
+            - value: 'Everyone has a role to play in the fight against cancer. Learn more and get involved.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Sample Page External Feature Card Image'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Los sentimientos y el cáncer'
+    ######## End Placeholder ############
