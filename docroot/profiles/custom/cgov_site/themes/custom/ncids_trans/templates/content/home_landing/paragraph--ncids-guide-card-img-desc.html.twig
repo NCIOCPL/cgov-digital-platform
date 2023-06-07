@@ -13,8 +13,7 @@
 {% set titleID = "#{entity_type}-#{id}" %}
 
 <h2 class="nci-guide-card__header" id="{{ titleID }}">{{ header }}</h2>
-<div aria-labelledby="{{ titleID }}"
-     class="nci-guide-card nci-guide-card--with-image-and-description"
+<div class="nci-guide-card nci-guide-card--with-image-and-description"
      data-eddl-landing-item="guide_card">
     <div class="nci-guide-card__wrapper">
         <picture class="nci-guide-card__image">
@@ -27,7 +26,7 @@
         </picture>
         <div class="nci-guide-card__body">
             <p class="nci-guide-card__description">{{ description }}</p>
-            <ul class="nci-card__button-group">
+            <ul class="nci-card__button-group" aria-labelledby="{{ titleID }}">
                 {{ content.field_link_buttons }}
             </ul>
         </div>
