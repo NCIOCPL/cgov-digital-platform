@@ -41,16 +41,14 @@ class ApiTest extends BrowserTestBase {
   protected $english = [
     'nid' => NULL,
     'title' => 'Test English Summary',
-    'short_title' => 'Test Short Title',
+    'browser_title' => 'Test Browser Title',
+    'cthp_card_title' => 'Test Card Title',
     'description' => 'Test description',
     'language' => 'en',
     'url' => '/types/lymphoma/hp/adult-hodgkin-treatment-pdq',
     'cdr_id' => 5001,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
-    // Begin suppressed field.
-    // 'keywords' => 'cancer, treatment',
-    // End suppressed field.
     'posted_date' => '2020-01-01',
     'updated_date' => '2020-01-02',
     'sections' => [
@@ -70,16 +68,14 @@ class ApiTest extends BrowserTestBase {
   protected $spanish = [
     'nid' => NULL,
     'title' => "Resumen en espa\u{f1}ol",
-    'short_title' => "T\u{ed}tulo corto",
+    'browser_title' => "T\u{ed}tulo corto",
+    'cthp_card_title' => 'Hakuna matata',
     'description' => "Descripci\u{f3}n",
     'language' => 'es',
     'url' => '/tipos/linfoma/pro/tratamiento-hodgkin-adultos-pdq',
     'cdr_id' => 5002,
     'audience' => 'Patients',
     'summary_type' => 'Treatment',
-    // Begin suppressed field.
-    // 'keywords' => 'cancer, treatment',
-    // End suppressed field.
     'posted_date' => '2020-01-04',
     'updated_date' => '2020-01-05',
     'sections' => [
@@ -100,13 +96,11 @@ class ApiTest extends BrowserTestBase {
     'audience',
     'cdr_id',
     'description',
-    // Begin suppressed field.
-    // 'keywords',
-    // End suppressed field.
     'posted_date',
     'title',
     'sections',
-    'short_title',
+    'browser_title',
+    'cthp_card_title',
     'summary_type',
     'updated_date',
     'url',
@@ -180,6 +174,7 @@ class ApiTest extends BrowserTestBase {
     $this->english['svpc'] = 1;
     $this->english['suppress_otp'] = 1;
     $this->english['intro_text'] = '<p>Oh, look!</p>';
+    $this->english['cthp_card_title'] = 'No worries!';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
     $this->assertEquals($payload['nid'], $nid, 'Uses same node');
@@ -236,12 +231,12 @@ class ApiTest extends BrowserTestBase {
     $this->checkPathauto($this->spanish);
 
     // Make sure changes don't affect the site sections until published.
-    $old_short_title = $this->english['short_title'];
-    $this->english['short_title'] = 'New Short Title';
+    $old_browser_title = $this->english['browser_title'];
+    $this->english['browser_title'] = 'New Browser Title';
     $payload = $this->store($this->english, 200);
     $summary_sections_created += count($this->english['sections']);
     $this->assertEquals($payload['nid'], $nid, 'Uses same node');
-    $this->checkSiteSections($this->english, $old_short_title);
+    $this->checkSiteSections($this->english, $old_browser_title);
     $this->publish([[$nid, 'en']]);
     $this->checkSiteSections($this->english);
 
@@ -557,7 +552,7 @@ class ApiTest extends BrowserTestBase {
       $name = $section->getName();
       if ($tail) {
         if (empty($nav_label)) {
-          $nav_label = $summary['short_title'];
+          $nav_label = $summary['browser_title'];
         }
 
         // For the last token in the URL, fields have different assignments.

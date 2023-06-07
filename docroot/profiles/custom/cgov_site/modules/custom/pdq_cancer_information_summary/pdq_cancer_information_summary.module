@@ -70,10 +70,10 @@ function _pdq_cis_needs_site_sections(EntityInterface $entity) {
     ->execute();
 
   // If so, and the label used for navigation is unchanged, we're done.
-  $short_title = $entity->get('field_browser_title')->value;
+  $browser_title = $entity->get('field_browser_title')->value;
   foreach ($tids as $tid) {
     $term = Term::load($tid);
-    if ($term->getName() === $short_title) {
+    if ($term->getName() === $browser_title) {
       return FALSE;
     }
   }

@@ -294,3 +294,31 @@ function pdq_cancer_information_summary_update_9003(&$sandbox) {
   $config->save();
   \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_pdq_intro_text on the edit form.');
 }
+
+/**
+ * Add new field for cancer-type home page card titles.
+ */
+function pdq_cancer_information_summary_update_9004(&$sandbox) {
+
+  // Make sure the field is installed.
+  _pdq_cancer_information_summary_install_node_field('field_cthp_card_title');
+
+  // Make sure it shows up on the form.
+  $name = 'core.entity_form_display.node.pdq_cancer_information_summary.default';
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($name);
+  $content = $config->get('content');
+  $hidden = $config->get('hidden');
+  $weight = $content['field_browser_title']['weight'] ?? 10;
+  $content['field_cthp_card_title'] = [
+    'weight' => $weight,
+    'settings' => ['display_label' => TRUE],
+    'third_party_settings' => [],
+    'type' => 'string_textfield',
+    'region' => 'content',
+  ];
+  unset($hidden['field_cthp_card_title']);
+  $config->set('content', $content);
+  $config->set('hidden', $hidden);
+  $config->save();
+  \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_cthp_card_title on the edit form.');
+}
