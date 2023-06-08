@@ -12,7 +12,7 @@ const playVideoClickHandler = (evt: Event): void => {
 		1,
 		1,
 		'Inline Video',
-		'N/A',
+		'Not Defined',
 		'Standard YouTube Video',
 		video.dataset.videoTitle || '_ERROR_',
 		'Video Player',

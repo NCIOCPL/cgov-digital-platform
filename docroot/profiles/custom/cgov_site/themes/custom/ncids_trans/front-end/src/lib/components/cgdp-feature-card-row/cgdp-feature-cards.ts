@@ -26,7 +26,7 @@ const getLinkArea = (evt: Event): string => {
 		SPAN: 'Title',
 	};
 
-	return tags[tag] || 'Undefined';
+	return tags[tag] || 'Not Defined';
 };
 
 /**
@@ -43,7 +43,7 @@ const getLinkText = (evt: Event): string => {
 		Title: getText(link, '.nci-card__title'),
 	};
 
-	return textOptions[linkArea] || 'Undefined';
+	return textOptions[linkArea] || 'Not Defined';
 };
 
 /**
