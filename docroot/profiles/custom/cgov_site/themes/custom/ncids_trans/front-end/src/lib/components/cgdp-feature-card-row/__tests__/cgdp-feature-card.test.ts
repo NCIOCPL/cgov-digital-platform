@@ -66,8 +66,8 @@ describe('CGDP Feature Cards', () => {
 				componentVariant: 'Standard Single Link',
 				title: 'External Card Title',
 				linkType: 'External',
-				linkText: 'Undefined',
-				linkArea: 'Undefined',
+				linkText: 'Not Defined',
+				linkArea: 'Not Defined',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -104,8 +104,8 @@ describe('CGDP Feature Cards', () => {
 				componentVariant: 'Standard Single Link',
 				title: 'Internal Card Title',
 				linkType: 'Internal',
-				linkText: 'Undefined',
-				linkArea: 'Undefined',
+				linkText: 'Not Defined',
+				linkArea: 'Not Defined',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -142,8 +142,8 @@ describe('CGDP Feature Cards', () => {
 				componentVariant: 'Standard Single Link',
 				title: '_ERROR_',
 				linkType: '_ERROR_',
-				linkText: 'Undefined',
-				linkArea: 'Undefined',
+				linkText: 'Not Defined',
+				linkArea: 'Not Defined',
 				totalLinks: 1,
 				linkPosition: 1,
 			}

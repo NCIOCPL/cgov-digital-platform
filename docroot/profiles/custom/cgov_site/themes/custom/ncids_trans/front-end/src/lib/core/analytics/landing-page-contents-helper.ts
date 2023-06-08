@@ -20,9 +20,9 @@ import { trackOther } from './eddl-util';
  *     as "Internal", "External", or "Media".
  * @param {string} linkText - Text of target selected. Value will vary based on
  *     the link area and component type. If the link area cannot be determined
- *     use "Undefined". Truncated after 50 characters.
+ *     use "Not Defined". Truncated after 50 characters.
  * @param {string} linkArea - Exact target selected. Such as Title if the Title
- *     was clicked.  If the link area cannot be determined use "Undefined".
+ *     was clicked.  If the link area cannot be determined use "Not Defined".
  * @param {number} totalLinks - Total number of links shown on the component.
  * @param {number} linkPosition - The index of the link clicked in the card
  *     evaluated by counting the links top to bottom or left to right depending
