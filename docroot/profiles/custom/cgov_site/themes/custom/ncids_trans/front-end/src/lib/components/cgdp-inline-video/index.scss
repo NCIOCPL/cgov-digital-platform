@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .cgdp-video {
 	position: relative;
 	width: 100%;
@@ -6,6 +8,7 @@
 	overflow: hidden;
 	padding-top: 0;
 	padding-bottom: 56.25%;
+  background-color: color($theme-color-accent-cool-darker);
 
 	iframe,
 	object,
@@ -29,6 +32,14 @@
 			fill: red;
 			fill-opacity: 1;
 			transition: all 100ms cubic-bezier(0, 0, 0.2, 1);
+		}
+    
+    // add focus indicator for keyboard navigation
+		&:focus {
+			.video-preview--play-button {
+				outline: 0.25rem solid color($theme-color-primary-light);
+				outline-offset: 2px;
+			}
 		}
 	}
 

@@ -1,7 +1,8 @@
 {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
+{% set aria_label = "Play video"|t %}
 
 <div id="ytplayer-jC8CUIID2HA" class="flex-video cgdp-video" data-video-url="{{ url }}" data-video-title="{{ name }}">
-	<div class="video-preview--container" tabindex="0">
+	<div class="video-preview--container" tabindex="0" role="button" aria-label="{{ aria_label }}">
 		{{ content.thumbnail }}
 		<div class="video-preview--play-button">
 			<svg height="100%" version="1.1" viewbox="0 0 68 48" width="100%">

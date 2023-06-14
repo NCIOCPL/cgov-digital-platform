@@ -11,6 +11,11 @@ $flex-video-margin-bottom: em-calc(16) !default;
 // We use this to control widescreen bottom padding
 $flex-video-widescreen-padding-bottom: 57.25% !default;
 
+// background color added to ward off automated contrast 
+// checkers flagging the title.
+// NCIDS $theme-color-accent-cool-darker hex value below
+$flex-video-background-color: #06162D; 
+
 //
 // Flex Video Mixins
 //
@@ -22,6 +27,7 @@ $flex-video-widescreen-padding-bottom: 57.25% !default;
   height: 0;
   margin-bottom: $flex-video-margin-bottom;
   overflow: hidden;
+  background-color: $flex-video-background-color; 
 
   &.widescreen { padding-bottom: $flex-video-widescreen-padding-bottom; }
   &.vimeo { padding-top: 0; }
