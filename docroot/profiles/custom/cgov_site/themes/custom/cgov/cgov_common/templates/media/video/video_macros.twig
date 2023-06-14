@@ -7,6 +7,7 @@
 
 {% macro video(name, content, showCaption = true, additionalClasses = "") %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
+  {% set aria_label = "Play video"|t %}
   {% if hasRequiredBaseFields %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
     <figure class="{{'video ' ~ additionalClasses}}">
@@ -16,7 +17,7 @@
         <h4 tabindex="0" class="title">{{ name }}</h4>
       {% endif %}
       <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
-        <div class="video-preview--container" tabindex="0">
+        <div class="video-preview--container" tabindex="0" role="button" aria-label="{{ aria_label }}">
           {{ content.thumbnail }}
           <div class="video-preview--play-button">
             <svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%">

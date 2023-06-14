@@ -9,6 +9,14 @@
             transition: all 100ms cubic-bezier(0.0,0.0,0.2,1);
         }
     }
+    
+    // add focus indicator for keyboard navigation
+    &:focus {
+			.video-preview--play-button {
+				outline: 0.25rem solid #3395ca; // NCIDS $theme-color-primary-light
+				outline-offset: 2px;
+			}
+		}
 
     &::before {
         z-index: 1;

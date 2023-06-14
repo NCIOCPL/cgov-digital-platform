@@ -7,7 +7,7 @@ export const cgdpInlineVideoBadDom = () => {
 		<div class="cgdp-inline-video" data-eddl-landing-item="inline_video">
 			<div class="grid-container">
 				<div id="ytplayer-jC8CUIID2HA" class="flex-video cgdp-video rendered" data-video-url="/media/oembed?url=https%3A//www.youtube.com/watch%3Fv%3Dk1MHY_AFNAM&amp;max_width=0&amp;max_height=0&amp;hash=J68Emy4PqueTaDce29HZKSeN3ghVE5ju-dliZhIFSOI" data-video-title="">
-					<div class="video-preview--container" tabindex="0">
+					<div class="video-preview--container" tabindex="0" role="button" aria-label="Play video">
 						<img loading="lazy" src="/sites/default/files/oembed_thumbnails/3lVXccSiwvvX77eL5mLlh3JZFaS5PyQdR5r0piWl_cE.jpg" width="480" height="360" alt="">
 						<div class="video-preview--play-button">
 						<svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%">
