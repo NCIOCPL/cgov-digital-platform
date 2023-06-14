@@ -1,3 +1,5 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
 {# ###### Setup Image Position & Image ####### #}
 {% set image_position = paragraph.field_image_position_promo.value %}
 {% if image_position == 'no-img' %}
@@ -18,44 +20,11 @@
 
 {# ###### Setup button ####### #}
 {% set externalUrl = paragraph.field_featured_url.uri %}
-{% set button_alt = paragraph.field_button_alt.value %}
 
 {# ###### Setup Description ####### #}
 {% set description = paragraph.field_override_description.value %}
 
 {% set id = paragraph.id() %}
 {% set entity_type = paragraph.entityTypeID %}
-{% set titleID = "#{entity_type}-#{id}" %}
 
-<section class="usa-section usa-section--light" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
-    <div class="tablet-lg:grid-container-widescreen">
-        <div class="nci-promo-block {{ image_position }} {{ promo_theme }}" data-eddl-landing-item="promo_block">
-            {% if image_position %}
-                {% set renderImage = image|render %}
-                {% if renderImage %}
-                    {{- image -}}
-                {% else %}
-                    {% set sourceAttribs = create_attribute({
-                        'media': '(min-width: 880px)'
-                    })
-                    %}
-                    <picture class="nci-promo-block__image">
-                        <source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_promo_1x1') }}">
-                        <img src="{{ get_placeholder_image('ncids_promo_16x9') }}" alt="No Image Placeholder">
-                    </picture>
-                {% endif %}
-            {% endif %}
-            <div class="nci-promo-block__content">
-                <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ paragraph.field_override_title.value }}</h2>
-                {% if description %}
-                    <p class="nci-promo-block__text">
-                        {{ description }}
-                    </p>
-                {% endif %}
-                <a class="usa-button usa-button--secondary" href="{{ externalUrl }}" aria-label="{{ button_alt }}" data-eddl-landing-item-link-type="External">
-                    {{ paragraph.field_button_text.value }}
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+{{ homeLandingMacros.ncidsPromoBlock(paragraph.field_override_title.value, description, image, externalUrl, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "External") }}

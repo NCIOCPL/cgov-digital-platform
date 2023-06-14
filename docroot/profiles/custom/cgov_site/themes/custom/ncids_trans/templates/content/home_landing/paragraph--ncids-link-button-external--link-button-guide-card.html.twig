@@ -1,6 +1,4 @@
-<a aria-label="{{ paragraph.field_button_alt.value }}"
-   class="usa-button usa-button--outline usa-button--secondary"
-   data-eddl-landing-item-link-type="External"
-   href="{{ paragraph.field_external_link.uri }}">
-  {{ paragraph.field_button_text.value }}
-</a>
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
+{{ homeLandingMacros.ncidsLinkButton(paragraph.field_external_link.uri, paragraph.field_button_alt.value, paragraph.field_button_text.value, "usa-button--outline usa-button--secondary", "External") }}
+

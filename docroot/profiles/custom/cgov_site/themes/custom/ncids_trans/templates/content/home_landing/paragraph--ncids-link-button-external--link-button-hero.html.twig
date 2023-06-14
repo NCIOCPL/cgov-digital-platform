@@ -1,9 +1,3 @@
-{% if paragraph.field_button_alt.value %}
-    {% set ariaAttribs = create_attribute({
-        'aria-label': paragraph.field_button_alt.value
-    })
-    %}
-{% endif %}
-<a href="{{ paragraph.field_external_link.uri }}" {{ ariaAttribs }} class="nci-hero__cta-button usa-button" data-eddl-landing-item-link-type="External">
-    {{ paragraph.field_button_text.value }}
-</a>
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
+{{ homeLandingMacros.ncidsLinkButton(paragraph.field_external_link.uri, paragraph.field_button_alt.value, paragraph.field_button_text.value, "nci-hero__cta-button", "External") }}

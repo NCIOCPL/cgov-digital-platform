@@ -1,3 +1,5 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
 {% if content.field_featured_item[0] %}
   {#
    # The Field Formatter takes care of the translations of the featured item. featured_item_node should
@@ -26,9 +28,7 @@
   {# Else no description #}
 
   {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
-  {# ###### Setup button classes and labels ####### #}
-  {% set button_alt = paragraph.field_button_alt.value %}
-
+ 
   {# ###### Setup Image Position & Image ####### #}
   {% set image_position = paragraph.field_image_position_promo.value %}
   {% if image_position == 'no-img' %}
@@ -55,26 +55,6 @@
 
   {% set id = paragraph.id() %}
   {% set entity_type = paragraph.entityTypeID %}
-  {% set titleID = "#{entity_type}-#{id}" %}
 
-  <section class="usa-section usa-section--light" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
-    <div class="tablet-lg:grid-container-widescreen">
-      <div class="nci-promo-block {{ image_position }} {{ promo_theme }}" data-eddl-landing-item="promo_block">
-        {% if image_position %}
-          {{- image -}}
-        {% endif %}
-        <div class="nci-promo-block__content">
-          <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ title }}</h2>
-          {% if description %}
-            <p class="nci-promo-block__text">
-              {{ description }}
-            </p>
-          {% endif %}
-          <a class="usa-button usa-button--secondary" href="{{ url }}" aria-label="{{ button_alt }}" data-eddl-landing-item-link-type="Internal">
-            {{ paragraph.field_button_text.value }}
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  {{ homeLandingMacros.ncidsPromoBlock(title, description, image, url, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "Internal") }}
 {% endif %}
