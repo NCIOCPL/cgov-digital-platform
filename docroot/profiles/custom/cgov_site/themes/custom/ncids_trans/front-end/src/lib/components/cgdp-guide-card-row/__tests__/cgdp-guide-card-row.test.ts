@@ -199,6 +199,44 @@ describe('CGDP Guide Cards', () => {
 		);
 	});
 
+	it('sends description with missing ul element', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdpGuideCardRowBadDom);
+
+		// Create the JS
+		cgdpGuideCardRow();
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		fireEvent.click(links[7]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:GuideCard:LinkClick',
+			'LP:GuideCard:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 2,
+				pageRowIndex: 2,
+				rowItems: 2,
+				rowItemIndex: 1,
+				componentType: 'Guide Card',
+				componentTheme: 'Light',
+				componentVariant: 'Image and Description',
+				title: "NCI is the nation's trusted source for cancer info",
+				linkType: 'External',
+				linkText: 'Learn More',
+				linkArea: 'Button',
+				totalLinks: 1,
+				linkPosition: 1,
+			}
+		);
+	});
+
 	it('sends error with missing labelledby and description', async () => {
 		// Lets make a spy to ensure that trackOther is called correctly
 		const spy = jest.spyOn(eddlUtil, 'trackOther');

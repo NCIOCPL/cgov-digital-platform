@@ -3,14 +3,14 @@ export const cgdpGuideCardRowDom = `
     <div class="grid-container">
       <div class="nci-title-aligned-card-group">
         <h2 class="nci-guide-card__header" id="1">Patients and Caregivers, with a Title Long Enough to Wrap to a Second Line</h2>
-        <div class="nci-guide-card nci-guide-card--with-image-and-description" data-eddl-landing-item="guide_card" aria-labelledby="1">
+        <div class="nci-guide-card nci-guide-card--with-image-and-description" data-eddl-landing-item="guide_card">
           <div class="nci-guide-card__wrapper">
             <picture class="nci-guide-card__image">
               <img src="/sites/default/files/styles/ncids_guide_card_16x9/module/cgov_image/img/placeholder-16x9.png?itok=2kKgOzXH" alt="No Image Placeholder">
             </picture>
             <div class="nci-guide-card__body">
               <p class="nci-guide-card__description">NCI is the nation's trusted source for cancer information. We're here with information about causes and risk factors, early detection and diagnosis, and treatment options.</p>
-              <ul class="nci-card__button-group">
+              <ul class="nci-card__button-group" aria-labelledby="1">
                 <li>
                   <a href="https://www.google.com" aria-label="" class="usa-button usa-button--outline usa-button--secondary" data-eddl-landing-item-link-type="External">Learn More</a>
                 </li>
@@ -19,14 +19,14 @@ export const cgdpGuideCardRowDom = `
           </div>
         </div>
         <h2 class="nci-guide-card__header" id="2">Researchers</h2>
-        <div class="nci-guide-card nci-guide-card--with-image-and-description" data-eddl-landing-item="guide_card" aria-labelledby="2">
+        <div class="nci-guide-card nci-guide-card--with-image-and-description" data-eddl-landing-item="guide_card">
           <div class="nci-guide-card__wrapper">
             <picture class="nci-guide-card__image">
               <img src="/sites/default/files/styles/ncids_guide_card_16x9/module/cgov_image/img/placeholder-16x9.png?itok=2kKgOzXH" alt="No Image Placeholder">
             </picture>
             <div class="nci-guide-card__body">
               <p class="nci-guide-card__description">Support for the best science underpins everything NCI does. NCI supports the best scientists and research projects through a rigorous grant application and peer review process.</p>
-              <ul class="nci-card__button-group">
+              <ul class="nci-card__button-group" aria-labelledby="2">
                 <li>
                   <a href="https://www.google.com" aria-label="Learn More about something important" class="usa-button usa-button--outline usa-button--secondary" data-eddl-landing-item-link-type="External">Learn More</a>
                 </li>
