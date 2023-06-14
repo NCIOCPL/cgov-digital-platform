@@ -1,0 +1,58 @@
+{# Macro for NCIDS Promo Block #}
+{% macro ncidsPromoBlock(title, description, image, url, id, entity_type, image_position, promo_theme, button_text, button_alt, link_type) %}
+	{% set renderImage = image|render %}
+	{% import _self as self %}
+    {% set titleID = "#{entity_type}-#{id}-title" %}
+    {% if button_alt %}
+        {% set ariaAttribs = create_attribute({
+            'aria-label': button_alt
+        })
+        %}
+    {% endif %}
+	<section class="usa-section usa-section--light" aria-labelledby="{{ titleID }}" data-eddl-landing-row>
+        <div class="tablet-lg:grid-container-widescreen">
+            <div class="nci-promo-block {{ image_position }} {{ promo_theme }}" data-eddl-landing-item="promo_block">
+                {% if image_position %}
+                    {% set renderImage = image|render %}
+                    {% if renderImage %}
+                        {{- image -}}
+                    {% else %}
+                        {% set sourceAttribs = create_attribute({
+                            'media': '(min-width: 880px)'
+                        })
+                        %}
+                        <picture class="nci-promo-block__image">
+                            <source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_promo_1x1') }}">
+                            <img src="{{ get_placeholder_image('ncids_promo_16x9') }}" alt="No Image Placeholder">
+                        </picture>
+                    {% endif %}
+                {% endif %}
+                <div class="nci-promo-block__content">
+                    <h2 id="{{ titleID }}" class="nci-promo-block__heading">{{ title }}</h2>
+                    {% if description %}
+                        <p class="nci-promo-block__text">
+                            {{ description }}
+                        </p>
+                    {% endif %}
+                    <a class="usa-button usa-button--secondary" href="{{ url }}" {{ ariaAttribs }} data-eddl-landing-item-link-type="{{ link_type }}">
+                        {{ button_text }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endmacro %}
+
+{# Macro for NCIDS Link Buttons External and Internal #}
+{# Used for Guide Cards, Call to Action Strip, and Hero with CTA Strip #}
+{% macro ncidsLinkButton(url, button_alt, button_text, classes, link_type) %}
+    {% if button_alt %}
+        {% set ariaAttribs = create_attribute({
+            'aria-label': button_alt
+        })
+        %}
+    {% endif %}
+    <a href="{{ url }}" {{ ariaAttribs }} class="usa-button {{ classes }}" data-eddl-landing-item-link-type="{{ link_type }}">
+        {{ button_text }}
+    </a>
+{% endmacro %}

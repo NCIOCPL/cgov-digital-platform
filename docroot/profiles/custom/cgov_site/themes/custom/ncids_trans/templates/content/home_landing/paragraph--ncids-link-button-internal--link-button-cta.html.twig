@@ -1,3 +1,5 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
 {% if content.field_internal_link[0] %}
   {#
    # The Field Formatter takes care of the translations of the featured item. featured_item_node should
@@ -15,13 +17,5 @@
 
   {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
 
-  {% if paragraph.field_button_alt.value %}
-    {% set ariaAttribs = create_attribute({
-        'aria-label': paragraph.field_button_alt.value
-    })
-    %}
-  {% endif %}
-  <a href="{{ url }}" {{ ariaAttribs }} class="usa-button" data-eddl-landing-item-link-type="Internal">
-    {{ buttonText }}
-  </a>
+  {{ homeLandingMacros.ncidsLinkButton(url, paragraph.field_button_alt.value, buttonText, "", "Internal") }}
 {% endif %}
