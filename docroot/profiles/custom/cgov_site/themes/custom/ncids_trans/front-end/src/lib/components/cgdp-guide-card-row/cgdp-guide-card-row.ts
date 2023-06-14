@@ -10,7 +10,8 @@ import { landingClickTracker } from '../../core/analytics/landing-page-contents-
  * @returns {string} - Card title.
  */
 const getTitle = (card: HTMLElement): string => {
-	const id = card.getAttribute('aria-labelledby');
+	const ul = card.querySelector('ul');
+	const id = ul?.getAttribute('aria-labelledby');
 	const header = id ? document.getElementById(id)?.textContent?.trim() : null;
 	const description = card.querySelector(
 		'.nci-guide-card__description'
