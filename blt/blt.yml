@@ -110,6 +110,14 @@ validate:
   deprecation: false
 
 tests:
+  cypress:
+    paths:
+      - ${repo.root}/tests/cypress/cypress/e2e/CreateUsers.feature
+      - ${repo.root}/tests/cypress/cypress/e2e/BehatParallel
+      - ${repo.root}/tests/cypress/cypress/e2e/CreateSiteSection.feature
+      - ${repo.root}/tests/cypress/cypress/e2e/ContentCreationParallel
+    num-threads: 2
+
   phpunit:
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/profiles/custom/cgov_site' }
