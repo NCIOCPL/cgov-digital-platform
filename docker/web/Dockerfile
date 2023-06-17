@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ################################################################################
 #                                                                              #
@@ -32,7 +32,15 @@ RUN DEBIAN_FRONTEND=noninteractive \
 RUN DEBIAN_FRONTEND=noninteractive \
   add-apt-repository ppa:ondrej/php; \
   DEBIAN_FRONTEND=noninteractive \
-  add-apt-repository ppa:ondrej/apache2
+  add-apt-repository ppa:ondrej/apache2; \
+  DEBIAN_FRONTEND=noninteractive \
+  add-apt-repository ppa:phd/chromium-browser; \
+  apt update
+
+## This forces Ubuntu to use the PPA version of chromium-browser and not
+## ubuntu's version. (Ubuntu requires SNAP and it does not work with Docker)
+## The ppa:phd/chromium-browser was added above.
+COPY ./build/etc/apt/preferences.d/phd-chromium-browser /etc/apt/preferences.d/phd-chromium-browser
 
 # ...then install packages.
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -57,18 +65,15 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php8.0-soap \
   php8.0-xdebug \
   php8.0-xml \
-  mysql-client-5.7 \
+  mysql-client-8.0 \
   git \
-  clamav \
   imagemagick \
   vim \
   zip \
   autoconf libtool m4 pkg-config nasm \
   libpng-dev \
+  chromium-browser \
   chromium-chromedriver
-
-# Update ClamAV
-RUN freshclam
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
