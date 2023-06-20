@@ -6,7 +6,6 @@ use Twig\TwigFunction;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 
-
 /**
  * Extend Drupal's AbstractExtension class.
  */

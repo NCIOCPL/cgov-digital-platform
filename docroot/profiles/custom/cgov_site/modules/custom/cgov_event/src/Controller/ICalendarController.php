@@ -100,7 +100,6 @@ class ICalendarController extends ControllerBase {
     $start_date = NULL;
     $end_date = NULL;
 
-
     if ($node->hasField('field_event_start_date') && !empty($node->get('field_event_start_date')->first())) {
       // Convert the date to the Timezone of the user requesting.
       $start_date_obj = new DrupalDateTime($node->get('field_event_start_date')->getString(), DateTimeItemInterface::STORAGE_TIMEZONE);

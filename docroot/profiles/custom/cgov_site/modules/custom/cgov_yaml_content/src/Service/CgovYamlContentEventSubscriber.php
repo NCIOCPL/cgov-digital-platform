@@ -268,7 +268,6 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // After unsetting the #process config, we should be
     // left with anything intended for the field, such as alt
     // tags.
-
     $path = $this->moduleExtensionList->getPath('cgov_yaml_content');
     $directory = '/data_files/';
     // If the entity type is an image, look in to the /images directory.
@@ -629,7 +628,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
   public function addLandingPage($savedEntity) {
     $entityType = $savedEntity->getEntityTypeId();
     // $bundleType = $savedEntity->bundle();
-    // TODO: For now we want to do the same thing for all content
+    // @todo For now we want to do the same thing for all content
     // types. In the future, special rules will have to be added
     // to accomodate CTHP bundles.
     $isNode = $entityType === 'node';

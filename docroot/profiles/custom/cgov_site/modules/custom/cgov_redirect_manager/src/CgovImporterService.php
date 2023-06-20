@@ -47,7 +47,6 @@ class CgovImporterService {
    */
   protected $logger;
 
-
   /**
    * Constructs a Google Analytics Counter object.
    *
@@ -251,7 +250,7 @@ class CgovImporterService {
         'source' => self::stripLeadingSlash($line[0]),
         'redirect' => isset($line[1]) ? self::stripLeadingSlash($line[1]) : NULL,
         'status_code' => $line[2],
-        'language' => isset($line[3]) ? $line[3] : $options['language'],
+        'language' => $line[3] ?? $options['language'],
       ];
 
     }
@@ -320,9 +319,8 @@ class CgovImporterService {
     }
     else {
       $parsed_url = UrlHelper::parse(trim($redirect_array['source']));
-      $path = isset($parsed_url['path']) ? $parsed_url['path'] : NULL;
-      $query = isset($parsed_url['query']) ? $parsed_url['query'] : NULL;
-
+      $path = $parsed_url['path'] ?? NULL;
+      $query = $parsed_url['query'] ?? NULL;
 
       $redirectEntityManager = \Drupal::service('entity_type.manager')
         ->getStorage('redirect');
@@ -469,8 +467,8 @@ class CgovImporterService {
   protected static function redirectExists(array $row) {
     // @todo memoize the query.
     $parsed_url = UrlHelper::parse(trim($row['source']));
-    $path = isset($parsed_url['path']) ? $parsed_url['path'] : NULL;
-    $query = isset($parsed_url['query']) ? $parsed_url['query'] : NULL;
+    $path = $parsed_url['path'] ?? NULL;
+    $query = $parsed_url['query'] ?? NULL;
     $hash = Redirect::generateHash($path, $query, $row['language']);
 
     // Search for duplicate.

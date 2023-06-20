@@ -3,7 +3,6 @@
 namespace Drupal\cgov_syndication\Controller;
 
 use Drupal\node\Controller\NodeViewController;
-use Drupal\node\Entity\Node;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

@@ -219,7 +219,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
    */
   private function addPurgeCacheTags(BinaryFileResponse $response, array $tags) {
     if ($this->serviceContainer->has('purge.tagsheaders')) {
-      // @var Drupal\purge\Plugin\Purge\TagsHeader\TagsHeadersServiceInterface;
+      /** @var \Drupal\purge\Plugin\Purge\TagsHeader\TagsHeadersServiceInterface */
       $purgeTagsHeaders = $this->serviceContainer->get('purge.tagsheaders');
 
       foreach ($purgeTagsHeaders as $header) {
@@ -255,9 +255,8 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     if ($this->serviceContainer->has('akamai.client.manager')) {
 
       // Get Akamai Required Services.
-      // @var \Drupal\akamai\Helper\CacheTagFormatter
+      /** @var \Drupal\akamai\Helper\CacheTagFormatter */
       $tagFormatter = $this->serviceContainer->get('akamai.helper.cachetagformatter');
-      // @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
       $eventDispatcher = $this->serviceContainer->get('event_dispatcher');
 
       $config = $this->configFactory->get('akamai.settings');

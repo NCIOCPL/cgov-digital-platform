@@ -14,6 +14,11 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
  */
 class PageOptionsTest extends UnitTestCase {
 
+  /**
+   * The dependency injection container.
+   *
+   * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+   */
   protected $container;
 
   /**

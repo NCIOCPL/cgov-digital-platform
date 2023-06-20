@@ -33,7 +33,7 @@ class CgovGlossifier extends CKEditorPluginBase {
     // to display correctly it needs to be in an icons folder.
     return [
       'Cgov_glossifier' => [
-        'label' => t('Glossify'),
+        'label' => $this->t('Glossify'),
         'image' => \Drupal::service('extension.list.module')->getPath('pdq_glossifier') . '/js/plugins/cgov_glossifier/icons/button.png',
       ],
     ];

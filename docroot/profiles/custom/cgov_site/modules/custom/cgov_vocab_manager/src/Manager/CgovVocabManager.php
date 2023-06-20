@@ -11,7 +11,7 @@ use Drupal\taxonomy\TermStorageInterface;
 use Drupal\Core\Url;
 
 /**
- * Class CgovVocabManager.
+ * Cgov vocab manager.
  *
  * @package Drupal\cgov_vocab_manager\Manager
  */

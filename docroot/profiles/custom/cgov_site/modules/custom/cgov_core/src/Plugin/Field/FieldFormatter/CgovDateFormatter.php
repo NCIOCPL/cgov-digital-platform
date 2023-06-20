@@ -42,9 +42,12 @@ class CgovDateFormatter extends DateTimeDefaultFormatter {
 
     $form['display_strategy'] = [
       '#type' => 'select',
-      '#title' => t('Display Strategy'),
-      '#description' => t("Choose filter method for displaying dates selected in date display mode field."),
-      '#options' => ['all' => 'Show All', 'latest' => 'Show Latest'],
+      '#title' => $this->t('Display Strategy'),
+      '#description' => $this->t("Choose filter method for displaying dates selected in date display mode field."),
+      '#options' => [
+        'all' => $this->t('Show All'),
+        'latest' => $this->t('Show Latest'),
+      ],
       '#default_value' => $this->getSetting('display_strategy'),
     ];
 

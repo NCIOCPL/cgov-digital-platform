@@ -8,7 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class FrontendGlobalsForm.
+ * Frontend Globals Form.
  */
 class FrontendGlobalsForm extends FormBase {
 

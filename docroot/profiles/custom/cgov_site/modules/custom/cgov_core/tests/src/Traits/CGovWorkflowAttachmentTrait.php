@@ -26,4 +26,5 @@ trait CGovWorkflowAttachmentTrait {
     $typePlugin->addEntityTypeAndBundle('node', $type_name);
     $workflow->save();
   }
+
 }

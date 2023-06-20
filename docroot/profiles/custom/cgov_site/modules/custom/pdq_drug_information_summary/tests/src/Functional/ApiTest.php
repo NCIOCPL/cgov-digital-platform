@@ -232,7 +232,7 @@ class ApiTest extends BrowserTestBase {
     $pairs = json_decode($response->getBody()->__toString(), TRUE);
     $this->assertCount(1, $pairs, 'Only one node/language per CDR ID');
     $this->assertCount(2, $pairs[0], 'Pair must have two items');
-    list($nid, $language) = $pairs[0];
+    [$nid, $language] = $pairs[0];
     $this->assertTrue(is_numeric($nid), 'Node ID is numeric');
     $this->assertEquals($nid, (int) $nid, 'Node ID is an integer');
     $this->assertEquals($language, 'en', 'Correct language code');

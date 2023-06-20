@@ -133,7 +133,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     if (!$navItem || !$renderDepth) {
       return [];
     }
-    // TODO: Consider building this as nested markup elements to completely
+    // @todo Consider building this as nested markup elements to completely
     // obviate the need for a template that simply parallels this logic.
     $isInCurrentPath = $navItem->getIsInCurrentPath();
     $isCurrentSectionLandingPage = $navItem->isCurrentSiteSectionLandingPage();
