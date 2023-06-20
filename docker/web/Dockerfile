@@ -72,6 +72,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
   zip \
   autoconf libtool m4 pkg-config nasm \
   libpng-dev \
+  pngcrush \
+  libjpeg-turbo-progs \
   chromium-browser \
   chromium-chromedriver
 

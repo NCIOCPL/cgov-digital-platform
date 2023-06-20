@@ -97,3 +97,20 @@ function cgov_image_update_8004() {
   $service = \Drupal::service('features.manager');
   $result = $service->import(['cgov_image']);
 }
+
+/**
+ * Update for Image Optimization.
+ *
+ * Install image api optimize and image api optimize binaries.
+ */
+function cgov_image_update_8005() {
+  if (!\Drupal::moduleHandler()->moduleExists('imageapi_optimize')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['imageapi_optimize']);
+    // We should only install the binaries module if imageapi_optimize is
+    // installed.
+    if (!\Drupal::moduleHandler()->moduleExists('imageapi_optimize_binaries')) {
+      $installer->install(['imageapi_optimize_binaries']);
+    }
+  }
+}
