@@ -1,0 +1,60 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
+{% if content.field_featured_item[0] %}
+  {#
+   # The Field Formatter takes care of the translations of the featured item. featured_item_node should
+   # be used to call the featured item.
+   #}
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
+
+  {# ###### Setup Title ####### #}
+  {% set title = paragraph.field_override_title.value %}
+  {% if title is empty %}
+    {% set title = featured_item_node.field_card_title[0].value %}
+    {% if title is empty %}
+      {% set title = featured_item_node.field_browser_title[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% set description = paragraph.field_override_description.value %}
+  {% if description is empty %}
+    {% set description = featured_item_node.field_feature_card_description[0].value %}
+    {% if description is empty %}
+      {% set description = featured_item_node.field_list_description[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {# Else no description #}
+
+  {% set url = path('entity.node.canonical', {'node':  featured_item_node.nid[0].value}) %}
+ 
+  {# ###### Setup Image Position & Image ####### #}
+  {% set image_position = paragraph.field_image_position_promo.value %}
+  {% if image_position == 'no-img' %}
+    {% set image_position = '' %}
+  {% elseif image_position == 'left' %}
+    {% set image_position = 'nci-promo-block--with-image' %}
+    {% set image = content.field_featured_item %}
+    {% if content.field_override_image_promotional[0] %}
+      {% set image = content.field_override_image_promotional %}
+    {% endif %}
+  {% else %}
+    {% set image_position = 'nci-promo-block--with-image nci-alternating-right' %}
+    {% set image = content.field_featured_item %}
+    {% if content.field_override_image_promotional[0] %}
+      {% set image = content.field_override_image_promotional %}
+    {% endif %}
+  {% endif %}
+
+  {# ###### Setup Theme ####### #}
+  {% set promo_theme = paragraph.field_ncids_theme.value %}
+  {% if promo_theme == 'light' %}
+      {% set promo_theme = '' %}
+  {% endif %}
+
+  {% set id = paragraph.id() %}
+  {% set entity_type = paragraph.entityTypeID %}
+
+  {{ homeLandingMacros.ncidsPromoBlock(title, description, image, url, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "Internal") }}
+{% endif %}

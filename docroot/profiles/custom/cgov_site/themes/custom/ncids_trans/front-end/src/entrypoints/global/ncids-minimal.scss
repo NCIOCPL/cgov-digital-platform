@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@use '../cgdp-required.scss';
+
+// Style all "naked" <a> elements with the correct colors. This overrides
+// the uswds setting used by uswds-global just for this entry point.
+@use 'uswds-core';
+uswds-core.$theme-global-link-styles: true;
+
+@forward 'uswds-global';
+
+@forward 'usa-layout-grid';
+@forward 'nci-no-print'; //print styling
+
+// The specific Component imports. Nothing in this list SHOULD reference
+// NCIDS or USWDS. It should come from ../../lib/components.
+@forward 'usa-skipnav';
+@forward '../../lib/components/usa-banner';
+@forward '../../lib/components/usa-site-alert';
+@forward '../../lib/components/usa-footer';
+
+// TODO Keep as last import for now, there is a ordering bug
+@forward '../../lib/components/nci-header';
+
+// This is global typography and body content styling. The following imports
+// are from the uswds-typography package, however we will comment out the
+// ones we do not thing should be global.
+@forward "usa-content";
+@forward "usa-dark-background";
+@forward "usa-display";
+// The intro styling seems silly here as we only use into on articles and
+// blogs posts for the most part.
+//@forward "usa-intro";
+@forward "usa-link";
+// List is actually already included with footer, however, we include it
+// here in the event it is removed from the footer some day.
+@forward "usa-list";
+@forward "usa-paragraph";
+@forward "usa-prose";
+
+@use 'uswds-core' as *;
+
+// There is no way to force the measure to none with utility classes due
+// to the specificity of usa-prose's measure styling. So let's just create
+// a variant here for now. This should be removed when NCIDS#1020 gets
+// implemented.
+.usa-prose--nci-no-measure {
+	p {
+		@include u-measure('none');
+	}
+}

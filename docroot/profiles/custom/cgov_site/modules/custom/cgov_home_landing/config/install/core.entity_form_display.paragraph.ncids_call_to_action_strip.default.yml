@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_call_to_action_strip.field_cta_link_buttons
+    - paragraphs.paragraphs_type.ncids_call_to_action_strip
+  module:
+    - paragraphs
+id: paragraph.ncids_call_to_action_strip.default
+targetEntityType: paragraph
+bundle: ncids_call_to_action_strip
+mode: default
+content:
+  field_cta_link_buttons:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Link
+      title_plural: Links
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

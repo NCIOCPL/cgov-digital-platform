@@ -14,6 +14,23 @@ import * as nock from 'nock';
 jest.mock('../../../core/analytics/eddl-util');
 
 describe('nci-header - mega menu analytics', () => {
+	beforeEach(() => {
+		// matchMedia not available in JSDOM
+		Object.defineProperty(window, 'matchMedia', {
+			writable: true,
+			value: jest.fn().mockImplementation((query) => ({
+				matches: query === '(min-width: 480px)',
+				media: query,
+				onchange: null,
+				addListener: jest.fn(), // Deprecated
+				removeListener: jest.fn(), // Deprecated
+				addEventListener: jest.fn(),
+				removeEventListener: jest.fn(),
+				dispatchEvent: jest.fn(),
+			})),
+		});
+	});
+
 	beforeAll(() => {
 		nock.disableNetConnect();
 	});

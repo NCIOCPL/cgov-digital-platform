@@ -1,0 +1,21 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
+{% if content.field_internal_link[0] %}
+  {#
+   # The Field Formatter takes care of the translations of the featured item. featured_item_node should
+   # be used to call the featured item.
+   #}
+   {% set featured_item_node = content.field_internal_link[0]["#node"] %}
+
+  {% set buttonText = paragraph.field_button_text.value %}
+  {% if buttonText is empty %}
+    {% set buttonText = featured_item_node.field_card_title[0].value %}
+    {% if buttonText is empty %}
+      {% set buttonText = featured_item_node.field_browser_title[0].value %}
+    {% endif %}
+  {% endif %}
+
+  {% set url = path('entity.node.canonical', {'node':  content.field_internal_link[0]["#node"].nid[0].value}) %}
+
+  {{ homeLandingMacros.ncidsLinkButton(url, paragraph.field_button_alt.value, buttonText, "", "Internal") }}
+{% endif %}

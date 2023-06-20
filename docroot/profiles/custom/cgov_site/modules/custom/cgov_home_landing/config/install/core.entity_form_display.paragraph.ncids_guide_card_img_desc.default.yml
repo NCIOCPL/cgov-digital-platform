@@ -1,0 +1,56 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_guide_card_img_desc.field_container_heading
+    - field.field.paragraph.ncids_guide_card_img_desc.field_guide_card_description
+    - field.field.paragraph.ncids_guide_card_img_desc.field_image_guide_card
+    - field.field.paragraph.ncids_guide_card_img_desc.field_link_buttons
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.ncids_guide_card_img_desc
+  module:
+    - image
+    - paragraphs
+id: paragraph.ncids_guide_card_img_desc.default
+targetEntityType: paragraph
+bundle: ncids_guide_card_img_desc
+mode: default
+content:
+  field_container_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_guide_card_description:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_image_guide_card:
+    type: image_image
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_link_buttons:
+    type: entity_reference_paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: 'Link Buttons'
+      title_plural: 'Link Buttons'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

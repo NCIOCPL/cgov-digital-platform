@@ -1,0 +1,113 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_hero.field_cta_link_buttons
+    - field.field.paragraph.ncids_hero.field_desktop_hero
+    - field.field.paragraph.ncids_hero.field_link_button
+    - field.field.paragraph.ncids_hero.field_mobile_hero
+    - field.field.paragraph.ncids_hero.field_mobile_large_hero
+    - field.field.paragraph.ncids_hero.field_ncids_theme
+    - field.field.paragraph.ncids_hero.field_tablet_hero
+    - field.field.paragraph.ncids_hero.field_tablet_large_hero
+    - field.field.paragraph.ncids_hero.field_tagline
+    - field.field.paragraph.ncids_hero.field_widescreen_hero
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.ncids_hero
+  module:
+    - image
+    - paragraphs
+id: paragraph.ncids_hero.default
+targetEntityType: paragraph
+bundle: ncids_hero
+mode: default
+content:
+  field_cta_link_buttons:
+    type: entity_reference_paragraphs
+    weight: 3
+    region: content
+    settings:
+      title: 'CTA Strip'
+      title_plural: 'CTA Strips'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_desktop_hero:
+    type: image_image
+    weight: 5
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_link_button:
+    type: entity_reference_paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: 'Link Button'
+      title_plural: 'Link Button'
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_mobile_hero:
+    type: image_image
+    weight: 9
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_mobile_large_hero:
+    type: image_image
+    weight: 8
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_ncids_theme:
+    type: options_select
+    weight: 0
+    region: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_tablet_hero:
+    type: image_image
+    weight: 7
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_tablet_large_hero:
+    type: image_image
+    weight: 6
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_tagline:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_widescreen_hero:
+    type: image_image
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
