@@ -1,10 +1,10 @@
 /**
  * @file
  * Placeholder file for custom blog post form behaviors.
- * TODO: make selectors settings
- *
+ * TODO: make selectors settings 
+ * 
  */
-(function ($, Drupal) {
+(function($, Drupal) {
 
   /**
    * @type {Drupal~behavior}
@@ -23,15 +23,15 @@
       });
 
       /** Clear checks and show correct selections on dropdown change. */
-      $( "#edit-field-blog-series" ).change(function () {
-        $('#edit-field-blog-topics .form-checkbox').prop('checked', FALSE);
+      $( "#edit-field-blog-series" ).change(function() {
+        $('#edit-field-blog-topics .form-checkbox').prop('checked', false);
         filterTopicOptions(settings);
       });
 
       /**
        * If the topic ID matches the series ID, remove the hidden class and show the checkboxes.
-       *
-       * @param {*} settings
+       * 
+       * @param {*} settings 
        *    Drupalsettings
        */
       function filterTopicOptions(settings) {
@@ -51,7 +51,7 @@
       } // filterTopicOptions()
 
     } // attach()
-
+    
   }; // Drupal.behaviors.blogPostForm {}
 
 })(jQuery, Drupal);

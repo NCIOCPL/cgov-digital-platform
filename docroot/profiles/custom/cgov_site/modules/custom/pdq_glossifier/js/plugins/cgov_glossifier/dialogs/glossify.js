@@ -5,11 +5,9 @@
 function ReplaceWithPolyfill() {
   'use-strict'; // For safari, and IE > 10
   var parent = this.parentNode, i = arguments.length, currentNode;
-  if (!parent) { return;
-  }
-  if (!i) { // if there are no arguments
+  if (!parent) return;
+  if (!i) // if there are no arguments
     parent.removeChild(this);
-  }
   while (i--) { // i-- decrements i and returns the value of i before the decrement
     currentNode = arguments[i];
     if (typeof currentNode !== 'object'){
@@ -18,22 +16,18 @@ function ReplaceWithPolyfill() {
       currentNode.parentNode.removeChild(currentNode);
     }
     // the value of "i" below is after the decrement
-    if (!i) { // if currentNode is the first argument (currentNode === arguments[0])
+    if (!i) // if currentNode is the first argument (currentNode === arguments[0])
       parent.replaceChild(currentNode, this);
-    } else { // if currentNode isn't the first
+    else // if currentNode isn't the first
       parent.insertBefore(this.previousSibling, currentNode);
-    }
   }
 }
-if (!Element.prototype.replaceWith) {
+if (!Element.prototype.replaceWith)
     Element.prototype.replaceWith = ReplaceWithPolyfill;
-}
-if (!CharacterData.prototype.replaceWith) {
+if (!CharacterData.prototype.replaceWith)
     CharacterData.prototype.replaceWith = ReplaceWithPolyfill;
-}
-if (!DocumentType.prototype.replaceWith) {
+if (!DocumentType.prototype.replaceWith)
     DocumentType.prototype.replaceWith = ReplaceWithPolyfill;
-}
 
 // IE11 for the win! Need a way to handle nodelists with modern array methods.
 function arrayifyNodelist(nodeList){
@@ -44,7 +38,7 @@ function arrayifyNodelist(nodeList){
 // ################### MAIN ######################
 // ###############################################
 
-CKEDITOR.dialog.add('glossifyDialog', function (editor) {
+CKEDITOR.dialog.add('glossifyDialog', function(editor) {
   return {
     title: 'Glossify Page',
     buttons: [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ],
@@ -114,15 +108,15 @@ function requestGlossification(dialog) {
           ],
         }),
       })
-      .done(function (data) {
+      .done(function(data) {
         handleGlossifierResponse.call(dialog, preparedBody, data, language);
       })
-      .fail(function (jqXHR, textStatus, errorText) {
+      .fail(function(jqXHR, textStatus, errorText){
         const errorMessage = 'Glossifier request failed: \'' + jqXHR.status + ' ' + errorText + '\'';
         handleFailedGlossifierRequest.call(dialog, errorMessage)
       })
     })
-    .fail(function (jqXHR, textStatus, errorText) {
+    .fail(function(jqXHR, textStatus, errorText){
       const errorMessage = 'Unable to retrieve session token: \'' + jqXHR.status + ' ' + errorText + '\'';;
       handleFailedGlossifierRequest.call(dialog, errorMessage)
     })
@@ -132,7 +126,7 @@ function saveGlossificationChoices() {
   const dialogContainer = this.getElement().$.querySelector('.glossify-dialog-container')
   const labels = dialogContainer.querySelectorAll('label[data-glossify-label]');
   const labelsArray = arrayifyNodelist(labels);
-  labelsArray.forEach(function (label) {
+  labelsArray.forEach(function(label) {
     const checkbox = label.querySelector('input');
     const isSelected = checkbox.checked;
     if(!isSelected) {
@@ -270,41 +264,41 @@ function prepareEditorBodyForGlossificationRequest(data) {
     return fixedSpanish;
   }
 
-    let tempData = data;
+	let tempData = data;
   let result = "";
   // 1) Save previously glossified term state as an element that the API will
   // ignore.
   tempData = cachePreviouslyGlossifiedTerms(tempData);
   // 2) Sanitize the string.
-    for (let i = 0; i < tempData.length; i++) {
-        let c = tempData.charAt(i);
-        if (c == "\n") {  //line feed substitute
-            result += "&#x000a;";
-        }
-        else if (c == "\r") { //carriage return substitute
-            result += "&#x000d;";
-        }
-        else if (c == "”") {    //right double quote
-            result += "&#148;";
-        }
-        else if (c == "—") {    //em dash
-            result += "&#151;";
-        }
-        else if (c == "–") {    //en dash
-            result += "&#150;";
-        }
-        else if (c == "Á") {    //A accent - for some reason WS chokes on this
-            result += "&#193;";
-        }
-        else if (c == "Í") {    //I accent
-            result += "&#205;";
-        }
-        else {
-            result += c;
-        }
+	for (let i=0; i < tempData.length; i++) {
+		let c = tempData.charAt(i);
+		if (c == "\n") {  //line feed substitute
+			result += "&#x000a;";
+		}
+		else if (c == "\r") { //carriage return substitute
+			result += "&#x000d;";
+		}
+		else if (c == "”") {	//right double quote
+			result += "&#148;";
+		}
+		else if (c == "—") {	//em dash
+			result += "&#151;";
+		}
+		else if (c == "–") {	//en dash
+			result += "&#150;";
+		}
+		else if (c == "Á") {	//A accent - for some reason WS chokes on this
+			result += "&#193;";
+		}
+		else if (c == "Í") {	//I accent
+			result += "&#205;";
+		}
+		else {
+			result += c;
+		}
   }
   result = fixSpanish(result);
-    return result;
+	return result;
 }
 
 /**
@@ -319,7 +313,7 @@ function prepareEditorBodyForGlossificationRequest(data) {
 function cachePreviouslyGlossifiedTerms(body) {
   const glossifiedTermTest = new RegExp("<a\\s+class=\"definition\".+?>(.+?)</a>", "g");
   const result = body.replace(glossifiedTermTest, wrapTermToSaveState);
-    return result;
+	return result;
 }
 
 /**
@@ -348,7 +342,7 @@ function wrapTermToSaveState(match, firstCaptureGroup) {
     "<span rel='glossified' data-id='" + id
     + "' data-language='" + language
     + "' data-term='" + termMatch + "'></span>";
-    return wrappedTerm;
+	return wrappedTerm;
 }
 
 // ##########################################
@@ -389,7 +383,7 @@ function handleGlossifierResponse(preparedBody, responseArray, language) {
   // previously selected state and then remove the span tag.
   const previouslyGlossifiedTerms = this.getElement().$.querySelectorAll("span[rel='glossified']");
   const previouslyGlossifiedTermsArray = arrayifyNodelist(previouslyGlossifiedTerms);
-  previouslyGlossifiedTermsArray.forEach(function (span) {
+  previouslyGlossifiedTermsArray.forEach(function(span) {
     const termText = span.dataset.term;
     const termId = span.dataset.id;
     const termLanguage = span.dataset.language;
@@ -400,7 +394,7 @@ function handleGlossifierResponse(preparedBody, responseArray, language) {
     span.innerHTML = labelString;
     const labelTag = span.querySelector('label');
     const inputTag = labelTag.querySelector('input');
-    inputTag.checked = TRUE;
+    inputTag.checked = true;
     span.replaceWith(labelTag);
   });
   // Since the dialog can expand after loading the contents, we need to fix the positioning so it's not pushed down off the page.
@@ -517,3 +511,5 @@ function glossifyTermFromLabel(label){
 
   label.replaceWith(anchor);
 }
+
+

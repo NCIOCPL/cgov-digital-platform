@@ -90,13 +90,15 @@ class CgovCoreTwigExtensions extends AbstractExtension {
       new TwigFunction('get_blog_info', [$this, 'getBlogInfo'], ['is_safe' => ['html']]),
       new TwigFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
       new TwigFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
-      new TwigFunction('get_translated_absolute_path',
-      [$this, 'getTranslatedAbsolutePath'],
-      ['is_safe' => ['html']]
+      new TwigFunction(
+          'get_translated_absolute_path',
+          [$this, 'getTranslatedAbsolutePath'],
+          ['is_safe' => ['html']]
       ),
-      new TwigFunction('strip_duplicate_leading_credit',
-      [$this, 'stripDuplicateLeadingCredit'],
-      ['is_safe' => ['html']]
+      new TwigFunction(
+          'strip_duplicate_leading_credit',
+          [$this, 'stripDuplicateLeadingCredit'],
+          ['is_safe' => ['html']]
       ),
       new TwigFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
       // This is borrowed from 'sfc' module based on discussions in

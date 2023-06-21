@@ -12,7 +12,8 @@ services:
  # Defines a service of which returns the associated crop for  given image style
   cgov_image.image_tools:
     class: Drupal\cgov_image\CgovImageTools
-  cgov_image.twig.CgovImageTwigExtensions:    
-    class: Drupal\cgov_image\CgovImageTwigExtensions    
-    tags:      
+  cgov_image.twig.CgovImageTwigExtensions:
+    class: Drupal\cgov_image\CgovImageTwigExtensions
+    arguments: ['@file_url_generator', '@entity_type.manager']
+    tags:
       - { name: twig.extension }

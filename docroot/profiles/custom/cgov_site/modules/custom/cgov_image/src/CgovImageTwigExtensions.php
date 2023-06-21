@@ -2,21 +2,46 @@
 
 namespace Drupal\cgov_image;
 
-use Drupal\image\Entity\ImageStyle;
-use Drupal\cgov_image\CgovImageTools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
- * Class CgovImageTwigExtensions.
+ * Cgov Image Twig Extensions.
  */
 class CgovImageTwigExtensions extends AbstractExtension {
-  /**
-   * A list with all the defined functions. The first parameter is the name
-   * by which we will call the function. The second parameter is the
-   * name of the function that will implement the function.
-   */
 
+  /**
+   * The file URL generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
+   * The Get EntityTypeManagerInterface.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Constructs \Drupal\Core\Template\TwigExtension.
+   *
+   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
+   *   The file URL generator.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Get entity_type_manager.
+   */
+  public function __construct(FileUrlGeneratorInterface $file_url_generator, EntityTypeManagerInterface $entity_type_manager) {
+    $this->fileUrlGenerator = $file_url_generator;
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * A list with all the defined functions.
+   */
   public function getFunctions() {
     return [
       new TwigFunction('get_placeholder_image', [$this, 'getPlaceholderImage']),
@@ -37,8 +62,8 @@ class CgovImageTwigExtensions extends AbstractExtension {
     $test = new CgovImageTools();
     $crop = $test->findCropByStyle($image_style);
     $uri = 'module://cgov_image/img/placeholder-' . $crop . '.png';
-    $image_style = ImageStyle::load($image_style);
-    $absolute_path = \Drupal::service('file_url_generator')->transformRelative($image_style->buildUrl($uri));
+    $image_style = $this->entityTypeManager->getStorage('image_style')->load($image_style);
+    $absolute_path = $this->fileUrlGenerator->transformRelative($image_style->buildUrl($uri));
     return $absolute_path;
   }
 
