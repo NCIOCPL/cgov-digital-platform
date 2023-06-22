@@ -1,0 +1,191 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Hero Default Test Page"
+  title__ES:
+      value: "NCIDS Spanish Hero Default Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-hero-default-test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_with_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'NCI is the nation''s leader in cancer research'
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'widescreen.jpg'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'desktop.jpg'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet_large.jpg'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet.jpg'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile_large.jpg'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile.jpg'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Latest News and Initiatives"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Inside Cancer Careers Podcast'
+          field_override_card_description:
+            - value: 'Listen to the Center for Cancer Training''s New Podcast.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'National Cancer Plan'
+          field_override_card_description:
+            - value: 'Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference' 
+                args:
+                  - 'media' 
+                  - bundle: 'cgov_image' 
+                    name: 'Feature Card Cat'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: 'NCI Funds more research grants thanks to congress'
+          field_override_card_description:
+            - value: 'Dr. Bertagnolli discusses how NCI will increase support for cancer research in FY 2023.'
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Internal Feature Card Test - 4x3 Override'
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'El NCI es el líder nacional de investigación del cáncer'
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'widescreen.jpg'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'desktop.jpg'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet_large.jpg'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'tablet.jpg'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile_large.jpg'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'mobile.jpg'
+    ######## End Placeholder ############

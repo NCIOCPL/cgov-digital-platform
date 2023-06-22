@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_2_guide_card_row.field_image_desc_guide_cards
+    - paragraphs.paragraphs_type.ncids_2_guide_card_row
+  module:
+    - entity_reference_revisions
+id: paragraph.ncids_2_guide_card_row.default
+targetEntityType: paragraph
+bundle: ncids_2_guide_card_row
+mode: default
+content:
+  field_image_desc_guide_cards:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

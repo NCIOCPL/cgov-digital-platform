@@ -1,0 +1,16 @@
+<!-- Begin MAIN CONTENT AREA -->
+<main class="main-content type {{ page_type }}" id="main-content">
+  {# Title Row #}
+  <div class="usa-section usa-section--cgdp-no-top usa-section--cgdp-double-bottom">
+    <div class="grid-container cgdp-title-area">
+        {% set hr_attribs = create_attribute({}) %}
+        {# @TODO: Change this to the nci- page title class when it is made #}
+        <h1 {{hr_attribs.addClass('cgdp-title-area__page-title')}}>{{ node.label }}</h1>
+        {% if node.field_page_subheading.value %}
+          <span class="cgdp-title-area__subheading">{{ node.field_page_subheading.value }}</span>
+        {% endif %}
+    </div>
+  </div>
+  {# End Title Row#}
+  {{content.field_landing_contents}}
+</main>

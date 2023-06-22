@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_link_button_internal.field_button_alt
+    - field.field.paragraph.ncids_link_button_internal.field_button_text
+    - field.field.paragraph.ncids_link_button_internal.field_internal_link
+    - paragraphs.paragraphs_type.ncids_link_button_internal
+id: paragraph.ncids_link_button_internal.default
+targetEntityType: paragraph
+bundle: ncids_link_button_internal
+mode: default
+content:
+  field_button_alt:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_button_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_internal_link:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: ncids_promo_block_image
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -564,3 +564,927 @@
   field_date_display_mode:
     - value: 'posted'
     - value: 'updated'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Feature Card Cat" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'feature_card_test_cat_override_source.jpeg'
+      alt: 'Feature Card Cat'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1407
+                height: 795
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 173
+                y: 0
+                width: 1060
+                height: 795
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 262
+                y: 0
+                width: 1060
+                height: 795
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 482
+                y: 0
+                width: 596
+                height: 795
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 366
+                y: 0
+                width: 795
+                height: 795
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 1
+                width: 1407
+                height: 791
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 602
+                y: 0
+                width: 447
+                height: 795
+
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Feature Card Test"
+  title__ES:
+      value: "[Internal Feature Card] Title - ES"
+  field_page_description:
+    value: "[Internal Feature Card] Page Description"
+  field_page_description__ES:
+    value: "[Internal Feature Card] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Feature Card] Card Title"
+  field_card_title__ES:
+    value: "[Internal Feature Card] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Feature Card] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Feature Card] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Feature Card Cat'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-card-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-card-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Feature Card Cat 16x9 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'feature_card_test_cat_override_source.jpeg'
+      alt: 'Feature Card Cat 16x9 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1407
+                height: 795
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 173
+                y: 0
+                width: 1060
+                height: 795
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 262
+                y: 0
+                width: 1060
+                height: 795
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 482
+                y: 0
+                width: 596
+                height: 795
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 366
+                y: 0
+                width: 795
+                height: 795
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 1
+                width: 1407
+                height: 791
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 602
+                y: 0
+                width: 447
+                height: 795
+  field_ncids_promo_art_16x9:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'feature_card_test_cat_16x9_override.jpeg'
+      alt: '16x9 Override Image'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Feature Card Test - 16x9 Override"
+  title__ES:
+      value: "[Internal Feature Card - 16x9 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Feature Card - 16x9 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Feature Card - 16x9 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Feature Card - 16x9 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Feature Card - 16x9 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Feature Card - 16x9 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Feature Card - 16x9 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Feature Card Cat 16x9 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-card-test-16x9-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-card-test-16x9-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Feature Card Cat 4x3 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'feature_card_test_cat_override_source.jpeg'
+      alt: 'Feature Card Cat 4x3 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1407
+                height: 795
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 173
+                y: 0
+                width: 1060
+                height: 795
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 262
+                y: 0
+                width: 1060
+                height: 795
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 482
+                y: 0
+                width: 596
+                height: 795
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 366
+                y: 0
+                width: 795
+                height: 795
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 1
+                width: 1407
+                height: 791
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 602
+                y: 0
+                width: 447
+                height: 795
+  field_ncids_promo_art_4x3:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'feature_card_test_cat_4x3_override.jpeg'
+      alt: '4x3 Override Image'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Feature Card Test - 4x3 Override"
+  title__ES:
+      value: "[Internal Feature Card - 4x3 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Feature Card - 4x3 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Feature Card - 4x3 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Feature Card - 4x3 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Feature Card - 4x3 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Feature Card - 4x3 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Feature Card - 4x3 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Feature Card Cat 4x3 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-card-test-4x3-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-card-test-4x3-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Find a Clinical Trial Test Article"
+  title__ES:
+      value: "[Find a Clinical Trial] Title - ES"
+  field_page_description:
+    value: "[Find a Clinical Trial] Page Description"
+  field_page_description__ES:
+    value: "[Find a Clinical Trial] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Find a Clinical Trial] Card Title"
+  field_card_title__ES:
+    value: "[Find a Clinical Trial] Card Title - ES"
+  field_browser_title:
+    value: "[Find a Clinical Trial] Browser Title"
+  field_browser_title_ES:
+    value: "[Find a Clinical Trial] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Find a Clinical Trial'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "clinical-trial-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "clinical-trial-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test"
+  title__ES:
+      value: "[Internal Promo Block] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Guide Card Test"
+  title__ES:
+      value: "[Guide Card] Title - ES"
+  field_page_description:
+    value: "[Guide Card] Page Description"
+  field_page_description__ES:
+    value: "[Guide Card] Page Descriptiomn - ES"
+  field_feature_card_description:
+    value: "[Guide Card] Feature Card Description"
+  field_feature_card_description__ES:
+    value: "[Guide Card] Feature Card Description - ES"
+  field_browser_title:
+    value: "[Guide Card] Browser Title"
+  field_browser_title__ES:
+    value: "[Guide Card] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog 1x1 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog 1x1 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+  field_ncids_promo_art_1x1:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_1x1.png'
+      alt: '1x1 Override Image'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test - 1x1 Override"
+  title__ES:
+      value: "[Internal Promo Block - 1x1 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block - 1x1 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block - 1x1 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block - 1x1 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block - 1x1 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block - 1x1 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block - 1x1 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog 1x1 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-1x1-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-1x1-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Promo Block Dog 16x9 Override" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_source.png'
+      alt: 'Promo Block Dog 16x9 Override'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 378
+                y: 0
+                width: 2268
+                height: 1701
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 287
+                y: 0
+                width: 2268
+                height: 1701
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 874
+                y: 0
+                width: 1275
+                height: 1701
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 713
+                y: 0
+                width: 1701
+                height: 1701
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 3024
+                height: 1701
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 950
+                y: 0
+                width: 956
+                height: 1701
+  field_ncids_promo_art_16x9:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'promo_block_dog_16x9.png'
+      alt: '16x9 Override Image'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Internal Promo Block Test - 16x9 Override"
+  title__ES:
+      value: "[Internal Promo Block - 16x9 Override] Title - ES"
+  field_page_description:
+    value: "[Internal Promo Block - 16x9 Override] Page Description"
+  field_page_description__ES:
+    value: "[Internal Promo Block - 16x9 Override] Page Descriptiomn - ES"
+  field_card_title:
+    value: "[Internal Promo Block - 16x9 Override] Card Title"
+  field_card_title__ES:
+    value: "[Internal Promo Block - 16x9 Override] Card Title - ES"
+  field_browser_title:
+    value: "[Internal Promo Block - 16x9 Override] Browser Title"
+  field_browser_title_ES:
+    value: "[Internal Promo Block - 16x9 Override] Browser Title - ES"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Block Dog 16x9 Override'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "internal-promo-block-test-16x9-article"
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url__ES:
+    value: "internal-promo-block-test-16x9-article"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'

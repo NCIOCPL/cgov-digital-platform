@@ -1,0 +1,14 @@
+{{ attach_library('ncids_trans/ncids-minimal') }}
+{{ attach_library('ncids_trans/ncids-home-landing') }}
+
+{% set page_type = 'node--type-' ~ node.bundle|clean_class %}
+
+{{ page.ncids_banner }}
+{{ page.ncids_site_alerts }}
+{{ page.ncids_header }}
+
+<div id="page">
+  {{ page.content }}
+</div>
+
+{{ page.ncids_footer }}

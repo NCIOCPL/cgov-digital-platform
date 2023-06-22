@@ -5,6 +5,10 @@
  * Contains cgov_home_landing.module.
  */
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
  /**
   * Implements hook_field_widget_form_alter().
   *
@@ -18,5 +22,49 @@ function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $cont
   ];
   $formHelper = \Drupal::service('cgov_core.form_tools');
   $formHelper->allowTextFormats($map, $element, $context);
+
+  // Makes autocomplete do nothing
+  if (
+    array_key_exists('#paragraph_type', $element) &&
+    ($element['#paragraph_type'] == 'ncids_promo_block_external')
+  ) {
+    // Make the autocomplete do nothing.
+    $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;
+  }
+  // Makes autocomplete do nothing for link button external
+  // used in guide cards and cta strip
+  if (
+    array_key_exists('#paragraph_type', $element) && 
+    ($element['#paragraph_type'] == 'ncids_link_button_external')
+  ) {
+    $element['subform']['field_external_link']['widget'][0]['uri']['#process'] = NULL;
+  }
 }
 
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ *
+ * We need to filter out the paragraph list items that have no links.
+ * They can have no link because:
+ *   A) A content editor did not add a link to the list item.
+ *   B) An anon user is view the page and the link is unpublished.
+ *   C) Migrate entered a target_id, but it points to non-existant content.
+ */
+function cgov_home_landing_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  $bundle = $entity->bundle();
+
+  if ($bundle === 'ncids_promo_block_internal' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
+  }
+
+  if ($bundle === 'ncids_link_button_internal' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_internal_link');
+  }
+
+  if ($bundle === 'ncids_inline_video' && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_video');
+  }
+
+  // We have no skin in the game.
+  return AccessResult::neutral();
+}

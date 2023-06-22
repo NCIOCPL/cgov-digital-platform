@@ -1,0 +1,30 @@
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+
+{# ###### Setup Image Position & Image ####### #}
+{% set image_position = paragraph.field_image_position_promo.value %}
+{% if image_position == 'no-img' %}
+    {% set image_position = '' %}
+{% elseif image_position == 'left' %}
+    {% set image_position = 'nci-promo-block--with-image' %}
+    {% set image = content.field_override_image_promotional %}
+{% else %}
+    {% set image_position = 'nci-promo-block--with-image nci-alternating-right' %}
+    {% set image = content.field_override_image_promotional %}
+{% endif %}
+
+{# ###### Setup Theme ####### #}
+{% set promo_theme = paragraph.field_ncids_theme.value %}
+{% if promo_theme == 'light' %}
+    {% set promo_theme = '' %}
+{% endif %}
+
+{# ###### Setup button ####### #}
+{% set externalUrl = paragraph.field_featured_url.uri %}
+
+{# ###### Setup Description ####### #}
+{% set description = paragraph.field_override_description.value %}
+
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+
+{{ homeLandingMacros.ncidsPromoBlock(paragraph.field_override_title.value, description, image, externalUrl, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "External") }}
