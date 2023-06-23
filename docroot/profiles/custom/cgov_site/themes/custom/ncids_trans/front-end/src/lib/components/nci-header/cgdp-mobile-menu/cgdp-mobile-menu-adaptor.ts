@@ -80,19 +80,26 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	protected langcode: 'en' | 'es' = 'en';
 
 	/**
+	 * This is the base url of the current page
+	 */
+	protected baseURL: string;
+
+	/**
 	 * @jsdoc
 	 * @param {boolean} useUrlForNavigationId this param is stupid.
 	 * @param {Axios} client an axios client
 	 * @param {string} initialItemId the initial menu id
 	 * @param {DrupalNavApiReference} initialNavRef information about the initial nav
 	 * @param {'en'|'es'} langcode the language code of the current page.
+	 * @param {string} baseURL the base url of the current page
 	 */
 	constructor(
 		useUrlForNavigationId: boolean,
 		client: Axios,
 		initialItemId: string,
 		initialNavRef: DrupalNavApiReference,
-		langcode: 'en' | 'es'
+		langcode: 'en' | 'es',
+		baseURL: string
 	) {
 		this.useUrlForNavigationId = useUrlForNavigationId;
 		this.client = client;
@@ -104,6 +111,7 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 		this.nextMenuToFetch = initialNavRef;
 
 		this.langcode = langcode;
+		this.baseURL = baseURL;
 	}
 
 	/**
@@ -176,7 +184,9 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 
 		const rootId = (this.navTree as AdapterTreeItem)['id'];
 		const label =
-			this.nextMenuToFetch === null && parentNode.id === rootId
+			(this.nextMenuToFetch === null && parentNode.id === rootId) ||
+			(this.baseURL === parentNode.path &&
+				this.nextMenuToFetch?.id === parentNode.id)
 				? locale['main_menu'][this.langcode]
 				: locale['back'][this.langcode];
 
