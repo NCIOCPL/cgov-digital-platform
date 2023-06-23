@@ -133,7 +133,8 @@ const initialize = () => {
 		client,
 		window.ncidsNavInfo?.item_id?.toString(),
 		window.ncidsNavInfo.nav,
-		lang
+		lang,
+		baseURL
 	);
 
 	// NOTE: this is on the document. This is because the nci-header does not

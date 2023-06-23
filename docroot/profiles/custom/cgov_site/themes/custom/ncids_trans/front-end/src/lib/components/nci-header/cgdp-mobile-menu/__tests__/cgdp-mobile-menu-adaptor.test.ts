@@ -46,7 +46,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			client,
 			'1500005',
 			{ id: '1500002', menu_type: 'section-nav' },
-			'en'
+			'en',
+			'/a'
 		);
 
 		const initialMenuID = await adaptor.getInitialMenuId();
@@ -92,7 +93,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			client,
 			'1500044',
 			{ id: '1500043', menu_type: 'section-nav' },
-			'en'
+			'en',
+			'/a'
 		);
 
 		const initialMenuID = await adaptor.getInitialMenuId();
@@ -128,7 +130,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			client,
 			'1500032',
 			{ id: '1500030', menu_type: 'section-nav' },
-			'es'
+			'es',
+			'/c'
 		);
 
 		const initialMenuID = await adaptor.getInitialMenuId();
@@ -163,7 +166,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			client,
 			'1500005',
 			{ id: '1500002', menu_type: 'section-nav' },
-			'en'
+			'en',
+			'/a'
 		);
 
 		await expect(adaptor.getNavigationLevel('15000005')).rejects.toThrow(
@@ -188,7 +192,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			client,
 			'1500000',
 			{ id: '1500000', menu_type: 'mobile-nav' },
-			'en'
+			'en',
+			'/a'
 		);
 
 		const initialMenuID = await adaptor.getInitialMenuId();
@@ -220,13 +225,48 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			null,
-			'en'
+			'en',
+			'/a'
 		);
 
 		const initialMenuID = await adaptor.getInitialMenuId();
 		await expect(adaptor.getNavigationLevel(initialMenuID)).rejects.toThrow(
 			'Section 1500000 cannot be found in the navigation.'
 		);
+
+		scope.isDone();
+	});
+
+	it('starting at Publications loads the main menu which leads to mobile menu', async () => {
+		const client = axios.create({
+			baseURL: 'http://localhost',
+		});
+
+		const scope = nock('http://localhost')
+			.get('/taxonomy/term/844114/section-nav')
+			.once()
+			.replyWithFile(200, __dirname + '/data/section-nav/844114.json')
+			.get('/taxonomy/term/309/mobile-nav')
+			.once()
+			.replyWithFile(200, __dirname + '/data/mobile-nav-api.json');
+
+		const adaptor = new CgdpMobileMenuAdaptor(
+			false,
+			client,
+			'930167',
+			{ id: '844114', menu_type: 'section-nav' },
+			'en',
+			'/publications'
+		);
+
+		const initialMenuID = await adaptor.getInitialMenuId();
+		expect(initialMenuID).toBe('930167');
+
+		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		expect(initialMenuData.parent?.label).toEqual('Back');
+
+		const parentData = await adaptor.getNavigationLevel('844114');
+		expect(parentData.parent?.label).toEqual('Back');
 
 		scope.isDone();
 	});
