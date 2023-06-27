@@ -1,0 +1,61 @@
+parameters:
+  level: 2
+  paths:
+    - docroot/modules/custom
+    - docroot/profiles/custom
+    - docroot/themes/custom
+  excludePaths:
+    - */tests/fixtures/*.php
+    - */settings*.php
+    - */node_modules/*
+    ## The following paths should be removed as each module is remediated
+    ### cgov_site Profile Tests
+    - docroot/profiles/custom/cgov_site/tests/*
+    ### cgov_site Profile Themes
+    - docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/*
+    - docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/*
+    ### cgov_site Profile Modules
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_cancer_research/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_file/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_metatag/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_syndication/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/*
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/*
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/*
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/*
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_drug_information_summary/*
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/*
+  ignoreErrors:
+    ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
+    ## as an error. However we do want to flag when people do unessesary ignores in doc comments,
+    ## so we will only report unmatched here.
+    -
+      ## This is the Drupal pattern for creating instances of plugins
+      message: "#Unsafe usage of new static\\(\\)#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:#"
+      reportUnmatched: false
+    -
+      ## Ignoring a deprecation with PHPUnit 9.6 that does not have a replacement. The fix will most likely
+      ## to be rewriting the test cases, which will be out of scope for the Drupal 10 upgrade.
+      ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
+      message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
+      reportUnmatched: false

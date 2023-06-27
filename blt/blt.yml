@@ -107,7 +107,8 @@ cgov:
   front_end_globals_file: '${repo.root}/FrontendGlobals.json'
 
 validate:
-  deprecation: false
+  phpstan:
+    config: '${repo.root}/phpstan.neon'
 
 tests:
   phpunit:
