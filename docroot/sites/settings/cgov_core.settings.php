@@ -38,38 +38,41 @@ if ($is_acsf_env && $acsf_db_name) {
     }
   }
   $config['simple_sitemap.settings']['base_url'] = 'https://' . $domain;
-}
-else {
+} else {
   // NOTE: you can override this in your local.settings.php.
   $config['simple_sitemap.settings']['base_url'] = 'https://www.cancer.gov';
 }
 
-// If this is a local environment or non-production (01live) environment
-// route e-mails to the logger.
+// Get our current environment
 if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-  // Alter '01dev,' '01test', and '01live' to match
-  // your website's environment names.
   $env = $_ENV['AH_SITE_ENVIRONMENT'];
   if (preg_match('/^ode\d*$/', $env)) {
     $env = 'ode';
   }
-  switch ($env) {
-    case '01live':
-      break;
-
-    case '01dev':
-    case 'dev':
-    case '01test':
-    case 'test':
-    case 'ode':
-    default:
-      $config['system.mail']['interface']['default'] = 'cgov_mail_logger';
-      break;
-  }
+} else {
+  $env = null;
 }
-else {
+
+// on non-prod environments, route emails to logger
+if ($env !== "01live") {
+  // route e-mails to the logger.
   $config['system.mail']['interface']['default'] = 'cgov_mail_logger';
 }
+
+// on enironments that have SAML, route to Okta upon logout
+switch ($env) {
+  case '01live':
+    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam.cancer.gov/login/signout';
+  case '01dev':
+  case 'dev':
+  case '01test':
+  case 'test':
+  case 'int':
+    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam-stage.cancer.gov/login/signout';
+  default:
+    break;
+}
+
 // Outlook doesn't adhere to standards, so accommodating and using
 // CRLF line-endings.
 $settings['mail_line_endings'] = "\r\n";
