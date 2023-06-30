@@ -26,13 +26,13 @@ drush:
 modules:
   local:
     enable: [dblog, devel, views_ui, cgov_yaml_content]
-    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, cgov_saml_auth_config, seckit, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge, akamai]
+    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, autologout, cgov_saml_auth_config, seckit, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge, akamai]
   ci:
     enable: {  }
-    uninstall: [acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, akamai]
+    uninstall: [acquia_connector, shield, simplesamlphp_auth, autologout, cgov_saml_auth_config, cgov_https_config, akamai]
   ode:
     enable: [dblog, acquia_connector, shield, cgov_caching_nocdn, cgov_https_config]
-    uninstall: [syslog, cgov_caching_cdn, akamai]
+    uninstall: [syslog, autologout, cgov_saml_auth_config, cgov_caching_cdn, akamai]
   dev:
     enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
     uninstall: [syslog, cgov_caching_cdn, akamai]
@@ -44,13 +44,13 @@ modules:
     uninstall: [syslog, devel, views_ui, cgov_caching_cdn, akamai]
   ## We have no prod in ACE.
   01dev:
-    enable: [dblog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn, akamai]
+    enable: [dblog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
     uninstall: [syslog, cgov_caching_nocdn]
   01test:
-    enable: [dblog, acquia_connector, acsf, shield, cgov_https_config, cgov_caching_cdn, akamai]
+    enable: [dblog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
     uninstall: [syslog, cgov_caching_nocdn]
   01live:
-    enable: [syslog, acquia_connector, acsf, shield, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
+    enable: [syslog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
     uninstall: [dblog, cgov_caching_nocdn]
 ## If this is not set, blt drupal:install will iterate through the sites in the sites folder.
 ## For now we set it to default, so it does not try installing simpletest, or god forbid "g".
