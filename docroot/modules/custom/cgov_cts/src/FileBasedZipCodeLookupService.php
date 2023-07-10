@@ -48,7 +48,7 @@ class FileBasedZipCodeLookupService implements ZipCodeLookupServiceInterface {
         // Load the database.
         $file_contents = file_get_contents($this->fileLocation);
       }
-      catch (Exception $ex) {
+      catch (\Exception $ex) {
         throw new \Exception("Cannot read zip code DB file at " . $this->fileLocation);
       }
       if ($file_contents === FALSE) {

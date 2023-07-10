@@ -8,6 +8,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Utility\Token;
 use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 use Drupal\cgov_js_app_module\Render\JsAppModuleScriptMarkup;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -116,6 +117,13 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
   protected $tokenService;
 
   /**
+   * The currently active route match object.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
    * Constructs a AppModulePluginBase object.
    *
    * @param array $configuration
@@ -128,18 +136,22 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
    *   The Drupal language manager.
    * @param \Drupal\Core\Utility\Token $token_service
    *   The Drupal token service.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   The currently active route match object.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     LanguageManagerInterface $language_manager,
-    Token $token_service
+    Token $token_service,
+    RouteMatchInterface $route_match
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->definition = $plugin_definition + $configuration;
     $this->languageManager = $language_manager;
     $this->tokenService = $token_service;
+    $this->routeMatch = $route_match;
   }
 
   /**
@@ -151,7 +163,8 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
       $plugin_id,
       $plugin_definition,
       $container->get('language_manager'),
-      $container->get('token')
+      $container->get('token'),
+      $container->get('current_route_match')
     );
   }
 
@@ -310,7 +323,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
     // Now the trick is that only certain types of page-level entities will
     // have URLs we can use. (E.g. Node, media, taxonomy_term?)
     // So for now, we will only support Node.
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
     if (is_object($node)) {
       // This should have the canonical and hreflang items.
       foreach ($node->uriRelationships() as $rel) {
@@ -319,7 +332,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
           $drupal_urls['canonical'] = parse_url($canonical_url->toString());
 
           // Now go and get the other languages.
-          /** @var \Drupal\Core\Url[] $urls */
+          /** @var \Drupal\Core\Url[] $alternate_urls */
           $alternate_urls = array_map(
             function ($language) use ($canonical_url) {
               $url = clone $canonical_url;

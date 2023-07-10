@@ -2,6 +2,8 @@
 
 namespace Drupal\app_module\Plugin\app_module;
 
+use Drupal\Core\Cache\CacheableMetadata;
+
 /**
  * This is the basis for most app modules.
  *
@@ -99,7 +101,7 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
   final public function alterTokens(array &$replacements, array $context, $path, array $options = []) {
     parent::alterTokens($replacements, $context, $path, $options);
 
-    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase */
+    /** @var \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface */
     $builder = $this->getBuilderForRoute($path);
 
     if ($builder) {
@@ -123,5 +125,16 @@ abstract class MultiRouteAppModulePluginBase extends AppModulePluginBase {
       return [];
     }
   }
+
+  /**
+   * Gets the Render Array Builder for the route.
+   *
+   * @param string $path
+   *   The path to determine the builder.
+   *
+   * @return \Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface
+   *   The Render array builder for the path.
+   */
+  abstract protected function getBuilderForRoute($path);
 
 }

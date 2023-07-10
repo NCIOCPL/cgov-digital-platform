@@ -29,6 +29,7 @@ class JsonDataFieldFormatter extends FormatterBase implements ContainerFactoryPl
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
+    $yaml_data = '';
     foreach ($items as $delta => $item) {
       $data_value = $item->get('value')->getValue();
       if ($data_value) {

@@ -29,7 +29,7 @@ abstract class KernelTestBase extends DrupalKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     FileCacheFactory::setPrefix(Settings::getApcuPrefix('file_cache', $this->root));
     parent::setUp();
 
