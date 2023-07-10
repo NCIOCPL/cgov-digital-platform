@@ -364,7 +364,6 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
       ->method('getInternalPath')
       ->willReturn($route);
 
-    /** @var \Drupal\node\NodeInterface */
     $entity = $this->getMockBuilder('\Drupal\node\Entity\Node')
       ->disableOriginalConstructor()
       ->getMock();
@@ -473,6 +472,9 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
 
   /**
    * Helper method to get content entity for negative tests.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   *   The content entity.
    */
   protected function getNegativeContentEntity(
     $type,

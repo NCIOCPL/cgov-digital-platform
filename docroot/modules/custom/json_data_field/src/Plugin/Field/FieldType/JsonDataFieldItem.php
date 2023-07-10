@@ -98,13 +98,19 @@ class JsonDataFieldItem extends FieldItemBase {
   public static function fieldSettingsFormValidate(array $form, FormStateInterface $form_state) {
     $json_schema_file = $form_state->getValue('settings')['json_schema_file'];
     if (!empty($json_schema_file) && !empty($json_schema_file['json_schema_file_uri']) && !empty($json_schema_file['file_upload'])) {
-      $form_state->setError($form, t('Please enter only a schema file uri OR upload a file. You can not use both'));
+      $form_state->setError(
+        $form,
+        \Drupal::translation()->translate('Please enter only a schema file uri OR upload a file. You can not use both')
+      );
     }
 
     // Check if JSONSchema file exists in the system.
     if (!empty($json_schema_file) && !empty($json_schema_file['json_schema_file_uri'])) {
       if (!file_exists($json_schema_file['json_schema_file_uri'])) {
-        $form_state->setError($form, t('JSONSchema file does not exist in the system.'));
+        $form_state->setError(
+          $form,
+          \Drupal::translation()->translate('JSONSchema file does not exist in the system.')
+        );
       }
     }
 
@@ -156,6 +162,7 @@ class JsonDataFieldItem extends FieldItemBase {
       if (!empty($settings['json_schema_file']['file_upload'])) {
         $schema_fid = $settings['json_schema_file']['file_upload'][0];
         if (!empty($schema_fid) && $file = \Drupal::entityTypeManager()->getStorage('file')->load($schema_fid)) {
+          /** @var \Drupal\file\FileInterface $file */
           $file->setPermanent();
           $file->save();
           $settings['json_schema_file'] = $file->getFileUri();

@@ -38,7 +38,7 @@ class AppPathTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setup();
     // These are special and cannot be installed as a dependency
     // for this module. So we have to install their bits separately.
@@ -87,7 +87,7 @@ class AppPathTest extends KernelTestBase {
     // 2. Change alias.
     $this->nodeStorage->resetCache();
     $node1 = Node::load($node1->id());
-    $node1->get('path')->alias = '/test-node-1-updated';
+    $node1->path->alias = '/test-node-1-updated';
     $node1->save();
 
     // Assert app path was updated.

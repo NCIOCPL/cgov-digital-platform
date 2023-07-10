@@ -13,14 +13,14 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
   /**
    * Language manager.
    *
-   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Language\LanguageManagerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $languageManager;
 
   /**
    * The token service.
    *
-   * @var Drupal\Core\Utility\Token|\PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Utility\Token|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $tokenService;
 
@@ -30,6 +30,13 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
    * @var \Drupal\cgov_js_app_module\Plugin\app_module\JsOnlyAppModulePlugin
    */
   protected $pluginInstance;
+
+  /**
+   * Current active route match object.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected $routeMatch;
 
   /**
    * These are a set of default options for the plugin methods.
@@ -59,11 +66,12 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->languageManager = $this->createMock('Drupal\Core\Language\LanguageManagerInterface');
     $this->tokenService = $this->createMock('Drupal\Core\Utility\Token');
+    $this->routeMatch = $this->createMock('\Drupal\Core\Routing\RouteMatchInterface');
 
     $this->pluginInstance = new JsOnlyAppModulePlugin(
       [],
@@ -75,7 +83,8 @@ class JsOnlyAppModulePluginTest extends UnitTestCase {
         "provider" => "cgov_js_app_module",
       ],
       $this->languageManager,
-      $this->tokenService
+      $this->tokenService,
+      $this->routeMatch
     );
   }
 

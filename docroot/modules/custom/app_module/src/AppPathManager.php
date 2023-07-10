@@ -31,7 +31,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   /**
    * The Entity Type Manager service.
    *
-   * @var \Drupal\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -238,7 +238,9 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   public function updateAliasFromPath(PathAliasInterface $path) {
 
     // Nothing to see here. Exit.
-    if ($path->getAlias() === $path->original->getAlias()) {
+    /** @var \Drupal\path_alias\PathAliasInterface */
+    $originalPath = $path->original;
+    if ($path->getAlias() === $originalPath->getAlias()) {
       return;
     }
 
@@ -553,10 +555,6 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
   public function cacheClear($source = NULL) {
 
     $this->lookupMap = [];
-    $this->noPath = [];
-    $this->noAlias = [];
-    $this->langcodePreloaded = [];
-    $this->preloadedPathLookups = [];
     $this->cache->delete($this->cacheKey);
     $this->isInitialized = FALSE;
   }

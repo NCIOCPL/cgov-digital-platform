@@ -16,21 +16,21 @@ class ZipCodeLookupResourceTest extends UnitTestCase {
   /**
    * The logger.
    *
-   * @var \Psr\Log\LoggerInterface|PHPUnit_Framework_MockObject_MockObject
+   * @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $logger;
 
   /**
    * Mock CacheContextsManager.
    *
-   * @var \Drupal\Core\Cache\Context\CacheContextsManager|PHPUnit_Framework_MockObject_MockObject
+   * @var \Drupal\Core\Cache\Context\CacheContextsManager|\PHPUnit\Framework\MockObject\MockObject
    */
   protected $mockCacheContextsManager;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // The cache context merging in the rest service requires the caching

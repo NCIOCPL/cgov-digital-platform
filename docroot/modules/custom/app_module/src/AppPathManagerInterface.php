@@ -36,7 +36,7 @@ interface AppPathManagerInterface {
   /**
    * Updates an app path's alias from a path info.
    *
-   * @param Drupal\path_alias\PathAliasInterface $path
+   * @param \Drupal\path_alias\PathAliasInterface $path
    *   A path alias.
    */
   public function updateAliasFromPath(PathAliasInterface $path);
@@ -44,7 +44,7 @@ interface AppPathManagerInterface {
   /**
    * Delete's an app path based on a path info.
    *
-   * @param Drupal\path_alias\PathAliasInterface $path
+   * @param \Drupal\path_alias\PathAliasInterface $path
    *   The removed path alias.
    */
   public function deleteByPath(PathAliasInterface $path);

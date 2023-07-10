@@ -69,7 +69,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
    *
    * Once installed, a content type with the desired field is created.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Install Drupal.
     parent::setUp();
     // Create a new request stack to handle the various test requests.
