@@ -49,9 +49,9 @@ class AppModuleForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-
+    // App module entity.
+    /** @var \Drupal\app_module\Entity\AppModule $app_module */
     $app_module = $this->entity;
-
     $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
@@ -100,6 +100,7 @@ class AppModuleForm extends EntityForm {
     }
 
     $form_state->setRedirect('entity.app_module.collection');
+    return $status;
   }
 
   /**
@@ -107,6 +108,7 @@ class AppModuleForm extends EntityForm {
    */
   public function exist($id) {
     $entity = $this->entityTypeManager->getStorage('app_module')->getQuery()
+      ->accessCheck(TRUE)
       ->condition('id', $id)
       ->execute();
     return (bool) $entity;

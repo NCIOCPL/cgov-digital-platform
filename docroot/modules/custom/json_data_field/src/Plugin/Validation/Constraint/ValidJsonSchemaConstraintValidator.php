@@ -2,6 +2,7 @@
 
 namespace Drupal\json_data_field\Plugin\Validation\Constraint;
 
+use Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use JsonSchema\Validator;
@@ -24,6 +25,12 @@ class ValidJsonSchemaConstraintValidator extends ConstraintValidator {
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
+
+    // Extra type guarding to ensure we are a a json data field.
+    if (!($value instanceof JsonDataFieldItem)) {
+      throw new \Exception('ValidJsonSchemaContraintValidator can only be used for JsonDataFieldItem fields.');
+    }
+
     // Empty should be handled by the field settings.
     if (empty($value->value)) {
       return;
@@ -37,11 +44,11 @@ class ValidJsonSchemaConstraintValidator extends ConstraintValidator {
     // Get the json_data_field JsonSchema file.
     $field_storage_settings = $value->getFieldDefinition()->getSettings();
 
-    $field_name = $value->getFieldDefinition()->id();
-
     if (empty($field_storage_settings)) {
       return;
     }
+
+    $field_name = $value->getFieldDefinition()->getName();
 
     $schema_uri = $field_storage_settings['json_schema_file'] ?? '';
     // Check if JSONSchema file exists in the system.
