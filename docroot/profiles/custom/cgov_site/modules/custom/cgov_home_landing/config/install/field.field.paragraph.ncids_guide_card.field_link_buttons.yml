@@ -1,0 +1,161 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_link_buttons
+    - paragraphs.paragraphs_type.ncids_guide_card
+    - paragraphs.paragraphs_type.ncids_link_button_external
+    - paragraphs.paragraphs_type.ncids_link_button_internal
+  module:
+    - entity_reference_revisions
+id: paragraph.ncids_guide_card.field_link_buttons
+field_name: field_link_buttons
+entity_type: paragraph
+bundle: ncids_guide_card
+label: 'Links for Guide Card Buttons'
+description: 'The link buttons to display. Minimum of two, maximum of 6.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      ncids_link_button_internal: ncids_link_button_internal
+      ncids_link_button_external: ncids_link_button_external
+    negate: 0
+    target_bundles_drag_drop:
+      body_section:
+        weight: -88
+        enabled: false
+      cgov_card_borderless:
+        weight: -87
+        enabled: false
+      cgov_card_external:
+        weight: -86
+        enabled: false
+      cgov_card_internal:
+        weight: -85
+        enabled: false
+      cgov_card_raw_html:
+        weight: -84
+        enabled: false
+      cgov_citation:
+        weight: -83
+        enabled: false
+      cgov_column_one:
+        weight: -82
+        enabled: false
+      cgov_column_two:
+        weight: -81
+        enabled: false
+      cgov_content_block:
+        weight: -80
+        enabled: false
+      cgov_cthp_block_card:
+        weight: -79
+        enabled: false
+      cgov_cthp_feature_card_external:
+        weight: -78
+        enabled: false
+      cgov_cthp_feature_card_internal:
+        weight: -77
+        enabled: false
+      cgov_cthp_guide_card:
+        weight: -76
+        enabled: false
+      cgov_cthp_overview_card:
+        weight: -75
+        enabled: false
+      cgov_cthp_raw_html_card:
+        weight: -74
+        enabled: false
+      cgov_cthp_research_card:
+        weight: -73
+        enabled: false
+      cgov_cthp_video_card:
+        weight: -72
+        enabled: false
+      cgov_dynamic_list:
+        weight: -71
+        enabled: false
+      cgov_external_link:
+        weight: -70
+        enabled: false
+      cgov_guide_row:
+        weight: -69
+        enabled: false
+      cgov_hero_banner:
+        weight: -68
+        enabled: false
+      cgov_internal_link:
+        weight: -67
+        enabled: false
+      cgov_list:
+        weight: -66
+        enabled: false
+      cgov_media_link:
+        weight: -65
+        enabled: false
+      cgov_multimedia_row:
+        weight: -64
+        enabled: false
+      cgov_primary_feature_row:
+        weight: -63
+        enabled: false
+      cgov_secondary_feature_row:
+        weight: -62
+        enabled: false
+      cgov_title_first_feature_card_ro:
+        weight: -61
+        enabled: false
+      cgov_two_item_feature_row:
+        weight: -60
+        enabled: false
+      ncids_2_guide_card_row:
+        weight: -59
+        enabled: false
+      ncids_3_feature_card_row:
+        weight: -58
+        enabled: false
+      ncids_3_guide_card_row:
+        weight: -57
+        enabled: false
+      ncids_call_to_action_strip:
+        weight: -56
+        enabled: false
+      ncids_feature_card_external:
+        weight: -55
+        enabled: false
+      ncids_feature_card_internal:
+        weight: -54
+        enabled: false
+      ncids_guide_card:
+        weight: -89
+        enabled: false
+      ncids_guide_card_img_desc:
+        weight: -53
+        enabled: false
+      ncids_hero:
+        weight: -52
+        enabled: false
+      ncids_inline_video:
+        weight: -51
+        enabled: false
+      ncids_link_button_external:
+        weight: -49
+        enabled: true
+      ncids_link_button_internal:
+        weight: -50
+        enabled: true
+      ncids_promo_block_external:
+        weight: -48
+        enabled: false
+      ncids_promo_block_internal:
+        weight: -47
+        enabled: false
+      pdq_summary_section:
+        weight: -46
+        enabled: false
+field_type: entity_reference_revisions
