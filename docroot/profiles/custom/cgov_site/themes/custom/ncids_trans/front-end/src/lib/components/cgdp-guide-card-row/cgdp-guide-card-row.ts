@@ -32,7 +32,8 @@ const guideCardLinkClickHandler =
 		rowItems: number,
 		rowItemIndex: number | '_ERROR_',
 		totalLinks: HTMLElement[],
-		card: HTMLElement
+		card: HTMLElement,
+		componentVariant: string
 	) =>
 	(evt: Event): void => {
 		const link = evt.currentTarget as HTMLAnchorElement;
@@ -44,7 +45,7 @@ const guideCardLinkClickHandler =
 			rowItemIndex,
 			'Guide Card',
 			'Light',
-			'Image and Description',
+			componentVariant,
 			getTitle(card),
 			link.dataset.eddlLandingItemLinkType || '_ERROR_',
 			!link.textContent ? '_ERROR_' : link.textContent.trim(),
@@ -67,12 +68,22 @@ const guideCardHelper = (card: HTMLElement): void => {
 		: [];
 	const rowItemIndex = allCards.indexOf(card) + 1;
 	const rowItems = allCards.length;
-
+	const componentVariant =
+		parentRowContainer &&
+		(parentRowContainer as HTMLElement).dataset.eddlLandingRow
+			? 'Standard'
+			: 'Image and Description';
 	const links = Array.from(card.querySelectorAll('a'));
 	links.forEach((link) => {
 		link.addEventListener(
 			'click',
-			guideCardLinkClickHandler(rowItems, rowItemIndex, links, card)
+			guideCardLinkClickHandler(
+				rowItems,
+				rowItemIndex,
+				links,
+				card,
+				componentVariant
+			)
 		);
 	});
 };
