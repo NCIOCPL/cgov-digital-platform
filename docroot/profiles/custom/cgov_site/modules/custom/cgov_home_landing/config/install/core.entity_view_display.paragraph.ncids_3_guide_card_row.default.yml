@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_3_guide_card_row.field_container_heading
+    - field.field.paragraph.ncids_3_guide_card_row.field_guide_cards
+    - paragraphs.paragraphs_type.ncids_3_guide_card_row
+  module:
+    - entity_reference_revisions
+id: paragraph.ncids_3_guide_card_row.default
+targetEntityType: paragraph
+bundle: ncids_3_guide_card_row
+mode: default
+content:
+  field_container_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_guide_cards:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

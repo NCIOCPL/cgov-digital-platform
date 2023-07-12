@@ -1,0 +1,20 @@
+{% if (content.field_guide_cards['#items']|length > 0) %}
+    {% if content.field_container_heading[0] %}
+        <section class="usa-section usa-section--light cgdp-guide-card-row" data-eddl-landing-row="3_guide_card_row">
+            <div class="grid-container">
+                <h2 class="nci-guide-card__header">{{ paragraph.field_container_heading.value }}</h2>
+                <ul class="nci-card-group">
+                    {{ content.field_guide_cards }}
+                </ul>
+            </div>
+        </section>
+    {% else %}
+        <div class="usa-section usa-section--light cgdp-guide-card-row" data-eddl-landing-row="3_guide_card_row">
+            <div class="grid-container">
+                <ul class="nci-card-group">
+                    {{ content.field_guide_cards }}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
