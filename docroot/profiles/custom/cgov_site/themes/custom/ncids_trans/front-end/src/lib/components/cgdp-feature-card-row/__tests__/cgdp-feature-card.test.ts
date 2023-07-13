@@ -112,6 +112,44 @@ describe('CGDP Feature Cards', () => {
 		);
 	});
 
+	it('multimedia feature card', () => {
+		const dom = nciFeatureCardRowDom();
+
+		// Lets make a spy to ensure that trackOther is called correctly
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', dom.outerHTML);
+
+		// Create the JS
+		cgdpFeatureCardInit();
+
+		const card = screen.getAllByRole('link');
+
+		fireEvent.click(card[2]);
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'LP:FeatureCard:LinkClick',
+			'LP:FeatureCard:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				rowItems: 3,
+				rowItemIndex: 3,
+				componentType: 'Feature Card',
+				componentTheme: 'Light',
+				componentVariant: 'Standard Single Link',
+				title: 'Media Card Title',
+				linkType: 'Media',
+				linkText: 'Not Defined',
+				linkArea: 'Not Defined',
+				totalLinks: 1,
+				linkPosition: 1,
+			}
+		);
+	});
+
 	it('bad DOM feature card', () => {
 		const dom = nciFeatureCardRowBadDom();
 

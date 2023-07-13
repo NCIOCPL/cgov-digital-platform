@@ -26,6 +26,10 @@ function cgov_promo_paragraph_access(EntityInterface $entity, $operation, Accoun
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
 
+  else if (($bundle === 'ncids_feature_card_internal') && $operation === 'view') {
+    return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_media');
+  }
+
   // We have no skin in the game.
   return AccessResult::neutral();
 }
