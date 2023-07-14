@@ -125,7 +125,6 @@ jobs:
           ELECTRON_EXTRA_LAUNCH_ARGS: '--disable-gpu'
           NUM_THREADS: 3
         run: |
-          npm ci
           # Run the builtin Drush Web server
           drush rs 0.0.0.0:8888 &
           npm run blt:tests:cypress -- -t $NUM_THREADS
