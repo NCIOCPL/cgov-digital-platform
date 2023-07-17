@@ -59,3 +59,17 @@ parameters:
       ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
       message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
       reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\:\\:#"
+      reportUnmatched: false
