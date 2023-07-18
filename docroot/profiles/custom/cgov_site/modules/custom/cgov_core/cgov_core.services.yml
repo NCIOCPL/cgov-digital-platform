@@ -26,7 +26,7 @@ services:
       - '@entity.repository'
   cgov_core.twig_extensions:
     class: Drupal\cgov_core\CgovCoreTwigExtensions
-    arguments: ['@entity_type.manager', '@language_manager', '@renderer', '@request_stack']
+    arguments: ['@entity_type.manager', '@language_manager', '@renderer', '@request_stack', '@file_url_generator']
     tags:
       - { name: twig.extension }
   cgov_core.translation_available:
@@ -51,6 +51,7 @@ services:
       - { name: path_processor_outbound, priority: 600 }
   cgov_core.config_overrider:
     class: Drupal\cgov_core\CgovConfigOverrider
+    arguments: ['@service_container']
     tags:
       - {name: config.factory.override, priority: 5}
   cgov_core.route_subscriber:

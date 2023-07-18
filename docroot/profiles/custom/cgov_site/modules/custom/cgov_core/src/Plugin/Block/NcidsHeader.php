@@ -20,6 +20,7 @@ use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\cgov_core\NavItem;
 use Drupal\Core\File\FileUrlGenerator;
 use Drupal\file\FileUsage\FileUsageInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 
 /**
  * Provides a 'NCIDS Header' block.
@@ -38,6 +39,13 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
+
+  /**
+   * A current user instance.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
 
   /**
    * Cgov Navigation Manager Service.
@@ -135,7 +143,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     RequestContext $request_context,
     FileUrlGenerator $file_url_generator,
     EntityTypeManagerInterface $entity_type_manager,
-    FileUsageInterface $file_usage_svc
+    FileUsageInterface $file_usage_svc,
+    AccountProxyInterface $current_user
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
@@ -147,6 +156,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     $this->fileUrlGenerator = $file_url_generator;
     $this->entityTypeManager = $entity_type_manager;
     $this->fileUsageSvc = $file_usage_svc;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -165,7 +175,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       $container->get('router.request_context'),
       $container->get('file_url_generator'),
       $container->get('entity_type.manager'),
-      $container->get('file.usage')
+      $container->get('file.usage'),
+      $container->get('current_user')
     );
   }
 
@@ -635,7 +646,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       // Drupal coding standards.)
       // P.S. How is Core code not passing the Drupal sniffer rules??
       '#default_value' => !empty($search_results_page) && (
-          \Drupal::currentUser()->hasPermission('link to any page') ||
+        $this->currentUser->hasPermission('link to any page') ||
           Url::fromUri($search_results_page, [])->access()
       ) ? static::getUriAsDisplayableString($search_results_page) : NULL,
       '#element_validate' => [

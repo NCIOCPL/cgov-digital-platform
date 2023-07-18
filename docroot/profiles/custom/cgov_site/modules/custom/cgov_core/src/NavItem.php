@@ -5,6 +5,7 @@ namespace Drupal\cgov_core;
 use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Component\Utility\Html;
+use Drupal\block_content\BlockContentInterface;
 
 /**
  * Nav Item.
@@ -58,7 +59,7 @@ class NavItem {
    *
    * @var bool
    */
-  protected $isBreadCrumbRoot;
+  protected $isBreadcrumbRoot;
 
   /**
    * TRUE if this is nav root for section navs.
@@ -219,7 +220,11 @@ class NavItem {
     $referencedEntities = $megamenuFieldEntityReference->referencedEntities();
     $hasMegamenu = count($referencedEntities) > 0;
     if ($hasMegamenu) {
-      $megamenuMarkupEncoded = $megamenuFieldEntityReference->entity->get('field_raw_html')->value;
+      $blockEntity = $megamenuFieldEntityReference->entity;
+      if (!($blockEntity instanceof BlockContentInterface)) {
+        return "";
+      }
+      $megamenuMarkupEncoded = $blockEntity->get('field_raw_html')->value;
       $megamenuMarkupDecoded = Html::decodeEntities($megamenuMarkupEncoded);
       return $megamenuMarkupDecoded;
     }
@@ -328,7 +333,7 @@ class NavItem {
    * Optional, pass an array of class properties
    * with boolean values to filter children against.
    *
-   * @return \Drupal\cgov_core\NavItemInterface[]
+   * @return mixed
    *   Filtered array of direct descendents.
    */
   public function getChildren() {

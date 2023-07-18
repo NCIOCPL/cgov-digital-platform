@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\cgov_core\Traits;
 
+use Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface;
+
 /**
  * Provides test assertions for testing config entity synchronization.
  *
@@ -21,8 +23,12 @@ trait CGovWorkflowAttachmentTrait {
   public function attachContentTypeToWorkflow($type_name, $workflow_name) {
     $workflows = \Drupal::entityTypeManager()->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('node', $type_name);
-    $workflow->save(TRUE);
+    $typePlugin = $workflow->getTypePlugin();
+    if (!($typePlugin instanceof ContentModerationInterface)) {
+      throw new \Exception("editorial_workflow is not of the expected type, ContentModerationInterface.");
+    }
+    $typePlugin->addEntityTypeAndBundle('node', $type_name);
+    $workflow->save();
   }
 
 }

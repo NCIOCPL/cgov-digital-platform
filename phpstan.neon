@@ -18,7 +18,6 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/*
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/*
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_cancer_research/*
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/*
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/*
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/*
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_file/*
@@ -58,4 +57,25 @@ parameters:
       ## to be rewriting the test cases, which will be out of scope for the Drupal 10 upgrade.
       ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
       message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\:\\:#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:#"
       reportUnmatched: false

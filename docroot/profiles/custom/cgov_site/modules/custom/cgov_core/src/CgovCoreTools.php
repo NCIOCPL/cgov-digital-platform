@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\language\LanguageNegotiatorInterface;
+use Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface;
 
 /**
  * Helper service for various cgov installation tasks.
@@ -169,8 +170,12 @@ class CgovCoreTools {
   public function attachMediaTypeToWorkflow($type_name, $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('media', $type_name);
-    $workflow->save(TRUE);
+    $typePlugin = $workflow->getTypePlugin();
+    if (!($typePlugin instanceof ContentModerationInterface)) {
+      return;
+    }
+    $typePlugin->addEntityTypeAndBundle('media', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -181,8 +186,12 @@ class CgovCoreTools {
   public function attachBlockContentTypeToWorkflow($type_name, $workflow_name) {
     $workflows = $this->entityTypeManager->getStorage('workflow')->loadMultiple();
     $workflow = $workflows[$workflow_name];
-    $workflow->getTypePlugin()->addEntityTypeAndBundle('block_content', $type_name);
-    $workflow->save(TRUE);
+    $typePlugin = $workflow->getTypePlugin();
+    if (!($typePlugin instanceof ContentModerationInterface)) {
+      return;
+    }
+    $typePlugin->addEntityTypeAndBundle('block_content', $type_name);
+    $workflow->save();
   }
 
   /**
@@ -501,7 +510,9 @@ class CgovCoreTools {
     // EntityReferenceFormatterBase, and is the same check call that would
     // hide the content item.
     $access_result = $dependant->access('view', NULL, TRUE);
-
+    if (!($access_result instanceof AccessResult)) {
+      throw new \Exception("access_result is not of the expected type, AccessResult.");
+    }
     if ($access_result->isAllowed()) {
       // If we are allowed to see the node, then we do not want to influence
       // any access checks.
