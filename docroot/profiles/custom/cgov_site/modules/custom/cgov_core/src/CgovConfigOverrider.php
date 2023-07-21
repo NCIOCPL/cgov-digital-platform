@@ -5,29 +5,13 @@ namespace Drupal\cgov_core;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryOverrideInterface;
 use Drupal\Core\Config\StorageInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * CgovConfigOverrider - Overrides configurations for cgov_core.
  */
 class CgovConfigOverrider implements ConfigFactoryOverrideInterface {
-
-  /**
-   * The service container.
-   *
-   * @var \Symfony\Component\DependencyInjection\ContainerInterface
-   */
-  protected $container;
-
-  /**
-   * Constructs object.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The current service container.
-   */
-  public function __construct(ContainerInterface $container) {
-    $this->container = $container;
-  }
+  use ContainerAwareTrait;
 
   /**
    * {@inheritdoc}
