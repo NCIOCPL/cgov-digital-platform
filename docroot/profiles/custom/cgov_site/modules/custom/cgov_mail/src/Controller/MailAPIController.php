@@ -75,7 +75,7 @@ class MailAPIController extends ControllerBase {
     // Grab the referring URL in the event the
     // data fails validation, or the MailManager fails to send.
     $previousUrl = $request->server->get('HTTP_REFERER');
-
+    $recaptchaResponseField = NULL;
     // Initialize variables.
     $from = $to = $subject = $body = $redirect = $requiredFields = $splitFields = '';
     $errorList = [];

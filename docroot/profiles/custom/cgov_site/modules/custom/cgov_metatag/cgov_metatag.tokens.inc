@@ -164,7 +164,7 @@ function get_social_image_path_from_media($media_entity) {
 
         // Get the Image URL.
         $file_uri = $file->getFileUri();
-        $image_url_token = file_url_transform_relative(file_create_url($file_uri));
+        $image_url_token = \Drupal::service('file_url_generator')->generateString($file_uri);
 
       }
       // Use the normal image if cropped with social media crop.
@@ -238,7 +238,7 @@ function find_styled_image_url($image_fid, $social_img_style_name) {
         $style->createDerivative($file_uri, $derivative_uri);
       }
 
-      $image_url = file_url_transform_relative($style->buildUrl($file_uri));
+      $image_url = \Drupal::service('file_url_generator')->transformRelative($style->buildUrl($file_uri));
 
       // Strip the tokens as they're not desired.
       $image_url = strtok($image_url, "?");
