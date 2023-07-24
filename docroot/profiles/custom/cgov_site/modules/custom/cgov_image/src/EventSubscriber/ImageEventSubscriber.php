@@ -5,7 +5,7 @@ namespace Drupal\cgov_image\EventSubscriber;
 use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -46,10 +46,10 @@ class ImageEventSubscriber implements EventSubscriberInterface {
   /**
    * Validates that this request can be handled.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
 
     // We should probably only do this for certain routes.
     if ($this->currentRoute->getRouteName() !== 'entity.media.canonical') {
@@ -82,7 +82,7 @@ class ImageEventSubscriber implements EventSubscriberInterface {
   /**
    * Gets the current entity if there is one.
    *
-   * @return Drupal\Core\Entity\ContentEntityInterface
+   * @return \Drupal\Core\Entity\ContentEntityInterface
    *   The retrieved entity, or FALSE if none found.
    */
   private function getCurrEntity() {

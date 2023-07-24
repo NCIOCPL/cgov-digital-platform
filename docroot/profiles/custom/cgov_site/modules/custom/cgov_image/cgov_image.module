@@ -9,6 +9,7 @@ use Drupal\crop\Entity\Crop;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\file\Entity\File;
+use Drupal\media\MediaInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view().
@@ -27,7 +28,6 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
   if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
     return;
   }
-
   // Take Care of Crop Views.
   $isMatch = preg_match('/^image_crop_(?P<img>.+)$/', $view_mode, $match);
   if ($isMatch) {
@@ -78,15 +78,18 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity object.
- * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  * @param string $view_mode
  *   The view mode the entity is rendered in.
  */
 function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if(!($entity instanceof MediaInterface)){
+    return;
+  }
   if ($entity->get('field_display_enlarge')->value == 1) {
     $build['enlarge_uri'] = $build['field_media_image']['#items']->view([
       'type' => 'image_url',
@@ -108,9 +111,9 @@ function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, En
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity object.
- * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  * @param string $view_mode
@@ -131,7 +134,9 @@ function _cgov_image_filter_view_image(
   if (in_array($img_type, ['article', 'enlarged'])) {
     return;
   }
-
+  if(!($entity instanceof MediaInterface)) {
+    return;
+  }
   // Only certain image types will have overrides.
   if (in_array($img_type, ['featured', 'panoramic', 'social_media', 'thumbnail'])) {
 
@@ -225,8 +230,8 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
 /**
  * Handle images for NCIDS Feature Cards.
  *
- * NCIDS Feature Cards requires both a 16x9 and a 4x3 
- * image. This method must determines where to source the image 
+ * NCIDS Feature Cards requires both a 16x9 and a 4x3
+ * image. This method must determines where to source the image
  * from, either override field for that aspect ratio or the
  * crop on the field_media_image.
  *
@@ -235,16 +240,16 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity object.
- * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
 function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
 
   if (
-    (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0)) || 
+    (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0)) ||
     (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
   ) {
     // if true === if there are crops applied to field_media_image
@@ -255,10 +260,10 @@ function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity
       return;
     }
   }
-  
-  // The 4x3 image will be used in the picture element's source element. 
+
+  // The 4x3 image will be used in the picture element's source element.
   // There is no drupal render type for a source element.
-  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.  
+  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
   $build['uri_4x3'] = $build['field_media_image']['#items']->view([
     'type' => 'image_url',
     'settings' => [
@@ -271,8 +276,8 @@ function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity
 /**
  * Handle images for NCIDS Feature Cards.
  *
- * NCIDS Feature Cards requires both a 16x9 and a 4x3 
- * image. This method must determines where to source the image 
+ * NCIDS Feature Cards requires both a 16x9 and a 4x3
+ * image. This method must determines where to source the image
  * from, either override field for that aspect ratio or the
  * crop on the field_media_image.
  *
@@ -281,9 +286,9 @@ function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity object.
- * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
@@ -325,8 +330,8 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
 /**
  * Handle images for NCIDS Promo Block.
  *
- * NCIDS Promo Block requires both a 16x9 and a 1x1 
- * image. This method must determines where to source the image 
+ * NCIDS Promo Block requires both a 16x9 and a 1x1
+ * image. This method must determines where to source the image
  * from, either override field for that aspect ratio or the
  * crop on the field_media_image.
  *
@@ -335,19 +340,19 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\Core\Entity\EntityInterface $entity
  *   The entity object.
- * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
 function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
 
-  // The 4x3 image will be used in the picture element's source element. 
+  // The 4x3 image will be used in the picture element's source element.
   // There is no drupal render type for a source element.
-  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.  
+  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
   if (
-    (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0)) || 
+    (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0)) ||
     (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
   ) {
     // if true === if there are crops applied to field_media_image

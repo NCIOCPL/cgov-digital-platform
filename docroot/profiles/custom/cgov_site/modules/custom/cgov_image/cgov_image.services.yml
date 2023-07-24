@@ -6,13 +6,14 @@ services:
       - { name: event_subscriber }
   cgov_image.image_redirect_path_processor:
     class: Drupal\cgov_image\Plugin\PathProcessor\ImageRedirectProcessor
-    arguments: ['@current_route_match']
+    arguments: ['@current_route_match', '@file_url_generator']
     tags:
       - { name: path_processor_outbound, priority: 500 }
  # Defines a service of which returns the associated crop for  given image style
   cgov_image.image_tools:
     class: Drupal\cgov_image\CgovImageTools
-  cgov_image.twig.CgovImageTwigExtensions:    
-    class: Drupal\cgov_image\CgovImageTwigExtensions    
-    tags:      
+  cgov_image.twig.CgovImageTwigExtensions:
+    class: Drupal\cgov_image\CgovImageTwigExtensions
+    arguments: ['@file_url_generator']
+    tags:
       - { name: twig.extension }
