@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c21e3bba7995b75f4a5431f551165365",
+    "content-hash": "827f2c5d20fb43e61f2cf5767fe40668",
     "packages": [
         {
             "name": "acquia/acsf-tools",
@@ -596,69 +596,6 @@
             "time": "2017-09-01T07:02:30+00:00"
         },
         {
-            "name": "akamai-open/edgegrid-client",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/akamai/AkamaiOPEN-edgegrid-php-client.git",
-                "reference": "a368473f0f73fab96ffee03ee40d2f18694ff526"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/akamai/AkamaiOPEN-edgegrid-php-client/zipball/a368473f0f73fab96ffee03ee40d2f18694ff526",
-                "reference": "a368473f0f73fab96ffee03ee40d2f18694ff526",
-                "shasum": ""
-            },
-            "require": {
-                "akamai-open/edgegrid-auth": "^1.0.0",
-                "guzzlehttp/guzzle": "^6.1.1",
-                "league/climate": "~3.2",
-                "monolog/monolog": "^1.15",
-                "php": ">=5.5",
-                "psr/log": "^1.0"
-            },
-            "require-dev": {
-                "apigen/apigen": "^4.0.0",
-                "friendsofphp/php-cs-fixer": "^1.9",
-                "kherge/box": "^2.5",
-                "phpunit/phpunit": "~4.7",
-                "squizlabs/php_codesniffer": "^2.3"
-            },
-            "bin": [
-                "bin/http"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Akamai\\Open\\EdgeGrid\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Davey Shafik",
-                    "email": "dshafik@akamai.com"
-                }
-            ],
-            "description": "Implements the Akamai {OPEN} EdgeGrid Authentication specified by https://developer.akamai.com/introduction/Client_Auth.html",
-            "homepage": "https://github.com/akamai-open/AkamaiOPEN-edgegrid-php",
-            "keywords": [
-                "Authentication",
-                "akamai",
-                "client",
-                "edgegrid",
-                "open"
-            ],
-            "support": {
-                "issues": "https://github.com/akamai/AkamaiOPEN-edgegrid-php-client/issues",
-                "source": "https://github.com/akamai/AkamaiOPEN-edgegrid-php-client/tree/1.0.0"
-            },
-            "time": "2017-09-01T07:23:52+00:00"
-        },
-        {
             "name": "alchemy/zippy",
             "version": "0.4.9",
             "source": {
@@ -1115,6 +1052,7 @@
                 "issues": "https://github.com/minkphp/MinkGoutteDriver/issues",
                 "source": "https://github.com/minkphp/MinkGoutteDriver/tree/v1.3.0"
             },
+            "abandoned": "behat/mink-browserkit-driver",
             "time": "2021-10-12T11:35:46+00:00"
         },
         {
@@ -4228,10 +4166,6 @@
                     "homepage": "https://www.drupal.org/user/1231722"
                 },
                 {
-                    "name": "Dane Powell",
-                    "homepage": "https://www.drupal.org/user/339326"
-                },
-                {
                     "name": "irek02",
                     "homepage": "https://www.drupal.org/user/736644"
                 },
@@ -4807,38 +4741,40 @@
         },
         {
             "name": "drupal/akamai",
-            "version": "dev-3.x",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/akamai.git",
-                "reference": "d4e4c8167332c8cce4f65716683cfec64d1dae38"
+                "reference": "4.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/akamai-4.1.0.zip",
+                "reference": "4.1.0",
+                "shasum": "512ade13a781876df2e03afbf9c04569f53ce6d0"
             },
             "require": {
-                "akamai-open/edgegrid-auth": "~1.0.1",
-                "akamai-open/edgegrid-client": "~1.0.0",
-                "drupal/core": "~8.5 || ^9"
+                "drupal/core": "~8.5 || ^9",
+                "patriziotomato/edgegrid-client": "1.2.1"
             },
             "require-dev": {
                 "drupal/key": "~1.8",
-                "drupal/purge": "3.0-beta9",
+                "drupal/purge": "~3.2",
                 "drupal/token": "~1.6"
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-3.x": "3.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-3.0-alpha8+6-dev",
-                    "datestamp": "1621545412",
+                    "version": "4.1.0",
+                    "datestamp": "1674831396",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9"
+                        "drush.services.yml": "^9 || ^10 || ^11"
                     }
                 }
             },
@@ -6647,6 +6583,10 @@
             ],
             "authors": [
                 {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
                     "name": "dawehner",
                     "homepage": "https://www.drupal.org/user/99340"
                 },
@@ -6673,6 +6613,10 @@
                 {
                     "name": "joseph.olstad",
                     "homepage": "https://www.drupal.org/user/1321830"
+                },
+                {
+                    "name": "matthand",
+                    "homepage": "https://www.drupal.org/user/171527"
                 },
                 {
                     "name": "mpotter",
@@ -7875,8 +7819,8 @@
                     "role": "Maintainer"
                 },
                 {
-                    "name": "benjy",
-                    "homepage": "https://www.drupal.org/user/1852732"
+                    "name": "JeroenT",
+                    "homepage": "https://www.drupal.org/user/2228934"
                 }
             ],
             "description": "Allows site administrators to grant some roles the authority to assign selected roles to users.",
@@ -9650,16 +9594,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "b94b2807d85443f9719887892882d0329d1e2598"
+                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/b94b2807d85443f9719887892882d0329d1e2598",
-                "reference": "b94b2807d85443f9719887892882d0329d1e2598",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/67ab6e18aaa14d753cc148911d273f6e6cb6721e",
+                "reference": "67ab6e18aaa14d753cc148911d273f6e6cb6721e",
                 "shasum": ""
             },
             "require": {
@@ -9669,11 +9613,6 @@
                 "symfony/phpunit-bridge": "^4.4 || ^5.1"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
             "autoload": {
                 "files": [
                     "src/functions_include.php"
@@ -9714,7 +9653,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.5.2"
+                "source": "https://github.com/guzzle/promises/tree/1.5.3"
             },
             "funding": [
                 {
@@ -9730,7 +9669,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T14:55:35+00:00"
+            "time": "2023-05-21T12:31:43+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -10287,27 +10226,27 @@
         },
         {
             "name": "league/climate",
-            "version": "3.7.0",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/climate.git",
-                "reference": "5c717c3032c5118be7ad2395dbe0813d9894e8c7"
+                "reference": "a785a3ac8f584eed4abd45e4e16fe64c46659a28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/climate/zipball/5c717c3032c5118be7ad2395dbe0813d9894e8c7",
-                "reference": "5c717c3032c5118be7ad2395dbe0813d9894e8c7",
+                "url": "https://api.github.com/repos/thephpleague/climate/zipball/a785a3ac8f584eed4abd45e4e16fe64c46659a28",
+                "reference": "a785a3ac8f584eed4abd45e4e16fe64c46659a28",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3 || ^8.0",
-                "psr/log": "^1.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "seld/cli-prompt": "^1.0"
             },
             "require-dev": {
-                "mikey179/vfsstream": "^1.4",
+                "mikey179/vfsstream": "^1.6.10",
                 "mockery/mockery": "^1.4.2",
-                "phpunit/phpunit": "^9.5.0"
+                "phpunit/phpunit": "^9.5.10"
             },
             "suggest": {
                 "ext-mbstring": "If ext-mbstring is not available you MUST install symfony/polyfill-mbstring"
@@ -10346,9 +10285,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/climate/issues",
-                "source": "https://github.com/thephpleague/climate/tree/3.7.0"
+                "source": "https://github.com/thephpleague/climate/tree/3.8.2"
             },
-            "time": "2021-01-10T20:18:52+00:00"
+            "time": "2022-06-18T14:42:08+00:00"
         },
         {
             "name": "league/container",
@@ -10643,6 +10582,7 @@
                 "issues": "https://github.com/pel/pel/issues",
                 "source": "https://github.com/pel/pel/tree/0.9.10"
             },
+            "abandoned": true,
             "time": "2021-01-01T22:15:50+00:00"
         },
         {
@@ -10767,51 +10707,67 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.26.1",
+            "version": "2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5"
+                "reference": "f259e2b15fb95494c83f52d3caad003bbf5ffaa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c6b00f05152ae2c9b04a448f99c7590beb6042f5",
-                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f259e2b15fb95494c83f52d3caad003bbf5ffaa1",
+                "reference": "f259e2b15fb95494c83f52d3caad003bbf5ffaa1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "psr/log": "~1.0"
+                "php": ">=7.2",
+                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
             },
             "provide": {
-                "psr/log-implementation": "1.0.0"
+                "psr/log-implementation": "1.0.0 || 2.0.0 || 3.0.0"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "^2.4.9 || ^3.0",
                 "doctrine/couchdb": "~1.0@dev",
-                "graylog2/gelf-php": "~1.0",
-                "php-amqplib/php-amqplib": "~2.4",
-                "php-console/php-console": "^3.1.3",
-                "phpstan/phpstan": "^0.12.59",
-                "phpunit/phpunit": "~4.5",
-                "ruflin/elastica": ">=0.90 <3.0",
-                "sentry/sentry": "^0.13",
-                "swiftmailer/swiftmailer": "^5.3|^6.0"
+                "elasticsearch/elasticsearch": "^7 || ^8",
+                "ext-json": "*",
+                "graylog2/gelf-php": "^1.4.2 || ^2@dev",
+                "guzzlehttp/guzzle": "^7.4",
+                "guzzlehttp/psr7": "^2.2",
+                "mongodb/mongodb": "^1.8",
+                "php-amqplib/php-amqplib": "~2.4 || ^3",
+                "phpspec/prophecy": "^1.15",
+                "phpstan/phpstan": "^0.12.91",
+                "phpunit/phpunit": "^8.5.14",
+                "predis/predis": "^1.1 || ^2.0",
+                "rollbar/rollbar": "^1.3 || ^2 || ^3",
+                "ruflin/elastica": "^7",
+                "swiftmailer/swiftmailer": "^5.3|^6.0",
+                "symfony/mailer": "^5.4 || ^6",
+                "symfony/mime": "^5.4 || ^6"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "elasticsearch/elasticsearch": "Allow sending log messages to an Elasticsearch server via official client",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
-                "ext-mongo": "Allow sending log messages to a MongoDB server",
+                "ext-curl": "Required to send log messages using the IFTTTHandler, the LogglyHandler, the SendGridHandler, the SlackWebhookHandler or the TelegramBotHandler",
+                "ext-mbstring": "Allow to work properly with unicode symbols",
+                "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "ext-openssl": "Required to send log messages using SSL",
+                "ext-sockets": "Allow sending log messages to a Syslog server (via UDP driver)",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
-                "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
-                "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "sentry/sentry": "Allow sending log messages to a Sentry server"
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Monolog\\": "src/Monolog"
@@ -10825,11 +10781,11 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
+                    "homepage": "https://seld.be"
                 }
             ],
             "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
-            "homepage": "http://github.com/Seldaek/monolog",
+            "homepage": "https://github.com/Seldaek/monolog",
             "keywords": [
                 "log",
                 "logging",
@@ -10837,7 +10793,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/1.26.1"
+                "source": "https://github.com/Seldaek/monolog/tree/2.9.1"
             },
             "funding": [
                 {
@@ -10849,7 +10805,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-28T08:32:12+00:00"
+            "time": "2023-02-06T13:44:46+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -10965,6 +10921,68 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.4"
             },
             "time": "2023-03-05T19:49:14+00:00"
+        },
+        {
+            "name": "patriziotomato/edgegrid-client",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/patriziotomato/edgegrid-php-client.git",
+                "reference": "8a84c8c465b3205171b15fae0edd74758a8a8648"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/patriziotomato/edgegrid-php-client/zipball/8a84c8c465b3205171b15fae0edd74758a8a8648",
+                "reference": "8a84c8c465b3205171b15fae0edd74758a8a8648",
+                "shasum": ""
+            },
+            "require": {
+                "akamai-open/edgegrid-auth": "^1.0.0",
+                "guzzlehttp/guzzle": "^6.2|^7.0",
+                "league/climate": "~3.2",
+                "monolog/monolog": "^2.0",
+                "php": ">=7.2",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.0.0",
+                "friendsofphp/php-cs-fixer": "^1.9",
+                "kherge/box": "^2.5",
+                "phpunit/phpunit": "~4.7",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "bin": [
+                "bin/http"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Akamai\\Open\\EdgeGrid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick Thomas",
+                    "email": "github@patrick-thomas.de"
+                }
+            ],
+            "description": "Implements the Akamai {OPEN} EdgeGrid Authentication specified by https://developer.akamai.com/introduction/Client_Auth.html",
+            "keywords": [
+                "Authentication",
+                "akamai",
+                "client",
+                "edgegrid",
+                "open"
+            ],
+            "support": {
+                "source": "https://github.com/patriziotomato/edgegrid-php-client/tree/v1.2.1"
+            },
+            "abandoned": true,
+            "time": "2021-01-26T11:54:21+00:00"
         },
         {
             "name": "pear/archive_tar",
@@ -21065,12 +21083,11 @@
     "stability-flags": {
         "acquia/acsf-tools": 20,
         "drupal/acquia_purge": 10,
-        "drupal/akamai": 20,
         "drupal/page_manager": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
