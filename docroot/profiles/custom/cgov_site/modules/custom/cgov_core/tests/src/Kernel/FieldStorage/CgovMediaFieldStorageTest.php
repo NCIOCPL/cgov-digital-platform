@@ -103,7 +103,6 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
     // Test the field persistance when it has been removed from all nodes.
     foreach ($this->fieldsToTest as $fieldToTest) {
       // Remove from our content type.
-      /** @var \Drupal\Core\Entity\EntityInterface $field */
       $field = FieldConfig::loadByName('media', 'ponies', $fieldToTest["name"]);
       $field->delete();
 

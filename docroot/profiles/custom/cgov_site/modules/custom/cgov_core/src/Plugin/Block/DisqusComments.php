@@ -119,7 +119,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
    * Create a new node storage instance.
    *
    * @return \Drupal\Core\Entity\EntityStorageInterface
-   *   The node storage or NULL.
+   *   The node storage.
    */
   private function getNodeStorage() {
     return $this->entityTypeManager->getStorage('node');

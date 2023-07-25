@@ -143,7 +143,6 @@ class CGovFieldStorageTest extends KernelTestBase {
     foreach ($this->fieldsToTest as $fieldToTest) {
       // Remove from our content type.
       $field = FieldConfig::loadByName('node', 'ponies', $fieldToTest["name"]);
-      /** @var \Drupal\Core\Entity\EntityInterface $field */
       $field->delete();
 
       // Ensure the field exists past its removal.

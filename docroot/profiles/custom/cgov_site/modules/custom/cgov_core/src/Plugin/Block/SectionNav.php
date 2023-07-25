@@ -77,11 +77,11 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Get Section Nav NavItems.
    *
-   * @return array
+   * @return array|null
    *   Multidimensional section nav.
    */
   public function getSectionNav() {
-    $renderTree = [];
+    $renderTree = NULL;
     $navRoot = $this->navMgr->getNavRoot('field_section_nav_root');
     if ($navRoot) {
       // The fallback render depth should match the default set by the field

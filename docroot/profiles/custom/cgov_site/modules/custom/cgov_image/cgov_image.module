@@ -25,7 +25,7 @@ use Drupal\media\MediaInterface;
  * We only do this for the Image Crop view modes. (image_crop_XXX)
  */
 function cgov_image_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
+  if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image' && !($entity instanceof MediaInterface)) {
     return;
   }
   // Take Care of Crop Views.
@@ -78,7 +78,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\media\MediaInterface $entity
  *   The entity object.
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
@@ -86,10 +86,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
  * @param string $view_mode
  *   The view mode the entity is rendered in.
  */
-function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if(!($entity instanceof MediaInterface)){
-    return;
-  }
+function _cgov_image_add_enlarge_link(array &$build, MediaInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   if ($entity->get('field_display_enlarge')->value == 1) {
     $build['enlarge_uri'] = $build['field_media_image']['#items']->view([
       'type' => 'image_url',
@@ -111,7 +108,7 @@ function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, En
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\media\MediaInterface $entity
  *   The entity object.
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
@@ -123,7 +120,7 @@ function _cgov_image_add_enlarge_link(array &$build, EntityInterface $entity, En
  */
 function _cgov_image_filter_view_image(
   array &$build,
-  EntityInterface $entity,
+  MediaInterface $entity,
   EntityViewDisplayInterface $display,
   $view_mode,
   $img_type
@@ -134,9 +131,7 @@ function _cgov_image_filter_view_image(
   if (in_array($img_type, ['article', 'enlarged'])) {
     return;
   }
-  if(!($entity instanceof MediaInterface)) {
-    return;
-  }
+
   // Only certain image types will have overrides.
   if (in_array($img_type, ['featured', 'panoramic', 'social_media', 'thumbnail'])) {
 
@@ -240,13 +235,13 @@ function cgov_image_field_widget_form_alter(&$element, $form_state, $context) {
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\media\MediaInterface $entity
  *   The entity object.
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
-function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+function _cgov_image_handle_ncids_feature(array &$build, MediaInterface $entity, EntityViewDisplayInterface $display) {
 
   if (
     (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0)) ||
@@ -286,13 +281,13 @@ function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\media\MediaInterface $entity
  *   The entity object.
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
-function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+function _cgov_image_handle_ncids_crop_check(array &$build, MediaInterface $entity, EntityViewDisplayInterface $display) {
   // Get the image style for the field_media_image. Guarding against a
   // misconfigured view mode.
   $crop_image_display = $display->get('content')['field_media_image'];
@@ -340,13 +335,13 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
  *   The module may add elements to $build prior to rendering.
  *   The structure of $build is a renderable array as expected by
  *   drupal_render().
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param \Drupal\media\MediaInterface $entity
  *   The entity object.
  * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
  *   The entity view display holding the display options configured for
  *   the entity components.
  */
-function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+function _cgov_image_handle_ncids_promo(array &$build, MediaInterface $entity, EntityViewDisplayInterface $display) {
 
   // The 4x3 image will be used in the picture element's source element.
   // There is no drupal render type for a source element.
