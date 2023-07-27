@@ -109,6 +109,9 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
 
   /**
    * Get Main Nav NavItems.
+   *
+   * @return string
+   *   The rendered main nav items as HTML string.
    */
   public static function getMainNav() {
     $renderTree = '';
@@ -256,6 +259,12 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
    *   be rendered.
    * - if there is content, moves the contextual links from the block content to
    *   the block itself.
+   *
+   * @param mixed $build
+   *   The render array to augement.
+   *
+   * @return mixed
+   *   The augmented render array.
    */
   public static function preRender($build) {
     // We are not cached and should render.

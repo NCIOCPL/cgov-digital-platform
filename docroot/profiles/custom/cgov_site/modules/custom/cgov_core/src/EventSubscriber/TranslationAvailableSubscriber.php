@@ -114,7 +114,7 @@ class TranslationAvailableSubscriber implements EventSubscriberInterface {
   /**
    * Gets the current entity if there is one.
    *
-   * @return \Drupal\Core\Entity\ContentEntityInterface|bool
+   * @return \Drupal\Core\Entity\ContentEntityInterface|false
    *   The retrieved entity, or FALSE if none found.
    */
   private function getCurrEntity() {

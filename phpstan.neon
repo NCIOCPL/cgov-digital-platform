@@ -34,6 +34,14 @@ parameters:
     ## as an error. However we do want to flag when people do unessesary ignores in doc comments,
     ## so we will only report unmatched here.
     -
+      ## See changelog https://www.drupal.org/node/3159012 for whatever mess you want to call
+      ## supporting multiple versions of Symfony. Basically our code is correct, it is just
+      ## that we need the new version of symfony to be correct, which means when we update to
+      ## D10, we should be able to remove this line. The odd thing is the problem is in
+      ## Symfony, and in Symfony 5.0 fixes the inheritance chain.
+      message: "#Call to deprecated method stopPropagation\\(\\) of class Symfony\\\\Component\\\\EventDispatcher\\\\Event#"
+      reportUnmatched: false
+    -
       ## This is the Drupal pattern for creating instances of plugins
       message: "#Unsafe usage of new static\\(\\)#"
       reportUnmatched: false
@@ -50,24 +58,24 @@ parameters:
       ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
       message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
       reportUnmatched: false
-    -
+#    -
       ## This is dangerous, but ignore complains about magic properties of fields, which is common.
       ## This allows us to do $entity->field_somefield->property where property is not "value".
       ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
       ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
-      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:#"
-      reportUnmatched: false
-    -
+#      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\EntityInterface\\:\\:#"
+#      reportUnmatched: false
+#    -
       ## This is dangerous, but ignore complains about magic properties of fields, which is common.
       ## This allows us to do $entity->field_somefield->property where property is not "value".
       ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
       ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
-      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\:\\:#"
-      reportUnmatched: false
-    -
+#      message: "#Access to an undefined property Drupal\\\\Core\\\\Entity\\\\ContentEntityInterface\\:\\:#"
+#      reportUnmatched: false
+#    -
       ## This is dangerous, but ignore complains about magic properties of fields, which is common.
       ## This allows us to do $entity->field_somefield->property where property is not "value".
       ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
       ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
-      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:#"
-      reportUnmatched: false
+#      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemInterface\\:\\:#"
+#      reportUnmatched: false

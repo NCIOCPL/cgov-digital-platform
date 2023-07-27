@@ -25,7 +25,7 @@ use Drupal\media\MediaInterface;
  * We only do this for the Image Crop view modes. (image_crop_XXX)
  */
 function cgov_image_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image' && !($entity instanceof MediaInterface)) {
+  if (!($entity instanceof MediaInterface) && $entity->bundle() != 'cgov_image' && $entity->bundle() != 'cgov_contextual_image') {
     return;
   }
   // Take Care of Crop Views.

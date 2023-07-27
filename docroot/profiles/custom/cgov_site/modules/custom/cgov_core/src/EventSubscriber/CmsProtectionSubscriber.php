@@ -131,10 +131,6 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
       $response->setSharedMaxAge(0);
       $response->headers->addCacheControlDirective('must-revalidate', TRUE);
       $response->headers->addCacheControlDirective('no-store', TRUE);
-      // Call to deprecated method stopPropagation() of class
-      // Symfony\Component\EventDispatcher\Event:since Symfony 4.3,
-      // use "Symfony\Contracts\EventDispatcher\Event" instead.
-      /** @phpstan-ignore-next-line */
       $event->stopPropagation();
     }
 

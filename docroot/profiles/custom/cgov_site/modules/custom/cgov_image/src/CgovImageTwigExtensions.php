@@ -3,6 +3,7 @@
 namespace Drupal\cgov_image;
 
 use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\cgov_image\CgovImageTools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -21,19 +22,34 @@ class CgovImageTwigExtensions extends AbstractExtension {
   protected $fileUrlGenerator;
 
   /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
    *   File url generator.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    */
-  public function __construct(FileUrlGeneratorInterface $file_url_generator) {
+  public function __construct(FileUrlGeneratorInterface $file_url_generator, EntityTypeManagerInterface $entity_type_manager) {
     $this->fileUrlGenerator = $file_url_generator;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
-   * A list with all the defined functions. The first parameter is the name
-   * by which we will call the function. The second parameter is the
-   * name of the function that will implement the function.
+   * A list with all the defined functions.
+   *
+   * The first parameter is the name by which we will call the function.
+   * The second parameter is the name of the function that will implement
+   * the function.
+   *
+   * @return mixed
+   *   The twig functions.
    */
   public function getFunctions() {
     return [
@@ -55,7 +71,7 @@ class CgovImageTwigExtensions extends AbstractExtension {
     $test = new CgovImageTools();
     $crop = $test->findCropByStyle($image_style);
     $uri = 'module://cgov_image/img/placeholder-' . $crop . '.png';
-    $image_style = ImageStyle::load($image_style);
+    $image_style = $this->entityTypeManager->getStorage('image_style')->load($image_style);
     $absolute_path = $this->fileUrlGenerator->transformRelative($image_style->buildUrl($uri));
     return $absolute_path;
   }

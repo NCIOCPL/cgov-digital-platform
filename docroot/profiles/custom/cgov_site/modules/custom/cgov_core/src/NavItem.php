@@ -333,11 +333,10 @@ class NavItem {
    * Optional, pass an array of class properties
    * with boolean values to filter children against.
    *
-   * @return mixed
+   * @return \Drupal\cgov_core\NavItem[]
    *   Filtered array of direct descendents.
    */
   public function getChildren() {
-    // @var \Drupal\taxonomy\TermInterface[]
     $allChildTerms = $this->navMgr->getChildTerms($this->term);
     // Build the navItems to make interacting with terms easier.
     $navItems = array_map(function ($term) {
