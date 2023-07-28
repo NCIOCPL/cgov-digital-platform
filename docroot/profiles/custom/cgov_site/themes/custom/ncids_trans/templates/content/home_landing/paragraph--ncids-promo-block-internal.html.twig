@@ -49,8 +49,16 @@
 
   {# ###### Setup Theme ####### #}
   {% set promo_theme = paragraph.field_ncids_theme.value %}
-  {% if promo_theme == 'light' %}
-      {% set promo_theme = '' %}
+  {# /*
+    The elseif statement below is a hack to address the already existing
+    'nci-promo-block--dark' values that are in the database. 
+    TODO: Issue #3988 
+    https://github.com/NCIOCPL/cgov-digital-platform/issues/3988
+  */ #}
+  {% if promo_theme == 'dark' or promo_theme == 'nci-promo-block--dark' %}
+    {% set promo_theme = 'nci-promo-block--dark' %}
+  {% else %}
+    {% set promo_theme = '' %}
   {% endif %}
 
   {% set id = paragraph.id() %}
