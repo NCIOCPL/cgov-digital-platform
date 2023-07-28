@@ -209,17 +209,17 @@ function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 }
 
 /**
- * Implements hook_entity_view_alter().
+ * Implements hook_ENTITY_TYPE_view_alter().
  *
  * Add attributes to media content types.
  */
-function cgov_core_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+function cgov_core_media_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
 
   // If accessible text is available, add a link to an alternate version of the
   // page containing only the accessible text.
   // NOTE: $entity already reflects the current language, no need to switch
   // to another translation to check for availability.
-  if ($entity->field_accessible_version != NULL &&
+  if (isset($entity->field_accessible_version) &&
     (count($entity->field_accessible_version) > 0)) {
 
     // Set the longdesc attribute to a URL pointing to the infographic module's
@@ -235,7 +235,7 @@ function cgov_core_entity_view_alter(array &$build, EntityInterface $entity, Ent
         // Added if to prevent attempt at accessing the #field-type property if
         // it doesn't exist. (For whatever reason, evaluation doesn't seem to be
         // short-circuted when the other conditions are false.)
-        if ($properties['#field_type'] == 'image' && $properties[0]["#image_style"] == 'cgov_article') {
+        if ($properties['#field_type'] == 'image' && isset($properties[0]["#image_style"]) && $properties[0]["#image_style"] == 'cgov_article') {
           $build[$key][0]['#item_attributes']['longdesc'] =
             Url::fromRoute('cgov_core.long_description', $args)->toString();
         }

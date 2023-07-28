@@ -1,0 +1,16 @@
+{# ###### Setup Header ####### #}
+{% set header = paragraph.field_container_heading.value %}
+
+{# ###### Unqique header id for label ######## #}
+{% set id = paragraph.id() %}
+{% set entity_type = paragraph.entityTypeID %}
+{% set titleID = "#{entity_type}-#{id}" %}
+
+<div class="nci-guide-card__wrapper" data-eddl-landing-item="guide_card">
+    <div class="nci-guide-card__body">
+        <h2 class="nci-guide-card__title" id="{{ titleID }}">{{ header }}</h2>
+        <ul class="nci-card__button-group" aria-labelledby="{{ titleID }}">
+            {{ content.field_link_buttons }}
+        </ul>
+    </div>
+</div>

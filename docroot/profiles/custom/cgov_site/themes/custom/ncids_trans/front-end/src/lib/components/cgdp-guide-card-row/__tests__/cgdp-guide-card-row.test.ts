@@ -8,6 +8,7 @@ import * as eddlUtil from '../../../core/analytics/eddl-util';
 import cgdpGuideCardRow from '../cgdp-guide-card-row';
 import { cgdpGuideCardRowDom } from './cgdp-guide-card-row.dom';
 import { cgdpGuideCardRowBadDom } from './cgdp-guide-card-row.bad.dom';
+import { cgdp3GuideCardRowDom } from './cgdp-3-guide-card-row.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -309,6 +310,82 @@ describe('CGDP Guide Cards', () => {
 				linkArea: 'Button',
 				totalLinks: 6,
 				linkPosition: 2,
+			}
+		);
+	});
+
+	it('sends analytics when external link clicked on default guide card', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdp3GuideCardRowDom);
+
+		// Create the JS
+		cgdpGuideCardRow();
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		fireEvent.click(links[1]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:GuideCard:LinkClick',
+			'LP:GuideCard:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				rowItems: 1,
+				rowItemIndex: 1,
+				componentType: 'Guide Card',
+				componentTheme: 'Light',
+				componentVariant: 'Standard',
+				title: 'Research Grant Funding',
+				linkType: 'External',
+				linkText: 'Cancer Moonshot Funding Opportunities',
+				linkArea: 'Button',
+				totalLinks: 4,
+				linkPosition: 2,
+			}
+		);
+	});
+
+	it('sends analytics when internal link clicked on default guide card', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdp3GuideCardRowDom);
+
+		// Create the JS
+		cgdpGuideCardRow();
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		fireEvent.click(links[2]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:GuideCard:LinkClick',
+			'LP:GuideCard:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				rowItems: 1,
+				rowItemIndex: 1,
+				componentType: 'Guide Card',
+				componentTheme: 'Light',
+				componentVariant: 'Standard',
+				title: 'Research Grant Funding',
+				linkType: 'Internal',
+				linkText: 'Funding Strategy',
+				linkArea: 'Button',
+				totalLinks: 4,
+				linkPosition: 3,
 			}
 		);
 	});

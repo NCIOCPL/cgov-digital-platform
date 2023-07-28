@@ -205,7 +205,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
 
     // Get the filesystem path (not web path) to the imagestyle
     // file so we can get filesize.
-    $imagestyle_filename = realpath(".") . $relative_imagestyle_uri;
+    $imagestyle_filename = urldecode(realpath(".") . $relative_imagestyle_uri);
     $styled_file_size = filesize($imagestyle_filename);
     $styled_mime_type = image_type_to_mime_type(exif_imagetype($imagestyle_filename));
 

@@ -1,0 +1,233 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Feature Card Test Multimedia Page"
+  title__ES:
+      value: "NCIDS Spanish Feature Card Multimedia Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-multimedia-feature-card-test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_without_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Multimedia Feature Card"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Test PDF File name'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Multimedia Feature Card Row 2"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'Override Card Title'
+          field_override_card_description:
+            - value: 'Override Card Description'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'Override Card Title'
+          field_override_card_description:
+            - value: 'Override Card Description'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Test PDF File name'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Lead Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'Override Card Title'
+          field_override_card_description:
+            - value: 'Override Card Description'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat 16x9 Override'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Multimedia Feature Card Row 3"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'Drug Combo Effective for Metastatic Breast Cancer in Younger Women'
+          field_override_card_description:
+            - value: 'Ribociclib plus hormone therapy were superior to standard chemotherapy combos in a recent trial.'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat 4x3 Override'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'What Causes Immunotherapy''s Heart-Related Side Effects?'
+          field_override_card_description:
+            - value: 'A protein commonly found on heart cells may provoke immune cells to attack.'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_file'
+                    name: 'Test PDF File name'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_override_card_title:
+            - value: 'Override Card Title'
+          field_override_card_description:
+            - value: 'Override Card Description'
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat 16x9 Override'
+    ######## End Feature Row ###########
+    
+  ## SPANISH CONTENTS HERE
+  field_landing_contents__ES:
+    ######## Placeholder ############
+    - entity: 'paragraph'
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="grid-container">
+              <div class="usa-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ullamcorper dignissim cras tincidunt lobortis. Sapien pellentesque habitant morbi tristique senectus et. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Lectus sit amet est placerat in egestas. Vitae proin sagittis nisl rhoncus mattis rhoncus. Tincidunt ornare massa eget egestas purus viverra accumsan. Ipsum faucibus vitae aliquet nec. Lacus laoreet non curabitur gravida arcu ac. Interdum varius sit amet mattis vulputate. Viverra mauris in aliquam sem fringilla ut. Amet consectetur adipiscing elit ut aliquam.
+              </div>
+            </div>
+    ######## End Placeholder ############

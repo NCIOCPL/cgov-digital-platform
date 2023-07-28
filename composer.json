@@ -13,10 +13,6 @@
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        "clinical-trial-search": {
-            "type": "vcs",
-            "url": "https://github.com/NCIOCPL/clinical-trials-search-client.php"
         }
     },
     "require": {
@@ -40,6 +36,7 @@
         "drupal/address": "1.11.0",
         "drupal/admin_toolbar": "^3.0.3",
         "drupal/akamai": "3.x-dev@dev",
+        "drupal/autologout": "^1.4",
         "drupal/clamav": "^2.0",
         "drupal/config_perms": "^2",
         "drupal/console": "^1.9.7",
@@ -51,7 +48,7 @@
         "drupal/embed": "^1.6",
         "drupal/entity_browser": "^2.8",
         "drupal/entity_embed": "^1.2.0",
-        "drupal/entity_reference_revisions": "^1.9.0",
+        "drupal/entity_reference_revisions": "^1.10",
         "drupal/features": "^3.12.0",
         "drupal/image_widget_crop": "^2.2",
         "drupal/imagemagick": "^3.2.0",
@@ -61,8 +58,8 @@
         "drupal/moderation_sidebar": "^1.4",
         "drupal/page_manager": "^4.0@beta",
         "drupal/panels": "^4.3",
-        "drupal/paragraphs": "^1.6",
-        "drupal/paragraphs_asymmetric_translation_widgets": "^1.0",
+        "drupal/paragraphs": "^1.15",
+        "drupal/paragraphs_asymmetric_translation_widgets": "^1.2",
         "drupal/pathauto": "^1.6",
         "drupal/purge": "3.0.0",
         "drupal/redirect": "^1.6",
@@ -80,7 +77,6 @@
         "drush/drush": "^11.4.0",
         "eluceo/ical": "^0.15.0",
         "kint-php/kint": "^3.3",
-        "nciocpl/clinical-trial-search-client.php": "dev-master",
         "robrichards/xmlseclibs": "^3.1",
         "scotteh/php-dom-wrapper": "^2.0.3",
         "simplesamlphp/simplesamlphp": "^1.19.2",
@@ -226,6 +222,9 @@
                 "2820218 : Page manager does not respect existing route defaults for title callbacks": "https://www.drupal.org/files/issues/2018-03-21/2820218-50.patch",
                 "2876880 : page_variant entity type does not exist when installing or enabling": "https://www.drupal.org/files/issues/2876880-page-varient-cache-2.patch",
                 "3257213 : Route enhacers called multiple times, parameter upcasting / convertion lost": "https://www.drupal.org/files/issues/2022-02-21/3257213-7.patch"
+            },
+            "drupal/paragraphs": {
+                "3331203 : Core 9.5.0 causing broken-looking styling (Legacy widget, with Seven)": "https://www.drupal.org/files/issues/2023-02-22/3331203-11.patch"
             },
             "drupal/purge": {
                 "3094343 : Garbled purge tag IDs": "https://www.drupal.org/files/issues/2020-04-06/purge-3094343.patch"

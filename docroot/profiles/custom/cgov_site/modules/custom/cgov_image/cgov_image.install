@@ -86,7 +86,6 @@ function cgov_image_update_8003() {
   $result = $service->import(['cgov_image']);
 }
 
-
 /**
  * Update for NCIDS Internal Promo Blocks.
  *
@@ -94,6 +93,17 @@ function cgov_image_update_8003() {
  * before node core.entity_view_display configs are loaded.
  */
 function cgov_image_update_8004() {
+  $service = \Drupal::service('features.manager');
+  $result = $service->import(['cgov_image']);
+}
+
+/**
+ * Update for NCIDS Media Feature Card.
+ *
+ * Force installation of core.entity_view_mode.media.ncids_feature_card_image
+ * before node core.entity_view_display configs are loaded.
+ */
+function cgov_image_update_8005() {
   $service = \Drupal::service('features.manager');
   $result = $service->import(['cgov_image']);
 }

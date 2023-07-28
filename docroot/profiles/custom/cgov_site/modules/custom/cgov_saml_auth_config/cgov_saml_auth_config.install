@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * Update for Auto Logout. (Issue #1700)
+ */
+function cgov_saml_auth_config_update_9001() {
+  // Enable autologout
+  if (!\Drupal::moduleHandler()->moduleExists('autologout')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['autologout']);
+  }
+
+}
