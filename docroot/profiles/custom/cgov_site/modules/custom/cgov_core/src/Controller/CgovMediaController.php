@@ -3,7 +3,7 @@
 namespace Drupal\cgov_core\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\media\Entity\Media;
+use Drupal\media\MediaInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -22,11 +22,10 @@ class CgovMediaController extends ControllerBase {
   /**
    * Return an infographic's long description in an HTTP Response.
    *
-   * @param \Drupal\media\Entity\Media $media
+   * @param \Drupal\media\MediaInterface $media
    *   Id of the infographic to render.
    */
-  public function longDescription(Media $media) {
-
+  public function longDescription(MediaInterface $media) {
     if ($media == NULL) {
       throw new NotFoundHttpException();
     }
@@ -38,18 +37,13 @@ class CgovMediaController extends ControllerBase {
 
       // Only return a value if the field has a value. If it's missing or empty,
       // fall through to a NotFoundException.
-      if (count($media->field_accessible_version) > 0) {
-
-        $field = $media->field_accessible_version[0];
-        if ($field != NULL) {
-          $text = trim($field->getString());
-
-          if (strlen($text) > 0) {
-            $response = new Response();
-            $response->setContent($text);
-            $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
-            return $response;
-          }
+      if (isset($media->field_accessible_version->value)) {
+        $text = trim($media->field_accessible_version->value);
+        if (strlen($text) > 0) {
+          $response = new Response();
+          $response->setContent($text);
+          $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
+          return $response;
         }
       }
     }

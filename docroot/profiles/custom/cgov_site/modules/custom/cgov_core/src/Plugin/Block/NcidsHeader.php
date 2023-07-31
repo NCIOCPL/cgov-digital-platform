@@ -130,6 +130,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    *   The entity type manager.
    * @param \Drupal\file\FileUsage\FileUsageInterface $file_usage_svc
    *   The file usage service.
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   A current user instance.
    */
   public function __construct(
     array $configuration,

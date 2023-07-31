@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityRepository;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -153,6 +154,9 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
         // Load the Blog Series node for the current language.
         if ($series_node) {
           $series_node = $this->entityRepository->getTranslationFromContext($series_node, $lang);
+          if (!($series_node instanceof NodeInterface)) {
+            return $build;
+          }
           $allow_comments = intval($series_node->field_allow_comments->value);
           $shortname = $series_node->field_blog_series_shortname->value;
 

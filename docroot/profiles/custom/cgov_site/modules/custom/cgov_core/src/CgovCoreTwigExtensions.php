@@ -9,7 +9,6 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\file\Entity\File;
 use Drupal\views\ViewExecutable;
-use Drupal\image\Entity\ImageStyle;
 use Drupal\Component\Utility\Html;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFunction;
@@ -91,8 +90,16 @@ class CgovCoreTwigExtensions extends AbstractExtension {
       new TwigFunction('get_blog_info', [$this, 'getBlogInfo'], ['is_safe' => ['html']]),
       new TwigFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
       new TwigFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
-      new TwigFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
-      new TwigFunction('strip_duplicate_leading_credit', [$this, 'stripDuplicateLeadingCredit'], ['is_safe' => ['html']]),
+      new TwigFunction('get_translated_absolute_path',
+        [$this, 'getTranslatedAbsolutePath'],
+        [
+          'is_safe' => ['html'],
+        ]),
+      new TwigFunction('strip_duplicate_leading_credit',
+      [$this, 'stripDuplicateLeadingCredit'],
+       [
+         'is_safe' => ['html'],
+       ]),
       new TwigFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
       // This is borrowed from 'sfc' module based on discussions in
       // https://www.drupal.org/project/drupal/issues/2660002. This should be
@@ -195,10 +202,8 @@ class CgovCoreTwigExtensions extends AbstractExtension {
   public function getImageData(File $media_image_file, $image_style) {
     // Get URI of media image file (eg: public://2019-03/image.jpg).
     $image_uri = $media_image_file->getFileUri();
-
     // Generate new derivative image from imagestyle.
-    /** @var \Drupal\image\Entity\ImageStyle $imageStyle */
-    $imageStyle = ImageStyle::load($image_style);
+    $imageStyle = $this->entityTypeManager->getStorage('image_style')->load($image_style);
     // Get thumbnail_uri
     // (eg: public://styles/cgov_thumbail/public/2019-03/image.jpg).
     $thumbnail_uri = $imageStyle->buildUri($image_uri);

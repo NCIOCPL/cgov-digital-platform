@@ -142,10 +142,10 @@ class NavItem {
    *   Term to map NavItem properties to.
    */
   protected function initialize(TermInterface $term) {
-    // TODO: Break some of these into their own protected functions.
+    // @todo Break some of these into their own protected functions.
     // Or do we want the getters to all interact directly with the term
     // since there isn't much precalculation anyway.
-    // TODO: Error handle if fields don't exist.
+    // @todo Error handle if fields don't exist.
     $this->term = $term;
     $this->termId = $this->term->id();
 
@@ -160,7 +160,6 @@ class NavItem {
       ? $this->term->field_navigation_label->value
       : $this->term->name->value;
 
-    // @var [['value' => string], ['value' => string]]
     $navigationDisplayRules = $this->term->field_navigation_display_options->getValue();
     $navigationDisplayRules = count($navigationDisplayRules) ? $navigationDisplayRules : [];
     // Populate a lookup table for easier reference later.

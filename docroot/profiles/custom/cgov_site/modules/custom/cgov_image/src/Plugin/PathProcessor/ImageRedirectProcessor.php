@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\file\FileInterface;
+use Drupal\media\MediaInterface;
 
 /**
  * Redirect media/{image} request to raw file.
@@ -66,7 +68,6 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
     if (!in_array($bundle, $prohibitedBundles)) {
       return $path;
     }
-
     // We don't want '/espanol' getting tacked on
     // to a file path. We'll create a language object for
     // english to prevent any language processors using
@@ -74,9 +75,16 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
     // to the front of the file path.
     $languageObject = ConfigurableLanguage::createFromLangcode('en');
     $options['language'] = $languageObject;
-
+    if (!($entity instanceof MediaInterface)) {
+      // $path retuns /media/{id}
+      return $path;
+    }
     // Redirect to the media type's underlying file.
-    $file_uri = $entity->field_media_image->entity->getFileUri();
+    $file_entity = $entity->field_media_image->entity;
+    if (!($file_entity instanceof FileInterface)) {
+      return $path;
+    }
+    $file_uri = $file_entity->getFileUri();
     $image_file_path = $this->fileUrlGenerator->generateString($file_uri);
     return $image_file_path;
   }
