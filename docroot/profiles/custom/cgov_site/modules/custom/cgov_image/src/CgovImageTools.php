@@ -17,7 +17,7 @@ class CgovImageTools {
    *   NULL if the style does not have a crop, the name of the crop otherwise.
    */
   public function findCropByStyle($image_style) {
-    // TODO: Actually find the crop from the style.
+    // @todo Actually find the crop from the style.
     switch ($image_style) {
       case "cgov_article":
       case "cgov_enlarged":

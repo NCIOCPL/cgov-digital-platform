@@ -2,15 +2,13 @@
 
 namespace Drupal\cgov_image;
 
-use Drupal\image\Entity\ImageStyle;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\cgov_image\CgovImageTools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 
 /**
- * Class CgovImageTwigExtensions.
+ * Cgov Image Twig Extensions.
  */
 class CgovImageTwigExtensions extends AbstractExtension {
 

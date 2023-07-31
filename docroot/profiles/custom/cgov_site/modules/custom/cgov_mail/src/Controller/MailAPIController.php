@@ -26,14 +26,39 @@ class MailAPIController extends ControllerBase {
   use StringTranslationTrait;
   use MessengerTrait;
 
+  /**
+   * Email validator.
+   *
+   * @var \Drupal\Component\Utility\EmailValidatorInterface
+   */
   protected $emailValidator;
 
+  /**
+   * Mail manager.
+   *
+   * @var \Drupal\Core\Mail\MailManagerInterface
+   */
   protected $mailManager;
 
+  /**
+   * Cgov mail config.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
   protected $cgovMailConfig;
 
+  /**
+   * Account.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
   protected $account;
 
+  /**
+   * Mail plugin.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
   protected $mailPlugin;
 
   /**

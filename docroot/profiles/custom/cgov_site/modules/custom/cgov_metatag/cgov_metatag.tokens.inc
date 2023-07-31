@@ -12,7 +12,11 @@ use Drupal\crop\Entity\Crop;
  */
 function cgov_metatag_token_info() {
   $info = [];
-  $info['types']['cgov_tokens'] = ['name' => t('Cancer.gov Tokens'), 'description' => t('Cancer.gov Tokens')];
+  $info['types']['cgov_tokens'] =
+        [
+          'name' => t('Cancer.gov Tokens'),
+          'description' => t('Cancer.gov Tokens'),
+        ];
 
   $info['tokens']['cgov_tokens']['cgov-title'] =
         [
