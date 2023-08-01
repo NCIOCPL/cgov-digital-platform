@@ -16,8 +16,12 @@
 
   <!-- Use colors in output. -->
   <arg name="colors"/>
+
   <!-- Show progress. -->
   <arg value="p"/>
+
+  <!-- Print the actual rule that is breaking -->
+  <arg value="s"/>
 
   <!-- Include existing standards. -->
   <rule ref="Drupal">
@@ -31,6 +35,7 @@
   <file>blt/src</file>
   <file>docroot/modules/custom</file>
   <file>docroot/themes/custom</file>
+  <file>docroot/profiles/custom</file>
   <file>tests</file>
 
   <exclude-pattern>*/behat</exclude-pattern>
@@ -42,5 +47,26 @@
   <exclude-pattern>*/sites/g</exclude-pattern>
   <exclude-pattern>*/sites/sites.php</exclude-pattern>
   <exclude-pattern>/simplesamlphp/*</exclude-pattern>
-
+  <!-- Exclude our JS that follows our own linting standards -->
+  <exclude-pattern>*/themes/custom/ncids_trans/front-end</exclude-pattern>
+  <exclude-pattern>*/themes/custom/ncids_trans/dist</exclude-pattern>
+  <exclude-pattern>*/themes/custom/cgov/src</exclude-pattern>
+  <exclude-pattern>*/themes/custom/cgov/cgov_common/*.js</exclude-pattern>
+  <exclude-pattern>*/themes/custom/cgov/cgov_common/src</exclude-pattern>
+  <exclude-pattern>*/themes/custom/cgov/cgov_common/dist</exclude-pattern>
+  <!-- Temporary Excludes for bad files -->
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/CgovBlogTwigExtensions.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTwigExtensions.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Form/FrontendGlobalsForm.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/PageOptions.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/NcidsHeader.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Field/FieldFormatter/CgovDateFormatter.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Unit/Plugin/Block/PageOptionsTest.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/CgovImageTwigExtensions.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_metatag/cgov_metatag.tokens.inc</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Commands/RevisionPrunerCommands.php</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/js/plugins/cgov_glossifier/dialogs/glossify.js</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/CKEditorPlugin/CgovGlossifier.php</exclude-pattern>
 </ruleset>

@@ -99,7 +99,7 @@ class WorkflowTest extends KernelTestBase {
     $translation->save();
     $tests = [['draft', 0], ['review', 0], ['editing', 1], ['archived', 1]];
     foreach ($tests as $test) {
-      list($state, $expected_violations) = $test;
+      [$state, $expected_violations] = $test;
       $translation->moderation_state->value = $state;
       $violations = $translation->validate();
       $negative = $expected_violations ? ' not' : '';
@@ -151,7 +151,7 @@ class WorkflowTest extends KernelTestBase {
     foreach ($cases as $case) {
 
       // Create a new node with the transition's starting state.
-      list($from, $to, $user, $expected_failure) = $case;
+      [$from, $to, $user, $expected_failure] = $case;
       $this->setCurrentUser($this->users['admin']);
       $node = $this->createNode(['type' => 'pony']);
       $node->moderation_state->value = $from;

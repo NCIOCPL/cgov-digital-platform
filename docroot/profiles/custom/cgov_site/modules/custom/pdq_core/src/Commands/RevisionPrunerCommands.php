@@ -44,6 +44,7 @@ class RevisionPrunerCommands extends DrushCommands {
    * @param array $options
    *   An associative array of options whose values come from cli, aliases,
    *   config, etc.
+   *
    * @option bundle
    *   Prune all nodes of specified bundle. Ignored when ids are specified.
    *   Only pdq_cancer_information_summary and pdq_drug_information_summary
@@ -59,6 +60,7 @@ class RevisionPrunerCommands extends DrushCommands {
    *
    * @command pdq:prune-node-revisions
    * @aliases rprune
+   *
    * @throws \Exception
    */
   public function prune($ids = '', array $options = ['bundle' => self::REQ, 'keep' => self::REQ]) {

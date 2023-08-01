@@ -8,7 +8,6 @@ use Drupal\cgov_core\Services\PageOptionsManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Cache\Cache;
 
 /**
  * Provides a block with page options.
