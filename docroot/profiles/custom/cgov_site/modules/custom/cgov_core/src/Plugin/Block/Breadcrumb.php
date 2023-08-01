@@ -231,7 +231,7 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
         'show' => $this->t('Show when only breadcrumb item'),
       ],
       '#description' => $this->t('Select whether the root site section (e.g., Home or Página Principal) should display when it is the only breadcrumb.'),
-      '#default_value' => isset($config['show_home_alone']) ? $config['show_home_alone'] : 'hide',
+      '#default_value' => $config['show_home_alone'] ?? 'hide',
     ];
 
     return $form;

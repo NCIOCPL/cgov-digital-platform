@@ -35,6 +35,7 @@ class OrphanCleanupCommands extends DrushCommands {
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *
    * @option max_deletions
    *   Restrict number of deletions to MAX_DELETIONS (default is 1000).
    *   When all the revisions for a given entity are orphaned, the deletion

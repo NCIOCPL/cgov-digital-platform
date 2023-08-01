@@ -3,18 +3,17 @@
 namespace Drupal\cgov_image;
 
 use Drupal\image\Entity\ImageStyle;
-use Drupal\cgov_image\CgovImageTools;
 
 /**
  * Class CgovImageTwigExtensions.
  */
 class CgovImageTwigExtensions extends \Twig_Extension {
+
   /**
    * A list with all the defined functions. The first parameter is the name
    * by which we will call the function. The second parameter is the
    * name of the function that will implement the function.
    */
-
   public function getFunctions() {
     return [
       new \Twig_SimpleFunction('get_placeholder_image', [$this, 'getPlaceholderImage']),

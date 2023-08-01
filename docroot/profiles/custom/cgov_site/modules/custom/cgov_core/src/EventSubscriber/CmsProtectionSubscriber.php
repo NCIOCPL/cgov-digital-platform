@@ -121,7 +121,7 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
   private function redirectToLogin(GetResponseEvent $event) {
     if ($this->currentUser->isAnonymous() && !$this->isLoginRoute()) {
       // This is not a login route, so take them there.
-      // TODO: Set the user back to the original route.
+      // @todo Set the user back to the original route.
       $url = $this->getLoginUrl();
       $response = new RedirectResponse($url, 302);
       $event->setResponse($response);
