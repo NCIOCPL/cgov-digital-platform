@@ -25,6 +25,7 @@ class SlevenCommands extends BltTasks {
         'module' => 'cgov_yaml_content',
       ],
       'cgov:load-fe-globals' => [],
+      'cgov:load:glossifier-data' => [],
     ];
 
     $this->invokeCommands($commands);
@@ -106,6 +107,25 @@ class SlevenCommands extends BltTasks {
     $this->say("Clearing Cache");
     $task = $this->taskDrush()
       ->drush('cr')
+      ->printOutput(TRUE);
+    $result = $task->interactive($this->input()->isInteractive())->run();
+    return $result;
+  }
+
+  /**
+   * Load Glossifier Data.
+   *
+   * @command cgov:load:glossifier-data
+   */
+  public function glossifierData() {
+    $this->say("Processing Glossifier Data");
+    $glossify_file_path = $this->getConfigValue('cgov.pdq_load_glossifier_file');
+    if (!file_exists($glossify_file_path)) {
+      throw new BltException("Could not read the glossifier file.");
+    }
+    $task = $this->taskDrush()
+      ->drush('load-glossifier')
+      ->rawArg($glossify_file_path)
       ->printOutput(TRUE);
     $result = $task->interactive($this->input()->isInteractive())->run();
     return $result;

@@ -400,7 +400,7 @@ function handleGlossifierResponse(preparedBody, responseArray, language) {
     span.innerHTML = labelString;
     const labelTag = span.querySelector('label');
     const inputTag = labelTag.querySelector('input');
-    inputTag.checked = TRUE;
+    inputTag.checked = true;
     span.replaceWith(labelTag);
   });
   // Since the dialog can expand after loading the contents, we need to fix the positioning so it's not pushed down off the page.

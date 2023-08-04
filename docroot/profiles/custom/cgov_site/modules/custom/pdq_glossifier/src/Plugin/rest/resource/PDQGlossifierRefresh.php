@@ -4,11 +4,10 @@ namespace Drupal\pdq_glossifier\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Drupal\Core\Database\Database;
 use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function GuzzleHttp\json_encode;
+use Drupal\pdq_glossifier\PdqGlossifierServiceInterface;
 
 /**
  * Implements PDQ RESTful API verbs.
@@ -35,6 +34,13 @@ class PDQGlossifierRefresh extends ResourceBase {
   protected $currentUser;
 
   /**
+   * A current user instance.
+   *
+   * @var \Drupal\pdq_glossifier\PdqGlossifierServiceInterface
+   */
+  protected $pdqGlossify;
+
+  /**
    * Constructs a new PDQGlossifierRefresh object.
    *
    * @param array $configuration
@@ -49,6 +55,8 @@ class PDQGlossifierRefresh extends ResourceBase {
    *   A logger instance.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
+   * @param \Drupal\pdq_glossifier\PdqGlossifierServiceInterface $pdq_glossify
+   *   Pdq glossify service.
    */
   public function __construct(
     array $configuration,
@@ -56,9 +64,10 @@ class PDQGlossifierRefresh extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    AccountProxyInterface $current_user) {
+    AccountProxyInterface $current_user,
+    PdqGlossifierServiceInterface $pdq_glossify) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
-
+    $this->pdqGlossify = $pdq_glossify;
     $this->currentUser = $current_user;
   }
 
@@ -72,7 +81,8 @@ class PDQGlossifierRefresh extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('pdq'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('pdq_glossifier.data')
     );
   }
 
@@ -94,12 +104,8 @@ class PDQGlossifierRefresh extends ResourceBase {
     // Drupal 9 requires this param to be named $data, let's make this more
     // readable.
     $terms = $data;
-
     $now = date('Y-m-d H:i:s');
-    $fields = ['terms' => json_encode($terms), 'updated' => $now];
-    $conn = Database::getConnection();
-    $conn->update('pdq_glossary')->fields($fields)->execute();
-    $count = count($terms);
+    $count = $this->pdqGlossify->update($terms, $now);
     $msg = "Stored $count glossary terms";
     $this->logger->notice($msg);
     return new ResourceResponse(['message' => "$msg at $now"], 200);
