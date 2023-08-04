@@ -11,6 +11,19 @@ const getHeroTitle = (nciHeroElement: HTMLElement): string =>
 		?.querySelector('.nci-hero__cta-tagline')?.textContent || '_ERROR_';
 
 /**
+ * Gets the theme of the Hero (Light / Dark)
+ * @param {HTMLElement} nciHeroElement - The Hero
+ */
+const getHeroTheme = (nciHeroElement: HTMLElement): string => {
+	const isDark = Boolean(
+		nciHeroElement
+			.querySelector('.nci-hero__cta-container')
+			?.querySelector('.nci-hero__cta--dark')
+	);
+	if (isDark) return 'Dark';
+	return 'Light';
+};
+/**
  * Gets the Variant of the Hero (With(out) CTA Strip/Button)
  * Confirms whether Hero has a CTA Strip, CTA Button, or Both
  * @param {HTMLElement} nciHeroElement - The NCI Hero Element
@@ -81,7 +94,7 @@ const nciHeroLinkClickHandler =
 			1, // rowItems
 			1, // rowItemsIndex
 			'Hero', // componentType
-			'Light', // componentTheme
+			getHeroTheme(nciHero) as string, // componentTheme
 			getHeroVariant(nciHero) as string, // componentVariant
 			getHeroTitle(nciHero) as string, // title
 			target.dataset.eddlLandingItemLinkType || '_ERROR_', // linkType
