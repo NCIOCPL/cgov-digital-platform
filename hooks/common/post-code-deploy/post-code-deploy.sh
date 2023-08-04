@@ -67,6 +67,10 @@ else
   ## Setup some default JS globals.
   blt cgov:load-fe-globals --environment=$target_env --no-interaction -D drush.ansi=false
 
+  ## Load glossifier data.
+  blt cgov:load:glossifier-data --no-interaction -D drush.ansi=false
+
+
   ## Load ODE Content
   blt custom:install_cgov_yaml_content_by_module cgov_yaml_content --no-interaction -D drush.ansi=false
 
