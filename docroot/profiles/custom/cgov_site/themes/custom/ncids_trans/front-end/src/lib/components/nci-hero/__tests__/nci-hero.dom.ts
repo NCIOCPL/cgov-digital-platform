@@ -88,4 +88,22 @@ export const nciHeroTestDom = `
     </div>
   </div>
 </section>
+<section class="usa-section usa-section--light usa-section--cgdp-no-top" aria-labelledby="paragraph-851" data-eddl-landing-row>
+	<div class="nci-hero " data-eddl-landing-item="hero">
+		<picture class="nci-hero__image">
+			<source media="(min-width: 1024px)" srcset="/sites/default/files/widescreen.jpg">
+			<source media="(min-width: 880px)" srcset="/sites/default/files/desktop.jpg">
+			<source media="(min-width: 640px)" srcset="/sites/default/files/tablet_large.jpg">
+			<source media="(min-width: 480px)" srcset="/sites/default/files/tablet.jpg">
+			<source media="(min-width: 320px)" srcset="/sites/default/files/mobile_large.jpg">
+			<img loading="lazy" src="/sites/default/files/mobile.jpg" width="640" height="640" alt="">
+		</picture>
+		<div class="nci-hero__cta-container">
+			<div class="nci-hero__cta nci-hero__cta--with-button nci-hero__cta--dark">
+				<h2 class="nci-hero__cta-tagline" id="851">NCI Hero Title 5</h2>
+				<a data-testid="herobutton5" href="/about-cancer/coping/feelings" aria-label="Internal Button Alt Text" class="nci-hero__cta-button usa-button" data-eddl-landing-item-link-type="Internal">Feelings and Cancer Link 1</a>
+			</div>
+		</div>
+	</div>
+</section>
 `;

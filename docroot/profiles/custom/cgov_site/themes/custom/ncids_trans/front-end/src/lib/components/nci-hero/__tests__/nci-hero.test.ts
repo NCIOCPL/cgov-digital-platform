@@ -352,7 +352,7 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
-			pageRows: 4,
+			pageRows: 5,
 			pageRowIndex: 1,
 			rowItems: 1,
 			rowItemIndex: 1,
@@ -386,7 +386,7 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
-			pageRows: 4,
+			pageRows: 5,
 			pageRowIndex: 2,
 			rowItems: 1,
 			rowItemIndex: 1,
@@ -420,7 +420,7 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
-			pageRows: 4,
+			pageRows: 5,
 			pageRowIndex: 3,
 			rowItems: 1,
 			rowItemIndex: 1,
@@ -454,7 +454,7 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
-			pageRows: 4,
+			pageRows: 5,
 			pageRowIndex: 4,
 			rowItems: 1,
 			rowItemIndex: 1,
@@ -464,6 +464,40 @@ describe('NCI Hero', () => {
 			title: 'NCI Hero Title 4',
 			linkType: 'Internal',
 			linkText: 'Feelings and Cancer Link 4',
+			linkArea: 'Primary Button',
+			totalLinks: 1,
+			linkPosition: '1-1',
+		});
+	});
+
+	it('should call the analytics with appropriate values for Dark Hero with Button with no CTA Strip', () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', nciHeroTestDom);
+
+		// Create the JS
+		nciHeroInit();
+
+		// Get links
+		const heroLink = screen.getByTestId('herobutton5');
+
+		// Click the link
+		fireEvent.click(heroLink);
+
+		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
+			location: 'Body',
+			pageRows: 5,
+			pageRowIndex: 5,
+			rowItems: 1,
+			rowItemIndex: 1,
+			componentType: 'Hero',
+			componentTheme: 'Dark',
+			componentVariant: 'Button with no CTA Strip',
+			title: 'NCI Hero Title 5',
+			linkType: 'Internal',
+			linkText: 'Feelings and Cancer Link 1',
 			linkArea: 'Primary Button',
 			totalLinks: 1,
 			linkPosition: '1-1',

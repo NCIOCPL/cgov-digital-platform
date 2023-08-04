@@ -1,3 +1,4 @@
+{# Image Setup #}
 {% if content.field_widescreen_hero[0] %}
   {% set widescreenSrc = file_url(content.field_widescreen_hero['#items'].entity.uri.value) %}
 {% endif %}
@@ -15,14 +16,28 @@
 {% endif %}
 {% set image_mobile = content.field_mobile_hero[0] %}
 
-{% if content.field_cta_link_buttons[0] %}
-  {% set ctaClassName = "nci-hero--with-cta-strip" %}
+{# Theme Setup #}
+{% set theme = paragraph.field_ncids_theme.value %}
+
+{# Hero Classes Setup #}
+{% set heroClasses = create_attribute() %}
+{% set heroClasses = heroClasses.addClass("nci-hero") %}
+{% if content.field_cta_link_buttons[0] and theme == 'light' %}
+  {% set heroClasses = heroClasses.addClass("nci-hero--with-cta-strip") %}
 {% endif %}
+
+{# Primary CTA Setup #}
+{% set ctaClasses = create_attribute() %}
+{% set ctaClasses = ctaClasses.addClass("nci-hero__cta") %}
 {% if content.field_link_button[0] %}
-  {% set buttonClassName = "nci-hero__cta--with-button" %}
+  {% set ctaClasses = ctaClasses.addClass("nci-hero__cta--with-button") %}
 {% endif %}
+{% if theme == 'dark' %}
+  {% set ctaClasses = ctaClasses.addClass("nci-hero__cta--dark") %}
+{% endif %}
+
 <div class="usa-section usa-section--light usa-section--cgdp-no-top" data-eddl-landing-row>
-  <div class="nci-hero {{ ctaClassName }}" data-eddl-landing-item="hero">
+  <div {{ heroClasses }} data-eddl-landing-item="hero">
     <picture class="nci-hero__image">
       <source media='(min-width: 1024px)' srcset="{{ widescreenSrc }}">
       <source media='(min-width: 880px)' srcset="{{ desktopSrc }}">
@@ -32,12 +47,12 @@
       {{- image_mobile -}}
     </picture>
     <div class="nci-hero__cta-container">
-      <div class="nci-hero__cta {{ buttonClassName }}">
+      <div {{ ctaClasses }}>
         <h2 class="nci-hero__cta-tagline">{{ paragraph.field_tagline.value }}</h2>
         {{ content.field_link_button }}
       </div>
     </div>
-    {% if content.field_cta_link_buttons[0] %}
+    {% if heroClasses.hasClass("nci-hero--with-cta-strip") %}
       <div class="nci-hero__nci-cta-strip-container">
         <div class="grid-container">
           {{ content.field_cta_link_buttons }}
