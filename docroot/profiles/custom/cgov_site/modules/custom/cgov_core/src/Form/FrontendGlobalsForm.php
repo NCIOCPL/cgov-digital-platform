@@ -8,14 +8,14 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class FrontendGlobalsForm.
+ * Frontend Globals Form.
  */
 class FrontendGlobalsForm extends FormBase {
 
   /**
    * Config factory.
    *
-   * @var Drupal\Core\Config\ConfigFactoryInterface
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 

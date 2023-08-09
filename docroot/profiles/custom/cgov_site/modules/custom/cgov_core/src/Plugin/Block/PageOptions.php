@@ -19,6 +19,11 @@ use Drupal\Core\Access\AccessResult;
  */
 class PageOptions extends BlockBase implements ContainerFactoryPluginInterface {
 
+  /**
+   * Page options.
+   *
+   * @var array
+   */
   public $pageOptionsConfigs = [];
 
   /**
