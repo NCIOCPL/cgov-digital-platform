@@ -11,7 +11,6 @@ parameters:
     ## The following paths should be removed as each module is remediated
     ### cgov_site Profile Tests
     - docroot/profiles/custom/cgov_site/tests/src/Functional/CgovSiteTest.php
-    - docroot/profiles/custom/cgov_site/tests/src/Functional/PdqNodeTypeTest.php
     ### cgov_site Profile Themes
     - docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/cgov_common.theme
     - docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/theme-settings.php
@@ -39,7 +38,6 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/CmsProtectionSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/ResponseCacheSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/TranslationAvailableSubscriber.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Form/FrontendGlobalsForm.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/NavItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/Breadcrumb.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/DisqusComments.php
@@ -47,14 +45,8 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/NcidsHeader.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/SectionNav.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Services/CgovNavigationManager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Services/PageOptionsManager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/FieldStorage/CGovFieldStorageTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/FieldStorage/CgovMediaFieldStorageTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/RolesTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/TestKernelTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/WorkflowTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Traits/CGovWorkflowAttachmentTrait.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Unit/Plugin/Block/PageOptionsTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/cgov_embedded_block.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/src/Controller/ICalendarController.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_file/src/EventSubscriber/DirectFileDownloadSubscriber.php
@@ -63,7 +55,6 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/CgovImageTwigExtensions.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/EventSubscriber/ImageEventSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/Plugin/PathProcessor/ImageRedirectProcessor.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/tests/src/Kernel/CgovImageFieldStorageTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php
@@ -98,13 +89,9 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/RevisionPruner.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/tests/src/Kernel/CleanupTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/tests/src/Kernel/FieldStorage/PDQFieldStorageTest.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/tests/src/Kernel/WorkflowTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_drug_information_summary/src/Plugin/rest/resource/PDQResource.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_drug_information_summary/tests/src/Functional/ApiTest.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/CKEditorPlugin/CgovGlossifier.php
     - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/rest/resource/PDQResource.php
-    - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/tests/src/Functional/ApiTest.php
   ignoreErrors:
     ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
     ## as an error. However we do want to flag when people do unessesary ignores in doc comments,

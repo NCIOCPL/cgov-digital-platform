@@ -127,7 +127,7 @@ class PageOptionsManager implements PageOptionsManagerInterface {
   /**
    * Gets the current entity if there is one.
    *
-   * @return Drupal\Core\Entity\ContentEntityInterface
+   * @return \Drupal\Core\Entity\ContentEntityInterface
    *   The retrieved entity, or FALSE if none found.
    */
   private function getCurrEntity() {
