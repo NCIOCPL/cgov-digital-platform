@@ -4,11 +4,12 @@ namespace Drupal\cgov_blog;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Twig\Extension\AbstractExtension;
 
 /**
  * Extend Drupal's Twig_Extension class.
  */
-class CgovBlogTwigExtensions extends \Twig_Extension {
+class CgovBlogTwigExtensions extends AbstractExtension {
 
   /**
    * Blog Manager.
@@ -36,7 +37,7 @@ class CgovBlogTwigExtensions extends \Twig_Extension {
    */
   public function getFunctions() {
     return [
-      new \Twig_SimpleFunction('get_blog_series_title', [$this, 'getBlogSeriesTitle'], ['is_safe' => ['html']]),
+      new \Twig\TwigFunction('get_blog_series_title', [$this, 'getBlogSeriesTitle'], ['is_safe' => ['html']]),
     ];
   }
 
@@ -67,7 +68,7 @@ class CgovBlogTwigExtensions extends \Twig_Extension {
     }
 
     // When called from a twig template, $topic may be an empty string.
-    $includeTopic = isset($topic) && (strlen(trim($topic)) > 0);
+    $includeTopic = (strlen(trim($topic)) > 0);
 
     return $this->blogManager->getBlogSeriesTitle($month, $year, $includeTopic, $node);
   }

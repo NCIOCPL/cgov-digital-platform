@@ -6,6 +6,7 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_install().
@@ -68,4 +69,59 @@ function cgov_blog_update_8001() {
   ];
 
   $siteHelper->addRolePermissions($perms);
+}
+
+
+
+/**
+ * Enable layout builder. (Issue #3807)
+ */
+function cgov_blog_update_8002() {
+  // Install Contextual Links
+
+  $uninstall_array = [];
+  if (!\Drupal::moduleHandler()->moduleExists('contextual')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['contextual']);
+  }
+  
+  // Install Layout Builder
+  if (!\Drupal::moduleHandler()->moduleExists('layout_builder')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['layout_builder']);
+  }
+
+  // Uninstall Panels
+  if (\Drupal::moduleHandler()->moduleExists('panels')) {
+    array_push($uninstall_array, 'panels');
+  }
+
+  // Uninstall Page Manager
+  if (\Drupal::moduleHandler()->moduleExists('page_manager')) {
+    array_push($uninstall_array, 'page_manager');
+  }
+  
+  // Uninstall Page Manager UI
+  if (\Drupal::moduleHandler()->moduleExists('page_manager_ui')) {
+    array_push($uninstall_array, 'page_manager_ui');
+  }
+  $installer = \Drupal::service('module_installer');
+  $installer->uninstall($uninstall_array, FALSE);
+
+  $blog_post_config = 'modules/custom/cgov_blog/config/install/page_manager.page_variant.node_view-panels_variant-blog-post.yml';
+  $blog_series_config = 'modules/custom/cgov_blog/config/install/page_manager.page_variant.node_view-panels_variant-blog-series.yml';
+  $blog_topics_pathauto = 'modules/custom/cgov_blog/config/install/pathauto.pattern.cgov_blog_topics.yml';
+
+  // Get the necessary services.
+  $container = \Drupal::getContainer();
+  $file_system = $container->get('file_system');
+  if ($blog_post_config && file_exists($blog_post_config)) {
+    $file_system->delete($blog_post_config);
+  }
+  if ($blog_series_config && file_exists($blog_series_config)) {
+    $file_system->delete($blog_series_config);
+  }
+  if ($blog_topics_pathauto && file_exists($blog_topics_pathauto)) {
+    $file_system->delete($blog_topics_pathauto);
+  }
 }
