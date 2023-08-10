@@ -2,13 +2,13 @@
 
 namespace Drupal\cgov_blog\Services;
 
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\path_alias\AliasManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\TypedData\TranslatableInterface;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -31,19 +31,18 @@ class BlogManager implements BlogManagerInterface {
   protected $entityTypeManager;
 
   /**
-   * The route matcher.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatcher;
-
-  /**
    * The path alias manager.
    *
    * @var \Drupal\path_alias\AliasManagerInterface
    */
   protected $aliasManager;
 
+  /**
+   * The route matcher.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatcher;
 
   /**
    * Language manager.
@@ -94,226 +93,136 @@ class BlogManager implements BlogManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function getCurrentEntity() {
-    // BlogManagerInterface implementation.
-    $params = $this->routeMatcher->getParameters()->all();
-    foreach ($params as $param) {
-      if ($param instanceof ContentEntityInterface) {
-        // If you find a ContentEntityInterface stop iterating and return it.
-        return $param;
+  public function getBlogSeriesFromRoute() {
+    $value = NULL;
+    $node = $this->routeMatcher->getParameter('node');
+    if ($node === NULL) {
+      return NULL;
+    }
+    if ($node->bundle() === 'cgov_blog_series') {
+      $value = $node;
+    }
+    elseif ($node->bundle() === 'cgov_blog_post') {
+      // The node contains the field "field_blog_series".
+      $reference = $node->field_blog_series->referencedEntities();
+      if (isset($reference[0]) && $reference[0] instanceof NodeInterface && $reference[0]->bundle() === 'cgov_blog_series') {
+        // A referenced entity exists.
+        $value = $reference[0];
+        $value = $value->getTranslation($this->languageManager->getCurrentLanguage()->getId());
       }
     }
-    return FALSE;
+
+    return $value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getSeriesEntity() {
-    $seriesEntity = [];
-    $currEntity = $this->getCurrentEntity();
-    $currBundle = $currEntity->bundle();
-
-    // If this is a series.
-    switch ($currBundle) {
-      case 'cgov_blog_series':
-        $seriesEntity = $currEntity;
-        break;
-
-      case 'cgov_blog_post':
-        $seriesEntity = $currEntity->field_blog_series->entity;
-        $seriesEntity = $this->getCurrentTranslation($seriesEntity);
-        break;
-
-      default:
-        break;
-    }
-
-    return $seriesEntity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCurrentLang() {
-    $currentLang = $this->getCurrentEntity()->language()->getId();
-    return $currentLang;
-  }
-
-  /**
-   * Gets the entity translation to be used in the given context.
-   *
-   * This will check whether a translation for the desired language
-   * is available and if not, it will fall back to the most
-   * appropriate translation based on the provided context.
-   * Based on the implementation found in
-   * EntityReferenceFormatterBase->getEntitiesToView().
-   *
-   * @return \Drupal\Core\Entity\EntityInterface
-   *   A referenced entity.
-   */
-  public function getCurrentTranslation($node) {
-    if ($node instanceof TranslatableInterface) {
-      $lang = $this->getCurrentLang();
-      $node = $this->entityRepository->getTranslationFromContext($node, $lang);
-    }
-    return $node;
-  }
-
-  /**
-   * Create a node object given an nid.
-   *
-   * @param string $nid
-   *   A node ID.
-   *
-   * @return Drupal\Core\Entity\EntityStorageInterface
-   *   The node storage or NULL.
-   */
-  public function getNodeFromNid($nid) {
-    $storage = $this->entityTypeManager->getStorage('node');
-    $nodeLoad = (isset($storage)) ? $storage->load($nid) : NULL;
-    $nodeLoad = $this->getCurrentTranslation($nodeLoad);
-    return $nodeLoad;
-  }
-
-  /**
-   * Get a single topic taxonomy object.
-   *
-   * @param string $tid
-   *   A taxonomy term ID.
-   * @param string $lang
-   *   A language code (optional).
-   */
-  public function loadBlogTopic($tid, $lang = FALSE) {
-    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $topic = $taxonomy_storage->load($tid) ?? NULL;
-
-    /*
-     * Retrieve the translated taxonomy term in specified
-     * language ($curr_langcode) with fallback to default
-     * language if translation not exists.
-     */
-    if ($topic != NULL) {
-      $langs = $lang ?? $this->getCurrentLang();
-      $topic = $this->entityRepository->getTranslationFromContext($topic, $langs);
-    }
-
-    return $topic;
-  }
-
-  /**
-   * Get all single topic taxonomy objects.
-   *
-   * @param string $vid
-   *   A vocabulary ID.
-   */
-  public function loadAllBlogTopics($vid) {
-    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $topics = $taxonomy_storage->loadTree($vid) ?? NULL;
-    return $topics;
-  }
-
-  /**
-   * Get the Blog Series ID.
-   */
-  public function getSeriesId() {
-    $series = $this->getSeriesEntity();
-    $sid = '';
-    if (isset($series)) {
-      $sid = $series->id();
-    }
-    return $sid;
-  }
-
-  /**
-   * The URL path for the blog series.
-   *
-   * @param mixed $queryParams
-   *   An associative array of the URL query parameter.
-   */
-  public function getSeriesPath($queryParams = []) {
-    $series = $this->getSeriesEntity();
-    $path = $series->toUrl('canonical', ['query' => $queryParams]);
+  public function getSeriesPath(NodeInterface $blog_series, $queryParams = []) {
+    $path = $blog_series->toUrl('canonical', ['query' => $queryParams]);
     return $path->toString();
   }
 
   /**
-   * Get the Blog Featured content nodes.
+   * {@inheritdoc}
    */
-  public function getSeriesFeaturedPosts() {
-    $featured_posts = [];
-    $series = $this->getSeriesEntity();
-    if (!empty($series->field_featured_posts)) {
-      $featured_posts = $series->field_featured_posts->referencedEntities();
-    }
-    return $featured_posts;
+  public function getTopicsBySeries(NodeInterface $series) {
+    return $this->getTopicsBySeriesId($series->id(), $this->languageManager->getCurrentLanguage()->getId());
   }
 
   /**
-   * Get Blog Series topics (categories).
+   * {@inheritdoc}
    */
-  public function getSeriesTopics() {
-    $topics = [];
-    $curr_nid = $this->getSeriesId();
-    $taxonomy = $this->loadAllBlogTopics('cgov_blog_topics');
+  public function getTopicsBySeriesId($id, $langcode) {
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $tids = $term_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('vid', 'cgov_blog_topics')
+      ->condition('field_owner_blog.target_id', $id)
+      ->condition('langcode', $langcode)
+      ->execute();
+    $terms = $term_storage->loadMultiple($tids);
 
-    // Create an array of topics that match the owner Blog Series.
-    if (count($taxonomy) > 0) {
-      foreach ($taxonomy as $taxon) {
-        $tid = $taxon->tid;
-        $owner_nid = $this->loadBlogTopic($tid)
-          ->get('field_owner_blog')->target_id;
-        if ($curr_nid == $owner_nid) {
-          $topics[] = $taxon;
-        }
-      }
-    }
-    return $topics;
+    return $terms;
   }
 
   /**
-   * Get the in usage Subset of Blog Series topics (categories).
+   * {@inheritdoc}
    */
-  public function getActiveSeriesTopics() {
-    // Get all associated categories.
-    $activeTopics = $this->getSeriesTopics();
-
-    // Skip setting the category if there are 0 posts for this language.
+  public function getFilteredTopicsBySeries(NodeInterface $blog_series) {
+    $topics = $this->getTopicsBySeries($blog_series);
+    $rtn_topics = [];
     $langcode = $this->languageManager->getCurrentLanguage()->getId();
-    foreach ($activeTopics as $key => $topic) {
-      // Query for nodes with this category in the current language context.
-      $query = $this->entityTypeManager->getStorage('node')->getQuery();
-      $langcode_group = $query->andConditionGroup()
-        ->condition("field_blog_topics", $topic->tid, '=', $langcode);
-
-      $nodes = $query
+    foreach ($topics as $key => $term) {
+      $node_storage = $this->entityTypeManager->getStorage('node');
+      $node = $node_storage->getQuery()
+        ->accessCheck(TRUE)
+        ->condition('field_blog_topics', $term->id(), '=', $langcode)
         ->condition('type', 'cgov_blog_post')
         ->condition('status', 1)
-        ->condition($langcode_group)
         ->execute();
       // Remove the category if there are zero usages.
-      if (empty($nodes)) {
-        unset($activeTopics[$key]);
+      if (!empty($node)) {
+        $rtn_topics[$key] = $term->getTranslation($langcode);
       }
     }
-
-    return $activeTopics;
+    return $rtn_topics;
   }
 
   /**
-   * Get Blog Series topic based on field_pretty_url.
+   * {@inheritdoc}
    */
-  public function getSeriesTopicByUrl() {
+  public function getCurrentEntity() {
+    return $this->routeMatcher->getParameter('node') ?? FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSeriesFeaturedPosts(NodeInterface $blog_series) {
+    $langcode = $this->languageManager->getCurrentLanguage()->getId();
+    $featured_posts = [];
+    $featured_posts_translated = [];
+    if (!empty($blog_series->field_featured_posts)) {
+      $featured_posts = $blog_series->field_featured_posts->referencedEntities();
+    }
+    foreach ($featured_posts as $key => $post) {
+      $translated_post = $this->entityRepository->getTranslationFromContext($post, $langcode);
+      $featured_posts_translated[$key] = $translated_post;
+    }
+    return $featured_posts_translated;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getNodesByPostedDateDesc($type) {
+    $query = $this->entityTypeManager->getStorage('node');
+    $nids = $query->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('status', 1)
+      ->condition('type', $type)
+      ->condition('langcode', $this->getCurrentEntity()->language()->getId())
+      ->sort('field_date_posted', 'DESC')
+      ->execute();
+    $nodes = $query->loadMultiple($nids);
+    return $nodes;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSeriesTopicByUrl(NodeInterface $blog_series) {
 
     // Retrieve the collection of associated topics and filter to match
     // against the topic query string parameter.
     $rtn = NULL;
     $filter = $this->requestStack->getCurrentRequest()->query->get('topic');
-    $topics = $this->getSeriesTopics();
+    $topics = $this->getTopicsBySeries($blog_series);
 
     // Get Blog Topic taxonomy terms in English and Spanish.
     foreach ($topics as $topic) {
-      $tid = $topic->tid;
+      $tid = $topic->id();
 
       /*
        * If a filter match is found, return topic with the matching pretty URL.
@@ -335,19 +244,41 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * The the URL path for a node based on NID.
-   *
-   * @param string $nid
-   *   Node ID of content item.
-   * @param string $lang
-   *   Optional langcode.
+   * {@inheritdoc}
+   */
+  public function loadBlogTopic($tid, $lang = FALSE) {
+    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $topic = $taxonomy_storage->load($tid) ?? NULL;
+
+    /*
+     * Retrieve the translated taxonomy term in specified
+     * language ($curr_langcode) with fallback to default
+     * language if translation not exists.
+     */
+    if ($topic != NULL) {
+      if (!$lang) {
+        $langs = $this->getCurrentEntity()->language()->getId();
+        $topic = $this->entityRepository->getTranslationFromContext($topic, $langs);
+        return $topic;
+      }
+      $topic = $this->entityRepository->getTranslationFromContext($topic, $lang);
+    }
+
+    return $topic;
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function getBlogPathFromNid($nid, $lang = NULL) {
+    $path = "";
     $node = $this->getNodeFromNid($nid);
-    $path = (isset($node)) ? $node->toUrl('canonical') : NULL;
+    if ($node !== NULL) {
+      $path = $node->toUrl('canonical');
+    }
 
     // Use alias manager otherwise.
-    if (!isset($path)) {
+    if ($path === "") {
       $path = (isset($lang)) ? $this->aliasManager->getAliasByPath('/node/' . $nid, $lang) :
         $this->aliasManager->getAliasByPath('/node/' . $nid);
     }
@@ -355,53 +286,40 @@ class BlogManager implements BlogManagerInterface {
   }
 
   /**
-   * Return query results based on date posted.
-   *
-   * @param string $type
-   *   Content type or bundle.
+   * {@inheritdoc}
+   */
+  public function getNodeFromNid($nid) {
+    $storage = $this->entityTypeManager->getStorage('node');
+    $nodeLoad = $storage->load($nid) ?? NULL;
+
+    if ($nodeLoad instanceof Node) {
+      $lang = $this->getCurrentEntity()->language()->getId();
+      if ($nodeLoad->hasTranslation($lang)) {
+        $nodeLoad = $nodeLoad->getTranslation($lang);
+      }
+    }
+    return $nodeLoad;
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function getNodesByPostedDateAsc($type) {
-    $query = $this->entityTypeManager->getStorage('node')->getQuery();
-    $query->condition('status', 1);
-    $query->condition('type', $type);
-    $query->condition('langcode', $this->getCurrentLang());
-    $query->sort('field_date_posted');
-    $nids = $query->execute();
+    $node_storage = $this->entityTypeManager->getStorage('node');
+    $nids = $node_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', 1)
+      ->condition('type', $type)
+      ->condition('langcode', $this->getCurrentEntity()->language()->getId())
+      ->sort('field_date_posted')
+      ->execute();
     return $nids;
   }
 
   /**
-   * Return query results based on date posted.
-   *
-   * @param string $type
-   *   Content type or bundle.
+   * {@inheritdoc}
    */
-  public function getNodesByPostedDateDesc($type) {
-    $query = $this->entityTypeManager->getStorage('node')->getQuery();
-    $query->condition('status', 1);
-    $query->condition('type', $type);
-    $query->condition('langcode', $this->getCurrentLang());
-    $query->sort('field_date_posted', 'DESC');
-    $nids = $query->execute();
-    return $nids;
-  }
-
-  /**
-   * Return the title for blog series..
-   *
-   * @param string $month
-   *   Month value.
-   * @param string $year
-   *   Year value.
-   * @param bool $includeTopic
-   *   Should the title include the topic?
-   * @param object $node
-   *   Node object.
-   *
-   * @return string
-   *   Blog series title.
-   */
-  public function getBlogSeriesTitle($month, $year, $includeTopic, $node) {
+  public function getBlogSeriesTitle($month, $year, $includeTopic, $blog_series) {
 
     $title = "";
     // If url has topic or year add them to the title.
@@ -409,59 +327,26 @@ class BlogManager implements BlogManagerInterface {
       if ($year) {
         $title .= $month ? date('F', mktime(0, 0, 0, $month, 10)) : '';
         $title .= ' ' . $year . ' - ';
+        $title .= ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
       }
       if ($includeTopic) {
-        $topic_text = $this->getSeriesTopicByUrl();
-        $topic_text = (!empty($topic_text) ? $topic_text->getName() : '');
-        $title .= $topic_text . ' - ';
-      }
-      // Show card title if not empty. Otherwise show browser title field.
-      $title .= ($node->field_card_title->value) ? $node->field_card_title->value : $node->field_browser_title->value;
-    }
-    else {
-      $title = $node->getTitle();
-    }
-    return $title;
-  }
-
-  /**
-   * Return list of terms for series..
-   *
-   * @param string $series_id
-   *   The series node id.
-   * @param string $language_id
-   *   The series language.
-   *
-   * @return array
-   *   Blog series terms.
-   */
-  public function getBlogTopicsForSeries($series_id, $language_id) {
-
-    $vid = 'cgov_blog_topics';
-
-    $taxonomy_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    $terms = $taxonomy_storage->loadTree($vid);
-
-    $term_data = [];
-
-    foreach ($terms as $term) {
-      $term_series_tid = $this->entityTypeManager->getStorage('taxonomy_term')->load($term->tid)->get('field_owner_blog')->target_id;
-      if ($term_series_tid == $series_id) {
-        // Not default language.
-        if ($term->langcode != $language_id) {
-          $term_object = $taxonomy_storage->load($term->tid);
-          if ($term_object->hasTranslation($language_id)) {
-            $translated_term = $term_object->getTranslation($language_id);
-            $term_data[$term->tid] = $translated_term->getName();
-          }
+        $topic_text = $this->getSeriesTopicByUrl($blog_series);
+        if (isset($topic_text)) {
+          $title .= $topic_text->getName() . ' - ';
+          // Show card title if not empty. Otherwise show browser title field.
+          $title .= ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
         }
         else {
-          $term_data[$term->tid] = $term->name;
+          // Show card title if not empty. Otherwise show browser title field.
+          $title = ($blog_series->field_card_title->value) ? $blog_series->field_card_title->value : $blog_series->field_browser_title->value;
+          $title .= " - Error: Category Does Not Exist";
         }
       }
     }
-
-    return $term_data;
+    else {
+      $title = $blog_series->getTitle();
+    }
+    return $title;
   }
 
 }

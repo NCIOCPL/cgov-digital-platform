@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -22,10 +23,6 @@ function cgov_blog_token_info() {
     'blog-post-path' => [
       'name' => t('Blog Post Path'),
       'description' => t('The computed path of a Blog Post.'),
-    ],
-    'blog-topic-path' => [
-      'name' => t('Blog Topic Path'),
-      'description' => t('The path of a Blog Topic taxonomy term.'),
     ],
     'blog-series-title' => [
       'name' => t('Blog Series Title'),
@@ -55,14 +52,6 @@ function cgov_blog_tokens($type, $tokens, array $data, array $options, Bubbleabl
         }
         break;
 
-      // Replace 'taxonomy/term/[tid]' with owner Site Section and Pretty URL.
-      // @todo Remove this case; dead code.
-      case 'blog-topic-path':
-        if (!empty($data['term'])) {
-          $replacements[$original] = _get_blog_topic_path($data['term'] ?: $replacements[$original]);
-        }
-        break;
-
       case 'blog-series-title':
         if (!empty($data['node'])) {
           $replacements[$original] = _get_blog_series_title($data['node']);
@@ -80,6 +69,9 @@ function cgov_blog_tokens($type, $tokens, array $data, array $options, Bubbleabl
 /**
  * Get the canonical url for a blog.
  *
+ * @param \Drupal\node\Entity\Node $node
+ *   The blog series.
+ *
  * @throws \Drupal\Core\TypedData\Exception\MissingDataException
  *   Error for missing data.
  */
@@ -94,8 +86,9 @@ function _get_blog_post_path($node) {
       // Get the owner series and translation if exists.
       $seriesEntity = $node->field_blog_series->entity;
       $seriesEntity = $entityRepository->getTranslationFromContext($seriesEntity, $lang);
-
-      // Get the computed path of the series and pretty URL if not empty.
+      if (!($seriesEntity instanceof Node)) {
+        throw new \Exception("The blog series is not of type Node");
+      }
       $tid = $seriesEntity->field_site_section->target_id;
       $path = Term::load($tid)->get('computed_path')->value;
       $purl = $seriesEntity->field_pretty_url->value;
@@ -108,29 +101,6 @@ function _get_blog_post_path($node) {
     catch (Exception $e) {
       \Drupal::logger('cgov_blog')
         ->notice('Could not retrieve blog computed path: ' . $path);
-    }
-  }
-  return $path;
-}
-
-/**
- * Get the path for a blog taxnomy term. TODO: deprecated, remove this function.
- *
- * @throws \Drupal\Core\TypedData\Exception\MissingDataException
- *   Error for missing data.
- */
-function _get_blog_topic_path($term) {
-  $path = FALSE;
-  if (!empty($term->field_pretty_url->value)) {
-    try {
-      $nid = $term->get('field_owner_blog')->first()->getValue()['target_id'];
-      $name = $term->field_pretty_url->value;
-      $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
-      $path = $alias . '/' . $name;
-    }
-    catch (Exception $e) {
-      \Drupal::logger('cgov_blog')
-        ->notice('Could not retrieve computed path for Blog Topic nid: ' . $nid);
     }
   }
   return $path;

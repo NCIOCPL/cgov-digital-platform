@@ -2,9 +2,9 @@
 
 namespace Drupal\cgov_blog\Plugin\Block;
 
-use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -35,7 +35,7 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
    * @param \Drupal\cgov_blog\Services\BlogManagerInterface $blog_manager
-   *   A blog manager object.
+   *   A blog manager 2 object.
    */
   public function __construct(
     // Constructor with args.
@@ -65,49 +65,48 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    // If our entity exists, get the nid (content id) and bundle (content type).
-    if ($curr_entity = $this->blogManager->getCurrentEntity()) {
-      $content_id = $curr_entity->id();
-      $content_type = $curr_entity->bundle();
-    }
-
     // Build object.
     $build = [];
+
+    // If our entity exists, get the nid (content id) and bundle (content type).
+    $curr_entity = $this->blogManager->getCurrentEntity();
+    if ($curr_entity === FALSE) {
+      return $build;
+    }
+    $content_id = $curr_entity->id();
+    $content_type = $curr_entity->bundle();
 
     // Render our pager markup based on content type.
     // Note: wherever possible, we should use out-of-the box pagination from
     // the view. This plugin is currently being used by Blog Posts only.
-    switch ($content_type) {
-      case 'cgov_blog_post':
-        $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
-        // Get series nid for the block.
-        $series_nid = $this->blogManager->getSeriesId();
-        $langcode = $curr_entity->language()->getId();
-        $prev_nid = $post['prev_nid'] ?? '';
-        $prev_title = $post['prev_title'] ?? '';
-        $prev_link = $this->blogManager->getBlogPathFromNid($prev_nid, $langcode);
-        $next_nid = $post['next_nid'] ?? '';
-        $next_title = $post['next_title'] ?? '';
-        $next_link = $this->blogManager->getBlogPathFromNid($next_nid, $langcode);
-        // Build the render array & cache tags.
-        $build['#cgov_block_data'] = [
-          'prev_nid' => $prev_nid,
-          'prev_title' => $prev_title,
-          'prev_link' => $prev_link,
-          'next_nid' => $next_nid,
-          'next_title' => $next_title,
-          'next_link' => $next_link,
-        ];
-        $build['#cache'] = [
-          'tags' => [
-            'node:' . $series_nid,
-          ],
-        ];
-        break;
-
-      default:
-        break;
+    if ($content_type === 'cgov_blog_post') {
+      $post = $this->drawBlogPostOlderNewer($content_id, $content_type);
+      // Get series nid for the block.
+      $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+      $series_nid = $blog_series->id();
+      $langcode = $curr_entity->language()->getId();
+      $prev_nid = $post['prev_nid'] ?? '';
+      $prev_title = $post['prev_title'] ?? '';
+      $prev_link = $this->blogManager->getBlogPathFromNid($prev_nid, $langcode);
+      $next_nid = $post['next_nid'] ?? '';
+      $next_title = $post['next_title'] ?? '';
+      $next_link = $this->blogManager->getBlogPathFromNid($next_nid, $langcode);
+      // Build the render array & cache tags.
+      $build['#cgov_block_data'] = [
+        'prev_nid' => $prev_nid,
+        'prev_title' => $prev_title,
+        'prev_link' => $prev_link,
+        'next_nid' => $next_nid,
+        'next_title' => $next_title,
+        'next_link' => $next_link,
+      ];
+      $build['#cache'] = [
+        'tags' => [
+          'node:' . $series_nid,
+        ],
+      ];
     }
+
     return $build;
   }
 
@@ -125,6 +124,9 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   The nid of the current content item.
    * @param string $content_type
    *   The content type machine name.
+   *
+   * @return array
+   *   An array of blog links or an empty array.
    */
   private function getBlogPostPagerLinks($cid, $content_type) {
     // Get available Blog Post nids.
@@ -163,6 +165,9 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   Array of link objects.
    * @param string $field
    *   Field to sort by.
+   *
+   * @return array
+   *   A sorted array of $links by $field.
    */
   private function sortByField(array $links, $field) {
     if (count($links) > 1) {
@@ -181,6 +186,9 @@ class BlogPager extends BlockBase implements ContainerFactoryPluginInterface {
    *   The nid of the current content item.
    * @param string $content_type
    *   The content type machine name.
+   *
+   * @return array
+   *   An array of blog posts or an empty array.
    */
   private function drawBlogPostOlderNewer($cid, $content_type) {
     // Get an array of blog field collections to populate links.
