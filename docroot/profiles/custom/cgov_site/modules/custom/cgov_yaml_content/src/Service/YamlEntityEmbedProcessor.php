@@ -90,8 +90,8 @@ class YamlEntityEmbedProcessor {
 
       // Only process if the UUID is process. We may find already processed
       // fields in translations or some other nonsense...
-      if ($drupalEntityEl->getAttr('data-entity-uuid') === "#process") {
-        $entityType = $drupalEntityEl->getAttr('data-entity-type');
+      if ($drupalEntityEl->getAttribute('data-entity-uuid') === "#process") {
+        $entityType = $drupalEntityEl->getAttribute('data-entity-type');
         if (!$entityType) {
           $this->throwParamError("Invalid entity embed, missing #process");
         }
@@ -99,7 +99,7 @@ class YamlEntityEmbedProcessor {
 
         $uuid = $this->queryEntityUuid($entityType, $queryParams);
         if ($uuid) {
-          $drupalEntityEl->setAttr('data-entity-uuid', $uuid);
+          $drupalEntityEl->setAttribute('data-entity-uuid', $uuid);
         }
         else {
           $this->throwParamError("Could not find entity for embed", $entityType, $queryParams);
@@ -134,7 +134,8 @@ class YamlEntityEmbedProcessor {
    */
   public function queryEntityUuid($entity_type, array $content_data) {
     $storage = $this->entityTypeManager->getStorage($entity_type);
-    $query = $storage->getQuery('AND');
+    $query = $storage->getQuery('AND')
+      ->accessCheck(FALSE);
     foreach ($content_data as $key => $value) {
       if ($key != 'entity' && !is_array($value)) {
         $query->condition($key, $value);
