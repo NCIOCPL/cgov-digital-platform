@@ -9,15 +9,16 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\file\Entity\File;
 use Drupal\views\ViewExecutable;
-use Drupal\image\Entity\ImageStyle;
 use Drupal\Component\Utility\Html;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\TwigFunction;
+use Twig\Extension\AbstractExtension;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 
 /**
- * Extend Drupal's Twig_Extension class.
+ * Extend Drupal's AbstractExtension class.
  */
-class CgovCoreTwigExtensions extends \Twig_Extension {
+class CgovCoreTwigExtensions extends AbstractExtension {
 
   /**
    * Entity Type Manager.
@@ -41,9 +42,9 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $renderer;
 
   /**
-   * The current Request object.
+   * The request stack.
    *
-   * @var \Symfony\Component\HttpFoundation\Request
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $requestStack;
 
@@ -55,15 +56,23 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   protected $langid;
 
   /**
+   * The file URL generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * Constructs a new CgovNavigationManager class.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RendererInterface $renderer, RequestStack $requestStack) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, RendererInterface $renderer, RequestStack $requestStack, FileUrlGeneratorInterface $file_url_generator) {
     $this->entityTypeManager = $entityTypeManager;
     $this->languageManager = $languageManager;
     $this->renderer = $renderer;
     $this->requestStack = $requestStack;
     // Get current language.
     $this->langid = $this->languageManager->getCurrentLanguage()->getID();
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -78,12 +87,20 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    */
   public function getFunctions() {
     return [
-      new \Twig_SimpleFunction('get_blog_info', [$this, 'getBlogInfo'], ['is_safe' => ['html']]),
-      new \Twig_SimpleFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
-      new \Twig_SimpleFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
-      new \Twig_SimpleFunction('get_translated_absolute_path', [$this, 'getTranslatedAbsolutePath'], ['is_safe' => ['html']]),
-      new \Twig_SimpleFunction('strip_duplicate_leading_credit', [$this, 'stripDuplicateLeadingCredit'], ['is_safe' => ['html']]),
-      new \Twig_SimpleFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
+      new TwigFunction('get_blog_info', [$this, 'getBlogInfo'], ['is_safe' => ['html']]),
+      new TwigFunction('get_enclosure', [$this, 'getEnclosure'], ['is_safe' => ['html']]),
+      new TwigFunction('get_list_description', [$this, 'getListDescription'], ['is_safe' => ['html']]),
+      new TwigFunction('get_translated_absolute_path',
+       [$this, 'getTranslatedAbsolutePath'],
+       [
+         'is_safe' => ['html'],
+       ]),
+      new TwigFunction('strip_duplicate_leading_credit',
+       [$this, 'stripDuplicateLeadingCredit'],
+       [
+         'is_safe' => ['html'],
+       ]),
+      new TwigFunction('has_content', [$this, 'hasContent'], ['is_safe' => ['html']]),
       // This is borrowed from 'sfc' module based on discussions in
       // https://www.drupal.org/project/drupal/issues/2660002. This should be
       // used when you are going to be digging around in entity reference
@@ -174,7 +191,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    * provided ImageStyle.  The image's imagestyle file will be created on the
    * filesystem (which is required to determine the filesize properly).
    *
-   * @param Drupal\file\Entity\File $media_image_file
+   * @param \Drupal\file\Entity\File $media_image_file
    *   The File entity of an image field.
    * @param string $image_style
    *   The Image Style to render the image with.
@@ -187,8 +204,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $image_uri = $media_image_file->getFileUri();
 
     // Generate new derivative image from imagestyle.
-    /** @var \Drupal\image\Entity\ImageStyle $imageStyle */
-    $imageStyle = ImageStyle::load($image_style);
+    $imageStyle = $this->entityTypeManager->getStorage('image_style')->load($image_style);
     // Get thumbnail_uri
     // (eg: public://styles/cgov_thumbail/public/2019-03/image.jpg).
     $thumbnail_uri = $imageStyle->buildUri($image_uri);
@@ -197,7 +213,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     $imageStyle->createDerivative($image_uri, $thumbnail_uri);
     // Convert 'public://path/image.jpg'
     // to '/sites/default/files/path/image.jpg'.
-    $relative_imagestyle_uri = file_url_transform_relative(file_create_url($thumbnail_uri));
+    $relative_imagestyle_uri = $this->fileUrlGenerator->generateString($thumbnail_uri);
     // Remove querystring, if present (eg: path/image.jpg?h=98765az)
     $relative_imagestyle_uri = strtok($relative_imagestyle_uri, '?');
     // Add HTTP scheme (HTTP[S]) and hostname.
@@ -235,7 +251,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
     if (!$node) {
       return NULL;
     }
-
+    $description = NULL;
     // Check for available descriptions to display.
     if ($node->hasField('field_page_description')) {
       $description = $node->field_page_description->value;
@@ -319,7 +335,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
   /**
    * Get the Blog Information about Series and Topics.
    *
-   * @param Drupal\views\ViewExecutable $view
+   * @param \Drupal\views\ViewExecutable $view
    *   The current view being displayed.  Uses Contextual Filters for details.
    *
    * @return array
@@ -331,6 +347,9 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
 
     $series_nid = !empty($view->args) ? $view->args[0] : '';
     $topic_tid = count($view->args) > 1 ? $view->args[1] : NULL;
+    $series_name = NULL;
+    $series_link = NULL;
+    $series_desc = NULL;
 
     if ($series_nid) {
       if ($series_nid == 'all') {
@@ -409,7 +428,7 @@ class CgovCoreTwigExtensions extends \Twig_Extension {
    * @param int $nid
    *   Node ID to create enclosure tag from.
    *
-   * @return Drupal\file\Entity\File
+   * @return \Drupal\file\Entity\File
    *   The specified node or NULL
    */
   public function getNodeImageFile($nid) {
