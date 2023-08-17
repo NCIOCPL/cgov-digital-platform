@@ -15,6 +15,24 @@ module.exports = {
 				},
 			},
 		],
+		[
+			'postcss-prefix-selector',
+			{
+				prefix: '.ck-content',
+				transform(prefix, selector, prefixedSelector, filepath) {
+					if (filepath.match(/ckeditor\.scss$/)) {
+						if (selector === '.ck-content') {
+							return selector;
+						} else if (selector.startsWith('.contentzone ')) {
+							return selector.replace(/^\.contentzone/, '.ck-content');
+						} else {
+							return prefixedSelector;
+						}
+					}
+					return selector;
+				},
+			},
+		],
 		['autoprefixer'],
 	],
 };
