@@ -1,0 +1,63 @@
+name: Check Install Files for Changes
+on:
+  workflow_call:
+    outputs:
+      changed:
+        description: "Whether any install files were changed"
+        value: ${{ jobs.check_files.outputs.changed }}
+      key:
+        description: "Cache key to record success"
+        value: ${{ jobs.check_files.outputs.key }}
+
+jobs:
+  check_files:
+    name: Check Hash
+    runs-on: ubuntu-20.04
+    outputs:
+      changed: ${{ steps.record_change.outputs.changed }}
+      key: ${{ steps.install_files_hash.outputs.key }}
+    steps:
+      ## This clones and checks out.
+      - name: Checkout branch from Github
+        uses: actions/checkout@v3
+
+      - name: Generate install files hash
+        id: install_files_hash
+        run: |
+          echo "key=${{ runner.os }}-install-hash-$(find . -type f \( -path "*/modules/custom/*/*.install" -o -path "*/config/install/*.yml" \) -exec md5sum {} + | sort | awk '{print $NF}' | tr -d '\n' | md5sum)" >> "$GITHUB_OUTPUT"
+
+      - name: Locate Cache
+        uses: actions/cache/restore@v3
+        id: retrieve_files_hash
+        with:
+          path: dummy.txt
+          key: ${{ steps.install_files_hash.outputs.key }}
+          lookup-only: true
+
+      - name: Record a change to the install files
+        id: record_change
+        if: steps.retrieve_files_hash.outputs.cache-hit != 'true'
+        run: |
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  #######################################################################
+  ## This job should go into the main workflow where you want to check the hash before running the workflow
+  ## Make your other build steps dependent on it with
+  ## if: needs.check_file_changes.outputs.changed == 'true'
+  #######################################################################
+
+  ## check_file_changes:
+  ##   name: Check install files for changes
+  ##   uses: ./.github/workflows/check-install-files.yml
+
+  #######################################################################
+  ## This job should go into the main workflow _after_ your build steps
+  ## It should be dependent on the build completing successfully
+  #######################################################################
+
+  ## save_hash:
+  ##   name: Save install files hash
+  ##   uses: ./.github/workflows/save-install-hash.yml
+  ##   needs: check_files
+  ##   with:
+  ##     key: ${{ needs.check_files.outputs.key }}

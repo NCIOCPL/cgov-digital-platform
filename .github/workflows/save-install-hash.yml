@@ -1,0 +1,22 @@
+name: Save Install Files Hash
+on:
+  workflow_call:
+    inputs:
+      key:
+        required: true
+        type: string
+
+jobs:
+  check_files:
+    name: Save Hash
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Dummy file
+        run: |
+          touch dummy.txt
+
+      - name: Save install files cache
+        uses: actions/cache/save@v3
+        with:
+          path: dummy.txt
+          key: ${{ inputs.key }}
