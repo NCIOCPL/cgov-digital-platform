@@ -60,16 +60,17 @@ if ($env !== "01live") {
 }
 
 // on enironments that have SAML, route to Okta upon logout
+// Production Okta for default, including 01live
 switch ($env) {
-  case '01live':
-    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam.cancer.gov/login/signout';
   case '01dev':
   case 'dev':
   case '01test':
   case 'test':
   case 'int':
     $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam-stage.cancer.gov/login/signout';
+    break;
   default:
+    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam.cancer.gov/login/signout';
     break;
 }
 
