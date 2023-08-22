@@ -2,11 +2,15 @@
 
 namespace Drupal\cgov_image\Plugin\PathProcessor;
 
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
+use Drupal\file\FileInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\media\Entity\Media;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Redirect media/{image} request to raw file.
@@ -21,13 +25,23 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
   protected $currentRoute;
 
   /**
+   * The file URL generator.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\Core\Routing\ResettableStackedRouteMatchInterface $currentRoute
    *   The current route.
+   * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
+   *   File url generator.
    */
-  public function __construct(ResettableStackedRouteMatchInterface $currentRoute) {
+  public function __construct(ResettableStackedRouteMatchInterface $currentRoute, FileUrlGeneratorInterface $file_url_generator) {
     $this->currentRoute = $currentRoute;
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
@@ -39,20 +53,11 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
       return $path;
     }
 
-    $entity = $this->getCurrEntity();
-
-    if (!$entity) {
-      return $path;
-    }
-
-    $prohibitedBundles = [
-      'cgov_image',
-      'cgov_contextual_image',
-    ];
-
-    $bundle = $entity->bundle();
-
-    if (!in_array($bundle, $prohibitedBundles)) {
+    $entity = $this->currentRoute->getParameter('media');
+    if ($entity === NULL ||
+      !($entity instanceof Media) ||
+      ($entity->bundle() !== 'cgov_image' && $entity->bundle() !== 'cgov_contextual_image')
+    ) {
       return $path;
     }
 
@@ -65,32 +70,15 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
     $options['language'] = $languageObject;
 
     // Redirect to the media type's underlying file.
-    $file_uri = $entity->field_media_image->entity->getFileUri();
-    $image_file_path = file_url_transform_relative(file_create_url($file_uri));
-    return $image_file_path;
-  }
-
-  /**
-   * Gets the current entity if there is one.
-   *
-   * @return \Drupal\Core\Entity\ContentEntityInterface
-   *   The retrieved entity, or FALSE if none found.
-   */
-  private function getCurrEntity() {
-    $params = $this->currentRoute->getParameters()->all();
-    foreach ($params as $param) {
-      if (!is_object($param)) {
-        continue;
-      }
-
-      $class = new \ReflectionClass($param);
-
-      if (in_array('Drupal\Core\Entity\ContentEntityInterface', $class->getInterfaceNames())) {
-        // If you find a ContentEntityInterface stop iterating and return it.
-        return $param;
-      }
+    $file_entity = $entity->field_media_image->entity;
+    if (!($file_entity instanceof FileInterface)) {
+      // What to do if the file is NULL or not the right type?
+      throw new NotFoundHttpException('Media item is missing primary image.');
     }
-    return FALSE;
+
+    $file_uri = $file_entity->getFileUri();
+    $image_file_path = $this->fileUrlGenerator->generateString($file_uri);
+    return $image_file_path;
   }
 
 }
