@@ -2,6 +2,8 @@
 
 namespace Drupal\app_module\Plugin\app_module;
 
+use Drupal\Core\Cache\CacheableMetadata;
+
 /**
  * Base class for creating builders for Multi Route app modules.
  *

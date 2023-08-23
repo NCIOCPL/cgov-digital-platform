@@ -123,7 +123,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
    */
   private function getNodeStorage() {
     $node_storage = $this->entityTypeManager->getStorage('node');
-    return isset($node_storage) ? $node_storage : NULL;
+    return $node_storage ?? NULL;
   }
 
   /**

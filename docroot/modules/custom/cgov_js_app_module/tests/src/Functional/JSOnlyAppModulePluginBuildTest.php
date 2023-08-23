@@ -36,6 +36,20 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
   ];
 
   /**
+   * The administrator account.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $administratorAccount;
+
+  /**
+   * The author account.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $authorAccount;
+
+  /**
    * The app module id.
    *
    * @var string
@@ -84,7 +98,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Create a field, create a node type.
     parent::setUp();
 
@@ -112,8 +126,8 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
       'name' => 'JS Application Page',
       'type' => 'js_app_page',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and manage fields');
-    $this->assertText((string) new FormattableMarkup('The content type @name has been added.', ['@name' => 'JS Application Page']));
+    $this->submitForm($edit, 'Save and manage fields');
+    $this->assertSession()->pageTextContains((string) new FormattableMarkup('The content type @name has been added.', ['@name' => 'JS Application Page']));
 
     // Add an app module reference.
     $this->createField();
@@ -397,15 +411,15 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
       'field_name' => $field_name,
       'label' => $field_name,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and continue');
+    $this->submitForm($edit, 'Save and continue');
 
     /* NOTE: We should not need a cardinality because it is not an input field. */
 
     // And now we save the field settings.
-    $this->drupalPostForm(NULL, [
+    $this->submitForm([
       'settings[target_type]' => 'app_module',
     ], 'Save field settings');
-    $this->verbose(
+    dump(
       (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality 1',
         [
           '%field_name' => $field_name,
@@ -421,14 +435,14 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     $edit = [
       'fields[field_' . $field_name . '][type]' => $widget_type,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Set the field formatter for the newly created field.
     $this->drupalGet('admin/structure/types/manage/' . $content_type . '/display');
     $edit1 = [
       'fields[field_' . $field_name . '][type]' => $fieldFormatter,
     ];
-    $this->drupalPostForm(NULL, $edit1, 'Save');
+    $this->submitForm($edit1, 'Save');
 
     return $field_name;
   }
@@ -454,7 +468,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', [
       '@type' => 'JS Application Page',
       '@title' => $node_title,

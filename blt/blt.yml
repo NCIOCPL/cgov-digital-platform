@@ -105,9 +105,16 @@ simplesamlphp: true
 cgov:
   drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
   front_end_globals_file: '${repo.root}/FrontendGlobals.json'
+  pdq_load_glossifier_file: '${repo.root}/glossifier_refresh.json'
 
 validate:
-  deprecation: false
+  phpstan:
+    config: '${repo.root}/phpstan.neon'
+  lint:
+    filesets:
+      - files.php.custom.modules
+      - files.php.cgov.profiles
+      - files.php.tests
 
 tests:
   phpunit:

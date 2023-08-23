@@ -59,11 +59,11 @@ class CgovBlogTwigExtensions extends \Twig_Extension {
 
     // The only allowed characters in dates are numbers. Once we eliminate
     // everything else, there's no need to do further checks.
-    if($year != NULL && (!is_numeric($year) || $year < 0)) {
-        throw new BadRequestHttpException('year is invalid');
+    if ($year != NULL && (!is_numeric($year) || $year < 0)) {
+      throw new BadRequestHttpException('year is invalid');
     }
-    if($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
-        throw new BadRequestHttpException('month is invalid');
+    if ($month != NULL && (!is_numeric($month) || $month < 1 || $month > 12)) {
+      throw new BadRequestHttpException('month is invalid');
     }
 
     // When called from a twig template, $topic may be an empty string.

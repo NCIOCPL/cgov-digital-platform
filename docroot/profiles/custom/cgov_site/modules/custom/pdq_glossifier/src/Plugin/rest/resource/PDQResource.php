@@ -180,7 +180,7 @@ class PDQResource extends ResourceBase {
       foreach ($results[0] as $result) {
 
         // Find the offsets in characters, not bytes.
-        list($word, $offset) = $result;
+        [$word, $offset] = $result;
         $prefix = substr($masked, 0, $offset);
         $suffix = substr($masked, $offset + strlen($word));
         $start = mb_strlen($prefix, 'utf-8');

@@ -2,7 +2,7 @@
 
 namespace Drupal\app_module\Plugin\Field\FieldType;
 
-use Drupal\app_module\AppModule;
+use Drupal\app_module\AppModules;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
@@ -98,7 +98,7 @@ class AppModuleReferenceItem extends EntityReferenceItem {
    *   An array of enabled app modules names keyed by app module ID.
    */
   protected function getAllAppModuleNames() {
-    $appmodules = AppModule::getEnabledAppModules();
+    $appmodules = AppModules::getEnabledAppModules();
     $options = [];
     foreach ($appmodules as $appmodule) {
       $options[$appmodule->id()] = $appmodule->label();

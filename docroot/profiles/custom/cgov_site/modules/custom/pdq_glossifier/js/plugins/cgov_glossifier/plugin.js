@@ -2,7 +2,7 @@
   CKEDITOR.plugins.add('cgov_glossifier', {
     icons: 'button',
 
-    init: function(editor) {
+    init: function (editor) {
       CKEDITOR.dialog.add('glossifyDialog', this.path + 'dialogs/glossify.js' );
       editor.addCommand('glossify', new CKEDITOR.dialogCommand('glossifyDialog'));
       editor.ui.addButton('Cgov_glossifier', {

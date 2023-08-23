@@ -14,12 +14,17 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
  */
 class PageOptionsTest extends UnitTestCase {
 
+  /**
+   * The dependency injection container.
+   *
+   * @var \Symfony\Component\DependencyInjection\ContainerBuilder
+   */
   protected $container;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->container = new ContainerBuilder();
     \Drupal::setContainer($this->container);

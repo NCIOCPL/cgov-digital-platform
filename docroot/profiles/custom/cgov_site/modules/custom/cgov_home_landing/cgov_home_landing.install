@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * @file
  * Contains cgov_home_landing.install.
@@ -23,4 +25,32 @@ function cgov_home_landing_install() {
   // Mini Landing.
   $siteHelper->addContentTypePermissions('cgov_mini_landing', ['content_author']);
 
+}
+
+/**
+ * Update for v2.9.0 to fix field_button_text length.
+ */
+function cgov_home_landing_update_8001() {
+
+  // Make the database column bigger.
+  $database = \Drupal::database();
+  $database->query("ALTER TABLE paragraph__field_button_text MODIFY field_button_text_value VARCHAR(100)");
+  $database->query("ALTER TABLE paragraph_revision__field_button_text MODIFY field_button_text_value VARCHAR(100)");
+
+  // Modify the schema.
+  $storage_key = 'paragraph.field_schema_data.field_button_text';
+  $storage_schema = \Drupal::keyValue('entity.storage_schema.sql');
+  $field_schema = $storage_schema->get($storage_key);
+  $field_schema['paragraph__field_button_text']['fields']['field_button_text_value']['length'] = 100;
+  $field_schema['paragraph_revision__field_button_text']['fields']['field_button_text_value']['length'] = 100;
+  $storage_schema->set($storage_key, $field_schema);
+
+  // Update field configuration.
+  $config = \Drupal::configFactory()
+    ->getEditable('field.storage.paragraph.field_button_text');
+  $config->set('settings.max_length', 100);
+  $config->save(TRUE);
+
+  // Update field storage configuration.
+  FieldStorageConfig::loadByName('paragraph', 'field_button_text')->save();
 }

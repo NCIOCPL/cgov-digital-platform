@@ -13,7 +13,7 @@ interface AppModuleInterface extends ConfigEntityInterface, EntityWithPluginColl
   /**
    * Gets the application module plugin.
    *
-   * @return \Drupal\app_module\Plugin\AppModulePluginInterface|null
+   * @return \Drupal\app_module\Plugin\app_module\AppModulePluginInterface|null
    *   The AppModule plugin or NULL if the plugin id was not set yet.
    */
   public function getAppModulePlugin();

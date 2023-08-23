@@ -1,0 +1,113 @@
+parameters:
+  level: 2
+  paths:
+    - docroot/modules/custom
+    - docroot/profiles/custom
+    - docroot/themes/custom
+  excludePaths:
+    - */tests/fixtures/*.php
+    - */settings*.php
+    - */node_modules/*
+    ## The following paths should be removed as each module is remediated
+    ### cgov_site Profile Tests
+    - docroot/profiles/custom/cgov_site/tests/src/Functional/CgovSiteTest.php
+    ### cgov_site Profile Themes
+    - docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/cgov_common.theme
+    - docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/theme-settings.php
+    - docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/ncids_trans.theme
+    - docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/theme-settings.php
+    ### cgov_site Profile Modules
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/cgov_application_page.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/cgov_blog.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/cgov_blog.tokens.inc
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/CgovBlogTwigExtensions.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogArchive.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogCategories.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogFeaturedPosts.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogPager.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogTopicIntro.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogTopicTitle.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Services/BlogManager.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Services/BlogManagerInterface.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_cancer_research/cgov_cancer_research.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovConfigOverrider.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTools.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTwigExtensions.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Controller/CgovMediaController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/CmsProtectionSubscriber.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/ResponseCacheSubscriber.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/TranslationAvailableSubscriber.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/NavItem.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/Breadcrumb.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/DisqusComments.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/MainNav.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/NcidsHeader.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/SectionNav.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Services/CgovNavigationManager.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Kernel/WorkflowTest.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Traits/CGovWorkflowAttachmentTrait.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/cgov_embedded_block.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/src/Controller/ICalendarController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_file/src/EventSubscriber/DirectFileDownloadSubscriber.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_home_landing/src/CgovHomeLandingPageTwigExtension.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/CgovImageTwigExtensions.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/EventSubscriber/ImageEventSubscriber.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/src/Plugin/PathProcessor/ImageRedirectProcessor.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Plugin/Mail/CgovMailLogger.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_metatag/cgov_metatag.tokens.inc
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/cgov_redirect_manager.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/src/CgovImporterService.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/src/Plugin/QueueWorker/RedirectManagerQueueWorker.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/cgov_schema_org.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldType/CgovSchemaOrgFieldItem.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldWidget/CgovSchemaOrgWidget.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.install
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.tokens.inc
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Controller/CgovNavTreeController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/FixHomeUrlAliasOutboundPathProcessor.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/src/Plugin/Validation/Constraint/UniqueCgovUrlConstraintValidator.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_syndication/cgov_syndication.module
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_syndication/src/Controller/CgovSyndicationController.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_syndication/src/Plugin/Field/FieldType/CgovSyndicationFieldItem.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_syndication/src/Plugin/Field/FieldWidget/CgovSyndicationWidget.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Form/CgovVocabManagerForm.php
+    - docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/pdq_cancer_information_summary.module
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/OrphanCleanup.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/src/Plugin/rest/resource/PDQResource.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/tests/src/Functional/ApiTest.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Commands/RevisionPrunerCommands.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/PDQConfigOverrider.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Plugin/rest/resource/PDQResource.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/RevisionPruner.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_core/tests/src/Kernel/CleanupTest.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_drug_information_summary/src/Plugin/rest/resource/PDQResource.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/CKEditorPlugin/CgovGlossifier.php
+    - docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/src/Plugin/rest/resource/PDQResource.php
+  ignoreErrors:
+    ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
+    ## as an error. However we do want to flag when people do unessesary ignores in doc comments,
+    ## so we will only report unmatched here.
+    -
+      ## This is the Drupal pattern for creating instances of plugins
+      message: "#Unsafe usage of new static\\(\\)#"
+      reportUnmatched: false
+    -
+      ## This is dangerous, but ignore complains about magic properties of fields, which is common.
+      ## This allows us to do $entity->field_somefield->property where property is not "value".
+      ## it also allows us to do $entity->get('field_somefield')->property where property is not "value".
+      ## See https://github.com/mglaman/phpstan-drupal/issues/147#issuecomment-760893993
+      message: "#Access to an undefined property Drupal\\\\Core\\\\Field\\\\FieldItemListInterface\\:\\:#"
+      reportUnmatched: false
+    -
+      ## Ignoring a deprecation with PHPUnit 9.6 that does not have a replacement. The fix will most likely
+      ## to be rewriting the test cases, which will be out of scope for the Drupal 10 upgrade.
+      ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
+      message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
+      reportUnmatched: false
