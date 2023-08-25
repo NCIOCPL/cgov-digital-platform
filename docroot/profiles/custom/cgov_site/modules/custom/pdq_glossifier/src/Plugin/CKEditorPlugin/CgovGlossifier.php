@@ -3,6 +3,7 @@
 namespace Drupal\pdq_glossifier\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\editor\Entity\Editor;
 
 /**
@@ -19,6 +20,8 @@ use Drupal\editor\Entity\Editor;
  */
 class CgovGlossifier extends CKEditorPluginBase {
 
+  use StringTranslationTrait;
+
   /**
    * {@inheritdoc}
    *
@@ -31,10 +34,11 @@ class CgovGlossifier extends CKEditorPluginBase {
     // the CKEditor plugin you are implementing.
     // NOTE: It doesn't matter that you can specify custom paths. For the icon
     // to display correctly it needs to be in an icons folder.
+    $module_list = $this->getModuleList();
     return [
       'Cgov_glossifier' => [
-        'label' => t('Glossify'),
-        'image' => drupal_get_path('module', 'pdq_glossifier') . '/js/plugins/cgov_glossifier/icons/button.png',
+        'label' => $this->t('Glossify'),
+        'image' => $module_list->getPath('pdq_glossifier') . '/js/plugins/cgov_glossifier/icons/button.png',
       ],
     ];
   }
@@ -45,7 +49,8 @@ class CgovGlossifier extends CKEditorPluginBase {
   public function getFile() {
     // Make sure that the path to the plugin.js matches the file structure of
     // the CKEditor plugin you are implementing.
-    return drupal_get_path('module', 'pdq_glossifier') . '/js/plugins/cgov_glossifier/plugin.js';
+    $module_list = $this->getModuleList();
+    return $module_list->getPath('pdq_glossifier') . '/js/plugins/cgov_glossifier/plugin.js';
   }
 
   /**
