@@ -126,7 +126,7 @@ class ApiTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp() : void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 
@@ -202,7 +202,7 @@ class ApiTest extends BrowserTestBase {
     $this->checkValues($values, ['en', 'es']);
 
     // Make sure we haven't set the site sections yet.
-    $query = \Drupal::entityQuery('taxonomy_term');
+    $query = \Drupal::entityQuery('taxonomy_term')->accessCheck(FALSE);
     $query->condition('vid', 'cgov_site_sections');
     $query->condition('field_landing_page.target_id', $nid);
     $tids = $query->execute();
@@ -520,7 +520,7 @@ class ApiTest extends BrowserTestBase {
     $url = $summary['url'];
     $language = $summary['language'];
     $nid = $summary['nid'];
-    $query = \Drupal::entityQuery('taxonomy_term');
+    $query = \Drupal::entityQuery('taxonomy_term')->accessCheck(FALSE);
     $query->condition('vid', 'cgov_site_sections');
     $query->condition('field_landing_page.target_id', $nid);
     $query->condition('langcode', $language);

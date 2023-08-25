@@ -2,6 +2,7 @@
 
 namespace Drupal\pdq_core\Plugin\rest\resource;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
 use Drupal\pdq_core\RevisionPruner;
@@ -51,6 +52,13 @@ class PDQResource extends ResourceBase {
   protected $pruner;
 
   /**
+   * Service for using the database API.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
    * Constructs a new PdqResource object.
    *
    * @param array $configuration
@@ -69,6 +77,8 @@ class PDQResource extends ResourceBase {
    *   Used to find and load node revisions.
    * @param \Drupal\pdq_core\RevisionPruner $pruner
    *   Eliminates unwanted node older revisions.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Access to the database API.
    */
   public function __construct(
     array $configuration,
@@ -78,12 +88,14 @@ class PDQResource extends ResourceBase {
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
     EntityTypeManagerInterface $entity_type_manager,
-    RevisionPruner $pruner) {
+    RevisionPruner $pruner,
+    Connection $database) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;
     $this->entityTypeManager = $entity_type_manager;
     $this->pruner = $pruner;
+    $this->database = $database;
   }
 
   /**
@@ -98,7 +110,8 @@ class PDQResource extends ResourceBase {
       $container->get('logger.factory')->get('pdq'),
       $container->get('current_user'),
       $container->get('entity_type.manager'),
-      $container->get('pdq_core.revision_pruner')
+      $container->get('pdq_core.revision_pruner'),
+      $container->get('database')
     );
   }
 
@@ -187,6 +200,7 @@ class PDQResource extends ResourceBase {
           // set the correct revision creation time and user for new
           // revisions, so we do it here.
           // See https://github.com/NCIOCPL/cgov-digital-platform/issues/2630.
+          /** @var \Drupal\node\NodeInterface */
           $revision = $storage->loadRevision($vid);
           $translation = $revision->getTranslation($lang);
           $translation->moderation_state->value = 'published';
@@ -293,6 +307,7 @@ class PDQResource extends ResourceBase {
     $storage = $this->entityTypeManager->getStorage('node');
     foreach (['en', 'es'] as $langcode) {
       $nids = $storage->getQuery()
+        ->accessCheck(FALSE)
         ->condition('field_pdq_cdr_id', $id, '=', $langcode)
         ->execute();
       if (!empty($nids)) {
@@ -307,14 +322,14 @@ class PDQResource extends ResourceBase {
   /**
    * Return a catalog of the PDQ content in the Drupal CMS.
    *
-   * @return \Drupal\Rest\ResourceResponse
+   * @return \Drupal\rest\ResourceResponse
    *   Sequence of key-indexed arrays, each of which contains
    *   values for `cdr_id`, `nid`, `vid`, `created`, `updated`,
    *   `langcode`, and `type`, wrapped in a ResourceResponse.
    */
   private function catalog(): ResourceResponse {
     $join = 'd.nid = c.entity_id AND d.langcode = c.langcode';
-    $query = \Drupal::database()->select('node__field_pdq_cdr_id', 'c');
+    $query = $this->database->select('node__field_pdq_cdr_id', 'c');
     $query->join('node_field_data', 'd', $join);
     $results = $query->fields('c')
       ->fields('d', ['created', 'changed'])

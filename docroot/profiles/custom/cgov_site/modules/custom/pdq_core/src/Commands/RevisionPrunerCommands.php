@@ -87,7 +87,7 @@ class RevisionPrunerCommands extends DrushCommands {
           return;
         }
         $storage = $this->entityTypeManager->getStorage('node');
-        $query = $storage->getQuery();
+        $query = $storage->getQuery()->accessCheck(FALSE);
         $query->condition('type', $bundle);
         $nids = $query->execute();
       }

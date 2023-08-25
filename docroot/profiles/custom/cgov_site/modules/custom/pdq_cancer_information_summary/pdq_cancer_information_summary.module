@@ -5,10 +5,10 @@
  * Contains pdq_cancer_information_summary.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_field_widget_form_alter().
@@ -28,49 +28,50 @@ function pdq_cancer_information_summary_field_widget_form_alter(
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function pdq_cancer_information_summary_node_insert(EntityInterface $entity) {
-  if (_pdq_cis_needs_site_sections($entity)) {
-    _pdq_cis_add_site_sections($entity);
+function pdq_cancer_information_summary_node_insert(NodeInterface $node) {
+  if (_pdq_cis_needs_site_sections($node)) {
+    _pdq_cis_add_site_sections($node);
   }
 }
 
 /**
  * Implements hook_ENTITY_TYPE_update().
  */
-function pdq_cancer_information_summary_node_update(EntityInterface $entity) {
-  if (_pdq_cis_needs_site_sections($entity)) {
-    _pdq_cis_add_site_sections($entity);
+function pdq_cancer_information_summary_node_update(NodeInterface $node) {
+  if (_pdq_cis_needs_site_sections($node)) {
+    _pdq_cis_add_site_sections($node);
   }
 }
 
 /**
  * Check to see whether we need to add site sections for a summary.
  *
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param Drupal\node\NodeInterface $node
  *   Reference to the PDQ Cancer Information Summary just saved.
  */
-function _pdq_cis_needs_site_sections(EntityInterface $entity) {
+function _pdq_cis_needs_site_sections(NodeInterface $node) {
 
   // Only appropriate for PDQ CIS nodes.
-  if ($entity->bundle() !== 'pdq_cancer_information_summary') {
+  if ($node->bundle() !== 'pdq_cancer_information_summary') {
     return FALSE;
   }
 
   // Don't do anything for unpublished summary revisions.
-  if (!$entity->get('status')->value) {
+  if (!$node->get('status')->value) {
     return FALSE;
   }
 
   // See if the site sections are already present.
-  $url = $entity->field_pdq_url->value;
+  $url = $node->get('field_pdq_url')->value;
   $tids = \Drupal::entityQuery('taxonomy_term')
+    ->accessCheck(FALSE)
     ->condition('vid', 'cgov_site_sections')
-    ->condition('field_landing_page.target_id', $entity->id())
+    ->condition('field_landing_page.target_id', $node->id())
     ->condition('computed_path', $url)
     ->execute();
 
   // If so, and the label used for navigation is unchanged, we're done.
-  $browser_title = $entity->get('field_browser_title')->value;
+  $browser_title = $node->get('field_browser_title')->value;
   foreach ($tids as $tid) {
     $term = Term::load($tid);
     if ($term->getName() === $browser_title) {
@@ -83,15 +84,15 @@ function _pdq_cis_needs_site_sections(EntityInterface $entity) {
 /**
  * Common code to add site_section terms.
  *
- * @param Drupal\Core\Entity\EntityInterface $entity
+ * @param Drupal\node\NodeInterface $node
  *   Reference to the PDQ Cancer Information Summary just saved.
  */
-function _pdq_cis_add_site_sections(EntityInterface $entity) {
+function _pdq_cis_add_site_sections(NodeInterface $node) {
 
   // Collect the values we need from the summary.
-  $langcode = $entity->get('langcode')->value;
-  $url = $entity->get('field_pdq_url')->value;
-  $nav_label = $entity->get('field_browser_title')->value;
+  $langcode = $node->get('langcode')->value;
+  $url = $node->get('field_pdq_url')->value;
+  $nav_label = $node->get('field_browser_title')->value;
 
   // Find the root of the navigation tree for this language.
   $section = _pdq_cis_load_site_section($langcode);
@@ -133,7 +134,7 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
         'langcode' => $langcode,
       ]);
       if ($is_last_token) {
-        $child->set('field_landing_page', $entity);
+        $child->set('field_landing_page', $node);
       }
       $child->save();
     }
@@ -156,17 +157,17 @@ function _pdq_cis_add_site_sections(EntityInterface $entity) {
  *
  * This is for adding in the On This Page view of the sections for templates.
  */
-function pdq_cancer_information_summary_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+function pdq_cancer_information_summary_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
 
   // We should only do this for summaries in the full display mode.
-  if ($entity->bundle() != 'pdq_cancer_information_summary' || ($view_mode != 'full' && $view_mode != 'default')) {
+  if ($node->bundle() != 'pdq_cancer_information_summary' || ($view_mode != 'full' && $view_mode != 'default')) {
     return;
   }
 
   if (!empty($build['field_summary_sections']['#items'])) {
 
     // Make sure the field isn't being suppressed.
-    if ($entity->field_pdq_suppress_otp->value == '0') {
+    if ($node->get('field_pdq_suppress_otp')->value == '0') {
 
       // Copy summary sections into a new "field" using TOC display.
       $build['otp_toc'] = $build['field_summary_sections']['#items']->view([
@@ -191,11 +192,11 @@ function pdq_cancer_information_summary_node_view(array &$build, EntityInterface
  * @param string $url
  *   The optional value to match for the pretty url field.
  *
- * @return Drupal\taxonomy\Entity\Term
+ * @return Drupal\taxonomy\Entity\Term|NULL
  *   Reference to site section term, if found; else NULL.
  */
 function _pdq_cis_load_site_section($langcode, $parent = 0, $url = '') {
-  $query = \Drupal::entityQuery('taxonomy_term');
+  $query = \Drupal::entityQuery('taxonomy_term')->accessCheck(FALSE);
   $query->condition('vid', 'cgov_site_sections');
   $query->condition('parent', $parent);
   $query->condition('langcode', $langcode);
