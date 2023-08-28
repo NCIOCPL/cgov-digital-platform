@@ -66,14 +66,14 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
   public function validate($entity, Constraint $constraint) {
     $is_populated_section = $entity->hasField('field_site_section') && !empty($entity->get('field_site_section')->first());
     $is_populated_pretty_url = $entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url')->first());
-
     if ($is_populated_section) {
+      if (!($constraint instanceof UniqueCgovUrlConstraint)) {
+        return NULL;
+      }
       $site_section = $entity->get('field_site_section');
       // If both are populated, both values may only be used together once.
       if ($is_populated_pretty_url) {
-
         $pretty_url = $entity->get('field_pretty_url');
-
         if (!$this->isUniqueSectionUrlCombo($pretty_url, $site_section, $entity)) {
           $this->context->buildViolation($constraint->prettyUrlInUse)
             ->atPath('field_pretty_url')
@@ -136,6 +136,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
         ->getStorage($entity_type_id)
         ->getQuery();
       $value_taken = (bool) $query
+        ->accessCheck(FALSE)
         ->condition($id_key, (int) $entity->id(), '<>')
         ->condition($field_name, $value)
         ->notExists('field_pretty_url')
@@ -143,7 +144,6 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
         ->count()
         ->execute();
     }
-
     return !$value_taken;
   }
 
@@ -166,8 +166,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
   public function isUniqueSectionUrlCombo(FieldItemListInterface $prettyURL, FieldItemListInterface $section, EntityInterface $entity) {
     // Get the value. Different if a field vs entity ref.
     $section_value = $section->first()->getValue()['target_id'];
-    $pretty_url_value = $prettyURL->first()->value;
-
+    $pretty_url_value = $prettyURL->value;
     // Get the actual fields machine name.
     $pretty_url_field_name = $prettyURL->getFieldDefinition()->getName();
     $section_field_name = $section->getFieldDefinition()->getName();
@@ -182,6 +181,7 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
       ->getStorage($entity_type_id)
       ->getQuery();
     $value_taken = (bool) $query
+      ->accessCheck(FALSE)
       ->condition($id_key, (int) $entity->id(), '<>')
       ->condition($section_field_name, $section_value)
       ->condition($pretty_url_field_name, $pretty_url_value)
