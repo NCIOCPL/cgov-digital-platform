@@ -425,7 +425,8 @@ class CgovCoreTools {
    *   Returns one of the following: 'prod', 'test', 'dev', 'local'.
    */
   public function getCloudEnvironment() {
-    $site_env = strtolower($this->getAhSiteEnvironment());
+    // Null coalescing is to prevent deprecations warning in tests.
+    $site_env = strtolower($this->getAhSiteEnvironment() ?? '');
 
     // Check if site_env matches a prod environment name...
     if (in_array($site_env, self::PROD_AH_SITE_ENVS) ||
