@@ -21,7 +21,7 @@ class AppModuleEntityTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['app_module', 'app_module_test'];
+  protected static $modules = ['app_module', 'app_module_test'];
 
   /**
    * The installation profile to use with this test.

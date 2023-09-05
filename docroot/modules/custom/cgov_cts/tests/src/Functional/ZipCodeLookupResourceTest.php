@@ -19,7 +19,7 @@ class ZipCodeLookupResourceTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['app_module', 'cgov_cts'];
+  protected static $modules = ['app_module', 'cgov_cts'];
 
   /**
    * The installation profile to use with this test.
@@ -33,7 +33,7 @@ class ZipCodeLookupResourceTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable9';
 
   /**
    * Tests the zip code lookup.

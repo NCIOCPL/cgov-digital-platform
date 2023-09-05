@@ -44,7 +44,7 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'language',
     'path',
     'block',
@@ -57,9 +57,13 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
   /**
    * The theme to use with this test.
    *
+   * Olivero is required for us to find the pre tag in the widget test.
+   * Stable9 does not add in the class attributes for fields, and our
+   * xpath query was not finding the json content.
+   *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'olivero';
 
   /**
    * {@inheritdoc}

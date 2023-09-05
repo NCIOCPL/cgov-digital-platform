@@ -51,7 +51,7 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'language',
     'path',
     'block',
@@ -66,7 +66,7 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable9';
 
   /**
    * {@inheritdoc}

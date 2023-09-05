@@ -68,6 +68,7 @@ class JsonDataFieldWidgetTest extends JsonDataFieldBrowserTestBase {
     $expected = str_replace('"', "", $single_line_yaml);
 
     // Check that the YAML is correct after saving.
+    // Stable9 is not outputting class names.
     $field_value = $this->xpath("//div[contains(@class,'field--type-json-data')]/div/pre/code");
     $actual = (string) $field_value[0]->getText();
     $actual = str_replace("'", "", $actual);

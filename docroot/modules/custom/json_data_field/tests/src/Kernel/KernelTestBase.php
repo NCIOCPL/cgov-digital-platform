@@ -18,7 +18,7 @@ abstract class KernelTestBase extends DrupalKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'json_data_field',
     'field',
     'user',
