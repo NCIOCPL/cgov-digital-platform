@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -112,10 +112,10 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
   /**
    * Handles the request, and serves out the content.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event data.
    */
-  public function onRequest(GetResponseEvent $event) {
+  public function onRequest(RequestEvent $event) {
 
     if ($this->currentRoute->getRouteName() !== 'entity.media.canonical') {
       return;
@@ -136,8 +136,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
     // Get the ID of the requested file by its field delta.
     if (is_numeric($delta)) {
-      $values = $entity->field_media_file->getValue();
-
+      $values = $entity->get('field_media_file')->getValue();
       if (isset($values[$delta])) {
         $fid = $values[$delta]['target_id'];
       }
@@ -146,7 +145,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
       }
     }
     else {
-      $fid = $entity->field_media_file->target_id;
+      $fid = $entity->get('field_media_file')->target_id;
     }
 
     // If media has no file item.
@@ -180,6 +179,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     // manage anything cache related -- Drupal and Purge will not.
     // Code below lifted from Purge's CacheableResponseSubscriber.
     $tags = $entity->getCacheTags();
+
     $this->addCacheTags($response, $tags);
 
     // Set the max age for our CDN friends. I mean, if we have a cache
@@ -219,7 +219,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
    */
   private function addPurgeCacheTags(BinaryFileResponse $response, array $tags) {
     if ($this->serviceContainer->has('purge.tagsheaders')) {
-      /** @var Drupal\purge\Plugin\Purge\TagsHeader\TagsHeadersServiceInterface; */
+      /** @var \Drupal\purge\Plugin\Purge\TagsHeader\TagsHeadersServiceInterface; */
       $purgeTagsHeaders = $this->serviceContainer->get('purge.tagsheaders');
 
       foreach ($purgeTagsHeaders as $header) {
@@ -253,15 +253,13 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
     // Check if Akamai is enabled.
     if ($this->serviceContainer->has('akamai.client.manager')) {
-
       // Get Akamai Required Services.
       /** @var \Drupal\akamai\Helper\CacheTagFormatter */
       $tagFormatter = $this->serviceContainer->get('akamai.helper.cachetagformatter');
-      /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface */
       $eventDispatcher = $this->serviceContainer->get('event_dispatcher');
-
       $config = $this->configFactory->get('akamai.settings');
       $header = $config->get('edge_cache_tag_header');
+
       if ($header) {
         $blacklist = $config->get('edge_cache_tag_header_blacklist');
         $blacklist = is_array($blacklist) ? $blacklist : [];
@@ -277,8 +275,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
         // Instantiate our event to allow tag modification.
         $event = new AkamaiHeaderEvents($filtered_tags);
-        $eventDispatcher->dispatch(AkamaiHeaderEvents::HEADER_CREATION, $event);
-
+        $eventDispatcher->dispatch($event, AkamaiHeaderEvents::HEADER_CREATION);
         // Format the modified tags and add them as a header.
         $modified_tags = $event->data;
         foreach ($modified_tags as &$tag) {
@@ -309,6 +306,7 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
     if ($restriction[0]['value'] == 'ExcludeSearch') {
       return TRUE;
     }
+    return FALSE;
   }
 
   /**
