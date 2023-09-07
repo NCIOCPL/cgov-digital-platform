@@ -3,6 +3,7 @@
 namespace Drupal\cgov_blog\Plugin\Block;
 
 use Drupal\cgov_blog\Services\BlogManagerInterface;
+use Drupal\cgov_blog\Services\BlogManager2Interface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
@@ -28,6 +29,13 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   public $blogManager;
 
   /**
+   * The BlogManager2 object.
+   *
+   * @var \Drupal\cgov_blog\Services\BlogManager2Interface
+   */
+  public $blogManager2;
+
+  /**
    * Constructs a blog entity object.
    *
    * @param array $configuration
@@ -38,16 +46,20 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin implementation definition.
    * @param \Drupal\cgov_blog\Services\BlogManagerInterface $blog_manager
    *   A blog manager object.
+   * @param \Drupal\cgov_blog\Services\BlogManager2Interface $blog_manager_2
+   *   A blog manager 2 object.
    */
   public function __construct(
     // Constructor with args.
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    BlogManagerInterface $blog_manager
+    BlogManagerInterface $blog_manager,
+    BlogManager2Interface $blog_manager_2
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->blogManager = $blog_manager;
+    $this->blogManager2 = $blog_manager_2;
   }
 
   /**
@@ -59,7 +71,8 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('cgov_blog.blog_manager')
+      $container->get('cgov_blog.blog_manager'),
+      $container->get('cgov_blog.blog_manager_2')
     );
   }
 
@@ -73,7 +86,8 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
     $build = [];
 
     // Return blog category elements.
-    $blog_categories = $this->drawBlogCategories();
+    $blog_series = $this->blogManager2->getSeriesFromRoute();
+    $blog_categories = $this->drawBlogCategories($blog_series);
     // Get series nid for the block.
     $build = [
       'blog_categories' => [
@@ -88,9 +102,13 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   protected function blockAccess(AccountInterface $account) {
-    $blog_categories = $this->drawBlogCategories();
-    $series_nid = $this->blogManager->getSeriesId();
     $result = AccessResult::forbidden();
+    $blog_series = $this->blogManager2->getSeriesFromRoute();
+    if (!isset($blog_series)) {
+      return $result;
+    }
+    $blog_categories = $this->drawBlogCategories($blog_series);
+    $series_nid = $blog_series->id();
     if (count($blog_categories) > 0) {
       $result = AccessResult::allowed();
     }
@@ -100,12 +118,13 @@ class BlogCategories extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * Draw category (topic) links.
    *
-   * {@inheritdoc}
+   * @param Drupal\Core\Entity\ContentEntityInterface $blog_series
+   *   The blog series.
    */
-  private function drawBlogCategories() {
+  private function drawBlogCategories($blog_series) {
     $category_links = [];
     // Get all associated categories and build URL paths for this series.
-    $categories = $this->blogManager->getActiveSeriesTopics();
+    $categories = $this->blogManager2->getTopicsBySeries($blog_series);
     foreach ($categories as $cat) {
       $link = $this->getCategoryLink($cat->tid);
       $category_links[$link['link_name']] = $link['link_path'];

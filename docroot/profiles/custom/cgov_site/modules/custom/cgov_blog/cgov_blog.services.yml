@@ -8,6 +8,15 @@ services:
       - '@path_alias.manager'
       - '@language_manager'
       - '@request_stack'
+  cgov_blog.blog_manager_2:
+    class: Drupal\cgov_blog\Services\BlogManager2
+    arguments:
+      - '@entity.repository'
+      - '@entity_type.manager'
+      - '@current_route_match'
+      - '@path_alias.manager'
+      - '@language_manager'
+      - '@request_stack'
   cgov_blog.twig_extensions:
     class: Drupal\cgov_blog\CgovBlogTwigExtensions
     arguments: ['@cgov_blog.blog_manager']
