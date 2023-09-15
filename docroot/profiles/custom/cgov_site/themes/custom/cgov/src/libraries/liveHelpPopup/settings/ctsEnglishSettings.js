@@ -9,6 +9,7 @@ const server = (currentHost === "www.cancer.gov") ? HOST_SERVER_LIVE : HOST_SERV
 
 const ctsEnglishSettings = {
     urls: [
+        // Pre-partners move.  Remove these afterward.
         "/about-cancer/treatment/clinical-trials/search",
         "/about-cancer/treatment/clinical-trials/basic",
         "/about-cancer/treatment/clinical-trials/search/a",
@@ -19,8 +20,18 @@ const ctsEnglishSettings = {
         "/about-cancer/treatment/clinical-trials/search/results",
         "/about-cancer/treatment/clinical-trials/search/view",
         /^\/about-cancer\/treatment\/clinical-trials\/disease\/.*/,
-        /^\/about-cancer\/treatment\/clinical-trials\/intervention\/.*/
-    ],
+        /^\/about-cancer\/treatment\/clinical-trials\/intervention\/.*/,
+        // Post-partners move.
+        "/research/participate/clinical-trials-search",
+        "/research/participate/clinical-trials-search/a",
+        "/research/participate/clinical-trials-search/advanced",
+        "/research/participate/clinical-trials-search/r",
+        "/research/participate/clinical-trials-search/v",
+        "/research/participate/clinical-trials-search/results",
+        "/research/participate/clinical-trials-search/view",
+        /^\/research\/participate\/clinical-trials\/disease\/.*/,
+        /^\/research\/participate\/clinical-trials\/intervention\/.*/
+      ],
     popupDelaySeconds: 30, // Number of seconds to delay before displaying the popup.
 
     popupID: 'ProactiveLiveHelpForCTSPrompt',
