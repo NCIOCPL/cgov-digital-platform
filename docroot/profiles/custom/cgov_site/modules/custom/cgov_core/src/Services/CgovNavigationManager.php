@@ -347,7 +347,7 @@ class CgovNavigationManager {
 
     // Get the index of the root, the next item in the array would ve the next
     // menu item that would get highlighted.
-    $idxRoot = array_search($navRoot, $this->fullAncestry);
+    $idxRoot = array_search($navRoot, $this->fullAncestry, TRUE);
     if ($idxRoot !== FALSE) {
       if (($idxRoot - 1) >= 0) {
         // Make sure the child is not set as display in main nav false.
@@ -489,7 +489,7 @@ class CgovNavigationManager {
     $menu_filter = 'hide_in_' . $menu_type;
 
     // We have a root. Now we need to figure out where we fall in the tree.
-    $root_idx = array_search($root_term, $this->fullAncestry);
+    $root_idx = array_search($root_term, $this->fullAncestry, TRUE);
 
     // If the root idx is 0, then the URL being viewed is the landing page for
     // root, so we can just return the id of the root. If we hit this condition

@@ -1,0 +1,170 @@
+name: Test Ability to Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - 'hotfix/**'
+      - 'release/**'
+      - 'feature/**'
+      - 'prototype/**'
+    tags:
+      - '*'
+    paths:
+      # IMPORTANT: Changes to these file specs must, Must, MUST  be reflected in the file specs
+      # for pull_request and the check_for_past_run job.
+      - '**/config/install/*.yml'
+      - '**/modules/custom/*/*.install'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      # IMPORTANT: Changes to these file specs must, Must, MUST  be reflected in the file specs
+      # for push and the check_for_past_run job.
+      - '**/config/install/*.yml'
+      - '**/modules/custom/*/*.install'
+
+# Only run one instance of this workflow at a time per branch.
+concurrency:
+  group: ${{ github.ref_name }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+
+  test_update:
+    name: Test ability to update
+    # Check whether the config and install files have changed since the last successful run.
+    # If not, there's no need to run this job.
+    needs: check_for_past_run
+    if: needs.check_for_past_run.outputs.changed == 'true'
+
+    runs-on: ubuntu-20.04
+    services:
+      ## Ubuntu 20 comes with mysql 8, so we need a separate service
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+          MYSQL_USER: drupal
+          MYSQL_PASSWORD: drupal
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+    steps:
+
+      ## Checkout the master branch since that is what is currently on production.
+      - name: Checkout master branch from Github
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      ## Setup PHP and Composer Caching
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          ## This list of extensions matches those we install with our docker file, then I removed
+          ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
+          extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
+          tools: composer:v2
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Composer install
+        run: |
+          composer install
+
+      ## Install BLT and Drush Launchers
+      - name: Install BLT and Drush Launchers
+        run: |
+          curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar && chmod +x /usr/local/bin/drush
+          curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar && chmod +x /usr/local/bin/blt
+
+      - name: Setup Env
+        run: |
+          ## The mynci service creates the drupal DB, we need to make the
+          ## simpletest DB for the phpunit tests by hand here.
+          mysql -u root -proot --protocol=TCP -e "CREATE DATABASE IF NOT EXISTS simpletest"
+          mysql -u root -proot --protocol=TCP -e "GRANT ALL ON simpletest.* to 'simpletest'@'%' IDENTIFIED BY 'simpletest'"
+          ## We don't set git info for right now as we are in the NCIOCPL origin right now.
+
+      - name: Install Drupal (current production)
+        run: |
+          # Install with content
+          blt blt:init:settings --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+          blt cgov:reinstall --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+
+      - name: Switch to the branch from the pull request.
+        uses: actions/checkout@v3
+
+      - name: Install new code and run update.
+        run: |
+          composer cgov-clean && composer install
+          drush cr
+          blt drupal:update --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
+
+
+  # Jobs past this point are responsible for determining whether any of the .yaml or .install files have changed since
+  # the last successful run. The details of how this is done are unimportant to the overall task of checking whether
+  # the code will break deployment.
+
+  check_for_past_run:
+
+    name: Check for past successful run
+    runs-on: ubuntu-20.04
+    outputs:
+      changed: ${{ steps.record_change.outputs.changed }}
+      key: ${{ steps.install_files_hash.outputs.key }}
+    steps:
+      ## Checks out the branch being tested.
+      - name: Checkout branch from Github
+        uses: actions/checkout@v3
+
+      - name: Generate install files hash
+        id: install_files_hash
+        run: |
+          echo "key=${{ runner.os }}-install-hash-$(find . -type f \( -path "*/modules/custom/*/*.install" -o -path "*/config/install/*.yml" \) -exec md5sum {} + | sort | awk '{print $NF}' | tr -d '\n' | md5sum)" >> "$GITHUB_OUTPUT"
+
+      - name: Locate Cache
+        uses: actions/cache/restore@v3
+        id: retrieve_files_hash
+        with:
+          path: dummy.txt
+          key: ${{ steps.install_files_hash.outputs.key }}
+          lookup-only: true
+
+      - name: Record a change to the install files
+        id: record_change
+        if: steps.retrieve_files_hash.outputs.cache-hit != 'true'
+        run: |
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+
+  save_successful_run:
+    name: Save install files hash
+    needs: [check_for_past_run, test_update]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Dummy file
+        run: |
+          touch dummy.txt
+
+      - name: Save install files cache
+        uses: actions/cache/save@v3
+        with:
+          path: dummy.txt
+          key: ${{ needs.check_for_past_run.outputs.key }}

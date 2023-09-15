@@ -23,7 +23,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'app_module',
     'app_module_test',
   ];

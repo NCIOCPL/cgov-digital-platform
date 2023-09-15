@@ -18,7 +18,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'language',
     'path',
     'block',
@@ -68,7 +68,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable9';
 
   /**
    * These are a set of default options for the plugin methods.
@@ -419,15 +419,6 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     $this->submitForm([
       'settings[target_type]' => 'app_module',
     ], 'Save field settings');
-    dump(
-      (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality 1',
-        [
-          '%field_name' => $field_name,
-          '%widget_type' => $widget_type,
-          '%cardinality' => "1",
-        ]
-      )
-    );
     $assert->pageTextContains((string) new FormattableMarkup('Updated field @name field settings.', ['@name' => $field_name]));
 
     // Set the widget type for the newly created field.

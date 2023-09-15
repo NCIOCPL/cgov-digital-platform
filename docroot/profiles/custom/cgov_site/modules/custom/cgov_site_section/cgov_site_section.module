@@ -55,7 +55,11 @@ function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
   // the server is case-sensitive.
   if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
     $field_pretty_url = $entity->get('field_pretty_url')->value;
-    $entity->set('field_pretty_url', strtolower($field_pretty_url));
+    // Must still test if $field_pretty_url is not NULL for deprecations
+    // in tests.
+    if ($field_pretty_url !== NULL) {
+      $entity->set('field_pretty_url', strtolower($field_pretty_url));
+    }
   }
 
   // Calculate and set the compute_path field.
@@ -733,7 +737,11 @@ function cgov_site_section_entity_presave($entity) {
 
     if ($entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url'))) {
       $field_pretty_url = $entity->get('field_pretty_url')->value;
-      $entity->set('field_pretty_url', strtolower($field_pretty_url));
+      // Must still test if $field_pretty_url is not NULL for deprecations
+      // in tests.
+      if ($field_pretty_url !== NULL) {
+        $entity->set('field_pretty_url', strtolower($field_pretty_url));
+      }
     }
   }
 }

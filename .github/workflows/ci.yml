@@ -13,6 +13,11 @@ on:
       - '*'
   pull_request:
 
+# Only run one instance of this workflow at a time per branch.
+concurrency:
+  group: ${{ github.ref_name }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build, Test and Upload Artifacts
@@ -63,7 +68,7 @@ jobs:
           echo "repo_name=${REPO_NAME}" >> $GITHUB_OUTPUT
       ## This clones and checks out.
       - name: Checkout branch from Github
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       ## Setup node and npm caching.
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -78,7 +83,7 @@ jobs:
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           ## This list of extensions matches those we install with our docker file, then I removed
           ## cli, common, fpm cause they would not install, then I removed xdebug cause why?
           extensions: bz2, curl, gd, mbstring, memcached, mysql, oauth, opcache, readline, sqlite3, soap, xml
@@ -87,7 +92,7 @@ jobs:
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}

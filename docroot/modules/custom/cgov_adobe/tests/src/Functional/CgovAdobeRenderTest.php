@@ -18,7 +18,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'language',
     'path',
     'block',
@@ -39,7 +39,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable9';
 
   /**
    * The content type name.
