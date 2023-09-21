@@ -7,3 +7,6 @@ become a CKEditor 5 plugin in `/build`. Technically, everything in these files
 could be in a single `index.js` - the only file the MUST be present is
 `/src/index.js`. However, splitting the plugin into concern-specific files has
 maintainability benefits.
+
+Oh and we got creative with using Drupal.dialog since CDEditor 5 does not have
+dialogs anymore.

@@ -8,16 +8,16 @@ export default class GlossifyUI extends Plugin {
     editor.ui.componentFactory.add('glossifier', (locale) => {
       const buttonView = new ButtonView(locale);
 
-       // Create the toolbar button.
-       buttonView.set({
+      // Create the toolbar button.
+      buttonView.set({
         label: editor.t('Glossify'),
         icon,
         tooltip: true,
       });
-         // Execute the command when the button is clicked (executed).
-         this.listenTo(buttonView, 'execute', () =>
-         editor.execute('glossifyAction'),
-       );
+      // Execute the command when the button is clicked (executed).
+      this.listenTo(buttonView, 'execute', () =>
+        editor.execute('glossifyAction'),
+      );
 
       return buttonView;
     });
