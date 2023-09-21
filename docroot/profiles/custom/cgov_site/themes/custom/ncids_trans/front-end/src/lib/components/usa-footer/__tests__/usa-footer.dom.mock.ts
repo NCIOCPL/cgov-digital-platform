@@ -43,7 +43,7 @@ export const usaFooterDomMock = (): string => {
 													<a href="/publications/dictionaries/cancer-terms">Dictionary of Cancer Terms</a>
 												</li>
 												<li class="usa-footer__secondary-link">
-													<a href="/about-cancer/treatment/clinical-trials/search">Find a Clinical Trial</a>
+													<a href="/research/participate/clinical-trials-search">Find a Clinical Trial</a>
 												</li>
 												<li>
 													<a data-testid="bad-link"></a>

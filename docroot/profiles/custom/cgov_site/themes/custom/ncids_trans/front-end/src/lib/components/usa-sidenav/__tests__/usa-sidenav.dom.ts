@@ -1,4 +1,4 @@
-// URL: /about-cancer/treatment/clinical-trials/paying
+// URL: /research/participate/clinical-trials/paying
 /** This scenario is a tree that is 4-levels deep, with the active item being the current page. */
 export const deepTreeNav = `
 <nav aria-label="Secondary navigation">
@@ -16,44 +16,44 @@ export const deepTreeNav = `
         </li>
 
         <li class="usa-sidenav__item">
-          <a href="/about-cancer/treatment/clinical-trials" data-menu-id="941577" class="usa-current usa-current--nci-ancestor">Clinical Trials Information</a>
+          <a href="/research/participate/clinical-trials" data-menu-id="941577" class="usa-current usa-current--nci-ancestor">Clinical Trials Information</a>
           <ul class="usa-sidenav__sublist">
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/search" data-menu-id="16374"
+              <a href="/research/participate/clinical-trials-search" data-menu-id="16374"
                 class="nci-has-children">Find NCI-Supported Clinical Trials</a>
             </li>
 
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/what-are-trials" data-menu-id="396047" class="nci-has-children">What Are Clinical Trials? </a>
+              <a href="/research/participate/clinical-trials/what-are-clinical-trials" data-menu-id="396047" class="nci-has-children">What Are Clinical Trials? </a>
             </li>
 
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/paying" data-menu-id="63846" class="usa-current">Paying for Clinical Trials</a>
+              <a href="/research/participate/clinical-trials/paying" data-menu-id="63846" class="usa-current">Paying for Clinical Trials</a>
               <ul class="usa-sidenav__sublist">
                 <li class="usa-sidenav__item">
-                  <a href="/about-cancer/treatment/clinical-trials/paying/insurance" data-menu-id="804863">Insurance Coverage and Clinical Trials</a>
+                  <a href="/research/participate/clinical-trials/paying" data-menu-id="804863">Insurance Coverage and Clinical Trials</a>
                 </li>
 
                 <li class="usa-sidenav__item">
-                  <a href="/about-cancer/treatment/clinical-trials/paying/work-with-insurance" data-menu-id="802441">How to Work With Your Health Insurance Plan</a>
+                  <a href="/research/participate/clinical-trials/paying" data-menu-id="802441">How to Work With Your Health Insurance Plan</a>
                 </li>
 
                 <li class="usa-sidenav__item">
-                  <a href="/about-cancer/treatment/clinical-trials/paying/federal-programs" data-menu-id="420514">Federal Government Programs</a>
+                  <a href="/research/participate/clinical-trials/paying" data-menu-id="420514">Federal Government Programs</a>
                 </li>
               </ul>
             </li>
 
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/patient-safety" data-menu-id="63848" class="nci-has-children">Patient Safety</a>
+              <a href="/research/participate/clinical-trials/safety" data-menu-id="63848" class="nci-has-children">Patient Safety</a>
             </li>
 
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/taking-part" data-menu-id="396057">Deciding to Take Part in a Trial</a>
+              <a href="/research/participate/clinical-trials/why-participate" data-menu-id="396057">Deciding to Take Part in a Trial</a>
             </li>
 
             <li class="usa-sidenav__item">
-              <a href="/about-cancer/treatment/clinical-trials/questions" data-menu-id="420504">Questions to Ask about Treatment Clinical Trials</a>
+              <a href="/research/participate/clinical-trials/why-participate" data-menu-id="420504">Questions to Ask about Treatment Clinical Trials</a>
             </li>
 
             <li class="usa-sidenav__item">
@@ -100,7 +100,7 @@ export const currentUrlNotInNav = `
         </li>
 
         <li class="usa-sidenav__item">
-          <a href="/about-cancer/treatment/clinical-trials" data-menu-id="941577" class="nci-has-children">Clinical Trials Information</a>
+          <a href="/research/participate/clinical-trials" data-menu-id="941577" class="nci-has-children">Clinical Trials Information</a>
         </li>
 
         <li class="usa-sidenav__item">
