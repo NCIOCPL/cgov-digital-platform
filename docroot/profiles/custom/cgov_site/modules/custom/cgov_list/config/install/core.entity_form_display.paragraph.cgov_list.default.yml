@@ -14,31 +14,38 @@ bundle: cgov_list
 mode: default
 content:
   field_list_item_style:
+    type: options_select
     weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_list_items:
+    type: paragraphs
     weight: 2
+    region: content
     settings:
       title: 'List Item'
       title_plural: 'List Items'
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: cgov_internal_link
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
-    type: entity_reference_paragraphs
-    region: content
   field_list_title:
+    type: string_textfield
     weight: 0
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
 hidden:
   created: true
   status: true
