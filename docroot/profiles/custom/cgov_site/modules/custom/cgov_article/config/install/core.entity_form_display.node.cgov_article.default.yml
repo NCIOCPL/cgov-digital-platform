@@ -32,7 +32,7 @@ dependencies:
     - content_moderation
     - datetime
     - entity_browser
-    - paragraphs_asymmetric_translation_widgets
+    - paragraphs
     - path
     - text
   enforced:
@@ -50,189 +50,210 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_article_body:
-    type: paragraphs_classic_asymmetric
+    type: paragraphs
     weight: 11
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 2
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: body_section
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
-    region: content
   field_browser_title:
+    type: string_textfield
     weight: 5
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_card_title:
+    type: string_textfield
     weight: 6
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_citation:
-    type: paragraphs_classic_asymmetric
+    type: paragraphs
     weight: 18
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
-    region: content
   field_date_display_mode:
-    weight: 17
-    settings: {  }
-    third_party_settings: {  }
     type: options_buttons
-    region: content
-  field_date_posted:
-    weight: 14
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_reviewed:
-    weight: 16
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_updated:
-    weight: 15
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_feature_card_description:
-    weight: 9
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_hhs_syndication:
-    weight: 100
-    settings: {  }
-    third_party_settings: {  }
-    type: cgov_syndication_widget
-    region: content
-  field_image_article:
-    weight: 12
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      field_widget_replace: false
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
-  field_image_promotional:
-    weight: 13
-    settings:
-      entity_browser: cgov_image_browser
-      field_widget_display: rendered_entity
-      field_widget_remove: true
-      field_widget_replace: false
-      selection_mode: selection_append
-      field_widget_display_settings:
-        view_mode: image_reference_field_form
-      field_widget_edit: false
-      open: false
-    third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
-  field_intro_text:
-    weight: 10
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
-  field_list_description:
-    weight: 8
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
-    region: content
-  field_page_description:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_pretty_url:
-    weight: 2
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_public_use:
-    weight: 19
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_related_resources:
-    type: paragraphs_classic_asymmetric
     weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_posted:
+    type: datetime_default
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_reviewed:
+    type: datetime_default
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_updated:
+    type: datetime_default
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_feature_card_description:
+    type: string_textfield
+    weight: 9
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_hhs_syndication:
+    type: cgov_syndication_widget
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_image_article:
+    type: entity_browser_entity_reference
+    weight: 12
+    region: content
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_image_promotional:
+    type: entity_browser_entity_reference
+    weight: 13
+    region: content
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_intro_text:
+    type: text_textarea
+    weight: 10
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_list_description:
+    type: string_textarea
+    weight: 8
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_page_description:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pretty_url:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_public_use:
+    type: options_select
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_related_resources:
+    type: paragraphs
+    weight: 17
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
-    region: content
   field_schema_org_data:
-    weight: 101
-    settings: {  }
-    third_party_settings: {  }
     type: cgov_schema_org_widget
+    weight: 101
     region: content
-  field_search_engine_restrictions:
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+  field_search_engine_restrictions:
     type: options_select
+    weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_site_section:
+    type: entity_browser_entity_reference
     weight: 1
+    region: content
     settings:
       entity_browser: cgov_site_section_browser
       field_widget_display: label
-      field_widget_remove: true
-      selection_mode: selection_append
       field_widget_edit: false
+      field_widget_remove: true
       field_widget_replace: false
       open: false
       field_widget_display_settings: {  }
+      selection_mode: selection_append
     third_party_settings: {  }
-    type: entity_browser_entity_reference
-    region: content
   langcode:
     type: language_select
     weight: 0
@@ -243,8 +264,8 @@ content:
   moderation_state:
     type: moderation_state_default
     weight: 26
-    settings: {  }
     region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -259,10 +280,10 @@ content:
     region: content
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 24
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -280,12 +301,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 21
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 50
