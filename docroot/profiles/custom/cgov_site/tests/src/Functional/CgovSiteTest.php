@@ -75,9 +75,9 @@ class CgovSiteTest extends BrowserTestBase {
     $this->assertSession()->elementContains('css', '.block-local-tasks-block', 'Settings');
 
     // Verify enabled themes.
-    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Common Base Theme');
-    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'CGov Admin Theme');
-    $this->assertSession()->elementContains('css', '.system-themes-list-installed', 'Seven');
+    $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'CGov Common Base Theme');
+    $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'CGov Admin Theme');
+    $this->assertSession()->elementContains('css', '.system-themes-list--installed', 'Claro');
 
     // Test that once the site is install English and Spanish are enabled.
     $langs = \Drupal::service('language_manager')->getLanguages();
