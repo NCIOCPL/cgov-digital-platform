@@ -48,3 +48,198 @@ Barring new templates, we need to drill a bit deeper. */
   margin-left: auto;
   width: 100px;
 }
+
+/* Changes for container width for node form*/
+@media screen and (min-width: 61rem) {
+  .layout-region--node-main .layout-region__content, .layout-region--node-footer .layout-region__content {
+      max-width: none;
+  }
+  }
+
+  /* Changes for node form buttons */
+  .button {
+    background-color: #f2f1eb;
+    border: 1px solid #a6a6a6 !important;
+  }
+  .button:hover {
+    background-color: #f2f1eb;
+    box-shadow: 0 1px 2px hsla(0,0%,0%,0.125);
+  }
+  .button--primary {
+    color: #fff;
+    background-color: #003ecc;
+  }
+  .button--primary:hover {
+    color: #fff;
+    background-color: #0036b1;
+  }
+
+  /* Changes for node form drop buttons */
+  .dropbutton__item .button {
+    background-color: #f2f1eb;
+    border: 1px solid #a6a6a6 !important;
+  }
+  .dropbutton__toggle {
+    background-color: #f2f1eb;
+  }
+  .dropbutton__toggle:hover {
+    background-color: #f2f1eb;
+    box-shadow: 0 1px 2px hsla(0,0%,0%,0.125);
+    border: 1px solid #a6a6a6 !important;
+  }
+  .dropbutton__item:first-of-type > *:hover, .dropbutton__item:first-of-type > .button:hover {
+    background-color: #f2f1eb;
+    border: 1px solid #a6a6a6 !important;
+  }
+  .dropbutton__item:first-of-type > * {
+    background-color: #f2f1eb;
+  }
+  .dropbutton-wrapper .dropbutton-widget .dropbutton-action input:hover {
+    background-image: linear-gradient(to bottom,#fcfcfa,#e9e9dd);
+      box-shadow: 0 1px 2px hsla(0,0%,0%,0.125);
+      color: #1a1a1a;
+      background-color: #f9f8f6;
+      background-image: -webkit-linear-gradient(top,#fcfcfa,#e9e9dd);
+  }
+  .dropbutton__item:first-of-type ~ .dropbutton__item > .button {
+    border: 1px solid #a6a6a6 !important;
+    background-color: #f2f1eb;
+    color: #232429;
+    font-weight: bold;
+  }
+  .dropbutton__item:first-of-type ~ .dropbutton__item {
+    max-width: 20.5rem;
+  }
+
+  /* Changes for select list field */
+  .form-element--type-select {
+    min-height: 2rem;
+    padding: 0.7rem 2rem 0.7rem 1rem;
+    transition: all 0.1s;
+    border: 1px solid #a6a6a6;
+    border-radius: 0.143em;
+    background-color: #f2f1eb;
+    text-shadow: 0 1px hsla(0,0%,100%,0.6);
+    font-size: 0.875rem;
+  }
+
+  /* Changes for modal view window in entity browser */
+  .ui-dialog .ui-dialog-titlebar {
+    padding: .5rem 4rem .5rem 1.5rem !important;
+    line-height: 1.2rem !important;
+  }
+  .ui-dialog .ui-dialog-title {
+    font-size: 1.224rem !important;
+  }
+   body:not(.toolbar-tray-open) .layout-container {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .entity-browser-form .views-exposed-form .form-item .form-element {
+    padding: .3rem;
+    min-height: 2rem;
+  }
+  .entity-browser-form .views-exposed-form .form-type--select .form-element {
+    padding: .3rem 2rem !important;
+    min-height: 2rem;
+  }
+  .entity-browser-form .views-exposed-form .views-exposed-form__item--actions .button {
+    padding: .5rem 1rem;
+  }
+  .entity-browser-form .views-exposed-form {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    box-shadow: none;
+  }
+  body:not(.toolbar-tray-open) .layout-container h2{
+    font-size: 1.385em;
+    margin: 0;
+    line-height: 1rem;
+  }
+  .entity-browser-form .view-site-section-browser table td, .entity-browser-form .views-table td{
+    padding: 0px;
+    height: 3rem;
+  }
+  .entity-browser-form .form-actions, .entity-browser-form .form-actions .form-submit {
+    margin: 0;
+  }
+  .entity-browser-form .pager {
+    margin: 0;
+  }
+
+  /* Changes for crop image section in media */
+  .vertical-tabs {
+    position: relative;
+    margin: 10px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background: #e6e5e1;
+  }
+  .vertical-tabs__menu {
+    float: left;
+    width: 15rem;
+    list-style-type: none;
+    border-bottom: 1px solid #ccc;
+    line-height: 1;
+    padding: 0;
+  }
+  .vertical-tabs__menu-item {
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+  .vertical-tabs__menu-item a {
+    display: block;
+    padding: 10px 15px 15px;
+    text-decoration: none;
+    border-bottom: 1px solid #b3b2ad;
+    background-color: #f2f2f0;
+    text-shadow: 0 1px hsla(0,0%,100%,0.6);
+  }
+  .vertical-tabs__menu-item.first a {
+    border-top-left-radius: 4px;
+  }
+  .vertical-tabs__menu-item-summary {
+    display: block;
+    padding-top: 0.4em;
+    color: #666;
+  }
+  .vertical-tabs__menu-item.is-selected {
+    z-index: 1;
+    overflow-x: hidden;
+    width: 100%;
+    border-right: 1px solid #fcfcfa;
+    border-bottom: 1px solid #b3b2ad;
+    box-shadow: 0 5px 5px -5px hsla(0,0%,0%,0.3);
+  }
+  .vertical-tabs__menu-item.is-selected a {
+    padding-left: 11px;
+    text-decoration: none;
+    color: #004f80;
+    border-bottom: none;
+    box-shadow: none;
+    background: #fff;
+    text-shadow: none;
+    border-right: none;
+  }
+  .vertical-tabs__menu-item a:hover, .vertical-tabs__menu-item a:focus {
+    background: #fcfcfa;
+    text-shadow: none;
+    box-shadow: none;
+  }
+  .vertical-tabs .vertical-tabs__panes {
+    margin-left: 15em;
+  }
+  .image-data__crop-wrapper .claro-details__wrapper {
+    margin: .5rem 1rem;
+  }
+  .js .paragraph-type-title {
+    min-width: 60%;
+  }
+
+  /* linkit autocomplete in ckeditor */
+  .ui-autocomplete .linkit-result-line-wrapper.ui-menu-item-wrapper.ui-state-active,
+  .ui-autocomplete .linkit-result-line-wrapper.ui-menu-item-wrapper.ui-state-focus {
+  background: #0075ba !important;
+  }
