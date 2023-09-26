@@ -144,41 +144,48 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
  *
  * @see system_themes_installed()
  */
-function cgov_core_themes_installed() {
+function cgov_core_themes_installed($theme_list) {
   // Create Contact Us block for Press Releases.
-  $block_theme = \Drupal::config('system.theme')->get('default');
-  $block_region = 'public_use';
-  $block_label = 'Public Use';
-  $block_html = <<<EOMarkup
-<p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
-EOMarkup;
+  foreach ($theme_list as $theme) {
+    if ($theme != 'ncids_trans' && $theme != 'cgov_common') {
+      continue;
+    }
+    $blockContent = \Drupal::entityTypeManager()->getStorage('block_content')->loadByProperties(['info' => 'Public Use']);
+      if(empty($blockContent)) {
+        $block_theme = $theme;
+        $block_region = 'public_use';
+        $block_label = 'Public Use';
+        $block_html = <<<EOMarkup
+      <p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
+      EOMarkup;
 
-  // Create block content.
-  $block_content = BlockContent::create([
-    'id' => 'public_use',
-    'type' => 'content_block',
-    'info' => $block_label,
-    'body' => ['value' => $block_html, 'format' => 'full_html'],
-  ]);
-  $block_content->save();
+        // Create block content.
+        $block_content = BlockContent::create([
+          'id' => 'public_use',
+          'type' => 'content_block',
+          'info' => $block_label,
+          'body' => ['value' => $block_html, 'format' => 'full_html'],
+        ]);
+        $block_content->save();
 
-  // Assign block to Region.
-  $data = [
-    'id' => 'public_use',
-    'plugin' => 'block_content:' . $block_content->uuid(),
-    'region' => $block_region,
-    'provider' => 'block_content',
-    'weight' => 0,
-    'theme' => $block_theme,
-    'settings' => [
-      'label' => $block_label,
-      'label_display' => '0',
-    ],
-  ];
+        // Assign block to Region.
+        $data = [
+          'id' => 'public_use',
+          'plugin' => 'block_content:' . $block_content->uuid(),
+          'region' => $block_region,
+          'provider' => 'block_content',
+          'weight' => 0,
+          'theme' => $block_theme,
+          'settings' => [
+            'label' => $block_label,
+            'label_display' => '0',
+          ],
+        ];
 
-  $block = Block::create($data);
-  $block->save();
-
+        $block = Block::create($data);
+        $block->save();
+      }
+    }
 }
 
 /**
@@ -366,5 +373,19 @@ function cgov_core_update_9003() {
     $config_path = \Drupal::service('extension.list.module')->getPath('user') . '/config/optional/views.view.user_admin_people.yml';
     $data = Yaml::parseFile($config_path);
     Drupal::configFactory()->getEditable('views.view.user_admin_people')->setData($data)->save(TRUE);
+  }
+}
+
+
+/**
+ * Remove ckeditor.
+ */
+function cgov_core_update_9004() {
+  $installer = \Drupal::service('module_installer');
+  if (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+    $installer->uninstall(['ckeditor'], FALSE);
+  }
+  if (!\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+    $installer->install(['ckeditor5']);
   }
 }
