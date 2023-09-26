@@ -77,13 +77,13 @@ paratest:
     procs: 4
 command-hooks:
   frontend-reqs:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-reqs.sh
   frontend-assets:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-assets.sh
   frontend-test:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-test.sh
   pre-commit:
     dir: '${docroot}'
@@ -120,4 +120,3 @@ tests:
   phpunit:
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/profiles/custom/cgov_site' }
-

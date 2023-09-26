@@ -2,14 +2,19 @@
 
 set -e
 
-## This assumes working directory is docroot/profile/custom/cgov_site/themes/custom
+## This assumes working directory is docroot/profile/custom/cgov_site
 
 ## build ncids_trans packages
-pushd ncids_trans/front-end
+pushd themes/custom/ncids_trans/front-end
 npm run build:prod
 popd
 
-## Install cgov_common packages
-pushd cgov/cgov_common
+## Build cgov_common packages
+pushd themes/custom/cgov/cgov_common
+npm run build
+popd
+
+## Build pdq_glossifier packages
+pushd modules/custom/pdq_glossifier
 npm run build
 popd
