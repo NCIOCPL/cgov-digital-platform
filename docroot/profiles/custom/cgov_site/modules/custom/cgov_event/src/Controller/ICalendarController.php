@@ -5,7 +5,6 @@ namespace Drupal\cgov_event\Controller;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -14,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountProxy;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\File\FileSystem;
+use Drupal\file\FileRepositoryInterface;
 
 /**
  * The iCalendar controller.
@@ -38,6 +38,13 @@ class ICalendarController extends ControllerBase {
   protected $file;
 
   /**
+   * The file repository service.
+   *
+   * @var \Drupal\file\FileRepositoryInterface
+   */
+  protected $fileRepository;
+
+  /**
    * Constructs an ICalendar Controller object.
    *
    * @param \Drupal\Core\Entity\EntityStorageInterface $entityStorage
@@ -48,12 +55,15 @@ class ICalendarController extends ControllerBase {
    *   The request stack.
    * @param \Drupal\Core\File\FileSystem $fileStorage
    *   The file system.
+   * @param \Drupal\file\FileRepositoryInterface $file_repository
+   *   The file repository service.
    */
-  public function __construct(EntityStorageInterface $entityStorage, AccountProxy $currentUser, RequestStack $request, FileSystem $fileStorage) {
+  public function __construct(EntityStorageInterface $entityStorage, AccountProxy $currentUser, RequestStack $request, FileSystem $fileStorage, FileRepositoryInterface $file_repository) {
     $this->entity = $entityStorage;
     $this->currentUser = $currentUser;
     $this->request = $request;
     $this->file = $fileStorage;
+    $this->fileRepository = $file_repository;
   }
 
   /**
@@ -64,7 +74,8 @@ class ICalendarController extends ControllerBase {
       $container->get('entity_type.manager')->getStorage('node'),
       $container->get('current_user'),
       $container->get('request_stack'),
-      $container->get('file_system')
+      $container->get('file_system'),
+      $container->get('file.repository')
     );
 
   }
@@ -86,13 +97,13 @@ class ICalendarController extends ControllerBase {
 
     if ($node->hasField('field_event_start_date') && !empty($node->get('field_event_start_date')->first())) {
       // Convert the date to the Timezone of the user requesting.
-      $start_date = $node->get('field_event_start_date')->date->format(
+      $start_date = $node->field_event_start_date->date->format(
         'Y-m-d H:i:s'
       );
     }
 
     if ($node->hasField('field_event_end_date') && !empty($node->get('field_event_end_date')->first())) {
-      $end_date = $node->get('field_event_end_date')->date->format(
+      $end_date = $node->field_event_end_date->date->format(
         'Y-m-d H:i:s'
       );
     }
@@ -121,13 +132,7 @@ class ICalendarController extends ControllerBase {
     $filename = 'cal-' . $nid . '.ics';
     $uri = 'public://' . $filename;
     $content = $vCalendar->render();
-    $file = file_save_data($content, $uri, FileSystemInterface::EXISTS_REPLACE);
-    if (empty($file)) {
-      return new Response(
-        'iCalendar Error, please contact the System Administrator'
-      );
-    }
-
+    $file = $this->fileRepository->writeData($content, $uri, FileSystemInterface::EXISTS_REPLACE);
     $mimetype = 'text/calendar';
     $scheme = 'public';
     $parts = explode('://', $uri);
