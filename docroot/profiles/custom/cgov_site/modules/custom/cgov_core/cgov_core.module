@@ -75,6 +75,7 @@ EOMarkup;
   $query = \Drupal::entityQuery('block_content');
   $query->condition('info', 'Public Use')
     ->condition('langcode', 'en');
+  $query->accessCheck(TRUE);
   $result = $query->execute();
   if (count($result)) {
     $eid = array_shift($result);
