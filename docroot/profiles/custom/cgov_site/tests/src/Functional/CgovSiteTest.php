@@ -40,7 +40,7 @@ class CgovSiteTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
   }
@@ -68,7 +68,7 @@ class CgovSiteTest extends BrowserTestBase {
     // Load Appearance (themes) page.
     $this->drupalGet('admin/appearance');
     // Verify we have permission to view page.
-    $this->assertResponse(200);
+    $this->assertSession()->statusCodeEquals(200);
 
     // Verify local tasks (tabs) menu items are present.
     $this->assertSession()->elementContains('css', '.block-local-tasks-block', 'List');
