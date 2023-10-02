@@ -23,7 +23,7 @@
         "acquia/blt-drupal-test": "^1.0",
         "acquia/blt-phpcs": "^1.0",
         "acquia/blt-simplesamlphp": "^1.0",
-        "acquia/memcache-settings": "^1.0",
+        "acquia/memcache-settings": "^1.2",
         "brianium/paratest": "^6.3",
         "commerceguys/addressing": "^1.4",
         "composer/installers": "^1.9.0",
@@ -214,6 +214,9 @@
             ]
         },
         "patches": {
+            "acquia/memcache-settings": {
+                "4033 : Turn off memcache on ODEs, hack for our issue 4033": "patches/acquia/memcache.settings-hack-for-4033.patch"
+            },
             "drupal/core": {
                 "2952990 : Missing schema for display_options.defaults.sitename_title": "https://www.drupal.org/files/issues/2018-03-14/views-schema-2952990-2.patch",
                 "3048288 : Avoid bogus MethodNotAllowedException; see https://github.com/NCIOCPL/cgov-digital-platform/issues/1716": "https://www.drupal.org/files/issues/2019-04-15/route-method-exception-path-fix-3048288.patch",
