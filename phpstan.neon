@@ -18,25 +18,12 @@ parameters:
     - docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/theme-settings.php
     ### cgov_site Profile Modules
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/cgov_application_page.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/cgov_blog.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/cgov_blog.tokens.inc
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/CgovBlogTwigExtensions.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogArchive.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogCategories.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogFeaturedPosts.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogPager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogTopicIntro.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogTopicTitle.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Services/BlogManager.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Services/BlogManagerInterface.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_cancer_research/cgov_cancer_research.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovConfigOverrider.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovCoreTools.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Controller/CgovMediaController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/CmsProtectionSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/ResponseCacheSubscriber.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/EventSubscriber/TranslationAvailableSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/NavItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/Breadcrumb.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/DisqusComments.php
@@ -48,7 +35,6 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/tests/src/Traits/CGovWorkflowAttachmentTrait.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_embedded_block/cgov_embedded_block.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_event/src/Controller/ICalendarController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_file/src/EventSubscriber/DirectFileDownloadSubscriber.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_image/cgov_image.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
@@ -82,6 +68,14 @@ parameters:
     ## NOTE: Each rule needs reportUnmatched so that PHPStan does not report unmatched rules
     ## as an error. However we do want to flag when people do unessesary ignores in doc comments,
     ## so we will only report unmatched here.
+    -
+      ## See changelog https://www.drupal.org/node/3159012 for whatever mess you want to call
+      ## supporting multiple versions of Symfony. Basically our code is correct, it is just
+      ## that we need the new version of symfony to be correct, which means when we update to
+      ## D10, we should be able to remove this line. The odd thing is the problem is in
+      ## Symfony, and in Symfony 5.0 fixes the inheritance chain.
+      message: "#Call to deprecated method stopPropagation\\(\\) of class Symfony\\\\Component\\\\EventDispatcher\\\\Event#"
+      reportUnmatched: false
     -
       ## This is the Drupal pattern for creating instances of plugins
       message: "#Unsafe usage of new static\\(\\)#"

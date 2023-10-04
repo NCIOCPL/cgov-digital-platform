@@ -2,9 +2,10 @@
 
 namespace Drupal\cgov_blog\Plugin\Block;
 
-use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_blog\Services\BlogManagerInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -64,46 +65,51 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    */
   public function build() {
     $build = [];
-    $series = $this->blogManager->getSeriesEntity();
+    $series = $this->blogManager->getBlogSeriesFromRoute();
 
     // Set return values by Archive field selection.
-    if (!empty($series)) {
-      $group_by = $series->field_archive_group_by->getValue()['0']['value'];
-      $years_back = $series->field_archive_back_years->getValue()['0']['value'];
-      $archive = $this->drawArchiveData($years_back, $group_by);
-      $path = $this->blogManager->getSeriesPath();
-      /*
-       * Pass custom data to the block inside '#cgov_block_data'.
-       * Otherwise render array is invalid.
-       */
-      $build = [
-        '#cgov_block_data' => [
-          'archive_data' => $archive,
-          'archive_granularity' => $group_by,
-          'archive_path' => $path,
-        ],
-        '#cache' => [
-          'tags' => [
-            'node:' . $series->id(),
-          ],
-        ],
-      ];
+    if (!isset($series)) {
+      return $build;
     }
-
+    $group_by = $series->field_archive_group_by->getValue()['0']['value'];
+    $years_back = $series->field_archive_back_years->getValue()['0']['value'];
+    $archive = $this->drawArchiveData(intval($years_back), $group_by, $series);
+    $path = $this->blogManager->getSeriesPath($series, []);
+    /*
+     * Pass custom data to the block inside '#cgov_block_data'.
+     * Otherwise render array is invalid.
+     */
+    $build = [
+      '#cgov_block_data' => [
+        'archive_data' => $archive,
+        'archive_granularity' => $group_by,
+        'archive_path' => $path,
+      ],
+      '#cache' => [
+        'tags' => [
+          'node:' . $series->id(),
+        ],
+      ],
+    ];
     return $build;
   }
 
   /**
    * Get a collection of years and months.
    *
-   * @param string $years_back
+   * @param int $years_back
    *   The number of archive years to show.
    * @param string $group_by
    *   Archive granularity (years vs. months).
+   * @param \Drupal\node\NodeInterface $series
+   *   The blog series.
+   *
+   * @return array
+   *   Either an array of months, years, or an empty array.
    */
-  private function drawArchiveData($years_back, $group_by) {
+  private function drawArchiveData($years_back, $group_by, NodeInterface $series) {
     // Get an array of years and months.
-    $archive_dates = $this->getMonthsAndYears();
+    $archive_dates = $this->getMonthsAndYears($series);
     $min_year = intval(date('Y') - $years_back);
 
     // Get data based on group_by setting.
@@ -118,10 +124,16 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * Get a collection of years and months.
+   *
+   * @param \Drupal\node\NodeInterface $series
+   *   The blog series.
+   *
+   * @return array
+   *   An array of months and years.
    */
-  private function getMonthsAndYears() {
+  private function getMonthsAndYears(NodeInterface $series) {
     // Get all available Blog Posts in current language.
-    $dates_raw = $this->getSortedDates();
+    $dates_raw = $this->getSortedDates($series);
     $dates = [];
 
     /*
@@ -140,22 +152,26 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * Get a descending array of Blog Post dates.
+   *
+   * @param \Drupal\node\NodeInterface $series
+   *   The blog series.
+   *
+   * @return array
+   *   The sorted posted dates.
    */
-  private function getSortedDates() {
+  private function getSortedDates(NodeInterface $series) {
     // Get all available Blog Posts in current language.
-    $nids = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post');
+    $nodes = $this->blogManager->getNodesByPostedDateDesc('cgov_blog_post');
     $dates = [];
 
     // Get current series ID.
-    $filter_series = $this->blogManager->getSeriesId();
+    $filter_series = $series->id();
 
     /*
      * Get node dates where field_blog_series matches the filter series.
      */
-    foreach ($nids as $nid) {
-      $node = $this->blogManager->getNodeFromNid($nid);
+    foreach ($nodes as $node) {
       $field_blog_series = $node->field_blog_series->target_id;
-
       // Get the date posted field, then split for the link values.
       if ($field_blog_series == $filter_series) {
         $dates[] = $node->field_date_posted->value;
@@ -172,8 +188,11 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *
    * @param array $arch_dates
    *   Collection of blog post dates for archive.
-   * @param string $min_year
+   * @param int $min_year
    *   The earliest archive year to show.
+   *
+   * @return array
+   *   Archieve dates by year.
    */
   private function getByYear(array $arch_dates, $min_year) {
     $archive = [];
@@ -199,8 +218,11 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
    *
    * @param array $arch_dates
    *   Collection of blog post dates for archive.
-   * @param string $min_year
+   * @param int $min_year
    *   The earliest archive year to show.
+   *
+   * @return array
+   *   Archieve dates by year.
    */
   private function getByMonth(array $arch_dates, $min_year) {
     $archive = [];

@@ -10,6 +10,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Cache\Cache;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_alter().
@@ -48,14 +49,25 @@ function cgov_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) 
         $series_nid = $series_id[0]['target_id'];
       }
 
-      $form['field_blog_topics']['widget']['#options'] = $blog_manager->getBlogTopicsForSeries($series_nid, \Drupal::languageManager()->getCurrentLanguage()->getId());
-
+      $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      $terms = $blog_manager->getTopicsBySeriesId($series_nid, $langcode);
+      $term_names = [];
+      foreach ($terms as $term) {
+        $term_names[$term->id()] = $term->getTranslation($langcode)->getName();
+      }
+      $form['field_blog_topics']['widget']['#options'] = $term_names;
     }
     else {
       // Editing a published node. Restrict to series topics.
       $series_id = $form['field_blog_series']['widget']['#default_value'];
       $blog_manager = \Drupal::service('cgov_blog.blog_manager');
-      $form['field_blog_topics']['widget']['#options'] = $blog_manager->getBlogTopicsForSeries($series_id[0], \Drupal::languageManager()->getCurrentLanguage()->getId());
+      $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      $terms = $blog_manager->getTopicsBySeriesId($series_id, $langcode);
+      $term_names = [];
+      foreach ($terms as $term) {
+        $term_names[$term->id()] = $term->getTranslation($langcode)->getName();
+      }
+      $form['field_blog_topics']['widget']['#options'] = $term_names;
       $form['field_blog_series']['#disabled'] = TRUE;
     }
     // Hide the label when options are empty.
@@ -87,8 +99,8 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
 
   // If this is a list in a Blog Series, use 'items per page' field.
   if ($view->id() == 'cgov_block_blog_posts') {
-    $node = Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
-    if ($node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
+    $node = Drupal::entityTypeManager()->getStorage('node')->load((int) $args[0]);
+    if (isset($node) && $node->bundle() == 'cgov_blog_series' && isset($node->field_num_display_posts)) {
       $view->setItemsPerPage($node->field_num_display_posts->value);
     }
   }
@@ -128,25 +140,6 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
     }
 
   }
-}
-
-/**
- * Get an array of all taxonomy/owner blog pairs.
- */
-function _get_id_pairs(array $form) {
-
-  // Get the list of topics (categories) from the vocabulary ID.
-  $vid = 'cgov_blog_topics';
-  $topics = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
-
-  // Return Blog Topic IDs and associated node IDs as an array.
-  $id_pairs = [];
-  foreach ($topics as $topic) {
-    $tid = $topic->tid;
-    $nid = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid)->get('field_owner_blog')->target_id;
-    $id_pairs[$tid] = $nid;
-  }
-  return $id_pairs;
 }
 
 /**
@@ -195,11 +188,13 @@ function cgov_blog_preprocess_block(&$variables) {
       $node = \Drupal::routeMatch()->getParameter('node');
 
       // If Blog Series content type, add nav link for the current language.
-      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
+      if (isset($node) && $node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $node = \Drupal::service('entity.repository')->getTranslationFromContext($node, $lang);
-        $section = $node->field_site_section->entity;
-        $label = $section->field_navigation_label->value ?? $section->name->value;
+        if ($node->hasTranslation($lang)) {
+          $node = $node->getTranslation($lang);
+        }
+        $section = $node->get('field_site_section')->entity;
+        $label = $section->field_navigation_label->value ?? $section->label();
         $variables['content']['breadcrumbs'][] = [
           'href' => $node->toUrl()->toString(),
           'label' => $label,
@@ -207,57 +202,6 @@ function cgov_blog_preprocess_block(&$variables) {
       }
     }
   }
-
-  /*
-   * Modify the language toggle block.
-   * Set correct translation for topic query param.
-   */
-  if ($variables['plugin_id'] === 'language_block:language_content') {
-
-    // Topic is evaluated for presence, and checked for an exact match.
-    // As it is not output, there is no need for sanitation.
-    $topic = \Drupal::request()->query->get('topic');
-
-    // Proceed only if the view contains topic query param.
-    if (!empty($topic)) {
-      $node = \Drupal::routeMatch()->getParameter('node');
-
-      // If Blog Series content type, add nav link for the current language.
-      if ($node instanceof NodeInterface && $node->bundle() === 'cgov_blog_series') {
-        // Get the query parameter and current and opposite languages.
-        $lang_current = (\Drupal::languageManager()->getCurrentLanguage()->getId());
-        $lang_toggled = $lang_current != 'en' ? 'en' : 'es';
-
-        // Get array of blog topics.
-        $query = \Drupal::entityQuery('taxonomy_term');
-        $query->condition('vid', 'cgov_blog_topics');
-        $tids = $query->execute();
-        $terms = Term::loadMultiple($tids);
-
-        /*
-         * Loop through each term to find translation. If translation exists
-         * and the topic query param value does NOT match the language of the
-         * current page, replace with the correct language value.
-         */
-        foreach ($terms as $term) {
-          if ($term->hasTranslation($lang_current)) {
-            // Get field value for current page language.
-            $term_current = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_current);
-            $pretty_url_current = $term_current->get('field_topic_pretty_url')->value;
-
-            // If query parameter matches, replace with correct parameter.
-            if ($pretty_url_current == $topic) {
-              $term_toggled = \Drupal::service('entity.repository')->getTranslationFromContext($term, $lang_toggled);
-              $pretty_url_toggled = $term_toggled->get('field_topic_pretty_url')->value;
-              $variables['content']['#links'][$lang_toggled]['query']['topic'] = $pretty_url_toggled;
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-
 }
 
 /**
@@ -303,5 +247,56 @@ function cgov_blog_entity_update($entity) {
     if ($current_state === "published" && $blog_series_target_id > 0) {
       Cache::invalidateTags(['node:' . $blog_series_target_id]);
     }
+  }
+}
+
+/**
+ * Implments hook_language_switch_links_alter
+ *
+ * Makes sure that the correct 'field_topic_pretty_url' is being
+ * assigned to the translation of the topic. 
+ */
+function cgov_blog_language_switch_links_alter(array &$links, $type, Url $url) {
+  if ($type !== 'language_content' || $url->getRouteName() !== 'entity.node.canonical') {
+    return;
+  }
+
+  $current_node = \Drupal::routeMatch()->getParameter('node');
+  if ($current_node->bundle() !== 'cgov_blog_series') {
+    return;
+  }
+  
+  $langcode = array_key_first($links);
+  if (isset($links[$langcode]["query"]["topic"])) {
+    $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    
+    // Using the field_topic_pretty_url on the query topic on $links, we can get 
+    // the taxonomy term. 
+    $tids = $term_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('vid', 'cgov_blog_topics')
+      ->condition('field_owner_blog.target_id', $current_node->id())
+      ->condition('field_topic_pretty_url', $links[$langcode]["query"]["topic"])
+      ->execute();
+    if (!empty($tids)) {
+      $term = $term_storage->load(array_pop($tids));
+      if ($term instanceof Term && $term->hasTranslation($langcode)) {
+        $links[$langcode]["query"]["topic"] = $term->getTranslation($langcode)->get('field_topic_pretty_url')->value;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Make sure our language_switch_links_alter comes at the very end of the
+ * implementation list.
+ */
+function cgov_blog_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'language_switch_links_alter') {
+    $group = $implementations['cgov_blog'];
+    unset($implementations['cgov_blog']);
+    $implementations['cgov_blog'] = $group;
   }
 }

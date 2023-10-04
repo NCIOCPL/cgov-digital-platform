@@ -2,9 +2,10 @@
 
 namespace Drupal\cgov_blog\Plugin\Block;
 
-use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_blog\Services\BlogManagerInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -67,11 +68,14 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
   public function build() {
     // Build object.
     $build = [];
-
     // Return blog featured post block elements. TODO: clean up twig.
-    $featured = $this->drawFeaturedPosts();
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if (!isset($blog_series)) {
+      return $build;
+    }
+    $featured = $this->drawFeaturedPosts($blog_series);
     // Get series nid for the block.
-    $series_nid = $this->blogManager->getSeriesId();
+    $series_nid = $blog_series->id();
     /*
      * Pass custom data to the block inside '#cgov_featured'.
      * Otherwise render array is invalid.
@@ -89,10 +93,16 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
 
   /**
    * Retrieve the title, URL, date, and author from each Featured Post.
+   *
+   * @param \Drupal\node\NodeInterface $blog_series
+   *   The blog series.
+   *
+   * @return array
+   *   The featured posts associated with the blog series.
    */
-  private function drawFeaturedPosts() {
+  private function drawFeaturedPosts(NodeInterface $blog_series) {
     $featured = [];
-    $featured_nodes = $this->blogManager->getSeriesFeaturedPosts();
+    $featured_nodes = $this->blogManager->getSeriesFeaturedPosts($blog_series);
 
     // If we have featured posts, get the node data.
     if (!empty($featured_nodes)) {
@@ -107,7 +117,7 @@ class BlogFeaturedPosts extends BlockBase implements ContainerFactoryPluginInter
         }
         $featured[$i] = [
           'title' => $title,
-          'href' => $this->blogManager->getBlogPathFromNid($node->id()),
+          'href' => $node->toUrl('canonical'),
           'date' => $node->field_date_posted->date->format('F j, Y'),
           'author' => $node->field_author->value,
         ];

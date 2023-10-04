@@ -2,9 +2,9 @@
 
 namespace Drupal\cgov_blog\Plugin\Block;
 
-use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -67,7 +67,12 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
    * {@inheritdoc}
    */
   public function build() {
-    $topic_intro = $this->getTopicIntro();
+    $build = [];
+    $blog_series = $this->blogManager->getBlogSeriesFromRoute();
+    if (!isset($blog_series)) {
+      return $build;
+    }
+    $topic_intro = $this->getTopicIntro($blog_series);
     $build = [
       'topic_intro' => $topic_intro,
       '#cache' => [
@@ -81,9 +86,15 @@ class BlogTopicIntro extends BlockBase implements ContainerFactoryPluginInterfac
 
   /**
    * Get category description for intro text.
+   *
+   * @param \Drupal\node\NodeInterface $blog_series
+   *   The current blog series.
+   *
+   * @return string
+   *   The topic description or an empty string.
    */
-  private function getTopicIntro() {
-    $topic = $this->blogManager->getSeriesTopicByUrl();
+  private function getTopicIntro($blog_series) {
+    $topic = $this->blogManager->getSeriesTopicByUrl($blog_series);
     $intro = $topic->description->value ?? '';
     return $intro;
   }
