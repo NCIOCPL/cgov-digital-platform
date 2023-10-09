@@ -67,7 +67,7 @@ class EntityEmbedPreviewThemeNegotiator implements ThemeNegotiatorInterface {
    * {@inheritdoc}
    */
   public function applies(RouteMatchInterface $route_match) {
-    return ($route_match->getRouteName() === 'entity_embed.preview' && $this->entityTypeManager->hasHandler('user_role', 'storage') && $this->user->hasPermission('view the administration theme'));
+    return ($route_match->getRouteName() === 'embed.preview' && $this->entityTypeManager->hasHandler('user_role', 'storage') && $this->user->hasPermission('view the administration theme'));
   }
 
   /**
