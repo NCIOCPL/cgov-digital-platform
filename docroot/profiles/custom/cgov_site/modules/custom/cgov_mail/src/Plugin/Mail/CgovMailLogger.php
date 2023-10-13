@@ -2,13 +2,13 @@
 
 namespace Drupal\cgov_mail\Plugin\Mail;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Mail\MailInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Site\Settings;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Mime\Header\UnstructuredHeader;
 
 /**
  * Defines a mail backend that captures sent messages to the logger.
@@ -38,16 +38,10 @@ class CgovMailLogger implements MailInterface, ContainerFactoryPluginInterface {
   /**
    * Constructs a new LoggerMail object.
    *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
    * @param \Psr\Log\LoggerInterface $logger
    *   The logger.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger) {
+  public function __construct(LoggerInterface $logger) {
     $this->logger = $logger;
   }
 
@@ -55,8 +49,9 @@ class CgovMailLogger implements MailInterface, ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static($configuration, $plugin_id, $plugin_definition, $container->get('logger.factory')
-      ->get('mail'));
+    return new static(
+      $container->get('logger.factory')->get('mail')
+    );
   }
 
   /**
@@ -93,7 +88,7 @@ class CgovMailLogger implements MailInterface, ContainerFactoryPluginInterface {
     $mimeheaders = [];
     $message['headers']['To'] = $message['to'];
     foreach ($message['headers'] as $name => $value) {
-      $mimeheaders[] = $name . ': ' . Unicode::mimeHeaderEncode($value);
+      $mimeheaders[] = $name . ': ' . (new UnstructuredHeader($name, $value))->getBodyAsString();
     }
     $line_endings = Settings::get('mail_line_endings', PHP_EOL);
     $output = implode($line_endings, $mimeheaders) . $line_endings;

@@ -1,0 +1,20 @@
+diff --git a/memcache.settings.php b/memcache.settings.php
+index 777225a..5c64628 100644
+--- a/memcache.settings.php
++++ b/memcache.settings.php
+@@ -36,7 +36,14 @@ if (getenv('AH_SITE_ENVIRONMENT') &&
+   $memcached_exists = class_exists('Memcached', FALSE);
+   $memcache_services_yml = DRUPAL_ROOT . '/modules/contrib/memcache/memcache.services.yml';
+   $memcache_module_is_present = file_exists($memcache_services_yml);
+-  if ($memcache_module_is_present && ($memcache_exists || $memcached_exists)) {
++
++  $isODE=FALSE;
++  $env = $_ENV['AH_SITE_ENVIRONMENT'];
++  if (preg_match('/^ode\d*$/', $env)) {
++    $isODE=TRUE;
++  }
++
++  if (!$isODE && $memcache_module_is_present && ($memcache_exists || $memcached_exists)) {
+     // Use Memcached extension if available.
+     if ($memcached_exists) {
+       $settings['memcache']['extension'] = 'Memcached';
