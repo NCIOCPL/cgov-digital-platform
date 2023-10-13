@@ -177,6 +177,20 @@
  @import "~Core/libraries/accordion/accordion";
 
  @import "~Core/styles/tables";
+ // Hack around ckeditor default table styles.
+ .ck-content {
+	figure.table {
+		figcaption,
+		.emptyCaptionShim,
+		table.table-default caption
+		{
+			background-color: transparent;
+			font-family: Montserrat,Avant Garde,Arial,sans-serif;
+			color: #606060;
+			font-size: 1.375em;
+		}
+	}
+ }
  @import "~Core/libraries/modal/modal";
 
  @import "~Core/styles/contentTemplate";
@@ -233,11 +247,6 @@
  // Overrides found necessary for CKEditor upgrade
 .ck-content {
 	@include u-font('body', $theme-body-font-size)
-}
-
-// figcaption getting background from somewhere?
-.ck-content table > figcaption{
-  background: none;
 }
 
 // media items inside ck-editor

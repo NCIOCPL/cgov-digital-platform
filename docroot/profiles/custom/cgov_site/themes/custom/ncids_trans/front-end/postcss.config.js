@@ -18,10 +18,15 @@ module.exports = {
 			prefix: '.ck-content',
 			transform(prefix, selector, prefixedSelector, filepath) {
 				if (filepath.match(/ckeditor\.scss$/)) {
-					if (selector === '.ck-content') {
+					if (selector.startsWith('.ck-content')) {
 						return selector;
 					} else if (selector.startsWith('.contentzone ')) {
 						return selector.replace(/^\.contentzone/, '.ck-content');
+					} else if (selector.startsWith('table.table-default')) {
+						return selector.replace(
+							/^table\.table-default/,
+							'.ck-content .table table.table-default'
+						);
 					} else {
 						return prefixedSelector;
 					}
