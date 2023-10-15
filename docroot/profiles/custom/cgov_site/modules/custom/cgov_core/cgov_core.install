@@ -8,6 +8,8 @@
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\cgov_core\CgovCoreTools;
+use Drupal\views\Entity\View;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_install().
@@ -117,16 +119,8 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'administer themes',
       'administer frontend globals',
       // Let site_admin assign roles.
-      'assign admin_ui role',
-      'assign advanced_editor role',
-      'assign blog_manager role',
-      'assign content_author role',
-      'assign content_editor role',
-      'assign content_previewer role',
-      'assign image_manager role',
-      'assign layout_manager role',
-      'assign pdq_importer role',
-      'assign site_admin role',
+      'edit user roles',
+      // Other random permissions.
       'access site in maintenance mode',
       'access files overview',
       // Custom permissions.
@@ -332,3 +326,45 @@ function cgov_core_update_9002() {
   }
 }
 
+/**
+ * Remove role_delegation. (Issue #4106)
+ */
+function cgov_core_update_9003() {
+
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Remove role_delegation permissions from site_admin.
+  $roles_to_remove = [
+    'site_admin' => [
+      'assign admin_ui role',
+      'assign advanced_editor role',
+      'assign blog_manager role',
+      'assign content_author role',
+      'assign content_editor role',
+      'assign content_previewer role',
+      'assign image_manager role',
+      'assign layout_manager role',
+      'assign pdq_importer role',
+      'assign site_admin role',
+    ],
+  ];
+  $siteHelper->removeRolePermissions($roles_to_remove);
+
+  // Add new "edit user roles" permission for saving user roles.
+  $siteHelper->addRolePermissions([
+    'site_admin' => [ 'edit user roles' ],
+  ]);
+
+  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['role_delegation'], FALSE);
+  }
+
+  // Role delegation provides views extensions, so the removal of
+  // role_delegation delete's the people view. We need to re-add.
+  if (\Drupal::moduleHandler()->moduleExists('views') && !View::load('user_admin_people')) {
+    $config_path = \Drupal::service('extension.list.module')->getPath('user') . '/config/optional/views.view.user_admin_people.yml';
+    $data = Yaml::parseFile($config_path);
+    Drupal::configFactory()->getEditable('views.view.user_admin_people')->setData($data)->save(TRUE);
+  }
+}

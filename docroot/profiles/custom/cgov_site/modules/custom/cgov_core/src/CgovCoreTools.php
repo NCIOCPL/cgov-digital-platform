@@ -239,6 +239,29 @@ class CgovCoreTools {
   }
 
   /**
+   * Remove Permissions from a role.
+   *
+   * @param array $rolePermissions
+   *   Array of [ RoleID => [ PermissionsList ] ] of permissions to remove.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function removeRolePermissions(array $rolePermissions) {
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roles = $role_storage->loadMultiple(array_keys($rolePermissions));
+
+    foreach ($rolePermissions as $roleId => $permissionId) {
+      foreach ($permissionId as $perm) {
+        $roles[$roleId]->revokePermission($perm);
+      }
+      $roles[$roleId]->save();
+    }
+
+  }
+
+  /**
    * Add Permissions to a role.
    *
    * @param string $type_name
