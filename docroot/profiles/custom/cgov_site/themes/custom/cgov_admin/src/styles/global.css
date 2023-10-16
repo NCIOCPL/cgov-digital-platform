@@ -49,10 +49,6 @@ Barring new templates, we need to drill a bit deeper. */
   width: 100px;
 }
 
-.toolbar-oriented .toolbar-bar{
-  z-index: 9999;
-}
-
 /* Changes for container width for node form*/
 @media screen and (min-width: 61rem) {
   .layout-region--node-main .layout-region__content, .layout-region--node-footer .layout-region__content {
@@ -248,4 +244,15 @@ Barring new templates, we need to drill a bit deeper. */
   background: #0075ba !important;
   }
 
+  /* Paragraphs fields cause overflow of content forms in Claro */
+  .form-textarea-wrapper .ck.ck-toolbar .ck.ck-toolbar__items {
+    flex-wrap: wrap;
+  }
+
+  /* 1072px */
+  @media (max-width: 67em) {
+    .field--widget-paragraphs input.form-element {
+      width: 100%;
+    }
+  }
 
