@@ -3,7 +3,6 @@
 version: "3.7"
 
 services:
-
   web:
     ## Use the web folder
     build:
@@ -27,6 +26,7 @@ services:
       - ./docker.env
     ports:
       - "80:80"
+      - "443:443"
     networks:
       drupalvm:
         aliases:

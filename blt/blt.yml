@@ -1,7 +1,7 @@
 project:
   machine_name: microsite
   prefix: NCIOCPL
-  human_name: 'National Cancer Institute'
+  human_name: "National Cancer Institute"
   profile:
     name: cgov_site
   local:
@@ -10,47 +10,153 @@ project:
 git:
   default_branch: develop
   remotes:
-    acquia: 'ncigovcd@svn-29892.prod.hosting.acquia.com:ncigovcd.git'
+    acquia: "ncigovcd@svn-29892.prod.hosting.acquia.com:ncigovcd.git"
   hooks:
     pre-commit: false
     commit-msg: false
 deploy:
   tag_source: true
-  exclude_file: '${repo.root}/scripts/blt/deploy/deploy-exclude.txt'
+  exclude_file: "${repo.root}/scripts/blt/deploy/deploy-exclude.txt"
 drush:
   aliases:
-    remote: '${project.machine_name}.test'
+    remote: "${project.machine_name}.test"
     local: self
     ci: self
-  default_alias: '${drush.aliases.local}'
+  default_alias: "${drush.aliases.local}"
 modules:
   local:
-    enable: [dblog, devel, views_ui, cgov_yaml_content]
-    uninstall: [syslog, acquia_connector, shield, acsf, simplesamlphp_auth, autologout, cgov_saml_auth_config, seckit, cgov_https_config, cgov_caching_nocdn, cgov_caching_cdn, acquia_purge, akamai]
+    enable:
+      [
+        dblog,
+        devel,
+        views_ui,
+        cgov_yaml_content,
+        externalauth,
+        cgov_saml_auth_config,
+      ]
+    uninstall:
+      [
+        syslog,
+        acquia_connector,
+        shield,
+        acsf,
+        seckit,
+        cgov_https_config,
+        cgov_caching_nocdn,
+        cgov_caching_cdn,
+        acquia_purge,
+        akamai,
+      ]
   ci:
-    enable: {  }
-    uninstall: [acquia_connector, shield, simplesamlphp_auth, autologout, cgov_saml_auth_config, cgov_https_config, akamai]
+    enable: {}
+    uninstall:
+      [
+        acquia_connector,
+        shield,
+        autologout,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        akamai,
+      ]
   ode:
-    enable: [dblog, acquia_connector, shield, cgov_caching_nocdn, cgov_https_config]
-    uninstall: [syslog, autologout, cgov_saml_auth_config, cgov_caching_cdn, akamai]
+    enable:
+      [dblog, acquia_connector, shield, cgov_caching_nocdn, cgov_https_config]
+    uninstall:
+      [
+        syslog,
+        autologout,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_caching_cdn,
+        akamai,
+      ]
   dev:
-    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    enable:
+      [
+        dblog,
+        acquia_connector,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_nocdn,
+      ]
     uninstall: [syslog, cgov_caching_cdn, akamai]
   int:
-    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn]
+    enable:
+      [
+        dblog,
+        acquia_connector,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_cdn,
+      ]
     uninstall: [syslog, cgov_caching_nocdn]
   test:
-    enable: [dblog, acquia_connector, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_nocdn]
+    enable:
+      [
+        dblog,
+        acquia_connector,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_nocdn,
+      ]
     uninstall: [syslog, devel, cgov_caching_cdn, akamai]
   ## We have no prod in ACE.
   01dev:
-    enable: [dblog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
+    enable:
+      [
+        dblog,
+        acquia_connector,
+        acsf,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_cdn,
+        akamai,
+      ]
     uninstall: [syslog, cgov_caching_nocdn]
   01test:
-    enable: [dblog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
+    enable:
+      [
+        dblog,
+        acquia_connector,
+        acsf,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_cdn,
+        akamai,
+      ]
     uninstall: [syslog, cgov_caching_nocdn]
   01live:
-    enable: [syslog, acquia_connector, acsf, shield, simplesamlphp_auth, cgov_saml_auth_config, cgov_https_config, cgov_caching_cdn, akamai]
+    enable:
+      [
+        syslog,
+        acquia_connector,
+        acsf,
+        shield,
+        externalauth,
+        samlauth,
+        cgov_saml_auth_config,
+        cgov_https_config,
+        cgov_caching_cdn,
+        akamai,
+      ]
     uninstall: [dblog, cgov_caching_nocdn]
 ## If this is not set, blt drupal:install will iterate through the sites in the sites folder.
 ## For now we set it to default, so it does not try installing simpletest, or god forbid "g".
@@ -63,53 +169,50 @@ cm:
     allow-overrides: true
     bundle: [default]
 paratest:
-  -
-    config: '${repo.root}/phpunit.xml'
-    path: '${docroot}/modules/custom'
+  - config: "${repo.root}/phpunit.xml"
+    path: "${docroot}/modules/custom"
     class: null
     file: null
     procs: 4
-  -
-    config: '${repo.root}/phpunit.xml'
-    path: '${docroot}/profiles/custom/cgov_site'
+  - config: "${repo.root}/phpunit.xml"
+    path: "${docroot}/profiles/custom/cgov_site"
     class: null
     file: null
     procs: 4
 command-hooks:
   frontend-reqs:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: "${docroot}/profiles/custom/cgov_site/themes/custom"
     command: ${repo.root}/scripts/blt/custom/frontend-reqs.sh
   frontend-assets:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: "${docroot}/profiles/custom/cgov_site/themes/custom"
     command: ${repo.root}/scripts/blt/custom/frontend-assets.sh
   frontend-test:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: "${docroot}/profiles/custom/cgov_site/themes/custom"
     command: ${repo.root}/scripts/blt/custom/frontend-test.sh
   pre-commit:
-    dir: '${docroot}'
+    dir: "${docroot}"
     command: null
   pre-config-import:
-    dir: '${docroot}'
+    dir: "${docroot}"
     command: null
   post-deploy-build:
-    dir: '${deploy.dir}/docroot'
+    dir: "${deploy.dir}/docroot"
     command: null
   post-setup-build:
-    dir: '${docroot}'
+    dir: "${docroot}"
     command: null
   post-deploy:
-    dir: '${docroot}'
+    dir: "${docroot}"
     command: null
-simplesamlphp: true
 
 cgov:
-  drupal_users_file: '${repo.root}/cgov-drupal-users.yml'
-  front_end_globals_file: '${repo.root}/FrontendGlobals.json'
-  pdq_load_glossifier_file: '${repo.root}/glossifier_refresh.json'
+  drupal_users_file: "${repo.root}/cgov-drupal-users.yml"
+  front_end_globals_file: "${repo.root}/FrontendGlobals.json"
+  pdq_load_glossifier_file: "${repo.root}/glossifier_refresh.json"
 
 validate:
   phpstan:
-    config: '${repo.root}/phpstan.neon'
+    config: "${repo.root}/phpstan.neon"
   lint:
     filesets:
       - files.php.custom.modules
@@ -118,6 +221,11 @@ validate:
 
 tests:
   phpunit:
-    - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }
-    - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/profiles/custom/cgov_site' }
-
+    - {
+        config: "${repo.root}/phpunit.xml",
+        directory: "${docroot}/modules/custom",
+      }
+    - {
+        config: "${repo.root}/phpunit.xml",
+        directory: "${docroot}/profiles/custom/cgov_site",
+      }

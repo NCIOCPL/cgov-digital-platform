@@ -22,7 +22,6 @@
         "acquia/blt-behat": "^1.3.0",
         "acquia/blt-drupal-test": "^1.0",
         "acquia/blt-phpcs": "^1.0",
-        "acquia/blt-simplesamlphp": "^1.0",
         "acquia/memcache-settings": "^1.2",
         "brianium/paratest": "^6.3",
         "commerceguys/addressing": "^1.4",
@@ -50,6 +49,7 @@
         "drupal/entity_browser": "^2.8",
         "drupal/entity_embed": "^1.2.0",
         "drupal/entity_reference_revisions": "^1.10",
+        "drupal/externalauth": "^2.0",
         "drupal/features": "^3.12.0",
         "drupal/file_mdm": "^2.6.0",
         "drupal/image_widget_crop": "^2.4.0",
@@ -66,10 +66,10 @@
         "drupal/purge": "^3.4",
         "drupal/redirect": "^1.9",
         "drupal/role_delegation": "^1.2.0",
+        "drupal/samlauth": "^3.9",
         "drupal/seckit": "^2.0.1",
         "drupal/shield": "^1.7.0",
         "drupal/simple_sitemap": "^3.10.0",
-        "drupal/simplesamlphp_auth": "3.2",
         "drupal/token": "^1.12",
         "drupal/token_filter": "^1.3.0",
         "drupal/twig_field_value": "^2.0",
@@ -81,8 +81,6 @@
         "kint-php/kint": "^3.3",
         "robrichards/xmlseclibs": "^3.1",
         "scotteh/php-dom-wrapper": "^2.0.3",
-        "simplesamlphp/simplesamlphp": "^1.19.2",
-        "simplesamlphp/simplesamlphp-module-authyubikey": "0.9.1",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
@@ -106,7 +104,6 @@
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "simplesamlphp/composer-module-installer": true,
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/console-extend-plugin": true,
@@ -162,7 +159,6 @@
         ],
         "post-drupal-scaffold-cmd": [
             "patch -p1 < ./patches/drupal-scaffold/gitattributes.patch",
-            "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.saml.patch",
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.https.patch",
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.hsts.patch",
             "cd docroot && patch -p1 <../patches/drupal-scaffold/htaccess.acsf.patch",
@@ -221,11 +217,11 @@
                 "2952990 : Missing schema for display_options.defaults.sitename_title": "https://www.drupal.org/files/issues/2018-03-14/views-schema-2952990-2.patch",
                 "3048288 : Avoid bogus MethodNotAllowedException; see https://github.com/NCIOCPL/cgov-digital-platform/issues/1716": "https://www.drupal.org/files/issues/2019-04-15/route-method-exception-path-fix-3048288.patch",
                 "763380  : Do not use \\Drupal\\taxonomy\\TermStorageInterface::loadTree() in \\Drupal\\taxonomy\\Form\\OverviewTerms::buildForm()": "https://www.drupal.org/files/issues/2019-07-08/763380-61.patch",
-                "3150294 : (Unofficial Patch) New translations should use initial workflow state" : "patches/drupal/workflow-hack-for-3150294.patch",
+                "3150294 : (Unofficial Patch) New translations should use initial workflow state": "patches/drupal/workflow-hack-for-3150294.patch",
                 "1308152 : Add stream wrappers to access extension files": "https://www.drupal.org/files/issues/2021-12-15/1308152-395.patch",
-                "2971390 : Make exposure of translation meta fields conditional" : "https://www.drupal.org/files/issues/2021-10-29/2971390-62.patch",
-                "3359511 : Regression missing menu active trail" : "https://www.drupal.org/files/issues/2023-05-10/3359511-revert-3277784-2.patch",
-                "3322743 : FieldConfig-loadByName-return-type-issue" : "patches/drupal/3322743-FieldConfig-loadByName-return-type-issue.patch"
+                "2971390 : Make exposure of translation meta fields conditional": "https://www.drupal.org/files/issues/2021-10-29/2971390-62.patch",
+                "3359511 : Regression missing menu active trail": "https://www.drupal.org/files/issues/2023-05-10/3359511-revert-3277784-2.patch",
+                "3322743 : FieldConfig-loadByName-return-type-issue": "patches/drupal/3322743-FieldConfig-loadByName-return-type-issue.patch"
             },
             "drupal/features": {
                 "2834130 : Updates Features Diff to Include Alters": "https://www.drupal.org/files/issues/2019-06-09/features-detect-overrides-update-2834130-4-D8.patch"

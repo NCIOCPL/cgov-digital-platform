@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Database\Database;
+
 /**
  * Update for Auto Logout. (Issue #1700)
  */
@@ -8,6 +10,22 @@ function cgov_saml_auth_config_update_9001() {
   if (!\Drupal::moduleHandler()->moduleExists('autologout')) {
     $installer = \Drupal::service('module_installer');
     $installer->install(['autologout']);
+  }
+}
+
+/**
+ * Update to switch from simplesamlphp_auth to samlauth. (Issue TBD)
+ */
+function cgov_saml_auth_config_update_9002() {
+  // Enable autologout
+  if (!\Drupal::moduleHandler()->moduleExists('samlauth')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['samlauth']);
+    $connection = Database::getConnection();
+    $query = $connection->update('samlauth')
+      ->fields(['provider' => 'samlauth'])
+      ->condition('provider', 'simplesamlphp_auth');
+    $query->execute();
   }
 
 }
