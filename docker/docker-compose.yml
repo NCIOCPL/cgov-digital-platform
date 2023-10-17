@@ -3,7 +3,6 @@
 version: "3.7"
 
 services:
-
   web:
     ## Use the web folder
     build:
@@ -11,6 +10,8 @@ services:
     volumes:
       ## The project root
       - ../:/var/www:cached
+      ## The project root
+      - ./web/runtime/saml:/var/saml
       ## Configs
       - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
       - ./web/runtime/php_apache2.ini:/etc/php/8.1/apache2/php.ini
@@ -27,6 +28,7 @@ services:
       - ./docker.env
     ports:
       - "80:80"
+      - "443:443"
     networks:
       drupalvm:
         aliases:

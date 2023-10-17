@@ -5,26 +5,76 @@
  * Contains cgov_saml_auth_config.module.
  */
 
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RequestStack;
+use \Drupal\Core\Form\FormStateInterface;
+
+ /**
+ * Implements hook_form_FORM_ID_alter() for the login form.
+ */
+
+ function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Only modify the form if we are actually showing the login link.
+  if (isset($form['samlauth_auth_login_link'])) {
+
+    // Update the form cache context to respect the URL param.
+    $form['#cache']['contexts'][] = 'url.query_args:show_login_fields';
+
+    // Make the SAML link look like a button.
+    $form['samlauth_auth_login_link']['#prefix'] = '<div>';
+    $form['samlauth_auth_login_link']['#suffix'] = '</div>';
+    $form['samlauth_auth_login_link']['#weight'] = 100;
+    $form['samlauth_auth_login_link']['#attributes']['class'][] = 'button';
+
+    $request = \Drupal::request();
+
+    if (!$request->query->has('show_login_fields')) {
+
+      // Make the SAML button primary.
+      $form['samlauth_auth_login_link']['#attributes']['class'][] = 'submit';
+
+      // Hide the main form login fields.
+      $form['name']['#access'] = FALSE;
+      $form['pass']['#access'] = FALSE;
+      $form['actions']['#access'] = FALSE;
+
+      // Show a bypass link.
+      $form['normal_login_link'] = [
+        '#title' => 'Log in with Drupal',
+        '#type' => 'link',
+        '#url' => Url::fromRoute('user.login', [
+          'show_login_fields' => 'true'
+        ]),
+        '#prefix' => '<p>',
+        '#suffix' => '</p>',
+        '#weight' => 101,
+      ];
+    } else {
+
+      // Hide the SAML Button
+      $form['samlauth_auth_login_link']['#access'] = FALSE;
+
+      // Show a return link.
+      $form['saml_login_link'] = [
+        '#title' => 'Log in with Single Sign-On',
+        '#type' => 'link',
+        '#url' => Url::fromRoute('user.login'),
+        '#prefix' => '<p>',
+        '#suffix' => '</p>',
+        '#weight' => 101,
+      ];
+    }
+
+  }
+}
 
 /**
- * Implements hook_simplesamlphp_auth_allow_login().
- *
- * This will allow us to force a login failure if a user is not
- * allowed to login.
+ * Implements hook_user_logout().
  */
-function cgov_saml_auth_config_simplesamlphp_auth_allow_login(array $attributes) {
-  $external_auth = \Drupal::service('externalauth.externalauth');
-  $simplesaml_man = \Drupal::service('simplesamlphp_auth.manager');
-
-  $authname = $simplesaml_man->getAuthname();
-  $account = $external_auth->load($authname, 'simplesamlphp_auth');
-
-  if (!$account) {
-    \Drupal::logger('cgov_saml_auth_config')->warning('Could not find SSO user: %authname', [
-      '%authname' => $authname,
-    ]);
-    throw new AccessDeniedHttpException();
-  }
-  return TRUE;
+function cgov_saml_auth_config_user_logout($account)
+{
+  $url = Url::fromRoute('user.login');
+  $requestStack = \Drupal::requestStack();
+  $requestStack->getCurrentRequest()->query->set('destination', $url->toString());
 }

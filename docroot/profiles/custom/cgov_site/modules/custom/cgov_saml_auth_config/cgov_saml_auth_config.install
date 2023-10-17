@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Install cgov_saml_auth_config
+ */
+function cgov_saml_auth_config_install() {
+  // This is for the hook_form_user_login_form_alter.
+  // It should have been hook_module_implements_alter(),
+  // but it didn't matter if cgov_saml_auth_config or samlauth
+  // was listed first or second, samlauth always ran second.
+  // If weights are deprecated in favor of dependencies
+  // then in theory everything will still work without this.
+  module_set_weight('cgov_saml_auth_config',1);
+}
+
+/**
  * Update for Auto Logout. (Issue #1700)
  */
 function cgov_saml_auth_config_update_9001() {
@@ -9,5 +22,4 @@ function cgov_saml_auth_config_update_9001() {
     $installer = \Drupal::service('module_installer');
     $installer->install(['autologout']);
   }
-
 }

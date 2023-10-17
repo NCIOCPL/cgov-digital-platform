@@ -78,6 +78,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
 COPY ./build/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./build/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+RUN a2ensite default-ssl
 
 ## These are the PHP modules that are available to be
 ## loaded by the CLI & apache. This should be inline with
@@ -86,6 +88,9 @@ COPY ./build/php-conf /etc/php/8.1/mods-available
 
 # Enable mod_rewrite 'cause we needs it.
 RUN a2enmod rewrite
+# And these are needed for an SSL connection
+RUN a2enmod socache_shmcb
+RUN a2enmod ssl
 
 # Forward logs to docker log collector.
 RUN ln -sf /dev/stdout /var/log/apache2/access.log && \
@@ -145,6 +150,7 @@ RUN phpdismod -s apache2 xdebug
 
 # Expose the default Apache port.
 EXPOSE 80
+EXPOSE 443
 
 # Replace the standard entrypoint /bin/sh with our script.
 ENTRYPOINT ["docker-entrypoint.sh"]
