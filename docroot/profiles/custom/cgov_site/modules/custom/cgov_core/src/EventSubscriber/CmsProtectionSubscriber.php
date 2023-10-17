@@ -147,7 +147,8 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
     $login_routes = [
       'user.login',
       'user.login.http',
-      'simplesamlphp_auth.saml_login',
+      'samlauth.saml_controller_login',
+      'samlauth.saml_controller_acs',
       'system.403',
       'system.401',
     ];
@@ -161,9 +162,9 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
    *   The URL to send the user.
    */
   private function getLoginUrl() {
-    if ($this->moduleHandler->moduleExists('simplesamlphp_auth')) {
+    if ($this->moduleHandler->moduleExists('samlauth')) {
       // Send to SSO login.
-      $url = $this->urlGenerator->generateFromRoute('simplesamlphp_auth.saml_login');
+      $url = $this->urlGenerator->generateFromRoute('samlauth.saml_controller_login');
     }
     else {
       // Send to normal drupal login form.

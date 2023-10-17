@@ -15,6 +15,7 @@ fi
 APACHE_DOCROOT_DIR="${APACHE_DOCROOT_DIR:-/var/www/html}"
 if [ -n "$APACHE_DOCROOT_DIR" ]; then
      sed -i 's@^\s*DocumentRoot.*@'"        DocumentRoot ${APACHE_DOCROOT_DIR}"'@'  /etc/apache2/sites-available/000-default.conf
+     sed -i 's@^\s*DocumentRoot.*@'"        DocumentRoot ${APACHE_DOCROOT_DIR}"'@'  /etc/apache2/sites-available/default-ssl.conf
 fi
 
 # Allow the site name to be overriden.

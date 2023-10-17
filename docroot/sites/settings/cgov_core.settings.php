@@ -59,21 +59,6 @@ if ($env !== "01live") {
   $config['system.mail']['interface']['default'] = 'cgov_mail_logger';
 }
 
-// on enironments that have SAML, route to Okta upon logout
-// Production Okta for default, including 01live
-switch ($env) {
-  case '01dev':
-  case 'dev':
-  case '01test':
-  case 'test':
-  case 'int':
-    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam-stage.cancer.gov/login/signout';
-    break;
-  default:
-    $config['simplesamlphp_auth.settings']['logout_goto_url'] = 'https://iam.cancer.gov/login/signout';
-    break;
-}
-
 // Outlook doesn't adhere to standards, so accommodating and using
 // CRLF line-endings.
 $settings['mail_line_endings'] = "\r\n";
