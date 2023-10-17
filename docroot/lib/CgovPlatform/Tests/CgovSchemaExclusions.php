@@ -38,6 +38,7 @@ class CgovSchemaExclusions {
     // See https://www.drupal.org/project/adobe_dtm/issues/3117875
     // for the tracked issue.
     'adobe_dtm.settings',
+    'views.view.samlauth_map',
   ];
 
 }
