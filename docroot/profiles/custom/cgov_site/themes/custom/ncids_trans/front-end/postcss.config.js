@@ -27,6 +27,12 @@ module.exports = {
 							/^table\.table-default/,
 							'.ck-content .table table.table-default'
 						);
+					}
+					else if (selector.startsWith('table[data-sortable]')) {
+						return selector.replace(
+							/table\[data-sortable\]/,
+							'.ck-content .table table[data-sortable]'
+						);
 					} else {
 						return prefixedSelector;
 					}
