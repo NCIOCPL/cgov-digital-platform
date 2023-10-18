@@ -197,14 +197,25 @@ function cgov_core_user_presave(EntityInterface $entity) {
 
 /**
  * Implements hook_form_alter().
- *
- * We want to remove the 'Reset by Alphabetical'
- * form button on taxonomy tree forms.
  */
 function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // We want to remove the 'Reset by Alphabetical' form button on taxonomy tree forms.
   if ($form_id === 'taxonomy_overview_terms') {
     if (isset($form['actions']) && isset($form['actions']['reset_alphabetical'])) {
       unset($form['actions']['reset_alphabetical']);
+    }
+  }
+
+  // "administer permissions" is too much power for a user in production, but we
+  // still need to be able to add users and grant them roles. This hooks into the
+  // user form and allows users with the "edit user roles" permissions to be able
+  // to grant those roles. See the user form code in core for more on how they
+  // make the roles field.
+  if ($form_id === 'user_form' || $form_id === 'user_register_form') {
+    if (isset($form['account']['roles'])) {
+      $user = \Drupal::currentUser();
+      $form['account']['roles']['#access'] = $form['account']['roles']['#options'] &&
+        ($user->hasPermission('administer permissions') || $user->hasPermission('edit user roles'));
     }
   }
 }
