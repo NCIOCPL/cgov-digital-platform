@@ -14,6 +14,11 @@ pushd themes/custom/cgov/cgov_common
 npm ci
 popd
 
+## Install cgov_ckeditor_hack packages
+pushd modules/custom/cgov_ckeditor_hack
+npm ci
+popd
+
 ## Install pdq_glossifier packages
 pushd modules/custom/pdq_glossifier
 npm ci

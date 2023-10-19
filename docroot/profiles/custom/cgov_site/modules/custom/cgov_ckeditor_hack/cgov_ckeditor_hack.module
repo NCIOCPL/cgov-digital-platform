@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Modify the list of available CKEditor 5 plugins.
+ * implements hook_ckeditor5_plugin_info_alter()
+
+ * Replace drupal core's table plugin with our own.
+ *
+ * @param array $plugin_definitions
+ *   An array of all the existing plugin definitions, passed by reference.
+ *
+ * @see \Drupal\ckeditor5\Plugin\CKEditor5PluginManager
+ */
+function cgov_ckeditor_hack_ckeditor5_plugin_info_alter(array &$plugin_definitions): void {
+
+  assert($plugin_definitions['ckeditor5_table'] instanceof CKEditor5PluginDefinition);
+
+  //$html_support_plugin_defintion = $plugin_definitions['ckeditor5_htmlSupport'];//->toArray();
+  $source_editing_plugin_definition = $plugin_definitions['ckeditor5_sourceEditing']->toArray();
+  $style_plugin_defintion = $plugin_definitions['ckeditor5_style']->toArray();
+  $table_plugin_defintion = $plugin_definitions['ckeditor5_table']->toArray();
+
+
+
+  // $dump = var_export($style_plugin_defintion, TRUE);
+  // file_put_contents('style.txt', $dump, FILE_APPEND);
+
+  // $dump = var_export($table_plugin_defintion, TRUE);
+  // file_put_contents('table.txt', $dump, FILE_APPEND);
+
+  // foreach($plugin_definitions as $key => $value) {
+  //   $dump = var_export($value->toArray(), TRUE);
+  //   file_put_contents("$key.txt", $dump, FILE_APPEND);
+  // }
+
+  // $dump = var_export($plugin_definitions->toArray(), TRUE);
+  // file_put_contents('big-dump.txt', $dump, FILE_APPEND);
+}
