@@ -243,3 +243,15 @@ Barring new templates, we need to drill a bit deeper. */
   .ui-autocomplete .linkit-result-line-wrapper.ui-menu-item-wrapper.ui-state-focus {
   background: #0075ba !important;
   }
+
+  /* Paragraphs fields cause overflow of content forms in Claro */
+  .form-textarea-wrapper .ck.ck-toolbar .ck.ck-toolbar__items {
+    flex-wrap: wrap;
+  }
+
+  /* 1072px */
+  @media (max-width: 67em) {
+  .field--widget-paragraphs input.form-element {
+    width: 100%;
+  }
+  }
