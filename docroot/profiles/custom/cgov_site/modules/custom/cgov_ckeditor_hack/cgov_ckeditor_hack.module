@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
+
 /**
  * Modify the list of available CKEditor 5 plugins.
  * implements hook_ckeditor5_plugin_info_alter()
@@ -20,19 +22,28 @@ function cgov_ckeditor_hack_ckeditor5_plugin_info_alter(array &$plugin_definitio
   $style_plugin_defintion = $plugin_definitions['ckeditor5_style']->toArray();
   $table_plugin_defintion = $plugin_definitions['ckeditor5_table']->toArray();
 
+  $substitution = [
+    'ckeditor5_sourceEditing' => 'cgov_ckeditor_hack/ckeditor5.sourceEditing',
+    'ckeditor5_style' => 'cgov_ckeditor_hack/ckeditor5.style',
+    'ckeditor5_table' => 'cgov_ckeditor_hack/ckeditor5.table'
+  ];
 
+  foreach($substitution as $key => $replacement) {
+    assert($plugin_definitions[$key] instanceof CKEditor5PluginDefinition);
+    $plugin = $plugin_definitions[$key]->toArray();
+    $plugin['drupal']['library'] = $replacement;
+    $plugin_definitions[$key] = new CKEditor5PluginDefinition($plugin);
+  }
 
-  // $dump = var_export($style_plugin_defintion, TRUE);
-  // file_put_contents('style.txt', $dump, FILE_APPEND);
-
-  // $dump = var_export($table_plugin_defintion, TRUE);
-  // file_put_contents('table.txt', $dump, FILE_APPEND);
-
-  // foreach($plugin_definitions as $key => $value) {
-  //   $dump = var_export($value->toArray(), TRUE);
-  //   file_put_contents("$key.txt", $dump, FILE_APPEND);
+  // if( $html_support_plugin_defintion ) {
+  //   file_put_contents('debug', 'exists');
+  // }else{
+  //   file_put_contents('debug', 'doesn\'t exist');
   // }
 
-  // $dump = var_export($plugin_definitions->toArray(), TRUE);
-  // file_put_contents('big-dump.txt', $dump, FILE_APPEND);
+
+  // foreach($substitution as $key => $value) {
+  //   $dump = var_export($plugin_definitions[$key]->toArray(), TRUE);
+  //   file_put_contents("$key.txt", $dump, FILE_APPEND);
+  // }
 }
