@@ -69,22 +69,11 @@ shell_exec(sprintf('mkdir -p %s', escapeshellarg($cache_directory)));
  * NCI SPECIFIC HERE
  ***************************************/
 
-// Check for cgov-drupal-users file in /mnt/gfs/home/ncigov
-$users_file_exists = file_exists("/mnt/gfs/home/ncigov/cgov-drupal-user.yml");
-
-if ($users_file_exists) {
-  $usr_file_param = "-D cgov.drupal_users_file=/mnt/gfs/home/ncigov/cgov-drupal-user.yml";
-}
-else {
-  $usr_file_param = "";
-}
-
 // Execute the updates.
 $command = sprintf(
-  'DRUSH_PATHS_CACHE_DIRECTORY=%s %s cgov:acsf:post-install %s --environment=%s --site=%s --define drush.uri=%s --verbose --no-interaction',
+  'DRUSH_PATHS_CACHE_DIRECTORY=%s %s cgov:acsf:post-install --environment=%s --site=%s --define drush.uri=%s --verbose --no-interaction',
   escapeshellarg($cache_directory),
   escapeshellarg($blt),
-  $usr_file_param,
   escapeshellarg($env),
   escapeshellarg($_acsf_site_name),
   escapeshellarg($uri)
