@@ -3,7 +3,6 @@
 namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
-use Acquia\Blt\Robo\Exceptions\BltException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -23,10 +22,16 @@ class UsersCommands extends BltTasks {
     $users_file_path = $this->getConfigValue('cgov.drupal_users_file');
 
     if (!file_exists($users_file_path)) {
-      throw new BltException("Could not read the drupal user's file.");
+      // We should warn here and exit, but not throw.
+      $this->logger->warning("Skipping user load. $users_file_path not found.");
+      return;
     }
 
-    $userConfig = Yaml::parse(file_get_contents($users_file_path));
+    $userConfig = Yaml::parse(file_get_contents($users_file_path)) ?? [];
+
+    if ($userConfig === NULL || $userConfig === []) {
+      $this->logger->warning("Skipping user load. $users_file_path was empty.");
+    }
 
     $commands = [];
 
