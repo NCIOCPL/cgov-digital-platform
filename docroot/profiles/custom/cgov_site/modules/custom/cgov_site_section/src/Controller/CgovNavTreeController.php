@@ -99,7 +99,7 @@ class CgovNavTreeController extends ControllerBase {
   /**
    * Gets an empty 400 response for error conditions.
    *
-   * @return \Component\HttpFoundation\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   An empty JSON Object with a 400 status.
    */
   protected function getEmpty400Response() {
@@ -118,7 +118,7 @@ class CgovNavTreeController extends ControllerBase {
    * @param string|int $menu_id
    *   The ID of the root menu.
    *
-   * @return \Component\HttpFoundation\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   A JSON Object with a 200 status and tree data.
    */
   protected function getValidResponse(array $tree_root, $menu_type, $menu_id) {
@@ -465,7 +465,7 @@ class CgovNavTreeController extends ControllerBase {
    * @param \Drupal\taxonomy\TermInterface $term
    *   Term to retrieve parent from.
    *
-   * @return \Drupal\taxonomy\TermInterface
+   * @return \Drupal\taxonomy\TermInterface|null
    *   Parent of provided term.
    */
   public function getParentTerm(TermInterface $term) {
@@ -475,10 +475,11 @@ class CgovNavTreeController extends ControllerBase {
     $parents = $term_storage->loadParents($term->id());
     // Load parents return an associative array where key is $tid
     // obviating the need to query the term itself for its id.
-    if (count(array_keys($parents))) {
-      /** @var \Drupal\taxonomy\TermInterface */
-      return $parents[array_keys($parents)[0]];
+    if (count(array_keys($parents)) === 0) {
+      return NULL;
     }
+    /** @var \Drupal\taxonomy\TermInterface */
+    return $parents[array_keys($parents)[0]];
   }
 
 }

@@ -23,7 +23,7 @@ class CgovVocabManager {
    * Generates a rendered breadcrumb that print taxonomy hiererchy levels.
    */
   public function getTaxonomyBreadcrumb(int $parent_tid, TermStorageInterface $storageController, RendererInterface $renderer) {
-    if (!isset($parent_tid) || !$parent_tid) {
+    if (!$parent_tid) {
       return;
     }
 

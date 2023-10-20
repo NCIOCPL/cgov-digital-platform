@@ -75,8 +75,14 @@ function cgov_site_section_tokens($type, $tokens, array $data, array $options, B
             $replacements[$original] = $term->get('computed_path')->value;
           }
           catch (Exception $e) {
-            \Drupal::logger('cgov_site_section')
-              ->notice('Error loading and getting the computed path for tid: ' . $tid . " for entity " . $entity->id());
+            if (!empty($tid)) {
+              \Drupal::logger('cgov_site_section')
+                ->notice('Error loading and getting the computed path for tid: ' . $tid . " for entity " . $entity->id());
+            }
+            else {
+              \Drupal::logger('cgov_site_section')
+                ->notice('Error loading and getting the computed path for entity' . $entity->id() . " and no tid was found");
+            }
           }
         }
         else {
@@ -166,7 +172,7 @@ function _get_taxonomy_field_token(array $data, $fieldname) {
  *   Node object.
  */
 function _get_valid_parent($alias) {
-  if (!isset($alias) || trim($alias) === '') {
+  if (trim($alias) === '') {
     return NULL;
   }
 
