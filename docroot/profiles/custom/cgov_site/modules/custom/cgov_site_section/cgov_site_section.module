@@ -10,8 +10,11 @@ use Drupal\cgov_site_section\FieldStorageDefinition;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
+use Drupal\taxonomy\TermStorage;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
+use Drupal\block_content\Entity\BlockContent;
 
 /**
  * Implements hook_entity_field_storage_info().
@@ -31,7 +34,6 @@ function cgov_site_section_entity_field_storage_info(EntityTypeInterface $entity
  */
 function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
   if ($entity_type->id() === 'taxonomy_term' && $bundle === 'cgov_site_sections') {
-    /** @var \Drupal\Core\Field\FieldStorageDefinitionInterface $custom_bundle_field_storage */
     $custom_bundle_field_storage = cgov_site_section_entity_field_storage_info($entity_type)['computed_path'];
     $definitions[$custom_bundle_field_storage->getName()] = FieldDefinition::createFromFieldStorageDefinition($custom_bundle_field_storage);
     return $definitions;
@@ -45,7 +47,7 @@ function cgov_site_section_entity_bundle_field_info(EntityTypeInterface $entity_
  * field 'computed_path'. 'computed_path' consists of the parents terms path
  *  and this terms Pretty URL Field.
  */
-function cgov_site_section_taxonomy_term_presave(EntityInterface $entity) {
+function cgov_site_section_taxonomy_term_presave(Term $entity) {
   // Only do the following for site sections.
   if ($entity->bundle() !== 'cgov_site_sections') {
     return;
@@ -111,69 +113,75 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
    */
   if (
     $entity->getEntityTypeId() === 'node' &&
-    $entity->hasField('field_site_section')
+    !empty($entity->field_site_section)
   ) {
     // Check for moderation state AFTER determining its a node instead
     // of before due to https://www.drupal.org/project/wbm2cm/issues/3042445.
-    $current_entity_lang = $entity->get('langcode')->value;
-    $translated_entity = $entity->getTranslation($current_entity_lang);
-    $current_state = $translated_entity->get('moderation_state')->value;
+    $current_entity_lang = $entity->language()->getId();
 
-    if ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity)) {
-      // Find the Sections where this node is a landing page.
-      // Invalidate their cache to account for the nodes new alias.
-      $section_entities = \Drupal::entityTypeManager()
-        ->getStorage('taxonomy_term')
-        ->loadByProperties([
-          'field_landing_page.target_id' => $entity->id(),
-        ]);
+    $node_storage = \Drupal::service('entity_type.manager')
+      ->getStorage("node");
+    $node = $node_storage->load($entity->id());
+    if ($node->hasTranslation($current_entity_lang)) {
+      $translated_entity = $node->getTranslation($current_entity_lang);
+      $current_state = $translated_entity->get('moderation_state')->value;
 
-      if (count($section_entities) > 0) {
-        // This item is set as the landing page for at least one Site Section.
-        // Invalidate the Nav Root cache tag set on the Site Section(s).
-        $section_nav_ids = [];
-        $mobile_nav_ids = [];
-        foreach ($section_entities as $section) {
-          // Get taxonomy term storage.
-          $termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-          if ($section) {
-            // Load the parents of a term.
-            $parents = $termStorage->loadParents($section->id());
-            if (!empty($parents)) {
-              foreach ($parents as $parent_term) {
-                // Get section nav items to clear.
-                $section_nav_to_clear =  get_sections_to_clear($parent_term);
-                $section_nav_ids = array_merge($section_nav_ids, $section_nav_to_clear);
+      if ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity)) {
+        // Find the Sections where this node is a landing page.
+        // Invalidate their cache to account for the nodes new alias.
+        $section_entities = \Drupal::entityTypeManager()
+          ->getStorage('taxonomy_term')
+          ->loadByProperties([
+            'field_landing_page.target_id' => $entity->id(),
+          ]);
 
-                // Get mobile nav items to clear.
-                $mobile_nav_to_clear =  get_rendering_sections_for_mobile($parent_term);
-                $mobile_nav_ids = array_merge($mobile_nav_ids, $mobile_nav_to_clear);
+        if (count($section_entities) > 0) {
+          // This item is set as the landing page for at least one Site Section.
+          // Invalidate the Nav Root cache tag set on the Site Section(s).
+          $section_nav_ids = [];
+          $mobile_nav_ids = [];
+          foreach ($section_entities as $section) {
+            // Get taxonomy term storage.
+            $termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+            if ($section && $termStorage instanceof TermStorage) {
+              // Load the parents of a term.
+              $parents = $termStorage->loadParents($section->id());
+              if (!empty($parents)) {
+                foreach ($parents as $parent_term) {
+                  // Get section nav items to clear.
+                  $section_nav_to_clear =  get_sections_to_clear($parent_term);
+                  $section_nav_ids = array_merge($section_nav_ids, $section_nav_to_clear);
+
+                  // Get mobile nav items to clear.
+                  $mobile_nav_to_clear =  get_rendering_sections_for_mobile($parent_term);
+                  $mobile_nav_ids = array_merge($mobile_nav_ids, $mobile_nav_to_clear);
+                }
               }
+            }
+          }
+
+          // Invalidate the section cache tag.
+          if (!empty($section_nav_ids)) {
+            foreach ($section_nav_ids as $section_nav_id) {
+              invalidate_section_cache_tag($section_nav_id);
+            }
+          }
+          // Invalidate the mobile cache tag.
+          if (!empty($mobile_nav_ids)) {
+            foreach ($mobile_nav_ids as $mobile_nav_id) {
+              invalidate_mobile_nav_cache_tag($mobile_nav_id);
             }
           }
         }
 
-        // Invalidate the section cache tag.
-        if (!empty($section_nav_ids)) {
-          foreach ($section_nav_ids as $section_nav_id) {
-            invalidate_section_cache_tag($section_nav_id);
-          }
-        }
-        // Invalidate the mobile cache tag.
-        if (!empty($mobile_nav_ids)) {
-          foreach ($mobile_nav_ids as $mobile_nav_id) {
-            invalidate_mobile_nav_cache_tag($mobile_nav_id);
-          }
-        }
+        // Clear out the main nav cache tag. This is pretty brute force here and
+        // could be more nuanced like the invalidate section cache tag. e.g. this
+        // term may be too deep in the tree, or may be hidden, so no need to
+        // clear the menu. However, we are blocking clearing the nav from Akamai
+        // this is really for *-cms users to see their changed before pushing
+        // live.
+        Cache::invalidateTags(['mainnav:' . $current_entity_lang]);
       }
-
-      // Clear out the main nav cache tag. This is pretty brute force here and
-      // could be more nuanced like the invalidate section cache tag. e.g. this
-      // term may be too deep in the tree, or may be hidden, so no need to
-      // clear the menu. However, we are blocking clearing the nav from Akamai
-      // this is really for *-cms users to see their changed before pushing
-      // live.
-      Cache::invalidateTags(['mainnav:' . $current_entity_lang]);
     }
   }
 }
@@ -184,17 +192,18 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
  * If a mega menu block is updated then clean out the
  * mega-menu-block cache tag.
  */
-function cgov_site_section_block_content_update(EntityInterface $entity) {
+function cgov_site_section_block_content_update(BlockContent $entity) {
 
   if ($entity->bundle() !== 'ncids_mega_menu_content') {
     return;
   }
+  $test = $entity->original->get('status')->value;
 
   // Make sure to clear out the mega-menu-block cache tag
   // if the block status is updated OR
   // if the field_yaml_content data is updated.
-  if (($entity->original->status->value !== $entity->status->value) ||
-    ($entity->original->field_yaml_content->value !== $entity->field_yaml_content->value)) {
+  if (($entity->original->get('status')->value !== $entity->get('status')->value) ||
+    ($entity->original->get('field_yaml_content')->value !== $entity->get('field_yaml_content')->value)) {
     // Clear out the mega-menu-block cache tag.
     Cache::invalidateTags(['mega-menu-block:' . $entity->id()]);
   }
@@ -208,7 +217,7 @@ function cgov_site_section_block_content_update(EntityInterface $entity) {
  * then we need to cascade those changes to any subsections and
  * pages within those subsections.
  */
-function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
+function cgov_site_section_taxonomy_term_update(Term $entity) {
 
   // Only do this for site sections. In the future if there is
   // a vocabulary in which we attach site_section for managing its node's
@@ -277,7 +286,7 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
 
   // Make sure to clear out the mega-menu-section cache tag
   // if the field_ncids_mega_menu_contents data is updated.
-  if ($entity->original->field_ncids_mega_menu_contents->target_id !== $entity->field_ncids_mega_menu_contents->target_id) {
+  if ($entity->field_ncids_mega_menu_contents->target_id !== $entity->field_ncids_mega_menu_contents->target_id) {
     Cache::invalidateTags(['mega-menu-section:' . $entity->id()]);
   }
 
@@ -289,13 +298,13 @@ function cgov_site_section_taxonomy_term_update(EntityInterface $entity) {
 /**
  * Returns the set of sections IDs to clear for a given site section update.
  *
- * @param \Drupal\Core\Entity\EntityInterface $section_entity
+ * @param \Drupal\taxonomy\Entity\Term $section_entity
  *   The section being updated.
  *
  * @return array
  *   The sections IDs to cache tag clear.
  */
-function get_sections_to_clear(EntityInterface $section_entity) {
+function get_sections_to_clear(Term $section_entity) {
   // Get the current set of section IDs that display this item.
   // Includes this term itself if its a nav root.
   $sectionsToClear = get_rendering_sections($section_entity);
@@ -316,47 +325,10 @@ function get_sections_to_clear(EntityInterface $section_entity) {
   // we need to invalidate pages having its old section nav root ID.
   if (isset($section_entity->original)) {
     if ($section_entity->field_section_nav_root->value == 0 &&
-      $section_entity->original->field_section_nav_root->value == 1) {
+      $section_entity->original->get('field_section_nav_root')->value === 1) {
       $sectionsToClear[] = $section_entity->id();
     }
  }
-
-  // De-dupe the IDs.
-  $sectionsToClear = array_unique($sectionsToClear);
-
-  return $sectionsToClear;
-}
-
-/**
- * Returns the set of sections IDs to clear for a given mpbile nav update.
- *
- * @param \Drupal\Core\Entity\EntityInterface $section_entity
- *   The section being updated.
- *
- * @return array
- *   The mobile nav IDs to cache tag clear.
- */
-function get_mobile_nav_to_clear(EntityInterface $section_entity) {
-  // Get the current set of section IDs that display this item.
-  // Includes this term itself if its a nav root.
-  $sectionsToClear = get_rendering_sections($section_entity);
-
-  // If this section changed parents, or visibility, invalidate
-  // the cache tags for the original rendering sections as well.
-  if (entity_fields_modified([
-    'parent',
-    'field_navigation_display_options',
-  ], $section_entity)) {
-    $originalRenderingSections = get_rendering_sections($section_entity->original);
-    $sectionsToClear = array_merge($sectionsToClear, $originalRenderingSections);
-  }
-
-  // If this section changed from being a section nav root to not,
-  // we need to invalidate pages having its old section nav root ID.
-  if ($section_entity->field_main_nav_root->value == 0 &&
-    $section_entity->original->field_main_nav_root->value == 1) {
-    $sectionsToClear[] = $section_entity->id();
-  }
 
   // De-dupe the IDs.
   $sectionsToClear = array_unique($sectionsToClear);
@@ -458,7 +430,7 @@ function will_trigger_save_children(EntityInterface $updated_section_entity) {
  * field_site_section
  * field_pretty_url
  *
- * @param \Drupal\Core\Entity\EntityInterface $updated_entity
+ * @param \Drupal\taxonomy\Entity\Term|\Drupal\node\Entity\Node $updated_entity
  *   The entity just updated.
  *
  * @return bool
@@ -521,7 +493,8 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
     $updated_entity->bundle() == 'cgov_site_sections') {
 
     // Early exit. Yes,trigger a cache invalidation if weight modified.
-    $weightModified = $updated_entity->original->getWeight() !== $updated_entity->getWeight();
+    $original = $updated_entity->original;
+    $weightModified = ($original instanceof Term) && ($original->getWeight() !== $updated_entity->getWeight());
     if ($weightModified) {
       return TRUE;
     }
@@ -540,7 +513,7 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
       in_array('hide_in_section_nav', $displayOptions) : FALSE;
 
     // Get the display options for the original entity.
-    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = $original->get('field_navigation_display_options')->getValue();
     $originalOptions = array_column($originalOptions, 'value');
     $originalIsHidden = !empty($originalOptions)
       ? in_array('hide_in_section_nav', $originalOptions) : FALSE;
@@ -578,23 +551,27 @@ function _will_trigger_cache_tag_invalidation(EntityInterface $updated_entity) {
  *  field_navigation_display_options
  *  weight.
  *
- * @param \Drupal\Core\Entity\EntityInterface $updated_entity
+ * @param \Drupal\taxonomy\Entity\Term $updated_entity
  *   The entity just updated.
  *
  * @return bool
  *   A TRUE or FALSE as to whether to trigger a cache clear.
  */
-function should_invalidate_mobile_nav(EntityInterface $updated_entity) {
+function should_invalidate_mobile_nav(Term $updated_entity) {
 
   $entityType = $updated_entity->getEntityTypeId();
-
+  $values = [];
   // Invalidation Check for Site Sections.
   if ($entityType === 'taxonomy_term' &&
     $updated_entity->bundle() == 'cgov_site_sections') {
 
     // Early exit. Yes,trigger a cache invalidation if weight modified.
-    $weightModified = $updated_entity->original->getWeight() !== $updated_entity->getWeight();
-    if ($weightModified) {
+    $original = $updated_entity->orginal;
+    // if ($original !== NULL) {
+    //   return FALSE;
+    // }
+    $weightModified = ($original instanceof Term) && ($original->getWeight() !== $updated_entity->getWeight());
+    if ($weightModified || $original === NULL) {
       return TRUE;
     }
 
@@ -612,7 +589,7 @@ function should_invalidate_mobile_nav(EntityInterface $updated_entity) {
       in_array('hide_in_mobile_nav', $displayOptions) : FALSE;
 
     // Get the display options for the original entity.
-    $originalOptions = $updated_entity->original->field_navigation_display_options->getValue();
+    $originalOptions = $original->field_navigation_display_options->getValue();
     $originalOptions = array_column($originalOptions, 'value');
     $originalIsHidden = !empty($originalOptions)
       ? in_array('hide_in_mobile_nav', $originalOptions) : FALSE;
@@ -642,13 +619,13 @@ function should_invalidate_mobile_nav(EntityInterface $updated_entity) {
  *
  * @param array $fields
  *   The fields which trigger a cache invalidation.
- * @param \Drupal\Core\Entity\EntityInterface $entity
+ * @param Term|Node $entity
  *   The updated entity.
  *
  * @return bool
  *   A TRUE or FALSE as to whether the fields were modified.
  */
-function entity_fields_modified(array $fields, EntityInterface $entity) {
+function entity_fields_modified(array $fields, $entity) {
 
   // Exit early if no fields were passed.
   if (empty($fields)) {
@@ -657,7 +634,7 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
   // Store the original entity for comparison.
   $original = $entity->original;
   // If entity status has been modified exit and return true.
-  if (isset($entity->original) && ($entity->status->getString() !== $entity->original->status->getString())) {
+  if (isset($entity->original) && ($entity->get('status')->getString() !== $entity->original->get('status')->getString())) {
     return TRUE;
   }
   if ($entity->original == null && $entity->status->getString() == "1" ) {
@@ -698,10 +675,10 @@ function entity_fields_modified(array $fields, EntityInterface $entity) {
 /**
  * Set the front page if conditions are right.
  *
- * @param \Drupal\Core\Entity\EntityInterface $site_section
+ * @param \Drupal\taxonomy\Entity\Term $site_section
  *   The site section.
  */
-function _cgov_site_section_attempt_set_front_page(EntityInterface $site_section) {
+function _cgov_site_section_attempt_set_front_page(Term $site_section) {
   /*
    * If it has no landing page, then we need to exit.
    *
@@ -991,7 +968,7 @@ function get_term_tree(Term $term) {
 function get_section_parent(Term $term) {
   $termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
 
-  if ($term) {
+  if ($term && $termStorage instanceof TermStorage) {
     $parents = $termStorage->loadParents($term->id());
     if (!empty($parents)) {
       return $parents[array_keys($parents)[0]];
@@ -1010,9 +987,8 @@ function get_section_parent(Term $term) {
  */
 function cgov_site_section_link_alter(&$variables) {
   if (isset($variables['url'])) {
-    /** @var \Drupal\Core\Url $url */
     $url = $variables['url'];
-    if ($url->isRouted() && $url->getRouteName() == "entity.taxonomy_vocabulary.overview_form") {
+    if (($url instanceof Url) && $url->isRouted() && $url->getRouteName() == "entity.taxonomy_vocabulary.overview_form") {
       $params = $url->getRouteParameters();
       if (isset($params['taxonomy_vocabulary']) && $params['taxonomy_vocabulary'] === 'cgov_site_sections') {
         $variables['url'] = Url::fromRoute(
@@ -1027,7 +1003,7 @@ function cgov_site_section_link_alter(&$variables) {
 /**
  * Implements hook_ENTITY_TYPE_presave().
  */
-function cgov_site_section_block_content_presave(EntityInterface $entity) {
+function cgov_site_section_block_content_presave(BlockContent $entity) {
   if ($entity->bundle() !== 'ncids_mega_menu_content') {
      return;
   }

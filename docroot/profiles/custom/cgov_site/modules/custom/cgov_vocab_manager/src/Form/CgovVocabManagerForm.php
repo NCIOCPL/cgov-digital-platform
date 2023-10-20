@@ -3,6 +3,7 @@
 
 namespace Drupal\cgov_vocab_manager\Form;
 
+use Drupal\cgov_vocab_manager\Manager\CgovVocabManager;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
@@ -14,6 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\taxonomy\VocabularyInterface;
+use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -22,13 +24,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @internal
  */
 class CgovVocabManagerForm extends FormBase {
-
-  use DeprecatedServicePropertyTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $deprecatedProperties = ['entityManager' => 'entity.manager'];
 
   /**
    * The module handler service.
@@ -40,7 +35,7 @@ class CgovVocabManagerForm extends FormBase {
   /**
    * The entity manager.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -73,6 +68,13 @@ class CgovVocabManagerForm extends FormBase {
   protected $entityRepository;
 
   /**
+   * The cgov vocab manager.
+   *
+   * @var \Drupal\cgov_vocab_manager\Manager\CgovVocabManager
+   */
+  protected $vocabManager;
+
+  /**
    * Constructs an OverviewTerms object.
    *
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
@@ -83,18 +85,23 @@ class CgovVocabManagerForm extends FormBase {
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
+   * @param \Drupal\cgov_vocab_manager\Manager\CgovVocabManager $vocab_manager
+   *   The vocab manager.
    */
-  public function __construct(ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer = NULL, EntityRepositoryInterface $entity_repository = NULL) {
+  public function __construct(
+    ModuleHandlerInterface $module_handler,
+    EntityTypeManagerInterface $entity_type_manager,
+    RendererInterface $renderer = NULL,
+    EntityRepositoryInterface $entity_repository = NULL,
+    CgovVocabManager $vocab_manager
+  ) {
     $this->moduleHandler = $module_handler;
     $this->entityTypeManager = $entity_type_manager;
     $this->storageController = $entity_type_manager->getStorage('taxonomy_term');
     $this->termListBuilder = $entity_type_manager->getListBuilder('taxonomy_term');
-    $this->renderer = $renderer ?: \Drupal::service('renderer');
-    if (!$entity_repository) {
-      @trigger_error('Calling OverviewTerms::__construct() with the $entity_repository argument is supported in drupal:8.7.0 and will be required before drupal:9.0.0. See https://www.drupal.org/node/2549139.', E_USER_DEPRECATED);
-      $entity_repository = \Drupal::service('entity.repository');
-    }
+    $this->renderer = $renderer;
     $this->entityRepository = $entity_repository;
+    $this->vocabManager = $vocab_manager;
   }
 
   /**
@@ -105,7 +112,8 @@ class CgovVocabManagerForm extends FormBase {
       $container->get('module_handler'),
       $container->get('entity_type.manager'),
       $container->get('renderer'),
-      $container->get('entity.repository')
+      $container->get('entity.repository'),
+      $container->get('cgov_vocab_manager.manager')
     );
   }
 
@@ -119,7 +127,7 @@ class CgovVocabManagerForm extends FormBase {
    *   The title, itself
    */
   public function getTitle($taxonomy_vocabulary) {
-    return $this->t("CGov Vocab Manager - %voc_name", ["%voc_name" => $taxonomy_vocabulary->label()]);
+    return $this->t("CGov Vocab Manager - %voc_name", ["%voc_name" => $taxonomy_vocabulary]);
   }
 
   /**
@@ -137,8 +145,7 @@ class CgovVocabManagerForm extends FormBase {
       'max_depth' => 1,
       'load_entities' => FALSE,
     ];
-
-    \Drupal::moduleHandler()->alter('taxonomy_tree_args', $tree_args);
+    $this->moduleHandler->alter('taxonomy_tree_args', $tree_args);
 
     return $tree_args;
   }
@@ -193,6 +200,8 @@ class CgovVocabManagerForm extends FormBase {
     $delta = 0;
     $term_deltas = [];
 
+    $complete_tree = FALSE;
+
     $tree_args = $this->getTreeArgs($taxonomy_vocabulary);
 
     $tree = $this->storageController->loadTree($tree_args['vid'], $tree_args['parent'], $tree_args['max_depth'], $tree_args['load_entities']);
@@ -209,14 +218,14 @@ class CgovVocabManagerForm extends FormBase {
         continue;
       }
       // Count entries after the current page.
-      elseif ($page_entries > $page_increment && isset($complete_tree)) {
+      elseif ($page_entries > $page_increment && $complete_tree) {
         $after_entries++;
         continue;
       }
 
       // Do not let a term start the page that is not at the root.
       $term = $tree[$tree_index];
-      if (isset($term->depth) && ($term->depth > 0) && !isset($back_step)) {
+      if (isset($term->depth) && ($term->depth->value > 0) && !isset($back_step)) {
         $back_step = 0;
         while ($pterm = $tree[--$tree_index]) {
           $before_entries--;
@@ -231,7 +240,7 @@ class CgovVocabManagerForm extends FormBase {
       $back_step = isset($back_step) ? $back_step : 0;
 
       // Continue rendering the tree until we reach the a new root item.
-      if ($page_entries >= $page_increment + $back_step + 1 && $term->depth == 0 && $root_entries > 1) {
+      if ($page_entries >= $page_increment + $back_step + 1 && $term->depth->value == 0 && $root_entries > 1) {
         $complete_tree = TRUE;
         // This new item at the root level is the first item on the next page.
         $after_entries++;
@@ -245,14 +254,14 @@ class CgovVocabManagerForm extends FormBase {
       // page.
       $page_entries++;
       $term_deltas[$term->tid] = isset($term_deltas[$term->tid]) ? $term_deltas[$term->tid] + 1 : 0;
-      $key = 'tid:' . $term->tid . ':' . $term_deltas[$term->tid];
+      $key = 'tid:' . $term->id() . ':' . $term_deltas[$term->id()];
 
       // Keep track of the first term displayed on this page.
       if ($page_entries == 1) {
         $form['#first_tid'] = $term->tid;
       }
       // Keep a variable to make sure at least 2 root elements are displayed.
-      if ($term->parents[0] == 0) {
+      if (intval($term->parents[0]) == 0) {
         $root_entries++;
       }
       $current_page[$key] = $term;
@@ -277,7 +286,7 @@ class CgovVocabManagerForm extends FormBase {
         // Verify this is a term for the current page and set at the current
         // depth.
         if (is_array($user_input['terms'][$key]) && is_numeric($user_input['terms'][$key]['term']['tid'])) {
-          $current_page[$key]->depth = $user_input['terms'][$key]['term']['depth'];
+          $current_page[$key] = $user_input['terms'][$key]['term']['depth'];
         }
         else {
           unset($current_page[$key]);
@@ -291,7 +300,7 @@ class CgovVocabManagerForm extends FormBase {
     ];
     $help_message = '';
     if (!is_null($parent_tid) && $parent_tid) {
-      $help_message = \Drupal::service('cgov_vocab_manager.manager')
+      $help_message = $this->vocabManager
         ->getTaxonomyBreadcrumb($parent_tid, $this->storageController, $this->renderer);
     }
 
@@ -358,11 +367,12 @@ class CgovVocabManagerForm extends FormBase {
         'operations' => [],
         'weight' => $update_tree_access->isAllowed() ? [] : NULL,
       ];
-      /** @var $term \Drupal\Core\Entity\EntityInterface */
-      $term = $this->entityRepository->getTranslationFromContext($term);
+      // Removing the below line because it is translating the $term for the current
+      // language. If we are translating an english term to english, its the same term.
+      // $term = $this->entityRepository->getTranslationFromContext($term);
       $form['terms'][$key]['#term'] = $term;
       $indentation = [];
-      if (isset($term->depth) && $term->depth > 0) {
+      if (isset($term->depth) && intval($term->depth) > 0) {
         $indentation = [
           '#theme' => 'indentation',
           '#size' => $term->depth,
@@ -377,7 +387,7 @@ class CgovVocabManagerForm extends FormBase {
 
       $form['terms'][$key]['children'] = [
         '#type' => 'markup',
-        '#markup' => \Drupal::service('cgov_vocab_manager.manager')
+        '#markup' => $this->vocabManager
           ->getChildrenLink($term, $this->storageController, $this->renderer),
       ];
 
@@ -525,8 +535,10 @@ class CgovVocabManagerForm extends FormBase {
     foreach ($stubs as $itemKey => $stub) {
       $termKeyMap[$stub->tid] = $itemKey;
     }
-
     $terms = $this->storageController->loadMultiple(array_keys($termKeyMap));
+    if (empty($terms) || !($terms instanceof Term)) {
+      return $stubs;
+    }
     foreach ($terms as $tid => $term) {
       $stub = $stubs[$termKeyMap[$tid]];
       // Normally these properties are set by TermStorageInterface::loadTree,
