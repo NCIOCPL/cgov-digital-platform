@@ -64,9 +64,7 @@ class CgovSyndicationFieldItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $syndicate = $this->get('syndicate');
-    $keywords = $this->get('keywords');
-    return empty($syndicate) && empty($keywords);
+    return empty($this->get('syndicate')) && empty($this->get('keywords'));
   }
 
 }

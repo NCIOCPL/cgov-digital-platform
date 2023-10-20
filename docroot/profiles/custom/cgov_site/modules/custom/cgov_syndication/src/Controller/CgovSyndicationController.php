@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_syndication\Controller;
 
-use Drupal\node\Controller\NodeViewController;
 use Drupal\node\Entity\Node;
+use Drupal\node\Controller\NodeViewController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -21,7 +21,7 @@ class CgovSyndicationController extends NodeViewController {
   /**
    * Return an HTML rendering of a syndicated content item to HHS.
    *
-   * @param Drupal\node\Entity\Node $node
+   * @param \Drupal\node\Entity\Node $node
    *   Content item to be syndicated.
    *
    * @return array
@@ -31,7 +31,7 @@ class CgovSyndicationController extends NodeViewController {
 
     // Make sure we have a syndicatable piece of content.
     $bundles = ['cgov_article', 'pdq_cancer_information_summary'];
-    if (empty($node) || !in_array($node->bundle(), $bundles)) {
+    if (!in_array($node->bundle(), $bundles)) {
       throw new NotFoundHttpException();
     }
     if (!$node->hasField('field_hhs_syndication')) {
