@@ -33,17 +33,8 @@ function cgov_ckeditor_hack_ckeditor5_plugin_info_alter(array &$plugin_definitio
     $plugin = $plugin_definitions[$key]->toArray();
     $plugin['drupal']['library'] = $replacement;
     $plugin_definitions[$key] = new CKEditor5PluginDefinition($plugin);
+
+    //file_put_contents("$key.txt", var_export($replacement, TRUE));
   }
 
-  // if( $html_support_plugin_defintion ) {
-  //   file_put_contents('debug', 'exists');
-  // }else{
-  //   file_put_contents('debug', 'doesn\'t exist');
-  // }
-
-
-  // foreach($substitution as $key => $value) {
-  //   $dump = var_export($plugin_definitions[$key]->toArray(), TRUE);
-  //   file_put_contents("$key.txt", $dump, FILE_APPEND);
-  // }
 }
