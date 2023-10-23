@@ -1,5 +1,10 @@
 parameters:
   level: 2
+  drupal:
+    entityMapping:
+      redirect:
+        class: Drupal\redirect\Entity\Redirect
+        storage: Drupal\Core\Entity\ContentEntityStorageInterface
   paths:
     - docroot/modules/custom
     - docroot/profiles/custom
@@ -30,9 +35,6 @@ parameters:
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_infographic/cgov_infographic.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/cgov_redirect_manager.module
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/src/CgovImporterService.php
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/src/Plugin/QueueWorker/RedirectManagerQueueWorker.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/cgov_schema_org.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldType/CgovSchemaOrgFieldItem.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_schema_org/src/Plugin/Field/FieldWidget/CgovSchemaOrgWidget.php
@@ -83,3 +85,12 @@ parameters:
       ## See https://github.com/NCIOCPL/cgov-digital-platform/issues/3945
       message: "#Call to deprecated method withConsecutive\\(\\) of class PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationMocker.#"
       reportUnmatched: false
+    -
+      ## This ignore sucks. However claimItem only returns an object, it
+      ## should probably return an interface, or something else, but it
+      ## does not. We have no way of saying an object has random properties.
+      ## So we are going to just ignore instead until Drupal 12 or 13 fixes
+      ## it.
+      message: "#Cannot access property \\$data on object\\|true.#"
+      path: docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/cgov_redirect_manager.module
+      reportUnmatched: true

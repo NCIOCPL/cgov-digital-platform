@@ -2,12 +2,18 @@
 
 namespace Drupal\cgov_redirect_manager;
 
-use Drupal\Core\Database\Connection;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ExtensionPathResolver;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\path_alias\AliasManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Service that imports redirections in bulk.
@@ -16,22 +22,21 @@ use Psr\Log\LoggerInterface;
  */
 class CgovImporterService {
 
-  /**
-   * {@inheritdoc}
-   */
-  public static $messages = [];
+  use StringTranslationTrait;
 
   /**
-   * {@inheritdoc}
-   */
-  public static $options = [];
-
-  /**
-   * The database connection service.
+   * The current request stack.
    *
-   * @var \Drupal\Core\Database\Connection
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $connection;
+  protected $requestStack;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
 
   /**
    * The language manager to get all languages for to get all aliases.
@@ -39,6 +44,34 @@ class CgovImporterService {
    * @var \Drupal\Core\Language\LanguageManagerInterface
    */
   protected $languageManager;
+
+  /**
+   * Alias manager.
+   *
+   * @var \Drupal\path_alias\AliasManagerInterface
+   */
+  protected $aliasManager;
+
+  /**
+   * Drupal messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
+   * File System service.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
+   * Extension path resolver.
+   *
+   * @var \Drupal\Core\Extension\ExtensionPathResolver
+   */
+  protected $extensionPathResolver;
 
   /**
    * A logger instance.
@@ -50,21 +83,40 @@ class CgovImporterService {
   /**
    * Constructs a Google Analytics Counter object.
    *
-   * @param \Drupal\Core\Database\Connection $connection
-   *   A database connection.
-   *   The path matcher.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language
    *   The language manager.
+   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
+   *   The alias manager interface.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The Drupal messenger service.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The file system service.
+   * @param \Drupal\Core\Extension\ExtensionPathResolver $extension_path_resolver
+   *   The extension path resolver.
    * @param \Psr\Log\LoggerInterface $logger
    *   A logger instance.
    */
   public function __construct(
-    Connection $connection,
+    RequestStack $request_stack,
+    EntityTypeManagerInterface $entity_type_manager,
     LanguageManagerInterface $language,
+    AliasManagerInterface $alias_manager,
+    MessengerInterface $messenger,
+    FileSystemInterface $file_system,
+    ExtensionPathResolver $extension_path_resolver,
     LoggerInterface $logger
   ) {
-    $this->connection = $connection;
+    $this->requestStack = $request_stack;
+    $this->entityTypeManager = $entity_type_manager;
     $this->languageManager = $language;
+    $this->aliasManager = $alias_manager;
+    $this->messenger = $messenger;
+    $this->fileSystem = $file_system;
+    $this->extensionPathResolver = $extension_path_resolver;
     $this->logger = $logger;
   }
 
@@ -73,52 +125,83 @@ class CgovImporterService {
    *
    * @param mixed $file
    *   Either a Drupal file object (ui) or a path to a file (drush).
-   * @param str[] $options
-   *   User-supplied default flags.
+   * @param bool $suppress_messages
+   *   Should this supress logging messages?
+   * @param bool $allow_nonexistent
+   *   Allow links to non-existent urls.
+   * @param string $delimiter
+   *   Delimiter to break up columns.
+   * @param bool $has_header
+   *   Does the file have a header?
+   * @param bool $overwrite
+   *   Should existing redirects be overridden?
+   * @param string $status_code
+   *   The status code to set for all redirects, '301' or '302'.
+   * @param string $language
+   *   The default language for the redirects.
    */
-  public static function import($file, array $options) {
+  public function import(
+    $file,
+    $suppress_messages = TRUE,
+    $allow_nonexistent = TRUE,
+    $delimiter = ',',
+    $has_header = FALSE,
+    $overwrite = TRUE,
+    $status_code = '301',
+    $language = 'en'
+    ) {
+
+    // Holder of error messages.
+    $messages = [];
+
     // Parse the CSV file into a readable array.
-    $data = self::read($file, $options);
-    self::$options = $options;
+    [$data, $readMessages] = $this->read(
+      $file,
+      $delimiter,
+      $has_header,
+      $status_code,
+      $language
+    );
+    $messages = array_merge($messages, $readMessages);
+
     // Perform Drupal-specific validation logic on each row.
-    $data = array_filter($data, ['self', 'preSave']);
+    $data = array_filter($data, function ($row) use ($allow_nonexistent, $messages) {
+      [$status, $message] = $this->validateRow($row, $allow_nonexistent);
+      if (!$status) {
+        $messages[] = $message;
+      }
+      return $status;
+    });
     $count = 0;
 
-    if ($options['suppress_messages'] != 1) {
+    if (!$suppress_messages) {
       // Messaging/logging is separated out in case we want to suppress these.
-      foreach (self::$messages['warning'] as $warning) {
-        \Drupal::messenger()->addWarning($warning);
+      foreach ($messages as $warning) {
+        $this->messenger->addWarning($warning);
       }
     }
 
     if (empty($data)) {
-      \Drupal::messenger()->addWarning(t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>', [':sample' => '/' . drupal_get_path('module', 'path_redirect_import') . '/redirect-example-file.csv']));
+      $this->messenger->addWarning(
+        $this->t('The uploaded file contains no rows with compatible redirect data. No redirects have imported. Compare your file to <a href=":sample">this sample data.</a>',
+        [':sample' => '/' . $this->extensionPathResolver->getPath('module', 'path_redirect_import') . '/redirect-example-file.csv']
+      ));
     }
     else {
-      if (PHP_SAPI == 'cli' && function_exists('drush_main')) {
+      if (
+        PHP_SAPI === 'cli' && function_exists('drush_main')
+      ) {
         foreach ($data as $redirect_array) {
-          self::save($redirect_array, $options['override'], []);
+          $this->save($redirect_array, $overwrite);
           $count++;
         }
+        $this->messenger->addStatus($this->t('Successfully imported "@count" items.', ['@count' => $count]));
       }
       else {
-        // This case should never happen...
+        // This should never happen, but if it does, let's log a warning.
+        $this->logger->warning('Redirect importing has run outside of drush');
       }
     }
-    \Drupal::messenger()->addStatus(t('Successfully imported "@count" items.', ['@count' => $count]));
-  }
-
-  /**
-   * Batch API callback.
-   */
-  public static function finish($success, $results, $operations) {
-    if ($success) {
-      $message = t('Redirects processed.');
-    }
-    else {
-      $message = t('Finished with an error.');
-    }
-    \Drupal::messenger()->addStatus($message);
   }
 
   /**
@@ -146,7 +229,7 @@ class CgovImporterService {
    * @return mixed
    *   Returns an indexed array containing the fields read. See fgetcsv.
    */
-  public static function readExpandLine($file, $delimiter, $status, $lang) {
+  private function readExpandLine($file, $delimiter, $status, $lang) {
     $line = fgetcsv($file, 0, $delimiter);
 
     // Either EOF, Error or Empty Line.
@@ -192,130 +275,159 @@ class CgovImporterService {
    *
    * @param mixed $file
    *   A Drupal file object.
-   * @param str[] $options
-   *   User-passed defaults.
+   * @param string $delimiter
+   *   Delimiter to break up columns.
+   * @param bool $has_header
+   *   Does the file have a header?
+   * @param string $status_code
+   *   The status code for the redirect, '301' or '302'.
+   * @param string $language
+   *   The language for the redirects.
+   *   Note: urls starting with /espanol will be 'es'.
    *
-   * @return str[]
+   * @return array
+   *   Returns a two element array, the first being a
    *   Keyed array of redirects, in the format
-   *    [source, redirect, status_code, language].
+   *    [source, redirect, status_code, language],
+   *   The second being an array of messages.
    */
-  protected static function read($file, array $options = []) {
-
-    $filepath = \Drupal::service('file_system')->realpath($file->getFileUri());
+  protected function read(
+    $file,
+    $delimiter,
+    $has_header,
+    $status_code,
+    $language
+  ) {
+    $messages = [];
+    $filepath = $this->fileSystem->realpath($file->getFileUri());
 
     if (!$f = fopen($filepath, 'r')) {
-      return ['success' => FALSE, 'message' => [t('Unable to read the file')]];
+      return [
+        [],
+        [$this->t('Unable to read the file')],
+      ];
     }
-    $options += [
-      'delimiter' => ',',
-      'no_headers' => TRUE,
-      'override' => TRUE,
-      'status_code' => '301',
-      'language' => 'en',
-    ];
 
     $line_no = 0;
     $data = [];
-    while ($line = self::readExpandLine($f, $options['delimiter'], $options['status_code'], $options['language'])) {
+
+    // @todo The code below is a little silly and needs to be reworked.
+    // readExpandLine is much more opinionated than the code below suggests. For
+    // example, the status_code will always be there, it is in the return,
+    // UNLESS there is some data issue, in which the line is just returned.
+    // readExpandLine should throw an exception or something, or return a
+    // scalar with and error and the code below should work with that and
+    // not need to check if the 3rd element is empty to set the status.
+    while ($line = $this->readExpandLine($f, $delimiter, $status_code, $language)) {
       $line_no++;
-      if ($line_no == 1 && !$options['no_headers']) {
-        \Drupal::messenger()->addStatus(t('Skipping the header row.'));
+      if ($line_no == 1 && $has_header) {
         continue;
       }
 
       if (!is_array($line)) {
-        self::$messages['warning'][] = t('Line @line_no is invalid; bypassed.', ['@line_no' => $line_no]);
+        $messages[] = $this->t('Line @line_no is invalid; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
       if (empty($line[0]) || empty($line[1])) {
-        self::$messages['warning'][] = t('Line @line_no contains invalid data; bypassed.', ['@line_no' => $line_no]);
+        $messages[] = $this->t('Line @line_no contains invalid data; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
       if (empty($line[2])) {
-        $line[2] = $options['status_code'];
+        $line[2] = $status_code;
       }
       else {
         $redirect_options = redirect_status_code_options();
         if (!isset($redirect_options[$line[2]])) {
-          self::$messages['warning'][] = t('Line @line_no contains invalid status code; bypassed.', ['@line_no' => $line_no]);
+          $messages[] = $this->t('Line @line_no contains invalid status code; bypassed.', ['@line_no' => $line_no]);
           continue;
         }
       }
 
       if (empty($line[3])) {
-        $line[3] = $options['language'];
+        $line[3] = $language;
       }
-      elseif (!self::isValidLanguage($line[3])) {
-        self::$messages['warning'][] = t('Line @line_no contains an invalid language code; bypassed.', ['@line_no' => $line_no]);
+      elseif (!$this->isValidLanguage($line[3])) {
+        $messages[] = $this->t('Line @line_no contains an invalid language code; bypassed.', ['@line_no' => $line_no]);
         continue;
       }
 
       // Build a row of data.
       $data[$line_no] = [
-        'source' => self::stripLeadingSlash($line[0]),
-        'redirect' => isset($line[1]) ? self::stripLeadingSlash($line[1]) : NULL,
+        'source' => $this->stripLeadingSlash($line[0]),
+        'redirect' => isset($line[1]) ? $this->stripLeadingSlash($line[1]) : NULL,
         'status_code' => $line[2],
-        'language' => $line[3] ?? $options['language'],
+        'language' => $line[3] ?? $language,
       ];
 
     }
     fclose($f);
-    return $data;
+    return [$data, $messages];
   }
 
   /**
    * Check for problematic data and remove or clean up.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
+   * @param bool $allow_nonexistent
+   *   Allow redirects to non-existent URLs.
    *
-   * @return bool
-   *   A TRUE/FALSE value to be used by array_filter.
+   * @return array
+   *   An array with 2 elements. The first being the status, then second
+   *   being any error messages.
    */
-  public static function preSave(array $row) {
+  private function validateRow(array $row, $allow_nonexistent) {
     // Disallow redirects from <front>.
     if ($row['source'] == '<front>') {
-      self::$messages['warning'][] = t('You cannot create a redirect from the front page. Bypassing "@source".', ['@source' => $row['source']]);
-      return FALSE;
+      return [
+        FALSE,
+        $this->t('You cannot create a redirect from the front page. Bypassing "@source".', ['@source' => $row['source']]),
+      ];
     }
 
     // Disallow redirects from anchor fragments.
     if (strpos($row['source'], '#') !== FALSE) {
-      self::$messages['warning'][] = t('Redirects from anchor fragments (i.e., with "#) are not allowed. Bypassing "@source".', ['@source' => $row['source']]);
-      return FALSE;
+      return [
+        FALSE,
+        $this->t('Redirects from anchor fragments (i.e., with "#) are not allowed. Bypassing "@source".', ['@source' => $row['source']]),
+      ];
     }
 
     // Disallow redirects to nonexistent internal paths.
-    if (self::internalPathMissing($row['redirect']) && self::$options['allow_nonexistent'] == 0) {
-      self::$messages['warning'][] = t('The destination path "@redirect" does not exist on the site. Redirect from "@source" bypassed.', [
-        '@redirect' => $row['redirect'],
-        '@source' => $row['source'],
-      ]);
-      return FALSE;
+    if ($this->internalPathMissing($row['redirect']) && $allow_nonexistent) {
+      return [
+        FALSE,
+        $this->t('The destination path "@redirect" does not exist on the site. Redirect from "@source" bypassed.', [
+          '@redirect' => $row['redirect'],
+          '@source' => $row['source'],
+        ]),
+      ];
     }
 
     // Disallow infinite redirects.
-    if (self::sourceIsDestination($row)) {
-      self::$messages['warning'][] = t('You are attempting to redirect "@redirect" to itself. Bypassed, as this will result in an infinite loop.', ['@redirect' => $row['redirect']]);
-      return FALSE;
+    if ($this->sourceIsDestination($row)) {
+      return [
+        FALSE,
+        $this->t('You are attempting to redirect "@redirect" to itself. Bypassed, as this will result in an infinite loop.', ['@redirect' => $row['redirect']]),
+      ];
     }
 
-    return TRUE;
+    return [TRUE, ''];
   }
 
   /**
    * Save an individual redirect entity, if no redirect already exists.
    *
-   * @param str[] $redirect_array
+   * @param array $redirect_array
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
-   * @param bool $override
-   *   A 1 indicates that existing redirects should be updated.
+   * @param bool $overwrite
+   *   TRUE indicates that existing redirects should be overwritten.
    */
-  public static function save(array $redirect_array, $override) {
-    if ($redirects = self::redirectExists($redirect_array)) {
-      if ($override == 1) {
+  private function save(array $redirect_array, $overwrite) {
+    if ($redirects = $this->redirectExists($redirect_array)) {
+      if ($overwrite) {
         $redirect = reset($redirects);
       }
       else {
@@ -327,10 +439,9 @@ class CgovImporterService {
       $path = $parsed_url['path'] ?? NULL;
       $query = $parsed_url['query'] ?? NULL;
 
-      /** @var \Drupal\redirect\Entity\Redirect $redirect */
-      $redirectEntityManager = \Drupal::service('entity_type.manager')
+      $redirectStorage = $this->entityTypeManager
         ->getStorage('redirect');
-      $redirect = $redirectEntityManager->create();
+      $redirect = $redirectStorage->create();
       $redirect->setSource($path, $query);
     }
     // Currently, the Redirect module's setRedirect function assumes
@@ -344,14 +455,6 @@ class CgovImporterService {
     $redirect->setStatusCode($redirect_array['status_code']);
     $redirect->setLanguage($redirect_array['language']);
     $redirect->save();
-
-  }
-
-  /**
-   * Truncates redirect table.
-   */
-  public function deleteAll() {
-    $this->connection->truncate('redirect', [])->execute();
   }
 
   /**
@@ -363,7 +466,7 @@ class CgovImporterService {
    * @return string
    *   A URL without the leading slash.
    */
-  protected static function stripLeadingSlash($path) {
+  protected function stripLeadingSlash($path) {
     if (strpos($path, '/') === 0) {
       return substr($path, 1);
     }
@@ -379,7 +482,7 @@ class CgovImporterService {
    * @return string
    *   A URL with the leading slash.
    */
-  protected static function addLeadingSlash($path) {
+  protected function addLeadingSlash($path) {
     if (strpos($path, '/') !== 0) {
       return '/' . $path;
     }
@@ -392,23 +495,23 @@ class CgovImporterService {
    * @param string $destination
    *   A user-supplied URL path.
    */
-  protected static function internalPathMissing($destination) {
+  protected function internalPathMissing($destination) {
     if ($destination == '<front>') {
       return FALSE;
     }
     $parsed = parse_url($destination);
     if (!isset($parsed['scheme'])) {
       // Check for aliases *including* named anchors/query strings.
-      $alias = self::addLeadingSlash($destination);
-      $normal_path = \Drupal::service('path_alias.manager')
+      $alias = $this->addLeadingSlash($destination);
+      $normal_path = $this->aliasManager
         ->getPathByAlias($alias);
       if ($alias != $normal_path) {
         return FALSE;
       }
       // Check for aliases *excluding* named anchors/query strings.
       if (isset($parsed['path'])) {
-        $alias = self::addLeadingSlash($parsed['path']);
-        $normal_path = \Drupal::service('path_alias.manager')
+        $alias = $this->addLeadingSlash($parsed['path']);
+        $normal_path = $this->aliasManager
           ->getPathByAlias($alias);
         if ($alias != $normal_path) {
           return FALSE;
@@ -421,11 +524,11 @@ class CgovImporterService {
   /**
    * Check for infinite loops.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    */
-  protected static function sourceIsDestination(array $row) {
+  protected function sourceIsDestination(array $row) {
     // Check if the user-supplied source & redirect are identical.
     if ($row['source'] == $row['redirect']) {
       return TRUE;
@@ -435,7 +538,7 @@ class CgovImporterService {
       $parsed = parse_url($row['redirect']);
       if (!isset($parsed['scheme'])) {
         // If the destination is an internal link, prepare it.
-        $row['redirect'] = 'internal:' . self::addLeadingSlash($row['redirect']);
+        $row['redirect'] = 'internal:' . $this->addLeadingSlash($row['redirect']);
       }
       $source_url = Url::fromUri('internal:/' . $row['source']);
       $redirect_url = Url::fromUri($row['redirect']);
@@ -447,7 +550,9 @@ class CgovImporterService {
       }
       // We still need to check external links, if the user has entered
       // /node/3 => http://example.com/node/3.
-      $host = \Drupal::request()->getSchemeAndHttpHost();
+      $host = $this->requestStack
+        ->getCurrentRequest()
+        ->getSchemeAndHttpHost();
       if ($host . $source_url->toString() == $redirect_url->toString()) {
         return TRUE;
       }
@@ -460,7 +565,7 @@ class CgovImporterService {
   /**
    * Check if a redirect already exists for this source path.
    *
-   * @param str[] $row
+   * @param array $row
    *   Keyed array of redirects, in the format
    *    [source, redirect, status_code, language].
    *
@@ -468,7 +573,7 @@ class CgovImporterService {
    *   FALSE if the redirect does not exist, array of redirect objects
    *    if it does.
    */
-  protected static function redirectExists(array $row) {
+  protected function redirectExists(array $row) {
     // @todo memoize the query.
     $parsed_url = UrlHelper::parse(trim($row['source']));
     $path = $parsed_url['path'] ?? NULL;
@@ -476,7 +581,7 @@ class CgovImporterService {
     $hash = Redirect::generateHash($path, $query, $row['language']);
 
     // Search for duplicate.
-    $redirects = \Drupal::entityTypeManager()
+    $redirects = $this->entityTypeManager
       ->getStorage('redirect')
       ->loadByProperties(['hash' => $hash]);
     if (!empty($redirects)) {
@@ -494,11 +599,9 @@ class CgovImporterService {
    * @return bool
    *   Whether the langcode is valid.
    */
-  protected static function isValidLanguage($langcode) {
-    if (\Drupal::moduleHandler()->moduleExists('language')) {
-      if (!empty($langcode) && in_array($langcode, self::validLanguages())) {
-        return TRUE;
-      }
+  protected function isValidLanguage($langcode) {
+    if (!empty($langcode) && in_array($langcode, $this->validLanguages())) {
+      return TRUE;
     }
     return FALSE;
   }
@@ -506,16 +609,23 @@ class CgovImporterService {
   /**
    * Retrieve languages in the system.
    *
-   * @return str[]
+   * @return string[]
    *   A list of langcodes known to the system.
    */
-  protected static function validLanguages() {
-    $languages = \Drupal::languageManager()->getLanguages();
-    $languages = array_keys($languages);
+  protected function validLanguages() {
+    $languages = array_map(
+      function ($lang) {
+        return $lang->getId();
+      },
+      $this->languageManager->getLanguages()
+    );
 
-    $defaultLockedLanguages = \Drupal::languageManager()
-      ->getDefaultLockedLanguages();
-    $defaultLockedLanguages = array_keys($defaultLockedLanguages);
+    $defaultLockedLanguages = array_map(
+      function ($lang) {
+        return $lang->getId();
+      },
+      $this->languageManager->getDefaultLockedLanguages()
+    );
 
     return array_merge($languages, $defaultLockedLanguages);
   }
