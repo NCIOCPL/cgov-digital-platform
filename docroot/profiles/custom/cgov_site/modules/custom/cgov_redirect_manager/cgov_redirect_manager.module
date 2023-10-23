@@ -5,6 +5,9 @@
  * Contains cgov_redirect_manager.module.
  */
 
+use Drupal\Core\Queue\RequeueException;
+use Drupal\Core\Queue\SuspendQueueException;
+
 /**
  * Implements hook_cron().
  */
@@ -23,9 +26,7 @@ function cgov_redirect_manager_cron() {
     return FALSE;
   }
 
-  /** @var QueueFactory $queue_factory */
   $queue_factory = \Drupal::service('queue');
-  /** @var QueueWorkerManager $queue_manager */
   $queue_manager = \Drupal::service('plugin.manager.queue_worker');
 
   $queue = $queue_factory->get('cgov_redirect_manager_queue_worker');
@@ -37,7 +38,8 @@ function cgov_redirect_manager_cron() {
   // Process all cgov_redirect_manager_queue_worker in the given time.
   while ((!$time_limit || time() < $end) && ($item = $queue->claimItem())) {
     try {
-      $queue_worker->processItem($item->data);
+      $data = $item->data;
+      $queue_worker->processItem($data);
       $queue->deleteItem($item);
     }
     catch (RequeueException $e) {
