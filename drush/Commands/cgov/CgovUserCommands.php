@@ -287,6 +287,7 @@ class CgovUserCommands extends DrushCommands {
       // Update the existing account.
       $this->logger->warning(dt('User !user exists already. Updating...', ['!user' => $name]));
       $account->setpassword($pwd);
+      $account->activate();
     }
     else {
       $new_user = [
