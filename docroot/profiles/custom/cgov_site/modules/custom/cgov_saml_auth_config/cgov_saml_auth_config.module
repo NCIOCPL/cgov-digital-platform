@@ -1,12 +1,13 @@
 <?php
 
+use \Drupal\user\Entity\User;
+
 /**
  * @file
  * Contains cgov_saml_auth_config.module.
  */
 
 use Drupal\Core\Url;
-use Symfony\Component\HttpFoundation\RequestStack;
 use \Drupal\Core\Form\FormStateInterface;
 
  /**
@@ -77,4 +78,34 @@ function cgov_saml_auth_config_user_logout($account)
   $url = Url::fromRoute('user.login');
   $requestStack = \Drupal::requestStack();
   $requestStack->getCurrentRequest()->query->set('destination', $url->toString());
+}
+
+/**
+ * Extra submit action to add user to externalauth table.
+ */
+function user_form_submit($form, FormStateInterface $form_state) {
+
+  $name = $form_state->getValue('name');
+  $account = User::load($form_state->getValue('uid'));
+
+  $externalauth = \Drupal::service('externalauth.externalauth');
+
+  // Link the user to 'samlauth' if not already linked.
+  $externalauth->linkExistingAccount($name, 'samlauth', $account);
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() to hide password fields.
+ */
+function cgov_saml_auth_config_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if (\Drupal::hasService('externalauth.externalauth') &&
+  \Drupal::moduleHandler()->moduleExists('samlauth')) {
+
+    $form['account']['pass']['#access'] = FALSE;
+    $form['account']['pass']['#required'] = FALSE;
+    $form['actions']['submit']['#submit'][] = 'user_form_submit';
+
+  }
+
 }
