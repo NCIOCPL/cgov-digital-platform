@@ -123,7 +123,6 @@ class RedirectImport extends FormBase {
     }
     $this->messenger()->addStatus($this->t("Successfully uploaded redirect file."));
 
-    ini_set('auto_detect_line_endings', TRUE);
     // Don't do anything if no valid file.
     if (!isset($this->file)) {
       $this->messenger()->addWarning($this->t('No valid file was found. No redirects will be imported.'));

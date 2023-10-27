@@ -10,6 +10,7 @@ use Drupal\block_content\Entity\BlockContent;
 use Drupal\cgov_core\CgovCoreTools;
 use Drupal\views\Entity\View;
 use Symfony\Component\Yaml\Yaml;
+use Drupal\Core\Database\Database;
 
 /**
  * Implements hook_install().
@@ -366,5 +367,28 @@ function cgov_core_update_9003() {
     $config_path = \Drupal::service('extension.list.module')->getPath('user') . '/config/optional/views.view.user_admin_people.yml';
     $data = Yaml::parseFile($config_path);
     Drupal::configFactory()->getEditable('views.view.user_admin_people')->setData($data)->save(TRUE);
+  }
+}
+
+/**
+ * Switch from simplesamlphp_auth to samlauth. (Issue #4116)
+ */
+function cgov_core_update_9004() {
+
+  $module_handler = \Drupal::moduleHandler();
+
+  // (Re-)install cgov_saml_auth_config, which will bring along samlauth
+  if (!$module_handler->moduleExists('cgov_saml_auth_config')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['cgov_saml_auth_config']);
+  }
+
+  // Update the externalauth mapping table to switch from simplesamlphp to samlauth.
+  $connection = Database::getConnection();
+  if ($module_handler->moduleExists('samlauth') && $module_handler->moduleExists('externalauth') && $connection->schema()->tableExists('authmap')) {
+    $query = $connection->update('authmap')
+      ->fields(['provider' => 'samlauth'])
+      ->condition('provider', 'simplesamlphp_auth');
+    $query->execute();
   }
 }
