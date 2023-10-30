@@ -99,7 +99,7 @@ class CgovNavTreeController extends ControllerBase {
   /**
    * Gets an empty 400 response for error conditions.
    *
-   * @return \Component\HttpFoundation\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   An empty JSON Object with a 400 status.
    */
   protected function getEmpty400Response() {
@@ -118,7 +118,7 @@ class CgovNavTreeController extends ControllerBase {
    * @param string|int $menu_id
    *   The ID of the root menu.
    *
-   * @return \Component\HttpFoundation\JsonResponse
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   A JSON Object with a 200 status and tree data.
    */
   protected function getValidResponse(array $tree_root, $menu_type, $menu_id) {
