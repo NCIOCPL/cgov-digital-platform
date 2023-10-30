@@ -15,7 +15,7 @@ elseif (file_exists('/var/saml')) {
 
 if ($samlDir) {
 
-  $subdomain = $argv[1];
+  $spEntityId = $argv[1];
 
   if (!isset($argv[2])) {
     $domain = "cancer.gov";
@@ -24,8 +24,9 @@ if ($samlDir) {
     $domain = $argv[2];
   }
 
-  // Load and parse the XML data.
-  $metadataFile = sprintf('%s/idp-metadata/%s.xml', $samlDir, $subdomain);
+  // Load and parse the XML.
+  // Assumes you have an XML export from Okta with metadata.
+  $metadataFile = sprintf('%s/idp-metadata/%s.xml', $samlDir, $spEntityId);
   $metadata = simplexml_load_file($metadataFile);
   $metadata->registerXPathNamespace("md", "urn:oasis:names:tc:SAML:2.0:metadata");
   $metadata->registerXPathNamespace("ds", "http://www.w3.org/2000/09/xmldsig#");
@@ -37,7 +38,7 @@ if ($samlDir) {
 
   // Create an array to hold the extracted data.
   $dataArray = [
-    'spEntityId' => sprintf('https://%s.%s', $subdomain, $domain),
+    'spEntityId' => sprintf('https://%s.%s', $spEntityId, $domain),
     'idpEntityId' => $idpEntityId,
     'singleSignOnService' => $singleSignOnService,
     'idpCert' => $idpCert,
@@ -48,7 +49,7 @@ if ($samlDir) {
   $phpCode .= '$idpData = ' . var_export($dataArray, TRUE) . ';' . PHP_EOL;
 
   // Save the PHP file.
-  $metadataPHPFile = sprintf('%s/idp-metadata/%s.php', $samlDir, $subdomain);
+  $metadataPHPFile = sprintf('%s/idp-metadata/saml-metadata.php', $samlDir);
   file_put_contents($metadataPHPFile, $phpCode);
 
   echo 'PHP file generated with IDP data.';
