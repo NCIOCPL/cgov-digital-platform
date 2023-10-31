@@ -5,6 +5,8 @@
  * Set up SAML settings for Single Sign-On
  */
 
+ $samlDir = "";
+
 // Get our current environment
 if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   $samlDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/saml";
