@@ -67,7 +67,7 @@ class CgovImporterServiceTest extends BrowserTestBase {
 CSV;
 
     // Get random name for csv file and create it.
-    $file_name = $this->randomString() . '.csv';
+    $file_name = $this->randomMachineName() . '.csv';
     $file_system = $this->container->get('file_system');
     $real_file_path = $file_system->saveData($csv, 'temporary://' . $file_name);
 
