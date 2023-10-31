@@ -79,4 +79,8 @@ else
   drush pmu cgov_yaml_content
 fi
 
+## Make sure Drupal cron jobs (e.g. sitemap) get run at least once.
+drush cron
+drush cr
+
 set +v

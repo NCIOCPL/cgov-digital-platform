@@ -17,14 +17,14 @@ dependencies:
     - field.field.node.cgov_cthp.field_search_engine_restrictions
     - field.field.node.cgov_cthp.field_site_section
     - node.type.cgov_cthp
-  enforced:
-    module:
-      - cgov_core
   module:
     - content_moderation
     - entity_browser
     - paragraphs_asymmetric_translation_widgets
     - path
+  enforced:
+    module:
+      - cgov_core
 id: node.cgov_cthp.default
 targetEntityType: node
 bundle: cgov_cthp
@@ -170,6 +170,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   status:
     type: boolean_checkbox
     settings:
