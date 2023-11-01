@@ -234,7 +234,7 @@ class CgovUserCommands extends DrushCommands {
 
     // TODO: This should be more robust and check bad chars.
     // Password is optional, so not going to check it.
-    // saml is optional too, so not going to check it
+    // Saml is optional too, so not going to check it.
     $isValid = (
       array_key_exists('username', $user) &&
       $user['username'] != '' &&
@@ -278,6 +278,12 @@ class CgovUserCommands extends DrushCommands {
     else {
       $pwd = NULL;
     }
+    if (array_key_exists('saml', $user) && is_bool($user['saml'])) {
+      $saml = $user['saml'];
+    }
+    else {
+      $saml = TRUE;
+    }
 
     $account = user_load_by_name($name);
 
@@ -314,7 +320,7 @@ class CgovUserCommands extends DrushCommands {
     // If external authentication is available, set the user up to use it.
     if (\Drupal::hasService('externalauth.externalauth') &&
       \Drupal::moduleHandler()->moduleExists('samlauth') &&
-      $user['saml'] !== FALSE) {
+      $saml !== FALSE) {
       $externalauth = \Drupal::service('externalauth.externalauth');
       $externalauth->linkExistingAccount($name, 'samlauth', $account);
     }
