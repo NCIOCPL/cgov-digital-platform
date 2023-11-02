@@ -392,3 +392,19 @@ function cgov_core_update_9004() {
     $query->execute();
   }
 }
+
+/**
+ * Turn off HAL module. (Issue #4150)
+ *
+ * pdq_core and pdq_glossary bother required this, but it will
+ * be removed in D10. Adding the uninstall here as this is
+ * more of a global project change.
+ */
+function cgov_core_update_9005() {
+
+  if (\Drupal::moduleHandler()->moduleExists('hal')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->uninstall(['hal'], FALSE);
+  }
+
+}
