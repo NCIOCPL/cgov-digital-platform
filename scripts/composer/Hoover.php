@@ -50,6 +50,8 @@ class Hoover {
       'docroot/modules/contrib',
       'docroot/profiles/contrib',
       'docroot/themes/contrib',
+      // @todo Get rid of this after D10 upgrade.
+      'drush/Commands/acsf_tools',
     ];
     $git_root = exec('git rev-parse --show-toplevel');
     if (!$git_root) {
