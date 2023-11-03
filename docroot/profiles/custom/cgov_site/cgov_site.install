@@ -27,3 +27,17 @@ function cgov_site_install() {
 function cgov_site_update_9001() {
   \Drupal::service('theme_installer')->install(['claro']);
 }
+
+/**
+ * Install Stable 9 & Uninstall stable.
+ */
+function cgov_site_update_9002() {
+  $themeHandler = \Drupal::service('theme_handler');
+  $themeInstaller = \Drupal::service('theme_installer');
+  if ($themeHandler->themeExists('stable')) {
+    $themeInstaller->uninstall(['stable']);
+  }
+  if ($themeHandler->themeExists('stable9')) {
+    $themeInstaller->install(['stable9']);
+  }
+}
