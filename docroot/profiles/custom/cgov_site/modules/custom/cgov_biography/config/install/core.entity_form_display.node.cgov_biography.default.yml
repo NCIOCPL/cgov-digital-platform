@@ -42,7 +42,7 @@ dependencies:
     - content_moderation
     - datetime
     - entity_browser
-    - paragraphs
+    - paragraphs_asymmetric_translation_widgets
     - path
     - text
 id: node.cgov_biography.default
@@ -262,23 +262,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_related_resources:
-    type: paragraphs
+    type: paragraphs_classic_asymmetric
     weight: 33
     region: content
     settings:
       title: 'Related Resource'
       title_plural: 'Related Resources'
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
+      edit_mode: open
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
     third_party_settings: {  }
   field_scientific_publications:
     type: string_textarea

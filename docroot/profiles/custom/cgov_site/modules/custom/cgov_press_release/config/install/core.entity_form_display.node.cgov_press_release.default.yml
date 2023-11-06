@@ -29,7 +29,7 @@ dependencies:
     - content_moderation
     - datetime
     - entity_browser
-    - paragraphs
+    - paragraphs_asymmetric_translation_widgets
     - path
     - text
 id: node.cgov_press_release.default
@@ -45,7 +45,6 @@ content:
       rows: 9
       summary_rows: 3
       placeholder: ''
-      show_summary: false
     third_party_settings: {  }
   created:
     type: datetime_timestamp
@@ -70,23 +69,16 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_citation:
-    type: paragraphs
+    type: paragraphs_classic_asymmetric
     weight: 21
     region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
+      edit_mode: open
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
     third_party_settings: {  }
   field_date_display_mode:
     type: options_buttons
@@ -189,23 +181,16 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_related_resources:
-    type: paragraphs
+    type: paragraphs_classic_asymmetric
     weight: 20
     region: content
     settings:
       title: 'Related Resource'
       title_plural: 'Related Resources'
-      edit_mode: closed
-      closed_mode: summary
-      autocollapse: none
-      closed_mode_threshold: 0
+      edit_mode: open
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
-      features:
-        add_above: '0'
-        collapse_edit_all: collapse_edit_all
-        duplicate: duplicate
     third_party_settings: {  }
   field_search_engine_restrictions:
     type: options_select
