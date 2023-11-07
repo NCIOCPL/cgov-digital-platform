@@ -2,6 +2,8 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -11,8 +13,6 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\Utility\Token;
-use Drupal\block\Entity\Block;
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
 use Drupal\image\Plugin\Field\FieldType\ImageItem;
@@ -20,9 +20,9 @@ use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
-use Drupal\yaml_content\Event\YamlContentEvents;
 use Drupal\yaml_content\Event\EntityPostSaveEvent;
 use Drupal\yaml_content\Event\EntityPreSaveEvent;
+use Drupal\yaml_content\Event\YamlContentEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -543,7 +543,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     // Raise the preSave event so that other subscribers can modify
     // the entity before saving.
     $entity_pre_save_event = new EntityPreSaveEvent($event->getContentLoader(), $spanishTranslation, $yamlContent);
-    $this->eventDispatcher->dispatch(YamlContentEvents::ENTITY_PRE_SAVE, $entity_pre_save_event);
+    $this->eventDispatcher->dispatch($entity_pre_save_event, YamlContentEvents::ENTITY_PRE_SAVE);
 
     // We need to discreetly save the translation to trigger pathauto
     // url alias building.
