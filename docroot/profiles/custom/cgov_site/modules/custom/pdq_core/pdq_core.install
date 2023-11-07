@@ -21,9 +21,6 @@ function pdq_core_install() {
   // Add Roles.
   $siteHelper->addRole('pdq_importer', 'PDQ Importer', -3);
 
-  // Add content type permissions and assign to workflow.
-  $siteHelper->addContentTypePermissions('pdq_cancer_information_summary', ['pdq_importer'], CgovCoreTools::DEFAULT_PERMISSIONS);
-
   // Create importer user.
   $user = User::create();
   $user->setUsername('PDQ');
@@ -46,9 +43,6 @@ function pdq_core_install() {
  */
 function pdq_core_install_permissions(CgovCoreTools $siteHelper) {
   $perms = [
-    'admin_ui' => [
-      'access pdq_cis_browser entity browser pages',
-    ],
     'pdq_importer' => [
       'restful delete pdq_api',
       'restful get pdq_api',
