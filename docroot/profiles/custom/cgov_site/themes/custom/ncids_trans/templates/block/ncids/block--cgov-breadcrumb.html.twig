@@ -1,7 +1,7 @@
 {% if content.breadcrumbs|length > 0 %}
   <nav class="usa-breadcrumb usa-breadcrumb--wrap" aria-label="{{'Breadcrumbs'|t}}">
     <ol class="usa-breadcrumb__list">
-      {% for breadcrumb in content.breadcrumbs if breadcrumb.href %}
+      {% for breadcrumb in content.breadcrumbs|filter(breadcrumb => breadcrumb.href) %}
         <li class="usa-breadcrumb__list-item">
           <a href="{{ breadcrumb.href|e }}" class="usa-breadcrumb__link">
             <span>{{ breadcrumb.label|e }}</span>
