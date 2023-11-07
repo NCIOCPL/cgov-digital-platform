@@ -37,6 +37,18 @@ class CgovCoreTools {
     'translate [content_type] media',
   ];
 
+  // Note: The new Block Content permissions in D10 do not have the "own"
+  // set of permissions.
+  const BLOCK_CONTENT_PERMISSIONS = [
+    'create [content_type] block content',
+    'delete any [content_type] block content',
+    'edit any [content_type] block content',
+    'revert any [content_type] block content revisions',
+    'view any [content_type] block content history',
+    'translate block_content',
+    // Excluded: 'delete any [content_type] block content revisions'.
+  ];
+
   const PROD_AH_SITE_ENVS = [
     '01live',
     'prod',
@@ -397,6 +409,82 @@ class CgovCoreTools {
           else {
             // Load default permissions.
             $perms = self::MEDIA_PERMISSIONS;
+          }
+        }
+
+        // Update all the permissions.
+        foreach ($perms as &$perm) {
+          // Replace placeholders.
+          $perm = str_replace('[content_type]', $type_name, $perm);
+
+          // Grant Permission.
+          $roleObj->grantPermission($perm);
+          $roleObj->save();
+        }
+      }
+    }
+  }
+
+  /**
+   * Add Block Content Permissions to a role.
+   *
+   * @param string $type_name
+   *   Content type name to be added.
+   * @param mixed $roles
+   *   Roles to be added, as string or array.
+   * @param mixed $permissions
+   *   Permissions to be added, as string or array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException exception.
+   *   Expects getStorage to work.
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   *   Thrown if the entity type doesn't exist.
+   * @throws \Drupal\Core\Entity\EntityStorageException exception
+   *   Expects role->save() to work.
+   */
+  public function addBlockContentTypePermissions($type_name, $roles = self::DEFAULT_ROLES, $permissions = NULL) {
+    // Define Common roles and permissions.
+    $rolePerms['content_author'] = self::BLOCK_CONTENT_PERMISSIONS;
+    $rolePerms['content_editor'] = [];
+    $rolePerms['advanced_editor'] = [];
+    $rolePerms['layout_manager'] = self::BLOCK_CONTENT_PERMISSIONS;
+
+    // Convert $roles string to array if needed.
+    if (!is_array($roles)) {
+      $roles = [$roles];
+    }
+
+    // Get Role entities.
+    $role_storage = $this->entityTypeManager->getStorage('user_role');
+    $roleObjects = $role_storage->loadMultiple($roles);
+
+    if (count($roleObjects) != count($roles)) {
+      // Role not found, display error message.
+      echo "Role(s) " . implode(', ', $roles) . " not found in " . __FUNCTION__ . "\n";
+    }
+    else {
+      // Get all role objects.
+      foreach ($roleObjects as $role_name => $roleObj) {
+        // Get permissions to assign.
+        // If permissions are passed as a parameter, use that.
+        if ($permissions) {
+          // Convert to array if a string.
+          if (!is_array($permissions)) {
+            $perms = [$permissions];
+          }
+          else {
+            $perms = $permissions;
+          }
+        }
+        else {
+          // No permissions passed, get list of permissions to use.
+          if (isset($rolePerms[$role_name])) {
+            // Get role-specific permissions.
+            $perms = $rolePerms[$role_name];
+          }
+          else {
+            // Load default permissions.
+            $perms = self::BLOCK_CONTENT_PERMISSIONS;
           }
         }
 
