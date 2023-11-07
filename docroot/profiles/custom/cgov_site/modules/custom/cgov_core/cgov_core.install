@@ -415,3 +415,25 @@ function cgov_core_update_9005() {
   }
 
 }
+
+/**
+ * Fixed up block visibility for configs referencing node_type. (Issue #4163)
+ *
+ * 2 years ago this update hook went in place to migrate this to the new
+ * way. We did not know and did not update our install hooks in biography
+ * and press release. So we need to update any blocks using the old way.
+ */
+function cgov_core_update_9006() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('block.block.') as $block_config_name) {
+    $block = $config_factory->getEditable($block_config_name);
+
+    if ($block->get('visibility.node_type')) {
+      $configuration = $block->get('visibility.node_type');
+      $configuration['id'] = 'entity_bundle:node';
+      $block->set('visibility.entity_bundle:node', $configuration);
+      $block->clear('visibility.node_type');
+      $block->save(TRUE);
+    }
+  }
+}
