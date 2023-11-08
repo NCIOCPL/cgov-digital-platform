@@ -234,6 +234,7 @@ class CgovUserCommands extends DrushCommands {
 
     // TODO: This should be more robust and check bad chars.
     // Password is optional, so not going to check it.
+    // saml is optional too, so not going to check it
     $isValid = (
       array_key_exists('username', $user) &&
       $user['username'] != '' &&
@@ -287,6 +288,7 @@ class CgovUserCommands extends DrushCommands {
       // Update the existing account.
       $this->logger->warning(dt('User !user exists already. Updating...', ['!user' => $name]));
       $account->setpassword($pwd);
+      $account->activate();
     }
     else {
       $new_user = [
@@ -308,6 +310,14 @@ class CgovUserCommands extends DrushCommands {
     }
 
     $account->save();
+
+    // If external authentication is available, set the user up to use it.
+    if (\Drupal::hasService('externalauth.externalauth') &&
+      \Drupal::moduleHandler()->moduleExists('samlauth') &&
+      $user['saml'] !== FALSE) {
+      $externalauth = \Drupal::service('externalauth.externalauth');
+      $externalauth->linkExistingAccount($name, 'samlauth', $account);
+    }
 
     if ($isNew) {
       $this->logger()->success(dt(

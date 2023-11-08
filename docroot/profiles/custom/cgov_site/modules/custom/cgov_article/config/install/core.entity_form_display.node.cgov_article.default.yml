@@ -26,9 +26,6 @@ dependencies:
     - field.field.node.cgov_article.field_search_engine_restrictions
     - field.field.node.cgov_article.field_site_section
     - node.type.cgov_article
-  enforced:
-    module:
-      - cgov_core
   module:
     - cgov_schema_org
     - cgov_syndication
@@ -38,6 +35,9 @@ dependencies:
     - paragraphs_asymmetric_translation_widgets
     - path
     - text
+  enforced:
+    module:
+      - cgov_core
 id: node.cgov_article.default
 targetEntityType: node
 bundle: cgov_article
@@ -252,6 +252,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   status:
     type: boolean_checkbox
     settings:
