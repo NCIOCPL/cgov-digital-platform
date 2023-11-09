@@ -50,7 +50,7 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
     $env = 'ode';
   }
 } else {
-  $env = null;
+  $env = 'local';
 }
 
 // on non-prod environments, route emails to logger
@@ -69,3 +69,38 @@ $settings['disallow_routes'] = [
   'user.reset',
   'user.reset.form',
 ];
+
+// Get the license dir from our current environment
+$licenseDir = '/var/licenses';
+if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+  if ($env === 'ode') {
+    // ODEs get spun up dynamically and for now we want to store this in the
+    // homedirectory which does not change. In the future if we automate
+    // creation of ODEs we can push up our files to the /mnt/files directories
+    // for the ODEs.
+    $licenseDir = "/home/{$_ENV['AH_SITE_GROUP']}/licenses";
+  } else {
+    $licenseDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/licenses";
+  }
+}
+
+$licenseFilename = sprintf('%s/licenses.php', $licenseDir);
+if (file_exists($licenseFilename)) {
+
+  // Load the license keys file.
+  require($licenseFilename);
+
+  // Setup CKEditor LTS keys
+  if (array_key_exists('ckeditor_lts', $cgdp_license_keys)) {
+
+    // Set the default key if a specific environment key does not exist.
+    if (array_key_exists('default', $cgdp_license_keys['ckeditor_lts'])) {
+      $config['ckeditor.lts.settings']['license_key'] = $cgdp_license_keys['ckeditor_lts']['default'];
+    }
+    // Set the specific environment key.
+    if (array_key_exists($env, $cgdp_license_keys['ckeditor_lts'])) {
+      $config['ckeditor.lts.settings']['license_key'] = $cgdp_license_keys['ckeditor_lts'][$env];
+    }
+  }
+
+}
