@@ -12,6 +12,8 @@ services:
       - ../:/var/www:cached
       ## The project root
       - ./web/runtime/saml:/var/saml
+      ## Any license keys
+      - ./web/runtime/licenses:/var/licenses
       ## Configs
       - ./web/runtime/apache2.conf:/etc/apache2/apache2.conf
       - ./web/runtime/php_apache2.ini:/etc/php/8.1/apache2/php.ini
