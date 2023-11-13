@@ -127,15 +127,12 @@ RUN npm install -g npm@8.1.0
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
-## Install Drush Launcher (runs local drush instances)
-RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar \
-  && chmod +x /usr/local/bin/drush
+# Verify php and composer installs.
+RUN php --version; composer --version;
 
-RUN php --version; composer --version; drush --drush-launcher-version
-
-## Enable BLT function
-RUN curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar \
-  && chmod +x /usr/local/bin/blt
+# Make vendor/bin versions of drush, blt, etc. available.
+# NOTE: Putting this on the end in order to match the CI workflow.
+ENV PATH $PATH:/var/www/vendor/bin
 
 ## Turn off xdebug as it uses resources that could be best used
 ## elsewhere. Once the container is up you can use

@@ -101,11 +101,9 @@ jobs:
       - name: Composer install
         run: |
           composer install
-      ## Install BLT and Drush Launchers
-      - name: Install BLT and Drush Launchers
+      - name: Put BLT, Drush, etc. on the path.
         run: |
-          curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar && chmod +x /usr/local/bin/drush
-          curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar && chmod +x /usr/local/bin/blt
+          echo "$PWD/vendor/bin" >> $GITHUB_PATH
       - name: Setup Env
         run: |
           ## The mynci service creates the drupal DB, we need to make the
