@@ -131,11 +131,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sL -o /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.10.1/drush.phar \
   && chmod +x /usr/local/bin/drush
 
-## Install Drupal console
-RUN curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal \
-  && chmod +x /usr/local/bin/drupal
-
-RUN php --version; composer --version; drupal --version; drush --drush-launcher-version
+RUN php --version; composer --version; drush --drush-launcher-version
 
 ## Enable BLT function
 RUN curl -sL -o /usr/local/bin/blt https://github.com/acquia/blt-launcher/releases/download/v1.1.0/blt.phar \
