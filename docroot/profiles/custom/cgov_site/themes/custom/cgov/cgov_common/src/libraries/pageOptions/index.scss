@@ -24,37 +24,11 @@
       content: "";
     }
   }
-  .page-options--resize a::before {
-    @include svg-sprite(font-size-blue);
-  }
   .page-options--print a::before {
     @include svg-sprite(printer-blue);
   }
   .page-options--email a::before {
     @include svg-sprite(mail-envelope-closed-blue);
-  }
-  .social-share--facebook a::before {
-    @include svg-sprite(facebook-blue);
-  }
-  .social-share--twitter a::before {
-    @include svg-sprite(twitter-blue);
-  }
-  .social-share--pinterest a::before {
-    @include svg-sprite(pinterest-blue);
-  }
-}
-
-// Custom tweet button (not in the page options container - anywhere on the page)
-a.social-share--custom-tweet {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 56px;
-  width: 166px;
-
-  &::after {
-    content: "";
-    @include svg-sprite(tweet-this);
   }
 }
 
@@ -114,7 +88,6 @@ a.social-share--custom-tweet {
   .cthp-desktop.page-options {
     display: none;
   }
-
   .page-options {
     li {
       margin: 0 0.875em 0 0;
@@ -145,11 +118,7 @@ a.social-share--custom-tweet {
         margin-right: 0;
       }
     }
-
     .po-view-entire-document {
-      display: none;
-    }
-    .page-options--resize {
       display: none;
     }
     .page-options--print {
@@ -157,18 +126,6 @@ a.social-share--custom-tweet {
     }
     .page-options--email a::before {
       @include svg-sprite(mail-envelope-closed-white, mq);
-    }
-    .social-share--facebook a::before {
-      @include svg-sprite(facebook-white, mq);
-      font-size: 22px;
-    }
-    .social-share--twitter a::before {
-      @include svg-sprite(twitter-white, mq);
-      font-size: 17px;
-    }
-    .social-share--pinterest a::before {
-      @include svg-sprite(pinterest-white, mq);
-      font-size: 120%;
     }
   }
 }
@@ -239,60 +196,6 @@ a.social-share--custom-tweet {
       ul {
         float: right;
       }
-    }
-  }
-}
-
-// #R4R is a special case whereby only mobile display is shown for both mobile and desktop.
-.r4r-page-options-container {
-  .page-options {
-    position: relative;
-    top: auto;
-    right: auto;
-    margin: 1em auto;
-    text-align: center;
-    float: none;
-    ul {
-      margin: 0 auto;
-      float: none;
-      display: block;
-    }
-
-    li {
-      margin: 0 0.875em 0 0;
-      width: 35px;
-      height: 35px;
-      background-color: $color-link;
-      border-radius: 50%;
-
-      a {
-        position: relative;
-        display: block;
-        height: 100%;
-        font-size: 91%;
-        min-width: 35px;
-
-        &::before {
-          position: absolute;
-          left: 50%;
-          top: calc(50% + 1px);
-          transform: translateX(-50%) translateY(-50%);
-        }
-      }
-
-      &:hover {
-        background-color: $lcranberry;
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-    .page-options--email a::before {
-      @include svg-sprite(mail-envelope-closed-white, mq);
-    }
-    .social-share--twitter a::before {
-      @include svg-sprite(twitter-white, mq);
-      font-size: 17px;
     }
   }
 }

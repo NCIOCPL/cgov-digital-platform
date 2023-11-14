@@ -6,9 +6,6 @@
 
 module.exports = {
     variants: [
-      'purple',
-      'blue',
-      'green',
       'connect'
     ]
 };

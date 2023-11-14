@@ -1,17 +1,7 @@
-import facebook from './facebook';
-import twitter from './twitter';
-import customTweet from './customTweet';
-import pinterest from './pinterest';
-import email from './email';
-import print from './print';
-import resize from './resize';
+import email from "./email";
+import print from "./print";
 
 export default {
-    facebook,
-    twitter,
-    pinterest,
-    email,
-    print,
-    resize,
-    customTweet,
+  email,
+  print
 };
