@@ -6,9 +6,9 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\StringTextareaWidget;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Yaml\Yaml as SymfonyYaml;
-use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Yaml as SymfonyYaml;
 
 /**
  * Plugin implementation of the 'yaml_textarea' widget.

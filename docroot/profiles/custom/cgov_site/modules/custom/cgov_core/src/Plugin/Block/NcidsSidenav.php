@@ -2,12 +2,12 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\Core\Url;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\cgov_core\Services\CgovNavigationManager;
 
 /**
  * Provides a 'NCIDS Sidenav' block.

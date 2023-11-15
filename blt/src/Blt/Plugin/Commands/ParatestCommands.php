@@ -3,8 +3,8 @@
 namespace Cgov\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
-use Cgov\ParatestTrait;
 use Acquia\Blt\Robo\Exceptions\BltException;
+use Cgov\ParatestTrait;
 use Robo\Contract\VerbosityThresholdInterface;
 
 /**

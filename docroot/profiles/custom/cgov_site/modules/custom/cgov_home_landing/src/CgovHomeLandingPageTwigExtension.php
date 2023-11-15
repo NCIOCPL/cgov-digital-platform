@@ -2,9 +2,9 @@
 
 namespace Drupal\cgov_home_landing;
 
-use Twig\TwigFunction;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Extend Drupal's AbstractExtension class.

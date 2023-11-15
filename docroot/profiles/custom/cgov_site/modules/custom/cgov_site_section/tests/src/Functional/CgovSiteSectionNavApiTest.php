@@ -3,10 +3,10 @@
 namespace Drupal\Tests\cgov_site_section\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
-use Drupal\Tests\BrowserTestBase;
-use Drupal\taxonomy\Entity\Term;
-use Drupal\node\Entity\Node;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Tests\BrowserTestBase;
 use Symfony\Component\Yaml\Parser;
 
 /**

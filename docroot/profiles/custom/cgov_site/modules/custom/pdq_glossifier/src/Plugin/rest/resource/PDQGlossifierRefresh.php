@@ -2,12 +2,12 @@
 
 namespace Drupal\pdq_glossifier\Plugin\rest\resource;
 
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\pdq_glossifier\PdqGlossifierServiceInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\pdq_glossifier\PdqGlossifierServiceInterface;
 
 /**
  * Implements PDQ RESTful API verbs.

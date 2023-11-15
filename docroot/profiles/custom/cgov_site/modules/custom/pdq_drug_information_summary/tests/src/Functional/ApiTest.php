@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\pdq_drug_information_summary\Functional;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify publication of PDQ Drug Information Summaries.

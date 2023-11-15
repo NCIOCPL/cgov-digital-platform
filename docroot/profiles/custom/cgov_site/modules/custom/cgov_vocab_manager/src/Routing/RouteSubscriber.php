@@ -3,8 +3,8 @@
 namespace Drupal\cgov_vocab_manager\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Listens to the dynamic route events.

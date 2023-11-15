@@ -2,12 +2,12 @@
 
 namespace Drupal\cgov_site_section\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\taxonomy\TermInterface;
-use Drupal\Core\Render\RendererInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\taxonomy\TermInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**

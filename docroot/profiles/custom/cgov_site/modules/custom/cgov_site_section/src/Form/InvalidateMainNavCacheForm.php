@@ -5,8 +5,8 @@ namespace Drupal\cgov_site_section\Form;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 
 /**
  * Form for invalidating the MainNav block in the cache.

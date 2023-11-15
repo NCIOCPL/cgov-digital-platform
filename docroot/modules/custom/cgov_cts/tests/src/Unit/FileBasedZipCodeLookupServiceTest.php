@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\cgov_cts\Unit;
 
-use Drupal\Tests\UnitTestCase;
 use Drupal\cgov_cts\FileBasedZipCodeLookupService;
+use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests for the FileBasedZipCodeLookupService.

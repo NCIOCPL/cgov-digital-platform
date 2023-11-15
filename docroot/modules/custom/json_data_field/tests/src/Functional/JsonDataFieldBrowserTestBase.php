@@ -3,8 +3,8 @@
 namespace Drupal\Tests\json_data_field\Functional;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Tests\BrowserTestBase;
 use Drupal\file\Entity\File;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Base class for json data field field tests.

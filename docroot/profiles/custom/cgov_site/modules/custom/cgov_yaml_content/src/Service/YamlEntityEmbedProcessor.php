@@ -2,11 +2,11 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
+use DOMWrap\Document;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
-use DOMWrap\Document;
 
 /**
  * Helper service for YAML content loading for <drupal-entity> tags.

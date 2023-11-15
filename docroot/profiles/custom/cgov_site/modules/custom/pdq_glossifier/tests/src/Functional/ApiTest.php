@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\pdq_glossifier\Functional;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify correct behavior of the PDQ Glossifier service.

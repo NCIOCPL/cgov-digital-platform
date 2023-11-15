@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\cgov_site\Functional;
 
-use Drupal\Tests\SchemaCheckTestTrait;
-use Drupal\Tests\BrowserTestBase;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\SchemaCheckTestTrait;
 
 /**
  * Tests CGOV_SITE installation profile expectations are being met.

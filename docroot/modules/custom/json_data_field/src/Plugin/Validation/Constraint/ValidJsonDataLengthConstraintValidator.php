@@ -2,9 +2,9 @@
 
 namespace Drupal\json_data_field\Plugin\Validation\Constraint;
 
+use Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem;
 
 /**
  * Checks if YAML values are valid.

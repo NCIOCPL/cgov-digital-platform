@@ -2,14 +2,14 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
+use Drupal\cgov_core\NavItem;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Security\TrustedCallbackInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\cgov_core\Services\CgovNavigationManager;
-use Drupal\cgov_core\NavItem;
 
 /**
  * Provides a 'Main Nav' block.

@@ -5,10 +5,9 @@ namespace Drupal\cgov_yaml_content\Commands;
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Uuid\Php as Uuid;
-use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\Config;
+use Drupal\Core\Config\ConfigFactory;
 use Drush\Commands\DrushCommands;
-
 // WARNING!! This is deprecated, but drush still needs it, at the same time,
 // there is no replacement yet. See drush issue #4935.
 use Webmozart\PathUtil\Path;
