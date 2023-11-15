@@ -8,13 +8,13 @@ use Drupal\Core\CacheDecorator\CacheDecoratorInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityMalformedException;
-use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Exception\UndefinedLinkTemplateException;
 use Drupal\Core\Entity\RevisionableInterface;
-use Drupal\path_alias\AliasManagerInterface;
-use Drupal\path_alias\PathAliasInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\path_alias\AliasManagerInterface;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * The default app path manager implementation.

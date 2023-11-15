@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\node\Entity\NodeType;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeTypeInterface;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.

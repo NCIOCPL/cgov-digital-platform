@@ -6,8 +6,8 @@ namespace Cgov\Blt\Plugin\Filesets;
 // @codingStandardsIgnoreLine
 use Acquia\Blt\Annotations\Fileset;
 use Acquia\Blt\Robo\Config\ConfigAwareTrait;
-use Robo\Contract\ConfigAwareInterface;
 use Acquia\Blt\Robo\Filesets\FilesetsTrait;
+use Robo\Contract\ConfigAwareInterface;
 
 /**
  * Class Filesets.

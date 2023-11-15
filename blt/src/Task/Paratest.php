@@ -4,8 +4,8 @@ namespace Cgov\Task;
 
 use Robo\Contract\CommandInterface;
 use Robo\Contract\PrintedInterface;
-use Robo\Task\BaseTask;
 use Robo\Exception\TaskException;
+use Robo\Task\BaseTask;
 
 /**
  * Runs Paratest (PHPUnit) tests.

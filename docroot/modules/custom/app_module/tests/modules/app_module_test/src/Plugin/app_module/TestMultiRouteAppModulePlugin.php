@@ -2,8 +2,8 @@
 
 namespace Drupal\app_module_test\Plugin\app_module;
 
-use Drupal\app_module\Plugin\app_module\MultiRouteAppModulePluginBase;
 use Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderInterface;
+use Drupal\app_module\Plugin\app_module\MultiRouteAppModulePluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

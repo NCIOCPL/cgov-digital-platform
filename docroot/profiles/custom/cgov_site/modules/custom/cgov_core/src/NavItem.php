@@ -2,9 +2,9 @@
 
 namespace Drupal\cgov_core;
 
-use Drupal\taxonomy\TermInterface;
 use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Component\Utility\Html;
+use Drupal\taxonomy\TermInterface;
 
 /**
  * Nav Item.

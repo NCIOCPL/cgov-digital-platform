@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\cgov_saml_auth_config\Functional;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\user\Entity\Role;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Tests user form alterations.

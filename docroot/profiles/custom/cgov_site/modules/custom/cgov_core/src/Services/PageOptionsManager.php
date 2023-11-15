@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_core\Services;
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Page Options Manager Service.

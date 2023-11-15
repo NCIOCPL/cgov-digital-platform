@@ -3,8 +3,8 @@
 namespace Drupal\cgov_core\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
-use Symfony\Component\Routing\RouteCollection;
 use Drupal\Core\Site\Settings;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Listens to the dynamic route events.

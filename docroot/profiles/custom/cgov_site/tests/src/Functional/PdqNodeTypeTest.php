@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\node\Functional;
 
-use Drupal\node\Entity\NodeType;
-use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
-use Drupal\Tests\system\Functional\Cache\AssertPageCacheContextsAndTagsTrait;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\node\Entity\NodeType;
+use Drupal\Tests\system\Functional\Cache\AssertPageCacheContextsAndTagsTrait;
+use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 
 /**
  * Ensures the PDQ content types are correctly configured.

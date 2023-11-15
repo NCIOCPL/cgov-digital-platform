@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\pdq_cancer_information_summary\Functional;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Verify publication of PDQ Cancer Information Summaries.

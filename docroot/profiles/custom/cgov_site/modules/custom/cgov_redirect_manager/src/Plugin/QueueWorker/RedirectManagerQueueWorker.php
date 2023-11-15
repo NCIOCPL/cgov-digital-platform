@@ -2,11 +2,11 @@
 
 namespace Drupal\cgov_redirect_manager\Plugin\QueueWorker;
 
+use Drupal\cgov_redirect_manager\CgovImporterService;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\cgov_redirect_manager\CgovImporterService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Processes migration imports on cron.

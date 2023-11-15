@@ -2,9 +2,9 @@
 
 namespace Drupal\app_module\Entity;
 
+use Drupal\app_module\AppModuleInterface;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
-use Drupal\app_module\AppModuleInterface;
 
 /**
  * Defines the Application Module entity.
