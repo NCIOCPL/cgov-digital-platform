@@ -17,7 +17,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
   ];

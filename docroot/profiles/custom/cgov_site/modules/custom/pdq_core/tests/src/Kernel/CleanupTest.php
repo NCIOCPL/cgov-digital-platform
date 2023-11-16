@@ -30,7 +30,7 @@ class CleanupTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'path_alias',
     'system',
     'user',
@@ -62,7 +62,7 @@ class CleanupTest extends KernelTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions =
       CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();

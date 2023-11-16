@@ -36,7 +36,7 @@ class PdqNodeTypeTest extends NodeTestBase {
    *
    * @var array
    */
-  public static $modules = [];
+  protected static $modules = [];
 
 
   /**
