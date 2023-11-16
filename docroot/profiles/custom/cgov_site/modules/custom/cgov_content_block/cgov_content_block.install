@@ -20,5 +20,8 @@ function cgov_content_block_install() {
   ] as $block_type) {
     // Add workflow.
     $tools->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+
+    // Add content type permissions.
+    $tools->addBlockContentTypePermissions($block_type, ['advanced_editor']);
   }
 }
