@@ -17,6 +17,7 @@ on:
       # for pull_request and the check_for_past_run job.
       - '**/config/install/*.yml'
       - '**/modules/custom/*/*.install'
+      - '.github/workflows/test-deployability.yml'
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     paths:
@@ -24,6 +25,7 @@ on:
       # for push and the check_for_past_run job.
       - '**/config/install/*.yml'
       - '**/modules/custom/*/*.install'
+      - '.github/workflows/test-deployability.yml'
 
 # Only run one instance of this workflow at a time per branch.
 concurrency:
@@ -137,7 +139,7 @@ jobs:
       - name: Generate install files hash
         id: install_files_hash
         run: |
-          echo "key=${{ runner.os }}-install-hash-$(find . -type f \( -path "*/modules/custom/*/*.install" -o -path "*/config/install/*.yml" \) -exec md5sum {} + | sort | awk '{print $NF}' | tr -d '\n' | md5sum)" >> "$GITHUB_OUTPUT"
+          echo "key=${{ runner.os }}-install-hash-$(find . -type f \( -path "*/modules/custom/*/*.install" -o -path "*/config/install/*.yml" -o -path ./.github/workflows/test-deployability.yml \) -exec md5sum {} + | sort | awk '{print $NF}' | tr -d '\n' | md5sum)" >> "$GITHUB_OUTPUT"
 
       - name: Locate Cache
         uses: actions/cache/restore@v3
