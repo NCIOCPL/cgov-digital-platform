@@ -66,14 +66,16 @@ EOMarkup;
     'weight' => 0,
     'theme' => $block_theme,
     'visibility' => [
-      'node_type' =>
+      'entity_bundle:node' =>
         [
-          'id' => 'node_type',
-          'bundles' => ['cgov_press_release' => 'cgov_press_release'],
-          'context_mapping' =>
-            [
-              'node' => '@node.node_route_context:node',
-            ],
+          'id' => 'entity_bundle:node',
+          'negate' => FALSE,
+          'context_mapping' => [
+            'node' => '@node.node_route_context:node',
+          ],
+          'bundles' => [
+            'cgov_press_release' => 'cgov_press_release',
+          ],
         ],
       'language' =>
         [

@@ -79,7 +79,6 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
     'content_author' => [
       'access content overview',
       'create content translations',
-      'edit content translations',
       'use editorial_workflow transition back_to_draft',
       'use editorial_workflow transition back_to_editing',
       'use editorial_workflow transition request_archive',
@@ -145,41 +144,49 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
  *
  * @see system_themes_installed()
  */
-function cgov_core_themes_installed() {
+function cgov_core_themes_installed($theme_list) {
   // Create Contact Us block for Press Releases.
-  $block_theme = \Drupal::config('system.theme')->get('default');
-  $block_region = 'public_use';
-  $block_label = 'Public Use';
-  $block_html = <<<EOMarkup
-<p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
-EOMarkup;
+  foreach ($theme_list as $theme) {
+    if ($theme != 'ncids_trans' && $theme != 'cgov_common') {
+      // Skip doing this if a drupal core theme is being installed.
+      continue;
+    }
+    $blockContent = \Drupal::entityTypeManager()->getStorage('block_content')->loadByProperties(['info' => 'Public Use']);
+      if(empty($blockContent)) {
+        $block_theme = $theme;
+        $block_region = 'public_use';
+        $block_label = 'Public Use';
+        $block_html = <<<EOMarkup
+      <p><em>If you would like to reproduce some or all of this content, see <a href="/policies/copyright-reuse">Reuse of NCI Information</a> for guidance about copyright and permissions. In the case of permitted digital reproduction, please credit the National Cancer Institute as the source and link to the original NCI product using the original product's title; e.g., “[current-page:title] was originally published by the National Cancer Institute.”</em></p>
+      EOMarkup;
 
-  // Create block content.
-  $block_content = BlockContent::create([
-    'id' => 'public_use',
-    'type' => 'content_block',
-    'info' => $block_label,
-    'body' => ['value' => $block_html, 'format' => 'full_html'],
-  ]);
-  $block_content->save();
+        // Create block content.
+        $block_content = BlockContent::create([
+          'id' => 'public_use',
+          'type' => 'content_block',
+          'info' => $block_label,
+          'body' => ['value' => $block_html, 'format' => 'full_html'],
+        ]);
+        $block_content->save();
 
-  // Assign block to Region.
-  $data = [
-    'id' => 'public_use',
-    'plugin' => 'block_content:' . $block_content->uuid(),
-    'region' => $block_region,
-    'provider' => 'block_content',
-    'weight' => 0,
-    'theme' => $block_theme,
-    'settings' => [
-      'label' => $block_label,
-      'label_display' => '0',
-    ],
-  ];
+        // Assign block to Region.
+        $data = [
+          'id' => 'public_use',
+          'plugin' => 'block_content:' . $block_content->uuid(),
+          'region' => $block_region,
+          'provider' => 'block_content',
+          'weight' => 0,
+          'theme' => $block_theme,
+          'settings' => [
+            'label' => $block_label,
+            'label_display' => '0',
+          ],
+        ];
 
-  $block = Block::create($data);
-  $block->save();
-
+        $block = Block::create($data);
+        $block->save();
+      }
+    }
 }
 
 /**
@@ -407,4 +414,33 @@ function cgov_core_update_9005() {
     $installer->uninstall(['hal'], FALSE);
   }
 
+}
+
+/**
+ * Install Claro theme.
+ */
+function cgov_core_update_9006() {
+  \Drupal::service('theme_installer')->install(['claro']);
+}
+
+/**
+ * Fixed up block visibility for configs referencing node_type. (Issue #4163)
+ *
+ * 2 years ago this update hook went in place to migrate this to the new
+ * way. We did not know and did not update our install hooks in biography
+ * and press release. So we need to update any blocks using the old way.
+ */
+function cgov_core_update_9007() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('block.block.') as $block_config_name) {
+    $block = $config_factory->getEditable($block_config_name);
+
+    if ($block->get('visibility.node_type')) {
+      $configuration = $block->get('visibility.node_type');
+      $configuration['id'] = 'entity_bundle:node';
+      $block->set('visibility.entity_bundle:node', $configuration);
+      $block->clear('visibility.node_type');
+      $block->save(TRUE);
+    }
+  }
 }
