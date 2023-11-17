@@ -29,14 +29,18 @@ IFS='.' read -a name <<< $internal_domain
 # BLT executable:
 blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
 
-# Execute the updates.
-$blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$internal_domain --verbose --no-interaction
+## Lines above copied are from post-site-install.sh, but that script is called
+## before this one, so need to repeat the blt command.
+
+##########################################################
+### ----------- Cgov Specific Tasks Here ------------- ###
+###       Differences from db-update start here.       ###
+##########################################################
+
+$blt cgov:acsf:post-install --environment=$env --site=${name[0]} --define drush.uri=$internal_domain  --verbose --no-interaction -D drush.ansi=false
 result=$?
 
-set +v
-
-# Exit with the status of the BLT commmand. If the exit status is non-zero,
-# Site Factory will send a notification of a partiolly failed install and will
-# stop executing any further post-site-install hook scripts that would be in
-# this directory (and get executed in alphabetical order).
-exit $result
+if [[ $result != 0 ]]; then
+  echo "Command execution returned status code: $result!\n";
+  exit $result
+fi
