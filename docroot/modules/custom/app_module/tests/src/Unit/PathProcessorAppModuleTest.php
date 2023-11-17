@@ -158,7 +158,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
     $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->get('app_module_data'), []);
+    $this->assertEquals($request->query->all('app_module_data'), []);
     $stack->pop();
   }
 
@@ -198,7 +198,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
     $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->get('app_module_data'), []);
+    $this->assertEquals($request->query->all('app_module_data'), []);
     $stack->pop();
   }
 
@@ -238,7 +238,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/');
     $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->get('app_module_data'), []);
+    $this->assertEquals($request->query->all('app_module_data'), []);
     $stack->pop();
   }
 
@@ -321,7 +321,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/route');
     $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->get('app_module_data'), ['key1' => 'value1']);
+    $this->assertEquals($request->query->all('app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
     $stack->pop();
   }
@@ -366,7 +366,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertEquals($path, $owner_alias);
     $this->assertEquals($request->query->get('app_module_route'), '/route');
     $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->get('app_module_data'), ['key1' => 'value1']);
+    $this->assertEquals($request->query->all('app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
     $stack->pop();
   }
