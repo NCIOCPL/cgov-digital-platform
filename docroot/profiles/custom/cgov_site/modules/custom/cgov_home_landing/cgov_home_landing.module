@@ -10,11 +10,11 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
  /**
-  * Implements hook_field_widget_form_alter().
+  * Implements hook_field_widget_single_element_form_alter().
   *
   * Limits allowed text formats using the cgov_core form_tools service.
   */
-function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $context) {
+function cgov_home_landing_field_widget_single_element_form_alter(&$element, $form_state, $context) {
   // Makes autocomplete do nothing
   if (
     array_key_exists('#paragraph_type', $element) &&

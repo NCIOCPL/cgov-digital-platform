@@ -6,11 +6,9 @@
  */
 
 /**
- * Implements hook_field_widget_form_alter().
- *
- * Limits allowed text formats using the cgov_core form_tools service.
+ * Implements hook_field_widget_single_element_form_alter().
  */
-function cgov_cthp_field_widget_form_alter(&$element, $form_state, $context) {
+function cgov_cthp_field_widget_single_element_form_alter(&$element, $form_state, $context) {
 
   // Remove autocomplete from external links.
   if (

@@ -190,9 +190,9 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
 }
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_single_element_form_alter().
  */
-function cgov_list_field_widget_form_alter(&$element, &$form_state, $context) {
+function cgov_list_field_widget_single_element_form_alter(&$element, &$form_state, $context) {
   if (
     array_key_exists('#paragraph_type', $element) &&
     $element['#paragraph_type'] == 'cgov_external_link'

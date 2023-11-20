@@ -6,9 +6,9 @@
  */
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_single_element_form_alter().
  */
-function cgov_external_link_block_field_widget_form_alter(&$element, &$form_state, $context) {
+function cgov_external_link_block_field_widget_single_element_form_alter(&$element, &$form_state, $context) {
 
   if (
     $form_state->getBuildInfo()['form_id'] !== "block_content_cgov_external_link_block_edit_form" &&
