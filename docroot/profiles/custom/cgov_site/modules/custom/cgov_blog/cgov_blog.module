@@ -152,20 +152,6 @@ function _is_selectable(array $form) {
 }
 
 /**
- * Implements hook_field_widget_form_alter().
- *
- * Limits allowed text formats using the cgov_core form_tools service.
- */
-function cgov_blog_field_widget_form_alter(&$element, $form_state, $context) {
-  // Maps field names to an array containing a single format.
-  $map = [
-    'field_about_blog' => ['streamlined'],
-  ];
-  $formHelper = \Drupal::service('cgov_core.form_tools');
-  $formHelper->allowTextFormats($map, $element, $context);
-}
-
-/**
  * Preprocess function for block templates.
  */
 function cgov_blog_preprocess_block(&$variables) {
@@ -254,7 +240,7 @@ function cgov_blog_entity_update($entity) {
  * Implments hook_language_switch_links_alter
  *
  * Makes sure that the correct 'field_topic_pretty_url' is being
- * assigned to the translation of the topic. 
+ * assigned to the translation of the topic.
  */
 function cgov_blog_language_switch_links_alter(array &$links, $type, Url $url) {
   if ($type !== 'language_content' || $url->getRouteName() !== 'entity.node.canonical') {
@@ -265,13 +251,13 @@ function cgov_blog_language_switch_links_alter(array &$links, $type, Url $url) {
   if ($current_node->bundle() !== 'cgov_blog_series') {
     return;
   }
-  
+
   $langcode = array_key_first($links);
   if (isset($links[$langcode]["query"]["topic"])) {
     $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-    
-    // Using the field_topic_pretty_url on the query topic on $links, we can get 
-    // the taxonomy term. 
+
+    // Using the field_topic_pretty_url on the query topic on $links, we can get
+    // the taxonomy term.
     $tids = $term_storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('vid', 'cgov_blog_topics')

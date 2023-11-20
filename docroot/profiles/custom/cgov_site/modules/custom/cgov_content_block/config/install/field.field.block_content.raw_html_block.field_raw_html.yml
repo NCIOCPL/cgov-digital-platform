@@ -4,6 +4,7 @@ dependencies:
   config:
     - block_content.type.raw_html_block
     - field.storage.block_content.field_raw_html
+    - filter.format.raw_html
   module:
     - text
 id: block_content.raw_html_block.field_raw_html
@@ -16,5 +17,7 @@ required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - raw_html
 field_type: text_long

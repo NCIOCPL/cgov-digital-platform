@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_pdq_intro_text
+    - filter.format.raw_html
     - node.type.pdq_cancer_information_summary
   module:
     - text
@@ -16,5 +17,7 @@ required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - raw_html
 field_type: text_long

@@ -11,21 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 
 /**
- * Implements hook_field_widget_form_alter().
- */
-function pdq_cancer_information_summary_field_widget_form_alter(
-  &$element,
-  FormStateInterface $form_state,
-  $context) {
-  $map = [
-    'field_pdq_section_html' => ['raw_html'],
-    'field_pdq_intro_text' => ['raw_html'],
-  ];
-  $form_helper = \Drupal::service('cgov_core.form_tools');
-  $form_helper->allowTextFormats($map, $element, $context);
-}
-
-/**
  * Implements hook_ENTITY_TYPE_insert().
  */
 function pdq_cancer_information_summary_node_insert(NodeInterface $node) {

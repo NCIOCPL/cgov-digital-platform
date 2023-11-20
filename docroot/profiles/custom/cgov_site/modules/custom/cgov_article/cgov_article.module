@@ -6,21 +6,6 @@
  */
 
 /**
- * Implements hook_field_widget_form_alter().
- *
- * Limits allowed text formats using the cgov_core form_tools service.
- */
-function cgov_article_field_widget_form_alter(&$element, $form_state, $context) {
-  // Maps field names to an array containing a single format.
-  $map = [
-    'field_body_section_heading' => ['simple'],
-    'field_body_section_content' => ['full_html'],
-  ];
-  $formHelper = \Drupal::service('cgov_core.form_tools');
-  $formHelper->allowTextFormats($map, $element, $context);
-}
-
-/**
  * Preprocess function for field templates.
  */
 function cgov_article_preprocess_field(&$variables) {

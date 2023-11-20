@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_intro_text
+    - filter.format.streamlined
     - node.type.cgov_blog_post
   module:
     - text
@@ -16,5 +17,7 @@ required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - streamlined
 field_type: text_long

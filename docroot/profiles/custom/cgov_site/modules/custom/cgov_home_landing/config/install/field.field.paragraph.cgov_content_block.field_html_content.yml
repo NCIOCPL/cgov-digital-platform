@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_html_content
+    - filter.format.full_html
     - paragraphs.paragraphs_type.cgov_content_block
   module:
     - text
@@ -16,5 +17,7 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - full_html
 field_type: text_long
