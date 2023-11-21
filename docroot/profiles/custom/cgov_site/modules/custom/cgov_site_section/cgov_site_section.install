@@ -32,6 +32,8 @@ function cgov_site_section_install() {
   ] as $block_type) {
     // Add workflow.
     $siteHelper->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
+    // Add content type permissions.
+    $siteHelper->addBlockContentTypePermissions($block_type, ['advanced_editor']);
   }
 
 }

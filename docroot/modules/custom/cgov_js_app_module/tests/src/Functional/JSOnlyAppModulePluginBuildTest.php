@@ -156,13 +156,13 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
 
     //phpcs:disable Drupal.Strings.UnnecessaryStringConcat.Found
     $simple_test_expected_config =
-      "\t\"testKey1\": \"testValue\", " .
-      "\t\"testKey2\": \"testKey2\", " .
-      "\t\"baseHost\": \"http://simpletest\", " .
-      "\t\"basePath\": \"/node/1\", " .
-      "\t\"canonicalHost\": \"http://simpletest\", " .
-      "\t\"language\": \"en\", " .
-      "\t\"rootId\": \"NCI-app-root\" ";
+      "\"testKey1\": \"testValue\", " .
+      "\"testKey2\": \"testKey2\", " .
+      "\"baseHost\": \"http://simpletest\", " .
+      "\"basePath\": \"/node/1\", " .
+      "\"canonicalHost\": \"http://simpletest\", " .
+      "\"language\": \"en\", " .
+      "\"rootId\": \"NCI-app-root\" ";
     //phpcs:enable
 
     $this->internalTestApage(
@@ -179,12 +179,12 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     ];
     //phpcs:disable Drupal.Strings.UnnecessaryStringConcat.Found
     $literal_test_expected_config =
-      "\t\"testKey1\": window.test_var, " .
-      "\t\"baseHost\": \"http://simpletest\", " .
-      "\t\"basePath\": \"/node/2\", " .
-      "\t\"canonicalHost\": \"http://simpletest\", " .
-      "\t\"language\": \"en\", " .
-      "\t\"rootId\": \"NCI-app-root\" ";
+      "\"testKey1\": window.test_var, " .
+      "\"baseHost\": \"http://simpletest\", " .
+      "\"basePath\": \"/node/2\", " .
+      "\"canonicalHost\": \"http://simpletest\", " .
+      "\"language\": \"en\", " .
+      "\"rootId\": \"NCI-app-root\" ";
     //phpcs:enable
 
     $this->internalTestApage(
@@ -202,12 +202,12 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
 
     //phpcs:disable Drupal.Strings.UnnecessaryStringConcat.Found
     $token_test_expected_config =
-      "\t\"title\": \"DUNNO\", " .
-      "\t\"baseHost\": \"http://simpletest\", " .
-      "\t\"basePath\": \"/node/3\", " .
-      "\t\"canonicalHost\": \"http://simpletest\", " .
-      "\t\"language\": \"en\", " .
-      "\t\"rootId\": \"NCI-app-root\" ";
+      "\"title\": \"DUNNO\", " .
+      "\"baseHost\": \"http://simpletest\", " .
+      "\"basePath\": \"/node/3\", " .
+      "\"canonicalHost\": \"http://simpletest\", " .
+      "\"language\": \"en\", " .
+      "\"rootId\": \"NCI-app-root\" ";
     //phpcs:enable
 
     $this->internalTestApage(
@@ -261,30 +261,30 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
 
     //phpcs:disable Drupal.Strings.UnnecessaryStringConcat.Found
     $type_test_expected_config =
-      "\t\"tokenTest\": \"DUNNO\", " .
-      "\t\"literalTest\": window.foo, " .
-      "\t\"boolTest\": true, " .
-      "\t\"intTest\": 5, " .
-      "\t\"floatTest\": 10.5, " .
-      "\t\"stringTest\": \"imastring\", " .
-      "\t\"nullTest\": null, " .
-      "\t\"arrayTest\": [1,\"string\",true,\"DUNNO\",window.foo,null], " .
-      "\t\"nestedObject\": { " .
-        "\t\"tokenTest\": \"DUNNO\", " .
-        "\t\"literalTest\": window.foo, " .
-        "\t\"boolTest\": true, " .
-        "\t\"intTest\": 5, " .
-        "\t\"floatTest\": 10.5, " .
-        "\t\"stringTest\": \"imastring\", " .
-        "\t\"nullTest\": null, " .
-        "\t\"arrayTest\": [1,\"string\",true,\"DUNNO\",window.foo,null], " .
-        "\t\"superNested\": { \t\"key\": \"value\" } " .
+      "\"tokenTest\": \"DUNNO\", " .
+      "\"literalTest\": window.foo, " .
+      "\"boolTest\": true, " .
+      "\"intTest\": 5, " .
+      "\"floatTest\": 10.5, " .
+      "\"stringTest\": \"imastring\", " .
+      "\"nullTest\": null, " .
+      "\"arrayTest\": [1,\"string\",true,\"DUNNO\",window.foo,null], " .
+      "\"nestedObject\": { " .
+        "\"tokenTest\": \"DUNNO\", " .
+        "\"literalTest\": window.foo, " .
+        "\"boolTest\": true, " .
+        "\"intTest\": 5, " .
+        "\"floatTest\": 10.5, " .
+        "\"stringTest\": \"imastring\", " .
+        "\"nullTest\": null, " .
+        "\"arrayTest\": [1,\"string\",true,\"DUNNO\",window.foo,null], " .
+        "\"superNested\": { \"key\": \"value\" } " .
       "}, " .
-      "\t\"baseHost\": \"http://simpletest\", " .
-      "\t\"basePath\": \"/node/4\", " .
-      "\t\"canonicalHost\": \"http://simpletest\", " .
-      "\t\"language\": \"en\", " .
-      "\t\"rootId\": \"NCI-app-root\" ";
+      "\"baseHost\": \"http://simpletest\", " .
+      "\"basePath\": \"/node/4\", " .
+      "\"canonicalHost\": \"http://simpletest\", " .
+      "\"language\": \"en\", " .
+      "\"rootId\": \"NCI-app-root\" ";
     //phpcs:enable
 
     $this->internalTestApage(
@@ -302,13 +302,13 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
 
     //phpcs:disable Drupal.Strings.UnnecessaryStringConcat.Found
     $route_test_expected_config =
-      "\t\"testKey1\": \"testValue\", " .
-      "\t\"testKey2\": \"testKey2\", " .
-      "\t\"baseHost\": \"http://simpletest\", " .
-      "\t\"basePath\": \"/node/5\", " .
-      "\t\"canonicalHost\": \"http://simpletest\", " .
-      "\t\"language\": \"en\", " .
-      "\t\"rootId\": \"NCI-app-root\" ";
+      "\"testKey1\": \"testValue\", " .
+      "\"testKey2\": \"testKey2\", " .
+      "\"baseHost\": \"http://simpletest\", " .
+      "\"basePath\": \"/node/5\", " .
+      "\"canonicalHost\": \"http://simpletest\", " .
+      "\"language\": \"en\", " .
+      "\"rootId\": \"NCI-app-root\" ";
     //phpcs:enable
 
     $this->internalTestApage(
@@ -403,7 +403,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     $this->drupalGet('admin/structure/types/manage/' . $content_type . '/fields');
 
     // Go to the 'Add field' page.
-    $this->clickLink('Add field');
+    $this->clickLink('Create a new field');
 
     // Fill out the field form.
     $edit = [
