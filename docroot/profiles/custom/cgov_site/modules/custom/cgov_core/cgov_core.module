@@ -167,20 +167,41 @@ function cgov_core_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
 }
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_single_element_form_alter().
  *
  * Limits allowed text formats using the cgov_core form_tools service.
  */
-function cgov_core_field_widget_form_alter(&$element, $form_state, $context) {
-  // Maps field names to an array containing a single format.
-  $map = [
-    'field_citation_content' => ['streamlined'],
-    'field_intro_text' => ['streamlined'],
-    'field_caption' => ['simple'],
-    'body' => ['full_html'],
-  ];
-  $formHelper = \Drupal::service('cgov_core.form_tools');
-  $formHelper->allowTextFormats($map, $element, $context);
+function cgov_core_field_widget_single_element_form_alter(&$element, FormStateInterface $form_state, $context) {
+  // Remove filter information junk.
+  if (
+    $element !== NULL &&
+    array_key_exists('#type', $element) &&
+    $element['#type'] === 'text_format'
+  ) {
+    $element['#after_build'][] = '__cgov_core_text_filter_modify';
+  }
+}
+
+/**
+ * Helper function for cgov_core_field_widget_single_element_form_alter.
+ */
+function __cgov_core_text_filter_modify($form_element) {
+  /*
+   * So a couple of notes:
+   * 1. This gets fired twice for each element that is of text_format. The
+   *    first time is without format, the second with. I cannot find a
+   *    better way to handle this, and there are no hooks fired in the
+   *    element class for the text_format.
+   * 2. The unsets below don't care if those elements do not exist the
+   *    first time.
+   * 3. We cannot remove the whole 'format' element, because it stores the
+   *    hidden input with the format that is to be used.
+   */
+  unset($form_element['format']['help']);
+  unset($form_element['format']['guidelines']);
+  unset($form_element['format']['#type']);
+  unset($form_element['format']['#theme_wrappers']);
+  return $form_element;
 }
 
 /**
@@ -650,8 +671,8 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
 }
 
 /**
- * Implements field_widget_WIDGET_TYPE_form_alter().
+ * Implements field_widget_single_element_WIDGET_TYPE_form_alter().
  */
-function cgov_core_field_widget_link_default_form_alter(&$element, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
+function cgov_core_field_widget_single_element_link_default_form_alter(&$element, FormStateInterface $form_state, $context) {
   $element['uri']['#description'] = t('Enter the full URL starting with https://');
 }

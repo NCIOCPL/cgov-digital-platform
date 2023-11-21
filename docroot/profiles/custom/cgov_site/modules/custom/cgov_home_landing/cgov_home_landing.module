@@ -10,19 +10,11 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
  /**
-  * Implements hook_field_widget_form_alter().
+  * Implements hook_field_widget_single_element_form_alter().
   *
   * Limits allowed text formats using the cgov_core form_tools service.
   */
-function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $context) {
-  // Maps field names to an array containing a single format.
-  $map = [
-    'field_raw_html' => ['raw_html'],
-    'field_html_content' => ['full_html'],
-  ];
-  $formHelper = \Drupal::service('cgov_core.form_tools');
-  $formHelper->allowTextFormats($map, $element, $context);
-
+function cgov_home_landing_field_widget_single_element_form_alter(&$element, $form_state, $context) {
   // Makes autocomplete do nothing
   if (
     array_key_exists('#paragraph_type', $element) &&
@@ -34,7 +26,7 @@ function cgov_home_landing_field_widget_form_alter(&$element, $form_state, $cont
   // Makes autocomplete do nothing for link button external
   // used in guide cards and cta strip
   if (
-    array_key_exists('#paragraph_type', $element) && 
+    array_key_exists('#paragraph_type', $element) &&
     ($element['#paragraph_type'] == 'ncids_link_button_external')
   ) {
     $element['subform']['field_external_link']['widget'][0]['uri']['#process'] = NULL;

@@ -141,7 +141,7 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
     $this->drupalGet('admin/structure/types/manage/' . $this->contentTypeName . '/fields');
 
     // Go to the 'Add field' page.
-    $this->clickLink('Add field');
+    $this->clickLink('Create a new field');
 
     // Make a name for this field.
     $field_name = strtolower($this->randomMachineName(10));

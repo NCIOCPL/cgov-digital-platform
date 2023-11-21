@@ -21,7 +21,7 @@ use Drupal\Core\Session\AccountInterface;
 function cgov_promo_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
   $bundle = $entity->bundle();
 
-  if (($bundle === 'cgov_card_internal' || $bundle === 'ncids_feature_card_internal') && 
+  if (($bundle === 'cgov_card_internal' || $bundle === 'ncids_feature_card_internal') &&
   $operation === 'view') {
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
@@ -35,9 +35,9 @@ function cgov_promo_paragraph_access(EntityInterface $entity, $operation, Accoun
 }
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_single_element_form_alter().
  */
-function cgov_promo_field_widget_form_alter(&$element, &$form_state, $context) {
+function cgov_promo_field_widget_single_element_form_alter(&$element, &$form_state, $context) {
   if (
     array_key_exists('#paragraph_type', $element) &&
     ($element['#paragraph_type'] == 'cgov_card_external' ||
