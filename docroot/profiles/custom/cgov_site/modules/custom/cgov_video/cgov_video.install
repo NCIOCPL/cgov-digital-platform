@@ -24,6 +24,7 @@ function cgov_video_install() {
 
   // Attach video carousel to right workflow.
   $siteHelper->attachBlockContentTypeToWorkflow('cgov_video_carousel', 'simple_workflow');
+  $siteHelper->addBlockContentTypePermissions('cgov_video_carousel', ['advanced_editor']);
 
   // Install permissions for this module.
   _cgov_video_install_permissions($siteHelper);

@@ -58,7 +58,7 @@ function cgov_js_app_module_library_info_alter(array &$libraries, $extension) {
     return;
   }
 
-  $options = $request_query->get('app_module_data');
+  $options = $request_query->all('app_module_data');
 
   // Setup Library.
   $libraries[$options['drupalConfig']['appName']] = [
@@ -83,7 +83,7 @@ function cgov_js_app_module_css_alter(array &$css, AttachedAssetsInterface $asse
     return;
   }
 
-  $options = $request_query->get('app_module_data');
+  $options = $request_query->all('app_module_data');
 
   $css[$options['drupalConfig']['appCssUri']] = [
     'preprocess' => FALSE,
