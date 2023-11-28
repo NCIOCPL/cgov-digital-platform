@@ -73,7 +73,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
   autoconf libtool m4 pkg-config nasm \
   libpng-dev \
   chromium-browser \
-  chromium-chromedriver
+  chromium-chromedriver \
+  xvfb \
+  libgtk-3-0
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
@@ -118,7 +120,6 @@ RUN . $NVM_DIR/nvm.sh \
   && nvm use default
 
 # add node and npm to path so the commands are available
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # update npm
