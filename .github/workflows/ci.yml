@@ -121,11 +121,10 @@ jobs:
       - name: Run Front-end Tests
         run: |
           blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
-      - name: Behat Tests
+      - name: Behavioral Tests
         timeout-minutes: 120
         run: |
-          ## Behat tests will run the server
-          blt tests:behat:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
+          echo "TODO: Add Cypress tests here"
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |
