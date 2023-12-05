@@ -18,7 +18,7 @@ describe('usa-banner', () => {
 
 	it('sends the correct analytics for Spanish toggle', async () => {
 		const englishBanner = `
-			<section id="usa-banner" class="usa-banner usa-banner--nci-banner" aria-label="Official government website">
+			<section id="usa-banner" class="usa-banner" aria-label="Official government website">
 				<header class="usa-banner__header">
 					<div class="usa-banner__inner">
 						<div class="usa-banner__header-text">
@@ -58,7 +58,7 @@ describe('usa-banner', () => {
 
 	it('sends the correct analytics for the English toggle', async () => {
 		const spanishBanner = `
-			<section id="usa-banner" class="usa-banner usa-banner--nci-banner" aria-label="Un sitio oficial del Gobierno de Estados Unidos">
+			<section id="usa-banner" class="usa-banner" aria-label="Un sitio oficial del Gobierno de Estados Unidos">
 				<header class="usa-banner__header">
 					<div class="usa-banner__inner">
 						<div class="usa-banner__header-text">
@@ -98,7 +98,7 @@ describe('usa-banner', () => {
 
 	it('does not blow up if there is no toggle', async () => {
 		const noToggleBanner = `
-		<section id="usa-banner" class="usa-banner usa-banner--nci-banner" aria-label="Official government website">
+		<section id="usa-banner" class="usa-banner" aria-label="Official government website">
 			<header class="usa-banner__header">
 				<div class="usa-banner__inner">
 					<div class="usa-banner__header-text">
