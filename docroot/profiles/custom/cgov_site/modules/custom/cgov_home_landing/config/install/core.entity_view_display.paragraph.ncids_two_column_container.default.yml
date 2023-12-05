@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_two_column_container.field_main_contents
+    - field.field.paragraph.ncids_two_column_container.field_secondary_contents
+    - paragraphs.paragraphs_type.ncids_two_column_container
+  module:
+    - entity_reference_revisions
+id: paragraph.ncids_two_column_container.default
+targetEntityType: paragraph
+bundle: ncids_two_column_container
+mode: default
+content:
+  field_main_contents:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_secondary_contents:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

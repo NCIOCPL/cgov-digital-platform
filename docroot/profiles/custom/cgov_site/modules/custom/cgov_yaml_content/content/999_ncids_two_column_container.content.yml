@@ -1,0 +1,101 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS 2 Column Container Test Page"
+  title__ES:
+      value: "NCIDS Spanish 2 Column Container Test Page"
+  field_page_description:
+    value: "Accurate, up-to-date, comprehensive cancer information from the U.S. government's principal agency for cancer research."
+  field_page_description__ES:
+    value: "Información del Instituto Nacional del Cáncer sobre el tratamiento, la prevención, los exámenes de detección, la genética y las causas del cáncer, así como formas de hacer frente a la enfermedad."
+  field_browser_title:
+    value: "Comprehensive Cancer Information"
+  field_browser_title__ES:
+    value: "Cáncer en español"
+  field_pretty_url:
+    value: "ncids-two-column-container"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_without_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Our Organization"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Senior Leaders Article'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'DOCs Article'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Advisory Board Article'
+    - entity: 'paragraph'
+      type: "ncids_two_column_container"
+      field_main_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <h2 class="nci-heading-h2 nci-heading--label">Testing Main Contents</h2>
+                <p class="nci-guide-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="nci-guide-card__description">Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
+                <a class="usa-button" href="https://www.google.com">Test External Button</a>
+      field_secondary_contents:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section">
+                  <h2 class="nci-heading-h2 nci-heading--label">Media Resources</h2>
+                  <a>
+                    <h2 class="nci-heading-h2">Resources & Contacts</h2>
+                  </a>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p>Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
+                </div>
+  

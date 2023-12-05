@@ -7,6 +7,8 @@ import * as eddlUtil from '../../../core/analytics/eddl-util';
 
 import cgdpRawHtml from '../cgdp-landing-raw-html';
 import { cgdpLandingRawHtmlDom } from './cgdp-landing-raw-html.dom';
+import { cgdpRawHTMLRowCols } from './cgdp-landing-raw-html-cols.dom';
+import { cgdpLandingRawHtmlSingleBlockDom } from './cgdp-landing-raw-html-single-block.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -58,6 +60,8 @@ describe('CGDP Raw Html', () => {
 				location: 'Body',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
+				pageRowCols: 0,
+				pageRowColIndex: 0,
 				containerItems: 1,
 				containerItemIndex: 1,
 				componentType: 'Raw HTML',
@@ -104,6 +108,8 @@ describe('CGDP Raw Html', () => {
 				location: 'Body',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
+				pageRowCols: 0,
+				pageRowColIndex: 0,
 				containerItems: 1,
 				containerItemIndex: 1,
 				componentType: 'Raw HTML',
@@ -142,6 +148,8 @@ describe('CGDP Raw Html', () => {
 				location: 'Body',
 				pageRows: 4,
 				pageRowIndex: 1,
+				pageRowCols: 0,
+				pageRowColIndex: 0,
 				containerItems: 1,
 				containerItemIndex: 1,
 				componentType: 'Raw HTML',
@@ -153,6 +161,120 @@ describe('CGDP Raw Html', () => {
 				linkArea: 'Prose Block',
 				totalLinks: 1,
 				linkPosition: 1,
+			}
+		);
+	});
+
+	it('raw html link click when in row col - col 2', () => {
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdpRawHTMLRowCols);
+
+		// Create the JS
+		cgdpRawHtml();
+
+		const card = screen.getAllByRole('link');
+
+		fireEvent.click(card[2]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:RawHTML:LinkClick',
+			'LP:RawHTML:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 2,
+				pageRowColIndex: 2,
+				containerItems: 3,
+				containerItemIndex: 1,
+				componentType: 'Raw HTML',
+				componentTheme: 'Not Defined',
+				componentVariant: 'NewsEventsRightRail',
+				title: 'Media Resources',
+				linkType: 'Internal',
+				linkText: 'Resources & Contacts',
+				linkArea: 'Text',
+				totalLinks: 6,
+				linkPosition: 1,
+			}
+		);
+	});
+
+	it('raw html link click when in row col - col 1', () => {
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdpRawHTMLRowCols);
+
+		// Create the JS
+		cgdpRawHtml();
+
+		const card = screen.getAllByRole('link');
+
+		fireEvent.click(card[0]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:RawHTML:LinkClick',
+			'LP:RawHTML:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 2,
+				pageRowColIndex: 1,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'Raw HTML',
+				componentTheme: 'Not Defined',
+				componentVariant: 'NewsEventsRightRail',
+				title: 'Cancer Currents Blog',
+				linkType: 'Internal',
+				linkText: 'View all posts',
+				linkArea: 'Text',
+				totalLinks: 2,
+				linkPosition: 1,
+			}
+		);
+	});
+
+	it('sends correct analytics when raw HTML block is the only component on the page', () => {
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpLandingRawHtmlSingleBlockDom
+		);
+
+		// Create the JS
+		cgdpRawHtml();
+
+		const card = screen.getAllByRole('link');
+
+		fireEvent.click(card[1]);
+
+		expect(spy).toHaveBeenCalledWith(
+			'LP:RawHTML:LinkClick',
+			'LP:RawHTML:LinkClick',
+			{
+				location: 'Body',
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 0,
+				pageRowColIndex: 0,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'Raw HTML',
+				componentTheme: 'Not Defined',
+				componentVariant: 'NewsEventsRightRail',
+				title: 'Media Resources',
+				linkType: 'External',
+				linkText: 'Images and B-roll',
+				linkArea: 'Text',
+				totalLinks: 6,
+				linkPosition: 2,
 			}
 		);
 	});
