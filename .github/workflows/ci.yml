@@ -35,6 +35,7 @@ jobs:
           MYSQL_PASSWORD: drupal
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
     steps:
       - name: Setup variables
         id: set_vars
@@ -79,6 +80,11 @@ jobs:
       - name: Install NPM 8
         run: |
           npm install -g npm@8.1.0
+      - name: Install cypress modules
+        run: |
+          npm install -g cypress@13.4.0
+          npm install -g cypress-parallel@0.12.0
+          npm install -g cypress-multi-reporters
       ## Setup PHP and Composer Caching
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
@@ -122,9 +128,12 @@ jobs:
         run: |
           blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
       - name: Behavioral Tests
+        env:
+          NODE_PATH: $(which node | sed 's/bin\/node/lib\/node_modules/')
         timeout-minutes: 120
         run: |
-          echo "TODO: Add Cypress tests here"
+          # Run cypress parallel command.
+          blt tests:cypress:run --define drush.alias='${drush.aliases.ci}' --environment=ci --define tests.run-server=true -D behat.web-driver=chrome --ansi --verbose
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |

@@ -73,7 +73,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
   autoconf libtool m4 pkg-config nasm \
   libpng-dev \
   chromium-browser \
-  chromium-chromedriver
+  chromium-chromedriver \
+  xvfb \
+  libgtk-3-0
 
 # Copy up the available sites config. The startup script
 # manipulates this file based on env vars.
@@ -118,11 +120,19 @@ RUN . $NVM_DIR/nvm.sh \
   && nvm use default
 
 # add node and npm to path so the commands are available
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV NODE_PATH=$NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # update npm
 RUN npm install -g npm@8.1.0
+
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+# Permission changes are needed in order for npm to INSTALL Cypress
+RUN chmod o+wx /root \
+  && npm install -g cypress@13.4.0
+# Install cypress parallel and cypress multi reporters globally
+RUN npm install -g cypress-parallel@0.12.0
+RUN npm install -g cypress-multi-reporters
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2

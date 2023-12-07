@@ -122,5 +122,5 @@ And('user fills out {string} with {string}', (section, text) => {
 })
 
 And('user selects {string} checkbox', (checkbox) => {
-    cy.get(`[class='fieldset-wrapper']:contains("${checkbox}")`).parent().find('input.form-checkbox').check({ force: true })
+  cy.get(`label[for*='edit-field-date-display-mode']:contains("${checkbox}")`).parent().find('input[class*="form-checkbox"]').check({ force: true })
 })

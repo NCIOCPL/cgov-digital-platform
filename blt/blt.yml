@@ -233,11 +233,13 @@ validate:
 tests:
   cypress:
     paths:
-      - ${repo.root}/tests/cypress/cypress/e2e/CreateUsers.feature
+    ## - ${repo.root}/tests/cypress/cypress/e2e/CreateUsers.feature
+      - ${repo.root}/tests/cypress/cypress/e2e/CreateUser
       - ${repo.root}/tests/cypress/cypress/e2e/BehatParallel
-      - ${repo.root}/tests/cypress/cypress/e2e/CreateSiteSection.feature
+    ##  - ${repo.root}/tests/cypress/cypress/e2e/CreateSiteSection.feature
       - ${repo.root}/tests/cypress/cypress/e2e/ContentCreationParallel
     num-threads: 2
+    weights-file: "${repo.root}/tests/cypress/cypress/parallel-weights.json"
 
   phpunit:
     - { config: '${repo.root}/phpunit.xml', directory: '${docroot}/modules/custom' }

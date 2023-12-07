@@ -24,18 +24,25 @@ class CypressParallel extends BaseTask implements CommandInterface, PrintedInter
   use \Robo\Common\ExecOneCommand;
 
   /**
+   * Number of threads for cypress.
+   *
+   * @var integer
+   */
+  protected $cypressThreads = 2;
+
+  /**
+   * Cypress script file.
+   *
+   * @var string
+   */
+  protected $scriptFile = 'cy:run';
+
+  /**
    * Command variable.
    *
    * @var string
    */
   protected $command;
-
-  /**
-   * Directory of test files or single test file to run.
-   *
-   * @var string
-   */
-  protected $files = '';
 
   /**
    * Cypress constructor.
@@ -48,132 +55,122 @@ class CypressParallel extends BaseTask implements CommandInterface, PrintedInter
   public function __construct($pathToCypress = NULL) {
     $this->command = $pathToCypress;
 
-    /* @todo Find a way to get this onto the path via Docker and GHA */
+    $this->option('-t', $this->cypressThreads);
+    $this->option('-n', '/usr/local/versions/node/v16.13.0/lib/node_modules/cypress-multi-reporters');
     if (!$this->command) {
       $this->command = $this->findExecutable('cypress-parallel');
     }
     if (!$this->command) {
-      throw new TaskException(__CLASS__, "Neither local paratest nor global composer installation not found");
+      throw new TaskException(__CLASS__, "cypress-parallel executable file not found");
     }
   }
 
   /* @todo Add properties for all the parameters for cypress-parallel */
-
   /**
-   * Add a filter to command.
+   * Reporter to pass to Cypress.
    *
-   * @param string $filter
-   *   Filter to add.
+   * @param string $reporter
+   *   Reporter option.
    *
    * @return $this
    */
-  public function filter($filter) {
-    $this->option('filter', $filter);
+  public function setReporter($reporter) {
+    $this->option('-r', $reporter);
     return $this;
   }
 
   /**
-   * Add a group to command.
+   * Set reporter options.
    *
-   * @param string $group
-   *   Group to add.
+   * @param string $reporterOption
+   *   Reporter option.
    *
    * @return $this
    */
-  public function group($group) {
-    $this->option("group", $group);
+  public function setReporterOption($reporterOption) {
+    $this->option('-o', $reporterOption);
     return $this;
   }
 
   /**
-   * Exclude Group param.
+   * Set exit on first failing thread.
    *
-   * @param string $group
-   *   Group to add.
+   * @param string $bail
+   *   Bail.
    *
    * @return $this
    */
-  public function excludeGroup($group) {
-    $this->option("exclude-group", $group);
+  public function setBail($bail) {
+    $this->option('-b', $bail);
     return $this;
   }
 
   /**
-   * Adds `log-junit` option.
+   * Set the reporter module path.
    *
-   * @param string $file
-   *   JUnit file.
+   * @param string $reporterModulePath
+   *   Reporter module path.
    *
    * @return $this
    */
-  public function xml($file = NULL) {
-    $this->option("log-junit", $file);
+  public function setReporterModulePath($reporterModulePath) {
+    $this->option('-n', $reporterModulePath);
     return $this;
   }
 
   /**
-   * Adds bootstrap option.
-   *
-   * @param string $file
-   *   File param.
+   * Set npm Cypress command.
    *
    * @return $this
    */
-  public function bootstrap($file) {
-    $this->option("bootstrap", $file);
+  public function script() {
+    $this->option('-s', $this->scriptFile);
     return $this;
   }
 
   /**
-   * Adds config file.
+   * Set number of threads.
    *
-   * @param string $file
-   *   Config file.
+   * @param integer $threads
+   *   Number of threads.
    *
    * @return $this
    */
-  public function configFile($file) {
-    $this->option('-c', $file);
-    return $this;
-  }
-
-  /**
-   * Directory of test files or single test file to run.
-   *
-   * @param string $files
-   *   A single test file or a directory containing test files.
-   *
-   * @return $this
-   *   Returns object.
-   *
-   * @throws \Robo\Exception\TaskException
-   */
-  public function files($files) {
-    if (!empty($this->files) || is_array($files)) {
-      throw new TaskException(__CLASS__, "Only one file or directory may be provided.");
+  public function threads($threads = 0) {
+    if (!empty($threds)) {
+      $this->option('-t', $threads);
     }
-    $this->files = ' ' . $files;
-
     return $this;
   }
 
   /**
-   * Test the provided file.
-   *
-   * @param string $file
-   *   Path to file to test.
+   * Cypress mode.
    *
    * @return $this
    */
-  public function file($file) {
-    return $this->files($file);
+  public function mode() {
+    $this->option('-m', "false");
+    return $this;
+  }
+
+  /**
+   * Set parallel weights json file.
+   *
+   * @param string $weightFile
+   *   Weight file location.
+   *
+   * @return $this
+   */
+  public function setWeightFile($weightFile) {
+    $this->option('-w', $weightFile);
+    return $this;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCommand() {
-    return $this->command . $this->arguments . $this->files;
+    return $this->command . $this->arguments;
   }
 
   /**

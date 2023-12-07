@@ -8,21 +8,18 @@
     "cy:parallel": "cypress-parallel -s cy:run -t 3 -d 'cypress/e2e/BehatParallel/*' -m false -w 'cypress/parallel-weights.json'",
     "test": "cypress run --spec \"cypress/e2e/SetUp.feature\" && npm run cy:parallel",
     "blt:tests:cypress": "cypress run --spec \"cypress/e2e/CreateUsers.feature\" && cypress-parallel -s cy:run -d 'cypress/e2e/BehatParallel/*' -m false -w 'cypress/parallel-weights.json'",
-    "cypress:setUp": "cypress run --spec \"cypress/e2e/SetUp.feature\""
+    "cypress:setUp": "cypress run --spec \"cypress/e2e/SetUp.feature\"",
+    "cy:install": "cypress install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress-cucumber-preprocessor": "^4.3.1",
-    "cypress-parallel": "^0.12.0"
+    "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": "true",
     "stepDefinitions": "cypress/e2e/**/",
     "commonPath": "cypress/e2e/common"
-  },
-  "devDependencies": {
-    "cypress": "^10.11.0"
   }
 }
