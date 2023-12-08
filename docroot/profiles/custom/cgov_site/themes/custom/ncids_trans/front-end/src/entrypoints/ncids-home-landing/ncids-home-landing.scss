@@ -20,52 +20,57 @@ uswds-core.$output-these-utilities: (
 	'font-weight',
 	'border-color',
 	'line-height',
-	'justify-content',
+	'justify-content'
 );
 // Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
 // the smallest possible aspect classes.
 uswds-core.$add-aspect-settings: (
-  output: false,
-  responsive: false,
-  active: false,
-  focus: false,
-  hover: false,
-  visited: false,
+	output: false,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
 );
 uswds-core.$background-color-settings: (
 	output: true,
 	responsive: false,
 	active: false,
 	focus: false,
-	hover: false, // Undo default
-	visited: false,
+	hover: false,
+	// Undo default
+	visited: false
 );
 uswds-core.$box-shadow-settings: (
 	output: true,
 	responsive: false,
 	active: false,
 	focus: false,
-	hover: false, // Undo default
-	visited: false,
+	hover: false,
+	// Undo default
+	visited: false
 );
 uswds-core.$border-color-settings: (
 	output: true,
-	responsive: false, // Undo default
-	active: false,
-	focus: false,
-	hover: false, // Undo default
-	visited: false,
-);
-uswds-core.$justify-content-settings: (
-	output: true,
-	responsive: true, // Undo default
+	responsive: false,
+	// Undo default
 	active: false,
 	focus: false,
 	hover: false,
-	visited: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$justify-content-settings: (
+	output: true,
+	responsive: true,
+	// Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
 );
 
-@forward "uswds-utilities";
+@forward 'uswds-utilities';
 /* ------------------------------------------------------------------------- */
 /* End utility classes for raw html blocks                                   */
 /* ------------------------------------------------------------------------- */
@@ -76,41 +81,73 @@ uswds-core.$justify-content-settings: (
 
 // Begin NCIDS Landing with Title Title and Tagline Styles
 .cgdp-title-area {
-    // Need a smidge more padding top?
-    @include u-text('center');
+	// Need a smidge more padding top?
+	@include u-text('center');
 
-    &__page-title {
-        //Might be 15 and 11?
-        @include u-font(heading, 'xl');
-        @include u-margin-top(3);
-        @include u-margin-bottom(0);
+	&__page-title {
+		//Might be 15 and 11?
+		@include u-font(heading, 'xl');
+		@include u-margin-top(3);
+		@include u-margin-bottom(0);
 
-        @include at-media(tablet-lg) {
-                @include u-font(heading, '3xl');
-        }
-    }
+		@include at-media(tablet-lg) {
+			@include u-font(heading, '3xl');
+		}
+	}
 
-    &__subheading {
-        @include u-display('block');
-        @include u-font(body, 'md');
-        @include u-margin-top(1);
+	&__subheading {
+		@include u-display('block');
+		@include u-font(body, 'md');
+		@include u-margin-top(1);
 
-        @include at-media(tablet-lg) {
-            @include u-margin-top(1.5);
-            @include u-font(body, 'xl');
-        }
-    }
+		@include at-media(tablet-lg) {
+			@include u-margin-top(1.5);
+			@include u-font(body, 'xl');
+		}
+	}
 }
 // End Title and Tagline Styles
 
 // Removes padding from NCIDS with title's title and subheading container
 // and from the NCIDS Hero
 .usa-section--cgdp-no-top {
-    @include u-padding-top(0);
+	@include u-padding-top(0);
 }
 
 .ncids-column .usa-section:first-child {
 	@include at-media('tablet-lg') {
 		@include u-padding-top(0);
+	}
+}
+
+// Rightrail styles for news & events
+// List of links
+.rightrail__list-links {
+	@include u-margin-y('105');
+	@include u-line-height('body', 4);
+	& > li {
+		& > a {
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.rightrail__button {
+  @include u-margin-bottom('105');
+}
+
+.usa-button--nci-icon.usa-button--nci-full-width {
+	@include u-display('block');
+
+	.usa-icon {
+		float: left;
+	}
+
+	> span {
+		display: inline-block;
+		width: calc(100% - 48px);
 	}
 }

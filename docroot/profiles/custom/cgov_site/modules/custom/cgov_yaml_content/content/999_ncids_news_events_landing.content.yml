@@ -1,0 +1,361 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: "published"
+  title: "News & Events"
+  title__ES:
+    value: "Noticias"
+  field_page_description:
+    value: "The latest cancer news from the U.S. government's principal agency for cancer research, plus resources designed for science writers and reporters."
+  field_page_description__ES:
+    value: "Las últimas noticias de la principal dependencia del gobierno de los Estados Unidos dedicada a la investigación del cáncer, así como recursos para reporteros y escritores científicos."
+  field_browser_title:
+    value: "News & Events"
+  field_browser_title__ES:
+    value: "Noticias"
+  field_site_section:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/news-events"
+            langcode: "en"
+  field_site_section__ES:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/noticias"
+            langcode: "es"
+  field_page_style:
+    value: "ncids_with_title"
+  ### English Contents
+  field_landing_contents:
+    ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Our Organization"
+      field_row_cards:
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Senior Leaders Article"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "DOCs Article"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Advisory Board Article"
+    - entity: "paragraph"
+      type: "ncids_two_column_container"
+      field_main_contents:
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <h2 class="nci-heading-h3 nci-heading--label">Testing Main Contents</h2>
+                <p class="nci-guide-card__description">This is all temporary until dynamic lists come down. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="nci-guide-card__description">Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
+                <a class="usa-button" href="https://www.google.com">Test External Button</a>
+      field_secondary_contents:
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section" data-eddl-landing-row>
+                  <h2 class="nci-heading-h3 nci-heading--label">Media Resources</h2>
+                  <ul class="usa-list--unstyled rightrail__list-links">
+                    <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold" 
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Resources &amp; Contacts</a></li>
+                    <li><a href="https://visualsonline.cancer.gov/" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Images and B-roll</a></li>
+                    <li><a href="/about-nci/budget/fact-book" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >NCI Budget Data</a></li>
+                    <li><a href="#" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >News Releases</a></li>
+                  </ul>
+                  <a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new" class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Button">
+                      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                      <span>Subscribe to NCI News Releases</span></a>
+                  <a href="https://www.youtube.com/ncigov" class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Media Resources"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="usa-icon" role="img" aria-hidden="true">
+                    <path d="M19.816 5.389a2.469 2.469 0 0 1 1.766 1.746c.291 1.598.43 3.22.417 4.843a25.867 25.867 0 0 1-.417 4.794 2.468 2.468 0 0 1-1.766 1.795c-2.593.318-5.204.46-7.816.429a58.411 58.411 0 0 1-7.816-.429 2.469 2.469 0 0 1-1.766-1.746 25.879 25.879 0 0 1-.417-4.843 25.85 25.85 0 0 1 .417-4.793 2.468 2.468 0 0 1 1.766-1.796c2.594-.3 5.205-.427 7.816-.379a58.413 58.413 0 0 1 7.816.379ZM9.95 9.046v5.864l5.233-2.932L9.95 9.046Z"/></svg>
+                      <span>NCI YouTube</span></a>
+                </div>
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section" data-eddl-landing-row>
+                  <h2 class="nci-heading-h3 nci-heading--label">Cancer Currents Blog</h2>
+                  <div class="usa-prose">
+                    <p>Find news and updates on the latest cancer research.</p>
+                  </div>
+                  <ul class="usa-list--unstyled rightrail__list-links">
+                    <li><a href="#" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Cancer Currents Blog"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >View all posts</a></li>
+                  </ul>
+                  <a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new?topic_id=USNIHNCI_38" class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Cancer Currents Blog"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Button">
+                      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                      <span>Subscribe to Cancer Currents</span></a>
+                </div>
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section" data-eddl-landing-row>
+                  <h2 class="nci-heading-h3 nci-heading--label">Events</h2>
+                  <ul class="usa-list--unstyled rightrail__list-links">
+                    <li><a href="https://events.cancer.gov/" class="usa-link font-serif-lg text-bold"
+                    data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Events"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >NCI Events</a></li>
+                    <li><a href="/news-events/events/scientific-meetings" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Events"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Scientific Meetings and Lectures</a></li>
+                    <li><a href="/news-events/events/conferences" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Events"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Conferences</a></li>
+                    <li><a href="/news-events/events/advisory-board-meetings" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Events"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Advisory Board Meetings</a></li>
+                    <li><a href="https://events.cancer.gov/" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Events"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Text"
+                      >Register for an NCI Event</a></li>
+                  </ul>
+                </div>
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Novedades recientes"
+      field_row_cards:
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: "Quizartinib añade una nueva opción para tratar la leucemia mieloide aguda"
+          field_override_card_description:
+            - value: "La FDA aprobó un medicamento diseñado para las personas con LMA que tiene una mutación genética específica."
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Senior Leaders Article"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: "Un nuevo tratamiento inicial para algunos tipos de cáncer de próstata metastásicos"
+          field_override_card_description:
+            - value: "Se aprobó la combinación de enzalutamida con talazoparib para tratar cánceres de próstata metastásicos resistentes a la castración que tienen ciertas alteraciones genéticas."
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "DOCs Article"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: "Pocas personas con cáncer se hacen las pruebas de la línea germinal"
+          field_override_card_description:
+            - value: "Aunque hay más personas que se hacen las pruebas de la línea germinal para identificar mutaciones genéticas hereditarias del cáncer, las tasas aún son bajas."
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Advisory Board Article"
+    - entity: "paragraph"
+      type: "ncids_two_column_container"
+      field_main_contents:
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <h2 class="nci-heading-h3 nci-heading--label">Comunicados de prensa</h2>
+                <p class="nci-guide-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="nci-guide-card__description">Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
+                <a class="usa-button" href="https://www.google.com">Test External Button</a>
+      field_secondary_contents:
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section" data-eddl-landing-row>
+                  <h2 class="nci-heading-h3 nci-heading--label">Recursos para medios de communicación </h2>
+                  <ul class="usa-list--unstyled rightrail__list-links">
+                    <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Recursos para medios de communicación"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text">Contactos (en Inglés)</a></li>
+                    <li><a href="/espanol/redes-sociales" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Recursos para medios de communicación"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text">Material digital</a></li>
+                    <li><a href="/espanol/redes-sociales" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Recursos para medios de communicación"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text">Redes sociales</a></li>
+                  </ul>
+                  <a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                  data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Recursos para medios de communicación"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Button">
+                      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                      </svg>
+                      <span>Suscríbase a los comunicados de prensa del NCI</span></a>
+                  <a href="https://www.youtube.com/playlist?list=PLYKy4VbxNln7Cy6K2hZvwHLIZAElio5ai " class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Recursos para medios de communicación"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="usa-icon" role="img" aria-hidden="true">
+                        <path d="M19.816 5.389a2.469 2.469 0 0 1 1.766 1.746c.291 1.598.43 3.22.417 4.843a25.867 25.867 0 0 1-.417 4.794 2.468 2.468 0 0 1-1.766 1.795c-2.593.318-5.204.46-7.816.429a58.411 58.411 0 0 1-7.816-.429 2.469 2.469 0 0 1-1.766-1.746 25.879 25.879 0 0 1-.417-4.843 25.85 25.85 0 0 1 .417-4.793 2.468 2.468 0 0 1 1.766-1.796c2.594-.3 5.205-.427 7.816-.379a58.413 58.413 0 0 1 7.816.379ZM9.95 9.046v5.864l5.233-2.932L9.95 9.046Z" />
+                      </svg>
+                      <span>NCI YouTube</span>
+                  </a>
+                </div>
+        - entity: "paragraph"
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section" data-eddl-landing-row>
+                  <h2 class="nci-heading-h3 nci-heading--label">Blog temas y relatos</h2>
+                  <div class="usa-prose">
+                    <p>Las últimas noticias e investigaciones del Instituto Nacional del Cáncer. </p>
+                  </div>
+                  <ul class="usa-list--unstyled rightrail__list-links ">
+                    <li>
+                      <a href="/espanol/noticias/temas-y-relatos-blog" class="usa-link font-serif-lg text-bold"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Blog temas y relatos"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="Internal"
+                      data-eddl-landing-rawhtml-link-area="Text">
+                        <span>Blogs más recientes</span>
+                      </a>
+                    </li>
+                  </ul>
+                  <a href="https://public.govdelivery.com/accounts/USNIHNCIESP/subscriber/new" class="usa-button usa-button--nci-icon usa-button--nci-full-width rightrail__button"
+                      data-eddl-landing-rawhtml
+                      data-eddl-landing-rawhtml-title="Blog temas y relatos"
+                      data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail"
+                      data-eddl-landing-rawhtml-link-type="External"
+                      data-eddl-landing-rawhtml-link-area="Text">
+                      <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                      </svg>
+                      <span>Suscríbase</span>
+                  </a>
+                </div>
