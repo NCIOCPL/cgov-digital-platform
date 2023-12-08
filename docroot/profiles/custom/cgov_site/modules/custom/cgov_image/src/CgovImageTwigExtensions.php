@@ -3,9 +3,9 @@
 namespace Drupal\cgov_image;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Drupal\Core\File\FileUrlGeneratorInterface;
 
 /**
  * Cgov Image Twig Extensions.

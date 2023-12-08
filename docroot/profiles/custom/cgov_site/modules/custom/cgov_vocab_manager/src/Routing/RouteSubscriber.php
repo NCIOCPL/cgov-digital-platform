@@ -3,8 +3,8 @@
 namespace Drupal\cgov_vocab_manager\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Listens to the dynamic route events.
@@ -28,7 +28,7 @@ class RouteSubscriber extends RouteSubscriberBase {
    */
   protected function getOverviewOneLevelPageRoute() {
     $route = new Route('/admin/structure/cgov_taxonomy_manager/{taxonomy_vocabulary}/{parent_tid}');
-    $route->setDefault('_title_callback', 'Drupal\taxonomy\Controller\TaxonomyController::vocabularyTitle');
+    $route->setDefault('_title_callback', 'Drupal\cgov_vocab_manager\Form\CgovVocabManagerForm::getTitle');
     $route->setDefault('_form', 'Drupal\cgov_vocab_manager\Form\CgovVocabManagerForm');
     $route->setRequirement('_entity_access', 'taxonomy_vocabulary.access taxonomy overview');
     $route->setOption('_admin_route', TRUE);

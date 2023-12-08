@@ -4,8 +4,8 @@ namespace Drupal\cgov_core\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class to handle setting cache directives on some responses.

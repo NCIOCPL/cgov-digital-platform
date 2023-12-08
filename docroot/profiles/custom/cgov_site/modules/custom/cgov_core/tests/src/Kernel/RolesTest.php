@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\cgov_core\Kernel;
 
-use Drupal\KernelTests\KernelTestBase;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Tests the my custom service.
@@ -15,7 +15,7 @@ class RolesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
   ];

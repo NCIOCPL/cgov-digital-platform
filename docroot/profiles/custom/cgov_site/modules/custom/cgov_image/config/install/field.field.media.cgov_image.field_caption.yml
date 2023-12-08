@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.media.field_caption
+    - filter.format.simple
     - media.type.cgov_image
   module:
     - text
@@ -16,5 +17,7 @@ required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - simple
 field_type: text_long

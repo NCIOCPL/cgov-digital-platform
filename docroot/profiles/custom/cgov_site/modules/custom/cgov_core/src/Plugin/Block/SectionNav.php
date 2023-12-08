@@ -2,14 +2,14 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\cgov_core\Services\CgovNavigationManager;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Access\AccessResult;
 use Drupal\cgov_core\NavItem;
+use Drupal\cgov_core\Services\CgovNavigationManager;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'Section Nav' block.

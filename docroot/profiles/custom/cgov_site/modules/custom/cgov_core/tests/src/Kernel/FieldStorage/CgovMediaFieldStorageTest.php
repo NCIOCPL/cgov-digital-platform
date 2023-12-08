@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\media\Entity\MediaType;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\media\Entity\MediaType;
 use Drupal\media\MediaTypeInterface;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.
@@ -17,7 +17,7 @@ class CgovMediaFieldStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
   ];

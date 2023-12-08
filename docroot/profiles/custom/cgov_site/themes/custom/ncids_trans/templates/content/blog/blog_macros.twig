@@ -5,13 +5,13 @@
  */
 #}
 
-{# 
+{#
 # Get the content author or default to 'NCI Staff' if none found.
 # @param content
 #}
 {% macro getByline(content) %}
   {% if content.field_author and content.field_author|length > 2 %}
-    {% spaceless %}{{content.field_date_posted}}{% endspaceless %},
+    {{content.field_date_posted|render|spaceless}},
     {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
     {{content.field_author}}
   {% else %}
@@ -19,7 +19,7 @@
   {% endif %}
 {% endmacro %}
 
-{# 
+{#
 # Look for an associated promo or article imaage.
 # @param content
 #}
@@ -33,7 +33,7 @@
   {% endif %}
 {% endmacro %}
 
-{# 
+{#
  # Draw archive list item for month type.
  # @param array monthInfo
  # @param string monthInfo
@@ -48,7 +48,7 @@
   {% endfor %}
 {% endmacro %}
 
-{# 
+{#
  # Draw archive list item for year type.
  # @param array yearInfo
  #}
@@ -60,12 +60,12 @@
   {% endfor %}
 {% endmacro %}
 
-{# 
- # Draw the title for a given Blog Series. Prepend the month/year to the title if 
- # this is a Blog Archive page. Prepend the category name if this is a Blog Category 
+{#
+ # Draw the title for a given Blog Series. Prepend the month/year to the title if
+ # this is a Blog Archive page. Prepend the category name if this is a Blog Category
  # page.
  #
- # @param string month ('mm' numerical value) 
+ # @param string month ('mm' numerical value)
  # @param string year
  # @param string topic
  # @param object node
@@ -79,7 +79,7 @@
   </h1>
 {% endmacro %}
 
-{# 
+{#
  # Get long month name.
  # @param string month
  #}
@@ -87,7 +87,7 @@
   {% if month == '12' %}
     {% trans with {'context':'Long month name'} %}December{% endtrans %}
   {% elseif month == '11' %}
-    {% trans with {'context':'Long month name'} %}November{% endtrans %}    
+    {% trans with {'context':'Long month name'} %}November{% endtrans %}
   {% elseif month == '10' %}
     {% trans with {'context':'Long month name'} %}October{% endtrans %}
   {% elseif month == '09' %}
@@ -104,7 +104,7 @@
     {% trans with {'context':'Long month name'} %}April{% endtrans %}
   {% elseif month == '03' %}
     {% trans with {'context':'Long month name'} %}March{% endtrans %}
-  {% elseif month == '02' %} 
+  {% elseif month == '02' %}
     {% trans with {'context':'Long month name'} %}February{% endtrans %}
   {% else %}
     {% trans with {'context':'Long month name'} %}January{% endtrans %}

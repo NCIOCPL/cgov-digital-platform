@@ -2,8 +2,8 @@
 
 namespace Drupal\pdq_cancer_information_summary;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Service for clearing out orphan summary sections.

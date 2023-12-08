@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_schema_org\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
 
 /**
  * Plugin implementation of the 'cgov_schema_org_empty_formatter' formatter.

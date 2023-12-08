@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\cgov_redirect_manager\Functional;
 
-use Drupal\Tests\BrowserTestBase;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\Tests\BrowserTestBase;
 use Drush\TestTraits\DrushTestTrait;
 
 /**

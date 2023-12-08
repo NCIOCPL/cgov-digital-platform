@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\node\Entity\NodeType;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeTypeInterface;
-use CgovPlatform\Tests\CgovSchemaExclusions;
 
 /**
  * Base class which does most of the work for field storage tests.
@@ -19,7 +19,7 @@ class PDQFieldStorageTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'user', 'system', 'file', 'field', 'image', 'node', 'text', 'filter', 'datetime', 'options', 'workflows', 'content_moderation',
     'language', 'content_translation', 'pdq_core', 'paragraphs', 'rest', 'serialization', 'token', 'metatag',
   ];

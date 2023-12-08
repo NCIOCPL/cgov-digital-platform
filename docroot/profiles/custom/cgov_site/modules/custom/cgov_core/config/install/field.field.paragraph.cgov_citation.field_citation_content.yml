@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_citation_content
+    - filter.format.streamlined
     - paragraphs.paragraphs_type.cgov_citation
   module:
     - text
@@ -16,5 +17,7 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - streamlined
 field_type: text_long

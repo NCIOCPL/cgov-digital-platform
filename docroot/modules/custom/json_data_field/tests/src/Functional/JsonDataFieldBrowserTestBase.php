@@ -3,8 +3,8 @@
 namespace Drupal\Tests\json_data_field\Functional;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\Tests\BrowserTestBase;
 use Drupal\file\Entity\File;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Base class for json data field field tests.
@@ -141,7 +141,7 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
     $this->drupalGet('admin/structure/types/manage/' . $this->contentTypeName . '/fields');
 
     // Go to the 'Add field' page.
-    $this->clickLink('Add field');
+    $this->clickLink('Create a new field');
 
     // Make a name for this field.
     $field_name = strtolower($this->randomMachineName(10));

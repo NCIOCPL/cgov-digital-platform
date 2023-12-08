@@ -11,7 +11,7 @@
                      <div class="byline">
                         <p>
                            {% if post['author']|length > 2 %}
-                              {% spaceless %}{{post['date']}}{% endspaceless %},
+                              {{- post['date'] -}},
                               {% trans with {'context':'CGov Blog'} %}by{% endtrans %}
                               {{post['author']}}
                            {% else %}

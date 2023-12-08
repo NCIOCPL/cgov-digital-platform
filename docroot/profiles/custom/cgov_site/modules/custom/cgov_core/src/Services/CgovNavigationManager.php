@@ -2,16 +2,16 @@
 
 namespace Drupal\cgov_core\Services;
 
-use Drupal\path_alias\AliasManagerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\cgov_core\NavItem;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityRepository;
-use Drupal\Core\Path\CurrentPathStack;
-use Drupal\taxonomy\TermInterface;
-use Drupal\cgov_core\NavItem;
-use Psr\Log\LoggerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Path\CurrentPathStack;
+use Drupal\path_alias\AliasManagerInterface;
+use Drupal\taxonomy\TermInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Cgov Navigation Manager Service.

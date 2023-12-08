@@ -2,8 +2,8 @@
 
 namespace Drupal\json_data_field\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Yaml as SymfonyYaml;

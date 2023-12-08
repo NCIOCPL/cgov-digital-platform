@@ -3,9 +3,9 @@
 namespace Drupal\json_data_field\Plugin\Validation\Constraint;
 
 use Drupal\json_data_field\Plugin\Field\FieldType\JsonDataFieldItem;
+use JsonSchema\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use JsonSchema\Validator;
 
 /**
  * Checks if YAML values are valid.

@@ -2,13 +2,13 @@
 
 namespace Drupal\Tests\cgov_core\Kernel;
 
+use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
+use Drupal\Tests\cgov_core\Traits;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use CgovPlatform\Tests\CgovSchemaExclusions;
-use Drupal\Tests\cgov_core\Traits;
 
 /**
  * Ensure that cgov_site workflows conform to requirements.
@@ -25,7 +25,7 @@ class WorkflowTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'user',
     'path_alias',
@@ -48,7 +48,7 @@ class WorkflowTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     static::$configSchemaCheckerExclusions = CgovSchemaExclusions::$configSchemaCheckerExclusions;
     parent::setUp();
 

@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\cgov_core\Kernel;
 
-use Drupal\KernelTests\KernelTestBase;
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Tests node body field storage.
@@ -17,7 +17,7 @@ class TestKernelTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['user', 'system', 'field', 'node',
+  protected static $modules = ['user', 'system', 'field', 'node',
     'text', 'filter', 'taxonomy', 'token', 'metatag',
   ];
 
