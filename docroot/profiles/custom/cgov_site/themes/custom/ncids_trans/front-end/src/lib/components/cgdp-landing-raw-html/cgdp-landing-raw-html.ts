@@ -50,8 +50,8 @@ const rawHtmlClickTracker = (target: HTMLElement) => {
 		linkArea: 'Raw HTML',
 		linkText: linkText.slice(0, 50),
 		linkType: 'Not Defined',
-		rowItems: 1,
-		rowItemIndex: 1,
+		containerItems: 1,
+		containerItemIndex: 1,
 		totalLinks: totalLinks.length,
 		linkPosition: linkPosition,
 	};

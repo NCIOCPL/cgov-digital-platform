@@ -4,9 +4,9 @@ import { trackOther } from './eddl-util';
  * Landing page click tracker helper.
  * @param {HTMLElement} target - Selected component.
  * @param {string} linkName - Link name from type of selected component.
- * @param {number} rowItems - Total number of components in the row of the
+ * @param {number} containerItems - Total number of components in the row of the
  *     selected component.
- * @param {number} rowItemIndex - Index of the selected component in the row.
+ * @param {number} containerItemIndex - Index of the selected component in the row.
  * @param {string} componentType - Type of the selected component such as Promo
  *     Block, Feature Cards, etc.
  * @param {string} componentTheme - "Light" or "Dark". In cases where a theme
@@ -31,8 +31,8 @@ import { trackOther } from './eddl-util';
 export const landingClickTracker = (
 	target: HTMLElement,
 	linkName: string,
-	rowItems: number | '_ERROR_',
-	rowItemIndex: number | '_ERROR_',
+	containerItems: number | '_ERROR_',
+	containerItemIndex: number | '_ERROR_',
 	componentType: string,
 	componentTheme: string,
 	componentVariant: string,
@@ -58,8 +58,8 @@ export const landingClickTracker = (
 		location: 'Body',
 		pageRows: pageRows.length,
 		pageRowIndex: pageRowIndex,
-		rowItems: rowItems,
-		rowItemIndex: rowItemIndex,
+		containerItems: containerItems,
+		containerItemIndex: containerItemIndex,
 		componentType: componentType,
 		componentTheme: componentTheme,
 		componentVariant: componentVariant,
