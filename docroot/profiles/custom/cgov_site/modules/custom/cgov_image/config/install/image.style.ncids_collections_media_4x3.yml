@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: ncids_collections_media_4x3
+label: 'NCIDS Collections Media 4x3'
+effects:
+  37b56916-be0f-48e8-b85b-57d63fe2b8a8:
+    uuid: 37b56916-be0f-48e8-b85b-57d63fe2b8a8
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  e61fa581-45b2-4db5-907d-ea6a7d547b25:
+    uuid: e61fa581-45b2-4db5-907d-ea6a7d547b25
+    id: image_scale
+    weight: 2
+    data:
+      width: 400
+      height: null
+      upscale: true

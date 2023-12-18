@@ -108,3 +108,14 @@ function cgov_image_update_8005() {
   $service = \Drupal::service('features.manager');
   $result = $service->import(['cgov_image']);
 }
+
+/**
+ * Update for NCIDS Dynamic List.
+ *
+ * Force installation of core.entity_view_mode.media.ncids_collections_media
+ * before node core.entity_view_display configs are loaded.
+ */
+function cgov_image_update_8006() {
+  $service = \Drupal::service('features.manager');
+  $result = $service->import(['cgov_image']);
+}

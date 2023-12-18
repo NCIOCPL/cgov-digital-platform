@@ -74,15 +74,25 @@
     - entity: "paragraph"
       type: "ncids_two_column_container"
       field_main_contents:
-        - entity: "paragraph"
-          type: "cgov_card_raw_html"
-          field_raw_html:
-            - format: "raw_html"
-              value: |
-                <h2 class="nci-heading-h3 nci-heading--label">Testing Main Contents</h2>
-                <p class="nci-guide-card__description">This is all temporary until dynamic lists come down. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p class="nci-guide-card__description">Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
-                <a class="usa-button" href="https://www.google.com">Test External Button</a>
+        - entity: 'paragraph'
+          type: "ncids_dynamic_list"
+          field_list_title:
+            value: "Recent Press Releases"
+          field_source_view:
+            - target_id: press_releases
+              display_id: ncids_collection_media
+              data: |
+                a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+          field_view_more_text:
+            value: "All NCI News"
+          field_view_more_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'NCP Test Article'
       field_secondary_contents:
         - entity: "paragraph"
           type: "cgov_card_raw_html"
@@ -266,15 +276,25 @@
     - entity: "paragraph"
       type: "ncids_two_column_container"
       field_main_contents:
-        - entity: "paragraph"
-          type: "cgov_card_raw_html"
-          field_raw_html:
-            - format: "raw_html"
-              value: |
-                <h2 class="nci-heading-h3 nci-heading--label">Comunicados de prensa</h2>
-                <p class="nci-guide-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p class="nci-guide-card__description">Curabitur gravida arcu ac tortor dignissim convallis aenean et.</p>
-                <a class="usa-button" href="https://www.google.com">Test External Button</a>
+        - entity: 'paragraph'
+          type: "ncids_dynamic_list"
+          field_list_title:
+            value: "Últimos comunicados de prensa"
+          field_source_view:
+            - target_id: press_releases
+              display_id: ncids_collection_media
+              data: |
+                a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+          field_view_more_text:
+            value: "Todas las noticias del NCI"
+          field_view_more_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'NCP Test Article'
       field_secondary_contents:
         - entity: "paragraph"
           type: "cgov_card_raw_html"

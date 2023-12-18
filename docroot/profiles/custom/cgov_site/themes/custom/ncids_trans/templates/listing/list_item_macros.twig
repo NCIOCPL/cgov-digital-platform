@@ -274,3 +274,32 @@
     {% endif %}
   </div>
 {% endmacro %}
+
+{#
+  Render the NCIDS Dynamic Lists.
+
+  Used in:
+    * NCIDS 2 Column Container (Dynamic Lists as a field)
+    * NCIDS Dynamic Lists
+#}
+{% macro ncids_dynamic_list_macro(title, date, description, image, url) %}
+  <li class="usa-collection__item">
+    {% set renderImage = image|render %}
+    {% if renderImage is not empty %}
+      {{- image -}}
+    {% endif %}
+    <div class="usa-collection__body">
+      <h3 class="usa-collection__heading">
+        <a class="usa-link" href="{{ url }}">
+          {{ title }}
+        </a>
+      </h3>
+      <ul class="usa-collection__meta" aria-label="testing label">
+        <li class="usa-collection__meta-item">
+          {{ date }}
+        </li>
+      </ul>
+      <p class="usa-collection__description">{{ description }}</p>
+    </div>
+  </li>
+{% endmacro %}

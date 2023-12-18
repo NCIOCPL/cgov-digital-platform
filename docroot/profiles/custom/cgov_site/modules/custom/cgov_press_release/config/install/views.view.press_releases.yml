@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.press_view_archive_item
     - core.entity_view_mode.node.press_view_home_list_item
+    - core.entity_view_mode.node.press_view_ncids_collection_media
     - node.type.cgov_press_release
   module:
     - datetime
@@ -254,6 +255,41 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  ncids_collection_media:
+    id: ncids_collection_media
+    display_title: 'NCIDS Collection Media'
+    display_plugin: block
+    position: 3
+    display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 10
+      arguments: {  }
+      style:
+        type: default
+        options: {  }
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: press_view_ncids_collection_media
+      defaults:
+        pager: false
+        style: false
+        row: false
+        arguments: false
+      display_description: ''
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
