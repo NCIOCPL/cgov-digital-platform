@@ -7,6 +7,7 @@
 @forward '../../lib/components/nci-cta-strip';
 @forward '../../lib/components/nci-hero';
 @forward '../../lib/components/cgdp-inline-video';
+@forward '../../lib/components/cgdp-dynamic-list';
 
 /* ------------------------------------------------------------------------- */
 /* Output select utility classes for raw html blocks                         */
@@ -118,6 +119,10 @@ uswds-core.$justify-content-settings: (
 	@include at-media('tablet-lg') {
 		@include u-padding-top(0);
 	}
+}
+
+.cgdp-dynamic-list__view-more-button {
+	@include u-text('center');
 }
 
 // Rightrail styles for news & events

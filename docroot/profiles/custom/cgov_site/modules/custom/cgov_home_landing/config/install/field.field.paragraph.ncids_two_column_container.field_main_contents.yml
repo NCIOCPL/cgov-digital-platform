@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.paragraph.field_main_contents
     - paragraphs.paragraphs_type.cgov_card_raw_html
+    - paragraphs.paragraphs_type.ncids_dynamic_list
     - paragraphs.paragraphs_type.ncids_two_column_container
   module:
     - entity_reference_revisions
@@ -22,6 +23,7 @@ settings:
   handler_settings:
     target_bundles:
       cgov_card_raw_html: cgov_card_raw_html
+      ncids_dynamic_list: ncids_dynamic_list
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -123,6 +125,9 @@ settings:
       ncids_call_to_action_strip:
         weight: -60
         enabled: false
+      ncids_dynamic_list:
+        weight: 81
+        enabled: true
       ncids_feature_card_external:
         weight: -59
         enabled: false
