@@ -46,7 +46,6 @@ function cgov_metatag_token_info() {
           'name' => t('Cgov Media content-language Meta Tag'),
           'description' => t('The value to use for the media content-language meta tag.'),
         ];
-
   return $info;
 }
 
