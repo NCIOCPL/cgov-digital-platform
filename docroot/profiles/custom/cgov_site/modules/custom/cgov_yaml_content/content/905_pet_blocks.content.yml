@@ -86,3 +86,77 @@
           - 'media'
           - bundle: 'cgov_contextual_image'
             name: 'Didi - The bear'
+
+- entity: "media"
+  bundle: "cgov_image" 
+  name: "Space in name test" 
+  langcode: en 
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'testing space in name.jpg'
+      alt: 'Space in name test'
+      image_crop: 
+        crop_wrapper: 
+          freeform: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1165
+                height: 1165
+          thumbnail: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1161
+                height: 870
+          4x3: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 3
+                y: 0
+                width: 1161
+                height: 870
+          3x4: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 142
+                y: 0
+                width: 870
+                height: 1161
+          1x1: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 1165
+                height: 1165
+          16x9: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 0
+                y: 253
+                width: 1159
+                height: 652
+          9x16: 
+            crop_container:
+              values: 
+                crop_applied: 1
+                x: 253
+                y: 0
+                width: 652
+                height: 1159
