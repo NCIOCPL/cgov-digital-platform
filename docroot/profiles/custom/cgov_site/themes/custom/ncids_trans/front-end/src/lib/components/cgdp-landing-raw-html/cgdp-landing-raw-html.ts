@@ -1,3 +1,7 @@
+import {
+	getContainerItemInfo,
+	getLandingRowsAndColsInfo,
+} from '../../core/analytics/landing-page-contents-helper';
 import { trackOther } from '../../core/analytics/eddl-util';
 
 /**
@@ -5,18 +9,22 @@ import { trackOther } from '../../core/analytics/eddl-util';
  * @param {HTMLElement} target - Selected component.
  */
 const rawHtmlClickTracker = (target: HTMLElement) => {
-	/** Total number of rows on the landing page overall. */
-	const pageRows = Array.from(
-		document.querySelectorAll('[data-eddl-landing-row]')
-	);
+	const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
+		getLandingRowsAndColsInfo(target);
 
-	/** Parent row of the clicked target. */
-	const parentRowContainer = target.closest('[data-eddl-landing-row]');
+	const { containerItems, containerItemIndex } = getContainerItemInfo(target);
 
-	/** Matched index from all rows on page to the target's parent row. */
-	const pageRowIndex = parentRowContainer
-		? pageRows.indexOf(parentRowContainer) + 1
-		: '_ERROR_';
+	/** Set values for data that cannot be altered. */
+	const protectedData = {
+		location: 'Body',
+		componentType: 'Raw HTML',
+		pageRows,
+		pageRowIndex,
+		pageRowCols,
+		pageRowColIndex,
+		containerItems,
+		containerItemIndex,
+	};
 
 	/** Title from data attribute. Truncated after 50 characters. */
 	const title = target.dataset.eddlLandingRawhtmlTitle || 'Not Defined';
@@ -24,23 +32,23 @@ const rawHtmlClickTracker = (target: HTMLElement) => {
 	/**  Text of target selected. Truncated after 50 characters. */
 	const linkText = target.textContent ? target.textContent.trim() : '_ERROR_';
 
-	/** Total number of links shown in the row. */
-	const totalLinks = parentRowContainer
-		? Array.from(
-				parentRowContainer.querySelectorAll('[data-eddl-landing-rawhtml]')
-		  )
-		: [];
+	// Get the raw html block. If we are in a column, we should get the
+	// closest parent row that is in a column, if we get nothing, then
+	// this raw html block is missing the data-eddl-landing-row attrib.
+	const col = target.closest('[data-eddl-landing-row-col]');
+	const rawHtmlBlock =
+		col !== null
+			? target.closest('[data-eddl-landing-row-col] [data-eddl-landing-row]')
+			: target.closest('[data-eddl-landing-row]');
+
+	// An array of all the links inside of the rawHtml
+	const allLinks =
+		rawHtmlBlock !== null
+			? Array.from(rawHtmlBlock.querySelectorAll('[data-eddl-landing-rawhtml]'))
+			: [];
 
 	/** The index of the link clicked. */
-	const linkPosition = totalLinks.indexOf(target) + 1;
-
-	/** Set values for data that cannot be altered. */
-	const protectedData = {
-		location: 'Body',
-		componentType: 'Raw HTML',
-		pageRows: pageRows.length,
-		pageRowIndex: pageRowIndex,
-	};
+	const linkPosition = allLinks.indexOf(target) + 1;
 
 	/** Set values defaults for optional data attributes. */
 	const defaultData = {
@@ -50,9 +58,7 @@ const rawHtmlClickTracker = (target: HTMLElement) => {
 		linkArea: 'Raw HTML',
 		linkText: linkText.slice(0, 50),
 		linkType: 'Not Defined',
-		rowItems: 1,
-		rowItemIndex: 1,
-		totalLinks: totalLinks.length,
+		totalLinks: allLinks.length,
 		linkPosition: linkPosition,
 	};
 

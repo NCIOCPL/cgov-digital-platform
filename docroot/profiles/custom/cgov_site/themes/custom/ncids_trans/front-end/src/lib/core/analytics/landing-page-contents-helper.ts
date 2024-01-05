@@ -1,12 +1,102 @@
 import { trackOther } from './eddl-util';
 
+export const getLandingRowsAndColsInfo = (target: HTMLElement) => {
+	// Get the total number of page rows by finding all rows on the page
+	// and subtracting the rows within columns.
+	const allRows = Array.from(
+		document.querySelectorAll('[data-eddl-landing-row]')
+	);
+	const nestedRows = Array.from(
+		document.querySelectorAll('[data-eddl-landing-row] [data-eddl-landing-row]')
+	);
+	const pageRows = allRows.filter((r) => nestedRows.indexOf(r) === -1);
+
+	// Get the parent row of the clicked target, which might be in a column.
+	const parentRowColContainer = target.closest('[data-eddl-landing-row-col]');
+
+	// Now if there is a col we need to get the col's wrapping row.
+	const parentRowContainer =
+		parentRowColContainer !== null
+			? parentRowColContainer.closest('[data-eddl-landing-row]')
+			: target.closest('[data-eddl-landing-row]');
+
+	/** Matched index from all rows on page to the target's parent row. */
+	if (parentRowContainer === null) {
+		// NOTE: There is a case in which pageRowCols and pageRowColIndex could be
+		// considered _ERROR_ or something. This is probably good enough.
+		return {
+			pageRows: pageRows.length,
+			pageRowIndex: '_ERROR_',
+			pageRowCols: 0,
+			pageRowColIndex: 0,
+		};
+	}
+
+	// Get the index of the row within the page.
+	const pageRowIndex = pageRows.indexOf(parentRowContainer) + 1;
+
+	// Now find all the columns.
+	const pageRowCols = Array.from(
+		parentRowContainer.querySelectorAll('[data-eddl-landing-row-col]')
+	);
+
+	// If we do not have a column then there is no need to continue, only to
+	// return the row information.
+	if (pageRowCols.length === 0) {
+		return {
+			pageRows: pageRows.length,
+			pageRowIndex: pageRowIndex,
+			pageRowCols: 0,
+			pageRowColIndex: 0,
+		};
+	}
+
+	// There are columns within the row, but none that are
+	// closest to the target.
+	if (parentRowColContainer === null) {
+		return {
+			pageRows: pageRows.length,
+			pageRowIndex: pageRowIndex,
+			pageRowCols: pageRowCols.length,
+			pageRowColIndex: '_ERROR_',
+		};
+	} else {
+		return {
+			pageRows: pageRows.length,
+			pageRowIndex: pageRowIndex,
+			pageRowCols: pageRowCols.length,
+			pageRowColIndex: pageRowCols.indexOf(parentRowColContainer) + 1,
+		};
+	}
+};
+
+export const getContainerItemInfo = (target: HTMLElement) => {
+	const col = target.closest('[data-eddl-landing-row-col]');
+	if (col !== null) {
+		const parentColRow = target.closest('[data-eddl-landing-row]');
+		const colRows = Array.from(col.querySelectorAll('[data-eddl-landing-row]'));
+		const colItemIndex = parentColRow
+			? colRows.indexOf(parentColRow) + 1
+			: '_ERROR_';
+		return {
+			containerItems: colRows.length,
+			containerItemIndex: colItemIndex,
+		};
+	} else {
+		return {
+			containerItems: 1,
+			containerItemIndex: 1,
+		};
+	}
+};
+
 /**
  * Landing page click tracker helper.
  * @param {HTMLElement} target - Selected component.
  * @param {string} linkName - Link name from type of selected component.
- * @param {number} rowItems - Total number of components in the row of the
+ * @param {number} containerItems - Total number of components in the row of the
  *     selected component.
- * @param {number} rowItemIndex - Index of the selected component in the row.
+ * @param {number} containerItemIndex - Index of the selected component in the row.
  * @param {string} componentType - Type of the selected component such as Promo
  *     Block, Feature Cards, etc.
  * @param {string} componentTheme - "Light" or "Dark". In cases where a theme
@@ -31,8 +121,8 @@ import { trackOther } from './eddl-util';
 export const landingClickTracker = (
 	target: HTMLElement,
 	linkName: string,
-	rowItems: number | '_ERROR_',
-	rowItemIndex: number | '_ERROR_',
+	containerItems: number | '_ERROR_',
+	containerItemIndex: number | string,
 	componentType: string,
 	componentTheme: string,
 	componentVariant: string,
@@ -43,23 +133,17 @@ export const landingClickTracker = (
 	totalLinks: number,
 	linkPosition: number | string
 ) => {
-	/** Total number of rows on the landing page overall. */
-	const pageRows = Array.from(
-		document.querySelectorAll('[data-eddl-landing-row]')
-	);
-	/** Parent row of the clicked target. */
-	const parentRowContainer = target.closest('[data-eddl-landing-row]');
-	/** Matched index from all rows on page to the target's parent row. */
-	const pageRowIndex = parentRowContainer
-		? pageRows.indexOf(parentRowContainer) + 1
-		: '_ERROR_';
+	const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
+		getLandingRowsAndColsInfo(target);
 
 	trackOther(`LP:${linkName}:LinkClick`, `LP:${linkName}:LinkClick`, {
 		location: 'Body',
-		pageRows: pageRows.length,
-		pageRowIndex: pageRowIndex,
-		rowItems: rowItems,
-		rowItemIndex: rowItemIndex,
+		pageRows,
+		pageRowIndex,
+		pageRowCols,
+		pageRowColIndex,
+		containerItems: containerItems,
+		containerItemIndex: containerItemIndex,
 		componentType: componentType,
 		componentTheme: componentTheme,
 		componentVariant: componentVariant,

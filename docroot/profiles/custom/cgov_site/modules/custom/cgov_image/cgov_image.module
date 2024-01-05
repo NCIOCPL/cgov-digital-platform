@@ -66,6 +66,14 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
       $display
     );
   }
+
+  if ($view_mode === 'ncids_collections_media'){
+    _cgov_image_handle_ncids_collection(
+      $build,
+      $entity,
+      $display
+    );
+  }
 }
 
 /**
@@ -350,4 +358,51 @@ function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, 
       'image_style' => 'ncids_promo_1x1',
     ],
   ]);
+}
+
+/**
+ * Handle images for NCIDS Dynamic List.
+ *
+ * NCIDS Dynamic List requires a 4x3 image. This method must
+ * determine where to source the image from, either override 
+ * field for that aspect ratio or the crop on the field_media_image.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ */
+function _cgov_image_handle_ncids_collection(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+
+  // The 4x3 image will be used in the picture element's source element.
+  // There is no drupal render type for a source element.
+  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
+  if (
+    (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0))
+  ) {
+    // if true === if there are crops applied to field_media_image
+    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+      unset($build['field_media_image']);
+      unset($build['field_ncids_promo_art_4x3']);
+      return;
+    }
+  }
+}
+
+
+function cgov_image_preprocess_image_style(&$variables) {
+  $image_style = $variables['style_name'];
+  if ($image_style !== 'ncids_collections_media_4x3') {
+    return;
+  }
+
+  $variables['image']['#attributes']['class'][] = 'usa-collection__img';
+  $variables['image']['#width'] = '160';
+  $variables['image']['#height'] = '120';
 }

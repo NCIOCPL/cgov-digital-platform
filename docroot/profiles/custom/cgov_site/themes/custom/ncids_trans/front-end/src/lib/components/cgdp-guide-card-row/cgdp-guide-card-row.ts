@@ -22,15 +22,15 @@ const getTitle = (card: HTMLElement): string => {
 
 /**
  * Guide Card onclick handler.
- * @param {number} rowItems - Number of cards in row.
- * @param {number} rowItemIndex - Index of card clicked in row.
+ * @param {number} containerItems - Number of cards in row.
+ * @param {number} containerItemIndex - Index of card clicked in row.
  * @param {HTMLElement[]} totalLinks - All links found in card.
  * @param {HTMLElement} card - Guide Card of selected link.
  */
 const guideCardLinkClickHandler =
 	(
-		rowItems: number,
-		rowItemIndex: number | '_ERROR_',
+		containerItems: number,
+		containerItemIndex: number | '_ERROR_',
 		totalLinks: HTMLElement[],
 		card: HTMLElement,
 		componentVariant: string
@@ -41,8 +41,8 @@ const guideCardLinkClickHandler =
 		landingClickTracker(
 			link,
 			'GuideCard',
-			rowItems,
-			rowItemIndex,
+			containerItems,
+			containerItemIndex,
 			'Guide Card',
 			'Light',
 			componentVariant,
@@ -66,8 +66,8 @@ const guideCardHelper = (card: HTMLElement): void => {
 				parentRowContainer.querySelectorAll('[data-eddl-landing-item]')
 		  )
 		: [];
-	const rowItemIndex = allCards.indexOf(card) + 1;
-	const rowItems = allCards.length;
+	const containerItemIndex = allCards.indexOf(card) + 1;
+	const containerItems = allCards.length;
 	const componentVariant =
 		parentRowContainer &&
 		(parentRowContainer as HTMLElement).dataset.eddlLandingRow
@@ -78,8 +78,8 @@ const guideCardHelper = (card: HTMLElement): void => {
 		link.addEventListener(
 			'click',
 			guideCardLinkClickHandler(
-				rowItems,
-				rowItemIndex,
+				containerItems,
+				containerItemIndex,
 				links,
 				card,
 				componentVariant

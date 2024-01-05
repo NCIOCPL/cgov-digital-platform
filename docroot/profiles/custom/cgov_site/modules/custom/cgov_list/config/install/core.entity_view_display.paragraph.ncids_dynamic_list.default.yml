@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_dynamic_list.field_list_title
+    - field.field.paragraph.ncids_dynamic_list.field_source_view
+    - field.field.paragraph.ncids_dynamic_list.field_view_more_link
+    - field.field.paragraph.ncids_dynamic_list.field_view_more_text
+    - paragraphs.paragraphs_type.ncids_dynamic_list
+  module:
+    - viewsreference
+id: paragraph.ncids_dynamic_list.default
+targetEntityType: paragraph
+bundle: ncids_dynamic_list
+mode: default
+content:
+  field_list_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_source_view:
+    type: viewsreference_formatter
+    label: hidden
+    settings:
+      plugin_types:
+        - block
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_view_more_link:
+    type: entity_reference_entity_id
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_view_more_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

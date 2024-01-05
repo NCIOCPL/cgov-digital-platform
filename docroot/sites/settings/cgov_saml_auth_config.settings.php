@@ -18,7 +18,8 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 $fullName = $_SERVER['SERVER_NAME'];
 $segments = explode('.', $fullName);
 $hostname = $segments[0];
-$metadataFile = sprintf('%s/idp-metadata/%s.php', $samlDir, $hostname);
+// See scripts/utility/saml_convert.php if you need to recreate this PHP file.
+$metadataFile = sprintf('%s/idp-metadata/saml-metadata.php', $samlDir);
 
 if (file_exists($metadataFile) && $hostname !== 'default') { // hostname=default during drush commands
 

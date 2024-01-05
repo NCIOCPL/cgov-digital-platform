@@ -29,17 +29,9 @@ IFS='.' read -a name <<< $internal_domain
 # BLT executable:
 blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
 
-# Create and set Drush cache to unique local temporary storage per site.
-# This approach isolates drush processes to completely avoid race conditions
-# that persist after initial attempts at addressing in BLT: https://github.com/acquia/blt/pull/2922
-cache_dir=`/usr/bin/env php /mnt/www/html/$sitegroup.$env/vendor/acquia/blt/scripts/blt/drush/cache.php $sitegroup $env $internal_domain`
-
 # Execute the updates.
-DRUSH_PATHS_CACHE_DIRECTORY="$cache_dir" $blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$internal_domain --verbose --no-interaction
+$blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$internal_domain --verbose --no-interaction
 result=$?
-
-# Clean up the drush cache directory.
-rm -rf "$cache_dir"
 
 set +v
 

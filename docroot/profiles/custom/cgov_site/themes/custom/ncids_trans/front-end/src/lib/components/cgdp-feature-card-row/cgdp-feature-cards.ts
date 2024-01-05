@@ -48,19 +48,19 @@ const getLinkText = (evt: Event): string => {
 
 /**
  * Feature card on click handler.
- * @param {number} rowItems - Number of cards in row.
- * @param {number} rowItemIndex - Index of card selected in row.
+ * @param {number} containerItems - Number of cards in row.
+ * @param {number} containerItemIndex - Index of card selected in row.
  */
 const featureCardLinkClickHandler =
-	(rowItems: number, rowItemIndex: number | '_ERROR_') =>
+	(containerItems: number, containerItemIndex: number | '_ERROR_') =>
 	(evt: Event): void => {
 		const link = evt.currentTarget as HTMLElement;
 
 		landingClickTracker(
 			link,
 			'FeatureCard',
-			rowItems,
-			rowItemIndex,
+			containerItems,
+			containerItemIndex,
 			'Feature Card',
 			'Light',
 			'Standard Single Link',
@@ -84,12 +84,12 @@ const featureCardHelper = (card: HTMLElement): void => {
 				parentRowContainer.querySelectorAll('[data-eddl-landing-item]')
 		  )
 		: [];
-	const rowItemIndex = allCards.indexOf(card) + 1;
-	const rowItems = allCards.length;
+	const containerItemIndex = allCards.indexOf(card) + 1;
+	const containerItems = allCards.length;
 
 	card.addEventListener(
 		'click',
-		featureCardLinkClickHandler(rowItems, rowItemIndex)
+		featureCardLinkClickHandler(containerItems, containerItemIndex)
 	);
 };
 

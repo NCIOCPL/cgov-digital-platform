@@ -33,23 +33,15 @@ IFS='.' read -a name <<< "${uri}"
 # BLT executable:
 blt="/mnt/www/html/$sitegroup.$env/vendor/acquia/blt/bin/blt"
 
-# Create and set Drush cache to unique local temporary storage per site.
-# This approach isolates drush processes to completely avoid race conditions
-# that persist after initial attempts at addressing in BLT: https://github.com/acquia/blt/pull/2922
-cache_dir=`/usr/bin/env php /mnt/www/html/$sitegroup.$env/vendor/acquia/blt/scripts/blt/drush/cache.php $sitegroup $env $uri`
-
-echo "Generated temporary drush cache directory: $cache_dir."
-
 echo "Running BLT deploy tasks on $uri domain in $env environment on the $sitegroup subscription."
 
 # Run blt drupal:update tasks. The trailing slash behind the domain works
 # around a bug in Drush < 9.6 for path based domains: "domain.com/subpath/" is
 # considered a valid URI but "domain.com/subpath" is not.
-DRUSH_PATHS_CACHE_DIRECTORY="$cache_dir" $blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain/ --verbose --no-interaction
+$blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain/ --verbose --no-interaction
 
 # Clean up the drush cache directory.
 echo "Removing temporary drush cache files."
-rm -rf "$cache_dir"
 
 set +v
 
