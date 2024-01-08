@@ -52,6 +52,26 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 } else {
   $env = 'local';
 }
+// Settings for metatag attribute cgdp.domain.
+if($is_acsf_env && $acsf_db_name) {
+  // For ACSF env.
+  $acsf_domains = array_keys(gardens_data_get_sites_from_file($GLOBALS['gardens_site_settings']));
+  foreach ($acsf_domains as $domain_value) {
+    if(preg_match('/acsitefactory.com/', $domain_value)){
+      $temp = explode('.', $domain_value);
+      if($temp[1] == $_ENV['AH_SITE_GROUP']){
+        $domain_env = $temp[0];
+      }else {
+        $acsf_env = str_replace('-' . $_ENV['AH_SITE_GROUP'], '', $temp[1]);
+        $domain_env = $temp[0] . '-' . $acsf_env;
+      }
+    }
+  }
+  $settings['cgdp_domain'] = $domain_env;
+}
+else {
+  $settings['cgdp_domain'] = $env;
+}
 
 // on non-prod environments, route emails to logger
 if ($env !== "01live") {
