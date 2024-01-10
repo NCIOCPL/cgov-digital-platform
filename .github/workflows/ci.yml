@@ -76,9 +76,11 @@ jobs:
           node-version: '16.13.0'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
+          registry-url: https://npm.pkg.github.com
+          scope: '@nciocpl'
       - name: Install NPM 8
         run: |
-          npm install -g npm@8.1.0
+          npm install -g npm@8.19.4
       ## Setup PHP and Composer Caching
       - name: Setup PHP with tools
         uses: shivammathur/setup-php@v2
@@ -115,6 +117,8 @@ jobs:
         run: |
           blt validate --define drush.alias='${drush.aliases.ci}' --ansi --verbose --no-interaction
       - name: Setup App
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
           blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
