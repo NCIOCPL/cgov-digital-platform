@@ -1,0 +1,6 @@
+services:
+  cgov_article.twig_extensions:
+    class: Drupal\cgov_article\CgovArticleTwigExtensions
+    arguments: ['@language_manager']
+    tags:
+      - { name: twig.extension }

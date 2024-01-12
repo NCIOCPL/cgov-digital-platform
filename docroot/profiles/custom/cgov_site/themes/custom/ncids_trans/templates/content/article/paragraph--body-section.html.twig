@@ -12,9 +12,9 @@
   {# TODO: Determine how to deal with headings that are H3s #}
   {# Set the id to a clean version of the section heading for OTP links. #}
   {% if schema_org_type %}
-    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | clean_id }}" itemprop="name">
+    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}" itemprop="name">
   {% else %}
-    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | clean_id }}">
+    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}">
   {% endif %}
     {{- content.field_body_section_heading -}}
   </h2>
