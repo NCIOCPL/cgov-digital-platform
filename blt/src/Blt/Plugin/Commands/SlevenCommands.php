@@ -18,7 +18,7 @@ class SlevenCommands extends BltTasks {
   public function reinstall() {
 
     $commands = [
-      'drupal:install' => [],
+      'artifact:install:drupal' => [],
       'cgov:user:load-all' => [],
       'cgov:locales:translate' => [],
       'custom:install_cgov_yaml_content_by_module' => [
