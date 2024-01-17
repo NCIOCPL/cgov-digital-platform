@@ -56,23 +56,7 @@ else
   drush cgov:destroy-cache
 
   ## Perform a fresh install.
-  blt artifact:install:drupal --environment=$target_env -v --no-interaction -D drush.ansi=false
-
-  ## Load our test users.
-  blt cgov:user:load-all -D cgov.drupal_users_file=$users_file --no-interaction -D drush.ansi=false
-
-  ## Reload translation pack.
-  blt cgov:locales:translate --no-interaction -D drush.ansi=false
-
-  ## Setup some default JS globals.
-  blt cgov:load-fe-globals --environment=$target_env --no-interaction -D drush.ansi=false
-
-  ## Load glossifier data.
-  blt cgov:load:glossifier-data --no-interaction -D drush.ansi=false
-
-
-  ## Load ODE Content
-  blt custom:install_cgov_yaml_content_by_module cgov_yaml_content --no-interaction -D drush.ansi=false
+  blt cgov:reinstall --environment=$target_env -D cgov.drupal_users_file=$users_file -v --no-interaction -D drush.ansi=false
 
   ## Uninstall cgov_yaml_content once done to turn off entity presave hack for supporting
   ## drupal-entity.
