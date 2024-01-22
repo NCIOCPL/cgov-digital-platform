@@ -24,7 +24,6 @@ class CgovAcsfCommands extends BltTasks {
   public function postInstall() {
     $commands = [
       'cgov:locales:translate' => [],
-      'cgov:acsf:block-admin' => [],
       'cgov:user:load-all' => [],
     ];
 
