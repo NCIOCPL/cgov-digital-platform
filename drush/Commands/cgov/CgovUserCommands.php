@@ -2,8 +2,8 @@
 
 namespace Drush\Commands\cgov;
 
-use Drupal\user\Entity\User;
 use Drupal\user\Entity\Role;
+use Drupal\user\Entity\User;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\Yaml\Yaml;
 
@@ -35,7 +35,7 @@ class CgovUserCommands extends DrushCommands {
    * @bootstrap full
    */
   public function changeAdminUserInfo($usersFile) {
-    // TODO: Relative file paths do not work here. Make them work.
+    // @todo Relative file paths do not work here. Make them work.
     if (!file_exists($usersFile)) {
       throw new \Exception(dt('Unable to load file !file.', ['!file' => $usersFile]));
     }
@@ -49,13 +49,20 @@ class CgovUserCommands extends DrushCommands {
     }
 
     if (!$this->isAdminValid($userConfig['admin'])) {
+      $this->blockAdminUser();
+      $this->logger->debug('Admin has been blocked.');
       throw new \Exception(dt('Invalid config !file.', ['!file' => $usersFile]));
     }
 
     $user = $userConfig['admin']['username'];
     $pass = $userConfig['admin']['password'];
-
-    $this->resetAdmin($user, $pass);
+    if ($userConfig['admin']['enabled'] === TRUE) {
+      $this->resetAdmin($user, $pass);
+    }
+    else {
+      $this->blockAdminUser();
+      $this->logger->debug('Admin has been blocked.');
+    }
   }
 
   /**
@@ -93,12 +100,25 @@ class CgovUserCommands extends DrushCommands {
    *   TRUE if valid, FALSE if not.
    */
   protected function isAdminValid($admin) {
-    return (
-      array_key_exists('username', $admin) &&
-      $admin['username'] != '' &&
-      array_key_exists('password', $admin) &&
-      $admin['password'] != ''
-    );
+    // Validate username and password.
+    $userAndPasswordValid = FALSE;
+    if (array_key_exists('username', $admin) &&
+        $admin['username'] != '' &&
+        array_key_exists('password', $admin) &&
+        $admin['password'] != '') {
+      $userAndPasswordValid = TRUE;
+    }
+    // If present, the enabled key must be boolean.
+    // It is also valid if the key is absent.
+    $enabledSectionValid = FALSE;
+    if (array_key_exists('enabled', $admin) && is_bool($admin['enabled'])) {
+      $enabledSectionValid = TRUE;
+    }
+    elseif (!array_key_exists('enabled', $admin)) {
+      $enabledSectionValid = TRUE;
+    }
+
+    return $userAndPasswordValid && $enabledSectionValid;
   }
 
   /**
@@ -157,7 +177,7 @@ class CgovUserCommands extends DrushCommands {
    */
   public function bulkLoadUsers($usersFile) {
 
-    // TODO: Relative file paths do not work here. Make them work.
+    // @todo Relative file paths do not work here. Make them work.
     if (!file_exists($usersFile)) {
       throw new \Exception(dt('Unable to load file !file.', ['!file' => $usersFile]));
     }
@@ -232,7 +252,7 @@ class CgovUserCommands extends DrushCommands {
 
     $isValid = TRUE;
 
-    // TODO: This should be more robust and check bad chars.
+    // @todo This should be more robust and check bad chars.
     // Password is optional, so not going to check it.
     // Saml is optional too, so not going to check it.
     $isValid = (
