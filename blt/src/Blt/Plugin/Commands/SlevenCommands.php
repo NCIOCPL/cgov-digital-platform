@@ -18,9 +18,37 @@ class SlevenCommands extends BltTasks {
   public function reinstall() {
 
     $commands = [
-      'drupal:install' => [],
+      'cgov:install-drupal' => [],
+      'cgov:install-content' => [],
+    ];
+
+    $this->invokeCommands($commands);
+  }
+
+  /**
+   * Install the digital platform, without content.
+   *
+   * @command cgov:install-drupal
+   */
+  public function installDrupal() {
+
+    $commands = [
+      'artifact:install:drupal' => [],
       'cgov:user:load-all' => [],
       'cgov:locales:translate' => [],
+    ];
+
+    $this->invokeCommands($commands);
+  }
+
+  /**
+   * Install the standard test content.
+   *
+   * @command cgov:install-content
+   */
+  public function installContent() {
+
+    $commands = [
       'custom:install_cgov_yaml_content_by_module' => [
         'module' => 'cgov_yaml_content',
       ],
@@ -32,7 +60,7 @@ class SlevenCommands extends BltTasks {
   }
 
   /**
-   * Loads the front-enf globals.
+   * Loads the front-end globals.
    *
    * @command cgov:load-fe-globals
    */

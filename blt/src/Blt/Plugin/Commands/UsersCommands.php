@@ -34,16 +34,29 @@ class UsersCommands extends BltTasks {
     }
 
     $commands = [];
-
+    $blocked_admin = [
+      'cgov:acsf:block-admin' => [],
+    ];
     if (array_key_exists('admin', $userConfig)) {
       if ($this->isAdminBlockValid($userConfig['admin'])) {
-        $commands['cgov:user:reset-admin'] = [
-          'users_file_path' => $users_file_path,
-        ];
+        if ($userConfig['admin']['enabled'] === TRUE) {
+          $commands['cgov:user:reset-admin'] = [
+            'users_file_path' => $users_file_path,
+          ];
+        }
+        else {
+          $commands = $blocked_admin;
+          $this->logger->info("Admin user is not explicitly enabled and has been blocked.");
+        }
       }
       else {
-        $this->logger->warning("Skipping admin user. You must provide both the username and the password.");
+        $commands = $blocked_admin;
+        $this->logger->warning("Skipping admin user. You must provide both the username and password and set enable to either true or false.");
       }
+    }
+    else {
+      $commands = $blocked_admin;
+      $this->logger->info("No admin user provided so admin user has been blocked.");
     }
 
     if (array_key_exists("additional_users", $userConfig)) {
@@ -66,12 +79,26 @@ class UsersCommands extends BltTasks {
    */
   protected function isAdminBlockValid($admin) {
     // @todo This should be more robust and check bad chars.
-    return (
-      array_key_exists('username', $admin) &&
-      $admin['username'] != '' &&
-      array_key_exists('password', $admin) &&
-      $admin['password'] != ''
-    );
+    // Validate username and password.
+    $userAndPasswordValid = FALSE;
+    if (array_key_exists('username', $admin) &&
+        $admin['username'] != '' &&
+        array_key_exists('password', $admin) &&
+        $admin['password'] != '') {
+      $userAndPasswordValid = TRUE;
+    }
+
+    // If present, the enabled key must be boolean.
+    // It is also valid if the key is absent.
+    $enabledSectionValid = FALSE;
+    if (array_key_exists('enabled', $admin) && is_bool($admin['enabled'])) {
+      $enabledSectionValid = TRUE;
+    }
+    elseif (!array_key_exists('enabled', $admin)) {
+      $enabledSectionValid = TRUE;
+    }
+
+    return $userAndPasswordValid && $enabledSectionValid;
   }
 
   /**

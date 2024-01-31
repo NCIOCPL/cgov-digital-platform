@@ -34,16 +34,23 @@
             computed_path: '/'
             langcode: 'es'
   field_page_style:
-    value: "ncids_with_title"
+    value: "ncids_without_title"
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########
     - entity: 'paragraph'
       type: "ncids_hero"
       field_ncids_theme:
-        - value: 'light'
+        - value: 'dark'
       field_tagline:
         - value: 'This is my homepage hero tagline'
+      field_link_button:
+        - entity: 'paragraph'
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_button_text:
+            - value: "Learn More"
       field_widescreen_hero:
         - '#process':
             callback: 'file'
@@ -244,7 +251,7 @@
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "left" 
+        - value: "right" 
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:

@@ -5,6 +5,7 @@
  * Cgov metatag tokens.
  */
 
+use Drupal\Core\Site\Settings;
 use Drupal\crop\Entity\Crop;
 
 /**
@@ -46,7 +47,11 @@ function cgov_metatag_token_info() {
           'name' => t('Cgov Media content-language Meta Tag'),
           'description' => t('The value to use for the media content-language meta tag.'),
         ];
-
+  $info['tokens']['cgov_tokens']['cgdp-domain'] =
+        [
+          'name' => t('CGDP Domain'),
+          'description' => t('The value to use for meta tag.'),
+        ];
   return $info;
 }
 
@@ -76,6 +81,10 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
 
         case 'cgov-media-content-language':
           $replacements[$original] = get_media_meta_content_language_token($data);
+          break;
+
+        case 'cgdp-domain':
+          $replacements[$original] = Settings::get('cgdp_domain');
           break;
       }
     }

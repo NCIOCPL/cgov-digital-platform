@@ -76,8 +76,14 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
       throw new NotFoundHttpException('Media item is missing primary image.');
     }
 
-    $file_uri = $file_entity->getFileUri();
-    $image_file_path = $this->fileUrlGenerator->generateString($file_uri);
+    // URL encoding happens in UrlGenerator.php line 314 [rawurlencode].
+    // We need to make sure that we are returning the unencoded file path
+    // and there does not seem to be a way to generate an unencoded file
+    // path. This is a hack to allow us to obtain an unencoded path.
+    // Note: calling the $this->fileUrlGenerator->generate($uri)->getUri()
+    // returns an unencoded path with base: within our file path. Using
+    // the generate function would require us to remove base: from the path.
+    $image_file_path = urldecode($file_entity->createFileUrl());
     return $image_file_path;
   }
 
