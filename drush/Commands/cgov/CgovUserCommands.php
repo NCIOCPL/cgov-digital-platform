@@ -298,6 +298,11 @@ class CgovUserCommands extends DrushCommands {
     else {
       $pwd = NULL;
     }
+    $preferred_admin_langcode = NULL;
+    if (array_key_exists('preferred_admin_langcode', $user) && !empty(trim($user['preferred_admin_langcode']))) {
+      $preferred_admin_langcode = trim($user['preferred_admin_langcode']);
+    }
+
     if (array_key_exists('saml', $user) && is_bool($user['saml'])) {
       $saml = $user['saml'];
     }
@@ -314,6 +319,9 @@ class CgovUserCommands extends DrushCommands {
       // Update the existing account.
       $this->logger->warning(dt('User !user exists already. Updating...', ['!user' => $name]));
       $account->setpassword($pwd);
+      if ($preferred_admin_langcode !== NULL) {
+        $account->set('preferred_admin_langcode', $preferred_admin_langcode);
+      }
       $account->activate();
     }
     else {
@@ -323,6 +331,9 @@ class CgovUserCommands extends DrushCommands {
         'access' => '0',
         'status' => 1,
       ];
+      if ($preferred_admin_langcode !== NULL) {
+        $new_user['preferred_admin_langcode'] = $preferred_admin_langcode;
+      }
       $account = User::create($new_user);
 
       if (!$account) {
