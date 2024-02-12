@@ -1,0 +1,9 @@
+// Bugfix #3997 (Remove stray bullet added by legacy styling)
+
+.highcharts-container {
+  .highcharts-a11y-proxy-group-legend {
+    ul > li:before {
+      content: "";
+    }
+  }
+}
