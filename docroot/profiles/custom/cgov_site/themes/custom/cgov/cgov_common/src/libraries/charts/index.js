@@ -1,3 +1,4 @@
+import "./chart.scss";
 import axios from 'axios';
 import Chart from './Chart';
 import rules from './rules';
