@@ -68,10 +68,10 @@ jobs:
           echo "repo_name=${REPO_NAME}" >> $GITHUB_OUTPUT
       ## This clones and checks out.
       - name: Checkout branch from Github
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       ## Setup node and npm caching.
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '16.13.0'
           cache: 'npm'
@@ -94,7 +94,7 @@ jobs:
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
