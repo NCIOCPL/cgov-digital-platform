@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_site_section_browser
+    - field.field.node.cgov_home_landing.field_additional_library
     - field.field.node.cgov_home_landing.field_browser_title
     - field.field.node.cgov_home_landing.field_card_title
     - field.field.node.cgov_home_landing.field_date_display_mode
@@ -37,6 +38,12 @@ content:
   created:
     type: datetime_timestamp
     weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_additional_library:
+    type: options_select
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -213,9 +220,9 @@ content:
     third_party_settings: {  }
   simple_sitemap:
     weight: 10
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   status:
     type: boolean_checkbox
     weight: 23

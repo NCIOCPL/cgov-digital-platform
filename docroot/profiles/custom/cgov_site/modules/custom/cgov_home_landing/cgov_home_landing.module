@@ -7,6 +7,8 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\FieldDefinition;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Session\AccountInterface;
 
  /**
@@ -59,4 +61,31 @@ function cgov_home_landing_paragraph_access(EntityInterface $entity, $operation,
 
   // We have no skin in the game.
   return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ *
+ * Creates a group to be added in the advanced section.
+ * We are then able to add the additional library field to the group.
+ */
+function cgov_home_landing_form_node_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['additional_library'] = [
+    '#type' => 'details',
+    '#title' => 'Additional Front-End Library',
+    '#group' => 'advanced',
+    '#attributes' => [
+      'class' => ['node-form-options']
+    ],
+    '#attached' => [
+      'library' => ['node/drupal.node'],
+    ],
+    '#weight' => 100,
+    '#optional' => TRUE,
+    '#open' => FALSE,
+  ];
+
+  $form['field_additional_library']['#group'] = 'additional_library';
+
+  return $form;
 }
