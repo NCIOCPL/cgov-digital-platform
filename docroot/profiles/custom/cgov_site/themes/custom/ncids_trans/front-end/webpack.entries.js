@@ -46,4 +46,5 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/app-module/app-module.ts'
 	),
+	'addl-lib-test': path.resolve(__dirname, 'src/entrypoints/addl-lib-test/addl-lib-test.ts'),
 };

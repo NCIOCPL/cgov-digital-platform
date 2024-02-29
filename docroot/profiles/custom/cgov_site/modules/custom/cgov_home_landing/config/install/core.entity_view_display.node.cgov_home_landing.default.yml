@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.cgov_home_landing.field_additional_library
     - field.field.node.cgov_home_landing.field_browser_title
     - field.field.node.cgov_home_landing.field_card_title
     - field.field.node.cgov_home_landing.field_date_display_mode
@@ -35,6 +36,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: -20
+    region: content
+  field_additional_library:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 117
     region: content
   field_browser_title:
     type: string

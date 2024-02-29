@@ -8,6 +8,7 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
@@ -680,4 +681,57 @@ function cgov_core_entity_build_defaults_alter(array &$build, EntityInterface $e
  */
 function cgov_core_field_widget_single_element_link_default_form_alter(&$element, FormStateInterface $form_state, $context) {
   $element['uri']['#description'] = t('Enter the full URL starting with https://');
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function cgov_core_page_attachments(array &$attachments) {
+  $route_match = \Drupal::routeMatch();
+  $node = $route_match->getParameter('node');
+  if ($node && $node->field_additional_library != NULL && $route_match->getRouteName() === 'entity.node.canonical') {
+    $lib = $node->field_additional_library->value;
+    $front_end_theme = \Drupal::service('theme_handler')->getDefault();
+    $theme_libs = \Drupal::service('library.discovery')->getLibrariesByExtension($front_end_theme);
+    if ($lib !== 'None' && array_key_exists($lib, $theme_libs)) {
+      $attachments['#attached']['library'][] = $front_end_theme . '/' . $lib;
+    }
+  }
+}
+
+/**
+ * Set dynamic allowed libraries for the additional library field.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity being created.
+ *
+ * @return array
+ *   An array of additional libraries within ncids_trans theme.
+ */
+function cgov_addl_lib_allowed_values_function(EntityInterface $entity) {
+  $front_end_theme = \Drupal::service('theme_handler')->getDefault();
+  $libs = \Drupal::service('library.discovery')->getLibrariesByExtension($front_end_theme);
+  // Filters out all libraries that don't start with "addl-"
+  // and adds in the default value "None".
+  $options = array_reduce(
+    array_filter(array_keys($libs), fn($key) => str_starts_with($key, 'addl-')),
+    fn($carry, $key) => [...$carry, $key => $key],
+    ['none' => 'None']
+  );
+  return $options;
+}
+
+/**
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity being created.
+ * @param \Drupal\Core\Field\FieldDefinitionInterface $definition
+ *   The field definition.
+ *
+ * @return array
+ *   An array of default value keys with each entry keyed with the "value" key.
+ */
+function cgov_addl_lib_default_value_function(EntityInterface $entity, FieldDefinitionInterface $definition) {
+  return [
+    ['value' => 'None'],
+  ];
 }
