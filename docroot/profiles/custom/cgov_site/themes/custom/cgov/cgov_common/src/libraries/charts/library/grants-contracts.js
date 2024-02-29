@@ -2,6 +2,10 @@ import $ from 'jQuery';
 
 const dataFileName = 'grants-contracts';
 const id = 'NCI-Chart__grants-contracts';
+/*
+  Versioning for map collection included below is handled separately from Highcharts core/modules code
+  https://code.highcharts.com/mapdata/
+ */
 const geoDataURL = 'https://code.highcharts.com/mapdata/countries/us/custom/us-all-territories.topo.json';
 
 function initChart(Chart, data, miscData = {}) {
