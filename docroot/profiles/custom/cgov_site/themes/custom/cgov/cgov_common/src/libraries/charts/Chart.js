@@ -95,18 +95,18 @@ Chart.prototype = function () {
     if (typeof Highcharts == 'undefined' && !window.fetchingHighcharts) {
         window.fetchingHighcharts = true;
         // Load Highcharts core library
-        $.getScript('https://code.highcharts.com/highcharts.js', function() {
+        $.getScript('https://code.highcharts.com/11.4.0/highcharts.js', function() {
           // Load exporting module
-          $.getScript('https://code.highcharts.com/modules/exporting.js', function() {
+          $.getScript('https://code.highcharts.com/11.4.0/modules/exporting.js', function() {
             // exporting module loaded
             // Load offline-exporting module
-            $.getScript('https://code.highcharts.com/modules/offline-exporting.js', function() {
+            $.getScript('https://code.highcharts.com/11.4.0/modules/offline-exporting.js', function() {
               // offline-exporting module loaded
               // Load accessibility module
-              $.getScript('https://code.highcharts.com/modules/accessibility.js', function() {
+              $.getScript('https://code.highcharts.com/11.4.0/modules/accessibility.js', function() {
                 // accessibility module loaded
                 // Load drilldown module
-                $.getScript('https://code.highcharts.com/modules/drilldown.js', function() {
+                $.getScript('https://code.highcharts.com/11.4.0/modules/drilldown.js', function() {
                   // drilldown module loaded
                   window.fetchingHighcharts = false;
                   dfd.resolve();
@@ -146,7 +146,9 @@ Chart.prototype = function () {
 
         if(module.settings.chart.type == 'map'){
           // Load map module
-          $.getScript('https://code.highcharts.com/maps/modules/map.js', function() {
+          // GeoJSON map collection data in "./library/grants-contracts.js" is versioned separately
+          // from Highcharts core and modules code.
+          $.getScript('https://code.highcharts.com/maps/11.4.0/modules/map.js', function() {
             Highcharts.setOptions({
               lang: {
                 numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
