@@ -140,7 +140,6 @@ Chart.prototype = function () {
       var module = this;
 
       $.when(loadHighcharts.call(module)).done(function () {
-          //console.log("Highcharts is present");
           baseTheme.call(module);
 
           if (module.settings.chart.type in module) {
@@ -153,8 +152,7 @@ Chart.prototype = function () {
                   console.time("Highmaps Load Time");
                   // this is starting to look like a callback pyramid of doom
                   $.when(
-                      $.getScript('https://code.highcharts.com/maps/modules/map.js'),
-                      $.getScript('https://code.highcharts.com/mapdata/countries/us/us-all.js')
+                      $.getScript('https://code.highcharts.com/maps/modules/map.js')
                   ).done(function () {
                       console.timeEnd("Highmaps Load Time");
                       Highcharts.setOptions({
