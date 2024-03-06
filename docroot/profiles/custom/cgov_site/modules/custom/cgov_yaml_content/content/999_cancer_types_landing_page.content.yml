@@ -1,0 +1,35 @@
+- entity: "node"
+  type: "cgov_home_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Types"
+  title__ES:
+      value: "Tipos de cáncer"
+  field_page_description:
+    value: "A to Z list of cancer types, with links to disease-specific and general information about treatment, supportive care, screening, prevention, clinical trials, and other topics."
+  field_page_description__ES:
+    value: "Lista alfabética de todos los tipos de cáncer con enlaces a enfermedades específicas e información general sobre tratamiento, cuidados de apoyo, exámenes de detección, prevención, estudios clínicos y otros temas."
+  field_browser_title:
+    value: "A to Z List of Cancer Types"
+  field_browser_title__ES:
+    value: "Tipos de cáncer"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/types'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/tipos'
+  field_page_style:
+    value: "ncids_with_title"
+  field_additional_library:
+    value: "addl-cancer-types-landing-page"
