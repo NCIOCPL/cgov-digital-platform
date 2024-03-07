@@ -434,7 +434,6 @@ function cgov_core_update_9007() {
   $config_factory = \Drupal::configFactory();
   foreach ($config_factory->listAll('block.block.') as $block_config_name) {
     $block = $config_factory->getEditable($block_config_name);
-
     if ($block->get('visibility.node_type')) {
       $configuration = $block->get('visibility.node_type');
       $configuration['id'] = 'entity_bundle:node';
@@ -457,3 +456,13 @@ function cgov_core_update_10001() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Set NCI as default site Branding.
+ */
+function cgov_core_update_10002() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  // Set Default Site Branding.
+  $siteHelper->setDefaultSiteBranding();
+}
+
