@@ -131,6 +131,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'View plugins',
       'Field list report',
       'regenerate urls',
+      'administer responsive favicons',
     ],
   ];
 
@@ -453,6 +454,25 @@ function cgov_core_update_10001() {
   $perms = [
     'advanced_editor' => [
       'access block library',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Enable responsive_favicons & set Permission.
+ */
+function cgov_core_update_10002() {
+  $module_handler = \Drupal::moduleHandler();
+  if (!$module_handler->moduleExists('responsive_favicons')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['responsive_favicons']);
+  }
+
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'site_admin' => [
+      'administer responsive favicons',
     ],
   ];
   $siteHelper->addRolePermissions($perms);
