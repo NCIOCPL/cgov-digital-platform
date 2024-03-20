@@ -1,3 +1,4 @@
+import "./chart.scss";
 import axios from 'axios';
 import Chart from './Chart';
 import rules from './rules';
@@ -25,19 +26,19 @@ const init = () => {
 
   if(shouldCheckForChartHooks) {
     for(let i = 0; i < charts.length; i++){
-      const { dataFileName, id, initChart } = charts[i];
+      const { dataFileName, id, initChart, miscDataURL } = charts[i];
       const el = document.getElementById(id);
 
       if(el){
         const { chartRevision } = el.dataset;
-        getChartData(dataFileName, chartRevision)
-          .then(data => initChart(Chart, data));
+        getChartData(dataFileName, chartRevision, miscDataURL)
+          .then(({data, miscData}) => initChart(Chart, data, miscData));
       }
     }
   }
 }
 
-const getChartData = async (dataFileName, chartRevision) => {
+const getChartData = async (dataFileName, chartRevision, miscDataURL) => {
   const { chartData } = window.CDEConfig || {};
   const { factBook } = chartData || {};
   const { baseUrl, dataType } = factBook || {};
@@ -47,11 +48,19 @@ const getChartData = async (dataFileName, chartRevision) => {
     );
   }
   const fileURL = `${baseUrl}/${dataFileName}.${dataType || 'json'}?t=${chartRevision || ''}`;
+  const requestURLArray = [fileURL];
+
+  if (miscDataURL) {
+    requestURLArray.push(miscDataURL);
+  }
 
   try {
-    const response = await axios.get(fileURL);
-    const { data } = response;
-    return data;
+    const requests = requestURLArray.map(requestURL => axios.get(requestURL));
+
+    const [chartConfigResponse, miscDataResponse] = await axios.all(requests);
+    const data = chartConfigResponse?.data;
+    const miscData = miscDataResponse?.data;
+    return {data, miscData};
   } catch (error) {
     if (axios.isAxiosError(error) && error.response ) {
       throw new Error(`An error was returned while fetching data for FactBook ${dataFileName} chart with status ${error.response.status}`)

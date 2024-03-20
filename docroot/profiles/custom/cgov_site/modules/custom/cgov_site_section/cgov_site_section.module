@@ -118,8 +118,8 @@ function cgov_site_section_entity_update(EntityInterface $entity) {
     $current_entity_lang = $entity->get('langcode')->value;
     $translated_entity = $entity->getTranslation($current_entity_lang);
     $current_state = $translated_entity->get('moderation_state')->value;
-
-    if ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity)) {
+    $justArchived = ($current_state === "archived" && ($current_state != $translated_entity->original->moderation_state->value));
+    if (($justArchived) || ($current_state === 'published' && _will_trigger_cache_tag_invalidation($entity))) {
       // Find the Sections where this node is a landing page.
       // Invalidate their cache to account for the nodes new alias.
       $section_entities = \Drupal::entityTypeManager()

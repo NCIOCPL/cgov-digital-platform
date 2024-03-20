@@ -1,0 +1,25 @@
+{
+  "name": "cypress-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:parallel": "cypress-parallel --script cy:run --strictMode false --args '\"--browser chromium\"'",
+    "cy:run": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": "true",
+    "stepDefinitions": "cypress/e2e/**/",
+    "commonPath": "cypress/e2e/common"
+  },
+  "dependencies": {
+    "cypress": "^13.4.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-multi-reporters": "^1.6.4",
+    "cypress-parallel": "^0.14.0",
+    "electron": "^28.1.1"
+  }
+}

@@ -68,10 +68,10 @@ jobs:
           echo "repo_name=${REPO_NAME}" >> $GITHUB_OUTPUT
       ## This clones and checks out.
       - name: Checkout branch from Github
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       ## Setup node and npm caching.
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '16.13.0'
           cache: 'npm'
@@ -94,7 +94,7 @@ jobs:
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -125,10 +125,27 @@ jobs:
       - name: Run Front-end Tests
         run: |
           blt tests:frontend:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
+      - name: Start test server
+        run: |
+              ## Running drush runserver is equivelent to blt tests:server:start, and is what happens under the hood, except this allows us to bind to all ips on the box.
+              ## blt was not letting us bind to those IPs we wanted.
+              drush runserver --quiet 0.0.0.0:8888 &
       - name: Behavioral Tests
         timeout-minutes: 120
         run: |
-          echo "TODO: Add Cypress tests here"
+              blt tests:cypress:run --define drush.alias='${drush.aliases.ci}' --define tests.run-server=false --environment=ci --ansi --verbose --no-interaction
+      - name: Upload test screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-test-screenshots
+          path: ./tests/cypress/cypress/screenshots
+      # The weights file is re-generated on every run, but an existing copy is needed in order to help distribute
+      # test suites between threads. So, we need to restore the file to its original state in order to avoid
+      # failing the job with modified files.
+      - name: Reset weights
+        run: |
+              git restore --worktree $(find ./tests/cypress/cypress/e2e/ -name parallel-weights.json)
       - name: PHP Unit Tests
         timeout-minutes: 120
         run: |

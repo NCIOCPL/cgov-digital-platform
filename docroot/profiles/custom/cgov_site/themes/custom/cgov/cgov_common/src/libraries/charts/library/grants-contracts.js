@@ -2,13 +2,16 @@ import $ from 'jQuery';
 
 const dataFileName = 'grants-contracts';
 const id = 'NCI-Chart__grants-contracts';
+/*
+  Versioning for map collection included below is handled separately from Highcharts core/modules code
+  https://code.highcharts.com/mapdata/
+ */
+const geoDataURL = 'https://code.highcharts.com/mapdata/countries/us/custom/us-all-territories.topo.json';
 
-function initChart(Chart, grantsContractData) {
-
-
+function initChart(Chart, data, miscData = {}) {
   let dialogOffset = 0;
-  const mapData = grantsContractData.series[0].data;
-  const tooltipObj = grantsContractData.tooltip;
+  const allocationData = data.series[0].data;
+  const tooltipObj = data.tooltip;
 
 // store all our modal popups for manipulation later
   var popups = [];
@@ -31,7 +34,7 @@ function initChart(Chart, grantsContractData) {
   function buildChartSeries() {
     return [
       {
-        ...grantsContractData.series[0],
+        ...data.series[0],
         point: {
           events: {
             click: function () {
@@ -78,21 +81,18 @@ function initChart(Chart, grantsContractData) {
                           }
                         },
                         events: {
-                          afterAnimate: function () {
-                            var chart = this.chart;
-                            var legend = chart.legend;
-                            var tooltip = this.chart.tooltip;
-                            Object.keys(legend.allItems).forEach(function (
-                              key) {
-                              var item = legend.allItems[key];
-                              item.legendItem.on('mouseover', function (
-                                e) {
-                                var data = item.series.data[item.index];
-                                tooltip.refresh(data);
-                              }).on('mouseout', function (e) {
-                                tooltip.hide();
-                              });
+                          mouseOver: function () {
+                            const chart = this.chart;
+                            const legend = chart.legend;
+                            const tooltip = this.chart.tooltip;
+                            Object.keys(legend.allItems).forEach(function (key) {
+                              const item = legend.allItems[key];
+                              const data = item.series.data[item.index];
+                              tooltip.refresh(data);
                             });
+                          },
+                          mouseOut: function() {
+                            this.chart.tooltip.hide();
                           }
                         }
                       }
@@ -112,7 +112,6 @@ function initChart(Chart, grantsContractData) {
                       }
                     },
                     tooltip: {
-                      //pointFormat_old: '{point.code}: ${point.value}',
                       useHTML: true,
                       formatter: function () {
                         var data = this.point.options.drilldown_data.data;
@@ -124,13 +123,13 @@ function initChart(Chart, grantsContractData) {
                         var contracts = data[1] && data[1][1] || 0;
 
                         var template =
-                          '<tr><td>Grants:</td><td align="right"><b>$' +
+                          '<tr><td>Grants:</td><td style="text-align:center"><b>$' +
                           Highcharts.numberFormat(
                             grants, 0) +
-                          '</b></td></tr><tr><td>Contracts:</td><td align="right"><b>$' +
+                          '</b></td></tr><tr><td>Contracts:</td><td style="text-align:center"><b>$' +
                           Highcharts.numberFormat(
                             contracts, 0) +
-                          '</b></td></tr><tr><td style="border-top: 1px solid #000;">Total:</td><td style="border-top: 1px solid #000;" align="right"><b>$' +
+                          '</b></td></tr><tr><td style="border-top: 1px solid #000;">Total:</td><td style="border-top: 1px solid #000;text-align:center"><b>$' +
                           Highcharts.numberFormat(this.y, 0) +
                           '</b></td></tr>';
                         var footer = '</table></div>';
@@ -210,7 +209,7 @@ function initChart(Chart, grantsContractData) {
                     $modal.dialog("open");
                   }
                 } else {
-                  var message = "This state does not have any individual university or center receiving more than $15 million in NCI support.";
+                  var message = "This state/territory does not have any individual university or center receiving more than $15 million in NCI support.";
                   var $modal = $('<div id="' + modalId + '"><p class="no-results-message">' + message + '</p></div>')
                     .dialog({
                       title: this.name,
@@ -240,20 +239,19 @@ function initChart(Chart, grantsContractData) {
 
   function buildTooltip() {
     return {
-      //pointFormat_old: '{point.code}: ${point.value}',
       useHTML: tooltipObj.useHTML,
       formatter: function () {
         var header = '<div><div style="font-size: 13px;margin-bottom:3px">' + this.point
             .options.state +
           '</div><table style="border-collapse:collapse;margin: 0 auto">';
-        var template = '<tr><td>+ tooltipObj.label.grants + (' + this.point.grants.number +
-          '): </td><td align="right"><b>$' + Highcharts.numberFormat(this.point.grants
-            .amount, 0) + '</b></td></tr><tr><td>+ tooltipObj.label.contracts + (' + this.point.contracts
-            .number + '): </td><td align="right"><b>$' + Highcharts.numberFormat(this
+        var template = '<tr><td>' + tooltipObj.label.grants + ' (' + this.point.grants.number +
+          '): </td><td style="text-align: right;"><b>$' + Highcharts.numberFormat(this.point.grants
+            .amount, 0) + '</b></td></tr><tr><td>' + tooltipObj.label.contracts + ' (' + this.point.contracts
+            .number + '): </td><td style="text-align: right;"><b>$' + Highcharts.numberFormat(this
             .point.contracts.amount, 0) +
           '</b></td></tr><tr><td style="border-top: 1px solid #000;">' + this.series
             .name +
-          ':</td><td style="border-top: 1px solid #000;" align="right"><b>$' +
+          ':</td><td style="border-top: 1px solid #000;text-align: right"><b>$' +
           Highcharts.numberFormat(this.point.value, 0) + '</b></td></tr>';
         var footer = '</table></div>';
 
@@ -265,28 +263,31 @@ function initChart(Chart, grantsContractData) {
   window.addEventListener('resize', repositionModals);
 
 
-  $.each(mapData, function () {
+  $.each(allocationData, function () {
     this.code = this.code.toUpperCase();
     // TODO: logarithmic values cannot be 0 or negative numbers
     this.value = this.grants.amount + this.contracts.amount || 0.00001;
   });
 
+  const chartType = { map: miscData, ...data.chartType };
+
   new Chart(id, {
-    chart: grantsContractData.chartType,
-    title: grantsContractData.chartTitle,
-    credits: grantsContractData.credits,
-    exporting: grantsContractData.exporting,
-    legend: grantsContractData.legend,
-    mapNavigation: grantsContractData.mapNavigation,
-    colorAxis: grantsContractData.colorAxis,
-    responsive: grantsContractData.responsive,
+    chart: chartType,
+    title: data.chartTitle,
+    credits: data.credits,
+    exporting: data.exporting,
+    legend: data.legend,
+    mapNavigation: data.mapNavigation,
+    colorAxis: data.colorAxis,
+    responsive: data.responsive,
     tooltip: buildTooltip(),
     series: buildChartSeries()
-  }); //END new Chart
+  });
 }
 
 export default {
   id,
   initChart,
-  dataFileName
+  dataFileName,
+  miscDataURL: geoDataURL
 };

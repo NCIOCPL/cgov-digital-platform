@@ -815,7 +815,10 @@ class CgovNavigationManager {
     if ($landingPage) {
       // Set the entity in the correct language for display.
       if ($this->isTranslatableInterface($landingPage)) {
-        $landingPage = $this->entityRepository->getTranslationFromContext($landingPage, $this->interfaceLanguage->getId());
+        $current_lang = $this->interfaceLanguage->getId();
+        if ($landingPage->hasTranslation($current_lang)) {
+          $landingPage = $landingPage->getTranslation($current_lang);
+        }
       }
       $access = $landingPage->access('view', NULL, TRUE);
       if ($access->isAllowed()) {

@@ -84,7 +84,6 @@ function Chart (target, options) {
   }
 
   this.init();
-
 };
 
 // Module methods
@@ -93,89 +92,79 @@ Chart.prototype = function () {
 
       var dfd = $.Deferred();
 
-      if (typeof Highcharts == 'undefined' && !window.fetchingHighcharts) {
-          console.log("loading Highcharts");
-          console.time("Highcharts Load Time");
-          window.fetchingHighcharts = true;
-          $.when(
-              $.getScript('https://code.highcharts.com/highcharts.src.js')
-          ).then(function () {
-              console.log("loading Highchart plug-ins");
-              return $.when(
-                  $.getScript('https://code.highcharts.com/modules/exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/offline-exporting.js'),
-                  $.getScript('https://code.highcharts.com/modules/accessibility.js'),
-                  $.getScript('https://code.highcharts.com/modules/drilldown.js')
-              ).done(function () {
-                  console.log("Highcharts plug-ins loaded");
+    if (typeof Highcharts == 'undefined' && !window.fetchingHighcharts) {
+        window.fetchingHighcharts = true;
+        // Load Highcharts core library
+        $.getScript('https://code.highcharts.com/11.4.0/highcharts.js', function() {
+          // Load exporting module
+          $.getScript('https://code.highcharts.com/11.4.0/modules/exporting.js', function() {
+            // exporting module loaded
+            // Load offline-exporting module
+            $.getScript('https://code.highcharts.com/11.4.0/modules/offline-exporting.js', function() {
+              // offline-exporting module loaded
+              // Load accessibility module
+              $.getScript('https://code.highcharts.com/11.4.0/modules/accessibility.js', function() {
+                // accessibility module loaded
+                // Load drilldown module
+                $.getScript('https://code.highcharts.com/11.4.0/modules/drilldown.js', function() {
+                  // drilldown module loaded
                   window.fetchingHighcharts = false;
-                  console.timeEnd("Highcharts Load Time");
                   dfd.resolve();
+                });
               });
-          });
-      } else {
-          console.log("Highcharts is loading...");
+            });
+          })
+        })
+    } else {
+        function isHighchartsLoaded () {
+            if (typeof Highcharts == "undefined" || typeof Highcharts == "object" && window.fetchingHighcharts) {
+                setTimeout(function () {
+                    isHighchartsLoaded();
+                }, 100);
+            } else {
+                dfd.resolve();
+            }
+        }
 
-          function isHighchartsLoaded () {
-              if (typeof Highcharts == "undefined" || typeof Highcharts == "object" && window.fetchingHighcharts) {
-                  setTimeout(function () {
-                      console.log("Highcharts is not ready yet...");
-                      isHighchartsLoaded();
-                  }, 100);
-              } else {
-                  console.log("Highcharts and plug-ins are loaded");
-                  dfd.resolve();
-              }
-          }
+        isHighchartsLoaded();
 
-          isHighchartsLoaded();
+    }
 
-      }
-
-      return dfd.promise();
+    return dfd.promise();
   };
 
   var initialize = function () {
 
       var module = this;
 
-      $.when(loadHighcharts.call(module)).done(function () {
-          //console.log("Highcharts is present");
-          baseTheme.call(module);
+    $.when(loadHighcharts.call(module)).done(function () {
+      baseTheme.call(module);
 
-          if (module.settings.chart.type in module) {
-              console.log("rendering custom chart:", module.settings.chart.type);
-              module[module.settings.chart.type].call(module);
-          } else {
+      if (module.settings.chart.type in module) {
+        module[module.settings.chart.type].call(module);
+      } else {
 
-              if(module.settings.chart.type == 'map'){
-                  console.log("rendering highmap:", module.settings.chart.type);
-                  console.time("Highmaps Load Time");
-                  // this is starting to look like a callback pyramid of doom
-                  $.when(
-                      $.getScript('https://code.highcharts.com/maps/modules/map.js'),
-                      $.getScript('https://code.highcharts.com/mapdata/countries/us/us-all.js')
-                  ).done(function () {
-                      console.timeEnd("Highmaps Load Time");
-                      Highcharts.setOptions({
-                          lang: {
-                              numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
-                              thousandsSep: ","
-                          }
-                      });
-                      module.instance = Highcharts.mapChart(module.settings.target, module.settings)
-                  });
-              } else {
-                  console.log("rendering default chart:", module.settings.chart.type);
-                  module.instance = Highcharts.chart(module.settings.target, module.settings)
+        if(module.settings.chart.type == 'map'){
+          // Load map module
+          // GeoJSON map collection data in "./library/grants-contracts.js" is versioned separately
+          // from Highcharts core and modules code.
+          $.getScript('https://code.highcharts.com/maps/11.4.0/modules/map.js', function() {
+            Highcharts.setOptions({
+              lang: {
+                numericSymbols: [ "k" , "M" , "B" , "T" , "P" , "E"],
+                thousandsSep: ","
               }
-          }
-      });
-
+            });
+            module.instance = Highcharts.mapChart(module.settings.target, module.settings)
+          })
+        } else {
+          module.instance = Highcharts.chart(module.settings.target, module.settings)
+        }
+      }
+    });
   };
 
   var baseTheme = function () {
-      console.log("applying base theme");
       // theme settings for NCI
       var theme = {
           colors: this.settings.colors,
