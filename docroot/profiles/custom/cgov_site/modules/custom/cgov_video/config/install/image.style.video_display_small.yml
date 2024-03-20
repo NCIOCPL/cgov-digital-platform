@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: video_display_small
+label: 'Video Display: Small'
+effects:
+  723d592b-40cd-404a-bd30-4fefa82cfead:
+    uuid: 723d592b-40cd-404a-bd30-4fefa82cfead
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  89319aaa-ca58-4a38-a153-c32ec3fcc483:
+    uuid: 89319aaa-ca58-4a38-a153-c32ec3fcc483
+    id: image_scale
+    weight: 2
+    data:
+      width: 1982
+      height: null
+      upscale: false

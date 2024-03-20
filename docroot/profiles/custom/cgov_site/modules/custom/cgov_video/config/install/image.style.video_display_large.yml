@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: video_display_large
+label: 'Video Display: Large'
+effects:
+  44906a43-d677-477d-9979-35cf6641f4a5:
+    uuid: 44906a43-d677-477d-9979-35cf6641f4a5
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  2da97370-6133-449b-84e0-ddfea2594908:
+    uuid: 2da97370-6133-449b-84e0-ddfea2594908
+    id: image_scale
+    weight: 2
+    data:
+      width: 1988
+      height: null
+      upscale: false

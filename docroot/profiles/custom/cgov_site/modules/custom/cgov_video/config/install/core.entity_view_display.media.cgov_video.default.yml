@@ -14,6 +14,7 @@ dependencies:
     - field.field.media.cgov_video.field_list_description
     - field.field.media.cgov_video.field_media_oembed_video
     - field.field.media.cgov_video.field_meta_tags
+    - field.field.media.cgov_video.field_override_thumbnail_video
     - field.field.media.cgov_video.field_page_description
     - field.field.media.cgov_video.field_pretty_url
     - field.field.media.cgov_video.field_related_resources
@@ -38,12 +39,12 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 11
     region: content
   content_moderation_control:
     settings: {  }
     third_party_settings: {  }
-    weight: -20
+    weight: 0
     region: content
   created:
     type: timestamp
@@ -62,7 +63,7 @@ content:
         granularity: 2
         refresh: 60
     third_party_settings: {  }
-    weight: 0
+    weight: 2
     region: content
   field_browser_title:
     type: string
@@ -70,14 +71,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 8
+    weight: 5
     region: content
   field_caption:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 13
+    weight: 9
     region: content
   field_card_title:
     type: string
@@ -85,14 +86,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 6
     region: content
   field_date_display_mode:
     type: list_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 21
+    weight: 15
     region: content
   field_date_posted:
     type: cgov_date_formatter
@@ -102,7 +103,7 @@ content:
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    weight: 17
+    weight: 12
     region: content
   field_date_reviewed:
     type: cgov_date_formatter
@@ -112,7 +113,7 @@ content:
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    weight: 19
+    weight: 13
     region: content
   field_date_updated:
     type: cgov_date_formatter
@@ -122,7 +123,7 @@ content:
       format_type: cgov_display_date
       display_strategy: latest
     third_party_settings: {  }
-    weight: 20
+    weight: 14
     region: content
   field_feature_card_description:
     type: oembed
@@ -133,14 +134,14 @@ content:
       loading:
         attribute: eager
     third_party_settings: {  }
-    weight: 11
+    weight: 7
     region: content
   field_list_description:
     type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 22
+    weight: 16
     region: content
   field_media_oembed_video:
     type: oembed
@@ -151,14 +152,14 @@ content:
       loading:
         attribute: eager
     third_party_settings: {  }
-    weight: 6
+    weight: 4
     region: content
   field_meta_tags:
     type: metatag_empty_formatter
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 25
+    weight: 19
     region: content
   field_page_description:
     type: string
@@ -166,7 +167,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 23
+    weight: 17
     region: content
   field_pretty_url:
     type: string
@@ -174,14 +175,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 12
+    weight: 8
     region: content
   field_search_engine_restrictions:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 24
+    weight: 18
     region: content
   field_site_section:
     type: entity_reference_label
@@ -189,7 +190,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 15
+    weight: 10
     region: content
   thumbnail:
     type: image
@@ -200,16 +201,17 @@ content:
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 5
+    weight: 3
     region: content
   uid:
     type: author
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
 hidden:
+  field_override_thumbnail_video: true
   field_related_resources: true
   langcode: true
   name: true
