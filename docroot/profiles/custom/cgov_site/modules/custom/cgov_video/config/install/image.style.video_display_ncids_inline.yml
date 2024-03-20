@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: video_display_ncids_inline
+label: 'Video Display: NCIDS: Inline'
+effects:
+  9ece180c-c3b9-4dd5-ac00-8a592ce08737:
+    uuid: 9ece180c-c3b9-4dd5-ac00-8a592ce08737
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  dedc967b-b4bd-4904-b9f1-8a6c2ae2b738:
+    uuid: dedc967b-b4bd-4904-b9f1-8a6c2ae2b738
+    id: image_scale
+    weight: 2
+    data:
+      width: 2672
+      height: null
+      upscale: false
