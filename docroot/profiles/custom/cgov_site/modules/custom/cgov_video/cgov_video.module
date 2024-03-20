@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
 /**
  * Implements hook_form_alter().
@@ -19,5 +21,43 @@ function cgov_video_form_alter(&$form, FormStateInterface $form_state, $form_id)
     $userCreatedDescription = $form['field_media_oembed_video']['widget']['#description'];
     $form['field_media_oembed_video']['widget'][0]['value']['#description'] = $userCreatedDescription;
   }
+}
 
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function cgov_video_media_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->bundle() != 'cgov_video') {
+    return;
+  }
+  if(!empty($entity->field_override_thumbnail_video->target_id) && isset($build['field_override_thumbnail_video'])) {
+    _cgov_video_ovverride_thumbnail($build, $entity, $display, $view_mode);
+  }
+}
+
+
+/**
+ * Adds override video thumbnail.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ */
+function _cgov_video_ovverride_thumbnail(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $build['thumbnail'] = $build['field_override_thumbnail_video']['#items']->view([
+      'type' => 'image',
+      'settings' => [
+        'image_style' => $build['field_override_thumbnail_video'][0]['#image_style'],
+      ],
+    ]);
+    unset($build['field_override_thumbnail_video']);
 }
