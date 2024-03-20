@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\media\MediaInterface;
 
 /**
  * Implements hook_form_alter().
@@ -20,4 +22,23 @@ function cgov_video_form_alter(&$form, FormStateInterface $form_state, $form_id)
     $form['field_media_oembed_video']['widget'][0]['value']['#description'] = $userCreatedDescription;
   }
 
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function cgov_video_media_presave(EntityInterface $entity) {
+  if(($entity instanceof MediaInterface) && ($entity->bundle() == 'cgov_video') && $entity->hasField('field_override_thumbnail_video')) {
+    $siteLanguages = array_keys(\Drupal::languageManager()->getLanguages());
+    foreach($siteLanguages as $lang) {
+      if($entity->hasTranslation($lang)) {
+        $entity = $entity->getTranslation($lang);
+        if(!empty($overrideThumbnailId = $entity->field_override_thumbnail_video->target_id)){
+          $entity->thumbnail->target_id = $overrideThumbnailId;
+          $entity->thumbnail->width = $entity->field_override_thumbnail_video->width;
+          $entity->thumbnail->height = $entity->field_override_thumbnail_video->height;
+        }
+      }
+    }
+  }
 }
