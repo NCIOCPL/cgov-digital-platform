@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_override_thumbnail_video
+    - media.type.cgov_video
+  module:
+    - image
+id: media.cgov_video.field_override_thumbnail_video
+field_name: field_override_thumbnail_video
+entity_type: media
+bundle: cgov_video
+label: 'Override Thumbnail video'
+description: 'Override Thumbnail video : 2672px x 2004px or greater.  Keep 4:3 aspect ratio.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'cgov_image/override_video_thumbnail/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: '10 MB'
+  max_resolution: ''
+  min_resolution: 2672x2004
+  alt_field: false
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image
