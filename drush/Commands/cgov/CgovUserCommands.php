@@ -56,8 +56,9 @@ class CgovUserCommands extends DrushCommands {
 
     $user = $userConfig['admin']['username'];
     $pass = $userConfig['admin']['password'];
+    $this->resetAdmin($user, $pass);
     if ($userConfig['admin']['enabled'] === TRUE) {
-      $this->resetAdmin($user, $pass);
+      $this->unblockAdminUser();
     }
     else {
       $this->blockAdminUser();
@@ -83,6 +84,42 @@ class CgovUserCommands extends DrushCommands {
     if ($account = User::load(1)) {
       $account->block();
       $account->save();
+    }
+    else {
+      throw new \Exception(dt('Unable to load user 1.'));
+    }
+
+  }
+
+  /**
+   * UnBlock Admin User.
+   *
+   * @command cgov:unblock-admin-user
+   * @aliases unblock-admin-user, ublkadm
+   * @usage drush cgov:unblock-admin-user
+   *   UnBlock the admin user (user 1).
+   * @bootstrap full
+   */
+  public function unblockAdminUser() {
+    /** @var \Drupal\user\Entity\User $account */
+    if ($account = User::load(1)) {
+      $account->activate();
+      $account->save();
+      if (\Drupal::moduleHandler()->moduleExists('samlauth')) {
+        // Unlink saml for admin user.
+        $authname = \Drupal::database()->select('authmap', 'm')
+          ->fields('m', ['authname'])
+          ->condition('m.uid', (int) $account->id())
+          ->condition('m.provider', 'samlauth')
+          ->execute()->fetchField();
+        if ($authname) {
+          \Drupal::database()->delete('authmap')
+            ->condition('uid', (int) $account->id())
+            ->condition('provider', 'samlauth')
+            ->execute();
+        }
+      }
+
     }
     else {
       throw new \Exception(dt('Unable to load user 1.'));
