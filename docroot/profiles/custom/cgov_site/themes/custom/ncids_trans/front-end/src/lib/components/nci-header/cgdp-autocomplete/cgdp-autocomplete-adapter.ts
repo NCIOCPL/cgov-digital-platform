@@ -1,7 +1,7 @@
 import { Axios } from 'axios';
-import { AutocompleteAdaptor } from '@nciocpl/ncids-js';
+import { AutocompleteAdapter } from '@nciocpl/ncids-js/nci-autocomplete';
 
-class CgdpAutocompleteAdapter implements AutocompleteAdaptor {
+class CgdpAutocompleteAdapter implements AutocompleteAdapter {
 	/**
 	 * Instance of an axios client.
 	 */

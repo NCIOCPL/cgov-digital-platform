@@ -1,3 +1,3 @@
-import CgdpMobileMenuAdaptor from './cgdp-mobile-menu-adaptor';
+import CgdpMobileMenuAdapter from './cgdp-mobile-menu-adapter';
 
-export { CgdpMobileMenuAdaptor };
+export { CgdpMobileMenuAdapter };

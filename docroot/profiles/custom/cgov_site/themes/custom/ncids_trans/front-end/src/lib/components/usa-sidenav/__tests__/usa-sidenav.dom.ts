@@ -2,7 +2,7 @@
 /** This scenario is a tree that is 4-levels deep, with the active item being the current page. */
 export const deepTreeNav = `
 <nav aria-label="Secondary navigation">
-  <ul class="usa-sidenav usa-sidenav--nci-sidenav">
+  <ul class="usa-sidenav">
 
     <li class="usa-sidenav__item">
       <a href="/about-cancer/treatment" data-menu-id="11844" class="usa-current usa-current--nci-ancestor">Cancer Treatment</a>
@@ -87,7 +87,7 @@ export const deepTreeNav = `
 /** Scenario where the active navigation item is a parent of the current URL, which does not show in the navigation. */
 export const currentUrlNotInNav = `
 <nav aria-label="Secondary navigation">
-  <ul class="usa-sidenav usa-sidenav--nci-sidenav">
+  <ul class="usa-sidenav">
     <li class="usa-sidenav__item">
       <a href="/about-cancer/treatment" data-menu-id="11844" class="usa-current usa-current--nci-ancestor">Cancer Treatment</a>
       <ul class="usa-sidenav__sublist">
@@ -128,7 +128,7 @@ export const currentUrlNotInNav = `
 /** This scenario is where the active nav item is the root of the nav. */
 export const currentIsRoot = `
 <nav aria-label="Secondary navigation">
-  <ul class="usa-sidenav usa-sidenav--nci-sidenav">
+  <ul class="usa-sidenav">
 
     <li class="usa-sidenav__item">
       <a href="/research/nci-role" data-menu-id="916488" class="usa-current">NCI’s Role in Cancer Research</a>
