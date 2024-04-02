@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import CgdpMegaMenuAdaptor from '../cgdp-megamenu-adapter';
+import CgdpMegaMenuAdapter from '../cgdp-megamenu-adapter';
 import getGoodMegaMenu from './data/good-mega-menu';
 import getHeadingOnlyListMegaMenu from './data/heading-only-list';
 import * as nock from 'nock';
@@ -39,7 +39,7 @@ describe('cgdp-megamenu-adapter', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/good-mega-menu.json');
 
-		const adapter = new CgdpMegaMenuAdaptor(client);
+		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = getGoodMegaMenu() as HTMLElement;
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 
@@ -54,7 +54,7 @@ describe('cgdp-megamenu-adapter', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/good-mega-menu.json');
 
-		const adapter = new CgdpMegaMenuAdaptor(client);
+		const adapter = new CgdpMegaMenuAdapter(client);
 		await adapter.getMegaMenuContent('1234');
 		await adapter.getMegaMenuContent('1234');
 
@@ -71,7 +71,7 @@ describe('cgdp-megamenu-adapter', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/heading-only-list.json');
 
-		const adapter = new CgdpMegaMenuAdaptor(client);
+		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = getHeadingOnlyListMegaMenu() as HTMLElement;
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
@@ -85,7 +85,7 @@ describe('cgdp-megamenu-adapter', () => {
 			.once()
 			.reply(404);
 
-		const adapter = new CgdpMegaMenuAdaptor(client);
+		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = document.createElement('div');
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();
@@ -101,7 +101,7 @@ describe('cgdp-megamenu-adapter', () => {
 			.once()
 			.replyWithError('Stuff broke');
 
-		const adapter = new CgdpMegaMenuAdaptor(client);
+		const adapter = new CgdpMegaMenuAdapter(client);
 		const expectedHtml = document.createElement('div');
 		const actualHtml = await adapter.getMegaMenuContent('1234');
 		expect(actualHtml.isEqualNode(expectedHtml)).toBeTruthy();

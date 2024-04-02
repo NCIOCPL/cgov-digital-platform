@@ -34,7 +34,7 @@ describe('cgdp-megamenu-adapter', () => {
 		responseType: 'json',
 	});
 
-	it('the adaptor', async () => {
+	it('the adapter', async () => {
 		const scope = nock('https://webapis.cancer.gov/sitewidesearch/v1/')
 			.get('/Autosuggest/cgov/en/can')
 			.once()

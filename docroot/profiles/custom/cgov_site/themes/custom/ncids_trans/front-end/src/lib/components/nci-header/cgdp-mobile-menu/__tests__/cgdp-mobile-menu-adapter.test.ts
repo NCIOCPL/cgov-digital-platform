@@ -1,4 +1,4 @@
-import CgdpMobileMenuAdaptor from '../cgdp-mobile-menu-adaptor';
+import CgdpMobileMenuAdapter from '../cgdp-mobile-menu-adapter';
 
 import Menu1500005 from './expected/en/menu-1500005';
 import Menu1500004 from './expected/en/menu-1500004';
@@ -17,7 +17,7 @@ import Menu1500044 from './expected/en/menu-1500044';
 import * as nock from 'nock';
 import axios from 'axios';
 
-describe('CGDP Mobile Menu Adaptor', () => {
+describe('CGDP Mobile Menu Adapter', () => {
 	beforeAll(() => {
 		nock.disableNetConnect();
 	});
@@ -41,7 +41,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/mobile-nav/1500000.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500005',
@@ -50,26 +50,26 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/a'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
+		const initialMenuID = await adapter.getInitialMenuId();
 		expect(initialMenuID).toBe('1500005');
 
-		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		const initialMenuData = await adapter.getNavigationLevel(initialMenuID);
 		expect(initialMenuData).toEqual(Menu1500005);
 
 		// Pretend to have hit the back button.
-		const back1MenuData = await adaptor.getNavigationLevel('1500004');
+		const back1MenuData = await adapter.getNavigationLevel('1500004');
 		expect(back1MenuData).toEqual(Menu1500004);
 
 		// Lets jump to the top of the current fetched menu.
-		const sectionRootMenuData = await adaptor.getNavigationLevel('1500002');
+		const sectionRootMenuData = await adapter.getNavigationLevel('1500002');
 		expect(sectionRootMenuData).toEqual(Menu1500002);
 
 		// Let's move into the mobile nav.
-		const aMenuData = await adaptor.getNavigationLevel('1500001');
+		const aMenuData = await adapter.getNavigationLevel('1500001');
 		expect(aMenuData).toEqual(Menu1500001);
 
 		// Finally, lets go to the top. (This would be Main Menu as the back button)
-		const testRootMenuData = await adaptor.getNavigationLevel('1500000');
+		const testRootMenuData = await adapter.getNavigationLevel('1500000');
 		expect(testRootMenuData).toEqual(Menu1500000);
 
 		scope.isDone();
@@ -88,7 +88,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/section-nav/1500042.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500044',
@@ -97,16 +97,16 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/a'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
+		const initialMenuID = await adapter.getInitialMenuId();
 		expect(initialMenuID).toBe('1500044');
 
-		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		const initialMenuData = await adapter.getNavigationLevel(initialMenuID);
 		expect(initialMenuData).toEqual(Menu1500044);
 
-		const parentData = await adaptor.getNavigationLevel('1500043');
+		const parentData = await adapter.getNavigationLevel('1500043');
 		expect(parentData).toEqual(Menu1500043);
 
-		const parentData2 = await adaptor.getNavigationLevel('1500042');
+		const parentData2 = await adapter.getNavigationLevel('1500042');
 		expect(parentData2).toEqual(Menu1500042);
 
 		scope.isDone();
@@ -125,7 +125,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/mobile-nav/1500028.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500032',
@@ -134,18 +134,18 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/c'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
+		const initialMenuID = await adapter.getInitialMenuId();
 		expect(initialMenuID).toBe('1500032');
 
-		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		const initialMenuData = await adapter.getNavigationLevel(initialMenuID);
 		expect(initialMenuData).toEqual(Menu1500032);
 
 		// Let's move into the mobile nav.
-		const aMenuData = await adaptor.getNavigationLevel('1500029');
+		const aMenuData = await adapter.getNavigationLevel('1500029');
 		expect(aMenuData).toEqual(Menu1500029);
 
 		// // Finally, lets go to the top. (This would be Main Menu as the back button)
-		const testRootMenuData = await adaptor.getNavigationLevel('1500028');
+		const testRootMenuData = await adapter.getNavigationLevel('1500028');
 		expect(testRootMenuData).toEqual(Menu1500028);
 
 		scope.isDone();
@@ -161,7 +161,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.reply(400);
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500005',
@@ -170,7 +170,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/a'
 		);
 
-		await expect(adaptor.getNavigationLevel('15000005')).rejects.toThrow(
+		await expect(adapter.getNavigationLevel('15000005')).rejects.toThrow(
 			'Mobile menu unexpected status 400 fetching 1500002/section-nav'
 		);
 
@@ -187,7 +187,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/mobile-nav/1500000-weights.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500000',
@@ -196,10 +196,10 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/a'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
+		const initialMenuID = await adapter.getInitialMenuId();
 		expect(initialMenuID).toBe('1500000');
 
-		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		const initialMenuData = await adapter.getNavigationLevel(initialMenuID);
 		expect(initialMenuData).toEqual(Menu1500000);
 
 		scope.isDone();
@@ -218,7 +218,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/mobile-nav/1500000.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'1500000',
@@ -229,8 +229,8 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/a'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
-		await expect(adaptor.getNavigationLevel(initialMenuID)).rejects.toThrow(
+		const initialMenuID = await adapter.getInitialMenuId();
+		await expect(adapter.getNavigationLevel(initialMenuID)).rejects.toThrow(
 			'Section 1500000 cannot be found in the navigation.'
 		);
 
@@ -250,7 +250,7 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			.once()
 			.replyWithFile(200, __dirname + '/data/mobile-nav-api.json');
 
-		const adaptor = new CgdpMobileMenuAdaptor(
+		const adapter = new CgdpMobileMenuAdapter(
 			false,
 			client,
 			'930167',
@@ -259,13 +259,13 @@ describe('CGDP Mobile Menu Adaptor', () => {
 			'/publications'
 		);
 
-		const initialMenuID = await adaptor.getInitialMenuId();
+		const initialMenuID = await adapter.getInitialMenuId();
 		expect(initialMenuID).toBe('930167');
 
-		const initialMenuData = await adaptor.getNavigationLevel(initialMenuID);
+		const initialMenuData = await adapter.getNavigationLevel(initialMenuID);
 		expect(initialMenuData.parent?.label).toEqual('Back');
 
-		const parentData = await adaptor.getNavigationLevel('844114');
+		const parentData = await adapter.getNavigationLevel('844114');
 		expect(parentData.parent?.label).toEqual('Back');
 
 		scope.isDone();

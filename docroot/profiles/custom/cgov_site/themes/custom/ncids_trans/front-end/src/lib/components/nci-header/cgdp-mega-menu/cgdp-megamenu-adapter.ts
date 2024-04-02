@@ -1,12 +1,12 @@
 import axios, { Axios } from 'axios';
-import type { MegaMenuAdaptor } from '@nciocpl/ncids-js';
+import type { MegaMenuAdapter } from '@nciocpl/ncids-js/nci-header';
 import { CgdpMegaMenuData } from './types';
 import getCgdpMegaMenu from './components/cgdp-mega-menu';
 
 /**
  * Represents a MegaMenuAdapter for CGDP.
  */
-class CgdpMegaMenuAdaptor implements MegaMenuAdaptor {
+class CgdpMegaMenuAdapter implements MegaMenuAdapter {
 	/**
 	 * Flag to tell header to use ID for this adapter.
 	 */
@@ -78,4 +78,4 @@ class CgdpMegaMenuAdaptor implements MegaMenuAdaptor {
 	}
 }
 
-export default CgdpMegaMenuAdaptor;
+export default CgdpMegaMenuAdapter;
