@@ -219,6 +219,10 @@ function get_social_image_path_from_media($media_entity) {
     $social_img_style_name = 'cgov_social_media';
     // Use the Social Image Override if set.
     if ($media_entity) {
+      $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+      if ($media_entity->hasTranslation($language)) {
+        $media_entity = $media_entity->getTranslation($language);
+      }
       if (!$media_entity->get('field_override_img_social_media')->isEmpty()) {
 
         // Get the Social Media Image.
