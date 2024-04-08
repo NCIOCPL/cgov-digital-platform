@@ -1,6 +1,6 @@
 {
   "chartSubTitle":{
-    "text":"Fiscal Years 2018 - 2022"
+    "text":"Fiscal Years 2017 - 2023"
   },
   "chartTitle":{
     "text":"Extramural vs. Intramural and RMS Funding"
@@ -15,6 +15,49 @@
       }
     },
     "series":[
+      {
+        "name":"2017 Extramural",
+        "id":"2017E",
+        "xAxis":1,
+        "data":[
+          [
+            "Research Project Grants",
+            2278.416
+          ],
+          [
+            "Cancer Centers",
+            313.010
+          ],
+          [
+            "SPOREs",
+            111.436
+          ],
+          [
+            "Other P50s/P20s",
+            1.336
+          ],
+          [
+            "Other Specialized Centers",
+            135.578
+          ],
+          [
+            "Other Research Grants",
+            481.883
+          ],
+          [
+            "NRSA",
+            77.623
+          ],
+          [
+            "R&D Contracts",
+            880.377
+          ],
+          [
+            "Buildings & Facilities",
+            30
+          ]
+        ]
+      },
       {
         "name":"2018 Extramural",
         "id":"2018E",
@@ -231,6 +274,64 @@
         ]
       },
       {
+        "name":"2023 Extramural",
+        "id":"2023E",
+        "xAxis":1,
+        "data":[
+          [
+            "Research Project Grants",
+            3145.2
+          ],
+          [
+            "Cancer Centers",
+            353.5
+          ],
+          [
+            "SPOREs",
+            124.1
+          ],
+          [
+            "Other P50s/P20s",
+            5.3
+          ],
+          [
+            "Other Specialized Centers",
+            141.5
+          ],
+          [
+            "Other Research Grants",
+            621.5
+          ],
+          [
+            "NRSA",
+            90.3
+          ],
+          [
+            "R&D Contracts",
+            899.1
+          ],
+          [
+            "Buildings & Facilities",
+            30
+          ]
+        ]
+      },
+      {
+        "name":"2017 IRP & RMS",
+        "id":"2017I",
+        "xAxis":1,
+        "data":[
+          [
+            "Intramural Research",
+            899.696
+          ],
+          [
+            "RMS",
+            427.037
+          ]
+        ]
+      },
+      {
         "name":"2018 IRP & RMS",
         "id":"2018I",
         "xAxis":1,
@@ -304,12 +405,27 @@
             468.027
           ]
         ]
+      },
+      {
+        "name":"2023 IRP & RMS",
+        "id":"2023I",
+        "xAxis":1,
+        "data":[
+          [
+            "Intramural Research",
+            1278.5
+          ],
+          [
+            "RMS",
+            497.8
+          ]
+        ]
       }
     ]
   },
   "plotOptions":{
     "series":{
-      "pointStart":2018
+      "pointStart":2017
     }
   },
   "series":[
@@ -317,6 +433,10 @@
       "name":"Extramural",
       "xAxis":0,
       "data":[
+        {
+          "y":4309.7,
+          "drilldown":"2017E"
+        },
         {
           "y":4539.8,
           "drilldown":"2018E"
@@ -334,14 +454,22 @@
           "drilldown":"2021E"
         },
         {
-          "y":5135.2,
+          "y":5135.3,
           "drilldown":"2022E"
+        },
+        {
+          "y":5410.5,
+          "drilldown":"2023E"
         }
       ]
     },
     {
       "name":"IRP & RMS",
       "data":[
+        {
+          "y":1326.7,
+          "drilldown":"2017I"
+        },
         {
           "y":1387.9,
           "drilldown":"2018I"
@@ -361,6 +489,10 @@
         {
           "y":1698.4,
           "drilldown":"2022I"
+        },
+        {
+          "y":1776.3,
+          "drilldown":"2023I"
         }
       ]
     }
