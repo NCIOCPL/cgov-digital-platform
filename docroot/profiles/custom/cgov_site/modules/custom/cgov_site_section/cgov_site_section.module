@@ -774,6 +774,12 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
     ]
     );
   }
+  if ($entity_type->id() == 'taxonomy_term'  && $bundle === 'cgov_site_sections') {
+    if (isset($fields['parent'])) {
+      // Add custom constraint to this field
+      $fields['parent']->addConstraint('CgovValidateParentConstraint', []);
+    }
+  }
 }
 
 /**
