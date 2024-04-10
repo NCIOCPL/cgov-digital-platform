@@ -151,6 +151,8 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
       'samlauth.saml_controller_acs',
       'system.403',
       'system.401',
+      'system.css_asset',
+      'system.js_asset',
     ];
     return in_array($route_name, $login_routes);
   }
