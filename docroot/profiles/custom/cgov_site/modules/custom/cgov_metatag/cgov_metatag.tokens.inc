@@ -36,12 +36,6 @@ function cgov_metatag_token_info() {
           'name' => t('Translated Org Name'),
           'description' => t('The value to use for the org name (translated if another language.'),
         ];
-
-  $info['tokens']['cgov_tokens']['cgov-og-site-name'] =
-        [
-          'name' => t('Cgov og:site_name Meta Tag'),
-          'description' => t('The value to use for the og:site_name meta tag.'),
-        ];
   $info['tokens']['cgov_tokens']['cgov-media-content-language'] =
         [
           'name' => t('Cgov Media content-language Meta Tag'),
@@ -95,10 +89,6 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
 
         case 'cgov-trans-org-name':
           $replacements[$original] = t('NCI');
-          break;
-
-        case 'cgov-og-site-name':
-          $replacements[$original] = get_meta_og_site_name_token(t('National Cancer Institute'));
           break;
 
         case 'cgov-media-content-language':
@@ -319,23 +309,6 @@ function find_styled_image_url($image_fid, $social_img_style_name) {
     $image_url = NULL;
   }
   return $image_url;
-}
-
-/**
- * Sets up og_site_name metatag value.
- */
-function get_meta_og_site_name_token(string $transOrgName) {
-  // phpcs:disable
-  $name = t(\Drupal::config('system.site')->get('name'));
-  // phpcs:enable
-
-  if ($transOrgName != $name) {
-    $ogSiteName = $name . " - " . $transOrgName;
-    return $ogSiteName;
-  }
-  else {
-    return $name;
-  }
 }
 
 /**
