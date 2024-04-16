@@ -39,11 +39,4 @@ module.exports = {
   Connect: path.resolve(__dirname, "src/variants/connect/entrypoints/Connect.js"),
   CTHP: path.resolve(__dirname, "src/entrypoints/cthp/CTHP.js"),
   Event: path.resolve(__dirname, "src/entrypoints/event/Event.js"),
-  CTSApp: path.resolve(__dirname, "src/entrypoints/cts/CTSApp.js"),
-  GlossaryApp: path.resolve(
-    __dirname,
-    "src/entrypoints/glossary/GlossaryApp.js"
-  ),
-  R4RApp: path.resolve(__dirname, "src/entrypoints/r4r/r4rApp.js"),
-  SitewideSearchApp: path.resolve(__dirname, "src/entrypoints/sitewideSearch/SitewideSearchApp.js"),
 };
