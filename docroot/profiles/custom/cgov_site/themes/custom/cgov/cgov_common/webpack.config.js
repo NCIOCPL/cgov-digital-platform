@@ -6,7 +6,7 @@ const themeConfig = {
   name: "cgov_common",
   entry: themeEntries,
   resolve: {
-    modules: [path.resolve(__dirname, "../src"), path.resolve(__dirname, "./node_modules")],
+    modules: [path.resolve(__dirname, "../src"), path.resolve(__dirname, './node_modules'), "node_modules"],
     alias: {
       Core: path.resolve(__dirname, "..", "src"),
       Utilities: path.resolve(__dirname, "..", "src", "utilities"),
