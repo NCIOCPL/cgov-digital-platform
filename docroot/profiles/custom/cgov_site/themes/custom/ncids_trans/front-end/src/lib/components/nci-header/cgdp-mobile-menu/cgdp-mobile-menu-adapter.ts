@@ -1,9 +1,9 @@
 import axios, { Axios } from 'axios';
 import type {
-	MobileMenuAdaptor,
+	MobileMenuAdapter,
 	MobileMenuData,
 	MobileMenuItem,
-} from '@nciocpl/ncids-js';
+} from '@nciocpl/ncids-js/nci-header';
 import type {
 	AdapterTreeItem,
 	DrupalNavApiResponse,
@@ -28,7 +28,7 @@ const locale: { [resname: string]: { en: string; es: string } } = {
 /**
  * Represents a MegaMenuAdapter for CGDP.
  */
-class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
+class CgdpMobileMenuAdapter implements MobileMenuAdapter {
 	/**
 	 * Instance of an axios client.
 	 */
@@ -429,4 +429,4 @@ class CgdpMobileMenuAdaptor implements MobileMenuAdaptor {
 	}
 }
 
-export default CgdpMobileMenuAdaptor;
+export default CgdpMobileMenuAdapter;

@@ -52,6 +52,26 @@ function cgov_metatag_token_info() {
           'name' => t('CGDP Domain'),
           'description' => t('The value to use for meta tag.'),
         ];
+  $info['tokens']['cgov_tokens']['browser-title-site-name-meta'] =
+        [
+          'name' => t('Browser title Site Name Meta'),
+          'description' => t('The value to use for meta tag.'),
+        ];
+  $info['tokens']['cgov_tokens']['browser-title-site-name'] =
+        [
+          'name' => t('Browser title Site Name'),
+          'description' => t('The value to use for site name.'),
+        ];
+  $info['tokens']['cgov_tokens']['browser-title-site-name-custom'] =
+        [
+          'name' => t('Browser Custom title Site Name'),
+          'description' => t('The value return custom title for site name.'),
+        ];
+  $info['tokens']['cgov_tokens']['browser-title-site-name-default'] =
+        [
+          'name' => t('Browser title Site Name Default'),
+          'description' => t('The value to use for default site name.'),
+        ];
   return $info;
 }
 
@@ -60,6 +80,8 @@ function cgov_metatag_token_info() {
  */
 function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbleable_metadata) {
   $replacements = [];
+  $siteBrandingConfig = \Drupal::config('sitebranding.settings');
+  $token_service = \Drupal::token();
   if ($type == 'cgov_tokens') {
     foreach ($tokens as $name => $original) {
       switch ($name) {
@@ -85,6 +107,35 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
 
         case 'cgdp-domain':
           $replacements[$original] = Settings::get('cgdp_domain');
+          break;
+
+        case 'browser-title-site-name-custom':
+          $replacements[$original] = $siteBrandingConfig->get('custom_site_title_value');
+          break;
+
+        case 'browser-title-site-name-default':
+          $replacements[$original] = t('NCI');
+          break;
+
+        case 'browser-title-site-name':
+          $value = '';
+          if ($siteBrandingConfig->get('browser_display_type') === 'default') {
+            $value = $token_service->replace('[cgov_tokens:browser-title-site-name-default]');
+          }
+          elseif ($siteBrandingConfig->get('browser_display_type') === 'custom_title') {
+            $value = $token_service->replace('[cgov_tokens:browser-title-site-name-custom]');
+          }
+          $replacements[$original] = $value;
+          break;
+
+        case 'browser-title-site-name-meta':
+          if (!empty($siteName = $token_service->replace('[cgov_tokens:browser-title-site-name]'))) {
+            $replacements[$original] = ' - ' . $siteName;
+          }
+          else {
+            $replacements[$original] = '';
+          }
+
           break;
       }
     }

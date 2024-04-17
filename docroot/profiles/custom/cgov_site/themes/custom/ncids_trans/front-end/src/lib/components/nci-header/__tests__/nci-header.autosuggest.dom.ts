@@ -3,7 +3,7 @@ export const nciHeaderAutosuggestDom = () => {
 
 	// language=HTML
 	div.innerHTML = `
-		<header id="nci-header" class="nci-header nci-header--extended">
+		<header id="nci-header" class="nci-header nci-header--megamenu">
 			<div class="nci-header__navbar">
 				<div class="nci-logo" id="extended-mega-logo">
 					<a href="#" aria-label="Homepage">

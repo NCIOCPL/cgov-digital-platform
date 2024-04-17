@@ -1,10 +1,8 @@
 import axios from 'axios';
-import {
-	NCIExtendedHeaderWithMegaMenu,
-	NCIAutocomplete,
-} from '@nciocpl/ncids-js';
-import { CgdpMobileMenuAdaptor } from './cgdp-mobile-menu';
-import CgdpMegaMenuAdaptor from './cgdp-mega-menu/cgdp-megamenu-adapter';
+import { NCIExtendedHeaderWithMegaMenu } from '@nciocpl/ncids-js/nci-header';
+import { NCIAutocomplete } from '@nciocpl/ncids-js/nci-autocomplete';
+import { CgdpMobileMenuAdapter } from './cgdp-mobile-menu';
+import CgdpMegaMenuAdapter from './cgdp-mega-menu/cgdp-megamenu-adapter';
 import CgdpAutocompleteAdapter from './cgdp-autocomplete/cgdp-autocomplete-adapter';
 import { DrupalNavApiReference } from './cgdp-mobile-menu/types';
 
@@ -118,7 +116,7 @@ const initialize = () => {
 		responseType: 'json',
 	});
 
-	const megaMenuSource = new CgdpMegaMenuAdaptor(client);
+	const megaMenuSource = new CgdpMegaMenuAdapter(client);
 
 	// We need to get the menu information off the window.
 	if (!window.ncidsNavInfo) {
@@ -128,7 +126,7 @@ const initialize = () => {
 
 	// This is a little dicey here as the nav info could be bad.
 	// todo: add a bit more checks to make sure the nav info is the right shape.
-	const mobileMenuSource = new CgdpMobileMenuAdaptor(
+	const mobileMenuSource = new CgdpMobileMenuAdapter(
 		false,
 		client,
 		window.ncidsNavInfo?.item_id?.toString(),

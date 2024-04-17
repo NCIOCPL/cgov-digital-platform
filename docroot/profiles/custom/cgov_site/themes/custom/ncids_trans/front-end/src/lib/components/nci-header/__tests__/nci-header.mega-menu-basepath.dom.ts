@@ -3,7 +3,7 @@ export const headerWithDataMenuIdBasePath = () => {
 
 	// language=HTML
 	div.innerHTML = `
-		<header id="nci-header" class="nci-header nci-header--extended" data-base-path="/nano">
+		<header id="nci-header" class="nci-header nci-header--megamenu" data-base-path="/nano">
 			<div class="nci-header__navbar">
 				<div class="nci-logo" id="extended-mega-logo">
 					<a href="#" aria-label="Homepage">

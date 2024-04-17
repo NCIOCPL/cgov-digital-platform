@@ -1,4 +1,4 @@
-import { NCIBigFooter } from '@nciocpl/ncids-js';
+import { NCIBigFooter } from '@nciocpl/ncids-js/usa-footer';
 
 import { trackOther } from '../../core/analytics/eddl-util';
 

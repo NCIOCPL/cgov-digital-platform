@@ -1,6 +1,6 @@
 import { trackOther } from '../../core/analytics/eddl-util';
 
-import { NCISiteAlert } from '@nciocpl/ncids-js';
+import { NCISiteAlert } from '@nciocpl/ncids-js/usa-site-alert';
 
 /**
  * Tracks analytics using eddlUtil for site alert.

@@ -8,13 +8,14 @@
 		"noImplicitReturns": true,
 		"noImplicitAny": true,
 		"module": "es6",
-		"moduleResolution": "node",
+		"moduleResolution": "Bundler",
 		"jsx": "react",
 		"jsxFactory": "CgdpJsx.createElement",
 		"jsxFragmentFactory": "CgdpJsx.Fragment",
 		"target": "es6",
 		// For now, until EVERYTHING is typescripot, we need to allow Js.
 		"allowJs": true,
+		"types": ["node", "jest", "@testing-library/jest-dom", "@types/jqueryui", "@types/react"],
 		// We have to duplicate the WebPack aliases in here for VSCode and TS.
 		// These paths are all relative to the baseUrl, which is src.
 		"paths": {

@@ -301,7 +301,7 @@ describe('usa-sidenav', () => {
 		// valid HTML, but would be unchecked conditions.
 		it('half works with error messages for stupid HTML', async () => {
 			const noSideNavMarkup = `
-				<ul class="usa-sidenav usa-sidenav--nci-sidenav">
+				<ul class="usa-sidenav">
 					<a href="#">link for bad html</a>
 				</ul>
 			`;
@@ -337,7 +337,7 @@ describe('usa-sidenav', () => {
 		});
 		it('half works with error messages for stupid HTML pt2', async () => {
 			const noSideNavMarkup = `
-				<ul class="usa-sidenav usa-sidenav--nci-sidenav">
+				<ul class="usa-sidenav">
 					<li>chicken</li>
 					<a href="#">link for bad html</a>
 				</ul>
@@ -374,7 +374,7 @@ describe('usa-sidenav', () => {
 		});
 		it('half works with error messages for empty anchor as title', async () => {
 			const noSideNavMarkup = `
-				<ul class="usa-sidenav usa-sidenav--nci-sidenav">
+				<ul class="usa-sidenav">
 					<li><a href="#"></a></li>
 					<a href="#">link for bad html</a>
 				</ul>
@@ -411,7 +411,7 @@ describe('usa-sidenav', () => {
 		});
 		it('half works with error messages for empty clicked thing', async () => {
 			const noSideNavMarkup = `
-				<ul class="usa-sidenav usa-sidenav--nci-sidenav">
+				<ul class="usa-sidenav">
 					<a href="#"></a>
 				</ul>
 			`;

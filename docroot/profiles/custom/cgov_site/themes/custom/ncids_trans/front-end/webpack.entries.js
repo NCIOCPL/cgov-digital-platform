@@ -46,4 +46,12 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/app-module/app-module.ts'
 	),
+	'addl-lib-test': path.resolve(__dirname, 'src/entrypoints/addl-lib-test/addl-lib-test.ts'),
+	// addl-cancer-types-landing-page is an additional library
+	// that can be added to a Home and Landing Page that contains
+	// the CSS and JS that will be used on the Cancer Types Landing Page
+	'addl-cancer-types-landing-page': path.resolve(
+		__dirname,
+		'src/entrypoints/addl-cancer-types-landing-page/addl-cancer-types-landing-page.ts'
+	),
 };
