@@ -22,13 +22,8 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
   $config['system.performance']['js']['gzip'] = TRUE;
 
   switch ($env) {
-    case '01dev':
     case 'dev':
-      // Disable aggregation of CSS and JS on dev.
-      $config['system.performance']['css']['preprocess'] = FALSE;
-      $config['system.performance']['css']['gzip'] = FALSE;
-      $config['system.performance']['js']['preprocess'] = FALSE;
-      $config['system.performance']['js']['gzip'] = FALSE;
+    case '01dev':
     case 'int':
     case '01test':
     case 'test':
