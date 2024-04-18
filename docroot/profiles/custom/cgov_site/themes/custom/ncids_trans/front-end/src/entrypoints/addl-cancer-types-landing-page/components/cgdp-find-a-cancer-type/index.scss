@@ -6,11 +6,27 @@
 		@include u-text('center');
 	}
 
+	&__button-wrapper {
+		@include u-display('flex');
+		@include u-flex('row');
+	}
+
+	.usa-button {
+		@include u-margin-top(2);
+		@include u-margin-right(0);
+	}
+
 	&__form {
 		@include at-media('mobile-lg') {
 			@include u-display('flex');
 			@include u-flex('row');
 			@include u-flex('justify-center');
+		}
+		@include u-flex('align-end');
+		&--error {
+			.usa-button {
+				@include u-margin-bottom(1);
+			}
 		}
 	}
 
@@ -28,16 +44,5 @@
 		@include at-media('widescreen') {
 			@include u-width('tablet');
 		}
-	}
-
-	&__button-wrapper {
-		@include u-display('flex');
-		@include u-flex('row');
-		@include u-flex('align-end');
-	}
-
-	&__button {
-		@include u-margin-top(2);
-		@include u-margin-right(0);
 	}
 }
