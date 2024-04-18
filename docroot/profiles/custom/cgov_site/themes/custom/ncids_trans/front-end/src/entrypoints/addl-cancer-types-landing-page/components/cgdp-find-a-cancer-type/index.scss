@@ -19,9 +19,10 @@
 	&__form {
 		@include at-media('mobile-lg') {
 			@include u-display('flex');
-			@include u-flex('row');
-			@include u-flex('justify-center');
 		}
+		@include u-flex('row');
+		@include u-flex('justify-center');
+		@include u-padding-x(3);
 		@include u-flex('align-end');
 		&--error {
 			.usa-button {
@@ -31,9 +32,9 @@
 	}
 
 	&__combo-box {
-		@include u-margin-right(2);
 		@include at-media('mobile-lg') {
 			@include u-width('card-lg');
+			@include u-margin-right(2);
 		}
 		@include at-media('tablet') {
 			@include u-width('mobile');
