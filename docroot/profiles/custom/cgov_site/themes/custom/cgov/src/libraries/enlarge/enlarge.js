@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import 'jquery-ui';
-import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
+import NCIAnalytics from 'Core/libraries/analytics/atomic-analytics-functions/all-themes';
 
 // Function to create an "Enlarge" button to click in order to
 // display a table or image using the entire window area
@@ -217,7 +217,7 @@ function enlargeTable(fig, settings) {
                 wrap.height(1); //Give 20px of padding between popup and references/content
             }
 
-            // This removes the dialog and puts the contents back 
+            // This removes the dialog and puts the contents back
             // where it got it from
             $(this).dialog('destroy');
             fig.data('scrollWrapper').addClass('has-scroll');
@@ -295,8 +295,8 @@ $.fn.overflowEnlarge = function( options ) {
 
         // Create the wrapper element
         var scrollWrapper = $('<div />', {
-            'class': 'scrollable', // Adding 'has-scroll' here adds a 
-                            // shadow border at page load even 
+            'class': 'scrollable', // Adding 'has-scroll' here adds a
+                            // shadow border at page load even
                     // without scrollbar
             'html': '<div />' // The inner div is needed for styling
         }).insertBefore(element);
@@ -310,17 +310,17 @@ $.fn.overflowEnlarge = function( options ) {
         // Store a reference to the wrapper element
         fig.data('scrollWrapper', scrollWrapper);
 
-        //There are two body widths on desktop, 1024-1339 & 1440+.  Some 
-    //tables will not fit in the body area for 1024-1339, but will for 
-    //1440+. Since we do a lot of table width changing to make sure 
+        //There are two body widths on desktop, 1024-1339 & 1440+.  Some
+    //tables will not fit in the body area for 1024-1339, but will for
+    //1440+. Since we do a lot of table width changing to make sure
     //text flows correctly when enlarged, we need to store the original
     //width so that if we are XL then we can remove the enlarges and such
         fig.data('tblOrigWidth', fig.data('theTable').width());
 
         // Check if the element is wider than its parent and thus needs to be scrollable
-    // Note: This does only work for the first section because the 
+    // Note: This does only work for the first section because the
     // width for hidden elements is always 0
-    // We're running another trigger in showSection to redraw the 
+    // We're running another trigger in showSection to redraw the
     // Enlarge button
         if (fig.data('theTable').outerWidth() > fig.data('theTable').parent().outerWidth()) {
 

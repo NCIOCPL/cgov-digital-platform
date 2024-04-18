@@ -14,6 +14,8 @@ import initializeCustomEventHandler from "Core/libraries/customEventHandler";
 initializeCustomEventHandler();
 
 import "Libraries/analytics/analytics";
+import "Libraries/analytics/legacy-analytics";
+
 import "./Common.scss";
 
 import $ from "jquery";

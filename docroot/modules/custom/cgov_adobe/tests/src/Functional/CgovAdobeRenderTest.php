@@ -156,6 +156,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->submitForm(
       [
         'enabled' => 1,
+        'load_async' => 0,
         'launch_property_build_url' => '//example.org/launch.js',
         'exclude_paths' => "/node/2\n" . strtolower($nodedetails[2]['alias']),
       ],
@@ -169,6 +170,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->doTestPathFilters($nodedetails);
     $this->doTestEnables($nodedetails);
     $this->doTestNoPaths($nodedetails);
+    $this->doTestLoadAsync($nodedetails);
   }
 
   /**
@@ -177,6 +179,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
   private function doTestConfig($nodedetails) {
     $initialConfig = $this->config('cgov_adobe.settings');
     $this->assertEquals($initialConfig->get('enabled'), TRUE, 'Enabled saved correctly in initial config');
+    $this->assertEquals($initialConfig->get('load_async'), FALSE, 'Load asynchronous saved correctly in initial config');
     $this->assertEquals($initialConfig->get('launch_property_build_url'), '//example.org/launch.js', 'Property URL saved correctly in initial config');
     $this->assertEquals(
       $initialConfig->get('exclude_paths'),
@@ -199,6 +202,10 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $script_file_el = $assert->elementExists('css', 'script#cgov-adobe-url');
     $actual_script_src = $script_file_el->getAttribute('src');
     $this->assertEquals('//example.org/launch.js', $actual_script_src);
+    // Only doing the first check here to make sure the script is not loaded
+    // asynchronously.
+    $actual_script_async = $script_file_el->getAttribute('async');
+    $this->assertNull($actual_script_async, 'Script tag is not asynchronous.');
     $assert->elementExists('css', 'script#cgov-adobe-bottom');
 
     // Tags are loaded on an allowed path.
@@ -245,6 +252,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->submitForm(
       [
         'enabled' => 0,
+        'load_async' => 0,
         'launch_property_build_url' => '//example.org/launch.js',
         'exclude_paths' => "/node/2\n" . strtolower($nodedetails[2]['alias']),
       ],
@@ -269,6 +277,7 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $this->submitForm(
       [
         'enabled' => 1,
+        'load_async' => 0,
         'launch_property_build_url' => '//example.org/launch.js',
         'exclude_paths' => "",
       ],
@@ -281,6 +290,35 @@ class CgovAdobeRenderTest extends BrowserTestBase {
     $actual_script_src = $script_file_el->getAttribute('src');
     $this->assertEquals('//example.org/launch.js', $actual_script_src);
     $assert->elementExists('css', 'script#cgov-adobe-bottom');
+  }
+
+  /**
+   * Tests the load_async setting.
+   */
+  private function doTestLoadAsync($nodedetails) {
+    $assert = $this->assertSession();
+    $this->drupalLogin($this->administratorAccount);
+
+    // Setup Adobe Config.
+    $this->drupalGet(Url::fromRoute('cgov_adobe.settings_form'));
+    $this->submitForm(
+      [
+        'enabled' => 1,
+        'load_async' => 1,
+        'launch_property_build_url' => '//example.org/launch.js',
+        'exclude_paths' => "",
+      ],
+      'Save configuration'
+    );
+
+    // Exclude the route based on the path alias.
+    $this->drupalGet('/node/3');
+    $script_file_el = $assert->elementExists('css', 'script#cgov-adobe-url');
+    $actual_script_src = $script_file_el->getAttribute('src');
+    $this->assertEquals('//example.org/launch.js', $actual_script_src);
+    $actual_script_async = $script_file_el->getAttribute('async');
+    $this->assertEquals('async', $actual_script_async, 'Script tag is asynchronous.');
+    $assert->elementNotExists('css', 'script#cgov-adobe-bottom');
   }
 
 }
