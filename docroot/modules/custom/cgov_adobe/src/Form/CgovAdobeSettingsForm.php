@@ -49,6 +49,13 @@ class CgovAdobeSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('enabled'),
     ];
 
+    $form['general']['load_async'] = [
+      '#type'          => 'checkbox',
+      '#title'         => $this->t('Load Adobe Launch Environment Asynchronously'),
+      '#description'   => $this->t('Will load the Adobe Launch Javascript asynchronously.'),
+      '#default_value' => $config->get('load_async'),
+    ];
+
     $form['general']['launch_property_build_url'] = [
       '#type'          => 'textfield',
       '#title'         => $this->t('Build URL'),
@@ -96,6 +103,7 @@ class CgovAdobeSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('cgov_adobe.settings')
       ->set('enabled', $form_state->getValue('enabled'))
+      ->set('load_async', $form_state->getValue('load_async'))
       ->set('launch_property_build_url', $form_state->getValue('launch_property_build_url'))
       ->set('exclude_paths', $form_state->getValue('exclude_paths'))
       ->save();

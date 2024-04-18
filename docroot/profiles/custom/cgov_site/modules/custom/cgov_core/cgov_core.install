@@ -466,3 +466,11 @@ function cgov_core_update_10002() {
   $siteHelper->setDefaultSiteBranding();
 }
 
+/**
+ * Set adobe launch to mark script as async.
+ */
+function cgov_core_update_10003() {
+  \Drupal::configFactory()->getEditable('cgov_adobe.settings')
+    ->set('load_async', TRUE)
+    ->save(TRUE);
+}

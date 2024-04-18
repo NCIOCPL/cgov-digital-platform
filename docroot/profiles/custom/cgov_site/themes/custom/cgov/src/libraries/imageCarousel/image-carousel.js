@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import './jquery.ui.imagecarousel'
 import AdobeAnalytics from 'Core/patches/adobeAnalyticsPatch';
-import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
+import NCIAnalytics from 'Core/libraries/analytics/atomic-analytics-functions/all-themes';
 
 function _initialize() {
   // We want a guard clause to limit the weight of this library as it

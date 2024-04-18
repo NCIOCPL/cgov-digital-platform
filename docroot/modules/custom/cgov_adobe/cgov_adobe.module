@@ -70,9 +70,12 @@ function cgov_adobe_page_attachments(&$attachments) {
  * Implements hook_page_bottom().
  */
 function cgov_adobe_page_bottom(array &$page_bottom) {
-  // If we would add a script tag to the head, then add to
-  // the bottom as well.
-  if (_cgov_adobe_embed_code_tag_array()) {
+
+  $config = \Drupal::config('cgov_adobe.settings');
+
+  // If we would add a script tag to the head, without the async attribute
+  // then we need to add the page bottom script per Launch directions.
+  if ($config->get('load_async') !== true && _cgov_adobe_embed_code_tag_array()) {
     $page_bottom['cgov_adobe'] = [
       '#type'       => 'html_tag',
       '#tag'        => 'script',
@@ -154,6 +157,10 @@ function _cgov_adobe_embed_code_tag_array() {
       'src'   => $script,
     ],
   ];
+
+  if ($config->get('load_async') === true) {
+    $tag['#attributes']['async'] = 'async';
+  }
 
   $attachment = [
     $tag,
