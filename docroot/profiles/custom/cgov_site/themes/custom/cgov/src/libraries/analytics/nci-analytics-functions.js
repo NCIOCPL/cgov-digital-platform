@@ -286,421 +286,6 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    SiteWideSearchResultsSearch: function (sender, keyWordTextBoxID, searchRadioButtonsID) {
-        var keyword = document.getElementById(keyWordTextBoxID).value;
-        var e = document.getElementsByName(searchRadioButtonsID);
-
-        for (var i = 0; i < e.length; i++) {
-            if (e[i].checked) {
-                if (e[i].value == 2) {
-                    var searchType = 'sitewide_bottom_withinresults';
-                    break;
-                }
-                else {
-                    var searchType = 'sitewide_bottom_new';
-                    break;
-                }
-            }
-        }
-
-        // if (s.prop8.toLowerCase() == 'spanish')
-        //     searchType += '_spanish';
-
-        // the Omniture s_code file generates 'class does not support Automation' errors on the
-        // dataSrc, dataFld, and dataFormatAs properties the 'SEARCH' Image button = therefore reference to
-        // the control is being set to null instead of sender
-        var clickParams = new NCIAnalytics.ClickParams(this,
-            'nciglobal', 'o', 'SiteWideSearchResultsSearch');
-        clickParams.Props = {
-            11: searchType,
-            14: keyword
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1',
-            14: keyword
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    SiteWideSearchResults: function (sender, isBestBet, resultIndex) {
-        var searchModule = (isBestBet) ? 'best_bets' : 'generic';
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'SiteWideSearchResults');
-        clickParams.Props = {
-            12: searchModule,
-            13: resultIndex
-        };
-        clickParams.Evars = {
-            12: searchModule
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    TermsDictionarySearch: function (sender, isSpanish) {
-        var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-
-        NCIAnalytics.TermsDictionarySearchCore(sender,
-            document.getElementById('AutoComplete1').value,
-            prop24Contents,
-            'TermsDictionarySearch',
-            isSpanish);
-    },
-
-    //******************************************************************************************************
-    GeneticsDictionarySearch: function (sender, searchString, isStartsWith) {
-        var prop24Contents = (isStartsWith) ? 'starts with' : 'contains';
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            '', 'o', 'GeneticsDictionarySearch');
-        clickParams.Props = {
-            11: 'dictionary_genetics',
-            22: searchString,
-            24: prop24Contents
-        };
-        clickParams.Evars = {
-            11: 'dictionary_genetics',
-            13: '+1',
-            26: prop24Contents
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //Created this function to be consistent with the Term Dictionary search.
-    //Since, we are not sure if the doc sites are using this function; Dion recommend I leave
-    //the original function GeneticsDictionarySearch alone.
-    //******************************************************************************************************
-    GeneticsDictionarySearchNew: function (sender) {
-        var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            '', 'o', 'GeneticsDictionarySearch');
-        clickParams.Props = {
-            11: 'dictionary_genetics',
-            22: document.getElementById('AutoComplete1').value,
-            24: prop24Contents
-        };
-        clickParams.Evars = {
-            11: 'dictionary_genetics',
-            13: '+1',
-            26: prop24Contents
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-
-    },
-
-    //******************************************************************************************************
-    GeneticsDictionarySearchAlphaList: function (sender, value) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            '', 'o', 'GeneticsDictionarySearchAlphaList');
-        clickParams.Props = {
-            11: 'dictionary_genetics',
-            22: value,
-            24: 'starts with'
-        };
-        clickParams.Evars = {
-            11: 'dictionary_genetics',
-            13: '+1',
-            26: 'starts with'
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    GeneticsDictionaryResults: function (sender, resultIndex) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            '', 'o', 'GeneticsDictionaryResults');
-        clickParams.Props = {
-            13: resultIndex
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    TermsDictionarySearchAlphaList: function (sender, value) {
-
-        NCIAnalytics.TermsDictionarySearchCore(sender,
-            value,
-            'starts with',
-            'TermsDictionarySearchAlphaList',
-            false);
-    },
-
-    //******************************************************************************************************
-    TermsDictionarySearchAlphaListSpanish: function (sender, value) {
-
-        NCIAnalytics.TermsDictionarySearchCore(sender,
-            value,
-            'starts with',
-            'TermsDictionarySearchAlphaList',
-            true);
-    },
-
-    //******************************************************************************************************
-    TermsDictionarySearchCore: function (sender, value, prop24Contents, linkName, isSpanish) {
-
-        if (isSpanish) {
-            var searchType = 'diccionario';
-        }
-        else {
-            var searchType = 'dictionary_terms';
-        }
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', linkName);
-        clickParams.Props = {
-            11: searchType,
-            22: value,
-            24: prop24Contents
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1',
-            26: prop24Contents
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    TermsDictionaryResults: function (sender, resultIndex) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'TermsDictionaryResults');
-        clickParams.Props = {
-            13: resultIndex
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    DrugDictionarySearch: function (sender) {
-        var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-
-        NCIAnalytics.DrugDictionarySearchCore(sender,
-            document.getElementById('AutoComplete1').value,
-            prop24Contents,
-            'DrugDictionarySearch');
-    },
-
-    //******************************************************************************************************
-    DrugDictionarySearchAlphaList: function (sender, value) {
-
-        NCIAnalytics.DrugDictionarySearchCore(sender,
-            value,
-            'starts with',
-            'DrugDictionarySearchAlphaList');
-    },
-
-    //******************************************************************************************************
-    DrugDictionarySearchCore: function (sender, value, prop24Contents, linkName) {
-        var searchType = 'dictionary_drugs';
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal,ncidrugdictionary', 'o', linkName);
-        clickParams.Props = {
-            11: searchType,
-            22: value,
-            24: prop24Contents
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1',
-            26: prop24Contents
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    DrugDictionaryResults: function (sender, resultIndex) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal,ncidrugdictionary', 'o', 'DrugDictionaryResults');
-        clickParams.Props = {
-            13: resultIndex
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    FeaturedClinicalTrialSearch: function (sender) {
-        var searchType = 'clinicaltrials_featured';
-        var keyword = document.getElementById('keyword').value;
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'FeaturedClinicalTrialSearch');
-        clickParams.Props = {
-            11: searchType,
-            22: keyword
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1'
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    NewsSearch: function (sender, searchType) {
-        var keyword = document.getElementById('keyword').value;
-        var startDate = document.getElementById('startMonth').options[document.getElementById('startMonth').selectedIndex].text.replace(/^\s+|\s+$/g, '') + ' '
-            + document.getElementById('startYear').value;
-        var endDate = document.getElementById('endMonth').options[document.getElementById('endMonth').selectedIndex].text + ' '
-            + document.getElementById('endYear').value;
-
-        NCIAnalytics.KeywordDateRangeSearch(sender, searchType, keyword, startDate, endDate);
-    },
-
-    //******************************************************************************************************
-    GeneticServicesDirectorySearch: function (sender) {
-        var searchType = 'genetics';
-        var typeOfCancer = '';
-        var familyCancerSyndrome = '';
-        var city = document.getElementById(ids.txtCity).value;
-        var state = '';
-        var country = '';
-        var lastName = document.getElementById(ids.txtLastName).value;
-        var searchCriteria = '';
-        var specialty = '';
-        var selected = '';
-        var list;
-
-        //get Type(s) of Cancer
-        typeOfCancer = NCIAnalytics.SelectedOptionList(ids.selCancerType,
-            NCIAnalytics.stringDelimiter);
-
-        // get Family Cancer Syndrome
-        familyCancerSyndrome = NCIAnalytics.SelectedOptionList(ids.selCancerFamily,
-            NCIAnalytics.stringDelimiter);
-
-        //get State(s)
-        state = NCIAnalytics.SelectedOptionList(ids.selState,
-            NCIAnalytics.stringDelimiter);
-
-        //get Country(ies)
-        country = NCIAnalytics.SelectedOptionList(ids.selCountry,
-            NCIAnalytics.stringDelimiter);
-
-        searchCriteria =
-            [typeOfCancer, familyCancerSyndrome, city, state, country, lastName]
-                .join(NCIAnalytics.fieldDelimiter);
-        specialty = [typeOfCancer, familyCancerSyndrome].join(NCIAnalytics.fieldDelimiter);
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'GeneticServicesDirectorySearch');
-        clickParams.Props = {
-            11: searchType,
-            22: searchCriteria,
-            23: specialty
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1',
-            25: specialty
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    KeywordDateRangeSearch: function (sender, searchType, keyword, startDate, endDate) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'KeywordDateRangeSearch');
-        clickParams.Props = {
-            11: searchType,
-            22: keyword
-        };
-        clickParams.Evars = {
-            11: searchType,
-            23: startDate,
-            24: endDate,
-            13: '+1'
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    KeywordSearch: function (sender, searchType) {
-        var keyword = document.getElementById('keyword').value;
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'KeywordSearch');
-        clickParams.Props = {
-            11: searchType,
-            22: keyword
-        };
-        clickParams.Evars = {
-            11: searchType,
-            13: '+1'
-        };
-        clickParams.Events = [2];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    SearchResults: function (sender, resultIndex) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'SearchResults');
-        clickParams.Props = {
-            13: resultIndex
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    PDFLink: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'd', 'PDFLink');
-        clickParams.Evars = {
-            30: '+1'
-        };
-        clickParams.Events = [6];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-
-    DownloadKindleClick: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'd', 'DownloadKindleClick');
-        clickParams.Evars = {
-            30: '+1'
-        };
-        clickParams.Events = [22];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-
-    DownloadOtherEReaderClick: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'd', 'DownloadOtherEReaderClick');
-        clickParams.Evars = {
-            30: '+1'
-        };
-        clickParams.Events = [23];
-        clickParams.LogToOmniture();
-    },
-
-
-    //******************************************************************************************************
     eMailLink: function (sender) {
 
         var clickParams = new NCIAnalytics.ClickParams(sender,
@@ -712,15 +297,6 @@ var NCIAnalytics = {
         };
 
         clickParams.Events = [17];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    HelpLink: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'HelpLink');
-        clickParams.Events = [5];
         clickParams.LogToOmniture();
     },
 
@@ -738,28 +314,7 @@ var NCIAnalytics = {
         clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
-    //******************************************************************************************************
-    SendToPrinterLink: function (sender) {
 
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'SendToPrinterLink');
-        clickParams.Events = [14];
-        clickParams.LogToOmniture();
-    },
-    //******************************************************************************************************
-    HeaderLink: function (sender, headerName) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'HeaderLink-' + headerName);
-        clickParams.Props = {
-            36: headerName
-        };
-        clickParams.Evars = {
-            36: headerName
-        };
-        clickParams.Events = [16];
-        clickParams.LogToOmniture();
-    },
     //******************************************************************************************************
     FooterLink: function (sender, footerName) {
 
@@ -807,40 +362,6 @@ var NCIAnalytics = {
         clickParams.Events = [16,20];
         clickParams.LogToOmniture();
     },
-    //******************************************************************************************************
-    RightNavLink: function (sender, label) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'RightNavLink-');
-
-        clickParams.Props = {
-            27: sender.innerHTML, // Right Navigation Section Clicked c27
-            66: ((NCIAnalytics.siteSection) ? NCIAnalytics.siteSection + '_' : '') + sender.innerHTML.toLowerCase()
-        };
-        clickParams.Evars = {
-            49: sender.innerHTML // Right Navigation Section Clicked v49 | visit | recent
-        };
-
-        clickParams.Events = [8];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    GenericLinkTrack: function (sender, label, linkName='GenericLinkTrack') {
-        let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', linkName);
-        clickParams.Props = {
-            4: sender.href,
-            5: pageName,
-            28: label
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    /** @deprecated */
-    LinkTracking: function (toLink, fromLink, label) {
-        NCIAnalytics.GenericLinkTrack(fromLink, label, 'LinkTracking');
-    },
 
     //******************************************************************************************************
     CustomLink: function (sender, linkData) {
@@ -850,7 +371,14 @@ var NCIAnalytics = {
         let data = linkData.split('|');
         let linkName = data[0] || 'CustomLink';
         let label = data[1] || '';
-        NCIAnalytics.GenericLinkTrack(sender, label, linkName);
+
+        let clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', linkName);
+        clickParams.Props = {
+            4: sender.href,
+            5: pageName,
+            28: label
+        };
+        clickParams.LogToOmniture();
     },
 
     /* ********************************************************************** */
@@ -918,29 +446,6 @@ var NCIAnalytics = {
       clickParams.Events = events;
       clickParams.EventsWithIncrementors = eventsWithIncrementors;
       clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    BookmarkShareClick: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'BookmarkShareClick');
-
-        var linkText = (sender.title) ? sender.title : sender[0].title;
-
-        clickParams.Props = {
-            43: sender.title,
-            66: ((NCIAnalytics.siteSection) ? NCIAnalytics.siteSection + '_' : '') + 'social-share_' + linkText.toLowerCase()
-        };
-
-        clickParams.Events = [17];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    CustomTweetClick: function (sender, eventCode) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', eventCode);
-        clickParams.LogToOmniture();
     },
 
     //******************************************************************************************************
@@ -1084,31 +589,6 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    UtilityBarClick: function (sender, linkText) {
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'UtilityBarDictionaryClick');
-
-        var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
-        if (typeof pageNameOverride !== 'undefined') {
-            localPageName = pageNameOverride;
-        }
-
-        clickParams.Props = {
-            36: linkText,
-            53: linkText,
-            56: pageName
-        };
-
-        clickParams.Evars = {
-            36: linkText,
-            53: linkText
-        };
-
-        clickParams.Events = [16];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
     IndexedItemClick: function (sender, title, text, container, index, linkName) {
         var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', linkName);
         clickParams.Props = {
@@ -1140,137 +620,9 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    CustomIndexedItemClick: function (sender, title, text, linkName, index) {
-        NCIAnalytics.IndexedItemClick(sender, title, text, linkName, index, linkName);
-    },
-
-    //******************************************************************************************************
     DynamicListItemClick: function (sender, title, index) {
         let linkName = 'SearchResults';
         NCIAnalytics.IndexedItemClick(sender, title, linkName, title, index, linkName);
-    },
-
-    //******************************************************************************************************
-    TimelyContentZoneTab: function (sender, tabTitle) {
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'TimelyContentZoneTab');
-        clickParams.Props = {
-            37: tabTitle
-        };
-        clickParams.Evars = {
-            37: tabTitle
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    TimelyContentZoneLink: function (e, panelTitle) {
-        var targ;
-        if (!e) {
-            var e = window.event;
-        }
-        if (e.target) {
-            targ = e.target;
-        }
-        else if (e.srcElement) {
-            targ = e.srcElement;
-        }
-        if (targ.nodeType == 3) { // defeat Safari bug
-            targ = targ.parentNode;
-        }
-
-        if (targ.nodeName == 'IMG') {
-            targ = targ.parentNode;
-        }
-
-        if (targ.nodeName == 'EM') {
-            targ = targ.parentNode;
-        }
-
-        if (targ.nodeName == 'A') {
-            var linkText = "";
-            var isTag = false;
-
-            var clickParams = new NCIAnalytics.ClickParams(this,
-                'nciglobal', 'o', 'TimelyContentZoneLink');
-
-            for (i = 0; i < targ.innerHTML.length; i++) {
-                if (targ.innerHTML.charAt(i) == "<") {
-                    isTag = true;
-                }
-
-                if (!isTag) {
-                    linkText = linkText + targ.innerHTML.charAt(i);
-                }
-
-                if (targ.innerHTML.charAt(i) == ">") {
-                    isTag = false;
-                }
-            }
-
-            var prefixCheck = targ.innerHTML.toLowerCase();
-            if (prefixCheck.search("video_icon.jpg") > -1) {
-                linkText = "Video: " + linkText;
-            }
-            else if (prefixCheck.search("audio_icon.jpg") > -1) {
-                linkText = "Audio: " + linkText;
-            }
-
-            clickParams.Props = {
-                38: linkText,
-                39: targ.href,
-                40: panelTitle
-            };
-            clickParams.Evars = {
-                38: linkText,
-                39: targ.href,
-                40: panelTitle
-            };
-            clickParams.LogToOmniture();
-        }
-    },
-
-    //******************************************************************************************************
-    QuestionsAboutCancerFooter: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'QuestionsAboutCancerFooter');
-        clickParams.Events = [5];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    QuestionsAboutCancerHeader: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'QuestionsAboutCancerHeader');
-        clickParams.Events = [18];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    FindCancerTypeBox: function (sender) {
-
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'FindCancerTypeBox');
-        clickParams.Events = [19];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    TileCarousel: function (sender, tileTitle, tileURL) {
-        var clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal', 'o', 'TileCarousel');
-        clickParams.Props = {
-            41: tileTitle,
-            42: tileURL
-        };
-        clickParams.Evars = {
-            41: tileTitle,
-            42: tileURL
-        };
-        clickParams.Events = [20];
-        clickParams.LogToOmniture();
     },
 
     //******************************************************************************************************
@@ -1373,25 +725,6 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    BackToTopReveal: function (sender, reveal) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'BackToTopReveal');
-
-        clickParams.Events = [20];
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    BackToTopClick: function (sender, isUtilityBarVisible) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'BackToTopClick');
-
-        clickParams.Events = [21];
-        clickParams.Props = {
-            50: isUtilityBarVisible ? "UtilityBarShowing" : "UtilityBarHidden"
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
     SectionMenuButtonClick: function (sender, heading) {
         var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'SectionMenuButtonClick');
 
@@ -1446,20 +779,6 @@ var NCIAnalytics = {
     },
 
     //******************************************************************************************************
-    fontResizer: function (sender, fontSize, onload) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'fontResizer');
-
-        if(!onload) {
-            clickParams.Events = [36];
-        }
-        clickParams.Props = {
-            42: fontSize,
-            66: ((NCIAnalytics.siteSection) ? NCIAnalytics.siteSection + '_' : '') + 'font-resize_' + ((fontSize) ? fontSize.toLowerCase() : '')
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
     CalloutBoxLinkTrack: function (sender, label, linkName) {
         let callOut = 'CallOut';
         let link = linkName + callOut;
@@ -1470,61 +789,6 @@ var NCIAnalytics = {
             66: value
         };
         clickParams.LogToOmniture();
-    },
-
-    /******************************************************************************************************
-    * General accordion click tracking
-    * sender - the element responsible for this event.
-    * accordionId - identifier for the whole accordion
-    * sectionId - identifier for the clicked accordion section
-    * name - readable accordion section name
-    * action - expand or collapse
-    */
-    AccordionClick: function (sender, accordionId, sectionId, name, action) {
-        var clickParams = new NCIAnalytics.ClickParams(this, 'nciglobal', 'o', 'LinkTracking');
-
-        var accordionInfo = accordionId;
-        if(sectionId) {
-            accordionInfo += ('|' + sectionId);
-        }
-        if(name) {
-            accordionInfo += ('|' + name);
-        }
-        if(action) {
-            accordionInfo += ('|' + action);
-        }
-        clickParams.Props = {
-            41: accordionInfo
-        };
-        clickParams.LogToOmniture();
-    },
-
-    // Home Page Delighter Click
-    // sender - the element responsible for this event.
-    // type - the delighter type.
-    // value - pageName
-    HomePageDelighterClick: function (sender, type, value) {
-        if( type === 'hp_find'){
-            var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'HomePageFindDelighter');
-            clickParams.Props = {
-                5 : 'hp_find ct delighter|' + value,
-                66 : 'delighter_findclinicaltrials'
-            };
-            clickParams.LogToOmniture();
-        }
-    },
-
-    // Record that an item in the delighter rail was clicked.
-    // sender - the element responsible for this event.
-    // type - the delighter type.
-    RecordDelighterRailClick: function (sender, type) {
-        if( type === 'livehelp'){
-            var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'DelighterLiveChat');
-            clickParams.Props = {
-                5 : 'rrail_chat with us|' + pageName
-            };
-            clickParams.LogToOmniture();
-        }
     },
 
     // Record that the proactive chat prompt was displayed.
@@ -1560,58 +824,6 @@ var NCIAnalytics = {
         clickParams.LogToOmniture();
     },
 
-    /******************************************************************************************************
-    * Track clicks on CTS feedback form
-    * sender - the element responsible for this event.
-    */
-    FeedbackFormClick: function (sender, value) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'FeedbackForm');
-        clickParams.Props = {
-            5 : value + '|' + pageName
-        };
-        clickParams.LogToOmniture();
-    },
-
-    /******************************************************************************************************
-    * Track link clicks on CTS pages
-    * sender - the element responsible for this event.
-    * type - info about which component is being tracked
-    * value - pagename
-    */
-    SimpleCTSLink: function (sender, type, value) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'CTSLink');
-        clickParams.Props = {
-            5: type + '|' + value
-        };
-        clickParams.LogToOmniture();
-    },
-
-    //******************************************************************************************************
-    SPLF_Lang: function () {
-        //alert('Lang');
-    },
-    //******************************************************************************************************
-    VideoSplashImageClick: function (sender, video, pageName) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'OnThisPageClick');
-
-        clickParams.Props = {
-            66: "VideoStart_" + video,
-            67: pageName
-        };
-        clickParams.Events = [51];
-        clickParams.LogToOmniture();
-    },
-    //******************************************************************************************************
-    BRPiconClick: function (sender, file, pageName) {
-        var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'OnThisPageClick');
-
-        clickParams.Props = {
-            66: "FileDownload_" + file,
-            67: pageName
-        };
-        clickParams.Events = [52];
-        clickParams.LogToOmniture();
-    },
     /* ********************************************************************** */
     BlogArchiveLinkClick: function (sender, pageName) {
         var clickParams = new NCIAnalytics.ClickParams(sender, 'nciglobal', 'o', 'BlogArchiveDateClick');
@@ -1792,28 +1004,7 @@ var NCIAnalytics = {
         };
         clickParams.LogToOmniture();
     },
-  /* ********************************************************************** */
-    SpecialReportFileClick: function (sender, pageName) {
-      var clickParams = new NCIAnalytics.ClickParams(sender,
-        'nciglobal', 'o', ' v');
-      clickParams.Events = [52];
-      clickParams.Props = {
-        66:  "filedownload_icon",
-        67: pageName
-      };
-      clickParams.LogToOmniture();
-    },
-  /* ********************************************************************** */
-  SpecialReportButtonClick: function (sender, pageName) {
-    var clickParams = new NCIAnalytics.ClickParams(sender,
-      'nciglobal', 'o', ' v');
-    clickParams.Events = [52];
-    clickParams.Props = {
-      66:  "filedownload_button",
-      67: pageName
-    };
-    clickParams.LogToOmniture();
-  },
+
 };
 
 /* End the giant NCIAnalytics object functions */
