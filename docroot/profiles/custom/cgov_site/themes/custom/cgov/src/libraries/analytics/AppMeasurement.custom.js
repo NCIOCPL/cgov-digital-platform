@@ -1,6 +1,5 @@
 import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
 import { attachEvents } from 'Core/libraries/analytics/nci-analytics-functions';
-import { initializeDumbDataLayer } from './dumb-datalayer';
 
 var AppMeasurementCustom = {
 
@@ -686,14 +685,6 @@ var AppMeasurementCustom = {
         (b="http://"+b);l.ssl&&(b=l.replace(b,"http:","https:"));c.RAND=Math.floor(1E13*Math.random());for(a=0;0<=a;)a=b.indexOf("[",a),0<=a&&(e=b.indexOf("]",a),e>a&&(g=b.substring(a+1,e),2<g.length&&"s."==g.substring(0,2)?(f=l[g.substring(2)])||(f=""):(f=""+c[g],f!=c[g]&&parseFloat(f)!=c[g]&&(g=0)),g&&(b=b.substring(0,a)+encodeURIComponent(f)+b.substring(e+1)),a=e));return b}}
 
    },
-   /**
-    * Initializes the dumb data layer. This is meant to be called from
-    * DTM's Adobe Analytics Tool Custom Code. (As DTM has an instance
-    * of s_gi)
-    *
-    * @param {Object} s - The Adobe Analytics s object.
-    */
-   initializeDumbDataLayer: (s) => initializeDumbDataLayer(s, AppMeasurementCustom)
 };
 
 // Export our AppMeasurementCustom object.
