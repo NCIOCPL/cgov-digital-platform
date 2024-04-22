@@ -50,7 +50,7 @@ class CgovHomeLandingPageTwigExtension extends AbstractExtension {
    */
   public function getHomeLandingStyle() {
     $entity = $this->requestStack->getCurrentRequest()->get('node');
-    if ($entity && $entity->bundle() === 'cgov_home_landing') {
+    if ($entity && ($entity->bundle() === 'cgov_home_landing' || $entity->bundle() === 'cgov_mini_landing')) {
       $page_style = $entity->get('field_page_style')->getValue();
       return $page_style[0]['value'] ?? '';
     }

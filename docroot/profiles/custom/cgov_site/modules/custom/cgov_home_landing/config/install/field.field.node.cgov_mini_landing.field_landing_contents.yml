@@ -10,6 +10,15 @@ dependencies:
     - paragraphs.paragraphs_type.cgov_dynamic_list
     - paragraphs.paragraphs_type.cgov_list
     - paragraphs.paragraphs_type.cgov_two_item_feature_row
+    - paragraphs.paragraphs_type.ncids_2_guide_card_row
+    - paragraphs.paragraphs_type.ncids_3_feature_card_row
+    - paragraphs.paragraphs_type.ncids_3_guide_card_row
+    - paragraphs.paragraphs_type.ncids_call_to_action_strip
+    - paragraphs.paragraphs_type.ncids_dynamic_list
+    - paragraphs.paragraphs_type.ncids_hero
+    - paragraphs.paragraphs_type.ncids_inline_video
+    - paragraphs.paragraphs_type.ncids_promo_block_external
+    - paragraphs.paragraphs_type.ncids_promo_block_internal
   module:
     - entity_reference_revisions
 id: node.cgov_mini_landing.field_landing_contents
@@ -26,12 +35,21 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      cgov_content_block: cgov_content_block
       cgov_two_item_feature_row: cgov_two_item_feature_row
       cgov_list: cgov_list
-      cgov_content_block: cgov_content_block
       cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
+      ncids_2_guide_card_row: ncids_2_guide_card_row
+      ncids_3_feature_card_row: ncids_3_feature_card_row
+      ncids_3_guide_card_row: ncids_3_guide_card_row
+      ncids_call_to_action_strip: ncids_call_to_action_strip
+      ncids_dynamic_list: ncids_dynamic_list
+      ncids_hero: ncids_hero
+      ncids_inline_video: ncids_inline_video
+      ncids_promo_block_external: ncids_promo_block_external
+      ncids_promo_block_internal: ncids_promo_block_internal
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -49,6 +67,9 @@ settings:
       cgov_card_raw_html:
         weight: 5
         enabled: true
+      cgov_citation:
+        weight: 53
+        enabled: false
       cgov_column_one:
         weight: -17
         enabled: false
@@ -58,22 +79,118 @@ settings:
       cgov_content_block:
         weight: 1
         enabled: true
+      cgov_cthp_block_card:
+        weight: 57
+        enabled: false
+      cgov_cthp_feature_card_external:
+        weight: 58
+        enabled: false
+      cgov_cthp_feature_card_internal:
+        weight: 59
+        enabled: false
+      cgov_cthp_guide_card:
+        weight: 60
+        enabled: false
+      cgov_cthp_overview_card:
+        weight: 61
+        enabled: false
+      cgov_cthp_raw_html_card:
+        weight: 62
+        enabled: false
+      cgov_cthp_research_card:
+        weight: 63
+        enabled: false
+      cgov_cthp_video_card:
+        weight: 64
+        enabled: false
       cgov_dynamic_list:
         weight: 6
         enabled: true
+      cgov_external_link:
+        weight: 66
+        enabled: false
       cgov_guide_row:
         weight: -20
+        enabled: false
+      cgov_hero_banner:
+        weight: 68
+        enabled: false
+      cgov_internal_link:
+        weight: 69
         enabled: false
       cgov_list:
         weight: 3
         enabled: true
+      cgov_media_link:
+        weight: 71
+        enabled: false
+      cgov_multimedia_row:
+        weight: 72
+        enabled: false
       cgov_primary_feature_row:
         weight: -21
         enabled: false
       cgov_secondary_feature_row:
         weight: -19
         enabled: false
+      cgov_title_first_feature_card_ro:
+        weight: 75
+        enabled: false
       cgov_two_item_feature_row:
         weight: 2
         enabled: true
+      ncids_2_guide_card_row:
+        weight: 77
+        enabled: true
+      ncids_3_feature_card_row:
+        weight: 78
+        enabled: true
+      ncids_3_guide_card_row:
+        weight: 79
+        enabled: true
+      ncids_call_to_action_strip:
+        weight: 80
+        enabled: true
+      ncids_dynamic_list:
+        weight: 81
+        enabled: true
+      ncids_feature_card_external:
+        weight: 82
+        enabled: false
+      ncids_feature_card_internal:
+        weight: 83
+        enabled: false
+      ncids_feature_card_multimedia:
+        weight: 84
+        enabled: false
+      ncids_guide_card:
+        weight: 85
+        enabled: false
+      ncids_guide_card_img_desc:
+        weight: 86
+        enabled: false
+      ncids_hero:
+        weight: 87
+        enabled: true
+      ncids_inline_video:
+        weight: 88
+        enabled: true
+      ncids_link_button_external:
+        weight: 89
+        enabled: false
+      ncids_link_button_internal:
+        weight: 90
+        enabled: false
+      ncids_promo_block_external:
+        weight: 91
+        enabled: true
+      ncids_promo_block_internal:
+        weight: 92
+        enabled: true
+      ncids_two_column_container:
+        weight: 93
+        enabled: false
+      pdq_summary_section:
+        weight: 94
+        enabled: false
 field_type: entity_reference_revisions

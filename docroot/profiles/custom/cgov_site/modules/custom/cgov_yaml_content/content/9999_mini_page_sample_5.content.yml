@@ -1,0 +1,55 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Mini Landing 5"
+  title__ES:
+      value: "NCIDS Mini Landing 5 - es"
+  field_page_description:
+    value: "NCIDS Mini Landing 5"
+  field_page_description__ES:
+    value: "NCIDS Mini Landing 5 - es"
+  field_browser_title:
+    value: "NCIDS Mini Landing 5"
+  field_browser_title__ES:
+    value: "NCIDS Mini Landing 5 - es"
+  field_pretty_url:
+    value: "mini-sample-page-5"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+            langcode: 'en'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+            langcode: 'es'
+  field_page_style:
+    value: "ncids_mini_landing"
+  ### English Contents
+  field_landing_contents:
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: ncids_collection_media
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
+
+  field_landing_contents__ES:
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: press_releases
+          display_id: ncids_collection_media
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"5";s:6:"offset";N;s:5:"title";i:0;}
