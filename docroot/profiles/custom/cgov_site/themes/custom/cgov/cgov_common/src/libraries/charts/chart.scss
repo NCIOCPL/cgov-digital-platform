@@ -25,3 +25,33 @@
     font-weight: normal !important
   }
 }
+
+@media only screen and (max-width: 415px) {
+  #NCI-Chart__kawards-pie {
+    .highcharts-root {
+      .highcharts-data-labels,
+      .highcharts-series-group {
+        transform: matrix(1, 0, 0, 1, 10, 85);
+      }
+
+      .highcharts-series {
+        transform: none;
+      }
+
+      .highcharts-legend {
+        transform: translate(5px, 420px);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  #NCI-Chart__kawards-pie {
+    .highcharts-root {
+      .highcharts-data-labels,
+      .highcharts-series-group {
+        transform: matrix(1, 0, 0, 1, 10, 125);
+      }
+    }
+  }
+}

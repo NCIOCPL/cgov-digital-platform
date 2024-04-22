@@ -339,6 +339,11 @@ Chart.prototype = function () {
                     textTransform: 'uppercase'
                   }
               }
+          },
+          navigation: {
+            buttonOptions: {
+              x: 5
+            }
           }
       };
 
