@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: video_display_medium
+label: 'Video Display: Medium'
+effects:
+  da53495c-0973-40b8-ba98-b42f0504099d:
+    uuid: da53495c-0973-40b8-ba98-b42f0504099d
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  3e5e72de-7a41-4246-a1dc-342b562058d9:
+    uuid: 3e5e72de-7a41-4246-a1dc-342b562058d9
+    id: image_scale
+    weight: 2
+    data:
+      width: 1982
+      height: null
+      upscale: false

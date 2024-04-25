@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: video_display_cthp_card
+label: 'Video Display: CTHP Card'
+effects:
+  25b3fda5-4663-47de-bbfd-30efce310800:
+    uuid: 25b3fda5-4663-47de-bbfd-30efce310800
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  2367b48f-e134-40eb-b9e6-048275d0c06f:
+    uuid: 2367b48f-e134-40eb-b9e6-048275d0c06f
+    id: image_scale
+    weight: 2
+    data:
+      width: 1221
+      height: null
+      upscale: false

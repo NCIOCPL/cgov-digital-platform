@@ -10,13 +10,11 @@ const stopErrorState = (): void => {
 	const comboBoxEl = document.querySelector('.usa-combo-box') as HTMLElement;
 	const selectEl = document.getElementsByName('find-cancer-type');
 	const errorSpan = formGroup?.querySelector('.usa-error-message');
-	const submitButton = document
-		.getElementById('cancer-type-form')
-		?.querySelector('.usa-button');
+	const formEl = document.getElementById('cancer-type-form');
 	formGroup?.classList.remove('usa-form-group--error');
 	comboBoxEl.classList.remove('usa-combo-box--nci-error');
 	selectEl[0].classList.remove('usa-select--nci-error');
-	submitButton?.classList.remove('margin-bottom-1');
+	formEl?.classList.remove('cgdp-find-a-cancer-type__form--error');
 	errorSpan?.remove();
 };
 
@@ -47,10 +45,8 @@ const updateError = (): void => {
 		}
 		const labelElement = formGroup?.querySelector('.usa-label');
 		labelElement?.parentNode?.insertBefore(errorMessageSpan, comboBoxEl);
-		const submitButton = document
-			.getElementById('cancer-type-form')
-			?.querySelector('.usa-button');
-		submitButton?.classList.add('margin-bottom-1');
+		const formEl = document.getElementById('cancer-type-form');
+		formEl?.classList.add('cgdp-find-a-cancer-type__form--error');
 	}
 };
 
