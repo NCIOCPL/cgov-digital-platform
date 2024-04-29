@@ -12,6 +12,9 @@ require_once 'cgov_settings_utilities.inc';
 $env = CGovSettingsUtil::getEnvironmentName();
 $domain = CGovSettingsUtil::getDomain();
 
+// Set the domain for use when purging the cache.
+$settings['cgdp.cache_url_host'] = 'https://' . $domain;
+
 // Verify we're on an Acquia-hosted environment.
 if (CGovSettingsUtil::isAcquia()) {
 
