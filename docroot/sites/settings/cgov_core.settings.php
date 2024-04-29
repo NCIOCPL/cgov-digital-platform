@@ -37,10 +37,16 @@ if ($is_acsf_env && $acsf_db_name) {
       $domain = $site_name;
     }
   }
+  $settings['cgdp.cache_url_host'] = 'https://' . $domain;
   $config['simple_sitemap.settings']['base_url'] = 'https://' . $domain;
 } else {
   // NOTE: you can override this in your local.settings.php.
   $config['simple_sitemap.settings']['base_url'] = 'https://www.cancer.gov';
+  // Setting this cgdp host as a current host.
+  // This will work for non ACSF environments.
+  // Using $_SERVER variable because drupal services aren't
+  // available in settings.php.
+  $settings['cgdp.cache_url_host'] = 'https://' . $_SERVER['HTTP_HOST'];
 }
 
 // Get our current environment
