@@ -27,7 +27,7 @@ function cgov_caching_cdn_install() {
   // Set config.
   $config_factory = \Drupal::service('config.factory');
   $config_installer = new CgovPurgeConfigInstaller($config_factory);
-  $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag']);
+  $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag', 'akamai']);
 }
 
 /**
@@ -41,4 +41,14 @@ function cgov_caching_cdn_update_8001() {
   $config_factory = \Drupal::service('config.factory');
   $config_installer = new CgovPurgeConfigInstaller($config_factory);
   $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag']);
+}
+
+/**
+ * Updates purge config to include Akamai purger for URLs.
+ */
+function cgov_caching_cdn_update_10001() {
+  // Set config.
+  $config_factory = \Drupal::service('config.factory');
+  $config_installer = new CgovPurgeConfigInstaller($config_factory);
+  $config_installer->installPurgeConfiguration(['acquia_purge', 'akamai_tag', 'akamai']);
 }

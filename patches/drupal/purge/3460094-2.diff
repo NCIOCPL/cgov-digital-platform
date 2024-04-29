@@ -1,0 +1,57 @@
+diff --git a/src/Drush/Commands/QueueCommands.php b/src/Drush/Commands/QueueCommands.php
+index 38e64bc..604bb6b 100644
+--- a/src/Drush/Commands/QueueCommands.php
++++ b/src/Drush/Commands/QueueCommands.php
+@@ -123,6 +123,12 @@ class QueueCommands extends DrushCommands implements SiteAliasManagerAwareInterf
+    * @hook init p:queue-add
+    */
+   public function queueAddParseExpressions(InputInterface $input, AnnotationData $annotationData) {
++    // This hook is run twice for some reason, so skip if we have already run.
++    $hasinitHookRunAlready = static::initHookStaticVariable();
++    if ($hasinitHookRunAlready) {
++      // Already run.
++      return;
++    }
+     $raw = trim(implode(" ", $input->getArguments()['expressions']));
+     $expressions = [];
+     if ($raw) {
+@@ -147,6 +153,15 @@ class QueueCommands extends DrushCommands implements SiteAliasManagerAwareInterf
+     $input->setArgument('expressions', $expressions);
+   }
+
++  /**
++   * Reset static varaible so command can be called again in same request.
++   *
++   * @hook post-init p:queue-add
++   */
++  public function queueAddParseExpressionsPostRun(InputInterface $input, AnnotationData $annotationData) {
++    static::initHookStaticVariable(TRUE);
++  }
++
+   /**
+    * Add one or more items to the queue for later processing.
+    *
+@@ -635,4 +650,23 @@ class QueueCommands extends DrushCommands implements SiteAliasManagerAwareInterf
+     return $result;
+   }
+
++  /**
++   * Provide a init hook static variable tracker. Default return is FALSE.
++   *
++   * @param bool $reset
++   *   Reset the staic varibale back to TRUE. Return is unaffected.
++   *
++   * @return bool
++   *   The previous static, regardless if reset.
++   */
++  protected static function initHookStaticVariable($reset = FALSE) {
++    static $hasInitHookRun = FALSE;
++    $old_state = $hasInitHookRun;
++    $hasInitHookRun = TRUE;
++    if ($reset) {
++      $hasInitHookRun = FALSE;
++    }
++    return $old_state;
++  }
++
+ }
