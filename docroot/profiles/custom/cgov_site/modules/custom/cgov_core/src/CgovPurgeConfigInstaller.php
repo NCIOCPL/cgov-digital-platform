@@ -28,6 +28,7 @@ class CgovPurgeConfigInstaller {
   private const PURGERS = [
     'acquia_purge' => '8813de186f',
     'akamai_tag' => 'bf950143a3',
+    'akamai' => '08153881ce',
   ];
 
   /**
