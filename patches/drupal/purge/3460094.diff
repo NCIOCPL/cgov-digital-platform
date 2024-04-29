@@ -1,0 +1,63 @@
+diff --git a/composer.json b/composer.json
+index 08b04a8..3d2a947 100644
+--- a/composer.json
++++ b/composer.json
+@@ -12,11 +12,6 @@
+     "extra": {
+         "branch-alias": {
+             "dev-8.x-3.x": "3.x-dev"
+-        },
+-        "drush": {
+-            "services": {
+-                "drush.services.yml": ">=10"
+-            }
+         }
+     }
+ }
+diff --git a/drush.services.yml b/drush.services.yml
+deleted file mode 100644
+index f026873..0000000
+--- a/drush.services.yml
++++ /dev/null
+@@ -1,41 +0,0 @@
+-services:
+-  purge_drush.debug_commands:
+-    class: Drupal\purge\Drush\Commands\DebugCommands
+-    arguments: ['@purge.logger']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.diagnostics_command:
+-    class: Drupal\purge\Drush\Commands\DiagnosticsCommand
+-    arguments: ['@purge.diagnostics']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.invalidate_command:
+-    class: Drupal\purge\Drush\Commands\InvalidateCommand
+-    arguments: ['@purge.invalidation.factory', '@purge.processors', '@purge.purgers']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.processor_commands:
+-    class: Drupal\purge\Drush\Commands\ProcessorCommands
+-    arguments: ['@purge.processors']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.purger_commands:
+-    class: Drupal\purge\Drush\Commands\PurgerCommands
+-    arguments: ['@purge.purgers']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.queue_commands:
+-    class: Drupal\purge\Drush\Commands\QueueCommands
+-    arguments: ['@purge.processors', '@purge.purgers', '@purge.invalidation.factory', '@purge.queue', '@purge.queue.stats', '@purge.queuers']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.queuer_commands:
+-    class: Drupal\purge\Drush\Commands\QueuerCommands
+-    arguments: ['@purge.queuers']
+-    tags:
+-      - { name: drush.command }
+-  purge_drush.types_command:
+-    class: Drupal\purge\Drush\Commands\TypesCommand
+-    arguments: ['@purge.invalidation.factory', '@purge.purgers']
+-    tags:
+-      - { name: drush.command }
