@@ -180,6 +180,33 @@ Chart.prototype = function () {
                   color: '#62559f'
               }
           },
+          exporting: {
+            chartOptions: {
+              chart: {
+                backgroundColor: '#FFF',
+                spacingLeft: 60,
+                spacingRight: 60
+              },
+              title: {
+                style: {
+                  fontSize: '1em'
+                }
+              },
+              subtitle: {
+                style: {
+                  fontSize: '0.75em'
+                }
+              },
+              colorAxis:{
+                min:10000000,
+                type:"logarithmic",
+                minColor:"#BDDDE6",
+                maxColor:"#004250"
+              },
+            },
+            sourceHeight: 450,
+            sourceWidth: 995
+          },
           plotOptions: {
               pie: {
                   dataLabels: {
@@ -426,7 +453,6 @@ Chart.prototype = function () {
                   }
               }
           },
-
           legend: {
               layout: 'vertical',
               align: 'right',
