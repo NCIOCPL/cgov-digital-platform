@@ -5,6 +5,24 @@
     value: "Anemia and Cancer Treatment - Spanish"
   langcode: en
   status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'anemia-cancer'
+  field_pretty_url__ES:
+    value: 'anemia-cancer-es'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
   moderation_state:
     value: 'published'
   field_article_body:
@@ -132,6 +150,24 @@
       value: "Cgov Article - Spanish"
   langcode: en
   status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_pretty_url:
+    value: 'cgov-article'
+  field_pretty_url__ES:
+    value: 'cgov-article-es'
   moderation_state:
     value: 'published'
   field_article_body:
