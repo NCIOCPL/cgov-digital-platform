@@ -11,6 +11,7 @@ use Drupal\views\ViewExecutable;
 use Drupal\Core\Cache\Cache;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Implements hook_form_alter().
@@ -284,5 +285,44 @@ function cgov_blog_module_implements_alter(&$implementations, $hook) {
     $group = $implementations['cgov_blog'];
     unset($implementations['cgov_blog']);
     $implementations['cgov_blog'] = $group;
+  }
+}
+
+
+/**
+ * Implements hook_node_access().
+ *
+ * Prevent Deletion of Blog series if tagged in blog post.
+ */
+function cgov_blog_node_access($entity, $operation, $account) {
+  if ($entity->bundle() === 'cgov_blog_series' && $operation === 'delete') {
+    // Check if blog series tagged in blog post based on langcode.
+    $query = \Drupal::entityQuery('node')
+      ->condition('field_blog_series', $entity->nid->value)
+      ->condition('type', 'cgov_blog_post')
+      ->condition('langcode', $entity->langcode->value)
+      ->accessCheck(FALSE);
+    $result = $query->execute();
+    if (!empty($result) && count($result) > 0) {
+      return AccessResult::forbidden();
+    }
+  }
+  // If the operation is not delete, return neutral to let other modules decide.
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function cgov_blog_node_delete($entity) {
+  // Verify that the node type is blog post.
+  if ($entity->bundle() === "cgov_blog_post") {
+    // Get the blog series nid and invalidate cache tag.
+    $current_entity_lang = $entity->langcode->value;
+    $translated_entity = $entity->getTranslation($current_entity_lang);
+    $blog_series_target_id = $translated_entity->field_blog_series->target_id;
+    if (!empty($blog_series_target_id)) {
+      Cache::invalidateTags(['node:' . $blog_series_target_id]);
+    }
   }
 }
