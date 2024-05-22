@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_summary_box.field_content_heading
+    - field.field.paragraph.ncids_summary_box.field_html_content
+    - paragraphs.paragraphs_type.ncids_summary_box
+  module:
+    - text
+id: paragraph.ncids_summary_box.default
+targetEntityType: paragraph
+bundle: ncids_summary_box
+mode: default
+content:
+  field_content_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_html_content:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

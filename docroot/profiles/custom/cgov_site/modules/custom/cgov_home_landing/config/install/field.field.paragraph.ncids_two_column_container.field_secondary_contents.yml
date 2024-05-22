@@ -4,6 +4,8 @@ dependencies:
   config:
     - field.storage.paragraph.field_secondary_contents
     - paragraphs.paragraphs_type.cgov_card_raw_html
+    - paragraphs.paragraphs_type.ncids_content_block
+    - paragraphs.paragraphs_type.ncids_summary_box
     - paragraphs.paragraphs_type.ncids_two_column_container
   module:
     - entity_reference_revisions
@@ -21,7 +23,9 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      ncids_summary_box: ncids_summary_box
       cgov_card_raw_html: cgov_card_raw_html
+      ncids_content_block: ncids_content_block
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -123,6 +127,12 @@ settings:
       ncids_call_to_action_strip:
         weight: 80
         enabled: false
+      ncids_content_block:
+        weight: 83
+        enabled: true
+      ncids_dynamic_list:
+        weight: 83
+        enabled: false
       ncids_feature_card_external:
         weight: 81
         enabled: false
@@ -156,6 +166,9 @@ settings:
       ncids_promo_block_internal:
         weight: 91
         enabled: false
+      ncids_summary_box:
+        weight: 49
+        enabled: true
       ncids_two_column_container:
         weight: 47
         enabled: false
