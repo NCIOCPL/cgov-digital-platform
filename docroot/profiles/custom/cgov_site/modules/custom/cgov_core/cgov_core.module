@@ -339,6 +339,15 @@ function cgov_core_page_attachments_alter(array &$attachments) {
   ];
   $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
   $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
+
+  // Hack to remove the "ad" inserted by the responsive_favicons module.
+  $headings = &$attachments['#attached']['html_head'];
+  foreach($headings as &$element) {
+    if($element[1] === 'responsive_favicons'){
+      $element[0]['#attributes']['name'] = 'x-no-op';
+      $element[0]['#attributes']['content'] = 'none';
+    }
+  }
 }
 
 /**
