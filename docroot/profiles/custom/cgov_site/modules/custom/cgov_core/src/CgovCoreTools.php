@@ -6,6 +6,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\language\LanguageNegotiatorInterface;
 
 /**
@@ -133,10 +134,10 @@ class CgovCoreTools {
    *   The entity type manager.
    */
   public function __construct(
-      ConfigFactoryInterface $config_factory,
-      LanguageNegotiatorInterface $negotiator,
-      EntityTypeManagerInterface $entity_type_manager
-    ) {
+    ConfigFactoryInterface $config_factory,
+    LanguageNegotiatorInterface $negotiator,
+    EntityTypeManagerInterface $entity_type_manager,
+  ) {
 
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;
@@ -647,6 +648,29 @@ class CgovCoreTools {
    */
   public function getProdUrl() {
     return 'https://www.cancer.gov';
+  }
+
+  /**
+   * Custom edit page submit handler for our media types.
+   *
+   * This overrides the behavior of core's content_moderation module and forces
+   * the form submission to redirect to the media listing page instead of the
+   * individual item's latest revision form.
+   *
+   * @param array $form
+   *   An associative array containthe structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   */
+  public static function mediaFormSubmitter(array &$form, FormStateInterface $form_state) {
+    if ($redirect = $form_state->getRedirect()) {
+      if ($redirect->getRouteName() === 'entity.media.latest_version') {
+        /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+        $entity = $form_state->getFormObject()->getEntity();
+        $entity_type_id = $entity->getEntityTypeId();
+        $form_state->setRedirect("entity.$entity_type_id.collection", [$entity_type_id => $entity->id()]);
+      }
+    }
   }
 
 }

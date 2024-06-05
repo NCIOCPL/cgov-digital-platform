@@ -53,7 +53,7 @@ class ZipCodeLookupResource extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    ZipCodeLookupServiceInterface $zipcode_lookup
+    ZipCodeLookupServiceInterface $zipcode_lookup,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
     $this->lookupService = $zipcode_lookup;

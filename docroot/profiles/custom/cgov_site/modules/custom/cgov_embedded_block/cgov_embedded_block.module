@@ -10,56 +10,40 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Element;
 
-/**
- * Implements hook_form_alter().
- *
- * This handles all block_content forms, which each have a unique
- * ID based on the bundle name. Some logic borrowed from entity_redirect.
- */
-function cgov_embedded_block_form_alter(
-  &$form,
-  FormStateInterface $form_state,
-  $form_id
-) {
-  // Make sure we are a block content form.
-  $isMatch = preg_match('/^block_content_/', $form_id, $match);
-  if (!$isMatch) {
-    return;
-  }
-
-  // The following should pass if we are a block_content form.
-  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
-  $form_object = $form_state->getFormObject();
-  if (!is_a($form_object, '\Drupal\block_content\BlockContentForm')) {
-    return;
-  }
-
-  $entity = $form_object->getEntity();
-
-  // You can always create a new block config by adding it to block layout,
-  // so for our system, we will never create the block after the fact.
-  if ($entity->isNew()) {
-    $form['actions']['submit']['#submit'][] = '_cgov_embedded_block_handle_new';
-  }
-
-}
-
-/**
- * Submit function to handle the redirection per entity create/edit action.
- */
-function _cgov_embedded_block_handle_new($form, FormStateInterface $form_state) {
-  $form_object = $form_state->getFormObject();
-  $entity = $form_object->getEntity();
-  // We should not add the block, instead go to listing page.
-  $form_state->setRedirectUrl($entity->toUrl('collection'));
-}
-
 /*--------------------------------------------------
  * Add theming hints to block_content entities.
  *
  * Borrowed from
  * https://github.com/swentel/block_content_template.
  *---------------------------------------------------*/
+
+ /**
+ * Implements hook_form_alter().
+ *
+ * Remove the "Save and Configure" button from all varieties of block content.
+ *
+ * There's a separate condition in block_content/src/BlockContentForm.php where a
+ * `theme` query parameter changes the label on the `submit` action to be "Save and Configure",
+ * but we don't know what triggers that and are will leave that action unaltered.
+ */
+function cgov_embedded_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Test that this is a block content form.
+  if (!str_starts_with($form_id, 'block_content_')) {
+    return;
+  }
+
+  // Make doubly sure this is a block_content form.
+  /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+  $form_object = $form_state->getFormObject();
+  if (!is_a($form_object, '\Drupal\block_content\BlockContentForm')) {
+    return;
+  }
+
+  if (isset($form['actions']) && isset($form['actions']['configure_block'])) {
+    unset($form['actions']['configure_block']);
+  }
+}
 
 /**
  * Implements hook_theme().

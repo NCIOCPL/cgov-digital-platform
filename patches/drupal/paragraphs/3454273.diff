@@ -1,0 +1,22 @@
+diff --git a/paragraphs.module b/paragraphs.module
+index 92d98f543edeb239e7d929a659eb562dbc23a1fc..885955ce6f911eac8bb1a08a8c1d68d61bc1496e 100644
+--- a/paragraphs.module
++++ b/paragraphs.module
+@@ -427,13 +427,13 @@ function paragraphs_preprocess_field_multiple_value_form(&$variables) {
+     if (isset($variables['table']['#tabledrag'])) {
+       // Remove the tabledrag.
+       unset($variables['table']['#tabledrag']);
+-      unset($variables['table']['#header'][1]);
++      unset($variables['table']['#header'][2]);
+       foreach ($variables['table']['#rows'] as $key => $value) {
+         $variables['table']['#rows'][$key]['data'][0]['class'][] = 'paragraph-bullet';
+         // Restore the removed weight and give access FALSE.
+-        if (isset($value['data'][2])) {
+-          $variables['table']['#rows'][$key]['data'][1]['data']['_weight'] = $value['data'][2]['data'];
+-          unset($variables['table']['#rows'][$key]['data'][2]);
++        if (isset($value['data'][3])) {
++          $variables['table']['#rows'][$key]['data'][1]['data']['_weight'] = $value['data'][3]['data'];
++          unset($variables['table']['#rows'][$key]['data'][3]);
+           $variables['table']['#rows'][$key]['data'][1]['data']['_weight']['#access'] = FALSE;
+         }
+       }

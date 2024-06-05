@@ -61,7 +61,7 @@ class AppPathStorage implements AppPathStorageInterface {
     $app_module_id,
     $app_module_data = [],
     $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED,
-    $pid = NULL
+    $pid = NULL,
   ) {
     if ($owner_source[0] !== '/') {
       throw new \InvalidArgumentException(sprintf('Owner source path %s has to start with a slash.', $owner_source));

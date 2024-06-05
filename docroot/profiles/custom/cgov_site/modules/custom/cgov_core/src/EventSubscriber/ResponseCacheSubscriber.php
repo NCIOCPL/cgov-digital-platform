@@ -28,7 +28,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface {
    *   The config factory.
    */
   public function __construct(
-    ConfigFactory $config_factory
+    ConfigFactory $config_factory,
   ) {
     $this->configFactory = $config_factory;
   }

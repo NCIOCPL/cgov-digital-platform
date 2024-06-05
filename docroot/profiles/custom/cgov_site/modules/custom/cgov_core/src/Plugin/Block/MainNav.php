@@ -57,7 +57,7 @@ class MainNav extends BlockBase implements ContainerFactoryPluginInterface, Trus
     $plugin_id,
     $plugin_definition,
     CgovNavigationManager $navigationManager,
-    LanguageManagerInterface $language_manager
+    LanguageManagerInterface $language_manager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;

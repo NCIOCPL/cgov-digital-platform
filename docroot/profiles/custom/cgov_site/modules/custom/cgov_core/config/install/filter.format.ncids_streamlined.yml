@@ -22,19 +22,24 @@ filters:
     status: true
     weight: -49
     settings: {  }
-  filter_html_image_secure:
-    id: filter_html_image_secure
+  filter_align:
+    id: filter_align
     provider: filter
     status: false
-    weight: -40
+    weight: -44
     settings: {  }
-  filter_url:
-    id: filter_url
+  filter_autop:
+    id: filter_autop
     provider: filter
     status: false
-    weight: -41
-    settings:
-      filter_url_length: 72
+    weight: -43
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: false
+    weight: -42
+    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
@@ -44,29 +49,17 @@ filters:
       allowed_html: '<em> <strong> <ul type> <ol type start> <li> <h1 id> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <a class href hreflang data-entity-substitution data-entity-type data-entity-uuid data-glossary-id title> <s> <sup> <sub> <h1>'
       filter_html_help: true
       filter_html_nofollow: false
-  filter_autop:
-    id: filter_autop
+  filter_html_escape:
+    id: filter_html_escape
     provider: filter
     status: false
-    weight: -43
+    weight: -46
     settings: {  }
-  filter_align:
-    id: filter_align
+  filter_html_image_secure:
+    id: filter_html_image_secure
     provider: filter
     status: false
-    weight: -44
-    settings: {  }
-  filter_image_lazy_load:
-    id: filter_image_lazy_load
-    provider: filter
-    status: true
-    weight: -38
-    settings: {  }
-  filter_caption:
-    id: filter_caption
-    provider: filter
-    status: false
-    weight: -42
+    weight: -40
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
@@ -74,12 +67,19 @@ filters:
     status: false
     weight: -39
     settings: {  }
-  filter_html_escape:
-    id: filter_html_escape
+  filter_image_lazy_load:
+    id: filter_image_lazy_load
+    provider: filter
+    status: true
+    weight: -38
+    settings: {  }
+  filter_url:
+    id: filter_url
     provider: filter
     status: false
-    weight: -46
-    settings: {  }
+    weight: -41
+    settings:
+      filter_url_length: 72
   linkit:
     id: linkit
     provider: linkit
@@ -93,4 +93,4 @@ filters:
     status: true
     weight: -48
     settings:
-      replace_empty: '0'
+      replace_empty: false

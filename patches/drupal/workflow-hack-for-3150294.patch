@@ -1,8 +1,8 @@
 diff --git a/core/modules/content_moderation/content_moderation.module b/core/modules/content_moderation/content_moderation.module
-index 394a07f820..35c90d462a 100644
+index 5366264907..568b9088c9 100644
 --- a/core/modules/content_moderation/content_moderation.module
 +++ b/core/modules/content_moderation/content_moderation.module
-@@ -443,3 +443,23 @@ function content_moderation_views_post_execute(ViewExecutable $view) {
+@@ -382,3 +382,23 @@ function content_moderation_views_post_execute(ViewExecutable $view) {
      }
    }
  }
@@ -27,28 +27,29 @@ index 394a07f820..35c90d462a 100644
 +  }
 +}
 diff --git a/core/modules/content_moderation/src/ModerationInformation.php b/core/modules/content_moderation/src/ModerationInformation.php
-index e85a066f9d..d44d33a91a 100644
+index 78d0dc6014..91d8323d2b 100644
 --- a/core/modules/content_moderation/src/ModerationInformation.php
 +++ b/core/modules/content_moderation/src/ModerationInformation.php
-@@ -241,7 +241,7 @@ public function getUnsupportedFeatures(EntityTypeInterface $entity_type) {
+@@ -214,7 +214,7 @@ public function getUnsupportedFeatures(EntityTypeInterface $entity_type) {
    public function getOriginalState(ContentEntityInterface $entity) {
      $state = NULL;
      $workflow_type = $this->getWorkflowForEntity($entity)->getTypePlugin();
 -    if (!$entity->isNew() && !$this->isFirstTimeModeration($entity)) {
 +    if (!$entity->isNew() && !$entity->isNewTranslation() && !$this->isFirstTimeModeration($entity)) {
+       /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
+       $storage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
        /** @var \Drupal\Core\Entity\ContentEntityInterface $original_entity */
-       $original_entity = $this->entityTypeManager->getStorage($entity->getEntityTypeId())->loadRevision($entity->getLoadedRevisionId());
-       if (!$entity->isDefaultTranslation() && $original_entity->hasTranslation($entity->language()->getId())) {
 diff --git a/core/modules/content_moderation/src/Plugin/Field/FieldWidget/ModerationStateWidget.php b/core/modules/content_moderation/src/Plugin/Field/FieldWidget/ModerationStateWidget.php
-index 2f259b25cc..3e98e9279b 100644
+index e641dbb8d5..d2b5bb8438 100644
 --- a/core/modules/content_moderation/src/Plugin/Field/FieldWidget/ModerationStateWidget.php
 +++ b/core/modules/content_moderation/src/Plugin/Field/FieldWidget/ModerationStateWidget.php
-@@ -125,7 +125,7 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+@@ -124,7 +124,7 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
      // If the entity already exists, grab the most recent revision and load it.
      // The moderation state of the saved revision will be used to display the
      // current state as well determine the appropriate transitions.
 -    if (!$entity->isNew()) {
 +    if (!$entity->isNew() && !$entity->isNewTranslation()) {
+       /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
+       $storage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
        /** @var \Drupal\Core\Entity\ContentEntityInterface $original_entity */
-       $original_entity = $this->entityTypeManager->getStorage($entity->getEntityTypeId())->loadRevision($entity->getLoadedRevisionId());
-       if (!$entity->isDefaultTranslation() && $original_entity->hasTranslation($entity->language()->getId())) {
+

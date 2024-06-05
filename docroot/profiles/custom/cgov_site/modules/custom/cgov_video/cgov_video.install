@@ -42,7 +42,25 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
       'access cgov_video_browser entity browser pages',
       'access cgov_embedded_video_browser entity browser pages',
     ],
+    'content_author' => [
+      'revert any cgov_video media revisions',
+      'view any cgov_video media revisions',
+    ],
   ];
 
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Set permissions for editing media file revisions.
+ */
+function cgov_video_update_10001() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'content_author' => [
+      'revert any cgov_video media revisions',
+      'view any cgov_video media revisions',
+    ],
+  ];
   $siteHelper->addRolePermissions($perms);
 }

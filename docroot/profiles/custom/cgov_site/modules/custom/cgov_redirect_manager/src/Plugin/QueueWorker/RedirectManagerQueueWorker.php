@@ -65,7 +65,7 @@ class RedirectManagerQueueWorker extends QueueWorkerBase implements ContainerFac
     $plugin_id,
     array $plugin_definition,
     LoggerInterface $loggerFactory,
-    CgovImporterService $importer_service
+    CgovImporterService $importer_service,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->loggerFactory = $loggerFactory;
@@ -79,7 +79,7 @@ class RedirectManagerQueueWorker extends QueueWorkerBase implements ContainerFac
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,

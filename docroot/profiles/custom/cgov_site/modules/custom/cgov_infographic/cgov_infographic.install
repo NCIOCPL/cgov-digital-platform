@@ -38,7 +38,25 @@ function _cgov_infographic_install_permissions(CgovCoreTools $siteHelper) {
     'admin_ui' => [
       'access cgov_embedded_infographic_browser entity browser pages',
     ],
+    'content_author' => [
+      'revert any cgov_infographic media revisions',
+      'view any cgov_infographic media revisions',
+    ],
   ];
 
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Set permissions for editing media file revisions.
+ */
+function cgov_infographic_update_10001() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'content_author' => [
+      'revert any cgov_infographic media revisions',
+      'view any cgov_infographic media revisions',
+    ],
+  ];
   $siteHelper->addRolePermissions($perms);
 }
