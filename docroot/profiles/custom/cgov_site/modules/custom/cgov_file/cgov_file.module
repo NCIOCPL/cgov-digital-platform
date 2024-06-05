@@ -5,18 +5,36 @@
  * Contains the cgov_file functions.
  */
 
+use Drupal\cgov_core\CgovCoreTools;
 use Drupal\file\FileInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_module_implements_alter()
+ *
+ * We need our form_alter to run after content_moderation's.
+ */
+function cgov_file_module_implements_alter(array &$implementations, string $hook) {
+  if ($hook === 'form_alter') {
+    $group = $implementations['cgov_file'];
+    unset($implementations['cgov_file']);
+    $implementations['cgov_file'] = $group;
+  }
+}
 
 /**
  * Implements hook_form_alter().
  */
-function cgov_file_form_alter(&$form, &$form_state, $form_id) {
+function cgov_file_form_alter(&$form, FormStateInterface &$form_state, string $form_id) {
   if ($form_id != 'media_cgov_file_add_form' && $form_id != 'media_cgov_file_edit_form') {
     return;
   }
 
-  $form['field_media_file']['widget'][0]['#upload_validators']['file_validate_extensions'] = [NULL];
+  $form['field_media_file']['widget'][0]['#upload_validators']['FileExtension'] = "";
   $form['field_media_file']['widget'][0]['#upload_validators']['_cgov_file_validate'] = [];
+
+  // Add our media submitter for images and contextual images.
+  $form['actions']['submit']['#submit'][] = [CgovCoreTools::class, 'mediaFormSubmitter'];
 }
 
 /**
@@ -37,3 +55,4 @@ function _cgov_file_validate(FileInterface $file) {
   // TODO: Reject any files we do not like.
   return [];
 }
+

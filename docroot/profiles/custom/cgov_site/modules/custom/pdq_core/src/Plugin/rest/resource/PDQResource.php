@@ -89,7 +89,8 @@ class PDQResource extends ResourceBase {
     AccountProxyInterface $current_user,
     EntityTypeManagerInterface $entity_type_manager,
     RevisionPruner $pruner,
-    Connection $database) {
+    Connection $database,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;

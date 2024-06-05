@@ -215,7 +215,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
           $app_module_id,
           $app_module_data,
           $langcode,
-          $pid
+          $pid,
         ) {
           return [
             'pid' => $pid ?? 3,
@@ -315,7 +315,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
           $app_module_id,
           $app_module_data,
           $langcode,
-          $pid
+          $pid,
         ) {
           return [
             'pid' => $pid ?? 99,
@@ -354,7 +354,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     $alias,
     $language,
     $app_module_id,
-    $app_module_data
+    $app_module_data,
   ) {
     $urlMock = $this->getMockBuilder('Drupal\Core\Url')
       ->disableOriginalConstructor()
@@ -483,7 +483,7 @@ class AppPathManagerUpdatePathDataTest extends AppPathManagerTestBase {
     $has_app_id = FALSE,
     $expected_field_calls = 0,
     $is_default_revision = FALSE,
-    $expected_revision_calls = 0
+    $expected_revision_calls = 0,
   ) {
     // Mock the type to be used later.
     $entity = $this->getMockBuilder($type)

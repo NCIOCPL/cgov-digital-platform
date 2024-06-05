@@ -108,7 +108,7 @@ class CgovImporterService {
     MessengerInterface $messenger,
     FileSystemInterface $file_system,
     ExtensionPathResolver $extension_path_resolver,
-    LoggerInterface $logger
+    LoggerInterface $logger,
   ) {
     $this->requestStack = $request_stack;
     $this->entityTypeManager = $entity_type_manager;
@@ -148,8 +148,8 @@ class CgovImporterService {
     $has_header = FALSE,
     $overwrite = TRUE,
     $status_code = '301',
-    $language = 'en'
-    ) {
+    $language = 'en',
+  ) {
 
     // Holder of error messages.
     $messages = [];
@@ -296,7 +296,7 @@ class CgovImporterService {
     $delimiter,
     $has_header,
     $status_code,
-    $language
+    $language,
   ) {
     $messages = [];
     $filepath = $this->fileSystem->realpath($file->getFileUri());

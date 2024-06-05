@@ -4,6 +4,7 @@ namespace Drupal\Tests\cgov_core\Kernel;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\user\Entity\Role;
 
 /**
  * Tests the my custom service.
@@ -42,7 +43,7 @@ class RolesTest extends KernelTestBase {
    * Tests the Roles are defined.
    */
   public function testRoles() {
-    $roles = user_roles();
+    $roles = Role::loadMultiple();
     $this->assertArrayHasKey('anonymous', $roles, 'Anonymous role exists.');
     $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
     // No test for 'adminstrator' (defined in cgov_site install profile)

@@ -168,6 +168,11 @@ function gardens_site_data_get_site_from_server_info() {
   // upper cased paths may still not be recognized (by Drush commands, unless
   // there is a symlink matching the specific case) though.
   $host = strtolower($host);
+
+  if (empty($path)) {
+    $path = '';
+  }
+
   // The path may have a trailing slash (because PHP_URL_PATH can contain one,
   // and because a script may have set SCRIPT_NAME to '//index.php'). Unify, so
   // the result is either empty or a path with a leading slash.
