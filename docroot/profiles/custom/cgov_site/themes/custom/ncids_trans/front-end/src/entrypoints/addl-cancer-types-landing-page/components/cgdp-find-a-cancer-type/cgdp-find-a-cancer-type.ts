@@ -1,6 +1,7 @@
 import { getLandingRowsAndColsInfo } from '../../../../lib/core/analytics/landing-page-contents-helper';
 import { trackOther } from '../../../../lib/core/analytics/eddl-util';
 import { USAComboBox } from '@nciocpl/ncids-js/usa-combo-box';
+import debounce from 'lodash.debounce';
 
 /**
  * Switches the HTML back to non-error state
@@ -99,6 +100,7 @@ const initialize = (): void => {
 		noResultsCounter: 0,
 		clearCounter: 0,
 		errorCounter: 0,
+		previousInputValue: '',
 	};
 
 	const comboBoxEl = document.querySelector('.usa-combo-box') as HTMLElement;
@@ -176,36 +178,52 @@ const initialize = (): void => {
 		}
 	});
 
+	const debouncedNoResultsHandler = debounce(
+		(evt: CustomEvent, target: HTMLElement) => {
+			const detail = evt.detail;
+			state.noResultsCounter = state.noResultsCounter + 1;
+			const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
+				getLandingRowsAndColsInfo(target);
+			state.previousInputValue = detail.inputValue;
+			trackOther(
+				`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
+				`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
+				{
+					location: 'Body',
+					componentType: 'Raw HTML',
+					pageRows,
+					pageRowIndex,
+					pageRowCols,
+					pageRowColIndex,
+					containerItems: 1,
+					containerItemIndex: 1,
+					componentTheme: 'Not Defined',
+					componentVariant: 'Cancer Type Search',
+					title: 'Cancer Types Search',
+					linkArea: 'Dropdown',
+					formAction: 'No Results Found',
+					selectedItemCounter: state.selectedItemsCounter,
+					noResultCounter: state.noResultsCounter,
+					clearCounter: state.clearCounter,
+					errorCounter: state.errorCounter,
+					noResultsValue: detail.inputValue,
+				}
+			);
+		},
+		500
+	);
+
 	comboBoxEl.addEventListener('usa-combo-box:listbox:no-results', (evt) => {
 		const detail = (evt as CustomEvent).detail;
-		state.noResultsCounter = state.noResultsCounter + 1;
+		if (
+			detail.inputValue &&
+			state.previousInputValue.startsWith(detail.inputValue)
+		) {
+			// User is deleting characters, do not fire analytics
+			return;
+		}
 		const target = evt.currentTarget as HTMLElement;
-		const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
-			getLandingRowsAndColsInfo(target);
-		trackOther(
-			`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
-			`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
-			{
-				location: 'Body',
-				componentType: 'Raw HTML',
-				pageRows,
-				pageRowIndex,
-				pageRowCols,
-				pageRowColIndex,
-				containerItems: 1,
-				containerItemIndex: 1,
-				componentTheme: 'Not Defined',
-				componentVariant: 'Cancer Type Search',
-				title: 'Cancer Types Search',
-				linkArea: 'Dropdown',
-				formAction: 'No Results Found',
-				selectedItemCounter: state.selectedItemsCounter,
-				noResultCounter: state.noResultsCounter,
-				clearCounter: state.clearCounter,
-				errorCounter: state.errorCounter,
-				noResultsValue: detail.inputValue,
-			}
-		);
+		debouncedNoResultsHandler(evt as CustomEvent, target as HTMLElement);
 	});
 
 	const form = document.getElementById('cancer-type-form');

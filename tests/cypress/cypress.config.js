@@ -9,7 +9,7 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
       // implement node event listeners here
     },
-    defaultCommandTimeout: 10000,
+    defaultCommandTimeout: 20000,
     cacheAcrossSpecs: true,
     // Spec is required, even when provided on command line.
     specPattern: 'cypress/e2e/**/*.feature',

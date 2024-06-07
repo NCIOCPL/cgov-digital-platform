@@ -19,7 +19,7 @@ const injectIFrame = (videoHook, videoSource) => {
         // instantaneously, keeping up the illusion that the preview video was
         // the real thing.
         iFrame.src += "&autoplay=1&rel=0";
-        iFrame.sandbox = "allow-same-origin allow-scripts";
+        iFrame.sandbox = "allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation";
         videoHook.innerHTML = ''; // Wipe out Play button and Thumbnail and Title
         videoHook.appendChild(iFrame);
         iFrame.focus();

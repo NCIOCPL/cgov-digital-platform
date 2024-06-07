@@ -1,11 +1,10 @@
-// Bugfix #3997 (Remove stray bullet added by legacy styling)
-
 .highcharts-container {
   hr {
     margin:0
   }
 
-  .highcharts-a11y-proxy-group-legend {
+  // Bugfix #3997/#4288 (Remove stray bullet added by legacy styling)
+  .highcharts-a11y-proxy-group-legend, .highcharts-contextmenu {
     ul > li:before {
       content: "";
     }
@@ -24,5 +23,35 @@
   }
   .highcharts-legend-item text {
     font-weight: normal !important
+  }
+}
+
+@media only screen and (max-width: 415px) {
+  #NCI-Chart__kawards-pie {
+    .highcharts-root {
+      .highcharts-data-labels,
+      .highcharts-series-group {
+        transform: matrix(1, 0, 0, 1, 10, 85);
+      }
+
+      .highcharts-series {
+        transform: none;
+      }
+
+      .highcharts-legend {
+        transform: translate(5px, 420px);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  #NCI-Chart__kawards-pie {
+    .highcharts-root {
+      .highcharts-data-labels,
+      .highcharts-series-group {
+        transform: matrix(1, 0, 0, 1, 10, 125);
+      }
+    }
   }
 }

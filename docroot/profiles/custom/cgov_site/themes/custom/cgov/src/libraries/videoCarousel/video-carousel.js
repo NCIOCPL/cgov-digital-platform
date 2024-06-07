@@ -2,7 +2,7 @@ import $ from 'jquery';
 import FlexVideoAPI from './flex-video-api';
 import 'slick-carousel';
 import 'Core/libraries/carousel/slick-patch';
-import { NCIAnalytics } from 'Core/libraries/analytics/nci-analytics-functions';
+import NCIAnalytics from 'Core/libraries/analytics/atomic-analytics-functions/all-themes';
 
 // Number of thumbnails to show in the carousel
 var thumbsToShow = 3;
@@ -227,7 +227,7 @@ function appendCarouselControls($this) {
     '<button class="m-next" type="button" value="' + $next + '" aria-label="' + $next + '"></button>' +
     "</div>" +
     "</div>";
-    
+
     $this.append($carouselControls + $mobileControls);
 }
 

@@ -2,10 +2,13 @@
 
 namespace Drupal\cgov_core\Plugin\PathProcessor;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\TypedData\TranslatableInterface;
+use Drupal\Core\Url;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -44,6 +47,13 @@ class UrlProcessor implements OutboundPathProcessorInterface {
   protected $aliasManager;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructor.
    *
    * @param \Drupal\path_alias\AliasManagerInterface $aliasManager
@@ -52,11 +62,14 @@ class UrlProcessor implements OutboundPathProcessorInterface {
    *   Language manager.
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $serviceContainer
    *   Service Container.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    */
-  public function __construct(AliasManagerInterface $aliasManager, LanguageManagerInterface $languageManager, ContainerInterface $serviceContainer) {
+  public function __construct(AliasManagerInterface $aliasManager, LanguageManagerInterface $languageManager, ContainerInterface $serviceContainer, EntityTypeManagerInterface $entity_type_manager) {
     $this->aliasManager = $aliasManager;
     $this->languageManager = $languageManager;
     $this->serviceContainer = $serviceContainer;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -73,19 +86,25 @@ class UrlProcessor implements OutboundPathProcessorInterface {
     $routes = $routeProvider->getRoutesByPattern($pattern);
     $isNode = $routes->get('entity.node.canonical') != NULL;
     $isMedia = $routes->get('entity.media.canonical') != NULL;
-
     if (!$isNode && !$isMedia) {
       return $path;
     }
-
+    $params = Url::fromUri("internal:" . $path)->getRouteParameters();
+    $entity_type = key($params);
+    $entity = NULL;
+    if ($entity_type == 'media' || $entity_type == 'node') {
+      $entity = $this->entityTypeManager->getStorage($entity_type)->load($params[$entity_type]);
+    }
     $currentLanguage = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_INTERFACE)->getId();
     $alias = $this->aliasManager->getAliasByPath($path, $currentLanguage);
     $isAliased = $path !== $alias;
     if (!$isAliased) {
       $languageObject = ConfigurableLanguage::createFromLangcode('en');
-      $options['language'] = $languageObject;
+      // We are checking entity translation if en doesnot exist, but es exist.
+      if ($entity && ($entity instanceof TranslatableInterface) && $entity->hasTranslation('en')) {
+        $options['language'] = $languageObject;
+      }
     }
-
     return $path;
   }
 

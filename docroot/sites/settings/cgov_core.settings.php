@@ -93,15 +93,7 @@ $settings['disallow_routes'] = [
 // Get the license dir from our current environment
 $licenseDir = '/var/licenses';
 if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-  if ($env === 'ode') {
-    // ODEs get spun up dynamically and for now we want to store this in the
-    // homedirectory which does not change. In the future if we automate
-    // creation of ODEs we can push up our files to the /mnt/files directories
-    // for the ODEs.
-    $licenseDir = "/home/{$_ENV['AH_SITE_GROUP']}/licenses";
-  } else {
-    $licenseDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/licenses";
-  }
+  $licenseDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/licenses";
 }
 
 $licenseFilename = sprintf('%s/licenses.php', $licenseDir);

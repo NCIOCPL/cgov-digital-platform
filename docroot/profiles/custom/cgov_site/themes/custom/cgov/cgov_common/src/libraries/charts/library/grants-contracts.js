@@ -275,7 +275,6 @@ function initChart(Chart, data, miscData = {}) {
     chart: chartType,
     title: data.chartTitle,
     credits: data.credits,
-    exporting: data.exporting,
     legend: data.legend,
     mapNavigation: data.mapNavigation,
     colorAxis: data.colorAxis,

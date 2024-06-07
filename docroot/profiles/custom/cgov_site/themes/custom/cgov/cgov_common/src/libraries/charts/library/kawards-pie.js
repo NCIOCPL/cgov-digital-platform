@@ -2,6 +2,8 @@ const dataFileName = 'kawards-pie';
 const id = 'NCI-Chart__kawards-pie';
 
 function initChart(Chart, kAwardsData) {
+  kAwardsData.responsive.rules[1].chartOptions.legend.labelFormatter = function () { return this.name };
+
   new Chart(id, {
     colors: kAwardsData.colors,
     chart: kAwardsData.chartType,

@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import 'cypress-network-idle'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -43,7 +44,7 @@ Cypress.Commands.add('getIframeBody', (locator) => {
   // get the iframe > document > body
   // and retry until the body element is not empty
   return cy
-    .get(locator)
+    .get(locator, { timeout: 20000 })
     .its('0.contentDocument.body').should('not.be.empty')
     // wraps "body" DOM element to allow
     // chaining more Cypress commands, like ".find(...)"
