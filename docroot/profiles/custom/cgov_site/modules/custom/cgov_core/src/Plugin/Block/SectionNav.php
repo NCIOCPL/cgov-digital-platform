@@ -45,7 +45,7 @@ class SectionNav extends BlockBase implements ContainerFactoryPluginInterface {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    CgovNavigationManager $navigationManager
+    CgovNavigationManager $navigationManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;

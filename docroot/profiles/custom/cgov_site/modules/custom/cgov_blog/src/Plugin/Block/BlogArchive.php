@@ -42,7 +42,7 @@ class BlogArchive extends BlockBase implements ContainerFactoryPluginInterface {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    BlogManagerInterface $blog_manager
+    BlogManagerInterface $blog_manager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->blogManager = $blog_manager;

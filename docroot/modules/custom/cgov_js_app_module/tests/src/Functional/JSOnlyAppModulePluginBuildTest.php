@@ -336,7 +336,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     array $options,
     $node_title,
     $expected_onload_script,
-    $expected_config
+    $expected_config,
   ) {
     // Create the page, which will redirect to the page.
     $this->addNode($node_title, $options);
@@ -396,7 +396,7 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     $field_name = 'js_app_module',
     $type = 'app_module_reference',
     $widget_type = 'app_module_reference_select',
-    $fieldFormatter = 'app_module_reference_formatter'
+    $fieldFormatter = 'app_module_reference_formatter',
   ) {
     $assert = $this->assertSession();
 

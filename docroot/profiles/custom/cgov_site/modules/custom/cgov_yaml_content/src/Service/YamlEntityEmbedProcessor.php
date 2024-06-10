@@ -32,7 +32,7 @@ class YamlEntityEmbedProcessor {
    *   Drupal Entity Type Manager.
    */
   public function __construct(
-    EntityTypeManagerInterface $entityTypeManager
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->entityTypeManager = $entityTypeManager;
   }

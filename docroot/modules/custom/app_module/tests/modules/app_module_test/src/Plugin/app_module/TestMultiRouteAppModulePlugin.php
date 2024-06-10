@@ -51,7 +51,7 @@ class TestMultiRouteAppModulePlugin extends MultiRouteAppModulePluginBase {
     $plugin_id,
     $plugin_definition,
     MultiRouteAppModuleBuilderInterface $default_builder,
-    MultiRouteAppModuleBuilderInterface $chicken_builder
+    MultiRouteAppModuleBuilderInterface $chicken_builder,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->definition = $plugin_definition + $configuration;

@@ -198,7 +198,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
   private function setRequest(
     AppModule $entity,
     $app_module_path,
-    $default_null_path = TRUE
+    $default_null_path = TRUE,
   ) {
     // Get the plugin.
     $plugin = $entity->getAppModulePlugin();
@@ -227,7 +227,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
   private function evalBuildFromPrerender(
     $app_module_path,
     $app_module_id,
-    array $content
+    array $content,
   ) {
 
     // Load the entity.
@@ -269,7 +269,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
     $app_route_id,
     $tags,
     $contexts = ['url.query_args:app_module_route'],
-    $max_age = 0
+    $max_age = 0,
   ) {
     // Load the entity.
     $entity = AppModule::load($app_module_id);

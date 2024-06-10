@@ -57,7 +57,7 @@ class Breadcrumb extends BlockBase implements ContainerFactoryPluginInterface {
     $plugin_id,
     $plugin_definition,
     CgovNavigationManager $navigationManager,
-    Token $tokenSvc
+    Token $tokenSvc,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;

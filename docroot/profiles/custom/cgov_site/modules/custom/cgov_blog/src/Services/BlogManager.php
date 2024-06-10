@@ -80,7 +80,7 @@ class BlogManager implements BlogManagerInterface {
     RouteMatchInterface $route_matcher,
     AliasManagerInterface $alias_manager,
     LanguageManagerInterface $language_manager,
-    RequestStack $request_stack
+    RequestStack $request_stack,
   ) {
     $this->entityRepository = $entity_repository;
     $this->entityTypeManager = $entity_type_manager;

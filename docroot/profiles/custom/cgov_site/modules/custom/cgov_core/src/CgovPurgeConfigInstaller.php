@@ -37,7 +37,7 @@ class CgovPurgeConfigInstaller {
    *   A Config Factory Interface.
    */
   public function __construct(
-    ConfigFactoryInterface $factory
+    ConfigFactoryInterface $factory,
   ) {
     $this->configFactory = $factory;
   }

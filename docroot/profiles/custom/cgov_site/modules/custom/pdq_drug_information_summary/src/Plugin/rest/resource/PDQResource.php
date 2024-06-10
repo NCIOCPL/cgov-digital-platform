@@ -67,7 +67,8 @@ class PDQResource extends ResourceBase {
     array $serializer_formats,
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
-    EntityTypeManagerInterface $entity_type_manager) {
+    EntityTypeManagerInterface $entity_type_manager,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
     $this->currentUser = $current_user;

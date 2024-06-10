@@ -68,7 +68,8 @@ interface AppPathStorageInterface {
     $app_module_id,
     array $app_module_data,
     $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED,
-    $pid = NULL);
+    $pid = NULL,
+  );
 
   /**
    * Fetches a specific app module path from the database.

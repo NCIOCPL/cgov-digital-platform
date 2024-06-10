@@ -74,7 +74,7 @@ class DisqusComments extends BlockBase implements ContainerFactoryPluginInterfac
     RouteMatchInterface $route_matcher,
     EntityTypeManagerInterface $entity_type_manager,
     EntityRepository $entity_repository,
-    CgovCoreTools $cgov_core_tools
+    CgovCoreTools $cgov_core_tools,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatcher = $route_matcher;

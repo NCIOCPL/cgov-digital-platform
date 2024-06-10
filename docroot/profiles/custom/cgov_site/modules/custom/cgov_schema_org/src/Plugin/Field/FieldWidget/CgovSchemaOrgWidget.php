@@ -38,11 +38,11 @@ class CgovSchemaOrgWidget extends WidgetBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function formElement(
-      FieldItemListInterface $items,
-      $delta,
-      array $element,
-      array &$form,
-      FormStateInterface $form_state
+    FieldItemListInterface $items,
+    $delta,
+    array $element,
+    array &$form,
+    FormStateInterface $form_state,
   ) {
     $page_types = [
       'faq_page',
