@@ -89,3 +89,16 @@ parameters:
       message: "#Cannot access property \\$data on object\\|true.#"
       path: docroot/profiles/custom/cgov_site/modules/custom/cgov_redirect_manager/cgov_redirect_manager.module
       reportUnmatched: true
+    -
+      ## This ignore is for the deprecated CacheDecoratorInterface module.
+      message: "#Class Drupal\\\\app_module\\\\AppPathManager implements deprecated interface#"
+      path: docroot/modules/custom/app_module/src/AppPathManager.php
+      reportUnmatched: false
+    -
+      ## This ignore is for the deprecated CacheDecoratorInterface module.
+      message: "#Class Drupal\\\\cgov_core\\\\NciPrimaryNavCacheContext implements deprecated interface#"
+      reportUnmatched: false
+    -
+      ## This ignore is for the deprecated CacheDecoratorInterface module.
+      message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
+      reportUnmatched: false
