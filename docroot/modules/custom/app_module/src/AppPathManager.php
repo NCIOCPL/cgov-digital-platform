@@ -113,7 +113,7 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     AppPathStorageInterface $storage,
     LanguageManagerInterface $language_manager,
     CacheBackendInterface $cache,
-    TimeInterface $time_service
+    TimeInterface $time_service,
   ) {
     $this->aliasManager = $alias_manager;
     $this->entityTypeManager = $entity_type_manager;

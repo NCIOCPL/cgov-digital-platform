@@ -65,7 +65,7 @@ class CmsProtectionSubscriber implements EventSubscriberInterface {
     AccountInterface $current_user,
     RouteMatchInterface $current_route,
     UrlGeneratorInterface $url_generator,
-    ModuleHandler $module_handler
+    ModuleHandler $module_handler,
   ) {
     $this->currentUser = $current_user;
     $this->currentRoute = $current_route;

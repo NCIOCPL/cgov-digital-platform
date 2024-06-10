@@ -88,11 +88,11 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
    *   Service Container.
    */
   public function __construct(
-      EntityTypeManagerInterface $entity_type_manager,
-      ResettableStackedRouteMatchInterface $current_route,
-      RequestStack $request_stack,
-      ConfigFactoryInterface $configFactory,
-      ContainerInterface $serviceContainer
+    EntityTypeManagerInterface $entity_type_manager,
+    ResettableStackedRouteMatchInterface $current_route,
+    RequestStack $request_stack,
+    ConfigFactoryInterface $configFactory,
+    ContainerInterface $serviceContainer,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->currentRoute = $current_route;
