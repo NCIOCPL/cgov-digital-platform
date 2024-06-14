@@ -96,7 +96,7 @@ class JsonDataFieldItem extends FieldItemBase {
    *   The form state of the (entire) configuration form.
    */
   public static function fieldSettingsFormValidate(array $form, FormStateInterface $form_state) {
-    $json_schema_file = $form_state->getValue('settings')['json_schema_file'];
+    $json_schema_file = $form_state->getValue(['field_storage', 'subform', 'settings', 'json_schema_file']);
     if (!empty($json_schema_file) && !empty($json_schema_file['json_schema_file_uri']) && !empty($json_schema_file['file_upload'])) {
       $form_state->setError(
         $form,

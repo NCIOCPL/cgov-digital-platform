@@ -411,15 +411,15 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
       'field_name' => $field_name,
       'label' => $field_name,
     ];
-    $this->submitForm($edit, 'Save and continue');
+    $this->submitForm($edit, 'Continue');
 
     /* NOTE: We should not need a cardinality because it is not an input field. */
 
     // And now we save the field settings.
     $this->submitForm([
-      'settings[target_type]' => 'app_module',
-    ], 'Save field settings');
-    $assert->pageTextContains((string) new FormattableMarkup('Updated field @name field settings.', ['@name' => $field_name]));
+      'settings[handler]' => 'default:app_module',
+    ], 'Save settings');
+    $assert->pageTextContains((string) new FormattableMarkup('Saved @name configuration.', ['@name' => $field_name]));
 
     // Set the widget type for the newly created field.
     $this->drupalGet('admin/structure/types/manage/' . $content_type . '/form-display');
