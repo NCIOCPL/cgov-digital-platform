@@ -1,17 +1,5 @@
-{% if content.field_ncids_promo_art_16x9 and content.field_ncids_promo_art_4x3 and content.field_media_image %}
+{% if content.field_ncids_promo_art_16x9 and content.field_media_image %}
   <picture class="nci-card__image">
-    {% set sourceAttribs = create_attribute({
-        'media': '(min-width: 880px)'
-      }) 
-    %}
-    {% if content.field_ncids_promo_art_4x3[0] %}
-      {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.field_ncids_promo_art_4x3[0]|render) %}
-    {% elseif content.uri_4x3[0] %}
-      {% set sourceAttribs = sourceAttribs.setAttribute('srcset', content.uri_4x3[0]|render) %}
-    {% endif %}
-    {% if sourceAttribs.srcset %}
-      <source {{ sourceAttribs }}>
-    {% endif %}
     {% if content.field_ncids_promo_art_16x9[0] %}
       {{ content.field_ncids_promo_art_16x9 }}
     {% elseif content.field_media_image[0] %}
@@ -19,12 +7,7 @@
     {% endif %}
   </picture>
 {% else %}
-  {% set sourceAttribs = create_attribute({
-    'media': '(min-width: 880px)'
-  })
-  %}
   <picture class="nci-card__image">
-    <source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_featured_4x3') }}">
 			<img src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">
   </picture>
 {% endif %}

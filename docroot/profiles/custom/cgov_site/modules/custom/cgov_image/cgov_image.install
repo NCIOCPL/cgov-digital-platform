@@ -119,3 +119,17 @@ function cgov_image_update_8006() {
   $service = \Drupal::service('features.manager');
   $result = $service->import(['cgov_image']);
 }
+
+/**
+ * Update for NCIDS Feature Card.
+ *
+ * Deletes ncids_featured_4x3 image style.
+ */
+function cgov_image_update_8007() {
+  $service = \Drupal::service('features.manager');
+  $result = $service->import(['cgov_image']);
+
+  $config = \Drupal::configFactory()
+    ->getEditable('image.style.ncids_featured_4x3');
+  $config->delete();
+}
