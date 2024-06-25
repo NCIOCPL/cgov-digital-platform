@@ -1,0 +1,103 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required.scss';
+@forward '../../lib/components/usa-breadcrumb';
+@forward '../../lib/components/usa-sidenav';
+@forward '../../lib/components/cgdp-page-options';
+@forward '../../lib/components/cgdp-landing-raw-html';
+
+@use 'uswds-core';
+
+/* ------------------------------------------------------------------------- */
+/* Output select utility classes for raw html blocks                         */
+/* ------------------------------------------------------------------------- */
+uswds-core.$output-these-utilities: (
+	'padding',
+	'box-shadow',
+	'font',
+	'background-color',
+	'font-weight',
+	'border-color',
+	'line-height',
+	'justify-content'
+);
+// Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
+// the smallest possible aspect classes.
+uswds-core.$add-aspect-settings: (
+	output: false,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
+);
+uswds-core.$background-color-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$box-shadow-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$border-color-settings: (
+	output: true,
+	responsive: false,
+	// Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$justify-content-settings: (
+	output: true,
+	responsive: true,
+	// Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
+);
+
+@forward 'uswds-utilities';
+/* ------------------------------------------------------------------------- */
+/* End utility classes for raw html blocks                                   */
+/* ------------------------------------------------------------------------- */
+
+// We re-import core so that we do not need to namespace core for every call
+// below.
+@use 'uswds-core' as *;
+
+// Used to give 0 padding bottom to the page title block.
+.usa-section--cgdp-no-bottom {
+	@include u-padding-bottom(0);
+
+	// We need to make sure that if a same colored usa-section follows a no bottom
+	// then we should not add negative top margin to the following usa-section.
+	&.usa-section--light + .usa-section--light,
+	&.usa-section--dark + .usa-section--dark,
+	&.usa-section:not(.usa-section--light, .usa-section--dark)
+		+ .usa-section:not(.usa-section--light, .usa-section--dark) {
+			@include u-margin-top(0);
+			@include at-media('tablet') {
+				@include u-margin-top(0);
+			}
+	}
+}
+
+.main-content {
+	@include u-padding-bottom(2);
+	.usa-section:first-child {
+		@include u-padding-top(0);
+	}
+}
