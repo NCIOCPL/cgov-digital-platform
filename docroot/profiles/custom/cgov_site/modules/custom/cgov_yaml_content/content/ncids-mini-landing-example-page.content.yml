@@ -1,0 +1,49 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Mini Landing Page Example"
+  title__ES:
+      value: "NCIDS Mini Landing Page Example - Spanish"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS components."
+  field_page_description__ES:
+    value: "Sample mini and landing page in Spanish to test NCIDS components."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_browser_title__ES:
+    value: "Mini Landing Page - Spanish"
+  field_pretty_url:
+    value: "ncids-mini-landing/template"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_mlp_page_style:
+    value: "ncids"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>Hello World</p>
+              </div>
+            </div>
+  ## SPANISH CONTENTS HERE
