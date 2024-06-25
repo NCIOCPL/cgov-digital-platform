@@ -33,8 +33,8 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     $suggestions[] = 'page__' . $content_type;
 
     // Add theme suggestion for special report template if appropriate.
-    if ($node->bundle() == "cgov_home_landing") {
-      $page_template = $node->field_page_style->value;
+    if ($content_type == "cgov_home_landing" || $content_type == "cgov_mini_landing") {
+      $page_template = $content_type == "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
       if ($page_template !== null) {
         $suggestions[] = 'page__' . $content_type . '__' . $page_template;
       }
@@ -68,11 +68,11 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
 function ncids_trans_theme_suggestions_node_alter(array &$suggestions, array $variables) {
   $node = $variables['elements']['#node'];
 
-  if ($node->bundle() !== "cgov_home_landing") {
+  if ($node->bundle() !== "cgov_home_landing" && $node->bundle() !== "cgov_mini_landing") {
     return $suggestions;
   }
 
-  $style = $node->field_page_style->value;
+  $style = $node->bundle() === "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   // We only want to add a suggestion if it is the full display mode for now.
