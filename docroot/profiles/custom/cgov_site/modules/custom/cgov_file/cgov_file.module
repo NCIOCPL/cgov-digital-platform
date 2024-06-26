@@ -15,7 +15,7 @@ function cgov_file_form_alter(&$form, &$form_state, $form_id) {
     return;
   }
 
-  $form['field_media_file']['widget'][0]['#upload_validators']['file_validate_extensions'] = [NULL];
+  $form['field_media_file']['widget'][0]['#upload_validators']['FileExtension'] = "";
   $form['field_media_file']['widget'][0]['#upload_validators']['_cgov_file_validate'] = [];
 }
 
