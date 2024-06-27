@@ -188,3 +188,16 @@ function cgov_image_update_10004() {
   $assigner->assignConfigPackages();
   $result = $service->import(['cgov_image']);
 }
+
+/**
+ * Update for NCIDS Overrides.
+ *
+ * Force installation of core.entity_view_mode.media.admin_ncids_card_override
+ * before node core.entity_view_display configs are loaded.
+ */
+function cgov_image_update_10005() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $result = $service->import(['cgov_image']);
+}
