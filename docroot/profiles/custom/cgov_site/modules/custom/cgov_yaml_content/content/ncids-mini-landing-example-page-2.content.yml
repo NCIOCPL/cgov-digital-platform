@@ -1,0 +1,62 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Small Business Innovation Research and Small Business Technology Transfer"
+  title__ES:
+      value: "Información sobre estudios clínicos para pacientes y cuidadores"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS components."
+  field_page_description__ES:
+    value: "Sample mini and landing page in Spanish to test NCIDS components."
+  field_browser_title:
+    value: "Small Business Innovation Research and Small Business Technology Transfer"
+  field_browser_title__ES:
+    value: "Información sobre estudios clínicos para pacientes y cuidadores"
+  field_pretty_url:
+    value: "ras"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_mlp_page_style:
+    value: "ncids"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna ac placerat vestibulum lectus mauris ultrices eros in. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor. Habitasse platea dictumst quisque sagittis purus. Lectus urna duis convallis convallis tellus id interdum velit laoreet. Nunc scelerisque viverra mauris in aliquam sem fringilla. Sit amet aliquam id diam maecenas ultricies mi eget mauris. Nibh tortor id aliquet lectus. Ut tellus elementum sagittis vitae. Convallis tellus id interdum velit laoreet id donec ultrices tincidunt. Morbi tristique senectus et netus.</p>
+              </div>
+            </div>
+  field_landing_contents__ES:
+  ## SPANISH CONTENTS HERE
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna ac placerat vestibulum lectus mauris ultrices eros in. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor. Habitasse platea dictumst quisque sagittis purus. Lectus urna duis convallis convallis tellus id interdum velit laoreet. Nunc scelerisque viverra mauris in aliquam sem fringilla. Sit amet aliquam id diam maecenas ultricies mi eget mauris. Nibh tortor id aliquet lectus. Ut tellus elementum sagittis vitae. Convallis tellus id interdum velit laoreet id donec ultrices tincidunt. Morbi tristique senectus et netus.</p>
+              </div>
+            </div>
