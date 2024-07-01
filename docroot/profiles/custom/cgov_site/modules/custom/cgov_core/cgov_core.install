@@ -58,6 +58,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'use text format raw_html',
       'use text format simple',
       'use text format streamlined',
+      'use text format ncids_streamlined',
     ],
     'advanced_editor' => [
       'access taxonomy overview',
@@ -490,6 +491,25 @@ function cgov_core_update_10004() {
   $perms = [
     'site_admin' => [
       'administer responsive favicons',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Add permissions for new ncids_streamlined editor.
+ */
+function cgov_core_update_10005() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Import the configs to create the new ncids_streamlined
+  // so the permission exists so we can add it.
+  $service = \Drupal::service('features.manager');
+  $service->import(['cgov_core']);
+
+  $perms = [
+    'admin_ui' => [
+      'use text format ncids_streamlined',
     ],
   ];
   $siteHelper->addRolePermissions($perms);
