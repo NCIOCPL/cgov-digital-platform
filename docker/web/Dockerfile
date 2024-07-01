@@ -125,6 +125,13 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # update npm
 RUN npm install -g npm@8.19.4
 
+## Turn off xdebug as it uses resources that could be best used
+## elsewhere. Once the container is up you can use
+## phpenmod -s <SAPI> xdebug
+## where SAPI is probably, most likely, apache2
+RUN phpdismod -s cli xdebug
+RUN phpdismod -s apache2 xdebug
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
@@ -134,13 +141,6 @@ RUN php --version; composer --version;
 # Make vendor/bin versions of drush, blt, etc. available.
 # NOTE: Putting this on the end in order to match the CI workflow.
 ENV PATH $PATH:/var/www/vendor/bin
-
-## Turn off xdebug as it uses resources that could be best used
-## elsewhere. Once the container is up you can use
-## phpenmod -s <SAPI> xdebug
-## where SAPI is probably, most likely, apache2
-RUN phpdismod -s cli xdebug
-RUN phpdismod -s apache2 xdebug
 
 # Expose the default Apache port.
 EXPOSE 80
