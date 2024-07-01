@@ -39,26 +39,61 @@
     - entity: "paragraph"
       type: "ncids_page_title_block"
     - entity: "paragraph"
-      type: "cgov_card_raw_html"
-      field_raw_html:
-        - format: "raw_html"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
           value: |
-            <div class="usa-section">
-              <div class="usa-prose">
-                <p>Hello World</p>
-              </div>
-            </div>
+            <h2>Level 2 heading</h2>
+            <p><strong>More than 30 percent</strong> of all human cancers - <em>including 95 percent of pancreatic cancers and 45 percent of colorectal cancers</em> - are driven by <sup>mutations of the RAS</sup> family of genes. <sub>NCI established the RAS initiative in 2013 to explore</sub> innovative approaches for attacking the <s>proteins encoded by mutant forms of RAS genes</s> and to <strong><em>ultimately create effective, new therapies for RAS-related cancers.</em></strong></p>
+            <h3>This is an h3 test</h3>
+            <h4>Internal Link Testing</h4>
+            <!-- Make this a managed link in the WYSIWYG -->
+            <p>See <a
+                data-entity-substitution="canonical"
+                data-entity-type="node"
+                data-entity-uuid="#process"
+                data-cgov-yaml-query-type="cgov_home_landing"
+                data-cgov-yaml-query-title="About Cancer"
+              >About Cancer</a> managed internal link.</p>
+            <p>See <a href="/about-cancer">About Cancer</a> internal link.</p>
+            <h5>Media Link Testing</h5>
+            <p>See <a
+                data-entity-substitution="canonical"
+                data-entity-type="media"
+                data-entity-uuid="#process"
+                data-cgov-yaml-query-bundle="cgov_file"
+                data-cgov-yaml-query-name="Test PDF File name"
+              >Test File Download</a> managed media link.</p>
+            <h6>External Link Testing</h6>
+            <p>See <a href="https://www.google.com/">Google</a> for external link.</p>
+            <h6>Email Link Testing</h6>
+            <p><a href="mailto:jenny@example.org">Email Jenny</a></p>
+            <h6>Other link testing</h6>
+            <p><a href="tel:1-555-867-5309">Call Jenny</a></p>
+            <h2>List Testing</h2>
+            <ul>
+              <li>This is</li>
+              <li>an unordered</li>
+              <li>list of stuff</li>
+            </ul>
+            <ol>
+              <li>This is</li>
+              <li>>an ordered</li>
+              <li>list of stuff</li>
+            </ul>
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+             This is a <a href="https://www.google.com">test link without a heading</a>.
   field_landing_contents__ES:
   ## SPANISH CONTENTS HERE
     - entity: "paragraph"
       type: "ncids_page_title_block"
     - entity: "paragraph"
-      type: "cgov_card_raw_html"
-      field_raw_html:
-        - format: "raw_html"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
           value: |
-            <div class="usa-section">
-              <div class="usa-prose">
-                <p>Hello World</p>
-              </div>
-            </div>
+            <p>This is a content block. This is a placeholder spanish page for when/if we want to test spanish content - DR</p>

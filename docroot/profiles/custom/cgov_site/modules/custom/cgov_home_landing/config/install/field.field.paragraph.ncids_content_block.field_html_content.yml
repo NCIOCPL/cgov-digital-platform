@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_html_content
+    - filter.format.streamlined
+    - paragraphs.paragraphs_type.ncids_content_block
+  module:
+    - text
+id: paragraph.ncids_content_block.field_html_content
+field_name: field_html_content
+entity_type: paragraph
+bundle: ncids_content_block
+label: 'HTML Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - ncids_streamlined
+field_type: text_long
