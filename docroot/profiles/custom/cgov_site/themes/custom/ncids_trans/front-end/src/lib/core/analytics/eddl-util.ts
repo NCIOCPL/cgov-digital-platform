@@ -104,6 +104,7 @@ export const trackOther = (
 	linkName: string,
 	data: object
 ) => {
+	console.log(eventName);
 	track({
 		type: EDDLEventTypes.Other,
 		event: eventName,

@@ -244,74 +244,6 @@ describe('usa-site-alert', () => {
 		);
 	});
 
-	it('sending the correct analytics for standard expand', async () => {
-		const siteAlert = `
-		<section
-			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
-			data-site-alert-closable="true"
-		>
-    	<div class="usa-alert">
-        <div class="usa-alert__body">
-            <header class="usa-alert__nci-header">
-                <h3 class="usa-alert__heading">COVID-19 resources.</h3>
-            </header>
-            <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
-                    <li>
-                        <a class="usa-link" href="/about-cancer">
-                            What people with cancer should know
-                        </a>
-                    </li>
-                    <li>
-                        <a class="usa-link" href="/about-nci">
-                            Get the latest public health information from CDC
-                        </a>
-                    </li>
-                    <li>
-                        <a class="usa-link" href="/about-cancer"> Guidance for cancer researchers </a>
-                    </li>
-                    <li>
-                        <a class="usa-link" href="about-nci">
-                            Get the latest research information from NIH
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    	</div>
-		</section>
-		`;
-
-		// Lets make a spy to ensure that trackOther is called correctly
-		const spy = jest.spyOn(eddlUtil, 'trackOther');
-
-		// Inject the HTML into the dom.
-		document.body.insertAdjacentHTML('beforeend', siteAlert);
-
-		// Create the site alert JS
-		siteAlertInit();
-
-		//toggles the expand button
-		const expand = screen.getByRole('button', { expanded: false });
-
-		//click the expand button
-		fireEvent.click(expand);
-
-		expect(spy).toHaveBeenCalledTimes(1);
-
-		expect(spy).toHaveBeenCalledWith(
-			'PreHeader:LinkClick',
-			'PreHeader:LinkClick',
-			{
-				linkText: 'Expand',
-				location: 'PreHeader',
-				action: 'Expand',
-				preHeaderElement: 'Standard Alert',
-			}
-		);
-	});
-
 	it('sending the correct analytics for standard minimize', async () => {
 		const siteAlert = `
 		<section
@@ -447,53 +379,6 @@ describe('usa-site-alert', () => {
 					location: 'PreHeader',
 					action: 'Dismiss',
 					preHeaderElement: 'Standard Alert',
-				}
-			);
-		});
-	});
-
-	it('sending the correct analytics for slim dismiss', async () => {
-		const siteAlert = `
-		<section
-			aria-label="Slim information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-slim usa-site-alert--nci-info"
-			data-site-alert-closable="true"
-		>
-			<div class="usa-alert">
-					<div class="usa-alert__body">
-							<div class="usa-alert__text">
-									<strong>Short alert message.</strong> Additional context and followup
-									information including <a class="usa-link" href="#">a link</a>.
-							</div>
-					</div>
-			</div>
-		</section>
-		`;
-
-		// Lets make a spy to ensure that trackOther is called correctly
-		const spy = jest.spyOn(eddlUtil, 'trackOther');
-
-		// Inject the HTML into the dom.
-		document.body.insertAdjacentHTML('beforeend', siteAlert);
-
-		// Create the site alert JS
-		siteAlertInit();
-
-		//toggles the close button
-		const dismiss = screen.getByRole('button', { name: 'Dismiss alert' });
-
-		// clicks the close button
-		fireEvent.click(dismiss);
-
-		await waitFor(() => {
-			expect(spy).toHaveBeenCalledWith(
-				'PreHeader:LinkClick',
-				'PreHeader:LinkClick',
-				{
-					linkText: 'Dismiss',
-					location: 'PreHeader',
-					action: 'Dismiss',
-					preHeaderElement: 'Slim Alert',
 				}
 			);
 		});

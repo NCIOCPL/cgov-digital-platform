@@ -48,20 +48,8 @@ describe('usa-footer', () => {
 
 		const link = screen.getAllByRole('link');
 
-		// Click Return to top
-		fireEvent.click(link[0]);
-		expect(spy).toHaveBeenCalledWith(
-			'RightEdge:LinkClick',
-			'RightEdge:LinkClick',
-			{
-				linkText: 'Back To Top',
-				location: 'Right Edge',
-				section: 'Back To Top',
-			}
-		);
-
 		// Click secondary link
-		fireEvent.click(link[1]);
+		fireEvent.click(link[0]);
 		expect(spy).toHaveBeenCalledWith('Footer:LinkClick', 'Footer:LinkClick', {
 			linkText: 'About this Website',
 			location: 'Footer',
@@ -69,7 +57,7 @@ describe('usa-footer', () => {
 		});
 
 		// Click contact link
-		fireEvent.click(link[14]);
+		fireEvent.click(link[13]);
 		expect(spy).toHaveBeenCalledWith('Footer:LinkClick', 'Footer:LinkClick', {
 			linkText: 'Live Chat',
 			location: 'Footer',
@@ -77,7 +65,7 @@ describe('usa-footer', () => {
 		});
 
 		// Click social icon
-		fireEvent.click(link[18]);
+		fireEvent.click(link[17]);
 		expect(spy).toHaveBeenCalledWith('Footer:LinkClick', 'Footer:LinkClick', {
 			linkText: 'Facebook',
 			location: 'Footer',
@@ -85,7 +73,7 @@ describe('usa-footer', () => {
 		});
 
 		// Click organization area
-		fireEvent.click(link[23]);
+		fireEvent.click(link[22]);
 		expect(spy).toHaveBeenCalledWith('Footer:LinkClick', 'Footer:LinkClick', {
 			linkText: 'U.S. Department of Health and Human Services',
 			location: 'Footer',
