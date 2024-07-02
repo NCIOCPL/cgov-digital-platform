@@ -238,27 +238,15 @@ function _cgov_image_filter_view_image(
 function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
 
   if (
-    (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0)) ||
     (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
   ) {
     // if true === if there are crops applied to field_media_image
     if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
       unset($build['field_media_image']);
-      unset($build['field_ncids_promo_art_4x3']);
       unset($build['field_ncids_promo_art_16x9']);
       return;
     }
   }
-
-  // The 4x3 image will be used in the picture element's source element.
-  // There is no drupal render type for a source element.
-  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
-  $build['uri_4x3'] = $build['field_media_image']['#items']->view([
-    'type' => 'image_url',
-    'settings' => [
-      'image_style' => 'ncids_featured_4x3',
-    ],
-  ]);
 }
 
 
@@ -364,7 +352,7 @@ function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, 
  * Handle images for NCIDS Dynamic List.
  *
  * NCIDS Dynamic List requires a 4x3 image. This method must
- * determine where to source the image from, either override 
+ * determine where to source the image from, either override
  * field for that aspect ratio or the crop on the field_media_image.
  *
  * @param array $build

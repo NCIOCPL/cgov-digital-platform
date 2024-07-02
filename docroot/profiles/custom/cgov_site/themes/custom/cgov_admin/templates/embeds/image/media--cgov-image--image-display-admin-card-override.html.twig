@@ -1,0 +1,16 @@
+{% if content.field_ncids_promo_art_16x9 and content.field_ncids_promo_art_1x1 and content.field_media_image %}
+  {% if content.field_ncids_promo_art_16x9[0] or content.field_ncids_promo_art_1x1[0] %}
+    {% if content.field_ncids_promo_art_16x9[0] %}
+      {{ content.field_ncids_promo_art_16x9 }}
+    {% elseif content.field_media_image[0] %}
+      <div class="field__label">Media Image</div>
+      {{ content.field_media_image }}
+    {% endif %}
+    {% if content.field_ncids_promo_art_1x1[0] %}
+      {{ content.field_ncids_promo_art_1x1 }}
+    {% endif %}
+  {% else %}
+    <div class="field__label">Media Image</div>
+    {{ content.field_media_image }}
+  {% endif %}
+{% endif %}

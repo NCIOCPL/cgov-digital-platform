@@ -21,12 +21,7 @@
 	{% if renderImage %}
 		{{- image -}}
 	{% else %}
-		{% set sourceAttribs = create_attribute({
-			'media': '(min-width: 880px)'
-		})
-		%}
 		<picture class="nci-card__image">
-			<source {{ sourceAttribs }} srcset="{{ get_placeholder_image('ncids_featured_4x3') }}">
 			<img src="{{ get_placeholder_image('ncids_featured_16x9') }}" alt="No Image Placeholder">
 		</picture>
 	{% endif %}
