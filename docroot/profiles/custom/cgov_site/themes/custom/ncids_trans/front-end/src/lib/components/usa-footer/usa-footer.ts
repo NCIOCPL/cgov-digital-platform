@@ -153,16 +153,28 @@ const initialize = (): void => {
 	if (document.documentElement.lang === 'es') {
 		NCIBigFooter.create(footerElement, {
 			subscribeInvalidEmailAlert: 'Ingrese su dirección de correo electrónico',
+			backToTopText: 'Volver Arriba',
 		});
 	} else {
 		NCIBigFooter.create(footerElement);
 	}
 
-	// set up listener for backToTop
-	const backToTopLink = footerElement.querySelector(
-		'.usa-footer__nci-return-to-top a'
-	) as HTMLAnchorElement;
-	backToTopLink.addEventListener('click', backToTopAnalyticsHandler());
+	const bttObserver = new MutationObserver(() => {
+		const selector = '.usa-footer__nci-return-to-top a';
+		if (document.querySelector(selector)) {
+			bttObserver.disconnect();
+
+			const backToTopLink = footerElement.querySelector(
+				selector
+			) as HTMLAnchorElement;
+			backToTopLink.addEventListener('click', backToTopAnalyticsHandler());
+		}
+	});
+
+	bttObserver.observe(footerElement, {
+		childList: true,
+		subtree: true,
+	});
 
 	// All link clicks in the footer(primary and secondary sections)
 	const navLinks = footerElement.querySelectorAll(
