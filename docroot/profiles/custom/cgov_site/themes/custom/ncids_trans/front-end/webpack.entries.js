@@ -33,6 +33,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/mini-landing/mini-landing.ts'
 	),
+	'ncids-mini-landing': path.resolve(
+		__dirname,
+		'src/entrypoints/ncids-mini-landing/ncids-mini-landing.ts'
+	),
 	'cancer-center': path.resolve(
 		__dirname,
 		'src/entrypoints/cancer-center/cancer-center.ts'

@@ -1,0 +1,64 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "The Adventures and Chronicles of the Quick Brown Fox Who Jumped Over the Lazy Dog and Their Friends the Tortoise and the Hare With Interludes from Alice in Wonderland"
+  title__ES:
+      value: "Las Aventuras y Crónicas del Veloz Zorro Marrón que Saltó Sobre el Perro Perezoso y Sus Amigas la Tortuga y la Liebre con Interludios de Alicia en el País de las Maravillas"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS components."
+  field_page_description__ES:
+    value: "Sample mini and landing page in Spanish to test NCIDS components."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_browser_title__ES:
+    value: "Mini Landing Page - Spanish"
+  field_pretty_url:
+    value: "ncids-mini-landing/template"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_mlp_page_style:
+    value: "ncids"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>Hello World</p>
+              </div>
+            </div>
+  field_landing_contents__ES:
+  ## SPANISH CONTENTS HERE
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>Hello World</p>
+              </div>
+            </div>
