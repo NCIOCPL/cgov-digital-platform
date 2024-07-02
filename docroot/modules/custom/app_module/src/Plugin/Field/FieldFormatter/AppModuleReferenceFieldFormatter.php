@@ -56,7 +56,7 @@ class AppModuleReferenceFieldFormatter extends FormatterBase implements Containe
     $label,
     $view_mode,
     array $third_party_settings,
-    AppModuleRenderArrayBuilderInterface $app_module_builder
+    AppModuleRenderArrayBuilderInterface $app_module_builder,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->appModuleBuilder = $app_module_builder;

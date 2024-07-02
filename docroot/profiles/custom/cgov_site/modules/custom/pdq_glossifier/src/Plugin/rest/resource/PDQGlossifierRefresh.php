@@ -65,7 +65,8 @@ class PDQGlossifierRefresh extends ResourceBase {
     array $serializer_formats,
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
-    PdqGlossifierServiceInterface $pdq_glossify) {
+    PdqGlossifierServiceInterface $pdq_glossify,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
     $this->pdqGlossify = $pdq_glossify;
     $this->currentUser = $current_user;

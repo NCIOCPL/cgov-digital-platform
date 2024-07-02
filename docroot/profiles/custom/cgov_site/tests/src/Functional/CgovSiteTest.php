@@ -5,6 +5,7 @@ namespace Drupal\Tests\cgov_site\Functional;
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\SchemaCheckTestTrait;
+use Drupal\user\Entity\Role;
 
 /**
  * Tests CGOV_SITE installation profile expectations are being met.
@@ -50,7 +51,7 @@ class CgovSiteTest extends BrowserTestBase {
    */
   public function testCgovSiteProfile() {
     // Verify all basic roles exist.
-    $roles = user_roles();
+    $roles = Role::loadMultiple();
     $this->assertArrayHasKey('anonymous', $roles, 'Anonymous role exists.');
     $this->assertArrayHasKey('authenticated', $roles, 'Authenticated role exists.');
     $this->assertArrayHasKey('admin_ui', $roles, 'Admin UI role exists.');

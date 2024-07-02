@@ -111,8 +111,8 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
     Token $token,
     ContainerAwareEventDispatcher $dispatcher,
     ModuleExtensionList $extension_list_module,
-    FileRepositoryInterface $file_repository
-    ) {
+    FileRepositoryInterface $file_repository,
+  ) {
     $this->themeManager = $themeManager;
     $this->entityTypeManager = $entityTypeManager;
     $this->fileSystem = $fileSystem;

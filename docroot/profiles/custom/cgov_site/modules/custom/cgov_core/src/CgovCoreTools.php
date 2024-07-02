@@ -133,10 +133,10 @@ class CgovCoreTools {
    *   The entity type manager.
    */
   public function __construct(
-      ConfigFactoryInterface $config_factory,
-      LanguageNegotiatorInterface $negotiator,
-      EntityTypeManagerInterface $entity_type_manager
-    ) {
+    ConfigFactoryInterface $config_factory,
+    LanguageNegotiatorInterface $negotiator,
+    EntityTypeManagerInterface $entity_type_manager,
+  ) {
 
     $this->negotiator = $negotiator;
     $this->configFactory = $config_factory;

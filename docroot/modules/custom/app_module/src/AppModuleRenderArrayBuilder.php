@@ -31,7 +31,7 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
    *   The request object.
    */
   public function __construct(
-    RequestStack $request_stack
+    RequestStack $request_stack,
   ) {
     $this->requestStack = $request_stack;
   }

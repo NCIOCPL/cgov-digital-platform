@@ -78,7 +78,7 @@ class PDQResource extends ResourceBase {
     LoggerInterface $logger,
     AccountProxyInterface $current_user,
     EntityTypeManagerInterface $entity_type_manager,
-    OrphanCleanup $orphan_cleanup
+    OrphanCleanup $orphan_cleanup,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
@@ -94,7 +94,7 @@ class PDQResource extends ResourceBase {
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,

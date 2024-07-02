@@ -36,7 +36,7 @@ class OrphanCleanup {
    */
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
-    Connection $connection
+    Connection $connection,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->connection = $connection;

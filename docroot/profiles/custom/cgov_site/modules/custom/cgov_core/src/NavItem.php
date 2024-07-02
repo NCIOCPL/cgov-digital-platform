@@ -125,8 +125,8 @@ class NavItem {
   public function __construct(
     CgovNavigationManager $navMgr,
     TermInterface $term,
-    bool $isInCurrentPath
-    ) {
+    bool $isInCurrentPath,
+  ) {
     $this->navMgr = $navMgr;
     $this->isInCurrentPath = $isInCurrentPath;
     $this->initialize($term);

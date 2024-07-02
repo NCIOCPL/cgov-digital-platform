@@ -40,7 +40,7 @@ class CgovMegaMenuController extends ControllerBase {
    */
   public function __construct(
     AliasManagerInterface $alias_manager,
-    EntityTypeManager $entityTypeManager
+    EntityTypeManager $entityTypeManager,
   ) {
     $this->aliasManager = $alias_manager;
     $this->entityTypeManager = $entityTypeManager;

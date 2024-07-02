@@ -145,7 +145,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
     $plugin_definition,
     LanguageManagerInterface $language_manager,
     Token $token_service,
-    RouteMatchInterface $route_match
+    RouteMatchInterface $route_match,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->definition = $plugin_definition + $configuration;

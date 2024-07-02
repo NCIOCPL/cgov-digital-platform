@@ -10,6 +10,36 @@ name: Streamlined
 format: streamlined
 weight: -10
 filters:
+  editor_file_reference:
+    id: editor_file_reference
+    provider: editor
+    status: false
+    weight: -45
+    settings: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: -49
+    settings: {  }
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: false
+    weight: -44
+    settings: {  }
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: false
+    weight: -43
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: false
+    weight: -42
+    settings: {  }
   filter_html:
     id: filter_html
     provider: filter
@@ -19,24 +49,29 @@ filters:
       allowed_html: '<em> <strong> <cite> <blockquote cite> <code> <ul type> <ol type start> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <a class href hreflang data-entity-substitution data-entity-type data-entity-uuid data-glossary-id title> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <s> <sup> <sub> <h1>'
       filter_html_help: true
       filter_html_nofollow: false
-  token_filter:
-    id: token_filter
-    provider: token_filter
-    status: true
-    weight: -48
-    settings:
-      replace_empty: '0'
-  editor_file_reference:
-    id: editor_file_reference
-    provider: editor
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
     status: false
-    weight: -45
+    weight: -46
     settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
     status: false
     weight: -40
+    settings: {  }
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: false
+    weight: -39
+    settings: {  }
+  filter_image_lazy_load:
+    id: filter_image_lazy_load
+    provider: filter
+    status: true
+    weight: -44
     settings: {  }
   filter_url:
     id: filter_url
@@ -45,42 +80,6 @@ filters:
     weight: -41
     settings:
       filter_url_length: 72
-  filter_autop:
-    id: filter_autop
-    provider: filter
-    status: false
-    weight: -43
-    settings: {  }
-  filter_align:
-    id: filter_align
-    provider: filter
-    status: false
-    weight: -44
-    settings: {  }
-  filter_caption:
-    id: filter_caption
-    provider: filter
-    status: false
-    weight: -42
-    settings: {  }
-  filter_htmlcorrector:
-    id: filter_htmlcorrector
-    provider: filter
-    status: false
-    weight: -39
-    settings: {  }
-  filter_html_escape:
-    id: filter_html_escape
-    provider: filter
-    status: false
-    weight: -46
-    settings: {  }
-  entity_embed:
-    id: entity_embed
-    provider: entity_embed
-    status: true
-    weight: -49
-    settings: {  }
   linkit:
     id: linkit
     provider: linkit
@@ -88,9 +87,10 @@ filters:
     weight: -50
     settings:
       title: false
-  filter_image_lazy_load:
-    id: filter_image_lazy_load
-    provider: filter
+  token_filter:
+    id: token_filter
+    provider: token_filter
     status: true
-    weight: -44
-    settings: {  }
+    weight: -48
+    settings:
+      replace_empty: '0'
