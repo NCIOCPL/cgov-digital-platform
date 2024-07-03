@@ -1,0 +1,35 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "The RAS Initiative"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS components."
+  field_browser_title:
+    value: "Small Business Innovation Research and Small Business Technology Transfer"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "cgov_card_raw_html"
+      field_raw_html:
+        - format: "raw_html"
+          value: |
+            <div class="usa-section">
+              <div class="usa-prose">
+                <p>More than 30 percent of all human cancers—including 95 percent of pancreatic cancers and 45 percent of colorectal cancers—are driven by mutations of the RAS family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers.</p>
+              </div>
+            </div>
