@@ -135,14 +135,14 @@ class ValidateParentConstraintValidator extends ConstraintValidator implements C
    *   Boolean.
    */
   public function checkChildUniqueName($formData, $parentItems) {
-    $name = $formData['name'][0]['value'];
+    $name = strtolower($formData['name'][0]['value']);
     $langcode = $formData['langcode'][0]['value'];
     $tid = !empty($formData['tid']) ? $formData['tid'][0]['value'] : '';
     if (count($parentItems) === 1) {
       $vid = 'cgov_site_sections';
       $terms = $this->termStorage->loadTree($vid, $formData['parent'][0]['target_id'], 1);
       foreach ($terms as $term) {
-        if ($term->name === $name && $term->tid !== $tid && $langcode === $term->langcode) {
+        if (strtolower($term->name) === $name && $term->tid !== $tid && $langcode === $term->langcode) {
           return FALSE;
         }
       }
