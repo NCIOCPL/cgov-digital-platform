@@ -26,6 +26,13 @@ class UniqueCgovUrlConstraint extends CompositeConstraintBase {
   public $sectionInUse = 'This section already has a landing page.';
 
   /**
+   * Unique pretty url.
+   *
+   * @var string
+   */
+  public $uniquePrettyUrl = 'The section is unable to be saved. Please enter a unique pretty url.';
+
+  /**
    * {@inheritdoc}
    */
   public function coversFields() {

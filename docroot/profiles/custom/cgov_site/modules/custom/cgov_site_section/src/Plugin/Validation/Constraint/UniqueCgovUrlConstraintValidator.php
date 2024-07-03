@@ -3,10 +3,12 @@
 namespace Drupal\cgov_site_section\Plugin\Validation\Constraint;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -64,12 +66,22 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
    *   Error for missing data.
    */
   public function validate($entity, Constraint $constraint) {
+    if (!($constraint instanceof UniqueCgovUrlConstraint)) {
+      return NULL;
+    }
+
+    if ($entity instanceof FieldItemListInterface && $entity->getEntity() instanceof Term && $entity->getEntity()->hasField('field_pretty_url')) {
+      // Validate a URL which is generated based on pretty URL & computed path
+      // also check its uniqueness for both path aliases & term hierarchy.
+      $result = $this->validateSiteSectionComputedPath($entity->getEntity());
+      if ($result) {
+        $this->context->addViolation($constraint->uniquePrettyUrl);
+      }
+      return;
+    }
     $is_populated_section = $entity->hasField('field_site_section') && !empty($entity->get('field_site_section')->first());
     $is_populated_pretty_url = $entity->hasField('field_pretty_url') && !empty($entity->get('field_pretty_url')->first());
     if ($is_populated_section) {
-      if (!($constraint instanceof UniqueCgovUrlConstraint)) {
-        return NULL;
-      }
       $site_section = $entity->get('field_site_section');
       // If both are populated, both values may only be used together once.
       if ($is_populated_pretty_url) {
@@ -89,13 +101,57 @@ class UniqueCgovUrlConstraintValidator extends ConstraintValidator implements Co
             ->atPath('field_site_section')
             ->addViolation();
         }
-
         return NULL;
       }
     }
-
     // If both the fields do not exist, do not validate anything.
     return NULL;
+  }
+
+  /**
+   * Method to validate paths for site sections.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   Site section term.
+   *
+   * @return bool
+   *   List of term ids or empty array.
+   */
+  public function validateSiteSectionComputedPath(ContentEntityInterface $entity) {
+    $prettyUrl = $entity->get('field_pretty_url')->value;
+    /** @var \Drupal\Core\Entity\ContentEntityInterface $parentEntity */
+    $parentEntity = $entity->get('parent')->entity;
+    if (empty($prettyUrl) || ($parentEntity == NULL)) {
+      return [];
+    }
+    $parentComputedPath = $parentEntity->get('computed_path')->value;
+    if ($parentComputedPath === '/') {
+      $parentComputedPath = '';
+    }
+    $currentComputedPath = empty($parentComputedPath) ? '/' . $prettyUrl : $parentComputedPath . '/' . $prettyUrl;
+
+    $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+      ->condition('vid', $entity->bundle())
+      ->accessCheck(FALSE)
+      ->condition('computed_path', $currentComputedPath);
+    // Exclude the current term if it exists.
+    if (!$entity->isNew()) {
+      $query->condition('tid', $entity->id(), '!=');
+    }
+    $result = $query->execute();
+    $alias_ids = [];
+    // Create an entity query for the 'path_alias' entity.
+    if ($entity->isNew()) {
+      $aliasChecker = $this->entityTypeManager->getStorage('path_alias')
+        ->getQuery()
+        ->accessCheck(FALSE)
+        ->condition('alias', $currentComputedPath);
+      // Execute the query to get the path alias ID(s).
+      $alias_ids = $aliasChecker->execute();
+    }
+    $output = (!empty($result) || !empty($alias_ids)) ? TRUE : FALSE;
+
+    return $output;
   }
 
   /**
