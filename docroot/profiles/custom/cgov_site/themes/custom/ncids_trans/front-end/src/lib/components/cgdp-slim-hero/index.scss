@@ -1,0 +1,69 @@
+@forward 'usa-section';
+
+@use 'uswds-core' as *;
+.cgdp-slim-hero {
+
+	// Hero does not show on mobile.
+	@include u-display('none');
+
+	@include at-media('tablet') {
+		@include u-display('block');
+	}
+
+  img {
+    object-fit: cover;
+    width: 100%;
+
+    // Tablet breakpoint
+    @include at-media('tablet') {
+			@include u-display('block');
+			height: 144px;
+    }
+    // Tablet-lg breakpoint
+    @include at-media('tablet-lg') {
+			height: 195px;
+    }
+    // Desktop breakpoint
+    @include at-media('desktop') {
+			height: 165px;
+    }
+    // Widescreen breakpoint
+    @include at-media('widescreen') {
+			height: 230px;
+    }
+  }
+}
+
+// So hero is a bad component here. It does not show on mobile, which
+// makes our section padding rules problematic. So, what we need to
+// do is to only make the image not visible, then mess with the
+// padding/margin of the banner on mobile to pretend like there is
+// no usa-section element taking up this spot.
+
+// This is for a hero following a section with no bottom. We need to
+// "transfer" the css rules for a section following a tile to the
+// section after the hero at mobile. For tablet and up, we need to
+// reset the rule.
+// NOTE: I am not giving a crap about light/dark here. Sorry!
+.usa-section.usa-section--cgdp-no-bottom + .usa-section.cgdp-slim-hero + .usa-section {
+	@include u-margin-top(0);
+	// Restore the default
+	@include at-media('tablet') {
+		// This matches $section-padding-height-half from usa-section.
+		@include u-margin-top(-2);
+	}
+}
+
+// This is for the first element in a section following a hero. We need to
+// "transfer" the css rules for the first section in main contents to have
+// no top padding on mobile.
+.main-content .usa-section.cgdp-slim-hero:first-child + .usa-section.usa-section {
+	@include u-padding-top(0);
+	@include u-margin-top(0);
+
+	@include at-media('tablet') {
+		// This matches $section-padding-height-half from usa-section.
+		@include u-padding-top(2);
+		@include u-margin-top(-2);
+	}
+}
