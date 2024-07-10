@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_slim_hero.field_slim_hero_image
+    - paragraphs.paragraphs_type.ncids_slim_hero
+  module:
+    - image
+id: paragraph.ncids_slim_hero.default
+targetEntityType: paragraph
+bundle: ncids_slim_hero
+mode: default
+content:
+  field_slim_hero_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

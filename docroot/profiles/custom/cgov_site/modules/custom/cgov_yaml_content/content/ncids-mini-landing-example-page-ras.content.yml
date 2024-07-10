@@ -22,6 +22,16 @@
   field_landing_contents:
   ######## Begin Feature Row ###########
     - entity: "paragraph"
+      type: "ncids_slim_hero"
+      field_slim_hero_image:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Slim-Hero.png'
+          alt: 'The RAS Initiative Slim Hero Alt Text'
+    - entity: "paragraph"
       type: "ncids_page_title_block"
     - entity: "paragraph"
       type: "ncids_content_block"

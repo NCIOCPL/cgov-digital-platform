@@ -12,6 +12,7 @@ dependencies:
     - paragraphs.paragraphs_type.cgov_two_item_feature_row
     - paragraphs.paragraphs_type.ncids_content_block
     - paragraphs.paragraphs_type.ncids_page_title_block
+    - paragraphs.paragraphs_type.ncids_slim_hero
   module:
     - entity_reference_revisions
 id: node.cgov_mini_landing.field_landing_contents
@@ -34,8 +35,9 @@ settings:
       cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
-      ncids_page_title_block: ncids_page_title_block
       ncids_content_block: ncids_content_block
+      ncids_page_title_block: ncids_page_title_block
+      ncids_slim_hero: ncids_slim_hero
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -179,6 +181,9 @@ settings:
       ncids_promo_block_internal:
         weight: 94
         enabled: false
+      ncids_slim_hero:
+        weight: 51
+        enabled: true
       ncids_two_column_container:
         weight: 95
         enabled: false
