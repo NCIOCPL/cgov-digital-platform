@@ -1,6 +1,6 @@
 import { trackOther } from '../../core/analytics/eddl-util';
 
-import { NCISiteAlert } from '@nciocpl/ncids-js/usa-site-alert';
+import { USASiteAlert } from '@nciocpl/ncids-js/usa-site-alert';
 
 /**
  * Tracks analytics using eddlUtil for site alert.
@@ -68,7 +68,7 @@ const initialize = () => {
 	usaAlerts.forEach((element: Node) => {
 		const alert = element as HTMLElement;
 		const closeable = alert.dataset.siteAlertClosable?.toLowerCase() === 'true';
-		NCISiteAlert.create(alert, { closeable });
+		USASiteAlert.create(alert, { closeable });
 
 		alert.addEventListener('usa-site-alert:content:expand', expandClickHandler);
 
