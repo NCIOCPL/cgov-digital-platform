@@ -14,6 +14,13 @@ jest.mock('../../../core/analytics/eddl-util');
 describe('CGDP Inline Video', () => {
 	beforeEach(() => {
 		window.print = jest.fn();
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvHomeLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
 	});
 	afterEach(() => {
 		// Hack to clean out the dom.
@@ -55,6 +62,8 @@ describe('CGDP Inline Video', () => {
 			'LP:InlineVideo:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 0,
@@ -95,6 +104,8 @@ describe('CGDP Inline Video', () => {
 			'LP:InlineVideo:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 0,

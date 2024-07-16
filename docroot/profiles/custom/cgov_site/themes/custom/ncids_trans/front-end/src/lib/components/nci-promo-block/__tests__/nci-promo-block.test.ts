@@ -13,9 +13,19 @@ jest.mock('../../../core/analytics/eddl-util');
 const numberOfPromoBlockRows = 9;
 
 describe('cgdp-promo-block', () => {
+	beforeEach(() => {
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvHomeLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
+	});
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
+		document.head.innerHTML = '';
 		jest.resetAllMocks();
 	});
 
@@ -78,6 +88,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 7,
 					pageRowCols: 0,
@@ -128,6 +140,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: 1,
 					pageRowIndex: 1,
 					pageRowCols: 0,
@@ -168,6 +182,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 8,
 					pageRowCols: 0,
@@ -208,6 +224,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 9,
 					pageRowCols: 0,
@@ -248,6 +266,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 6,
 					pageRowCols: 0,
@@ -288,6 +308,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 1,
 					pageRowCols: 0,
@@ -328,6 +350,8 @@ describe('cgdp-promo-block', () => {
 				'LP:PromoBlock:LinkClick',
 				{
 					location: 'Body',
+					pageType: 'cgvHomeLanding',
+					pageTemplate: 'ncids_without_title',
 					pageRows: numberOfPromoBlockRows,
 					pageRowIndex: 2,
 					pageRowCols: 0,
