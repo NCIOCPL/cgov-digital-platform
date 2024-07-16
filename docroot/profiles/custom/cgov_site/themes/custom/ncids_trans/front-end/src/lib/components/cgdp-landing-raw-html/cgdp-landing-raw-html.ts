@@ -1,6 +1,8 @@
 import {
 	getContainerItemInfo,
 	getLandingRowsAndColsInfo,
+	getPageInfo,
+	getEventNameBeginning,
 } from '../../core/analytics/landing-page-contents-helper';
 import { trackOther } from '../../core/analytics/eddl-util';
 
@@ -14,10 +16,14 @@ const rawHtmlClickTracker = (target: HTMLElement) => {
 
 	const { containerItems, containerItemIndex } = getContainerItemInfo(target);
 
+	const { pageType, pageTemplate } = getPageInfo();
+
 	/** Set values for data that cannot be altered. */
 	const protectedData = {
 		location: 'Body',
 		componentType: 'Raw HTML',
+		pageType,
+		pageTemplate,
 		pageRows,
 		pageRowIndex,
 		pageRowCols,
@@ -77,11 +83,17 @@ const rawHtmlClickTracker = (target: HTMLElement) => {
 		{}
 	);
 
-	trackOther(`LP:RawHTML:LinkClick`, `LP:RawHTML:LinkClick`, {
-		...defaultData,
-		...overrideData,
-		...protectedData,
-	});
+	const eventNameStart = getEventNameBeginning(pageType);
+
+	trackOther(
+		`${eventNameStart}:RawHTML:LinkClick`,
+		`${eventNameStart}:RawHTML:LinkClick`,
+		{
+			...defaultData,
+			...overrideData,
+			...protectedData,
+		}
+	);
 };
 
 /**
