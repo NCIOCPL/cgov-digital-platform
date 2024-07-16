@@ -16,7 +16,18 @@ describe('NCIDS Dynamic List', () => {
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
+		document.head.innerHTML = '';
 		jest.resetAllMocks();
+	});
+
+	beforeEach(() => {
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvHomeLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
 	});
 
 	it('sends analytics when collection item clicked on dynamic list', async () => {
@@ -40,6 +51,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -80,6 +93,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -120,6 +135,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -160,6 +177,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -200,6 +219,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -270,6 +291,8 @@ describe('NCIDS Dynamic List', () => {
 			'LP:Collection:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
