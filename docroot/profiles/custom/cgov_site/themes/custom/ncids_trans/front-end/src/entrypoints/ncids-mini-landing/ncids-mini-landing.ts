@@ -5,8 +5,11 @@ import usaSidenavInit from '../../lib/components/usa-sidenav';
 import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
 import cgdpContentBlockInit from '../../lib/components/cgdp-landing-content-block';
+import cgdpFeatureCardRow from '../../lib/components/cgdp-feature-card-row';
 
 const onDOMContentLoaded = () => {
+	// Init feature cards
+	cgdpFeatureCardRow();
 	// Init raw html blocks
 	cgdpLandingRawHtml();
 	// Initialize the Sidenav

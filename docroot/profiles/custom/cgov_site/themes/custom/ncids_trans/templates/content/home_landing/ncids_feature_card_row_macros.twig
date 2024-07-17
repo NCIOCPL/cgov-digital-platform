@@ -1,0 +1,35 @@
+{% macro ncidsFeatureCardRow(paragraph, content, variant_classes = '', show_heading = true) %}
+  {% if (content.field_row_cards['#items']|length > 0) %}
+    {% set id = paragraph.id() %}
+    {% set entity_type = paragraph.entityTypeID %}
+    {% set heading_id = "#{entity_type}-#{id}-heading" %}
+    {% set section_classes = "usa-section cgdp-feature-card-row #{variant_classes}" %}
+
+    {% set page_style = getHomeLandingStyle() %}
+    {# Only add the light theme to the section if it is a home/landing #}
+    {% if (page_style == "ncids_with_title") or (page_style == "ncids_without_title") %}
+      {% set is_home_landing = true %}
+    {% endif %}
+
+    {% if is_home_landing %}
+      {% set section_classes = "#{section_classes} usa-section--light" %}
+    {% endif %}
+
+    <section class="{{section_classes}}" aria-labelledby="{{heading_id}}" data-eddl-landing-row>
+      {% if is_home_landing %}
+      <div class="grid-container">
+      {% endif %}
+        {% set heading_classes = "cgdp-feature-card-row__heading" %}
+        {% if not show_heading %}
+          {% set heading_classes = "#{heading_classes} usa-sr-only" %}
+        {% endif %}
+        <h2 id="{{heading_id}}" class="{{heading_classes}}">{{ content.field_container_heading }}</h2>
+        <ul class="nci-card-group">
+          {{ content.field_row_cards }}
+        </ul>
+      {% if is_home_landing %}
+      </div>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endmacro %}
