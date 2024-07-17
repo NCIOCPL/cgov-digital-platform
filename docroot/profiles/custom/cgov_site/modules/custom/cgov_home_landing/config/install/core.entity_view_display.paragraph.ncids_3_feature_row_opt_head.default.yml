@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_3_feature_row_opt_head.field_container_heading
+    - field.field.paragraph.ncids_3_feature_row_opt_head.field_heading_visibility
+    - field.field.paragraph.ncids_3_feature_row_opt_head.field_row_cards
+    - paragraphs.paragraphs_type.ncids_3_feature_row_opt_head
+  module:
+    - entity_reference_revisions
+    - options
+id: paragraph.ncids_3_feature_row_opt_head.default
+targetEntityType: paragraph
+bundle: ncids_3_feature_row_opt_head
+mode: default
+content:
+  field_container_heading:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_heading_visibility:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_row_cards:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: ncids_group_card
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

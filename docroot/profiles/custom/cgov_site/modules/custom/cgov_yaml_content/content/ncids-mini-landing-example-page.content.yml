@@ -97,6 +97,49 @@
         - format: "ncids_streamlined"
           value: |
              This is a <a href="https://www.google.com">test link without a heading</a>.
+    - entity: 'paragraph'
+      type: "ncids_3_feature_row_opt_head"
+      field_container_heading:
+        - value: "Test Links"
+      field_heading_visibility:
+        value: visible
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_home_landing'
+                    title: 'About Cancer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
   field_landing_contents__ES:
   ## SPANISH CONTENTS HERE
     - entity: "paragraph"
@@ -117,3 +160,46 @@
         - format: "ncids_streamlined"
           value: |
             <p>This is a content block. This is a placeholder spanish page for when/if we want to test spanish content - DR</p>
+    - entity: 'paragraph'
+      type: "ncids_3_feature_row_opt_head"
+      field_container_heading:
+        - value: "Test Links"
+      field_heading_visibility:
+        value: visible
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_home_landing'
+                    title: 'El cáncer'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_card_description:
+            - value: 'Descripción externa'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_multimedia"
+          field_featured_media:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'Instituto Nacional del Cáncer Panorama'
