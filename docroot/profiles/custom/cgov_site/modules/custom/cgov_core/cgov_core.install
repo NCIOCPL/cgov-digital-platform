@@ -34,6 +34,7 @@ function cgov_core_install() {
 
   // Install permissions for this module.
   _cgov_core_install_permissions($siteHelper);
+  _cgov_core_remove_permissions($siteHelper);
 }
 
 /**
@@ -136,6 +137,22 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
   ];
 
   $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Remove permissions we don't want the user to have.
+ *
+ * @param \Drupal\cgov_core\CgovCoreTools $siteHelper
+ *   Cgov tools service.
+ */
+function _cgov_core_remove_permissions(CgovCoreTools $siteHelper) {
+  $perms_to_remove = [
+    'admin_ui' => [
+      'access help pages',
+    ],
+  ];
+
+  $siteHelper->removeRolePermissions($perms_to_remove);
 }
 
 /**
@@ -493,4 +510,17 @@ function cgov_core_update_10004() {
     ],
   ];
   $siteHelper->addRolePermissions($perms);
+}
+
+/*
+ * Fix permission for viewing help pages.
+ */
+function cgov_core_update_10005() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms_to_remove = [
+    'admin_ui' => [
+      'access help pages',
+    ],
+  ];
+  $siteHelper->removeRolePermissions($perms_to_remove);
 }
