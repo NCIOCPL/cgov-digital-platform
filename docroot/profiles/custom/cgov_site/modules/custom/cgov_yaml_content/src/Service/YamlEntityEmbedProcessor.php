@@ -64,21 +64,79 @@ class YamlEntityEmbedProcessor {
     // Loop over values and replace.
     foreach ($field as $field_item) {
       /* $field_item is of type TextLongItem. */
-      if (preg_match("/<drupal-entity/", $field_item->value)) {
-        $field_item->value = $this->transformEmbeds($field_item->value);
+      if (preg_match("/data-entity-uuid=\"#process\"/", $field_item->value)) {
+        $field_item->value = $this->transformContent($field_item->value);
       }
     }
   }
 
   /**
-   * Finds all the drupal-enitity elements and looks up their UUID.
+   * Transforms content for processing.
    *
    * @param string $value
    *   The string to transform.
    */
-  public function transformEmbeds($value) {
+  public function transformContent($value) {
     $doc = new Document();
     $doc->html($value);
+
+    // Run transformers.
+    $this->transformEmbeds($doc);
+    $this->transformManagedLinks($doc);
+
+    // Return the value.
+    $body = $doc->find('body');
+    if ($body->count() > 0) {
+      $value = $body->html();
+    }
+
+    return $value;
+  }
+
+  /**
+   * Finds all the managed links and looks up their UUID.
+   *
+   * @param \DOMWrap\Document $doc
+   *   The document to transform.
+   */
+  public function transformManagedLinks($doc) {
+    $allLinks = $doc->getElementsByTagName('a');
+
+    // Note: Don't use a foreach; it doesn't work. Must loop backwards.
+    // Stolen from The Developer Formerly Know As Adrian's Migrate code.
+    // Ask ‽ why it does not work. :)
+    $length = $allLinks->length;
+    for ($i = $length - 1; $i >= 0; $i--) {
+      $linkEl = $allLinks->item($i);
+
+      // Only process if the UUID is process. We may find already processed
+      // fields in translations or some other nonsense...
+      if ($linkEl->getAttribute('data-entity-uuid') === "#process") {
+        $entityType = $linkEl->getAttribute('data-entity-type');
+        if (!$entityType) {
+          $this->throwParamError("Invalid entity embed, missing #process");
+        }
+        $queryParams = $this->mapYamlQueryAttrToParams($linkEl->attributes);
+
+        $matchingEntity = $this->queryEntityUuid($entityType, $queryParams);
+        if ($matchingEntity) {
+          $linkEl->setAttribute('data-entity-uuid', $matchingEntity->uuid());
+          $linkEl->setAttribute('href', $matchingEntity->toUrl()->toString());
+        }
+        else {
+          $this->throwParamError("Could not find entity for linking", $entityType, $queryParams);
+        }
+      }
+    }
+  }
+
+  /**
+   * Finds all the drupal-entity elements and looks up their UUID.
+   *
+   * @param \DOMWrap\Document $doc
+   *   The document to transform.
+   */
+  public function transformEmbeds($doc) {
     $allEmbeds = $doc->getElementsByTagName('drupal-entity');
 
     // Note: Don't use a foreach; it doesn't work. Must loop backwards.
@@ -97,27 +155,20 @@ class YamlEntityEmbedProcessor {
         }
         $queryParams = $this->mapYamlQueryAttrToParams($drupalEntityEl->attributes);
 
-        $uuid = $this->queryEntityUuid($entityType, $queryParams);
-        if ($uuid) {
-          $drupalEntityEl->setAttribute('data-entity-uuid', $uuid);
+        $matchingEntity = $this->queryEntityUuid($entityType, $queryParams);
+
+        if ($matchingEntity) {
+          $drupalEntityEl->setAttribute('data-entity-uuid', $matchingEntity->uuid());
         }
         else {
           $this->throwParamError("Could not find entity for embed", $entityType, $queryParams);
         }
       }
     }
-
-    // Return the value.
-    $body = $doc->find('body');
-    if ($body->count() > 0) {
-      $value = $body->html();
-    }
-
-    return $value;
   }
 
   /**
-   * Finds a UUID for embedding.
+   * Finds an entity for embedding.
    *
    * YAML Content module does not handle media in its helper, so
    * we will need to roll our own.
@@ -127,8 +178,8 @@ class YamlEntityEmbedProcessor {
    * @param array $content_data
    *   The import content structure representing the entity being searched for.
    *
-   * @return string|false
-   *   Return a matching UUID if one is found, or FALSE otherwise.
+   * @return \Drupal\Core\Entity\EntityInterface|false
+   *   Return a matching entity if one is found, or FALSE otherwise.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
@@ -159,7 +210,7 @@ class YamlEntityEmbedProcessor {
       return $this->throwParamError('Multiple embed entities matched query.', $entity_type, $content_data);
     }
 
-    return array_shift($entities)->uuid();
+    return array_shift($entities);
   }
 
   /**
