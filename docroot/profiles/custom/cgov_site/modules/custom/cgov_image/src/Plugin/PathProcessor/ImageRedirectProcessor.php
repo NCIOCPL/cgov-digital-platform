@@ -49,11 +49,20 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
    */
   public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL) {
 
-    if ($this->currentRoute->getRouteName() !== 'entity.media.canonical') {
-      return $path;
+    // Is this the current version, an older one, or some other route?
+    switch ($this->currentRoute->getRouteName()) {
+      case 'entity.media.canonical':
+        $entity = $this->currentRoute->getParameter('media');
+        break;
+
+      case 'entity.media.revision':
+        $entity = $this->currentRoute->getParameter('media_revision');
+        break;
+
+      default:
+        return $path;
     }
 
-    $entity = $this->currentRoute->getParameter('media');
     if ($entity === NULL ||
       !($entity instanceof Media) ||
       ($entity->bundle() !== 'cgov_image' && $entity->bundle() !== 'cgov_contextual_image')
