@@ -9,6 +9,8 @@ use Drupal\crop\Entity\Crop;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\file\Entity\File;
+use Drupal\media\Entity\Media;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view().
@@ -364,7 +366,7 @@ function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, 
  * Handle images for NCIDS Dynamic List.
  *
  * NCIDS Dynamic List requires a 4x3 image. This method must
- * determine where to source the image from, either override 
+ * determine where to source the image from, either override
  * field for that aspect ratio or the crop on the field_media_image.
  *
  * @param array $build
@@ -405,4 +407,31 @@ function cgov_image_preprocess_image_style(&$variables) {
   $variables['image']['#attributes']['class'][] = 'usa-collection__img';
   $variables['image']['#width'] = '160';
   $variables['image']['#height'] = '120';
+}
+
+/**
+ * Removes revision tab from cgov_image and cgov_contextual_image.
+ *
+ * @param array $data
+ *   An associative array containing list of (up to 2) tab
+ *   levels that contain a list of tabs keyed by their href,
+ *   each one being an associative array as described above.
+ * @param string $route_name
+ *   The route name of the page.
+ * @param Drupal\Core\Cache\RefinableCacheableDependencyInterface $cacheability
+ *   The cacheability metadata for the current route's local tasks.
+ */
+function cgov_image_menu_local_tasks_alter(array &$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+  $media = \Drupal::routeMatch()->getParameter('media');
+  if (!empty($media) && $media instanceof Media) {
+    $bundle = $media->bundle();
+    if ($bundle === 'cgov_image' || $bundle === 'cgov_contextual_image') {
+      if (isset($data['tabs'][0]['entity.version_history:media.version_history'])) {
+        unset($data['tabs'][0]['entity.version_history:media.version_history']);
+      }
+      if (isset($data['tabs'][0]['content_moderation.workflows:media.latest_version_tab'])) {
+        unset($data['tabs'][0]['content_moderation.workflows:media.latest_version_tab']);
+      }
+    }
+  }
 }
