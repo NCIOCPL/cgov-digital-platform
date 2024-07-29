@@ -1,5 +1,15 @@
 import { trackOther } from './eddl-util';
 
+/**
+ * Definition for page information object.
+ */
+interface PageInfo {
+	/** The type of the page. Comes from dcterms.type <meta> tag. */
+	pageType?: string;
+	/** The template/page style of the page. Comes from cgdp.template <meta> tag. */
+	pageTemplate?: string;
+}
+
 export const getLandingRowsAndColsInfo = (target: HTMLElement) => {
 	// Get the total number of page rows by finding all rows on the page
 	// and subtracting the rows within columns.
@@ -91,6 +101,37 @@ export const getContainerItemInfo = (target: HTMLElement) => {
 };
 
 /**
+ * Gets information about the page from metadata.
+ * @returns
+ */
+export const getPageInfo = (): PageInfo => {
+	return {
+		pageType: (
+			document.querySelector('meta[name="dcterms.type"]') as HTMLMetaElement
+		)?.content,
+		pageTemplate: (
+			document.querySelector('meta[name="cgdp.template"]') as HTMLMetaElement
+		)?.content,
+	};
+};
+
+/**
+ * Gets the beginning string for an EDDL event name.
+ * @param pageType The type of the page based on dcterms.type meta tag.
+ * @returns The beginning string.
+ */
+export const getEventNameBeginning = (pageType: string | undefined) => {
+	switch (pageType) {
+		case 'cgvHomeLanding':
+			return 'LP';
+		case 'cgvMiniLanding':
+			return 'MLP';
+		default:
+			return 'UNKNOWN';
+	}
+};
+
+/**
  * Landing page click tracker helper.
  * @param {HTMLElement} target - Selected component.
  * @param {string} linkName - Link name from type of selected component.
@@ -136,22 +177,32 @@ export const landingClickTracker = (
 	const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 		getLandingRowsAndColsInfo(target);
 
-	trackOther(`LP:${linkName}:LinkClick`, `LP:${linkName}:LinkClick`, {
-		location: 'Body',
-		pageRows,
-		pageRowIndex,
-		pageRowCols,
-		pageRowColIndex,
-		containerItems: containerItems,
-		containerItemIndex: containerItemIndex,
-		componentType: componentType,
-		componentTheme: componentTheme,
-		componentVariant: componentVariant,
-		title: title.slice(0, 50),
-		linkType: linkType,
-		linkText: linkText.slice(0, 50),
-		linkArea: linkArea,
-		totalLinks: totalLinks,
-		linkPosition: linkPosition,
-	});
+	const { pageType, pageTemplate } = getPageInfo();
+
+	const eventNameStart = getEventNameBeginning(pageType);
+
+	trackOther(
+		`${eventNameStart}:${linkName}:LinkClick`,
+		`${eventNameStart}:${linkName}:LinkClick`,
+		{
+			location: 'Body',
+			pageType,
+			pageTemplate,
+			pageRows,
+			pageRowIndex,
+			pageRowCols,
+			pageRowColIndex,
+			containerItems: containerItems,
+			containerItemIndex: containerItemIndex,
+			componentType: componentType,
+			componentTheme: componentTheme,
+			componentVariant: componentVariant,
+			title: title.slice(0, 50),
+			linkType: linkType,
+			linkText: linkText.slice(0, 50),
+			linkArea: linkArea,
+			totalLinks: totalLinks,
+			linkPosition: linkPosition,
+		}
+	);
 };

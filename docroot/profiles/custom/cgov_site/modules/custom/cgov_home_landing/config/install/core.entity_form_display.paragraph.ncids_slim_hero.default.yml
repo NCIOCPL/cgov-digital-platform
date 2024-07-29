@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_slim_hero.field_slim_hero_image
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.ncids_slim_hero
+  module:
+    - image
+id: paragraph.ncids_slim_hero.default
+targetEntityType: paragraph
+bundle: ncids_slim_hero
+mode: default
+content:
+  field_slim_hero_image:
+    type: image_image
+    weight: 0
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

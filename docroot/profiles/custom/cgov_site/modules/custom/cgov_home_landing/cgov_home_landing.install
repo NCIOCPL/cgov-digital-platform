@@ -1,6 +1,8 @@
 <?php
 
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldConfig;
 
 /**
  * @file
@@ -53,4 +55,86 @@ function cgov_home_landing_update_8001() {
 
   // Update field storage configuration.
   FieldStorageConfig::loadByName('paragraph', 'field_button_text')->save();
+}
+
+/**
+ * Updates default value for field_mlp_page_style.
+ */
+function cgov_home_landing_update_8002() {
+
+  // Import the feature to get the field_mlp_page_style.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_home_landing']);
+
+  // Make sure software querying the field doesn't get back a NULL.
+  $db = \Drupal::database();
+  $bundle = 'cgov_mini_landing';
+  $fields = [
+    'bundle',
+    'deleted',
+    'entity_id',
+    'revision_id',
+    'langcode',
+    'delta',
+    'field_mlp_page_style_value',
+  ];
+
+  // Now we are going to get the revisions we need to add the
+  // default field_mlp_page_style to.
+  $prefixes = ['node', 'node_revision'];
+  foreach ($prefixes as $prefix) {
+    $page_style_table = "{$prefix}__field_mlp_page_style";
+    $browser_title_table = "{$prefix}__field_browser_title";
+
+    // Step 1: Get all the node/revision records that have a value set.
+    $results = $db->select($page_style_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $found = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      $found[$key] = $key;
+    }
+
+    // Step 2: Figure out what node/revision do not have the page style value set.
+    // We do this by getting all the node/revision records that don't have a
+    // value set. The Browser Title is old and required, so all revisions of a
+    // a MLP should have a record in the table.
+    $results = $db->select($browser_title_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $records = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      if (!array_key_exists($key, $found)) {
+        // This entity/revision/langcode does not have a value set, so let's set one.
+        $records[] = [
+          'bundle' => $bundle,
+          'deleted' => 0,
+          'entity_id' => $result->entity_id,
+          'revision_id' => $result->revision_id,
+          'langcode' => $result->langcode,
+          'delta' => 0,
+          'field_mlp_page_style_value' => 'standard',
+        ];
+      }
+    }
+
+    // Insert all the records we need to add.
+    $insert = $db->insert($page_style_table)->fields($fields);
+    foreach ($records as $record) {
+      $insert->values($record);
+    }
+    $insert->execute();
+    $count = count($records);
+    \Drupal::logger($bundle)->notice("Created $count rows in $page_style_table.");
+  }
 }

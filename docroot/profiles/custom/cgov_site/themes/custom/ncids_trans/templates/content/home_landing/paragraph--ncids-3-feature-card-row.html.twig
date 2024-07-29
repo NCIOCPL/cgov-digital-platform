@@ -1,13 +1,3 @@
-{% if (content.field_row_cards['#items']|length > 0) %}
-  {% set id = paragraph.id() %}
-  {% set entity_type = paragraph.entityTypeID %}
-  {% set heading_id = "#{entity_type}-#{id}-heading" %}
-  <section class="usa-section usa-section--light cgdp-feature-card-row" aria-labelledby="{{heading_id}}" data-eddl-landing-row>
-    <div class="grid-container">
-      <h2 id="{{heading_id}}" class="cgdp-feature-card-row__heading">{{ content.field_container_heading }}</h2>
-      <ul class="nci-card-group">
-        {{ content.field_row_cards }}
-      </ul>
-    </div>
-  </section>
-{% endif %}
+{% import '@ncids_trans/content/home_landing/ncids_feature_card_row_macros.twig' as rowMacros %}
+
+{{ rowMacros.ncidsFeatureCardRow(paragraph, content) }}

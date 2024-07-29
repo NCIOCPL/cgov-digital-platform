@@ -1,0 +1,9 @@
+{% import '@ncids_trans/content/home_landing/ncids_feature_card_row_macros.twig' as rowMacros %}
+
+{% if paragraph.field_heading_visibility.value == 'sr-only' %}
+  {% set show_heading = false %}
+{% else %}
+  {% set show_heading = true %}
+{% endif %}
+
+{{ rowMacros.ncidsFeatureCardRow(paragraph, content, 'cgdp-feature-card-row--opt-head', show_heading) }}

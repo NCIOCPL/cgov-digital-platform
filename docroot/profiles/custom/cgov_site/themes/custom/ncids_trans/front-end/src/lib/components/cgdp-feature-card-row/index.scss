@@ -2,8 +2,15 @@
 @forward 'nci-card';
 @forward 'nci-card-group';
 @use 'uswds-core' as *;
-.cgdp-feature-card-row__heading { 
+
+.cgdp-feature-card-row__heading {
     @include u-text('bold');
     @include typeset('heading', '2xl', 2);
     margin: 0 0 16px 0;
+}
+
+// When a feature card row is used on inner pages, then the heading should
+// mimic an h2 as seen in usa-prose.
+.cgdp-feature-card-row--opt-head .cgdp-feature-card-row__heading {
+    @include typeset('heading', $theme-h2-font-size, $theme-heading-line-height);
 }

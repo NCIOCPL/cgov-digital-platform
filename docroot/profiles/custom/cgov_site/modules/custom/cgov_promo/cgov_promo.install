@@ -4,3 +4,11 @@
  * @file
  * Contains cgov_promo.install.
  */
+
+ /*
+ * Enable ncids_group_card view mode.
+ */
+function cgov_promo_update_10001() {
+  $service = \Drupal::service('features.manager');
+  $service->import(['cgov_promo']);
+}
