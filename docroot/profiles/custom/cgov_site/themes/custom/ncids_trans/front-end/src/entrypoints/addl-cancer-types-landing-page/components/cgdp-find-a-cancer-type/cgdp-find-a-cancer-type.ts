@@ -1,4 +1,8 @@
-import { getLandingRowsAndColsInfo } from '../../../../lib/core/analytics/landing-page-contents-helper';
+import {
+	getLandingRowsAndColsInfo,
+	getPageInfo,
+	getEventNameBeginning,
+} from '../../../../lib/core/analytics/landing-page-contents-helper';
 import { trackOther } from '../../../../lib/core/analytics/eddl-util';
 import { USAComboBox } from '@nciocpl/ncids-js/usa-combo-box';
 import debounce from 'lodash.debounce';
@@ -66,12 +70,17 @@ const focusHandler = (evt: FocusEvent): void => {
 	const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 		getLandingRowsAndColsInfo(currentTarget);
 
+	const { pageType, pageTemplate } = getPageInfo();
+	const eventNameStart = getEventNameBeginning(pageType);
+
 	trackOther(
-		`LP:RawHTMLCancerTypeSearch:FormFocus`,
-		`LP:RawHTMLCancerTypeSearch:FormFocus`,
+		`${eventNameStart}:RawHTMLCancerTypeSearch:FormFocus`,
+		`${eventNameStart}:RawHTMLCancerTypeSearch:FormFocus`,
 		{
 			location: 'Body',
 			componentType: 'Raw HTML',
+			pageType,
+			pageTemplate,
 			pageRows,
 			pageRowIndex,
 			pageRowCols,
@@ -112,12 +121,16 @@ const initialize = (): void => {
 		const target = evt.currentTarget as HTMLElement;
 		const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 			getLandingRowsAndColsInfo(target);
+		const { pageType, pageTemplate } = getPageInfo();
+		const eventNameStart = getEventNameBeginning(pageType);
 		trackOther(
-			`LP:RawHTMLCancerTypeSearch:ClearForm`,
-			`LP:RawHTMLCancerTypeSearch:ClearForm`,
+			`${eventNameStart}:RawHTMLCancerTypeSearch:ClearForm`,
+			`${eventNameStart}:RawHTMLCancerTypeSearch:ClearForm`,
 			{
 				location: 'Body',
 				componentType: 'Raw HTML',
+				pageType,
+				pageTemplate,
 				pageRows,
 				pageRowIndex,
 				pageRowCols,
@@ -149,12 +162,16 @@ const initialize = (): void => {
 			const linkPosition = Array.from(comboBox.getOptions()).indexOf(
 				detail.selected.item(0)
 			);
+			const { pageType, pageTemplate } = getPageInfo();
+			const eventNameStart = getEventNameBeginning(pageType);
 			trackOther(
-				`LP:RawHTMLCancerTypeSearch:SelectItem`,
-				`LP:RawHTMLCancerTypeSearch:SelectItem`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SelectItem`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SelectItem`,
 				{
 					location: 'Body',
 					componentType: 'Raw HTML',
+					pageType,
+					pageTemplate,
 					pageRows,
 					pageRowIndex,
 					pageRowCols,
@@ -185,12 +202,16 @@ const initialize = (): void => {
 			const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 				getLandingRowsAndColsInfo(target);
 			state.previousInputValue = detail.inputValue;
+			const { pageType, pageTemplate } = getPageInfo();
+			const eventNameStart = getEventNameBeginning(pageType);
 			trackOther(
-				`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
-				`LP:RawHTMLCancerTypeSearch:NoResultsFound`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:NoResultsFound`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:NoResultsFound`,
 				{
 					location: 'Body',
 					componentType: 'Raw HTML',
+					pageType,
+					pageTemplate,
 					pageRows,
 					pageRowIndex,
 					pageRowCols,
@@ -240,12 +261,16 @@ const initialize = (): void => {
 		) {
 			updateError();
 			state.errorCounter = state.errorCounter + 1;
+			const { pageType, pageTemplate } = getPageInfo();
+			const eventNameStart = getEventNameBeginning(pageType);
 			trackOther(
-				`LP:RawHTMLCancerTypeSearch:SubmitError`,
-				`LP:RawHTMLCancerTypeSearch:SubmitError`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SubmitError`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SubmitError`,
 				{
 					location: 'Body',
 					componentType: 'Raw HTML',
+					pageType,
+					pageTemplate,
 					pageRows,
 					pageRowIndex,
 					pageRowCols,
@@ -268,12 +293,16 @@ const initialize = (): void => {
 			const linkPosition = Array.from(comboBox.getOptions()).indexOf(
 				selectedOption
 			);
+			const { pageType, pageTemplate } = getPageInfo();
+			const eventNameStart = getEventNameBeginning(pageType);
 			trackOther(
-				`LP:RawHTMLCancerTypeSearch:SubmitForm`,
-				`LP:RawHTMLCancerTypeSearch:SubmitForm`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SubmitForm`,
+				`${eventNameStart}:RawHTMLCancerTypeSearch:SubmitForm`,
 				{
 					location: 'Body',
 					componentType: 'Raw HTML',
+					pageType,
+					pageTemplate,
 					pageRows,
 					pageRowIndex,
 					pageRowCols,

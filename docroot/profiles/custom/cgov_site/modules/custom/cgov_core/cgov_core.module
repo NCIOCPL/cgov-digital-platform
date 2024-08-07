@@ -16,6 +16,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
@@ -233,6 +234,16 @@ function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     }
   }
 
+  if (strpos($form_id, 'taxonomy_term') !== FALSE && isset($form['tid']['#value'])) {
+    $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+    $vid = $form['vid']['#value'];
+    if (in_array($vid, $vocabs)) {
+      $references = getTermRefsFromField($form['tid']['#value'], $vid);
+      if (count($references) > 0) {
+        \Drupal::messenger()->addWarning('Taxonomy term cannot be deleted. The term is used in a published revision.');
+      }
+    }
+  }
   // "administer permissions" is too much power for a user in production, but we
   // still need to be able to add users and grant them roles. This hooks into the
   // user form and allows users with the "edit user roles" permissions to be able
@@ -328,6 +339,15 @@ function cgov_core_page_attachments_alter(array &$attachments) {
   ];
   $cache_tags = isset($attachments['#cache']['tags']) ? $attachments['#cache']['tags'] : [];
   $attachments['#cache']['tags'] = Cache::mergeTags($cache_tags, $config->getCacheTags());
+
+  // Hack to remove the "ad" inserted by the responsive_favicons module.
+  $headings = &$attachments['#attached']['html_head'];
+  foreach($headings as &$element) {
+    if($element[1] === 'responsive_favicons'){
+      $element[0]['#attributes']['name'] = 'x-no-op';
+      $element[0]['#attributes']['content'] = 'none';
+    }
+  }
 }
 
 /**
@@ -734,4 +754,97 @@ function cgov_addl_lib_default_value_function(EntityInterface $entity, FieldDefi
   return [
     ['value' => 'None'],
   ];
+}
+
+/**
+ * Implements hook_entity_type_access().
+ */
+function cgov_core_taxonomy_term_access($entity, $operation, $account) {
+  // Prevent term deletion if used in default revision.
+  $references = [];
+  $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+  if (in_array($entity->bundle(), $vocabs)) {
+    switch ($operation) {
+      case 'delete':
+        $references = getTermRefsFromField($entity->id(), $entity->bundle());
+        if (count($references) > 0) {
+          return AccessResult::forbidden();
+        }
+        break;
+
+      // Let other modules weigh in if we haven't vetoed the operation.
+      default:
+        return AccessResult::neutral();
+    }
+  }
+  return AccessResult::neutral();
+}
+
+/**
+ * Method to find if term refrence exist.
+ */
+function getTermRefsFromField($tid, $vid) {
+  $entities = [];
+
+  $entity_reference_fields = [];
+  $field_map = \Drupal::service('entity_field.manager')->getFieldMap();
+  foreach ($field_map as $key => $entity_type) {
+    foreach ($entity_type as $field_name => $fields) {
+      if ($fields["type"] == "entity_reference" && strpos($field_name, "field_") !== FALSE) {
+        $entity_reference_fields[$key][$field_name] = $fields;
+      }
+    }
+  }
+  foreach ($entity_reference_fields as $entity_type => $field_array) {
+    foreach ($field_array as $field_name => $values) {
+      foreach ($values['bundles'] as $bundle) {
+        $field_config = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+        if ($field_config != NULL) {
+          $field_settings = $field_config->getSettings();
+          if ($field_settings["target_type"] == "taxonomy_term" && $field_settings['handler'] == "default:taxonomy_term") {
+            if (in_array($vid, $field_settings['handler_settings']['target_bundles']) || empty($field_settings['handler_settings']['target_bundles'])) {
+              $map[$entity_type][$field_name] = $field_name;
+            }
+          }
+        }
+      }
+    }
+  }
+  foreach ($map as $entity_type => $fields) {
+    foreach ($fields as $key => $value) {
+      $result = [];
+      $result = \Drupal::entityTypeManager()->getStorage($entity_type)->getQuery()
+        ->condition('status', 1)
+        ->accessCheck(FALSE)
+        ->condition($value, $tid, '=')->execute();
+      if (!empty($result)) {
+        $entities[$entity_type] = $result;
+      }
+    }
+  }
+  return $entities;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function cgov_core_taxonomy_term_delete(EntityInterface $entity) {
+  $bundle = $entity->bundle();
+  $tid = $entity->id();
+  $tags = [];
+  if ($bundle == 'cgov_blog_topics') {
+    $references = getTermRefsFromField($tid, $bundle);
+    if (count($references) > 0) {
+      foreach ($references as $type => $ids) {
+        if ($type === 'node') {
+          foreach ($ids as $value) {
+            $tags[] = 'node:' . $value;
+          }
+        }
+      }
+      if (!empty($tags)) {
+        Cache::invalidateTags($tags);
+      }
+    }
+  }
 }

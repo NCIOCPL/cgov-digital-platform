@@ -58,6 +58,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'use text format raw_html',
       'use text format simple',
       'use text format streamlined',
+      'use text format ncids_streamlined',
     ],
     'advanced_editor' => [
       'access taxonomy overview',
@@ -131,6 +132,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'View plugins',
       'Field list report',
       'regenerate urls',
+      'administer responsive favicons',
     ],
   ];
 
@@ -473,4 +475,42 @@ function cgov_core_update_10003() {
   \Drupal::configFactory()->getEditable('cgov_adobe.settings')
     ->set('load_async', TRUE)
     ->save(TRUE);
+}
+
+/*
+ * Enable responsive_favicons & set Permission.
+ */
+function cgov_core_update_10004() {
+  $module_handler = \Drupal::moduleHandler();
+  if (!$module_handler->moduleExists('responsive_favicons')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['responsive_favicons']);
+  }
+
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'site_admin' => [
+      'administer responsive favicons',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
+}
+
+/**
+ * Add permissions for new ncids_streamlined editor.
+ */
+function cgov_core_update_10005() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Import the configs to create the new ncids_streamlined
+  // so the permission exists so we can add it.
+  $service = \Drupal::service('features.manager');
+  $service->import(['cgov_core']);
+
+  $perms = [
+    'admin_ui' => [
+      'use text format ncids_streamlined',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
 }

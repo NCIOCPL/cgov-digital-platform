@@ -1,4 +1,8 @@
-import { getLandingRowsAndColsInfo } from '../../../../lib/core/analytics/landing-page-contents-helper';
+import {
+	getLandingRowsAndColsInfo,
+	getPageInfo,
+	getEventNameBeginning,
+} from '../../../../lib/core/analytics/landing-page-contents-helper';
 import { trackOther } from '../../../../lib/core/analytics/eddl-util';
 import { USAAccordion } from '@nciocpl/ncids-js/usa-accordion';
 
@@ -53,29 +57,37 @@ const accordionClickTracker = (target: HTMLElement) => {
 	);
 	const sectionsExpandedAtClick = expandedButtons.length;
 
-	trackOther(`LP:RawHTMLAccordion:LinkClick`, `LP:RawHTMLAccordion:LinkClick`, {
-		location: 'Body',
-		componentType: 'Raw HTML',
-		pageRows,
-		pageRowIndex,
-		pageRowCols,
-		pageRowColIndex,
-		containerItems,
-		containerItemIndex,
-		componentTheme: 'Not Defined',
-		componentVariant: 'Accordion',
-		title: 'Cancer Types A-Z Accordion',
-		linkArea,
-		linkText: linkText.slice(0, 50),
-		linkType,
-		totalLinks: allLinks.length,
-		linkPosition,
-		accordionExpands,
-		accordionCollapses,
-		sectionsExpandedAtClick,
-		accordionAction: 'Link Click',
-		accordionFirstInteraction,
-	});
+	const { pageType, pageTemplate } = getPageInfo();
+	const eventStartName = getEventNameBeginning(pageType);
+	trackOther(
+		`${eventStartName}:RawHTMLAccordion:LinkClick`,
+		`${eventStartName}:RawHTMLAccordion:LinkClick`,
+		{
+			location: 'Body',
+			componentType: 'Raw HTML',
+			pageType,
+			pageTemplate,
+			pageRows,
+			pageRowIndex,
+			pageRowCols,
+			pageRowColIndex,
+			containerItems,
+			containerItemIndex,
+			componentTheme: 'Not Defined',
+			componentVariant: 'Accordion',
+			title: 'Cancer Types A-Z Accordion',
+			linkArea,
+			linkText: linkText.slice(0, 50),
+			linkType,
+			totalLinks: allLinks.length,
+			linkPosition,
+			accordionExpands,
+			accordionCollapses,
+			sectionsExpandedAtClick,
+			accordionAction: 'Link Click',
+			accordionFirstInteraction,
+		}
+	);
 };
 
 /**
@@ -127,11 +139,16 @@ const accordionExpandCollapseTracker = (evt: Event) => {
 
 	const linkText = target.textContent ? target.textContent.trim() : '_ERROR_';
 
+	const { pageType, pageTemplate } = getPageInfo();
+	const eventStartName = getEventNameBeginning(pageType);
+
 	trackOther(
-		`LP:RawHTMLAccordion:ExpandCollapse`,
-		`LP:RawHTMLAccordion:ExpandCollapse`,
+		`${eventStartName}:RawHTMLAccordion:ExpandCollapse`,
+		`${eventStartName}:RawHTMLAccordion:ExpandCollapse`,
 		{
 			location: 'Body',
+			pageType,
+			pageTemplate,
 			componentType: 'Raw HTML',
 			pageRows,
 			pageRowIndex,

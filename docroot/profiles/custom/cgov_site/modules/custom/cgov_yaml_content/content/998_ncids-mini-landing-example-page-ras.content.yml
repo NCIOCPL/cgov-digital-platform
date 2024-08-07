@@ -1,0 +1,41 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "The RAS Initiative"
+  field_page_description:
+    value: "NCI established the RAS Initiative to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers."
+  field_browser_title:
+    value: "The RAS Initiative"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/research/key-initiatives/ras'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_slim_hero"
+      field_slim_hero_image:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'Slim-Hero.png'
+          alt: 'The RAS Initiative Slim Hero Alt Text'
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+            <p>More than 30 percent of all human cancers—including 95 percent of pancreatic cancers and 45 percent of colorectal cancers—are driven by mutations of the RAS family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers.<p>

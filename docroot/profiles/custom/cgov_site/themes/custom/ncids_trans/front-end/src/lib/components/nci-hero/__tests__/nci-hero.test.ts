@@ -11,9 +11,19 @@ import { nciHeroTestDom } from './nci-hero.dom';
 jest.mock('../../../core/analytics/eddl-util');
 
 describe('NCI Hero', () => {
+	beforeEach(() => {
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvHomeLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
+	});
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
+		document.head.innerHTML = '';
 		jest.resetAllMocks();
 	});
 
@@ -100,6 +110,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 1,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -155,6 +167,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 1,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -210,6 +224,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 1,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -265,6 +281,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 1,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -326,6 +344,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 1,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -362,6 +382,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 5,
 			pageRowIndex: 1,
 			pageRowCols: 0,
@@ -398,6 +420,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 5,
 			pageRowIndex: 2,
 			pageRowCols: 0,
@@ -434,6 +458,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 5,
 			pageRowIndex: 3,
 			pageRowCols: 0,
@@ -470,6 +496,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 5,
 			pageRowIndex: 4,
 			pageRowCols: 0,
@@ -506,6 +534,8 @@ describe('NCI Hero', () => {
 
 		expect(spy).toHaveBeenCalledWith('LP:Hero:LinkClick', 'LP:Hero:LinkClick', {
 			location: 'Body',
+			pageType: 'cgvHomeLanding',
+			pageTemplate: 'ncids_without_title',
 			pageRows: 5,
 			pageRowIndex: 5,
 			pageRowCols: 0,

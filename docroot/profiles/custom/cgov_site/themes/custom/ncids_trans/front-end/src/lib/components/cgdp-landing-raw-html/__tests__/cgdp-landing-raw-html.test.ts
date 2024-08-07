@@ -15,10 +15,18 @@ jest.mock('../../../core/analytics/eddl-util');
 describe('CGDP Raw Html', () => {
 	beforeEach(() => {
 		window.print = jest.fn();
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvHomeLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
 	});
 	afterEach(() => {
 		// Hack to clean out the dom.
 		document.getElementsByTagName('body')[0].innerHTML = '';
+		document.head.innerHTML = '';
 		jest.resetAllMocks();
 	});
 
@@ -58,6 +66,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -106,6 +116,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -146,6 +158,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 4,
 				pageRowIndex: 1,
 				pageRowCols: 0,
@@ -183,6 +197,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -220,6 +236,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 2,
@@ -260,6 +278,8 @@ describe('CGDP Raw Html', () => {
 			'LP:RawHTML:LinkClick',
 			{
 				location: 'Body',
+				pageType: 'cgvHomeLanding',
+				pageTemplate: 'ncids_without_title',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 0,
@@ -275,6 +295,56 @@ describe('CGDP Raw Html', () => {
 				linkArea: 'Text',
 				totalLinks: 6,
 				linkPosition: 2,
+			}
+		);
+	});
+
+	it('actually uses page and template info', () => {
+		const dom = cgdpLandingRawHtmlDom();
+
+		// Lets make a spy to ensure that trackOther is called correctly
+		const trackOtherSpy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', dom.outerHTML);
+		document.head.innerHTML = '';
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvMiniLanding">
+			<meta name="cgdp.template" content="ncids_default">
+			`
+		);
+
+		// Create the JS
+		cgdpRawHtml();
+
+		const card = screen.getAllByRole('link');
+
+		fireEvent.click(card[0]);
+
+		expect(trackOtherSpy).toHaveBeenCalledWith(
+			'MLP:RawHTML:LinkClick',
+			'MLP:RawHTML:LinkClick',
+			{
+				location: 'Body',
+				pageType: 'cgvMiniLanding',
+				pageTemplate: 'ncids_default',
+				pageRows: 4,
+				pageRowIndex: 1,
+				pageRowCols: 0,
+				pageRowColIndex: 0,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'Raw HTML',
+				componentTheme: 'Not Defined',
+				componentVariant: 'Not Defined',
+				title: 'I am a header in a prose block',
+				linkType: 'Internal',
+				linkText: 'Go to some website for more information',
+				linkArea: 'Prose Block',
+				totalLinks: 1,
+				linkPosition: 1,
 			}
 		);
 	});

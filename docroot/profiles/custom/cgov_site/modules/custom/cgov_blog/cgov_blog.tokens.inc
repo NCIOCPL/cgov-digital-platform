@@ -85,18 +85,23 @@ function _get_blog_post_path($node) {
     try {
       // Get the owner series and translation if exists.
       $seriesEntity = $node->field_blog_series->entity;
-      $seriesEntity = $entityRepository->getTranslationFromContext($seriesEntity, $lang);
-      if (!($seriesEntity instanceof Node)) {
-        throw new \Exception("The blog series is not of type Node");
+      if (is_object($seriesEntity)) {
+        $seriesEntity = $entityRepository->getTranslationFromContext($seriesEntity, $lang);
+        if (!($seriesEntity instanceof Node)) {
+          throw new \Exception("The blog series is not of type Node");
+        }
+        $tid = $seriesEntity->field_site_section->target_id;
+        $path = Term::load($tid)->get('computed_path')->value;
+        $purl = $seriesEntity->field_pretty_url->value;
+        if (!empty($purl)) {
+          $path .= ('/' . $purl);
+        }
+        // Append year.
+        $path .= ('/' . $year);
       }
-      $tid = $seriesEntity->field_site_section->target_id;
-      $path = Term::load($tid)->get('computed_path')->value;
-      $purl = $seriesEntity->field_pretty_url->value;
-      if (!empty($purl)) {
-        $path .= ('/' . $purl);
+      else {
+        \Drupal::logger('cgov_blog')->notice("Blog Post (" . $node->id() . ") has no blog series");
       }
-      // Append year.
-      $path .= ('/' . $year);
     }
     catch (Exception $e) {
       \Drupal::logger('cgov_blog')
