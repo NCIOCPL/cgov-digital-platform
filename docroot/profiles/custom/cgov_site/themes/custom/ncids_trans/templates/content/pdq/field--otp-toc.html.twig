@@ -1,6 +1,6 @@
 {% if items|length > 0 %}
 <nav class="on-this-page" role="navigation">
-  <h6>{% trans %}On This Page{% endtrans %}</h6>
+  <span class="on-this-page__header">{% trans %}On This Page{% endtrans %}</span>
   <ul>
     {% for item in items %}
       {{ item.content }}
