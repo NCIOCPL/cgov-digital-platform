@@ -123,9 +123,12 @@ export function makeAllAccordions() {
 		// TODO: this is an overly complicated and probably invalid selector for accordion headers and is breaking functionality. Reverting to previous commit
 		//'.accordion' : headingTag + ':not([data-display-excludedevice~="mobile"] ' + headingTag + '):not([class~=callout-box] ' + headingTag + ')',
 		'.accordion' : 'h2:not([data-display-excludedevice~="mobile"] h2)',
-		'#nvcgRelatedResourcesArea' : 'h6',
-		'#cgvCitationSl' : 'h6',
-		'.cthp-content' : 'h2'
+		'div.main-content #nvcgRelatedResourcesArea' : 'h6',
+		'div.main-content #cgvCitationSl' : 'h6',
+		'.cthp-content' : 'h2',
+    // Header Skips A11Y Update - added h2 header + class to targets list.
+    'main#main-content #nvcgRelatedResourcesArea' : 'h2.related-resources__heading',
+    'main#main-content #cgvCitationSl' : 'h2.cgvCitationSl__heading'
 	};
 	//var targetsSelector = Object.keys(targets).join(', ');
 	var targetsBuiltAccordion = [],
