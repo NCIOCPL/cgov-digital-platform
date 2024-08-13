@@ -185,6 +185,16 @@ class CgovCoreTools {
   }
 
   /**
+   * Set default search result sitename.
+   */
+  public function setDefaultSiteBrandingForSchemaOrg() {
+    $config_site = $this->configFactory->getEditable('sitebranding.settings');
+    $config_site->set('sitename_display_type', 'default');
+    $config_site->set('custom_site_name', '');
+    $config_site->save();
+  }
+
+  /**
    * Links a media type to a workflow.
    *
    * See https://github.com/NCIOCPL/cgov-digital-platform/issues/127.

@@ -544,3 +544,24 @@ function cgov_core_update_10006() {
   ];
   $siteHelper->removeRolePermissions($perms_to_remove);
 }
+
+/**
+ * Enable schema_metatag.
+ */
+function cgov_core_update_10007() {
+  $module_handler = \Drupal::moduleHandler();
+  if (!$module_handler->moduleExists('schema_metatag')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['schema_metatag']);
+    $installer->install(['schema_web_site']);
+
+  }
+}
+
+/**
+ * Set default search result sitename.
+ */
+function cgov_core_update_10008() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $siteHelper->setDefaultSiteBrandingForSchemaOrg();
+}

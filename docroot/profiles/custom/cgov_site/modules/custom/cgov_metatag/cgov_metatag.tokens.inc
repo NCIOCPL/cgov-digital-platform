@@ -66,6 +66,21 @@ function cgov_metatag_token_info() {
           'name' => t('Browser title Site Name Default'),
           'description' => t('The value to use for default site name.'),
         ];
+  $info['tokens']['cgov_tokens']['sitename-display-type-meta'] =
+        [
+          'name' => t('Search Results Site Name Display.'),
+          'description' => t('The value to use for meta tag.'),
+        ];
+  $info['tokens']['cgov_tokens']['site-name-display-custom'] =
+        [
+          'name' => t('Search Results Custom Site Name'),
+          'description' => t('Search Results Custom Site Name value.'),
+        ];
+  $info['tokens']['cgov_tokens']['site-name-display-default'] =
+        [
+          'name' => t('Search Results Default Site Name'),
+          'description' => t('Search Results Default Site Name value.'),
+        ];
   return $info;
 }
 
@@ -125,7 +140,25 @@ function cgov_metatag_tokens($type, $tokens, array $data, array $options, $bubbl
           else {
             $replacements[$original] = '';
           }
+          break;
 
+        case 'site-name-display-default':
+          $replacements[$original] = t('National Cancer Institute (.gov)');
+          break;
+
+        case 'site-name-display-custom':
+          $replacements[$original] = $siteBrandingConfig->get('custom_site_name');
+          break;
+
+        case 'sitename-display-type-meta':
+          $value = '';
+          if ($siteBrandingConfig->get('sitename_display_type') === 'default') {
+            $value = $token_service->replace('[cgov_tokens:site-name-display-default]');
+          }
+          elseif ($siteBrandingConfig->get('sitename_display_type') === 'custom_site_name') {
+            $value = $token_service->replace('[cgov_tokens:site-name-display-custom]');
+          }
+          $replacements[$original] = $value;
           break;
       }
     }
