@@ -30,7 +30,7 @@
     {{ drupal_block('cgov_blog_pager', {label: ''}) }}
     {% if content.field_recommended_content[0] %}
       <div id="blog-cards">
-        <h4>{{ series.field_recommended_content_header.value }}</h4>
+        <h2 class="recommended-content__header">{{ series.field_recommended_content_header.value }}</h2>
         {{ content.field_recommended_content }}
       <div>
     {% endif %}
