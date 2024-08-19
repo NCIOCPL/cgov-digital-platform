@@ -3,7 +3,7 @@
   langcode: en
   status: 1
   moderation_state:
-    value: 'published'
+    value: "published"
   title: "NCIDS Mini Landing Page Raw HTML Example"
   field_page_description:
     value: "Sample mini and landing page to test Raw HTML and usa-section."
@@ -12,22 +12,81 @@
   field_pretty_url:
     value: "raw-html-sample-page"
   field_site_section:
-    - '#process':
-        callback: 'reference'
+    - "#process":
+        callback: "reference"
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            computed_path: '/test'
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
   field_mlp_page_style:
     value: "ncids_default"
   ### English Contents
   field_landing_contents:
-  ######## Begin Feature Row ###########
+    ######## Begin Feature Row ###########
     - entity: "paragraph"
       type: "cgov_card_raw_html"
       field_raw_html:
         - format: "raw_html"
           value: |
+            <div class="usa-section" data-eddl-landing-row="">
+              <h2 class="nci-heading-h3 margin-bottom-2">Flag Card Group Heading</h2>
+              <ul class="nci-card-group nci-flag-card-group">
+                <li class="nci-card nci-flag-card">
+                  <a>
+                    <picture media="(min-width: 640px)" srcset="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" class="nci-flag-card__image">
+                      <img src="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" alt="Driving Discovery"/>
+                    </picture>
+                    <div class="nci-flag-card__content">
+                      <h3 class="nci-card__title">About Cancer</h3>
+                      <p class="nci-card__description">This flag card is an internal link to About Cancer.</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="nci-card nci-flag-card">
+                  <a>
+                    <picture media="(min-width: 640px)" srcset="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" class="nci-flag-card__image">
+                      <img src="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" alt="Driving Discovery"/>
+                    </picture>
+                    <div class="nci-flag-card__content">
+                      <h3 class="nci-card__title">External Card to Google</h3>
+                      <p class="nci-card__description">This is an extremely long description on an external card that will redirect the user to Google.com. Extra text in this card to test the behavior of a card when the text is very very long.</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="nci-card nci-flag-card">
+                  <a>
+                    <picture media="(min-width: 640px)" srcset="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" class="nci-flag-card__image">
+                      <img src="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" alt="Driving Discovery"/>
+                    </picture>
+                    <div class="nci-flag-card__content">
+                      <h3 class="nci-card__title">Multimedia Card linking to Implementation Science Infographic with a Very Long Title to Test the Behavior of a Card with a Very Long Title Set</h3>
+                      <p class="nci-card__description">This is the description for the multimedia card.</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="nci-card nci-flag-card">
+                  <a>
+                    <picture media="(min-width: 640px)" srcset="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" class="nci-flag-card__image">
+                      <img src="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" alt="Driving Discovery"/>
+                    </picture>
+                    <div class="nci-flag-card__content">
+                      <h3 class="nci-card__title">Cancer Types</h3>
+                    </div>
+                  </a>
+                </li>
+                <li class="nci-card nci-flag-card">
+                  <a>
+                    <picture media="(min-width: 640px)" srcset="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" class="nci-flag-card__image">
+                      <img src="/profiles/custom/cgov_site/modules/custom/cgov_yaml_content/images/chatbot-1-1-promo.png" alt="Driving Discovery"/>
+                    </picture>
+                    <div class="nci-flag-card__content">
+                      <h3 class="nci-card__title">Cancer Research</h3>
+                      <p class="nci-card__description">This is the fifth flag card in the group.</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
             <div class="usa-section" data-eddl-landing-row="">
               <div class="usa-prose">
                 <h2 class="nci-heading-h3 nci-heading--label">Test for Raw HTML & Analytics</h2>

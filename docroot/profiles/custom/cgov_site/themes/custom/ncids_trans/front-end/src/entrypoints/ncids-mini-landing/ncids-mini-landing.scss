@@ -22,7 +22,8 @@ uswds-core.$output-these-utilities: (
 	'font-weight',
 	'border-color',
 	'line-height',
-	'justify-content'
+	'justify-content',
+	'margin-vertical'
 );
 // Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
 // the smallest possible aspect classes.
@@ -91,10 +92,10 @@ uswds-core.$justify-content-settings: (
 	&.usa-section--dark + .usa-section--dark,
 	&.usa-section:not(.usa-section--light, .usa-section--dark)
 		+ .usa-section:not(.usa-section--light, .usa-section--dark) {
+		@include u-margin-top(0);
+		@include at-media('tablet') {
 			@include u-margin-top(0);
-			@include at-media('tablet') {
-				@include u-margin-top(0);
-			}
+		}
 	}
 }
 
@@ -104,3 +105,53 @@ uswds-core.$justify-content-settings: (
 		@include u-padding-top(0);
 	}
 }
+
+/* Styles for Flag Cards START */
+.nci-flag-card-group {
+	@include u-display('flex');
+	@include u-flex('wrap');
+}
+
+.nci-flag-card-group .nci-flag-card {
+	@include grid-col(12);
+	@include at-media('desktop') {
+		@include grid-col(6);
+	}
+	@include u-margin-bottom(4);
+	&:last-child {
+		@include u-margin-bottom(0);
+	}
+
+	& > a {
+		@include u-display('inline-flex');
+		@include u-flex('row');
+		@include u-radius('md');
+		@include u-shadow(2);
+		@include u-width('full');
+	}
+}
+
+.nci-flag-card__image {
+	@include u-width('card');
+	@include u-height('card');
+	@include u-display('none');
+	@include at-media('tablet') {
+		@include u-display('block');
+		flex-shrink: 0;
+	}
+}
+
+.nci-flag-card__content {
+	@include u-padding(3);
+	@include u-flex('align-self-center');
+
+	/* Remove Styles when Ticket #XXXX is done START*/
+	.nci-card__title {
+		@include u-font('heading', 'md');
+	}
+	.nci-card__description {
+		@include u-font('sans', 'xs');
+	}
+	/* Remove Styles Area END*/
+}
+/* Styles for Flag Cards END */
