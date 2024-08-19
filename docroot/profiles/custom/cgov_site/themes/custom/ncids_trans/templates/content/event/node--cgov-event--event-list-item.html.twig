@@ -8,13 +8,13 @@
 
 <div class="event-list-item">
     {# Title #}
-    <h3 class="event-title">
+    <span class="event-title__header">
         <a class="title" href="{{ url }}">{{ label }}</a>
-    </h3>
+    </span>
 
     {# Series name #}
     {% if content.field_event_series|field_value %}
-        <h4 class="event-series">{{ content.field_event_series }}</h4>
+        <span class="event-series__header">{{ content.field_event_series }}</span>
     {% endif %}
 
     {# List description #}
