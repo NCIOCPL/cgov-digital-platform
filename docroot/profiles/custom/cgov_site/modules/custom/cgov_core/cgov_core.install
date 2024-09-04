@@ -544,3 +544,14 @@ function cgov_core_update_10006() {
   ];
   $siteHelper->removeRolePermissions($perms_to_remove);
 }
+
+/*
+ * Fix permission for viewing help pages.
+ */
+function cgov_core_update_10007() {
+  $module_handler = \Drupal::moduleHandler();
+  if (!$module_handler->moduleExists('jsonapi')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['jsonapi']);
+  }
+}
