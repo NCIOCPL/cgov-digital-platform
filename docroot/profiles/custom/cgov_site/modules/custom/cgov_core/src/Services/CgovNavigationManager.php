@@ -124,8 +124,8 @@ class CgovNavigationManager {
     EntityFieldManagerInterface $entityFieldManager,
     LoggerInterface $logger,
     LanguageManagerInterface $languageManager,
-    EntityRepository $entityRepository
-    ) {
+    EntityRepository $entityRepository,
+  ) {
     $this->currentPath = $currentPath;
     $this->pathAliasManager = $pathAliasManager;
     $this->entityTypeManager = $entityTypeManager;

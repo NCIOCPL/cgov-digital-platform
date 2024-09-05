@@ -1,0 +1,83 @@
+diff --git a/css/paragraphs.widget.css b/css/paragraphs.widget.css
+index 50703b5a55556be76f0cfea129f4ad41432465ea..1f0ec1e2370e12a22a185fba29f5a84a627f087a 100644
+--- a/css/paragraphs.widget.css
++++ b/css/paragraphs.widget.css
+@@ -168,18 +168,21 @@
+   margin-right: -11px;
+ }
+ 
+-.js .field--widget-paragraphs .form-actions {
++.js .field--widget-paragraphs .form-actions,
++.js .field--widget-paragraphs .field-actions {
+   -webkit-box-align: center;
+   -webkit-align-items: center;
+       -ms-flex-align: center;
+           align-items: center;
+ }
+ 
+-.js .field--widget-paragraphs .form-actions .dropbutton-multiple {
++.js .field--widget-paragraphs .form-actions .dropbutton-multiple,
++.js .field--widget-paragraphs .field-actions .dropbutton-multiple {
+   margin-right: .5rem;
+ }
+ 
+-.js .field--widget-paragraphs .form-actions .placeholder {
++.js .field--widget-paragraphs .form-actions .placeholder,
++.js .field--widget-paragraphs .field-actions .placeholder {
+   margin-left: .25em;
+ }
+ 
+@@ -193,7 +196,7 @@
+ }
+ 
+ .js .field--widget-paragraphs .paragraphs-dropbutton-wrapper .dropbutton-multiple {
+-  margin: 0;
++  margin: 0 .5rem 0 0;
+ }
+ 
+ .js .field--widget-paragraphs .dropbutton-wrapper {
+@@ -396,15 +399,15 @@ tr:hover .paragraphs-description::after {
+   background: #057ec7 none;
+ }
+ 
++.js .paragraphs-convert-button {
++  margin-left: 0;
++}
++
+ .paragraphs-dragdrop__item .paragraphs-summary-wrapper .paragraphs-description .paragraphs-content-wrapper,
+ .paragraphs-dragdrop__item .paragraphs-summary-wrapper .paragraphs-description .paragraphs-plugin-wrapper {
+   font-size: 81.3%;
+ }
+ 
+-.js .paragraphs-convert-button {
+-  margin-left: 0;
+-}
+-
+ .paragraph--view-mode--preview {
+   padding-right: 1em;
+ }
+diff --git a/css/paragraphs.widget.scss b/css/paragraphs.widget.scss
+index cfee73f010d1bcc707ba262cb493ea8b9b161d2f..bc9f05abbc03a90576a036334572a2d9371d765c 100644
+--- a/css/paragraphs.widget.scss
++++ b/css/paragraphs.widget.scss
+@@ -96,8 +96,9 @@
+       margin-right: -11px;
+     }
+ 
+-    // Fix alignment of form-actions.
+-    .form-actions {
++    // Fix alignment of field-actions / form-actions.
++    .form-actions,
++    .field-actions {
+       align-items: center;
+ 
+       // Fix alignment to content.
+@@ -120,7 +121,7 @@
+       padding: 0;
+ 
+       .dropbutton-multiple {
+-        margin: 0;
++        margin: 0 .5rem 0 0;
+       }
+     }
+ 

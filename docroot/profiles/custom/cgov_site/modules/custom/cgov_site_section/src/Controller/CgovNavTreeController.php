@@ -29,7 +29,7 @@ class CgovNavTreeController extends ControllerBase {
    *   The renderer.
    */
   public function __construct(
-    RendererInterface $renderer
+    RendererInterface $renderer,
   ) {
     $this->renderer = $renderer;
   }

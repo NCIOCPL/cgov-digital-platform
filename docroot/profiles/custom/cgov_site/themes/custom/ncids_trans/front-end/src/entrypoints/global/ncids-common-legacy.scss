@@ -100,15 +100,8 @@ ul li ul {
   * General is a hot mess of general and, oddly, very specific
   * rules. There are also pull quotes and callout boxes in here.
   *****************************************************************/
-// The local general was not correctly referenced and this was affecting
-// our ability to fix sub/sup. For now we are going to set a var to remove
-// the sub/sup element styling and keep it backwards compatible with
-// what is in cgov now. This all needs to be fixed in the future.
-// The bad local general file has been deleted, but it is located at
-// https://github.com/NCIOCPL/cgov-digital-platform/blob/b0ed8f443cb5a067602525b1ef4493acfb7c5985/docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/front-end/src/legacy/styles/_general.scss
-// for the future.
-$generate-sub-sup-element-styles: false;
-@import "~Core/styles/general";
+
+@import "../../legacy/styles/general";
 
 // NOTE: We deleted the .cgh-staff. It looks like it was previously used, but
 // the site has been updated to remove that content.

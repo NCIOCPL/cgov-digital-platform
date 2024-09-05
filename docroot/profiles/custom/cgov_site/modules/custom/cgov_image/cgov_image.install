@@ -46,8 +46,12 @@ function _cgov_image_install_permissions(CgovCoreTools $siteHelper) {
       'access cgov_image_carousel_image_browser entity browser pages',
     ],
     'image_manager' => [
+      'revert any cgov_contextual_image media revisions',
+      'revert any cgov_image media revisions',
       'use simple_workflow transition create_new_draft',
       'use simple_workflow transition publish',
+      'view any cgov_contextual_image media revisions',
+      'view any cgov_image media revisions'
     ],
   ];
 
@@ -132,4 +136,19 @@ function cgov_image_update_8007() {
   $config = \Drupal::configFactory()
     ->getEditable('image.style.ncids_featured_4x3');
   $config->delete();
+}
+
+/**
+ * Set permissions for editing media file revisions.
+ */
+function cgov_image_update_10001() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+  $perms = [
+    'image_manager' => [
+      'revert any cgov_contextual_image media revisions',
+      'revert any cgov_image media revisions',
+      'view any cgov_contextual_image media revisions',
+      'view any cgov_image media revisions'    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
 }
