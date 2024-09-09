@@ -1,0 +1,1668 @@
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "RAS Research Team - Image"
+  name__ES:
+    value: "RAS Research Team - Image"
+  field_caption:
+    value: |
+      <p>RAS research team.</p>
+  field_caption__ES:
+    value: |
+      <p>RAS research team.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Research-Teams.jpg'
+      alt: 'RAS Research Team.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Research-Teams.jpg'
+      alt: 'RAS Research Team.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS Research Team"
+  title__ES:
+    value: "RAS Research Team - ES"
+  field_browser_title:
+    value: "RAS Research Team"
+  field_browser_title__ES:
+    value: "RAS Research Team - ES"
+  field_page_description:
+    value: "Learn about the nine highly collaborative research teams that compose the RAS Initiative. View their progress, projects, tools, collaborators, and team members."
+  field_page_description__ES:
+    value: "RAS Research Team description - ES"
+  field_card_title:
+    value: "RAS Research Team"
+  field_card_title__ES:
+    value: "RAS Research Team - ES"
+  field_card_description:
+    value: "RAS Research Team Card Desc"
+  field_card_description__ES:
+    value: "RAS Research Team Card Desc - ES"
+  field_pretty_url:
+    value: "ras-research-team"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'RAS Research Team - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "RAS Tools Resources - Image"
+  name__ES:
+    value: "RAS Tools Resources - Image"
+  field_caption:
+    value: |
+      <p>RAS tools resources.</p>
+  field_caption__ES:
+    value: |
+      <p>RAS tools resources.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Tools-Resources.jpg'
+      alt: 'RAS Tools Resources.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Tools-Resources.jpg'
+      alt: 'RAS Tools Resources'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS Tools and Resources"
+  title__ES:
+    value: "RAS Tools and Resources - ES"
+  field_browser_title:
+    value: "RAS Tools and Resources"
+  field_browser_title__ES:
+    value: "RAS Tools and Resources - ES"
+  field_page_description:
+    value: "Find DNA reagents, cell line reagents, and protein production tools developed by researchers with the NCI RAS Initiative."
+  field_page_description__ES:
+    value: "RAS Tools and Resources description - ES"
+  field_card_title:
+    value: "RAS Tools and Resources"
+  field_card_title__ES:
+    value: "RAS Tools and Resources - ES"
+  field_card_description:
+    value: "RAS Tools and Resources Card Desc"
+  field_card_description__ES:
+    value: "RAS Tools and Resources Card Desc - ES"
+  field_pretty_url:
+    value: "ras-tools-resources"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'RAS Tools Resources - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "Publications from the RAS Initiative - Image"
+  name__ES:
+    value: "Publications from the RAS Initiative - Image"
+  field_caption:
+    value: |
+      <p>Publications from the RAS Initiative.</p>
+  field_caption__ES:
+    value: |
+      <p>Publications from the RAS Initiative.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Publications-RAS-Initiative.jpg'
+      alt: 'Publications for the RAS Initiatives.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Publications-RAS-Initiative.jpg'
+      alt: 'Publications for the RAS Initiatives.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Publications from the RAS Initiative"
+  title__ES:
+    value: "Publications from the RAS Initiative - ES"
+  field_browser_title:
+    value: "Publications from the RAS Initiative"
+  field_browser_title__ES:
+    value: "Publications from the RAS Initiative - ES"
+  field_page_description:
+    value: "This list of RAS Initiative publications reflects the balance between the public responsibilities of NCI and the requirements of external partners."
+  field_page_description__ES:
+    value: "Publications from the RAS Initiative description - ES"
+  field_card_title:
+    value: "Publications from the RAS Initiative"
+  field_card_title__ES:
+    value: "Publications from the RAS Initiative - ES"
+  field_card_description:
+    value: "Publications from the RAS Initiative Card Desc"
+  field_card_description__ES:
+    value: "Publications from the RAS Initiative Card Desc - ES"
+  field_pretty_url:
+    value: "publications-ras-initiative"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Publications from the RAS Initiative - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "RAS News & Events - Image"
+  name__ES:
+    value: "RAS News & Events - Image"
+  field_caption:
+    value: |
+      <p>RAS News & Events.</p>
+  field_caption__ES:
+    value: |
+      <p>RAS News & Events.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-News-Events.jpg'
+      alt: 'RAS News & Events.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-News-Events.jpg'
+      alt: 'RAS News & Events.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS News & Events"
+  title__ES:
+    value: "RAS News & Events - ES"
+  field_browser_title:
+    value: "RAS News & Events"
+  field_browser_title__ES:
+    value: "RAS News & Events - ES"
+  field_page_description:
+    value: "Through community and technical collaborations, workshops, and symposia, the RAS Initiative seeks to increase the sharing of knowledge and resources that are essential to defeat cancers caused by mutant RAS genes."
+  field_page_description__ES:
+    value: "RAS News & Events description - ES"
+  field_card_title:
+    value: "RAS News & Events"
+  field_card_title__ES:
+    value: "RAS News & Events - ES"
+  field_card_description:
+    value: "RAS News & Events Card Desc"
+  field_card_description__ES:
+    value: "RAS News & Events Card Desc - ES"
+  field_pretty_url:
+    value: "publications-ras-initiative"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'RAS News & Events - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "About the RAS Initiative - Image"
+  name__ES:
+    value: "About the RAS Initiative - Image"
+  field_caption:
+    value: |
+      <p>About the RAS Initiative.</p>
+  field_caption__ES:
+    value: |
+      <p>About the RAS Initiative.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'About-RAS-Initiative.jpg'
+      alt: 'About the RAS Initiative.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'About-RAS-Initiative.jpg'
+      alt: 'About the RAS Initiative.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "About the RAS Initiative"
+  title__ES:
+    value: "About the RAS Initiative - ES"
+  field_browser_title:
+    value: "About the RAS Initiative"
+  field_browser_title__ES:
+    value: "About the RAS Initiative - ES"
+  field_page_description:
+    value: "The \"hub and spoke\" model of the RAS Initiative connects researcher collaborators to better understand and target the more than 30% of cancers driven by mutations in RAS genes. Find more on the problem with RAS genes, RAS Initiative origins and oversight, and contact information."
+  field_page_description__ES:
+    value: "About the RAS Initiative description - ES"
+  field_card_title:
+    value: "About the RAS Initiative"
+  field_card_title__ES:
+    value: "About the RAS Initiative - ES"
+  field_card_description:
+    value: "About the RAS Initiative Card Desc"
+  field_card_description__ES:
+    value: "About the RAS Initiative Card Desc - ES"
+  field_pretty_url:
+    value: "publications-ras-initiative"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'About the RAS Initiative - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "RAS Dialogue Blog - Image"
+  name__ES:
+    value: "RAS Dialogue Blog - Image"
+  field_caption:
+    value: |
+      <p>RAS Dialogue Blog.</p>
+  field_caption__ES:
+    value: |
+      <p>RAS Dialogue Blog.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_credit__ES:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Dialogue-Blog.jpg'
+      alt: 'RAS Dialogue Blog.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+  field_media_image__ES:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'RAS-Dialogue-Blog.jpg'
+      alt: 'RAS Dialogue Blog.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 314
+                height: 236
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 177
+                height: 236
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 236
+                height: 236
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "RAS Dialogue Blog"
+  title__ES:
+    value: "RAS Dialogue Blog - ES"
+  field_browser_title:
+    value: "RAS Dialogue Blog"
+  field_browser_title__ES:
+    value: "RAS Dialogue Blog - ES"
+  field_page_description:
+    value: "In a new post, Drs. Fuyuhiko Tamanoi, Hideyuki Saya, Toshio Imai, and Kiyoko Kato present a report of the online meeting that they organized, titled \"Development of mutant KRAS molecular target drugs and future prospects.\""
+  field_page_description__ES:
+    value: "RAS Dialogue Blog description - ES"
+  field_card_title:
+    value: "RAS Dialogue Blog"
+  field_card_title__ES:
+    value: "RAS Dialogue Blog - ES"
+  field_card_description:
+    value: "RAS Dialogue Blog Card Desc"
+  field_card_description__ES:
+    value: "RAS Dialogue Blog Card Desc - ES"
+  field_pretty_url:
+    value: "publications-ras-initiative"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'RAS Dialogue Blog - Image'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Funding Opportunities: AI in Cancer Research"
+  title__ES:
+    value: "Funding Opportunities: AI in Cancer Research - ES"
+  field_browser_title:
+    value: "Funding Opportunities: AI in Cancer Research"
+  field_browser_title__ES:
+    value: "Funding Opportunities: AI in Cancer Research - ES"
+  field_page_description:
+    value: "NCI funds and supports extramural research to advance the use of AI in cancer research. Find out more about funding opportunities and other ways to engage in advancing AI for cancer research."
+  field_page_description__ES:
+    value: "Funding Opportunities: AI in Cancer Research description - ES"
+  field_card_title:
+    value: "Funding Opportunities: AI in Cancer Research"
+  field_card_title__ES:
+    value: "Funding Opportunities: AI in Cancer Research - ES"
+  field_card_description:
+    value: "Funding Opportunities: AI in Cancer Research Card Desc"
+  field_card_description__ES:
+    value: "Funding Opportunities: AI in Cancer Research Card Desc - ES"
+  field_pretty_url:
+    value: "funding-opportunities-ai-cancer-research"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Events: AI in Cancer Research"
+  title__ES:
+    value: "Events: AI in Cancer Research - ES"
+  field_browser_title:
+    value: "Events: AI in Cancer Research"
+  field_browser_title__ES:
+    value: "Events: AI in Cancer Research - ES"
+  field_page_description:
+    value: "Discover upcoming and past seminars and workshops organized by NCI on AI in cancer research."
+  field_page_description__ES:
+    value: "Events: AI in Cancer Research description - ES"
+  field_card_title:
+    value: "Events: AI in Cancer Research"
+  field_card_title__ES:
+    value: "Events: AI in Cancer Research - ES"
+  field_card_description:
+    value: "Events: AI in Cancer Research Card Desc"
+  field_card_description__ES:
+    value: "Events: AI in Cancer Research Card Desc - ES"
+  field_pretty_url:
+    value: "events-ai-cancer-research"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Resources and Tools: AI in Cancer Research"
+  title__ES:
+    value: "Resources and Tools: AI in Cancer Research - ES"
+  field_browser_title:
+    value: "Resources and Tools: AI in Cancer Research"
+  field_browser_title__ES:
+    value: "Resources and Tools: AI in Cancer Research - ES"
+  field_page_description:
+    value: "Access a wide-ranging collection of NCI-supported resources and tools specific to artificial intelligence, machine learning, and deep learning."
+  field_page_description__ES:
+    value: "Resources and Tools: AI in Cancer Research description - ES"
+  field_card_title:
+    value: "Resources and Tools: AI in Cancer Research"
+  field_card_title__ES:
+    value: "Resources and Tools: AI in Cancer Research - ES"
+  field_card_description:
+    value: "Resources and Tools: AI in Cancer Research Card Desc"
+  field_card_description__ES:
+    value: "Resources and Tools: AI in Cancer Research Card Desc - ES"
+  field_pretty_url:
+    value: "resources-tools-ai-cancer-research"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Research Highlights: AI in Cancer Research"
+  title__ES:
+    value: "Research Highlights: AI in Cancer Research - ES"
+  field_browser_title:
+    value: "Research Highlights: AI in Cancer Research"
+  field_browser_title__ES:
+    value: "Research Highlights: AI in Cancer Research - ES"
+  field_page_description:
+    value: "Access a wide-ranging collection of NCI-supported resources and tools specific to artificial intelligence, machine learning, and deep learning."
+  field_page_description__ES:
+    value: "Research Highlights: AI in Cancer Research description - ES"
+  field_card_title:
+    value: "Research Highlights: AI in Cancer Research"
+  field_card_title__ES:
+    value: "Research Highlights: AI in Cancer Research - ES"
+  field_card_description:
+    value: "Research Highlights: AI in Cancer Research Card Desc"
+  field_card_description__ES:
+    value: "Research Highlights: AI in Cancer Research Card Desc - ES"
+  field_pretty_url:
+    value: "research-highlights-ai-cancer-research"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+  field_article_body__ES:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <div id="lipsum">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum viverra arcu a lectus rutrum facilisis. Quisque luctus sem a suscipit posuere. Proin bibendum imperdiet nisi, sed commodo libero varius non. Pellentesque magna erat, facilisis quis malesuada quis, ornare convallis felis. Mauris eu mi vitae dolor convallis vulputate. Aenean in ante id nunc blandit porttitor sed in nunc. Vestibulum rhoncus velit nec neque condimentum facilisis. Nulla sagittis placerat mi, vitae varius nunc auctor at. Proin sagittis vestibulum leo et laoreet. Aliquam volutpat arcu quam, eget iaculis odio facilisis ac.</p>
+              <p>Praesent suscipit elementum odio eu sodales. Sed sodales elit in dolor tristique eleifend. Etiam sapien nibh, iaculis nec auctor nec, laoreet in justo. Duis mi sem, mattis in tellus ac, semper aliquet turpis. Pellentesque eu mi a tellus accumsan molestie. Nunc vitae ligula nulla. Quisque ac urna vestibulum, luctus sem eget, molestie neque. Morbi lobortis nibh risus, sed sollicitudin neque consequat eget.</p>
+              <p>Nullam non placerat nisl, vitae pulvinar arcu. Etiam rhoncus justo quis justo sagittis gravida. Donec vehicula vel magna in varius. Vestibulum bibendum non velit non tincidunt. Nam ornare magna magna, vulputate commodo sem pretium ut. Vivamus eu facilisis lorem. Suspendisse sagittis dolor dui, et lobortis mi ornare eget. Ut lacinia eros quis orci luctus, id dictum nulla cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit amet odio porttitor, tempus diam ut, ultricies dolor. Aenean pellentesque nunc ac nulla semper ornare. Nunc sodales suscipit arcu, quis scelerisque nisl. Cras pharetra erat quam, a lobortis lacus ullamcorper vel. Integer porttitor nisi varius, tristique metus in, posuere ex. In hac habitasse platea dictumst. Phasellus non imperdiet quam.</p>
+              <p>Vivamus eleifend varius sapien, vitae ornare lacus faucibus quis. Quisque efficitur ac elit dignissim tempus. Fusce pulvinar luctus nisl, non egestas eros semper sed. Maecenas rhoncus consequat massa. Curabitur nec egestas purus. Vivamus lorem justo, finibus vitae sem vel, vulputate malesuada dolor. Aenean fringilla tempus est, id tincidunt leo tristique at. Aliquam velit elit, sodales sit amet libero sit amet, fermentum condimentum ipsum. Aenean non finibus mi. Aliquam urna magna, dictum sed elementum eget, molestie vel mi. Pellentesque ultricies vitae enim eget lobortis. Donec eget mattis sem.</p>
+              <p>Morbi et urna vitae erat egestas elementum. Nullam vel semper lectus. Cras ultrices, justo in porttitor blandit, dui nisl finibus nunc, sodales rutrum turpis leo ac nisl. Nunc eget ullamcorper metus. Sed velit enim, eleifend nec vulputate quis, pulvinar in ipsum. Suspendisse ornare a tellus non dignissim. Nullam congue ante in turpis feugiat, ut pharetra magna dignissim. In eleifend laoreet lectus id efficitur. Vestibulum lacus urna, aliquam et rutrum sit amet, suscipit ac diam. Quisque ornare facilisis libero. Nam fermentum dolor et turpis consectetur convallis. Suspendisse sagittis ex metus, at elementum nisi tincidunt commodo.</p>
+            </div>
+
+- entity: "media"
+  bundle: "cgov_video"
+  name: "Test Video - with Image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "test-video-image"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Testing body text.</p>
+  field_caption:
+    - format: "simple"
+      value: |
+        Test field caption.
+  field_list_description: "LIST: Test list description."
+  field_page_description: "META: Test meta description."
+  field_browser_title: "Test Video - with Image"
+  field_media_oembed_video: "https://www.youtube.com/watch?v=fAQmCNWJHb8"

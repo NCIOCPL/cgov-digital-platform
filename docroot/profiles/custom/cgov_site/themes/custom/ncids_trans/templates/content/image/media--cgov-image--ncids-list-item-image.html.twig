@@ -1,0 +1,7 @@
+{% if content.field_ncids_promo_art_4x3 and content.field_media_image %}
+    {% if content.field_ncids_promo_art_4x3[0] %}
+        {{ content.field_ncids_promo_art_4x3 }}
+    {% else %}
+        {{ content.field_media_image }}
+    {% endif %}
+{% endif %}

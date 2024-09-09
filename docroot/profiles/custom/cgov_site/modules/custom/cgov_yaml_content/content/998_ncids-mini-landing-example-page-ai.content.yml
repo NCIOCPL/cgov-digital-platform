@@ -4,18 +4,18 @@
   status: 1
   moderation_state:
     value: 'published'
-  title: "The RAS Initiative"
+  title: "Artificial Intelligence (AI) in Cancer Research"
   field_page_description:
-    value: "NCI established the RAS Initiative to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers."
+    value: "Artificial Intelligence (AI) in Cancer Research - Description"
   field_browser_title:
-    value: "The RAS Initiative"
+    value: "Artificial Intelligence (AI) in Cancer Research"
   field_site_section:
     - '#process':
         callback: 'reference'
         args:
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
-            computed_path: '/research/key-initiatives/ras'
+            computed_path: '/research/resources/ai-cancer-research'
   field_mlp_page_style:
     value: "ncids_default"
   ### English Contents
@@ -29,8 +29,8 @@
             args:
               - 'image'
               - type: 'module'
-                filename: 'Slim-Hero.png'
-          alt: 'The RAS Initiative Slim Hero Alt Text'
+                filename: 'AI-Cancer-Research-Slim-Hero.jpg'
+          alt: 'AI in Cancer Research alt text'
     - entity: "paragraph"
       type: "ncids_page_title_block"
     - entity: "paragraph"
@@ -38,11 +38,12 @@
       field_html_content:
         - format: "ncids_streamlined"
           value: |
-            <p>More than 30 percent of all human cancers—including 95 percent of pancreatic cancers and 45 percent of colorectal cancers—are driven by mutations of the RAS family of genes. NCI established the RAS initiative in 2013 to explore innovative approaches for attacking the proteins encoded by mutant forms of RAS genes and to ultimately create effective, new therapies for RAS-related cancers.<p>
+            <p>Recent advances in Artificial Intelligence (AI) have converged to rapidly accelerate activity across the cancer research spectrum. AI can create new models of care, as well as advance our knowledge of cancer biology, in an ever-expanding world of technology.<p>
+            <p>NCI supports many projects and activities, including funding opportunities and engaging the cancer research and AI communities to help realize the promise of AI in cancer research and care. Extramural researchers are encouraged to check out NCI funding opportunities and resources, as well as the latest seminars and workshops.</p>
     - entity: 'paragraph'
       type: "cgov_list"
       field_list_item_style:
-        value: ncids_list_item_title_desc_image
+        value: ncids_list_item_title_desc
       field_list_items:
         - entity: 'paragraph'
           type: "cgov_internal_link"
@@ -53,7 +54,7 @@
                 args:
                   - 'node'
                   - type: 'cgov_article'
-                    title: 'RAS Research Team'
+                    title: 'Funding Opportunities: AI in Cancer Research'
         - entity: 'paragraph'
           type: "cgov_internal_link"
           field_internal_link:
@@ -63,7 +64,7 @@
                 args:
                   - 'node'
                   - type: 'cgov_article'
-                    title: 'RAS Tools and Resources'
+                    title: 'Events: AI in Cancer Research'
         - entity: 'paragraph'
           type: "cgov_internal_link"
           field_internal_link:
@@ -73,7 +74,7 @@
                 args:
                   - 'node'
                   - type: 'cgov_article'
-                    title: 'Publications from the RAS Initiative'
+                    title: 'Resources and Tools: AI in Cancer Research'
         - entity: 'paragraph'
           type: "cgov_internal_link"
           field_internal_link:
@@ -83,24 +84,4 @@
                 args:
                   - 'node'
                   - type: 'cgov_article'
-                    title: 'RAS News & Events'
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'About the RAS Initiative'
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'RAS Dialogue Blog'
+                    title: 'Research Highlights: AI in Cancer Research'

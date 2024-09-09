@@ -1,0 +1,5 @@
+{% if content.field_image_promotional and content.field_image_promotional['#title'] %}
+    {{ content.field_image_promotional }}
+{% else %}
+    <img class="usa-collection__img" src="{{ get_placeholder_image('ncids_collections_media_4x3') }}" alt="No Image Placeholder">
+{% endif %}

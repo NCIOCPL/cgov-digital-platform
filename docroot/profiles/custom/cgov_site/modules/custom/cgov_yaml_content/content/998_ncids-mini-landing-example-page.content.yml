@@ -140,6 +140,244 @@
                   - 'media'
                   - bundle: 'cgov_infographic'
                     name: 'NCI at a Glance Infographic'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_title:
+        value: 'Title and Description'
+      field_list_item_style:
+        value: ncids_list_item_title_desc
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Research Team'
+          field_override_title:
+            value: 'Override Title Test'
+          field_override_list_description:
+            value: 'Override Description Test'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Research Team'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Test Title'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_override_list_description:
+            - value: 'External Link Test Description'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Colorectal Cancer Screening: What to Expect'
+          field_override_title:
+            - value: "Media Link Video Override Title"
+          field_override_list_description:
+            - value: "Media Link Video Override Description"
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Nonspecific Immune Stimulation'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_title:
+        value: 'Title, Description, and Image'
+      field_list_item_style:
+        value: ncids_list_item_title_desc_image
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Research Team'
+          field_override_title:
+            value: 'Override Title Test'
+          field_override_list_description:
+            value: 'Override Description Test'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_blog_post'
+                    title: 'Blog post Lead Image with Override and No Promo'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Research Team'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead Promo IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Test Title'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_override_list_description:
+            - value: 'External Link Test Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Colorectal Cancer Screening: What to Expect'
+          field_override_title:
+            - value: "Media Link Video Override Title"
+          field_override_list_description:
+            - value: "Media Link Video Override Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_infographic'
+                    name: 'NCI at a Glance Infographic'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Nonspecific Immune Stimulation'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_media_link"
+          field_media_link:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Colorectal Cancer Screening: What to Expect'
   field_landing_contents__ES:
   ## SPANISH CONTENTS HERE
     - entity: "paragraph"

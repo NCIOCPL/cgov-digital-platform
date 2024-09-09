@@ -6,6 +6,7 @@ import usaBreadcrumbInit from '../../lib/components/usa-breadcrumb';
 import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
 import cgdpContentBlockInit from '../../lib/components/cgdp-landing-content-block';
 import cgdpFeatureCardRow from '../../lib/components/cgdp-feature-card-row';
+import cgdpListInit from '../../lib/components/cgdp-list';
 
 const onDOMContentLoaded = () => {
 	// Init feature cards
@@ -20,6 +21,8 @@ const onDOMContentLoaded = () => {
 	cgdpPageOptionsInit();
 	// Init the content block
 	cgdpContentBlockInit();
+	// Init Lists
+	cgdpListInit();
 };
 
 window.addEventListener('DOMContentLoaded', onDOMContentLoaded);

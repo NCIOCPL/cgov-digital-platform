@@ -80,15 +80,13 @@ function cgov_list_allowed_values_function(
   ContentEntityInterface $entity = NULL,
   $cacheable
 ) {
-  // This initially queried the view modes for paragraphs; however,
-  // managed lists should only use a subset of the list item display
-  // modes. So we are keeping it like this if the future requires it,
-  // also it is much easier to change post go-live.
   $options = [
     'list_item_title' => 'Compact',
     'list_item_title_desc' => 'Title and Description',
     'list_item_title_desc_image' => 'Title, Description, and Image',
-      'list_item_title_desc_image_alternating' => 'Title, Description, and Alternating Image',
+    'list_item_title_desc_image_alternating' => 'Title, Description, and Alternating Image',
+    'ncids_list_item_title_desc' => 'NCIDS Title and Description',
+    'ncids_list_item_title_desc_image' => 'NCIDS Title, Description, and Image',
   ];
 
   return $options;
@@ -106,7 +104,6 @@ function cgov_list_allowed_values_function(
 function cgov_list_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $bundle = $entity->bundle();
   if ($bundle === 'cgov_list') {
-
     $list_item_mode = $entity->field_list_item_style->value;
 
     // Only rebuild the items if there are some.
