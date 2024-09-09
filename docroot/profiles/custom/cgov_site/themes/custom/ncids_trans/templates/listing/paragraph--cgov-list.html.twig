@@ -8,25 +8,36 @@
   as access filters are not applied.
 #}
 {% if (content.field_list_items['#items']|length > 0) %}
-  <!-- List Style: {{- style -}} -->
-  {% if style == 'list_item_title_desc_image_alternating' %}
-    {% set alternating_image_container_classes = 'row flex-columns' %}
-    {% set attr = attr.addClass(alternating_image_container_classes) %}
-    <div{{ attr }}>
-      <div class="medium-10 columns align-center">
-        <div class="alternating-image-list-container">
-          {{ content.field_list_items }}
-        </div>
+  {% if style starts with "ncids" %}
+    <div class="usa-section" data-eddl-landing-row>
+      <div class="cgdp-list">
+        {% if content.field_list_title[0] %}
+          <h2 class="nci-heading-h2 nci-heading--label">{{- content.field_list_title[0] -}}</h2>
+        {% endif %}
+        {{ content.field_list_items }}
       </div>
     </div>
   {% else %}
-    {% set attr = attr.addClass('managed list') %}
-    <div{{ attr }}>
-      {{ content.field_list_title }}
-      {{ content.field_list_items }}
-    </div>
+    {#
+      Will render out the legacy list styles.
+    #}
+    <!-- List Style: {{- style -}} -->
+    {% if style == 'list_item_title_desc_image_alternating' %}
+      {% set alternating_image_container_classes = 'row flex-columns' %}
+      {% set attr = attr.addClass(alternating_image_container_classes) %}
+      <div{{ attr }}>
+        <div class="medium-10 columns align-center">
+          <div class="alternating-image-list-container">
+            {{ content.field_list_items }}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {% set attr = attr.addClass('managed list') %}
+      <div{{ attr }}>
+        {{ content.field_list_title }}
+        {{ content.field_list_items }}
+      </div>
+    {% endif %}
   {% endif %}
-
-{% else %}
-  <!-- Empty List Is Hidden -->
 {% endif %}

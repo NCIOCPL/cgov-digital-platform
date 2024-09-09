@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.ncids_list_item_title_desc
+    - field.field.paragraph.cgov_internal_link.field_internal_link
+    - field.field.paragraph.cgov_internal_link.field_override_image_promotional
+    - field.field.paragraph.cgov_internal_link.field_override_list_description
+    - field.field.paragraph.cgov_internal_link.field_override_title
+    - paragraphs.paragraphs_type.cgov_internal_link
+  module:
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: paragraph.cgov_internal_link.ncids_list_item_title_desc
+targetEntityType: paragraph
+bundle: cgov_internal_link
+mode: ncids_list_item_title_desc
+content:
+  field_internal_link:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: link
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_override_list_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_override_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_override_image_promotional: true

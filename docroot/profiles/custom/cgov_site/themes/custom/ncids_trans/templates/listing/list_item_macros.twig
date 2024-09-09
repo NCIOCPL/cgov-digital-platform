@@ -159,8 +159,8 @@
 
 
 {#
-  Title 
-  
+  Title
+
   Used in:
     * CTHP Research Block
 #}
@@ -299,6 +299,40 @@
           {{ date }}
         </li>
       </ul>
+      <p class="usa-collection__description">{{ description }}</p>
+    </div>
+  </li>
+{% endmacro %}
+
+{% macro ncids_list_macro(title, description, url, style, image, media_type, file_type, file_size, file_ext) %}
+  <li class="usa-collection__item" data-list-component-variant="{{ style }}">
+    {% if style == "Title, Description, and Image" %}
+      {% set renderImage = image|render %}
+      {% if renderImage %}
+        {{- image -}}
+      {% else %}
+        <img class="usa-collection__img" src="{{ get_placeholder_image('ncids_collections_media_4x3') }}" alt="No Image Placeholder">
+      {% endif %}
+    {% endif %}
+    <div class="usa-collection__body">
+      <h3 class="usa-collection__heading">
+        <a class="usa-link" href="{{ url }}">
+          {{- title -}}
+        </a>
+        {% if media_type == "Video" or media_type == "Infographic" %}
+           ({{ media_type }})
+        {% elseif media_type == "File" %}
+          <span class="filetype {{file_type}}">
+            {% if file_type != "unknown" %}
+              {# Note, the spanish should have the word order reversed... #}
+              <span class="usa-sr-only">{{ file_type }} {% trans %}file{% endtrans %}</span>
+            {% else %}
+              {{ file_ext }}<span class="usa-sr-only"> {% trans %}file{% endtrans %}</span>
+            {% endif %}
+          </span>
+          <span class="filesize">({{ file_size }})</span>
+        {% endif %}
+      </h3>
       <p class="usa-collection__description">{{ description }}</p>
     </div>
   </li>
