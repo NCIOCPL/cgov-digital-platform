@@ -1,0 +1,268 @@
+# This file will be copied into the root directory of the build artifact.
+local.*
+*.local
+local.blt.yml
+
+# Ignore paths that contain user-generated content.
+/docroot/sites/*/files
+/docroot/sites/*/private
+# Specifically exclude the docroot README, which is being re-inserted by composer scaffolding
+/docroot/README.md
+/files-private
+
+# Ignore build artifacts.
+/tmp/
+/reports/
+/travis_wait*
+
+# Node.js package manager.
+npm-debug.log
+
+# Profiler tools.
+xhprof_*
+
+# SASS artifacts.
+.sass-cache
+*.css.map
+
+# Vagrant virtual machines.
+/.vagrant/
+/Vagrantfile
+
+# Acquia Cli tool
+acquiacli.yml
+
+# OS files
+# ------------
+# - Linux
+# ------------
+# Reference: https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
+
+*~
+
+# Handle open for deleted file.
+.fuse_hidden*
+.nfs*
+
+# KDE directory preferences.
+.directory
+
+# Linux trash folder.
+.Trash-*
+
+# ------------
+# - macOS
+# ------------
+# Reference: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.*
+
+# Directories potentially created on remote AFP share
+.AppleDB/
+.AppleDesktop/
+Network Trash Folder/
+Temporary Items/
+.apdisk/
+
+# ------------
+# - Windows
+# ------------
+# Reference: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
+
+# Thumbnail cache files.
+Thumbs.db
+ehthumbs*.db
+
+# Directory config file.
+Desktop.ini
+
+# Recycle or Trash.
+$RECYCLE.BIN/
+
+# Windows Installer files.
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Shortcuts.
+*.lnk
+
+# Editor files
+# - Reference: https://github.com/github/gitignore/tree/master/Global
+# ------------
+# - Eclipse
+# ------------
+
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# External tool builders.
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations".
+*.launch
+
+# PyDev specific (Python IDE for Eclipse).
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling).
+.cproject
+
+# CDT- autotools.
+.autotools
+
+# Java annotation processor (APT).
+.factorypath
+
+# PDT-specific (PHP Development Tools).
+.buildpath
+
+# sbteclipse plugin.
+.target
+
+# Tern plugin.
+.tern-project
+
+# TeXlipse plugin.
+.texlipse
+
+# STS (Spring Tool Suite).
+.springBeans
+
+# Code Recommenders.
+.recommenders/
+
+# Scala IDE specific (Scala & Java development for Eclipse).
+.cache-main
+.scala_dependencies
+.worksheet
+
+# ------------
+# - Emacs
+# ------------
+
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# flymake-mode.
+*_flymake.*
+
+# eshell files.
+/eshell/
+
+# elpa packages.
+/elpa/
+
+# reftex files.
+*.rel
+
+# AUCTeX auto folder.
+/auto/
+
+# cask packages.
+.cask/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory.
+/server/
+
+# projectiles files
+.projectile
+
+# directory configuration.
+.dir-locals.el
+
+
+# ------------
+# - JetBrains
+# ------------
+
+.idea/
+.idea_modules/
+*.iws
+
+# JIRA plugin.
+atlassian-ide-plugin.xml
+
+
+# ------------
+# - NetBeans
+# ------------
+
+nbproject/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+
+# ------------
+# - Sublime
+# ------------
+
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+*.sublime-settings
+
+/sftp-config.json
+/docroot/sftp-config.json
+
+# Package Control files.
+Package Control.*
+oscrypto-ca-bundle.crt
+bh_unicode_properties.cache
+
+
+# ------------
+# - Vim
+# ------------
+
+Session.vim
+
+# Swap files.
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Temporary files.
+.netrwhist
+*~
+
+# ------------
+# - Prevent supply chain attacks
+# - Reference: https://www.bleepingcomputer.com/news/security/researcher-hacks-over-35-tech-firms-in-novel-supply-chain-attack/
+# ------------
+package.json
+package-lock.json
