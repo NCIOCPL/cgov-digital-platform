@@ -60,6 +60,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'use text format simple',
       'use text format streamlined',
       'use text format ncids_streamlined',
+      'use text format ncids_streamlined_no_headings',
     ],
     'advanced_editor' => [
       'access taxonomy overview',
@@ -564,4 +565,25 @@ function cgov_core_update_10007() {
 function cgov_core_update_10008() {
   $siteHelper = \Drupal::service('cgov_core.tools');
   $siteHelper->setDefaultSiteBrandingForSchemaOrg();
+}
+
+/**
+ * Add permissions for new ncids_streamlined_no_headings editor.
+ */
+function cgov_core_update_10009() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Import the configs to create the new ncids_streamlined_no_headings
+  // so the permission exists so we can add it.
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_core']);
+
+  $perms = [
+    'admin_ui' => [
+      'use text format ncids_streamlined_no_headings',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
 }

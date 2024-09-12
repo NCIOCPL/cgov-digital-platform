@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_html_content
+    - filter.format.ncids_streamlined_no_headings
+    - paragraphs.paragraphs_type.ncids_summary_box
+  module:
+    - text
+id: paragraph.ncids_summary_box.field_html_content
+field_name: field_html_content
+entity_type: paragraph
+bundle: ncids_summary_box
+label: Body
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - ncids_streamlined_no_headings
+field_type: text_long
