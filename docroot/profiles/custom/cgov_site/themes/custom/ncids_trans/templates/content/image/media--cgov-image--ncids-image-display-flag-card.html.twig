@@ -1,0 +1,13 @@
+{% if content.field_ncids_promo_art_1x1 and content.field_media_image %}
+	<div class="cgdp-flag-card__image">
+		{% if content.field_ncids_promo_art_1x1[0] %}
+			{{ content.field_ncids_promo_art_1x1 }}
+		{% elseif content.field_media_image[0] %}
+			{{ content.field_media_image }}
+		{% endif %}
+	</div>
+{% else %}
+	<div class="cgdp-flag-card__image">
+		<img src="{{ get_placeholder_image('ncids_promo_1x1') }}" alt="No Image Placeholder">
+	</div>
+{% endif %}
