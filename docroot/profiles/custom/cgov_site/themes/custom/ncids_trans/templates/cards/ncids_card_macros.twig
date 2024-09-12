@@ -26,3 +26,25 @@
 		</picture>
 	{% endif %}
 {% endmacro %}
+
+{% macro ncidsFlagCard(title, description, image, url, directory, id, entity_type, link_type) %}
+	{% set renderImage = image|render %}
+	{% import _self as self %}
+  {% set titleID = "#{entity_type}-#{id}" %}
+
+	<a href="{{ url }}" aria-labelledby="{{ titleID }}" data-eddl-landing-item="flag_card" data-eddl-landing-item-link-type="{{ link_type }}">
+    {% if renderImage %}
+      {{- image -}}
+    {% else %}
+      <div class="cgdp-flag-card__image">
+        <img src="{{ get_placeholder_image('ncids_promo_1x1') }}" alt="No Image Placeholder">
+      </div>
+    {% endif %}
+		<div class="cgdp-flag-card__content">
+			<span class="cgdp-flag-card__title" id="{{ titleID }}">{{ title }}</span>
+			{% if description %}
+				<p class="cgdp-flag-card__description">{{ description }}</p>
+			{% endif %}
+		</div>
+	</a>
+{% endmacro %}
