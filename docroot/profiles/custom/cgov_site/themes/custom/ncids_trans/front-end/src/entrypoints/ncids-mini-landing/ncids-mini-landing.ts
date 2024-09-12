@@ -7,6 +7,7 @@ import cgdpPageOptionsInit from '../../lib/components/cgdp-page-options';
 import cgdpContentBlockInit from '../../lib/components/cgdp-landing-content-block';
 import cgdpFeatureCardRow from '../../lib/components/cgdp-feature-card-row';
 import cgdpListInit from '../../lib/components/cgdp-list';
+import cgdpSummaryBox from '../../lib/components/cgdp-summary-box';
 
 const onDOMContentLoaded = () => {
 	// Init feature cards
@@ -23,6 +24,8 @@ const onDOMContentLoaded = () => {
 	cgdpContentBlockInit();
 	// Init Lists
 	cgdpListInit();
+	// Init the summary box
+	cgdpSummaryBox();
 };
 
 window.addEventListener('DOMContentLoaded', onDOMContentLoaded);

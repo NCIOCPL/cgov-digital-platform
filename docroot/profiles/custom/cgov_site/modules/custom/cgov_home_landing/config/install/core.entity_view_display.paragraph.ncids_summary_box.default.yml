@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_summary_box.field_container_heading_wysiwyg
+    - field.field.paragraph.ncids_summary_box.field_html_content
+    - paragraphs.paragraphs_type.ncids_summary_box
+  module:
+    - text
+id: paragraph.ncids_summary_box.default
+targetEntityType: paragraph
+bundle: ncids_summary_box
+mode: default
+content:
+  field_container_heading_wysiwyg:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_html_content:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

@@ -1,0 +1,48 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.ncids_streamlined_no_headings
+  module:
+    - ckeditor
+format: ncids_streamlined_no_headings
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Undo
+            - Redo
+            - Styles
+            - RemoveFormat
+        -
+          name: Links
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - NumberedList
+            - BulletedList
+        -
+          name: Tools
+          items:
+            - Source
+  plugins:
+    stylescombo:
+      styles: "strong|Bold\r\nem|Italics\r\ns|Strikethrough\r\nsub|Subscript\r\nsup|Superscript"
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: cgov_inline_links
+image_upload:
+  status: false
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

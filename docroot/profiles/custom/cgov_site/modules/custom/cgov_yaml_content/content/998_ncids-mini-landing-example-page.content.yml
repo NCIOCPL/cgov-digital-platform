@@ -441,3 +441,62 @@
                   - 'media'
                   - bundle: 'cgov_infographic'
                     name: 'Instituto Nacional del Cáncer Panorama'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Page for Summary Box"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS summary box."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_pretty_url:
+    value: "ncids-mini-landing-summary-box"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_summary_box"
+      field_container_heading_wysiwyg:
+        - format: "simple"
+          value: "This is an example of a very long heading using the optional heading field in the Content Management System that <em>will wrap with the usa-measure if implemented correctly</em>"
+      field_html_content:
+        - format: "ncids_streamlined_no_headings"
+          value: |
+            <p><strong>More than 30 percent</strong> of all human cancers - <em>including 95 percent of pancreatic cancers and 45 percent of colorectal cancers</em> - are driven by <sup>mutations of the RAS</sup> family of genes. <sub>NCI established the RAS initiative in 2013 to explore</sub> innovative approaches for attacking the <s>proteins encoded by mutant forms of RAS genes</s> and to <strong><em>ultimately create effective, new therapies for RAS-related cancers.</em></strong></p>
+            <p>See <a href="/about-cancer">About Cancer</a> managed internal link.</p>
+            <p>See <a href="/about-cancer">About Cancer</a> internal link.</p>
+            <p>See <a href="/research/progress/discovery/test-file-url">Test File Download</a> managed media link.</p>
+            <p>See <a href="https://www.google.com/">Google</a> for external link.</p>
+            <ul>
+              <li>This is</li>
+              <li>an unordered</li>
+              <li>list of stuff</li>
+            </ul>
+            <ol>
+              <li>This is</li>
+              <li>>an ordered</li>
+              <li>list of stuff</li>
+            </ul>
+    - entity: "paragraph"
+      type: "ncids_summary_box"
+      field_html_content:
+        - format: "ncids_streamlined_no_headings"
+          value: |
+            This is a summary box has no heading!!
+            Email Link Testing
+            <p><a href="mailto:jenny@example.org">Email Jenny</a></p>
+            Other link testing
+            <p><a href="tel:1-555-867-5309">Call Jenny</a></p>
