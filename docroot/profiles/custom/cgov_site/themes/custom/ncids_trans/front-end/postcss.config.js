@@ -18,9 +18,6 @@ module.exports = {
 					if (filepath.match(/-legacy\.scss$/)) {
 						// Handle legacy CSS for the front-end
 						return prefixedSelector;
-					} else if (filepath.match(/r4r-app\/.*\.s?css$/)) {
-						// Hack for legacy R4R app
-						return prefixedSelector;
 					}
 					return selector;
 				},

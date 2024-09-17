@@ -19,7 +19,24 @@
           - vid: "cgov_site_sections"
             computed_path: "/research/resources"
   field_application_module:
-    - target_id: cgov_r4r_app
+    - target_id: cgov_js_only_app
+      data:
+       drupalConfig:
+        appName: "r4r-app"
+        rootId: "NCI-R4R-root"
+        initFnName: "window.R4RApp"
+        appCssUri: "https://www.cancer.gov/app-modules/r4r-app/r4r-app.v3.0.1/static/css/main-legacy.css"
+        appJsUri: "https://www.cancer.gov/app-modules/r4r-app/r4r-app.v3.0.1/static/js/main.js"
+        removeHeadElements: []
+        validAppPaths: []
+       frontEndConfig:
+        customTheme:
+          r4r-container: 'row'
+          searchbar__container: 'cancer-gov'
+          searchbar__button--submit: 'button'
+          browse__tile: 'arrow-link'
+          similar-resource__tile: 'arrow-link'
+        apiEndpoint: "@@LITERAL@@window.CDEConfig.r4rConfig.apiServer"
   field_date_posted:
     value: "2016-06-23"
   field_date_reviewed:
