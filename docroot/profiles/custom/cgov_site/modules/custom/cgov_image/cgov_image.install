@@ -158,5 +158,7 @@ function cgov_image_update_10001() {
  */
 function cgov_image_update_10002() {
   $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
   $service->import(['cgov_image']);
 }
