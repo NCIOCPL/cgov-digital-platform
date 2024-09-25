@@ -131,6 +131,16 @@ export const getEventNameBeginning = (pageType: string | undefined) => {
 	}
 };
 
+export const getRowVariant = (target: HTMLElement) => {
+	const rowVariant = target.closest(
+		'[data-eddl-landing-row-variant]'
+	) as HTMLElement;
+	if (rowVariant) {
+		return rowVariant.dataset.eddlLandingRowVariant;
+	}
+	return 'Not Defined';
+};
+
 /**
  * Landing page click tracker helper.
  * @param {HTMLElement} target - Selected component.
@@ -188,6 +198,7 @@ export const landingClickTracker = (
 			location: 'Body',
 			pageType,
 			pageTemplate,
+			pageRowVariant: getRowVariant(target),
 			pageRows,
 			pageRowIndex,
 			pageRowCols,

@@ -2,212 +2,195 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_landing_contents
-    - node.type.cgov_mini_landing
-    - paragraphs.paragraphs_type.cgov_card_borderless
+    - field.storage.paragraph.field_right_content
     - paragraphs.paragraphs_type.cgov_card_raw_html
-    - paragraphs.paragraphs_type.cgov_content_block
-    - paragraphs.paragraphs_type.cgov_dynamic_list
-    - paragraphs.paragraphs_type.cgov_list
-    - paragraphs.paragraphs_type.cgov_two_item_feature_row
-    - paragraphs.paragraphs_type.ncids_3_feature_row_opt_head
     - paragraphs.paragraphs_type.ncids_content_block
-    - paragraphs.paragraphs_type.ncids_flag_card_group
+    - paragraphs.paragraphs_type.ncids_feature_card_external
+    - paragraphs.paragraphs_type.ncids_feature_card_internal
+    - paragraphs.paragraphs_type.ncids_feature_card_multimedia
     - paragraphs.paragraphs_type.ncids_mlp_two_column_layout
-    - paragraphs.paragraphs_type.ncids_page_title_block
-    - paragraphs.paragraphs_type.ncids_slim_hero
     - paragraphs.paragraphs_type.ncids_summary_box
   module:
     - entity_reference_revisions
-id: node.cgov_mini_landing.field_landing_contents
-field_name: field_landing_contents
-entity_type: node
-bundle: cgov_mini_landing
-label: Contents
-description: 'Contents of the Landing Page.'
-required: false
-translatable: true
+id: paragraph.ncids_mlp_two_column_layout.field_right_content
+field_name: field_right_content
+entity_type: paragraph
+bundle: ncids_mlp_two_column_layout
+label: 'Right Content'
+description: 'Content on the right side of this layout.'
+required: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      cgov_content_block: cgov_content_block
-      cgov_two_item_feature_row: cgov_two_item_feature_row
-      cgov_list: cgov_list
-      cgov_card_borderless: cgov_card_borderless
-      cgov_card_raw_html: cgov_card_raw_html
-      cgov_dynamic_list: cgov_dynamic_list
-      ncids_page_title_block: ncids_page_title_block
-      ncids_slim_hero: ncids_slim_hero
-      ncids_3_feature_row_opt_head: ncids_3_feature_row_opt_head
       ncids_content_block: ncids_content_block
-      ncids_mlp_two_column_layout: ncids_mlp_two_column_layout
+      ncids_feature_card_internal: ncids_feature_card_internal
+      ncids_feature_card_external: ncids_feature_card_external
+      ncids_feature_card_multimedia: ncids_feature_card_multimedia
       ncids_summary_box: ncids_summary_box
-      ncids_flag_card_group: ncids_flag_card_group
+      cgov_card_raw_html: cgov_card_raw_html
     negate: 0
     target_bundles_drag_drop:
       body_section:
-        weight: -15
+        weight: 54
         enabled: false
       cgov_card_borderless:
-        weight: 4
-        enabled: true
-      cgov_card_external:
-        weight: -14
-        enabled: false
-      cgov_card_internal:
-        weight: -13
-        enabled: false
-      cgov_card_raw_html:
-        weight: 5
-        enabled: true
-      cgov_citation:
         weight: 55
         enabled: false
-      cgov_column_one:
-        weight: -17
+      cgov_card_external:
+        weight: 56
         enabled: false
-      cgov_column_two:
-        weight: -16
+      cgov_card_internal:
+        weight: 57
         enabled: false
-      cgov_content_block:
-        weight: 1
+      cgov_card_raw_html:
+        weight: 65
         enabled: true
-      cgov_cthp_block_card:
+      cgov_citation:
+        weight: 58
+        enabled: false
+      cgov_column_one:
         weight: 59
         enabled: false
-      cgov_cthp_feature_card_external:
-        weight: 60
-        enabled: false
-      cgov_cthp_feature_card_internal:
-        weight: 61
-        enabled: false
-      cgov_cthp_guide_card:
-        weight: 62
-        enabled: false
-      cgov_cthp_overview_card:
-        weight: 63
-        enabled: false
-      cgov_cthp_raw_html_card:
-        weight: 64
-        enabled: false
-      cgov_cthp_research_card:
-        weight: 65
-        enabled: false
-      cgov_cthp_video_card:
+      cgov_column_two:
         weight: 66
         enabled: false
-      cgov_dynamic_list:
-        weight: 6
-        enabled: true
-      cgov_external_link:
+      cgov_content_block:
+        weight: 67
+        enabled: false
+      cgov_cthp_block_card:
         weight: 68
         enabled: false
-      cgov_guide_row:
-        weight: -20
+      cgov_cthp_feature_card_external:
+        weight: 69
         enabled: false
-      cgov_hero_banner:
+      cgov_cthp_feature_card_internal:
         weight: 70
         enabled: false
-      cgov_internal_link:
+      cgov_cthp_guide_card:
         weight: 71
         enabled: false
-      cgov_list:
-        weight: 3
-        enabled: true
-      cgov_media_link:
+      cgov_cthp_overview_card:
+        weight: 72
+        enabled: false
+      cgov_cthp_raw_html_card:
         weight: 73
         enabled: false
-      cgov_multimedia_row:
+      cgov_cthp_research_card:
         weight: 74
         enabled: false
-      cgov_primary_feature_row:
-        weight: -21
+      cgov_cthp_video_card:
+        weight: 75
         enabled: false
-      cgov_secondary_feature_row:
-        weight: -19
+      cgov_dynamic_list:
+        weight: 76
         enabled: false
-      cgov_title_first_feature_card_ro:
+      cgov_external_link:
         weight: 77
         enabled: false
-      cgov_two_item_feature_row:
-        weight: 2
-        enabled: true
-      ncids_2_guide_card_row:
+      cgov_guide_row:
+        weight: 78
+        enabled: false
+      cgov_hero_banner:
         weight: 79
         enabled: false
-      ncids_3_feature_card_row:
+      cgov_internal_link:
         weight: 80
         enabled: false
-      ncids_3_feature_row_opt_head:
-        weight: 81
-        enabled: true
-      ncids_3_guide_card_row:
+      cgov_list:
         weight: 81
         enabled: false
-      ncids_call_to_action_strip:
+      cgov_media_link:
         weight: 82
         enabled: false
-      ncids_content_block:
-        weight: 83
-        enabled: true
-      ncids_dynamic_list:
+      cgov_multimedia_row:
         weight: 83
         enabled: false
-      ncids_feature_card_external:
+      cgov_primary_feature_row:
         weight: 84
         enabled: false
-      ncids_feature_card_internal:
+      cgov_secondary_feature_row:
         weight: 85
         enabled: false
-      ncids_feature_card_multimedia:
+      cgov_title_first_feature_card_ro:
         weight: 86
         enabled: false
-      ncids_flag_card_group:
-        weight: 92
-        enabled: true
-      ncids_guide_card:
+      cgov_two_item_feature_row:
         weight: 87
         enabled: false
-      ncids_guide_card_img_desc:
+      ncids_2_guide_card_row:
         weight: 88
         enabled: false
-      ncids_hero:
+      ncids_3_feature_card_row:
         weight: 89
         enabled: false
-      ncids_inline_video:
+      ncids_3_feature_row_opt_head:
         weight: 90
         enabled: false
-      ncids_link_button_external:
+      ncids_3_guide_card_row:
         weight: 91
         enabled: false
-      ncids_link_button_internal:
+      ncids_call_to_action_strip:
         weight: 92
         enabled: false
-      ncids_mlp_two_column_layout:
-        weight: 99
+      ncids_content_block:
+        weight: 60
         enabled: true
-      ncids_page_title_block:
-        weight: 49
-        enabled: true
-      ncids_promo_block_external:
+      ncids_dynamic_list:
         weight: 93
         enabled: false
-      ncids_promo_block_internal:
+      ncids_feature_card_external:
+        weight: 62
+        enabled: true
+      ncids_feature_card_internal:
+        weight: 61
+        enabled: true
+      ncids_feature_card_multimedia:
+        weight: 63
+        enabled: true
+      ncids_guide_card:
         weight: 94
         enabled: false
-      ncids_slim_hero:
-        weight: 51
-        enabled: true
-      ncids_summary_box:
-        weight: 102
-        enabled: true
-      ncids_two_column_container:
+      ncids_guide_card_img_desc:
         weight: 95
         enabled: false
-      pdq_summary_section:
+      ncids_hero:
         weight: 96
+        enabled: false
+      ncids_inline_video:
+        weight: 97
+        enabled: false
+      ncids_link_button_external:
+        weight: 98
+        enabled: false
+      ncids_link_button_internal:
+        weight: 99
+        enabled: false
+      ncids_mlp_two_column_layout:
+        weight: 100
+        enabled: false
+      ncids_page_title_block:
+        weight: 101
+        enabled: false
+      ncids_promo_block_external:
+        weight: 102
+        enabled: false
+      ncids_promo_block_internal:
+        weight: 103
+        enabled: false
+      ncids_slim_hero:
+        weight: 104
+        enabled: false
+      ncids_summary_box:
+        weight: 64
+        enabled: true
+      ncids_two_column_container:
+        weight: 105
+        enabled: false
+      pdq_summary_section:
+        weight: 106
         enabled: false
 field_type: entity_reference_revisions
