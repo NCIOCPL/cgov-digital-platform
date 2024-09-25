@@ -1,0 +1,427 @@
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "About Cancer Treatment - Image"
+  field_caption:
+    value: |
+      <p>About Cancer Treatment - Image.</p>
+  field_credit:
+    value: "National Cancer Institute"
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'Treatment-feature-card.jpg'
+      alt: 'USA Map Image.'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 83
+                y: 0
+                width: 465
+                height: 349
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 84
+                y: 0
+                width: 465
+                height: 349
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 98
+                y: 0
+                width: 261
+                height: 349
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 109
+                y: 0
+                width: 349
+                height: 349
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 0
+                x: 0
+                y: 0
+                width: 620
+                height: 349
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Page for 2 Column Layout"
+  field_page_description:
+    value: "Sample mini and landing page to test NCIDS 2 column layout."
+  field_browser_title:
+    value: "Mini Landing Page"
+  field_pretty_url:
+    value: "ncids-mini-landing-2-column-layout"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section">
+                  <div class="usa-prose">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras Curabitur ut venenatis nisl, vitae hendrerit ligula orem ipsu</p>
+                  </div>
+                </div>
+      field_right_content:
+        - entity: "paragraph"
+          type: "ncids_summary_box"
+          field_container_heading_wysiwyg:
+            - format: "simple"
+              value: "Key Information"
+          field_html_content:
+            - format: "ncids_streamlined_no_headings"
+              value: |
+                <ul>
+                  <li>If you are under a winter storm warning, <a href="https://www.google.com">find shelter</a> right away.</li>
+                  <li>Sign up for <a href="https://www.google.com">your community's warning system.</a></li>
+                  <li>Learn the signs of, and basic treatments for, <a href="https://www.google.com">frostbite</a> and <a href="https://www.google.com">hypothermia</a>.</li>
+                  <li>Gather emergency supplies for your <a href="https://www.google.com">home</a> and your <a href="https://www.google.com">car</a>.</li>
+                </ul>
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_66_33
+      field_left_content:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section">
+                  <div class="usa-prose">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras Curabitur ut venenatis nisl, vitae hendrerit ligula orem ipsu</p>
+                  </div>
+                </div>
+      field_right_content:
+        - entity: "paragraph"
+          type: "ncids_summary_box"
+          field_container_heading_wysiwyg:
+            - format: "simple"
+              value: "Key Information"
+          field_html_content:
+            - format: "ncids_streamlined_no_headings"
+              value: |
+                <ul>
+                  <li>If you are under a winter storm warning, <a href="https://www.google.com">find shelter</a> right away.</li>
+                  <li>Sign up for <a href="https://www.google.com">your community's warning system.</a></li>
+                  <li>Learn the signs of, and basic treatments for, <a href="https://www.google.com">frostbite</a> and <a href="https://www.google.com">hypothermia</a>.</li>
+                  <li>Gather emergency supplies for your <a href="https://www.google.com">home</a> and your <a href="https://www.google.com">car</a>.</li>
+                </ul>
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras Curabitur ut venenatis nisl, vitae hendrerit ligula orem ipsu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Cancer Training at NCI'
+          field_override_card_description:
+            - value: 'Find training, fellowships, and other professional education opportunities for students and scientists on the NIH and NCI campuses in Maryland.'
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_66_33
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi mole consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandmauris.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Cancer Training at NCI'
+          field_override_card_description:
+            - value: 'Find training, fellowships, and other professional education opportunities for students and scientists on the NIH and NCI campuses in Maryland.'
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_summary_box"
+          field_container_heading_wysiwyg:
+            - format: "simple"
+              value: "Key Information"
+          field_html_content:
+            - format: "ncids_streamlined_no_headings"
+              value: |
+                <ul>
+                  <li>If you are under a winter storm warning, <a href="https://www.google.com">find shelter</a> right away.</li>
+                  <li>Sign up for <a href="https://www.google.com">your community's warning system.</a></li>
+                  <li>Learn the signs of, and basic treatments for, <a href="https://www.google.com">frostbite</a> and <a href="https://www.google.com">hypothermia</a>.</li>
+                  <li>Gather emergency supplies for your <a href="https://www.google.com">home</a> and your <a href="https://www.google.com">car</a>.</li>
+                </ul>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "cgov_card_raw_html"
+          field_raw_html:
+            - format: "raw_html"
+              value: |
+                <div class="usa-section">
+                  <div class="usa-prose">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras Curabitur ut venenatis nisl, vitae hendrerit ligula orem ipsu</p>
+                  </div>
+                </div>
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_summary_box"
+          field_container_heading_wysiwyg:
+            - format: "simple"
+              value: "Key Information"
+          field_html_content:
+            - format: "ncids_streamlined_no_headings"
+              value: |
+                <ul>
+                  <li>If you are under a winter storm warning, <a href="https://www.google.com">find shelter</a> right away.</li>
+                  <li>Sign up for <a href="https://www.google.com">your community's warning system.</a></li>
+                  <li>Learn the signs of, and basic treatments for, <a href="https://www.google.com">frostbite</a> and <a href="https://www.google.com">hypothermia</a>.</li>
+                  <li>Gather emergency supplies for your <a href="https://www.google.com">home</a> and your <a href="https://www.google.com">car</a>.</li>
+                </ul>
+      field_right_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <div class="usa-section">
+                  <div class="usa-prose">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras Curabitur ut venenatis nisl, vitae hendrerit ligula orem ipsu Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac.</p>
+                  </div>
+                </div>
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Cancer Treatment"
+  field_page_description:
+    value: "Cancer Treatment Example Page."
+  field_browser_title:
+    value: "Cancer Treatment Example Page"
+  field_pretty_url:
+    value: "treatment"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/about-cancer'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>There are many types of cancer treatment. The types of treatment that you have will depend on the type of cancer you have and how advanced it is. Some people with cancer will have only one treatment. But most people have a combination of treatments, such as surgery with chemotherapy and/or radiation therapy. You may also have immunotherapy, targeted therapy, or hormone therapy.</p>
+                <p>Clinical trials might also be an option for you. Clinical trials are research studies that involve people. Understanding what they are and how they work can help you decide if taking part in a trial is a good option for you.</p>
+                <p>When you need treatment for cancer, you have a lot to learn and think about. It is normal to feel overwhelmed and confused. But, talking with your doctor and learning all you can about all your treatment options, including clinical trials, can help you make a decision you feel good about. Our Questions to Ask Your Doctor About Treatment may help.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Cancer Training at NCI'
+          field_override_card_description:
+            - value: 'Find training, fellowships, and other professional education opportunities for students and scientists on the NIH and NCI campuses in Maryland.'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'About Cancer Treatment - Image'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: ncids_list_item_title_desc_image
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Research Team'
+          field_override_title:
+            - value: 'Types of Cancer Treatment'
+          field_override_list_description:
+            - value: 'Learn about the different types of cancer treatments, including  chemotherapy, radiation therapy, immunotherapy, and targeted therapy.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Tools and Resources'
+          field_override_title:
+            - value: 'Side Effects of Cancer Treatment'
+          field_override_list_description:
+            - value: 'Find common side effects caused by cancer or cancer treatments. Know  what signs and symptoms to call your doctor about, ways to manage these  problems, and treatment options.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'Publications from the RAS Initiative'
+          field_override_title:
+            - value: 'Find NCI-Supported Clinical Trials'
+          field_override_list_description:
+            - value: 'Find an NCI-supported clinical trial—and learn how to locate other research studies—that may be right for you or a loved one.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS News & Events'
+          field_override_title:
+            - value: 'A-Z List of Cancer Drugs'
+          field_override_list_description:
+            - value: 'Consumer-friendly information about cancer drugs and drug combinations used to prevent and treat cancer.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'About the RAS Initiative'
+          field_override_title:
+            - value: 'Complementary and Alternative Medicine'
+          field_override_list_description:
+            - value: 'Types of therapies used in complementary and alternative medicine (CAM)  in cancer care, such as mind-body methods like meditation and yoga, or  biologically-based like herbs and vitamins. Massage, reiki, acupuncture,  and traditional medical systems are included. Also mentioned are  talking to your doctor about CAM and the safety of CAM.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Dialogue Blog'
+          field_override_title:
+            - value: 'Questions to Ask about Your Cancer Treatment'
+          field_override_list_description:
+            - value: 'Suggested questions to ask your doctor about treatment choices and the possible side effects of cancer treatment.'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: 'RAS Dialogue Blog'
+          field_override_title:
+            - value: 'Treatment Research'
+          field_override_list_description:
+            - value: 'Find research articles on cancer treatment, which may include news  stories, clinical trials, blog posts, and descriptions of active  studies.'

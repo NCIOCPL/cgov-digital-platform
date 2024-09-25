@@ -1,0 +1,25 @@
+<div class="usa-section cgdp-two-column-layout" data-eddl-landing-row>
+  {% set layout_details = {
+    'two_column_layout_50_50': {
+      'variant': 'TwoColumn50:50',
+      'classes': ['tablet-lg:grid-col-6', 'tablet-lg:grid-col-6']
+    },
+    'two_column_layout_66_33': {
+      'variant': 'TwoColumn66:33',
+      'classes': ['tablet-lg:grid-col-8', 'tablet-lg:grid-col-4']
+    }
+  } %}
+
+  {% set selected_layout = layout_details[paragraph.field_two_column_layout_display.value] %}
+
+  {% if selected_layout is defined %}
+    <div class="grid-row grid-gap-4" data-eddl-landing-row-variant="{{ selected_layout.variant }}">
+      <div class="{{ selected_layout.classes[0] }} cgdp-column" data-eddl-landing-row-col>
+        {{ content.field_left_content }}
+      </div>
+      <div class="{{ selected_layout.classes[1] }} cgdp-column" data-eddl-landing-row-col>
+        {{ content.field_right_content }}
+      </div>
+    </div>
+  {% endif %}
+</div>

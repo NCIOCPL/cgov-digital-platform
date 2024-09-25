@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_mlp_two_column_layout.field_left_content
+    - field.field.paragraph.ncids_mlp_two_column_layout.field_right_content
+    - field.field.paragraph.ncids_mlp_two_column_layout.field_two_column_layout_display
+    - paragraphs.paragraphs_type.ncids_mlp_two_column_layout
+  module:
+    - entity_reference_revisions
+    - options
+id: paragraph.ncids_mlp_two_column_layout.default
+targetEntityType: paragraph
+bundle: ncids_mlp_two_column_layout
+mode: default
+content:
+  field_left_content:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_right_content:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_two_column_layout_display:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

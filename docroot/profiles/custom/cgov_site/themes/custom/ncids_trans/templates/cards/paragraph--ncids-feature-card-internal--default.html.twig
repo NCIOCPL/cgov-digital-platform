@@ -1,0 +1,46 @@
+{% import '@ncids_trans/cards/ncids_card_macros.twig' as cardMacros %}
+{# This needs to parallel the feature card template. The biggest difference is that
+ # this template allows for overrides. I cannot see a straight forward way of overriding
+ # the node's title and description fields and still using the Feature Card template. So
+ # we will duplicate it.
+ #}
+{% if content.field_featured_item[0] %}
+  {% set featured_item_node = content.field_featured_item[0]["#node"] %}
+  {% set nid = featured_item_node.id %}
+
+  {# ###### Setup Title ####### #}
+  {% if content.field_override_card_title[0] %}
+    {% set title = content.field_override_card_title[0] %}
+  {% elseif featured_item_node.field_card_title[0] %}
+    {% set title = featured_item_node.field_card_title[0].value %}
+  {% else %}
+    {% set title = featured_item_node.field_browser_title[0].value %}
+  {% endif %}
+
+  {# ###### Setup Description ####### #}
+  {% if content.field_override_card_description[0] %}
+    {% set description = content.field_override_card_description[0] %}
+  {% elseif featured_item_node.field_feature_card_description[0] %}
+    {% set description = featured_item_node.field_feature_card_description[0].value %}
+  {% elseif featured_item_node.field_list_description[0] %}
+    {% set description = featured_item_node.field_list_description[0].value %}
+  {% endif %}
+  {# Else no description #}
+
+  {# ###### Setup URL ######## #}
+  {% set url = path('entity.node.canonical', {'node' : nid}) %}
+
+  {# ###### Setup Image ######## #}
+  {% set image = content.field_featured_item %}
+  {% if content.field_override_image_promotional[0] %}
+    {% set image = content.field_override_image_promotional %}
+  {% endif %}
+
+  {% set id = paragraph.id() %}
+  {% set entity_type = paragraph.entityTypeID %}
+  <div class="usa-section">
+    <div class="nci-card cgdp-feature-card">
+      {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, entity_type, 'Internal') }}
+    </div>
+  </div>
+{% endif %}
