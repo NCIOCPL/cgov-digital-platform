@@ -37,6 +37,7 @@ if ($is_acsf_env && $acsf_db_name) {
       $domain = $site_name;
     }
   }
+  $settings['cgdp.cache_url_host'] = 'https://' . $domain;
   $config['simple_sitemap.settings']['base_url'] = 'https://' . $domain;
 } else {
   // NOTE: you can override this in your local.settings.php.
