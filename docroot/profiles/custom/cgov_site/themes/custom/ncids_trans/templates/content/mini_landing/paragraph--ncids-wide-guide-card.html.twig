@@ -1,0 +1,26 @@
+{% set image = content.field_image_guide_card[0] %}
+{% set file_entity = image['#item'].entity %}
+{% if file_entity %}
+  {% set file_uri = file_entity.getFileUri() %}
+  {% set image_url = file_uri|image_style('ncids_guide_card_1x1') %}
+{% else %}
+  {% set image_url = get_placeholder_image('ncids_guide_card_1x1') %}
+{% endif %}
+
+<div class="usa-section" data-eddl-landing-row>
+	<div class="nci-guide-card nci-guide-card--cgdp-wide" style="background-image: url({{ image_url }})">
+		<div class="nci-guide-card__wrapper">
+			<div class="nci-guide-card__body">
+				{% if content.field_container_heading[0] %}
+					<h2 class="nci-guide-card__title">{{ content.field_container_heading }}</h2>
+				{% endif %}
+				<div class="nci-guide-card__description usa-prose">
+					{{ content.field_html_content }}
+				</div>
+				<ul class="nci-card__button-group">
+					{{ content.field_three_link_buttons }}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

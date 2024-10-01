@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_html_content
+    - filter.format.simple
+    - paragraphs.paragraphs_type.ncids_wide_guide_card
+  module:
+    - text
+id: paragraph.ncids_wide_guide_card.field_html_content
+field_name: field_html_content
+entity_type: paragraph
+bundle: ncids_wide_guide_card
+label: Description
+description: "Displays in the box to the left of the image. Should provide context for the card's call-to-action buttons."
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - simple
+field_type: text_long
