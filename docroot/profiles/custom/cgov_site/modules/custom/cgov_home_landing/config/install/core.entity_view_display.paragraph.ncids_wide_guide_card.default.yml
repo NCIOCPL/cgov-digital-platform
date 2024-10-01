@@ -1,0 +1,55 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_wide_guide_card.field_container_heading
+    - field.field.paragraph.ncids_wide_guide_card.field_html_content
+    - field.field.paragraph.ncids_wide_guide_card.field_image_guide_card
+    - field.field.paragraph.ncids_wide_guide_card.field_three_link_buttons
+    - image.style.ncids_guide_card_1x1
+    - paragraphs.paragraphs_type.ncids_wide_guide_card
+  module:
+    - entity_reference_revisions
+    - image
+    - text
+id: paragraph.ncids_wide_guide_card.default
+targetEntityType: paragraph
+bundle: ncids_wide_guide_card
+mode: default
+content:
+  field_container_heading:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_html_content:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_image_guide_card:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ncids_guide_card_1x1
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_three_link_buttons:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: link_button_guide_card
+      link: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

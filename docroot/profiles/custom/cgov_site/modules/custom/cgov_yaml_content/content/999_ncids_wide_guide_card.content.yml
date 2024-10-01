@@ -1,0 +1,326 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Clinical Trials Information for Patients and Caregivers"
+  field_page_description:
+    value: "Sample mini and landing page to test wide guide card with real content."
+  field_browser_title:
+    value: "Clinical Trials Information for Patients and Caregivers"
+  field_pretty_url:
+    value: "clinical-trials"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_html_content:
+        - format: "simple"
+          value: |
+            <p>Explore the basics of clinical trials, including what they are, how they work, and what to expect. Learning more about clinical trials can help you prepare to take next steps and find trials near you.</p>
+      field_image_guide_card:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'wide-guide-card-image.png'
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_article'
+                  title: 'Funding Opportunities Article'
+        field_button_text:
+          - value: 'Why Participate in a Clinical Trial?'
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_article'
+                  title: 'Feelings and Cancer'
+        field_button_text:
+          - value: 'Who Pays for Clinical Trials?'
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_home_landing'
+                  title: 'About Cancer'
+        field_button_text:
+          - value: 'How do Clinical Trials work?'
+    - entity: 'paragraph'
+      type: "cgov_list"
+      field_list_item_style:
+        value: ncids_list_item_title_desc_image
+      field_list_items:
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            value: "Are Clinical Trials Safe?"
+          field_override_list_description:
+            value: "Learn about informed consent, institutional review boards, and how trials are closely monitored to protect you."
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            value: "Find Clinical Trials"
+          field_override_list_description:
+            value: "Find an NCI-supported clinical trial—and learn how to locate other research studies—that may be right for you or a loved one."
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No Lead IMG] Title'
+        - entity: 'paragraph'
+          type: "cgov_internal_link"
+          field_override_title:
+            value: "What Are Clinical Trials?"
+          field_override_list_description:
+            value: "Learn about the purpose and importance of clinical trials, including the different types of clinical trials used in cancer research."
+          field_internal_link:
+            - target_type: 'node'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'node'
+                  - type: 'cgov_article'
+                    title: '[No Lead IMG] Title'
+    - entity: "paragraph"
+      type: "ncids_flag_card_group"
+      field_container_heading:
+        - value: "The Optional Flag Card Group Heading"
+      field_heading_visibility:
+        value: sr-only
+      field_row_cards_unlimited:
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: "Request a Free Clinical Trial Search"
+          field_override_card_description:
+            - value: "Visit our contact page to connect with a cancer information specialist by phone, email, and chat."
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Feelings and Cancer"
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_override_card_title:
+            - value: "Donate Your Health Data and Medical Samples"
+          field_override_card_description:
+            - value: "See how donating your existing medical records and health samples can save lives."
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_article"
+                    title: "Find a Clinical Trial Test Article"
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Page for Wide Guide Card"
+  field_page_description:
+    value: "Sample mini and landing page to test wide guide card."
+  field_browser_title:
+    value: "Test Page for Wide Guide Card"
+  field_pretty_url:
+    value: "ncids-mini-landing-wide-guide-card"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_html_content:
+        - format: "simple"
+          value: |
+            <p>This is a description that is five hundred characters long and will be followed with 3 call-to-action buttons. Lorem ipsum odor amet, consectetuer adipiscing elit. <strong>Augue tristique dolor id metus turpis mauris varius. Eu montes diam elementum leo finibus dolor.</strong> <em>Vivamus tortor lacus ridiculus vel erat ornare nam.</em> <strong><em>Habitant puvinar sodales ipsum metus purus.</em></strong> Fusce ornare rutrum quisque lacus nam nascetur vel. Mi nostra ut consequat habitant vehicula. Maecenas primis leo platea odio mi mi. Ad suspen</p>
+      field_image_guide_card:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'wide-guide-card-image-2.png'
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_mini_landing'
+                  title: 'Coping with Cancer'
+        field_button_text:
+          - value: 'Cancer Homepage'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
+        field_button_text:
+          - value: "External Link to Google"
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_blog_series'
+                  title: 'Cancer Currents Blog'
+    - entity: "paragraph"
+      type: "ncids_3_feature_row_opt_head"
+      field_container_heading:
+        - value: "Optional Feature Card Row Heading"
+      field_heading_visibility:
+        value: visible
+      field_row_cards:
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "Cancer Types"
+          field_override_card_title:
+            - value: 'Lorem ipsum dolor sit amet consectetur'
+          field_override_card_description:
+            - value: 'Success stories blurb. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "NCIDS Grants & Training Page"
+          field_override_card_title:
+            - value: 'Lorem ipsum dolor sit amet consectetur adipiscing elit'
+          field_override_card_description:
+            - value: 'Blurb for feature card two. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'
+        - entity: "paragraph"
+          type: "ncids_feature_card_internal"
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "News & Events"
+          field_override_card_title:
+            - value: 'Lorem ipsum dolor sit'
+          field_override_card_description:
+            - value: 'Feature card three blurb. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.'
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_container_heading:
+        - value: "Optional Heading for Wide Guide Card"
+      field_html_content:
+        - format: "simple"
+          value: |
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis eros ut eros rutrum, et interdumwow dolor tincidunt. Aliquam cursus risus in mattis maximus. Pellentesque tristique mi non velit pretium pretium. Morbi varius vestibulum elit volutpat. Sed pulvinar placerat. Wllgwyng yllgogerych</p>
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_home_landing'
+                  title: 'Sample Page - Homepage'
+        field_button_text:
+          - value: 'Cancer Homepage'
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_container_heading:
+        - value: "This is a Very Long Heading That Will Cause the Wide Guide Card to Look Badly, but This Scenario Will be Prevented by Guidance"
+      field_html_content:
+        - format: "simple"
+          value: |
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis eros ut eros rutrum, et interdumwow dolor tincidunt. Aliquam cursus risus in mattis maximus. Pellentesque tristique mi non velit pretium pretium. Morbi varius vestibulum elit volutpat. Sed pulvinar placerat. Wllgwyng yllgogerych. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis eros ut eros rutrum, et interdumwow dolor tincidunt. Aliquam cursus risus in mattis maximus. Pellentesque tristique mi non velit pretium pretium. Morbi varius vestibulum elit volutpat. Sed pulvinar placerat. Wllgwyng yllgogerych. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis eros ut eros rutrum, et interdumwow dolor tincidunt. Aliquam cursus risus in mattis maximus. Pellentesque tristique mi non velit pretium pretium. Morbi varius vestibulum elit volutpat. Sed pulvinar placerat. Wllgwyng yllgogerych.</p>
+      field_three_link_buttons:
+      - entity: 'paragraph'
+        type: "ncids_link_button_internal"
+        field_internal_link:
+          - target_type: 'node'
+            '#process':
+              callback: 'reference'
+              args:
+                - 'node'
+                - type: 'cgov_home_landing'
+                  title: 'Cancer Types'
+        field_button_text:
+          - value: 'This is an internal link with a very long title to test for analytics.'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
+        field_button_text:
+          - value: "This is an External Link with a very long title to test for analytics."

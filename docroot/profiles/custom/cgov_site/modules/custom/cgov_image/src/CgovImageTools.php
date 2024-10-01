@@ -39,6 +39,7 @@ class CgovImageTools {
 
       case "cgov_borderless_card":
       case "ncids_promo_1x1":
+      case "ncids_guide_card_1x1":
         return "1x1";
     }
     return NULL;
