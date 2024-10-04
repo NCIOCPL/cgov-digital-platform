@@ -1,0 +1,22 @@
+@use 'uswds-core' as *;
+
+.cgdp-two-column-layout {
+	.cgdp-column:first-child {
+		.usa-section {
+			@include u-padding-bottom(3);
+
+			@include at-media('tablet-lg') {
+				@include u-padding-bottom(0);
+			}
+		}
+  }
+
+  .usa-section {
+    @include u-padding-bottom(0);
+  }
+
+  .cgdp-summary-box,
+  .cgdp-feature-card {
+    @include u-margin-bottom(0);
+  }
+}

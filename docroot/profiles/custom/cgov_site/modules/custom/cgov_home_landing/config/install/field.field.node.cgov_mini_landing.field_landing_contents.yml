@@ -12,8 +12,11 @@ dependencies:
     - paragraphs.paragraphs_type.cgov_two_item_feature_row
     - paragraphs.paragraphs_type.ncids_3_feature_row_opt_head
     - paragraphs.paragraphs_type.ncids_content_block
+    - paragraphs.paragraphs_type.ncids_flag_card_group
+    - paragraphs.paragraphs_type.ncids_mlp_two_column_layout
     - paragraphs.paragraphs_type.ncids_page_title_block
     - paragraphs.paragraphs_type.ncids_slim_hero
+    - paragraphs.paragraphs_type.ncids_summary_box
   module:
     - entity_reference_revisions
 id: node.cgov_mini_landing.field_landing_contents
@@ -36,10 +39,13 @@ settings:
       cgov_card_borderless: cgov_card_borderless
       cgov_card_raw_html: cgov_card_raw_html
       cgov_dynamic_list: cgov_dynamic_list
-      ncids_3_feature_row_opt_head: ncids_3_feature_row_opt_head
-      ncids_content_block: ncids_content_block
       ncids_page_title_block: ncids_page_title_block
       ncids_slim_hero: ncids_slim_hero
+      ncids_3_feature_row_opt_head: ncids_3_feature_row_opt_head
+      ncids_content_block: ncids_content_block
+      ncids_mlp_two_column_layout: ncids_mlp_two_column_layout
+      ncids_summary_box: ncids_summary_box
+      ncids_flag_card_group: ncids_flag_card_group
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -159,6 +165,9 @@ settings:
       ncids_feature_card_multimedia:
         weight: 86
         enabled: false
+      ncids_flag_card_group:
+        weight: 92
+        enabled: true
       ncids_guide_card:
         weight: 87
         enabled: false
@@ -177,6 +186,9 @@ settings:
       ncids_link_button_internal:
         weight: 92
         enabled: false
+      ncids_mlp_two_column_layout:
+        weight: 99
+        enabled: true
       ncids_page_title_block:
         weight: 49
         enabled: true
@@ -188,6 +200,9 @@ settings:
         enabled: false
       ncids_slim_hero:
         weight: 51
+        enabled: true
+      ncids_summary_box:
+        weight: 102
         enabled: true
       ncids_two_column_container:
         weight: 95

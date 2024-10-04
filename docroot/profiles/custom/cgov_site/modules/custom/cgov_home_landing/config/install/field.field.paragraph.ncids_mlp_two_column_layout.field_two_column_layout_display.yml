@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_two_column_layout_display
+    - paragraphs.paragraphs_type.ncids_mlp_two_column_layout
+  module:
+    - options
+id: paragraph.ncids_mlp_two_column_layout.field_two_column_layout_display
+field_name: field_two_column_layout_display
+entity_type: paragraph
+bundle: ncids_mlp_two_column_layout
+label: '2 Column Layout Display'
+description: 'Sets the display for two columns, in either a 50/50 or 66/33 split (content on the left takes up 2/3 of your page and content on the right takes up 1/3).'
+required: true
+translatable: false
+default_value:
+  -
+    value: two_column_layout_50_50
+default_value_callback: ''
+settings: {  }
+field_type: list_string

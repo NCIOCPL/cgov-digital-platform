@@ -64,6 +64,30 @@ class SiteBrandingSettingsForm extends ConfigFormBase {
         ],
       ],
     ];
+    $form['tags']['sitename_display_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Search Results Site Name Display Option'),
+      '#description' => $this->t("Site Name that appears at the top of search results on a search engine for all pages on the site. Default is 'National Cancer Institute'."),
+      '#options' => [
+        'default' => $this->t('National Cancer Institute'),
+        'custom_site_name' => $this->t('Custom Site Name'),
+      ],
+      '#required' => TRUE,
+      '#default_value' => $config->get('sitename_display_type'),
+    ];
+
+    $form['tags']['custom_site_name'] = [
+      '#type' => 'textfield',
+      '#description' => $this->t('Search Results Custom Site Name text replaces the search result site name.'),
+      '#maxlength' => 60,
+      '#title' => $this->t('Search Results Custom Site Name'),
+      '#default_value' => $config->get('custom_site_name'),
+      '#states' => [
+        'disabled' => [
+          ':input[name="sitename_display_type"]' => ['!value' => 'custom_site_name'],
+        ],
+      ],
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -76,6 +100,8 @@ class SiteBrandingSettingsForm extends ConfigFormBase {
     $this->config(static::SETTINGS)
       ->set('browser_display_type', $form_state->getValue('browser_display_type'))
       ->set('custom_site_title_value', $form_state->getValue('custom_site_title_value'))
+      ->set('sitename_display_type', $form_state->getValue('sitename_display_type'))
+      ->set('custom_site_name', $form_state->getValue('custom_site_name'))
       ->save();
     parent::submitForm($form, $form_state);
     drupal_flush_all_caches();
@@ -87,6 +113,9 @@ class SiteBrandingSettingsForm extends ConfigFormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     if ($form_state->getValue('browser_display_type') === 'custom_title' && $form_state->isValueEmpty('custom_site_title_value')) {
       $form_state->setErrorByName('custom_site_title_value', $this->t("Please enter the Custom Site Title text to save this page."));
+    }
+    if ($form_state->getValue('sitename_display_type') === 'custom_site_name' && $form_state->isValueEmpty('custom_site_name')) {
+      $form_state->setErrorByName('custom_site_name', $this->t("Please enter the Search Results Custom Site Name text to save this page."));
     }
   }
 

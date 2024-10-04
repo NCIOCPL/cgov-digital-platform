@@ -1,0 +1,5 @@
+<h2 class="usa-summary-box__heading">
+  {% for item in items %}
+    {{- item.content['#text']|replace({'<p>': '', '</p>': ''})|raw -}}
+  {% endfor %}
+</h2>

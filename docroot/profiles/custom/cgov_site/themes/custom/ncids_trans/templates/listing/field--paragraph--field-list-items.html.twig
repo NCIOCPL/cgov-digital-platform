@@ -1,5 +1,9 @@
 {% if items | length > 0 %}
-  <ul>
+  {% set style = element['#object'].field_list_item_style.value %}
+  {% if style starts with 'ncids' %}
+    {% set attr = create_attribute({'class': ['usa-collection']}) %}
+  {% endif %}
+  <ul{{ attr }}>
     {% for item in items %}
       {{ item.content }}
     {% endfor %}

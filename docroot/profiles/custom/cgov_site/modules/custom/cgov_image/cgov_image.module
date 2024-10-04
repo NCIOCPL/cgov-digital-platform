@@ -78,6 +78,14 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
       $display
     );
   }
+
+  if ($view_mode === 'ncids_image_display_flag_card' ) {
+    _cgov_image_handle_ncids_flag(
+      $build,
+      $entity,
+      $display
+    );
+  }
 }
 
 /**
@@ -450,4 +458,37 @@ function cgov_image_form_alter(&$form, FormStateInterface &$form_state, string $
 
   // Add our media submitter for images and contextual images.
   $form['actions']['submit']['#submit'][] = [CgovCoreTools::class, 'mediaFormSubmitter'];
+}
+
+/**
+ * Handle images for NCIDS Flag Cards.
+ *
+ * NCIDS Flag Cards requires a 1x1 image.
+ * This method must determines where to source the image
+ * from, either override field for that aspect ratio or the
+ * crop on the field_media_image.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ */
+function _cgov_image_handle_ncids_flag(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+
+  if (
+    (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0))
+  ) {
+    // if true === if there are crops applied to field_media_image
+    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+      unset($build['field_media_image']);
+      unset($build['field_ncids_promo_art_1x1']);
+      return;
+    }
+  }
 }

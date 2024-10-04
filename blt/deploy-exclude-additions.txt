@@ -1,2 +1,12 @@
-cgov_drupal_users_file.yml
-## Also add front-end source
+# Our test users file for lower tiers
+/cgov-drupal-users.yml
+
+# Front-end source code
+docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/front-end
+
+# This excludes our readme, but it gets copied back in by composer
+# A separate exclude in scripts/blt/deploy/.gitignore fixes that
+/docroot/README.md
+
+# Docker files for local development
+/docker/

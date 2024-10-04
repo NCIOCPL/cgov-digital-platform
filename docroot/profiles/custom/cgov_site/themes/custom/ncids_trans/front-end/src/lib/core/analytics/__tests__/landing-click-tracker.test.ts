@@ -4,8 +4,12 @@ import '@testing-library/jest-dom/extend-expect';
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 import {
 	getContainerItemInfo,
+	getRowVariant,
 	landingClickTracker,
 } from '../landing-page-contents-helper';
+
+import { screen } from '@testing-library/dom';
+import { cgdp2ColumnLayoutDom } from './cgdp-2-column-layout.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
 
@@ -58,6 +62,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'cgvHomeLanding',
 				pageTemplate: 'ncids_without_title',
+				pageRowVariant: 'Not Defined',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -119,6 +124,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'cgvMiniLanding',
 				pageTemplate: 'ncids_default',
+				pageRowVariant: 'Not Defined',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -180,6 +186,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'chicken',
 				pageTemplate: 'chicken',
+				pageRowVariant: 'Not Defined',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -234,6 +241,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: undefined,
 				pageTemplate: undefined,
+				pageRowVariant: 'Not Defined',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -310,6 +318,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'cgvHomeLanding',
 				pageTemplate: 'ncids_without_title',
+				pageRowVariant: 'Not Defined',
 				pageRows: 5,
 				pageRowIndex: 5,
 				pageRowCols: 0,
@@ -380,6 +389,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'cgvHomeLanding',
 				pageTemplate: 'ncids_without_title',
+				pageRowVariant: 'Not Defined',
 				pageRows: 1,
 				pageRowIndex: 1,
 				pageRowCols: 1,
@@ -449,6 +459,7 @@ describe('Landing click tracker helper', () => {
 				location: 'Body',
 				pageType: 'cgvHomeLanding',
 				pageTemplate: 'ncids_without_title',
+				pageRowVariant: 'Not Defined',
 				pageRows: 0,
 				pageRowIndex: '_ERROR_',
 				pageRowCols: 0,
@@ -464,6 +475,68 @@ describe('Landing click tracker helper', () => {
 				linkArea: 'linkArea',
 				totalLinks: 0,
 				linkPosition: 0,
+			}
+		);
+	});
+
+	it('sends analytics when item clicked on list', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML('beforeend', cgdp2ColumnLayoutDom);
+		document.head.insertAdjacentHTML(
+			'beforeend',
+			`
+			<meta name="dcterms.type" content="cgvMiniLanding">
+			<meta name="cgdp.template" content="ncids_without_title">
+			`
+		);
+
+		// Get links
+		const links = screen.getAllByRole('link');
+
+		// Click the link
+		// Create the JS
+		landingClickTracker(
+			links[2],
+			'SummaryBox',
+			1,
+			1,
+			'Summary Box',
+			'Not Defined',
+			'Not Defined',
+			'Key Information',
+			'External',
+			"your community's warning system.",
+			'Text',
+			6,
+			3
+		);
+		// Test spy
+		expect(spy).toHaveBeenCalledWith(
+			'MLP:SummaryBox:LinkClick',
+			'MLP:SummaryBox:LinkClick',
+			{
+				location: 'Body',
+				pageType: 'cgvMiniLanding',
+				pageTemplate: 'ncids_without_title',
+				pageRowVariant: getRowVariant(links[2]),
+				pageRows: 1,
+				pageRowIndex: 1,
+				pageRowCols: 2,
+				pageRowColIndex: 2,
+				containerItems: 1,
+				containerItemIndex: 1,
+				componentType: 'Summary Box',
+				componentTheme: 'Not Defined',
+				componentVariant: 'Not Defined',
+				title: 'Key Information',
+				linkType: 'External',
+				linkText: "your community's warning system.",
+				linkArea: 'Text',
+				totalLinks: 6,
+				linkPosition: 3,
 			}
 		);
 	});

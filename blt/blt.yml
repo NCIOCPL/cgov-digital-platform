@@ -17,6 +17,8 @@ git:
 deploy:
   tag_source: true
   exclude_file: '${repo.root}/scripts/blt/deploy/deploy-exclude.txt'
+  exclude_additions_file: ${repo.root}/blt/deploy-exclude-additions.txt
+  gitignore_file: ${repo.root}/scripts/blt/deploy/.gitignore
 drush:
   aliases:
     remote: '${project.machine_name}.test'

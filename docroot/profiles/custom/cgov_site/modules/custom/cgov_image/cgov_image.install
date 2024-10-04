@@ -152,3 +152,26 @@ function cgov_image_update_10001() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+ /*
+ * Enable ncids_list_style view mode.
+ */
+function cgov_image_update_10002() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_image']);
+}
+
+/**
+ * Update for NCIDS Flag Card Group.
+ *
+ * Force installation of core.entity_view_mode.media.ncids_image_display_flag_card
+ * before node core.entity_view_display configs are loaded.
+ */
+function cgov_image_update_10003() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $result = $service->import(['cgov_image']);
+}
