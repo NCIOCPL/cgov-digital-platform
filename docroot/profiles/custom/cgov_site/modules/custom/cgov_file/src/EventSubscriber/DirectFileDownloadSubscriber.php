@@ -185,9 +185,9 @@ class DirectFileDownloadSubscriber implements EventSubscriberInterface {
 
     $response = new BinaryFileResponse($uri);
     $filename = $file->getFilename();
-
     // Downloads the file with the correct name for revision or current file.
-    $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+    $attachemntType = ($file->filemime->value === 'application/pdf') ? 'inline' : 'attachment';
+    $response->headers->set('Content-Disposition', $attachemntType . '; filename="' . $filename . '"');
 
     // Add response header so we can indicate to any upstream CDN that
     // this file can change its contents at any point. i.e. don't let
