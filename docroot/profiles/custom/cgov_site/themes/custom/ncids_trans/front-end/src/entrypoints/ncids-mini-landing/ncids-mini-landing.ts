@@ -9,6 +9,7 @@ import cgdpFeatureCardRow from '../../lib/components/cgdp-feature-card-row';
 import cgdpListInit from '../../lib/components/cgdp-list';
 import cgdpSummaryBox from '../../lib/components/cgdp-summary-box';
 import cgdpFlagCardGroupInit from '../../lib/components/cgdp-flag-card-group';
+import cgdpWideGuideCard from '../../lib/components/cgdp-wide-guide-card';
 
 const onDOMContentLoaded = () => {
 	// Init feature cards
@@ -29,6 +30,8 @@ const onDOMContentLoaded = () => {
 	cgdpSummaryBox();
 	// Init Flag Cards
 	cgdpFlagCardGroupInit();
+	// Init the wide guide card
+	cgdpWideGuideCard();
 };
 
 window.addEventListener('DOMContentLoaded', onDOMContentLoaded);

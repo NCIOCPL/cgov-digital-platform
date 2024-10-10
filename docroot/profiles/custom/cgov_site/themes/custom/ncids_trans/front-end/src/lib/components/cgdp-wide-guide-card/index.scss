@@ -1,0 +1,61 @@
+@use 'uswds-core' as *;
+@use 'nci-guide-card' as guideCard;
+
+/* Wide Guide Card START */
+.nci-guide-card.nci-guide-card--cgdp-wide {
+	@include u-maxw('none');
+}
+
+.nci-guide-card--cgdp-wide {
+	@include u-shadow(2);
+	@include u-radius('md');
+	@include u-width('full');
+	background-image: none;
+	@include at-media('tablet-lg') {
+		background-image: initial;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: 100%;
+	}
+	// container for card body text
+	.nci-guide-card__wrapper {
+		@include at-media('tablet-lg') {
+			@include u-padding-y(3);
+			@include u-padding-left(3);
+		}
+		@include u-padding-y(0);
+		@include u-padding-left(0);
+		@include u-bg('transparent');
+	}
+	.nci-guide-card__title {
+		@include typeset("heading", "xl");
+		@include u-text-align('left');
+	}
+	.nci-guide-card__body {
+		@include u-radius('md');
+		@include u-padding-x(3);
+		@include u-padding-top(3);
+		@include u-padding-bottom(4);
+		@include u-width('full');
+		@include u-bg('white');
+		z-index: 5;
+		@include at-media('mobile-lg') {
+			@include u-padding-x(4);
+		}
+		@include at-media('tablet-lg') {
+			@include u-outline('2px');
+			@include u-outline-color('gray-cool-10');
+			width: 50%;
+		}
+		li:last-child {
+			@include u-margin-bottom(0);
+		}
+	}
+	.nci-guide-card__description {
+		@include u-margin-bottom(3);
+		/* START Remove the typeset override when ticket #4355 is completed */
+		@include typeset("body", "xs");
+		/* END Code Removal Note */
+	}
+}
+/* Wide Guide Card STOP */
