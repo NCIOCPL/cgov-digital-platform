@@ -43,3 +43,27 @@
   </figure>
 
 {% endmacro %}
+
+{% macro ncidsImageHandler(image, caption, credit, crop) %}
+  {% set image_styles = {
+    '1x1': 'ncids_promo_1x1',
+    '4x3': 'ncids_collections_media_4x3',
+    '16x9': 'ncids_featured_16x9'
+  } %}
+  {% set image_style = image_styles[crop] %}
+  {% if image %}
+    <picture class="cgdp-image__img">
+      {{ image }}
+    </picture>
+  {% else %}
+    <picture class="cgdp-image__img">
+      <img src="{{ get_placeholder_image('{{ image_style }}') }}" alt="No Image Placeholder">
+    </picture>
+  {% endif %}
+  {% if credit or caption %}
+    <div class="cgdp-image__caption usa-prose">
+      {{ caption }}
+      <p>Credit: {{ credit }}</p>
+    </div>
+  {% endif %}
+{% endmacro %}
