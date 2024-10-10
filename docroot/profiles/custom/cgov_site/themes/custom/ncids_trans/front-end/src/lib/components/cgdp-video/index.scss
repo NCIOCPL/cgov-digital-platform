@@ -1,0 +1,12 @@
+@forward '../cgdp-inline-video/';
+@use 'uswds-core' as *;
+
+.cgdp-video {
+	&__caption {
+		@include u-padding-top(1);
+		@include u-padding-bottom(1);
+		@include u-padding-left(2);
+		@include u-margin-top(-0.5);
+		@include u-border-left(0.5, $theme-color-secondary);
+	}
+}

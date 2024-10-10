@@ -175,3 +175,16 @@ function cgov_image_update_10003() {
   $assigner->assignConfigPackages();
   $result = $service->import(['cgov_image']);
 }
+
+/**
+ * Update for NCIDS Image.
+ *
+ * Force installation of core.entity_view_mode.media.ncids_aspect_ratio
+ * before node core.entity_view_display configs are loaded.
+ */
+function cgov_image_update_10004() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $result = $service->import(['cgov_image']);
+}
