@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.16x9
+  module:
+    - crop
+name: ncids_image_para_16x9
+label: 'NCIDS Image Paragraph 16x9'
+effects:
+  2b190245-5f7e-4ce6-b182-0986eb1e04db:
+    uuid: 2b190245-5f7e-4ce6-b182-0986eb1e04db
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 16x9
+      automatic_crop_provider: null
+  ff7fd761-594b-4d5a-ab85-80f6db0bd5a5:
+    uuid: ff7fd761-594b-4d5a-ab85-80f6db0bd5a5
+    id: image_scale
+    weight: 2
+    data:
+      width: 1216
+      height: null
+      upscale: false
