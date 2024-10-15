@@ -86,6 +86,15 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
       $display
     );
   }
+  if (preg_match('/^ncids_aspect_ratio_/', $view_mode)) {
+    // Call your custom function or handle the logic here
+    _cgov_image_handle_ncids_image(
+      $build,
+      $entity,
+      $display,
+      $view_mode
+    );
+  }
 }
 
 /**
@@ -489,6 +498,51 @@ function _cgov_image_handle_ncids_flag(array &$build, EntityInterface $entity, E
       unset($build['field_media_image']);
       unset($build['field_ncids_promo_art_1x1']);
       return;
+    }
+  }
+}
+
+/**
+ * Handle images for NCIDS Image.
+ *
+ * NCIDS Image requires a 1x1 image.
+ * This method must determines where to source the image
+ * from, either override field for that aspect ratio or the
+ * crop on the field_media_image.
+ *
+ * @param array $build
+ *   A renderable array representing the entity content.
+ *   The module may add elements to $build prior to rendering.
+ *   The structure of $build is a renderable array as expected by
+ *   drupal_render().
+ * @param Drupal\Core\Entity\EntityInterface $entity
+ *   The entity object.
+ * @param Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display holding the display options configured for
+ *   the entity components.
+ * @param string $view_mode
+ *   The view mode the entity is rendered in.
+ */
+function _cgov_image_handle_ncids_image(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Define a mapping of view modes to their respective field names.
+  $view_mode_fields = [
+    "ncids_image_display_image_1x1" => 'field_ncids_promo_art_1x1',
+    "ncids_image_display_image_4x3" => 'field_ncids_promo_art_4x3',
+    "ncids_image_display_image_16x9" => 'field_ncids_promo_art_16x9',
+  ];
+
+  // Check if the view mode exists in the mapping.
+  if (isset($view_mode_fields[$view_mode])) {
+    $field_name = $view_mode_fields[$view_mode];
+
+    // Check if the field items are set and not empty.
+    if (!isset($build[$field_name]['#items']) || count($build[$field_name]['#items']) === 0) {
+      // Check for crop and unset fields if necessary.
+      if (!_cgov_image_handle_ncids_crop_check($build, $entity, $display)) {
+        unset($build['field_media_image']);
+        unset($build[$field_name]);
+        return;
+      }
     }
   }
 }
