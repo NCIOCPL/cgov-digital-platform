@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.4x3
+  module:
+    - crop
+name: ncids_image_para_4x3
+label: 'NCIDS Image Paragraph 4x3'
+effects:
+  48c9917d-fa6d-4e94-99d1-9198aa9942e4:
+    uuid: 48c9917d-fa6d-4e94-99d1-9198aa9942e4
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: 4x3
+      automatic_crop_provider: null
+  ce7970a2-7754-4a0b-8ed6-b5a6dfd7bb5b:
+    uuid: ce7970a2-7754-4a0b-8ed6-b5a6dfd7bb5b
+    id: image_scale
+    weight: 2
+    data:
+      width: 1216
+      height: null
+      upscale: true

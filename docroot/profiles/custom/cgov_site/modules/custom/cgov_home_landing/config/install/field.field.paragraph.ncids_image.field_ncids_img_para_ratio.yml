@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_ncids_img_para_ratio
+    - paragraphs.paragraphs_type.ncids_image
+  module:
+    - options
+id: paragraph.ncids_image.field_ncids_img_para_ratio
+field_name: field_ncids_img_para_ratio
+entity_type: paragraph
+bundle: ncids_image
+label: 'Image Crop Display'
+description: 'Sets the aspect ratio for the image at 1:1, 4:3, or 16:9.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

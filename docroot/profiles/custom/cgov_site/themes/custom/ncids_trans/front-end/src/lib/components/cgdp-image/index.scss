@@ -1,0 +1,33 @@
+@use 'uswds-core' as *;
+
+.cgdp-image {
+	img {
+		@include u-display('block');
+		@include u-width('full');
+		@include u-height('auto');
+		transition: transform 0.5s ease;
+	}
+	&__caption {
+		@include u-font('sans', '2xs');
+		@include u-padding-top(1);
+		@include u-padding-bottom(1);
+		@include u-padding-left(2);
+		@include u-border-left(0.5, $theme-color-secondary);
+		p {
+			@include u-margin-top(0);
+			&:not(:only-child) {
+				@include u-margin-bottom(1);
+			}
+			&:last-child {
+				@include u-margin-bottom(0);
+			}
+		}
+	}
+	&__credit {
+		@include u-font('sans', '3xs');
+	}
+	overflow: hidden;
+	@include u-display('block');
+	@include u-margin-x(0);
+	@include u-margin-y(0);
+}

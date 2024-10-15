@@ -1,0 +1,7 @@
+{% import '@ncids_trans/content/image/image_macros.twig' as imageMacros %}
+
+{% set image = content.field_ncids_promo_art_1x1[0] ?? content.field_media_image[0] ?? null %}
+{% set caption = content.field_caption|field_value %}
+{% set credit = content.field_credit|field_value %}
+
+{{ imageMacros.ncidsImageHandler(image, caption, credit, 'ncids_image_para_1x1') }}
