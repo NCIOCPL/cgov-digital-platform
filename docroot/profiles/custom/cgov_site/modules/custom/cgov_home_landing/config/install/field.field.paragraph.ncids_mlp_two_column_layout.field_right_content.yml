@@ -8,8 +8,10 @@ dependencies:
     - paragraphs.paragraphs_type.ncids_feature_card_external
     - paragraphs.paragraphs_type.ncids_feature_card_internal
     - paragraphs.paragraphs_type.ncids_feature_card_multimedia
+    - paragraphs.paragraphs_type.ncids_image
     - paragraphs.paragraphs_type.ncids_mlp_two_column_layout
     - paragraphs.paragraphs_type.ncids_summary_box
+    - paragraphs.paragraphs_type.ncids_video
   module:
     - entity_reference_revisions
 id: paragraph.ncids_mlp_two_column_layout.field_right_content
@@ -32,6 +34,8 @@ settings:
       ncids_feature_card_multimedia: ncids_feature_card_multimedia
       ncids_summary_box: ncids_summary_box
       cgov_card_raw_html: cgov_card_raw_html
+      ncids_image: ncids_image
+      ncids_video: ncids_video
     negate: 0
     target_bundles_drag_drop:
       body_section:
@@ -151,6 +155,9 @@ settings:
       ncids_feature_card_multimedia:
         weight: 63
         enabled: true
+      ncids_flag_card_group:
+        weight: 95
+        enabled: false
       ncids_guide_card:
         weight: 94
         enabled: false
@@ -160,6 +167,9 @@ settings:
       ncids_hero:
         weight: 96
         enabled: false
+      ncids_image:
+        weight: 99
+        enabled: true
       ncids_inline_video:
         weight: 97
         enabled: false
@@ -190,6 +200,9 @@ settings:
       ncids_two_column_container:
         weight: 105
         enabled: false
+      ncids_video:
+        weight: 111
+        enabled: true
       pdq_summary_section:
         weight: 106
         enabled: false

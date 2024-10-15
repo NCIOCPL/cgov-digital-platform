@@ -33,6 +33,8 @@ const config = {
 	moduleNameMapper: {
 		"^Core/(.*)$": path.resolve(__dirname, '../../cgov/src' + '/$1'),
 		"^Utilities/(.*)$": path.resolve(__dirname, '../../cgov/src/utilities' + '/$1'),
+		// Adding this for flex video's testing purposes.
+		"^Utilities$": path.resolve(__dirname, '../../cgov/src/utilities/index.js'),
 		"^Polyfills/(.*)$": path.resolve(__dirname, '../../cgov/src/polyfills' + '/$1'),
 		// The only thing in styles is the sprite. So we can point this at our
 		// local copy.
@@ -40,6 +42,9 @@ const config = {
 		"^Libraries/(.*)$": path.resolve(__dirname, '../../cgov/cgov_common/src/libraries' + '/$1'),
 		// This is used to reference sprites.
 		"^ImageDist/(.*)$": path.resolve(__dirname, "../dist/images" + '/$1'),
+		// Adding this for flex video's testing purposes due to
+		// jest not finding axios because the require is in a file in cgov.
+		"^axios$": path.resolve(__dirname, './node_modules/axios'),
 	}
 };
 module.exports = config;
