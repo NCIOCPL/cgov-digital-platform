@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_image_browser
+    - field.field.paragraph.ncids_image.field_ncids_img_para_ratio
+    - field.field.paragraph.ncids_image.field_override_image_promotional
+    - paragraphs.paragraphs_type.ncids_image
+  module:
+    - entity_browser
+id: paragraph.ncids_image.default
+targetEntityType: paragraph
+bundle: ncids_image
+mode: default
+content:
+  field_ncids_img_para_ratio:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_override_image_promotional:
+    type: entity_browser_entity_reference
+    weight: 1
+    region: content
+    settings:
+      entity_browser: cgov_image_browser
+      field_widget_display: rendered_entity
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings:
+        view_mode: image_reference_field_form
+      selection_mode: selection_append
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

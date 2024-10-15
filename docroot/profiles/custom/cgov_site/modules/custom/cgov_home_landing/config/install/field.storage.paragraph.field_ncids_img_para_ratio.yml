@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_ncids_img_para_ratio
+field_name: field_ncids_img_para_ratio
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: ncids_image_display_image_1x1
+      label: 1x1
+    -
+      value: ncids_image_display_image_4x3
+      label: 4x3
+    -
+      value: ncids_image_display_image_16x9
+      label: 16x9
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
