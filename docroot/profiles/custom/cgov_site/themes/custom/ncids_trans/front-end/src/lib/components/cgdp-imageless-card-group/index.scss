@@ -26,9 +26,13 @@
 			&:last-child {
 				@include u-margin-bottom(0); // overrides nci-card
 			}
+			a {
+				@include u-width('full');
+			}
 		}
 	}
 	&__heading {
+		@include u-margin-top(0);
 		@include u-margin-bottom(2);
 	}
 	&--one-card > ul {
@@ -66,13 +70,13 @@
 			}
 		}
 	}
-	// TODO: Remove once DS has been updated ticket #4355
-	// This DS ticket addresses the heading changes and
-	// will need to be removed once merged to the platform.
+
 	.nci-card__title {
-		@include u-font('serif', 'md');
+		@include u-font('serif', 'md'); // TODO: Remove once DS has been updated ticket #4355
+		@include u-padding-bottom(0);
 	}
 	.nci-card__description {
-		@include u-font('sans', 'xs');
+		@include u-font('sans', 'xs'); // TODO: Remove once DS has been updated ticket #4355
+		@include u-margin-top(2);
 	}
 }

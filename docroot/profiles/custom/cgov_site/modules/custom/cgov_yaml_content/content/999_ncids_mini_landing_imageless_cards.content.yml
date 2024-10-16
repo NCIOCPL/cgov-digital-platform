@@ -3,24 +3,37 @@
   langcode: en
   status: 1
   moderation_state:
-    value: 'published'
+    value: "published"
   title: "Key Initiatives"
+  title__ES:
+    value: "Spanish Key Initiatives"
   field_page_description:
     value: "Learn about major research initiatives NCI has developed to address specific issues of high priority for the cancer research community."
+  field_page_description__ES:
+    value: "(Spanish translation) Learn about major research initiatives NCI has developed to address specific issues of high priority for the cancer research community."
   field_browser_title:
     value: "Key Initiatives"
+  field_browser_title__ES:
+    value: "Spanish Key Initiatives"
   field_site_section:
-    - '#process':
-        callback: 'reference'
+    - "#process":
+        callback: "reference"
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            computed_path: '/research/key-initiatives'
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/research/key-initiatives"
+  field_site_section__ES:
+    - "#process":
+        callback: "reference"
+        args:
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/investigacion/iniciativas-clave"
   field_mlp_page_style:
     value: "ncids_default"
   ### English Contents
   field_landing_contents:
-  ######## Begin Feature Row ###########
+    ######## Begin Feature Row ###########
     - entity: "paragraph"
       type: "ncids_page_title_block"
     - entity: "paragraph"
@@ -38,19 +51,19 @@
           value: |
             <p>NCI is supporting foundational research undertaken through the Cancer  Moonshot and launching new initiatives to build on those successes with  the aim of achieving bold new goals.</p>
       field_image_guide_card:
-        - '#process':
-            callback: 'file'
+        - "#process":
+            callback: "file"
             args:
-              - 'image'
-              - type: 'module'
-                filename: 'wide-guide-card-image.png'
+              - "image"
+              - type: "module"
+                filename: "wide-guide-card-image.png"
       field_three_link_buttons:
-      - entity: 'paragraph'
-        type: "ncids_link_button_external"
-        field_external_link:
-          - uri: 'https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative/funding'
-        field_button_text:
-          - value: "See Funding Opportunities"
+        - entity: "paragraph"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: "https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative/funding"
+          field_button_text:
+            - value: "See Funding Opportunities"
     - entity: "paragraph"
       type: "ncids_imageless_card_group"
       field_container_heading:
@@ -98,32 +111,112 @@
                   - "node"
                   - type: "cgov_mini_landing"
                     title: "The RAS Initiative"
+  ### Spanish Contents
+  field_landing_contents__ES:
+    ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_page_title_block"
+    - entity: "paragraph"
+      type: "ncids_content_block"
+      field_html_content:
+        - format: "ncids_streamlined"
+          value: |
+            <p>(Spanish) NCI has worked to leverage its role as the leader of the National Cancer Program to expand our understanding of cancer and to translate new knowledge into better cancer prevention and treatment. Although the majority of NCI's funding supports investigator-initiated science, the institute also invests in major research initiatives to facilitate and support research on specific issues of importance to the cancer research enterprise.</p>
+    - entity: "paragraph"
+      type: "ncids_wide_guide_card"
+      field_container_heading:
+        - value: "Cancer Moonshot"
+      field_html_content:
+        - format: "simple"
+          value: |
+            <p>(Spanish) NCI is supporting foundational research undertaken through the Cancer  Moonshot and launching new initiatives to build on those successes with  the aim of achieving bold new goals.</p>
+      field_image_guide_card:
+        - "#process":
+            callback: "file"
+            args:
+              - "image"
+              - type: "module"
+                filename: "wide-guide-card-image.png"
+      field_three_link_buttons:
+        - entity: "paragraph"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: "https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative/funding"
+          field_button_text:
+            - value: "(Spanish) See Funding Opportunities"
+    - entity: "paragraph"
+      type: "ncids_imageless_card_group"
+      field_container_heading:
+        - value: "(Spanish) The Optional Imageless Card Group Heading"
+      field_heading_visibility:
+        value: sr-only
+      field_card_layout_display:
+        - value: cgdp-imageless-card-group--two-card
+      field_row_cards_unlimited:
+        - entity: "paragraph"
+          type: "ncids_imageless_card_external"
+          field_override_card_title:
+            - value: "(Spanish) NCI Equity and Inclusion Program"
+          field_override_card_description:
+            - value: "(Spanish) Learn how NCI will help end structural racism in biomedical research and why the program was launched."
+          field_featured_url:
+            - uri: "https://www.cancer.gov/research/key-initiatives/nci-equity-inclusion-program"
+        - entity: "paragraph"
+          type: "ncids_imageless_card_external"
+          field_override_card_title:
+            - value: "(Spanish) NCI COVID-19 Research Initiatives"
+          field_override_card_description:
+            - value: "(Spanish) NCI is mobilizing its experts and resources to study COVID-19."
+          field_featured_url:
+            - uri: "https://www.cancer.gov/research/key-initiatives/covid-19"
+        - entity: "paragraph"
+          type: "ncids_imageless_card_external"
+          field_override_card_title:
+            - value: "(Spanish) Childhood Cancer Data Initiative (CCDI)"
+          field_override_card_description:
+            - value: "(Spanish) CCDI addresses the critical need to collect, analyze, and share childhood cancer data."
+          field_featured_url:
+            - uri: "https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative"
+        - entity: "paragraph"
+          type: "ncids_imageless_card_internal"
+          field_override_card_title:
+            - value: "(Spanish) The RAS Initiative"
+          field_override_card_description:
+            - value: "(Spanish) NCI's RAS Initiative explores innovative approaches for attacking the proteins encoded by mutant forms of the KRAS gene. "
+          field_featured_item:
+            - target_type: "node"
+              "#process":
+                callback: "reference"
+                args:
+                  - "node"
+                  - type: "cgov_mini_landing"
+                    title: "The RAS Initiative"
 
 - entity: "node"
   type: "cgov_mini_landing"
   langcode: en
   status: 1
   moderation_state:
-    value: 'published'
+    value: "published"
   title: "NCIDS Imageless Card Test Page"
   field_page_description:
     value: "NCIDS Imageless Card Test Page - Page Description"
   field_browser_title:
     value: "NCIDS Imageless Card Test Page"
   field_site_section:
-    - '#process':
-        callback: 'reference'
+    - "#process":
+        callback: "reference"
         args:
-          - 'taxonomy_term'
-          - vid: 'cgov_site_sections'
-            computed_path: '/test'
+          - "taxonomy_term"
+          - vid: "cgov_site_sections"
+            computed_path: "/test"
   field_pretty_url:
     value: "ncids-imageless-card-test"
   field_mlp_page_style:
     value: "ncids_default"
   ### English Contents
   field_landing_contents:
-  ######## Begin Feature Row ###########
+    ######## Begin Feature Row ###########
     - entity: "paragraph"
       type: "ncids_content_block"
       field_html_content:
@@ -134,8 +227,6 @@
       type: "ncids_imageless_card_group"
       field_container_heading:
         - value: "The Optional Imageless Card Group Heading - One Card"
-      field_heading_visibility:
-        value: sr-only
       field_card_layout_display:
         - value: cgdp-imageless-card-group--one-card
       field_row_cards_unlimited:
@@ -181,9 +272,7 @@
     - entity: "paragraph"
       type: "ncids_imageless_card_group"
       field_container_heading:
-        - value: "The Optional Imageless Card Group Heading - two Card"
-      field_heading_visibility:
-        value: sr-only
+        - value: "The Optional Imageless Card Group Heading - Two Card"
       field_card_layout_display:
         - value: cgdp-imageless-card-group--two-card
       field_row_cards_unlimited:
@@ -228,42 +317,40 @@
       field_heading_visibility:
         value: sr-only
       field_row_cards:
-        - entity: 'paragraph'
+        - entity: "paragraph"
           type: "ncids_feature_card_internal"
           field_featured_item:
             - target_type: "node"
               "#process":
                 callback: "reference"
                 args:
-                  - 'node'
-                  - type: 'cgov_home_landing'
-                    title: 'Cancer Research'
-        - entity: 'paragraph'
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "Cancer Research"
+        - entity: "paragraph"
           type: "ncids_feature_card_internal"
           field_featured_item:
             - target_type: "node"
               "#process":
                 callback: "reference"
                 args:
-                  - 'node'
-                  - type: 'cgov_home_landing'
-                    title: 'Grants & Training'
-        - entity: 'paragraph'
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "Grants & Training"
+        - entity: "paragraph"
           type: "ncids_feature_card_internal"
           field_featured_item:
             - target_type: "node"
               "#process":
                 callback: "reference"
                 args:
-                  - 'node'
-                  - type: 'cgov_home_landing'
-                    title: 'News & Events'
+                  - "node"
+                  - type: "cgov_home_landing"
+                    title: "News & Events"
     - entity: "paragraph"
       type: "ncids_imageless_card_group"
       field_container_heading:
         - value: "The Optional Imageless Card Group Heading - Three Card"
-      field_heading_visibility:
-        value: sr-only
       field_card_layout_display:
         - value: cgdp-imageless-card-group--three-card
       field_row_cards_unlimited:
