@@ -1,0 +1,46 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.ncids_group_imageless_card
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_featured_media
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_override_card_description
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_override_card_title
+    - paragraphs.paragraphs_type.ncids_imageless_card_multimedia
+  module:
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: paragraph.ncids_imageless_card_multimedia.ncids_group_imageless_card
+targetEntityType: paragraph
+bundle: ncids_imageless_card_multimedia
+mode: ncids_group_imageless_card
+content:
+  field_featured_media:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_override_card_description:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_override_card_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }
