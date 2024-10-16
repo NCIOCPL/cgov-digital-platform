@@ -48,3 +48,16 @@
 		</div>
 	</a>
 {% endmacro %}
+
+{% macro ncidsImagelessCard(title, description, url, id, entity_type, link_type) %}
+	{% set renderImage = image|render %}
+	{% import _self as self %}
+  {% set titleID = "#{entity_type}-#{id}" %}
+
+	<a href="{{ url }}" aria-labelledby="{{ titleID }}" data-eddl-landing-item="imageless_card" data-eddl-landing-item-link-type="{{ link_type }}">
+    <div class="nci-card__body">
+      <span class="nci-card__title" id="{{ titleID }}">{{ title }}</span>
+      <p class="nci-card__description">{{ description }}</p>
+    </div>
+	</a>
+{% endmacro %}
