@@ -22,6 +22,9 @@ use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Site\Settings;
+use Drupal\redirect\Entity\Redirect;
+use Drupal\Core\Language\Language;
 
 /**
  * Implements hook_block_build_alter().
@@ -847,4 +850,48 @@ function cgov_core_taxonomy_term_delete(EntityInterface $entity) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function cgov_core_redirect_insert(Redirect $entity) {
+  $moduleHandler = \Drupal::service('module_handler');
+  if (!$moduleHandler->moduleExists('purge')) {
+    return;
+  }
+    // The value for cgdp.cache_url_host is computed in cgov_core.settings.php.
+    $host = Settings::get('cgdp.cache_url_host');
+    $host = rtrim($host, '/');
+    $sourcePath = '/' . $entity->redirect_source->path;
+    $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+    $purgeProcessors = \Drupal::service('purge.processors');
+    $purgePurgers = \Drupal::service('purge.purgers');
+    $processor = $purgeProcessors->get('drush_purge_invalidate');
+    if (empty($processor)) {
+      return;
+    }
+    $language = [$entity->language->value];
+    // If no language is specified for the redirect,
+    // purge the url for all languages.
+    if ($entity->language->value === Language::LANGCODE_NOT_SPECIFIED) {
+      $langcodes = \Drupal::languageManager()->getLanguages();
+      $language = array_keys($langcodes);
+    }
+
+    $invalidations = [];
+    // Creating a absolute url for all languages based on $language,
+    // these absolute url will pass to purger to invalidate cache of url.
+    foreach ($language as $value) {
+      $language_prefix = \Drupal::config('language.negotiation')->get("url.prefixes.$value");
+      if (!empty($language_prefix)) {
+        $sourcePath = Url::fromUri("internal:/{$language_prefix}{$sourcePath}")->toString();
+      }
+      $invalidateUrl = $host . $sourcePath;
+      $invalidations[] = $purgeInvalidationFactory->get('url', $invalidateUrl);
+    }
+    if (!empty($invalidations)){
+      $purgePurgers->invalidate($processor, $invalidations);
+    }
+
 }
