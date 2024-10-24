@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_imgless_crd_grp_display
+field_name: field_imgless_crd_grp_display
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: cgdp-imageless-card-group--one-card
+      label: '1 Column'
+    -
+      value: cgdp-imageless-card-group--two-card
+      label: '2 Column'
+    -
+      value: cgdp-imageless-card-group--three-card
+      label: '3 Column'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

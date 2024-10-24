@@ -22,3 +22,13 @@ function cgov_promo_update_10002() {
   $assigner->assignConfigPackages();
   $service->import(['cgov_promo']);
 }
+
+ /*
+ * Enable ncids_group_imageless_card view mode.
+ */
+function cgov_promo_update_10003() {
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_promo']);
+}
