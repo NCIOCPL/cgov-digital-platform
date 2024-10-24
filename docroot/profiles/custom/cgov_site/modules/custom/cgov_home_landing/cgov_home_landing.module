@@ -7,6 +7,8 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\paragraphs\ParagraphInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Field\FieldDefinition;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -88,4 +90,29 @@ function cgov_home_landing_form_node_form_alter(&$form, \Drupal\Core\Form\FormSt
   $form['field_additional_library']['#group'] = 'additional_library';
 
   return $form;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * This changes the view mode of the image for
+ * ncids_image so it renders with the proper aspect ratio.
+ */
+function cgov_home_landing_paragraph_view(array &$build, ParagraphInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $bundle = $entity->bundle();
+  if ($bundle === 'ncids_image') {
+    $crop_display = $entity->field_ncids_img_para_ratio->value;
+    // Only rebuild the items if there are some.
+    if (
+      array_key_exists('#items', $build['field_override_image_promotional']) &&
+      (count($build['field_override_image_promotional']['#items']) > 0)
+    ) {
+      $build['field_override_image_promotional'] = $build['field_override_image_promotional']['#items']->view([
+        'type' => 'entity_reference_entity_view',
+        'settings' => [
+          'view_mode' => $crop_display,
+        ],
+      ]);
+    }
+  }
 }
