@@ -101,7 +101,7 @@ function cgov_home_landing_form_node_form_alter(&$form, \Drupal\Core\Form\FormSt
 function cgov_home_landing_paragraph_view(array &$build, ParagraphInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $bundle = $entity->bundle();
   if ($bundle === 'ncids_image') {
-    $crop_display = $entity->field_image_aspect_ratio->value;
+    $crop_display = $entity->field_ncids_img_para_ratio->value;
     // Only rebuild the items if there are some.
     if (
       array_key_exists('#items', $build['field_override_image_promotional']) &&
