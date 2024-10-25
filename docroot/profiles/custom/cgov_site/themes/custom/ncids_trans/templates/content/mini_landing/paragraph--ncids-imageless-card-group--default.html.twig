@@ -1,0 +1,12 @@
+{% set heading_classes = "cgdp-imageless-card-group__heading" %}
+{% if paragraph.field_heading_visibility.value == 'sr-only' %}
+  {% set heading_classes = "#{heading_classes} usa-sr-only" %}
+{% endif %}
+<div class="usa-section" data-eddl-landing-row>
+  <div class="cgdp-imageless-card-group {{ paragraph.field_imgless_crd_grp_display.value }}">
+    <h2 class="{{heading_classes}}">{{ content.field_container_heading }}</h2>
+    <ul>
+      {{ content.field_row_cards_unlimited }}
+    </ul>
+  </div>
+</div>

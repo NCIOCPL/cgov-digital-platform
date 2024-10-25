@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.cgov_media_browser
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_featured_media
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_override_card_description
+    - field.field.paragraph.ncids_imageless_card_multimedia.field_override_card_title
+    - paragraphs.paragraphs_type.ncids_imageless_card_multimedia
+  module:
+    - entity_browser
+id: paragraph.ncids_imageless_card_multimedia.default
+targetEntityType: paragraph
+bundle: ncids_imageless_card_multimedia
+mode: default
+content:
+  field_featured_media:
+    type: entity_browser_entity_reference
+    weight: 0
+    region: content
+    settings:
+      entity_browser: cgov_media_browser
+      field_widget_display: label
+      field_widget_edit: false
+      field_widget_remove: true
+      field_widget_replace: false
+      open: false
+      field_widget_display_settings: {  }
+      selection_mode: selection_append
+    third_party_settings: {  }
+  field_override_card_description:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_override_card_title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

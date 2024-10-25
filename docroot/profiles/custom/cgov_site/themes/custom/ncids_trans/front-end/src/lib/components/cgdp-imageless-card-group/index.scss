@@ -1,0 +1,83 @@
+@forward 'nci-card';
+@use 'uswds-core' as *;
+
+/* Imageless Guide Card SCSS */
+.cgdp-imageless-card-group {
+	ul {
+		@include u-margin-x('auto');
+		@include u-width('full');
+		@include u-display('flex');
+		@include u-flex('wrap');
+		row-gap: units(3);
+		@include at-media('tablet-lg') {
+			row-gap: units(4);
+		}
+		padding-inline-start: 0;
+		margin-block-start: 0;
+		margin-block-end: 0;
+		li {
+			@include u-display('block');
+			flex: 0 0 100%;
+			@include at-media('tablet-lg') {
+				@include u-padding-x(2);
+			}
+			@include u-padding-x(0);
+			@include u-margin-bottom(0);
+			&:last-child {
+				@include u-margin-bottom(0); // overrides nci-card
+			}
+			a {
+				@include u-width('full');
+			}
+		}
+	}
+	&__heading {
+		@include typeset('heading', $theme-h2-font-size, $theme-heading-line-height);
+		@include u-margin-top(0);
+		@include u-margin-bottom(2);
+	}
+	&--one-card > ul {
+		li {
+			@include u-padding-x(0);
+			@include u-display('block');
+		}
+	}
+	@include at-media('tablet-lg') {
+		&--two-card > ul {
+			li {
+				@include u-display('flex');
+				flex: 0 0 50%;
+				&:nth-child(2n + 1) {
+					@include u-padding-left(0);
+				}
+				&:nth-child(2n + 2) {
+					@include u-padding-right(0);
+				}
+			}
+		}
+		&--three-card > ul {
+			li {
+				@include u-display('flex');
+				flex: 0 0 33%;
+				&:nth-child(3n + 2) {
+					flex: 0 0 34%;
+				}
+				&:nth-child(3n + 1) {
+					@include u-padding-left(0);
+				}
+				&:nth-child(3n + 3) {
+					@include u-padding-right(0);
+				}
+			}
+		}
+	}
+
+	.nci-card__title {
+		@include u-font('serif', 'md'); // TODO: Remove once DS has been updated ticket #4355
+		@include u-padding-bottom(0);
+	}
+	.nci-card__description {
+		@include u-font('sans', 'xs'); // TODO: Remove once DS has been updated ticket #4355
+		@include u-margin-top(2);
+	}
+}
