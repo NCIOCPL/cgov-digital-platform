@@ -1,0 +1,82 @@
+diff --git a/core/lib/Drupal/Core/Extension/ModuleHandler.php b/core/lib/Drupal/Core/Extension/ModuleHandler.php
+index 262865403e6..46c8ed3fa46 100644
+--- a/core/lib/Drupal/Core/Extension/ModuleHandler.php
++++ b/core/lib/Drupal/Core/Extension/ModuleHandler.php
+@@ -629,6 +629,12 @@ protected function getImplementationInfo($hook) {
+   protected function buildImplementationInfo($hook) {
+     $implementations = [];
+     $hook_info = $this->getHookInfo();
++
++    // In case it's an early stage and the hook info was loaded from cache, the
++    // module files are not yet loaded at this point and discovery below
++    // produces an empty list.
++    $this->loadAll();
++
+     foreach ($this->moduleList as $module => $extension) {
+       $include_file = isset($hook_info[$hook]['group']) && $this->loadInclude($module, 'inc', $module . '.' . $hook_info[$hook]['group']);
+       // Since $this->implementsHook() may needlessly try to load the include
+@@ -676,6 +682,17 @@ protected function buildImplementationInfo($hook) {
+    *     from the cache.
+    */
+   protected function verifyImplementations(&$implementations, $hook) {
++    // Under certain circumstances the module files are not yet loaded. This
++    // happens for example when invoking a hook inside the constructor of a
++    // http_middleware service; these services are constructed very early as
++    // a dependency of http_kernel service. A more concrete example is a
++    // middleware service using the entity_type.manager. Most of the times
++    // the entity type information is retrieved from cache (stored in the
++    // discovery cache bin). When this cache however is missing, hooks
++    // like hook_entity_type_build() and hook_entity_type_alter() need to be
++    // invoked at this early stage.
++    $this->loadAll();
++
+     $all_valid = TRUE;
+     foreach ($implementations as $module => $group) {
+       // If this hook implementation is stored in a lazy-loaded file, include
+diff --git a/core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php b/core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php
+index c989ea870db..64122069129 100644
+--- a/core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php
++++ b/core/tests/Drupal/Tests/Core/Extension/ModuleHandlerTest.php
+@@ -391,6 +391,7 @@ function (callable $hook, string $module) use (&$implementors) {
+    * Tests getImplementations.
+    *
+    * @covers ::invokeAllWith
++   * @covers ::verifyImplementations
+    */
+   public function testCachedGetImplementationsMissingMethod() {
+     $this->cacheBackend->expects($this->exactly(1))
+@@ -417,7 +418,6 @@ public function testCachedGetImplementationsMissingMethod() {
+       ])
+       ->onlyMethods(['buildImplementationInfo'])
+       ->getMock();
+-    $module_handler->load('module_handler_test');
+ 
+     $module_handler->expects($this->never())->method('buildImplementationInfo');
+     $implementors = [];
+@@ -533,4 +533,26 @@ public function testGetModuleDirectories() {
+     $this->assertEquals(['node' => $this->root . '/core/modules/node'], $module_handler->getModuleDirectories());
+   }
+ 
++  /**
++   * Tests that modules are included in case of a partial cache miss.
++   *
++   * @covers ::hasImplementations
++   * @covers ::getImplementationInfo
++   * @covers ::buildImplementationInfo
++   */
++  public function testMissingHookImplementationCache() {
++    // Simulate missing cache entry for hook implementations, but existing one
++    // for hook info.
++    $this->cacheBackend
++      ->expects($this->exactly(2))
++      ->method('get')
++      ->willReturnMap([
++        ['hook_info', FALSE, (object) ['data' => []]],
++        ['module_implements', FALSE, FALSE],
++      ]);
++
++    $module_handler = $this->getModuleHandler();
++    $this->assertTrue($module_handler->hasImplementations('hook', 'module_handler_test'));
++  }
++
+ }
