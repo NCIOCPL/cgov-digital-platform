@@ -21,12 +21,12 @@ use Drupal\Core\Session\AccountInterface;
 function cgov_promo_paragraph_access(EntityInterface $entity, $operation, AccountInterface $account) {
   $bundle = $entity->bundle();
 
-  if (($bundle === 'cgov_card_internal' || $bundle === 'ncids_feature_card_internal') &&
+  if (($bundle === 'cgov_card_internal' || $bundle === 'ncids_feature_card_internal' || $bundle === 'ncids_imageless_card_internal') &&
   $operation === 'view') {
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
 
-  else if (($bundle === 'ncids_feature_card_internal') && $operation === 'view') {
+  else if (($bundle === 'ncids_feature_card_internal' || $bundle === 'ncids_imageless_card_multimedia') && $operation === 'view') {
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_media');
   }
 
@@ -41,7 +41,8 @@ function cgov_promo_field_widget_single_element_form_alter(&$element, &$form_sta
   if (
     array_key_exists('#paragraph_type', $element) &&
     ($element['#paragraph_type'] == 'cgov_card_external' ||
-    $element['#paragraph_type'] == 'ncids_feature_card_external')
+    $element['#paragraph_type'] == 'ncids_feature_card_external' ||
+    $element['#paragraph_type'] == 'ncids_imageless_card_external')
   ) {
     // Make the autocomplete do nothing.
     $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;

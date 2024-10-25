@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ncids_imageless_card_external.field_featured_url
+    - field.field.paragraph.ncids_imageless_card_external.field_override_card_description
+    - field.field.paragraph.ncids_imageless_card_external.field_override_card_title
+    - paragraphs.paragraphs_type.ncids_imageless_card_external
+  module:
+    - link
+id: paragraph.ncids_imageless_card_external.default
+targetEntityType: paragraph
+bundle: ncids_imageless_card_external
+mode: default
+content:
+  field_featured_url:
+    type: link_separate
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_override_card_description:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_override_card_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

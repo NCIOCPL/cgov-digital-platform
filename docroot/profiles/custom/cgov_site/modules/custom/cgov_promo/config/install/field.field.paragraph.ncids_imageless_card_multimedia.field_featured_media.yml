@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_media
+    - paragraphs.paragraphs_type.ncids_imageless_card_multimedia
+id: paragraph.ncids_imageless_card_multimedia.field_featured_media
+field_name: field_featured_media
+entity_type: paragraph
+bundle: ncids_imageless_card_multimedia
+label: 'Featured Media'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: cgov_all_selection
+  handler_settings:
+    target_bundles:
+      cgov_file: cgov_file
+      cgov_infographic: cgov_infographic
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: cgov_file
+field_type: entity_reference
