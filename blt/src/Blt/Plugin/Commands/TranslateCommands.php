@@ -49,8 +49,11 @@ class TranslateCommands extends BltTasks {
     $this->say("=== Update all available locales! ===");
     $this->say("=====================================");
     /** @var \Acquia\Blt\Robo\Tasks\DrushTask $task */
+    $docroot = $this->getConfigValue('docroot');
     $task = $this->taskDrush()
       ->drush('locale:update')
+      // Force a re-import of our translations.
+      ->drush("locale:import es {$docroot}/profiles/custom/cgov_site/translations/cgov_site.es.po")
       ->drush('cr')
       ->printOutput(TRUE);
     $result = $task->interactive($this->input()->isInteractive())->run();
