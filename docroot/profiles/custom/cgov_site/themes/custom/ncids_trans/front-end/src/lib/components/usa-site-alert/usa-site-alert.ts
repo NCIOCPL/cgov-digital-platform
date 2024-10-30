@@ -1,6 +1,6 @@
 import { trackOther } from '../../core/analytics/eddl-util';
 
-import { NCISiteAlert } from '@nciocpl/ncids-js/usa-site-alert';
+import { USASiteAlert } from '@nciocpl/ncids-js/usa-site-alert';
 
 /**
  * Tracks analytics using eddlUtil for site alert.
@@ -38,7 +38,7 @@ const minimizeClickHandler: EventListener = () => {
 const dismissClickHandler: EventListener = (evt: Event) => {
 	const target = evt.currentTarget as HTMLElement;
 	const preHeaderElement = target.classList;
-	const el = preHeaderElement.contains('usa-site-alert--nci-slim')
+	const el = preHeaderElement.contains('usa-site-alert--slim')
 		? 'Slim Alert'
 		: 'Standard Alert';
 	track('Dismiss', el, 'Dismiss');
@@ -52,7 +52,7 @@ const linkClickHandler: EventListener = (evt: Event) => {
 	const target = evt.currentTarget as HTMLElement;
 	const linkText = (target.textContent as string).trim() || '_ERROR_';
 	const preHeaderElement = (target.closest('section') as HTMLElement).classList;
-	const el = preHeaderElement.contains('usa-site-alert--nci-slim')
+	const el = preHeaderElement.contains('usa-site-alert--slim')
 		? 'Slim Alert'
 		: 'Standard Alert';
 	track(linkText, el, 'Link Click');
@@ -68,7 +68,7 @@ const initialize = () => {
 	usaAlerts.forEach((element: Node) => {
 		const alert = element as HTMLElement;
 		const closeable = alert.dataset.siteAlertClosable?.toLowerCase() === 'true';
-		NCISiteAlert.create(alert, { closeable });
+		USASiteAlert.create(alert, { closeable });
 
 		alert.addEventListener('usa-site-alert:content:expand', expandClickHandler);
 

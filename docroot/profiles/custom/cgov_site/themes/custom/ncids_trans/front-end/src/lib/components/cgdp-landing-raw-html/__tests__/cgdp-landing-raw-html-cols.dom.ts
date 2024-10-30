@@ -4,7 +4,7 @@ export const cgdpRawHTMLRowCols = `
         <div class="grid-row grid-gap-4">
             <div class="tablet-lg:grid-col-8 ncids-column" data-eddl-landing-row-col>
                 <div class="usa-section" data-eddl-landing-row>
-                    <h2 class="nci-heading-h3 nci-heading--label">Cancer Currents Blog</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Cancer Currents Blog</h2>
                     <div class="usa-prose">
                         <p>Find news and updates on the latest cancer research.</p>
                     </div>
@@ -22,7 +22,7 @@ export const cgdpRawHTMLRowCols = `
             </div>
             <div class="tablet-lg:grid-col-4 ncids-column" data-eddl-landing-row-col="">
                 <div class="usa-section" data-eddl-landing-row>
-                    <h2 class="nci-heading-h3 nci-heading--label">Media Resources</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Media Resources</h2>
                         <ul class="usa-list--unstyled rightrail__list-links">
                             <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">Resources &amp; Contacts</a></li>
                             <li><a href="https://visualsonline.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text">Images and B-roll</a></li>
@@ -45,7 +45,7 @@ export const cgdpRawHTMLRowCols = `
                         </p>
                 </div>
                 <div class="usa-section" data-eddl-landing-row>
-                    <h2 class="nci-heading-h3 nci-heading--label">Cancer Currents Blog</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Cancer Currents Blog</h2>
                     <div class="usa-prose">
                         <p>Find news and updates on the latest cancer research.</p>
                     </div>
@@ -61,7 +61,7 @@ export const cgdpRawHTMLRowCols = `
                     </p>
                 </div>
                 <div class="usa-section" data-eddl-landing-row>
-                    <h2 class="nci-heading-h3 nci-heading--label">Events</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Events</h2>
                         <ul class="usa-list--unstyled rightrail__list-links">
                             <li><a href="https://events.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Events" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text">NCI Events</a></li>
                             <li><a href="/news-events/events/scientific-meetings" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Events" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">Scientific Meetings and Lectures</a></li>

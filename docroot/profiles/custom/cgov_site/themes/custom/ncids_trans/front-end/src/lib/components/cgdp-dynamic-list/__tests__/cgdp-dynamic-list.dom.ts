@@ -4,7 +4,7 @@ export const cgdpDynamicListDom = `
         <div class="grid-row grid-gap-4">
             <div class="tablet-lg:grid-col-8 ncids-column" data-eddl-landing-row-col>
                 <div class="cgdp-dynamic-list" data-eddl-landing-row>
-                    <h2 class="nci-heading-h2 nci-heading--label">Recent Press Releases</h2>
+                    <h2 class="cgdp-list__title nci-heading--label">Recent Press Releases</h2>
                     <div class="view-element-container">
                         <ul class="usa-collection" data-dynamic-list-view="Press Releases" data-dynamic-list-display="NCDIS Collection Media">
                             <li class="usa-collection__item">
@@ -100,7 +100,7 @@ export const cgdpDynamicListDom = `
             </div>
             <div class="tablet-lg:grid-col-4 ncids-column" data-eddl-landing-row-col>
                 <div class="usa-section">
-                    <h2 class="nci-heading-h3 nci-heading--label">Media Resources</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Media Resources</h2>
                     <ul class="usa-list--unstyled rightrail__list-links">
                         <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text" data-eddl-landing-rawhtml-total-links="6" data-eddl-landing-rawhtml-link-position="1">Resources &amp; Contacts</a></li>
                         <li><a href="https://visualsonline.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text" data-eddl-landing-rawhtml-total-links="6" data-eddl-landing-rawhtml-link-position="2">Images and B-roll</a></li>
@@ -121,7 +121,7 @@ export const cgdpDynamicListDom = `
                     </p>
                 </div>
                 <div class="usa-section">
-                    <h2 class="nci-heading-h3 nci-heading--label">Cancer Currents Blog</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Cancer Currents Blog</h2>
                     <p>Find news and updates on the latest cancer research.</p>
                     <ul class="usa-list--unstyled rightrail__list-links">
                         <li><a href="#" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Cancer Currents Blog" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text" data-eddl-landing-rawhtml-total-links="2" data-eddl-landing-rawhtml-link-position="1">View all posts</a></li>
@@ -134,7 +134,7 @@ export const cgdpDynamicListDom = `
                     </p>
                 </div>
                 <div class="usa-section">
-                    <h2 class="nci-heading-h3 nci-heading--label">Events</h2>
+                    <h2 class="cgdp-dynamic-list__title nci-heading--label">Events</h2>
                         <ul class="usa-list--unstyled rightrail__list-links">
                             <li><a href="https://events.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Events" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text" data-eddl-landing-rawhtml-total-links="5" data-eddl-landing-rawhtml-link-position="1">NCI Events</a></li>
                             <li><a href="/news-events/events/scientific-meetings" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Events" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text" data-eddl-landing-rawhtml-total-links="5" data-eddl-landing-rawhtml-link-position="2">Scientific Meetings and Lectures</a></li>

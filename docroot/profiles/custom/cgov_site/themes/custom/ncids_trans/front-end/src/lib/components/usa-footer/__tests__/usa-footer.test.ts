@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 
-import { fireEvent, screen } from '@testing-library/dom';
+import { fireEvent, screen, waitFor } from '@testing-library/dom';
 
 import * as eddlUtil from '../../../core/analytics/eddl-util';
 
@@ -34,7 +34,7 @@ describe('usa-footer', () => {
 		jest.resetAllMocks();
 	});
 
-	it('sends the correct analytics for link clicks', () => {
+	it('sends the correct analytics for link clicks', async () => {
 		const footer = usaFooterDomMock();
 
 		// Lets make a spy to ensure that trackOther is called correctly
@@ -45,6 +45,13 @@ describe('usa-footer', () => {
 
 		// Create the footer JS
 		footerInit();
+
+		// scroll and check back to top link before clicking
+		fireEvent.scroll(window, { target: { scrollY: 300 } });
+		await waitFor(async () => {
+			const link = screen.getAllByRole('link');
+			expect(link[0]).toBeTruthy();
+		});
 
 		const link = screen.getAllByRole('link');
 

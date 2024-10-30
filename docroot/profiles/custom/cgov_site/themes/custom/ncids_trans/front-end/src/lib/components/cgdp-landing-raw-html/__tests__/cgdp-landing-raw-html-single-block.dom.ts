@@ -1,6 +1,6 @@
 export const cgdpLandingRawHtmlSingleBlockDom = `
 <div class="usa-section" data-eddl-landing-row>
-    <h2 class="nci-heading-h3 nci-heading--label">Media Resources</h2>
+    <h2 class="cgdp-dynamic-list__title nci-heading--label">Media Resources</h2>
     <ul class="usa-list--unstyled rightrail__list-links">
         <li><a href="/news-events/media-resources" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="Internal" data-eddl-landing-rawhtml-link-area="Text">Resources &amp; Contacts</a></li>
         <li><a href="https://visualsonline.cancer.gov/" class="usa-link font-serif-lg text-bold" data-eddl-landing-rawhtml="" data-eddl-landing-rawhtml-title="Media Resources" data-eddl-landing-rawhtml-component-variant="NewsEventsRightRail" data-eddl-landing-rawhtml-link-type="External" data-eddl-landing-rawhtml-link-area="Text">Images and B-roll</a></li>
