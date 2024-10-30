@@ -3,18 +3,12 @@
 @import "~Styles/sprites/svg-sprite";
 
 .cgdp-list {
-	// TODO: Remove once DS has been updated ticket #4355
-	// This is a fix to remove spacing on a list item
-	// when there is no list title and fixes the collection
-	// heading size. We can remove the margin-top-0 and u-font()
-	// when the ticket has been merged in.
-	.usa-collection__heading {
-		@include u-font('serif', 'md');
-		> .usa-link {
-			@include u-font('serif', 'md');
-		}
+	.cgdp-list__title {
+		@include typeset-h2;
 	}
-
+	.cgdp-list__title {
+		margin-block-end: 1.75rem !important;
+	}
 	&:not(:has(> h2)) {
 		.usa-collection {
 			@include u-margin-top(0);
@@ -28,6 +22,7 @@
 		@include u-margin-bottom(1.5);
 		vertical-align: middle;
 	}
+
 }
 
 .filetype {

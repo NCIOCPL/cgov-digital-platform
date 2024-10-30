@@ -1,1 +1,13 @@
+@use 'uswds-core' as *;
 @forward 'usa-collection';
+
+.cgdp-dynamic-list__title {
+	@include typeset-h3;
+	&  + * {
+    margin-top: 0;
+	}
+}
+
+.cgdp-dynamic-list__title {
+	margin-block-end: 1.75rem !important;
+}

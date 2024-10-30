@@ -1,7 +1,7 @@
 export const cgdpListBadDom = `
 <div class="usa-section" data-eddl-landing-row="">
   <div class="cgdp-list">
-		<h2 class="nci-heading-h2 nci-heading--label">Test Heading</h2>
+		<h2 class="cgdp-list__title nci-heading--label">Test Heading</h2>
     <ul class="usa-collection">
       <li class="usa-collection__item" data-list-component-variant="Title, Description, and Image">
 				<img loading="lazy" class="usa-collection__img" src="/sites/default/files/styles/ncids_collections_media_4x3/public/cgov_image/media_image/2024-08/RAS-Research-Teams.jpg?h=2b197aa1&amp;itok=47zl49wF" width="160" height="120" alt="RAS Research Team.">

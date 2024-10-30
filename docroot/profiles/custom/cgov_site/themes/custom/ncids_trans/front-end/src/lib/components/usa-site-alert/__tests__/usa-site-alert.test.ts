@@ -12,7 +12,7 @@ jest.mock('../../../core/analytics/eddl-util');
 describe('usa-site-alert', () => {
 	afterEach(() => {
 		// Hack to clean out the dom.
-		document.cookie = 'NCISiteAlertsite-alert-0=; Path=/;';
+		document.cookie = 'USASiteAlertsite-alert-0=; Path=/;';
 		document.getElementsByTagName('body')[0].innerHTML = '';
 		jest.resetAllMocks();
 	});
@@ -21,7 +21,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 				aria-label="Slim emergency site alert example"
-				class="usa-site-alert usa-site-alert--nci-slim usa-site-alert--nci-emergency"
+				class="usa-site-alert usa-site-alert--slim usa-site-alert--emergency"
 		>
 				<div class="usa-alert">
 					<div class="usa-alert__body">
@@ -64,7 +64,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
     	<div class="usa-alert">
@@ -73,7 +73,7 @@ describe('usa-site-alert', () => {
                 <h3 class="usa-alert__heading">COVID-19 resources.</h3>
             </header>
             <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
+                <ul class="usa-list usa-list--two-column">
                     <li>
                         <a class="usa-link" href="/about-cancer">
                             What people with cancer should know
@@ -135,7 +135,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
     	<div class="usa-alert">
@@ -144,7 +144,7 @@ describe('usa-site-alert', () => {
                 <h3 class="usa-alert__heading">COVID-19 resources.</h3>
             </header>
             <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
+                <ul class="usa-list usa-list--two-column">
                     <li>
                         <a class="usa-link" href="/about-cancer">
                         </a>
@@ -205,7 +205,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 				aria-label="Slim emergency site alert example"
-				class="usa-site-alert usa-site-alert--nci-slim usa-site-alert--nci-emergency"
+				class="usa-site-alert usa-site-alert--slim usa-site-alert--emergency"
 		>
 				<div class="usa-alert">
 					<div class="usa-alert__body">
@@ -248,7 +248,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
     	<div class="usa-alert">
@@ -257,7 +257,7 @@ describe('usa-site-alert', () => {
                 <h3 class="usa-alert__heading">COVID-19 resources.</h3>
             </header>
             <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
+                <ul class="usa-list usa-list--two-column">
                     <li>
                         <a class="usa-link" href="/about-cancer">
                             What people with cancer should know
@@ -304,9 +304,9 @@ describe('usa-site-alert', () => {
 			'PreHeader:LinkClick',
 			'PreHeader:LinkClick',
 			{
-				linkText: 'Expand',
+				linkText: 'Minimize',
 				location: 'PreHeader',
-				action: 'Expand',
+				action: 'Minimize',
 				preHeaderElement: 'Standard Alert',
 			}
 		);
@@ -316,7 +316,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
     	<div class="usa-alert">
@@ -325,7 +325,7 @@ describe('usa-site-alert', () => {
                 <h3 class="usa-alert__heading">COVID-19 resources.</h3>
             </header>
             <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
+                <ul class="usa-list usa-list--two-column">
                     <li>
                         <a class="usa-link" href="/about-cancer">
                             What people with cancer should know
@@ -388,7 +388,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Standard information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-standard usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
     	<div class="usa-alert">
@@ -397,7 +397,7 @@ describe('usa-site-alert', () => {
                 <h3 class="usa-alert__heading">COVID-19 resources.</h3>
             </header>
             <div class="usa-alert__nci-content">
-                <ul class="usa-alert__nci-list">
+                <ul class="usa-list usa-list--two-column">
                     <li>
                         <a class="usa-link" href="/about-cancer">
                             What people with cancer should know
@@ -456,7 +456,7 @@ describe('usa-site-alert', () => {
 		const siteAlert = `
 		<section
 			aria-label="Slim information site alert example with close"
-			class="usa-site-alert usa-site-alert--nci-slim usa-site-alert--nci-info"
+			class="usa-site-alert usa-site-alert--slim usa-site-alert--info"
 			data-site-alert-closable="true"
 		>
 			<div class="usa-alert">
