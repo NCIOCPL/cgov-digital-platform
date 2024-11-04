@@ -112,6 +112,18 @@ module.exports = (env, argv) => {
 								sourceMap: true,
 							},
 						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									// If we don't force a config here postcss seemingly trys to find the
+									// closest postcss config to the sass you are loading, and in cgov_common
+									// that is a bad thing.
+									config: path.resolve(__dirname, './ckeditor.config.js'),
+								},
+								sourceMap: true,
+							},
+						},
 						// Call the sass loader to process any .scss file called from .js/ts.
 						// NOTE: subsequent calls to other sass partials from this call will
 						// be resolved through node-sass and NOT webpack.

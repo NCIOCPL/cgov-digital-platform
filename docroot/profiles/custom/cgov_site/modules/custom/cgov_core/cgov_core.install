@@ -587,3 +587,16 @@ function cgov_core_update_10009() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Remove ckeditor.
+ */
+function cgov_core_update_10010() {
+  $installer = \Drupal::service('module_installer');
+  if (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+    $installer->uninstall(['ckeditor'], FALSE);
+  }
+  if (!\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+    $installer->install(['ckeditor5']);
+  }
+}
