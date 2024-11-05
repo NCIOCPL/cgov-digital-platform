@@ -28,7 +28,11 @@
 		@include u-bg('transparent');
 	}
 	.nci-guide-card__title {
-		@include typeset("heading", "xl");
+		@include typeset(
+			'heading',
+			$theme-h2-font-size,
+			$theme-heading-line-height
+		);
 		@include u-text-align('left');
 	}
 	.nci-guide-card__body {
@@ -53,11 +57,11 @@
 	}
 	.nci-guide-card__description {
 		@include u-margin-bottom(3);
-		@include typeset("body", "xs", $theme-body-line-height);
+		@include typeset('body', 'xs', $theme-body-line-height);
 		max-width: measure($theme-text-measure);
 
 		& > p {
-		 margin-block-start: 0;
+			margin-block-start: 0;
 		}
 	}
 }
