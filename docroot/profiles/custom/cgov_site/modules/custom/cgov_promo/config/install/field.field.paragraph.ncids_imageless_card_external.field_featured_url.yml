@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_featured_url
+    - paragraphs.paragraphs_type.ncids_imageless_card_external
+  module:
+    - link
+id: paragraph.ncids_imageless_card_external.field_featured_url
+field_name: field_featured_url
+entity_type: paragraph
+bundle: ncids_imageless_card_external
+label: 'Featured Item Url'
+description: 'Enter the full URL starting with https://'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 17
+field_type: link

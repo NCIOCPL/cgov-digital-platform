@@ -43,3 +43,25 @@
   </figure>
 
 {% endmacro %}
+
+{% macro ncidsImageHandler(image, caption, credit, no_image_style) %}
+  <figure class="cgdp-image">
+    {% if image %}
+      {{ image }}
+    {% else %}
+      <img src="{{ get_placeholder_image('{{ no_image_style }}') }}" alt="No Image Placeholder">
+    {% endif %}
+    {% if caption %}
+      <figcaption class="cgdp-image__caption usa-prose">
+        {{ caption }}
+        {% if credit %}
+          <p class="cgdp-image__credit">{% trans %}Credit{% endtrans %}: {{ credit }}</p>
+        {% endif %}
+      </figcaption>
+    {% elseif credit %}
+      <div class="cgdp-image__caption usa-prose">
+        <p class="cgdp-image__credit">{% trans %}Credit{% endtrans %}: {{ credit }}</p>
+      </div>
+    {% endif %}
+  </figure>
+{% endmacro %}

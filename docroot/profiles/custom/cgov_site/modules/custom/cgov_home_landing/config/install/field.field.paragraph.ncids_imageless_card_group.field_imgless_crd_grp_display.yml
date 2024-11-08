@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_imgless_crd_grp_display
+    - paragraphs.paragraphs_type.ncids_imageless_card_group
+  module:
+    - options
+id: paragraph.ncids_imageless_card_group.field_imgless_crd_grp_display
+field_name: field_imgless_crd_grp_display
+entity_type: paragraph
+bundle: ncids_imageless_card_group
+label: 'Card Layout Display'
+description: 'Sets the number of cards to display in a row, in either a 1, 2, or 3-card layout per row.'
+required: true
+translatable: false
+default_value:
+  -
+    value: cgdp-imageless-card-group--three-card
+default_value_callback: ''
+settings: {  }
+field_type: list_string

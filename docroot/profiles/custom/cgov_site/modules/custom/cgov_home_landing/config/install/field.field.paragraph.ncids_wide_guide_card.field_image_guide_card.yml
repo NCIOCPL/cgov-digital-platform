@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_image_guide_card
+    - paragraphs.paragraphs_type.ncids_wide_guide_card
+  module:
+    - image
+id: paragraph.ncids_wide_guide_card.field_image_guide_card
+field_name: field_image_guide_card
+entity_type: paragraph
+bundle: ncids_wide_guide_card
+label: Image
+description: 'Displays to the right of the content and call-to-action buttons. Keep 1:1 aspect ratio.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'ncids_wide_guide_card/field_image_guide_card/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: 1060x1060
+  alt_field: true
+  alt_field_required: false
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image
