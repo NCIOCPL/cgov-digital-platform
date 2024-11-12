@@ -7,14 +7,13 @@
  * @see https://docs.acquia.com/site-factory/tiers/paas/workflow/hooks
  */
 
+require_once 'cgov_settings_utilities.inc';
+
+$env = CGovSettingsUtil::getEnvironmentName();
+$domain = CGovSettingsUtil::getDomain();
+
 // Verify we're on an Acquia-hosted environment.
-if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-  // Alter '01dev,' '01test', and '01live' to match
-  // your website's environment names.
-  $env = $_ENV['AH_SITE_ENVIRONMENT'];
-  if (preg_match('/^ode\d*$/', $env)) {
-    $env = 'ode';
-  }
+if (CGovSettingsUtil::isAcquia()) {
 
   $config['system.performance']['css']['preprocess'] = TRUE;
   $config['system.performance']['css']['gzip'] = TRUE;
@@ -34,8 +33,11 @@ if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
       break;
   }
 
-  // Setup proper .edgerc path for Akamai module
-  $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
-  $config['akamai.settings']['edgerc_path'] = "/mnt/gfs/home/$ah_group/common/.edgerc";
-
+  // ODEs are not behind Akamai, but everything else conceivably could be.
+  if ($env != 'ode') {
+    // Setup proper .edgerc path for Akamai module
+    $ah_group = isset($_ENV['AH_SITE_GROUP']) ? $_ENV['AH_SITE_GROUP'] : NULL;
+    $config['akamai.settings']['edgerc_path'] = "/mnt/gfs/home/$ah_group/common/.edgerc";
+    $config['akamai.settings']['basepath'] = 'https://' . $domain;
+  }
 }

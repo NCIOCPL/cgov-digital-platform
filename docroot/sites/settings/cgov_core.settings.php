@@ -7,6 +7,11 @@
  * @see https://docs.acquia.com/site-factory/tiers/paas/workflow/hooks
  */
 
+require_once 'cgov_settings_utilities.inc';
+
+$env = CGovSettingsUtil::getEnvironmentName();
+$domain = CGovSettingsUtil::getDomain();
+
 /*
 * Set the translation path to allow for easy management of third-party
 * translation files. The installer ignores the path for the initial install,
@@ -20,40 +25,12 @@
 $config['locale.settings']['translation']['use_source'] = 'local';
 $config['locale.settings']['translation']['path'] = DRUPAL_ROOT . '/translations';
 
-// Pass in the correct ACSF site name to build the sitemap.xml.
-// The base_url is picked up from, well, who knows what actually. It should be
-// what is passed in for the --uri flag to drush for the cron, but then again
-// it should appear as the site factory name? In any case we want to find the
-// preferred domain, which should always be the public facing one. This is
-// the name that shows on the card for the site. Anyway, you should always
-// add that one as the first domain when creating a site, and then we will
-// make sure that shows up in the sitemap.xml with the following code.
-if ($is_acsf_env && $acsf_db_name) {
-  $domains = gardens_data_get_sites_from_file($GLOBALS['gardens_site_settings']['conf']['acsf_db_name']);
-  // Full disclosure, I don't know if the preferred_domain is always set.
-  $domain = array_keys($domains)[0];
-  foreach ($domains as $site_name => $site_info) {
-    if (!empty($site_info['flags']['preferred_domain'])) {
-      $domain = $site_name;
-    }
-  }
-  $config['simple_sitemap.settings']['base_url'] = 'https://' . $domain;
-} else {
-  // NOTE: you can override this in your local.settings.php.
-  $config['simple_sitemap.settings']['base_url'] = 'https://www.cancer.gov';
-}
+// Pass in the correct domain name to build the sitemap.xml.
+// NOTE: you can override this in your local.settings.php.
+$config['simple_sitemap.settings']['base_url'] = 'https://' . $domain;
 
-// Get our current environment
-if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-  $env = $_ENV['AH_SITE_ENVIRONMENT'];
-  if (preg_match('/^ode\d*$/', $env)) {
-    $env = 'ode';
-  }
-} else {
-  $env = 'local';
-}
 // Settings for metatag attribute cgdp.domain.
-if($is_acsf_env && $acsf_db_name) {
+if(CGovSettingsUtil::isACSF()) {
   // For ACSF env.
   $acsf_domains = array_keys(gardens_data_get_sites_from_file($GLOBALS['gardens_site_settings']));
   foreach ($acsf_domains as $domain_value) {
@@ -92,7 +69,7 @@ $settings['disallow_routes'] = [
 
 // Get the license dir from our current environment
 $licenseDir = '/var/licenses';
-if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+if (CGovSettingsUtil::isAcquia()) {
   $licenseDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/licenses";
 }
 
