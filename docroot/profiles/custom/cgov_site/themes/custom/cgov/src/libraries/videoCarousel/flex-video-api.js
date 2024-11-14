@@ -75,7 +75,7 @@ function _initialize($parent) {
 					.attr('alt', videoTitle)
 					.attr('id', 'flex-video-api')
 					.attr('enablejsapi', '1')
-          .attr('sandbox', 'allow-same-origin allow-scripts')
+          .attr('sandbox', 'allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation')
 					.text(videoText[videoType][lang])
 			);
 		});
