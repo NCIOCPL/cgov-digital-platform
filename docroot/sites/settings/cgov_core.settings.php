@@ -50,10 +50,13 @@ else {
   $settings['cgdp_domain'] = $env;
 }
 
-// on non-prod environments, route emails to logger
+// On non-prod environments, override email settings.
 if ($env !== "01live") {
-  // route e-mails to the logger.
+  // Route e-mails to the logger.
   $config['system.mail']['interface']['default'] = 'cgov_mail_logger';
+  // Change the contact form address.
+  $config['cgov_mail.settings']['contact_form_recipient'] = 'CancerGovTEST@nih.gov';
+  $config['cgov_mail.settings']['es_contact_form_recipient'] = 'CancerGovTEST@nih.gov';
 }
 
 // Outlook doesn't adhere to standards, so accommodating and using
