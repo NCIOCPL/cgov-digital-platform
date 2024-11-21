@@ -2,11 +2,11 @@
 
 namespace Drupal\app_module\Plugin\Field\FieldType;
 
-use Drupal\app_module\AppModules;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\MapDataDefinition;
+use Drupal\app_module\AppModules;
 
 /**
  * Defines the 'appmodulereference' entity field type.

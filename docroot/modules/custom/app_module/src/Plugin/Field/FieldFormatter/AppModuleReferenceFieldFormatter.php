@@ -2,12 +2,12 @@
 
 namespace Drupal\app_module\Plugin\Field\FieldFormatter;
 
-use Drupal\app_module\AppModuleRenderArrayBuilderInterface;
-use Drupal\app_module\Entity\AppModule;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\app_module\AppModuleRenderArrayBuilderInterface;
+use Drupal\app_module\Entity\AppModule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

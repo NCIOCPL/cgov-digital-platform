@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\app_module\Unit;
 
-use Drupal\app_module\PathProcessor\PathProcessorAppModule;
 use Drupal\Tests\UnitTestCase;
+use Drupal\app_module\PathProcessor\PathProcessorAppModule;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 

@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\cgov_cts\Unit;
 
-use Drupal\cgov_cts\Plugin\rest\resource\ZipCodeLookupResource;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
+use Drupal\cgov_cts\Plugin\rest\resource\ZipCodeLookupResource;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
