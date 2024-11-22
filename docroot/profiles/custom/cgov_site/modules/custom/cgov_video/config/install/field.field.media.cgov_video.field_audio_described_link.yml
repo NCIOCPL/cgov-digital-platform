@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_audio_described_link
+    - media.type.cgov_video
+  module:
+    - link
+id: media.cgov_video.field_audio_described_link
+field_name: field_audio_described_link
+entity_type: media
+bundle: cgov_video
+label: 'Audio-Described Video Link'
+description: 'Used to provide a link to the audio-described file. Enter the full URL starting with https://'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link
