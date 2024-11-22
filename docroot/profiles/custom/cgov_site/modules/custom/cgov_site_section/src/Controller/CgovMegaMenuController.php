@@ -59,7 +59,7 @@ class CgovMegaMenuController extends ControllerBase {
   /**
    * Return section nav items.
    */
-  public function getMegaMenu(TermInterface $taxonomy_term = NULL) {
+  public function getMegaMenu(?TermInterface $taxonomy_term = NULL) {
     $field_yaml_content = [];
     // Make sure the field_ncids_mega_menu_contents is not empty.
     if ($taxonomy_term->field_ncids_mega_menu_contents->target_id) {

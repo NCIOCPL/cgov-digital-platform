@@ -4,8 +4,8 @@ namespace Drupal\Tests\pdq_cancer_information_summary\Functional;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
 use Drupal\Core\Url;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Verify publication of PDQ Cancer Information Summaries.
@@ -434,7 +434,7 @@ class ApiTest extends BrowserTestBase {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  private function publish(array $summaries = NULL) {
+  private function publish(?array $summaries = NULL) {
     if (empty($summaries)) {
       $summaries = [
         [$this->english['nid'], 'en'],

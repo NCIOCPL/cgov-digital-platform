@@ -2,13 +2,13 @@
 
 namespace Drupal\cgov_js_app_module\Plugin\app_module;
 
-use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
-use Drupal\cgov_js_app_module\Render\JsAppModuleScriptMarkup;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\Token;
+use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
+use Drupal\cgov_js_app_module\Render\JsAppModuleScriptMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

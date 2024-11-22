@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_core;
 
-use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Component\Utility\Html;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\taxonomy\TermInterface;
 
 /**

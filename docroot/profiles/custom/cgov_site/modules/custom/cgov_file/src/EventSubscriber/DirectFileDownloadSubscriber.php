@@ -2,11 +2,11 @@
 
 namespace Drupal\cgov_file\EventSubscriber;
 
-use Drupal\akamai\Event\AkamaiHeaderEvents;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\ResettableStackedRouteMatchInterface;
+use Drupal\akamai\Event\AkamaiHeaderEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

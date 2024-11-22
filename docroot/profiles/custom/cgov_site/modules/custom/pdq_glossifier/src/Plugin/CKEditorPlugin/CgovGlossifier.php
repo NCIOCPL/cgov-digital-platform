@@ -2,8 +2,8 @@
 
 namespace Drupal\pdq_glossifier\Plugin\CKEditorPlugin;
 
-use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\ckeditor\CKEditorPluginBase;
 use Drupal\editor\Entity\Editor;
 
 /**

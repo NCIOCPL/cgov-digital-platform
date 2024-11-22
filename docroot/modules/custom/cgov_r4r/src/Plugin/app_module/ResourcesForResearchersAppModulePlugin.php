@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_r4r\Plugin\app_module;
 
-use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 
 /**
  * R4R App Module Plugin.

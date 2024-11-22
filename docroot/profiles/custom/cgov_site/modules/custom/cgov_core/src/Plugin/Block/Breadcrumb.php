@@ -2,7 +2,6 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,6 +10,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\Token;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

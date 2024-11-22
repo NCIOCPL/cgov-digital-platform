@@ -2,8 +2,8 @@
 
 namespace Drupal\app_module_test\Plugin\app_module;
 
-use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\app_module\Plugin\app_module\AppModulePluginBase;
 
 /**
  * Test App Module Plugin.

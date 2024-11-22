@@ -2,11 +2,11 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\cgov_core\Services\PageOptionsManagerInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\cgov_core\Services\PageOptionsManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
