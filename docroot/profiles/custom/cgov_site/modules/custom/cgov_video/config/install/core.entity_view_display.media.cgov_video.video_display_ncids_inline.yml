@@ -25,12 +25,25 @@ dependencies:
     - media.type.cgov_video
   module:
     - image
+    - link
     - media
 id: media.cgov_video.video_display_ncids_inline
 targetEntityType: media
 bundle: cgov_video
 mode: video_display_ncids_inline
 content:
+  field_audio_described_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_media_oembed_video:
     type: oembed
     label: hidden
@@ -76,7 +89,6 @@ hidden:
   body: true
   content_moderation_control: true
   created: true
-  field_audio_described_link: true
   field_browser_title: true
   field_caption: true
   field_card_title: true
