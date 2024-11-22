@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\cgov_core\Unit\Plugin\Services;
 
-use Drupal\cgov_core\Services\PageOptionsManager;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\cgov_core\Services\PageOptionsManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**

@@ -3,9 +3,9 @@
 namespace Drupal\Tests\cgov_core\Kernel\FieldStorage;
 
 use CgovPlatform\Tests\CgovSchemaExclusions;
+use Drupal\KernelTests\KernelTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeTypeInterface;
 

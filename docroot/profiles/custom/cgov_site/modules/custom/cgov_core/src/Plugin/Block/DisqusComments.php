@@ -2,13 +2,13 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\cgov_core\CgovCoreTools;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityRepository;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\cgov_core\CgovCoreTools;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\app_module\Unit;
 
-use Drupal\app_module\AppPathManager;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\app_module\AppPathManager;
 
 /**
  * Base class for AppPathManager tests.

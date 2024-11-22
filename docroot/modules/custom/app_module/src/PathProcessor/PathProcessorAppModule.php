@@ -2,9 +2,9 @@
 
 namespace Drupal\app_module\PathProcessor;
 
-use Drupal\app_module\AppPathManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
+use Drupal\app_module\AppPathManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

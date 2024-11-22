@@ -2,9 +2,9 @@
 
 namespace Drupal\cgov_blog\Plugin\Block;
 
-use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\cgov_blog\Services\BlogManagerInterface;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

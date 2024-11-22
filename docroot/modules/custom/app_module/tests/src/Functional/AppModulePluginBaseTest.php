@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\app_module\Functional;
 
-use Drupal\app_module\Entity\AppModule;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\app_module\Entity\AppModule;
 
 /**
  * Test the Config Entity Example module.

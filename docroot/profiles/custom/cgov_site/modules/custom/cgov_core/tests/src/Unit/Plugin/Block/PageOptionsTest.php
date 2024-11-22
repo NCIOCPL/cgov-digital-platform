@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\cgov_core\Unit\Plugin\Block;
 
-use Drupal\cgov_core\Plugin\Block\PageOptions;
-use Drupal\cgov_core\Services\PageOptionsManager;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
+use Drupal\cgov_core\Plugin\Block\PageOptions;
+use Drupal\cgov_core\Services\PageOptionsManager;
 
 /**
  * Tests Page Options Block Plugin.

@@ -2,11 +2,11 @@
 
 namespace Drupal\app_module\Form;
 
-use Drupal\app_module\Plugin\AppModulePluginManager;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\app_module\Plugin\AppModulePluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
