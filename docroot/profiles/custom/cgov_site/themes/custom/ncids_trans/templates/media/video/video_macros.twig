@@ -29,10 +29,16 @@
         </div>
       </div>
       {% set hasCaption = content.field_caption|field_value %}
+      {% set hasAudioDescribed = content.field_audio_described_link|field_value %}
       {% if hasCaption and showCaption %}
         <figcaption class="caption-container">
           {{ content.field_caption }}
+          {{ content.field_audio_described_link }}
         </figcaption>
+      {% elseif hasAudioDescribed %}
+        <div class="caption-container">
+          {{ content.field_audio_described_link }}
+        </div>
       {% endif %}
     </figure>
   {% endif %}
