@@ -434,7 +434,7 @@ class ApiTest extends BrowserTestBase {
    *
    * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  private function publish(array $summaries = NULL) {
+  private function publish(?array $summaries = NULL) {
     if (empty($summaries)) {
       $summaries = [
         [$this->english['nid'], 'en'],
