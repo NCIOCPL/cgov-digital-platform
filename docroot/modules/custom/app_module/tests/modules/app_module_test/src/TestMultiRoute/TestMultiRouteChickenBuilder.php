@@ -2,8 +2,8 @@
 
 namespace Drupal\app_module_test\TestMultiRoute;
 
-use Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\app_module\Plugin\app_module\MultiRouteAppModuleBuilderBase;
 
 /**
  * Chicken route builder for Testing multi route app module plugin.

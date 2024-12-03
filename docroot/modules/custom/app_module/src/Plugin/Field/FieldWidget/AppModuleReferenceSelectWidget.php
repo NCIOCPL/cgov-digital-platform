@@ -2,10 +2,10 @@
 
 namespace Drupal\app_module\Plugin\Field\FieldWidget;
 
-use Drupal\app_module\AppModules;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\app_module\AppModules;
 
 /**
  * Plugin implementation of the 'options_select' widget.

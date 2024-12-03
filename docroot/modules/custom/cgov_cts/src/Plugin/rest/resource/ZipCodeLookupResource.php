@@ -2,8 +2,8 @@
 
 namespace Drupal\cgov_cts\Plugin\rest\resource;
 
-use Drupal\cgov_cts\ZipCodeLookupServiceInterface;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\cgov_cts\ZipCodeLookupServiceInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Psr\Log\LoggerInterface;

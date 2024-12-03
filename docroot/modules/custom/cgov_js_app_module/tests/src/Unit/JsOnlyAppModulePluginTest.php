@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\cgov_js_app_module\Unit;
 
-use Drupal\cgov_js_app_module\Plugin\app_module\JsOnlyAppModulePlugin;
 use Drupal\Tests\UnitTestCase;
+use Drupal\cgov_js_app_module\Plugin\app_module\JsOnlyAppModulePlugin;
 
 /**
  * Tests for the PathProcessorAppModule.

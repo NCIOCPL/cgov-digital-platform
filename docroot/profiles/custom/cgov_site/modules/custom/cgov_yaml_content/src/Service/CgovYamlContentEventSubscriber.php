@@ -2,8 +2,6 @@
 
 namespace Drupal\cgov_yaml_content\Service;
 
-use Drupal\block\Entity\Block;
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -13,6 +11,8 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\Utility\Token;
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
 use Drupal\image\Plugin\Field\FieldType\ImageItem;

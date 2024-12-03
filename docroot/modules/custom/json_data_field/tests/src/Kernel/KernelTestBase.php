@@ -4,9 +4,9 @@ namespace Drupal\Tests\json_data_field\Kernel;
 
 use Drupal\Component\FileCache\FileCacheFactory;
 use Drupal\Core\Site\Settings;
+use Drupal\KernelTests\KernelTestBase as DrupalKernelTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\KernelTests\KernelTestBase as DrupalKernelTestBase;
 
 /**
  * Class KernelTestBase for Kernel test.

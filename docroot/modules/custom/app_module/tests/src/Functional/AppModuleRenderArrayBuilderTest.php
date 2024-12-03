@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\app_module\Functional;
 
+use Drupal\Tests\BrowserTestBase;
 use Drupal\app_module\AppModuleRenderArrayBuilder;
 use Drupal\app_module\Entity\AppModule;
-use Drupal\Tests\BrowserTestBase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
