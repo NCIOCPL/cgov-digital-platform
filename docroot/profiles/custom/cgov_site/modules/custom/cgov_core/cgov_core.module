@@ -22,6 +22,7 @@ use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 
 /**
  * Implements hook_block_build_alter().
@@ -847,4 +848,33 @@ function cgov_core_taxonomy_term_delete(EntityInterface $entity) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter.
+ *
+ * D10.3 Added revisions for taxonomy terms, but considering how
+ * specialized some of our vocabularies are, we need more
+ * testing before we support revisions and reverting.
+ */
+function cgov_core_menu_local_tasks_alter(array &$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+  // This hides the revisions tab.
+  if ($route_name === 'entity.taxonomy_term.edit_form') {
+    if (isset($data['tabs'][0]['entity.version_history:taxonomy_term.version_history'])) {
+      unset($data['tabs'][0]['entity.version_history:taxonomy_term.version_history']);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * D10.3 Added revisions for taxonomy terms, but considering how
+ * specialized some of our vocabularies are, we need more
+ * testing before we support revisions and reverting.
+ */
+function cgov_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // This hides the whole Revision Information vertical tab with the revision
+  // checkbox and comments.
+  $form['revision_information']['#access'] = FALSE;
 }

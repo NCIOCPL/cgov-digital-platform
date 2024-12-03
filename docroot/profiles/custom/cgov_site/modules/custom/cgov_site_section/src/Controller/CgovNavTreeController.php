@@ -46,7 +46,7 @@ class CgovNavTreeController extends ControllerBase {
   /**
    * Return section nav items.
    */
-  public function getSectionNav(TermInterface $taxonomy_term = NULL) {
+  public function getSectionNav(?TermInterface $taxonomy_term = NULL) {
     $menu_type = 'section_nav';
 
     // If this is not a section nav root we need to return a 400.
@@ -73,7 +73,7 @@ class CgovNavTreeController extends ControllerBase {
   /**
    * Return mobile nav items.
    */
-  public function getMobileNav(TermInterface $taxonomy_term = NULL) {
+  public function getMobileNav(?TermInterface $taxonomy_term = NULL) {
     $menu_type = 'mobile_nav';
 
     // If this is not a main nav root we need to return a 400.
@@ -272,7 +272,7 @@ class CgovNavTreeController extends ControllerBase {
    * @return array
    *   The navigation root.
    */
-  protected function getNavData(TermInterface $taxonomy_term = NULL, $menu_type, $max_depth) {
+  protected function getNavData(TermInterface $taxonomy_term, $menu_type, $max_depth) {
     $nav_item = [];
 
     // Get landing page path if the landing page is published.

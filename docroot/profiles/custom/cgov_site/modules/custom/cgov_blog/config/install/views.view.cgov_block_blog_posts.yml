@@ -219,6 +219,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -275,7 +276,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: default
           exception:
             value: all
@@ -301,6 +302,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: node
         field_blog_topics_target_id:
           id: field_blog_topics_target_id
           table: node__field_blog_topics
@@ -308,7 +310,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: default
           exception:
             value: all
@@ -337,6 +339,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: taxonomy_term
         field_date_posted_value_year:
           id: field_date_posted_value_year
           table: node__field_date_posted
