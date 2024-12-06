@@ -1,0 +1,44 @@
+From 4b765a3f930853a074f9ee91413f3824ea57b1ca Mon Sep 17 00:00:00 2001
+From: "davyd.burianuvatyi@ua.nestle.com" <venia7vedmak@gmail.com>
+Date: Thu, 15 Feb 2024 16:57:54 +0200
+Subject: [PATCH] Issue [#3376766]: use absolute path for a href in head
+
+---
+ responsive_favicons.module | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/responsive_favicons.module b/responsive_favicons.module
+index cccc910..7fb5822 100644
+--- a/responsive_favicons.module
++++ b/responsive_favicons.module
+@@ -9,6 +9,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
+ use \Drupal\Component\Utility\UrlHelper;
+ use Drupal\Core\Render\Markup;
+ use Drupal\Core\StreamWrapper\PublicStream;
++use Drupal\Core\Url;
+ 
+ /**
+  * Implements hook_help().
+@@ -133,7 +134,8 @@ function _responsive_favicons_validate_tags($html) {
+   foreach ($tags as $tag) {
+     $url_path = _responsive_favicons_normalise_path($tag->getAttribute('href'));
+     $file_path = parse_url($url_path, PHP_URL_PATH);
+-    $tag->setAttribute('href', $url_path);
++    $url = Url::fromUserInput($url_path, ['absolute' => TRUE])->toString();
++    $tag->setAttribute('href', $url);
+ 
+     if (file_exists($docroot . $file_path) && is_readable($docroot . $file_path)) {
+       $found[] = $dom->saveXML($tag);
+@@ -152,7 +154,8 @@ function _responsive_favicons_validate_tags($html) {
+     if ($name === 'msapplication-TileImage') {
+       $url_path = _responsive_favicons_normalise_path($tag->getAttribute('content'));
+       $file_path = parse_url($url_path, PHP_URL_PATH);
+-      $tag->setAttribute('content', $url_path);
++      $url = Url::fromUserInput($url_path, ['absolute' => TRUE])->toString();
++      $tag->setAttribute('content', $url);
+ 
+       if (file_exists($docroot . $file_path) && is_readable($docroot . $file_path)) {
+         $found[] = $dom->saveXML($tag);
+-- 
+GitLab
+
