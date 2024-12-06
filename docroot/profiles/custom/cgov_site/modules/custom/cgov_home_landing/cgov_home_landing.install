@@ -138,3 +138,35 @@ function cgov_home_landing_update_8002() {
     \Drupal::logger($bundle)->notice("Created $count rows in $page_style_table.");
   }
 }
+
+/**
+ * Implements hook_install().
+ *
+ * Deletes the NCIDS Title Block Paragraph.
+ *
+ */
+function cgov_home_landing_update_10001() {
+  // Import the feature to ensure we have the latest configuration.
+  $features_mgr = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $features_mgr->import(['cgov_home_landing']);
+
+  $storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  $ids = $storage->getQuery()
+    ->condition('type', 'ncids_page_title_block')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (!empty($ids)) {
+    $paragraphs = $storage->loadMultiple($ids);
+
+    // Delete existing entities.
+    $storage->delete($paragraphs);
+  }
+
+  // Deletes paragraph config.
+  $config = \Drupal::configFactory()
+    ->getEditable('paragraphs.paragraphs_type.ncids_page_title_block');
+  $config->delete();
+}

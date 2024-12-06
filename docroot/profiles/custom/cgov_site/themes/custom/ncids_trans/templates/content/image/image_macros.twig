@@ -52,14 +52,14 @@
       <img src="{{ get_placeholder_image('{{ no_image_style }}') }}" alt="No Image Placeholder">
     {% endif %}
     {% if caption %}
-      <figcaption class="cgdp-image__caption usa-prose">
+      <figcaption class="cgdp-image__caption">
         {{ caption }}
         {% if credit %}
           <p class="cgdp-image__credit">{% trans %}Credit{% endtrans %}: {{ credit }}</p>
         {% endif %}
       </figcaption>
     {% elseif credit %}
-      <div class="cgdp-image__caption usa-prose">
+      <div class="cgdp-image__caption">
         <p class="cgdp-image__credit">{% trans %}Credit{% endtrans %}: {{ credit }}</p>
       </div>
     {% endif %}

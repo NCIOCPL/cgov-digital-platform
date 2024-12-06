@@ -776,8 +776,13 @@ function cgov_site_section_entity_bundle_field_info_alter(&$fields, EntityTypeIn
   }
   if ($entity_type->id() == 'taxonomy_term'  && $bundle === 'cgov_site_sections') {
     if (isset($fields['parent'])) {
-      // Add custom constraint to this field
+      // Add custom constraint to validate parent term combinations.
       $fields['parent']->addConstraint('CgovValidateParentConstraint', []);
+    }
+    if (isset($fields['field_pretty_url'])) {
+      // Add custom constraint for pretty url to check the uniqueness of url
+      // based on computed path.
+      $fields['field_pretty_url']->addConstraint('UniqueCgovUrl');
     }
   }
 }

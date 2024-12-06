@@ -24,7 +24,7 @@ describe('usa-banner', () => {
 						<div class="usa-banner__header-text">
 							An official website of the United States government
 						</div>
-									<a href="/espanol/cancer/sobrellevar/sentimientos" class="usa-button usa-button--nci-small" hreflang="es">Español</a>
+									<a href="/espanol/cancer/sobrellevar/sentimientos" class="usa-banner__language-toggle" hreflang="es">Español</a>
 					</div>
 				</header>
 			</section>
@@ -64,7 +64,7 @@ describe('usa-banner', () => {
 						<div class="usa-banner__header-text">
 							Un sitio oficial del Gobierno de Estados Unidos
 						</div>
-									<a href="/about-cancer/coping/feelings" class="usa-button usa-button--nci-small" hreflang="en">English</a>
+									<a href="/about-cancer/coping/feelings" class="usa-banner__language-toggle" hreflang="en">English</a>
 					</div>
 				</header>
 			</section>

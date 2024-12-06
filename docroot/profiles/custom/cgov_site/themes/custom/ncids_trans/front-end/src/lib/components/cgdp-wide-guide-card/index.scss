@@ -53,9 +53,12 @@
 	}
 	.nci-guide-card__description {
 		@include u-margin-bottom(3);
-		/* START Remove the typeset override when ticket #4355 is completed */
-		@include typeset("body", "xs");
-		/* END Code Removal Note */
+		@include typeset("body", "xs", $theme-body-line-height);
+		max-width: measure($theme-text-measure);
+
+		& > p {
+		 margin-block-start: 0;
+		}
 	}
 }
 /* Wide Guide Card STOP */

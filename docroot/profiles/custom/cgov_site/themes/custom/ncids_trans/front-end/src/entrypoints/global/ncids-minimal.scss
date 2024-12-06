@@ -52,3 +52,15 @@ uswds-core.$theme-global-link-styles: true;
 		@include u-measure('none');
 	}
 }
+// cgdp-raw-html-fix is to set margin block start/end for first/last p
+// if the wysiwyg should change this should be seperated out into a
+// new definition.
+.usa-prose--cgdp-raw-html-fix,
+.usa-prose--cgdp-streamlined-wysiwyg {
+	& > p:first-child {
+		margin-block-start: 0;
+	}
+	& > p:last-child {
+		margin-block-end: 0;
+	}
+}

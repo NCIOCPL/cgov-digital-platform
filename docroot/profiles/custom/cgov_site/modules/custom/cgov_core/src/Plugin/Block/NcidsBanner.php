@@ -97,7 +97,7 @@ class NcidsBanner extends BlockBase implements ContainerFactoryPluginInterface {
       // Set the hreflang attribute.
       $link['attributes'] = [
         'id' => 'lang-toggle',
-        'class' => ['usa-button', 'usa-button--nci-small'],
+        'class' => ['usa-button', 'usa-banner__language-toggle'],
         'hreflang' => $link['language']->getId(),
       ];
 

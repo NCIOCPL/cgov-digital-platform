@@ -100,14 +100,17 @@ const footerLinkAnalyticsHandler = () => (event: Event) => {
 /**
  * Click handler for back to top click.
  */
-const backToTopAnalyticsHandler = () => () => {
-	trackOther('RightEdge:LinkClick', 'RightEdge:LinkClick', {
-		linkText: 'Back To Top',
-		location: 'Right Edge',
-		section: 'Back To Top',
-	});
-};
 
+const backToTopAnalyticsHandler = (event: Event) => {
+	const clickedElement = event.target as HTMLElement;
+	if (clickedElement.closest('.usa-footer__nci-return-to-top')) {
+		trackOther('RightEdge:LinkClick', 'RightEdge:LinkClick', {
+			linkText: 'Back To Top',
+			location: 'Right Edge',
+			section: 'Back To Top',
+		});
+	}
+};
 /**
  * Click handler for collapse events.
  */
@@ -153,16 +156,19 @@ const initialize = (): void => {
 	if (document.documentElement.lang === 'es') {
 		NCIBigFooter.create(footerElement, {
 			subscribeInvalidEmailAlert: 'Ingrese su dirección de correo electrónico',
+			backToTopText: 'Volver Arriba',
 		});
 	} else {
 		NCIBigFooter.create(footerElement);
 	}
-
-	// set up listener for backToTop
-	const backToTopLink = footerElement.querySelector(
-		'.usa-footer__nci-return-to-top a'
-	) as HTMLAnchorElement;
-	backToTopLink.addEventListener('click', backToTopAnalyticsHandler());
+	// set up listener for backToTop on footer
+	footerElement.addEventListener(
+		'click',
+		(e) => {
+			backToTopAnalyticsHandler(e);
+		},
+		true
+	);
 
 	// All link clicks in the footer(primary and secondary sections)
 	const navLinks = footerElement.querySelectorAll(

@@ -1,0 +1,160 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Embedded Video Test"
+  field_page_description:
+    value: "Embedded Video Test"
+  field_browser_title:
+    value: "Embedded Video Test"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "embedded-video-test"
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>This page is a test of all the embedded video types</p>
+  field_article_body:
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Large No Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_large_no_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Large With Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_large_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Medium No Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_medium_no_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Medium With Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_medium_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small No Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_small_no_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Small With Title'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>Lorem ipsum dolor sit amet. Hic quaerat molestiae ex enim quae est eaque quod et omnis eligendi. Aut tempore distinctio aut iste perspiciatis qui saepe odio qui tempora eveniet ex aperiam totam non sint inventore.</p>
+            <p>Ut sunt minima ut cupiditate sunt quo enim explicabo sed dolor eveniet 33 repellat galisum. Et voluptas porro est distinctio debitis sed molestias maxime ut laboriosam magnam ad expedita voluptates et cupiditate magni quo repellendus officiis.</p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="cgov_video_button"
+              data-entity-embed-display="view_mode:media.video_display_small_title"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_video"
+              data-cgov-yaml-query-name="Nonspecific Immune Stimulation"
+            ></drupal-entity>
+            <p>Ut minus quia et unde harum non voluptatum reiciendis eum quas illum qui molestiae voluptatem et voluptatem ipsum aut numquam aperiam. Ut unde sequi qui illo velit in eligendi alias sed vero assumenda. Et earum voluptas aut dolore neque non eligendi quia sit explicabo ipsum eum sequi corporis! Id praesentium saepe cum voluptatibus eaque et dicta tempore non neque rerum est ipsum eligendi sit asperiores quaerat et sequi Quis.</p>
+            <p>Ut quia repudiandae qui facere assumenda et sunt praesentium? Et quas corporis a iure nesciunt aut ipsam sunt et tempore totam id beatae nisi sed velit atque ut quasi laboriosam. Sed asperiores animi ut laudantium exercitationem qui nobis dolores est tempora dolorem non galisum consequatur eos rerum possimus. Ut aliquam amet et ipsam obcaecati et incidunt ipsum est voluptas ullam et sapiente alias!</p>
+  field_date_posted:
+    value: "2024-10-02"
+  field_date_reviewed:
+    value: "2023-10-02"
+  field_date_updated:
+    value: "2023-10-02"
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'updated'
