@@ -1,12 +1,12 @@
 langcode: en
 status: true
 dependencies:
-  config:
-    - workflows.workflow.editorial_workflow
   module:
-    - content_moderation
     - node
     - user
+  enforced:
+    module:
+      - content_moderation
 id: moderated_content
 label: 'Moderated content'
 module: views
@@ -17,63 +17,12 @@ base_field: vid
 display:
   default:
     id: default
-    display_title: Master
+    display_title: Default
     display_plugin: default
     position: 0
     display_options:
       title: 'Moderated content'
       fields:
-        operations:
-          id: operations
-          table: node_revision
-          field: operations
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: entity_operations
-          label: Operations
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          destination: true
         title:
           id: title
           table: node_field_revision
@@ -204,17 +153,17 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        langcode:
-          id: langcode
-          table: node_field_revision
-          field: langcode
-          relationship: nid
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: uid
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: langcode
+          entity_type: user
+          entity_field: name
           plugin_id: field
-          label: Language
+          label: Author
           exclude: false
           alter:
             alter_text: false
@@ -256,10 +205,9 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: language
+          type: user_name
           settings:
-            link_to_entity: false
-            native_language: false
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -333,71 +281,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        name:
-          id: name
-          table: users_field_data
-          field: name
-          relationship: uid
-          group_type: group
-          admin_label: ''
-          entity_type: user
-          entity_field: name
-          plugin_id: field
-          label: Author
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: user_name
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
         changed:
           id: changed
           table: node_field_revision
@@ -456,7 +339,7 @@ display:
             custom_date_format: ''
             timezone: ''
             tooltip:
-              date_format: ''
+              date_format: long
               custom_date_format: ''
             time_diff:
               enabled: false
@@ -474,6 +357,57 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        operations:
+          id: operations
+          table: node_revision
+          field: operations
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_operations
+          label: Operations
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          destination: true
       pager:
         type: full
         options:
@@ -527,15 +461,15 @@ display:
       sorts: {  }
       arguments: {  }
       filters:
-        latest_revision:
-          id: latest_revision
+        latest_translation_affected_revision:
+          id: latest_translation_affected_revision
           table: node_revision
-          field: latest_revision
+          field: latest_translation_affected_revision
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          plugin_id: latest_revision
+          plugin_id: latest_translation_affected_revision
           operator: '='
           value: ''
           group: 1
@@ -662,12 +596,8 @@ display:
           plugin_id: moderation_state_filter
           operator: in
           value:
-            editorial_workflow-draft: editorial_workflow-draft
-            editorial_workflow-review: editorial_workflow-review
-            editorial_workflow-editing: editorial_workflow-editing
-            editorial_workflow-post_publication_review: editorial_workflow-post_publication_review
-            editorial_workflow-archive_requested: editorial_workflow-archive_requested
-            editorial_workflow-archived: editorial_workflow-archived
+            editorial-draft: editorial-draft
+            editorial-archived: editorial-archived
           group: 1
           exposed: true
           expose:
@@ -753,7 +683,7 @@ display:
           plugin_id: moderation_state_filter
           operator: 'not in'
           value:
-            editorial_workflow-published: editorial_workflow-published
+            editorial-published: editorial-published
           group: 1
           exposed: false
           expose:
@@ -794,20 +724,13 @@ display:
           row_class: ''
           default_row_class: true
           columns:
-            operations: operations
             title: title
             type: type
-            langcode: langcode
-            moderation_state: moderation_state
             name: name
+            moderation_state: moderation_state
             changed: changed
           default: changed
           info:
-            operations:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             title:
               sortable: true
               default_sort_order: asc
@@ -822,22 +745,15 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            langcode:
-              sortable: true
+            name:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             moderation_state:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            name:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
