@@ -146,13 +146,21 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
     // Make a name for this field.
     $field_name = strtolower($this->randomMachineName(10));
 
-    // Fill out the field form.
+    // Step 1. Choose the field type.
     $edit = [
       'new_storage_type' => $type,
       'field_name' => $field_name,
       'label' => $field_name,
     ];
-    $this->submitForm($edit, 'Continue');
+    $this->submitForm([
+      'new_storage_type' => $type,
+    ], 'Continue');
+
+    // Step 2. Label the field.
+    $this->submitForm([
+      'field_name' => $field_name,
+      'label' => $field_name,
+    ], 'Continue');
 
     // Get JsonSchema file.
     $schema_file = \Drupal::service('extension.list.module')->getPath('json_data_field') . '/tests/schema.json';
@@ -181,7 +189,7 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
       'field_storage[subform][settings][json_schema_file][json_schema_file_uri]' => $file->getFileUri(),
     ];
 
-    // And now we save the field settings.
+    // Step 3. Save the field settings.
     $this->submitForm($edit, 'Save settings');
 
     $assert->pageTextContains((string) new FormattableMarkup('Saved @name configuration.', ['@name' => $field_name]));

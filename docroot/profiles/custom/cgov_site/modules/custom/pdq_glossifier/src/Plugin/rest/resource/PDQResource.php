@@ -372,7 +372,7 @@ class PDQResource extends ResourceBase {
    * @return array
    *   Values formatted for the array of matches returned to the client.
    */
-  private function wrap(array $match, int $doc_id, string $lang, string $dict = NULL) {
+  private function wrap(array $match, int $doc_id, string $lang, ?string $dict = NULL) {
     $wrapped = [
       'start' => $match['start'],
       'length' => $match['length'],
