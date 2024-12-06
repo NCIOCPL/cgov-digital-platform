@@ -272,7 +272,7 @@ class CgovNavTreeController extends ControllerBase {
    * @return array
    *   The navigation root.
    */
-  protected function getNavData(?TermInterface $taxonomy_term = NULL, $menu_type, $max_depth) {
+  protected function getNavData(TermInterface $taxonomy_term, $menu_type, $max_depth) {
     $nav_item = [];
 
     // Get landing page path if the landing page is published.
