@@ -162,17 +162,22 @@ abstract class AppModuleFieldBrowserTestBase extends BrowserTestBase {
     // Make a name for this field.
     $field_name = strtolower($this->randomMachineName(10));
 
-    // Fill out the field form.
-    $edit = [
+    // Step 1. Pick the field type.
+    $this->submitForm([
       'new_storage_type' => $type,
+    ], 'Continue');
+
+    // Step 2. Label the field.
+    $this->submitForm([
       'field_name' => $field_name,
       'label' => $field_name,
-    ];
-    $this->submitForm($edit, 'Continue');
+    ], 'Continue');
+    $assert->pageTextContains((string) new FormattableMarkup('@name settings for @ct', [
+      '@name' => $field_name,
+      '@ct' => $this->contentTypeName,
+    ]));
 
-    /* NOTE: We should not need a cardinality because it is not an input field. */
-
-    // And now we save the field settings.
+    // Step 3. Save the field settings.
     $this->submitForm([
       'settings[handler]' => 'default:app_module',
     ], 'Save settings');
