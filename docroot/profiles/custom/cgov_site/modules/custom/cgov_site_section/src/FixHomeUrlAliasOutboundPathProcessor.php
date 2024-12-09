@@ -47,7 +47,7 @@ class FixHomeUrlAliasOutboundPathProcessor implements OutboundPathProcessorInter
   /**
    * {@inheritdoc}
    */
-  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL) {
+  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleable_metadata = NULL) {
     // Get the route for the front page.
     $front_path = $this->config->get('system.site')->get('page.front');
 

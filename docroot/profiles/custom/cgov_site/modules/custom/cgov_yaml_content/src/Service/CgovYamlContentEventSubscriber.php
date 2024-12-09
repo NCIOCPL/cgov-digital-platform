@@ -9,6 +9,7 @@ use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
@@ -291,7 +292,7 @@ class CgovYamlContentEventSubscriber implements EventSubscriberInterface {
       $this->fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY);
 
       // Save the file data or return an existing file.
-      $file = $this->fileRepository->writeData($fileData, $destination . $filename, FileSystemInterface::EXISTS_REPLACE);
+      $file = $this->fileRepository->writeData($fileData, $destination . $filename, FileExists::Replace);
 
       // Use the newly created file id as the value.
       $processConfig['target_id'] = $file->id();
