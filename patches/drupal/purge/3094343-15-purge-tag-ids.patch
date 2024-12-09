@@ -1,0 +1,67 @@
+diff --git a/src/Plugin/Purge/Queue/DatabaseQueue.php b/src/Plugin/Purge/Queue/DatabaseQueue.php
+index 9621fec..d776b1e 100644
+--- a/src/Plugin/Purge/Queue/DatabaseQueue.php
++++ b/src/Plugin/Purge/Queue/DatabaseQueue.php
+@@ -67,40 +67,32 @@ class DatabaseQueue extends CoreDatabaseQueue implements QueueInterface {
+    * {@inheritdoc}
+    */
+   public function createItemMultiple(array $items) {
+-    $item_ids = $records = [];
+-
+-    // Build a array with all exactly records as they should turn into rows.
+-    $time = time();
+-    foreach ($items as $data) {
+-      $records[] = [
+-        'data' => serialize($data),
+-        'created' => $time,
+-      ];
+-    }
+-
+-    // Insert all of them using just one multi-row query.
+-    $query = $this->connection
+-      ->insert(static::TABLE_NAME, [])
+-      ->fields(['data', 'created']);
+-    foreach ($records as $record) {
+-      $query->values($record);
+-    }
+-
+-    // Execute the query and finish the call.
+-    if ($id = $query->execute()) {
+-      $id = (int) $id;
+-
+-      // A multiple row-insert doesn't give back all the individual IDs, so
+-      // calculate them back by applying subtraction.
+-      for ($i = 1; $i <= count($records); $i++) {
+-        $item_ids[] = $id;
+-        $id++;
++    // Wrap these in our own loop so we get the right ID values.
++    $ids = [];
++    $now = time();
++    $transaction = $this->connection->startTransaction();
++    try {
++      foreach ($items as $data) {
++        $query = $this->connection->insert(static::TABLE_NAME)
++          ->fields([
++            'data' => serialize($data),
++            'created' => $now,
++          ]);
++        if ($id = $query->execute()) {
++          $ids[] = (int) $id;
++        }
++        else {
++          // This will trigger a rollback of the transaction.
++          throw new \Exception('Inserted item did not return an ID');
++        }
+       }
+-      return $item_ids;
+     }
+-    else {
++    catch (\Exception $e) {
++      $transaction->rollBack();
+       return FALSE;
+     }
++    unset($transaction);
++    return $ids;
+   }
+ 
+   /**
