@@ -1,9 +1,11 @@
 {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
 {% set aria_label = "Play video"|t %}
-
+{% set id = media.id() %}
+{% set entity_type = media.entityTypeID %}
+{% set titleID = "#{entity_type}-#{id}" %}
 <figure class="cgdp-video">
   <div class="cgdp-video__media">
-    <div id="ytplayer-jC8CUIID2HA" class="flex-video" data-video-url="{{ url }}" data-video-title="{{ name }}">
+    <div aria-labelledby="{{ titleID }}" id="ytplayer-jC8CUIID2HA" class="flex-video" data-video-url="{{ url }}" data-video-title="{{ name }}">
       <div class="video-preview__container" tabindex="0" role="button" aria-label="{{ aria_label }}">
         {{ content.thumbnail }}
         <div class="video-preview__play-button">
@@ -17,8 +19,11 @@
     </div>
   </div>
   {% if content.field_caption[0] %}
-    <figcaption class="cgdp-video__caption">
+    <figcaption id="{{ titleID }}" class="cgdp-video__caption">
       {{ content.field_caption|field_value }}
     </figcaption>
   {% endif %}
 </figure>
+{% if content.field_audio_described_link[0] %}
+  {{ content.field_audio_described_link}}
+{% endif %}
