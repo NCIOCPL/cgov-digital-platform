@@ -68,11 +68,18 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
 function ncids_trans_theme_suggestions_node_alter(array &$suggestions, array $variables) {
   $node = $variables['elements']['#node'];
 
-  if ($node->bundle() !== "cgov_home_landing" && $node->bundle() !== "cgov_mini_landing") {
+  if ($node->bundle() !== "cgov_home_landing" && $node->bundle() !== "cgov_mini_landing" && $node->bundle() !== "cgov_application_page") {
     return $suggestions;
   }
 
-  $style = $node->bundle() === "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
+  // Hanldes application page's node templates
+  if ($node->bundle() === "cgov_application_page") {
+    $style = $node->field_app_module_page_template->value;
+  }
+  // Hanldes home and mini landing page's node templates
+  else {
+    $style = $node->bundle() === "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
+  }
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 
   // We only want to add a suggestion if it is the full display mode for now.
