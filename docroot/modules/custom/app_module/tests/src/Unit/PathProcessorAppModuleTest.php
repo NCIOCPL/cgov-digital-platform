@@ -27,13 +27,6 @@ class PathProcessorAppModuleTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * A app module path processor.
-   *
-   * @var \Drupal\app_module\PathProcessor\PathProcessorAppModule
-   */
-  protected $pathProcessor;
-
-  /**
    * The Entity storage service.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface|\PHPUnit\Framework\MockObject\MockObject
@@ -41,20 +34,10 @@ class PathProcessorAppModuleTest extends UnitTestCase {
   protected $entityStorage;
 
   /**
-   * The request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $stack;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-
-    // Create a new request stack to handle the various test requests.
-    $this->stack = new RequestStack();
 
     $this->appPathManager = $this->createMock('\Drupal\app_module\AppPathManagerInterface');
     $this->entityTypeManager = $this->createMock('\Drupal\Core\Entity\EntityTypeManagerInterface');
@@ -65,9 +48,6 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       ->method('getStorage')
       ->with('app_module')
       ->willReturn($this->entityStorage);
-
-    $this->pathProcessor = new PathProcessorAppModule($this->appPathManager, $this->entityTypeManager);
-    $this->stack->pop();
   }
 
   /**
@@ -80,12 +60,17 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, NULL);
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     $this->assertEquals($path, $request_url);
-    $this->stack->pop();
   }
 
   /**
@@ -99,6 +84,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
       'owner_pid' => 10,
@@ -110,7 +101,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
 
     $this->setStorageMock(NULL, '/bad_route', []);
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
@@ -119,7 +110,6 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertTrue(!$request->query->has('app_module_route'));
     $this->assertTrue(!$request->query->has('app_module_id'));
     $this->assertTrue(!$request->query->has('app_module_data'));
-    $stack->pop();
   }
 
   /**
@@ -133,6 +123,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
       'owner_pid' => 10,
@@ -151,15 +147,14 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       []
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
     $this->assertEquals($path, $owner_alias);
-    $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
-    $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->all('app_module_data'), []);
-    $stack->pop();
+    $this->assertEquals($request->attributes->get('cgov_app_module_route'), '/exact_route');
+    $this->assertEquals($request->attributes->get('cgov_app_module_id'), 'fake');
+    $this->assertEquals($request->attributes->all('cgov_app_module_data'), []);
   }
 
   /**
@@ -173,6 +168,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
       'owner_pid' => 10,
@@ -191,15 +192,14 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       []
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
     $this->assertEquals($path, $owner_alias);
-    $this->assertEquals($request->query->get('app_module_route'), '/exact_route');
-    $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->all('app_module_data'), []);
-    $stack->pop();
+    $this->assertEquals($request->attributes->get('cgov_app_module_route'), '/exact_route');
+    $this->assertEquals($request->attributes->get('cgov_app_module_id'), 'fake');
+    $this->assertEquals($request->attributes->all('cgov_app_module_data'), []);
   }
 
   /**
@@ -212,6 +212,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $owner_alias = '/good/url';
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
+
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
 
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
@@ -231,15 +237,14 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       []
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
     $this->assertEquals($path, $owner_alias);
-    $this->assertEquals($request->query->get('app_module_route'), '/');
-    $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->all('app_module_data'), []);
-    $stack->pop();
+    $this->assertEquals($request->attributes->get('cgov_app_module_route'), '/');
+    $this->assertEquals($request->attributes->get('cgov_app_module_id'), 'fake');
+    $this->assertEquals($request->attributes->all('cgov_app_module_data'), []);
   }
 
   /**
@@ -252,6 +257,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $owner_alias = '/good/url';
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
+
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
 
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
@@ -269,7 +280,7 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       FALSE
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // The alias has a trailing slash so we return it to let Drupal deal with
     // the redirect to the non-trailing slash url.
@@ -277,8 +288,6 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $this->assertTrue(!$request->query->has('app_module_route'));
     $this->assertTrue(!$request->query->has('app_module_id'));
     $this->assertTrue(!$request->query->has('app_module_data'));
-
-    $stack->pop();
   }
 
   /**
@@ -292,6 +301,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
       'owner_pid' => 10,
@@ -314,16 +329,15 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       ['key1' => 'value1']
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
     $this->assertEquals($path, $owner_alias);
-    $this->assertEquals($request->query->get('app_module_route'), '/route');
-    $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->all('app_module_data'), ['key1' => 'value1']);
+    $this->assertEquals($request->attributes->get('cgov_app_module_route'), '/route');
+    $this->assertEquals($request->attributes->get('cgov_app_module_id'), 'fake');
+    $this->assertEquals($request->attributes->all('cgov_app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
-    $stack->pop();
   }
 
   /**
@@ -337,6 +351,12 @@ class PathProcessorAppModuleTest extends UnitTestCase {
     $stack = $this->getRequest($request_url, []);
     $request = $stack->getCurrentRequest();
 
+    $pathProcessor = new PathProcessorAppModule(
+      $this->appPathManager,
+      $this->entityTypeManager,
+      $stack
+    );
+
     $this->mockAppPathResponse($this->appPathManager, [
       'pid' => 3,
       'owner_pid' => 10,
@@ -359,16 +379,15 @@ class PathProcessorAppModuleTest extends UnitTestCase {
       ['key1' => 'value1']
     );
 
-    $path = $this->pathProcessor->processInbound($request_url, $request);
+    $path = $pathProcessor->processInbound($request_url, $request);
 
     // There was no match so the returned path should match the original
     // request.
     $this->assertEquals($path, $owner_alias);
-    $this->assertEquals($request->query->get('app_module_route'), '/route');
-    $this->assertEquals($request->query->get('app_module_id'), 'fake');
-    $this->assertEquals($request->query->all('app_module_data'), ['key1' => 'value1']);
+    $this->assertEquals($request->attributes->get('cgov_app_module_route'), '/route');
+    $this->assertEquals($request->attributes->get('cgov_app_module_id'), 'fake');
+    $this->assertEquals($request->attributes->all('cgov_app_module_data'), ['key1' => 'value1']);
     $this->assertEquals($request->query->get('some_id'), '123');
-    $stack->pop();
   }
 
   /**

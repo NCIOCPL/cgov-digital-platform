@@ -113,10 +113,9 @@ function app_module_path_alias_delete(PathAliasInterface $path) {
  * Implements hook_page_attachments_alter().
  */
 function app_module_page_attachments_alter(array &$attachments) {
-  $request_query = \Drupal::request()->query;
-  $app_module_id = $request_query->get('app_module_id');
-  $app_module_route = $request_query->get('app_module_route');
-  $app_module_data = $request_query->all('app_module_data');
+  $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
+  $app_module_route = \Drupal::request()->attributes->get('cgov_app_module_route');
+  $app_module_data = \Drupal::request()->attributes->all('cgov_app_module_data');
 
   // We are not rendering an app module, so exit.
   if (!$app_module_id) {
@@ -151,9 +150,9 @@ function app_module_page_attachments_alter(array &$attachments) {
  * Implements hook_tokens_alter().
  */
 function app_module_tokens_alter(array &$replacements, array $context, BubbleableMetadata $bubbleable_metadata) {
-  $app_module_id = \Drupal::request()->query->get('app_module_id');
-  $app_module_route = \Drupal::request()->query->get('app_module_route');
-  $app_module_data = \Drupal::request()->query->all('app_module_data');
+  $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
+  $app_module_route = \Drupal::request()->attributes->get('cgov_app_module_route');
+  $app_module_data = \Drupal::request()->attributes->all('cgov_app_module_data');
 
   // We are not rendering an app module, so exit.
   if (!$app_module_id) {
