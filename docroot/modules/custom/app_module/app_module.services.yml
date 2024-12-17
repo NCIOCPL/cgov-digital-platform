@@ -15,7 +15,7 @@ services:
       - { name: backend_overridable }
   app_module.path_processor_app_module:
     class: Drupal\app_module\PathProcessor\PathProcessorAppModule
-    arguments: ['@app_module.app_path_manager', '@entity_type.manager']
+    arguments: ['@app_module.app_path_manager', '@entity_type.manager', '@request_stack']
     tags:
       - { name: path_processor_inbound, priority: 101 }
   app_module.route_normalizer_block_request_subscriber:
