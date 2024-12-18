@@ -113,7 +113,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
         'caching_app_module_plugin',
         'config:app_module.app_module.caching_app_module',
       ],
-      ['url.query_args:app_module_route'],
+      [],
       50
     );
 
@@ -127,7 +127,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
         'caching_app_module_plugin:chicken',
         'config:app_module.app_module.caching_app_module',
       ],
-      ['url.query_args:app_module_route', "url.query_args:chicken_param"],
+      ["url.query_args:chicken_param"],
       100
     );
 
@@ -140,7 +140,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
         'test_multi_route_app_module_plugin',
         'config:app_module.app_module.test_multi_route_app_module',
       ],
-      ['url.query_args:app_module_route'],
+      [],
       50
     );
 
@@ -154,7 +154,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
         'test_multi_route_app_module_plugin:chicken',
         'config:app_module.app_module.test_multi_route_app_module',
       ],
-      ['url.query_args:app_module_route', "url.query_args:chicken_param"],
+      ["url.query_args:chicken_param"],
       100
     );
 
@@ -211,13 +211,8 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
       []
     );
 
-    // Smush the params together with the app_module_route.
-    $params = array_merge(
-      ['app_module_route' => $route_info['app_module_route']],
-      $route_info['params']
-    );
-
-    $request = Request::create('/foo/bar', 'GET', $params);
+    $request = Request::create('/foo/bar', 'GET', $route_info['params']);
+    $request->attributes->add(['cgov_app_module_route' => $route_info['app_module_route']]);
     $this->stack->push($request);
   }
 
@@ -268,7 +263,7 @@ class AppModuleRenderArrayBuilderTest extends BrowserTestBase {
     $app_module_id,
     $app_route_id,
     $tags,
-    $contexts = ['url.query_args:app_module_route'],
+    $contexts = [],
     $max_age = 0,
   ) {
     // Load the entity.

@@ -21,6 +21,21 @@ function cgov_application_page_entity_insert(EntityInterface $entity) {
      */
     $app_path_svc = \Drupal::service('app_module.app_path_manager');
     $app_path_svc->updateAppPath($entity);
+
+    // @todo: move to cgov_js_app_module when app_module_path becomes entity.
+    // We need to clear the libraries cache if this is a cgov_js_only_app and its
+    // CSS has never been registered before. Clearing the cache will trigger a
+    // rebuild of the libraries, which will pick up our new CSS.
+    if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
+      $library_discovery = \Drupal::service('library.discovery');
+      $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+
+      // Clear the cache if the css file is not already defined in a library.
+      $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
+      if (!isset($js_app_libs[$cssUri])) {
+        $library_discovery->clearCachedDefinitions();
+      }
+    }
   }
 }
 
@@ -37,6 +52,21 @@ function cgov_application_page_entity_update(EntityInterface $entity) {
      */
     $app_path_svc = \Drupal::service('app_module.app_path_manager');
     $app_path_svc->updateAppPath($entity);
+
+    // @todo: move to cgov_js_app_module when app_module_path becomes entity.
+    // We need to clear the libraries cache if this is a cgov_js_only_app and its
+    // CSS has never been registered before. Clearing the cache will trigger a
+    // rebuild of the libraries, which will pick up our new CSS.
+    if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
+      $library_discovery = \Drupal::service('library.discovery');
+      $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+
+      // Clear the cache if the css file is not already defined in a library.
+      $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
+      if (!isset($js_app_libs[$cssUri])) {
+        $library_discovery->clearCachedDefinitions();
+      }
+    }
   }
 }
 

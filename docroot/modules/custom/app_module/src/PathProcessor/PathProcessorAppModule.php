@@ -6,6 +6,7 @@ use Drupal\app_module\AppPathManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Defines a path processor to setup app module routes and support pushstate.
@@ -34,29 +35,87 @@ class PathProcessorAppModule implements InboundPathProcessorInterface {
   protected $entityTypeManager;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
+   * The Current Request.
+   *
+   * This is a cached version of the current request object.
+   * Use currentRequest() to access it. This is to get around
+   * circular dependencies.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request|null
+   */
+  protected $currentRequest;
+
+  /**
    * Constructs a PathProcessorAppModule object.
    *
    * @param \Drupal\app_module\AppPathManagerInterface $app_path_manager
    *   An app module path manager for looking up the alias.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
    */
-  public function __construct(AppPathManagerInterface $app_path_manager, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(
+    AppPathManagerInterface $app_path_manager,
+    EntityTypeManagerInterface $entity_type_manager,
+    RequestStack $request_stack,
+  ) {
     $this->appPathManager = $app_path_manager;
     $this->entityTypeManager = $entity_type_manager;
+    $this->requestStack = $request_stack;
   }
 
   /**
    * {@inheritdoc}
+   *
+   * Um, this gets called *a lot*. I mean lots of lots. Like every link
+   * and file going through Drupal is hitting this code. By link, all the
+   * possible editing links are included. So if you are requesting Node 11,
+   * there will be a lot of /node/11 requests. Then there is the redirect
+   * handler, which basically calls processInbound on each incoming link.
+   *
+   * Anyway, there are probably some optimizations for the future, like
+   * skipping any .jpg/png/etc. OTOH, who knows if we will have an app
+   * that is for viewing images and a .jpg/png/etc would be a valid
+   * route.
    */
   public function processInbound($path, Request $request) {
+
+    // processInbound can actually be called "to process requests other
+    // than the current request. So we are doing this to actually make
+    // sure we are being called for the current request. It seems checking
+    // this probably will have some slight performance benefits.
+    if ($request->getRequestUri() !== $this->currentRequest()->getRequestUri()) {
+      return $path;
+    }
+
+    // Now that we know that this path is for the current request,
+    // we should check to make sure that we have not already looked up
+    // the path. If we have already, then just return it.
+    if ($this->currentRequest()->attributes->get('cgov_app_module_owner_alias')) {
+      // Return the loaded owner alias.
+      return $this->currentRequest()->attributes->get('cgov_app_module_resolved_path');
+    }
 
     // Lookup our app module path.
     $appPath = $this->appPathManager->getPathByRequest($path);
 
     // There is no module for this path.
     if (!$appPath) {
-      return $path;
+      // There is no module for this path, and there never will be. This is
+      // really just a slight optimization since multiple handlers can actually
+      // process the URL as incoming. So both the request and the currentRequest
+      // will match, but actually the app module lookup would have already
+      // occurred. (e.g., the redirect module's RequestHandler.)
+      $this->currentRequest()->attributes->add(['cgov_app_module_resolved_path' => $path]);
+      return $this->currentRequest()->attributes->get('cgov_app_module_resolved_path');
     }
 
     // Load the AppModule/plugin for this path so that we can extract the route
@@ -99,17 +158,31 @@ class PathProcessorAppModule implements InboundPathProcessorInterface {
 
     // Set the app_module_route parameter so the AppModuleRenderArrayBuilder
     // can pass it off to the plugin for rendering.
-    $request->query->add(['app_module_route' => $app_route['app_module_route']]);
-    $request->query->add(['app_module_data' => $appPath['app_module_data']]);
-    $request->query->add(['app_module_id' => $appPath['app_module_id']]);
+    $this->currentRequest()->attributes->add(['cgov_app_module_route' => $app_route['app_module_route']]);
+    $this->currentRequest()->attributes->add(['cgov_app_module_data' => $appPath['app_module_data']]);
+    $this->currentRequest()->attributes->add(['cgov_app_module_id' => $appPath['app_module_id']]);
+    $this->currentRequest()->attributes->add(['cgov_app_module_resolved_path' => $appPath['owner_alias']]);
 
     // Add any additional params to the request object.
     foreach ($app_route['params'] as $param_name => $param_value) {
-      $request->query->add([$param_name => $param_value]);
+      $this->currentRequest()->query->add([$param_name => $param_value]);
     }
 
     // Return the alias of the parent entity.
-    return $appPath['owner_alias'];
+    return $this->currentRequest()->attributes->get('cgov_app_module_resolved_path');
+  }
+
+  /**
+   * Helper function to get current request object.
+   *
+   * This is here to get around circular dependency errors when
+   * we set this via the constructor.
+   */
+  protected function currentRequest() {
+    if (!$this->currentRequest) {
+      $this->currentRequest = $this->requestStack->getCurrentRequest();
+    }
+    return $this->currentRequest;
   }
 
 }
