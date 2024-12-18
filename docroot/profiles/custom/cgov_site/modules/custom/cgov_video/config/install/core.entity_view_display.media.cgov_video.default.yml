@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_audio_described_link
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
     - field.field.media.cgov_video.field_card_title
@@ -24,6 +25,7 @@ dependencies:
   module:
     - cgov_core
     - image
+    - link
     - media
     - metatag
     - options
@@ -64,6 +66,18 @@ content:
         refresh: 60
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_audio_described_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 20
     region: content
   field_browser_title:
     type: string
