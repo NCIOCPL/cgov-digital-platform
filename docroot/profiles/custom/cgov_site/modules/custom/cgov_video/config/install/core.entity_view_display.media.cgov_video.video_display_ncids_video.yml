@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.video_display_ncids_video
     - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_audio_described_link
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
     - field.field.media.cgov_video.field_card_title
@@ -25,6 +26,7 @@ dependencies:
   module:
     - image
     - layout_builder
+    - link
     - media
     - text
 third_party_settings:
@@ -36,6 +38,18 @@ targetEntityType: media
 bundle: cgov_video
 mode: video_display_ncids_video
 content:
+  field_audio_described_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_caption:
     type: text_default
     label: hidden
