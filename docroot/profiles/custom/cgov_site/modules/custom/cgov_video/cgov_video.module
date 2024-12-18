@@ -35,3 +35,12 @@ function cgov_video_media_view(array &$build, EntityInterface $entity, EntityVie
     unset($build['field_override_thumbnail_video']);
   }
 }
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ */
+function cgov_video_field_widget_single_element_link_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if ($context['items']->getName() === 'field_audio_described_link') {
+    $element['uri']['#description'] = t('Used to provide a link to the audio-described file. Enter the full URL starting with https://');
+  }
+}
