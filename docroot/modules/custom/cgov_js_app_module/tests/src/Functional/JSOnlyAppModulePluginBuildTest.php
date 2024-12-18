@@ -405,17 +405,20 @@ class JSOnlyAppModulePluginBuildTest extends BrowserTestBase {
     // Go to the 'Add field' page.
     $this->clickLink('Create a new field');
 
-    // Fill out the field form.
-    $edit = [
+    // Step 1. Select the Field Type.
+    $this->submitForm([
       'new_storage_type' => $type,
+    ], 'Continue');
+
+    // Step 2. Configure the field.
+    $this->submitForm([
       'field_name' => $field_name,
       'label' => $field_name,
-    ];
-    $this->submitForm($edit, 'Continue');
+    ], 'Continue');
 
     /* NOTE: We should not need a cardinality because it is not an input field. */
 
-    // And now we save the field settings.
+    // Step 3. Save the field settings.
     $this->submitForm([
       'settings[handler]' => 'default:app_module',
     ], 'Save settings');
