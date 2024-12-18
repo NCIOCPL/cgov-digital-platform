@@ -65,6 +65,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
   php8.1-soap \
   php8.1-xdebug \
   php8.1-xml \
+  php8.1-zip \
   mysql-client-8.0 \
   git \
   imagemagick \
