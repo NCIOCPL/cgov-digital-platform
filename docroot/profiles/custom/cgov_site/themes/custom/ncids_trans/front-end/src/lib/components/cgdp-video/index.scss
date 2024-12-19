@@ -1,8 +1,10 @@
 @use 'uswds-core' as *;
 
 .cgdp-video {
-	@include u-margin-x(0);
-	@include u-margin-y(0);
+	&__figure{
+		@include u-margin-x(0);
+		@include u-margin-y(0);
+	}
 	&__caption {
 		@include typeset('sans', '2xs', $theme-body-line-height);
 		@include u-padding-top(1);
@@ -105,5 +107,21 @@
 		left: calc(50% - 34px);
 		width: 68px;
 		height: 48px;
+	}
+
+	&__audio-described-link {
+		p {
+			@include u-margin-y(0);
+			@include typeset('sans', '3xs', 4);
+		}
+		@include u-padding-y(1);
+		@include u-padding-x(2);
+		@include u-border-left(0.5, $theme-color-secondary);
+		@include u-display(flex);
+		@include u-flex('align-center');
+		svg {
+			@include u-margin-right(1);
+			@include u-font-size('body', '3xl');
+		}
 	}
 }
