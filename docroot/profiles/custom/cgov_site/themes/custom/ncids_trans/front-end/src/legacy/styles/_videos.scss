@@ -122,3 +122,42 @@ span.video-title__heading {
 }
 /* End Video Alignment */
 /*** END Video Player ***/
+
+/* Audio-Described Link */
+// I have concern about using this class as we are applying a non-legacy
+// class to a legacy stylesheet. However, as I am still unsure of how to dynamically
+// change the class used for the twig template based on if the page is display legacy vs.
+// non-legacy content.
+.video {
+	&__no-caption {
+		margin-bottom: 19.5px;
+	}
+	+ .cgdp-video__audio-described-link {
+		margin-bottom: 10px;
+	}
+}
+
+.cgdp-video__audio-described-link {
+  p {
+    margin: 0;
+  }
+	padding: 8px 0.9375em 8px 0.9375em;
+  line-height: 1.5em;
+  background-color: $caption-background;
+  font-size: 14px;
+  font-family: $montserrat-font-stack;
+  text-align: left;
+	display: flex;
+	align-items: center;
+	// The figure element has 10px of marign-bottom, there is 17.5px of padding under the caption,
+	// there is 8px of padding ontop of the AD link text and our expected spacing between the caption
+	// and AD link is 16px.
+	// 17.5px + 8px + X = 16px -> X = -9.5px
+	// With the 10px margin-bottom we need to account for, I add a margin-top: -19.5px
+	margin-top: -19.5px;
+	svg {
+		margin-right: 8px;
+		font-size: 32px;
+	}
+}
+/* END Audio-Described Link */
