@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * The normalization should be disabled by setting the
  * "_disable_route_normalizer" request parameter to TRUE. This should be done
  * before onKernelRequestRedirect() method is executed and only if the
- * "app_module_route" query parameter is present.
+ * "cgov_app_module_route" attribute parameter is present.
  */
 class AppModuleRouteNormalizerBlockRequestSubscriber implements EventSubscriberInterface {
 
@@ -25,7 +25,7 @@ class AppModuleRouteNormalizerBlockRequestSubscriber implements EventSubscriberI
   public function onKernelRequest(RequestEvent $event) {
     $request = $event->getRequest();
 
-    if ($request->query->get('app_module_route')) {
+    if ($request->attributes->get('cgov_app_module_route')) {
       $request->attributes->set('_disable_route_normalizer', TRUE);
     }
   }

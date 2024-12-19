@@ -531,7 +531,7 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
 
     // I don't think we need any other cache tags. The parent app module
     // should have the instance of this app module for clearing if the
-    // config is updated. This tag below is a couresy if we need to
+    // config is updated. This tag below is a courtesy if we need to
     // clear ALL js app modules.
     $meta
       ->setCacheTags(['cgov_js_only_app_module_plugin']);

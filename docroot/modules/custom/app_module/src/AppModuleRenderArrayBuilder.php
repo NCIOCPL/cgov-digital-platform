@@ -64,8 +64,8 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
 
     // Determine the path.
     // The path processor will push the app module path into the request
-    // object's query params.
-    $path = $this->requestStack->getCurrentRequest()->query->get('app_module_route') ?? '/';
+    // object's attributes params.
+    $path = $this->requestStack->getCurrentRequest()->attributes->get('cgov_app_module_route') ?? '/';
 
     // Get the specific route id.
     $app_route_id = $plugin->getAppRouteId($path, $options);
@@ -122,9 +122,7 @@ class AppModuleRenderArrayBuilder implements AppModuleRenderArrayBuilderInterfac
     // information.
     $cache_meta = $plugin->getCacheInfoForRoute($path, $options);
 
-    // We must always vary by the app_module_route parameter.
     $route_contexts = Cache::mergeContexts(
-      ['url.query_args:app_module_route'],
       $app_module->getCacheContexts()
     );
 
