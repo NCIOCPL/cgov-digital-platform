@@ -4,8 +4,8 @@ namespace Drupal\cgov_event\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystem;
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\file\FileRepositoryInterface;
 use Eluceo\iCal\Component\Calendar;
@@ -132,7 +132,7 @@ class ICalendarController extends ControllerBase {
     $filename = 'cal-' . $nid . '.ics';
     $uri = 'public://' . $filename;
     $content = $vCalendar->render();
-    $file = $this->fileRepository->writeData($content, $uri, FileSystemInterface::EXISTS_REPLACE);
+    $file = $this->fileRepository->writeData($content, $uri, FileExists::Replace);
     $mimetype = 'text/calendar';
     $scheme = 'public';
     $parts = explode('://', $uri);

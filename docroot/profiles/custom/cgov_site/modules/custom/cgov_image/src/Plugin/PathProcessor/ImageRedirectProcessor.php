@@ -48,7 +48,7 @@ class ImageRedirectProcessor implements OutboundPathProcessorInterface {
   /**
    * {@inheritdoc}
    */
-  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL) {
+  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleable_metadata = NULL) {
 
     // Is this the current version, an older one, or some other route?
     $routename = $this->currentRoute->getRouteName();

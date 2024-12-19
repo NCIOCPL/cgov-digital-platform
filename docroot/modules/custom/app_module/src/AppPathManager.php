@@ -173,61 +173,42 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     // See if we have an app path.
     $app_path = $this->storage->load(['owner_pid' => $path['pid']]);
 
+    $return = NULL;
+
     if (!$app_path) {
       // There is no existing app path. Let's see if it is because we did not
       // have a populated field_application_module the last time we saved.
-      return $this->registerAppPath($entity, $path, $app_field_id);
+      // Get the app module ID & data.
+      $app_module_id = $entity->$app_field_id->target_id;
+      $app_module_data = $entity->$app_field_id->data;
+
+      // Treat this as a new item. If it breaks, well,
+      // bad on the caller.
+      $return = $this->storage->save(
+        $path['pid'],
+        $path['source'],
+        $path['alias'],
+        $app_module_id,
+        $app_module_data,
+        $path['langcode']
+      );
     }
+    else {
+      // We have an app path, and that means that we will just be updating the
+      // app module id and data.
+      $app_module_id = $entity->$app_field_id->target_id;
+      $app_module_data = $entity->$app_field_id->data;
 
-    // We have an app path, and that means that we will just be updating the
-    // app module id and data.
-    $app_module_id = $entity->$app_field_id->target_id;
-    $app_module_data = $entity->$app_field_id->data;
-
-    $return = $this->storage->save(
-      $app_path['owner_pid'],
-      $app_path['owner_source'],
-      $app_path['owner_alias'],
-      $app_module_id,
-      $app_module_data,
-      $app_path['langcode'],
-      $app_path['pid']
-    );
-
-    return $return;
-  }
-
-  /**
-   * Helper function to create a NEW app path for an entity.
-   *
-   * This is so that we do not need to add this logic to all
-   * of the entity modules that we may add app modules to.
-   *
-   * NOTE: This is inspired by PathautoGenerator.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity to create the app module path entry for.
-   * @param array $path
-   *   An associative array matching a AliasStorage::load return.
-   * @param string $app_field_id
-   *   The name of the app module reference field.
-   */
-  protected function registerAppPath(EntityInterface $entity, array $path, $app_field_id = 'field_application_module') {
-
-    // Get the app module ID & data.
-    $app_module_id = $entity->$app_field_id->target_id;
-    $app_module_data = $entity->$app_field_id->data;
-
-    // Treat this as a new item. If it breaks, well,
-    // bad on the caller.
-    $return = $this->storage->save(
-      $path['pid'],
-      $path['source'],
-      $path['alias'],
-      $app_module_id,
-      $app_module_data,
-      $path['langcode']
-    );
+      $return = $this->storage->save(
+        $app_path['owner_pid'],
+        $app_path['owner_source'],
+        $app_path['owner_alias'],
+        $app_module_id,
+        $app_module_data,
+        $app_path['langcode'],
+        $app_path['pid']
+      );
+    }
 
     return $return;
   }
@@ -339,6 +320,15 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
     }
 
     return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getAllPaths($app_module_id = NULL) {
+    $allPaths = $this->storage->loadAll();
+
+    return array_filter($allPaths, fn($path) => $app_module_id ? $path['app_module_id'] === $app_module_id : TRUE);
   }
 
   /**

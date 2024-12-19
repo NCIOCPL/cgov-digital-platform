@@ -1,0 +1,347 @@
+diff --git a/core/modules/block_content/src/BlockContentTranslationHandler.php b/core/modules/block_content/src/BlockContentTranslationHandler.php
+index 31e7a517f2..470c85f7f3 100644
+--- a/core/modules/block_content/src/BlockContentTranslationHandler.php
++++ b/core/modules/block_content/src/BlockContentTranslationHandler.php
+@@ -5,12 +5,28 @@
+ use Drupal\block_content\Entity\BlockContentType;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\content_translation\ContentTranslationHandler;
++use Drupal\Core\Form\FormStateInterface;
+
+ /**
+  * Defines the translation handler for content blocks.
+  */
+ class BlockContentTranslationHandler extends ContentTranslationHandler {
+
++  /**
++   * {@inheritdoc}
++   */
++  public function entityFormAlter(array &$form, FormStateInterface $form_state, EntityInterface $entity) {
++    parent::entityFormAlter($form, $form_state, $entity);
++
++    if (isset($form['content_translation'])) {
++      // Block content entities do not expose the status field. Make the content
++      // translation status field visible instead.
++      // @todo This will not be necessary once this issue lands:
++      //   https://www.drupal.org/project/drupal/issues/2834546
++      $form['content_translation']['status']['#access'] = TRUE;
++    }
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+diff --git a/core/modules/block_content/tests/src/Functional/BlockContentTranslationUITest.php b/core/modules/block_content/tests/src/Functional/BlockContentTranslationUITest.php
+index 8685166823..b8410b2a17 100644
+--- a/core/modules/block_content/tests/src/Functional/BlockContentTranslationUITest.php
++++ b/core/modules/block_content/tests/src/Functional/BlockContentTranslationUITest.php
+@@ -106,6 +106,21 @@ protected function getEditValues($values, $langcode, $new = FALSE) {
+     return $edit;
+   }
+
++  /**
++   * {@inheritdoc}
++   */
++  protected function hasMetadataField($field_name) {
++    $result = parent::hasMetadataField($field_name);
++    // Block content entities have a status field but do not expose it.
++    // @todo This will not be necessary once this issue lands:
++    //   https://www.drupal.org/project/drupal/issues/2834546
++    if ($field_name === 'status') {
++      return FALSE;
++    }
++
++    return $result;
++  }
++
+   /**
+    * {@inheritdoc}
+    */
+diff --git a/core/modules/comment/src/CommentTranslationHandler.php b/core/modules/comment/src/CommentTranslationHandler.php
+index a0abe4b710..5adf1057b9 100644
+--- a/core/modules/comment/src/CommentTranslationHandler.php
++++ b/core/modules/comment/src/CommentTranslationHandler.php
+@@ -4,28 +4,12 @@
+
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\content_translation\ContentTranslationHandler;
+-use Drupal\Core\Form\FormStateInterface;
+
+ /**
+  * Defines the translation handler for comments.
+  */
+ class CommentTranslationHandler extends ContentTranslationHandler {
+
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public function entityFormAlter(array &$form, FormStateInterface $form_state, EntityInterface $entity) {
+-    parent::entityFormAlter($form, $form_state, $entity);
+-
+-    if (isset($form['content_translation'])) {
+-      // We do not need to show these values on comment forms: they inherit the
+-      // basic comment property values.
+-      $form['content_translation']['status']['#access'] = FALSE;
+-      $form['content_translation']['name']['#access'] = FALSE;
+-      $form['content_translation']['created']['#access'] = FALSE;
+-    }
+-  }
+-
+   /**
+    * {@inheritdoc}
+    */
+@@ -33,17 +17,4 @@ protected function entityFormTitle(EntityInterface $entity) {
+     return t('Edit comment @subject', ['@subject' => $entity->label()]);
+   }
+
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public function entityFormEntityBuild($entity_type, EntityInterface $entity, array $form, FormStateInterface $form_state) {
+-    if ($form_state->hasValue('content_translation')) {
+-      $translation = &$form_state->getValue('content_translation');
+-      /** @var \Drupal\comment\CommentInterface $entity */
+-      $translation['status'] = $entity->isPublished();
+-      $translation['name'] = $entity->getAuthorName();
+-    }
+-    parent::entityFormEntityBuild($entity_type, $entity, $form, $form_state);
+-  }
+-
+ }
+diff --git a/core/modules/content_translation/src/ContentTranslationHandler.php b/core/modules/content_translation/src/ContentTranslationHandler.php
+index a4894b99f1..e9543fa4a8 100644
+--- a/core/modules/content_translation/src/ContentTranslationHandler.php
++++ b/core/modules/content_translation/src/ContentTranslationHandler.php
+@@ -507,6 +507,8 @@ public function entityFormAlter(array &$form, FormStateInterface $form_state, En
+         '#default_value' => $status,
+         '#description' => $description,
+         '#disabled' => !$enabled,
++        // Show status field if it is not natively provided by the entity type.
++        '#access' => !$this->hasPublishedStatus(),
+       ];
+
+       $translate = !$new_translation && $metadata->isOutdated();
+@@ -553,6 +555,7 @@ public function entityFormAlter(array &$form, FormStateInterface $form_state, En
+         '#validate_reference' => FALSE,
+         '#maxlength' => 60,
+         '#description' => t('Leave blank for %anonymous.', ['%anonymous' => \Drupal::config('user.settings')->get('anonymous')]),
++        '#access' => !$this->hasAuthor(),
+       ];
+
+       $date = $new_translation ? $this->time->getRequestTime() : $metadata->getCreatedTime();
+@@ -562,6 +565,7 @@ public function entityFormAlter(array &$form, FormStateInterface $form_state, En
+         '#maxlength' => 25,
+         '#description' => t('Leave blank to use the time of form submission.'),
+         '#default_value' => $new_translation || !$date ? '' : $this->dateFormatter->format($date, 'custom', 'Y-m-d H:i:s O'),
++        '#access' => !$this->hasCreatedTime(),
+       ];
+
+       $form['#process'][] = [$this, 'entityFormSharedElements'];
+@@ -723,10 +727,15 @@ public function entityFormEntityBuild($entity_type, EntityInterface $entity, arr
+     $values = &$form_state->getValue('content_translation', []);
+
+     $metadata = $this->manager->getTranslationMetadata($entity);
+-    $metadata->setAuthor(!empty($values['uid']) ? User::load($values['uid']) : User::load(0));
+-    $metadata->setPublished(!empty($values['status']));
+-    $metadata->setCreatedTime(!empty($values['created']) ? strtotime($values['created']) : $this->time->getRequestTime());
+-
++    if (isset($form['content_translation']['uid']) && $form['content_translation']['uid']['#access']) {
++      $metadata->setAuthor(!empty($values['uid']) ? User::load($values['uid']) : User::load(0));
++    }
++    if (isset($form['content_translation']['status']) && $form['content_translation']['status']['#access']) {
++      $metadata->setPublished(!empty($values['status']));
++    }
++    if (isset($form['content_translation']['created']) && $form['content_translation']['created']['#access']) {
++      $metadata->setCreatedTime(!empty($values['created']) ? strtotime($values['created']) : $this->time->getRequestTime());
++    }
+     $metadata->setOutdated(!empty($values['outdated']));
+     if (!empty($values['retranslate'])) {
+       $this->retranslate($entity, $form_langcode);
+diff --git a/core/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php b/core/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php
+index 75aaec084a..21914cf373 100644
+--- a/core/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php
++++ b/core/modules/content_translation/tests/src/Functional/ContentTranslationUITestBase.php
+@@ -19,6 +19,7 @@
+ abstract class ContentTranslationUITestBase extends ContentTranslationTestBase {
+
+   use AssertPageCacheContextsAndTagsTrait;
++  use ContentTranslationMetadataTrait;
+
+   /**
+    * The id of the entity being translated.
+@@ -297,8 +298,8 @@ protected function doTestPublishedStatus() {
+     foreach ($this->langcodes as $index => $langcode) {
+       if ($index > 0) {
+         $url = $entity->toUrl('edit-form', ['language' => ConfigurableLanguage::load($langcode)]);
+-        $edit = ['content_translation[status]' => FALSE];
+         $this->drupalGet($url);
++        $edit = $this->getMetadataValueAndAssertNoField('status', FALSE);
+         $this->submitForm($edit, $this->getFormSubmitAction($entity, $langcode));
+         $storage = $this->container->get('entity_type.manager')
+           ->getStorage($this->entityTypeId);
+@@ -308,10 +309,13 @@ protected function doTestPublishedStatus() {
+       }
+     }
+
+-    // Check that the last published translation cannot be unpublished.
+-    $this->drupalGet($entity->toUrl('edit-form'));
+-    $this->assertSession()->fieldDisabled('content_translation[status]');
+-    $this->assertSession()->fieldValueEquals('content_translation[status]', TRUE);
++    // Check that the last published translation cannot be unpublished, this
++    // only applies to the translation specific status field.
++    if (!$this->hasMetadataField('status')) {
++      $this->drupalGet($entity->toUrl('edit-form'));
++      $this->assertSession()->fieldDisabled('content_translation[status]');
++      $this->assertSession()->fieldValueEquals('content_translation[status]', TRUE);
++    }
+   }
+
+   /**
+@@ -327,16 +331,14 @@ protected function doTestAuthoringInfo() {
+     // Post different authoring information for each translation.
+     foreach ($this->langcodes as $index => $langcode) {
+       $user = $this->drupalCreateUser();
++      $url = $entity->toUrl('edit-form', ['language' => ConfigurableLanguage::load($langcode)]);
++      $this->drupalGet($url);
+       $values[$langcode] = [
+         'uid' => $user->id(),
+         'created' => \Drupal::time()->getRequestTime() - mt_rand(0, 1000),
+       ];
+-      $edit = [
+-        'content_translation[uid]' => $user->getAccountName(),
+-        'content_translation[created]' => $this->container->get('date.formatter')->format($values[$langcode]['created'], 'custom', 'Y-m-d H:i:s O'),
+-      ];
+-      $url = $entity->toUrl('edit-form', ['language' => ConfigurableLanguage::load($langcode)]);
+-      $this->drupalGet($url);
++      $edit = $this->getMetadataValueAndAssertNoField('uid', $user->getAccountName());
++      $edit += $this->getMetadataValueAndAssertNoField('created', $values[$langcode]['created']);
+       $this->submitForm($edit, $this->getFormSubmitAction($entity, $langcode));
+     }
+
+@@ -352,12 +354,9 @@ protected function doTestAuthoringInfo() {
+
+     // Try to post non valid values and check that they are rejected.
+     $langcode = 'en';
+-    $edit = [
+-      // User names have by default length 8.
+-      'content_translation[uid]' => $this->randomMachineName(12),
+-      'content_translation[created]' => '19/11/1978',
+-    ];
+     $this->drupalGet($entity->toUrl('edit-form'));
++    $edit = $this->getMetadataValueAndAssertNoField('uid', $this->randomMachineName(12));
++    $edit += $this->getMetadataValueAndAssertNoField('created', '19/11/1978');
+     $this->submitForm($edit, $this->getFormSubmitAction($entity, $langcode));
+     $this->assertSession()->statusMessageExists('error');
+     $metadata = $this->manager->getTranslationMetadata($entity->getTranslation($langcode));
+diff --git a/core/modules/content_translation/tests/src/Functional/ContentTranslationWorkflowsTest.php b/core/modules/content_translation/tests/src/Functional/ContentTranslationWorkflowsTest.php
+index 733fc8d5d6..0ecccf74b5 100644
+--- a/core/modules/content_translation/tests/src/Functional/ContentTranslationWorkflowsTest.php
++++ b/core/modules/content_translation/tests/src/Functional/ContentTranslationWorkflowsTest.php
+@@ -174,7 +174,7 @@ protected function setupEntity(?UserInterface $user = NULL) {
+     $add_translation_url = Url::fromRoute("entity.$this->entityTypeId.content_translation_add", [$this->entityTypeId => $id, 'source' => $default_langcode, 'target' => $this->langcodes[2]]);
+     $edit = [
+       'name[0][value]' => 'translation name',
+-      'content_translation[status]' => FALSE,
++      'status[value]' => FALSE,
+     ];
+     $this->drupalGet($add_translation_url);
+     $this->submitForm($edit, 'Save');
+diff --git a/core/modules/node/src/NodeTranslationHandler.php b/core/modules/node/src/NodeTranslationHandler.php
+index 244a0535a2..b339fc7756 100644
+--- a/core/modules/node/src/NodeTranslationHandler.php
++++ b/core/modules/node/src/NodeTranslationHandler.php
+@@ -17,14 +17,6 @@ class NodeTranslationHandler extends ContentTranslationHandler {
+   public function entityFormAlter(array &$form, FormStateInterface $form_state, EntityInterface $entity) {
+     parent::entityFormAlter($form, $form_state, $entity);
+
+-    if (isset($form['content_translation'])) {
+-      // We do not need to show these values on node forms: they inherit the
+-      // basic node property values.
+-      $form['content_translation']['status']['#access'] = FALSE;
+-      $form['content_translation']['name']['#access'] = FALSE;
+-      $form['content_translation']['created']['#access'] = FALSE;
+-    }
+-
+     $form_object = $form_state->getFormObject();
+     $form_langcode = $form_object->getFormLangcode($form_state);
+     $translations = $entity->getTranslationLanguages();
+@@ -54,18 +46,4 @@ protected function entityFormTitle(EntityInterface $entity) {
+     return t('<em>Edit @type</em> @title', ['@type' => $type_name, '@title' => $entity->label()]);
+   }
+
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public function entityFormEntityBuild($entity_type, EntityInterface $entity, array $form, FormStateInterface $form_state) {
+-    if ($form_state->hasValue('content_translation')) {
+-      $translation = &$form_state->getValue('content_translation');
+-      $translation['status'] = $entity->isPublished();
+-      $account = $entity->uid->entity;
+-      $translation['uid'] = $account ? $account->id() : 0;
+-      $translation['created'] = $this->dateFormatter->format($entity->created->value, 'custom', 'Y-m-d H:i:s O');
+-    }
+-    parent::entityFormEntityBuild($entity_type, $entity, $form, $form_state);
+-  }
+-
+ }
+diff --git a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulChanged.php b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulChanged.php
+index 1ced7141aa..c12dc44309 100644
+--- a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulChanged.php
++++ b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulChanged.php
+@@ -23,6 +23,7 @@
+  *     "route_provider" = {
+  *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
+  *     },
++ *     "translation" = "Drupal\entity_test\EntityTestTranslationHandler",
+  *     "views_data" = "Drupal\views\EntityViewsData"
+  *   },
+  *   base_table = "entity_test_mul_changed",
+@@ -54,6 +55,12 @@ class EntityTestMulChanged extends EntityTestMul implements EntityChangedInterfa
+   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+     $fields = parent::baseFieldDefinitions($entity_type);
+
++    // Show the created field in the edit form.
++    $fields['created']->setDisplayOptions('form', [
++      'type' => 'datetime_timestamp',
++      'weight' => 10,
++    ]);
++
+     $fields['changed'] = BaseFieldDefinition::create('changed_test')
+       ->setLabel(t('Changed'))
+       ->setDescription(t('The time that the entity was last edited.'))
+diff --git a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulRevPub.php b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulRevPub.php
+index 856b8e8f20..52e250b6df 100644
+--- a/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulRevPub.php
++++ b/core/modules/system/tests/modules/entity_test/src/Entity/EntityTestMulRevPub.php
+@@ -59,7 +59,17 @@ class EntityTestMulRevPub extends EntityTestMulRev implements EntityPublishedInt
+    * {@inheritdoc}
+    */
+   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+-    return parent::baseFieldDefinitions($entity_type) + static::publishedBaseFieldDefinitions($entity_type);
++    $fields = parent::baseFieldDefinitions($entity_type) + static::publishedBaseFieldDefinitions($entity_type);
++
++    $fields['status']
++      ->setDisplayOptions('form', [
++        'type' => 'boolean_checkbox',
++        'settings' => [
++          'display_label' => TRUE,
++        ],
++      ])
++      ->setDisplayConfigurable('form', TRUE);
++    return $fields;
+   }
+
+ }
+diff --git a/core/modules/taxonomy/src/TermTranslationHandler.php b/core/modules/taxonomy/src/TermTranslationHandler.php
+index 8ef804bc00..a803327887 100644
+--- a/core/modules/taxonomy/src/TermTranslationHandler.php
++++ b/core/modules/taxonomy/src/TermTranslationHandler.php
+@@ -16,9 +16,6 @@ class TermTranslationHandler extends ContentTranslationHandler {
+    */
+   public function entityFormAlter(array &$form, FormStateInterface $form_state, EntityInterface $entity) {
+     parent::entityFormAlter($form, $form_state, $entity);
+-
+-    $form['content_translation']['status']['#access'] = !isset($form['content_translation']);
+-
+     $form['actions']['submit']['#submit'][] = [$this, 'entityFormSave'];
+   }

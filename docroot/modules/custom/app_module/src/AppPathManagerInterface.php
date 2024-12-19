@@ -87,6 +87,17 @@ interface AppPathManagerInterface {
   public function getPathByRequest($request_path, $langcode = NULL);
 
   /**
+   * Gets all registered app module paths.
+   *
+   * @param string $app_module_id
+   *   An optional app module id to filter the paths by.
+   *
+   * @return array|null
+   *   An array of app module paths.
+   */
+  public function getAllPaths($app_module_id = NULL);
+
+  /**
    * Clear internal caches in alias manager.
    *
    * @param string $source
