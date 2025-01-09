@@ -1,0 +1,48 @@
+From ebf2726cfed920a21e99f0a160a80e6ab1a8094d Mon Sep 17 00:00:00 2001
+From: blairlearn <68514-blairlearn@users.noreply.drupalcode.org>
+Date: Fri, 28 Jun 2024 16:47:50 -0400
+Subject: [PATCH] Issue #3457880 by blairlearn: Vary cached response according
+ to site.
+
+---
+ responsive_favicons.module | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/responsive_favicons.module b/responsive_favicons.module
+index cccc910..6b51c87 100644
+--- a/responsive_favicons.module
++++ b/responsive_favicons.module
+@@ -81,7 +81,7 @@ function responsive_favicons_load_all_icons() {
+   $icons = &drupal_static(__FUNCTION__);
+   if (!isset($icons)) {
+     $config = \Drupal::config('responsive_favicons.settings');
+-    $cid = 'responsive_favicons:icons';
++    $cid = _responsive_favicons_compute_cache_id();
+     if ($cached = \Drupal::cache()->get($cid)) {
+       $icons = $cached->data;
+     }
+@@ -106,6 +106,21 @@ function responsive_favicons_load_all_icons() {
+   return $icons;
+ }
+ 
++/**
++ * Helper function to compute a unique cache id which varies according to
++ * context.
++ *
++ * @return string
++ */
++function _responsive_favicons_compute_cache_id() {
++
++  // Vary the response according to the site's base URL (e.g. example.com and www.example.com).
++  $context_service =  \Drupal::service('cache_context.url.site');
++  $site = $context_service->getContext();
++
++  return "responsive_favicons.$site:icons";
++}
++
+ /**
+  * Helper function to check whether responsive favicon files exist and are
+  * readable. This function also strips any pasted content that is not a link
+-- 
+GitLab
+
