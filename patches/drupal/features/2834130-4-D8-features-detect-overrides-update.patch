@@ -1,0 +1,19 @@
+diff --git a/src/FeaturesManager.php b/src/FeaturesManager.php
+index 07c46e0..a5035a6 100644
+--- a/src/FeaturesManager.php
++++ b/src/FeaturesManager.php
+@@ -1221,10 +1221,12 @@ class FeaturesManager implements FeaturesManagerInterface {
+   public function detectOverrides(Package $feature, $include_new = FALSE) {
+     /** @var \Drupal\config_update\ConfigDiffInterface $config_diff */
+     $config_diff = \Drupal::service('config_update.config_diff');
++    // Load configuration from active state w/ alters applied.
++    $config = $this->getConfigCollection();
+ 
+     $different = [];
+     foreach ($feature->getConfig() as $name) {
+-      $active = $this->configStorage->read($name);
++      $active = $config[$name]->getData();
+       $extension = $this->extensionStorages->read($name);
+       $extension = !empty($extension) ? $extension : [];
+       if (($include_new || !empty($extension)) && !$config_diff->same($extension, $active)) {
+
