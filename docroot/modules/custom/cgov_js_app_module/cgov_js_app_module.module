@@ -12,78 +12,90 @@ use Drupal\Core\Asset\AttachedAssetsInterface;
  * the CSS in libraries (e.g. Common.css). The issue is that most app modules
  * override syles included in the Common and therefore need to come after.
  *
- * So cool. We just use hook_css_alter and add it right? Wrong. The libraries
- * attachment is cached based on the theme name, and the list of libraries for
- * the request.
- *
- * So cool. We will just use hook_library_info_build and add a library. Wrong.
- * The libraries provided by the module are cached, and so only 1 app module's
- * library/CSS would be added.
- *
- * So cool. We will use hook_library_info_alter to add the library that way.
+ * So cool. We will use hook_library_info_build to add the libraries to this
+ * module.
  * Wrong. Adding the library to the request works, but unfortunately, the
- * assets of that library are being cached by extension.
+ * libraries of a module are always added before a theme.
+ * ---> NOTE: This gets cached and for now, saving an application page will
+ * need to clear the library discovery cache.
  *
- * The final approach is to add an "empty" library to get the cache ID to be
- * different instances. Then use css_alter to add the CSS. This seems to get
- * around extension caching issues.
- *
- * NOTE 1: The library we add in info_alter is also added to the render array's
- * attachments in JsOnlyAppModulePlugin::buildForRoute.
- *
- * NOTE 2: The module that adds the library is the module who's hooks are
- * fired. So if we wanted to follow the pattern we have been where app_module
- * implements the hooks, the base AppModulePluginBase provides a method to
- * provide information to that hook, we cannot. This is because the hooks in
- * app_module would never be called, instead it would be looking for the
- * hooks in the module that implements the actual plugin.
- *
- *  NOTE 3: for the JS we have NONE of these issues.
+ * We use css_alter to change the group/weight of the CSS. This seems to get
+ * around extension ordering issues.
  */
 
 /**
-  * Implements hook_library_info_alter().
-  *
-  */
-function cgov_js_app_module_library_info_alter(array &$libraries, $extension) {
-  if ($extension !== 'cgov_js_app_module') {
-    return;
+ * Implements hook_library_info_build().
+ *
+ * This loads up all app module css files as libraries under `cgov_js_app_module`.
+ * This allows us to attach the libraries to pages using the app modules.
+ *
+ * This function should only be called once per cache load. New app modules and
+ * updates will need to clear out the library cache tag. (There is a library cache
+ * tag right?)
+ */
+function cgov_js_app_module_library_info_build() {
+  $libraries = [];
+
+  // Get all the application paths (with configs) registered in the system.
+  $app_path_manager = \Drupal::service('app_module.app_path_manager');
+  $app_paths = $app_path_manager->getAllPaths('cgov_js_only_app');
+
+  foreach ($app_paths as $app_path) {
+    $options = $app_path['app_module_data'];
+
+    // Define a custom library to include the CSS file.
+    $css_uri = $options['drupalConfig']['appCssUri'];
+
+    // Add the custom library to the page.
+    if (!isset($libraries[$css_uri])) {
+      $libraries[$css_uri] = [
+        'version' => -1,
+        'license' => [
+          'name' => 'NA',
+        ],
+        'css' => [
+          'theme' => [
+            $css_uri => [
+              'preprocess' => FALSE,
+              'weight' => 1000,
+              'group' => 1000,
+              'type' => 'file',
+              'data' => $options['drupalConfig']['appCssUri'],
+              'version' => -1,
+              'media' => 'all',
+              'browsers' => [
+                'IE' => TRUE,
+                '!IE' => TRUE,
+              ],
+            ],
+          ],
+        ],
+      ];
+    }
   }
 
-  $request_query = \Drupal::request()->query;
-  $app_module_id = $request_query->get('app_module_id');
-
-  // We are not rendering an app module, so exit.
-  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
-    return;
-  }
-
-  $options = $request_query->all('app_module_data');
-
-  // Setup Library.
-  $libraries[$options['drupalConfig']['appName']] = [
-    'version' => -1,
-    'license' => [
-      'name' => 'NA',
-    ],
-    'css' => [],
-  ];
-
+  return $libraries;
 }
 
 /**
  * Implements hook_css_alter().
+ *
+ * This is a hack to work around https://www.drupal.org/project/drupal/issues/3046636.
+ * Basically, all module libraries will come before any theme libraries. However, we
+ * want to add these stylesheets after our theme's since the app theme is usually
+ * overriding the styles we define in our global css. This hook is going to reset the
+ * module weight once everything is loaded.
+ * See https://www.drupal.org/project/drupal/issues/3046636#comment-15396857.
  */
 function cgov_js_app_module_css_alter(array &$css, AttachedAssetsInterface $assets) {
-  $request_query = \Drupal::request()->query;
-  $app_module_id = $request_query->get('app_module_id');
+  $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
 
   // We are not rendering an app module, so exit.
   if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
     return;
   }
 
-  $options = $request_query->all('app_module_data');
+  $options = \Drupal::request()->attributes->all('cgov_app_module_data');
 
   $css[$options['drupalConfig']['appCssUri']] = [
     'preprocess' => FALSE,
@@ -99,4 +111,24 @@ function cgov_js_app_module_css_alter(array &$css, AttachedAssetsInterface $asse
     ],
   ];
 
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function cgov_js_app_module_preprocess_page(array &$variables) {
+  $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
+
+  // We are not rendering an app module, so exit.
+  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
+    return;
+  }
+
+  $options = \Drupal::request()->attributes->all('cgov_app_module_data');
+
+  // Define a custom library to include the CSS file.
+  $css_uri = $options['drupalConfig']['appCssUri'];
+
+  // Add the custom library to the page.
+  $variables['#attached']['library'][] = 'cgov_js_app_module/' . $css_uri;
 }

@@ -269,7 +269,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
             '#tag' => 'img',
             '#attributes' => [
               'src' => $mobile_url->toString(),
-              'alt' => '',
+              'alt' => $this->configuration['home_page_title'],
             ],
           ],
         ],
