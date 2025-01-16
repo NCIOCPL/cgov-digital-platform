@@ -587,3 +587,14 @@ function cgov_core_update_10009() {
   ];
   $siteHelper->addRolePermissions($perms);
 }
+
+/**
+ * Turn on jsonapi.
+ */
+function cgov_core_update_10010() {
+  $module_handler = \Drupal::moduleHandler();
+  if (!$module_handler->moduleExists('jsonapi')) {
+    $installer = \Drupal::service('module_installer');
+    $installer->install(['jsonapi']);
+  }
+}
