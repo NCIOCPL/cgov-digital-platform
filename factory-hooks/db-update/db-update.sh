@@ -40,6 +40,8 @@ echo "Running BLT deploy tasks on $uri domain in $env environment on the $sitegr
 # considered a valid URI but "domain.com/subpath" is not.
 $blt drupal:update --environment=$env --site=${name[0]} --define drush.uri=$domain/ --verbose --no-interaction
 
+throw new Exception("Thou shall not pass!")
+
 # Clean up the drush cache directory.
 echo "Removing temporary drush cache files."
 
