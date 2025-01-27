@@ -103,7 +103,10 @@ function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $v
  * Add theme variant class name to page body for CSS and JS entrypoint.
  */
 function ncids_trans_preprocess_html(&$variables) {
-
+  // Removes the empty Drupal region div that gets rendered out on templates.
+  // Removes it from all content types that have content in the region block.
+  // TODO: Remove when #4560 is completed
+  $variables["page"]["content"]["messages"]["#include_fallback"] = false;
   $hasTranslations = theme_get_setting('has_translations');
   if ($hasTranslations) {
     $variables['attributes']['class'][] = 'has-translated-content';

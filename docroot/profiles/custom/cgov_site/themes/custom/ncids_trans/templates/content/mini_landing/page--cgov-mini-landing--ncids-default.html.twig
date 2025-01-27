@@ -7,11 +7,9 @@
 {{ page.ncids_site_alerts }}
 {{ page.ncids_header }}
 
-{# Hide this block on print #}
 <div class="grid-container">
   <div class="grid-row flex-no-wrap">
     <div class="grid-col-10">
-      {# What if no breadcrumbs? #}
       {{ page.ncids_breadcrumb }}
     </div>
     {{ pageOptionsMacros.page_options("top") }}
@@ -19,17 +17,12 @@
 </div>
 
 <div id="page" class="grid-container">
-  {# This is not a NCIDS class. It should be in legacy. #}
-  {# Killed general-page-body-container #}
   <div class="grid-row grid-gap">
     {{ page.ncids_sidenav }}
-    <div class="cgdpl {% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
-      {# This content div is to support a lot of legacy JS #}
-      <div id="content" class="{{ page_type }}">
-        <main class="contentzone has-section-nav" id="main-content">
-          {{ page.content }}
-        </main>
-      </div>
+    <div class="{% if page.ncids_sidenav %}desktop:grid-col-9{% else %}grid-col-12{% endif %}">
+      <main class="cgdp-main-content" id="main-content">
+        {{ page.content }}
+      </main>
     </div>
     <div class="desktop:grid-col-9 desktop:grid-offset-3">
       {{ pageOptionsMacros.page_options("bottom") }}
