@@ -782,12 +782,14 @@ $settings['entity_update_batch_size'] = 50;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $config_directories['sync'] = '../config/sync';
-require DRUPAL_ROOT . "/../vendor/acquia/blt/settings/blt.settings.php";
+
+require DRUPAL_ROOT . "/../vendor/acquia/drupal-recommended-settings/settings/acquia-recommended.settings.php";
+
 /**
  * IMPORTANT.
  *
  * Do not include additional settings here. Instead, add them to settings
- * included by `blt.settings.php`. See BLT's documentation for more detail.
+ * included by `acquia-recommended.settings.php`. See Acquia's documentation for more detail.
  *
- * @link http://blt.readthedocs.io
+ * @link https://docs.acquia.com/
  */
