@@ -26,6 +26,12 @@ services:
       ## that works with it frequently enough to know what this
       ## iss. (For read-only don't follow the npm login steps)
       - ~/.npmrc:/root/.npmrc
+      ## Composer authentication for NCIOCPL package overrides.
+      ## This only needs a no-scope token. (Classic token with nothing
+      ## checked.) (The token needs to authorized for NCIOCPL SSO)
+      ## Authenticate using:
+      ## `composer config --global github-oauth.github.com <TOKEN>`
+      - ~/.composer/auth.json:/root/.composer/auth.json
     env_file:
       - ./docker.env
     ports:

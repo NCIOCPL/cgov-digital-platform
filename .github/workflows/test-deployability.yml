@@ -89,6 +89,8 @@ jobs:
       - name: Composer install
         run: |
           composer install
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
 
       - name: Put BLT, Drush, etc. on the path.
         run: |

@@ -101,6 +101,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
       - name: Composer install
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
         run: |
           composer install
       - name: Put BLT, Drush, etc. on the path.
@@ -119,6 +121,7 @@ jobs:
       - name: Setup App
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
         run: |
           ## The setup app script cannot create build.json as we are in the NCIOCPL origin.
           blt setup --define drush.alias='${drush.aliases.ci}' --environment=ci --no-interaction --ansi --verbose
@@ -163,6 +166,7 @@ jobs:
       - name: Build Artifact
         env:
           NEW_BUILD_DIR: ${{ format('{0}{1}', runner.temp, '/artifact') }}
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"} }'
         run: |
           blt deploy:check-dirty --ansi --verbose --no-interaction
           blt artifact:build -D deploy.dir=${NEW_BUILD_DIR} -D deploy.docroot=${NEW_BUILD_DIR}/docroot --ansi --verbose --no-interaction

@@ -11,4 +11,4 @@
 
 // Configure your hash salt here.
 // $settings['hash_salt'] = '';.
-require DRUPAL_ROOT . '/../vendor/acquia/blt/settings/blt.settings.php';
+require DRUPAL_ROOT . '/../vendor/acquia/drupal-recommended-settings/settings/acquia-recommended.settings.php';
