@@ -6,17 +6,18 @@
  * This is intended for to provide an opportunity for applications to override
  * any previous configuration at a global or multisite level.
  *
- * This is included by vendor/acquia/blt/settings/blt.settings.php, before the CI
- * and site specific settings files.
+ * This is included by
+ * vendor/acquia/acquia-recommended-settings/settings/acquia-recommended.settings.php,
+ * before the CI and site specific settings files.
  *
  ***********************************************************************************
  * This logic supports the old behavior of loading all files in the settings folder.
  * However, there may be times when supporting files, or in the case of default.global.settings.php
- * that is automatically added by BLT, must not be loaded because they are NOT settings.
- * the excludeFiles array is for ignoring those non-settings files.
+ * that is automatically added by Acquia Recommended Settings, must not be loaded because they
+ * are NOT settings. The excludeFiles array is for ignoring those non-settings files.
  *
- * In the case of local.settings.php, this file is loaded by BLT sometime AFTER
- * global.settings.php has been run.
+ * In the case of local.settings.php, this file is loaded by Acquia Recommended Settings sometime
+ * AFTER global.settings.php has been run.
  ***********************************************************************************
  */
 

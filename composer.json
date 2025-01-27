@@ -10,6 +10,10 @@
         }
     ],
     "repositories": {
+        "acquia/blt": {
+            "type": "vcs",
+            "url": "https://github.com/nciocpl/blt"
+        },
         "drupal": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
@@ -29,7 +33,7 @@
         }
     },
     "require": {
-        "acquia/blt": "13.7.4",
+        "acquia/blt": "14.0.0-beta2",
         "acquia/blt-acsf": "^1.1",
         "acquia/blt-phpcs": "^1.0",
         "acquia/memcache-settings": "^1.2",
@@ -120,7 +124,8 @@
             "drupal/core-composer-scaffold": true,
             "phpstan/extension-installer": true,
             "php-http/discovery": true,
-            "tbachert/spi": false
+            "tbachert/spi": false,
+            "acquia/drupal-recommended-settings": true
         }
     },
     "autoload": {
@@ -145,7 +150,8 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "chmod 0644 ./docroot/sites/default/settings.php"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
