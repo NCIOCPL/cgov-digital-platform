@@ -1,0 +1,61 @@
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Application Test Page Left Nav - Dummy App Module"
+  field_page_description:
+    value: "An application page to test the NCIDS template with left nav"
+  field_browser_title:
+    value: "NCIDS Application Test Page Left Nav- Dummy App Module"
+  field_pretty_url:
+    value: "ncids-application-page-left-nav"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_application_module:
+    - target_id: dummy_app_module
+  field_date_posted:
+    value: "2025-01-07"
+  field_date_reviewed:
+    value: "2025-01-07"
+  field_date_updated:
+    value: "2025-01-07"
+  field_app_module_page_template:
+    value: ncids_left_nav
+
+- entity: "node"
+  type: "cgov_application_page"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NCIDS Application Test Page No Left Nav - Dummy App Module"
+  field_page_description:
+    value: "An application page to test the NCIDS template without left nav"
+  field_browser_title:
+    value: "NCIDS Application Test Page No Left Nav- Dummy App Module"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "ncids-application-page-no-left-nav"
+  field_application_module:
+    - target_id: dummy_app_module
+  field_date_posted:
+    value: "2025-01-07"
+  field_date_reviewed:
+    value: "2025-01-07"
+  field_date_updated:
+    value: "2025-01-07"
+  field_app_module_page_template:
+    value: ncids_no_left_nav
