@@ -87,9 +87,11 @@ class ICalendarController extends ControllerBase {
    */
   public function download($nid) {
     // Load event node.
+    /** @var \Drupal\node\NodeInterface */
     $node = $this->entityTypeManager()->getStorage('node')->load($nid);
-    if (empty($node)) {
-      return FALSE;
+    if ($node === NULL || $node->bundle() !== 'cgov_event') {
+      // Throwing 404 if node ID doesn't exist.
+      throw new NotFoundHttpException();
     }
 
     $start_date = NULL;
