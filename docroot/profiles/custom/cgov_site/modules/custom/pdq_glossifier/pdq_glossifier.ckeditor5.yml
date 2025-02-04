@@ -1,0 +1,24 @@
+pdq_glossifier_cgov_glossifier:
+  ckeditor5:
+    plugins:
+      - glossifier.Glossify
+    # *Additional configuration properties*
+    # config: data sent to the constructor of any CKEditor 5 plugin
+    #   editorPluginName:
+    #     editorPluginProperty: editorPluginValue
+
+  # Configuration that will be used directly by Drupal.
+  drupal:
+    label: Glossify
+    # The library loaded while using the editor.
+    library: pdq_glossifier/glossifier
+    # The library loaded when configuring the text format using this plugin.
+    admin_library: pdq_glossifier/admin.glossifier
+    toolbar_items:
+      # This should match the name of the corresponding plugin exported in the
+      # plugin's index.js.
+      glossifier:
+        label: Glossify
+    # If the plugin does not provide elements, set this as
+    # `elements: false`
+    elements: false
