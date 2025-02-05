@@ -30,23 +30,6 @@ const getLinkArea = (evt: Event): string => {
 };
 
 /**
- * Gets text content of the exact link area.
- * @param {Event} evt - Click event
- */
-const getLinkText = (evt: Event): string => {
-	const link = evt.currentTarget as HTMLElement;
-	const linkArea = getLinkArea(evt);
-
-	const textOptions: { [key: string]: string } = {
-		Image: 'Image',
-		Description: getText(link, '.nci-card__description'),
-		Title: getText(link, '.nci-card__title'),
-	};
-
-	return textOptions[linkArea] || 'Not Defined';
-};
-
-/**
  * Feature card on click handler.
  * @param {number} containerItems - Number of cards in row.
  * @param {number} containerItemIndex - Index of card selected in row.
@@ -64,9 +47,12 @@ const featureCardLinkClickHandler =
 			'Feature Card',
 			'Light',
 			'Standard Single Link',
-			getText(link, '.nci-card__title'),
+			getText(
+				link.closest('.grid-container') as HTMLElement,
+				'.cgdp-feature-card-row__heading'
+			), // title of row
 			link.dataset.eddlLandingItemLinkType || '_ERROR_',
-			getLinkText(evt),
+			getText(link, '.nci-card__title'), // title of card
 			getLinkArea(evt),
 			1,
 			1
