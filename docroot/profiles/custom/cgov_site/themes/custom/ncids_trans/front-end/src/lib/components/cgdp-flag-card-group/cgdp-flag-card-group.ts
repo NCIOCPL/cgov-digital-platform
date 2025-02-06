@@ -13,6 +13,23 @@ const getText = (link: HTMLElement, selector: string): string => {
 };
 
 /**
+ * Gets the exact location clicked that triggered the event.
+ * @param {Event} evt - Click event
+ */
+const getLinkArea = (evt: Event): string => {
+	const link = evt.target as HTMLElement;
+	const tag = link.tagName;
+
+	const tags: { [key: string]: string } = {
+		IMG: 'Image',
+		P: 'Description',
+		SPAN: 'Title',
+	};
+
+	return tags[tag] || 'Not Defined';
+};
+
+/**
  * Gets the title of the flag card group.
  * @param {HTMLElement} link - selected card.
  */
@@ -31,6 +48,7 @@ const flagCardLinkClickHandler =
 	(containerItems: number, containerItemIndex: number | '_ERROR_') =>
 	(evt: Event): void => {
 		const link = evt.currentTarget as HTMLElement;
+
 		landingClickTracker(
 			link,
 			'FlagCard',
@@ -42,7 +60,7 @@ const flagCardLinkClickHandler =
 			getTitle(link),
 			link.dataset.eddlLandingItemLinkType || '_ERROR_',
 			getText(link, '.cgdp-flag-card__title').trim(),
-			'Card',
+			getLinkArea(evt),
 			1,
 			1
 		);
