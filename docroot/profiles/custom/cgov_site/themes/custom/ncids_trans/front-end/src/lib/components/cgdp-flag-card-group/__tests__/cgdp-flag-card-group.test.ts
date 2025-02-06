@@ -57,8 +57,9 @@ describe('CGDP Flag Cards', () => {
 		cgdpFlagCardInit();
 
 		const card = screen.getAllByRole('link');
+		const titleElement = card[0].querySelector('span') as HTMLElement;
 
-		fireEvent.click(card[0]);
+		fireEvent.click(titleElement);
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'MLP:FlagCard:LinkClick',
@@ -80,7 +81,7 @@ describe('CGDP Flag Cards', () => {
 				title: 'The Optional Flag Card Group Heading',
 				linkType: 'Internal',
 				linkText: 'About Cancer',
-				linkArea: 'Card',
+				linkArea: 'Title',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -100,8 +101,9 @@ describe('CGDP Flag Cards', () => {
 		cgdpFlagCardInit();
 
 		const card = screen.getAllByRole('link');
+		const descriptionElement = card[1].querySelector('p') as HTMLElement;
 
-		fireEvent.click(card[1]);
+		fireEvent.click(descriptionElement);
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'MLP:FlagCard:LinkClick',
@@ -123,7 +125,7 @@ describe('CGDP Flag Cards', () => {
 				title: 'The Optional Flag Card Group Heading',
 				linkType: 'External',
 				linkText: 'External Card Title',
-				linkArea: 'Card',
+				linkArea: 'Description',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -166,7 +168,7 @@ describe('CGDP Flag Cards', () => {
 				title: 'The Optional Flag Card Group Heading',
 				linkType: 'Media',
 				linkText: 'Media Card Title',
-				linkArea: 'Card',
+				linkArea: 'Not Defined',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -209,7 +211,7 @@ describe('CGDP Flag Cards', () => {
 				title: 'Not Defined',
 				linkType: '_ERROR_',
 				linkText: '_ERROR_',
-				linkArea: 'Card',
+				linkArea: 'Not Defined',
 				totalLinks: 1,
 				linkPosition: 1,
 			}
@@ -229,8 +231,9 @@ describe('CGDP Flag Cards', () => {
 		cgdpFlagCardInit();
 
 		const card = screen.getAllByRole('link');
+		const linkElement = card[6].querySelector('img') as HTMLElement;
 
-		fireEvent.click(card[6]);
+		fireEvent.click(linkElement);
 
 		expect(trackOtherSpy).toHaveBeenCalledWith(
 			'MLP:FlagCard:LinkClick',
@@ -252,7 +255,7 @@ describe('CGDP Flag Cards', () => {
 				title: 'Not Defined',
 				linkType: 'External',
 				linkText: 'External Card Title',
-				linkArea: 'Card',
+				linkArea: 'Image',
 				totalLinks: 1,
 				linkPosition: 1,
 			}

@@ -206,7 +206,7 @@ describe('CGDP Feature Cards', () => {
 				componentType: 'Feature Card',
 				componentTheme: 'Light',
 				componentVariant: 'Standard Single Link',
-				title: 'Feature Card Row 1',
+				title: 'Not Defined',
 				linkType: '_ERROR_',
 				linkText: '_ERROR_',
 				linkArea: 'Not Defined',

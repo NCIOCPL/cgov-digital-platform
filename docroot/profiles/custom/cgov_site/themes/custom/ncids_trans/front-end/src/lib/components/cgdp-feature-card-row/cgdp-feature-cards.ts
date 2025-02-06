@@ -13,6 +13,19 @@ const getText = (link: HTMLElement, selector: string): string => {
 };
 
 /**
+ * Gets text content by selector.
+ * @param {HTMLElement} link - Selected card.
+ * @param {string} selector - Selector for query.
+ */
+const getTitle = (link: HTMLElement, selector: string): string => {
+	const container = link.closest('.usa-section') as HTMLElement;
+	const element = container?.querySelector(selector);
+	const text = element?.textContent?.trim();
+
+	return text || 'Not Defined';
+};
+
+/**
  * Gets the exact location clicked that triggered the event.
  * @param {Event} evt - Click event
  */
@@ -47,10 +60,7 @@ const featureCardLinkClickHandler =
 			'Feature Card',
 			'Light',
 			'Standard Single Link',
-			getText(
-				link.closest('.grid-container') as HTMLElement,
-				'.cgdp-feature-card-row__heading'
-			), // title of row
+			getTitle(link, '.cgdp-feature-card-row__heading'), // title of row
 			link.dataset.eddlLandingItemLinkType || '_ERROR_',
 			getText(link, '.nci-card__title'), // title of card
 			getLinkArea(evt),
