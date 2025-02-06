@@ -2,8 +2,8 @@ export const cgdpFlagCardGroupBadDom = () => {
 	const div = document.createElement('div');
 
 	div.innerHTML = `
-		<div class="usa-section" data-eddl-bad-landing-row="">
-			<h2 class="nci-heading-h3 padding-bottom-2">
+		<div data-eddl-bad-landing-row="">
+			<h2 class="padding-bottom-2">
 				The Optional Flag Card Group Heading
 			</h2>
 			<ul class="cgdp-flag-card-group">

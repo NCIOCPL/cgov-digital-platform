@@ -14,7 +14,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">About Cancer</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">About Cancer</span>
 							<p class="cgdp-flag-card__description">This flag card is an internal link to About Cancer</p>
 						</div>
 					</a>
@@ -25,7 +25,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">External Card Title</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">External Card Title</span>
 							<p class="cgdp-flag-card__description">External Flag Card</p>
 						</div>
 					</a>
@@ -36,7 +36,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">Media Card Title</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">Media Card Title</span>
 							<p class="cgdp-flag-card__description">Three Cards here</p>
 						</div>
 					</a>
@@ -47,7 +47,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">Fourth Card</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">Fourth Card</span>
 							<p class="cgdp-flag-card__description">Four Flag Cards.</p>
 						</div>
 					</a>
@@ -58,7 +58,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">There are Five Cards</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">There are Five Cards</span>
 							<p class="cgdp-flag-card__description">This flag card is fifth.</p>
 						</div>
 					</a>
@@ -73,7 +73,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">About Cancer</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">About Cancer</span>
 							<p class="cgdp-flag-card__description">This flag card is an internal link to About Cancer</p>
 						</div>
 					</a>
@@ -84,7 +84,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">External Card Title</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">External Card Title</span>
 							<p class="cgdp-flag-card__description">External Flag Card</p>
 						</div>
 					</a>
@@ -95,7 +95,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">Media Card Title</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">Media Card Title</span>
 							<p class="cgdp-flag-card__description">Three Cards here</p>
 						</div>
 					</a>
@@ -106,7 +106,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">Fourth Card</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">Fourth Card</span>
 							<p class="cgdp-flag-card__description">Four Flag Cards.</p>
 						</div>
 					</a>
@@ -117,7 +117,7 @@ export const cgdpFlagCardGroupDom = () => {
 							<img src="/sites/default/files/styles/ncids_promo_1x1/module/cgov_image/img/placeholder-1x1.png?itok=6LApdh5r" alt="No Image Placeholder">
 						</picture>
 						<div class="cgdp-flag-card__content">
-							<h3 class="cgdp-flag-card__title" id="paragraph-2391">There are Five Cards</h3>
+							<span class="cgdp-flag-card__title" id="paragraph-2391">There are Five Cards</span>
 							<p class="cgdp-flag-card__description">This flag card is fifth.</p>
 						</div>
 					</a>
