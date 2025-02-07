@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.video_display_large_title
     - field.field.media.cgov_video.body
+    - field.field.media.cgov_video.field_audio_described_link
     - field.field.media.cgov_video.field_browser_title
     - field.field.media.cgov_video.field_caption
     - field.field.media.cgov_video.field_card_title
@@ -24,6 +25,7 @@ dependencies:
     - media.type.cgov_video
   module:
     - image
+    - link
     - media
     - text
 id: media.cgov_video.video_display_large_title
@@ -35,6 +37,18 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_audio_described_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_caption:
     type: text_default

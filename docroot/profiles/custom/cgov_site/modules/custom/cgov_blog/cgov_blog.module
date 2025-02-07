@@ -98,6 +98,10 @@ function _update_blog_post_checkboxes($form, &$form_state) {
  */
 function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
 
+  if ($view->id() !== 'blog_rss' && $view->id() !== 'cgov_block_blog_posts') {
+    return;
+  }
+
   // If this is a list in a Blog Series, use 'items per page' field.
   if ($view->id() == 'cgov_block_blog_posts') {
     $node = Drupal::entityTypeManager()->getStorage('node')->load((int) $args[0]);
@@ -107,39 +111,55 @@ function cgov_blog_views_pre_view(ViewExecutable $view, $display_id, array &$arg
   }
 
   // Allow replacement of contextual filters arguments.
-  // Can use ?series=cancer-currents&topic=clinical-trial-results .
-  if ($view->id() == 'blog_rss' || $view->id() == 'cgov_block_blog_posts') {
-    $series = \Drupal::request()->query->get('series');
-    $topic = \Drupal::request()->query->get('topic');
+  // Can use ?series=cancer-currents&topic=clinical-trial-results.
+  // NOTE: query parameters will only get the last value if the
+  // parameters are duplicated. e.g., ?a=1&a=2 returns 2 when you
+  // get('a');
+  $series = \Drupal::request()->query->get('series');
+  $topic = \Drupal::request()->query->get('topic');
 
-    // Convert BlogSeries.Shortname to ID.
-    if ($series && !is_numeric($series) && $series != 'all') {
-      $nodes = \Drupal::entityTypeManager()
-        ->getStorage('node')
-        ->loadByProperties(
-            ['field_blog_series_shortname' => $series]
-        );
-      // Get first array key.
-      reset($nodes);
-      $nid = key($nodes);
-      // Store NID as the first contextual filter argument.
-      $view->args[0] = (int) $nid;
-    }
+  // Setup cache contexts as the series and topic can change the
+  // items display, and so should be part of the cache keys.
+  // This fixes #4568 where random junk requests were caching the
+  // block in a bad state where none of these parameters changed
+  // it.
+  $contexts = ['url.query_args:series', 'url.query_args:topic'];
+  if ($view->id() == 'cgov_block_blog_posts') {
+    array_push($contexts, 'url.query_args:month', 'url.query_args:year');
+  }
 
-    // Convert BlogTopic.PrettyUrl to ID.
-    if ($topic && !is_numeric($topic) && $topic != 'all') {
-      $terms = \Drupal::entityTypeManager()
-        ->getStorage('taxonomy_term')
-        ->loadByProperties(
-            ['field_topic_pretty_url' => $topic]
-        );
-      // Get first array key.
-      reset($terms);
-      $tid = key($terms);
-      // Store NID as the first contextual filter argument.
-      $view->args[1] = (int) $tid;
-    }
+  $view->element['#cache']['contexts'] = Cache::mergeContexts(
+    $view->element['#cache']['contexts'] ?? [],
+    $contexts
+  );
 
+
+  // Convert BlogSeries.Shortname to ID.
+  if ($series && !is_numeric($series) && $series != 'all') {
+    $nodes = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadByProperties(
+          ['field_blog_series_shortname' => $series]
+      );
+    // Get first array key.
+    reset($nodes);
+    $nid = key($nodes);
+    // Store NID as the first contextual filter argument.
+    $view->args[0] = (int) $nid;
+  }
+
+  // Convert BlogTopic.PrettyUrl to ID.
+  if ($topic && !is_numeric($topic) && $topic != 'all') {
+    $terms = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(
+          ['field_topic_pretty_url' => $topic]
+      );
+    // Get first array key.
+    reset($terms);
+    $tid = key($terms);
+    // Store NID as the first contextual filter argument.
+    $view->args[1] = (int) $tid;
   }
 }
 

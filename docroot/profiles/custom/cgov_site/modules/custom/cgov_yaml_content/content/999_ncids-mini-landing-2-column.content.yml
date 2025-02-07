@@ -2648,3 +2648,134 @@
             - value: 'Public Health Impact of DCEG Research'
           field_override_list_description:
             - value: 'DCEG research findings have had a significant impact on public health - both national and global.'
+
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Test Page for Video AD Link"
+  title__ES:
+      value: "Test Page for Video AD Link - ES"
+  field_page_description:
+    value: "Test Page for Video AD Link - Page Description"
+  field_page_description__ES:
+    value: "Test Page for Video AD Link - Page Description ES"
+  field_browser_title:
+    value: "Test Page for Video AD Link - Browser Title"
+  field_browser_title__ES:
+    value: "Test Page for Video AD Link - Browser Title ES"
+  field_pretty_url:
+    value: "video-ad-link"
+  field_pretty_url__ES:
+    value: "video-ad-link"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_site_section__ES:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test-es'
+  field_mlp_page_style:
+    value: "ncids_default"
+  ### English Contents
+  field_landing_contents:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_video"
+          field_featured_video:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Nonspecific Immune Stimulation'
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_50_50
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_video"
+          field_featured_video:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Test Video - No Caption'
+  field_landing_contents__ES:
+  ######## Begin Feature Row ###########
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_66_33
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_video"
+          field_featured_video:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Estimulación inmunitaria no específica'
+    - entity: "paragraph"
+      type: "ncids_mlp_two_column_layout"
+      field_two_column_layout_display:
+        - value: two_column_layout_66_33
+      field_left_content:
+        - entity: "paragraph"
+          type: "ncids_content_block"
+          field_html_content:
+            - format: "ncids_streamlined"
+              value: |
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris. Curabitur scelerisque leo sed risus vulputate gravida. Cras consectetur est est, eu posuere mi molestie ac. Cras accumsan consequat nibh vitae scelerisque. Suspendisse sagittis leo eu elit vestibulum, feugiat cursus nisl finibus. Nulla posuere scelerisque velit, et ornare arcu suscipit in. Curabitur ut venenatis nisl, vitae hendrerit ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis elit consequat, efficitur risus id, blandit mauris.</p>
+      field_right_content:
+        - entity: 'paragraph'
+          type: "ncids_video"
+          field_featured_video:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_video'
+                    name: 'Test Video - No Caption'

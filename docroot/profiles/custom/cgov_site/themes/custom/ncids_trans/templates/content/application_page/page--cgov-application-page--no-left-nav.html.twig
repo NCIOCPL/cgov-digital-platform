@@ -23,7 +23,11 @@
       {# This content div is to support a lot of legacy JS #}
       <div id="content" class="{{ page_type }}">
         <main class="contentzone has-section-nav" id="main-content">
-          {{ page.content }}
+          <article>
+            <div class="resize-content">
+              {{ page.content }}
+            </div>
+          </article>
         </main>
       </div>
     </div>

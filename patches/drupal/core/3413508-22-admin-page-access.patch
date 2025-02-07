@@ -1,0 +1,188 @@
+diff --git a/core/modules/system/src/Access/SystemAdminMenuBlockAccessCheck.php b/core/modules/system/src/Access/SystemAdminMenuBlockAccessCheck.php
+index a527605ea7..ebc880bd2d 100644
+--- a/core/modules/system/src/Access/SystemAdminMenuBlockAccessCheck.php
++++ b/core/modules/system/src/Access/SystemAdminMenuBlockAccessCheck.php
+@@ -84,12 +84,9 @@ protected function hasAccessToChildMenuItems(MenuLinkInterface $link, AccountInt
+ 
+     $tree = $this->menuLinkTree->load(NULL, $parameters);
+ 
+-    if (empty($tree)) {
+-      $route = $this->router->getRouteCollection()->get($link->getRouteName());
+-      if ($route) {
+-        return AccessResult::allowedIf(empty($route->getRequirement('_access_admin_menu_block_page')));
+-      }
+-      return AccessResult::neutral();
++    $route = $this->router->getRouteCollection()->get($link->getRouteName());
++    if ($route && empty($route->getRequirement('_access_admin_menu_block_page'))) {
++      return AccessResult::allowed();
+     }
+ 
+     foreach ($tree as $element) {
+@@ -99,7 +96,9 @@ protected function hasAccessToChildMenuItems(MenuLinkInterface $link, AccountInt
+ 
+       // If access is allowed to this element in the tree check for access to
+       // its own children.
+-      return AccessResult::allowedIf($this->hasAccessToChildMenuItems($element->link, $account)->isAllowed());
++      if ($this->hasAccessToChildMenuItems($element->link, $account)->isAllowed()) {
++        return AccessResult::allowed();
++      }
+     }
+     return AccessResult::neutral();
+   }
+diff --git a/core/modules/system/tests/modules/menu_test/menu_test.links.menu.yml b/core/modules/system/tests/modules/menu_test/menu_test.links.menu.yml
+index d694e419b8..e2d9dd4953 100644
+--- a/core/modules/system/tests/modules/menu_test/menu_test.links.menu.yml
++++ b/core/modules/system/tests/modules/menu_test/menu_test.links.menu.yml
+@@ -35,6 +35,11 @@ menu_test.parent_test.child3_test:
+   description: 'Menu item description child3'
+   route_name: menu_test.child3_test
+   parent: menu_test.parent_test
++menu_test.parent_test.child4_test:
++  title: 'Menu child4'
++  description: 'Menu item description child4'
++  route_name: menu_test.child4_test
++  parent: menu_test.parent_test
+ menu_test.parent_test.child_test.super_child1_test:
+   title: 'Menu super child1'
+   description: 'Menu item description super child1'
+@@ -50,6 +55,11 @@ menu_test.parent_test.child_test.super_child3_test:
+   description: 'Menu item description super child3'
+   route_name: menu_test.super_child3_test
+   parent: menu_test.parent_test.child2_test
++menu_test.parent_test.child_test.super_child4_test:
++  title: 'Menu super child4'
++  description: 'Menu item description super child4'
++  route_name: menu_test.super_child4_test
++  parent: menu_test.parent_test.child4_test
+ menu_test.menu_parent_test_param:
+   title: 'Menu Parent Param'
+   description: 'Menu item description parent'
+diff --git a/core/modules/system/tests/modules/menu_test/menu_test.permissions.yml b/core/modules/system/tests/modules/menu_test/menu_test.permissions.yml
+index 47c528f012..69ed5629f4 100644
+--- a/core/modules/system/tests/modules/menu_test/menu_test.permissions.yml
++++ b/core/modules/system/tests/modules/menu_test/menu_test.permissions.yml
+@@ -7,6 +7,9 @@ access child1 test page:
+ access child2 test page:
+   title: 'Access child2 test page'
+   restrict access: true
++access child4 test page:
++  title: 'Access child4 test page'
++  restrict access: true
+ access super child1 test page:
+   title: 'Access super child1 test page'
+   restrict access: true
+@@ -16,3 +19,6 @@ access super child2 test page:
+ access super child3 test page:
+   title: 'Access super child3 test page'
+   restrict access: true
++access super child4 test page:
++  title: 'Access super child4 test page'
++  restrict access: true
+diff --git a/core/modules/system/tests/modules/menu_test/menu_test.routing.yml b/core/modules/system/tests/modules/menu_test/menu_test.routing.yml
+index 5b83aeb2af..0c359e350e 100644
+--- a/core/modules/system/tests/modules/menu_test/menu_test.routing.yml
++++ b/core/modules/system/tests/modules/menu_test/menu_test.routing.yml
+@@ -66,6 +66,20 @@ menu_test.child3_test:
+   requirements:
+     _access: 'TRUE'
+ 
++menu_test.child4_test:
++  path: '/parent_test/child4_test'
++  defaults:
++    _controller: '\Drupal\test_page_test\Controller\TestPageTestController::testPage'
++  requirements:
++    _permission: 'access child4 test page'
++
++menu_test.super_child4_test:
++  path: '/parent_test/child4_test/super_child4_test'
++  defaults:
++    _controller: '\Drupal\test_page_test\Controller\TestPageTestController::testPage'
++  requirements:
++    _permission: 'access super child4 test page'
++
+ menu_test.super_child1_test:
+   path: '/parent_test/child_test/super_child1_test'
+   defaults:
+diff --git a/core/modules/system/tests/src/Functional/Menu/MenuAccessTest.php b/core/modules/system/tests/src/Functional/Menu/MenuAccessTest.php
+index 307fbf3613..c6c30bfbac 100644
+--- a/core/modules/system/tests/src/Functional/Menu/MenuAccessTest.php
++++ b/core/modules/system/tests/src/Functional/Menu/MenuAccessTest.php
+@@ -131,9 +131,11 @@ public function testSystemAdminMenuBlockAccessCheck(): void {
+     // --menu_test.super_child2_test
+     // --menu_test.super_child3_test
+     // -menu_test.child3_test
+-    // All routes in this tree except the "super_child" routes should have the
+-    // '_access_admin_menu_block_page' requirement which denies access unless
+-    // the user has access to a menu item under that route. Route
++    // -menu_test.child4_test
++    // --menu_test.super_child4_test
++    // All routes in this tree except the "super_child" and "child4_test" routes
++    // should have the '_access_admin_menu_block_page' requirement which denies
++    // access unless the user has access to a menu item under that route. Route
+     // 'menu_test.child3_test' has no menu items underneath it so no user should
+     // have access to this route even though it has the requirement
+     // `_access: 'TRUE'`.
+@@ -142,9 +144,11 @@ public function testSystemAdminMenuBlockAccessCheck(): void {
+       'menu_test.child1_test',
+       'menu_test.child2_test',
+       'menu_test.child3_test',
++      'menu_test.child4_test',
+       'menu_test.super_child1_test',
+       'menu_test.super_child2_test',
+       'menu_test.super_child3_test',
++      'menu_test.super_child4_test',
+     ];
+ 
+     // Create a user with access to only the top level parent.
+@@ -178,16 +182,29 @@ public function testSystemAdminMenuBlockAccessCheck(): void {
+       'access child2 test page',
+       'access super child3 test page',
+     ]);
++    $superChild4User = $this->drupalCreateUser([
++      'access parent test page',
++      'access child4 test page',
++      'access super child4 test page',
++    ]);
++    $child4NoSuperChild4User = $this->drupalCreateUser([
++      'access parent test page',
++      'access child4 test page',
++    ]);
++
+     $noParentAccessUser = $this->drupalCreateUser([
+       'access child1 test page',
+       'access child2 test page',
++      'access child4 test page',
+       'access super child1 test page',
+       'access super child2 test page',
+       'access super child3 test page',
++      'access super child4 test page',
+     ]);
+ 
+-    // Users that do not have access to any of the 'super_child' routes will
+-    // not have access to any of the routes in the tree.
++    // Users that do not have access to any of the 'super_child' routes where
++    // the 'child' routes have the '_access_admin_menu_block_page' requirement
++    // will not have access to any of the routes in the tree.
+     $this->assertUserRoutesAccess($parentUser, [], ...$tree_routes);
+     $this->assertUserRoutesAccess($childOnlyUser, [], ...$tree_routes);
+ 
+@@ -217,6 +234,19 @@ public function testSystemAdminMenuBlockAccessCheck(): void {
+       // multiple items nested at the same level.
+       ['menu_test.parent_test', 'menu_test.child2_test', 'menu_test.super_child3_test'],
+       ...$tree_routes);
++    // Users who have only access to one super child route should have access
++    // only to that route and its parents.
++    $this->assertUserRoutesAccess(
++      $superChild4User,
++      ['menu_test.parent_test', 'menu_test.child4_test', 'menu_test.super_child4_test'],
++      ...$tree_routes);
++    // Users who don't have access to a super child route, but where the parent
++    // route does not have the '_access_admin_menu_block_page' requirement,
++    // should have access to that parent route, but not the super child.
++    $this->assertUserRoutesAccess(
++      $child4NoSuperChild4User,
++      ['menu_test.parent_test', 'menu_test.child4_test'],
++      ...$tree_routes);
+ 
+     // Test a route that has parameter defined in the menu item.
+     $this->drupalLogin($parentUser);

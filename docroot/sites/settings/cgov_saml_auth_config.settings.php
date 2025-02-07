@@ -5,10 +5,12 @@
  * Set up SAML settings for Single Sign-On
  */
 
+ require_once 'cgov_settings_utilities.inc';
+
  $samlDir = "";
 
 // Get our current environment
-if (file_exists('/var/www/site-php') && isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+if (CGovSettingsUtil::isAcquia()) {
   $samlDir = "/mnt/files/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/saml";
 } elseif (file_exists('/var/saml')) {
   $samlDir = "/var/saml";

@@ -5,18 +5,21 @@
  */
 #}
 
-{% macro video(name, content, showCaption = true, additionalClasses = "") %}
+{% macro video(name, content, media, showCaption = true, additionalClasses = "") %}
+  {% set videoID = 'media--' ~ media.id()|clean_unique_id %}
   {% set hasRequiredBaseFields = content.field_media_oembed_video|field_value and name %}
   {% set aria_label = "Play video"|t %}
+  {% set hasCaption = content.field_caption|field_value %}
+  {% set hasAudioDescribed = content.field_audio_described_link|field_value %}
   {% if hasRequiredBaseFields %}
     {% set url = content.field_media_oembed_video[0]['#attributes']['src'] %}
-    <figure class="{{'video ' ~ additionalClasses}}">
+    <figure class="{{'video ' ~ additionalClasses}} {% if not hasCaption or (not showCaption and hasAudioDescribed) %}video__no-caption{% endif %}">
       {# Check whether the active video display mode has explicitly set the 'name' as an available field #}
       {% set hasTitle = content.name %}
       {% if hasTitle %}
         <span tabindex="0" class="video-title__heading">{{ name }}</span>
       {% endif %}
-      <div id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
+      <div {% if hasCaption %} {% if media is not null %}aria-labelledby="{{ videoID }}"{% endif %}{% endif %}id="ytplayer-jC8CUIID2HA" class="flex-video widescreen" data-video-url="{{ url }}" data-video-title="{{ name }}">
         <div class="video-preview--container" tabindex="0" role="button" aria-label="{{ aria_label }}">
           {{ content.thumbnail }}
           <div class="video-preview--play-button">
@@ -28,12 +31,14 @@
           <p>{{ name }}</p>
         </div>
       </div>
-      {% set hasCaption = content.field_caption|field_value %}
       {% if hasCaption and showCaption %}
-        <figcaption class="caption-container">
+        <figcaption class="caption-container" id="{{ videoID }}">
           {{ content.field_caption }}
         </figcaption>
       {% endif %}
     </figure>
+    {% if hasAudioDescribed %}
+      {{ content.field_audio_described_link }}
+    {% endif %}
   {% endif %}
 {% endmacro %}
