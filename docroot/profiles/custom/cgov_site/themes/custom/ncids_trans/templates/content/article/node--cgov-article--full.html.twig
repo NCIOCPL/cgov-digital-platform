@@ -1,8 +1,10 @@
 {{ attach_library('ncids_trans/article') }}
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-    <div class="resize-content">
+    <div class="cgdpl">
+      <div class="contentzone">
+      {# Add contentzone and legacy containers to this template #}
         <h1>
             {{ node.label }}
         </h1>
@@ -11,12 +13,13 @@
           {{ content.field_intro_text }}
           {{ content.field_article_body }}
         </div>
+      </div>
     </div>
     {# TODO: Article footer stuff has to go somewhere. TBD. #}
-    <footer class="article-footer">
+    <footer class="cgdp-article-footer">
       {{ content.field_citation }}
       {{ content.field_related_resources }}
-      {{ contentPageMacros.displayDates(node, content) }}
+      {{ contentPageMacros.ncidsDisplayDates(node, content) }}
       {% if node.field_public_use.value == '1' %}
         {{ drupal_region('public_use') }}
       {% endif %}
