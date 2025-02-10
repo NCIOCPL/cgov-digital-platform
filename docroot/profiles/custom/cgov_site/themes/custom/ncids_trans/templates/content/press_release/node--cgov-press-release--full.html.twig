@@ -1,34 +1,38 @@
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{{ attach_library('ncids_trans/press-release') }}
+{% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
   {% if content.field_press_release_type|field_value %}
-    <div id="cgvBodyHeader" class="row banner-slot">
-      <div class="slot-item only-SI large-12 columns body-banner">
-        <div class="news-type">{{ content.field_press_release_type }}</div>
+    <div class="grid-row">
+      <div class="grid-col-12">
+        {{ content.field_press_release_type }}
       </div>
     </div>
   {% endif %}
-  <div class="resize-content">
-    <h1>
-      {{ node.label }}
-    </h1>
-    <div id="cgvBody">
+  <div class="cgdpl">
+    <div class="contentzone">
+      <h1>
+        {{ node.label }}
+      </h1>
+      <div id="cgvBody">
 
-      <div class="press-release-date-contact row collapse">
-        {{ contentPageMacros.displayDates(node,content) }}
-        {{ drupal_region('press_release_contact') }}
+        <div class="press-release-date-contact row collapse">
+          {{ contentPageMacros.displayDates(node,content) }}
+          {{ drupal_region('press_release_contact') }}
+        </div>
+
+        {{ content.field_image_article }}
+        {{ content.field_intro_text }}
+        {{ content.body }}
       </div>
-
-      {{ content.field_image_article }}
-      {{ content.field_intro_text }}
-      {{ content.body }}
     </div>
   </div>
 
-  <footer class="article-footer">
+  <footer class="cgdp-article-footer">
     {{ content.field_citation }}
     {{ content.field_related_resources }}
     {% if node.field_public_use.value == '1' %}
       {{ drupal_region('public_use') }}
-    {% endif %}  </footer>
+    {% endif %}
+  </footer>
 </article>
