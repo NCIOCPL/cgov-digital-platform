@@ -53,6 +53,10 @@ module.exports = {
 		__dirname,
 		'src/entrypoints/cancer-center/cancer-center.ts'
 	),
+	'press-release': path.resolve(
+		__dirname,
+		'src/entrypoints/press-release/press-release.ts'
+	),
 	blogs: path.resolve(__dirname, 'src/entrypoints/blogs/blogs.ts'),
 	biography: path.resolve(__dirname, 'src/entrypoints/biography/biography.ts'),
 	cthp: path.resolve(__dirname, 'src/entrypoints/cthp/cthp.ts'),
