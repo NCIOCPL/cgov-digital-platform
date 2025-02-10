@@ -4,6 +4,32 @@
  * Theme macros for common content page tasks.
  */
 #}
+{% macro ncidsDisplayDates(node, content) %}
+  {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
+    <div class="cgdp-document-dates">
+      <ul class="usa-list usa-list--unstyled">
+        {% if content.field_date_posted[0] %}
+          <li>
+            <strong>{% trans with {'context': 'CGov UI' } %}Posted{% endtrans %}:</strong>
+            {{ content.field_date_posted }}
+          </li>
+        {% endif %}
+        {% if content.field_date_updated[0] %}
+          <li>
+            <strong>{% trans with {'context': 'CGov UI' } %}Updated{% endtrans %}:</strong>
+            {{ content.field_date_updated }}
+          </li>
+        {% endif %}
+        {% if content.field_date_reviewed[0] %}
+          <li>
+            <strong>{% trans with {'context': 'CGov UI' } %}Reviewed{% endtrans %}:</strong>
+            {{ content.field_date_reviewed }}
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
 
 {% macro displayDates(node, content) %}
     {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
