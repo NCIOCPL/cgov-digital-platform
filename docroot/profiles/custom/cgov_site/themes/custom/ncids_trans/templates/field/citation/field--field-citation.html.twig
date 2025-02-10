@@ -1,6 +1,6 @@
-<div id="cgvCitationSl">
+<div class="cgdp-article-footer-citation">
 	<div>
-    <h2 class="cgvCitationSl__heading">
+    <h2 class="nci-heading-h3">
       {% if items|length == 1 %}
         {% trans %}
           Selected Reference
@@ -11,7 +11,7 @@
         {% endtrans %}
       {% endif %}
     </h2>
-    <ol class="article-citation">
+    <ol class="cgdp-article-footer-citation__citations">
       {% for item in items %}
         <li id="r{{ loop.index }}">
           {{ item.content }}
