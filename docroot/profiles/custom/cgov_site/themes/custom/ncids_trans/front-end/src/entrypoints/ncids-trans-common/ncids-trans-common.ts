@@ -66,7 +66,7 @@ import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
 
 import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
 import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
-import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
+// import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
 import formControls from 'Core/libraries/formControls/formControls';
@@ -140,7 +140,9 @@ const onDOMContentLoaded = () => {
 	formControls();
 
 	/*** BEGIN accordionizer ***/
-	makeAllAccordions();
+	// Turning off accordions. Will have another spike to investigate how accordions
+	// will work for the new styles and requirements.
+	// makeAllAccordions();
 
 	/*** BEGIN page outlining ***/
 	// generate the page outline -- this is used for all page-/document-level navigation
