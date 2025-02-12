@@ -2,6 +2,8 @@
 // file should generate markup.
 @forward '../cgdp-required';
 // Expose USWDS variables and mixins to our imports.
+@forward "nci-heading";
+@forward "usa-list";
 @use 'uswds-core' as *;
 
 @import "../../legacy/styles/variables";
@@ -147,4 +149,62 @@ $include-html-type-classes: false;
       margin: 0;
     }
   }
+}
+
+.cgdp-related-resources {
+	// Verify with design what the actual tokens should be
+	@include u-margin-bottom(2);
+	@include u-margin-top(5);
+	ul {
+		@include u-margin-top(1);
+		li {
+			@include u-margin-y(0.5);
+			@include u-margin-x(0);
+			a {
+				// We can probably just add the classes to the anchor tag instead like we do for summary box
+				@include u-text('no-underline');
+			}
+		}
+	}
+}
+
+// Removes legacy styling for bullet points on lists
+.contentzone ul > li:before {
+	@include u-display('none');
+}
+
+.cgdp-article-footer-citation {
+	ol {
+		@include u-margin-bottom(2);
+		@include u-padding(0);
+		li {
+			@include u-margin-left(5);
+			@include u-margin-y(1);
+			@include u-line-height('body', 3);
+			p {
+				@include u-display('inline');
+			}
+		}
+	}
+}
+
+.cgdp-public-use {
+	// add styles for public use
+	// margin top 0, padding 0, italics, font stuff
+	clear: both;
+	// add uswds mixin
+	@include u-padding(0);
+	@include u-margin-top(0);
+	@include u-border-top(1px, $theme-color-base);
+	p {
+		@include u-line-height('body', 3);
+	}
+}
+
+.cgdp-document-dates {
+	// add styles for document dates
+	@include u-margin-top(3);
+
+	// clearfix class on the ul has a marign-bottom of 16px. Do we still need this?
+	@include u-margin-bottom(2);
 }
