@@ -154,13 +154,13 @@ const initialize = (): void => {
 	comboBoxEl.addEventListener('usa-combo-box:selected', (evt) => {
 		stopErrorState();
 		const detail = (evt as CustomEvent).detail;
-		if (detail.previouslySelected[0].text !== detail.selected.item(0).text) {
+		if (detail.previouslySelected[0].text !== detail.selected[0].text) {
 			state.selectedItemsCounter = state.selectedItemsCounter + 1;
 			const target = evt.currentTarget as HTMLElement;
 			const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 				getLandingRowsAndColsInfo(target);
 			const linkPosition = Array.from(comboBox.getOptions()).indexOf(
-				detail.selected.item(0)
+				detail.selected[0]
 			);
 			const { pageType, pageTemplate } = getPageInfo();
 			const eventNameStart = getEventNameBeginning(pageType);
@@ -253,7 +253,8 @@ const initialize = (): void => {
 		const target = evt.currentTarget as HTMLElement;
 		const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 			getLandingRowsAndColsInfo(target);
-		const selectedOption = comboBox.getSelectedOptions().item(0);
+		const selectedOptions = comboBox.getSelectedOptions();
+		const selectedOption = selectedOptions[0];
 		if (
 			selectedOption === null ||
 			selectedOption.text === 'Select a cancer type' ||
