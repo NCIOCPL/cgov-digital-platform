@@ -2,12 +2,12 @@
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
+    {# Add contentzone and legacy containers to this template #}
+    <h1 class="nci-heading-h1">
+        {{ node.label }}
+    </h1>
     <div class="cgdpl">
       <div class="contentzone">
-      {# Add contentzone and legacy containers to this template #}
-        <h1>
-            {{ node.label }}
-        </h1>
         <div id="cgvBody">
           {{ content.field_image_article }}
           {{ content.field_intro_text }}

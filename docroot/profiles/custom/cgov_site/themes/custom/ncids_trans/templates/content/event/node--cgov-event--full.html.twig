@@ -7,9 +7,9 @@
 {% set isMultiYearEvent = eventStart|date('Y') <  eventEnd|date('Y') %}
 
 <article>
-  <div class="cgdpl">
-    <div class="contentzone">
-      <h1 class="event-title">{{ node.label }}</h1>
+    <h1 class="nci-heading-h1">{{ node.label }}</h1>
+    <div class="cgdpl">
+      <div class="contentzone">
         <div id="cgvBody">
           {{ content.field_image_article }}
           <h2 class="event-series">{{ content.field_event_series }}</h2>
@@ -53,9 +53,9 @@
               <a href="/node/{{ node.id }}/icalendar">Add to Outlook Calendar</a>
           </p>
           {{ content.body }}
+        </div>
       </div>
     </div>
-  </div>
 
     <footer class="article-footer">
         {{ content.field_related_resources }}

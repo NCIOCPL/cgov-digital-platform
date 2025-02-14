@@ -3,18 +3,16 @@
 
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-  <h1>{{ name }}</h1>
+  <h1 class="nci-heading-h1">{{ name }}</h1>
   {# Need styles for body content. Usa-prose condenses the width #}
-  <div>
-    {{ content.body }}
-  </div>
   <div class="cgdpl">
     <div class="contentzone">
+      {{ content.body }}
       {% set classes = "image-center-full" %}
       {{ infographicMacros.infographicImage(classes, content) }}
     </div>
   </div>
-  <footer>
+  <footer class="cgdp-article-footer">
     {{ contentPageMacros.displayDates(media,content) }}
     {% if media.field_public_use.value == '1' %}
       {{ drupal_region('public_use') }}
