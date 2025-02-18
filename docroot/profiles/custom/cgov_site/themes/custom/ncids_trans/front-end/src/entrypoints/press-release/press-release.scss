@@ -1,3 +1,11 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
 @forward '../cgdp-required';
+
+@use 'uswds-core' as *;
+
+.cgdp-media-contact {
+	@include at-media('desktop'){
+		@include u-text-align('right');
+	}
+}
