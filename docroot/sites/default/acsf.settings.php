@@ -23,6 +23,28 @@ if (!empty($_ENV['AH_SITE_GROUP']) && !empty($_ENV['AH_SITE_ENVIRONMENT']) && fu
     return 'acsf-infrastructure';
   }
 
+  $enable_deployment_500_mode = (int) getenv('ACSF_ENABLE_DEPLOYMENT_500_MODE');
+
+  if ($enable_deployment_500_mode === 1) {
+    header('HTTP/1.1 503 Service Temporarily Unavailable');
+    header('Status: 503 Service Temporarily Unavailable');
+    print <<<HTML
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <title>Service Temporarily Unavailable</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+ </head>
+ <body>
+  <h1>Service Temporarily Unavailable</h1>
+  <p>We're currently performing maintenance/updates. The site will be back shortly.</p>
+ </body>
+</html>
+HTML;
+    exit();
+  }
+
   // Print a 404 response and a small HTML page.
   header("HTTP/1.0 404 Not Found");
   header('Content-type: text/html; charset=utf-8');

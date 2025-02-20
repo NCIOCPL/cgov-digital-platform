@@ -166,7 +166,7 @@ class NavItem {
     foreach ($navigationDisplayRules as $rule) {
       $rule = $rule['value'];
       $this->displayRules[$rule] = TRUE;
-    };
+    }
   }
 
   /**
