@@ -1,0 +1,291 @@
+diff --git a/core/core.services.yml b/core/core.services.yml
+index 10feccb1372..be54cc82ecf 100644
+--- a/core/core.services.yml
++++ b/core/core.services.yml
+@@ -1857,8 +1857,6 @@ services:
+   response_filter.active_link:
+     class: Drupal\Core\EventSubscriber\ActiveLinkResponseFilter
+     arguments: ['@current_user', '@path.current', '@path.matcher', '@language_manager']
+-  response_filter.rss.cdata:
+-    class: Drupal\Core\EventSubscriber\RssResponseCdata
+   response_filter.rss.relative_url:
+     class: Drupal\Core\EventSubscriber\RssResponseRelativeUrlFilter
+   messenger:
+diff --git a/core/lib/Drupal/Core/EventSubscriber/RssResponseCdata.php b/core/lib/Drupal/Core/EventSubscriber/RssResponseCdata.php
+deleted file mode 100644
+index 4c3c88726d0..00000000000
+--- a/core/lib/Drupal/Core/EventSubscriber/RssResponseCdata.php
++++ /dev/null
+@@ -1,79 +0,0 @@
+-<?php
+-
+-namespace Drupal\Core\EventSubscriber;
+-
+-use Drupal\Component\Utility\Xss;
+-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+-use Symfony\Component\HttpKernel\KernelEvents;
+-
+-/**
+- * Subscribes to wrap RSS descriptions in CDATA.
+- */
+-class RssResponseCdata implements EventSubscriberInterface {
+-
+-  /**
+-   * Wraps RSS descriptions in CDATA.
+-   *
+-   * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+-   *   The response event.
+-   */
+-  public function onResponse(ResponseEvent $event): void {
+-    // Skip responses that are not RSS.
+-    if (stripos($event->getResponse()->headers->get('Content-Type', ''), 'application/rss+xml') === FALSE) {
+-      return;
+-    }
+-
+-    $response = $event->getResponse();
+-    $response->setContent($this->wrapDescriptionCdata($response->getContent()));
+-  }
+-
+-  /**
+-   * Converts description node to CDATA RSS markup.
+-   *
+-   * @param string $rss_markup
+-   *   The RSS markup to update.
+-   *
+-   * @return string|false
+-   *   The updated RSS XML or FALSE if there is an error saving the xml.
+-   */
+-  protected function wrapDescriptionCdata(string $rss_markup): string|false {
+-    $rss_dom = new \DOMDocument();
+-
+-    // Load the RSS, if there are parsing errors, abort and return the unchanged
+-    // markup.
+-    $previous_value = libxml_use_internal_errors(TRUE);
+-    $rss_dom->loadXML($rss_markup);
+-    $errors = libxml_get_errors();
+-    libxml_use_internal_errors($previous_value);
+-    if ($errors) {
+-      return $rss_markup;
+-    }
+-
+-    foreach ($rss_dom->getElementsByTagName('item') as $item) {
+-      foreach ($item->getElementsByTagName('description') as $node) {
+-        $html_markup = $node->nodeValue;
+-        if (!empty($html_markup)) {
+-          $html_markup = Xss::filter($html_markup, ['a', 'abbr', 'acronym', 'address', 'b', 'bdo', 'big', 'blockquote', 'br', 'caption', 'cite', 'code', 'col', 'colgroup', 'dd', 'del', 'dfn', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 'q', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'ul', 'var']);
+-          $new_node = $rss_dom->createCDATASection($html_markup);
+-          $node->replaceChild($new_node, $node->firstChild);
+-        }
+-      }
+-    }
+-
+-    return $rss_dom->saveXML();
+-  }
+-
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public static function getSubscribedEvents(): array {
+-    // This should run after any other response subscriber that modifies the
+-    // markup.
+-    // @see \Drupal\Core\EventSubscriber\RssResponseRelativeUrlFilter
+-    $events[KernelEvents::RESPONSE][] = ['onResponse', -513];
+-
+-    return $events;
+-  }
+-
+-}
+diff --git a/core/lib/Drupal/Core/EventSubscriber/RssResponseRelativeUrlFilter.php b/core/lib/Drupal/Core/EventSubscriber/RssResponseRelativeUrlFilter.php
+index 204a5780428..fa6c09c7a7d 100644
+--- a/core/lib/Drupal/Core/EventSubscriber/RssResponseRelativeUrlFilter.php
++++ b/core/lib/Drupal/Core/EventSubscriber/RssResponseRelativeUrlFilter.php
+@@ -74,7 +74,6 @@ protected function transformRootRelativeUrlsToAbsolute($rss_markup, Request $req
+    */
+   public static function getSubscribedEvents(): array {
+     // Should run after any other response subscriber that modifies the markup.
+-    // Only the CDATA wrapper should run after this filter.
+     // @see \Drupal\Core\EventSubscriber\ActiveLinkResponseFilter
+     $events[KernelEvents::RESPONSE][] = ['onResponse', -512];
+
+diff --git a/core/modules/views/tests/src/Functional/Plugin/DisplayFeedTest.php b/core/modules/views/tests/src/Functional/Plugin/DisplayFeedTest.php
+index dadae86f1d0..5c0cbe67982 100644
+--- a/core/modules/views/tests/src/Functional/Plugin/DisplayFeedTest.php
++++ b/core/modules/views/tests/src/Functional/Plugin/DisplayFeedTest.php
+@@ -78,13 +78,8 @@ public function testFeedOutput(): void {
+     $this->assertEquals('Copyright 2019 Dries Buytaert', $this->getSession()->getDriver()->getText('//channel/copyright'));
+     $this->assertEquals($node_title, $this->getSession()->getDriver()->getText('//item/title'));
+     $this->assertEquals($node_link, $this->getSession()->getDriver()->getText('//item/link'));
+-    // HTML should no longer be escaped since it is CDATA. Confirm it is
+-    // wrapped in CDATA.
+-    $this->assertSession()->responseContains('<description><![CDATA[');
+-    // Confirm that the view is still displaying the content.
+-    $this->assertSession()->responseContains('<p>A paragraph</p>');
+-    // Confirm that the CDATA is closed properly.
+-    $this->assertSession()->responseContains(']]></description>');
++    // Verify HTML is properly escaped in the description field.
++    $this->assertSession()->responseContains('&lt;p&gt;A paragraph&lt;/p&gt;');
+
+     $view = $this->container->get('entity_type.manager')->getStorage('view')->load('test_display_feed');
+     $display = &$view->getDisplay('feed_1');
+@@ -144,13 +139,8 @@ public function testFeedFieldOutput(): void {
+     $this->drupalGet('test-feed-display-fields.xml');
+     $this->assertEquals($node_title, $this->getSession()->getDriver()->getText('//item/title'));
+     $this->assertEquals($node_link, $this->getSession()->getDriver()->getText('//item/link'));
+-    // HTML should no longer be escaped since it is CDATA. Confirm it is wrapped
+-    // in CDATA.
+-    $this->assertSession()->responseContains('<description><![CDATA[');
+-    // Confirm that the view is still displaying the content.
+-    $this->assertSession()->responseContains('<p>A paragraph</p>');
+-    // Confirm that the CDATA is closed properly.
+-    $this->assertSession()->responseContains(']]></description>');
++    // Verify HTML is properly escaped in the description field.
++    $this->assertSession()->responseContains('&lt;p&gt;A paragraph&lt;/p&gt;');
+
+     // Change the display to use the nid field, which is rewriting output as
+     // 'node/{{ nid }}' and make sure things are still working.
+diff --git a/core/tests/Drupal/Tests/Core/EventSubscriber/RssResponseCdataTest.php b/core/tests/Drupal/Tests/Core/EventSubscriber/RssResponseCdataTest.php
+deleted file mode 100644
+index 00ae45fbb0d..00000000000
+--- a/core/tests/Drupal/Tests/Core/EventSubscriber/RssResponseCdataTest.php
++++ /dev/null
+@@ -1,139 +0,0 @@
+-<?php
+-
+-declare(strict_types=1);
+-
+-namespace Drupal\Tests\Core\EventSubscriber;
+-
+-use Drupal\Core\EventSubscriber\RssResponseCdata;
+-use Drupal\Tests\UnitTestCase;
+-use Symfony\Component\HttpFoundation\Request;
+-use Symfony\Component\HttpFoundation\Response;
+-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+-use Symfony\Component\HttpKernel\HttpKernelInterface;
+-
+-/**
+- * @coversDefaultClass \Drupal\Core\EventSubscriber\RssResponseCdata
+- * @group event_subscriber
+- */
+-class RssResponseCdataTest extends UnitTestCase {
+-
+-  /**
+-   * Provides known RSS feeds to compare.
+-   *
+-   * @return array
+-   *   An array of valid and invalid RSS feeds.
+-   */
+-  public static function providerTestOnResponse(): array {
+-    $data = [];
+-
+-    $valid_feed = <<<RSS
+-<?xml version="1.0" encoding="utf-8"?>
+-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xml:base="https://www.drupal.org">
+-<channel>
+-  <title>Drupal.org</title>
+-  <link>https://www.drupal.org</link>
+-  <description>Come for the software &amp; stay for the community
+-Drupal is an open source content management platform powering millions of websites and applications. It’s built, used, and supported by an active and diverse community of people around the world.</description>
+-  <language>en</language>
+-  <item>
+-     <title>Drupal 8 turns one!</title>
+-     <link>https://www.drupal.org/blog/drupal-8-turns-one</link>
+-     <description>&lt;a href=&quot;localhost/node/1&quot;&gt;Hello&amp;nbsp;&lt;/a&gt;
+-    </description>
+-  </item>
+-  </channel>
+-</rss>
+-RSS;
+-
+-    $valid_expected_feed = <<<RSS
+-<?xml version="1.0" encoding="utf-8"?>
+-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xml:base="https://www.drupal.org">
+-<channel>
+-  <title>Drupal.org</title>
+-  <link>https://www.drupal.org</link>
+-  <description>Come for the software &amp; stay for the community
+-Drupal is an open source content management platform powering millions of websites and applications. It’s built, used, and supported by an active and diverse community of people around the world.</description>
+-  <language>en</language>
+-  <item>
+-     <title>Drupal 8 turns one!</title>
+-     <link>https://www.drupal.org/blog/drupal-8-turns-one</link>
+-     <description><![CDATA[<a href="localhost/node/1">Hello&nbsp;</a>
+-    ]]></description>
+-  </item>
+-  </channel>
+-</rss>
+-
+-RSS;
+-
+-    $data['valid-feed'] = [$valid_feed, $valid_expected_feed];
+-
+-    $invalid_feed = <<<RSS
+-<?xml version="1.0" encoding="utf-8"?>
+-<rss version="2.0" xml:base="https://www.drupal.org"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+-<channel>
+-  <title>Drupal.org</title>
+-  <link>https://www.drupal.org</link>
+-  <description>Come for the software, stay for the community
+-Drupal is an open source content management platform powering millions of websites and applications. It’s built, used, and supported by an active and diverse community of people around the world.</description>
+-  <language>en</language>
+-  <item>
+-     <title>Drupal 8 turns one!</title>
+-     <link>https://www.drupal.org/blog/drupal-8-turns-one</link>
+-     <description>
+-     <![CDATA[
+-     &lt;a href="localhost/node/1"&gt;Hello&lt;/a&gt;
+-     <script>
+-<!--//--><![CDATA[// ><!--
+-
+-<!--//--><![CDATA[// ><!--
+-
+-<!--//--><![CDATA[// ><!--
+-(function(d, s, id) {
+-  var js, fjs = d.getElementsByTagName(s)[0];
+-  if (d.getElementById(id)) return;
+-  js = d.createElement(s); js.id = id;
+-  js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.3";
+-  fjs.parentNode.insertBefore(js, fjs);
+-}(document, 'script', 'facebook-jssdk'));
+-//--><!]]]]]]><![CDATA[><![CDATA[>
+-
+-//--><!]]]]><![CDATA[>
+-
+-//--><!]]>
+-</script>
+-    ]]>
+-    </description>
+-  </item>
+-  </channel>
+-</rss>
+-RSS;
+-
+-    $data['invalid-feed'] = [$invalid_feed, $invalid_feed];
+-    return $data;
+-  }
+-
+-  /**
+-   * @dataProvider providerTestOnResponse
+-   *
+-   * @param string $content
+-   *   The content for the request.
+-   * @param string $expected_content
+-   *   The expected content from the response.
+-   */
+-  public function testOnResponse(string $content, string $expected_content): void {
+-    $event = new ResponseEvent(
+-      $this->prophesize(HttpKernelInterface::class)->reveal(),
+-      Request::create('/'),
+-      HttpKernelInterface::MAIN_REQUEST,
+-      new Response($content, 200, [
+-        'Content-Type' => 'application/rss+xml',
+-      ])
+-    );
+-
+-    $url_filter = new RssResponseCdata();
+-    $url_filter->onResponse($event);
+-
+-    $this->assertEquals($expected_content, $event->getResponse()->getContent());
+-  }
+-
+-}

@@ -1,96 +1,129 @@
 jqueryandui:
   js:
-    dist/js/jqueryandui.js: { preprocess: true }
+    dist/js/jqueryandui.js: {}
   dependencies:
     - core/jquery
 
 global-styling:
   css:
     theme:
-      dist/css/Common.css: { preprocess: false }
+      dist/css/Common.css: {}
 
 global-scripts:
   js:
-    dist/js/Common.js: { preprocess: false }
+    dist/js/Common.js: {}
   dependencies:
     - cgov_common/jqueryandui
 
 article:
   css:
     theme:
-      dist/css/Article.css: { preprocess: false }
+      dist/css/Article.css: {}
   js:
-    dist/js/Article.js: { preprocess: false }
+    dist/js/Article.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 homelanding:
   css:
     theme:
-      dist/css/Homelanding.css: { preprocess: false }
+      dist/css/Homelanding.css: {}
   js:
-    dist/js/Homelanding.js: { preprocess: false }
+    dist/js/Homelanding.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 specialreport:
   css:
     theme:
-      dist/css/SpecialReport.css: { preprocess: false }
+      dist/css/SpecialReport.css: {}
   js:
-    dist/js/SpecialReport.js: { preprocess: false }
+    dist/js/SpecialReport.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 dcegconnect:
   css:
     theme:
-      dist/css/dcegConnect.css: { preprocess: false }
+      dist/css/dcegConnect.css: {}
   js:
-    dist/js/dcegConnect.js: { preprocess: false }
+    dist/js/dcegConnect.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 pdq:
   css:
     theme:
-      dist/css/PDQ.css: { preprocess: false }
+      dist/css/PDQ.css: {}
   js:
-    dist/js/PDQ.js: { preprocess: false }
+    dist/js/PDQ.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 minilanding:
   css:
     theme:
-      dist/css/Minilanding.css: { preprocess: false }
+      dist/css/Minilanding.css: {}
   js:
-    dist/js/Minilanding.js: { preprocess: false }
+    dist/js/Minilanding.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 cancer-centers:
   css:
     theme:
-      dist/css/CancerCenters.css: { preprocess: false }
+      dist/css/CancerCenters.css: {}
   js:
-    dist/js/CancerCenters.js: { preprocess: false }
+    dist/js/CancerCenters.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 biography:
   css:
     theme:
-      dist/css/Biography.css: { preprocess: false }
+      dist/css/Biography.css: {}
   js:
-    dist/js/Biography.js: { preprocess: false }
+    dist/js/Biography.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 event:
   css:
     theme:
-      dist/css/Event.css: { preprocess: false }
+      dist/css/Event.css: {}
   js:
-    dist/js/Event.js: { preprocess: false }
+    dist/js/Event.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 blogPost:
   css:
     theme:
-      dist/css/BlogPost.css: { preprocess: false }
+      dist/css/BlogPost.css: {}
   js:
-    dist/js/BlogPost.js: { preprocess: false }
+    dist/js/BlogPost.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 blogSeries:
   css:
     theme:
-      dist/css/BlogSeries.css: { preprocess: false }
+      dist/css/BlogSeries.css: {}
   js:
-    dist/js/BlogSeries.js: { preprocess: false }
+    dist/js/BlogSeries.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 purple-theme:
   css:
@@ -98,6 +131,9 @@ purple-theme:
       dist/css/Purple.css: { preprocess: false }
   js:
     dist/js/Purple.js: { preprocess: false }
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 blue-theme:
   css:
@@ -105,6 +141,9 @@ blue-theme:
       dist/css/Blue.css: { preprocess: false }
   js:
     dist/js/Blue.js: { preprocess: false }
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 green-theme:
   css:
@@ -112,6 +151,9 @@ green-theme:
       dist/css/Green.css: { preprocess: false }
   js:
     dist/js/Green.js: { preprocess: false }
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 connect-theme:
   css:
@@ -119,11 +161,16 @@ connect-theme:
       dist/css/Connect.css: { preprocess: false }
   js:
     dist/js/Connect.js: { preprocess: false }
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
 
 cthp:
   css:
     theme:
-      dist/css/CTHP.css: { preprocess: false }
+      dist/css/CTHP.css: {}
   js:
-    dist/js/CTHP.js: { preprocess: false }
-
+    dist/js/CTHP.js: {}
+  dependencies:
+    - cgov_common/global-scripts
+    - cgov_common/global-styling
