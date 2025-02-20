@@ -558,7 +558,6 @@ class JsOnlyAppModulePlugin extends AppModulePluginBase {
     $head_links_to_remove = array_filter($remove_elements, function ($el) {
       return ($el === "alternate");
     });
-    ;
 
     /* -----------
      * Remove head elements
