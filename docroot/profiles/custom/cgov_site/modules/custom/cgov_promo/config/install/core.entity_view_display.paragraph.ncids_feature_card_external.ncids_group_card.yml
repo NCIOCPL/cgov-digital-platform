@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.ncids_group_card
+    - field.field.paragraph.ncids_feature_card_external.field_external_link_display
     - field.field.paragraph.ncids_feature_card_external.field_featured_url
     - field.field.paragraph.ncids_feature_card_external.field_override_card_description
     - field.field.paragraph.ncids_feature_card_external.field_override_card_title
@@ -16,7 +17,7 @@ bundle: ncids_feature_card_external
 mode: ncids_group_card
 content:
   field_featured_url:
-    weight: 0
+    type: link_separate
     label: hidden
     settings:
       trim_length: 80
@@ -25,7 +26,7 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    type: link_separate
+    weight: 0
     region: content
   field_override_card_description:
     type: string
@@ -52,4 +53,5 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-hidden: {  }
+hidden:
+  field_external_link_display: true

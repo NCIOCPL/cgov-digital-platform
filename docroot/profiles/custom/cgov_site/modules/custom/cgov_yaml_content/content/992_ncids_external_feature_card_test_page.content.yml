@@ -54,42 +54,46 @@
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Override Placeholder'
         - entity: 'paragraph'
           type: "ncids_feature_card_external"
           field_featured_url:
             - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
           field_override_card_title:
-            - value: 'External Card Title'
+            - value: 'Force Hide Icon'
           field_override_card_description:
             - value: 'This is a use case of the card using the images crops for 16x9 and 4x3'
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Feature Card Cat'
         - entity: 'paragraph'
           type: "ncids_feature_card_external"
           field_featured_url:
-            - uri: 'https://www.google.com'
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
           field_override_card_title:
-            - value: 'External Card Title'
+            - value: 'Force Display Icon'
           field_override_card_description:
             - value: 'This uses the 4x3 crop and the 16x9 override'
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Feature Card Cat 16x9 Override'
     - entity: 'paragraph'
       type: "ncids_3_feature_card_row"
@@ -107,31 +111,35 @@
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Feature Card Cat 4x3 Override'
         - entity: 'paragraph'
           type: "ncids_feature_card_external"
           field_featured_url:
             - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
           field_override_card_title:
-            - value: 'External Card Title'
+            - value: 'Force Hide Icon'
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Override Placeholder'
         - entity: 'paragraph'
           type: "ncids_feature_card_external"
           field_featured_url:
-            - uri: 'https://www.google.com'
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
           field_override_card_title:
-            - value: 'External Card Title'
+            - value: 'Force Display Icon'
           field_override_card_description:
             - value: 'External Card Description'
     - entity: 'paragraph'
@@ -142,32 +150,151 @@
         - entity: 'paragraph'
           type: "ncids_feature_card_external"
           field_featured_url:
-            - uri: 'https://www.google.com'
+            - uri: 'https://www.nih.gov'
+          field_external_link_display:
+            - value: 'default'
           field_override_card_title:
-            - value: 'External Card Title'
+            - value: 'Gov Default'
           field_override_card_description:
             - value: 'Image has no crop -> Show placeholder'
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
-                callback: 'reference' 
+                callback: 'reference'
                 args:
-                  - 'media' 
-                  - bundle: 'cgov_image' 
+                  - 'media'
+                  - bundle: 'cgov_image'
                     name: 'Find a Clinical Trial'
     ######## End Feature Row ###########
-    
+
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
-    ######## Placeholder ############
+######## Begin Feature Row ###########
     - entity: 'paragraph'
-      type: "cgov_card_raw_html"
-      field_raw_html:
-        - format: "raw_html"
-          value: |
-            <div class="grid-container">
-              <div class="usa-section">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit ullamcorper dignissim cras tincidunt lobortis. Sapien pellentesque habitant morbi tristique senectus et. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Lectus sit amet est placerat in egestas. Vitae proin sagittis nisl rhoncus mattis rhoncus. Tincidunt ornare massa eget egestas purus viverra accumsan. Ipsum faucibus vitae aliquet nec. Lacus laoreet non curabitur gravida arcu ac. Interdum varius sit amet mattis vulputate. Viverra mauris in aliquam sem fringilla ut. Amet consectetur adipiscing elit ut aliquam.
-              </div>
-            </div>
-    ######## End Placeholder ############
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Feature Card Row 1"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_card_description:
+            - value: 'Image using 16x9 and 4x3 Override Fields'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+          field_override_card_title:
+            - value: 'Forzar ocultar icono'
+          field_override_card_description:
+            - value: 'This is a use case of the card using the images crops for 16x9 and 4x3'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+          field_override_card_title:
+            - value: 'Icono de visualización de fuerza'
+          field_override_card_description:
+            - value: 'This uses the 4x3 crop and the 16x9 override'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat 16x9 Override'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Feature Card Row 2"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_override_card_title:
+            - value: 'Título de la tarjeta externa'
+          field_override_card_description:
+            - value: 'Image using 16x9 crop and 4x3 Override Fields'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Feature Card Cat 4x3 Override'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+          field_override_card_title:
+            - value: 'Forzar ocultar icono'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+          field_override_card_title:
+            - value: 'Icono de visualización de fuerza'
+          field_override_card_description:
+            - value: 'External Card Description'
+    - entity: 'paragraph'
+      type: "ncids_3_feature_card_row"
+      field_container_heading:
+        - value: "Feature Card Row 3"
+      field_row_cards:
+        - entity: 'paragraph'
+          type: "ncids_feature_card_external"
+          field_featured_url:
+            - uri: 'https://www.nih.gov'
+          field_external_link_display:
+            - value: 'default'
+          field_override_card_title:
+            - value: 'Gov Default'
+          field_override_card_description:
+            - value: 'Image has no crop -> Show placeholder'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+    ######## End Feature Row ###########
