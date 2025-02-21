@@ -2,29 +2,31 @@
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-    {# Add contentzone and legacy containers to this template #}
-    <h1 class="nci-heading-h1">
-        {{ node.label }}
-    </h1>
-    {# {{ content.field_image_article }} #}
-    <div class="cgdpl">
-      <div class="contentzone">
-        <div id="cgvBody">
-          {{ content.field_intro_text }}
-          {{ content.field_article_body }}
-        </div>
-      </div>
-    </div>
-    {# TODO: Article footer stuff has to go somewhere. TBD. #}
-    <footer class="cgdp-article-footer">
-      {{ content.field_citation }}
-      {{ content.field_related_resources }}
-      {{ contentPageMacros.ncidsDisplayDates(node, content) }}
-      {% if node.field_public_use.value == '1' %}
-        {{ drupal_region('public_use') }}
-      {% endif %}
-      {% if node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
-        {{ drupal_region('syndication') }}
-      {% endif %}
-    </footer>
+	{# Add contentzone and legacy containers to this template #}
+	<h1 class="nci-heading-h1">
+		{{ node.label }}
+	</h1>
+	{# {{ content.field_image_article }} #}
+	{{ content.field_intro_text }}
+	<div class="cgdpl">
+		<div class="contentzone">
+			<div
+				id="cgvBody">
+				{# {{ content.field_intro_text }} #}
+				{{ content.field_article_body }}
+			</div>
+		</div>
+	</div>
+	{# TODO: Article footer stuff has to go somewhere. TBD. #}
+	<footer class="cgdp-article-footer">
+		{{ content.field_citation }}
+		{{ content.field_related_resources }}
+		{{ contentPageMacros.ncidsDisplayDates(node, content) }}
+		{% if node.field_public_use.value == '1' %}
+			{{ drupal_region('public_use') }}
+		{% endif %}
+		{% if node.field_hhs_syndication.value[0]['syndicate'] == '1' %}
+			{{ drupal_region('syndication') }}
+		{% endif %}
+	</footer>
 </article>
