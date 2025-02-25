@@ -4,6 +4,11 @@
 // file should generate markup.
 @forward '../cgdp-required';
 
+// Style all "naked" <a> elements with the correct colors. This overrides
+// the uswds setting used by uswds-global just for this entry point.
+@use 'uswds-core';
+uswds-core.$theme-global-link-styles: true;
+
 // This must be the first one after the required and nothing in between.
 // This is the normalizer, font stuff, elements, accessibility.
 @forward 'uswds-global';
@@ -51,8 +56,6 @@
 @forward "usa-paragraph";
 @forward "usa-prose";
 @forward "nci-heading";
-
-@use 'uswds-core';
 
 // We should not allow all the utilities we do for home and landing. There should
 // not be as many bespoke layouts for inner pages.
