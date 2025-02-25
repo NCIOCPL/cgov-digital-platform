@@ -8,23 +8,38 @@
  * nav displays - based on the wrapping container.
  */
 #}
-{% if content.field_body_section_heading['#items'].getValue() %}
-  {# TODO: Determine how to deal with headings that are H3s #}
-  {# Set the id to a clean version of the section heading for OTP links. #}
-  {% if schema_org_type %}
-    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}" itemprop="name">
-  {% else %}
-    <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}">
+
+{# Setup attribs if schema org is enabled #}
+{% set section_attribs = create_attribute() %}
+{% if schema_org_type %}
+  {% set section_attribs = create_attribute({
+    'itemscope': '',
+    'itemprop': 'mainEntity',
+    'itemtype': 'https://schema.org/Question'
+  }) %}
+{% endif %}
+
+{# TODO: What is the merit of actually using sections instead of divs? #}
+{# Is it for SEO, is it for accessibility? If it is for A11Y, are they labeled #}
+<section {{ section_attribs }}>
+  {% if content.field_body_section_heading['#items'].getValue() %}
+    {# TODO: Determine how to deal with headings that are H3s #}
+    {# Set the id to a clean version of the section heading for OTP links. #}
+    {% if schema_org_type %}
+      <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}" itemprop="name">
+    {% else %}
+      <h2 id="{{ content.field_body_section_heading['#items'][0].value | striptags | nci_transliterate | clean_id }}">
+    {% endif %}
+      {{- content.field_body_section_heading -}}
+    </h2>
   {% endif %}
-    {{- content.field_body_section_heading -}}
-  </h2>
-{% endif %}
-{% if schema_org_type %}
-  <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-    <div itemprop="text">
-{% endif %}
-{{ content.field_body_section_content }}
-{% if schema_org_type %}
+  {% if schema_org_type %}
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <div itemprop="text">
+  {% endif %}
+  {{ content.field_body_section_content }}
+  {% if schema_org_type %}
+      </div>
     </div>
-  </div>
-{% endif %}
+  {% endif %}
+</section>
