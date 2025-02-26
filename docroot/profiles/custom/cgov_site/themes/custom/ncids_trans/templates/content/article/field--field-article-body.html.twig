@@ -14,7 +14,7 @@
   {# TODO: Find a way to ensure there will be at least 1 heading before drawing. #}
   <nav class="cgdp-on-this-page" role="navigation">
     {# See admin/config/regional/translate for Spanish string. #}
-    <span class="cgdp-on-this-page__header">{% trans %}On This Page{% endtrans %}</span>
+    <h2 class="cgdp-on-this-page__header">{% trans %}On This Page{% endtrans %}</h2>
     <ul>
       {% for item in items %}
         {% if item.content['#paragraph'].field_body_section_heading.value %}
