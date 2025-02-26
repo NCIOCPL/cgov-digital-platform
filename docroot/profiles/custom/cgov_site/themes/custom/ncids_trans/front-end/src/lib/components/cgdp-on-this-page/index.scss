@@ -1,0 +1,16 @@
+@use 'uswds-core' as *;
+@use 'usa-list' as list;
+
+.cgdp-on-this-page {
+	margin: units(3) units(0) units(5) units(2);
+	&__header {
+		@include typeset-h3;
+	}
+
+	ul {
+		@extend .usa-list;
+		& > li a {
+			text-decoration: none;;
+		}
+	}
+}
