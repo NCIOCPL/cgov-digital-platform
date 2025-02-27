@@ -3,7 +3,16 @@
 @forward '../cgdp-required';
 // Expose USWDS variables and mixins to our imports.
 @use 'uswds-core' as *;
+@use 'usa-accordion' as accordion;
 
-@import "../../legacy/styles/variables";
+@import '../../legacy/styles/variables';
 @import '../../legacy/styles/breakpoint-mixins';
-@import "~Core/styles/feature_cards";
+@import '~Core/styles/feature_cards';
+
+.usa-accordion {
+	@include u-margin-top('205');
+	@extend .usa-accordion__heading;
+	section:not(:first-child) {
+		@include u-margin-top(1);
+	}
+}
