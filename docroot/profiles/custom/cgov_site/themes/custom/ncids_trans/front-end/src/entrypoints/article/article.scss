@@ -2,4 +2,12 @@
 // file should generate markup.
 @forward '../cgdp-required';
 
+@use 'uswds-core' as *;
+
 @import '../../lib/components/cgdp-on-this-page';
+@import '../../lib/components/cgdp-article-body';
+@import '../../lib/components/cgdp-related-resources';
+
+.cgdp-related-resources.usa-accordion {
+	@include u-margin-top(1);
+}

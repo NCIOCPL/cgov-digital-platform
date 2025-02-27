@@ -2,7 +2,12 @@
 @use 'usa-list' as list;
 
 .cgdp-on-this-page {
+	display: none;
+	@include at-media('tablet') {
+		display: block;
+	}
 	margin: units(3) units(0) units(5) units(2);
+
 	&__header {
 		@include typeset-h3;
 	}
