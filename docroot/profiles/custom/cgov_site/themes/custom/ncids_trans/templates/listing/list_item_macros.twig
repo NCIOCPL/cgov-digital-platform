@@ -282,7 +282,7 @@
     * NCIDS 2 Column Container (Dynamic Lists as a field)
     * NCIDS Dynamic Lists
 #}
-{% macro ncids_dynamic_list_macro(title, date, description, image, url) %}
+{% macro ncids_dynamic_list_macro(title, date, description = '', image, url) %}
   <li class="usa-collection__item">
     {% set renderImage = image|render %}
     {% if renderImage is not empty %}
@@ -299,7 +299,9 @@
           {{ date }}
         </li>
       </ul>
-      <p class="usa-collection__description">{{ description }}</p>
+      {% if description is not empty %}
+        <p class="usa-collection__description">{{ description }}</p>
+      {% endif %}
     </div>
   </li>
 {% endmacro %}

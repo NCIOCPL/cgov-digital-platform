@@ -12,8 +12,8 @@
   {# The view more link is TBD for now as the news-events page has a custom content block instead of the view more link #}
   {# {% set featured_item_node = content.field_view_more_link[0]["#node"] %}
   {% set nid = featured_item_node.id %} #}
-  {% set url = path('entity.node.canonical', {'node' : content.field_view_more_link[0]['#plain_text']}) %}
   {% if content.field_view_more_text[0] and content.field_view_more_link[0] %}
+    {% set url = path('entity.node.canonical', {'node' : content.field_view_more_link[0]['#plain_text']}) %}
     <div class="cgdp-dynamic-list__view-more-button padding-top-105">
       <a class="usa-button usa-button--nci-icon" href="{{ url }}">
         <svg viewBox="0 0 24 24" fill="none" width="24" height="24" class="usa-icon" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
