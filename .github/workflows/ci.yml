@@ -21,9 +21,9 @@ concurrency:
 jobs:
   build:
     name: Build, Test and Upload Artifacts
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     services:
-      ## Ubuntu 20 comes with mysql 8, so we need a separate service
+      ## Starting with Ubuntu 20.04, the runners come with mysql 8, so we need a separate service
       mysql:
         image: mysql:5.7
         ports:
