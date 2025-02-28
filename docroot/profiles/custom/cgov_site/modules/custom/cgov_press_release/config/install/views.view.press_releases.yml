@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.press_view_archive_item
     - core.entity_view_mode.node.press_view_home_list_item
+    - core.entity_view_mode.node.press_view_ncids_collection_condensed
     - core.entity_view_mode.node.press_view_ncids_collection_media
     - node.type.cgov_press_release
   module:
@@ -77,6 +78,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 20
           total_pages: null
           id: 0
@@ -94,7 +96,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -252,6 +253,76 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  ncids_collection_condensed:
+    id: ncids_collection_condensed
+    display_title: 'NCIDS Collection Condensed'
+    display_plugin: block
+    position: 1
+    display_options:
+      title: 'News Releases'
+      pager:
+        type: full
+        options:
+          offset: 0
+          pagination_heading_level: h4
+          items_per_page: 20
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: ''
+            last: ''
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      style:
+        type: default
+        options: {  }
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: press_view_ncids_collection_condensed
+      defaults:
+        title: false
+        css_class: false
+        pager: false
+        style: false
+        row: false
+        header: false
+        footer: false
+      css_class: ''
+      display_description: 'This is a view configuration for the NCIDS Collection Condensed pages.'
+      header: {  }
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: 'News Releases @start - @end of @total'
+      rendering_language: '***LANGUAGE_language_interface***'
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
         - 'languages:language_interface'
         - url
         - url.query_args

@@ -1,0 +1,109 @@
+{#
+/**
+ * @file
+ * Theme override for a views pager.
+ *
+ * Available variables:
+ * - heading_id: Pagination heading ID.
+ * - pagination_heading_level: The heading level to use for the pager.
+ * - items: List of pager items.
+ *   The list is keyed by the following elements:
+ *   - first: Item for the first page; not present on the first page of results.
+ *   - previous: Item for the previous page; not present on the first page
+ *     of results.
+ *   - next: Item for the next page; not present on the last page of results.
+ *   - last: Item for the last page; not present on the last page of results.
+ *   - pages: List of pages, keyed by page number.
+ *   Sub-sub elements:
+ *   items.first, items.previous, items.next, items.last, and each item inside
+ *   items.pages contain the following elements:
+ *   - href: URL with appropriate query parameters for the item.
+ *   - attributes: A keyed list of HTML attributes for the item.
+ *   - text: The visible text used for the item link, such as "‹ Previous"
+ *     or "Next ›".
+ * - current: The page number of the current page.
+ * - ellipses: If there are more pages than the quantity allows, then an
+ *   ellipsis before or after the listed pages may be present.
+ *   - previous: Present if the currently visible list of pages does not start
+ *     at the first page.
+ *   - next: Present if the visible list of pages ends before the last page.
+ *
+ * @see template_preprocess_pager()
+ */
+#}
+{% if items %}
+  <nav role="navigation" aria-labelledby="{{ heading_id }}" class="usa-pagination">
+    <ul class="usa-pagination__list js-pager__items">
+      {# Print first item if we are not on the first page. #}
+      {% if items.first and items.first.text is not empty %}
+          <li class="usa-pagination__item usa-pagination__item--first">
+          <a href="{{ items.first.href }}" title="{{ 'Go to first page'|t }}"{{ items.first.attributes.addClass('usa-pagination__link', 'usa-pagination__first-page')|without('href', 'title') }}>
+            <span class="visually-hidden">{{ 'First page'|t }}</span>
+            <span aria-hidden="true">{{ items.first.text|default('« First'|t) }}</span>
+          </a>
+        </li>
+      {% endif %}
+      {# Print previous item if we are not on the first page. #}
+      {% if items.previous %}
+        <li class="usa-pagination__item usa-pagination__arrow">
+          <a href="{{ items.previous.href }}" aria-label="{{ 'Previous page'|t }}"{{ items.previous.attributes.addClass('usa-pagination__link', 'usa-pagination__previous-page')|without('href', 'title', 'rel', 'aria-label') }}>
+            <svg class="usa-icon" aria-hidden="true" role="img" viewBox="0 0 24 24">
+              <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+            <span class="usa-pagination__link-text"> {{ 'Previous'|t }} </span>
+          </a>
+        </li>
+      {% endif %}
+      {# Add an ellipsis if there are further previous pages. #}
+      {% if ellipses.previous %}
+        <li class="usa-pagination__item usa-pagination__overflow" aria-label="ellipsis indicating non-visible pages" role="presentation"><span>&hellip;</span></li>
+      {% endif %}
+      {# Now generate the actual pager piece. #}
+      {% for key, item in items.pages %}
+        {% if current == key %}
+          <li class="usa-pagination__item usa-pagination__page-no">
+            <a href="{{ item.href }}" aria-label="{{ 'Page @number'|t({'@number': item.text}) }}" aria-current="page" {{ item.attributes.addClass('usa-pagination__button', 'usa-current')|without('href', 'aria-label', 'aria-current')}}>
+              <span class="visually-hidden">
+                {{ 'Page'|t }}
+              </span>
+              {{- key -}}
+            </a>
+          </li>
+        {% else %}
+          <li class="usa-pagination__item">
+            <a href="{{ item.href }}" aria-label="{{ 'Page @number'|t({'@number': item.text}) }}" {{ item.attributes.addClass('usa-pagination__button')|without('href', 'aria-label')}}>
+            <span class="visually-hidden">
+              {{ 'Page'|t }}
+            </span>
+            {{- key -}}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      {# Add an ellipsis if there are further next pages. #}
+      {% if ellipses.next %}
+        <li class="usa-pagination__item usa-pagination__overflow" aria-label="ellipsis indicating non-visible pages" role="presentation"><span>&hellip;</span></li>
+      {% endif %}
+      {# Print next item if we are not on the last page. #}
+      {% if items.next %}
+        <li class="usa-pagination__item usa-pagination__arrow">
+          <a href="{{ items.next.href }}" aria-label="{{ 'Next page'|t }}" {{ items.next.attributes.addClass('usa-pagination__link', 'usa-pagination__next-page')|without('href', 'title', 'rel', 'aria-label') }}>
+            <span class="usa-pagination__link-text"> {{ 'Next'|t }} </span>
+            <svg class="usa-icon" aria-hidden="true" role="img" viewBox="0 0 24 24">
+              <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+          </a>
+        </li>
+      {% endif %}
+      {# Print last item if we are not on the last page. #}
+      {% if items.last and items.last.text is not empty %}
+        <li class="usa-pagination__item usa-pagination__item--first">
+          <a href="{{ items.last.href }}" title="{{ 'Go to last page'|t }}"{{ items.last.attributes.addClass('usa-pagination__link', 'usa-pagination__last-page')|without('href', 'title') }}>
+            <span class="visually-hidden">{{ 'Last page'|t }}</span>
+            <span aria-hidden="true">{{ items.last.text|default('Last »'|t) }}</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
