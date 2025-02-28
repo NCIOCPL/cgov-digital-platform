@@ -11,3 +11,22 @@
 .cgdp-dynamic-list__title {
 	margin-block-end: 1.75rem !important;
 }
+
+.cgdp-dynamic-list__top-pager,
+.cgdp-dynamic-list__bottom-pager {
+	border-top: solid 1px color($theme-color-base-light);
+	@include u-margin-top(4);
+	@include u-margin-bottom(3);
+	width: 100%;
+	.usa-pagination {
+		justify-content: left;
+	}
+}
+
+.cgdp-dynamic-list__top-pager {
+	border-bottom: solid 1px color($theme-color-base-light);
+}
+
+.cgdp-dynamic-list__bottom-pager {
+	@include u-padding-bottom(0);
+}
