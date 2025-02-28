@@ -41,9 +41,9 @@ jobs:
     needs: check_for_past_run
     if: needs.check_for_past_run.outputs.changed == 'true'
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     services:
-      ## Ubuntu 20 comes with mysql 8, so we need a separate service
+      ## Starting with Ubuntu 20.04, the runners come with mysql 8, so we need a separate service
       mysql:
         image: mysql:5.7
         ports:
@@ -127,7 +127,7 @@ jobs:
   check_for_past_run:
 
     name: Check for past successful run
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       changed: ${{ steps.record_change.outputs.changed }}
       key: ${{ steps.install_files_hash.outputs.key }}
@@ -159,7 +159,7 @@ jobs:
   save_successful_run:
     name: Save install files hash
     needs: [check_for_past_run, test_update]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Dummy file
         run: |
