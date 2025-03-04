@@ -5,6 +5,8 @@
 
 @use 'uswds-core' as *;
 
+@import '../../lib/components/cgdp-field-image-article';
+
 .cgdp-media-contact {
 	@include at-media('tablet') {
 		@include u-text-align('right');
@@ -16,6 +18,7 @@
 }
 
 .cgdp-press-release-title-block {
+	@include u-margin-bottom(2);
 	div,
 	div > .usa-list {
 		line-height: 1.5;
