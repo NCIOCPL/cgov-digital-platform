@@ -1,4 +1,14 @@
 @use 'uswds-core' as *;
+@use '~Styles/sprites/svg-sprite' as sprite;
+
+// Mixin for font styles shared between enlarge text and captions
+@mixin image-caption-styles {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+	@include u-border-left(0.5, $theme-color-secondary);
+	@include u-padding-y(1);
+	@include u-padding-x(2);
+}
 
 .cgdp-image {
 	img {
@@ -8,12 +18,7 @@
 		transition: transform 0.5s ease;
 	}
 	&__caption {
-		@include u-font('sans', '2xs');
-		line-height: line-height($theme-body-font-family, $theme-body-line-height);
-		@include u-padding-top(1);
-		@include u-padding-bottom(1);
-		@include u-padding-x(2);
-		@include u-border-left(0.5, $theme-color-secondary);
+		@include image-caption-styles();
 		p {
 			@include u-margin-top(0);
 			&:not(:only-child) {
@@ -31,4 +36,20 @@
 	@include u-display('block');
 	@include u-margin-x(0);
 	@include u-margin-y(0);
+
+	// Styles for enlarge image link START
+	figure {
+		@include u-margin(0);
+	}
+	&__enlarge > a {
+		@include u-display('flex');
+		@include u-flex('align-center');
+		@include image-caption-styles();
+		.usa-icon {
+			width: 1.5rem;
+			height: 1.5rem;
+			@include u-margin-right(1);
+		}
+	}
+	// Enlarge image link styles END
 }

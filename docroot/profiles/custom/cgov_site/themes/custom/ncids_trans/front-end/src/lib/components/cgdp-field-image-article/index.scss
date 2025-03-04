@@ -1,0 +1,13 @@
+@use 'uswds-core' as *;
+
+@import '../../components/cgdp-image';
+
+.cgdp-field-image-article {
+	@include at-media('tablet') {
+		float: right;
+		max-width: 40%;
+		.cgdp-image {
+			@include u-margin-left(5);
+		}
+	}
+}
