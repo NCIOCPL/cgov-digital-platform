@@ -29,13 +29,66 @@
           - 'taxonomy_term'
           - vid: 'cgov_site_sections'
             computed_path: '/instituto'
+  field_page_style:
+    value: "ncids_with_title"
   field_landing_contents:
     - entity: 'paragraph'
-      type: "cgov_card_raw_html"
-      field_raw_html:
-        - format: "raw_html"
-          value: |
-            <h2>This page intentionally left blank</h2>
+      type: "ncids_hero"
+      field_ncids_theme:
+        - value: 'light'
+      field_tagline:
+        - value: 'NCI is the nation''s leader in cancer research'
+      field_link_button:
+        - entity: 'paragraph'
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_button_text:
+            - value: "Force Icon"
+          field_external_link_display:
+            - value: 'force_display'
+      field_widescreen_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-wide.png'
+      field_desktop_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-desktop.png'
+      field_tablet_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-tabletlarge.png'
+      field_tablet_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-tablet.png'
+      field_mobile_large_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-mobilelarge.png'
+      field_mobile_hero:
+        - '#process':
+            callback: 'file'
+            args:
+              - 'image'
+              - type: 'module'
+                filename: 'hero-image-grants-mobile.png'
   field_landing_contents__ES:
     - entity: 'paragraph'
       type: "cgov_card_raw_html"

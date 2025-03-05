@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_external_link_display
+    - paragraphs.paragraphs_type.ncids_link_button_external
+  module:
+    - options
+id: paragraph.ncids_link_button_external.field_external_link_display
+field_name: field_external_link_display
+entity_type: paragraph
+bundle: ncids_link_button_external
+label: 'External Link Display'
+description: 'The external link icon automatically displays for a hyperlink that isn&rsquo;t a .gov. Use this option to override the external link icon display rules.'
+required: true
+translatable: false
+default_value:
+  -
+    value: default
+default_value_callback: ''
+settings: {  }
+field_type: list_string

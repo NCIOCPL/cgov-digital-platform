@@ -63,31 +63,25 @@
           field_external_link:
             - uri: 'https://www.google.com'
           field_button_text:
-            - value: "External Link Button"
+            - value: "Default External"
+          field_external_link_display:
+            - value: 'default'
         - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_button_text:
+            - value: "Default Internal"
+          field_external_link_display:
+            - value: 'default'
         - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Guide Card Test'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_button_text:
+            - value: "Force Display External"
+          field_external_link_display:
+            - value: 'force_display'
       field_widescreen_hero:
         - '#process':
             callback: 'file'
@@ -136,31 +130,27 @@
         - entity: 'paragraph'
           type: "ncids_link_button_external"
           field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_button_text:
+            - value: "Force Display Internal"
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "ncids_link_button_external"
+          field_external_link:
             - uri: 'https://www.google.com'
           field_button_text:
-            - value: "Learn More"
+            - value: "Force Hide External"
+          field_external_link_display:
+            - value: 'do_not_display'
         - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Internal Promo Block Test'
-        - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Guide Card Test'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_button_text:
+            - value: "Force Hide Internal"
+          field_external_link_display:
+            - value: 'do_not_display'
     - entity: 'paragraph'
       type: "ncids_2_guide_card_row"
       field_image_desc_guide_cards:
