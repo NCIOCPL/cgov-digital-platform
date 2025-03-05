@@ -1568,7 +1568,7 @@
             computed_path: '/subvenciones-capacitacion'
             langcode: 'es'
   field_page_style:
-    value: "ncids_without_title"
+    value: "ncids_with_title"
   ### English Contents
   field_landing_contents:
     ######## Begin Feature Row ###########
@@ -1578,6 +1578,15 @@
         - value: 'light'
       field_tagline:
         - value: 'NCI is the nation''s leader in cancer research'
+      field_link_button:
+        - entity: 'paragraph'
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_button_text:
+            - value: "Hide Icon"
+          field_external_link_display:
+            - value: 'do_not_display'
       field_widescreen_hero:
         - '#process':
             callback: 'file'
