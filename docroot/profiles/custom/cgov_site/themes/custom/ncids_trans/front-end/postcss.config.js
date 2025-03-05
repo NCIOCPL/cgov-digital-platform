@@ -7,9 +7,6 @@ module.exports = {
 				transform(prefix, selector, prefixedSelector, filepath) {
 					if (filepath.match(/-legacy\.scss$/)) {
 						return prefixedSelector;
-					} else if (filepath.match(/r4r-app\/.*\.s?css$/)) {
-						// Hack for legacy R4R app
-						return prefixedSelector;
 					}
 					return selector;
 				},
