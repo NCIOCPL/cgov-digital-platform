@@ -5,9 +5,11 @@ dependencies:
     - field.field.paragraph.ncids_link_button_external.field_button_alt
     - field.field.paragraph.ncids_link_button_external.field_button_text
     - field.field.paragraph.ncids_link_button_external.field_external_link
+    - field.field.paragraph.ncids_link_button_external.field_external_link_display
     - paragraphs.paragraphs_type.ncids_link_button_external
   module:
     - link
+    - options
 id: paragraph.ncids_link_button_external.default
 targetEntityType: paragraph
 bundle: ncids_link_button_external
@@ -30,7 +32,7 @@ content:
     weight: 1
     region: content
   field_external_link:
-    weight: 0
+    type: link_separate
     label: hidden
     settings:
       trim_length: 80
@@ -39,6 +41,13 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    type: link_separate
+    weight: 0
+    region: content
+  field_external_link_display:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
 hidden: {  }
