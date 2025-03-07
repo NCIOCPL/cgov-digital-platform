@@ -1,0 +1,12 @@
+  {{ header }}
+  <div class="cgdp-dynamic-list__top-pager">
+    {{ pager }}
+  </div>
+  {% if rows -%}
+    <ul class="usa-collection usa-collection--condensed" data-dynamic-list-view="Press Releases" data-dynamic-list-display="NCIDS Collection Condensed">
+        {{ rows }}
+    </ul>
+  {% endif %}
+  <div class="cgdp-dynamic-list__bottom-pager">
+    {{ pager }}
+  </div>
