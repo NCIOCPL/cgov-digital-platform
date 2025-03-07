@@ -953,3 +953,29 @@ function cgov_core_redirect_update(Redirect $entity) {
   // We do not need to clear the $entity->original because the redirect module
   // already clears that on updates and deletes via cache tag.
 }
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ *
+ * Rewrite the changed field to display the date in our preferred format,
+ * regardless of the user's locale.
+ */
+function cgov_core_preprocess_views_view_field(array &$variables) {
+  $view = $variables['view'];
+
+  $isContentView = fn($viewID): bool => in_array($viewID, ['content', 'moderated_content', 'block_content']) !== FALSE
+    && (strpos($view->current_display, 'page') === 0 || strpos($view->current_display, 'moderated_content') === 0);
+  $isMediaView = fn($viewID): bool => in_array($viewID, ['media', 'moderated_media']) && strpos($view->current_display, 'media_page_list') === 0;
+
+  // We only want to do this for content and media views.
+  if (!$isContentView($view->id()) && !$isMediaView($view->id()))
+    return;
+
+  // We only want to do this for the 'changed' field.
+  if ($variables['field']->field !== 'changed' || empty($variables['row']->_entity))
+    return;
+
+  // Apply our custom date format to the 'changed' field.
+  $timestamp = $variables['row']->_entity->getChangedTime();
+  $variables['output'] = \Drupal::service('date.formatter')->format($timestamp, 'cgov_short_date');
+}
