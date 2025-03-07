@@ -3,7 +3,7 @@ export const nciFeatureCardRowBadDom = () => {
 
 	// language=HTML
 	div.innerHTML = `
-		<section class="usa-section usa-section--light cgdp-feature-card-row" data-eddl-bad-landing-row="feature-card">
+		<section class="usa-section--light cgdp-feature-card-row" data-eddl-bad-landing-row="feature-card">
 			<div class="grid-container">
 				<h2 class="cgdp-feature-card-row__heading">Feature Card Row 1</h2>
 				<ul class="nci-card-group">

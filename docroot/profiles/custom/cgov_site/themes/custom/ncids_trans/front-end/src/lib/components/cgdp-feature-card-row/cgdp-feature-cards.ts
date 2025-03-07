@@ -13,6 +13,19 @@ const getText = (link: HTMLElement, selector: string): string => {
 };
 
 /**
+ * Gets text content by selector.
+ * @param {HTMLElement} link - Selected card.
+ * @param {string} selector - Selector for query.
+ */
+const getTitle = (link: HTMLElement, selector: string): string => {
+	const container = link.closest('.usa-section') as HTMLElement;
+	const element = container?.querySelector(selector);
+	const text = element?.textContent?.trim();
+
+	return text || 'Not Defined';
+};
+
+/**
  * Gets the exact location clicked that triggered the event.
  * @param {Event} evt - Click event
  */
@@ -27,23 +40,6 @@ const getLinkArea = (evt: Event): string => {
 	};
 
 	return tags[tag] || 'Not Defined';
-};
-
-/**
- * Gets text content of the exact link area.
- * @param {Event} evt - Click event
- */
-const getLinkText = (evt: Event): string => {
-	const link = evt.currentTarget as HTMLElement;
-	const linkArea = getLinkArea(evt);
-
-	const textOptions: { [key: string]: string } = {
-		Image: 'Image',
-		Description: getText(link, '.nci-card__description'),
-		Title: getText(link, '.nci-card__title'),
-	};
-
-	return textOptions[linkArea] || 'Not Defined';
 };
 
 /**
@@ -64,9 +60,9 @@ const featureCardLinkClickHandler =
 			'Feature Card',
 			'Light',
 			'Standard Single Link',
-			getText(link, '.nci-card__title'),
+			getTitle(link, '.cgdp-feature-card-row__heading'), // title of row
 			link.dataset.eddlLandingItemLinkType || '_ERROR_',
-			getLinkText(evt),
+			getText(link, '.nci-card__title'), // title of card
 			getLinkArea(evt),
 			1,
 			1

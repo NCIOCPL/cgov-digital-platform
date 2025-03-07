@@ -127,7 +127,7 @@ class CgovDateFormatter extends DateTimeDefaultFormatter {
         // the formatted value.
         $dateEntity->get(0)->value,
       ];
-    };
+    }
 
     // 2. Sort (in place) according to datetime_iso8601 value ascending.
     usort($dateEntitiesWithValues, function ($entity1, $entity2) {

@@ -48,10 +48,10 @@
         "drupal/admin_toolbar": "^3.4",
         "drupal/akamai": "^5.0@RC",
         "drupal/autologout": "^1.4",
-        "drupal/ckeditor_lts": "^1.0",
+        "drupal/ckeditor_lts": "1.0.3",
         "drupal/config_perms": "^2.1",
-        "drupal/core-composer-scaffold": "~10.3.8",
-        "drupal/core-recommended": "~10.3.8",
+        "drupal/core-composer-scaffold": "~10.4.3",
+        "drupal/core-recommended": "~10.4.3",
         "drupal/crop": "^2.3.0",
         "drupal/ctools": "^4.0.0",
         "drupal/devel": "^5.1.2",
@@ -87,7 +87,7 @@
         "drupal/viewsreference": "2.0-beta6",
         "drupal/yaml_content": "^1.0-alpha9",
         "drush/drush": "^12.4.3",
-        "eluceo/ical": "^0.15.0",
+        "eluceo/ical": "^0.18.0",
         "js-cookie/js-cookie": "^3.0",
         "justinrainbow/json-schema": "^v5.2.13",
         "kint-php/kint": "^3.3",
@@ -98,7 +98,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/core-dev": "~10.3.8",
+        "drupal/core-dev": "~10.4.3",
         "jangregor/phpstan-prophecy": "^1.0",
         "mglaman/phpstan-drupal": "^1.1",
         "phpspec/prophecy-phpunit": "^2",
@@ -230,6 +230,7 @@
                 "4033 : Turn off memcache on ODEs, hack for our issue 4033": "patches/acquia/memcache.settings-hack-for-4033.patch"
             },
             "drupal/core": {
+                "3497758 : Regression: RssResponseCdata filtering out common HTML tags from RSS feeds (https://www.drupal.org/project/drupal/issues/3497758#comment-15984102, comment #63; diff taken from https://github.com/drupal/drupal/commit/5e9220f2eb28857a14ac5c82a0333a8673b4e80c.diff)": "patches/drupal/core/3497758-63-revert-cdata-rss.patch",
                 "2952990 : Missing schema for display_options.defaults.sitename_title (https://www.drupal.org/project/drupal/issues/2952990#comment-12526074, comment 2)": "patches/drupal/core/2952990-2-views-schema.patch",
                 "3150294 : (Unofficial Patch) New translations should use initial workflow state" : "patches/drupal/workflow-hack-for-3150294.patch",
                 "1308152 : Add stream wrappers to access extension files (https://www.drupal.org/project/drupal/issues/1308152#comment-15653396, comment 404)": "patches/drupal/core/1308152-404-stream-wrapper.patch",

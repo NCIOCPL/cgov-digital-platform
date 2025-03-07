@@ -95,10 +95,6 @@ $include-html-type-classes: false;
       margin-right: 2.5em;
     }
 
-    &.align-right {
-      margin-left: 2.5em;
-    }
-
     &.align-center {
       margin: 2.5em auto;
     }
@@ -107,6 +103,15 @@ $include-html-type-classes: false;
       background-color: transparent;
     }
   }
+}
+@include bp(medium-up) {
+	.cgvblogpost {
+		.embedded-entity{
+			&.align-right {
+				margin-left: 2.5em;
+			}
+		}
+	}
 }
 
 @include bp(medium-up) {
