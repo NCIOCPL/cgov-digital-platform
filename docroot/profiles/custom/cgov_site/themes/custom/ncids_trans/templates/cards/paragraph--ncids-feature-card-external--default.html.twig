@@ -19,8 +19,12 @@
 {# ###### Render Card ###### #}
 {% set id = paragraph.id() %}
 {% set entity_type = paragraph.entityTypeID %}
+{% set card_attributes = create_attribute({'class': ['nci-card','cgdp-feature-card']}) %}
+  {% if (paragraph.field_external_link_display.value == 'force_display') %}
+    {% set card_attributes = card_attributes.addClass('nci-card--external') %}
+  {% endif %}
 <div class="usa-section">
-  <div class="nci-card cgdp-feature-card">
-    {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, entity_type, 'External') }}
+  <div {{ card_attributes }}>
+    {{ cardMacros.ncidsFeatureCard(title, description, image, url, directory, id, entity_type, 'External', suppress_external_icon) }}
   </div>
 </div>
