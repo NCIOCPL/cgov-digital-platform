@@ -1,0 +1,29 @@
+<?php
+
+use Drupal\Core\Config\ConfigFactoryInterface;
+
+/**
+ * Implements hook_install().
+ */
+function cgov_syslog_install(): void {
+  _cgov_syslog_override_config();
+}
+
+/**
+ * Overwite syslog.settings with our desired configuration.
+ * @return void
+ */
+function _cgov_syslog_override_config(): void {
+
+  $syslog_config = \Drupal::configFactory()->getEditable('syslog.settings');
+  $syslog_config->set('format', '!severity|!base_url|!timestamp|!type|!ip|!request_uri|!referer|!uid|!link|!message');
+  $syslog_config->save();
+  \Drupal::logger('cgov_syslog')->info('Override syslog.settings with cgov_syslog.settings');
+}
+
+/**
+ * Update hook to update syslog.settings to our desired configuration.
+ */
+function cgov_syslog_update_10001(): void {
+  _cgov_syslog_override_config();
+}
