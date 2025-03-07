@@ -63,31 +63,25 @@
           field_external_link:
             - uri: 'https://www.google.com'
           field_button_text:
-            - value: "External Link Button"
+            - value: "Learn More"
+          field_external_link_display:
+            - value: 'default'
         - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_button_text:
+            - value: "Force Show Icon"
+          field_external_link_display:
+            - value: 'force_display'
         - entity: 'paragraph'
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Guide Card Test'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_button_text:
+            - value: "Force Hide Icon"
+          field_external_link_display:
+            - value: 'do_not_display'
       field_widescreen_hero:
         - '#process':
             callback: 'file'

@@ -196,33 +196,29 @@
                 filename: 'wide-guide-card-image-2.png'
       field_three_link_buttons:
       - entity: 'paragraph'
-        type: "ncids_link_button_internal"
-        field_internal_link:
-          - target_type: 'node'
-            '#process':
-              callback: 'reference'
-              args:
-                - 'node'
-                - type: 'cgov_mini_landing'
-                  title: 'Coping with Cancer'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.google.com'
         field_button_text:
-          - value: 'Cancer Homepage'
+          - value: "External Link Default"
+        field_external_link_display:
+          - value: 'default'
+      - entity: 'paragraph'
+        type: "ncids_link_button_external"
+        field_external_link:
+          - uri: 'https://www.cancer.gov'
+        field_button_text:
+          - value: "Force Display"
+        field_external_link_display:
+          - value: 'force_display'
       - entity: 'paragraph'
         type: "ncids_link_button_external"
         field_external_link:
           - uri: 'https://www.google.com'
         field_button_text:
-          - value: "External Link to Google"
-      - entity: 'paragraph'
-        type: "ncids_link_button_internal"
-        field_internal_link:
-          - target_type: 'node'
-            '#process':
-              callback: 'reference'
-              args:
-                - 'node'
-                - type: 'cgov_blog_series'
-                  title: 'Cancer Currents Blog'
+          - value: "Force Hide"
+        field_external_link_display:
+          - value: 'do_not_display'
     - entity: "paragraph"
       type: "ncids_3_feature_row_opt_head"
       field_container_heading:
