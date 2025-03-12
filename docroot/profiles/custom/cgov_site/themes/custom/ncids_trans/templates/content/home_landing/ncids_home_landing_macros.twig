@@ -1,5 +1,5 @@
 {# Macro for NCIDS Promo Block #}
-{% macro ncidsPromoBlock(title, description, image, url, id, entity_type, image_position, promo_theme, button_text, button_alt, link_type) %}
+{% macro ncidsPromoBlock(title, description, image, url, id, entity_type, image_position, promo_theme, button_text, button_alt, link_type, external_icon_display = "default" ) %}
 	{% set renderImage = image|render %}
 	{% import _self as self %}
     {% set titleID = "#{entity_type}-#{id}-title" %}
@@ -34,7 +34,15 @@
                             {{ description }}
                         </p>
                     {% endif %}
-                    <a class="usa-button usa-button--secondary" href="{{ url }}" {{ ariaAttribs }} data-eddl-landing-item-link-type="{{ link_type }}">
+                    {% set link_attributes = create_attribute() %}
+                    {% set link_classes = create_attribute({'class': ['usa-button', 'usa-button--secondary' ]}) %}
+                    {% if external_icon_display == 'do_not_display' %}
+                      {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', true) %}
+                    {% endif %}
+                    {% if external_icon_display == 'force_display' %}
+                      {% set link_classes = link_classes.addClass('usa-button--external') %}
+                    {% endif %}
+                    <a {{ link_classes }} href="{{ url }}" {{ ariaAttribs }} {{ link_attributes }} data-eddl-landing-item-link-type="{{ link_type }}">
                         {{ button_text }}
                     </a>
                 </div>

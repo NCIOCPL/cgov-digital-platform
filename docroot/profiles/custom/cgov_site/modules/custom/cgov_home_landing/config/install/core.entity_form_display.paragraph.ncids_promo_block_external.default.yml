@@ -5,6 +5,7 @@ dependencies:
     - entity_browser.browser.cgov_image_browser
     - field.field.paragraph.ncids_promo_block_external.field_button_alt
     - field.field.paragraph.ncids_promo_block_external.field_button_text
+    - field.field.paragraph.ncids_promo_block_external.field_external_link_display
     - field.field.paragraph.ncids_promo_block_external.field_featured_url
     - field.field.paragraph.ncids_promo_block_external.field_image_position_promo
     - field.field.paragraph.ncids_promo_block_external.field_ncids_theme
@@ -22,7 +23,7 @@ mode: default
 content:
   field_button_alt:
     type: string_textfield
-    weight: 7
+    weight: 8
     region: content
     settings:
       size: 60
@@ -30,11 +31,17 @@ content:
     third_party_settings: {  }
   field_button_text:
     type: string_textfield
-    weight: 6
+    weight: 7
     region: content
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_external_link_display:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_featured_url:
     type: link_default
@@ -58,7 +65,7 @@ content:
     third_party_settings: {  }
   field_override_description:
     type: string_textfield
-    weight: 4
+    weight: 5
     region: content
     settings:
       size: 60
@@ -66,7 +73,7 @@ content:
     third_party_settings: {  }
   field_override_image_promotional:
     type: entity_browser_entity_reference
-    weight: 5
+    weight: 6
     region: content
     settings:
       entity_browser: cgov_image_browser
@@ -81,7 +88,7 @@ content:
     third_party_settings: {  }
   field_override_title:
     type: string_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60

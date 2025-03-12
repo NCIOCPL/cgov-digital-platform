@@ -16,8 +16,8 @@
 {% set promo_theme = paragraph.field_ncids_theme.value %}
 {# /*
   The elseif statement below is a hack to address the already existing
-  'nci-promo-block--dark' values that are in the database. 
-  TODO: Issue #3988 
+  'nci-promo-block--dark' values that are in the database.
+  TODO: Issue #3988
   https://github.com/NCIOCPL/cgov-digital-platform/issues/3988
 */ #}
 {% if promo_theme == 'dark' or promo_theme == 'nci-promo-block--dark' %}
@@ -35,4 +35,4 @@
 {% set id = paragraph.id() %}
 {% set entity_type = paragraph.entityTypeID %}
 
-{{ homeLandingMacros.ncidsPromoBlock(paragraph.field_override_title.value, description, image, externalUrl, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "External") }}
+{{ homeLandingMacros.ncidsPromoBlock(paragraph.field_override_title.value, description, image, externalUrl, id, entity_type, image_position, promo_theme, paragraph.field_button_text.value, paragraph.field_button_alt.value, "External", paragraph.field_external_link_display.value ) }}
