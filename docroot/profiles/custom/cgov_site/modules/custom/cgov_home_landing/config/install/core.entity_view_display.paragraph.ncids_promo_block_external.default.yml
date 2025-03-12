@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.ncids_promo_block_external.field_button_alt
     - field.field.paragraph.ncids_promo_block_external.field_button_text
+    - field.field.paragraph.ncids_promo_block_external.field_external_link_display
     - field.field.paragraph.ncids_promo_block_external.field_featured_url
     - field.field.paragraph.ncids_promo_block_external.field_image_position_promo
     - field.field.paragraph.ncids_promo_block_external.field_ncids_theme
@@ -34,6 +35,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_external_link_display:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_featured_url:
     type: link_separate
@@ -79,11 +87,11 @@ content:
     weight: 5
     region: content
   field_override_title:
-    weight: 3
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
 hidden: {  }
