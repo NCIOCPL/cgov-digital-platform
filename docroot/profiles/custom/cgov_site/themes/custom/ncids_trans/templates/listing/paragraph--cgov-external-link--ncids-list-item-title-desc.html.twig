@@ -10,7 +10,7 @@
 
   {# ###### Setup the URL ###### #}
   {% set url = content.field_external_link[0]['#url'] %}
-
+  {% set external_link_display = content.field_external_link_display.value %}
   {## Render List Item ##}
-  {{ listItemMacros.ncids_list_macro(title, description, url, "Title and Description") }}
+  {{ listItemMacros.ncids_list_macro(title, description, url, "Title and Description", external_link_display = 'default') }}
 {% endif %}

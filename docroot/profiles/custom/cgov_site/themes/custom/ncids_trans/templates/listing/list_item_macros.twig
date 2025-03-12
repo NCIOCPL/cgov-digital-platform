@@ -290,8 +290,16 @@
     {% endif %}
     <div class="usa-collection__body">
       <h3 class="usa-collection__heading">
-        <a class="usa-link" href="{{ url }}">
-          {{ title }}
+        {% set link_attributes = create_attribute() %}
+          {% if (external_link_display == 'do_not_display') %}
+            {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', true) %}
+          {% endif %}
+        {% set link_classes = create_attribute({'class': ['usa-link']}) %}
+          {% if (external_link_display == 'force_display') %}
+            {% set link_classes = link_classes.addClass('usa-link--external') %}
+          {% endif %}
+        <a {{ link_classes }} href="{{ url }}" {{ link_attributes }}>
+          {{ title }}{{ external_link_display }}
         </a>
       </h3>
       <ul class="usa-collection__meta" aria-label="testing label">
@@ -306,7 +314,7 @@
   </li>
 {% endmacro %}
 
-{% macro ncids_list_macro(title, description, url, style, image, media_type, file_type, file_size, file_ext) %}
+{% macro ncids_list_macro(title, description, url, style, image, media_type, file_type, file_size, file_ext, external_link_display) %}
   <li class="usa-collection__item" data-list-component-variant="{{ style }}">
     {% if style == "Title, Description, and Image" %}
       {% set renderImage = image|render %}
@@ -318,8 +326,16 @@
     {% endif %}
     <div class="usa-collection__body">
       <h3 class="usa-collection__heading">
-        <a class="usa-link" href="{{ url }}">
-          {{- title -}}
+        {% set link_attributes = create_attribute() %}
+          {% if (external_link_display == 'do_not_display') %}
+            {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', true) %}
+          {% endif %}
+        {% set link_classes = create_attribute({'class': ['usa-link']}) %}
+          {% if (external_link_display == 'force_display') %}
+            {% set link_classes = link_classes.addClass('usa-link--external') %}
+          {% endif %}
+        <a {{ link_classes }} href="{{ url }}" {{ link_attributes }}>
+          {{- title -}}{{ external_link_display }}
         </a>
         {% if media_type == "Video" or media_type == "Infographic" %}
            ({{ media_type }})
