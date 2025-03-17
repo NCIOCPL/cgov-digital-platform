@@ -52,7 +52,7 @@
     {% else %}
       <img src="{{ get_placeholder_image('{{ no_image_style }}') }}" alt="No Image Placeholder">
     {% endif %}
-    {% if caption %}
+    {% if caption|field_value %}
       <figcaption class="cgdp-image__caption">
         {{ caption }}
         {% if credit %}
