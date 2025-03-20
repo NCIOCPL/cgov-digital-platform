@@ -12,6 +12,7 @@ import cgdpFlagCardGroupInit from '../../lib/components/cgdp-flag-card-group';
 import cgdpWideGuideCard from '../../lib/components/cgdp-wide-guide-card';
 import cgdpImagelessCardRow from '../../lib/components/cgdp-imageless-card-group';
 import cgdpVideoInit from '../../lib/components/cgdp-video';
+import cgdpDynamicListInit from '../../lib/components/cgdp-dynamic-list';
 
 const onDOMContentLoaded = () => {
 	// Init feature cards
@@ -38,6 +39,8 @@ const onDOMContentLoaded = () => {
 	cgdpImagelessCardRow();
 	// Init Video
 	cgdpVideoInit();
+	// Init collections
+	cgdpDynamicListInit();
 };
 
 window.addEventListener('DOMContentLoaded', onDOMContentLoaded);
