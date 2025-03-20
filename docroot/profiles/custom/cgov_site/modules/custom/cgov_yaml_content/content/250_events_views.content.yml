@@ -76,7 +76,7 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_event_series'
-            name: 'NCI Event Series'  
+            name: 'NCI Event Series'
   field_venue:
     - '#process':
         callback: 'reference'
@@ -92,7 +92,7 @@
     - format: "full_html"
       value: |
           <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
-          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp; 
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
           <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
           <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
           <p><strong>Meeting number</strong> (access code): 555 555 555</p>
@@ -147,7 +147,7 @@
         args:
           - 'taxonomy_term'
           - vid: 'cgov_event_series'
-            name: 'NCI Event Series'  
+            name: 'NCI Event Series'
   field_venue:
     - '#process':
         callback: 'reference'
@@ -300,7 +300,191 @@
           - 'media'
           - bundle: 'cgov_image'
             name: 'Reporter'
-
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-one'
+  title: 'Test Future Event 1'
+  field_browser_title:
+    - value: 'Test Future Event 1'
+  field_card_title:
+    - value: 'Test Future Event 1'
+  field_feature_card_description:
+    - value: |
+        I am testing future event pages.
+  field_list_description:
+    - value: |
+        I am testing future event pages.
+  field_page_description:
+    - value: |
+        I am testing future event pages.
+  field_event_start_date:
+    value: '2030-04-12T06:30:00'
+  field_event_end_date:
+    value: '2030-04-12T14:35:00'
+  field_all_day_event: 1
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'Other Events'
+  field_city_state:
+    value: 'Raleigh, NC'
+  body:
+    - format: 'full_html'
+      value: |
+        <h4>WHAT IS THE FUTURE OF CONTENT?</h4>
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-two'
+  title: 'Test Future Event 2'
+  field_browser_title:
+    - value: 'Test Future Event 2'
+  field_card_title:
+    - value: 'Test Future Event 2'
+  field_feature_card_description:
+    - value: |
+        I am testing future event pages.
+  field_page_description:
+    - value: |
+        I am testing future event pages.
+  field_event_start_date:
+    value: '2040-04-12T06:30:00'
+  field_event_end_date:
+    value: '2040-04-12T14:35:00'
+  field_all_day_event: 1
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_city_state:
+    value: 'Paduka, KY'
+  body:
+    - format: 'full_html'
+      value: |
+        <h4>WHY SHOULD CONTENT HAVE A FUTURE?</h4>
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-three'
+  title: 'Test Future Event 3'
+  field_browser_title:
+    - value: 'Test Future Event 3'
+  field_card_title:
+    - value: 'Test Future Event 3'
+  field_feature_card_description:
+    - value: |
+        I am describing future event pages.
+  field_list_description:
+    - value: |
+        I am describing future event pages.
+  field_page_description:
+    - value: |
+        I am describing future event pages.
+  field_event_start_date:
+    value: '2050-04-12T06:30:00'
+  field_event_end_date:
+    value: '2050-04-12T14:35:00'
+  field_all_day_event: 1
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'DCEG Events'
+  field_city_state:
+    value: 'Omaha, NE'
+  body:
+    - format: 'full_html'
+      value: |
+        <h4>WHAT DO WE MEAN BY FUTURE?</h4>
+- entity: 'node'
+  type: 'cgov_event'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-four'
+  title: 'Test Future Event 4'
+  field_browser_title:
+    - value: 'Test Future Event 4'
+  field_card_title:
+    - value: 'Test Future Event 4'
+  field_feature_card_description:
+    - value: |
+        I am describing future event pages.
+  field_list_description:
+    - value: |
+        I am describing future event pages.
+  field_page_description:
+    - value: |
+        I am describing future event pages.
+  field_event_start_date:
+    value: '2033-06-15T06:30:00'
+  field_event_end_date:
+    value: '2033-06-15T14:35:00'
+  field_all_day_event: 1
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_city_state:
+    value: 'Potomac, MD'
+  body:
+    - format: 'full_html'
+      value: |
+        <h4>THIS EVENT HAS NOT HAPPENED YET</h4>
 ## Past event pages
 - entity: 'node'
   type: 'cgov_event'

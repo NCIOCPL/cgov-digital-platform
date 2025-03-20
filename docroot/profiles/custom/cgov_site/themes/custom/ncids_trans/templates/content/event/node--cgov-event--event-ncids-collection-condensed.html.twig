@@ -1,0 +1,4 @@
+{% import '@ncids_trans/listing/list_item_macros.twig' as listItemMacros %}
+
+{## Render List Item ##}
+{{ listItemMacros.ncids_dynamic_list_event_macro(label, content.field_event_start_date, content.field_event_end_date, content.field_list_description, url, content.field_event_series, content.field_all_day_event[0]['#markup'], content.field_venue, content.field_room, content.field_city_state) }}

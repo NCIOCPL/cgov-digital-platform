@@ -1,0 +1,216 @@
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Past Events"
+  field_browser_title:
+    value: "Past Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'past-events-collection'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Past Events Description"
+  field_meta_description:
+    value: "Past Events Description"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_past_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Future Events"
+  field_browser_title:
+    value: "Future Events"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-events-collection'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Future  Events Description"
+  field_meta_description:
+    value: "Future  Events Description"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_future_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:0:"";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Past Events Test Pager"
+  field_browser_title:
+    value: "Past Events Test Pager"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'past-events-collection-test-pager'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Past Events Description"
+  field_meta_description:
+    value: "Past Events Description"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_past_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"2";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Future Events Test Pager"
+  field_browser_title:
+    value: "Future Events Test Pager"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-events-collection-test-pager'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Future  Events Test Pager Description"
+  field_meta_description:
+    value: "Future  Events Test Page rDescription"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_future_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:0:"";s:5:"limit";s:1:"2";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Past Events Test NCI Event Series"
+  field_browser_title:
+    value: "Past Events Test NCI Event Series"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'past-events-collection-test-nci-event-series'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Past Events Test NCI Event Series Description"
+  field_meta_description:
+    value: "Past Events Test NCI Event Series Description"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_past_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:7:"1500471";s:5:"limit";s:1:"2";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
+- entity: "node"
+  type: "cgov_mini_landing"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Future Events Test NCI Event Series"
+  field_browser_title:
+    value: "Future Events Test NCI Event Series"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/news-events/events'
+  field_pretty_url:
+    value: 'future-events-collection-test-nci-event-series'
+  field_mlp_page_style:
+    value: "ncids_default"
+  field_page_description:
+    value: "Future Events Test NCI Event Series Description"
+  field_meta_description:
+    value: "Future Events Test NCI Event Series Description"
+  ### English Contents
+  field_landing_contents:
+    ######## View Block ############
+    - entity: 'paragraph'
+      type: "ncids_dynamic_list"
+      field_source_view:
+        - target_id: cgov_events
+          display_id: ncids_collection_condensed_future_events
+          ### the options are serialized. So set this through the UI and find what it put in the DB.
+          data: |
+            a:5:{s:5:"pager";s:0:"";s:8:"argument";s:7:"1500471";s:5:"limit";s:1:"2";s:6:"offset";N;s:5:"title";i:0;}
+    ######## End View ##############
