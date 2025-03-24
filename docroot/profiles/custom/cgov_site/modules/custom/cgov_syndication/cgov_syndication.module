@@ -41,11 +41,8 @@ function cgov_syndication_preprocess_html(&$variables) {
  */
 function cgov_syndication_configurable_language_insert($entity) {
   $syndication_message['es'] = <<<EOMarkup
-  <div class="syndication">
-    <div>
-      <p>¿Desea usar este contenido en su sitio web o en otra plataforma digital? En nuestra <a href="/espanol/sindicacion">página de sindicación de contenidos</a> le decimos cómo hacerlo.</p>
-    </div>
-  </div>
+  <svg class="usa-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 48 48" fill="none"><path fill="#1B1B1B" fill-rule="evenodd" d="M19.616 12h21.818A2.57 2.57 0 0 1 44 14.575v15.24a2.57 2.57 0 0 1-2.567 2.567H28.937a.645.645 0 0 1-.618-.465c-.067-.228.152-.625.324-.936.034-.06.066-.119.093-.171l.102-.198c.232-.454.544-1.064.99-1.446a.653.653 0 0 1 .424-.16h10.38V15.368H20.699l-.024 3.634c.008.256-.056.497-.265.641-.2.145-.449.097-.69.024l-2.382-.722a.645.645 0 0 1-.305-.44l.016-1.34v-2.6A2.57 2.57 0 0 1 19.616 12Zm8.68 12.353a.613.613 0 0 1 .368.337c.064.152.064.337-.032.417l-4.86 9.874a.603.603 0 0 1-.554.337.587.587 0 0 1-.53-.361l-1.652-3.85c-6.209 2.454-10.468.69-12.97-1.268-2.174-1.7-3.394-3.786-3.843-4.66a6.678 6.678 0 0 1-.2-.417.598.598 0 0 1 1.123-.401c.006.025.026.068.057.135l.031.065c2.19 4.468 10.765 3.089 13.46 1.1l-1.629-3.803a.593.593 0 0 1 .722-.802l10.508 3.297Z" clip-rule="evenodd"/></svg>
+  <p>¿Desea usar este contenido en su sitio web o en otra plataforma digital? En nuestra <a class="usa-link" href="/espanol/sindicacion">página de sindicación de contenidos</a> le decimos cómo hacerlo.</p>
 EOMarkup;
 
   $langcode = $entity->id();
