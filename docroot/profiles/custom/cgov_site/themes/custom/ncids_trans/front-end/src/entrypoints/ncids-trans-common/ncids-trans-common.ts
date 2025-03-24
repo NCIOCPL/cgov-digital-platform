@@ -1,5 +1,4 @@
 import './ncids-trans-common.scss';
-import './ncids-trans-common-legacy.scss';
 
 // NCIDS Imports
 import usaBannerInit from '../../lib/components/usa-banner';
@@ -65,7 +64,7 @@ popupFunctions();
 import 'Core/libraries/enlarge/enlarge';
 import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
 
-// import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
+import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
 import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
 // import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
@@ -148,22 +147,22 @@ const onDOMContentLoaded = () => {
 	/*** BEGIN page outlining ***/
 	// generate the page outline -- this is used for all page-/document-level navigation
 	// set up outlines
-	// $('article').each(function () {
-	// 	const $this = $(this);
+	$('article').each(function () {
+		const $this = $(this);
 
-	// 	// check if there already is a built outline for this article
-	// 	if ($this.data('nci-outline')) {
-	// 		return;
-	// 	}
+		// check if there already is a built outline for this article
+		if ($this.data('nci-outline')) {
+			return;
+		}
 
-	// 	// otherwise, build and set the outline
-	// 	const outline = makeOutline(this);
-	// 	$this.data('nci-outline', outline);
-	// });
+		// otherwise, build and set the outline
+		const outline = makeOutline(this);
+		$this.data('nci-outline', outline);
+	});
 
-	// if ($('article').length > 0) {
-	// 	buildOTP();
-	// }
+	if ($('article').length > 0) {
+		buildOTP();
+	}
 	/*** END page outlining ***/
 
 	/*** BEGIN HACK for Blog Series titles

@@ -154,6 +154,24 @@ cancer-research:
   dependencies:
     - ncids_trans/ncids-trans-common
 
+press-release:
+  css:
+    theme:
+      dist/css/press-release.css: { preprocess: false }
+  js:
+    dist/js/press-release.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
+cancer-research:
+  css:
+    theme:
+      dist/css/cancer-research.css: { preprocess: false }
+  js:
+    dist/js/cancer-research.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-global
+
 event:
   css:
     theme:
@@ -225,3 +243,12 @@ addl-cancer-types-landing-page:
     dist/js/addl-cancer-types-landing-page.js: { preprocess: true }
   dependencies:
     - ncids_trans/ncids-home-landing
+
+ncids-trans-common:
+  css:
+    theme:
+      dist/css/ncids-trans-common.css: { preprocess: false }
+  js:
+    dist/js/ncids-trans-common.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-minimal

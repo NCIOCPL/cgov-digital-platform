@@ -57,75 +57,69 @@
 @forward "usa-prose";
 @forward "nci-heading";
 
-@use 'uswds-core';
+/* ------------------------------------------------------------------------- */
+/* Output select utility classes for raw html blocks                         */
+/* ------------------------------------------------------------------------- */
+uswds-core.$output-these-utilities: (
+	'padding',
+	'text-decoration',
+	'box-shadow',
+	'font',
+	'background-color',
+	'font-weight',
+	'border-color',
+	'line-height',
+	'justify-content'
+);
+// Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
+// the smallest possible aspect classes.
+uswds-core.$add-aspect-settings: (
+	output: false,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
+);
+uswds-core.$background-color-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$box-shadow-settings: (
+	output: true,
+	responsive: false,
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$border-color-settings: (
+	output: true,
+	responsive: false,
+	// Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	// Undo default
+	visited: false
+);
+uswds-core.$justify-content-settings: (
+	output: true,
+	responsive: true,
+	// Undo default
+	active: false,
+	focus: false,
+	hover: false,
+	visited: false
+);
 
-// We should not allow all the utilities we do for home and landing. There should
-// not be as many bespoke layouts for inner pages.
-
-// /* ------------------------------------------------------------------------- */
-// /* Output select utility classes for raw html blocks                         */
-// /* ------------------------------------------------------------------------- */
-// uswds-core.$output-these-utilities: (
-// 	'padding',
-// 	'text-decoration',
-// 	'box-shadow',
-// 	'font',
-// 	'background-color',
-// 	'font-weight',
-// 	'border-color',
-// 	'line-height',
-// 	'justify-content'
-// );
-// // Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
-// // the smallest possible aspect classes.
-// uswds-core.$add-aspect-settings: (
-// 	output: false,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	visited: false
-// );
-// uswds-core.$background-color-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$box-shadow-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$border-color-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	// Undo default
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$justify-content-settings: (
-// 	output: true,
-// 	responsive: true,
-// 	// Undo default
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	visited: false
-// );
-
-// @forward 'uswds-utilities';
-
+@forward 'uswds-utilities';
 /* ------------------------------------------------------------------------- */
 /* End utility classes for raw html blocks                                   */
 /* ------------------------------------------------------------------------- */
