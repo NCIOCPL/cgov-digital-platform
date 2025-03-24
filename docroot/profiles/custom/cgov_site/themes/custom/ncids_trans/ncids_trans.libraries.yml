@@ -21,6 +21,17 @@ ncids-minimal:
   js:
     dist/js/ncids-minimal.js: { preprocess: false }
 
+## New inner page common css/js which will be used until
+## we finish building the WYSIWYG
+ncids-trans-common:
+  css:
+    theme:
+      dist/css/ncids-trans-common.css: { preprocess: false }
+  js:
+    dist/js/ncids-trans-common.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/jqueryandui
+
 #####################
 ## NOTE: In the libraries below notice how there is a dependency on the global library.
 ## This is because attach_library does not care about order. If we add the dependencies
@@ -33,7 +44,7 @@ article:
   js:
     dist/js/article.js: { preprocess: false }
   dependencies:
-    - ncids_trans/ncids-global
+    - ncids_trans/ncids-trans-common
 
 home-landing:
   css:
@@ -114,7 +125,7 @@ cancer-center:
   js:
     dist/js/cancer-center.js: { preprocess: false }
   dependencies:
-    - ncids_trans/ncids-global
+    - ncids_trans/ncids-trans-common
 
 biography:
   css:
@@ -123,7 +134,25 @@ biography:
   js:
     dist/js/biography.js: { preprocess: false }
   dependencies:
-    - ncids_trans/ncids-global
+    - ncids_trans/ncids-trans-common
+
+press-release:
+  css:
+    theme:
+      dist/css/press-release.css: { preprocess: false }
+  js:
+    dist/js/press-release.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-trans-common
+
+cancer-research:
+  css:
+    theme:
+      dist/css/cancer-research.css: { preprocess: false }
+  js:
+    dist/js/cancer-research.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-trans-common
 
 event:
   css:
@@ -132,7 +161,7 @@ event:
   js:
     dist/js/event.js: { preprocess: false }
   dependencies:
-    - ncids_trans/ncids-global
+    - ncids_trans/ncids-trans-common
 
 blogs:
   css:
@@ -187,3 +216,21 @@ addl-cancer-types-landing-page:
     dist/js/addl-cancer-types-landing-page.js: { preprocess: true }
   dependencies:
     - ncids_trans/ncids-home-landing
+
+infographic:
+  css:
+    theme:
+      dist/css/infographic.css: { preprocess: false }
+  js:
+    dist/js/infographic.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-trans-common
+
+video:
+  css:
+    theme:
+      dist/css/video.css: { preprocess: false }
+  js:
+    dist/js/video.js: { preprocess: false }
+  dependencies:
+    - ncids_trans/ncids-trans-common

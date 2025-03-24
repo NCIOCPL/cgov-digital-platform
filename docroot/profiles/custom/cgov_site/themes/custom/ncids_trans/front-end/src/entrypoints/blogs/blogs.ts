@@ -3,6 +3,7 @@ import './blogs-legacy.scss';
 
 import * as $ from 'jquery';
 import { doAccordion } from 'Core/libraries/accordion/accordion';
+import cgdpRelatedResourcesInit from '../../lib/components/cgdp-related-resources';
 
 // Cheating here and just copying in the jqueryui type since TS is not pulling it in.
 interface AccordionUIParams {
@@ -94,6 +95,7 @@ const initializeAccordions = () => {
 
 const onDOMContentLoaded = () => {
 	initializeAccordions();
+	cgdpRelatedResourcesInit();
 };
 
 document.addEventListener('DOMContentLoaded', onDOMContentLoaded);

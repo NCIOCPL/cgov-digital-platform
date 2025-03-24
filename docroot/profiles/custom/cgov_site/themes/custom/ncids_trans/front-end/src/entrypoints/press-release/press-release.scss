@@ -1,0 +1,50 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+// Specific page styles
+@forward '../../lib/components/cgdp-related-resources';
+@forward '../../lib/components/cgdp-document-dates';
+@forward '../../lib/components/cgdp-public-use/';
+@forward '../../lib/components/cgdp-article-footer-citation';
+
+@use 'uswds-core' as *;
+
+.cgdp-media-contact {
+	@include u-margin-top(1.5);
+	@include u-margin-bottom(3);
+	@include at-media('mobile') {
+		@include u-margin-top(2);
+		@include u-margin-bottom(2);
+	}
+	&__info {
+		@include u-display('inline');
+		p {
+			@include u-margin-y(0);
+			line-height: 1.5;
+		}
+	}
+}
+
+.cgdp-press-release-title-block {
+	div,
+	div > .usa-list {
+		line-height: 1.5;
+	}
+	.nci-heading-h1 {
+		@include u-margin-top(2);
+	}
+	&__release-info {
+		@include at-media('tablet') {
+			& > div:first-child {
+				@include u-margin-bottom(1);
+				@include at-media('tablet') {
+					@include u-margin-bottom(0);
+				}
+			}
+			& > div:last-child {
+				white-space: nowrap;
+			}
+		}
+	}
+}

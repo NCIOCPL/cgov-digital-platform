@@ -1,0 +1,56 @@
+@forward 'usa-link';
+@use 'uswds-core' as *;
+@import '~Styles/sprites/svg-sprite';
+
+.cgdp-related-resources {
+	@include u-margin-bottom(2);
+	// Change top margin to token 2 once we create accordions
+	@include u-margin-top(5);
+	ul {
+		@include u-margin-top(1);
+		li {
+			@include u-margin-y(0.5);
+			@include u-line-height('body', 4);
+			a {
+				// We can probably just add the classes to the anchor tag instead like we do for summary box
+				@include u-text('no-underline');
+			}
+			&.cgdp-media-link {
+				.cgdp-media-link__mediatype {
+					@include u-margin-left(0.5);
+				}
+				.cgdp-media-link__filetype {
+					@include u-height(2.5);
+					@include u-width(2);
+					@include u-margin-top(0);
+					@include u-margin-x(0.5);
+					vertical-align: middle;
+					&.pdf {
+						@include svg-sprite(file-pdf-gray-o-thick);
+					}
+					&.ppt {
+						@include svg-sprite(file-ppt-gray);
+						@include u-width(2.5);
+					}
+					&.excel {
+						@include svg-sprite(file-excel-gray);
+						@include u-width(2.5);
+					}
+					&.word {
+						@include svg-sprite(file-word-gray);
+						@include u-width(2.5);
+					}
+					&.txt {
+						@include svg-sprite(file-download-gray-o);
+					}
+					&.exe {
+						@include svg-sprite(file-download-gray-o);
+					}
+					&.ebook {
+						@include svg-sprite(file-ebook-gray);
+					}
+				}
+			}
+		}
+	}
+}

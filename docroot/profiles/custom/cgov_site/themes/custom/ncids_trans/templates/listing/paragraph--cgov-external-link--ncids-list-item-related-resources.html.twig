@@ -1,0 +1,12 @@
+{% import '@ncids_trans/listing/list_item_macros.twig' as listItemMacros %}
+
+{% if content.field_external_link[0] %}
+
+	{# ###### Setup Title ####### #}
+	{% set title = content.field_override_title|field_value %}
+
+	{# ###### Setup the URL ###### #}
+	{% set url = content.field_external_link[0]['#url'] %}
+
+	{{ listItemMacros.ncids_list_item_related_resource(title, url, paragraph.bundle) }}
+{% endif %}
