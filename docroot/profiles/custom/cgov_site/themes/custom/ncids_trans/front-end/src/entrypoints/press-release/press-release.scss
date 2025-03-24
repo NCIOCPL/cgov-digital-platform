@@ -1,0 +1,66 @@
+// This contains the NCIDS Settings and required items. Nothing in this
+// file should generate markup.
+@forward '../cgdp-required';
+
+@use 'uswds-core' as *;
+
+.cgdp-media-contact {
+	@include at-media('tablet') {
+		@include u-text-align('right');
+	}
+	.cgdp-media-contact__info p {
+		@include u-margin-y(0);
+		line-height: 1.5;
+	}
+}
+
+.cgdp-press-release-title-block {
+	div,
+	div > .usa-list {
+		line-height: 1.5;
+	}
+	.nci-heading-h1 {
+		@include u-margin-top(2);
+	}
+	&__release-info {
+		@include at-media('tablet') {
+			display: flex;
+			justify-content: space-between;
+
+			& > div:first-child {
+				@include u-margin-bottom(1);
+				@include at-media('tablet') {
+					@include u-margin-bottom(0);
+				}
+			}
+			& > div:last-child {
+				white-space: nowrap;
+			}
+		}
+	}
+
+	// Override Legacy Styles
+	.cgdp-document-dates {
+		@include u-margin-y(0);
+		ul {
+			display: block;
+			@include at-media('tablet') {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			& > li {
+				&::before {
+					display: none;
+				}
+				display: block;
+				@include at-media('tablet') {
+					display: inline;
+					&:not(:last-child)::after {
+						content: '|';
+						@include u-margin-right(1);
+					}
+				}
+			}
+		}
+	}
+}

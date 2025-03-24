@@ -1,17 +1,20 @@
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{{ attach_library('ncids_trans/cancer-research') }}
+{% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-  <div class="resize-content">
-    <h1>
-      {{ node.label }}
-    </h1>
-    <div id="cgvBody">
-      {{ content.body }}
-      {{ content.field_selected_research }}
+  <div class="cgdpl">
+    <div class="contentzone">
+      <h1>
+        {{ node.label }}
+      </h1>
+      <div id="cgvBody">
+        {{ content.body }}
+        {{ content.field_selected_research }}
+      </div>
     </div>
   </div>
 
-  <footer class="article-footer">
-    {{ contentPageMacros.displayDates(node, content) }}
+  <footer class="cgdp-article-footer">
+    {{ contentPageMacros.ncidsDisplayDates(node, content) }}
   </footer>
 </article>
