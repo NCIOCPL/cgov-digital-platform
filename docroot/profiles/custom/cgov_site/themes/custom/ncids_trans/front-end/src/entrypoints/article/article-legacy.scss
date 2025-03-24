@@ -1,9 +1,24 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
 @forward '../cgdp-required';
+
 // Expose USWDS variables and mixins to our imports.
 @use 'uswds-core' as *;
 
+/** Legacy mixin things **/
+@import "~Core/styles/environments/percussion";
 @import "../../legacy/styles/variables";
+@import "~Core/styles/mixins";
+@import "~Core/styles/fonts";
 @import '../../legacy/styles/breakpoint-mixins';
-@import "~Core/styles/feature_cards";
+@import "~Core/styles/placeholders";
+@import "~Styles/sprites/svg-sprite"; //sprites are sometimes used in *_overrides files
+
+// This is for the on this page styling, which will be removed
+// when the OTP update story is done.
+// We needed foundation variables for the on this page styles
+@import "../../legacy/styles/nci-foundation_variables";
+
+@import "~Core/styles/ebookButtons";
+@import "~Core/styles/materials_to_share";
+
