@@ -1,0 +1,42 @@
+@use 'uswds-core' as *;
+
+.cgdp-document-dates {
+	clear: both;
+	ul {
+		@include u-display('block');
+		@include at-media('desktop') {
+			@include u-display('flex');
+			@include u-flex('wrap');
+		}
+		& > li {
+			@include u-display('block');
+			@include at-media('desktop') {
+				@include u-display('inline');
+			}
+
+			&:before {
+				content: "|";
+				@include u-position('relative');
+				@include u-display('none');
+				@include at-media('desktop') {
+					@include u-display('inline');
+				}
+				@include u-float('none');
+				@include u-margin-y(0);
+				@include u-margin-x(0.5);
+				@include u-left(0);
+				top: -0.1em;
+				@include u-font('body', 2);
+			}
+
+			&:first-child:before {
+				@include u-display('none');
+			}
+		}
+	}
+	// add styles for document dates
+	@include u-margin-top(3);
+
+	// clearfix class on the ul has a marign-bottom of 16px. Do we still need this?
+	@include u-margin-bottom(2);
+}

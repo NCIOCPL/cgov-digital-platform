@@ -1,0 +1,1101 @@
+- entity: "node"
+  type: "cgov_biography"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Biography Test Page - No Related Resources"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "bio-relres-nodate"
+  field_card_title:
+    value: "Jennifer K. Loukissas"
+  field_browser_title:
+    value: "biosketch and professional background - Placeholder"
+  field_page_description:
+    value: "biosketch and professional background - Placeholder"
+  field_list_description:
+    value: "biosketch and professional background - Placeholder"
+  field_feature_card_description:
+    value: "biosketch and professional background - Placeholder"
+  field_first_name:
+    value: "Jen"
+  field_middle_name:
+    value: "K."
+  field_last_name:
+    value: "Lou"
+  field_suffix:
+    value: "M.P.P"
+  field_title:
+    value: "Chief, Communications Team"
+  field_org_name_1:
+    value: "National Cancer Institute"
+  field_org_name_2:
+    value: "Division of Cancer Epidemiology & Genetics, Office of the Director"
+  field_campus:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_biography_campuses'
+            name: 'NCI Shady Grove Campus'
+  field_office_location:
+    value: "Room 7E434"
+  field_phone_number:
+    value: "240-276-7367"
+  field_email_address:
+    value: "loukissj@mail.nih.gov"
+  field_linkedin_handle:
+    value: "jennifer-loukissas-b09b254"
+  field_twitter_handle:
+    value: "jloukissas"
+  field_date_posted:
+    value: "2019-02-07"
+  field_date_reviewed:
+    value: "2019-02-07"
+  field_date_updated:
+    value: "2019-02-07"
+  body:
+  - format: "full_html"
+    value: |
+      <p>Jennifer Loukissas serves as the Chief of the Communications team in the National Cancer Institute’s Division of Cancer Epidemiology and Genetics. Ms. Loukissas helps DCEG investigators and trainees to transmit their research findings to a variety of lay audiences including news media, research advocates, general public, the United States Congress, and other governmental agencies.</p>
+      <p>Ms. Loukissas manages the Division's web and social media presence, and serves as senior managing editor for the Linkage newsletter. Equally important is her management of crisis communications for the Division. She also regularly delivers training on communicating science to investigators and trainees in NIH and academia. Ms. Loukissas is an award-winning science writer with 15 years of experience in public affairs. She came to the NIH in 2002 as Presidential Management Intern following receipt of a Master's Degree in Public Policy from Duke University; she holds a Bachelor of Arts in English from Haverford College.</p>
+      <p>Follow Ms. Loukissas on Twitter <a href="https://twitter.com/jloukissas">@jloukissas</a>.</p>
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Jennifer Bio'
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Feelings and Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_override_title:
+        - value: 'Overridden Title'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Learning to Relax'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.gov/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Google.com'
+      field_external_link:
+        - uri: 'http://www.google.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Blog Post Test Page - w/ Citations, Related Resources, and Content Row"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'NCI Staff'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+        <p>As his deputy, it was a pleasure to work closely with Ned, and I wish him the very best in his new role. I also feel the cancer research community owes him an enormous debt of gratitude for his exemplary leadership of NCI over the past year and a half, and for the course he&rsquo;s set during this time of extraordinary interest and progress in cancer research.</p>
+        <p>I agree with Ned that NCI&rsquo;s greatest strength is the passionate, talented people who work here. The challenges and opportunities before us are many, and I know I can count on NCI&rsquo;s exceptionally talented leaders and staff to continue their commitment and passion for our shared mission. In the months ahead, rest assured that I&mdash;and everyone at NCI&mdash;will remain focused on supporting the very best science in pursuit of better understanding the causes of cancer and its pathogenesis, and improving our ability to prevent, diagnose, and treat it.</p>
+        <p>Bipartisan support for biomedical research and substantial budget increases in each of the past 5 years have contributed to greater progress against cancer. However, there is still much to be done.</p>
+        <p>Last week, I had the opportunity to join with NIH Director Dr. Francis Collins and other NIH leaders in <span><a href="https://appropriations.house.gov/legislation/hearings/national-institutes-of-health-budget-request-for-fy-2020">representing NCI before the House subcommittee that oversees appropriations for NIH</a></span>. It was gratifying to speak with the committee about some of the research NCI is supporting, to hear from the committee members about their keen interest in the research that NIH funds in their communities and elsewhere, and to learn about their commitment to NIH.</p>
+        <p>I look forward to sharing with you, via this blog and other forums, more about how NCI is helping to shape and nurture a vibrant cancer research community to better prevent and treat cancer in service to patients everywhere.</p>
+  field_browser_title:
+    value: 'Ensuring a Smooth Leadership Transition at NCI'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'NCI Director'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "blog-post-relres-recccont-selref"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+  field_recommended_content:
+    - entity: 'paragraph'
+      type: "cgov_card_internal"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_blog_post'
+                title: 'FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer'
+    - entity: 'paragraph'
+      type: "cgov_card_internal"
+      field_featured_item:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_blog_post'
+                title: 'FDA Approves Lenvatinib for Radioactive Iodine-Refractory Thyroid Cancer'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Cat-Cat'
+    - entity: 'paragraph'
+      type: "cgov_card_external"
+      field_override_card_title:
+        - value: 'Pubs Locator'
+      field_override_image_promotional:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_image'
+                name: 'Find a Clinical Trial'
+      field_featured_url:
+        - uri: 'https://pubs.cancer.gov'
+
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Blog Post Test Page - w/ Citations, no Related Resources"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'NCI Staff'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+        <p>As his deputy, it was a pleasure to work closely with Ned, and I wish him the very best in his new role. I also feel the cancer research community owes him an enormous debt of gratitude for his exemplary leadership of NCI over the past year and a half, and for the course he&rsquo;s set during this time of extraordinary interest and progress in cancer research.</p>
+        <p>I agree with Ned that NCI&rsquo;s greatest strength is the passionate, talented people who work here. The challenges and opportunities before us are many, and I know I can count on NCI&rsquo;s exceptionally talented leaders and staff to continue their commitment and passion for our shared mission. In the months ahead, rest assured that I&mdash;and everyone at NCI&mdash;will remain focused on supporting the very best science in pursuit of better understanding the causes of cancer and its pathogenesis, and improving our ability to prevent, diagnose, and treat it.</p>
+        <p>Bipartisan support for biomedical research and substantial budget increases in each of the past 5 years have contributed to greater progress against cancer. However, there is still much to be done.</p>
+        <p>Last week, I had the opportunity to join with NIH Director Dr. Francis Collins and other NIH leaders in <span><a href="https://appropriations.house.gov/legislation/hearings/national-institutes-of-health-budget-request-for-fy-2020">representing NCI before the House subcommittee that oversees appropriations for NIH</a></span>. It was gratifying to speak with the committee about some of the research NCI is supporting, to hear from the committee members about their keen interest in the research that NIH funds in their communities and elsewhere, and to learn about their commitment to NIH.</p>
+        <p>I look forward to sharing with you, via this blog and other forums, more about how NCI is helping to shape and nurture a vibrant cancer research community to better prevent and treat cancer in service to patients everywhere.</p>
+  field_browser_title:
+    value: 'Ensuring a Smooth Leadership Transition at NCI'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>It is both an honor and a privilege to be given the opportunity to once again serve as acting director of the National Cancer Institute, following the departure of Dr. Ned Sharpless, who has been asked by the administration to serve as acting commissioner of the Food and Drug Administration.</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'NCI Director'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "blog-post-norelres-selref"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Press Release Test Page - w/ Citation, no Related Resources"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'press-release-citation-norr'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "This is the Cgov Browser Title"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+    - value: 'reviewed'
+    - value: 'updated'
+  field_list_description:
+    value: "List Description overriding meta description"
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2019-01-09"
+  field_date_reviewed:
+    value: "2019-01-09"
+  field_date_updated:
+    value: "2019-01-09"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'The BRCA Exchange graphic'
+  body:
+  - format: "full_html"
+    value: |
+      <p>A global resource that includes data on thousands of inherited variants in the <em>BRCA1</em> and <em>BRCA2</em> genes is available to the public. The BRCA Exchange was created through the BRCA Challenge, a long-term&nbsp;demonstration project initiated by the Global Alliance for Genomics and Health (GA4GH) to enhance sharing of <em>BRCA1 </em>and<em> BRCA2</em> data. The resource, available through a website and a new <a href="https://brcaexchange.org/about/app">smartphone app</a>, allows clinicians to review expert classifications of variants in these major cancer predisposition genes as part of their individual assessment of complex questions related to cancer prevention, screening, and intervention for high-risk patients.&nbsp;</p>
+      <p>The five-year BRCA Challenge project was funded in part by the National Cancer Institute (NCI), part of the National Institutes of Health, and through the <a href="https://www.cancer.gov/research/key-initiatives/moonshot-cancer-initiative">Cancer Moonshot</a><span>℠</span>. A paper detailing the development of the BRCA Exchange was published January 8, 2019, in&nbsp;<em>PLOS Genetics</em>.</p>
+      <p>“This project has yielded a meta-analysis of <em>BRCA1</em> and <em>BRCA2 </em>variants collected from multiple sources to understand how experts annotate specific mutations in the two genes,” said Stephen J. Chanock, M.D., director of NCI’s Division of Cancer Epidemiology and Genetics and lead author of the paper. “There’s an urgent need for sharing data in cancer predisposition research. The BRCA Exchange is proof of principle that large-scale collaboration and data sharing can be achieved and can provide the latest and best quality information to enable clinicians and individuals to improve care.”</p>
+      <figure class="image-right-medium centered-set">
+        <div class="media-highlight centered-element">
+          <img src="/PublishedContent/Images/about-cancer/causes-prevention/genetics/brca-challenge-infographic-article.__v100338300.png" alt="">
+          <!--Comment-->
+          <a href="/about-cancer/causes-prevention/genetics/brca-exchange-infographic" class="infographic-view-full no-resize" target="_blank">View Infographic</a>
+          <span class="media-label media-infographic en-us"> </span>
+        </div>
+      </figure>
+      <p>Certain inherited variants in these genes can increase the risk of breast, ovarian, and other cancers by varying degrees, whereas others are not associated with disease. Clinicians and patients need to know whether a given variant is likely to be disease-associated (pathogenic) and how likely a pathogenic variant is to cause cancer (penetrance). Until now, the available data on the inherited variants in these genes were not aggregated in a comprehensive way.</p>
+      <p>The BRCA Exchange dataset is composed of information from existing clinical databases—the Breast Cancer Information Core, ClinVar, and the Leiden Open Variation Database—as well as population databases and data from clinicians, clinical laboratories, and researchers worldwide. It currently includes more than 20,000 unique <em>BRCA1</em> and <em>BRCA2</em> variants. More than 6,100 variants in the database have been classified by an expert panel, the Evidence-based Network for the Interpretation of Germline Mutant Alleles, and approximately 3,700 of these variants are known to cause disease. The BRCA Exchange pools variants from data resources worldwide, which should lead to inclusion of rare variants that are very occasionally observed.</p>
+      <p>With a single-point-of-access website (<a href="http://www.brcaexchange.org">www.brcaexchange.org</a>), the BRCA Exchange provides information on these gene variants to clinicians, researchers, data scientists, patients, and patient advocates. It also serves as a demonstration project showing that this kind of comprehensive data sharing—requiring collaboration across hundreds of organizations, the establishment of an infrastructure to house the information, and the development of data-sharing protocols—is possible for other cancer predisposition genes and, indeed, for genes associated with other diseases.&nbsp;</p>
+      <p>Next steps for the project include collaboration with additional global data generators and data holders, continued technical development, and increased engagement with patients and patient advocates around the world.</p>
+      <p><strong>About the National Cancer Institute (NCI):</strong>&nbsp;NCI&nbsp;leads the National Cancer Program and NIH’s efforts to dramatically reduce the prevalence of cancer and improve the lives of cancer patients and their families, through research into prevention and cancer biology, the development of new interventions, and the training and mentoring of new researchers. For more information about cancer, please visit the NCI website at&nbsp;<a href="http://www.cancer.gov/">cancer.gov</a>&nbsp;or call NCI’s contact center,&nbsp;the Cancer Information Service, at 1-800-4-CANCER (1-800-422-6237).</p>
+      <p><strong>About the National Institutes of Health (NIH):</strong>&nbsp;NIH, the nation's medical research agency, includes 27 Institutes and Centers and is a component of the U.S. Department of Health and Human Services. NIH is the primary federal agency conducting and supporting basic, clinical, and translational medical research, and is investigating the causes, treatments, and cures for both common and rare diseases. For more information about NIH and its programs, visit&nbsp;<a href="https://www.nih.gov/">nih.gov</a>.</p>
+      <p></p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - No Article Footer Components"
+  field_page_description:
+    value: "Article Test Page with no article footer components"
+  field_card_title:
+    value: "[Find a Clinical Trial] Card Title"
+  field_browser_title:
+    value: "[Find a Clinical Trial] Browser Title"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Find a Clinical Trial'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_public_use: 0
+  field_pretty_url:
+    value: "article-nofooterelements"
+  field_date_posted:
+    value: "2023-02-02"
+  field_date_reviewed:
+    value: "2023-02-02"
+  field_date_updated:
+    value: "2023-02-02"
+  field_date_display_mode:
+    - value: 'none'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - w/ Article Footer Components"
+  field_page_description:
+    value: "A test page to test article pages with all of the article footer components"
+  field_browser_title:
+    value: "Breast Reconstruction After Mastectomy"
+  field_pretty_url:
+    value: "article-selref-date-pubuse"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reconstruction Panoramic'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "What is breast reconstruction?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many women who have a mastectomy—surgery to remove an entire breast to treat or prevent breast cancer—have the option of having the shape of the removed breast rebuilt.</p>
+            <p>Women who choose to have their breasts rebuilt have several options for how it can be done. Breasts can be rebuilt using implants (saline or silicone). They can also be rebuilt using autologous tissue (that is, tissue from elsewhere in the body). Sometimes both implants and autologous tissue are used to rebuild the breast.</p>
+            <p><a href="https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new"> <span>GovDelivery Test Link</span></a></p>
+            <p>Surgery to reconstruct the breasts can be done (or started) at the time of the mastectomy (which is called immediate reconstruction) or it can be done after the mastectomy incisions have healed and breast cancer therapy has been completed (which is called delayed reconstruction). Delayed reconstruction can happen months or even years after the mastectomy.</p>
+            <p>In a final stage of breast reconstruction, a nipple and areola may be re-created on the reconstructed breast, if these were not preserved during the mastectomy.</p>
+            <p>Sometimes breast reconstruction surgery includes surgery on the other, or contralateral, breast so that the two breasts will match in size and shape.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use implants to reconstruct a woman’s breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Implants are inserted underneath the skin or chest muscle following the mastectomy. (Most mastectomies are performed using a technique called skin-sparing mastectomy, in which much of the breast skin is saved for use in reconstructing the breast.)</p>
+            <p>Implants are usually placed as part of a two-stage procedure.</p>
+            <ul>
+              <li>In the first stage, the surgeon places a device, called a tissue expander, under the skin that is left after the mastectomy or under the chest muscle (1,2). The expander is slowly filled with saline during periodic visits to the doctor after surgery.</li>
+              <li>In the second stage, after the chest tissue has relaxed and healed enough, the expander is removed and replaced with an implant. The chest tissue is usually ready for the implant 2 to 6 months after mastectomy.</li>
+              <li>In some cases, the implant can be placed in the breast during the same surgery as the mastectomy—that is, a tissue expander is not used to prepare for the implant (3).</li>
+            </ul>
+            <p>Surgeons are increasingly using material called acellular dermal matrix as a kind of scaffold or “sling” to support tissue expanders and implants. Acellular dermal matrix is a kind of mesh that is made from donated human or pig skin that has been sterilized and processed to remove all cells to eliminate the risks of rejection and infection.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use tissue from a woman’s own body to reconstruct the breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>In autologous tissue reconstruction, a piece of tissue containing skin, fat, blood vessels, and sometimes muscle is taken from elsewhere in a woman’s body and used to rebuild the breast. This piece of tissue is called a flap.</p>
+            <p>Different sites in the body can provide flaps for breast reconstruction. Flaps used for breast reconstruction most often come from the abdomen or back. However, they can also be taken from the thigh or buttocks.</p>
+            <p>Depending on their source, flaps can be pedicled or free.</p>
+            <ul>
+              <li>With a pedicled flap, the tissue and attached blood vessels are moved together through the body to the breast area. Because the blood supply to the tissue used for reconstruction is left intact, blood vessels do not need to be reconnected once the tissue is moved.</li>
+              <li>With free flaps, the tissue is cut free from its blood supply. It must be attached to new blood vessels in the breast area, using a technique called microsurgery. This gives the reconstructed breast a blood supply.</li>
+            </ul>
+            <p>Abdominal and back flaps include:</p>
+            <ul>
+              <li>DIEP flap: Tissue comes from the abdomen and contains only skin, blood vessels, and fat, without the underlying muscle. This type of flap is a free flap.</li>
+              <li>Latissimus dorsi (LD) flap: Tissue comes from the middle and side of the back. This type of flap is pedicled when used for breast reconstruction. (LD flaps can be used for other types of reconstruction as well.)</li>
+              <li>SIEA flap (also called SIEP flap): Tissue comes from the abdomen as in a DIEP flap but includes a different set of blood vessels. It also does not involve cutting of the abdominal muscle and is a free flap. This type of flap is not an option for many women because the necessary blood vessels are not adequate or do not exist.</li>
+              <li>TRAM flap: Tissue comes from the lower abdomen as in a DIEP flap but includes muscle. It can be either pedicled or free.</li>
+            </ul>
+            <p>Flaps taken from the thigh or buttocks are used for women who have had previous major abdominal surgery or who don’t have enough abdominal tissue to reconstruct a breast. These types of flaps are free flaps. With these flaps an implant is often used as well to provide sufficient breast volume.</p>
+            <ul>
+              <li>IGAP flap: Tissue comes from the buttocks and contains only skin, blood vessels, and fat.</li>
+              <li>PAP flap: Tissue, without muscle, that comes from the upper inner thigh.</li>
+              <li>SGAP flap: Tissue comes from the buttocks as in an IGAP flap, but includes a different set of blood vessels and contains only skin, blood vessels, and fat.</li>
+              <li>TUG flap: Tissue, including muscle, that comes from the upper inner thigh.</li>
+            </ul>
+            <p>In some cases, an implant and autologous tissue are used together. For example, autologous tissue may be used to cover an implant when there isn’t enough skin and muscle left after mastectomy to allow for expansion and use of an implant (1,2).</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Mehrara BJ, Ho AY. Breast Reconstruction. In: Harris JR, Lippman ME, Morrow M, Osborne CK, eds. <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Cordeiro PG. Breast reconstruction after surgery for breast cancer. <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Coping with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_infographic'
+                name: 'NCI at a Glance Infographic'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Self-Image and Sexuality'
+  field_date_posted:
+    value: "2016-03-12"
+  field_date_reviewed:
+    value: "2016-03-12"
+  field_date_updated:
+    value: "2016-03-12"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_hhs_syndication:
+    - syndicate: 1
+      keywords: ''
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - w/o Related Resources"
+  field_page_description:
+    value: "A test page to test article pages with all article footer components besides related resources"
+  field_browser_title:
+    value: "Breast Reconstruction After Mastectomy"
+  field_pretty_url:
+    value: "article-selref-date-pubuse-syn-norelres"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reconstruction Panoramic'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "What is breast reconstruction?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many women who have a mastectomy—surgery to remove an entire breast to treat or prevent breast cancer—have the option of having the shape of the removed breast rebuilt.</p>
+            <p>Women who choose to have their breasts rebuilt have several options for how it can be done. Breasts can be rebuilt using implants (saline or silicone). They can also be rebuilt using autologous tissue (that is, tissue from elsewhere in the body). Sometimes both implants and autologous tissue are used to rebuild the breast.</p>
+            <p>Surgery to reconstruct the breasts can be done (or started) at the time of the mastectomy (which is called immediate reconstruction) or it can be done after the mastectomy incisions have healed and breast cancer therapy has been completed (which is called delayed reconstruction). Delayed reconstruction can happen months or even years after the mastectomy.</p>
+            <p>In a final stage of breast reconstruction, a nipple and areola may be re-created on the reconstructed breast, if these were not preserved during the mastectomy.</p>
+            <p>Sometimes breast reconstruction surgery includes surgery on the other, or contralateral, breast so that the two breasts will match in size and shape.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use implants to reconstruct a woman’s breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Implants are inserted underneath the skin or chest muscle following the mastectomy. (Most mastectomies are performed using a technique called skin-sparing mastectomy, in which much of the breast skin is saved for use in reconstructing the breast.)</p>
+            <p>Implants are usually placed as part of a two-stage procedure.</p>
+            <ul>
+              <li>In the first stage, the surgeon places a device, called a tissue expander, under the skin that is left after the mastectomy or under the chest muscle (1,2). The expander is slowly filled with saline during periodic visits to the doctor after surgery.</li>
+              <li>In the second stage, after the chest tissue has relaxed and healed enough, the expander is removed and replaced with an implant. The chest tissue is usually ready for the implant 2 to 6 months after mastectomy.</li>
+              <li>In some cases, the implant can be placed in the breast during the same surgery as the mastectomy—that is, a tissue expander is not used to prepare for the implant (3).</li>
+            </ul>
+            <p>Surgeons are increasingly using material called acellular dermal matrix as a kind of scaffold or “sling” to support tissue expanders and implants. Acellular dermal matrix is a kind of mesh that is made from donated human or pig skin that has been sterilized and processed to remove all cells to eliminate the risks of rejection and infection.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use tissue from a woman’s own body to reconstruct the breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>In autologous tissue reconstruction, a piece of tissue containing skin, fat, blood vessels, and sometimes muscle is taken from elsewhere in a woman’s body and used to rebuild the breast. This piece of tissue is called a flap.</p>
+            <p>Different sites in the body can provide flaps for breast reconstruction. Flaps used for breast reconstruction most often come from the abdomen or back. However, they can also be taken from the thigh or buttocks.</p>
+            <p>Depending on their source, flaps can be pedicled or free.</p>
+            <ul>
+              <li>With a pedicled flap, the tissue and attached blood vessels are moved together through the body to the breast area. Because the blood supply to the tissue used for reconstruction is left intact, blood vessels do not need to be reconnected once the tissue is moved.</li>
+              <li>With free flaps, the tissue is cut free from its blood supply. It must be attached to new blood vessels in the breast area, using a technique called microsurgery. This gives the reconstructed breast a blood supply.</li>
+            </ul>
+            <p>Abdominal and back flaps include:</p>
+            <ul>
+              <li>DIEP flap: Tissue comes from the abdomen and contains only skin, blood vessels, and fat, without the underlying muscle. This type of flap is a free flap.</li>
+              <li>Latissimus dorsi (LD) flap: Tissue comes from the middle and side of the back. This type of flap is pedicled when used for breast reconstruction. (LD flaps can be used for other types of reconstruction as well.)</li>
+              <li>SIEA flap (also called SIEP flap): Tissue comes from the abdomen as in a DIEP flap but includes a different set of blood vessels. It also does not involve cutting of the abdominal muscle and is a free flap. This type of flap is not an option for many women because the necessary blood vessels are not adequate or do not exist.</li>
+              <li>TRAM flap: Tissue comes from the lower abdomen as in a DIEP flap but includes muscle. It can be either pedicled or free.</li>
+            </ul>
+            <p>Flaps taken from the thigh or buttocks are used for women who have had previous major abdominal surgery or who don’t have enough abdominal tissue to reconstruct a breast. These types of flaps are free flaps. With these flaps an implant is often used as well to provide sufficient breast volume.</p>
+            <ul>
+              <li>IGAP flap: Tissue comes from the buttocks and contains only skin, blood vessels, and fat.</li>
+              <li>PAP flap: Tissue, without muscle, that comes from the upper inner thigh.</li>
+              <li>SGAP flap: Tissue comes from the buttocks as in an IGAP flap, but includes a different set of blood vessels and contains only skin, blood vessels, and fat.</li>
+              <li>TUG flap: Tissue, including muscle, that comes from the upper inner thigh.</li>
+            </ul>
+            <p>In some cases, an implant and autologous tissue are used together. For example, autologous tissue may be used to cover an implant when there isn’t enough skin and muscle left after mastectomy to allow for expansion and use of an implant (1,2).</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Mehrara BJ, Ho AY. Breast Reconstruction. In: Harris JR, Lippman ME, Morrow M, Osborne CK, eds. <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Cordeiro PG. Breast reconstruction after surgery for breast cancer. <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_date_posted:
+    value: "2016-03-12"
+  field_date_reviewed:
+    value: "2016-03-12"
+  field_date_updated:
+    value: "2016-03-12"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_hhs_syndication:
+    - syndicate: 1
+      keywords: ''
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - w/o Related Resources, Public Use, and Syndication"
+  field_page_description:
+    value: "A test page to test article pages with all article footer components besides related resources"
+  field_browser_title:
+    value: "Breast Reconstruction After Mastectomy"
+  field_pretty_url:
+    value: "article-selref-date-nopubuse-norelres-nosyn"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_image_promotional:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Reconstruction Panoramic'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "What is breast reconstruction?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Many women who have a mastectomy—surgery to remove an entire breast to treat or prevent breast cancer—have the option of having the shape of the removed breast rebuilt.</p>
+            <p>Women who choose to have their breasts rebuilt have several options for how it can be done. Breasts can be rebuilt using implants (saline or silicone). They can also be rebuilt using autologous tissue (that is, tissue from elsewhere in the body). Sometimes both implants and autologous tissue are used to rebuild the breast.</p>
+            <p>Surgery to reconstruct the breasts can be done (or started) at the time of the mastectomy (which is called immediate reconstruction) or it can be done after the mastectomy incisions have healed and breast cancer therapy has been completed (which is called delayed reconstruction). Delayed reconstruction can happen months or even years after the mastectomy.</p>
+            <p>In a final stage of breast reconstruction, a nipple and areola may be re-created on the reconstructed breast, if these were not preserved during the mastectomy.</p>
+            <p>Sometimes breast reconstruction surgery includes surgery on the other, or contralateral, breast so that the two breasts will match in size and shape.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use implants to reconstruct a woman’s breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Implants are inserted underneath the skin or chest muscle following the mastectomy. (Most mastectomies are performed using a technique called skin-sparing mastectomy, in which much of the breast skin is saved for use in reconstructing the breast.)</p>
+            <p>Implants are usually placed as part of a two-stage procedure.</p>
+            <ul>
+              <li>In the first stage, the surgeon places a device, called a tissue expander, under the skin that is left after the mastectomy or under the chest muscle (1,2). The expander is slowly filled with saline during periodic visits to the doctor after surgery.</li>
+              <li>In the second stage, after the chest tissue has relaxed and healed enough, the expander is removed and replaced with an implant. The chest tissue is usually ready for the implant 2 to 6 months after mastectomy.</li>
+              <li>In some cases, the implant can be placed in the breast during the same surgery as the mastectomy—that is, a tissue expander is not used to prepare for the implant (3).</li>
+            </ul>
+            <p>Surgeons are increasingly using material called acellular dermal matrix as a kind of scaffold or “sling” to support tissue expanders and implants. Acellular dermal matrix is a kind of mesh that is made from donated human or pig skin that has been sterilized and processed to remove all cells to eliminate the risks of rejection and infection.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - value: "How do surgeons use tissue from a woman’s own body to reconstruct the breast?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>In autologous tissue reconstruction, a piece of tissue containing skin, fat, blood vessels, and sometimes muscle is taken from elsewhere in a woman’s body and used to rebuild the breast. This piece of tissue is called a flap.</p>
+            <p>Different sites in the body can provide flaps for breast reconstruction. Flaps used for breast reconstruction most often come from the abdomen or back. However, they can also be taken from the thigh or buttocks.</p>
+            <p>Depending on their source, flaps can be pedicled or free.</p>
+            <ul>
+              <li>With a pedicled flap, the tissue and attached blood vessels are moved together through the body to the breast area. Because the blood supply to the tissue used for reconstruction is left intact, blood vessels do not need to be reconnected once the tissue is moved.</li>
+              <li>With free flaps, the tissue is cut free from its blood supply. It must be attached to new blood vessels in the breast area, using a technique called microsurgery. This gives the reconstructed breast a blood supply.</li>
+            </ul>
+            <p>Abdominal and back flaps include:</p>
+            <ul>
+              <li>DIEP flap: Tissue comes from the abdomen and contains only skin, blood vessels, and fat, without the underlying muscle. This type of flap is a free flap.</li>
+              <li>Latissimus dorsi (LD) flap: Tissue comes from the middle and side of the back. This type of flap is pedicled when used for breast reconstruction. (LD flaps can be used for other types of reconstruction as well.)</li>
+              <li>SIEA flap (also called SIEP flap): Tissue comes from the abdomen as in a DIEP flap but includes a different set of blood vessels. It also does not involve cutting of the abdominal muscle and is a free flap. This type of flap is not an option for many women because the necessary blood vessels are not adequate or do not exist.</li>
+              <li>TRAM flap: Tissue comes from the lower abdomen as in a DIEP flap but includes muscle. It can be either pedicled or free.</li>
+            </ul>
+            <p>Flaps taken from the thigh or buttocks are used for women who have had previous major abdominal surgery or who don’t have enough abdominal tissue to reconstruct a breast. These types of flaps are free flaps. With these flaps an implant is often used as well to provide sufficient breast volume.</p>
+            <ul>
+              <li>IGAP flap: Tissue comes from the buttocks and contains only skin, blood vessels, and fat.</li>
+              <li>PAP flap: Tissue, without muscle, that comes from the upper inner thigh.</li>
+              <li>SGAP flap: Tissue comes from the buttocks as in an IGAP flap, but includes a different set of blood vessels and contains only skin, blood vessels, and fat.</li>
+              <li>TUG flap: Tissue, including muscle, that comes from the upper inner thigh.</li>
+            </ul>
+            <p>In some cases, an implant and autologous tissue are used together. For example, autologous tissue may be used to cover an implant when there isn’t enough skin and muscle left after mastectomy to allow for expansion and use of an implant (1,2).</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Mehrara BJ, Ho AY. Breast Reconstruction. In: Harris JR, Lippman ME, Morrow M, Osborne CK, eds. <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Cordeiro PG. Breast reconstruction after surgery for breast cancer. <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_date_posted:
+    value: "2016-03-12"
+  field_date_reviewed:
+    value: "2016-03-12"
+  field_date_updated:
+    value: "2016-03-12"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_public_use: 0
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: 'Article Test Page - w/o Citations'
+  field_page_description:
+    value: 'Article Test Page - w/o Citations'
+  field_browser_title:
+    value: 'Article Test Page - w/o Citations'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'article-relres-date-pubuse-syn-noselref'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        <p>Click links on this page to test custom analytics data attributes. Use of a multipronged approach within hospitals, including community centers, not only eliminated treatment disparities among black and white patients with early-stage lung cancer, it also improved treatment rates for all patients.</p>
+  field_article_body:
+    ### Data attributes / custom links
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Common cancer types: custom links'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>There are several main <a href="/types" data-custom-link="CustomLinksTest|Cancer Types">types of cancer</a>. Carcinoma is a cancer that begins in the skin or in tissues that line or cover internal organs. Sarcoma is a cancer that begins in bone, cartilage, fat, muscle, blood vessels, or other connective or supportive tissue. Leukemia is a cancer that starts in blood-forming tissue, such as the bone marrow, and causes large numbers of abnormal blood cells to be produced and enter the blood. Lymphoma and multiple myeloma are cancers that begin in the cells of the immune system. Central nervous system cancers are cancers that begin in the tissues of the brain and spinal cord. Also called malignancy.</p>
+            <div class="callout-box-right">
+              <h3>Common Cancer Types</h3>
+              <p><a href="/types/bladder">Bladder Cancer</a><br>
+              <a href="/types/breast">Breast Cancer</a><br>
+              <a href="/types/colorectal">Colon and Rectal Cancer</a><br>
+              <a href="/types/uterine">Endometrial Cancer</a><br>
+              <a href="/types/kidney">Kidney Cancer</a><br>
+              <a href="/types/leukemia">Leukemia</a><br>
+              <a href="/types/liver">Liver Cancer</a><br>
+            </div>
+            <p>Cancer <a href="/about-cancer" data-custom-link="PreventionLink_Test|Prevention">prevention</a> is a critical component of our effort to reduce the burden of cancer in the United States and globally. As a measure of its importance, cancer prevention has the potential, in the long run, to save even more lives than treatment.
+            <p>“It is <a href="#" data-custom-link>important</a> to recognize that cancer mortality rates are declining in the 20-to-49-year-old age group, and that the rates of decline among women in this age group are faster than those in older women,” said Douglas R. Lowy, M.D., acting director of NCI.
+            The authors also reported in the special section that the incidence rates of in situ breast cancer and nonmalignant central nervous system tumors among women and men ages 20 to 49 are substantial. They wrote that some of the most frequent malignant and nonmalignant tumors that occur in this age group may be associated with considerable long-term and late effects related to the disease or its treatment. The authors conclude that access to timely and high-quality treatment and survivorship care is important to improve health outcomes and quality of life for younger adults diagnosed with cancer.</p>
+            <p>Effective <a href="https://prevention.cancer.gov" data-custom-link="CustomLinksTest">prevention</a> will also reduce cancer incidence and morbidity, meaning fewer people will have to face the physical, financial, social, and psychological harms of a cancer diagnosis and treatment.</p>
+            <p><a href="/grants-training/apply-grant" data-custom-link="Grants_Process">Apply for a Grant</a></p>
+            <h5>Indexed links to common cancer types</h5>
+            <div>Select a <a href="/types" data-custom-link>type of cancer</a> to learn about treatment, causes and prevention, screening, and the latest research.</div>
+            <ul>
+              <li><a href="/types/lung" data-indexed-link="Cancer Type Links List|PetCTList|1">Lung Cancer</a></li>
+              <li><a href="/types/skin" data-indexed-link="Cancer Type Links List|PetCTList|2">Melanoma</a></li>
+              <li><a href="/types/lymphoma" data-indexed-link="Cancer Type Links List|PetCTList|3">Lymphoma</a></li>
+              <li><a href="/types/pancreatic" data-indexed-link="Cancer Type Links List|PetCTList|4">Pancreatic Cancer</a></li>
+              <li><a href="/types/prostate" data-indexed-link="Cancer Type Links List|PetCTList|5">Prostate Cancer</a></li>
+              <li><a href="/types/thyroid" data-indexed-link="Cancer Type Links List|PetCTList|6">Thyroid Cancer</a></li>
+              <li><a href="/types/recurrent-cancer" data-indexed-link="Cancer Type Links List|PetCTList">Recurrent Cancer</a></li>
+              <li><a href="/types/metastatic-cancer" data-indexed-link="Cancer Type Links List|PetCTList">Metastatic Cancer</a></li>
+            </ul>
+            <p>One approach to cancer prevention is reducing or eliminating exposures to cancer-causing substances in the environment, such as asbestos, tobacco smoke, and radon gas. Another approach is to protect the body against such exposures or reduce their effect. For example, using sun screen to protect the skin against ultraviolet radiation and getting vaccinated against cancer-causing viruses, including certain types of human papillomavirus (HPV) that cause cervical and several other types of cancer, can protect against processes that can eventually lead to cancer. In addition, some cancer screening tests, such as the Pap smear for cervical cancer and colonoscopy for colorectal cancer, can aid in cancer prevention. These tests detect premalignant lesions that can be removed or destroyed before they progress to cancer.</p>
+    ### Sortable table
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'Funding Opportunity Announcements (FOA)'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>CGH has partnered with the NCI, Office of Cancer Centers to design a two-year administrative supplement to promote the development of new, or strengthen ongoing, partnerships between investigators at NCI-designated cancer centers and foreign institutions in low- and middle-income countries (LMICs). In addition, the supplements seek to support teams of researchers gathered to address the CPC needs of LMIC populations, while facilitating knowledge sharing between US and foreign investigators.</p>
+            <div style="height: 1px;"></div><figure class="table"><div class=""><div><table class="table-default complex-table" data-sortable="">
+            <thead>
+            <tr>
+            <th scope="col" tabindex="0" data-sorted="false">Title</th>
+            <th scope="col" tabindex="0" data-sorted="false">Announcement Number</th>
+            <th scope="col" data-sortable-type="date" tabindex="0" data-sorted="false">Opening Date</th>
+            <th scope="col" data-sortable-type="date" tabindex="0" data-sorted="false">Expiration Date</th>
+            <th scope="col" tabindex="0" data-sorted="false">Activity Code</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>Microbial-based Cancer Therapy - Bugs as Drugs (R01 Clinical Trial Not Allowed)</td>
+            <td><a title="PAR-19-193" href="https://grants.nih.gov/grants/guide/pa-files/par-19-193.html" target="_blank" rel="noopener noreferrer">PAR-19-193</a></td>
+            <td>05/05/2019</td>
+            <td>05/08/2022</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Modulating Intestinal Microbiota to Enhance Protective Immune Responses against Cancer (R21 Clinical Trial Not Allowed)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-19-199.html">PAR-19-199</a></td>
+            <td>05/10/2019</td>
+            <td>11/09/2021</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>Advancing Cancer Immunotherapy by Mitigating Immune-Related Adverse Events (irAE) (U01 Clinical Trial Not Allowed)</td>
+            <td><a title="RFA-CA-19-044" href="https://grants.nih.gov/grants/guide/rfa-files/RFA-CA-19-044.html" target="_blank" rel="noopener noreferrer">RFA-CA-19-044</a></td>
+            <td>03/25/2019</td>
+            <td>04/26/2019</td>
+            <td>U01</td>
+            </tr>
+            <tr>
+            <td>Pilot and Feasibility Studies Evaluating the Role of RNA Modifications (the 'epitranscriptome') in Cancer Biology (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-177.html">PAR-16-177</a></td>
+            <td>09/16/2016</td>
+            <td>07/17/2019</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>Collaborative Research Projects to Enhance Applicability of Mammalian Models for Translational Research (Collaborative R01)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-17-244.html">PAR-17-244</a></td>
+            <td>05/05/2017</td>
+            <td>05/08/2020</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Research Projects to Enhance Applicability of Mammalian Models for Translational Research (R01)</td>
+            <td><a href="https://grants.nih.gov/grants/guide/pa-files/PAR-17-245.html" target="_blank" rel="noopener noreferrer">PAR-17-245</a></td>
+            <td>05/05/2017</td>
+            <td>05/08/2020</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Gene Fusions in Pediatric Sarcomas (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-252.html">PA-16-252</a></td>
+            <td>09/05/2016</td>
+            <td>05/08/2019</td>
+            <td>R21</td>
+            </tr>
+            <tr>
+            <td>"High" or "Medium" Priority AIDS Research on Non-AIDS-defining or AIDS-defining Cancers (R01)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PA-16-426.html">PA-16-426</a></td>
+            <td>12/07/2016</td>
+            <td>09/08/2019</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Metabolic Reprogramming to Improve Immunotherapy (R01)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PAR-16-228.html">PAR-16-228</a></td>
+            <td>09/05/2016</td>
+            <td>09/08/2019</td>
+            <td>R01</td>
+            </tr>
+            <tr>
+            <td>Neural Regulation of Cancer (R21)</td>
+            <td><a href="http://grants.nih.gov/grants/guide/pa-files/PAR-16-246.html">PAR-16-246</a></td>
+            <td>09/26/2016</td>
+            <td>06/28/2019</td>
+            <td>R21</td>
+            </tr>
+            </tbody>
+            </table></div></div></figure>
+    ### Video carousel
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_heading:
+        - format: 'simple'
+          value: 'The SEER "Did You Know?" video series'
+      field_body_section_content:
+        - format: 'full_html'
+          value: |
+            <p>SEER has developed  <i>Did You Know?</i> video series, in collaboration with NCI's Office of Communications & Public Liaison, to highlight key topics and trends in cancer statistics. Many of the statistics presented in the videos are available in the annual SEER Cancer Statistics Review (CSR). This video series explores three cancer patients&rsquo; and their doctor&rsquo;s thoughts and feelings about prognosis.&nbsp;</span>The videos explain key points about prognosis and how doctors and patients can talk about it in a clear and supportive way. Two viewer guides are also available: for <a href="/about-cancer/diagnosis-staging/prognosis/patient-viewer-guide.pdf" title="">patients</a> (PDF-210KB) and for <a href="/about-cancer/diagnosis-staging/prognosis/provider-viewer-guide.pdf" title="">provider</a> care teams (PDF-210KB).</p>
+  field_related_resources:
+    - entity: 'paragraph'
+      type: 'cgov_internal_link'
+      field_override_title:
+        - value: 'Override: Feelings and Cancer'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Feelings and Cancer'
+    - entity: 'paragraph'
+      type: 'cgov_internal_link'
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_blog_series'
+                title: 'Cancer Currents Blog'
+  field_date_posted:
+    value: '2019-06-19'
+  field_date_reviewed:
+    value: '2019-06-19'
+  field_date_updated:
+    value: '2019-06-19'
+  field_date_display_mode:
+    value: 'reviewed'
+  field_hhs_syndication:
+    - syndicate: 1
+      keywords: ''
+
+- entity: "media"
+  bundle: "cgov_video"
+  name: "Test Video - with Date and Caption"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_pretty_url: "video-date-capt-noad"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Testing body text.</p>
+  field_caption:
+    - format: "simple"
+      value: |
+        Test field caption.
+  field_list_description: "LIST: Test list description."
+  field_page_description: "META: Test meta description."
+  field_browser_title: "Test Video - with Date and Caption"
+  field_media_oembed_video: "https://www.youtube.com/watch?v=fAQmCNWJHb8"
+  field_date_display_mode:
+    - value: 'reviewed'

@@ -410,3 +410,27 @@
     </div>
   </li>
 {% endmacro %}
+
+{% macro ncids_list_item_related_resource(title, url, link_type, media_type = null, file_type = null, file_size = null, file_ext = null) %}
+  {% if media_type == "Video" or media_type == "Infographic" or media_type == "File" %}
+  <li class="cgdp-media-link">
+  {% else %}
+  <li>
+  {% endif %}
+    <a class="usa-link" href='{{ url }}' data-list-item-type="{{ link_type }}">{{ title }}</a>
+    {% if media_type == "Video" or media_type == "Infographic" %}
+      <span class="cgdp-media-link__mediatype">({{ media_type }})</span>
+    {% elseif media_type == "File" %}
+      <span class="cgdp-media-link__filetype {{file_type}}">
+        {% if file_type != "unknown" %}
+          {# Note, the spanish should have the word order reversed... #}
+          <span class="usa-sr-only">{{ file_type }} {% trans %}file{% endtrans %}</span>
+        {% else %}
+          {{ file_ext }}<span class="usa-sr-only"> {% trans %}file{% endtrans %}</span>
+        {% endif %}
+      </span>
+      <span class="cgdp-media-link__filesize">({{ file_size }})</span>
+    {% endif %}
+  </li>
+{% endmacro %}
+
