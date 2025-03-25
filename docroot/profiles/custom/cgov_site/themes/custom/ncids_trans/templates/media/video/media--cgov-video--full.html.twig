@@ -3,20 +3,20 @@
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
+	<h1 class="nci-heading-h1">
+		{{ name }}
+	</h1>
 	<div class="cgdpl">
 		<div class="contentzone">
-      <h1>
-        {{ name }}
-      </h1>
-      <div id="cgvBody">
-        {{ content.body }}
-      </div>
-    </div>
-  </div>
-  {{ videoMacros.ncidsVideo(name, content, media) }}
-  {% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
-    <footer class="cgdp-article-footer">
-      {{ contentPageMacros.ncidsDisplayDates(media, content) }}
-    </footer>
-  {% endif %}
+			<div id="cgvBody">
+				{{ content.body }}
+			</div>
+		</div>
+	</div>
+	{{ videoMacros.ncidsVideo(name, content, media) }}
+	{% if content.field_date_posted[0] or content.field_date_updated[0] or content.field_date_reviewed[0] %}
+		<footer class="cgdp-article-footer">
+			{{ contentPageMacros.ncidsDisplayDates(media, content) }}
+		</footer>
+	{% endif %}
 </article>

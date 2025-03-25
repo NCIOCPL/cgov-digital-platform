@@ -1,0 +1,124 @@
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "NIH Management Fund, Service and Supply Fund (SSF), and GSA Rent (with H2)"
+  field_browser_title:
+    value: "2021 NCI Budget Fact Book - NIH Management Fund"
+  field_page_description:
+    value: "See the distribution of NCI's payment for common research and support activities required by NIH, including GSA Rent and the Service and Supply Fund."
+  field_card_title:
+    value: "NIH Management Fund"
+  field_card_description:
+    value: "See the distribution of NCI's payment for common research and support activities required by NIH."
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'article-h2-after-title'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <h2>H2 After Title</h2>
+            <p>The Management Fund provides for the financing of certain common research and administrative support activities which are required in the operations of NIH:</p>
+            <p><strong>Clinical Center:</strong> Admissions and follow-up, anesthesiology, diagnostic x-ray, nuclear medicine, clinical pathology, blood bank, rehabilitation medicine, pharmacy, medical records, nursing services, patient nutrition services, housekeeping services, laundry, social work, drug costs, red team response, bench to bedside and the Children's Hospital.</p>
+            <p><strong>Center for Scientific Review: </strong>Initial scientific review of applications and assignment of research grant applications to institutes.</p>
+            <p><strong>Center for Information Technology:</strong> Research and development program in which concepts and methods of computer science are applied to biomedical problems.</p>
+            <p><strong>Other Research Services:</strong> Procurement, safety, engineering, biomedical engineering, veterinary resources, and library services.</p>
+            <p><strong>Service &amp; Supply Fund: </strong>Mainframe computing, enterprise IT software planning and development, engineering planning and design, printing, telecommunications, procurement, shipping and receiving, motor pool, research animals, fabrication and maintenance of scientific equipment, utilities and plant maintenance, biomedical engineering, background investigations, IT cybersecurity and GSA rental payments for space (to include all building rental costs, including utilities and guard services).&nbsp;&nbsp;&nbsp;</p>
+            <p style="text-align: left;"><a class="data-download-btn" href="/about-nci/budget/fact-book/sample-download-data.xlsx">Download the Data</a></p>
+            <drupal-entity
+              data-caption=""
+              data-embed-button="insert_block_content"
+              data-entity-embed-display="view_mode:block_content.full"
+              data-entity-type="block_content"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-type="raw_html_block"
+              data-cgov-yaml-query-info="Factbook-HTML-ManagementFund"
+            ></drupal-entity>
+            <p>&nbsp;</p>
+            <table class="table-default complex-table" style="width: 100%;">
+            <caption>NCI FY 2021 Management Fund, SSF, and GSA Rent FY 2021<br />
+            <small><i>(Whole Dollars)</i></small></caption>
+            <thead>
+              <tr style="height: 14.45px;">
+                <th scope="col" style="height: 14.45px; text-align: center; vertical-align: middle;">Distribution of NCI Payment</th>
+                <th scope="col" style="height: 14.45px; text-align: center; vertical-align: middle;">Amount</th>
+                <th scope="col" style="height: 14.45px; text-align: center; vertical-align: middle;">Share of NCI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Clinical Center</td>
+                <td class="text-right" style="height: 14px;">$172,120,358</td>
+                <td class="text-right" style="height: 14px;">38.0%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Center for Scientific Review</td>
+                <td class="text-right" style="height: 14px;">22,765,248</td>
+                <td class="text-right" style="height: 14px;">5.0%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Center for Information Technology</td>
+                <td class="text-right" style="height: 14px;">40,262,648</td>
+                <td class="text-right" style="height: 14px;">8.9%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Service &amp; Supply Fund Assessment</td>
+                <td class="text-right" style="height: 14px;">205,569,289</td>
+                <td class="text-right" style="height: 14px;">45.3%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Other Research Services</td>
+                <td class="text-right" style="height: 14px;">12,777,921</td>
+                <td class="text-right" style="height: 14px;">2.8%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;">Other OD</td>
+                <td class="text-right" style="height: 14px;">0</td>
+                <td class="text-right" style="height: 14px;">0.0%</td>
+              </tr>
+              <tr style="height: 14px;">
+                <td style="height: 14px;"><b>Total NCI Management Fund &amp; SSF</b></td>
+                <td class="text-right" style="height: 14px;"><strong>$453,495,464</strong></td>
+                <td class="text-right" style="height: 14px;"><strong>100.0%</strong></td>
+              </tr>
+            </tbody>
+            </table>
+            <table class="table-default complex-table" style="width: 100%;">
+            <caption>NIH FY 2021 Management Fund &amp; SSF<br />
+            <small><i>(Whole Dollars)</i></small></caption>
+            <thead>
+              <tr style="height: 13px;">
+                <th scope="col" style="height: 13px; text-align: center; vertical-align: middle;">Type</th>
+                <th scope="col" style="height: 13px; text-align: center; vertical-align: middle;">Amount</th>
+                <th scope="col" style="height: 13px; text-align: center; vertical-align: middle;">Percent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 13.9px;">
+                <td style="height: 13.9px;">NCI</td>
+                <td class="text-right" style="height: 13.9px;">$453,495,464</td>
+                <td class="text-right" style="height: 13.9px;">19.9%</td>
+              </tr>
+              <tr style="height: 13px;">
+                <td style="height: 13px;">Other NIH Institutes</td>
+                <td class="text-right" style="height: 13px;">$1,819,830,999</td>
+                <td class="text-right" style="height: 13px;">80.1%</td>
+              </tr>
+              <tr style="height: 13px;">
+                <td style="height: 13px;"><b>Total NIH Management Fund &amp; SSF</b></td>
+                <td class="text-right" style="height: 13px;"><b>$2,273,326,463</b></td>
+                <td class="text-right" style="height: 13px;"><b>100%</b></td>
+              </tr>
+            </tbody>
+            </table>
