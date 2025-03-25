@@ -2,19 +2,19 @@
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-  <div class="cgdpl">
-    <div class="contentzone">
-      <h1>
-        {{ node.label }}
-      </h1>
-      <div id="cgvBody">
-        {{ content.body }}
-        {{ content.field_selected_research }}
-      </div>
-    </div>
-  </div>
+	<h1 class="nci-heading-h1">
+		{{ node.label }}
+	</h1>
+	<div class="cgdpl">
+		<div class="contentzone">
+			<div id="cgvBody">
+				{{ content.body }}
+				{{ content.field_selected_research }}
+			</div>
+		</div>
+	</div>
 
-  <footer class="cgdp-article-footer">
-    {{ contentPageMacros.ncidsDisplayDates(node, content) }}
-  </footer>
+	<footer class="cgdp-article-footer">
+		{{ contentPageMacros.ncidsDisplayDates(node, content) }}
+	</footer>
 </article>
