@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.ncids_imageless_card_external.field_external_link_display
     - field.field.paragraph.ncids_imageless_card_external.field_featured_url
     - field.field.paragraph.ncids_imageless_card_external.field_override_card_description
     - field.field.paragraph.ncids_imageless_card_external.field_override_card_title
@@ -13,6 +14,12 @@ targetEntityType: paragraph
 bundle: ncids_imageless_card_external
 mode: default
 content:
+  field_external_link_display:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_featured_url:
     type: link_default
     weight: 0
@@ -23,7 +30,7 @@ content:
     third_party_settings: {  }
   field_override_card_description:
     type: string_textfield
-    weight: 2
+    weight: 3
     region: content
     settings:
       size: 60
@@ -31,7 +38,7 @@ content:
     third_party_settings: {  }
   field_override_card_title:
     type: string_textfield
-    weight: 1
+    weight: 2
     region: content
     settings:
       size: 60
