@@ -60,12 +60,17 @@
 	</a>
 {% endmacro %}
 
-{% macro ncidsImagelessCard(title, description, url, id, entity_type, link_type) %}
+{% macro ncidsImagelessCard(title, description, url, id, entity_type, link_type, suppress_external_icon = false ) %}
 	{% set renderImage = image|render %}
 	{% import _self as self %}
 	{% set titleID = "#{entity_type}-#{id}" %}
-
-	<a href="{{ url }}" aria-labelledby="{{ titleID }}" data-eddl-landing-item="imageless_card" data-eddl-landing-item-link-type="{{ link_type }}">
+  {% set link_attributes = create_attribute() %}
+  {% set link_attributes = link_attributes.setAttribute('data-eddl-landing-item', 'imageless_card') %}
+  {% set link_attributes = link_attributes.setAttribute('data-eddl-landing-item-link-type', link_type ) %}
+    {% if suppress_external_icon %}
+      {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', true) %}
+    {% endif %}
+	<a href="{{ url }}" aria-labelledby="{{ titleID }}" {{ link_attributes }}>
 		<div class="nci-card__body">
 			<span class="nci-card__title" id="{{ titleID }}">{{ title }}</span>
 			{% if description %}
