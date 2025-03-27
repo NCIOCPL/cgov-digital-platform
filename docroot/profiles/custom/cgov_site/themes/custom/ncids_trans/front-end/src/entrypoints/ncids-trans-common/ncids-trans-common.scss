@@ -40,71 +40,92 @@
 // TODO Keep as last import for now, there is a ordering bug
 @forward '../../lib/components/nci-header';
 
+// This is global typography and body content styling. The following imports
+// are from the uswds-typography package, however we will comment out the
+// ones we do not thing should be global.
+@forward "usa-content";
+@forward "usa-dark-background";
+@forward "usa-display";
+// The intro styling seems silly here as we only use into on articles and
+// blogs posts for the most part.
+//@forward "usa-intro";
+@forward "usa-link";
+// List is actually already included with footer, however, we include it
+// here in the event it is removed from the footer some day.
+@forward "usa-list";
+@forward "usa-paragraph";
+@forward "usa-prose";
+@forward "nci-heading";
+
 @use 'uswds-core';
 
-/* ------------------------------------------------------------------------- */
-/* Output select utility classes for raw html blocks                         */
-/* ------------------------------------------------------------------------- */
-uswds-core.$output-these-utilities: (
-	'padding',
-	'text-decoration',
-	'box-shadow',
-	'font',
-	'background-color',
-	'font-weight',
-	'border-color',
-	'line-height',
-	'justify-content'
-);
-// Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
-// the smallest possible aspect classes.
-uswds-core.$add-aspect-settings: (
-	output: false,
-	responsive: false,
-	active: false,
-	focus: false,
-	hover: false,
-	visited: false
-);
-uswds-core.$background-color-settings: (
-	output: true,
-	responsive: false,
-	active: false,
-	focus: false,
-	hover: false,
-	// Undo default
-	visited: false
-);
-uswds-core.$box-shadow-settings: (
-	output: true,
-	responsive: false,
-	active: false,
-	focus: false,
-	hover: false,
-	// Undo default
-	visited: false
-);
-uswds-core.$border-color-settings: (
-	output: true,
-	responsive: false,
-	// Undo default
-	active: false,
-	focus: false,
-	hover: false,
-	// Undo default
-	visited: false
-);
-uswds-core.$justify-content-settings: (
-	output: true,
-	responsive: true,
-	// Undo default
-	active: false,
-	focus: false,
-	hover: false,
-	visited: false
-);
+// We should not allow all the utilities we do for home and landing. There should
+// not be as many bespoke layouts for inner pages.
 
-@forward 'uswds-utilities';
+// /* ------------------------------------------------------------------------- */
+// /* Output select utility classes for raw html blocks                         */
+// /* ------------------------------------------------------------------------- */
+// uswds-core.$output-these-utilities: (
+// 	'padding',
+// 	'text-decoration',
+// 	'box-shadow',
+// 	'font',
+// 	'background-color',
+// 	'font-weight',
+// 	'border-color',
+// 	'line-height',
+// 	'justify-content'
+// );
+// // Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
+// // the smallest possible aspect classes.
+// uswds-core.$add-aspect-settings: (
+// 	output: false,
+// 	responsive: false,
+// 	active: false,
+// 	focus: false,
+// 	hover: false,
+// 	visited: false
+// );
+// uswds-core.$background-color-settings: (
+// 	output: true,
+// 	responsive: false,
+// 	active: false,
+// 	focus: false,
+// 	hover: false,
+// 	// Undo default
+// 	visited: false
+// );
+// uswds-core.$box-shadow-settings: (
+// 	output: true,
+// 	responsive: false,
+// 	active: false,
+// 	focus: false,
+// 	hover: false,
+// 	// Undo default
+// 	visited: false
+// );
+// uswds-core.$border-color-settings: (
+// 	output: true,
+// 	responsive: false,
+// 	// Undo default
+// 	active: false,
+// 	focus: false,
+// 	hover: false,
+// 	// Undo default
+// 	visited: false
+// );
+// uswds-core.$justify-content-settings: (
+// 	output: true,
+// 	responsive: true,
+// 	// Undo default
+// 	active: false,
+// 	focus: false,
+// 	hover: false,
+// 	visited: false
+// );
+
+// @forward 'uswds-utilities';
+
 /* ------------------------------------------------------------------------- */
 /* End utility classes for raw html blocks                                   */
 /* ------------------------------------------------------------------------- */
