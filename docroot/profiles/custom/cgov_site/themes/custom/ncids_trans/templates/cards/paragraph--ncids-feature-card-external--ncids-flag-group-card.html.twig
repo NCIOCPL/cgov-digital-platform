@@ -19,4 +19,8 @@
 {# ###### Render Card ###### #}
 {% set id = paragraph.id() %}
 {% set entity_type = paragraph.entityTypeID %}
-{{ cardMacros.ncidsFlagCard(title, description, image, url, directory, id, entity_type, 'External') }}
+{% set suppress_external_icon = false %}
+  {% if (paragraph.field_external_link_display.value == 'do_not_display') %}
+    {% set suppress_external_icon = true %}
+  {% endif %}
+{{ cardMacros.ncidsFlagCard(title, description, image, url, directory, id, entity_type, 'External', suppress_external_icon ) }}

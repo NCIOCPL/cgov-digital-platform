@@ -1,6 +1,10 @@
 {% if items | length > 0 %}
   {% for item in items %}
-  <li class="cgdp-flag-card">
+    {% set card_attributes = create_attribute({'class': ['cgdp-flag-card']}) %}
+      {% if (item.content['#paragraph'].field_external_link_display.value == 'force_display') %}
+        {% set card_attributes = card_attributes.addClass('nci-card--external') %}
+      {% endif %}
+  <li {{ card_attributes }}>
     {{ item.content }}
   </li>
   {% endfor %}
