@@ -93,20 +93,6 @@
                   - type: 'cgov_article'
                     title: 'Feelings and Cancer'
         - entity: 'paragraph'
-          type: "cgov_card_internal"
-          field_override_card_title:
-            - value: 'Overridden Title'
-          field_override_card_description:
-            - value: 'Overridden description'
-          field_featured_item:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
-        - entity: 'paragraph'
           type: "cgov_card_external"
           field_override_card_title:
             - value: 'External Card Title'
@@ -122,6 +108,22 @@
                     name: 'Find a Clinical Trial'
           field_featured_url:
             - uri: 'https://www.google.com'
+        - entity: 'paragraph'
+          type: "cgov_card_external"
+          field_override_card_title:
+            - value: 'External Card Title'
+          field_override_card_description:
+            - value: 'External Card Description'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_featured_url:
+            - uri: 'https://www.cancer.gov'
       ## Cards here
     ######## End Feature Row ###########
     ######## Begin Guide Row ###########
@@ -267,7 +269,7 @@
           field_override_title:
             - value: 'External Card Title'
           field_override_list_description:
-            - value: 'External Card Description'
+            - value: 'External Card Description Default Option'
           field_override_image_promotional:
             - target_type: 'media'
               '#process':
@@ -278,30 +280,98 @@
                     name: 'Find a Clinical Trial'
           field_external_link:
             - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'default'
         - entity: 'paragraph'
-          type: "cgov_internal_link"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
-        - entity: 'paragraph'
-          type: "cgov_internal_link"
+          type: "cgov_external_link"
           field_override_title:
-            - value: 'Overridden Title'
+            - value: 'External Card Title'
           field_override_list_description:
-            - value: 'Overridden description'
-          field_internal_link:
-            - target_type: 'node'
+            - value: 'External Card Description Default Option'
+          field_override_image_promotional:
+            - target_type: 'media'
               '#process':
                 callback: 'reference'
                 args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description Force Display Option'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description Force Display Option'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description Force Hide Option'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Card Title'
+          field_override_list_description:
+            - value: 'External Card Description Force Hide Option'
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Find a Clinical Trial'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'do_not_display'
     ######## End Thumbnail List ##############
     ######## Home Page Carousel ############
     - entity: 'paragraph'

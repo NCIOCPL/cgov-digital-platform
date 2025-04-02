@@ -285,6 +285,114 @@
                   - 'media'
                   - bundle: 'cgov_image'
                     name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Default"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Default"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Force Show"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Force Show"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Force Hide"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Non-gov External Link Force Hide"
+          field_override_list_description:
+            - value: "Non-gov External Link Description"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'do_not_display'
     - entity: 'paragraph'
       type: "cgov_cthp_video_card"
       field_cthp_card_title:
@@ -362,6 +470,156 @@
             - value: 'External Link Title'
           field_external_link:
             - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Default'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Default'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'default'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Default'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Default'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'default'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Force Show'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Force Show'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'force_display'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Force Show'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Force Show'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Force Hide'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Force Hide'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+    - entity: 'paragraph'
+      type: "cgov_cthp_video_card"
+      field_cthp_card_title:
+        - value: 'Force Hide'
+      field_cthp_card_theme:
+        - value: 'cthp-survival'
+      field_cthp_override_description:
+        - value: "Find more information about trends in breast cancer on the Cancer Stat Facts: Female Breast Cancer page."
+      field_cthp_video:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_video'
+                name: 'Hedge Maze'
+      field_cthp_target_link:
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: 'External Link Force Hide'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'do_not_display'
 ######## End English CTHP Cards ##############
 ######## BEGIN SPANISH CTHP CARDS ########
   field_cthp_cards__ES:
