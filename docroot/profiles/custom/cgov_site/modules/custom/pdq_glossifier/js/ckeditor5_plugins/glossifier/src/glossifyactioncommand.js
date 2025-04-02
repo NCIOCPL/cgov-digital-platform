@@ -5,6 +5,7 @@
 
 import { Command } from 'ckeditor5/src/core';
 import {
+  convertTagStringToHTML,
   prepareEditorBodyForGlossificationRequest,
   getContentLanguage
 } from './utils/content-preparation';
@@ -134,8 +135,17 @@ export default class GlossifyActionCommand extends Command {
       const isSelected = checkbox.checked;
       if(!isSelected) {
         // Restore the term as basic text. No glossification.
-        const originalText = label.textContent;
-        label.replaceWith(originalText);
+       const termHTML = label.dataset.html;
+       const isPreexisting = label.dataset.preexisting;
+       const originalText = label.textContent;
+        if (isPreexisting === "true") {
+          let displayText = convertTagStringToHTML(originalText, termHTML);
+          const tempDoc = document.createElement('div');
+          tempDoc.innerHTML = displayText;
+          label.replaceWith(...tempDoc.childNodes);
+        } else {
+          label.replaceWith(originalText);
+        }
       }
       else {
         glossifyTermFromLabel(label);
