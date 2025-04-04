@@ -57,7 +57,7 @@
   {% endif %}
   <li class="{{ liClasslist }}">
     <div class="title-and-desc title desc container">
-      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext, external_link_option) }}
       {{ _self._output_list_desc_date(description, null) }}
     </div>
   </li>
@@ -71,7 +71,7 @@
 
   (Replaces old "Thumbnail Card" as well)
 #}
-{% macro list_item_title_desc_image(title, description, image, url, has_title_heading, media_link_type, file_type, file_size, file_ext) %}
+{% macro list_item_title_desc_image(title, description, image, url, has_title_heading, media_link_type, file_type, file_size, file_ext, external_link_option) %}
   {% if media_link_type == 'Infographic' %}
     {% set liClasslist = "infographic-list-item infographic list-item has-media" %}
   {% elseif media_link_type == 'Video' %}
@@ -84,7 +84,7 @@
   <li class="{{ liClasslist }}">
     {{ _self._output_list_image(image, url) }}
     <div class="title-and-desc title desc container">
-      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext) }}
+      {{ _self._output_list_title(title, url, has_title_heading, media_link_type, file_type, file_size, file_ext, external_link_option) }}
       {{ _self._output_list_desc_date(description, null) }}
     </div>
   </li>
@@ -282,7 +282,7 @@
     * NCIDS 2 Column Container (Dynamic Lists as a field)
     * NCIDS Dynamic Lists
 #}
-{% macro ncids_dynamic_list_macro(title, date, description = '', image, url) %}
+{% macro ncids_dynamic_list_macro(title, date, description = '', image, url, external_link_option) %}
   <li class="usa-collection__item">
     {% set renderImage = image|render %}
     {% if renderImage is not empty %}
@@ -306,7 +306,7 @@
   </li>
 {% endmacro %}
 
-{% macro ncids_list_macro(title, description, url, style, image, media_type, file_type, file_size, file_ext) %}
+{% macro ncids_list_macro(title, description, url, style, image, media_type, file_type, file_size, file_ext, external_link_option) %}
   <li class="usa-collection__item" data-list-component-variant="{{ style }}">
     {% if style == "Title, Description, and Image" %}
       {% set renderImage = image|render %}
@@ -318,8 +318,16 @@
     {% endif %}
     <div class="usa-collection__body">
       <h3 class="usa-collection__heading">
-        <a class="usa-link" href="{{ url }}">
-          {{- title -}}
+        {% set link_attributes = create_attribute() %}
+          {% if (external_link_display == 'do_not_display') %}
+            {% set link_attributes = link_attributes.setAttribute('data-ncids-internal-link', true) %}
+          {% endif %}
+        {% set link_classes = create_attribute({'class': ['usa-link']}) %}
+          {% if (external_link_display == 'force_display') %}
+            {% set link_classes = link_classes.addClass('usa-link--external') %}
+          {% endif %}
+        <a {{ link_classes }} href="{{ url }}" {{ link_attributes }}>
+          {{- title -}}{{ external_link_display }} fish fry
         </a>
         {% if media_type == "Video" or media_type == "Infographic" %}
            ({{ media_type }})

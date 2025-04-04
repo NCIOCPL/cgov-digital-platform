@@ -11,6 +11,9 @@
   {# ###### Setup the URL ###### #}
   {% set url = content.field_external_link[0]['#url'] %}
 
+  {# ###### Setup the External Link Display ###### #}
+  {% set external_link_option = content.field_external_link_display|field_value %}
+
   {## Render List Item ##}
-  {{ listItemMacros.list_item_title_desc(title, description, url, true) }}
+  {{ listItemMacros.list_item_title_desc(title, description, url, true, external_link_option = 'do_not_display') }}
 {% endif %}

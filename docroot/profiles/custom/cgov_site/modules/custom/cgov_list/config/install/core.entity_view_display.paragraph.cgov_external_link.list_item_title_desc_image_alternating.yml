@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.paragraph.list_item_title_desc_image_alternating
     - field.field.paragraph.cgov_external_link.field_external_link
+    - field.field.paragraph.cgov_external_link.field_external_link_display
     - field.field.paragraph.cgov_external_link.field_override_image_promotional
     - field.field.paragraph.cgov_external_link.field_override_list_description
     - field.field.paragraph.cgov_external_link.field_override_title
@@ -16,7 +17,7 @@ bundle: cgov_external_link
 mode: list_item_title_desc_image_alternating
 content:
   field_external_link:
-    weight: 2
+    type: link_separate
     label: hidden
     settings:
       trim_length: 80
@@ -25,30 +26,31 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    type: link_separate
+    weight: 2
     region: content
   field_override_image_promotional:
     type: entity_reference_entity_view
-    weight: 3
-    region: content
     label: above
     settings:
       view_mode: image_crop_panoramic
       link: false
     third_party_settings: {  }
+    weight: 3
+    region: content
   field_override_list_description:
     type: basic_string
-    weight: 1
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content
   field_override_title:
-    weight: 0
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 0
     region: content
-hidden: {  }
+hidden:
+  field_external_link_display: true
