@@ -17,5 +17,5 @@
   {% set url = content.field_external_link[0]['#url'] %}
 
   {## Render List Item ##}
-  {{ listItemMacros.ncids_list_macro(title, description, url, "Title, Description, and Image", image) }}
+  {{ listItemMacros.ncids_list_macro(title, description, url, "Title, Description, and Image", image, external_link_display = paragraph.field_external_link_display.value ) }}
 {% endif %}
