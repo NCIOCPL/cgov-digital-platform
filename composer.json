@@ -171,7 +171,8 @@
         ],
         "cgov-clean": [
             "CGovPlatform\\composer\\Hoover::clean",
-            "@composer clearcache --ansi"
+            "@composer clearcache --ansi",
+            "rm -rf docroot/sites/simpletest/*"
         ],
         "post-drupal-scaffold-cmd": [
             "patch -p1 < ./patches/drupal-scaffold/gitattributes.patch",
