@@ -17,7 +17,6 @@
 
 // The global NCIDS/USWDS packages that generate markup.
 // We either don't need this, or we do.
-//@import 'uswds/dist/scss/elements/typography/content'; // usa-prose, usa-intro(lede/lead)
 @forward 'usa-layout-grid';
 @forward 'nci-no-print'; //print styling
 
@@ -30,12 +29,6 @@
 @forward '../../lib/components/usa-sidenav';
 @forward '../../lib/components/cgdp-page-options';
 @forward '../../lib/components/usa-footer';
-@forward '../../lib//components/cgdp-video/';
-@forward '../../lib/components/cgdp-related-resources';
-@forward '../../lib/components/cgdp-document-dates';
-@forward '../../lib/components/cgdp-public-use';
-@forward '../../lib/components/cgdp-hhs-syndication';
-@forward '../../lib/components/cgdp-article-footer-citation';
 
 // TODO Keep as last import for now, there is a ordering bug
 @forward '../../lib/components/nci-header';
@@ -58,77 +51,3 @@
 @forward "nci-heading";
 
 @use 'uswds-core';
-
-// We should not allow all the utilities we do for home and landing. There should
-// not be as many bespoke layouts for inner pages.
-
-// /* ------------------------------------------------------------------------- */
-// /* Output select utility classes for raw html blocks                         */
-// /* ------------------------------------------------------------------------- */
-// uswds-core.$output-these-utilities: (
-// 	'padding',
-// 	'text-decoration',
-// 	'box-shadow',
-// 	'font',
-// 	'background-color',
-// 	'font-weight',
-// 	'border-color',
-// 	'line-height',
-// 	'justify-content'
-// );
-// // Add aspect ALWAYS outputs no matter the settings. So let's make sure we get
-// // the smallest possible aspect classes.
-// uswds-core.$add-aspect-settings: (
-// 	output: false,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	visited: false
-// );
-// uswds-core.$background-color-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$box-shadow-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$border-color-settings: (
-// 	output: true,
-// 	responsive: false,
-// 	// Undo default
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	// Undo default
-// 	visited: false
-// );
-// uswds-core.$justify-content-settings: (
-// 	output: true,
-// 	responsive: true,
-// 	// Undo default
-// 	active: false,
-// 	focus: false,
-// 	hover: false,
-// 	visited: false
-// );
-
-// @forward 'uswds-utilities';
-
-/* ------------------------------------------------------------------------- */
-/* End utility classes for raw html blocks                                   */
-/* ------------------------------------------------------------------------- */
-// We re-import core so that we do not need to namespace core for every call
-// below.
-@use 'uswds-core' as *;
