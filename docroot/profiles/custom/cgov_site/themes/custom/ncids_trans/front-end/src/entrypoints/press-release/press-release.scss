@@ -2,6 +2,11 @@
 // file should generate markup.
 @forward '../cgdp-required';
 
+// Specific page styles
+@forward '../../lib/components/cgdp-related-resources';
+@forward '../../lib/components/cgdp-document-dates';
+@forward '../../lib/components/cgdp-article-footer-citation';
+
 @use 'uswds-core' as *;
 
 .cgdp-media-contact {
@@ -38,25 +43,6 @@
 			}
 			& > div:last-child {
 				white-space: nowrap;
-			}
-		}
-	}
-
-	// Override Legacy Styles
-	.cgdp-document-dates {
-		@include u-margin-y(0);
-		ul {
-			& > li {
-				&::after {
-					// Hides extra '|'
-					@include u-display('none');
-				}
-				@include at-media('desktop') {
-					&:not(:last-child)::after {
-						content: '|';
-						@include u-margin-right(1);
-					}
-				}
 			}
 		}
 	}

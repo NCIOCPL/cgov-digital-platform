@@ -676,6 +676,16 @@
         - value: 'External Card Title'
       field_external_link:
         - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_file'
+                name: 'Test PDF File name'
   field_date_posted:
     value: "2018-08-20"
   field_date_reviewed:
