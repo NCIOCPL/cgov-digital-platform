@@ -61,6 +61,7 @@ function _cgov_core_install_permissions(CgovCoreTools $siteHelper) {
       'use text format streamlined',
       'use text format ncids_streamlined',
       'use text format ncids_streamlined_no_headings',
+      'use text format ncids_full_html',
     ],
     'advanced_editor' => [
       'access taxonomy overview',
@@ -599,4 +600,25 @@ function cgov_core_update_10010() {
   if (!\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
     $installer->install(['ckeditor5']);
   }
+}
+
+/**
+ * Add permissions for new ncids_full_html editor.
+ */
+function cgov_core_update_10011() {
+  $siteHelper = \Drupal::service('cgov_core.tools');
+
+  // Import the configs to create the new ncids_full_html
+  // so the permission exists so we can add it.
+  $service = \Drupal::service('features.manager');
+  $assigner = \Drupal::service('features_assigner');
+  $assigner->assignConfigPackages();
+  $service->import(['cgov_core']);
+
+  $perms = [
+    'admin_ui' => [
+      'use text format ncids_full_html',
+    ],
+  ];
+  $siteHelper->addRolePermissions($perms);
 }

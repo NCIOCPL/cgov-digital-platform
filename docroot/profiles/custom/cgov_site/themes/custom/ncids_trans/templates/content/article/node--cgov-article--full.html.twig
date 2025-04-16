@@ -1,4 +1,5 @@
 {{ attach_library('ncids_trans/article') }}
+{{ attach_library('ncids_trans/ncids-minimal') }}
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
@@ -11,7 +12,7 @@
 	{{ content.field_article_body}}
 
 	{# TODO: Article footer stuff has to go somewhere. TBD. #}
-	<footer class="cgdp-article-footer">
+	<footer class="cgdp-article-footer usa-prose">
 		{{ content.field_citation }}
 		{{ content.field_related_resources }}
 		{{ contentPageMacros.ncidsDisplayDates(node, content) }}

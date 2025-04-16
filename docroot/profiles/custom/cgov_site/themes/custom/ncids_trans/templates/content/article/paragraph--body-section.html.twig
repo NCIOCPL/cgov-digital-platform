@@ -10,7 +10,7 @@
 #}
 
 {# Setup attribs if schema org is enabled #}
-{% set section_attribs = create_attribute() %}
+{% set section_attribs = create_attribute().addClass('usa-prose') %}
 {% if schema_org_type %}
   {% set section_attribs = create_attribute({
     'itemscope': '',
