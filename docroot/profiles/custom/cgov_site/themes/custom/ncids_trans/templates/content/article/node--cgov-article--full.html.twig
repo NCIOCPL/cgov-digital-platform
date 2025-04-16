@@ -1,20 +1,17 @@
 {{ attach_library('ncids_trans/article') }}
+{{ attach_library('ncids_trans/ncids-minimal') }}
 {% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
 	<h1 class="nci-heading-h1">
 		{{ node.label }}
 	</h1>
-  {{ content.field_image_article }}
-  {{ content.field_intro_text }}
-  <div class="cgdpl">
-		<div class="contentzone">
-			<div id="cgvBody">
-				{{ content.field_article_body }}
-			</div>
-		</div>
-	</div>
-	<footer class="cgdp-article-footer">
+	{{ content.field_image_article }}
+	{{ content.field_intro_text }}
+	{{ content.field_article_body}}
+
+	{# TODO: Article footer stuff has to go somewhere. TBD. #}
+	<footer class="cgdp-article-footer usa-prose">
 		{{ content.field_citation }}
 		{{ content.field_related_resources }}
 		{{ contentPageMacros.ncidsDisplayDates(node, content) }}

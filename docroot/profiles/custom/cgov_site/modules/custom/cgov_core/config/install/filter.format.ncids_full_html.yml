@@ -1,0 +1,106 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - editor
+    - entity_embed
+    - linkit
+    - media
+    - token_filter
+name: 'NCIDS Full HTML'
+format: ncids_full_html
+weight: 0
+filters:
+  editor_file_reference:
+    id: editor_file_reference
+    provider: editor
+    status: false
+    weight: -46
+    settings: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: false
+    weight: -38
+    settings: {  }
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: false
+    weight: -45
+    settings: {  }
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: false
+    weight: -44
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: false
+    weight: -43
+    settings: {  }
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -48
+    settings:
+      allowed_html: '<br> <p> <h2> <h3> <h4> <h5> <h6> <strong> <em> <s> <sub> <sup> <a href data-entity-type data-entity-uuid data-entity-substitution> <ul> <ol start> <li> <table> <tr> <td rowspan colspan> <th rowspan colspan> <thead> <tbody> <tfoot> <caption>'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
+    status: false
+    weight: -47
+    settings: {  }
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: false
+    weight: -41
+    settings: {  }
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: false
+    weight: -40
+    settings: {  }
+  filter_image_lazy_load:
+    id: filter_image_lazy_load
+    provider: filter
+    status: false
+    weight: -39
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: false
+    weight: -42
+    settings:
+      filter_url_length: 72
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -50
+    settings:
+      title: false
+  media_embed:
+    id: media_embed
+    provider: media
+    status: false
+    weight: -37
+    settings:
+      default_view_mode: default
+      allowed_view_modes: {  }
+      allowed_media_types: {  }
+  token_filter:
+    id: token_filter
+    provider: token_filter
+    status: true
+    weight: -49
+    settings:
+      replace_empty: false
