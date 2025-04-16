@@ -116,6 +116,7 @@ export default class GlossifyActionCommand extends Command {
     const cancelBtn = document.createElement('button');
     cancelBtn.classList.add('button');
     cancelBtn.innerText = Drupal.t('Cancel');
+    cancelBtn.addEventListener('click', () => { this.modalInstance.close(); })
 
     this.buttonContents.appendChild(saveBtn);
     this.buttonContents.appendChild(cancelBtn);
