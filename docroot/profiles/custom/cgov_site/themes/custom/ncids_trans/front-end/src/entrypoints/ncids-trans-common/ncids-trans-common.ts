@@ -66,7 +66,7 @@ import 'Core/libraries/enlarge/enlarge';
 import 'Core/libraries/preventEnter/jquery.nci.prevent_enter';
 
 // import { buildOTP, makeOutline } from 'Core/libraries/pageOutline/NCI.page';
-import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
+// import exitDisclaimer from 'Libraries/exitDisclaimer/exitDisclaimer';
 // import { makeAllAccordions } from 'Core/libraries/accordion/accordion';
 import tableToggle from 'Core/libraries/tableToggle/tableToggle';
 import flexVideo from 'Core/libraries/videoPlayer/flexVideo';
@@ -117,7 +117,7 @@ const onDOMContentLoaded = () => {
 	/*** BEGIN Exit Disclaimer
 	 * This script looks for URLs where the href points to websites not in the federal domain (.gov) and if it finds one, it appends an image to the link. The image itself links to the exit disclaimer page.
 	 ***/
-	exitDisclaimer('ncids');
+	// exitDisclaimer('ncids');
 
 	/*** BEGIN table toggling
 	 * This allows for toggling between tables.

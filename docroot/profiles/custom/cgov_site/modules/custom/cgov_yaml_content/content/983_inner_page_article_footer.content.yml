@@ -603,6 +603,16 @@
               - type: 'cgov_article'
                 title: 'Coping with Cancer'
     - entity: 'paragraph'
+      type: "cgov_media_link"
+      field_media_link:
+        - target_type: 'media'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'media'
+              - bundle: 'cgov_infographic'
+                name: 'NCI at a Glance Infographic'
+    - entity: 'paragraph'
       type: "cgov_internal_link"
       field_internal_link:
         - target_type: 'node'
