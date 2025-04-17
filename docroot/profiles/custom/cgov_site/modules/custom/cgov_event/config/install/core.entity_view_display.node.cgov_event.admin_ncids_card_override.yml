@@ -1,0 +1,105 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.admin_ncids_card_override
+    - field.field.node.cgov_event.body
+    - field.field.node.cgov_event.field_all_day_event
+    - field.field.node.cgov_event.field_browser_title
+    - field.field.node.cgov_event.field_card_title
+    - field.field.node.cgov_event.field_city_state
+    - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_series
+    - field.field.node.cgov_event.field_event_start_date
+    - field.field.node.cgov_event.field_feature_card_description
+    - field.field.node.cgov_event.field_image_article
+    - field.field.node.cgov_event.field_image_promotional
+    - field.field.node.cgov_event.field_list_description
+    - field.field.node.cgov_event.field_meta_tags
+    - field.field.node.cgov_event.field_page_description
+    - field.field.node.cgov_event.field_pretty_url
+    - field.field.node.cgov_event.field_related_resources
+    - field.field.node.cgov_event.field_room
+    - field.field.node.cgov_event.field_search_engine_restrictions
+    - field.field.node.cgov_event.field_site_section
+    - field.field.node.cgov_event.field_venue
+    - node.type.cgov_event
+  module:
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.cgov_event.admin_ncids_card_override
+targetEntityType: node
+bundle: cgov_event
+mode: admin_ncids_card_override
+content:
+  field_browser_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_card_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_feature_card_description:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_image_article:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: image_display_admin_card_override
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_image_promotional:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: image_display_admin_card_override
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_list_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  body: true
+  content_moderation_control: true
+  field_all_day_event: true
+  field_city_state: true
+  field_event_end_date: true
+  field_event_series: true
+  field_event_start_date: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_related_resources: true
+  field_room: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  field_venue: true
+  langcode: true
+  links: true

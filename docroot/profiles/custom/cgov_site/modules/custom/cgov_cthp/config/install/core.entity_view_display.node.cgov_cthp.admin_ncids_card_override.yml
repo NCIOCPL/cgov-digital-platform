@@ -1,0 +1,86 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.admin_ncids_card_override
+    - field.field.node.cgov_cthp.field_audience
+    - field.field.node.cgov_cthp.field_audience_toggle
+    - field.field.node.cgov_cthp.field_browser_title
+    - field.field.node.cgov_cthp.field_card_title
+    - field.field.node.cgov_cthp.field_cthp_cards
+    - field.field.node.cgov_cthp.field_feature_card_description
+    - field.field.node.cgov_cthp.field_image_promotional
+    - field.field.node.cgov_cthp.field_list_description
+    - field.field.node.cgov_cthp.field_meta_tags
+    - field.field.node.cgov_cthp.field_page_description
+    - field.field.node.cgov_cthp.field_pretty_url
+    - field.field.node.cgov_cthp.field_search_engine_restrictions
+    - field.field.node.cgov_cthp.field_site_section
+    - node.type.cgov_cthp
+  module:
+    - layout_builder
+    - user
+  enforced:
+    module:
+      - cgov_core
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.cgov_cthp.admin_ncids_card_override
+targetEntityType: node
+bundle: cgov_cthp
+mode: admin_ncids_card_override
+content:
+  field_browser_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_card_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_feature_card_description:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_image_promotional:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: image_display_admin_card_override
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_list_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden:
+  content_moderation_control: true
+  field_audience: true
+  field_audience_toggle: true
+  field_cthp_cards: true
+  field_meta_tags: true
+  field_page_description: true
+  field_pretty_url: true
+  field_search_engine_restrictions: true
+  field_site_section: true
+  langcode: true
+  links: true
