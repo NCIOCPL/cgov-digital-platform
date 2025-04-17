@@ -10,6 +10,4 @@ npm run lint
 npm run test
 popd
 
-# There are no tests for cgov_common :(
-
 # There are no tests for pdq_glossifier :(

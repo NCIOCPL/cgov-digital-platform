@@ -35,7 +35,7 @@ class CgovSiteSectionNavApiTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'cgov_common';
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}
