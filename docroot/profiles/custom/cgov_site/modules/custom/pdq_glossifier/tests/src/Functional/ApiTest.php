@@ -23,7 +23,7 @@ class ApiTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'cgov_common';
+  protected $defaultTheme = 'stark';
 
   /**
    * Basic authentication credentials.
