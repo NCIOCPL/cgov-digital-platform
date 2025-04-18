@@ -17,14 +17,15 @@
 				@extend .usa-link;
 			}
 			&.cgdp-media-link {
-				@include u-display('flex');
-				@include u-flex('align-center');
-				gap: units(0.5);
+				.cgdp-media-link__mediatype {
+					@include u-margin-left(0.5);
+				}
 				.cgdp-media-link__filetype {
 					@include u-height(2.5);
 					@include u-width(2);
 					@include u-margin-top(0);
 					@include u-margin-x(0.5);
+					vertical-align: middle;
 					&.pdf {
 						@include svg-sprite(file-pdf-gray-o-thick);
 					}
