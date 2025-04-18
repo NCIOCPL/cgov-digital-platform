@@ -47,18 +47,12 @@
       field_tagline:
         - value: 'NCI is the nation''s leader in cancer research'
       field_link_button:
-        - entity: 'paragraph' 
-          type: "ncids_link_button_internal"
-          field_internal_link:
-            - target_type: 'node'
-              '#process':
-                callback: 'reference'
-                args:
-                  - 'node'
-                  - type: 'cgov_article'
-                    title: 'Feelings and Cancer'
-          field_button_alt:
-            - value: "Internal Button Alt Text"
+        - entity: 'paragraph'
+          type: "ncids_link_button_external"
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_button_text:
+            - value: "Default"
       field_widescreen_hero:
         - '#process':
             callback: 'file'
@@ -106,7 +100,7 @@
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_override_title:
         - value: 'NCI Bottom Line: A Blog about Grants and More'
       field_override_description:
@@ -122,13 +116,13 @@
       field_button_text:
         - value: 'Read the Blog'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
     - entity: 'paragraph'
       type: "ncids_promo_block_internal"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_override_title:
         - value: 'Find funding for training with out new chatbot'
       field_override_description:
@@ -144,7 +138,7 @@
       field_button_text:
         - value: 'Get Started'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Placeholder ############
@@ -155,7 +149,7 @@
       field_tagline:
         - value: 'El NCI es el líder nacional de investigación del cáncer'
       field_link_button:
-        - entity: 'paragraph' 
+        - entity: 'paragraph'
           type: "ncids_link_button_internal"
           field_internal_link:
             - target_type: 'node'

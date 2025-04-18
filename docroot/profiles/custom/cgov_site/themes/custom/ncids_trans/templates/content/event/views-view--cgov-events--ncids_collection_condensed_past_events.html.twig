@@ -1,0 +1,16 @@
+<ul class="usa-collection usa-collection--condensed" data-dynamic-list-view="Past Events" data-dynamic-list-display="NCIDS Collection Condensed">
+    {% if rows -%}
+      {{ rows }}
+      {% elseif empty -%}
+        {{ empty }}
+    {% endif %}
+</ul>
+{# Add the pager to the bottom of the list #}
+{% if pager and view.pager.options.items_per_page and view.pager.options.items_per_page < view.total_rows %}
+  {% if footer %}
+      {{ footer }}
+  {% endif %}
+  <div class="cgdp-dynamic-list__bottom-pager">
+    {{ pager }}
+  </div>
+{% endif %}

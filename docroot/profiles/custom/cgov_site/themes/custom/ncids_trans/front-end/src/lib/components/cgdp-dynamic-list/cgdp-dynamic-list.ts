@@ -9,7 +9,7 @@ import {
  */
 const getTitle = (collectionElement: HTMLElement): string =>
 	collectionElement.querySelector('.nci-heading--label')?.textContent ||
-	'_ERROR_';
+	'No Title';
 
 /**
  * Gets the componentTheme of the Dynamic List
@@ -73,7 +73,7 @@ const collectionLinkClickHandler =
  * @param {HTMLElement} dynamicList - The Dynamic List element.
  */
 const collectionHelper = (dynamicList: HTMLElement): void => {
-	const links = Array.from(dynamicList.querySelectorAll('a'));
+	const links = Array.from(dynamicList.querySelectorAll('a')) as HTMLElement[];
 	const collectionEl = dynamicList.querySelector(
 		'.usa-collection'
 	) as HTMLElement;

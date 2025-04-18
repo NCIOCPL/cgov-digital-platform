@@ -1,7 +1,11 @@
 {% if items | length > 0 %}
   {% for item in items %}
-  <li class="nci-card tablet-lg:grid-col-4">
-    {{ item.content }}
-  </li>
+    {% set card_attributes = create_attribute({'class': ['nci-card','tablet-lg:grid-col-4']}) %}
+      {% if (item.content['#paragraph'].field_external_link_display.value == 'force_display') %}
+        {% set card_attributes = card_attributes.addClass('nci-card--external') %}
+      {% endif %}
+      <li {{ card_attributes }}>
+        {{ item.content }}
+      </li>
   {% endfor %}
 {% endif %}

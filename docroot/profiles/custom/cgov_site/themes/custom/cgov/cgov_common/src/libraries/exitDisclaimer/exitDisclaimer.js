@@ -10,7 +10,8 @@ const legacyFilterSet = (_, el) => {
     && el.href.indexOf(location.protocol + '//' + location.hostname) !== 0
     && !$(el).hasClass('add_this_btn')
     && !$(el).hasClass('toolbar-item') // Drupal admin toolbar selector
-    && !$(el).hasClass('no-exit-notification');
+    && !$(el).hasClass('no-exit-notification')
+    && !$(el).hasClass('usa-link');
 }
 
 const ncidsFilterSet = (_, el) => {

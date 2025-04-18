@@ -43,7 +43,7 @@
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:
@@ -53,23 +53,25 @@
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Find a Clinical Trial'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Default External'
       field_button_alt:
-        - value: 'Button Alt Text' 
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'default'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_featured_url:
-        - uri: 'https://www.google.com'
+        - uri: 'https://www.cancer.gov'
       field_override_title:
         - value: 'NCIDS Promo Block External Title'
       field_override_description:
@@ -77,18 +79,20 @@
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Override Placeholder'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Default Internal'
       field_button_alt:
-        - value: 'Button Alt Text' 
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'do_not_display'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
-      field_ncids_theme: 
+      field_ncids_theme:
         - value: "light"
       field_image_position_promo:
         - value: "no-img"
@@ -99,37 +103,41 @@
       field_featured_url:
         - uri: 'https://www.google.com'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Force Display External'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'force_display'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_url:
-        - uri: 'https://www.google.com'
+        - uri: 'https://www.cancer.gov'
       field_override_title:
         - value: 'NCIDS Promo Block External Title 2'
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Override Placeholder'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Force Display Internal'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'force_display'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:
@@ -139,23 +147,25 @@
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Promo Block Dog'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Force Hide External'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'do_not_display'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_url:
-        - uri: 'https://www.google.com'
+        - uri: 'https://www.cancer.gov'
       field_override_title:
         - value: 'NCIDS Promo Block External Title 4'
       field_override_description:
@@ -163,21 +173,23 @@
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Promo Block Dog 1x1 Override'
       field_button_text:
-        - value: 'Learn More'
+        - value: 'Force Hide Internal'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
+      field_external_link_display:
+        - value: 'do_not_display'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "left" 
+        - value: "left"
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:
@@ -187,21 +199,21 @@
       field_override_image_promotional:
         - target_type: 'media'
           '#process':
-            callback: 'reference' 
+            callback: 'reference'
             args:
-              - 'media' 
-              - bundle: 'cgov_image' 
+              - 'media'
+              - bundle: 'cgov_image'
                 name: 'Promo Block Dog 16x9 Override'
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:
@@ -211,13 +223,13 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
     - entity: 'paragraph'
       type: "ncids_promo_block_external"
       field_ncids_theme:
         - value: "dark"
       field_image_position_promo:
-        - value: "no-img" 
+        - value: "no-img"
       field_featured_url:
         - uri: 'https://www.google.com'
       field_override_title:
@@ -227,7 +239,7 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Placeholder ############

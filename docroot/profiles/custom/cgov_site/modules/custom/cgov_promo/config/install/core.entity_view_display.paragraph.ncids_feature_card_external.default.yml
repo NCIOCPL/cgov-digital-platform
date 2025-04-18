@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.ncids_feature_card_external.field_external_link_display
     - field.field.paragraph.ncids_feature_card_external.field_featured_url
     - field.field.paragraph.ncids_feature_card_external.field_override_card_description
     - field.field.paragraph.ncids_feature_card_external.field_override_card_title
@@ -9,13 +10,21 @@ dependencies:
     - paragraphs.paragraphs_type.ncids_feature_card_external
   module:
     - link
+    - options
 id: paragraph.ncids_feature_card_external.default
 targetEntityType: paragraph
 bundle: ncids_feature_card_external
 mode: default
 content:
+  field_external_link_display:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_featured_url:
-    weight: 0
+    type: link_separate
     label: hidden
     settings:
       trim_length: 80
@@ -24,7 +33,7 @@ content:
       rel: '0'
       target: '0'
     third_party_settings: {  }
-    type: link_separate
+    weight: 0
     region: content
   field_override_card_description:
     type: string

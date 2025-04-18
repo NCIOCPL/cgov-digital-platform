@@ -48,12 +48,54 @@
           field_guide_card_description:
             - value: "NCI is the nation's trusted source for cancer information. We're here with information about causes and risk factors, early detection and diagnosis, and treatment options."
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
-              - value: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m"
+              - value: "Default External"
+            field_external_link_display:
+              - value: 'default'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Default Internal"
+            field_external_link_display:
+              - value: 'default'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.google.com'
+            field_button_text:
+              - value: "Force Display External"
+            field_external_link_display:
+              - value: 'force_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Force Display Internal"
+            field_external_link_display:
+              - value: 'force_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.google.com'
+            field_button_text:
+              - value: "Force Hide External"
+            field_external_link_display:
+              - value: 'do_not_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Force Hide Internal"
+            field_external_link_display:
+              - value: 'do_not_display'
         - entity: 'paragraph'
           type: "ncids_guide_card_img_desc"
           field_container_heading:
@@ -61,13 +103,13 @@
           field_guide_card_description:
             - value: "Support for the best science underpins everything NCI does. NCI supports the best scientists and research projects through a rigorous grant application and peer review process."
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -135,13 +177,13 @@
           field_container_heading:
             - value: "Research Grant Funding"
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -202,42 +244,66 @@
           field_container_heading:
             - value: "Grant Process"
           field_link_buttons:
-          - entity: 'paragraph' 
-            type: "ncids_link_button_external"
-            field_external_link:
-              - uri: 'https://www.google.com'
-            field_button_text:
-              - value: "Learn More"
-          - entity: 'paragraph' 
-            type: "ncids_link_button_external"
-            field_external_link:
-              - uri: 'https://www.google.com'
-            field_button_text:
-              - value: "Learn More 1"
           - entity: 'paragraph'
-            type: "ncids_link_button_internal"
-            field_internal_link:
-              - target_type: 'node'
-                '#process':
-                  callback: 'reference'
-                  args:
-                    - 'node'
-                    - type: 'cgov_article'
-                      title: 'Internal Promo Block Test'
-            field_button_alt:
-              - value: "Internal Button Alt Text"
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.google.com'
+            field_button_text:
+              - value: "Default External"
+            field_external_link_display:
+              - value: 'default'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Default Internal"
+            field_external_link_display:
+              - value: 'default'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.google.com'
+            field_button_text:
+              - value: "Force Display External"
+            field_external_link_display:
+              - value: 'force_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Force Display Internal"
+            field_external_link_display:
+              - value: 'force_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.google.com'
+            field_button_text:
+              - value: "Force Hide External"
+            field_external_link_display:
+              - value: 'do_not_display'
+          - entity: 'paragraph'
+            type: "ncids_link_button_external"
+            field_external_link:
+              - uri: 'https://www.cancer.gov'
+            field_button_text:
+              - value: "Force Hide Internal"
+            field_external_link_display:
+              - value: 'do_not_display'
         - entity: 'paragraph'
           type: "ncids_guide_card"
           field_container_heading:
             - value: "Funding for Training"
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -275,13 +341,13 @@
           field_container_heading:
             - value: "Research Grant Funding"
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -342,13 +408,13 @@
           field_container_heading:
             - value: "Grant Process"
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -371,13 +437,13 @@
           field_container_heading:
             - value: "Funding for Training"
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -412,7 +478,7 @@
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -424,13 +490,13 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
     - entity: 'paragraph'
       type: "ncids_promo_block_internal"
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -442,7 +508,7 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
   ## SPANISH CONTENTS HERE
   field_landing_contents__ES:
     ######## Placeholder ############
@@ -456,7 +522,7 @@
           field_guide_card_description:
             - value: "NCI is the nation's trusted source for cancer information. We're here with information about causes and risk factors, early detection and diagnosis, and treatment options."
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -469,13 +535,13 @@
           field_guide_card_description:
             - value: "Support for the best science underpins everything NCI does. NCI supports the best scientists and research projects through a rigorous grant application and peer review process."
           field_link_buttons:
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
             field_button_text:
               - value: "Learn More"
-          - entity: 'paragraph' 
+          - entity: 'paragraph'
             type: "ncids_link_button_external"
             field_external_link:
               - uri: 'https://www.google.com'
@@ -536,7 +602,7 @@
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -548,13 +614,13 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text'  
+        - value: 'Button Alt Text'
     - entity: 'paragraph'
       type: "ncids_promo_block_internal"
       field_ncids_theme:
         - value: "light"
       field_image_position_promo:
-        - value: "nci-alternating-right" 
+        - value: "nci-alternating-right"
       field_featured_item:
         - target_type: 'node'
           '#process':
@@ -566,5 +632,5 @@
       field_button_text:
         - value: 'Learn More'
       field_button_alt:
-        - value: 'Button Alt Text' 
+        - value: 'Button Alt Text'
     ######## End Placeholder ############

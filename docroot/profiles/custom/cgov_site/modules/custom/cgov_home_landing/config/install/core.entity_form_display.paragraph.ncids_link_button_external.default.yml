@@ -5,6 +5,7 @@ dependencies:
     - field.field.paragraph.ncids_link_button_external.field_button_alt
     - field.field.paragraph.ncids_link_button_external.field_button_text
     - field.field.paragraph.ncids_link_button_external.field_external_link
+    - field.field.paragraph.ncids_link_button_external.field_external_link_display
     - paragraphs.paragraphs_type.ncids_link_button_external
   module:
     - link
@@ -30,13 +31,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_external_link:
+    type: link_default
     weight: 0
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
+  field_external_link_display:
+    type: options_select
+    weight: 2
     region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   created: true
   status: true

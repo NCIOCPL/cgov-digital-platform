@@ -1,4 +1,4 @@
-{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}
+{% import '@ncids_trans/content/home_landing/ncids_home_landing_macros.twig' as homeLandingMacros %}{% set suppress_external_icon = false %}
 
-{{ homeLandingMacros.ncidsLinkButton(paragraph.field_external_link.uri, paragraph.field_button_alt.value, paragraph.field_button_text.value, "usa-button--outline usa-button--secondary", "External") }}
+{{ homeLandingMacros.ncidsLinkButton(paragraph.field_external_link.uri, paragraph.field_button_alt.value, paragraph.field_button_text.value, "usa-button--outline usa-button--secondary", "External", paragraph.field_external_link_display.value ) }}
 

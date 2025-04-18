@@ -36,6 +36,7 @@ modules:
       ]
     uninstall:
       [
+        cgov_syslog,
         syslog,
         acquia_connector,
         shield,
@@ -67,6 +68,7 @@ modules:
       ]
     uninstall:
       [
+        cgov_syslog,
         syslog,
         cgov_caching_cdn,
         akamai
@@ -82,6 +84,7 @@ modules:
       ]
     uninstall:
       [
+        cgov_syslog,
         syslog,
         cgov_caching_cdn,
         akamai
@@ -97,6 +100,7 @@ modules:
       ]
     uninstall:
       [
+        cgov_syslog,
         syslog,
         cgov_caching_nocdn
       ]
@@ -111,6 +115,7 @@ modules:
       ]
     uninstall:
       [
+        cgov_syslog,
         syslog,
         devel,
         cgov_caching_cdn,
@@ -121,6 +126,7 @@ modules:
     enable:
       [
         dblog,
+        cgov_syslog,
         acquia_connector,
         acsf,
         shield,
@@ -130,13 +136,13 @@ modules:
       ]
     uninstall:
       [
-        syslog,
         cgov_caching_nocdn
       ]
   01test:
     enable:
       [
         dblog,
+        cgov_syslog,
         acquia_connector,
         acsf,
         shield,
@@ -146,13 +152,12 @@ modules:
       ]
     uninstall:
       [
-        syslog,
         cgov_caching_nocdn
       ]
   01live:
     enable:
       [
-        syslog,
+        cgov_syslog,
         acquia_connector,
         acsf,
         shield,
@@ -190,13 +195,13 @@ paratest:
     procs: 4
 command-hooks:
   frontend-reqs:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-reqs.sh
   frontend-assets:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-assets.sh
   frontend-test:
-    dir: '${docroot}/profiles/custom/cgov_site/themes/custom'
+    dir: '${docroot}/profiles/custom/cgov_site'
     command: ${repo.root}/scripts/blt/custom/frontend-test.sh
   pre-commit:
     dir: '${docroot}'

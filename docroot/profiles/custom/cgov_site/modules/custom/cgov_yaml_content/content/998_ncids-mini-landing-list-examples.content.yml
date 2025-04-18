@@ -1,4 +1,3 @@
-
 - entity: "node"
   type: "cgov_mini_landing"
   langcode: en
@@ -296,7 +295,114 @@
                   - 'media'
                   - bundle: 'cgov_image'
                     name: 'Override Placeholder'
-
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Default"
+          field_override_list_description:
+            - value: "Default External Link .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Default"
+          field_override_list_description:
+            - value: "Default External Link .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Force Display"
+          field_override_list_description:
+            - value: "Force Display External Link Icon .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Force Display"
+          field_override_list_description:
+            - value: "Force Display External Link Icon .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Force Hide"
+          field_override_list_description:
+            - value: "Force Hide External Link Icon .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "External Link Force Hide"
+          field_override_list_description:
+            - value: "Force Hide External Link Icon .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'do_not_display'
 
 - entity: "node"
   type: "cgov_mini_landing"
@@ -781,6 +887,114 @@
                   - 'media'
                   - bundle: 'cgov_image'
                     name: 'Override Placeholder'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Default Option"
+          field_override_list_description:
+            - value: "Default External Link .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Default Option"
+          field_override_list_description:
+            - value: "Default External Link .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'default'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Force Display Option "
+          field_override_list_description:
+            - value: "Force Display External Link Icon .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Force Display Option"
+          field_override_list_description:
+            - value: "Force Display External Link Icon .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'force_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Force Hide Option"
+          field_override_list_description:
+            - value: "Force Hide External Link Icon .com"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.google.com'
+          field_external_link_display:
+            - value: 'do_not_display'
+        - entity: 'paragraph'
+          type: "cgov_external_link"
+          field_override_title:
+            - value: "Force Hide Option"
+          field_override_list_description:
+            - value: "Force Hide External Link Icon .gov"
+          field_override_image_promotional:
+            - target_type: 'media'
+              '#process':
+                callback: 'reference'
+                args:
+                  - 'media'
+                  - bundle: 'cgov_image'
+                    name: 'Override Placeholder'
+          field_external_link:
+            - uri: 'https://www.cancer.gov'
+          field_external_link_display:
+            - value: 'do_not_display'
 
   ##################################
   ###### SPANISH

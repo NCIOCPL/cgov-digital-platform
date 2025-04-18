@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - entity_browser.browser.cgov_image_browser
+    - field.field.paragraph.ncids_feature_card_external.field_external_link_display
     - field.field.paragraph.ncids_feature_card_external.field_featured_url
     - field.field.paragraph.ncids_feature_card_external.field_override_card_description
     - field.field.paragraph.ncids_feature_card_external.field_override_card_title
@@ -16,17 +17,23 @@ targetEntityType: paragraph
 bundle: ncids_feature_card_external
 mode: default
 content:
+  field_external_link_display:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_featured_url:
+    type: link_default
     weight: 0
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_override_card_description:
     type: string_textfield
-    weight: 2
+    weight: 3
     region: content
     settings:
       size: 60
@@ -34,7 +41,7 @@ content:
     third_party_settings: {  }
   field_override_card_title:
     type: string_textfield
-    weight: 1
+    weight: 2
     region: content
     settings:
       size: 60
@@ -42,7 +49,7 @@ content:
     third_party_settings: {  }
   field_override_image_promotional:
     type: entity_browser_entity_reference
-    weight: 3
+    weight: 4
     region: content
     settings:
       entity_browser: cgov_image_browser

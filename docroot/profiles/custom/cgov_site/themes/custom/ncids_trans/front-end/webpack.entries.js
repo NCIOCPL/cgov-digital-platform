@@ -53,7 +53,6 @@ module.exports = {
 	biography: path.resolve(__dirname, 'src/entrypoints/biography/biography.ts'),
 	cthp: path.resolve(__dirname, 'src/entrypoints/cthp/cthp.ts'),
 	event: path.resolve(__dirname, 'src/entrypoints/event/event.ts'),
-	'r4r-app': path.resolve(__dirname, 'src/entrypoints/r4r/r4r-app.js'),
 	'app-module': path.resolve(
 		__dirname,
 		'src/entrypoints/app-module/app-module.ts'
