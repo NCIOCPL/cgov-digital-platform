@@ -108,7 +108,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 # Install Node
 # nvm environment variables
 ENV NVM_DIR /usr/local
-ENV NODE_VERSION 16.13.0
+ENV NODE_VERSION 20.19.0
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
