@@ -109,7 +109,10 @@
 		height: 48px;
 	}
 
-	&__audio-described-link {
+	// Changed this code because embedded videos were breaking as
+	// it would trigger regardless of if it is wrapped with .cgdp-video or not.
+	// And during this stage where inner pages have both, we need to tread carefully.
+	& .cgdp-video__audio-described-link {
 		p {
 			@include u-margin-y(0);
 			@include typeset('sans', '3xs', 4);
