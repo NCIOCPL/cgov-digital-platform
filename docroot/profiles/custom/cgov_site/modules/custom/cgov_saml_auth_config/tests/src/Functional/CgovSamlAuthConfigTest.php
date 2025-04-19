@@ -25,7 +25,7 @@ class CgovSamlAuthConfigTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'cgov_common';
+  protected $defaultTheme = 'cgov_admin';
 
   /**
    * An admin user for testing.

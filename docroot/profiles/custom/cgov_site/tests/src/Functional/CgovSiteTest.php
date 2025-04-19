@@ -29,7 +29,7 @@ class CgovSiteTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'cgov_common';
+  protected $defaultTheme = 'stark';
 
   /**
    * The admin user.
