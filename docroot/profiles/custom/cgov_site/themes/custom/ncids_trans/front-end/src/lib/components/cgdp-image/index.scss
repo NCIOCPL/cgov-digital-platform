@@ -1,34 +1,70 @@
 @use 'uswds-core' as *;
+@use '~Styles/sprites/svg-sprite' as sprite;
+
+// Mixin for font styles shared between enlarge text and captions
+@mixin image-caption-styles {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+	@include u-border-left(0.5, $theme-color-secondary);
+	@include u-padding-y(1);
+	@include u-padding-x(2);
+}
 
 .cgdp-image {
+	// Styles for the image container
+	clear: both;
+	overflow: hidden;
+	@include u-display('block');
+	@include u-margin-x(0);
+	@include u-margin-y(0);
+
+	// Image Styles
 	img {
 		@include u-display('block');
 		@include u-width('full');
 		@include u-height('auto');
 		transition: transform 0.5s ease;
 	}
+
+	// Container which is a figcaption by default and a
+	// div when there isn't a caption and only a credit
 	&__caption {
-		@include u-font('sans', '2xs');
-		line-height: line-height($theme-body-font-family, $theme-body-line-height);
-		@include u-padding-top(1);
-		@include u-padding-bottom(1);
-		@include u-padding-x(2);
-		@include u-border-left(0.5, $theme-color-secondary);
-		p {
+		@include image-caption-styles();
+	}
+
+	// The caption text. This wraps the content in a div
+	// for spacing reasons in case there are multiple paragraphs
+	// in the caption
+	&__caption-text {
+		p:first-child {
 			@include u-margin-top(0);
-			&:not(:only-child) {
-				@include u-margin-bottom(1);
-			}
-			&:last-child {
-				@include u-margin-bottom(0);
-			}
+		}
+		p:last-child {
+			@include u-margin-bottom(0);
 		}
 	}
+
+	// This is the credit part of the image caption
 	&__credit {
 		@include u-font('sans', '3xs');
+		@include u-margin-y(0);
+		&:not(:only-child) {
+			@include u-margin-top(1);
+		}
 	}
-	overflow: hidden;
-	@include u-display('block');
-	@include u-margin-x(0);
-	@include u-margin-y(0);
+
+	// Styles for enlarge image link START
+	figure {
+		@include u-margin(0);
+	}
+	&__enlarge {
+		@include u-display('flex');
+		@include u-flex('align-center');
+		@include image-caption-styles();
+		.usa-icon {
+			@include u-font-size('body', 'xl');
+			@include u-margin-right(1);
+		}
+	}
+	// Enlarge image link styles END
 }

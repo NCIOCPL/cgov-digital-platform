@@ -1,9 +1,7 @@
-{% import '@cgov_common/content/image/image_macros.twig' as imageMacros %}
-
-{% set classes = "image-full" %}
+{% import '@ncids_trans/templates/content/image/image_macros.twig' as ncidsImageMacros %}
 
 {% if content.enlarge_uri[0] %}
   {% set enlarge_uri = content.enlarge_uri[0] %}
 {% endif %}
 
-{{ imageMacros.articleImage(classes, content.field_media_image, enlarge_uri, content.field_credit|field_value, content.field_caption ) }}
+{{ ncidsImageMacros.ncidsImageHandler(content.field_media_image, content.field_caption|field_value, content.field_credit|field_value, 'ncids_image_para_16x9', enlarge_uri) }}

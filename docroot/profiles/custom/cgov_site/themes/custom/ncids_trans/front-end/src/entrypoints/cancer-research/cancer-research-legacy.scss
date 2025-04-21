@@ -2,3 +2,21 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
 @forward '../cgdp-required';
+
+// Expose USWDS variables and mixins to our imports.
+@use 'uswds-core' as *;
+
+// Override .cgdpl paragraph styles for image caption
+// These fonts are overridden by the cgdpl
+// wrapper otherwise
+.cgdp-image__caption {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
+.cgdp-image__credit {
+	@include u-font('sans', '3xs');
+}
+.cgdp-image__enlarge {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
