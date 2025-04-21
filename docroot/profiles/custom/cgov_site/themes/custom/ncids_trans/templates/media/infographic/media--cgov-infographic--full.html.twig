@@ -4,21 +4,23 @@
 
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article class="cgdp-infographic">
-  <h1 class="nci-heading-h1">{{ name }}</h1>
-  <div class="cgdpl">
-    <div class="contentzone">
-      <div id="cgvBody">
-        {{ content.body }}
-      </div>
+	<h1 class="nci-heading-h1">{{ name }}</h1>
+	<div class="cgdp-main-content">
+		<div class="cgdpl">
+			<div class="contentzone">
+				<div id="cgvBody">
+					{{ content.body }}
+				</div>
 
-      {% set classes = "image-center-full" %}
-      {{ infographicMacros.infographicImage(classes, content) }}
-    </div>
-  </div>
-  <footer class="cgdp-article-footer">
-    {{ contentPageMacros.ncidsDisplayDates(media,content) }}
-    {% if media.field_public_use.value == '1' %}
-      {{ drupal_region('public_use') }}
-    {% endif %}
-  </footer>
+				{% set classes = "image-center-full" %}
+				{{ infographicMacros.infographicImage(classes, content) }}
+			</div>
+		</div>
+	</div>
+	<footer class="cgdp-article-footer">
+		{{ contentPageMacros.ncidsDisplayDates(media,content) }}
+		{% if media.field_public_use.value == '1' %}
+			{{ drupal_region('public_use') }}
+		{% endif %}
+	</footer>
 </article>

@@ -216,3 +216,19 @@ $include-html-type-classes: false;
 	// clearfix class on the ul has a marign-bottom of 16px. Do we still need this?
 	@include u-margin-bottom(2);
 }
+
+// Override .cgdpl paragraph styles for image caption
+// These fonts are overridden by the cgdpl
+// wrapper otherwise
+.cgdp-image__caption {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
+.cgdp-image__credit {
+	@include u-font('sans', '3xs');
+}
+.cgdp-image__enlarge {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
+

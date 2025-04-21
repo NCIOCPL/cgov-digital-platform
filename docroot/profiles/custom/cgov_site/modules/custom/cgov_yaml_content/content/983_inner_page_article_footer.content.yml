@@ -1099,3 +1099,1255 @@
   field_media_oembed_video: "https://www.youtube.com/watch?v=fAQmCNWJHb8"
   field_date_display_mode:
     - value: 'reviewed'
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "Porcupine Test Image - with Enlarge Button"
+  field_display_enlarge:
+    value: 1
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'porcupine-no-caption.jpg'
+      alt: 'Cute Porcupine posing for camera'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 100
+                y: 0
+                width: 600
+                height: 450
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 100
+                y: 0
+                width: 600
+                height: 450
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 277
+                y: 0
+                width: 337
+                height: 450
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 175
+                y: 0
+                width: 450
+                height: 450
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 0
+                width: 800
+                height: 450
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "media"
+  bundle: "cgov_image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  name: "Porcupine Test Image - with Caption & Enlarge Button"
+  field_caption:
+    - format: "simple"
+      value: |
+        Test Image with cute porcupine with enlarge button enabled.
+  field_display_enlarge:
+    value: 1
+  field_media_image:
+    - '#process':
+        callback: 'file'
+        args:
+          - 'image'
+          - type: 'module'
+            filename: 'porcupine.jpg'
+      alt: 'Cute Porcupine on tree branch'
+      image_crop:
+        crop_wrapper:
+          freeform:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+          thumbnail:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 76
+                y: 0
+                width: 1244
+                height: 933
+          4x3:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 76
+                y: 0
+                width: 1244
+                height: 933
+          3x4:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 550
+                y: 0
+                width: 699
+                height: 933
+          1x1:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 464
+                y: 0
+                width: 933
+                height: 933
+          16x9:
+            crop_container:
+              values:
+                crop_applied: 1
+                x: 0
+                y: 73
+                width: 1397
+                height: 786
+          9x16:
+            crop_container:
+              values:
+                crop_applied: 0
+                x:
+                y:
+                width:
+                height:
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - Lead Image with Caption and Credit"
+  field_page_description:
+    value: "Article Test Page with with lead image that contains caption and credit"
+  field_card_title:
+    value: "Article Test Page - Lead Image with Caption and Credit"
+  field_browser_title:
+    value: "Article Test Page - Lead Image with Caption and Credit"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "What is anemia?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Anemia is a condition in which the number of red blood cells is below normal.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "What are signs of anemia?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Anemia can make you feel very tired, short of breath, and lightheaded. Signs of anemia may also include feeling dizzy or faint, headaches, a fast heartbeat, and/or pale skin.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "What causes anemia in people with cancer?"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Cancer treatments, such as chemotherapy and radiation therapy, as well as cancers that affect the bone marrow, can cause anemia. When you are anemic, your body does not have enough red blood cells. Red blood cells are the cells that that carry oxygen from the lungs throughout your body to help it work properly.</p>
+            <p>You will have blood tests to check for anemia. Treatment for anemia is also based on your symptoms and on what is causing the anemia.</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Ways to manage anemia"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <drupal-entity
+              data-align="left"
+              data-embed-button="media_entity_embed"
+              data-entity-embed-display="view_mode:media.image_display_article_small"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_image"
+              data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+            ></drupal-entity>
+            <p>Here are some steps you can take if you have fatigue caused by anemia:</p>
+            <ul>
+              <li><b>Save your energy and ask for help.</b> Choose the most important things to do each day. When people offer to help, let them do so. They can take you to the doctor, make meals, or do other things you are too tired to do.</li>
+              <li><b>Balance rest with activity.</b> Take short naps during the day, but keep in mind that too much bed rest can make you feel weak. You may feel better if you take short walks or exercise a little every day.</li>
+              <li><b>Eat and drink well.</b> Talk with your doctor, nurse, or a registered dietitian to learn what foods and drinks are best for you. You may need to eat foods that are high in protein or iron.</li>
+            </ul>
+            <p>&nbsp;</p>
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_heading:
+        - format: "simple"
+          value: "Questions to ask your health care team about anemia"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>Prepare for your visit by making a list of questions to ask. Consider adding these questions to your list:</p>
+            <ul>
+              <li>What is causing the anemia?</li>
+              <li>What problems should I call you about?</li>
+              <li>What steps can I take to feel better?</li>
+              <li>Would medicine, iron pills, a blood transfusion, or other treatments help me?</li>
+              <li>Would you give me the name of a registered dietitian who could also give me advice?</li>
+            </ul>
+  field_public_use: 1
+  field_pretty_url:
+    value: "lead-img-caption-credit"
+  field_date_posted:
+    value: "2025-04-02"
+  field_date_reviewed:
+    value: "2025-04-02"
+  field_date_updated:
+    value: "2025-04-02"
+  field_date_display_mode:
+    - value: 'reviewed'
+  field_hhs_syndication:
+    - syndicate: 1
+      keywords: ''
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - Lead Image without Caption"
+  field_page_description:
+    value: "Article Test Page with with lead image that doesn't contain caption but contains enlarge button"
+  field_card_title:
+    value: "Article Test Page - Lead Image without Caption"
+  field_browser_title:
+    value: "Article Test Page - Lead Image without Caption"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Enlarge Button'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <p>As the National Cancer Act was passed in 1971, hard-fought and hard-won funding for cancer research began to effect true change. Ground broke, laboratories filled, and our nation's scientific workforce dedicated themselves to a new challenge of transforming how we understand and manage cancer. What we didn't know then is that these investments in the name of cancer would be crucial for our nation to fight future epidemics. The act inadvertently prepared our nation for another deadly illness that was yet to make its ominous appearance.</p>
+            <p>In 1981, 10 years after the signing of the act, the NIH Clinical Center admit­ted one of the very first patients with acquired immunodeficiency syndrome (AIDS). He was admitted through an NCI branch that studied immunodeficiency diseases and the cancers afflicting patients with these diseases. Almost immediately after the recognition of AIDS as a new disease, it became apparent that patients with this puzzling syndrome often developed a previously rare cancer called Kaposi sarcoma as well as other tumors such as high-grade B-cell lymphomas. As a result, some of the earliest AIDS patient care and research was performed by NCI scientists and external researchers funded by NCI.</p>
+            <p>AIDS researcher and early human immunodeficiency virus (HIV) drug developer Robert Yarchoan, M.D., recalled the gravity of the moment: “AIDS showed us that something that no one ever worried about before suddenly could become a major problem for the country and for mankind. And when HIV was identified as the cause of AIDS, it became apparent that in addition to persons known to have AIDS, thousands of people in the United States were already infected with this new virus without knowing it. Moreover, at this time, infection with HIV was in most cases fatal.”</p>
+            <p>As a result of the investment in cancer research stemming from the National Cancer Act, by the early 1980s NCI was in a strong position to make key early advances in the fight against HIV/AIDS. In particular, NCI and NCI-funded scientists had distinct expertise in retrovirology, in part because of the NCI Special Virus Cancer Program. NCI also had strong programs in immunology and drug development. With these areas of expertise, NCI scientists co-discovered HIV, showed that it was the cause of AIDS, developed the first blood test to prevent the spread of HIV by blood transfusion, and developed the first effective drugs to treat HIV including azidothymidine (also called AZT or zidovudine).</p>
+            <p>Over the years, NCI developed an extensive portfolio of research in the cancers associated with HIV/AIDS as well as HIV/AIDS itself, and it was recognized that there was a need for a central office to coordinate and prioritize this research. In 2007, NCI, under the leadership of Dr. John Niederhuber, established the Office of HIV and AIDS Malignancy (OHAM) under the Direction of Dr. Yarchoan. The creation of this office was pivotal to NCI. NCI currently funds both intramural (within NCI buildings) and extramural (through grants and contracts) research in HIV/AIDS and HIV-associated malignancies. In addition to coordinating HIV/AIDS and HIV- malignancy research throughout NCI, OHAM directly manages and facilitates major programs and initiatives through research, training, international studies, and clinical trials. As the needs and opportunities for research change, NCI’s OHAM plays a crucial role in prioritizing the most important research to prevent, diagnose, and treat HIV-associated malignancies and other cancers in people living with HIV, as well as basic research on these cancers and HIV/AIDS itself.</p>
+            <p>“Coordinating HIV/AIDS research throughout NCI, with the NIH Office of AIDS Research, and with other institutes and centers is a challenging task. However, doing it well enables us to make sure that funds are directed into the areas where they are most needed,” said RaeJean Hermansen, Ph.D., special assistant to the director of OHAM.</p>
+            <p>Two of the main efforts overseen by OHAM are the AIDS Malignancy Consortium, which conducts clinical research in HIV-associated malignancies both in the United States and in resource-poor areas, including sub-Saharan Africa, and the AIDS and Cancer Specimen Resource, which helps researchers by coordinating tissue donations from patients with HIV/AIDS. “It is very gratifying to have contributed to managing vital programs that focus on improving the standard of care of people living with HIV and cancer and ease their sufferings,” said Mostafa Nokta, M.D., Ph.D., director, AIDS Cancer Clinical Program, OHAM, NCI.</p>
+            <p>One of the challenges of OHAM is to adjust research priorities as needs and opportunities change. “With the development of antiretroviral therapy, we initially saw a dramatic decrease in AIDS-defining cancers. However, as people living with HIV are surviving and aging, we are seeing an increase in other cancers, and cancer continues to be a significant morbidity and one of the most frequent causes of death,” said Geraldina Dominguez, Ph.D., director, AIDS Malignancy Program, OHAM.</p>
+            <p>The National Cancer Act paved the way for the resources, skills, and expertise to be in place for those at the forefront of HIV/AIDS research. It enabled major advances in a time of need and NCI looks forward to robust cross-fertilization between cancer research and HIV/AIDS research until we have addressed every challenge that comes our way.</p>
+            <drupal-entity
+              data-align="center"
+              data-caption=""
+              data-embed-button="media_entity_embed"
+              data-entity-embed-display="view_mode:media.image_display_article_small"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_image"
+              data-cgov-yaml-query-name="oropharynx"
+            ></drupal-entity>
+            <p>Although many doubted whether any drug could be developed to fight AIDS, Dr. Robert Yarchoan worked with Drs. Samuel Broder and Hiroaki Mitsuya on the first AIDS drugs, including azidothymidine (AZT), transforming a fatal disease into a chronic one.</p>
+  field_public_use: 1
+  field_pretty_url:
+    value: "lead-img-no-caption-credit"
+  field_date_posted:
+    value: "2025-04-02"
+  field_date_reviewed:
+    value: "2025-04-02"
+  field_date_updated:
+    value: "2025-04-02"
+  field_date_display_mode:
+    - value: 'posted'
+
+- entity: "node"
+  type: "cgov_article"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title: "Article Test Page - No Lead Image"
+  field_page_description:
+    value: "Article Test Page with without lead image and only uses embedded images"
+  field_card_title:
+    value: "Article Test Page - No Lead Image"
+  field_browser_title:
+    value: "Article Test Page - No Lead Image"
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_article_body:
+    - entity: 'paragraph'
+      type: "body_section"
+      field_body_section_content:
+        - format: "full_html"
+          value: |
+            <drupal-entity
+              data-align="right"
+              data-caption=""
+              data-embed-button="media_entity_embed"
+              data-entity-embed-display="view_mode:media.image_display_article_small"
+              data-entity-type="media"
+              data-entity-uuid="#process"
+              data-cgov-yaml-query-bundle="cgov_image"
+              data-cgov-yaml-query-name="oropharynx"
+            ></drupal-entity>
+            <p>As the National Cancer Act was passed in 1971, hard-fought and hard-won funding for cancer research began to effect true change. Ground broke, laboratories filled, and our nation's scientific workforce dedicated themselves to a new challenge of transforming how we understand and manage cancer. What we didn't know then is that these investments in the name of cancer would be crucial for our nation to fight future epidemics. The act inadvertently prepared our nation for another deadly illness that was yet to make its ominous appearance.</p>
+            <p>In 1981, 10 years after the signing of the act, the NIH Clinical Center admit­ted one of the very first patients with acquired immunodeficiency syndrome (AIDS). He was admitted through an NCI branch that studied immunodeficiency diseases and the cancers afflicting patients with these diseases. Almost immediately after the recognition of AIDS as a new disease, it became apparent that patients with this puzzling syndrome often developed a previously rare cancer called Kaposi sarcoma as well as other tumors such as high-grade B-cell lymphomas. As a result, some of the earliest AIDS patient care and research was performed by NCI scientists and external researchers funded by NCI.</p>
+            <p>AIDS researcher and early human immunodeficiency virus (HIV) drug developer Robert Yarchoan, M.D., recalled the gravity of the moment: “AIDS showed us that something that no one ever worried about before suddenly could become a major problem for the country and for mankind. And when HIV was identified as the cause of AIDS, it became apparent that in addition to persons known to have AIDS, thousands of people in the United States were already infected with this new virus without knowing it. Moreover, at this time, infection with HIV was in most cases fatal.”</p>
+            <p>As a result of the investment in cancer research stemming from the National Cancer Act, by the early 1980s NCI was in a strong position to make key early advances in the fight against HIV/AIDS. In particular, NCI and NCI-funded scientists had distinct expertise in retrovirology, in part because of the NCI Special Virus Cancer Program. NCI also had strong programs in immunology and drug development. With these areas of expertise, NCI scientists co-discovered HIV, showed that it was the cause of AIDS, developed the first blood test to prevent the spread of HIV by blood transfusion, and developed the first effective drugs to treat HIV including azidothymidine (also called AZT or zidovudine).</p>
+            <p>Over the years, NCI developed an extensive portfolio of research in the cancers associated with HIV/AIDS as well as HIV/AIDS itself, and it was recognized that there was a need for a central office to coordinate and prioritize this research. In 2007, NCI, under the leadership of Dr. John Niederhuber, established the Office of HIV and AIDS Malignancy (OHAM) under the Direction of Dr. Yarchoan. The creation of this office was pivotal to NCI. NCI currently funds both intramural (within NCI buildings) and extramural (through grants and contracts) research in HIV/AIDS and HIV-associated malignancies. In addition to coordinating HIV/AIDS and HIV- malignancy research throughout NCI, OHAM directly manages and facilitates major programs and initiatives through research, training, international studies, and clinical trials. As the needs and opportunities for research change, NCI’s OHAM plays a crucial role in prioritizing the most important research to prevent, diagnose, and treat HIV-associated malignancies and other cancers in people living with HIV, as well as basic research on these cancers and HIV/AIDS itself.</p>
+            <p>“Coordinating HIV/AIDS research throughout NCI, with the NIH Office of AIDS Research, and with other institutes and centers is a challenging task. However, doing it well enables us to make sure that funds are directed into the areas where they are most needed,” said RaeJean Hermansen, Ph.D., special assistant to the director of OHAM.</p>
+            <p>Two of the main efforts overseen by OHAM are the AIDS Malignancy Consortium, which conducts clinical research in HIV-associated malignancies both in the United States and in resource-poor areas, including sub-Saharan Africa, and the AIDS and Cancer Specimen Resource, which helps researchers by coordinating tissue donations from patients with HIV/AIDS. “It is very gratifying to have contributed to managing vital programs that focus on improving the standard of care of people living with HIV and cancer and ease their sufferings,” said Mostafa Nokta, M.D., Ph.D., director, AIDS Cancer Clinical Program, OHAM, NCI.</p>
+            <p>One of the challenges of OHAM is to adjust research priorities as needs and opportunities change. “With the development of antiretroviral therapy, we initially saw a dramatic decrease in AIDS-defining cancers. However, as people living with HIV are surviving and aging, we are seeing an increase in other cancers, and cancer continues to be a significant morbidity and one of the most frequent causes of death,” said Geraldina Dominguez, Ph.D., director, AIDS Malignancy Program, OHAM.</p>
+            <p>The National Cancer Act paved the way for the resources, skills, and expertise to be in place for those at the forefront of HIV/AIDS research. It enabled major advances in a time of need and NCI looks forward to robust cross-fertilization between cancer research and HIV/AIDS research until we have addressed every challenge that comes our way.</p>
+            <p>Although many doubted whether any drug could be developed to fight AIDS, Dr. Robert Yarchoan worked with Drs. Samuel Broder and Hiroaki Mitsuya on the first AIDS drugs, including azidothymidine (AZT), transforming a fatal disease into a chronic one.</p>
+  field_public_use: 1
+  field_pretty_url:
+    value: "no-lead-img"
+  field_date_posted:
+    value: "2025-04-02"
+  field_date_reviewed:
+    value: "2025-04-02"
+  field_date_updated:
+    value: "2025-04-02"
+  field_date_display_mode:
+    - value: 'posted'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Blog Post Test Page - with Lead Image and caption"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'Goofy Guy'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Getting a diagnosis and undergoing treatment for a serious illness like cancer rank as some of life’s most stressful experiences. Over the last decade, it’s been increasingly recognized that distress can have an impact on a patient's health. Asking people with cancer about their emotional health—and treating distress—has become an integral part of cancer care.</p>
+        <p>But another population can experience substantial distress stemming from the fallout of a cancer diagnosis: family members and loved ones who act as caregivers. </p>
+        <p>And progress in identifying caregivers in distress and pointing them toward help lags far behind the advances in helping patients, according to results from a new study published September 21 in the Journal of the National Cancer Institute.</p>
+        <p>In a survey of more than 100 community cancer clinics across the United States, only 16% reported that they routinely screened caregivers for distress, and less than 13% had a strategy in place to refer those in need to mental health and other services, the study showed. In contrast, more than 90% regularly screened patients for distress and provided referrals to supportive care services.</p>
+        <p>Distress can harm a caregiver’s mental and physical health and may also affect the loved one with cancer they’re caring for, explained Chandylen Nightingale, Ph.D., of Wake Forest University, who led the study.</p>
+        <p>“There’s definitely evidence to suggest that caregiver well-being impacts the ability of people to provide care for their loved ones,” Dr. Nightingale said. “It can impact how well the person with cancer will do emotionally. It can even lead to them having more emergency room visits or longer hospital stays.”</p>
+        <p>The good news is that systems already exist to capture information on distress for patients. It may just be a question of leveraging them to help caregivers, explained Ann Geiger, Ph.D., from NCI’s Division of Cancer Control and Population Sciences (DCCPS), who was not involved with the study.</p>
+        <p>“It is a major accomplishment that almost all patients are screened for distress. But it took a long time to get there—it’s not something that happened overnight,” Dr. Geiger explained.</p>
+        <p>“Getting to widespread screening of caregivers will take time, but this research shows that process has begun.”</p>
+        <h2>Many sources of distress for cancer caregivers</h2>
+        <drupal-entity
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-embed-button="cgov_image_button"
+          data-align="left"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-cgov-yaml-query-name="oropharynx"
+        ></drupal-entity>
+        <p>Caregiver distress, which may include symptoms of depression, anxiety, and stress, can arise from many stressors, explained Dr. Nightingale. </p>
+        <p>“Cancer is often a very abrupt diagnosis and so, oftentimes, caregivers come into the role with little or no preparation or training. That can absolutely be distressing for them,” she said. “Then watching your loved one struggle with cancer treatment and any symptoms they might have, whether they’re physical or emotional, that’s going to be distressing.” </p>
+        <p>Many caregivers also have to juggle their own challenges, such as a job and childcare, in addition to caretaking, explained Michelle Mollica, Ph.D., of DCCPS, who was also not involved in the study. </p>
+        <p>“There’s so much uncertainty in cancer, and that often transfers to the caregiver,” Dr. Mollica said. “What will your partner or loved one need at any given moment? And how does that impact you and your ability to do things like work or take care of yourself, your finances?”</p>
+        <p>Services exist to help caregivers deal with or lessen their distress, including referring people to mental health care or a formal support group, or providing help accessing financial resources. But caregiver programs are not universally availableExit Disclaimer, and how often caregivers in need get linked to such services isn’t well documented.</p>
+  field_browser_title:
+    value: 'Blog Post Test Page - with Lead Image and caption'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Caption & Enlarge Button'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "blog-post-lead-img-caption"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Blog Post Test Page - with Lead Image and no caption"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'Goofy Guy'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <p>Getting a diagnosis and undergoing treatment for a serious illness like cancer rank as some of life’s most stressful experiences. Over the last decade, it’s been increasingly recognized that distress can have an impact on a patient's health. Asking people with cancer about their emotional health—and treating distress—has become an integral part of cancer care.</p>
+        <p>But another population can experience substantial distress stemming from the fallout of a cancer diagnosis: family members and loved ones who act as caregivers. </p>
+        <p>And progress in identifying caregivers in distress and pointing them toward help lags far behind the advances in helping patients, according to results from a new study published September 21 in the Journal of the National Cancer Institute.</p>
+        <p>In a survey of more than 100 community cancer clinics across the United States, only 16% reported that they routinely screened caregivers for distress, and less than 13% had a strategy in place to refer those in need to mental health and other services, the study showed. In contrast, more than 90% regularly screened patients for distress and provided referrals to supportive care services.</p>
+        <p>Distress can harm a caregiver’s mental and physical health and may also affect the loved one with cancer they’re caring for, explained Chandylen Nightingale, Ph.D., of Wake Forest University, who led the study.</p>
+        <p>“There’s definitely evidence to suggest that caregiver well-being impacts the ability of people to provide care for their loved ones,” Dr. Nightingale said. “It can impact how well the person with cancer will do emotionally. It can even lead to them having more emergency room visits or longer hospital stays.”</p>
+        <p>The good news is that systems already exist to capture information on distress for patients. It may just be a question of leveraging them to help caregivers, explained Ann Geiger, Ph.D., from NCI’s Division of Cancer Control and Population Sciences (DCCPS), who was not involved with the study.</p>
+        <p>“It is a major accomplishment that almost all patients are screened for distress. But it took a long time to get there—it’s not something that happened overnight,” Dr. Geiger explained.</p>
+        <p>“Getting to widespread screening of caregivers will take time, but this research shows that process has begun.”</p>
+        <h2>Many sources of distress for cancer caregivers</h2>
+        <drupal-entity
+          data-align="center"
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Caregiver distress, which may include symptoms of depression, anxiety, and stress, can arise from many stressors, explained Dr. Nightingale. </p>
+        <p>“Cancer is often a very abrupt diagnosis and so, oftentimes, caregivers come into the role with little or no preparation or training. That can absolutely be distressing for them,” she said. “Then watching your loved one struggle with cancer treatment and any symptoms they might have, whether they’re physical or emotional, that’s going to be distressing.” </p>
+        <p>Many caregivers also have to juggle their own challenges, such as a job and childcare, in addition to caretaking, explained Michelle Mollica, Ph.D., of DCCPS, who was also not involved in the study. </p>
+        <p>“There’s so much uncertainty in cancer, and that often transfers to the caregiver,” Dr. Mollica said. “What will your partner or loved one need at any given moment? And how does that impact you and your ability to do things like work or take care of yourself, your finances?”</p>
+        <p>Services exist to help caregivers deal with or lessen their distress, including referring people to mental health care or a formal support group, or providing help accessing financial resources. But caregiver programs are not universally availableExit Disclaimer, and how often caregivers in need get linked to such services isn’t well documented.</p>
+  field_browser_title:
+    value: 'Blog Post Test Page - with Lead Image and no caption'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Promo Placeholder'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "blog-post-lead-img-no-caption"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+- entity: "node"
+  type: "cgov_blog_post"
+  title: "Blog Post Test Page - with no Lead Image"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_author:
+    value: 'Goofy Guy'
+  field_blog_series:
+    - target_type: 'node'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'node'
+          - type: 'cgov_blog_series'
+            title: 'Cancer Currents Blog'
+  body:
+    - format: "full_html"
+      value: |
+        <drupal-entity
+          data-align="right"
+          data-embed-button="media_entity_embed"
+          data-entity-embed-display="view_mode:media.image_display_article_medium"
+          data-entity-type="media"
+          data-entity-uuid="#process"
+          data-cgov-yaml-query-bundle="cgov_image"
+          data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+        ></drupal-entity>
+        <p>Getting a diagnosis and undergoing treatment for a serious illness like cancer rank as some of life’s most stressful experiences. Over the last decade, it’s been increasingly recognized that distress can have an impact on a patient's health. Asking people with cancer about their emotional health—and treating distress—has become an integral part of cancer care.</p>
+        <p>But another population can experience substantial distress stemming from the fallout of a cancer diagnosis: family members and loved ones who act as caregivers. </p>
+        <p>And progress in identifying caregivers in distress and pointing them toward help lags far behind the advances in helping patients, according to results from a new study published September 21 in the Journal of the National Cancer Institute.</p>
+        <p>In a survey of more than 100 community cancer clinics across the United States, only 16% reported that they routinely screened caregivers for distress, and less than 13% had a strategy in place to refer those in need to mental health and other services, the study showed. In contrast, more than 90% regularly screened patients for distress and provided referrals to supportive care services.</p>
+        <p>Distress can harm a caregiver’s mental and physical health and may also affect the loved one with cancer they’re caring for, explained Chandylen Nightingale, Ph.D., of Wake Forest University, who led the study.</p>
+        <p>“There’s definitely evidence to suggest that caregiver well-being impacts the ability of people to provide care for their loved ones,” Dr. Nightingale said. “It can impact how well the person with cancer will do emotionally. It can even lead to them having more emergency room visits or longer hospital stays.”</p>
+        <p>The good news is that systems already exist to capture information on distress for patients. It may just be a question of leveraging them to help caregivers, explained Ann Geiger, Ph.D., from NCI’s Division of Cancer Control and Population Sciences (DCCPS), who was not involved with the study.</p>
+        <p>“It is a major accomplishment that almost all patients are screened for distress. But it took a long time to get there—it’s not something that happened overnight,” Dr. Geiger explained.</p>
+        <p>“Getting to widespread screening of caregivers will take time, but this research shows that process has begun.”</p>
+        <h2>Many sources of distress for cancer caregivers</h2>
+        <p>Caregiver distress, which may include symptoms of depression, anxiety, and stress, can arise from many stressors, explained Dr. Nightingale. </p>
+        <p>“Cancer is often a very abrupt diagnosis and so, oftentimes, caregivers come into the role with little or no preparation or training. That can absolutely be distressing for them,” she said. “Then watching your loved one struggle with cancer treatment and any symptoms they might have, whether they’re physical or emotional, that’s going to be distressing.” </p>
+        <p>Many caregivers also have to juggle their own challenges, such as a job and childcare, in addition to caretaking, explained Michelle Mollica, Ph.D., of DCCPS, who was also not involved in the study. </p>
+        <p>“There’s so much uncertainty in cancer, and that often transfers to the caregiver,” Dr. Mollica said. “What will your partner or loved one need at any given moment? And how does that impact you and your ability to do things like work or take care of yourself, your finances?”</p>
+        <p>Services exist to help caregivers deal with or lessen their distress, including referring people to mental health care or a formal support group, or providing help accessing financial resources. But caregiver programs are not universally availableExit Disclaimer, and how often caregivers in need get linked to such services isn’t well documented.</p>
+  field_browser_title:
+    value: 'Blog Post Test Page - with Lead Image and no caption'
+  field_card_title:
+    value: 'Blog Post Card title'
+  field_feature_card_description:
+    value: 'Blog Post feature card desc'
+  field_list_description:
+    value: 'Blog Post list desc'
+  field_page_description:
+    value: 'Blog Post page desc'
+  field_date_posted:
+    value: "2019-04-28"
+  field_pretty_url:
+    value: "blog-post-no-lead-img"
+  field_public_use: 1
+  field_search_engine_restrictions:
+    value: IncludeSearch
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Blog Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+  field_related_resources:
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Men with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_internal_link"
+      field_internal_link:
+        - target_type: 'node'
+          '#process':
+            callback: 'reference'
+            args:
+              - 'node'
+              - type: 'cgov_article'
+                title: 'Sexual Health Issues in Women with Cancer'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'External Card Title'
+      field_external_link:
+        - uri: 'https://www.google.com'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'National Institute of Mental Health - NIMH'
+      field_external_link:
+        - uri: 'http://www.nimh.nih.com/'
+    - entity: 'paragraph'
+      type: "cgov_external_link"
+      field_override_title:
+        - value: 'Yahoo.com'
+      field_external_link:
+        - uri: 'http://www.yahoo.com/'
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-lead-img-caption-enlarge"
+  title: "Event Page - with Lead Image and Caption & Enlarge button"
+  field_browser_title:
+    - value: 'Event Page - with Lead Image and Caption & Enlarge button'
+  field_card_title:
+    - value: 'Event Page - with Lead Image and Caption & Enlarge button'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-04-23T10:30:00'
+  field_event_end_date:
+    value: '2025-04-23T11:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "TE Seminar 116"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p>&nbsp;</p>
+          <drupal-entity
+            data-align="left"
+            data-embed-button="media_entity_embed"
+            data-entity-embed-display="view_mode:media.image_display_article_large"
+            data-entity-type="media"
+            data-entity-uuid="#process"
+            data-cgov-yaml-query-bundle="cgov_image"
+            data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+          ></drupal-entity>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)
+          <p>&nbsp;</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-lead-img-enlarge"
+  title: "Event Page - with Lead Image and Enlarge button"
+  field_browser_title:
+    - value: 'Event Page - with Lead Image and Enlarge button'
+  field_card_title:
+    - value: 'Event Page - with Lead Image and Enlarge button'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-04-23T10:30:00'
+  field_event_end_date:
+    value: '2025-04-23T11:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "TE Seminar 116"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p>&nbsp;</p>
+          <drupal-entity
+            data-align="center"
+            data-embed-button="media_entity_embed"
+            data-entity-embed-display="view_mode:media.image_display_article_large"
+            data-entity-type="media"
+            data-entity-uuid="#process"
+            data-cgov-yaml-query-bundle="cgov_image"
+            data-cgov-yaml-query-name="oropharynx"
+          ></drupal-entity>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)
+          <p>&nbsp;</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Enlarge Button'
+
+- entity: "node"
+  type: "cgov_event"
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: "event-no-lead-img"
+  title: "Event Page - without Lead Image"
+  field_browser_title:
+    - value: 'Event Page - without Lead Image'
+  field_card_title:
+    - value: 'Event Page - without Lead Image'
+  field_feature_card_description:
+    - value: 'Event Page - Feature Card Description'
+  field_list_description:
+    - value: 'Event Page - List Description'
+  field_page_description:
+    value: 'Event Page - Page Description'
+  field_event_start_date:
+    value: '2025-04-23T10:30:00'
+  field_event_end_date:
+    value: '2025-04-23T11:30:00'
+  field_all_day_event: 0
+  field_event_series:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_series'
+            name: 'NCI Event Series'
+  field_venue:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_venues'
+            name: 'NCI Shady Grove Campus'
+  field_room:
+    value: "TE Seminar 116"
+  field_city_state:
+    value: "Rockville, MD"
+  body:
+    - format: "full_html"
+      value: |
+          <drupal-entity
+            data-align="right"
+            data-embed-button="media_entity_embed"
+            data-entity-embed-display="view_mode:media.image_display_article_large"
+            data-entity-type="media"
+            data-entity-uuid="#process"
+            data-cgov-yaml-query-bundle="cgov_image"
+            data-cgov-yaml-query-name="oropharynx"
+          ></drupal-entity>
+          <p><strong>Speaker</strong><br>Matt Buman, Ph.D., Associate Professor at Arizona State University, College of Health Solutions, Phoenix, AZ</p>
+          <p><strong>Host</strong><br><a href="/about/staff-directory/biographies/A-J/matthews-charles">Charles Matthews</a>, Ph.D., Senior Investigator,&nbsp;
+          <a href="https://dceg.cancer.gov/about/organization/programs-ebp/meb">Metabolic Epidemiology Branch</a>, Division of Cancer Epidemiology &amp; Genetics, National Cancer Institute</p>
+          <p><strong><a href="#">JOIN WEBEX MEETING</a> <a class="exitNotification" href="https://www.cancer.gov/policies/linking"></a></strong></p>
+          <p><strong>Meeting number</strong> (access code): 555 555 555</p>
+          <p>You can also dial 555-555-555 and enter your meeting number.</p>
+          <p>&nbsp;</p>
+          <p><strong>JOIN BY PHONE</strong></p>
+          <p>1-855-555-5555 Call-in toll number (US/Canada) Tap <a>here</a> to call (mobile phones only, hosts not supported)
+          <p>&nbsp;</p>
+          <p>IMPORTANT NOTICE: Please note that this Webex service allows audio and other information sent during the session to be recorded, which may be discoverable in a legal matter. You should inform all meeting attendees prior to recording if you intend to record the meet</p>
+
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Press Release Test Page - with Lead Image and Caption & Enlarge Button"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'press-release-lead-img-caption-enlarge'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "This is the Cgov Browser Title"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+  field_list_description:
+    value: "List Description overriding meta description"
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2025-04-24"
+  field_date_reviewed:
+    value: "2025-04-24"
+  field_date_updated:
+    value: "2025-04-24"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'Porcupine Test Image - with Caption & Enlarge Button'
+  body:
+  - format: "full_html"
+    value: |
+      <p>Improvements in cancer prevention and screening have averted more deaths from five cancer types combined over the past 45 years than treatment advances, according to a modeling study led by researchers at the National Institutes of Health (NIH). The study, published Dec. 5, 2024, in JAMA Oncology, looked at deaths from breast, cervical, colorectal, lung, and prostate cancer that were averted by the combination of prevention, screening, and treatment advancesExit Disclaimer. The researchers from NIH’s National Cancer Institute (NCI) focused on these five cancers because they are among the most common causes of cancer deaths and strategies exist for their prevention, early detection, and/or treatment. In recent years, these five cancers have made up nearly half of all new cancer diagnoses and deaths.</p>
+      <p>"Although many people may believe that treatment advances are the major driver of reductions in mortality from these five cancers combined, the surprise here is how much prevention and screening contribute to reductions in mortality," said co-lead investigator Katrina A. B. Goddard, Ph.D., director of NCI’s Division of Cancer Control and Population Sciences. “Eight out of 10 deaths from these five cancers that were averted over the past 45 years were due to advances in prevention and screening.”</p>
+      <p>A single prevention intervention, smoking cessation, contributed the lion’s share of the deaths averted: 3.45 million from lung cancer alone. When considering each cancer site individually, prevention and screening accounted for most deaths averted for cervical, colorectal, lung, and prostate cancer, whereas treatment advances accounted for most deaths averted from breast cancer.</p>
+      <p>“To reduce cancer death rates, it's critical that we combine effective strategies in prevention and screening with advances in treatment,” said W. Kimryn Rathmell, M.D., Ph.D., director of NCI. “This study will help us understand which strategies have been most effective in reducing cancer deaths so that we can continue building on this momentum and hopefully increase the use of these strategies across the United States.”</p>
+      <drupal-entity
+        data-align="left"
+        data-embed-button="media_entity_embed"
+        data-entity-embed-display="view_mode:media.image_display_article_full"
+        data-entity-type="media"
+        data-entity-uuid="#process"
+        data-cgov-yaml-query-bundle="cgov_image"
+        data-cgov-yaml-query-name="oropharynx"
+      ></drupal-entity>
+      <p>“The Biden Cancer Moonshot is making real progress towards its bold goal to reduce the cancer death rate by at least 50% by 2047,” said Danielle Carnival, Ph.D., deputy assistant to the President for the Cancer Moonshot and deputy director, Health Outcomes, White House Office of Science and Technology Policy. “This study makes clear that the increased prevention and screening efforts championed and delivered on by the President and First Lady are crucial to reaching this ambitious goal.”</p>
+      <p>The researchers used statistical models from the Cancer Intervention and Surveillance Modeling Network (CISNET) and cancer mortality data to estimate the relative contributions of prevention, screening, and treatment advances to deaths averted from breast, cervical, colorectal, lung, and prostate cancers between 1975 and 2020.</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Press Release Test Page - with Lead Image and Caption"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'press-release-lead-img-caption'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "This is the Cgov Browser Title"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+  field_list_description:
+    value: "List Description overriding meta description"
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2025-04-24"
+  field_date_reviewed:
+    value: "2025-04-24"
+  field_date_updated:
+    value: "2025-04-24"
+  field_image_article:
+    - target_type: 'media'
+      '#process':
+        callback: 'reference'
+        args:
+          - 'media'
+          - bundle: 'cgov_image'
+            name: 'oropharynx'
+  body:
+  - format: "full_html"
+    value: |
+      <p>Improvements in cancer prevention and screening have averted more deaths from five cancer types combined over the past 45 years than treatment advances, according to a modeling study led by researchers at the National Institutes of Health (NIH). The study, published Dec. 5, 2024, in JAMA Oncology, looked at deaths from breast, cervical, colorectal, lung, and prostate cancer that were averted by the combination of prevention, screening, and treatment advancesExit Disclaimer. The researchers from NIH’s National Cancer Institute (NCI) focused on these five cancers because they are among the most common causes of cancer deaths and strategies exist for their prevention, early detection, and/or treatment. In recent years, these five cancers have made up nearly half of all new cancer diagnoses and deaths.</p>
+      <p>"Although many people may believe that treatment advances are the major driver of reductions in mortality from these five cancers combined, the surprise here is how much prevention and screening contribute to reductions in mortality," said co-lead investigator Katrina A. B. Goddard, Ph.D., director of NCI’s Division of Cancer Control and Population Sciences. “Eight out of 10 deaths from these five cancers that were averted over the past 45 years were due to advances in prevention and screening.”</p>
+      <p>A single prevention intervention, smoking cessation, contributed the lion’s share of the deaths averted: 3.45 million from lung cancer alone. When considering each cancer site individually, prevention and screening accounted for most deaths averted for cervical, colorectal, lung, and prostate cancer, whereas treatment advances accounted for most deaths averted from breast cancer.</p>
+      <p>“To reduce cancer death rates, it's critical that we combine effective strategies in prevention and screening with advances in treatment,” said W. Kimryn Rathmell, M.D., Ph.D., director of NCI. “This study will help us understand which strategies have been most effective in reducing cancer deaths so that we can continue building on this momentum and hopefully increase the use of these strategies across the United States.”</p>
+      <drupal-entity
+        data-align="left"
+        data-embed-button="media_entity_embed"
+        data-entity-embed-display="view_mode:media.image_display_article_full"
+        data-entity-type="media"
+        data-entity-uuid="#process"
+        data-cgov-yaml-query-bundle="cgov_image"
+        data-cgov-yaml-query-name="Porcupine Test Image - with Caption & Enlarge Button"
+      ></drupal-entity>
+      <p>“The Biden Cancer Moonshot is making real progress towards its bold goal to reduce the cancer death rate by at least 50% by 2047,” said Danielle Carnival, Ph.D., deputy assistant to the President for the Cancer Moonshot and deputy director, Health Outcomes, White House Office of Science and Technology Policy. “This study makes clear that the increased prevention and screening efforts championed and delivered on by the President and First Lady are crucial to reaching this ambitious goal.”</p>
+      <p>The researchers used statistical models from the Cancer Intervention and Surveillance Modeling Network (CISNET) and cancer mortality data to estimate the relative contributions of prevention, screening, and treatment advances to deaths averted from breast, cervical, colorectal, lung, and prostate cancers between 1975 and 2020.</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
+
+- entity: "node"
+  type: "cgov_press_release"
+  title: "Press Release Test Page - without Lead Image"
+  langcode: en
+  status: 1
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'press-release-no-lead-img'
+  moderation_state:
+    value: 'published'
+  field_browser_title:
+    value: "This is the Cgov Browser Title"
+  field_feature_card_description:
+    value: "This is a feature card description"
+  field_card_title:
+    value: "Press Release Title English"
+  field_press_release_type:
+    value: 'NCI Press Release'
+  field_date_display_mode:
+    - value: 'posted'
+  field_list_description:
+    value: "List Description overriding meta description"
+  field_page_description:
+    value: "This is the Meta Description AKA Page Description"
+  field_date_posted:
+    value: "2025-04-24"
+  field_date_reviewed:
+    value: "2025-04-24"
+  field_date_updated:
+    value: "2025-04-24"
+  body:
+  - format: "full_html"
+    value: |
+      <drupal-entity
+        data-align="right"
+        data-embed-button="media_entity_embed"
+        data-entity-embed-display="view_mode:media.image_display_article_small"
+        data-entity-type="media"
+        data-entity-uuid="#process"
+        data-cgov-yaml-query-bundle="cgov_image"
+        data-cgov-yaml-query-name="oropharynx"
+      ></drupal-entity>
+      <p>Improvements in cancer prevention and screening have averted more deaths from five cancer types combined over the past 45 years than treatment advances, according to a modeling study led by researchers at the National Institutes of Health (NIH). The study, published Dec. 5, 2024, in JAMA Oncology, looked at deaths from breast, cervical, colorectal, lung, and prostate cancer that were averted by the combination of prevention, screening, and treatment advancesExit Disclaimer. The researchers from NIH’s National Cancer Institute (NCI) focused on these five cancers because they are among the most common causes of cancer deaths and strategies exist for their prevention, early detection, and/or treatment. In recent years, these five cancers have made up nearly half of all new cancer diagnoses and deaths.</p>
+      <p>"Although many people may believe that treatment advances are the major driver of reductions in mortality from these five cancers combined, the surprise here is how much prevention and screening contribute to reductions in mortality," said co-lead investigator Katrina A. B. Goddard, Ph.D., director of NCI’s Division of Cancer Control and Population Sciences. “Eight out of 10 deaths from these five cancers that were averted over the past 45 years were due to advances in prevention and screening.”</p>
+      <p>A single prevention intervention, smoking cessation, contributed the lion’s share of the deaths averted: 3.45 million from lung cancer alone. When considering each cancer site individually, prevention and screening accounted for most deaths averted for cervical, colorectal, lung, and prostate cancer, whereas treatment advances accounted for most deaths averted from breast cancer.</p>
+      <p>“To reduce cancer death rates, it's critical that we combine effective strategies in prevention and screening with advances in treatment,” said W. Kimryn Rathmell, M.D., Ph.D., director of NCI. “This study will help us understand which strategies have been most effective in reducing cancer deaths so that we can continue building on this momentum and hopefully increase the use of these strategies across the United States.”</p>
+      <p>“The Biden Cancer Moonshot is making real progress towards its bold goal to reduce the cancer death rate by at least 50% by 2047,” said Danielle Carnival, Ph.D., deputy assistant to the President for the Cancer Moonshot and deputy director, Health Outcomes, White House Office of Science and Technology Policy. “This study makes clear that the increased prevention and screening efforts championed and delivered on by the President and First Lady are crucial to reaching this ambitious goal.”</p>
+      <p>The researchers used statistical models from the Cancer Intervention and Surveillance Modeling Network (CISNET) and cancer mortality data to estimate the relative contributions of prevention, screening, and treatment advances to deaths averted from breast, cervical, colorectal, lung, and prostate cancers between 1975 and 2020.</p>
+  field_citation:
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 1 - <i>Diseases of the Breast</i>. 5th ed. Philadelphia: Wolters Kluwer Health; 2014.</p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 2 -  <i>New England Journal of Medicine</i> 2008; 359(15):1590–1601. DOI: <a href="http://www.nejm.org/doi/full/10.1056/NEJMct0802899">10.1056/NEJMct0802899</a></p>
+    - entity: 'paragraph'
+      type: "cgov_citation"
+      field_citation_content:
+        - format: "streamlined"
+          value: |
+            <p>Citation 3 - Roostaeian J, Pavone L, Da Lio A, et al. Immediate placement of implants in breast reconstruction: patient selection and outcomes. <i>Plastic and Reconstructive Surgery</i> 2011; 127(4):1407-1416.</p>
+      field_pubmed_id:
+        - value: "21460648"
