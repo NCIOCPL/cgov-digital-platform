@@ -48,7 +48,10 @@ class YamlEntityEmbedProcessor {
     // We only need to check text_long fields as those are the ones that can
     // hold HTML, and thus only the ones to contain <drupal-entity> tags.
     foreach ($entity->getFields() as $field) {
-      if ($field->getFieldDefinition()->getType() === 'text_long') {
+      if (
+        $field->getFieldDefinition()->getType() === 'text_long' ||
+        $field->getFieldDefinition()->getType() === 'text_with_summary'
+      ) {
         $this->handleEmbedForTextLong($field);
       }
     }
