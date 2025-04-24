@@ -1,0 +1,19 @@
+@forward "usa-link";
+@use 'uswds-core' as *;
+
+.cgdp-related-resources {
+	// Verify with design what the actual tokens should be
+	@include u-margin-bottom(2);
+	@include u-margin-top(5);
+	ul {
+		@include u-margin-top(1);
+		li {
+			@include u-margin-y(0.5);
+			a {
+				// We can probably just add the classes to the anchor tag instead like we do for summary box
+				@include u-text('no-underline');
+				@extend .usa-link;
+			}
+		}
+	}
+}
