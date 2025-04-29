@@ -290,17 +290,6 @@ export default {
     });
   },
 
-  /* ********************************************************************** */
-  RelatedResourceClick: function (sender, linkText, index) {
-    legacyTrackOther('RelatedLinkClick', 'RelatedResourceClick', {
-      Props: {
-        50: linkText,
-        66: getBlogLocation() ? concatCustomLink("BlogRelatedResource:" + index) : concatCustomLink("RelatedResource:" + index),
-      },
-      Events: getBlogLocation() ? [57] : [59],
-    });
-  },
-
   /* ============ Start Specific Blog Tracking ============= */
   /* ********************************************************************** */
   BlogArchiveLinkClick: function (sender, pageName) {
