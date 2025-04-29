@@ -250,14 +250,6 @@ $(window).on("load", function () {
     NCIAnalytics.glossifiedTerm(this, linkText, blogLink);
   });
 
-  // Related Resources tracking on most content pages.
-  $("#nvcgRelatedResourcesArea").on("click", "a", function () {
-    var $this = $(this);
-    var linkText = $this.text();
-    var index = $this.closest("li").index() + 1;
-    NCIAnalytics.RelatedResourceClick(this, linkText, index);
-  });
-
   // Track clicks on feature cards on blog posts.
   $(".blog-feature .feature-card").each(function (i, el) {
     $(el).on("click", "a", function (event) {
