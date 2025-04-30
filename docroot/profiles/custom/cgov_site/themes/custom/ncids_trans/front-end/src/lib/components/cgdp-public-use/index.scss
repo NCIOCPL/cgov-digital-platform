@@ -7,15 +7,17 @@
 	clear: both;
 	// add uswds mixin
 	@include u-padding(0);
-	@include u-margin-top(0);
 	@include u-border-top(1px, $theme-color-base);
 	p {
 		@include u-line-height('body', 4);
 	}
-	&:only-child {
-		@include u-margin-top(3);
-		@include at-media('mobile') {
-			@include u-margin-top(4);
-		}
+}
+
+// The last child of the public use section shouldn't
+// Have any margin bottom, since its parents' are handling it
+.cgdp-public-use > * {
+	&:last-child {
+		@include u-margin-bottom(0);
 	}
 }
+

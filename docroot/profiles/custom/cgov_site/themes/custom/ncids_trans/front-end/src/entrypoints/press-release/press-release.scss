@@ -3,6 +3,7 @@
 @forward '../cgdp-required';
 
 // Specific page styles
+@forward '../../lib/components/cgdp-article-footer/';
 @forward '../../lib/components/cgdp-related-resources';
 @forward '../../lib/components/cgdp-document-dates';
 @forward '../../lib/components/cgdp-public-use/';
@@ -27,7 +28,6 @@
 		// These dates appear under the title for press releases
 		// As opposed to in the article footer otherwise
 		.cgdp-document-dates {
-			@include u-margin-top(0);
 			@include u-margin-bottom(1);
 			@include at-media('tablet') {
 				@include u-margin-bottom(0);

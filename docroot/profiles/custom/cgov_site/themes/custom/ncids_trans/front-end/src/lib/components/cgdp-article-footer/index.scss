@@ -1,0 +1,19 @@
+@use 'uswds-core' as *;
+
+// Set vertical margin around the article footer
+// (Children should not be applying this margin)
+.cgdp-article-footer {
+	@include u-margin-y(2);
+}
+
+// All direct children of article footer
+// Should have their vertical margin set here
+.cgdp-article-footer > * {
+	@include u-margin-y(2);
+	&:first-child {
+		@include u-margin-top(0);
+	}
+	&:last-child {
+		@include u-margin-bottom(0);
+	}
+}
