@@ -422,3 +422,100 @@
     value: '2019-06-19'
   field_date_display_mode:
     value: 'reviewed'
+
+- entity: 'node'
+  type: 'cgov_article'
+  langcode: en
+  status: 1
+  moderation_state:
+    value: 'published'
+  title:
+    value: 'Article Body Section - NCIDS Full HTML'
+  field_page_description:
+    value: 'An article page to test the new ncids_full_html editor for ckeditor5'
+  field_browser_title:
+    value: 'Article Body Section - NCIDS Full HTML'
+  field_site_section:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_site_sections'
+            computed_path: '/test'
+  field_pretty_url:
+    value: 'article-body-section-ncids-full'
+  field_intro_text:
+    - format: "streamlined"
+      value: |
+        Testing WYSIWYG for Article Body Section
+  field_article_body:
+    ### Data attributes / custom links
+    - entity: 'paragraph'
+      type: 'body_section'
+      field_body_section_content:
+        - format: 'ncids_full_html'
+          value: |
+            <p>Lorem <strong>ipsum</strong> <em>ordor</em> <s>amet</s>, con<sub>sectetuer </sub>adip<sup>iscing</sup> <em><strong>elit</strong></em>. <s><strong>Condimentum</strong></s> <strong>adip<sub>iscing</sub></strong> <strong>e<sup>u</sup></strong> <em><s>natoque</s></em> <em>pot<sub>enti</sub></em> <em>bib<sup>endum</sup></em>. <s>Apt<sub>ent</sub></s> <s>s<sup>ed</sup></s> f<sub>a<sup>me</sup>s</sub> so<sup>d</sup><sub><sup>al</sup></sub><sup>es</sup></p>
+            <ul>
+              <li>
+                quam purus
+                <ul>
+                  <li>vitae suscipit</li>
+                  <li>cubilia.</li>
+                </ul>
+              </li>
+              <li>Est</li>
+              <li>rutrum</li>
+            </ul>
+            <ol>
+              <li>semper</li>
+              <li>
+                quisque
+                <ol>
+                  <li>parturient</li>
+                  <li>
+                    curae.
+                    <ol>
+                      <li>Commodo</li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+              <li>et conubia</li>
+              <li>netus tempus, curae morbi.</li>
+            </ol>
+            <p><a href="https://github.com/NCIOCPL/cgov-digital-platform/issues/www.cancer.gov">Fusce ultrices maximus ullamcorper parturient facilisis.</a></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Table</th>
+                  <th>Column A</th>
+                  <th>Column B</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Row 1</td>
+                  <td>Item a</td>
+                  <td>Item b</td>
+                </tr>
+                <tr>
+                  <td>Row 2</td>
+                  <td>Item c</td>
+                  <td>Item d</td>
+                </tr>
+                <tr>
+                  <td>Row 3</td>
+                  <td>Item e</td>
+                  <td>Item f</td>
+                </tr>
+              </tbody>
+            </table>
+  field_date_posted:
+    value: '2019-06-19'
+  field_date_reviewed:
+    value: '2019-06-19'
+  field_date_updated:
+    value: '2019-06-19'
+  field_date_display_mode:
+    value: 'reviewed'

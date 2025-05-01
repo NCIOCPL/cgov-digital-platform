@@ -1,28 +1,27 @@
 // This contains the NCIDS Settings and required items. Nothing in this
 // file should generate markup.
 @forward '../cgdp-required';
+@forward '../../lib/components/cgdp-related-resources';
 
 // Specific page styles
 @forward '../../lib/components/cgdp-related-resources';
 @forward '../../lib/components/cgdp-document-dates';
 @forward '../../lib/components/cgdp-public-use/';
 @forward '../../lib/components/cgdp-article-footer-citation';
+@forward '../../lib/components/cgdp-field-image-article';
+@forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
 
 @use 'uswds-core' as *;
 
 .cgdp-media-contact {
-	@include u-margin-top(1.5);
-	@include u-margin-bottom(3);
-	@include at-media('mobile') {
-		@include u-margin-top(2);
-		@include u-margin-bottom(2);
+	@include u-margin-left(0);
+	@include at-media('tablet') {
+		@include u-margin-left(2);
+		@include u-text-align('right');
 	}
-	&__info {
-		@include u-display('inline');
-		p {
-			@include u-margin-y(0);
-			line-height: 1.5;
-		}
+	.cgdp-media-contact__info p {
+		@include u-margin-y(0);
+		line-height: 1.5;
 	}
 }
 
@@ -36,6 +35,9 @@
 	}
 	&__release-info {
 		@include at-media('tablet') {
+			display: flex;
+			justify-content: space-between;
+
 			& > div:first-child {
 				@include u-margin-bottom(1);
 				@include at-media('tablet') {
@@ -44,6 +46,35 @@
 			}
 			& > div:last-child {
 				white-space: nowrap;
+			}
+		}
+	}
+
+	// Override Legacy Styles
+	.cgdp-document-dates {
+		@include u-margin-top(0);
+		@include u-margin-bottom(2);
+		@include at-media('tablet') {
+			@include u-margin-bottom(0);
+		}
+		ul {
+			display: block;
+			@include at-media('tablet') {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			& > li {
+				&::before {
+					display: none;
+				}
+				display: block;
+				@include at-media('tablet') {
+					display: inline;
+					&:not(:last-child)::after {
+						content: '|';
+						@include u-margin-right(1);
+					}
+				}
 			}
 		}
 	}
