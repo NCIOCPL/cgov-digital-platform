@@ -57,3 +57,44 @@
   </figure>
 
 {% endmacro %}
+
+{% macro ncidsInfographicImage(
+  content,
+  link_text = 'View and Print Infographic') %}
+
+  {% set infographic_desktop_uri = content.desktop_uri[0] %}
+  {% set infographic_mobile_uri = null %}
+  {% set enlarge_uri = null %}
+
+  {% if content.enlarge_uri[0] %}
+    {% set enlarge_uri = content.enlarge_uri[0] %}
+  {% endif %}
+
+  {% if content.mobile_uri[0] %}
+    {% set infographic_mobile_uri = content.mobile_uri[0] %}
+  {% endif %}
+
+  <div class="cgdp-infographic">
+    <figure>
+      {% if infographic_mobile_uri is not empty %}
+        <picture>
+            <source srcset="{{infographic_mobile_uri}}" media="(max-width: 639px)">
+            <source srcset="{{infographic_desktop_uri}}" media="(min-width: 640px)">
+        {{ content.field_infographic }}
+        </picture>
+      {% else %}
+        {# if no infographic mobile, just render as an image #}
+        {{ content.field_infographic }}
+      {% endif %}
+      {% if content.field_caption|field_value|render|striptags|trim %}
+        <figcaption class="cgdp-infographic__caption">
+          {{ content.field_caption|field_value }}
+        </figcaption>
+      {% endif %}
+    </figure>
+    <div class="cgdp-infographic__link-container">
+      <a href="{{enlarge_uri}}" class="usa-link" data-link_title= "{{ content.name|field_value }}" target="_blank">{{ link_text|trans }}</a>
+    </div>
+  </div>
+
+{% endmacro %}

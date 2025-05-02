@@ -1,0 +1,28 @@
+@use 'uswds-core' as *;
+
+// Mixin for font styles shared between enlarge text and captions
+@mixin infographic-caption-styles {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+	@include u-border-left(0.5, $theme-color-secondary);
+	@include u-padding-y(1);
+	@include u-padding-x(2);
+}
+
+.cgdp-infographic {
+	figure {
+		@include u-margin(0);
+		img {
+			@include u-height('auto');
+		}
+	}
+	&__caption {
+		@include infographic-caption-styles();
+		p {
+			@include u-margin(0);
+		}
+	}
+	&__link-container {
+		@include infographic-caption-styles();
+	}
+}
