@@ -10,11 +10,9 @@
       <div id="cgvBody">
         {{ content.body }}
       </div>
-
-      {% set classes = "image-center-full" %}
-      {{ infographicMacros.infographicImage(classes, content) }}
     </div>
   </div>
+  {{ infographicMacros.ncidsInfographicImage(content) }}
   <footer class="cgdp-article-footer">
     {{ contentPageMacros.ncidsDisplayDates(media,content) }}
     {% if media.field_public_use.value == '1' %}
