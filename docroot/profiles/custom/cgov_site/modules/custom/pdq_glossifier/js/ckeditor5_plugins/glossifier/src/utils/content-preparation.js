@@ -49,6 +49,33 @@ const sanitizeChar = (c) => {
 }
 
 /**
+ * Wraps a string in set of html tags that surrounded it before glossification
+ *
+ * @param {string} termText
+ * @param {string} tagString
+ * @returns {string}
+ */
+export const convertTagStringToHTML = (termText, termHTML) => {
+  let displayText = termText;
+  // If we have termHTML tags, we need to wrap the originalText in them
+  if(termHTML && termHTML !== "") {
+    const tags = termHTML.split(',');
+    let textWithHTML = termText;
+    if(tags.length > 0) {
+      let openingTag = '';
+      let closingTag = '';
+      for (let i = 0; i < tags.length; i++) {
+        openingTag = '<' + tags[i] + '>';
+        closingTag = '</' + tags[i] + '>';
+        textWithHTML = openingTag + textWithHTML + closingTag;
+      }
+      displayText = textWithHTML;
+    }
+  }
+  return displayText;
+}
+
+/**
  * All preexisting glossified links are expected to match the same pattern that
  * allows us to extract enough data to reconstruct them after a new glossification pass.
  * The API is already set up to ignore all tags but only the contents of a tags.
@@ -65,7 +92,25 @@ const sanitizeChar = (c) => {
  */
 const wrapTermToSaveState = (match, firstCaptureGroup) => {
   const fullMatch = match;
-  const termMatch = firstCaptureGroup;
+  const matchedHTML = firstCaptureGroup;
+  //Parses the matchedHTML string into a DOM object and extracts tags
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(matchedHTML, 'text/html');
+  const elements = doc.getElementsByTagName('*');
+  const elementArray = Array.from(elements);
+  const tagList = elementArray.map(element => element.tagName.toLowerCase());
+  let tagListArray = [];
+  for (let i = 0; i < tagList.length; i++) {
+    if(tagList[i] !== "html" && tagList[i] !== "head" && tagList[i] !== "body") {
+      tagListArray.push(tagList[i]);
+    }
+  }
+  const tagListString = tagListArray.join(',');
+  let textContents = firstCaptureGroup;
+  if (elements.length > 0) {
+    textContents = elements[0].textContent || elements[0].innerText;
+  }
+  //Replace all tags with empty string
   const extractDataTest = /(CDR[0-9]+).+language=([A-z]+)/i;
   const extractedData = fullMatch.match(extractDataTest);
   const id = extractedData[1];
@@ -73,7 +118,9 @@ const wrapTermToSaveState = (match, firstCaptureGroup) => {
   const wrappedTerm =
     `<span rel="glossified" data-id="${id}"
       data-language="${language}"
-      data-term="${termMatch}"></span>`;
+      data-preexisting="true"
+      data-html="${tagListString}"
+      data-term="${textContents}"></span>`;
     return wrappedTerm;
 }
 

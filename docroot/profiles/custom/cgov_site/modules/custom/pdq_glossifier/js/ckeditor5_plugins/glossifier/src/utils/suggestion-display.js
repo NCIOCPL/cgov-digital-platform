@@ -1,3 +1,5 @@
+import { convertTagStringToHTML } from './content-preparation';
+
 /**
  * Create a glossified term HTML element.
  *
@@ -8,6 +10,13 @@
  */
 export const glossifyTermFromLabel = (label) => {
   const originalText = label.textContent;
+  const termHTML = label.dataset.html;
+  const isPreexisting = label.dataset.preexisting;
+  let displayText = originalText;
+  //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
+  if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
+    displayText = convertTagStringToHTML(originalText, termHTML);
+  }
   const id = label.dataset.termId;
   const language = label.dataset.language;
   const paramString = id + "&version=Patient&language=" + language;
@@ -19,8 +28,7 @@ export const glossifyTermFromLabel = (label) => {
   anchor.dataset.glossaryId = id;
   anchor.className = 'definition';
   anchor.href = href;
-  anchor.textContent = originalText;
-
+  anchor.innerHTML = displayText;
   label.replaceWith(anchor);
 };
 
@@ -30,25 +38,38 @@ export const glossifyTermFromLabel = (label) => {
  * @param {string} termText
  * @param {string} termId
  * @param {string} termLanguage
+ * @param {string} termHTML
  * @param {boolean} isFirstOccurenceOfTerm
+ * @param {boolean} isPreexisting
  *
  * @returns {string}
  */
-const createGlossificationTermOptionElementString = (termText, termId, termLanguage, isFirstOccurenceOfTerm) => {
+const createGlossificationTermOptionElementString = (termText, termId, termLanguage, termHTML, isFirstOccurenceOfTerm, isPreexisting) => {
   // Create element to wrap term for checkbox selection
   // IE Add in inputs now with all the rest of the attributes as data attributes.
   // Then when I strip the checkboxes I can build the anchor tag.
   // This is because, even on percussion now, clicking the links causes you to be
   // directed to an error page. That would avoid the issue.
+
   const firstOccurenceClassName = isFirstOccurenceOfTerm ? "glossify-dialog__term--first" : "";
-  const classlist = "glossify-dialog__term " + firstOccurenceClassName
+  const classlist = "glossify-dialog__term " + firstOccurenceClassName;
+  let textWithHTML = termText;
+  let dataHTML = '';
+  //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
+  if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
+    textWithHTML = convertTagStringToHTML(termText, termHTML);
+    dataHTML = termHTML;
+  }
+
   const wrappedTerm =
     `<label
        data-term-id="${termId}"
        data-language="${termLanguage}"
        class="${classlist}"
+       data-preexisting="${isPreexisting}"
+       data-html="${termHTML}"
        data-glossify-label
-    >${termText}<input type="checkbox"/></label>`;
+    >${textWithHTML}<input type="checkbox"/></label>`;
   return wrappedTerm;
 };
 
@@ -71,6 +92,10 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
   // (Which is important as long as the api uses indexes and length to identify terms).
   let processedHtml = "";
   let slowPointer = 0;
+  //Get all of the glossified terms in the originalHtml
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(originalHtml, 'text/html');
+  const elements = doc.querySelectorAll("span[rel='glossified']");
   for(let i = 0; i < candidateTermConfigs.length; i++){
     const termConfig = candidateTermConfigs[i];
     const termStartIndex = termConfig.start;
@@ -82,8 +107,15 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
     const termText = originalHtml.slice(slowPointer, termEndIndex);
     slowPointer = termEndIndex;
     const termId = termConfig.doc_id;
+    // Lookup termText in set of span placeholders for existing glossary term, set html property from that if present
+    let termHTML = '';
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i].dataset.term === termText){
+        termHTML = elements[i].dataset.html;
+      }
+    }
     const isFirstOccurenceOfTerm = termConfig.first_occurrence;
-    const wrappedTerm = createGlossificationTermOptionElementString(termText, termId, language, isFirstOccurenceOfTerm)
+    const wrappedTerm = createGlossificationTermOptionElementString(termText, termId, language,  termHTML, isFirstOccurenceOfTerm, false);
     processedHtml += wrappedTerm;
   }
   // We need to grab the tail of the originalHtml
@@ -124,9 +156,10 @@ export const createHtmlFromSuggestions = (preparedBody, responseArray, language)
   const previouslyGlossifiedTerms = contentsEl.querySelectorAll("span[rel='glossified']");
   previouslyGlossifiedTerms.forEach(function (span) {
     const termText = span.dataset.term;
+    const termHTML = span.dataset.html;
     const termId = span.dataset.id;
     const termLanguage = span.dataset.language;
-    const labelString = createGlossificationTermOptionElementString(termText, termId, termLanguage);
+    const labelString = createGlossificationTermOptionElementString(termText, termId, termLanguage, termHTML, false, true);
     // Because we have a string instead of a DOM element to work with, we're going to use a little
     // trickery here to get a DOM element by first inserting the string and then reextracting it
     // as an element (which lets us programmatically check the input and use the replaceWith method.)
