@@ -1,0 +1,203 @@
+diff --git a/js/paragraphs.admin.js b/js/paragraphs.admin.js
+index b7fb3e1..f2a4a33 100644
+--- a/js/paragraphs.admin.js
++++ b/js/paragraphs.admin.js
+@@ -190,5 +190,35 @@
+       }
+     }
+   };
++
++  /**
++   * Command to scroll to an paragraph item.
++   *
++   * @param {Drupal.Ajax} ajax
++   *   The Drupal Ajax object.
++   * @param {object} response
++   *   Object holding the server response.
++   * @param {number} [status]
++   *   The HTTP status code.
++   */
++  Drupal.AjaxCommands.prototype.scrollToElement = function (ajax, response, status) {
++    var resizeObserver = new ResizeObserver(function () {
++      document
++        .querySelector('[data-drupal-selector=' + response.elementSelector + ']')
++        .scrollIntoView(true);
++    });
++
++    var parent = document.querySelector('[data-drupal-selector=' + response.parentSelector + ']');
++    if (!parent) {
++      parent = document.querySelector('[data-drupal-selector=' + response.parentSelector + '-wrapper]');
++    }
++    if (parent) {
++      resizeObserver.observe(parent);
++
++      setTimeout(function () {
++        resizeObserver.unobserve(parent);
++      }, 500);
++    }
++  };
+ })(jQuery, Drupal, once);
+ 
+diff --git a/paragraphs.libraries.yml b/paragraphs.libraries.yml
+index c928e10..8856593 100644
+--- a/paragraphs.libraries.yml
++++ b/paragraphs.libraries.yml
+@@ -9,6 +9,8 @@ drupal.paragraphs.admin:
+   css:
+     theme:
+       css/paragraphs.admin.css: {}
++  js:
++    js/paragraphs.admin.js: { }
+ 
+ drupal.paragraphs.widget:
+   dependencies:
+diff --git a/src/Ajax/ParagraphsScrollToElementCommand.php b/src/Ajax/ParagraphsScrollToElementCommand.php
+new file mode 100644
+index 0000000..d9a6a11
+--- /dev/null
++++ b/src/Ajax/ParagraphsScrollToElementCommand.php
+@@ -0,0 +1,52 @@
++<?php
++
++namespace Drupal\paragraphs\Ajax;
++
++use Drupal\Core\Ajax\CommandInterface;
++
++/**
++ * Provides an AJAX command for scrolling an element into the view.
++ *
++ * This command is implemented in Drupal.AjaxCommands.prototype.scrollToElement.
++ */
++class ParagraphsScrollToElementCommand implements CommandInterface {
++
++  /**
++   * A CSS selector string.
++   *
++   * @var string
++   */
++  protected $elementSelector;
++
++  /**
++   * A CSS selector string.
++   *
++   * @var string
++   */
++  protected $parentSelector;
++
++  /**
++   * Constructs a ParagraphsScrollToElementCommand object.
++   *
++   * @param string $elementSelector
++   *   The data-drupal-selector for the paragraphs element.
++   * @param string $parentSelector
++   *   The data-drupal-selector for the paragraphs field.
++   */
++  public function __construct(string $elementSelector, string $parentSelector) {
++    $this->elementSelector = $elementSelector;
++    $this->parentSelector = $parentSelector;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function render() {
++    return [
++      'command' => 'scrollToElement',
++      'elementSelector' => $this->elementSelector,
++      'parentSelector' => $this->parentSelector,
++    ];
++  }
++
++}
+diff --git a/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php b/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+index aa2b707..c3fe7cf 100644
+--- a/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
++++ b/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+@@ -4,6 +4,10 @@ namespace Drupal\paragraphs\Plugin\Field\FieldWidget;
+ 
+ use Drupal\Component\Utility\NestedArray;
+ use Drupal\Component\Utility\Html;
++use Drupal\Core\Ajax\AjaxResponse;
++use Drupal\Core\Ajax\InsertCommand;
++use Drupal\Core\Ajax\InvokeCommand;
++use Drupal\paragraphs\Ajax\ParagraphsScrollToElementCommand;
+ use Drupal\Core\Entity\Entity\EntityFormDisplay;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Field\FieldDefinitionInterface;
+@@ -1149,6 +1153,7 @@ class InlineParagraphsWidget extends WidgetBase {
+    * {@inheritdoc}
+    */
+   public static function addMoreAjax(array $form, FormStateInterface $form_state) {
++    $response = new AjaxResponse();
+     $button = $form_state->getTriggeringElement();
+     // Go one level up in the form, to the widgets container.
+     $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, -2));
+@@ -1157,8 +1162,11 @@ class InlineParagraphsWidget extends WidgetBase {
+     $delta = $element['#max_delta'];
+     $element[$delta]['#prefix'] = '<div class="ajax-new-content">' . (isset($element[$delta]['#prefix']) ? $element[$delta]['#prefix'] : '');
+     $element[$delta]['#suffix'] = (isset($element[$delta]['#suffix']) ? $element[$delta]['#suffix'] : '') . '</div>';
++    $response->addCommand(new InsertCommand(NULL, $element));
++    $response->addCommand(new ParagraphsScrollToElementCommand($element[$element['#max_delta']]['#attributes']['data-drupal-selector'], $element['#attributes']['data-drupal-selector']));
++    $response->addCommand(new InvokeCommand('#' . $element[$element['#max_delta']]['#id'] . ' :input.form-element:visible:first', 'focus'));
+ 
+-    return $element;
++    return $response;
+   }
+ 
+   /**
+diff --git a/src/Plugin/Field/FieldWidget/ParagraphsWidget.php b/src/Plugin/Field/FieldWidget/ParagraphsWidget.php
+index 5e31eed..ce78c65 100644
+--- a/src/Plugin/Field/FieldWidget/ParagraphsWidget.php
++++ b/src/Plugin/Field/FieldWidget/ParagraphsWidget.php
+@@ -4,6 +4,10 @@ namespace Drupal\paragraphs\Plugin\Field\FieldWidget;
+ 
+ use Drupal\Component\Utility\NestedArray;
+ use Drupal\Component\Utility\Html;
++use Drupal\Core\Ajax\AjaxResponse;
++use Drupal\Core\Ajax\InsertCommand;
++use Drupal\Core\Ajax\InvokeCommand;
++use Drupal\paragraphs\Ajax\ParagraphsScrollToElementCommand;
+ use Drupal\Core\Entity\ContentEntityInterface;
+ use Drupal\Core\Entity\Entity\EntityFormDisplay;
+ use Drupal\Core\Entity\FieldableEntityInterface;
+@@ -1732,6 +1735,7 @@ class ParagraphsWidget extends WidgetBase {
+    * {@inheritdoc}
+    */
+   public static function addMoreAjax(array $form, FormStateInterface $form_state) {
++    $response = new AjaxResponse();
+     $submit = ParagraphsWidget::getSubmitElementInfo($form, $form_state);
+     $element = $submit['element'];
+ 
+@@ -1747,13 +1760,18 @@ class ParagraphsWidget extends WidgetBase {
+       ''
+     );
+ 
+-    return $element;
++    $response->addCommand(new InsertCommand(NULL, $element));
++    $response->addCommand(new ParagraphsScrollToElementCommand($element[$element['#max_delta']]['#attributes']['data-drupal-selector'], $element['#attributes']['data-drupal-selector']));
++    $response->addCommand(new InvokeCommand('#' . $element[$element['#max_delta']]['#id'] . ' :input.form-element:visible:first', 'focus'));
++
++    return $response;
+   }
+ 
+   /**
+    * Ajax callback for all actions.
+    */
+   public static function allActionsAjax(array $form, FormStateInterface $form_state) {
++    $response = new AjaxResponse();
+     $submit = ParagraphsWidget::getSubmitElementInfo($form, $form_state, ParagraphsWidget::ACTION_POSITION_HEADER);
+     $element = $submit['element'];
+ 
+@@ -1762,7 +1780,11 @@ class ParagraphsWidget extends WidgetBase {
+     $element[$delta]['#prefix'] = '<div class="ajax-new-content">' . (isset($element[$delta]['#prefix']) ? $element[$delta]['#prefix'] : '');
+     $element[$delta]['#suffix'] = (isset($element[$delta]['#suffix']) ? $element[$delta]['#suffix'] : '') . '</div>';
+ 
+-    return $element;
++    $response->addCommand(new InsertCommand(NULL, $element));
++    $response->addCommand(new ParagraphsScrollToElementCommand($element[$element['#max_delta']]['#attributes']['data-drupal-selector'], $element['#attributes']['data-drupal-selector']));
++    $response->addCommand(new InvokeCommand('#' . $element[$element['#max_delta']]['#id'] . ' :input.form-element:visible:first', 'focus'));
++
++    return $response;
+   }
+ 
+   /**
