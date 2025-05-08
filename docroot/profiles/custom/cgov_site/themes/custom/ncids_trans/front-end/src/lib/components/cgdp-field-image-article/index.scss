@@ -1,0 +1,14 @@
+@use 'uswds-core' as *;
+
+@forward '../../components/cgdp-image';
+
+.cgdp-field-image-article {
+	@include at-media('tablet') {
+		@include u-float('right');
+		max-width: 40%;
+		.cgdp-image {
+			@include u-margin-left(5);
+			@include u-margin-bottom(5);
+		}
+	}
+}
