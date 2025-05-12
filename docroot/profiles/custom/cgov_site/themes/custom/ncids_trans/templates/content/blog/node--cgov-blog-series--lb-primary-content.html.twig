@@ -51,8 +51,10 @@
     </div>
   </div>
 
-  <footer class="article-footer">
-    {{ content.field_related_resources }}
-  </footer>
+  {% if node.field_public_use.value == '1' %}
+    <footer class="article-footer">
+      {{ drupal_region('public_use') }}
+    </footer>
+  {% endif %}
 </article>
 <!-- ********************************* END Series Page Full Content ********************************** -->
