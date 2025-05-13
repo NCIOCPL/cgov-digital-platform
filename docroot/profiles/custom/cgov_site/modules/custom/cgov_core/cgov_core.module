@@ -965,7 +965,7 @@ function cgov_core_redirect_update(Redirect $entity) {
 function cgov_core_theme_suggestions_entity_embed_container_alter(array &$suggestions, array $variables) {
   $entity = $variables['element']['#entity'];
 
-  if($entity->bundle() !== 'cgov_image' && $entity->bundle() !== 'cgov_contextual_image') {
+  if($entity->bundle() !== 'cgov_image' && $entity->bundle() !== 'cgov_contextual_image' && $entity->bundle() !== 'cgov_infographic') {
     return $suggestions;
   }
 
