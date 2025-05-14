@@ -12,6 +12,8 @@ pdq_glossifier_cgov_glossifier:
     label: Glossify
     # The library loaded while using the editor.
     library: pdq_glossifier/glossifier
+    # The Drupal class for the glossifier plugin
+    class: Drupal\pdq_glossifier\Plugin\CKEditor5Plugin\PdqGlossifier
     # The library loaded when configuring the text format using this plugin.
     admin_library: pdq_glossifier/admin.glossifier
     toolbar_items:
@@ -19,6 +21,6 @@ pdq_glossifier_cgov_glossifier:
       # plugin's index.js.
       glossifier:
         label: Glossify
-    # If the plugin does not provide elements, set this as
-    # `elements: false`
-    elements: false
+    # This is the shape of our editing element.
+    elements:
+      - '<nci-definition data-gloss-id data-gloss-dictionary data-gloss-audience hreflang>'
