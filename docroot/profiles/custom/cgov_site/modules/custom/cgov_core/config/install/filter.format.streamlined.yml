@@ -5,6 +5,7 @@ dependencies:
     - editor
     - entity_embed
     - linkit
+    - nci_definition
     - token_filter
 name: Streamlined
 format: streamlined
@@ -46,7 +47,7 @@ filters:
     status: true
     weight: -47
     settings:
-      allowed_html: '<br> <p> <h1> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <blockquote cite> <ul type> <ol type start> <a hreflang data-glossary-id title class href data-entity-type data-entity-uuid data-entity-substitution> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <strong> <em> <s> <sub> <sup> <li>'
+      allowed_html: '<br> <p> <h1> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <blockquote cite> <ul type> <ol type start> <a hreflang data-glossary-id title class href data-entity-type data-entity-uuid data-entity-substitution> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <strong> <em> <s> <sub> <sup> <li> <nci-definition data-gloss-id data-gloss-dictionary data-gloss-audience data-gloss-lang>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_html_escape:
@@ -87,6 +88,13 @@ filters:
     weight: -50
     settings:
       title: false
+  nci_definition:
+    id: nci_definition
+    provider: nci_definition
+    status: true
+    weight: 0
+    settings:
+      definition_classes: ''
   token_filter:
     id: token_filter
     provider: token_filter
