@@ -1,0 +1,40 @@
+nci_definition.settings:
+  type: config_object
+  mapping:
+    definition_classes:
+      type: string
+      label: 'Definition Classes to Apply to Dictionary Link'
+    nci_glossary_dictionary_urls:
+      type: nci_definition.url_map
+      label: 'Dictionary URL Formatters'
+
+nci_definition.url_map:
+  type: sequence
+  label: 'Dictionary URL Formatters'
+  sequence:
+    type: nci_definition.url_map_entry
+    label: 'Dictionary URL Formatter'
+
+nci_definition.url_map_entry:
+  type: mapping
+  mapping:
+    dictionary:
+      type: string
+      label: 'Dictionary Key (per API)'
+    audience:
+      type: string
+      label: 'Audience'
+    langcode:
+      type: string
+      label: 'Language code'
+    formatter:
+      type: string
+      label: 'URL Formatter String'
+
+filter_settings.nci_definition:
+  type: filter
+  label: 'NCI Definition'
+  mapping:
+    definition_classes:
+      type: string
+      label: 'The class names to give to the anchor element.'

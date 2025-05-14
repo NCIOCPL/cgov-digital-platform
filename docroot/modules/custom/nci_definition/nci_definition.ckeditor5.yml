@@ -1,0 +1,29 @@
+nci_definition_cgov_glossifier:
+  ckeditor5:
+    plugins:
+      - glossifier.Glossify
+    # *Additional configuration properties*
+    # config: data sent to the constructor of any CKEditor 5 plugin
+    #   editorPluginName:
+    #     editorPluginProperty: editorPluginValue
+
+  # Configuration that will be used directly by Drupal.
+  drupal:
+    label: Glossify
+    # The library loaded while using the editor.
+    library: nci_definition/glossifier
+    # The Drupal class for the glossifier plugin
+    class: Drupal\nci_definition\Plugin\CKEditor5Plugin\Glossifier
+    # The library loaded when configuring the text format using this plugin.
+    admin_library: nci_definition/admin.glossifier
+    toolbar_items:
+      # This should match the name of the corresponding plugin exported in the
+      # plugin's index.js.
+      glossifier:
+        label: Glossify
+    # This is the shape of our editing element.
+    elements:
+      - '<nci-definition>'
+      - '<nci-definition data-gloss-id data-gloss-dictionary data-gloss-audience data-gloss-lang>'
+    conditions:
+      filter: nci_definition

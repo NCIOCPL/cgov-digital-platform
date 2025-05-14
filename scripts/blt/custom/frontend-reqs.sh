@@ -16,7 +16,7 @@ pushd themes/custom/cgov/cgov_common
 npm ci
 popd
 
-## Install pdq_glossifier packages
-pushd modules/custom/pdq_glossifier
+## Install nci_definition packages
+pushd ../../../modules/custom/nci_definition
 npm ci
 popd
