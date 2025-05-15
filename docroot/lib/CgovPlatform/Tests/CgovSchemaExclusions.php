@@ -39,6 +39,10 @@ class CgovSchemaExclusions {
     // for the tracked issue.
     'adobe_dtm.settings',
     'views.view.samlauth_map',
+    'views.view.content',
+    'views.view.moderated_content',
+    'views.view.media',
+    'views.view.moderated_media',
   ];
 
 }
