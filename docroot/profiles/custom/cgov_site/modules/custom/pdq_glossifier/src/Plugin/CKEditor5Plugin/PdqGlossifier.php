@@ -49,27 +49,32 @@ class PdqGlossifier extends CKEditor5PluginDefault implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getDynamicPluginConfig(array $static_plugin_config, EditorInterface $editor): array {
+    // Get the PDQ_Summary config.
+    $pdq_settings_config = $this->configFactory->get('pdq_glossifier.settings');
+
+    $plugin_config = [
+      'nci_definition' => [
+        'definition_classes' => $pdq_settings_config->get('definition_classes'),
+        // @todo Turn this into a nice json object where key is the key and the formatter the value.
+        'nci_glossary_dictionary_urls' => $pdq_settings_config->get('nci_glossary_dictionary_urls'),
+      ],
+    ];
+
     // Get the configs for the all possible filters (enabled or not).
     $filter_configs = $editor->getFilterFormat()->filters()->getConfiguration();
 
-    // If for some reason the filter does not exist or it is not
-    // enables then we need to note this. (It is an issue.)
-    if (!array_key_exists('', $filter_configs) || $filter_configs['nci_definition']['status'] !== TRUE) {
-      return [
-        'nci_definition' => [
-          'classes' => 'FILTER_NOT_SET',
-        ],
-      ];
+    if (
+      isset($filter_configs['nci_definition']['status']) &&
+      $filter_configs['nci_definition']['status'] === TRUE &&
+      isset($filter_configs['nci_definition']['definition_classes'])
+    ) {
+      $plugin_config['nci_definition']['definition_classes'] = $filter_configs['nci_definition']['definition_classes'];
     }
 
     /*
      * $nci_definition_settings = $filter_configs['nci_definition']['settings'];
      */
-    return [
-      'nci_definition' => [
-        'classes' => 'FILTER_SET',
-      ],
-    ];
+    return $plugin_config;
   }
 
 }
