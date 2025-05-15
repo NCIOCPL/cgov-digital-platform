@@ -1,0 +1,32 @@
+pdq_glossifier.settings:
+  type: config_object
+  mapping:
+    nci_glossary_dictionary_urls:
+      type: pdq_glossifier.url_map
+      label: 'Dictionary URL Formatters'
+
+pdq_glossifier.url_map:
+  type: sequence
+  label: 'Dictionary URL Formatters'
+  sequence:
+    type: pdq_glossifier.url_map_entry
+    label: 'Dictionary URL Formatter'
+
+pdq_glossifier.url_map_entry:
+  type: mapping
+  mapping:
+    key:
+      type: string
+      label: 'Dictionary Key'
+    formatter:
+      type: string
+      label: 'URL Formatter String'
+
+filter_settings.pdq_glossifier:
+  type: filter
+  label: 'PDQ Glossifier'
+  mapping:
+    definition_classes:
+      type: string
+      label: 'The class names to give to the anchor element.'
+
