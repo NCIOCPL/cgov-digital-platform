@@ -32,6 +32,19 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
     $config = $this->config('pdq_glossifier.settings');
 
     /* @todo Add field for global class list */
+    $form['definition_classes'] = [
+      '#type'          => 'textfield',
+      '#title'         => $this->t('Definition Link Classes'),
+      '#description'   => $this->t('Classes to Set on Definition Link. This can be overridden per editor configuration.'),
+      '#default_value' => $config->get('definition_classes'),
+      '#size'          => 80,
+      '#maxlength'     => 250,
+      '#states'        => [
+        'required' => [
+          ':input[name="enabled"]' => ['value' => TRUE],
+        ],
+      ],
+    ];
 
     $urls_description = '<p>' . $this->t('Enter the URLs for the NCI glossary dictionaries.');
     $urls_description .= '<br/>' . $this->t('Each entry should contain the following information separated by pipe characters (|):');
@@ -105,6 +118,7 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('pdq_glossifier.settings');
 
+    $config->set('definition_classes', $form_state->getValue('definition_classes'));
     $config->set('nci_glossary_dictionary_urls', $form_state->getValue('nci_glossary_dictionary_urls'));
     $config->save();
 
