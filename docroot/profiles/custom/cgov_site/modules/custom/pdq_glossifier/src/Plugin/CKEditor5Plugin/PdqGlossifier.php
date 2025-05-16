@@ -55,7 +55,6 @@ class PdqGlossifier extends CKEditor5PluginDefault implements ContainerFactoryPl
     $plugin_config = [
       'nci_definition' => [
         'definition_classes' => $pdq_settings_config->get('definition_classes'),
-        // @todo Turn this into a nice json object where key is the key and the formatter the value.
         'nci_glossary_dictionary_urls' => $pdq_settings_config->get('nci_glossary_dictionary_urls'),
       ],
     ];
@@ -71,9 +70,6 @@ class PdqGlossifier extends CKEditor5PluginDefault implements ContainerFactoryPl
       $plugin_config['nci_definition']['definition_classes'] = $filter_configs['nci_definition']['definition_classes'];
     }
 
-    /*
-     * $nci_definition_settings = $filter_configs['nci_definition']['settings'];
-     */
     return $plugin_config;
   }
 

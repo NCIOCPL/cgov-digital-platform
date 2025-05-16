@@ -102,7 +102,9 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
 
     $dictionary_url_config = array_map(
       fn($entry): array => [
-        'key' => implode('_', array_slice($entry, 0, 3)),
+        'dictionary' => $entry[0],
+        'audience' => $entry[1],
+        'langcode' => $entry[2],
         'formatter' => $entry[3],
       ],
       $dictionary_url_entries
@@ -167,10 +169,9 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
     }
 
     $entries = array_map(
-      function ($item): string {
-        $key_parts = explode('_', $item['key']);
-        return implode('|', [...$key_parts, $item['formatter']]);
-      },
+      fn($item): string => implode('|', [
+        $item['dictionary'], $item['audience'], $item['langcode'], $item['formatter'],
+      ]),
       $items
     );
 
