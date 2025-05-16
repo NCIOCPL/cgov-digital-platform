@@ -29,6 +29,8 @@ $include-html-button-classes: false;
 // diplayed in a view on a mini landing page.
 @import '../../legacy/styles/events';
 
+// @import '../../lib/components/cgdp-image';
+
 .feature-primary {
   .card {
     padding: 0;
@@ -253,3 +255,17 @@ div.row.feature-primary.flex-columns {
   }
 }
 /********************* END Mini Landing Page Styles ******************************************/
+
+// Override .cgdpl paragraph styles
+// These fonts are overridden by the cgdpl otherwise
+.cgdp-image__caption {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
+.cgdp-image__credit {
+	@include u-font('sans', '3xs');
+}
+.cgdp-image__enlarge {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
