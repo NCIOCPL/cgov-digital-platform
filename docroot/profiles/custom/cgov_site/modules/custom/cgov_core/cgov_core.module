@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Access\AccessResult;
@@ -26,6 +27,8 @@ use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Core\Language\Language;
+use Drupal\path_alias\PathAliasInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Implements hook_block_build_alter().
@@ -883,25 +886,48 @@ function cgov_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $for
 }
 
 /**
- * Method to clear source paths for redirects when inserted or updated.
+ * Method to clear the cache for an array of relative URLs.
  */
-function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
+function _cgov_core_invalidate_urls(array $urls) {
+
+  if (empty($urls)) {
+    return;
+  }
   // On local development without purge, make sure we don't fail.
-  $moduleHandler = \Drupal::service('module_handler');
-  if (!$moduleHandler->moduleExists('purge')) {
-    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the purge module installed.");
+  $module_handler = \Drupal::service('module_handler');
+  if (!$module_handler->moduleExists('purge')) {
+    return;
+  }
+  $purge_queuers = \Drupal::service('purge.queuers');
+  $queuer = $purge_queuers->get('drush_purge_queue_add');
+  if (empty($queuer)) {
+    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
     return;
   }
 
-  // Set up our needed variables for calculating the URL.
+  // The purge invalidation factory helps us construct an invalidation object
+  // that can be understood by the queuer and purgers.
+  $purge_invalidation_factory = \Drupal::service('purge.invalidation.factory');
+
   // The value for cgdp.cache_url_host is computed in cgov_caching.settings.php.
   $host = Settings::get('cgdp.cache_url_host');
   $host = rtrim($host, '/');
-  $sourcePath = '/' . $entity->redirect_source->path;
+  $invalidations = [];
 
-  // The purge invalidation factory helps us construct an invalidation object
-  // that can be understood by the queuer and purgers.
-  $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+  foreach ($urls as $url) {
+    $full_url = $host . $url;
+    $invalidations[] = $purge_invalidation_factory->get('url', $full_url);
+  }
+
+  // Actually add the invalidations to the purge queue.
+  $purge_queue = \Drupal::service('purge.queue');
+  $purge_queue->add($queuer, $invalidations);
+}
+
+/**
+ * Method to clear source paths for redirects when inserted or updated.
+ */
+function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
 
   // If no language is specified for the redirect,
   // purge the url for all languages.
@@ -914,30 +940,22 @@ function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
   // Create an absolute url for all languages based on $language,
   // then create an invalidation object using it.
   $invalidations = [];
+  $source_path = '/' . $entity->redirect_source->path;
   foreach ($language as $value) {
+    $localized_path = $source_path;
     $language_prefix = \Drupal::config('language.negotiation')->get("url.prefixes.$value");
     if (!empty($language_prefix)) {
-      $sourcePath = Url::fromUri("internal:/{$language_prefix}{$sourcePath}")->toString();
+      $localized_path = Url::fromUri("internal:/{$language_prefix}{$localized_path}")->toString();
     }
-    $invalidateUrl = $host . $sourcePath;
-    $invalidations[] = $purgeInvalidationFactory->get('url', $invalidateUrl);
+    $invalidations[] = $localized_path;
   }
-
-  // Actually add the invalidations to the purge queue.
-  $purgeQueuers = \Drupal::service('purge.queuers');
-  $queuer = $purgeQueuers->get('drush_purge_queue_add');
-  if (empty($queuer)) {
-    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
-    return;
-  }
-  $purgeQueue = \Drupal::service('purge.queue');
-  $purgeQueue->add($queuer, $invalidations);
+  _cgov_core_invalidate_urls($invalidations);
 }
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
  *
- * hook_redirect_insert is called on all new redirect creations, per Redirect module API.
+ * The hook_redirect_insert is called on all new redirect creations.
  */
 function cgov_core_redirect_insert(Redirect $entity) {
   _cgov_core_clear_redirect_source_cache($entity);
@@ -946,7 +964,7 @@ function cgov_core_redirect_insert(Redirect $entity) {
 /**
  * Implements hook_ENTITY_TYPE_update().
  *
- * hook_redirect_update is called on all redirect updates, per Redirect module API.
+ * The hook_redirect_update is called on all redirect updates.
  */
 function cgov_core_redirect_update(Redirect $entity) {
   _cgov_core_clear_redirect_source_cache($entity);
@@ -978,4 +996,101 @@ function cgov_core_preprocess_views_view_field(array &$variables) {
   // Apply short date format to the 'changed' field.
   $timestamp = $variables['row']->_entity->getChangedTime();
   $variables['output'] = \Drupal::service('date.formatter')->format($timestamp,'short','',NULL,'en');
+}
+
+/**
+ * Method to determine if we are in batch or CLI.
+ */
+function _cgov_core_is_programatic() {
+  $batch = batch_get();
+  $is_batch = !empty($batch['sets']);
+  $is_cli = (PHP_SAPI === 'cli');
+  return ($is_cli || $is_batch);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * Clears the cache for a path alias when it is updated.
+ * Updates only happen if fields that affect the path are changed.
+ * Updates don't occur until the entity revision is published.
+ */
+function cgov_core_path_alias_update(PathAliasInterface $alias) {
+  // Skip if this is not user triggered.
+  if (_cgov_core_is_programatic()) {
+    return;
+  }
+  $alias_path = $alias->getAlias();
+  $langcode = $alias->language()->getId();
+
+  // Check if language prefix is enabled for the language.
+  // If so, get the language prefix for the URL.
+  $language_manager = \Drupal::service('language_manager');
+  $default_langcode = $language_manager->getDefaultLanguage()->getId();
+  $prefix = '';
+  if ($langcode && $langcode !== $default_langcode) {
+    $prefix = '/' . \Drupal::config('language.negotiation')->get("url.prefixes.$langcode");
+  }
+
+  // Clear the cache for the resulting URL.
+  $url = $prefix . $alias_path;
+  _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * Implements hook_entity_update().
+ *
+ * Performs a cache clear for the entity's URL on first publish.
+ *
+ * This is required for instances where an entity with a path alias is created
+ * but stays in draft for a while before being published. hook_path_alias_update
+ * won't fire on publish because the path has not changed, but we want to clear
+ * the cache.
+ */
+function cgov_core_entity_update(EntityInterface $entity) {
+
+  // If we're not a content entity.
+  if (!$entity instanceof ContentEntityInterface) {
+    return;
+  }
+  // If we're not in the Editorial Workflow.
+  $moderation_info = \Drupal::service('content_moderation.moderation_information');
+  $workflow = $moderation_info->getWorkflowForEntity($entity);
+  if ($workflow === NULL || $workflow->id() !== 'editorial_workflow') {
+    return;
+  }
+  // If we don't have a moderation state or we're not coming from "In Review".
+  if (!$entity->hasField('moderation_state') || !isset($entity->original) || ($entity->original->moderation_state->value !== "review")) {
+    return;
+  }
+  // If we're not moving to a "Published" state.
+  if (!$entity instanceof EntityPublishedInterface || !$entity->isPublished()) {
+    return;
+  }
+
+  // If this is in batch or from the cli.
+  if (_cgov_core_is_programatic()) {
+    return;
+  }
+  $url = $entity->toUrl('canonical', ['absolute' => FALSE])->toString();
+  _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Make sure our cgov_core_entity_update comes at the very end of the
+ * implementation list because the path alias hooks need to run first.
+ *
+ * This is required for the first publish of translated nodes where the
+ * path alias has changed since the initial draft. Transaltion publishing
+ * doesn't trigger hook_path_alias_update, it triggers hook_path_alias_insert,
+ * which we don't have.
+ */
+function cgov_core_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'entity_update') {
+    $group = $implementations['cgov_core'];
+    unset($implementations['cgov_core']);
+    $implementations['cgov_core'] = $group;
+  }
 }
