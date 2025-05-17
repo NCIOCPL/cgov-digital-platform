@@ -26,6 +26,9 @@ use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Core\Language\Language;
+use Drupal\media\MediaInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Implements hook_block_build_alter().
@@ -883,9 +886,18 @@ function cgov_core_form_taxonomy_term_form_alter(&$form, FormStateInterface $for
 }
 
 /**
- * Method to clear source paths for redirects when inserted or updated.
+ * Method to clear the cache for an array of relative URLs by
+ * adding them to the purge queue as URL invalidations.
  */
-function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
+function _cgov_core_invalidate_urls(array $urls) {
+
+  if (empty($urls)) {
+    return;
+  }
+  foreach ($urls as $url) {
+    \Drupal::logger('cgov_core')->notice('Attempting to purge @url', ['@url' => $url]);
+  }
+
   // On local development without purge, make sure we don't fail.
   $moduleHandler = \Drupal::service('module_handler');
   if (!$moduleHandler->moduleExists('purge')) {
@@ -893,15 +905,35 @@ function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
     return;
   }
 
-  // Set up our needed variables for calculating the URL.
-  // The value for cgdp.cache_url_host is computed in cgov_caching.settings.php.
-  $host = Settings::get('cgdp.cache_url_host');
-  $host = rtrim($host, '/');
-  $sourcePath = '/' . $entity->redirect_source->path;
-
   // The purge invalidation factory helps us construct an invalidation object
   // that can be understood by the queuer and purgers.
   $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+
+  // The value for cgdp.cache_url_host is computed in cgov_caching.settings.php.
+  $host = Settings::get('cgdp.cache_url_host');
+  $host = rtrim($host, '/');
+  $invalidations = []; // initialize the array
+
+  foreach ($urls as $url) {
+    $full_url = $host . $url;
+    $invalidations[] = $purgeInvalidationFactory->get('url', $full_url);
+  }
+
+  // Actually add the invalidations to the purge queue.
+  $purgeQueuers = \Drupal::service('purge.queuers');
+  $queuer = $purgeQueuers->get('drush_purge_queue_add');
+  if (empty($queuer)) {
+    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
+    return;
+  }
+  $purgeQueue = \Drupal::service('purge.queue');
+  $purgeQueue->add($queuer, $invalidations);
+}
+
+/**
+ * Method to clear source paths for redirects when inserted or updated.
+ */
+function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
 
   // If no language is specified for the redirect,
   // purge the url for all languages.
@@ -914,24 +946,16 @@ function _cgov_core_clear_redirect_source_cache(Redirect $entity) {
   // Create an absolute url for all languages based on $language,
   // then create an invalidation object using it.
   $invalidations = [];
+  $sourcePath = '/' . $entity->redirect_source->path;
   foreach ($language as $value) {
+    $localized_path = $sourcePath;
     $language_prefix = \Drupal::config('language.negotiation')->get("url.prefixes.$value");
     if (!empty($language_prefix)) {
-      $sourcePath = Url::fromUri("internal:/{$language_prefix}{$sourcePath}")->toString();
+      $localized_path = Url::fromUri("internal:/{$language_prefix}{$localized_path}")->toString();
     }
-    $invalidateUrl = $host . $sourcePath;
-    $invalidations[] = $purgeInvalidationFactory->get('url', $invalidateUrl);
+    $invalidations[] = $localized_path;
   }
-
-  // Actually add the invalidations to the purge queue.
-  $purgeQueuers = \Drupal::service('purge.queuers');
-  $queuer = $purgeQueuers->get('drush_purge_queue_add');
-  if (empty($queuer)) {
-    \Drupal::logger('cgov_core')->notice("Attempted to purge redirect without the drush purgue queuer installed.");
-    return;
-  }
-  $purgeQueue = \Drupal::service('purge.queue');
-  $purgeQueue->add($queuer, $invalidations);
+  _cgov_core_invalidate_urls($invalidations);
 }
 
 /**
@@ -952,4 +976,163 @@ function cgov_core_redirect_update(Redirect $entity) {
   _cgov_core_clear_redirect_source_cache($entity);
   // We do not need to clear the $entity->original because the redirect module
   // already clears that on updates and deletes via cache tag.
+}
+
+/**
+ * Method to clear the cache of the URL for a path alias in a
+ * language-aware manner.
+ */
+function _cgov_core_clear_alias_cache(PathAliasInterface $alias) {
+  $alias_path = $alias->getAlias();
+  $langcode = $alias->language()->getId();
+
+  // Check if language prefix is enabled for the language.
+  // If so, get the language prefix for the URL.
+  $language_manager = \Drupal::service('language_manager');
+  $default_langcode = $language_manager->getDefaultLanguage()->getId();
+  $prefix = '';
+  if ($langcode && $langcode !== $default_langcode) {
+    $prefix = '/' . \Drupal::config('language.negotiation')->get("url.prefixes.$langcode");
+  }
+
+  // Clear the cache for the resulting URL.
+  $url = $prefix . $alias_path;
+  _cgov_core_invalidate_urls([$url]);
+}
+
+/**
+ * Implements hook_path_alias_insert().
+ *
+ * Clears the cache for a path alias when it is first inserted.
+ * For most pages this will be on save of the first draft, and thus too early.
+ * But when creating new translations of a page the path alias isn't created
+ * until the publish of the translation.
+ * For other pages, an extraneous cache clear doesn't hurt.
+ */
+function cgov_core_path_alias_insert(PathAliasInterface $alias) {
+  _cgov_core_clear_alias_cache($alias);
+}
+
+/**
+ * Implements hook_path_alias_update().
+ *
+ * Clears the cache for a path alias when it is updated.
+ * Updates only happen if fields that affect the path are changed.
+ * Updates don't occur until the entity revision is published.
+ */
+function cgov_core_path_alias_update(PathAliasInterface $alias) {
+  _cgov_core_clear_alias_cache($alias);
+}
+
+/**
+ * Method to pass data on whether an entity needs the cache cleared
+ * between the presave and update hooks. The static variable will
+ * persist for the length of the request during each function call.
+ */
+function &_cgov_core_check_url_cache_clear() {
+  static $entities = [];
+  return $entities;
+}
+
+/**
+ * Method to determine if this is the first publish of a page
+ * (or a re-publish with no currently published version)
+ * by loading the default revision  and checking its published status.
+ */
+function _cgov_core_is_first_publish(ContentEntityInterface $entity): bool {
+
+  $is_first_publish = FALSE;
+  // Skip doing anything if we're not publishing with this save.
+  if ($entity->original && !$entity->original->isPublished() && $entity->isPublished()) {
+
+    // We load the entity, which gets us the last default revision (i.e. published/archived/latest draft).
+    $storage = \Drupal::entityTypeManager()->getStorage($entity->getEntityTypeId());
+    $default_revision = $storage->load($entity->id());
+    $is_first_publish = !$default_revision->isPublished();
+
+    // Default revision always points at the default language so we need to instead
+    // check the translation for the current entity's language, if it exists.
+    $langcode = $entity->language()->getId();
+    if ($default_revision->hasTranslation($langcode)) {
+      $translated_revision = $default_revision->getTranslation($langcode);
+      $is_first_publish = !$translated_revision->isPublished();
+
+    // If there is no translation but this entity does not match the language
+    // of the default revision, then we're creating a new translation now.
+    } elseif ($langcode !== $default_revision->language()->getId()) {
+      $is_first_publish = TRUE;
+    }
+
+  }
+  return $is_first_publish;
+}
+
+/**
+ * Implements hook_node_presave().
+ *
+ * Detects if a node is being published for the first time and, if so,
+ * stores the ID temporarily to force a cache clear after saving.
+ * Has to run on presave otherwise the default revision detected is the one we just saved.
+ */
+function cgov_core_node_presave(NodeInterface $node) {
+  if (_cgov_core_is_first_publish($node)) {
+    $entities = &_cgov_core_check_url_cache_clear();
+    $entities[$node->uuid()] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ *
+ * Performs a cache clear for a node's URL on first publish (as detected by hook_node_presave).
+ * This is required because the hook_path_alias_insert above runs when the node is first drafted and
+ * someone may have visited the path after that but before publish, caching a 404 response.
+ *
+ * If the path affecting fields (pretty URL or site section) have been modified since the first draft,
+ * the URL calculated here will be old because path aliases aren't updated until after entity update completes.
+ * But the hook_path_alias_update above will catch the change and fire a second cache clear.
+ */
+function cgov_core_node_update(NodeInterface $node) {
+
+  // Only run if our node revision is being published during this update.
+  if (!$node->original->isPublished() && $node->isPublished()) {
+
+    // Check our static function to see if this requires a cache clear.
+    $entities = &_cgov_core_check_url_cache_clear();
+    if (!empty($entities[$node->uuid()])) {
+
+      // Actually perform the cache clear.
+      $url = $node->toUrl('canonical', ['absolute' => FALSE])->toString();
+      _cgov_core_invalidate_urls([$url]);
+      unset($entities[$node->uuid()]);
+    }
+  }
+}
+
+/**
+ * Implements hook_media_presave().
+ *
+ * Implements the same logic as cgov_core_node_presave, but for media.
+ */
+function cgov_core_media_presave(MediaInterface $media) {
+  if (_cgov_core_is_first_publish($media)) {
+    $entities = &_cgov_core_check_url_cache_clear();
+    $entities[$media->uuid()] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_media_update().
+ *
+ * Implements the same logic as cgov_core_node_update, but for media.
+ */
+function cgov_core_media_update(MediaInterface $media) {
+  if (!$media->original->isPublished() && $media->isPublished()) {
+    $entities = &_cgov_core_check_url_cache_clear();
+    if (!empty($entities[$media->uuid()])) {
+      $url = $media->toUrl('canonical', ['absolute' => FALSE])->toString();
+      _cgov_core_invalidate_urls([$url]);
+      unset($entities[$media->uuid()]);
+    }
+  }
 }
