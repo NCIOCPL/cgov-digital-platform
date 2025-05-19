@@ -39,6 +39,14 @@ class CgovSchemaExclusions {
     // for the tracked issue.
     'adobe_dtm.settings',
     'views.view.samlauth_map',
+    // Views: content, moderated content, media, and moderated media
+    // were missing time_diff schema definition. Error:
+    // display.default.display_options.fields.changed.settings.time_diff.description
+    // missing schema.
+    'views.view.content',
+    'views.view.moderated_content',
+    'views.view.media',
+    'views.view.moderated_media',
   ];
 
 }
