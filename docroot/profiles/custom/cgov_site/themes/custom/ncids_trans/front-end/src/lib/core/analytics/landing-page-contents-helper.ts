@@ -168,6 +168,7 @@ export const getRowVariant = (target: HTMLElement) => {
  * @param {number} linkPosition - The index of the link clicked in the card
  *     evaluated by counting the links top to bottom or left to right depending
  *     on the component.
+ * @param {string} overrideEventType - The type of click event. Default is "LinkClick".
  */
 export const landingClickTracker = (
 	target: HTMLElement,
@@ -182,7 +183,8 @@ export const landingClickTracker = (
 	linkText: string,
 	linkArea: string,
 	totalLinks: number,
-	linkPosition: number | string
+	linkPosition: number | string,
+	overrideEventType = 'LinkClick'
 ) => {
 	const { pageRows, pageRowIndex, pageRowCols, pageRowColIndex } =
 		getLandingRowsAndColsInfo(target);
@@ -192,8 +194,8 @@ export const landingClickTracker = (
 	const eventNameStart = getEventNameBeginning(pageType);
 
 	trackOther(
-		`${eventNameStart}:${linkName}:LinkClick`,
-		`${eventNameStart}:${linkName}:LinkClick`,
+		`${eventNameStart}:${linkName}:${overrideEventType}`,
+		`${eventNameStart}:${linkName}:${overrideEventType}`,
 		{
 			location: 'Body',
 			pageType,
