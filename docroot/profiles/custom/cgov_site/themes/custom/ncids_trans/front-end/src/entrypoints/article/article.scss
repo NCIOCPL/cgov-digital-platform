@@ -11,3 +11,15 @@
 @forward '../../lib/components/cgdp-hhs-syndication';
 @forward '../../lib/components/cgdp-field-image-article';
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
+
+@use 'uswds-core' as *;
+
+// TODO: When we move to the NCIDS Full WYSIWYG
+// We should remove this as we'll be apply
+// Measure throughout the page
+.cgdp-field-intro-text {
+	.usa-prose > p {
+		@include u-measure('none');
+	}
+}
+
