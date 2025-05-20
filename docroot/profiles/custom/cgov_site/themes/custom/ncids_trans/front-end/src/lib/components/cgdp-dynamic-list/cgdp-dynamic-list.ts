@@ -31,10 +31,17 @@ const getVariant = (collectionElement: HTMLElement): string =>
  */
 const getLinkArea = (linkClicked: HTMLElement): string => {
 	const linkClass = linkClicked.getAttribute('class');
-	if (linkClass === 'usa-link') {
-		return 'Collection Item';
+	const linkClassList = linkClass?.split(' ') || [];
+	switch (true) {
+		case linkClassList.includes('usa-link'):
+			return 'Collection Item';
+		case linkClassList.includes('usa-button'):
+		case linkClassList.includes('usa-pagination__button'):
+		case linkClassList.includes('usa-pagination__link'):
+			return 'Nav Links';
+		default:
+			return 'View All Button';
 	}
-	return 'View All Button';
 };
 
 /**
@@ -46,7 +53,8 @@ const collectionLinkClickHandler =
 		collectionElement: HTMLElement,
 		totalLinks: HTMLElement[],
 		componentTheme: string,
-		componentVariant: string
+		componentVariant: string,
+		overrideEventType: string
 	) =>
 	(evt: Event) => {
 		const target = evt.currentTarget as HTMLElement;
@@ -64,7 +72,8 @@ const collectionLinkClickHandler =
 			!target.textContent ? '_ERROR_' : target.textContent.trim(), // linkText
 			getLinkArea(target), // linkArea
 			totalLinks.length, // totalLinks
-			totalLinks.indexOf(target) + 1 // linkPosition
+			totalLinks.indexOf(target) + 1, // linkPosition
+			overrideEventType // overrideEventType
 		);
 	};
 
@@ -73,18 +82,40 @@ const collectionLinkClickHandler =
  * @param {HTMLElement} dynamicList - The Dynamic List element.
  */
 const collectionHelper = (dynamicList: HTMLElement): void => {
-	const links = Array.from(dynamicList.querySelectorAll('a')) as HTMLElement[];
+	// Standard link click handler
+	const clickLinks = Array.from(
+		dynamicList.querySelectorAll('.usa-collection__item a')
+	) as HTMLElement[];
+	// Nav link click handler for pager and view more .usa-pagination__button
+	const navClickLinks = Array.from(
+		dynamicList.querySelectorAll(
+			'.usa-pagination a, .cgdp-dynamic-list__view-more-button a, .ncids-dynamic-list--view-more-button a, .ncids-dynamic-list__view-more-button a'
+		)
+	) as HTMLElement[];
 	const collectionEl = dynamicList.querySelector(
 		'.usa-collection'
 	) as HTMLElement;
-	links.forEach((link) => {
+	clickLinks.forEach((link) => {
 		link.addEventListener(
 			'click',
 			collectionLinkClickHandler(
 				dynamicList,
-				links,
+				clickLinks,
 				getTheme(collectionEl),
-				getVariant(collectionEl)
+				getVariant(collectionEl),
+				'LinkClick'
+			)
+		);
+	});
+	navClickLinks.forEach((link) => {
+		link.addEventListener(
+			'click',
+			collectionLinkClickHandler(
+				dynamicList,
+				navClickLinks,
+				getTheme(collectionEl),
+				getVariant(collectionEl),
+				'NavClick'
 			)
 		);
 	});
