@@ -82,11 +82,26 @@ export default class GlossifyEditing extends Plugin {
         const glossAudience = modelElement.getAttribute('glossAudience');
         const hreflang = modelElement.getAttribute('hreflang');
 
-        // TODO: get real url from map.
-        const href = `/foo`;
+        const matchingFormatter = config['nci_glossary_dictionary_urls']?.find((entry) =>
+          entry['dictionary']?.toLowerCase() === glossDictionary?.toLowerCase() &&
+          entry['audience']?.toLowerCase() === glossAudience?.toLowerCase() &&
+          entry['langcode']?.toLowerCase() === hreflang?.toLowerCase()
+        )?.formatter;
+
+        // TODO: handle when formatter is bad.
+        // TODO: do we even need the real href? Would it be better to be
+        // able to click the link and show a balloon dialog to remove the
+        // glossified term.
+        // TODO: Fix formatter to not be so PHP.
+        const href = matchingFormatter ?
+          matchingFormatter.replace('%s', glossId) :
+          `#UNKNOWN_FORMATTER`;
 
         return writer.createContainerElement('a', {
-          class: 'definition', // todo: fix this
+          ...(config['definition_classes'] ?
+            { class: config['definition_classes'] } :
+            { }
+          ),
           href,
           'data-gloss-id': glossId,
           'data-gloss-dictionary': glossDictionary,
