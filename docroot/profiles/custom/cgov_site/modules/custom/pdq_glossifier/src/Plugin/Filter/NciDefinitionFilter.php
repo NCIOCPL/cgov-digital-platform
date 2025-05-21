@@ -74,7 +74,7 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
    *    data-gloss-id="<CDRID_AS_INT>"
    *    data-gloss-dictionary="<dictionary-name>"
    *    data-gloss-audience="<Patient|HealthProfessional>"
-   *    hreflang="<en|es>"
+   *    lang="<en|es>"
    *  >text</nci-definition>
    *
    * Gloss ID is required.
@@ -102,9 +102,9 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         // the content. We should probably not set this ever, EXCEPT when
         // we need to force the language of the glossary term. IDK if that
         // is a real need. Technically if we do not include it in the tag,
-        // then translating content becomes easier. We make the hreflang
+        // then translating content becomes easier. We make the lang
         // show up in the link because it is a good idea to have it there.
-        $hreflang = $node->getAttribute('hreflang') !== '' ? $node->getAttribute('hreflang') : $langcode;
+        $lang = $node->getAttribute('lang') !== '' ? $node->getAttribute('lang') : $langcode;
 
         if ($gloss_id === '') {
           // If the glossary ID is missing, we should not transform the tag.
@@ -118,7 +118,7 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         // Generate the href for search engines.
         $url_format = $this->getFormatterString(
           $config->get('nci_glossary_dictionary_urls'),
-          $dictionary, $audience, $hreflang
+          $dictionary, $audience, $lang
         );
 
         // @todo Address this open question:
@@ -151,8 +151,8 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         if (!$node->hasAttribute('data-gloss-audience')) {
           $node->setAttribute('data-gloss-audience', 'Patient');
         }
-        if (!$node->hasAttribute('hreflang')) {
-          $node->setAttribute('hreflang', $hreflang);
+        if (!$node->hasAttribute('lang')) {
+          $node->setAttribute('lang', $lang);
         }
       }
 
