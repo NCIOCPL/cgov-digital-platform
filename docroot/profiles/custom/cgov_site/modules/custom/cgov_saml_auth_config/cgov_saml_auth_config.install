@@ -1,7 +1,12 @@
 <?php
 
 /**
- * Install cgov_saml_auth_config
+ * @file
+ * Installs the cgov_saml_auth_config module.
+ */
+
+/**
+ * Install cgov_saml_auth_config.
  */
 function cgov_saml_auth_config_install() {
   // This is for the hook_form_user_login_form_alter.
@@ -10,43 +15,11 @@ function cgov_saml_auth_config_install() {
   // was listed first or second, samlauth always ran second.
   // If weights are deprecated in favor of dependencies
   // then in theory everything will still work without this.
-  module_set_weight('cgov_saml_auth_config',1);
+  module_set_weight('cgov_saml_auth_config', 1);
 }
 
 /**
- * Update for Auto Logout. (Issue #1700)
- */
-function cgov_saml_auth_config_update_9001() {
-  // Enable autologout
-  if (!\Drupal::moduleHandler()->moduleExists('autologout')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['autologout']);
-  }
-}
-
-/**
- * Enforce samlauth for all users. (Issue #4131)
- * One time update to make sure everyone has it enforced.
+ * Latest update hook.
  */
 function cgov_saml_auth_config_update_9002() {
-
-  $externalauth = \Drupal::service('externalauth.externalauth');
-
-  // Load all users.
-  $users = \Drupal::entityTypeManager()
-    ->getStorage('user')
-    ->loadMultiple();
-
-foreach ($users as $user) {
-  $authname = $user->getAccountName();
-
-  $excluded_usernames = ['siteadmin', 'author', 'editor', 'adveditor', 'preview', 'PDQ'];
-
-  // Link the user to 'samlauth' if not already linked.
-  if ($user->id() > 1 && // not admin
-      !in_array($authname, $excluded_usernames) // not one of our current standard accounts
-      ) {
-      $externalauth->linkExistingAccount($authname, 'samlauth', $user);
-    }
-  }
 }

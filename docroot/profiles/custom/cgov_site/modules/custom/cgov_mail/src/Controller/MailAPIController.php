@@ -7,16 +7,16 @@ namespace Drupal\cgov_mail\Controller;
  * Contains \Drupal\cgov_mail\Controller\MailAPIController.
  */
 
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Mail\MailManagerInterface;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Drupal\Component\Utility\EmailValidatorInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller routines for C.gov email form routes.
@@ -26,23 +26,50 @@ class MailAPIController extends ControllerBase {
   use StringTranslationTrait;
   use MessengerTrait;
 
+  /**
+   * The email validator service.
+   *
+   * @var \Drupal\Component\Utility\EmailValidatorInterface
+   */
   protected $emailValidator;
 
+  /**
+   * The mail manager service.
+   *
+   * @var \Drupal\Core\Mail\MailManagerInterface
+   */
   protected $mailManager;
 
+  /**
+   * Configuration object for cgov_mail.settings.
+   *
+   * @var \Drupal\Core\Config\EditableConfigInterface
+   */
   protected $cgovMailConfig;
 
+  /**
+   * The current user account.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
   protected $account;
 
+  /**
+   * The mail plugin.
+   *
+   * @var \Drupal\Core\Config\EditableConfigInterface
+   */
   protected $mailPlugin;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EmailValidatorInterface $email_validator,
-                              MailManagerInterface $mail_manager,
-                              ConfigFactoryInterface $config_factory,
-                              AccountInterface $account) {
+  public function __construct(
+    EmailValidatorInterface $email_validator,
+    MailManagerInterface $mail_manager,
+    ConfigFactoryInterface $config_factory,
+    AccountInterface $account,
+  ) {
     $this->emailValidator = $email_validator;
     $this->mailManager = $mail_manager;
     $this->cgovMailConfig = $config_factory->get('cgov_mail.settings');
@@ -104,7 +131,7 @@ class MailAPIController extends ControllerBase {
           $subject = $value;
           break;
 
-        case '__recipient';
+        case '__recipient':
           $to = $this->cgovMailConfig->get($value);
           // Set an error if a configured address was not found.
           if (($to === NULL) || ($to === '')) {

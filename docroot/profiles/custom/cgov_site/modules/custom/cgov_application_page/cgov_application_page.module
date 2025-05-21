@@ -7,7 +7,6 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Utility\Token;
 
 /**
  * Implements hook_entity_insert().
@@ -22,10 +21,10 @@ function cgov_application_page_entity_insert(EntityInterface $entity) {
     $app_path_svc = \Drupal::service('app_module.app_path_manager');
     $app_path_svc->updateAppPath($entity);
 
-    // @todo: move to cgov_js_app_module when app_module_path becomes entity.
-    // We need to clear the libraries cache if this is a cgov_js_only_app and its
-    // CSS has never been registered before. Clearing the cache will trigger a
-    // rebuild of the libraries, which will pick up our new CSS.
+    // @todo move to cgov_js_app_module when app_module_path becomes entity.
+    // We need to clear the libraries cache if this is a cgov_js_only_app and
+    // its CSS has never been registered before. Clearing the cache will
+    // trigger a rebuild of the libraries, which will pick up our new CSS.
     if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
       $library_discovery = \Drupal::service('library.discovery');
       $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
@@ -53,10 +52,10 @@ function cgov_application_page_entity_update(EntityInterface $entity) {
     $app_path_svc = \Drupal::service('app_module.app_path_manager');
     $app_path_svc->updateAppPath($entity);
 
-    // @todo: move to cgov_js_app_module when app_module_path becomes entity.
-    // We need to clear the libraries cache if this is a cgov_js_only_app and its
-    // CSS has never been registered before. Clearing the cache will trigger a
-    // rebuild of the libraries, which will pick up our new CSS.
+    // @todo move to cgov_js_app_module when app_module_path becomes entity.
+    // We need to clear the libraries cache if this is a cgov_js_only_app and
+    // its CSS has never been registered before. Clearing the cache will
+    // trigger a rebuild of the libraries, which will pick up our new CSS.
     if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
       $library_discovery = \Drupal::service('library.discovery');
       $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
@@ -143,13 +142,14 @@ function _cgov_application_page_get_curr_entity() {
  * rendered HTML.
  * 0000000000000000000000000000000000
  */
+
 /**
  * Implements hook_page_attachments().
  */
 function cgov_application_page_page_attachments(array &$attachments) {
-  // If this is the entity
+  // If this is the entity.
   $node = \Drupal::routeMatch()->getParameter('node');
-  if(!is_object($node) || $node->bundle() !== 'cgov_application_page') {
+  if (!is_object($node) || $node->bundle() !== 'cgov_application_page') {
     return;
   }
 
@@ -165,13 +165,13 @@ function cgov_application_page_page_attachments(array &$attachments) {
  * Implements template_preprocess_html().
  */
 function cgov_application_page_preprocess_html(&$variables) {
-  // If this is the entity
+  // If this is the entity.
   $node = \Drupal::routeMatch()->getParameter('node');
-  if(!is_object($node) || $node->bundle() !== 'cgov_application_page') {
+  if (!is_object($node) || $node->bundle() !== 'cgov_application_page') {
     return;
   }
 
-  // If this is the entity
+  // If this is the entity.
   if (!empty($variables['head_title']) && !empty($variables['page']['#attached']['html_head'])) {
     // Find title_tag in html_head.
     foreach ($variables['page']['#attached']['html_head'] as $delta => $tag) {
