@@ -33,7 +33,7 @@ export default class GlossifyEditing extends Plugin {
         'glossId',
         'glossDictionary',
         'glossAudience',
-        'hreflang',
+        'lang',
       ],
     });
 
@@ -58,7 +58,7 @@ export default class GlossifyEditing extends Plugin {
             'data-gloss-id',
             'data-gloss-dictionary',
             'data-gloss-audience',
-            'hreflang',
+            'lang',
           ],
         },
         model: (viewElement, { writer }) => {
@@ -66,7 +66,7 @@ export default class GlossifyEditing extends Plugin {
             glossId: viewElement.getAttribute('data-gloss-id'),
             glossDictionary: viewElement.getAttribute('data-gloss-dictionary'),
             glossAudience: viewElement.getAttribute('data-gloss-audience'),
-            hreflang: viewElement.getAttribute('hreflang'),
+            lang: viewElement.getAttribute('lang'),
           });
         },
       });
@@ -80,12 +80,12 @@ export default class GlossifyEditing extends Plugin {
         const glossId = modelElement.getAttribute('glossId');
         const glossDictionary = modelElement.getAttribute('glossDictionary');
         const glossAudience = modelElement.getAttribute('glossAudience');
-        const hreflang = modelElement.getAttribute('hreflang');
+        const lang = modelElement.getAttribute('lang');
 
         const matchingFormatter = config['nci_glossary_dictionary_urls']?.find((entry) =>
           entry['dictionary']?.toLowerCase() === glossDictionary?.toLowerCase() &&
           entry['audience']?.toLowerCase() === glossAudience?.toLowerCase() &&
-          entry['langcode']?.toLowerCase() === hreflang?.toLowerCase()
+          entry['langcode']?.toLowerCase() === lang?.toLowerCase()
         )?.formatter;
 
         // TODO: handle when formatter is bad.
@@ -106,7 +106,7 @@ export default class GlossifyEditing extends Plugin {
           'data-gloss-id': glossId,
           'data-gloss-dictionary': glossDictionary,
           'data-gloss-audience': glossAudience,
-          hreflang,
+          lang,
         })
       },
     });
@@ -123,7 +123,7 @@ export default class GlossifyEditing extends Plugin {
             'data-gloss-id': modelElement.getAttribute('glossId'),
             'data-gloss-dictionary': modelElement.getAttribute('glossDictionary'),
             'data-gloss-audience': modelElement.getAttribute('glossAudience'),
-            'hreflang': modelElement.getAttribute('hreflang'),
+            'lang': modelElement.getAttribute('lang'),
           });
         },
       });
