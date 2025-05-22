@@ -5,8 +5,8 @@
  * Contains cgov_infographic custom logic.
  */
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_entity_view_alter().
@@ -56,10 +56,12 @@ function cgov_infographic_entity_view_alter(array &$build, EntityInterface $enti
 /**
  * Implements hook_ENTITY_TYPE_view().
  */
-function cgov_infographic_media_view(array &$build,
- EntityInterface $entity,
-                                     EntityViewDisplayInterface $display,
- $view_mode) {
+function cgov_infographic_media_view(
+  array &$build,
+  EntityInterface $entity,
+  EntityViewDisplayInterface $display,
+  $view_mode,
+) {
   // Limit the following to infographic build renders.
   if ($entity == NULL || $entity->bundle() != 'cgov_infographic') {
     return;

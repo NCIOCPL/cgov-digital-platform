@@ -10,6 +10,10 @@
   <config name="ignore_warnings_on_exit" value="0" />
   <config name="ignore_errors_on_exit" value="0" />
 
+  <!-- Set extensions to scan (taken from Coder 8.3.6). -->
+  <!-- @see https://git.drupalcode.org/project/coder/blob/8.3.6/coder_sniffer/Drupal/ruleset.xml#L8 -->
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme"/>
+
   <!-- Set ignore extensions. -->
   <!-- @see https://www.drupal.org/node/2867601#comment-12075633 -->
   <arg name="ignore" value="*.css,*.md,*.txt,*.png,*.gif,*.jpeg,*.jpg,*.svg"/>
@@ -60,9 +64,14 @@
   <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/*.js</exclude-pattern>
   <!-- Temporary Excludes for bad files -->
   <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/Plugin/Block/NcidsHeader.php</exclude-pattern>
-  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_mail/src/Controller/MailAPIController.php</exclude-pattern>
-  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_vocab_manager/src/Manager/CgovVocabManager.php</exclude-pattern>
-  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_core/src/Commands/RevisionPrunerCommands.php</exclude-pattern>
-  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/js/plugins/cgov_glossifier/dialogs/glossify.js</exclude-pattern>
-  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_glossifier/js/plugins/cgov_glossifier/dialogs/glossify.js</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/cgov_blog.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_site_section/cgov_site_section.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_list/cgov_list.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/pdq_cancer_information_summary/pdq_cancer_information_summary.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/modules/custom/cgov_saml_auth_config/cgov_saml_auth_config.module</exclude-pattern>
+  <exclude-pattern>docroot/profiles/custom/cgov_site/themes/custom/ncids_trans/ncids_trans.theme</exclude-pattern>
+
+  <!-- This theme is slated to go away at some point, no need to fix it. -->
+  <exclude-pattern>docroot/profiles/custom/cgov_site/themes/custom/cgov/cgov_common/cgov_common.theme</exclude-pattern>
 </ruleset>
