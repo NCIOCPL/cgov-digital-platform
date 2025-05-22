@@ -67,7 +67,7 @@ describe('NCIDS Dynamic List', () => {
 				linkType: 'Internal',
 				linkText: 'Norman Sharpless sworn in as director of the Natio',
 				linkArea: 'Collection Item',
-				totalLinks: 6,
+				totalLinks: 5,
 				linkPosition: 3,
 			}
 		);
@@ -90,8 +90,8 @@ describe('NCIDS Dynamic List', () => {
 		fireEvent.click(links[5]);
 
 		expect(spy).toHaveBeenCalledWith(
-			'LP:Collection:LinkClick',
-			'LP:Collection:LinkClick',
+			'LP:Collection:NavClick',
+			'LP:Collection:NavClick',
 			{
 				location: 'Body',
 				pageType: 'cgvHomeLanding',
@@ -109,9 +109,9 @@ describe('NCIDS Dynamic List', () => {
 				title: 'Recent Press Releases',
 				linkType: 'Internal',
 				linkText: 'All NCI News',
-				linkArea: 'View All Button',
-				totalLinks: 6,
-				linkPosition: 6,
+				linkArea: 'Nav Links',
+				totalLinks: 1,
+				linkPosition: 1,
 			}
 		);
 	});
@@ -153,7 +153,7 @@ describe('NCIDS Dynamic List', () => {
 				linkType: 'Internal',
 				linkText: '_ERROR_',
 				linkArea: 'Collection Item',
-				totalLinks: 6,
+				totalLinks: 5,
 				linkPosition: 1,
 			}
 		);
@@ -196,7 +196,7 @@ describe('NCIDS Dynamic List', () => {
 				linkType: 'Internal',
 				linkText: 'Norman Sharpless sworn in as director of the Natio',
 				linkArea: 'Collection Item',
-				totalLinks: 6,
+				totalLinks: 5,
 				linkPosition: 3,
 			}
 		);
@@ -239,7 +239,7 @@ describe('NCIDS Dynamic List', () => {
 				linkType: 'Internal',
 				linkText: 'Norman Sharpless sworn in as director of the Natio',
 				linkArea: 'Collection Item',
-				totalLinks: 6,
+				totalLinks: 5,
 				linkPosition: 3,
 			}
 		);
@@ -312,7 +312,7 @@ describe('NCIDS Dynamic List', () => {
 				linkType: 'Internal',
 				linkText: 'BRCA Exchange aggregates data on thousands of BRCA',
 				linkArea: 'Collection Item',
-				totalLinks: 6,
+				totalLinks: 5,
 				linkPosition: 2,
 			}
 		);
