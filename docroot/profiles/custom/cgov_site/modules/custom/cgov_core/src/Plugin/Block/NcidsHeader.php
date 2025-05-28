@@ -2,24 +2,25 @@
 
 namespace Drupal\cgov_core\Plugin\Block;
 
-use Drupal\Core\Url;
+use Drupal\cgov_core\NavItem;
+use Drupal\cgov_core\Services\CgovNavigationManager;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileUrlGenerator;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RequestContext;
-use Drupal\path_alias\AliasManagerInterface;
-use Drupal\link\LinkItemInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\cgov_core\Services\CgovNavigationManager;
-use Drupal\cgov_core\NavItem;
-use Drupal\Core\File\FileUrlGenerator;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\file\FileUsage\FileUsageInterface;
+use Drupal\link\LinkItemInterface;
+use Drupal\path_alias\AliasManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'NCIDS Header' block.
@@ -89,6 +90,13 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
    * File usage service.
    *
    * @var \Drupal\file\FileUsage\FileUsageInterface
@@ -122,6 +130,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
    *   The entity type manager.
    * @param \Drupal\file\FileUsage\FileUsageInterface $file_usage_svc
    *   The file usage service.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
    */
   public function __construct(
     array $configuration,
@@ -135,7 +145,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     RequestContext $request_context,
     FileUrlGenerator $file_url_generator,
     EntityTypeManagerInterface $entity_type_manager,
-    FileUsageInterface $file_usage_svc
+    FileUsageInterface $file_usage_svc,
+    AccountInterface $current_user,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->navMgr = $navigationManager;
@@ -147,6 +158,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
     $this->fileUrlGenerator = $file_url_generator;
     $this->entityTypeManager = $entity_type_manager;
     $this->fileUsageSvc = $file_usage_svc;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -165,7 +177,8 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       $container->get('router.request_context'),
       $container->get('file_url_generator'),
       $container->get('entity_type.manager'),
-      $container->get('file.usage')
+      $container->get('file.usage'),
+      $container->get('current_user'),
     );
   }
 
@@ -635,7 +648,7 @@ class NcidsHeader extends BlockBase implements ContainerFactoryPluginInterface {
       // Drupal coding standards.)
       // P.S. How is Core code not passing the Drupal sniffer rules??
       '#default_value' => !empty($search_results_page) && (
-          \Drupal::currentUser()->hasPermission('link to any page') ||
+          $this->currentUser->hasPermission('link to any page') ||
           Url::fromUri($search_results_page, [])->access()
       ) ? static::getUriAsDisplayableString($search_results_page) : NULL,
       '#element_validate' => [
