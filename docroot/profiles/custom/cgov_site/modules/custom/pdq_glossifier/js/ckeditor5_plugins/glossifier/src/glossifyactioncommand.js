@@ -4,13 +4,8 @@
  */
 
 import { Command } from 'ckeditor5/src/core';
-import {
-  convertTagStringToHTML,
-  prepareEditorBodyForGlossificationRequest,
-  getContentLanguage
-} from './utils/content-preparation';
-
-import { createHtmlFromSuggestions, glossifyTermFromLabel } from './utils/suggestion-display';
+import processSelectedSuggestions from './utils/process-selected-suggestions';
+import prepareAndFetchSuggestions from './utils/prepare-and-fetch-suggestions';
 
 /**
  * Exception class for CSRF Exceptions.
@@ -129,92 +124,16 @@ export default class GlossifyActionCommand extends Command {
    * Ok button handler to update editor content with selections.
    */
   _updateEditorWithSelections() {
-    const labels = this.modalContents.querySelectorAll('label[data-glossify-label]');
-    for (const label of labels) {
-      const checkbox = label.querySelector('input');
-      const isSelected = checkbox.checked;
-      if(!isSelected) {
-        // Restore the term as basic text. No glossification.
-       const termHTML = label.dataset.html;
-       const isPreexisting = label.dataset.preexisting;
-       const originalText = label.textContent;
-        if (isPreexisting === "true") {
-          let displayText = convertTagStringToHTML(originalText, termHTML);
-          const tempDoc = document.createElement('div');
-          tempDoc.innerHTML = displayText;
-          label.replaceWith(...tempDoc.childNodes);
-        } else {
-          label.replaceWith(originalText);
-        }
-      }
-      else {
-        glossifyTermFromLabel(label);
-      }
-    }
-    const newHtml = this.modalContents.innerHTML;
+    // I would rather clone the modal contents, but there is not a great way while
+    // preserving the checkbox state. (I tried to DOMParser.parseFromString the
+    // modalContents.innerHTML, but checkboxes got unchecked.)
+    const newHtml = processSelectedSuggestions(this.modalContents);
+
     this.editor.data.set(newHtml);
 
     this.modalInstance.close();
   }
 
-  /**
-   * Fetches the glossary suggestions.
-   *
-   * This is more of a helper than anything else given the amount of
-   * promises we are dealing with.
-   *
-   * @param {string} content The content to get suggestions for.
-   * @param {string} language The two language character code.
-   */
-  async _fetchGlossarySuggestions(content, language) {
-    // Get the CSRF Token
-    let csrfToken = null;
-    try {
-      // We must retrieve the necessary csrf token to make an authenticated
-      // request to the api.
-      const res = await fetch(Drupal.url('session/token'));
-      if (res.status !== 200) {
-        throw new Error(`CSRF request responded with status ${res.status}`);
-      }
-      csrfToken = await res.text();
-
-    } catch (err) {
-      console.error(err);
-      throw new CsrfException(err.message);
-    }
-
-    // Now fetch the suggestions.
-    try {
-      const res = await fetch(Drupal.url('pdq/api/glossifier'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-CSRF-Token': csrfToken,
-        },
-        body: JSON.stringify({
-          'fragment': content,
-          'languages': [
-            language,
-          ],
-          'dictionaries': [
-            'Cancer.gov'
-          ],
-        }),
-      });
-
-      if (res.status !== 200) {
-        throw new Error(`Glossification request responded with status ${res.status}`);
-      }
-
-      const suggestions = await res.json();
-      return suggestions;
-
-    } catch (err) {
-      console.error(err);
-      throw new GlossifierApiException(err.message);
-    }
-  }
 
   /**
    * THE MAIN EXECUTE COMMAND.
@@ -226,13 +145,9 @@ export default class GlossifyActionCommand extends Command {
 
     this._setModalContentsToSpinner();
 
-    const preparedBody = prepareEditorBodyForGlossificationRequest(editor.data.get());
-    const language = getContentLanguage();
-
     // Begin the fetch chain.
-    this._fetchGlossarySuggestions(preparedBody, language)
-      .then((suggestions) => {
-        const suggestionsHtml = createHtmlFromSuggestions(preparedBody, suggestions, language)
+    prepareAndFetchSuggestions(editor.data.get())
+      .then((suggestionsHtml) => {
         // Render the options.
         this._setModalContentsToSuggestions(suggestionsHtml);
       })
@@ -245,7 +160,8 @@ export default class GlossifyActionCommand extends Command {
         }
       })
 
-    // Show the dialog.
+    // Show the dialog. Note: this shows the spinner the first time until
+    // the fetch completes.
     this.modalInstance.showModal();
   }
 }
