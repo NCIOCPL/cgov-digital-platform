@@ -4,11 +4,11 @@
  * @file
  * Functions to support theming in the ncids_trans theme.
  *
- * This is copied over from cgov_common
+ * This is copied over from cgov_common.
  */
 
-use Drupal\node\Entity\Node;
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Allows us to have node based page templates.
@@ -35,7 +35,7 @@ function ncids_trans_theme_suggestions_page_alter(array &$suggestions, array $va
     // Add theme suggestion for special report template if appropriate.
     if ($content_type == "cgov_home_landing" || $content_type == "cgov_mini_landing") {
       $page_template = $content_type == "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
-      if ($page_template !== null) {
+      if ($page_template !== NULL) {
         $suggestions[] = 'page__' . $content_type . '__' . $page_template;
       }
     }
@@ -77,10 +77,10 @@ function ncids_trans_theme_suggestions_pager_alter(array &$suggestions, array $v
     if (!$node instanceof Node) {
       $node = Node::load($node);
     }
-  $content_type = $node->bundle();
+    $content_type = $node->bundle();
     // Add theme suggestion for special report template if appropriate.
     $page_template = $content_type == "cgov_home_landing" ? $node->field_page_style->value : $node->field_mlp_page_style->value;
-    if (($page_template !== null) && str_starts_with($page_template, 'ncids_')) {
+    if (($page_template !== NULL) && str_starts_with($page_template, 'ncids_')) {
       $suggestions[] = 'pager__ncids';
     }
   }
@@ -131,8 +131,8 @@ function ncids_trans_theme_suggestions_field_alter(array &$suggestions, array $v
 function ncids_trans_preprocess_html(&$variables) {
   // Removes the empty Drupal region div that gets rendered out on templates.
   // Removes it from all content types that have content in the region block.
-  // TODO: Remove when #4560 is completed
-  $variables["page"]["content"]["messages"]["#include_fallback"] = false;
+  // @todo Remove when #4560 is completed.
+  $variables["page"]["content"]["messages"]["#include_fallback"] = FALSE;
   $hasTranslations = theme_get_setting('has_translations');
   if ($hasTranslations) {
     $variables['attributes']['class'][] = 'has-translated-content';
@@ -150,9 +150,12 @@ function ncids_trans_preprocess_node(&$variables) {
     'year',
   ];
 
+  // Actual query parameters.
+  $queryParameters = \Drupal::request()->query;
+
   // Add any parameter values to the $variables get property.
   foreach ($params as $param) {
-    $variables['get'][$param] = $_GET[$param] ?? '';
+    $variables['get'][$param] = $queryParameters->get($param, '');
   }
 
   // is_front is normally only available in page templates.
@@ -160,7 +163,8 @@ function ncids_trans_preprocess_node(&$variables) {
   // (NOTE: An exception might be thrown.)
   try {
     $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
-  } catch (Exception $e) {
+  }
+  catch (Exception $e) {
     // If the database is not yet available, set the default value.
     $variables['is_front'] = FALSE;
   }
@@ -203,8 +207,10 @@ function ncids_trans_page_attachments_alter(&$attachments) {
 }
 
 /**
- * @todo
+ * Helper function to get the initial navigation info for NCIDS.
+ *
  * @return string
+ *   A string containing the JSON representation of the navigation info.
  */
 function _ncids_trans_get_initial_nav_info() {
 
@@ -214,9 +220,10 @@ function _ncids_trans_get_initial_nav_info() {
   $nav_info = $nav_manager->getClosestNavForMobile();
 
   if ($nav_info) {
-    $nav_js = '{ id: "' . $nav_info['initial_nav']['id'] .'", menu_type: "' . $nav_info['initial_nav']['menu_type'] . '"}';
+    $nav_js = '{ id: "' . $nav_info['initial_nav']['id'] . '", menu_type: "' . $nav_info['initial_nav']['menu_type'] . '"}';
     return 'window.ncidsNavInfo = { nav: ' . $nav_js . ', item_id: ' . $nav_info['initial_item'] . '};';
-  } else {
+  }
+  else {
     return '[]';
   }
 }
