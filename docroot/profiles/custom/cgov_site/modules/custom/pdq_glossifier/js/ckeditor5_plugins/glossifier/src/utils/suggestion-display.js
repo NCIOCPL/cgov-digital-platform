@@ -55,6 +55,7 @@ const createGlossificationTermOptionElementString = (termText, termId, termLangu
   const classlist = "glossify-dialog__term " + firstOccurenceClassName;
   let textWithHTML = termText;
   let dataHTML = '';
+
   //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
     textWithHTML = convertTagStringToHTML(termText, termHTML);
@@ -93,7 +94,7 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
   let processedHtml = "";
   let slowPointer = 0;
   //Get all of the glossified terms in the originalHtml
-  const parser = new DOMParser();
+  const parser = new window.DOMParser();
   const doc = parser.parseFromString(originalHtml, 'text/html');
   const elements = doc.querySelectorAll("span[rel='glossified']");
   for(let i = 0; i < candidateTermConfigs.length; i++){
