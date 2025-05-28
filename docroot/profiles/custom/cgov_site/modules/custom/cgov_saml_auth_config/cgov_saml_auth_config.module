@@ -1,20 +1,18 @@
 <?php
 
-use \Drupal\user\Entity\User;
-
 /**
  * @file
- * Contains cgov_saml_auth_config.module.
+ * Contains the cgov_saml_auth_config the module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use \Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\User;
 
- /**
+/**
  * Implements hook_form_FORM_ID_alter() for the login form.
  */
-
- function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function cgov_saml_auth_config_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   // Only modify the form if we are actually showing the login link.
   if (isset($form['samlauth_auth_login_link'])) {
@@ -45,15 +43,16 @@ use \Drupal\Core\Form\FormStateInterface;
         '#title' => 'Log in with Drupal',
         '#type' => 'link',
         '#url' => Url::fromRoute('user.login', [
-          'show_login_fields' => 'true'
+          'show_login_fields' => 'true',
         ]),
         '#prefix' => '<p>',
         '#suffix' => '</p>',
         '#weight' => 101,
       ];
-    } else {
+    }
+    else {
 
-      // Hide the SAML Button
+      // Hide the SAML Button.
       $form['samlauth_auth_login_link']['#access'] = FALSE;
 
       // Show a return link.
@@ -73,8 +72,7 @@ use \Drupal\Core\Form\FormStateInterface;
 /**
  * Implements hook_user_logout().
  */
-function cgov_saml_auth_config_user_logout($account)
-{
+function cgov_saml_auth_config_user_logout($account) {
   $url = Url::fromRoute('user.login');
   $requestStack = \Drupal::requestStack();
   $requestStack->getCurrentRequest()->query->set('destination', $url->toString());
@@ -83,7 +81,7 @@ function cgov_saml_auth_config_user_logout($account)
 /**
  * Extra submit action to add user to externalauth table.
  */
-function user_form_submit($form, FormStateInterface $form_state) {
+function _cgov_saml_auth_config_user_form_submit($form, FormStateInterface $form_state) {
 
   $name = $form_state->getValue('name');
   $account = User::load($form_state->getValue('uid'));
@@ -95,7 +93,7 @@ function user_form_submit($form, FormStateInterface $form_state) {
 }
 
 /**
- * Implements hook_form_BASE_FORM_ID_alter() to hide password fields.
+ * Implements hook_form_BASE_FORM_ID_alter() for hiding password fields.
  */
 function cgov_saml_auth_config_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
@@ -104,7 +102,7 @@ function cgov_saml_auth_config_form_user_form_alter(&$form, FormStateInterface $
 
     $form['account']['pass']['#access'] = FALSE;
     $form['account']['pass']['#required'] = FALSE;
-    $form['actions']['submit']['#submit'][] = 'user_form_submit';
+    $form['actions']['submit']['#submit'][] = '_cgov_saml_auth_config_user_form_submit';
 
   }
 
