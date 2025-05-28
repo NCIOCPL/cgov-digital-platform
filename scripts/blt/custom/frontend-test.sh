@@ -12,4 +12,7 @@ popd
 
 # There are no tests for cgov_common :(
 
-# There are no tests for pdq_glossifier :(
+# Test pdq_glossifier
+pushd modules/custom/pdq_glossifier
+npm run test
+popd
