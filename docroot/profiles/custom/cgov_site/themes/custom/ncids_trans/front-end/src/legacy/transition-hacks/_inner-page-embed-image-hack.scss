@@ -1,0 +1,24 @@
+// Override .cgdpl paragraph styles for image caption
+// These fonts are overridden by the cgdpl
+// wrapper otherwise
+.cgdp-image figure {
+	@include u-margin(0);
+}
+.cgdp-image__caption {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
+.cgdp-image__credit {
+	@include u-font('sans', '3xs');
+	@include u-margin-y(0);
+	&:not(:only-child) {
+		@include u-margin-top(1);
+	}
+}
+.cgdp-image__credit:only-child() {
+	@include u-margin-top(0);
+}
+.cgdp-image__enlarge {
+	@include u-font('sans', '2xs');
+	line-height: line-height($theme-body-font-family, $theme-body-line-height);
+}
