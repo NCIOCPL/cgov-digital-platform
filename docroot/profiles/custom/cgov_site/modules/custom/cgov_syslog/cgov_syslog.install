@@ -1,6 +1,9 @@
 <?php
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+/**
+ * @file
+ * Install for the cgov_syslog module.
+ */
 
 /**
  * Implements hook_install().
@@ -11,7 +14,6 @@ function cgov_syslog_install(): void {
 
 /**
  * Overwite syslog.settings with our desired configuration.
- * @return void
  */
 function _cgov_syslog_override_config(): void {
 
@@ -22,8 +24,7 @@ function _cgov_syslog_override_config(): void {
 }
 
 /**
- * Update hook to update syslog.settings to our desired configuration.
+ * Latest update hook.
  */
 function cgov_syslog_update_10001(): void {
-  _cgov_syslog_override_config();
 }

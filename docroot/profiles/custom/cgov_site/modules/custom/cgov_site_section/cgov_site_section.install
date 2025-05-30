@@ -51,7 +51,7 @@ function _cgov_site_section_install_permissions(CgovCoreTools $siteHelper) {
     ],
     'site_admin' => [
       'access main nav cache invalidation',
-    ]
+    ],
   ];
 
   $siteHelper->addRolePermissions($perms);
@@ -71,73 +71,7 @@ function cgov_site_section_uninstall() {
 }
 
 /**
- * Update for v1.1.9.
- *
- * Install the cgov_vocab_manager module.
- */
-function cgov_site_section_update_8001() {
-  if (!\Drupal::moduleHandler()->moduleExists('cgov_vocab_manager')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['cgov_vocab_manager']);
-  }
-}
-
-/**
- * Update for Main Nav Caching Release.
- *
- * Install the permissions for existing site_admin role.
- */
-function cgov_site_section_update_8002() {
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'site_admin' => [
-      'access main nav cache invalidation',
-    ],
-  ];
-
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Update for Mobile navigation level settings.
- *
- * Set default value for Mobile navigation levels to display.
- */
-function cgov_site_section_update_8003() {
-  // Set default value for mobile_levels_to_display.
-  $config = \Drupal::service('config.factory')->getEditable('cgov_common.settings');
-  $config->set('mobile_levels_to_display', 4);
-  $config->save();
-}
-
-/**
- * Update for Mega Menu API.
- *
- * Set enable workflow on mega menu.
+ * Latest update hook.
  */
 function cgov_site_section_update_8004() {
-
-  // Enable our json_data_field module, which the following features require.
-  if (!\Drupal::moduleHandler()->moduleExists('json_data_field')) {
-    $installer = \Drupal::service('module_installer');
-    $installer->install(['json_data_field']);
-  }
-
-  // Import the new mega menu configurations.
-  $featuresManager = \Drupal::service('features.manager');
-  $featuresManager->import(['cgov_site_section']);
-
-  // Set enable workflow on mega menu.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Loop through all the block types and
-  // Enable the simple workflow.
-  foreach ([
-     'ncids_mega_menu_content',
-  ] as $block_type) {
-     // Add workflow.
-    $siteHelper->attachBlockContentTypeToWorkflow($block_type, 'simple_workflow');
-  }
 }

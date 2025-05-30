@@ -6,20 +6,19 @@
  */
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Field\FieldDefinition;
-use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\paragraphs\ParagraphInterface;
 
- /**
-  * Implements hook_field_widget_single_element_form_alter().
-  *
-  * Limits allowed text formats using the cgov_core form_tools service.
-  */
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ *
+ * Limits allowed text formats using the cgov_core form_tools service.
+ */
 function cgov_home_landing_field_widget_single_element_form_alter(&$element, $form_state, $context) {
-  // Makes autocomplete do nothing
+  // Makes autocomplete do nothing.
   if (
     array_key_exists('#paragraph_type', $element) &&
     ($element['#paragraph_type'] == 'ncids_promo_block_external')
@@ -28,7 +27,7 @@ function cgov_home_landing_field_widget_single_element_form_alter(&$element, $fo
     $element['subform']['field_featured_url']['widget'][0]['uri']['#process'] = NULL;
   }
   // Makes autocomplete do nothing for link button external
-  // used in guide cards and cta strip
+  // used in guide cards and cta strip.
   if (
     array_key_exists('#paragraph_type', $element) &&
     ($element['#paragraph_type'] == 'ncids_link_button_external')
@@ -66,18 +65,18 @@ function cgov_home_landing_paragraph_access(EntityInterface $entity, $operation,
 }
 
 /**
- * Implements hook_form_FORM_ID_alter()
+ * Implements hook_form_FORM_ID_alter().
  *
  * Creates a group to be added in the advanced section.
  * We are then able to add the additional library field to the group.
  */
-function cgov_home_landing_form_node_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function cgov_home_landing_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['additional_library'] = [
     '#type' => 'details',
     '#title' => 'Additional Front-End Library',
     '#group' => 'advanced',
     '#attributes' => [
-      'class' => ['node-form-options']
+      'class' => ['node-form-options'],
     ],
     '#attached' => [
       'library' => ['node/drupal.node'],

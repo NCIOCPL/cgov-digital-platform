@@ -5,8 +5,8 @@
  * Hook implementations for content syndication.
  */
 
-use Drupal\node\Entity\Node;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_preprocess_html().
@@ -58,10 +58,10 @@ EOMarkup;
   // Get the existing English Syndication message block to add the translation.
   $block_storage = \Drupal::entityTypeManager()->getStorage('block_content');
   $result = $block_storage->getQuery()
-      ->accessCheck(FALSE)
-      ->condition('info', 'Syndication Message')
-      ->condition('langcode', 'en')
-      ->execute();
+    ->accessCheck(FALSE)
+    ->condition('info', 'Syndication Message')
+    ->condition('langcode', 'en')
+    ->execute();
   if (count($result)) {
     $eid = array_shift($result);
     $block = $block_storage->load($eid);
