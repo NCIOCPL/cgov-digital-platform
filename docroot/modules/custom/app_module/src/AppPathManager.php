@@ -218,9 +218,13 @@ class AppPathManager implements AppPathManagerInterface, CacheDecoratorInterface
    */
   public function updateAliasFromPath(PathAliasInterface $path) {
 
+    // Workaround for phpstan complaining about unknown fields.
+    /** @var \Drupal\path_alias\Entity\PathAlias */
+    $entity = $path;
+
     // Nothing to see here. Exit.
-    /** @var \Drupal\path_alias\PathAliasInterface */
-    $originalPath = $path->original;
+    /** @var \Drupal\path_alias\Entity\PathAlias */
+    $originalPath = $entity->original;
     if ($path->getAlias() === $originalPath->getAlias()) {
       return;
     }
