@@ -15,10 +15,7 @@ parameters:
     - */node_modules/*
     ## The following paths should be removed as each module is remediated
     ### custom modules
-    - docroot/modules/custom/app_module/src/AppPathManager.php
-    - docroot/modules/custom/json_data_field/src/Plugin/Field/FieldFormatter/JsonDataFieldFormatter.php
     ### cgov_site Profile Modules
-    - docroot/profiles/custom/cgov_site/modules/custom/cgov_application_page/cgov_application_page.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_blog/src/Plugin/Block/BlogArchive.php
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/cgov_core.module
     - docroot/profiles/custom/cgov_site/modules/custom/cgov_core/src/CgovConfigOverrider.php
@@ -94,4 +91,9 @@ parameters:
     -
       ## This ignore is for the deprecated CacheDecoratorInterface module.
       message: "#Usage of deprecated trait Symfony\\\\Component\\\\DependencyInjection\\\\ContainerAwareTrait in class#"
+      reportUnmatched: false
+    -
+      ## With php 8.2, app_module/src/AppPathManager.php gets for access to an undefined property.
+      ## With php 8.1, no error is found and attempting to mark it to be ignored is reported as an error.
+      message: "#Access to an undefined property Drupal\\\\path_alias\\\\PathAliasInterface::\\$original.#"
       reportUnmatched: false
