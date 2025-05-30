@@ -75,7 +75,7 @@ function cgov_adobe_page_bottom(array &$page_bottom) {
 
   // If we would add a script tag to the head, without the async attribute
   // then we need to add the page bottom script per Launch directions.
-  if ($config->get('load_async') !== true && _cgov_adobe_embed_code_tag_array()) {
+  if ($config->get('load_async') !== TRUE && _cgov_adobe_embed_code_tag_array()) {
     $page_bottom['cgov_adobe'] = [
       '#type'       => 'html_tag',
       '#tag'        => 'script',
@@ -89,7 +89,7 @@ function cgov_adobe_page_bottom(array &$page_bottom) {
 }
 
 /**
- * Determines whether Launch tags should be added or not, based on path settings.
+ * Determines whether Launch tags should be added, based on path settings.
  *
  * @return bool
  *   TRUE if script should be add to the current path, otherwise FALSE.
@@ -128,7 +128,6 @@ function _cgov_adobe_path_check() {
   return $result;
 }
 
-
 /**
  * Returns tag array with embed code.
  *
@@ -158,7 +157,7 @@ function _cgov_adobe_embed_code_tag_array() {
     ],
   ];
 
-  if ($config->get('load_async') === true) {
+  if ($config->get('load_async') === TRUE) {
     $tag['#attributes']['async'] = 'async';
   }
 

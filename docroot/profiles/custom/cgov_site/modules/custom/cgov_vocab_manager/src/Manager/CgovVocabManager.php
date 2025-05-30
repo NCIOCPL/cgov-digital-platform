@@ -6,12 +6,12 @@ use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\TermStorageInterface;
-use Drupal\Core\Url;
 
 /**
- * Class CgovVocabManager.
+ * Logic for working with the site section taxonomy.
  *
  * @package Drupal\cgov_vocab_manager\Manager
  */

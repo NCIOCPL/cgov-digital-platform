@@ -52,29 +52,7 @@ function _cgov_video_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Set permissions for editing media file revisions.
- */
-function cgov_video_update_10001() {
-  $siteHelper = \Drupal::service('cgov_core.tools');
-  $perms = [
-    'content_author' => [
-      'revert any cgov_video media revisions',
-      'view any cgov_video media revisions',
-    ],
-  ];
-  $siteHelper->addRolePermissions($perms);
-}
-
-/**
- * Update for NCIDS Flag Card Group.
- *
- * Force installation of
- * core.entity_view_mode.media.video_display_ncids_video
- * before node core.entity_view_display configs are loaded.
+ * Latest update hook.
  */
 function cgov_video_update_10002() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $result = $service->import(['cgov_video']);
 }
