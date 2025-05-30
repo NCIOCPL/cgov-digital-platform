@@ -7,6 +7,8 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_entity_insert().
@@ -15,25 +17,29 @@ use Drupal\Core\Entity\EntityInterface;
  * not fire first.
  */
 function cgov_application_page_entity_insert(EntityInterface $entity) {
-  if ($entity->bundle() === 'cgov_application_page') {
-    /* New entity then the app path never existed. Register.
-     */
-    $app_path_svc = \Drupal::service('app_module.app_path_manager');
-    $app_path_svc->updateAppPath($entity);
+  if ($entity->bundle() !== 'cgov_application_page') {
+    return;
+  }
+  if (!$entity instanceof Node) {
+    return;
+  }
 
-    // @todo move to cgov_js_app_module when app_module_path becomes entity.
-    // We need to clear the libraries cache if this is a cgov_js_only_app and
-    // its CSS has never been registered before. Clearing the cache will
-    // trigger a rebuild of the libraries, which will pick up our new CSS.
-    if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
-      $library_discovery = \Drupal::service('library.discovery');
-      $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+  // New entity then the app path never existed. Register.
+  $app_path_svc = \Drupal::service('app_module.app_path_manager');
+  $app_path_svc->updateAppPath($entity);
 
-      // Clear the cache if the css file is not already defined in a library.
-      $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
-      if (!isset($js_app_libs[$cssUri])) {
-        $library_discovery->clearCachedDefinitions();
-      }
+  // @todo move to cgov_js_app_module when app_module_path becomes entity.
+  // We need to clear the libraries cache if this is a cgov_js_only_app and
+  // its CSS has never been registered before. Clearing the cache will
+  // trigger a rebuild of the libraries, which will pick up our new CSS.
+  if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
+    $library_discovery = \Drupal::service('library.discovery');
+    $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+
+    // Clear the cache if the css file is not already defined in a library.
+    $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
+    if (!isset($js_app_libs[$cssUri])) {
+      $library_discovery->clearCachedDefinitions();
     }
   }
 }
@@ -45,26 +51,30 @@ function cgov_application_page_entity_insert(EntityInterface $entity) {
  * not fire first.
  */
 function cgov_application_page_entity_update(EntityInterface $entity) {
-  if ($entity->bundle() === 'cgov_application_page') {
-    /* Update the app path information, or create if it did not exist
-     * before.
-     */
-    $app_path_svc = \Drupal::service('app_module.app_path_manager');
-    $app_path_svc->updateAppPath($entity);
+  if ($entity->bundle() !== 'cgov_application_page') {
+    return;
+  }
+  if (!$entity instanceof Node) {
+    return;
+  }
 
-    // @todo move to cgov_js_app_module when app_module_path becomes entity.
-    // We need to clear the libraries cache if this is a cgov_js_only_app and
-    // its CSS has never been registered before. Clearing the cache will
-    // trigger a rebuild of the libraries, which will pick up our new CSS.
-    if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
-      $library_discovery = \Drupal::service('library.discovery');
-      $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+  // Update the app path information, or create if it did not exist
+  // before.
+  $app_path_svc = \Drupal::service('app_module.app_path_manager');
+  $app_path_svc->updateAppPath($entity);
 
-      // Clear the cache if the css file is not already defined in a library.
-      $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
-      if (!isset($js_app_libs[$cssUri])) {
-        $library_discovery->clearCachedDefinitions();
-      }
+  // @todo move to cgov_js_app_module when app_module_path becomes entity.
+  // We need to clear the libraries cache if this is a cgov_js_only_app and
+  // its CSS has never been registered before. Clearing the cache will
+  // trigger a rebuild of the libraries, which will pick up our new CSS.
+  if ($entity->field_application_module->target_id === 'cgov_js_only_app') {
+    $library_discovery = \Drupal::service('library.discovery');
+    $cssUri = $entity->field_application_module->data['drupalConfig']['appCssUri'];
+
+    // Clear the cache if the css file is not already defined in a library.
+    $js_app_libs = $library_discovery->getLibrariesByExtension('cgov_js_app_module');
+    if (!isset($js_app_libs[$cssUri])) {
+      $library_discovery->clearCachedDefinitions();
     }
   }
 }
@@ -102,9 +112,9 @@ function cgov_application_page_theme_suggestions_html_alter(array &$suggestions,
  */
 function cgov_application_page_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $entity = _cgov_application_page_get_curr_entity();
-  if ($entity && $entity->getEntityTypeId() === 'node' && $entity->bundle() === "cgov_application_page") {
+  if ($entity instanceof NodeInterface && $entity->bundle() === "cgov_application_page") {
     $content_type = $entity->bundle();
-    $page_template = $entity->field_app_module_page_template->value;
+    $page_template = $entity->get('field_app_module_page_template')->value;
     if ($page_template !== NULL) {
       $suggestions[] = 'page__' . $content_type . '__' . $page_template;
     }
