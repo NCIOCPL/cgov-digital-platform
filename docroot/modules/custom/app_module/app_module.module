@@ -5,10 +5,10 @@
  * Contains app_module.module.
  */
 
-use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\app_module\Entity\AppModule;
-use Drupal\path_alias\PathAliasInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\path_alias\PathAliasInterface;
 
 /**
  * Implements hook_theme().
@@ -123,7 +123,7 @@ function app_module_page_attachments_alter(array &$attachments) {
   }
 
   // Get the app module entity.
-  /* @var \Drupal\app_module\AppModuleInterface */
+  /**  @var \Drupal\app_module\AppModuleInterface */
   $app_module = AppModule::load($app_module_id);
 
   if (!$app_module) {
@@ -132,7 +132,7 @@ function app_module_page_attachments_alter(array &$attachments) {
   }
 
   // Load the app module plugin.
-  /* @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
+  /** @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
   $app_module_plugin = $app_module->getAppModulePlugin();
 
   if (!$app_module_plugin) {
@@ -160,7 +160,7 @@ function app_module_tokens_alter(array &$replacements, array $context, Bubbleabl
   }
 
   // Get the app module entity.
-  /* @var \Drupal\app_module\AppModuleInterface */
+  /** @var \Drupal\app_module\AppModuleInterface    */
   $app_module = AppModule::load($app_module_id);
 
   if (!$app_module) {
@@ -169,7 +169,7 @@ function app_module_tokens_alter(array &$replacements, array $context, Bubbleabl
   }
 
   // Load the app module plugin.
-  /* @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
+  /** @var \Drupal\app_module\Plugin\app_module\AppModulePluginInterface */
   $app_module_plugin = $app_module->getAppModulePlugin();
 
   if (!$app_module_plugin) {
@@ -177,7 +177,7 @@ function app_module_tokens_alter(array &$replacements, array $context, Bubbleabl
     throw new \Exception("Request parameters indicate app module loaded, but app module plugin could not be loaded.");
   }
 
-  /* @var \Drupal\app_module\AppModuleRenderArrayBuilderInterface */
+  /** @var \Drupal\app_module\AppModuleRenderArrayBuilderInterface */
   $app_module_builder = \Drupal::service('app_module.builder');
 
   if ($app_module_plugin) {

@@ -6,11 +6,11 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
-use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\FileInterface;
 
 /**
- * Implements hook_module_implements_alter()
+ * Implements hook_module_implements_alter() for form_alter.
  *
  * We need our form_alter to run after content_moderation's.
  */
@@ -52,7 +52,6 @@ function cgov_file_form_alter(&$form, FormStateInterface &$form_state, string $f
  * @see hook_file_validate()
  */
 function _cgov_file_validate(FileInterface $file) {
-  // TODO: Reject any files we do not like.
+  // @todo Reject any files we do not like.
   return [];
 }
-

@@ -6,7 +6,6 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
-use Drupal\file\Entity\File;
 
 /**
  * Implements hook_install().
@@ -54,60 +53,7 @@ function _cgov_blog_install_permissions(CgovCoreTools $siteHelper) {
 }
 
 /**
- * Update for v1.1.7.
- *
- * Allow site_admin users to translate a blog's topic.
- */
-function cgov_blog_update_8001() {
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  $perms = [
-    'site_admin' => [
-      'translate cgov_blog_topics taxonomy_term',
-    ],
-  ];
-
-  $siteHelper->addRolePermissions($perms);
-}
-
-
-
-/**
  * Enable layout builder. (Issue #3807)
  */
 function cgov_blog_update_8002() {
-  // Uninstall Panels
-  $uninstall_array = [];
-  if (\Drupal::moduleHandler()->moduleExists('panels')) {
-    array_push($uninstall_array, 'panels');
-  }
-
-  // Uninstall Page Manager
-  if (\Drupal::moduleHandler()->moduleExists('page_manager')) {
-    array_push($uninstall_array, 'page_manager');
-  }
-  
-  // Uninstall Page Manager UI
-  if (\Drupal::moduleHandler()->moduleExists('page_manager_ui')) {
-    array_push($uninstall_array, 'page_manager_ui');
-  }
-  $installer = \Drupal::service('module_installer');
-  $installer->uninstall($uninstall_array, FALSE);
-  
-  // Install Layout Builder
-  if (!\Drupal::moduleHandler()->moduleExists('layout_builder')) {
-    $installer->install(['layout_builder']);
-  }
-
-  // Delete Configs
-  $config = \Drupal::configFactory()
-    ->getEditable('page_manager.page_variant.node_view-panels_variant-blog-post');
-  $config->delete();
-  $config = \Drupal::configFactory()
-    ->getEditable('page_manager.page_variant.node_view-panels_variant-blog-series');
-  $config->delete();
-  $config = \Drupal::configFactory()
-    ->getEditable('pathauto.pattern.cgov_blog_topics');
-  $config->delete();
 }
