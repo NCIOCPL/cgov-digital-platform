@@ -26,12 +26,13 @@ use Drupal\Core\Asset\AttachedAssetsInterface;
 /**
  * Implements hook_library_info_build().
  *
- * This loads up all app module css files as libraries under `cgov_js_app_module`.
- * This allows us to attach the libraries to pages using the app modules.
+ * This loads up all app module css files as libraries under
+ * `cgov_js_app_module`. This allows us to attach the libraries to pages using
+ * the app modules.
  *
  * This function should only be called once per cache load. New app modules and
- * updates will need to clear out the library cache tag. (There is a library cache
- * tag right?)
+ * updates will need to clear out the library cache tag. (There is a library
+ * cache tag right?)
  */
 function cgov_js_app_module_library_info_build() {
   $libraries = [];
@@ -80,18 +81,18 @@ function cgov_js_app_module_library_info_build() {
 /**
  * Implements hook_css_alter().
  *
- * This is a hack to work around https://www.drupal.org/project/drupal/issues/3046636.
- * Basically, all module libraries will come before any theme libraries. However, we
- * want to add these stylesheets after our theme's since the app theme is usually
- * overriding the styles we define in our global css. This hook is going to reset the
- * module weight once everything is loaded.
+ * This hack works around https://www.drupal.org/project/drupal/issues/3046636.
+ * Basically, all module libraries will come before any theme libraries.
+ * However, we want to add these stylesheets after our theme's since the app
+ * theme is usually overriding the styles we define in our global css. This
+ * hook is going to reset the module weight once everything is loaded.
  * See https://www.drupal.org/project/drupal/issues/3046636#comment-15396857.
  */
 function cgov_js_app_module_css_alter(array &$css, AttachedAssetsInterface $assets) {
   $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
 
   // We are not rendering an app module, so exit.
-  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
+  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app') {
     return;
   }
 
@@ -120,7 +121,7 @@ function cgov_js_app_module_preprocess_page(array &$variables) {
   $app_module_id = \Drupal::request()->attributes->get('cgov_app_module_id');
 
   // We are not rendering an app module, so exit.
-  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app' ) {
+  if (!$app_module_id || $app_module_id !== 'cgov_js_only_app') {
     return;
   }
 

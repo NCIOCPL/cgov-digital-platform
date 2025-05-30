@@ -1,15 +1,15 @@
 <?php
 
-use Drupal\Core\Config\FileStorage;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
-
 /**
  * @file
  * Contains pdq_cancer_information_summary.install.
  */
 
 use Drupal\cgov_core\CgovCoreTools;
+
+use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Implements hook_install().
@@ -68,6 +68,7 @@ function pdq_cancer_information_summary_update_8001() {
  * Install new node field.
  *
  * @param string $name
+ *   The name of the field to install.
  */
 function _pdq_cancer_information_summary_install_node_field($name) {
   $dir = new FileStorage(__DIR__ . '/config/install/');
@@ -322,3 +323,11 @@ function pdq_cancer_information_summary_update_9004(&$sandbox) {
   $config->save();
   \Drupal::logger('pdq_cancer_information_summary')->notice('Installed field_cthp_card_title on the edit form.');
 }
+
+/**
+ * The next update hook will go here.
+ *
+ * The logic for ensuring that new fields are added to the edit form
+ * is repeated in each update hook.  For future updates, please
+ * consider creating a helper function to avoid duplication.
+ */

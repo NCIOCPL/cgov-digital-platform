@@ -25,20 +25,7 @@ function cgov_cts_install() {
 }
 
 /**
- * Implements hook_update_N().
+ * Latest update hook.
  */
 function cgov_cts_update_9000() {
-  Drupal::configFactory()->getEditable('app_module.app_module.cgov_cts_app')->delete();
-  Drupal::configFactory()->getEditable('cgov_cts.settings')->delete();
-  $query = \Drupal::entityQuery('node')
-            ->condition('type', 'cgov_application_page')
-            ->condition('field_application_module', 'cgov_cts_app')
-            ->accessCheck(TRUE);
-  $results = $query->execute();
-  if (!empty($results)) {
-      $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
-      foreach ($results as $nid) {
-          $storage_handler->load($nid)->delete();
-      }
-  }
 }

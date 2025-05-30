@@ -5,9 +5,9 @@
  * Contains cgov_video.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_form_alter().
@@ -30,7 +30,7 @@ function cgov_video_media_view(array &$build, EntityInterface $entity, EntityVie
   if ($entity->bundle() != 'cgov_video') {
     return;
   }
-  if(!empty($entity->field_override_thumbnail_video->target_id) && isset($build['field_override_thumbnail_video'])) {
+  if (!empty($entity->field_override_thumbnail_video->target_id) && isset($build['field_override_thumbnail_video'])) {
     $build['thumbnail'] = $build['field_override_thumbnail_video'];
     unset($build['field_override_thumbnail_video']);
   }
