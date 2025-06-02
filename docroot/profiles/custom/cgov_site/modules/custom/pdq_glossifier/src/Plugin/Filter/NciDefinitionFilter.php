@@ -74,7 +74,7 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
    *    data-gloss-id="<CDRID_AS_INT>"
    *    data-gloss-dictionary="<dictionary-name>"
    *    data-gloss-audience="<Patient|HealthProfessional>"
-   *    lang="<en|es>"
+   *    data-gloss-lang="<en|es>"
    *  >text</nci-definition>
    *
    * Gloss ID is required.
@@ -104,7 +104,7 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         // is a real need. Technically if we do not include it in the tag,
         // then translating content becomes easier. We make the lang
         // show up in the link because it is a good idea to have it there.
-        $lang = $node->getAttribute('lang') !== '' ? $node->getAttribute('lang') : $langcode;
+        $lang = $node->getAttribute('data-gloss-lang') !== '' ? $node->getAttribute('data-gloss-lang') : $langcode;
 
         if ($gloss_id === '') {
           // If the glossary ID is missing, we should not transform the tag.
@@ -151,8 +151,8 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         if (!$node->hasAttribute('data-gloss-audience')) {
           $node->setAttribute('data-gloss-audience', 'Patient');
         }
-        if (!$node->hasAttribute('lang')) {
-          $node->setAttribute('lang', $lang);
+        if (!$node->hasAttribute('data-gloss-lang')) {
+          $node->setAttribute('data-gloss-lang', $lang);
         }
       }
 
