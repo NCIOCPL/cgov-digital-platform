@@ -33,11 +33,12 @@ export default class GlossifyEditing extends Plugin {
         'glossId',
         'glossDictionary',
         'glossAudience',
-        'lang',
+        'glossLang',
       ],
     });
 
-    this.editor.editing.view.domConverter.blockElements.push('drupal-entity');
+    // TODO: What is this?
+    //this.editor.editing.view.domConverter.blockElements.push('drupal-entity');
   }
 
   /**
@@ -58,7 +59,7 @@ export default class GlossifyEditing extends Plugin {
             'data-gloss-id',
             'data-gloss-dictionary',
             'data-gloss-audience',
-            'lang',
+            'data-gloss-lang',
           ],
         },
         model: (viewElement, { writer }) => {
@@ -66,7 +67,7 @@ export default class GlossifyEditing extends Plugin {
             glossId: viewElement.getAttribute('data-gloss-id'),
             glossDictionary: viewElement.getAttribute('data-gloss-dictionary'),
             glossAudience: viewElement.getAttribute('data-gloss-audience'),
-            lang: viewElement.getAttribute('lang'),
+            glossLang: viewElement.getAttribute('data-gloss-lang'),
           });
         },
       });
@@ -80,12 +81,12 @@ export default class GlossifyEditing extends Plugin {
         const glossId = modelElement.getAttribute('glossId');
         const glossDictionary = modelElement.getAttribute('glossDictionary');
         const glossAudience = modelElement.getAttribute('glossAudience');
-        const lang = modelElement.getAttribute('lang');
+        const glossLang = modelElement.getAttribute('glossLang');
 
         const matchingFormatter = config['nci_glossary_dictionary_urls']?.find((entry) =>
           entry['dictionary']?.toLowerCase() === glossDictionary?.toLowerCase() &&
           entry['audience']?.toLowerCase() === glossAudience?.toLowerCase() &&
-          entry['langcode']?.toLowerCase() === lang?.toLowerCase()
+          entry['langcode']?.toLowerCase() === glossLang?.toLowerCase()
         )?.formatter;
 
         // TODO: handle when formatter is bad.
@@ -106,7 +107,7 @@ export default class GlossifyEditing extends Plugin {
           'data-gloss-id': glossId,
           'data-gloss-dictionary': glossDictionary,
           'data-gloss-audience': glossAudience,
-          lang,
+          'data-gloss-lang': glossLang,
         })
       },
     });
@@ -123,7 +124,7 @@ export default class GlossifyEditing extends Plugin {
             'data-gloss-id': modelElement.getAttribute('glossId'),
             'data-gloss-dictionary': modelElement.getAttribute('glossDictionary'),
             'data-gloss-audience': modelElement.getAttribute('glossAudience'),
-            'lang': modelElement.getAttribute('lang'),
+            'data-gloss-lang': modelElement.getAttribute('glossLang'),
           });
         },
       });
