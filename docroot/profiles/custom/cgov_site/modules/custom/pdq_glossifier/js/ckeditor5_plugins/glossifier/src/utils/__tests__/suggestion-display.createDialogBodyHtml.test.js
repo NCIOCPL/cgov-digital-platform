@@ -7,16 +7,20 @@ describe('createDialogBodyHtml', () => {
       {
         start: 10,
         length: 6,
-        doc_id: "CDR123",
+        doc_id: "CDR0000000123",
         language: "en",
         first_occurrence: true,
-        dictionary: "Cancer.gov"
+        dictionary: "Cancer.gov",
+        audience: "Patient",
       },
       {
         start: 22,
         length: 7,
-        doc_id: 'CDR456',
-        first_occurrence: false
+        doc_id: 'CDR0000000456',
+        language: "en",
+        first_occurrence: false,
+        dictionary: "Cancer.gov",
+        audience: "Patient",
       }
     ];
 
@@ -24,15 +28,19 @@ describe('createDialogBodyHtml', () => {
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, mockCandidateTermConfigs, 'en');
 
     const expected = `This is a <label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
        data-glossify-label
     >cancer<input type="checkbox"/></label> test <label
-       data-term-id="CDR456"
-       data-language="en"
+       data-gloss-id="456"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""
@@ -54,14 +62,19 @@ describe('createDialogBodyHtml', () => {
     const candidateTerms = [{
       start: 22,
       length: 6,
-      doc_id: 'CDR123',
-      first_occurrence: true
+      doc_id: 'CDR0000000123',
+      language: 'en',
+      first_occurrence: true,
+      dictionary: 'Cancer.gov',
+      audience: 'Patient'
     }];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `This is a <strong><em><label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
@@ -71,6 +84,7 @@ describe('createDialogBodyHtml', () => {
     expect(result).toBe(expected);
   });
 
+  // @todo What is this use case now we have definition links.
   it('handles existing glossified terms with HTML tags', () => {
     const originalHtml = '<p>This is a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045333&amp;version=Patient&amp;language=en" data-glossary-id="CDR0000045333"><em><strong>cancer</strong></em></a> test</p>';
     const candidateTerms = [];
@@ -84,20 +98,24 @@ describe('createDialogBodyHtml', () => {
   it('preserves text before and after terms', () => {
     const originalHtml = 'Start cancer middle example end';
     const candidateTerms = [
-      { start: 6, length: 6, doc_id: 'CDR123', first_occurrence: true },  // "cancer" starts at position 6
-      { start: 20, length: 7, doc_id: 'CDR456', first_occurrence: false } // "example" starts at position 20
+      { start: 6, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' },  // "cancer" starts at position 6
+      { start: 20, length: 7, doc_id: 'CDR0000000456', language: 'en', first_occurrence: false, dictionary: 'Cancer.gov', audience: 'Patient' } // "example" starts at position 20
     ];
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `Start <label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
        data-glossify-label
     >cancer<input type="checkbox"/></label> middle <label
-       data-term-id="CDR456"
-       data-language="en"
+       data-gloss-id="456"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""
@@ -110,21 +128,25 @@ describe('createDialogBodyHtml', () => {
   it('handles overlapping term positions correctly', () => {
     const originalHtml = 'cancer treatment';
     const candidateTerms = [
-      { start: 0, length: 6, doc_id: 'CDR123', first_occurrence: true },
-      { start: 7, length: 9, doc_id: 'CDR456', first_occurrence: false }
+      { start: 0, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' },
+      { start: 7, length: 9, doc_id: 'CDR0000000456', language: 'en', first_occurrence: false, dictionary: 'Cancer.gov', audience: 'Patient' }
     ];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `<label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
        data-glossify-label
     >cancer<input type="checkbox"/></label> <label
-       data-term-id="CDR456"
-       data-language="en"
+       data-gloss-id="456"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""

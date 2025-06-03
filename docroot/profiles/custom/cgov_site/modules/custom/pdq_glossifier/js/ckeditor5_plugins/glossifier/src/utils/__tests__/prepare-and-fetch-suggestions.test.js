@@ -223,14 +223,16 @@ describe('prepareAndFetchSuggestions', () => {
 
   describe('Integration scenarios', () => {
     it('should handle complex content with mixed existing and new glossifications', async () => {
-      const complexContent = `
-        <p>Some existing <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR123&version=Patient&language=English">cancer</a> definition and new tumor text.</p>
-        <p>More content about treatment and therapy.</p>
-      `;
+      const complexContent = `<p>Some existing ` +
+        `<nci-definition data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">cancer</nci-definition>` +
+        ` definition and new tumor text.</p>` +
+        `<p>More content about treatment and therapy.</p>`;
 
       const mockSuggestions = [
-        { start: 50, length: 5, doc_id: 'CDR456', first_occurrence: true, dictionary: 'Cancer.gov' },
-        { start: 80, length: 9, doc_id: 'CDR789', first_occurrence: true, dictionary: 'Cancer.gov' }
+        // tumor
+        { start: 229, length: 5, doc_id: 'CDR0000000456', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' },
+        // treatment
+        { start: 266, length: 9, doc_id: 'CDR0000000789', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient'}
       ];
 
       global.fetch
@@ -245,18 +247,30 @@ describe('prepareAndFetchSuggestions', () => {
 
       const result = await prepareAndFetchSuggestions(complexContent);
 
+      const expectedBody = `<p>Some existing ` +
+        `<span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="" data-term="cancer"></span>` +
+        ` definition and new tumor text.</p><p>More content about treatment and therapy.</p>`;
+
       // Verify the API was called with properly prepared content
       const apiCallBody = JSON.parse(global.fetch.mock.calls[1][1].body);
-      expect(apiCallBody.fragment).toContain('span rel="glossified"');
-      expect(apiCallBody.fragment).toContain('data-term="cancer"');
-      expect(result).toBeInstanceOf(HTMLElement);
+      expect(apiCallBody.fragment).toBe(expectedBody);
+
+      const expected = `<div><p>Some existing ` +
+        `<label data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term " data-preexisting="true" data-html="" data-glossify-label="">cancer<input type="checkbox"></label>` +
+        ` definition and new ` +
+        `<label data-gloss-id="456" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">tumor<input type="checkbox"></label>` +
+        ` text.</p><p>More content about ` +
+        `<label data-gloss-id="789" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">treatment<input type="checkbox"></label>` +
+        ` and therapy.</p></div>`;
+
+      expect(result.outerHTML).toBe(expected);
     });
 
     it('should pass through the complete workflow correctly', async () => {
       const editorData = '<p>Test content about cancer treatment</p>';
       const mockSuggestions = [
-        { start: 19, length: 6, doc_id: 'CDR123', first_occurrence: true, dictionary: 'Cancer.gov' },
-        { start: 26, length: 9, doc_id: 'CDR456', first_occurrence: true, dictionary: 'Cancer.gov' }
+        { start: 22, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' },
+        { start: 29, length: 9, doc_id: 'CDR0000000456', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' }
       ];
 
       global.fetch
@@ -271,18 +285,23 @@ describe('prepareAndFetchSuggestions', () => {
 
       const result = await prepareAndFetchSuggestions(editorData);
 
+      const expectedBody = `<p>Test content about cancer treatment</p>`;
+
       // Verify the complete flow
       expect(global.fetch).toHaveBeenCalledTimes(2);
 
       // Check that content was prepared (should be mostly the same for simple content)
       const apiCallBody = JSON.parse(global.fetch.mock.calls[1][1].body);
-      expect(apiCallBody.fragment).toContain('Test content about cancer treatment');
+      expect(apiCallBody.fragment).toBe(expectedBody);
       expect(apiCallBody.languages).toEqual(['en']);
       expect(apiCallBody.dictionaries).toEqual(['Cancer.gov']);
 
-      // Check that result is a proper HTML element
-      expect(result).toBeInstanceOf(HTMLElement);
-      expect(result.innerHTML).toContain('data-term-id');
+      const expected = `<div><p>Test content about ` +
+        `<label data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">cancer<input type="checkbox"></label> ` +
+        `<label data-gloss-id="456" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">treatment<input type="checkbox"></label>` +
+        `</p></div>`;
+      expect(result.outerHTML).toBe(expected);
+
     });
 
     it('should handle very long content efficiently', async () => {

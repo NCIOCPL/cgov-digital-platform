@@ -10,14 +10,19 @@ describe('createGlossificationTermOptionElementString (tested indirectly)', () =
     const candidateTerms = [{
       start: 8,
       length: 6,
-      doc_id: 'CDR123',
-      first_occurrence: true
+      doc_id: 'CDR0000000123',
+      language: 'en',
+      first_occurrence: true,
+      dictionary: 'Cancer.gov',
+      audience: 'Patient',
     }];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `This is <label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
@@ -32,14 +37,19 @@ describe('createGlossificationTermOptionElementString (tested indirectly)', () =
     const candidateTerms = [{
       start: 8,
       length: 6,
-      doc_id: 'CDR123',
-      first_occurrence: false
+      doc_id: 'CDR0000000123',
+      language: 'en',
+      first_occurrence: false,
+      dictionary: 'Cancer.gov',
+      audience: 'Patient'
     }];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `This is <label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""
@@ -50,12 +60,12 @@ describe('createGlossificationTermOptionElementString (tested indirectly)', () =
   });
 
   it('handles preexisting terms with HTML tags', () => {
-    const preparedBody = '<span rel="glossified" data-term="cancer" data-html="strong,em" data-id="CDR123" data-language="en">cancer</span>';
+    const preparedBody = '<span rel="glossified" data-term="cancer" data-html="strong,em" data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">cancer</span>';
     const responseArray = [];
     const language = 'en';
 
     const result = suggestionDisplay.createHtmlFromSuggestions(preparedBody, responseArray, language);
-    const expectedHtml = `<label data-term-id="CDR123" data-language="en" class="glossify-dialog__term " data-preexisting="true" data-html="strong,em" data-glossify-label="">cancer<input type="checkbox"></label>`;
+    const expectedHtml = `<label data-gloss-id="123" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term " data-preexisting="true" data-html="strong,em" data-glossify-label="">cancer<input type="checkbox"></label>`;
 
     expect(result.innerHTML).toContain(expectedHtml);
   });
@@ -64,6 +74,7 @@ describe('createGlossificationTermOptionElementString (tested indirectly)', () =
 // Edge cases and error handling
 describe('Edge cases and error handling', () => {
 
+  // @todo This should actually be something it throws on.
   it('handles null/undefined values in createDialogBodyHtml', () => {
     const originalHtml = 'test content';
     const candidateTerms = [
@@ -72,8 +83,10 @@ describe('Edge cases and error handling', () => {
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `<label
-       data-term-id="null"
-       data-language="en"
+       data-gloss-id="NaN"
+       data-gloss-dictionary="undefined"
+       data-gloss-audience="undefined"
+       data-gloss-lang="undefined"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""
@@ -86,13 +99,15 @@ describe('Edge cases and error handling', () => {
   it('handles terms at the beginning of text', () => {
     const originalHtml = 'cancer is a disease';
     const candidateTerms = [
-      { start: 0, length: 6, doc_id: 'CDR123', first_occurrence: true }
+      { start: 0, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' }
     ];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `<label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
@@ -105,13 +120,15 @@ describe('Edge cases and error handling', () => {
   it('handles terms at the end of text', () => {
     const originalHtml = 'This is cancer';
     const candidateTerms = [
-      { start: 8, length: 6, doc_id: 'CDR123', first_occurrence: true }
+      { start: 8, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' }
     ];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `This is <label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
@@ -122,24 +139,30 @@ describe('Edge cases and error handling', () => {
 
   });
 
+  // Technically, per the API rules this would actually be a single term, and
+  // probably not match anything. I.E. terms can't really abut up to each other.
   it('handles adjacent terms', () => {
     const originalHtml = 'cancertumor';
     const candidateTerms = [
-      { start: 0, length: 6, doc_id: 'CDR123', first_occurrence: true },
-      { start: 6, length: 5, doc_id: 'CDR456', first_occurrence: false }
+      { start: 0, length: 6, doc_id: 'CDR0000000123', language: 'en', first_occurrence: true, dictionary: 'Cancer.gov', audience: 'Patient' },
+      { start: 6, length: 5, doc_id: 'CDR0000000456', language: 'en', first_occurrence: false, dictionary: 'Cancer.gov', audience: 'Patient' }
     ];
 
     const result = suggestionDisplay.createDialogBodyHtml(originalHtml, candidateTerms, 'en');
     const expected = `<label
-       data-term-id="CDR123"
-       data-language="en"
+       data-gloss-id="123"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term glossify-dialog__term--first"
        data-preexisting="false"
        data-html=""
        data-glossify-label
     >cancer<input type="checkbox"/></label><label
-       data-term-id="CDR456"
-       data-language="en"
+       data-gloss-id="456"
+       data-gloss-dictionary="Cancer.gov"
+       data-gloss-audience="Patient"
+       data-gloss-lang="en"
        class="glossify-dialog__term "
        data-preexisting="false"
        data-html=""

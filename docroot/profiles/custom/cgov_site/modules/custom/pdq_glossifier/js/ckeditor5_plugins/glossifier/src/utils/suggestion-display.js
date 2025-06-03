@@ -17,34 +17,43 @@ export const glossifyTermFromLabel = (label) => {
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
     displayText = convertTagStringToHTML(originalText, termHTML);
   }
-  const id = label.dataset.termId;
-  const language = label.dataset.language;
-  const paramString = id + "&version=Patient&language=" + language;
-  const href = "/Common/PopUps/popDefinition.aspx?id=" + paramString;
 
-  const anchor = document.createElement('a');
-  // The glossary popups shim on the FE will use this ID to generate a click handler
-  // that works with the current paradigm.
-  anchor.dataset.glossaryId = id;
-  anchor.className = 'definition';
-  anchor.href = href;
-  anchor.innerHTML = displayText;
-  label.replaceWith(anchor);
+  const definition = document.createElement('nci-definition');
+  definition.dataset.glossId = label.dataset.glossId;
+  definition.dataset.glossDictionary = label.dataset.glossDictionary;
+  definition.dataset.glossAudience = label.dataset.glossAudience;
+  definition.dataset.glossLang = label.dataset.glossLang;
+
+  // Why don't we get HTML from convertTagStringToHTML?
+  // It might be nicer to appendChild.
+  definition.innerHTML = displayText;
+  label.replaceWith(definition);
 };
 
 /**
  * Create element to wrap term for checkbox selection.
  *
  * @param {string} termText
- * @param {string} termId
- * @param {string} termLanguage
+ * @param {string} glossId the id of the definition
+ * @param {string} glossDictionary the dictionary name
+ * @param {string} glossAudience the audience of the definition
+ * @param {string} glossLang the language of the definition
  * @param {string} termHTML
  * @param {boolean} isFirstOccurenceOfTerm
  * @param {boolean} isPreexisting
  *
  * @returns {string}
  */
-const createGlossificationTermOptionElementString = (termText, termId, termLanguage, termHTML, isFirstOccurenceOfTerm, isPreexisting) => {
+const createGlossificationTermOptionElementString = (
+  termText,
+  glossId,
+  glossDictionary,
+  glossAudience,
+  glossLang,
+  termHTML,
+  isFirstOccurenceOfTerm,
+  isPreexisting
+) => {
   // Create element to wrap term for checkbox selection
   // IE Add in inputs now with all the rest of the attributes as data attributes.
   // Then when I strip the checkboxes I can build the anchor tag.
@@ -54,18 +63,21 @@ const createGlossificationTermOptionElementString = (termText, termId, termLangu
   const firstOccurenceClassName = isFirstOccurenceOfTerm ? "glossify-dialog__term--first" : "";
   const classlist = "glossify-dialog__term " + firstOccurenceClassName;
   let textWithHTML = termText;
-  let dataHTML = '';
 
   //If term was selected before and has html tags wrapping it, convert it from string to html wrapped in those tags
+  // The following code is inert because isPreexisting is never a string.
+  // also given how nested elements can get complicated, do we really
+  // want to see the styling on the text in the label.
   if((isPreexisting === "true") && termHTML && (termHTML!=='')) {
     textWithHTML = convertTagStringToHTML(termText, termHTML);
-    dataHTML = termHTML;
   }
 
   const wrappedTerm =
     `<label
-       data-term-id="${termId}"
-       data-language="${termLanguage}"
+       data-gloss-id="${glossId}"
+       data-gloss-dictionary="${glossDictionary}"
+       data-gloss-audience="${glossAudience}"
+       data-gloss-lang="${glossLang}"
        class="${classlist}"
        data-preexisting="${isPreexisting}"
        data-html="${termHTML}"
@@ -86,7 +98,7 @@ const createGlossificationTermOptionElementString = (termText, termId, termLangu
  *
  * @returns {string}
  */
-export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, language) => {
+export const createDialogBodyHtml = (originalHtml, candidateTermConfigs) => {
   // Instead of editing the string contents, we create a new string. This
   // allows us to do the whole concatenation in one pass. The slow pointer
   // keeps the new, longer string in sync with the indexes of the original string.
@@ -107,7 +119,11 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
     slowPointer = termStartIndex;
     const termText = originalHtml.slice(slowPointer, termEndIndex);
     slowPointer = termEndIndex;
-    const termId = termConfig.doc_id;
+    // The glossary id is CDR000012345. We need this to be just 12345.
+    const glossId = termConfig.doc_id ? parseInt(termConfig.doc_id?.slice(3)) : NaN;
+    const glossDictionary = termConfig.dictionary;
+    const glossAudience = termConfig.audience;
+    const glossLang = termConfig.language;
     // Lookup termText in set of span placeholders for existing glossary term, set html property from that if present
     let termHTML = '';
     for (let i = 0; i < elements.length; i++) {
@@ -116,7 +132,10 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
       }
     }
     const isFirstOccurenceOfTerm = termConfig.first_occurrence;
-    const wrappedTerm = createGlossificationTermOptionElementString(termText, termId, language,  termHTML, isFirstOccurenceOfTerm, false);
+    const wrappedTerm = createGlossificationTermOptionElementString(
+      termText, glossId, glossDictionary, glossAudience, glossLang,
+      termHTML, isFirstOccurenceOfTerm, false
+    );
     processedHtml += wrappedTerm;
   }
   // We need to grab the tail of the originalHtml
@@ -140,12 +159,15 @@ export const createDialogBodyHtml = (originalHtml, candidateTermConfigs, languag
  *
  * @param {string} preparedBody
  * @param {Object[]} responseArray
- * @param {string} language
  */
-export const createHtmlFromSuggestions = (preparedBody, responseArray, language) => {
+export const createHtmlFromSuggestions = (
+  preparedBody,
+  responseArray,
+) => {
   // TODO: Confirm whether getting the langcode from the editor instance is sufficient.
   // https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-langCode
-  const dialogBody = createDialogBodyHtml(preparedBody, responseArray, language);
+  // This todo should probably get moved to where ever this is called from.
+  const dialogBody = createDialogBodyHtml(preparedBody, responseArray);
 
   // Create an element with the contents of the suggestions.
   const contentsEl = document.createElement('div');
@@ -158,9 +180,14 @@ export const createHtmlFromSuggestions = (preparedBody, responseArray, language)
   previouslyGlossifiedTerms.forEach(function (span) {
     const termText = span.dataset.term;
     const termHTML = span.dataset.html;
-    const termId = span.dataset.id;
-    const termLanguage = span.dataset.language;
-    const labelString = createGlossificationTermOptionElementString(termText, termId, termLanguage, termHTML, false, true);
+    const glossId = span.dataset.glossId;
+    const glossDictionary = span.dataset.glossDictionary;
+    const glossAudience = span.dataset.glossAudience;
+    const glossLang = span.dataset.glossLang;
+    const labelString = createGlossificationTermOptionElementString(
+      termText, glossId, glossDictionary, glossAudience, glossLang,
+      termHTML, false, true
+    );
     // Because we have a string instead of a DOM element to work with, we're going to use a little
     // trickery here to get a DOM element by first inserting the string and then reextracting it
     // as an element (which lets us programmatically check the input and use the replaceWith method.)
