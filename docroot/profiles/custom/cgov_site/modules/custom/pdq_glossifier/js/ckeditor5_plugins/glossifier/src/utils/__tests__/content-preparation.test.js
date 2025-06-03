@@ -16,16 +16,19 @@ describe('convertTagStringToHTML', () => {
 });
 
 describe('prepareEditorBodyForGlossificationRequest', () => {
+  // Note, this is a weird test. Previously this test took in html entities and
+  // needed the "fixSpanish" to translate (some) to unicode chars. With our new
+  // approach we use DOMParser, which replaces the entities. However, in
+  // reviewing CKEditor 5, it replaces the entities for us. So there is pretty
+  // much no way any entities are passing through.
   it('sanitizes and fixes Spanish in input', () => {
     const input = 'Á\n&Eacute;';
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toContain('&#193;');
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toContain('&#x000a;');
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toContain('É');
+    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe('&#193;&#x000a;É');
   });
 
   it('replaces all supported Spanish HTML entities with literal characters', () => {
     const input = '&Aacute;&aacute;&Eacute;&eacute;&Iacute;&iacute;&Oacute;&oacute;&Uacute;&uacute;&Yacute;&yacute;&Ntilde;&ntilde;';
-    const output = 'ÁáÉéÍíÓóÚúÝýÑñ';
+    const output = '&#193;áÉé&#205;íÓóÚúÝýÑñ';
     expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
   });
 
@@ -34,8 +37,12 @@ describe('prepareEditorBodyForGlossificationRequest', () => {
   });
 
   it('sanitizes special characters to hex codes', () => {
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest('\n')).toBe('&#x000a;');
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest('\r')).toBe('&#x000d;');
+    // Technically the DOMParser automatically strips newlines on its own.
+    // putting the newlines between elements gets it to do the right thing.
+    expect(contentPrep.prepareEditorBodyForGlossificationRequest('<p>a</p>\n<p>b</p>')).toBe('<p>a</p>&#x000a;<p>b</p>');
+    // We used to have to replace \r with &#x000d;. DOMParser replaces
+    // \r with \n. Keeping this test to flag any future changes.
+    expect(contentPrep.prepareEditorBodyForGlossificationRequest('<p>a</p>\r<p>b</p>')).toBe('<p>a</p>&#x000a;<p>b</p>');
     expect(contentPrep.prepareEditorBodyForGlossificationRequest('”')).toBe('&#148;');
     expect(contentPrep.prepareEditorBodyForGlossificationRequest('—')).toBe('&#151;');
     expect(contentPrep.prepareEditorBodyForGlossificationRequest('–')).toBe('&#150;');
@@ -47,13 +54,16 @@ describe('prepareEditorBodyForGlossificationRequest', () => {
     expect(contentPrep.prepareEditorBodyForGlossificationRequest('a')).toBe('a');
   });
 
-  // @todo This test is technically an error if sanitization was expected to
-  // encode unicode characters. Because we sanitize before fixing Spanish.
-  // Will leave as is for now because that is how it has been "working" so far.
+  // This test now works as expected with the changes to content-preparation from
+  // prior to <nci-definition> handling. Previous translating HTML entities came
+  // after sanitization which encoded certain spanish unicode chars. Also, in
+  // retrospect, our new DOMParser AND even CKEditor always encodes html entities.
+  // Anyway, we are keeping this test here, for any future changes as the expected
+  // output below is, well, expected.
   it('handles mixed input with both entities and special chars', () => {
     const input = '&Aacute;\n—';
     // &Aacute; -> Á, then sanitized to &#193;, \n -> &#x000a;, — -> &#151;
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe('Á&#x000a;&#151;');
+    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe('&#193;&#x000a;&#151;');
   });
 
   // @todo Figure what it up with the nested children in the definition tags.
@@ -61,32 +71,25 @@ describe('prepareEditorBodyForGlossificationRequest', () => {
   // `<strong>Test <em>with children</em></strong>`
   // is handled correctly.
   it('handles content with existing definition tags', () => {
-    const input = `
-      <p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>
-      <p>Lorem ipsum dolor sit amet, <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045360&amp;version=Patient&amp;language=en" data-glossary-id="CDR0000045360">Anemia</a> consectetur adipiscing elit.</p>
-      <p>Lorem ipsum dolor sit amet, <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045360&amp;version=Patient&amp;language=en" data-glossary-id="CDR0000045360">Test <em>with<strong>children</strong></em></a> consectetur adipiscing elit.</p>
-    `;
-    const output = '&#x000a;      <p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>&#x000a;      <p>Lorem ipsum dolor sit amet, <span rel=\"glossified\" data-id=\"CDR0000045360\"&#x000a;      data-language=\"en\"&#x000a;      data-preexisting=\"true\"&#x000a;      data-html=\"\"&#x000a;      data-term=\"Anemia\"></span> consectetur adipiscing elit.</p>&#x000a;      <p>Lorem ipsum dolor sit amet, <span rel=\"glossified\" data-id=\"CDR0000045360\"&#x000a;      data-language=\"en\"&#x000a;      data-preexisting=\"true\"&#x000a;      data-html=\"em,strong\"&#x000a;      data-term=\"Test withchildren\"></span> consectetur adipiscing elit.</p>&#x000a;    ';
+    const input =
+      `<p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>` +
+      `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="4536" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Anemia</nci-definition> consectetur adipiscing elit.</p>` +
+      `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Test <em>with<strong>children</strong></em></nci-definition> consectetur adipiscing elit.</p>`;
+
+    const output =
+      `<p>Lorum ipsum dolor sit colon cancer, consectetur adipiscing elit.</p>` +
+      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="4536" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="" data-term="Anemia"></span> consectetur adipiscing elit.</p>` +
+      `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="em,strong" data-term="Test withchildren"></span> consectetur adipiscing elit.</p>`;
+
     expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
   });
 
-  // @todo The result of this test is a bit iffy. I would call it a bug, but it is also
-  // original code. But I would not expect the data-term to be "undefined" if the
-  // definition tag is empty.
+  // This test works slightly differently than previously. It maintains the empty
+  // space. Previously it just did "undefined", which was not exactly the expected
+  // response.
   it('handles content with empty definition tags', () => {
-    const input = `
-      <p>Lorem ipsum dolor sit amet, <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045360&amp;version=Patient&amp;language=en" data-glossary-id="CDR0000045360"> </a> consectetur adipiscing elit.</p>
-    `;
-    const output = '&#x000a;      <p>Lorem ipsum dolor sit amet, <span rel=\"glossified\" data-id=\"CDR0000045360\"&#x000a;      data-language=\"en\"&#x000a;      data-preexisting=\"true\"&#x000a;      data-html=\"\"&#x000a;      data-term=\"undefined\"></span> consectetur adipiscing elit.</p>&#x000a;    ';
-    expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
-  });
-
-  // @todo Make this test case work in the future. Right now the logic requires
-  // the HTML to be in a very specific order. Order should not matter in processing
-  // the definition links.
-  it('handles content with out of order definition link tags', () => {
-    const input = `<a href="/Common/PopUps/popDefinition.aspx?id=CDR0000045360&amp;version=Patient&amp;language=en" class="definition" data-glossary-id="CDR0000045360">Anemia</a>`;
-    const output = '<a href=\"/Common/PopUps/popDefinition.aspx?id=CDR0000045360&amp;version=Patient&amp;language=en\" class=\"definition\" data-glossary-id=\"CDR0000045360\">Anemia</a>';
+    const input = `<p>Lorem ipsum dolor sit amet, <nci-definition data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en"> </nci-definition> consectetur adipiscing elit.</p>`;
+    const output = `<p>Lorem ipsum dolor sit amet, <span rel="glossified" data-preexisting="true" data-gloss-lang="en" data-gloss-id="45360" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-html="" data-term=" "></span> consectetur adipiscing elit.</p>`;
     expect(contentPrep.prepareEditorBodyForGlossificationRequest(input)).toBe(output);
   });
 

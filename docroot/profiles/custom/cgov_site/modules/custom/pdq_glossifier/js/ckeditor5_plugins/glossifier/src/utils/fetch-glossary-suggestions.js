@@ -8,6 +8,15 @@
  * @param {string} language The two language character code.
  */
 const fetchGlossarySuggestions = async (content, language) => {
+
+  // @todo We should pass these items in as configured from the Drupal editor.
+  // The glossify button should maybe control which dictionary. Also
+  // possible is allowing the user to choose which one. For not, we just
+  // hard code here. We want the results to have the dictionary, which
+  // it does, but also the audience, which it does not.
+  const glossDictionary = "Cancer.gov";
+  const glossAudience = "Patient";
+
   // Get the CSRF Token
   let csrfToken = null;
   try {
@@ -39,7 +48,7 @@ const fetchGlossarySuggestions = async (content, language) => {
           language,
         ],
         'dictionaries': [
-          'Cancer.gov'
+          glossDictionary
         ],
       }),
     });
@@ -49,7 +58,10 @@ const fetchGlossarySuggestions = async (content, language) => {
     }
 
     const suggestions = await res.json();
-    return suggestions;
+    // Fake the audience until the API returns it. This will make the
+    // suggestions easier if we can pull this from the response.
+    // (Also in the future we may need to support multiple audiences.)
+    return suggestions.map((suggestion) => ({...suggestion, audience: glossAudience}));
 
   } catch (err) {
     console.error(err);
