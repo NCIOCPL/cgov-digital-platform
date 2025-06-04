@@ -5,6 +5,9 @@
 // Expose USWDS variables and mixins to our imports.
 @use 'uswds-core' as *;
 
+// Accordion
+@use 'usa-accordion' as accordion;
+
 /** Legacy mixin things **/
 @import '~Core/styles/environments/percussion';
 @import '../../legacy/styles/variables';
@@ -25,4 +28,8 @@
 // Override wrapper styles for embedded images
 // (Specifically the figure and caption/credit/enlarge styles
 @import '../../legacy/transition-hacks/inner-page-embed-image-hack';
+
+.usa-accordion {
+	@include u-margin-top(3);
+}
 
