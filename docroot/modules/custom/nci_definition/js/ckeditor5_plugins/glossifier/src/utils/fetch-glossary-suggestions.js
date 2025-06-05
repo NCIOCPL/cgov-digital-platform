@@ -35,6 +35,7 @@ const fetchGlossarySuggestions = async (content, language) => {
 
   // Now fetch the suggestions.
   try {
+    // @todo we should not hardcode the URL here.
     const res = await fetch(Drupal.url('pdq/api/glossifier'), {
       method: 'POST',
       headers: {

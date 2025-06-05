@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\pdq_glossifier\Plugin\CKEditor5Plugin;
+namespace Drupal\nci_definition\Plugin\CKEditor5Plugin;
 
 use Drupal\ckeditor5\Plugin\CKEditor5PluginConfigurableTrait;
 use Drupal\ckeditor5\Plugin\CKEditor5PluginDefault;
@@ -12,9 +12,9 @@ use Drupal\editor\EditorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * CKEditor 5 PDQ Glossifier plugin configuration.
+ * CKEditor 5 Glossifier plugin configuration.
  */
-class PdqGlossifier extends CKEditor5PluginDefault implements ContainerFactoryPluginInterface {
+class Glossifier extends CKEditor5PluginDefault implements ContainerFactoryPluginInterface {
 
   use CKEditor5PluginConfigurableTrait;
 
@@ -49,13 +49,13 @@ class PdqGlossifier extends CKEditor5PluginDefault implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function getDynamicPluginConfig(array $static_plugin_config, EditorInterface $editor): array {
-    // Get the PDQ_Summary config.
-    $pdq_settings_config = $this->configFactory->get('pdq_glossifier.settings');
+    // Get the NCI Definition config.
+    $settings_config = $this->configFactory->get('nci_definition.settings');
 
     $plugin_config = [
       'nci_definition' => [
-        'definition_classes' => $pdq_settings_config->get('definition_classes'),
-        'nci_glossary_dictionary_urls' => $pdq_settings_config->get('nci_glossary_dictionary_urls'),
+        'definition_classes' => $settings_config->get('definition_classes'),
+        'nci_glossary_dictionary_urls' => $settings_config->get('nci_glossary_dictionary_urls'),
       ],
     ];
 

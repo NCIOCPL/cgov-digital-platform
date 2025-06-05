@@ -600,3 +600,13 @@ function cgov_core_update_10010() {
     $installer->install(['ckeditor5']);
   }
 }
+
+/**
+ * Enable nci_definition.
+ */
+function cgov_core_update_10011() {
+  $installer = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('nci_definition')) {
+    $installer->install(['nci_definition']);
+  }
+}
