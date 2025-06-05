@@ -4,16 +4,36 @@
 // (Children should not be applying this margin)
 .cgdp-article-footer {
 	@include u-margin-y(2);
+	@include at-media('tablet') {
+		@include u-margin-top(4);
+	}
 }
 
 // All direct children of article footer
 // Should have their vertical margin set here
 .cgdp-article-footer > * {
-	@include u-margin-y(2);
+	@include u-margin-y(3);
+	@include at-media('tablet') {
+		@include u-margin-y(4);
+	}
 	&:first-child {
 		@include u-margin-top(0);
 	}
 	&:last-child {
 		@include u-margin-bottom(0);
+	}
+
+	// The sum of the spacing below should be 32px
+	// (the space between all components in the article footer)
+	// ** Public use is special because it has a border above it **
+
+	// The space between the element above public use
+	// and public use's top border (16px)
+	&:has(+ .cgdp-public-use) {
+		@include u-margin-bottom(2);
+	}
+	// The space between public use text and its top border (16px)
+	&.cgdp-public-use {
+		@include u-margin-top(2);
 	}
 }
