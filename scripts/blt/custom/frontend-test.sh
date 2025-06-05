@@ -12,7 +12,7 @@ popd
 
 # There are no tests for cgov_common :(
 
-# Test pdq_glossifier
-pushd modules/custom/pdq_glossifier
+# Test nci_definition
+pushd ../../../modules/custom/nci_definition
 npm run test
 popd
