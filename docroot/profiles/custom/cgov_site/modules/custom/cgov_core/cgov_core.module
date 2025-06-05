@@ -26,6 +26,7 @@ use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Core\Language\Language;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_block_build_alter().
@@ -186,6 +187,91 @@ function cgov_core_field_widget_single_element_form_alter(&$element, FormStateIn
   ) {
     $element['#after_build'][] = '__cgov_core_text_filter_modify';
   }
+
+  $wysiwyg_fields = [
+    '#node' => [
+      'cgov_application_page' => ['body'],
+      'cgov_biography' => ['body'],
+      'cgov_blog_post' => ['body'],
+      'cgov_cancer_center' => ['body'],
+      'cgov_cancer_research' => ['body'],
+      'cgov_event' => ['body'],
+      'cgov_press_release' => ['body'],
+    ],
+    '#paragraph' => [
+      'body_section' => ['field_body_section_content'],
+      'cgov_cthp_raw_html_card' => ['field_html_content'],
+      'cgov_content_block' => ['field_html_content'],
+    ],
+    '#block_content' => [
+      'content_block' => ['body'],
+      'ncids_mega_menu_content' => ['body'],
+    ],
+    '#media' => [
+      'cgov_infographic' => ['body'],
+      'cgov_video' => ['body'],
+    ],
+  ];
+  foreach ($context['items'] as $item) {
+    if (!$item->entity) {
+      continue;
+    }
+
+    $entity = $item->entity;
+    $entity_type = $entity->getEntityTypeId();
+    $entity_bundle = $entity->bundle();
+    if (isset($wysiwyg_fields[$entity_type][$entity_bundle])) {
+      foreach ($wysiwyg_fields[$entity_type][$entity_bundle] as $field_name) {
+        if ($entity->hasField($field_name)) {
+          $text = $entity->get($field_name)->value;
+          if (strpos($text, '<a class="definition"') !== false) {
+            $converter = \Drupal::service('nci_definition.legacy_converter');
+            $new_text = $converter->convert($text);
+
+
+            // $new_text = __cgov_core_testing_part_2($text);
+            $entity->set($field_name, $new_text);
+          }
+        }
+      }
+    }
+  }
+}
+
+function __cgov_core_testing_part_2(string $text): string {
+  $dom = Html::load($text);
+  $xpath = new \DOMXpath($dom);
+
+  // Find all <a class="definition"> tags
+  foreach ($xpath->query('//a[contains(@class, "definition")]') as $node) {
+    /** @var \DOMElement $node */
+
+    $href = $node->getAttribute('href');
+    $link_text = $node->textContent;
+
+    // Parse the href query parameters
+    parse_str(parse_url(html_entity_decode($href), PHP_URL_QUERY), $params);
+
+    $id = isset($params['id']) ? filter_var($params['id'], FILTER_SANITIZE_NUMBER_INT) : null;
+    $audience = isset($params['version']) ? $params['version'] : 'Patient';
+    $lang = isset($params['language']) && $params['language'] === 'English' ? 'en' : 'es';
+
+    if ($id) {
+      // $definition = $node->ownerDocument->createElement('nci-definition', htmlspecialchars($text));
+      $definition = $dom->createElement('nci-definition');
+      $definition->setAttribute('data-gloss-id', $id);
+      $definition->setAttribute('data-gloss-dictionary', 'Cancer.gov');
+      $definition->setAttribute('data-gloss-audience', $audience);
+      $definition->setAttribute('hreflang', $lang);
+
+      while ($node->firstChild) {
+        $definition->appendChild($node->firstChild);
+      }
+
+      $node->parentNode->replaceChild($definition, $node);
+    }
+  }
+  return Html::serialize($dom);
 }
 
 /**
@@ -978,4 +1064,119 @@ function cgov_core_preprocess_views_view_field(array &$variables) {
   // Apply short date format to the 'changed' field.
   $timestamp = $variables['row']->_entity->getChangedTime();
   $variables['output'] = \Drupal::service('date.formatter')->format($timestamp,'short','',NULL,'en');
+}
+
+/**
+ * Implements hook_preprocess_node()
+ */
+// function cgov_core_preprocess_node(&$variables) {
+//   if (!empty($variables['content'])) {
+//     array_walk_recursive($variables['content'], function (&$item, $key) {
+//       if (is_string($item) && strpos($item, '<a class="definition"') !== false) {
+//         $item = cgov_core_replace_glossification_links($item);
+//       }
+//     });
+//   }
+// }
+
+function __cgov_core_replace_glossification_links(array &$variables, string $entity_type) {
+  $element = $variables['elements'] ?? null;
+  if (!$element || !isset($element[$entity_type])) {
+    return;
+  }
+
+  $entity = $element[$entity_type];
+  $field_map = [
+    // Nodes
+    '#node' => [
+      'cgov_application_page' => ['body'],
+      'cgov_biography' => ['body'],
+      'cgov_blog_post' => ['body', 'field_intro_text'],
+      'cgov_cancer_center' => ['body'],
+      'cgov_cancer_research' => ['body'],
+      'cgov_event' => ['body'],
+      'cgov_press_release' => ['body'],
+      'cgov_article' => ['field_intro_text'],
+      'cgov_blog_series' => ['field_about_blog'],
+    ],
+    // Paragraphs
+    '#paragraph' => [
+      'body_section' => ['field_body_section_content'],
+      'cgov_cthp_raw_html_card' => ['field_html_content'],
+      'cgov_content_block' => ['field_html_content'],
+      'cgov_citation' => ['field_citation_content'],
+      'cgov_cthp_guide_card' => ['field_cthp_guide_card_desc'],
+      'cgov_cthp_overview_card' => ['field_cthp_overview_card_text'],
+    ],
+    // Blocks
+    '#block_content' => [
+      'content_block' => ['body'],
+      'ncids_mega_menu_content' => ['body'],
+    ],
+    // Media
+    '#media' => [
+      'cgov_infographic' => ['body'],
+      'cgov_video' => ['body'],
+    ],
+  ];
+
+  $bundle = $entity->bundle();
+
+  if (!isset($field_map[$entity_type][$bundle])) {
+    return;
+  }
+
+  foreach ($field_map[$entity_type][$bundle] as $field_name) {
+    if (!$entity->hasField($field_name)) {
+      continue;
+    }
+
+    $field_value = $entity->get($field_name)->value ?? null;
+    if(!$field_value) {
+      continue;
+    }
+
+    // Load the HTML into DOMDocument
+    $dom = Html::load($field_value);
+    $xpath = new \DOMXpath($dom);
+
+    foreach ($xpath->query('//a[@class="definition"]') as $node) {
+      $transformed = __cgov_core_test($node);
+
+      if ($node->childNodes->length) {
+        while ($node->firstChild) {
+          $transformed->appendChild($node->firstChild);
+        }
+      }
+      $node->parentNode->replaceChild($transformed, $node);
+      $node = $transformed;
+      $variables['content'][$field_name][0]['#text'] = Html::serialize($dom);
+    }
+  }
+}
+
+
+function __cgov_core_test($node) {
+  /** @var \DOMElement $node */
+  $href = $node->getAttribute('href');
+  // $onclick = $a->getAttribute('onclick');
+  $text = $node->nodeValue;
+
+  // Parse href or onclick to get parameters
+  parse_str(parse_url(html_entity_decode($href), PHP_URL_QUERY), $params);
+
+  $id = isset($params['id']) ? filter_var($params['id'], FILTER_SANITIZE_NUMBER_INT) : null;
+  $audience = isset($params['version']) ? $params['version'] : 'Patient';
+  $lang = isset($params['language']) && $params['language'] === 'English' ? 'en' : 'es';
+
+  if ($id) {
+    $definition = $node->ownerDocument->createElement('nci-definition', htmlspecialchars($text));
+    // $definition = $dom->createElement('nci-definition', htmlspecialchars($text));
+    $definition->setAttribute('data-gloss-id', $id);
+    $definition->setAttribute('data-gloss-dictionary', 'Cancer.gov');
+    $definition->setAttribute('data-gloss-audience', $audience);
+    $definition->setAttribute('hreflang', $lang);
+  }
+
+  return $definition;
 }
