@@ -3,9 +3,9 @@
 // Set vertical margin around the article footer
 // (Children should not be applying this margin)
 .cgdp-article-footer {
-	@include u-margin-y(2);
+	@include u-margin-y(3);
 	@include at-media('tablet') {
-		@include u-margin-top(4);
+		@include u-margin-y(4);
 	}
 }
 
@@ -30,10 +30,16 @@
 	// The space between the element above public use
 	// and public use's top border (16px)
 	&:has(+ .cgdp-public-use) {
-		@include u-margin-bottom(2);
+		@include u-margin-bottom(1.5);
+		@include at-media('tablet') {
+			@include u-margin-bottom(2);
+		}
 	}
 	// The space between public use text and its top border (16px)
 	&.cgdp-public-use {
-		@include u-margin-top(2);
+		@include u-margin-top(1.5);
+		@include at-media('tablet') {
+			@include u-margin-top(2);
+		}
 	}
 }
