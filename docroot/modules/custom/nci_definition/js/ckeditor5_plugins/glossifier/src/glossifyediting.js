@@ -36,9 +36,6 @@ export default class GlossifyEditing extends Plugin {
         'glossLang',
       ],
     });
-
-    // TODO: What is this?
-    //this.editor.editing.view.domConverter.blockElements.push('drupal-entity');
   }
 
   /**
@@ -89,11 +86,9 @@ export default class GlossifyEditing extends Plugin {
           entry['langcode']?.toLowerCase() === glossLang?.toLowerCase()
         )?.formatter;
 
-        // TODO: handle when formatter is bad.
-        // TODO: do we even need the real href? Would it be better to be
-        // able to click the link and show a balloon dialog to remove the
-        // glossified term.
-        // TODO: Fix formatter to not be so PHP.
+        // TODO: In the future we should make it so clicking the link presents a
+        // balloon dialog to remove the dictionary link.
+        // TODO: In the future Fix formatter to not be so PHP.
         const href = matchingFormatter ?
           matchingFormatter.replace('%s', glossId) :
           `#UNKNOWN_FORMATTER`;
