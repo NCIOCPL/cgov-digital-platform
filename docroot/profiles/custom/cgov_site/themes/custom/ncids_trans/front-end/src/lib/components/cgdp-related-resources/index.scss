@@ -1,8 +1,14 @@
+@forward 'usa-accordion';
 @forward 'usa-link';
 @use 'uswds-core' as *;
 @import '~Styles/sprites/svg-sprite';
 
 .cgdp-related-resources {
+	&__heading {
+		@include at-media('tablet') {
+			@include typeset-h2;
+		}
+	}
 	ul {
 		@include u-margin-top(1);
 		li {

@@ -1,6 +1,9 @@
 import { trackOther } from '../../core/analytics/eddl-util';
 import { getPageInfo } from '../../core/analytics/landing-page-contents-helper';
 
+import { USAAccordion } from '@nciocpl/ncids-js/usa-accordion';
+import { accordionizeForMobile } from '../../core/util/accordionize-for-mobile';
+
 /**
  * Enum for the type of link.
  */
@@ -12,6 +15,9 @@ enum LinkTypes {
 	/** For managed media links */
 	Media = 'Media',
 }
+
+// Track the accordion instance so we do not repeatedly create/destroy it.
+let accordionInstance: USAAccordion | null = null;
 
 /**
  * Gets the text of the nearest heading for an element
@@ -100,16 +106,24 @@ const relatedResourcesCreate = (relatedResourcesEl: HTMLElement) => {
 			)
 		);
 	});
+
+	// Initialize the Accordion
+	accordionInstance = accordionizeForMobile(
+		'.cgdp-related-resources',
+		accordionInstance
+	) as USAAccordion | null; // Because the function can return undefined, we cast it to USAAccordion | null
 };
 
 /**
- * Wires up the summary box for the cdgp requirements.
+ * Wires up the related resources element for analytics
+ * as well as the accordion when on mobile
  */
 const initialize = () => {
 	// Related resources are included in the templates, if we wanted a
 	// similar list, we could reuse this component for that. However,
 	// that would be a template change, and at that point this function
 	// could be updated. So just handling 1 for now.
+
 	const relatedResourcesEl = document.querySelector(
 		'.cgdp-related-resources'
 	) as HTMLElement;

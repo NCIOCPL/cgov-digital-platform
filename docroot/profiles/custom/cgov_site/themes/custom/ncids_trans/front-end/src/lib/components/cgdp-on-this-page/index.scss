@@ -1,0 +1,24 @@
+@use 'uswds-core' as *;
+@use 'usa-list' as list;
+
+.cgdp-on-this-page {
+	@include u-display('none');
+	@include at-media('tablet') {
+		@include u-display('block');
+	}
+	margin: units(4) units(0) units(0) units(2);
+	&__header {
+		@include typeset-h3;
+		clear: none;
+	}
+
+	ul {
+		@extend .usa-list;
+		& > li {
+			@include u-margin-bottom(1);
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}
