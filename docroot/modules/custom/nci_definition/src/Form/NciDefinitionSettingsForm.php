@@ -1,27 +1,27 @@
 <?php
 
-namespace Drupal\pdq_glossifier\Form;
+namespace Drupal\nci_definition\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Provides a form for PDQ Glossifier settings.
+ * Provides a form for NCI Definition settings.
  */
-class PdqGlossifierSettingsForm extends ConfigFormBase {
+class NciDefinitionSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['pdq_glossifier.settings'];
+    return ['nci_definition.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'pdq_glossifier_settings_form';
+    return 'nci_definition_settings_form';
   }
 
   /**
@@ -29,7 +29,7 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
-    $config = $this->config('pdq_glossifier.settings');
+    $config = $this->config('nci_definition.settings');
 
     /* @todo Add field for global class list */
     $form['definition_classes'] = [
@@ -118,7 +118,7 @@ class PdqGlossifierSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('pdq_glossifier.settings');
+    $config = $this->config('nci_definition.settings');
 
     $config->set('definition_classes', $form_state->getValue('definition_classes'));
     $config->set('nci_glossary_dictionary_urls', $form_state->getValue('nci_glossary_dictionary_urls'));

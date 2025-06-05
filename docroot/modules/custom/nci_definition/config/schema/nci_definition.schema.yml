@@ -1,21 +1,21 @@
-pdq_glossifier.settings:
+nci_definition.settings:
   type: config_object
   mapping:
     definition_classes:
       type: string
       label: 'Definition Classes to Apply to Dictionary Link'
     nci_glossary_dictionary_urls:
-      type: pdq_glossifier.url_map
+      type: nci_definition.url_map
       label: 'Dictionary URL Formatters'
 
-pdq_glossifier.url_map:
+nci_definition.url_map:
   type: sequence
   label: 'Dictionary URL Formatters'
   sequence:
-    type: pdq_glossifier.url_map_entry
+    type: nci_definition.url_map_entry
     label: 'Dictionary URL Formatter'
 
-pdq_glossifier.url_map_entry:
+nci_definition.url_map_entry:
   type: mapping
   mapping:
     dictionary:
@@ -38,4 +38,3 @@ filter_settings.nci_definition:
     definition_classes:
       type: string
       label: 'The class names to give to the anchor element.'
-

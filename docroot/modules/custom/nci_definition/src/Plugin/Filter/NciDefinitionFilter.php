@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pdq_glossifier\Plugin\Filter;
+namespace Drupal\nci_definition\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -86,7 +86,7 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
     // instances of <nci-definition> in the text.
     if (strpos($text, '<nci-definition') !== FALSE) {
       // Load the configuration.
-      $config = $this->configFactory->get('pdq_glossifier.settings');
+      $config = $this->configFactory->get('nci_definition.settings');
 
       $dom = Html::load($text);
       $xpath = new \DOMXPath($dom);
