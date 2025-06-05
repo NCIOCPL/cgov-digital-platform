@@ -164,9 +164,6 @@ export const createHtmlFromSuggestions = (
   preparedBody,
   responseArray,
 ) => {
-  // TODO: Confirm whether getting the langcode from the editor instance is sufficient.
-  // https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-langCode
-  // This todo should probably get moved to where ever this is called from.
   const dialogBody = createDialogBodyHtml(preparedBody, responseArray);
 
   // Create an element with the contents of the suggestions.

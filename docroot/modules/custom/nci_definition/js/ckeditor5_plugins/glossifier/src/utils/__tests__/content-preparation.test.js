@@ -7,7 +7,7 @@ describe('convertTagStringToHTML', () => {
     expect(contentPrep.convertTagStringToHTML('foo', 'strong')).toBe('<strong>foo</strong>');
   });
   it('wraps text in multiple tags', () => {
-    // @todo What is up with the order of tags here? A stack?
+    // @bug The whole wrapping and unwrapping tags is a bug.
     expect(contentPrep.convertTagStringToHTML('bar', 'em,strong')).toBe('<strong><em>bar</em></strong>');
   });
   it('returns text unchanged if tagString is empty', () => {
