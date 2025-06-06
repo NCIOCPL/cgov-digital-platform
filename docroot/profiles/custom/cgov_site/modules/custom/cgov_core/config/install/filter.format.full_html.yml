@@ -6,6 +6,7 @@ dependencies:
     - entity_embed
     - linkit
     - media
+    - nci_definition
     - token_filter
 name: 'Full HTML'
 format: full_html
@@ -97,6 +98,13 @@ filters:
       default_view_mode: default
       allowed_view_modes: {  }
       allowed_media_types: {  }
+  nci_definition:
+    id: nci_definition
+    provider: nci_definition
+    status: true
+    weight: 0
+    settings:
+      definition_classes: ''
   token_filter:
     id: token_filter
     provider: token_filter

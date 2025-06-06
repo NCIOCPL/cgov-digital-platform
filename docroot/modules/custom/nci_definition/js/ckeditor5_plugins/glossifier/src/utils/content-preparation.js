@@ -1,27 +1,4 @@
 /**
-* Replace Spanish-character entities with literal values
-* @param {string} editorContent the content to fix up.
-*/
-const fixSpanish = (editorContent) => {
-  const cleaned = editorContent
-    .replace('&Aacute;', 'Á')
-    .replace('&aacute;','á')
-    .replace('&Eacute;','É')
-    .replace('&eacute;','é')
-    .replace('&Iacute;','Í')
-    .replace('&iacute;','í')
-    .replace('&Oacute;','Ó')
-    .replace('&oacute;','ó')
-    .replace('&Uacute;','Ú')
-    .replace('&uacute;','ú')
-    .replace('&Yacute;','Ý')
-    .replace('&yacute;','ý')
-    .replace('&Ntilde;','Ñ')
-    .replace('&ntilde;','ñ');
-  return cleaned;
-}
-
-/**
  * Sanitizes characters converting to hex code for web calls.
  *
  * @param {string} c the character to sanitize
@@ -29,10 +6,11 @@ const fixSpanish = (editorContent) => {
  */
 const sanitizeChar = (c) => {
   switch (c) {
+    // Technically the DOMParser automatically strips newlines on their
+    // own, so this case is only hit when the newlines are between
+    // some nodes. (This includes carriage returns.)
     case "\n":  //line feed substitute
       return "&#x000a;";
-    case "\r": //carriage return substitute
-      return "&#x000d;";
     case "”":  //right double quote
       return "&#148;";
     case "—":  //em dash
@@ -76,55 +54,6 @@ export const convertTagStringToHTML = (termText, termHTML) => {
 }
 
 /**
- * All preexisting glossified links are expected to match the same pattern that
- * allows us to extract enough data to reconstruct them after a new glossification pass.
- * The API is already set up to ignore all tags but only the contents of a tags.
- * Since we use a span, we don't want the term to be findable and store it as a data attribute
- * rather than a text node.
- * We don't want to reglossify terms specifically because the terms
- * themselves may not match the glossary (because content editors can manually edit them
- * after a glossification pass and we need to preserve that alteration.)
- *
- * @param {string} match
- * @param {string} firstCaptureGroup
- *
- * @return {string}
- */
-const wrapTermToSaveState = (match, firstCaptureGroup) => {
-  const fullMatch = match;
-  const matchedHTML = firstCaptureGroup;
-  //Parses the matchedHTML string into a DOM object and extracts tags
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(matchedHTML, 'text/html');
-  const elements = doc.getElementsByTagName('*');
-  const elementArray = Array.from(elements);
-  const tagList = elementArray.map(element => element.tagName.toLowerCase());
-  let tagListArray = [];
-  for (let i = 0; i < tagList.length; i++) {
-    if(tagList[i] !== "html" && tagList[i] !== "head" && tagList[i] !== "body") {
-      tagListArray.push(tagList[i]);
-    }
-  }
-  const tagListString = tagListArray.join(',');
-  let textContents = firstCaptureGroup;
-  if (elements.length > 0) {
-    textContents = elements[0].textContent || elements[0].innerText;
-  }
-  //Replace all tags with empty string
-  const extractDataTest = /(CDR[0-9]+).+language=([A-z]+)/i;
-  const extractedData = fullMatch.match(extractDataTest);
-  const id = extractedData[1];
-  const language = extractedData[2];
-  const wrappedTerm =
-    `<span rel="glossified" data-id="${id}"
-      data-language="${language}"
-      data-preexisting="true"
-      data-html="${tagListString}"
-      data-term="${textContents}"></span>`;
-    return wrappedTerm;
-}
-
-/**
  * Before we can 'cache' the previously glossified terms during a request
  * we need to find them. Any glossified links that don't match this pattern
  * should be considered bad and handled with a manual content correction.
@@ -134,9 +63,54 @@ const wrapTermToSaveState = (match, firstCaptureGroup) => {
  * @return {string}
  */
 const removePreviouslyGlossifiedTerms = (body) => {
-  const glossifiedTermTest = new RegExp("<a\\s+class=\"definition\".+?>(.+?)</a>", "g");
-  const result = body.replace(glossifiedTermTest, wrapTermToSaveState);
-    return result;
+  // Bring this into a DOM so we can find elements and replace them.
+  const parser = new window.DOMParser();
+  const contentDom = parser.parseFromString(body, 'text/html');
+
+  const definitions = contentDom.body.querySelectorAll('nci-definition');
+
+  // We need to change each definition to a `<span rel="glossified">`
+  for (const definition of definitions) {
+
+    const replacementSpan = document.createElement('span');
+    replacementSpan.setAttribute('rel', 'glossified');
+    replacementSpan.dataset.preexisting = "true";
+    // Copy over the <nci-definition> attributes for the glossified term.
+    replacementSpan.dataset.glossLang = definition.dataset.glossLang;
+    replacementSpan.dataset.glossId = definition.dataset.glossId;
+    replacementSpan.dataset.glossDictionary = definition.dataset.glossDictionary;
+    replacementSpan.dataset.glossAudience = definition.dataset.glossAudience;
+
+    /*
+     * We need to flatten the children into a single text string. This is not
+     * actually needed when sending to the API, but needed to properly display
+     * the checkbox. The assumption here is under normal circumstances people
+     * do not do crazy child elements. (e.g., if you have a dictionary link around
+     * an image, things will go wrong here)
+     *
+     * There is one existing bug that we will not fix until a future ticket - handling:
+     * <nci-def><strong>Some Text <em>a sibling to the text node of strong</em></strong>
+     * The above gets converted to:
+     * <nci-def><em><strong>Some Text a sibling to the text node of strong</strong></em>
+     */
+    // We use getElementsByTagName so we can get a list for nested tag. (Hence the
+    // above bug)
+    const childArray = Array.from(definition.getElementsByTagName('*'));
+    const childTagList = childArray.map(element => element.tagName.toLowerCase());
+    const childTags = childTagList.join(',');
+    const childTextContents = definition.textContent;
+
+    // Now set the properties to hold the tags list and contents.
+    replacementSpan.dataset.html = childTags;
+    replacementSpan.dataset.term = childTextContents;
+
+    // Ok, now we swap.
+    definition.replaceWith(replacementSpan);
+  }
+
+  const newHtml = contentDom.body.innerHTML;
+
+  return newHtml;
 }
 
 /**
@@ -147,6 +121,8 @@ const removePreviouslyGlossifiedTerms = (body) => {
 export const prepareEditorBodyForGlossificationRequest = (data) => {
   // 1) Save previously glossified term state as an element that the API will
   // ignore.
+  // NOTE: This will replace HTML Entities with the unicode chars.
+  // This actually happens when content is loaded into CKEditor 5.
   const tempData = removePreviouslyGlossifiedTerms(data);
 
   let sanitizedData = "";
@@ -154,7 +130,6 @@ export const prepareEditorBodyForGlossificationRequest = (data) => {
   for (let i = 0; i < tempData.length; i++) {
     sanitizedData += sanitizeChar(tempData.charAt(i));
   }
-  sanitizedData = fixSpanish(sanitizedData);
   return sanitizedData;
 }
 
