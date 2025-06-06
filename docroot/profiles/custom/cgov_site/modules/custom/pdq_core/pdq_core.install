@@ -57,16 +57,8 @@ function pdq_core_install_permissions(CgovCoreTools $siteHelper) {
   $siteHelper->addRolePermissions($perms);
 }
 
-
 /**
- * Add a new permission to the pdq_importer role.
+ * Latest update hook.
  */
 function pdq_core_update_8001() {
-
-  // Get the helper service.
-  $siteHelper = \Drupal::service('cgov_core.tools');
-
-  // Install the new permission.
-  $perms = ['pdq_importer' => ['restful patch pdq_api']];
-  $siteHelper->addRolePermissions($perms);
 }

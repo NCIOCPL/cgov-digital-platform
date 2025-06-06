@@ -7,10 +7,10 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Implements hook_ENTITY_TYPE_access().
@@ -49,7 +49,7 @@ function cgov_list_paragraph_access(EntityInterface $entity, $operation, Account
  * @return string
  *   Formatted string.
  */
-function format_bytes(int $bytes, int $precision = 2) {
+function _cgov_list_format_bytes(int $bytes, int $precision = 2) {
   $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
   $bytes = max($bytes, 0);
@@ -58,7 +58,7 @@ function format_bytes(int $bytes, int $precision = 2) {
   $bytes /= pow(1024, $pow);
 
   return round($bytes, $precision) . ' ' . $units[$pow];
-};
+}
 
 /**
  * Set allowed values for the list item styling.
@@ -77,8 +77,8 @@ function format_bytes(int $bytes, int $precision = 2) {
  */
 function cgov_list_allowed_values_function(
   FieldStorageConfig $definition,
-  ContentEntityInterface $entity = NULL,
-  $cacheable
+  ?ContentEntityInterface $entity = NULL,
+  &$cacheable = TRUE,
 ) {
   $options = [
     'list_item_title' => 'Compact',
@@ -147,7 +147,7 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
       $file = $media->field_media_file->entity;
       // ##### Format file size.
       $fileSize = (int) $file->getSize();
-      $formattedFileSize = format_bytes($fileSize, 0);
+      $formattedFileSize = _cgov_list_format_bytes($fileSize, 0);
       $build['media_link_file_size'] = [
         '#plain_text' => $formattedFileSize,
       ];
@@ -158,7 +158,7 @@ function cgov_list_paragraph_view(array &$build, EntityInterface $entity, Entity
       // or granular requirements based on file extensions, we will manually
       // sniff the extension type. This should be deterministic because the
       // field has a validator that whitelists extensions explicitly.
-      // TODO: (Someday)Clean this crap up (better classnames and more standard
+      // @todo (Someday)Clean this crap up (better classnames and more standard
       // (is it the extension or the type for example)).
       $extensionsClassMap = [
         'pdf' => 'pdf',

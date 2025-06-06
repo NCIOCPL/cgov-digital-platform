@@ -26,7 +26,7 @@ function cgov_promo_paragraph_access(EntityInterface $entity, $operation, Accoun
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_item');
   }
 
-  else if (($bundle === 'ncids_feature_card_internal' || $bundle === 'ncids_imageless_card_multimedia') && $operation === 'view') {
+  elseif (($bundle === 'ncids_feature_card_internal' || $bundle === 'ncids_imageless_card_multimedia') && $operation === 'view') {
     return \Drupal::service('cgov_core.tools')->filterAccessForDependantEntity($entity, 'field_featured_media');
   }
 

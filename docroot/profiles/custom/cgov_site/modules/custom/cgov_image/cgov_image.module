@@ -6,13 +6,13 @@
  */
 
 use Drupal\cgov_core\CgovCoreTools;
-use Drupal\crop\Entity\Crop;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\crop\Entity\Crop;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
-use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view().
@@ -55,7 +55,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
 
-  if ($view_mode === 'ncids_image_display_feature' ) {
+  if ($view_mode === 'ncids_image_display_feature') {
     _cgov_image_handle_ncids_feature(
       $build,
       $entity,
@@ -63,7 +63,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
 
-  if ($view_mode === 'ncids_image_display_promo'){
+  if ($view_mode === 'ncids_image_display_promo') {
     _cgov_image_handle_ncids_promo(
       $build,
       $entity,
@@ -71,7 +71,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
 
-  if ($view_mode === 'ncids_collections_media'){
+  if ($view_mode === 'ncids_collections_media') {
     _cgov_image_handle_ncids_collection(
       $build,
       $entity,
@@ -79,7 +79,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
 
-  if ($view_mode === 'ncids_image_display_flag_card' ) {
+  if ($view_mode === 'ncids_image_display_flag_card') {
     _cgov_image_handle_ncids_flag(
       $build,
       $entity,
@@ -87,7 +87,7 @@ function cgov_image_media_view(array &$build, EntityInterface $entity, EntityVie
     );
   }
   if (preg_match('/^ncids_aspect_ratio_/', $view_mode)) {
-    // Call your custom function or handle the logic here
+    // Call your custom function or handle the logic here.
     _cgov_image_handle_ncids_image(
       $build,
       $entity,
@@ -152,7 +152,7 @@ function _cgov_image_filter_view_image(
   EntityInterface $entity,
   EntityViewDisplayInterface $display,
   $view_mode,
-  $img_type
+  $img_type,
 ) {
 
   // Article and Enlarged do not have image crops or override crops.
@@ -187,7 +187,7 @@ function _cgov_image_filter_view_image(
     $crop_image_display['settings'] == NULL ||
     $crop_image_display['settings']['image_style'] == NULL
   ) {
-    // TODO: Log a nice error.
+    // @todo Log a nice error.
     // No image for you! Configure properly.
     unset($build['field_media_image']);
     return;
@@ -197,13 +197,13 @@ function _cgov_image_filter_view_image(
   $image_style = $crop_image_display['settings']['image_style'];
 
   if ($image_style == NULL) {
-    // TODO: Log a nice error.
+    // @todo Log a nice error.
     // No image for you! Configure properly.
     unset($build['field_media_image']);
     return;
   }
 
-  // TODO: Check the display interface to see which style.
+  // @todo Check the display interface to see which style.
   // Then we can find the manual crop for that style.
   $image_helper = \Drupal::service('cgov_image.image_tools');
   $crop = $image_helper->findCropByStyle($image_style);
@@ -212,7 +212,7 @@ function _cgov_image_filter_view_image(
     // We do not know what this crop is. For now it is because
     // our switch statement does not have it. In the future it
     // will because the style does not have a crop.
-    // TODO: Log a nice error.
+    // @todo Log a nice error.
     unset($build['field_media_image']);
     return;
   }
@@ -261,15 +261,14 @@ function _cgov_image_handle_ncids_feature(array &$build, EntityInterface $entity
   if (
     (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
   ) {
-    // if true === if there are crops applied to field_media_image
-    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+    // If true === if there are crops applied to field_media_image.
+    if (!_cgov_image_handle_ncids_crop_check($build, $entity, $display)) {
       unset($build['field_media_image']);
       unset($build['field_ncids_promo_art_16x9']);
       return;
     }
   }
 }
-
 
 /**
  * Handle images for NCIDS Feature Cards.
@@ -298,7 +297,7 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
   // Get the image style, so we can find the crop.
   $image_style = $crop_image_display['settings']['image_style'];
 
-  // TODO: Check the display interface to see which style.
+  // @todo Check the display interface to see which style.
   // Then we can find the manual crop for that style.
   $image_helper = \Drupal::service('cgov_image.image_tools');
   $crop = $image_helper->findCropByStyle($image_style);
@@ -317,11 +316,13 @@ function _cgov_image_handle_ncids_crop_check(array &$build, EntityInterface $ent
   $file_uri = $file->getFileUri();
 
   $crop_state = Crop::cropExists($file_uri, $crop);
+  // phpcs:disable Drupal.Commenting.InlineComment.SpacingBefore
   // If we don't have a crop we should strip the image out.
   // if (!$crop_state) {
   //   unset($build['field_media_image']);
   //   return;
-  // }
+  // }.
+  // phpcs:enable
   return $crop_state;
 }
 
@@ -348,13 +349,14 @@ function _cgov_image_handle_ncids_promo(array &$build, EntityInterface $entity, 
 
   // The 4x3 image will be used in the picture element's source element.
   // There is no drupal render type for a source element.
-  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
+  // So instead, we want to get the 4x3 as a url for the image,
+  // using the 4x3 style.
   if (
     (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0)) ||
     (!isset($build['field_ncids_promo_art_16x9']['#items']) || (count($build['field_ncids_promo_art_16x9']['#items']) === 0))
   ) {
-    // if true === if there are crops applied to field_media_image
-    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+    // If true === if there are crops applied to field_media_image.
+    if (!_cgov_image_handle_ncids_crop_check($build, $entity, $display)) {
       unset($build['field_media_image']);
       unset($build['field_ncids_promo_art_1x1']);
       unset($build['field_ncids_promo_art_16x9']);
@@ -391,12 +393,13 @@ function _cgov_image_handle_ncids_collection(array &$build, EntityInterface $ent
 
   // The 4x3 image will be used in the picture element's source element.
   // There is no drupal render type for a source element.
-  // So instead, we want to get the 4x3 as a url for the image using the 4x3 style.
+  // So instead, we want to get the 4x3 as a url for the image,
+  // using the 4x3 style.
   if (
     (!isset($build['field_ncids_promo_art_4x3']['#items']) || (count($build['field_ncids_promo_art_4x3']['#items']) === 0))
   ) {
-    // if true === if there are crops applied to field_media_image
-    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+    // If true === if there are crops applied to field_media_image.
+    if (!_cgov_image_handle_ncids_crop_check($build, $entity, $display)) {
       unset($build['field_media_image']);
       unset($build['field_ncids_promo_art_4x3']);
       return;
@@ -404,7 +407,9 @@ function _cgov_image_handle_ncids_collection(array &$build, EntityInterface $ent
   }
 }
 
-
+/**
+ * Implements template_preprocess_image_style() for cgov_image.
+ */
 function cgov_image_preprocess_image_style(&$variables) {
   $image_style = $variables['style_name'];
   if ($image_style !== 'ncids_collections_media_4x3') {
@@ -444,7 +449,7 @@ function cgov_image_menu_local_tasks_alter(array &$data, $route_name, RefinableC
 }
 
 /**
- * Implements hook_module_implements_alter()
+ * Implements hook_module_implements_alter().
  *
  * We need our form_alter to run after content_moderation's.
  */
@@ -493,8 +498,8 @@ function _cgov_image_handle_ncids_flag(array &$build, EntityInterface $entity, E
   if (
     (!isset($build['field_ncids_promo_art_1x1']['#items']) || (count($build['field_ncids_promo_art_1x1']['#items']) === 0))
   ) {
-    // if true === if there are crops applied to field_media_image
-    if(!_cgov_image_handle_ncids_crop_check($build, $entity, $display)){
+    // If true === if there are crops applied to field_media_image.
+    if (!_cgov_image_handle_ncids_crop_check($build, $entity, $display)) {
       unset($build['field_media_image']);
       unset($build['field_ncids_promo_art_1x1']);
       return;

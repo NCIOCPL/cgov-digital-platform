@@ -5,30 +5,8 @@
  * Contains cgov_promo.install.
  */
 
- /*
- * Enable ncids_group_card view mode.
- */
-function cgov_promo_update_10001() {
-  $service = \Drupal::service('features.manager');
-  $service->import(['cgov_promo']);
-}
-
- /*
- * Enable ncids_flag_card_group view mode.
- */
-function cgov_promo_update_10002() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $service->import(['cgov_promo']);
-}
-
- /*
- * Enable ncids_group_imageless_card view mode.
+/**
+ * Latest update hook.
  */
 function cgov_promo_update_10003() {
-  $service = \Drupal::service('features.manager');
-  $assigner = \Drupal::service('features_assigner');
-  $assigner->assignConfigPackages();
-  $service->import(['cgov_promo']);
 }

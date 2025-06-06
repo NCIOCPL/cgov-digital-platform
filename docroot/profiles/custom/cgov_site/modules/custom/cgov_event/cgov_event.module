@@ -5,9 +5,9 @@
  * Contains cgov_event.module.
  */
 
- use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 
- /**
+/**
  * Alter bundle field definitions.
  *
  * Implements hook_entity_bundle_field_info_alter.
@@ -26,9 +26,10 @@
 function cgov_event_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
   if ($bundle === 'cgov_event') {
     if (!empty($fields['field_event_start_date'])) {
-      // Add custom constraint to this field, that checks if end time is later than start time.
-      // The parameter to addConstraint() is not the class name, but the ID defined in the
-      // class annotation in EventStartEndTimeConstraint.php
+      // Add custom constraint to this field, that checks if end time is later
+      // than start time. The parameter to addConstraint() is not the class
+      // name, but the ID defined in the class annotation in
+      // EventStartEndTimeConstraint.php.
       $fields['field_event_start_date']->addConstraint('CgovEventStartEndTimeConstraint', []);
     }
   }
