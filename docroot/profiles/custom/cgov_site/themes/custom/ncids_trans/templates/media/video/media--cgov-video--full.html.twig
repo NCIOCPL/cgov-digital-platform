@@ -1,18 +1,13 @@
 {% import '@ncids_trans/templates/media/video/video_macros.twig' as videoMacros %}
-{% import '@cgov_common/content_page_macros.twig' as contentPageMacros %}
+{% import '@ncids_trans/content_page_macros.twig' as contentPageMacros %}
 <!-- ********************************* BEGIN Page Content ********************************** -->
 <article>
-    <div class="resize-content">
-        <h1>
-          {{ name }}
-        </h1>
-        <div id="cgvBody">
-          {{ content.body }}
-          {{ videoMacros.video(name, content, media) }}
-        </div>
-    </div>
-    <footer class="article-footer">
-      {{ content.field_related_resources }}
-      {{ contentPageMacros.displayDates(media, content) }}
-    </footer>
+  <h1 class="nci-heading-h1">
+    {{ name }}
+  </h1>
+  {{ content.body }}
+  {{ videoMacros.ncidsVideo(name, content, media) }}
+  <footer class="cgdp-article-footer">
+    {{ contentPageMacros.ncidsDisplayDates(media, content) }}
+  </footer>
 </article>
