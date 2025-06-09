@@ -24,7 +24,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
-use Drupal\node\NodeInterface;
+use Drupal\node\Entity\Node;
 use Drupal\path_alias\PathAliasInterface;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
@@ -108,7 +108,7 @@ EOMarkup;
 /**
  * Implements hook_node_access().
  */
-function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+function cgov_core_node_access(Node $node, $op, AccountInterface $account) {
   $publish_permission = 'use editorial_workflow transition publish';
   switch ($op) {
 
@@ -119,6 +119,7 @@ function cgov_core_node_access(NodeInterface $node, $op, AccountInterface $accou
       $entityTypeManager = \Drupal::service('entity_type.manager');
       $workflows = $entityTypeManager->getStorage('workflow')->loadMultiple();
       $workflow = $workflows['editorial_workflow'];
+      /** @var \Drupal\content_moderation\Plugin\WorkflowType\ContentModerationInterface */
       $typePlugin = $workflow->getTypePlugin();
       if (!$typePlugin->appliesToEntityTypeAndBundle('node', $node->bundle())) {
         break;
@@ -219,11 +220,11 @@ function _cgov_core_text_filter_modify($form_element) {
  * When a user is initially created, default the preferred
  * language for the UI pages to English.
  */
-function cgov_core_user_presave(EntityInterface $entity) {
-  if ($entity->isNew() && empty($entity->preferred_admin_langcode->value)) {
+function cgov_core_user_presave(UserInterface $entity) {
+  if ($entity->isNew() && empty($entity->get('preferred_admin_langcode')->getValue())) {
     $entity->set('preferred_admin_langcode', 'en');
   }
-  elseif ($entity->preferred_admin_langcode->value === 'no-preference') {
+  elseif ($entity->get('preferred_admin_langcode')->getValue() === 'no-preference') {
     // Support the drush command(bulk-load-users), we use no-preference because
     // ALL new users on pre-save have a value for this field regardless of
     // whether it's empty.
