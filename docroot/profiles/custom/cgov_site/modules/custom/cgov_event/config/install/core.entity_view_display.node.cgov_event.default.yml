@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.cgov_event.field_card_title
     - field.field.node.cgov_event.field_city_state
     - field.field.node.cgov_event.field_event_end_date
+    - field.field.node.cgov_event.field_event_group
     - field.field.node.cgov_event.field_event_series
     - field.field.node.cgov_event.field_event_start_date
     - field.field.node.cgov_event.field_feature_card_description
@@ -88,6 +89,14 @@ content:
       format_type: medium
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_event_group:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 22
     region: content
   field_event_series:
     type: entity_reference_label

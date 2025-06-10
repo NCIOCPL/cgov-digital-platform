@@ -54,6 +54,13 @@
           - 'taxonomy_term'
           - vid: 'cgov_event_venues'
             name: 'NCI Shady Grove Campus'
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'Default'
   field_room:
     value: "TE406"
   field_city_state:

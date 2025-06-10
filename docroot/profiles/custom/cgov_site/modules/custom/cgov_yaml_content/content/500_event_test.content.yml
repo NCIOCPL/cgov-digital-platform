@@ -49,6 +49,13 @@
   field_event_end_date:
     value: '2019-04-11T21:30:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'Default'
   field_venue:
     - '#process':
         callback: 'reference'
