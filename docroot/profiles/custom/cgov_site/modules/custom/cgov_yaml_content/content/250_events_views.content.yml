@@ -27,15 +27,30 @@
   field_credit:
     value: "C.A.D. Schjelderup"
 
+## We are reserving tids 4000 - 4099 for Event Group taxonomy
+## Event Group taxonomy
+- entity: "taxonomy_term"
+  vid: "cgov_event_group"
+  tid: 4000
+  name: "CGH"
+- entity: "taxonomy_term"
+  vid: "cgov_event_group"
+  tid: 4001
+  name: "DCB"
+
+## We are reserving tids 4100 - 5000 for Event Series taxonomy
 ## Event Series taxonomy
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4100
   name: "DCEG Events"
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4101
   name: "NCI Event Series"
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4102
   name: "Other Events"
 
 ## Upcoming event pages
@@ -70,6 +85,13 @@
   field_event_end_date:
     value: '2019-07-11T11:30:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -141,6 +163,13 @@
   field_event_end_date:
     value: '2019-11-15T17:00:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -205,6 +234,13 @@
   field_event_end_date:
     value: '2019-12-12T17:00:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -270,6 +306,13 @@
   field_event_end_date:
     value: '2020-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -334,6 +377,13 @@
   field_event_end_date:
     value: '2030-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -378,6 +428,13 @@
   field_event_end_date:
     value: '2040-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -425,6 +482,13 @@
   field_event_end_date:
     value: '2050-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -472,6 +536,13 @@
   field_event_end_date:
     value: '2033-06-15T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -517,6 +588,13 @@
   field_event_end_date:
     value: '2019-04-16T12:00:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -587,6 +665,13 @@
   field_event_end_date:
     value: '2017-05-03T14:00:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
