@@ -184,7 +184,98 @@ function cgov_core_field_widget_single_element_form_alter(&$element, FormStateIn
     array_key_exists('#type', $element) &&
     $element['#type'] === 'text_format'
   ) {
+
+    _cgov_core_convert_legacy_definition_links($element, $form_state, $context);
+    // $field = $context['items']->getName();
+    // $delta = $context['delta'];
+
+    // If the form state inputs are zero for the field (look for delta! e.g. cardinality)
+        // contains a.definition, then replace the contents of #default_value
+    // replace contens of #default_value
+    // only use form state to test if it has been mangled with
+    // Only use #default_value
+
+    // Remove the choice of text_format
+
     $element['#after_build'][] = '__cgov_core_text_filter_modify';
+  }
+}
+
+/**
+ * Helper function to get the user inputs for a field.
+ */
+function _cgov_core_get_user_input_from_form_state(
+  array $widget_form_context,
+  $field_name,
+  $delta,
+  FormStateInterface $form_state
+) {
+  // The user inputs will be empty on the very initial load.
+  // Subsequent expand/collapses of the Paragraphs or other Ajax
+  // things will have a filled in form_state.
+  $user_inputs = $form_state->getUserInput();
+  if (count($user_inputs) === 0) {
+    return NULL;
+  }
+
+  // Ok, when there is a regular WYSIWYG field, everything is cool just fetching
+  // from $user_inputs. When we have a paragraph that has a WYSIWYG field, then
+  // we end up with a container, and then we need to get the value from the
+  // subform. (The subform is in the $user_input tree)
+  // So we are going to slide down the $user_input tree if it is a subform.
+  $tmp_inputs = $user_inputs;
+  if (isset($widget_form_context['#type']) && $widget_form_context['#type'] === 'container') {
+    foreach ($widget_form_context['#parent'] as $path) {
+      $tmp_inputs = $tmp_inputs[$path];
+    }
+  }
+
+  if (isset($tmp_inputs[$field_name][$delta]['value'] )) {
+    return $tmp_inputs[$field_name][$delta]['value'];
+  } else {
+    // This is probably a container that we are displaying for the very first time,
+    // and the subform user input does not exist yet.
+    return NULL;
+  }
+}
+
+/**
+ * Helper function for cgov_core_field_widget_single_element_form_alter.
+ */
+function _cgov_core_convert_legacy_definition_links(&$element, FormStateInterface $form_state, $context) {
+  // Return since there is no value in the field from the server
+  // to be changed. Any user interactions with the editing form
+  // since the initial content was loaded (e.g., $form_state),
+  // would be using the new <nci-dictionary> format and would
+  // not need to be replaced.
+  if (!isset($element['#default_value'])) {
+    return;
+  }
+
+  // Let's bail if the WYSIWYG is not using one of the legacy
+  // formats.
+  $format = isset($element['#format']) ?
+    $element['#format'] : (
+      isset($element['#allowed_formats'][0]) ?
+        $element['#allowed_formats'][0] :
+        null
+    );
+
+  $applicable_formats = [ 'full_html', 'streamlined' ];
+  if ($format === null || !in_array($format, $applicable_formats)) {
+    return;
+  }
+
+  $field_name = $context['items']->getName();
+  $delta = $context['delta'];
+  $user_state_value = _cgov_core_get_user_input_from_form_state($context['form'], $field_name, $delta, $form_state);
+
+  // We should only be replacing the text if it has not been sent to the user's
+  // browser. This means that it has not been sent back to us via the
+  // $form_state. Also, we only replace if it we have old definition links.
+  if ($user_state_value === NULL && strpos($element['#default_value'], '<a class="definition"') !== false) {
+    $converter = \Drupal::service('nci_definition.legacy_converter');
+    $element['#default_value'] = $converter->convert($element['#default_value']);
   }
 }
 
