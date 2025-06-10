@@ -28,6 +28,15 @@ class NciDefinitionLegacyConverter {
 
       $href = $node->getAttribute('href');
 
+      // If the href does not match the known good URL structure of a
+      // definition link we should move along.
+      if (
+        !preg_match('/^(http[s]*:\/\/[^\/]*|)\/Common\/PopUps\/popDefinition\.aspx\?id=([^&]*)&version=(patient|healthprofessional)&language=(English|Spanish|en|es)$/i', $href) &&
+        !preg_match('/^\/Common\/PopUps\/popDefinition\.aspx\?id=([^&]*)&version=(patient|healthprofessional)&language=(English|Spanish|en|es)&dictionary=([^&]*)$/i', $href)
+      ) {
+        continue;
+      }
+
       // Parse the href query parameters.
       parse_str(parse_url(html_entity_decode($href), PHP_URL_QUERY), $params);
 
