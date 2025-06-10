@@ -15,19 +15,6 @@ class NciDefinitionLegacyConverterTest extends TestCase {
   /**
    * @covers ::convert
    */
-  public function testConvertOldOldDefinitionLink() {
-    $converter = new NciDefinitionLegacyConverter();
-    $input = '<a class="definition" onclick="javascript:popWindow(\'defbyid\',\'CDR0000730354&amp;version=Patient&amp;language=English\'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000730354&amp;version=Patient&amp;language=English">Meditation</a>';
-    $output = $converter->convert($input);
-    // You are going to change this.
-    $expected = '<nci-definition data-gloss-id="730354" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Meditation</nci-definition>';
-
-    $this->assertEquals($expected, $output, 'This should convert a single data-glossary-id.');
-  }
-
-  /**
-   * @covers ::convert
-   */
   public function testConvertPdqHpGeneticsDefinitionLink() {
     $converter = new NciDefinitionLegacyConverter();
     $input = '<a class="definition" type="GlossaryTermRefs" href="/Common/PopUps/popDefinition.aspx?id=339347&amp;version=healthprofessional&amp;language=English&amp;dictionary=genetic" onclick="javascript:popWindow(\'defbyid\',\'CDR0000339347&amp;version=healthprofessional&amp;language=English&amp;dictionary=genetic\'); return(false);">sporadic</a>';
@@ -36,6 +23,58 @@ class NciDefinitionLegacyConverterTest extends TestCase {
     $expected = '<nci-definition data-gloss-id="339347" data-gloss-dictionary="Genetics" data-gloss-audience="Health Professional" data-gloss-lang="en">sporadic</nci-definition>';
 
     $this->assertEquals($expected, $output, 'This should convert a single definition with PDQ structure mess.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertLinkExternalLink() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" href="https://www.cancer.gov/Common/PopUps/popDefinition.aspx?id=CDR0000348989&version=Patient&amp;language=English" onclick="javascript:popWindow(\'defbyid\',\'CDR0000348989&amp;version=Patient&amp;language=English\'); return false;">case-control studies</a>';
+
+    $output = $converter->convert($input);
+
+    $expected = '<nci-definition data-gloss-id="348989" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">case-control studies</nci-definition>';
+    $this->assertEquals($expected, $output, 'This should convert a external link that has the parameters we need.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertLinkBadHref() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" href="/dictionary?expand=e#esophagus" onclick="javascript:popWindow(\'definition\',\'esophagus\'); return false;">esophagus</a>';
+
+    $output = $converter->convert($input);
+
+    $expected = '<a class="definition" href="/dictionary?expand=e#esophagus" onclick="javascript:popWindow(\'definition\',\'esophagus\'); return false;">esophagus</a>';
+    $this->assertEquals($expected, $output, 'This should convert a link whose href doesn\'t match our known patterns.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertLinkBadEncoding() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000348989#38;version=Patient&amp;language=English" onclick="javascript:popWindow(\'defbyid\',\'CDR0000348989&amp;version=Patient&amp;language=English\'); return false;">case-control studies</a>';
+
+    $output = $converter->convert($input);
+
+    $expected = '<a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000348989#38;version=Patient&amp;language=English" onclick="javascript:popWindow(\'defbyid\',\'CDR0000348989&amp;version=Patient&amp;language=English\'); return false;">case-control studies</a>';
+    $this->assertEquals($expected, $output, 'This should convert a link that has bad encoding for &.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertOldOldDefinitionLink() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" onclick="javascript:popWindow(\'defbyid\',\'CDR0000730354&amp;version=Patient&amp;language=English\'); return false;" href="/Common/PopUps/popDefinition.aspx?id=CDR0000730354&amp;version=Patient&amp;language=English">Meditation</a>';
+    $output = $converter->convert($input);
+    // You are going to change this.
+    $expected = '<nci-definition data-gloss-id="730354" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">Meditation</nci-definition>';
+
+    $this->assertEquals($expected, $output, 'This should convert a single data-glossary-id.');
   }
 
   /**

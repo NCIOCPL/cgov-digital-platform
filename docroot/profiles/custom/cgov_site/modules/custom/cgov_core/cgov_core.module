@@ -219,7 +219,10 @@ function _cgov_core_get_user_input_from_form_state(
   // So we are going to slide down the $user_input tree if it is a subform.
   $tmp_inputs = $user_inputs;
   if (isset($widget_form_context['#type']) && $widget_form_context['#type'] === 'container') {
-    foreach ($widget_form_context['#parent'] as $path) {
+    foreach ($widget_form_context['#parents'] as $path) {
+      if (!isset($tmp_inputs[$path])) {
+        return NULL;
+      }
       $tmp_inputs = $tmp_inputs[$path];
     }
   }
