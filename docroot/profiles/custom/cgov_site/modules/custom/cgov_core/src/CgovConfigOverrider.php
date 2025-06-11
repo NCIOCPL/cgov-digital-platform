@@ -5,23 +5,11 @@ namespace Drupal\cgov_core;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryOverrideInterface;
 use Drupal\Core\Config\StorageInterface;
-use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 
 /**
  * CgovConfigOverrider - Overrides configurations for cgov_core.
  */
 class CgovConfigOverrider implements ConfigFactoryOverrideInterface {
-
-  /**
-   * The bundle info service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
-   */
-  protected $bundleInfoService;
-
-  public function __construct(EntityTypeBundleInfoInterface $bundleInfoService) {
-    $this->bundleInfoService = $bundleInfoService;
-  }
 
   /**
    * {@inheritdoc}
@@ -30,14 +18,18 @@ class CgovConfigOverrider implements ConfigFactoryOverrideInterface {
     $overrides = [];
     // Editorial Workflow for all node types & non-image media items.
     if (in_array('workflows.workflow.editorial_workflow', $names)) {
-      $content_types = $this->bundleInfoService->getBundleInfo('node');
+      // phpcs:disable
+      $content_types = \Drupal::service('entity_type.bundle.info')->getBundleInfo('node');
+      // phpcs:enable
       foreach ($content_types as $type => $info) {
         if (strpos($type, 'cgov_') !== FALSE) {
           $overrides['workflows.workflow.editorial_workflow']['type_settings']['entity_types']['node'][] = $type;
         }
       }
 
-      $media_types = $this->bundleInfoService->getBundleInfo('media');
+      // phpcs:disable
+      $media_types = \Drupal::service('entity_type.bundle.info')->getBundleInfo('media');
+      // phpcs:enable
       foreach ($media_types as $type => $info) {
         if (strpos($type, 'cgov_') !== FALSE && strpos($type, '_image') === FALSE) {
           $overrides['workflows.workflow.editorial_workflow']['type_settings']['entity_types']['media'][] = $type;
@@ -46,14 +38,18 @@ class CgovConfigOverrider implements ConfigFactoryOverrideInterface {
     }
     // Simple Workflow is only for Custom Block Types and Images.
     if (in_array('workflows.workflow.simple_workflow', $names)) {
-      $custom_block_types = $this->bundleInfoService->getBundleInfo('block_content');
+      // phpcs:disable
+      $custom_block_types = \Drupal::service('entity_type.bundle.info')->getBundleInfo('block_content');
+      // phpcs:enable
       foreach ($custom_block_types as $type => $info) {
         // Do not check for a prefix for block content as all block_content
         // should follow the simple workflow.
         $overrides['workflows.workflow.simple_workflow']['type_settings']['entity_types']['block_content'][] = $type;
       }
 
-      $media_types = $this->bundleInfoService->getBundleInfo('media');
+      // phpcs:disable
+      $media_types = \Drupal::service('entity_type.bundle.info')->getBundleInfo('media');
+      // phpcs:enable
       foreach ($media_types as $type => $info) {
         // Only check for image media items.
         if (strpos($type, 'cgov_') !== FALSE && strpos($type, '_image') !== FALSE) {
