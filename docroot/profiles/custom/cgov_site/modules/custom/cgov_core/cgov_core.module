@@ -220,11 +220,11 @@ function _cgov_core_text_filter_modify($form_element) {
  * When a user is initially created, default the preferred
  * language for the UI pages to English.
  */
-function cgov_core_user_presave(UserInterface $entity) {
-  if ($entity->isNew() && empty($entity->get('preferred_admin_langcode')->getValue())) {
+function cgov_core_user_presave(EntityInterface $entity) {
+  if ($entity->isNew() && empty($entity->preferred_admin_langcode->value)) {
     $entity->set('preferred_admin_langcode', 'en');
   }
-  elseif ($entity->get('preferred_admin_langcode')->getValue() === 'no-preference') {
+  elseif ($entity->preferred_admin_langcode->value === 'no-preference') {
     // Support the drush command(bulk-load-users), we use no-preference because
     // ALL new users on pre-save have a value for this field regardless of
     // whether it's empty.
