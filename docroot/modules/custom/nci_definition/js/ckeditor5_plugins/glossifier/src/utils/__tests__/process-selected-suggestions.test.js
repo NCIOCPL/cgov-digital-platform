@@ -26,11 +26,11 @@ describe('processSelectedSuggestions', () => {
           ` affects your physical health, it can bring up a wide range of feelings you’re not used to dealing with. It can also make&nbsp;existing&nbsp;feelings seem more intense. They may change daily, hourly, or even minute to minute. This is true whether you’re currently in treatment, done with treatment, or a friend or family member. These feelings are ` +
           `<label data-gloss-id="44362" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">all<input type="checkbox"></label> normal.</p>` +
           `<p>Often the values you grew up with affect how you think about and&nbsp;` +
-          `<label data-term-id="454700" data-language="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">cope<input type="checkbox"></label>` +
+          `<label data-gloss-id="454700" data-language="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">cope<input type="checkbox"></label>` +
           ` with ` +
-          `<label data-term-id="45333" data-language="en" class="glossify-dialog__term " data-preexisting="false" data-html="" data-glossify-label="">cancer<input type="checkbox"></label>. For example some people:</p><ul><li>Feel they have to be strong and protect their friends and families</li><li>Seek support and turn to loved ones or other ` +
-          `<label data-term-id="45333" data-language="en" class="glossify-dialog__term " data-preexisting="false" data-html="" data-glossify-label="">cancer<input type="checkbox"></label> ` +
-          `<label data-term-id="450125" data-language="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">survivors<input type="checkbox"></label>` +
+          `<label data-gloss-id="45333" data-language="en" class="glossify-dialog__term " data-preexisting="false" data-html="" data-glossify-label="">cancer<input type="checkbox"></label>. For example some people:</p><ul><li>Feel they have to be strong and protect their friends and families</li><li>Seek support and turn to loved ones or other ` +
+          `<label data-gloss-id="45333" data-language="en" class="glossify-dialog__term " data-preexisting="false" data-html="" data-glossify-label="">cancer<input type="checkbox"></label> ` +
+          `<label data-gloss-id="450125" data-language="en" class="glossify-dialog__term glossify-dialog__term--first" data-preexisting="false" data-html="" data-glossify-label="">survivors<input type="checkbox"></label>` +
           `</li><li>Ask for help from counselors or other professionals</li><li>Turn to their faith to help them ` +
           `<label data-term-id="454700" data-language="en" class="glossify-dialog__term " data-preexisting="false" data-html="" data-glossify-label="">cope<input type="checkbox"></label>` +
           `</li></ul>` +
