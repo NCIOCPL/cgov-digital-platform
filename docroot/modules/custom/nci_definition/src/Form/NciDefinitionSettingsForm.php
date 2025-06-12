@@ -31,7 +31,6 @@ class NciDefinitionSettingsForm extends ConfigFormBase {
     $form = parent::buildForm($form, $form_state);
     $config = $this->config('nci_definition.settings');
 
-    /* @todo Add field for global class list */
     $form['definition_classes'] = [
       '#type'          => 'textfield',
       '#title'         => $this->t('Definition Link Classes'),

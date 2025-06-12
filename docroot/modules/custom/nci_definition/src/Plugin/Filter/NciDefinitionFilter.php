@@ -11,6 +11,7 @@ use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
 use Drupal\filter\Plugin\FilterInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -40,6 +41,13 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
   protected $configFactory;
 
   /**
+   * The logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * Constructs a NciDefinitionFilter object.
    *
    * @param array $configuration
@@ -50,10 +58,19 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The Drupal configuration factory service.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   A logger.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ConfigFactoryInterface $config_factory,
+    LoggerInterface $logger,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configFactory = $config_factory;
+    $this->logger = $logger;
   }
 
   /**
@@ -64,7 +81,8 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('logger.channel.nci_definition')
     );
   }
 
@@ -97,6 +115,8 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
         /** @var \DOMElement $node */
         $gloss_id = $node->getAttribute('data-gloss-id');
         // @todo Make default dictionary and audience a config setting.
+        // Although, we should only set the default when the WYSIWYG is
+        // updated too.
         $dictionary = $node->getAttribute('data-gloss-dictionary') !== '' ? $node->getAttribute('data-gloss-dictionary') : 'Cancer.gov';
         $audience = $node->getAttribute('data-gloss-audience') !== '' ? $node->getAttribute('data-gloss-audience') : 'Patient';
         // Langcode might be unknown or default. We want this to be either
@@ -110,7 +130,8 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
 
         if ($gloss_id === '') {
           // If the glossary ID is missing, we should not transform the tag.
-          // @todo error here.
+          $this->logger->warning('Definition filter encountered nci-definition with missing id.');
+
           continue;
         }
 
@@ -123,12 +144,16 @@ class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginIn
           $dictionary, $audience, $lang
         );
 
-        // @todo Address this open question:
-        // What will the default href be if the dictionary URL is not set,
-        // or if the parameters are not set? Let's assume for our test that
-        // the defaults are for the dictionary of cancer terms.
+        // If we have no format string we should log an error.
         if ($url_format === NULL) {
-          // @todo error here.
+          $this->logger->warning(
+            'Definition filter encountered unknown dictionary/audience/language combination: @dictionary/@audience/@language. Please check configuration.',
+            [
+              '@dictionary' => $dictionary,
+              '@audience' => $audience,
+              '@language' => $lang,
+            ]
+          );
           continue;
         }
 

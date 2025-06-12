@@ -84,8 +84,7 @@ describe('createDialogBodyHtml', () => {
     expect(result).toBe(expected);
   });
 
-  // @todo What is this use case now we have definition links.
-  it('handles existing glossified terms with HTML tags', () => {
+  it('does not break with un-converted old glossified terms with HTML tags', () => {
     const originalHtml = '<p>This is a <a class="definition" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045333&amp;version=Patient&amp;language=en" data-glossary-id="CDR0000045333"><em><strong>cancer</strong></em></a> test</p>';
     const candidateTerms = [];
 
