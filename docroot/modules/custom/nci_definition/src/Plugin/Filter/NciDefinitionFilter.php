@@ -6,23 +6,25 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\FilterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a filter to transform <nci-definition> tags.
- *
- * @Filter(
- *   id = "nci_definition",
- *   title = @Translation("NCI Definition Filter"),
- *   settings = {
- *     "definition_classes" = "",
- *   },
- *   description = @Translation("Transforms &lt;nci-definition&gt; tags to &lt;a&gt; tags."),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_REVERSIBLE
- * )
  */
+#[Filter(
+  id: "nci_definition",
+  title: new TranslatableMarkup("NCI Definition Filter"),
+  type: FilterInterface::TYPE_TRANSFORM_REVERSIBLE,
+  weight: -10,
+  settings: [
+    "definition_classes" => "",
+  ],
+)]
 class NciDefinitionFilter extends FilterBase implements ContainerFactoryPluginInterface {
 
   /**
