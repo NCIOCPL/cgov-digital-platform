@@ -326,7 +326,4 @@ describe('prepareAndFetchSuggestions', () => {
     });
   });
 
-  // @todo: Add more tests for preserving HTML and handling special chars.
-  // @todo: Maybe add a Spanish test for Spanish chars.
-
 });
