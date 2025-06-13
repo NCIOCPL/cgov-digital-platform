@@ -50,7 +50,7 @@ class JsonDataFieldFormatter extends FormatterBase implements ContainerFactoryPl
           '#type' => 'html_tag',
           '#tag' => 'code',
           '#value' => $yaml_data,
-          '#format' => $item->format,
+          '#format' => $item->get('format')?->getValue(),
           '#langcode' => $item->getLangcode(),
         ],
       ];
