@@ -850,6 +850,44 @@ display:
           exposed: false
           granularity: second
       arguments:
+        field_event_group_target_id:
+          id: field_event_group_target_id
+          table: node__field_event_group
+          field: field_event_group_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: entity_target_id
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: taxonomy_tid
+          default_argument_options:
+            term_page: '1'
+            node: false
+            limit: false
+            vids: {  }
+            anyall: ','
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
         field_event_series_target_id:
           id: field_event_series_target_id
           table: node__field_event_series
@@ -1095,10 +1133,10 @@ display:
           exposed: false
           granularity: second
       arguments:
-        field_event_series_target_id:
-          id: field_event_series_target_id
-          table: node__field_event_series
-          field: field_event_series_target_id
+        field_event_group_target_id_1:
+          id: field_event_group_target_id_1
+          table: node__field_event_group
+          field: field_event_group_target_id
           relationship: none
           group_type: group
           admin_label: ''
@@ -1127,7 +1165,43 @@ display:
             type: none
             fail: 'not found'
           validate_options: {  }
-          break_phrase: false
+          break_phrase: true
+          not: false
+        field_event_series_target_id:
+          id: field_event_series_target_id
+          table: node__field_event_series
+          field: field_event_series_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: entity_target_id
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: query_parameter
+          default_argument_options:
+            query_param: ''
+            fallback: ''
+            multiple: and
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: true
           not: false
       style:
         type: default
@@ -1145,9 +1219,11 @@ display:
         pager: false
         style: false
         row: false
+        relationships: false
         sorts: false
         arguments: false
         footer: false
+      relationships: {  }
       display_description: 'View of past events based on the current date'
       footer:
         result:

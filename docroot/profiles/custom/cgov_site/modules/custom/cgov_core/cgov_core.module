@@ -242,7 +242,7 @@ function cgov_core_form_alter(&$form, FormStateInterface $form_state, $form_id) 
   }
 
   if (strpos($form_id, 'taxonomy_term') !== FALSE && isset($form['tid']['#value'])) {
-    $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+    $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_group','cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
     $vid = $form['vid']['#value'];
     if (in_array($vid, $vocabs)) {
       $references = getTermRefsFromField($form['tid']['#value'], $vid);
@@ -769,7 +769,7 @@ function cgov_addl_lib_default_value_function(EntityInterface $entity, FieldDefi
 function cgov_core_taxonomy_term_access($entity, $operation, $account) {
   // Prevent term deletion if used in default revision.
   $references = [];
-  $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
+  $vocabs = ['cgov_cancer_center_types', 'cgov_cancer_center_regions', 'cgov_event_group','cgov_event_series', 'cgov_event_venues', 'cgov_biography_campuses', 'cgov_site_sections'];
   if (in_array($entity->bundle(), $vocabs)) {
     switch ($operation) {
       case 'delete':
