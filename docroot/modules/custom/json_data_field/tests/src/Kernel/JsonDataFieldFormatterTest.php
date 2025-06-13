@@ -27,7 +27,7 @@ class JsonDataFieldFormatterTest extends KernelTestBase {
       'mode' => 'default',
     ]);
     $entity_view_display->setComponent('test_json_data_field', [
-      'type' => 'json_data_formatter',
+      'type' => 'string',
     ]);
     $entity_view_display->save();
 
@@ -58,7 +58,7 @@ class JsonDataFieldFormatterTest extends KernelTestBase {
       'mode' => 'default',
     ]);
     $entity_view_display->setComponent('test_json_data_field', [
-      'type' => 'json_data_formatter',
+      'type' => 'string',
     ]);
     $entity_view_display->save();
 
