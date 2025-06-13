@@ -135,7 +135,7 @@ abstract class JsonDataFieldBrowserTestBase extends BrowserTestBase {
    * @return string
    *   Name of the field, like field_something
    */
-  protected function createField($type = 'json_data', $widget_type = 'yaml_textarea', $fieldFormatter = 'json_data_formatter') {
+  protected function createField($type = 'json_data', $widget_type = 'yaml_textarea', $fieldFormatter = 'string') {
     $assert = $this->assertSession();
 
     $this->drupalGet('admin/structure/types/manage/' . $this->contentTypeName . '/fields');
