@@ -15,6 +15,9 @@
 	padding-inline-start: 0;
 	margin-block-start: 0;
 	margin-block-end: 0;
+	& > * {
+		@include u-padding-x(2);
+	}
 	/* From NCI Card Group END */
 }
 
@@ -22,9 +25,6 @@
 	list-style: none;
 	@include u-display('flex');
 	@include u-margin-bottom(3);
-	@include at-media('tablet') {
-		@include u-margin-bottom(4);
-	}
 	&:last-child {
 		@include u-margin-bottom(0);
 	}
@@ -69,9 +69,8 @@
 .cgdp-flag-card__content {
 	@include u-padding-x(4);
 	@include u-padding-y('205');
-	@include at-media('desktop') {
-		@include u-padding-top(2);
-		@include u-padding-bottom(3);
+	@include at-media('tablet') {
+		@include u-padding-y(2);
 		@include u-padding-x(3);
 	}
 	@include u-flex('align-self-center');
