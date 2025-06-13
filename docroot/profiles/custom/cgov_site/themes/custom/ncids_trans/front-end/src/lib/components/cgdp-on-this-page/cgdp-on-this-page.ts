@@ -3,7 +3,7 @@ import { getPageInfo } from '../../core/analytics/landing-page-contents-helper';
 
 /**
  * Click handler for the language toggle click.
- * @param collectionElement the list element.
+ * @param linkArray the array of interactable OTP elements
  */
 const otpLinkClickHandler = (linkArray: HTMLElement[]) => (evt: Event) => {
 	const target = evt.currentTarget as HTMLElement;
@@ -42,6 +42,7 @@ const otpAnalyticsHelper = (List: HTMLElement): void => {
  * Wires up On This Page for analytics
  */
 const initialize = () => {
+	// On This Page Analytics (For Desktop)
 	const onThisPageNavElement = document.querySelector(
 		'.cgdp-on-this-page'
 	) as HTMLElement;
