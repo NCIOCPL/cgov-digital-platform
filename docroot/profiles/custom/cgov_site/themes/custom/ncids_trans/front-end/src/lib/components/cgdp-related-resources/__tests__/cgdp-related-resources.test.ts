@@ -9,6 +9,8 @@ import cgdpRelatedResourcesInit from '../cgdp-related-resources';
 import {
 	cgdpRelatedResourcesDom,
 	cgdpRelatedResourceErrorDom,
+	cgdpRelatedResourcesAccordionDom,
+	cgdpRelatedResourcesBadAccordionDom,
 } from './cgdp-related-resources.dom';
 
 jest.mock('../../../core/analytics/eddl-util');
@@ -171,5 +173,97 @@ describe('NCIDS Related Resources', () => {
 		cgdpRelatedResourcesInit();
 
 		expect(screen.getByText('Hello World')).toBeInTheDocument();
+	});
+
+	it('should send analytics when the accordion is expanded', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpRelatedResourcesAccordionDom
+		);
+
+		// Create the JS
+		cgdpRelatedResourcesInit();
+
+		// Get links
+		const accordionHeading = screen.getByText('Related Resources');
+
+		// Click the link
+		fireEvent.click(accordionHeading);
+
+		expect(spy).toHaveBeenCalledWith(
+			'Inner:Accordion:ExpandCollapse',
+			'Inner:Accordion:ExpandCollapse',
+			{
+				location: 'Body',
+				pageType: 'cgvArticle',
+				pageTemplate: 'default',
+				accordionAction: 'Collapse',
+				accordionFirstInteraction: true,
+				componentType: 'Related Resources Accordion',
+				title: '_ERROR_',
+				linkType: 'accordion',
+				accordionLinkText: 'Related Resources',
+				totalAccordionItems: 1,
+				accordionLinkPosition: 1,
+			}
+		);
+	});
+
+	it('should send analytics when the accordion is expanded even if the heading has no text', async () => {
+		// Lets make a spy to ensure that trackOther is called correctly
+		const spy = jest.spyOn(eddlUtil, 'trackOther');
+
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpRelatedResourcesBadAccordionDom
+		);
+
+		// Create the JS
+		cgdpRelatedResourcesInit();
+
+		// Get links
+		const accordionHeading = screen.getByTestId('accordion-heading');
+
+		// Click the link
+		fireEvent.click(accordionHeading);
+
+		expect(spy).toHaveBeenCalledWith(
+			'Inner:Accordion:ExpandCollapse',
+			'Inner:Accordion:ExpandCollapse',
+			{
+				location: 'Body',
+				pageType: 'cgvArticle',
+				pageTemplate: 'default',
+				accordionAction: 'Collapse',
+				accordionFirstInteraction: true,
+				componentType: 'Related Resources Accordion',
+				title: '_ERROR_',
+				linkType: 'accordion',
+				accordionLinkText: '_ERROR_',
+				totalAccordionItems: 1,
+				accordionLinkPosition: 1,
+			}
+		);
+	});
+
+	it('should not break when an accordion is not present', async () => {
+		// Inject the HTML into the dom.
+		document.body.insertAdjacentHTML(
+			'beforeend',
+			cgdpRelatedResourcesAccordionDom
+		);
+
+		// Create the JS
+		cgdpRelatedResourcesInit();
+
+		// Get links
+		const accordionHeading = screen.getByText('Related Resources');
+
+		expect(accordionHeading).toBeInTheDocument();
 	});
 });
