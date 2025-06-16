@@ -49,7 +49,11 @@ class NciDefinitionLegacyConverter {
       ];
 
       $audience = $audienceMapping[$version] ?? 'Patient';
-      $lang = isset($params['language']) && $params['language'] === 'English' ? 'en' : 'es';
+
+      $spanish_language_params = ['es', 'spanish'];
+      $lang = isset($params['language']) &&
+        (in_array(strtolower($params['language']), $spanish_language_params)) ?
+        'es' : 'en';
 
       $dictionary = isset($params['dictionary']) ? strtolower($params['dictionary']) : 'cancer.gov';
       if ($dictionary === 'genetic') {

@@ -93,6 +93,45 @@ class NciDefinitionLegacyConverterTest extends TestCase {
   /**
    * @covers ::convert
    */
+  public function testConvertOldEnDefinitionLink() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" data-glossary-id="CDR0000045214" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045214&amp;version=Patient&amp;language=en">chemotherapy</a>';
+    $output = $converter->convert($input);
+    // You are going to change this.
+    $expected = '<nci-definition data-gloss-id="45214" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="en">chemotherapy</nci-definition>';
+
+    $this->assertEquals($expected, $output, 'This should convert a single data-glossary-id.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertOldSpanishDefinitionLink() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" data-glossary-id="CDR0000045214" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045214&amp;version=Patient&amp;language=Spanish">chemotherapy</a>';
+    $output = $converter->convert($input);
+    // You are going to change this.
+    $expected = '<nci-definition data-gloss-id="45214" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="es">chemotherapy</nci-definition>';
+
+    $this->assertEquals($expected, $output, 'This should convert a single data-glossary-id.');
+  }
+
+  /**
+   * @covers ::convert
+   */
+  public function testConvertOldEsDefinitionLink() {
+    $converter = new NciDefinitionLegacyConverter();
+    $input = '<a class="definition" data-glossary-id="CDR0000045214" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045214&amp;version=Patient&amp;language=es">chemotherapy</a>';
+    $output = $converter->convert($input);
+    // You are going to change this.
+    $expected = '<nci-definition data-gloss-id="45214" data-gloss-dictionary="Cancer.gov" data-gloss-audience="Patient" data-gloss-lang="es">chemotherapy</nci-definition>';
+
+    $this->assertEquals($expected, $output, 'This should convert a single data-glossary-id.');
+  }
+
+  /**
+   * @covers ::convert
+   */
   public function testConvertTwoLinksSeparatedByNbsp() {
     $converter = new NciDefinitionLegacyConverter();
     $input = '<a class="definition" data-glossary-id="CDR0000045214" href="/Common/PopUps/popDefinition.aspx?id=CDR0000045214&amp;version=Patient&amp;language=English">chemotherapy</a>' .
