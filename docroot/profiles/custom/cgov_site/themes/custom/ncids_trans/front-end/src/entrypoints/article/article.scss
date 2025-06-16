@@ -13,7 +13,7 @@
 @forward '../../lib/components/wysiwyg/common/cgdp-embed-image';
 
 @forward '../../lib/components/cgdp-on-this-page';
-@forward '../../lib/components/cgdp-article-body/';
+@forward '../../lib/components/cgdp-article-body';
 
 @use 'uswds-core' as *;
 
@@ -23,5 +23,20 @@
 .cgdp-field-intro-text {
 	.usa-prose > p {
 		@include u-measure('none');
+	}
+}
+
+// Margin between accordion sections (8px)
+.cgdp-article-body.usa-accordion {
+	@include u-margin-top(3);
+	section:not(:first-child) {
+		@include u-margin-top(1);
+	}
+}
+// Margin for butting related resources accordion
+// directly up against article content accordion above it
+.cgdp-article-footer {
+	&:has(.usa-accordion) {
+		@include u-margin-top(1);
 	}
 }
