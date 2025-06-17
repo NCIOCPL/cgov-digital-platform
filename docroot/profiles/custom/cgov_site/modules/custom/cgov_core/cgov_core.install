@@ -600,3 +600,22 @@ function cgov_core_update_10010() {
     $installer->install(['ckeditor5']);
   }
 }
+
+/**
+ * Updates article page intro text to use ncids_streamlined_no_headings.
+ */
+function cgov_core_update_10011() {
+  $db = \Drupal::database();
+  $bundle = 'cgov_article';
+  // Node table updates
+  $db->update('node__field_intro_text')
+    ->fields(['field_intro_text_format' => 'ncids_streamlined_no_headings'])
+    ->condition('bundle', $bundle)
+    ->execute();
+
+  // Node revision table updates
+  $db->update('node_revision__field_intro_text')
+    ->fields(['field_intro_text_format' => 'ncids_streamlined_no_headings'])
+    ->condition('bundle', $bundle)
+    ->execute();
+}
