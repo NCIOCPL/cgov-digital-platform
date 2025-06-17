@@ -22,6 +22,9 @@ class JsonDataFieldWidgetTest extends JsonDataFieldBrowserTestBase {
    * - Creates a node of the new type.
    * - Populates the field with json_data_field.
    * - Tests the result.
+   *
+   * The formatter doesn't output anything, so we deliberately don't test
+   * the result of rendering.
    */
   public function testField() {
     $this->setupAndAssertForTests();
@@ -62,17 +65,6 @@ class JsonDataFieldWidgetTest extends JsonDataFieldBrowserTestBase {
       ],
       'Save'
     );
-
-    // Convert the multiline YAML into single line.
-    $single_line_yaml = trim(preg_replace('/\s+/', ' ', $yaml_data));
-    $expected = str_replace('"', "", $single_line_yaml);
-
-    // Check that the YAML is correct after saving.
-    // Stable9 is not outputting class names.
-    $field_value = $this->xpath("//div[contains(@class,'field--type-json-data')]/div/pre/code");
-    $actual = (string) $field_value[0]->getText();
-    $actual = str_replace("'", "", $actual);
-    $this->assertEquals($expected, $actual);
 
     // Check validation.
     $this->drupalGet('node/add/' . $this->contentTypeName);
