@@ -187,8 +187,8 @@ function cgov_core_field_widget_single_element_form_alter(&$element, FormStateIn
     array_key_exists('#type', $element) &&
     $element['#type'] === 'text_format'
   ) {
-    // Fixup the html of legacy definition links.
-    //_cgov_core_convert_legacy_definition_links($element, $form_state, $context);
+    /* Fixup the html of legacy definition links. */
+    /* _cgov_core_convert_legacy_definition_links($element, $form_state, $context); */
 
     // Remove the choice of text_format.
     $element['#after_build'][] = '_cgov_core_text_filter_modify';
