@@ -69,6 +69,149 @@ export default class GlossifyEditing extends Plugin {
         },
       });
 
+    /**
+     * Helper to extract the glossary ID from legacy definition links.
+     *
+     * @param {Element} viewElement the view element to extract the ID from.
+     * @returns {number|null} the glossary ID or null if it cannot be extracted.
+     */
+    const getLegacyGlossaryId = (viewElement) => {
+      // Handle newer nci definitions where the ID is nicely separated
+      // from the href.
+      if (viewElement.hasAttribute('data-glossary-id')) {
+        // Try to get ID from data-glossary-id attribute first
+        const dataGlossaryId = parseInt(
+          viewElement.getAttribute('data-glossary-id').replace(/^CDR0*/, '')
+        );
+
+        // We are not messing around. If there is a data-glossary-id and it
+        // is malformed, then we will not convert this link.
+        if (!isNaN(dataGlossaryId)) {
+          return dataGlossaryId;
+        } else {
+          return null;
+        }
+      }
+
+      // Fallback to processing the href to get the ID.
+      const href = viewElement.getAttribute('href');
+      // At this point we are pretty much good to go and all we need to do
+      // is to extract the properties from the href.
+      const parsedUrl = new URL(href, 'https://example.org');
+      const hrefId = parseInt(parsedUrl.searchParams.get('id')?.replace(/\D+/, ''));
+
+      // Only return the ID if it is a valid number.
+      if (!isNaN(hrefId)) {
+        return hrefId;
+      }
+
+      return null;
+    };
+
+    // Legacy definition link upcast conversion
+    conversion
+      .for("upcast")
+      .add((dispatcher) => {
+        dispatcher.on('element:a', (evt, data, conversionApi) => {
+          const viewElement = data.viewItem;
+
+          // Only process if it has the 'definition' class
+          if (!viewElement.hasClass('definition')) {
+            return;
+          }
+
+          // Let's test the URLs to make sure they are known formats.
+          const oldGlossifierPattern = /^(http[s]*:\/\/[^\/]*|)\/Common\/PopUps\/popDefinition\.aspx\?id=([^&]*)&version=(patient|healthprofessional)&language=(English|Spanish|en|es)$/i;
+          const pdqPattern = /^\/Common\/PopUps\/popDefinition\.aspx\?id=([^&]*)&version=(patient|healthprofessional)&language=(English|Spanish|en|es)&dictionary=([^&]*)$/i;
+          const href = viewElement.getAttribute('href');
+
+          if (
+            !oldGlossifierPattern.test(href) &&
+            !pdqPattern.test(href)
+          ) {
+            return;
+          }
+
+          // At this point we are pretty much good to go and all we need to do
+          // is to extract the properties from the href.
+          const parsedUrl = new URL(href, 'https://example.org');
+
+          // Extract data from legacy link attributes
+          const glossId = getLegacyGlossaryId(viewElement);
+
+          // Gonna bail if we don't have a valid ID because we can't just
+          // fall back to some default.
+          if (!glossId) {
+            console.warn(
+              'Glossifier: Unable to extract glossary ID from link.'
+            );
+            return;
+          }
+
+          // This is a cheat because we know the default dictionary for all old
+          // links.
+          const glossDictionary = 'Cancer.gov';
+          // Default to patient unless the version is HP.
+          const glossAudience = parsedUrl.searchParams.get('version')?.toLowerCase() === 'healthprofessional' ?
+            'HealthProfessional' : 'Patient';
+          const tmpLang = parsedUrl.searchParams.get('language')?.toLowerCase();
+          // Default to english.
+          const glossLang = (tmpLang === 'spanish' || tmpLang === 'es') ? 'es' : 'en';
+
+          // Now we get into the CKEditor conversion specific things.
+          const { writer, consumable, safeInsert } = conversionApi;
+
+          // Consume the element and all its attributes to prevent default conversion
+          if (!consumable.consume(viewElement, { name: true })) {
+            return;
+          }
+
+          // Consume all attributes to prevent them from being processed
+          for (const attributeName of viewElement.getAttributeKeys()) {
+            consumable.consume(viewElement, { attributes: attributeName });
+          }
+
+          // Create the nci-definition element
+          const nciDefinition = writer.createElement('nciDefinition', {
+            glossId,
+            glossDictionary,
+            glossAudience,
+            glossLang,
+          });
+
+          // Manually extract and convert only text content and basic formatting
+          // TODO: I don't know about this one. I need analysis on the inner HTML of def links.
+          const extractContent = (element, target) => {
+            for (const child of element.getChildren()) {
+              if (child.is('$text')) {
+                writer.insertText(child.data, target);
+              } else if (child.is('element')) {
+                // Only allow basic formatting elements, not other anchors
+                if (['strong', 'em', 'b', 'i', 'u', 'sub', 'sup'].includes(child.name)) {
+                  const formattingElement = writer.createElement(child.name);
+                  writer.insert(formattingElement, target);
+                  extractContent(child, formattingElement);
+                } else {
+                  // For other elements, just extract their text content
+                  extractContent(child, target);
+                }
+              }
+            }
+          };
+
+          extractContent(viewElement, nciDefinition);
+
+          // Insert the element
+          if (!safeInsert(nciDefinition, data.modelCursor)) {
+            return;
+          }
+
+          // Update the conversion result
+          conversionApi.updateConversionResult(nciDefinition, data);
+
+        }, { priority: 'high' });
+      });
+
     // Downcast to move from custom element to HTML for the editing view.
     // The editing view is what you see when you open the editor.
     // https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/downcast.html#downcast-pipelines
