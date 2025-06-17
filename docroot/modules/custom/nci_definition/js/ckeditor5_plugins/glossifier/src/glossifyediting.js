@@ -17,11 +17,15 @@ export default class GlossifyEditing extends Plugin {
     this._defineLegacyUpcastConverter(conversion);
     this._defineEditingDowncast(conversion, config);
     this._defineDataDowncast(conversion);
+    this._preventLinksInDefinitions(conversion);
 
     this.editor.commands.add(
       'glossifyAction',
       new GlossifyActionCommand(this.editor),
     );
+
+    // Disable link command when selection is inside nciDefinition
+    this._disableLinkCommandInDefinitions();
   }
 
   /**
@@ -45,6 +49,13 @@ export default class GlossifyEditing extends Plugin {
         'glossAudience',
         'glossLang',
       ],
+    });
+
+    // Explicitly disallow links inside nciDefinition elements
+    schema.addChildCheck((context, childDefinition) => {
+      if (context.endsWith('nciDefinition') && childDefinition.name === 'a') {
+        return false;
+      }
     });
   }
 
@@ -248,7 +259,7 @@ export default class GlossifyEditing extends Plugin {
           const glossLang = (tmpLang === 'spanish' || tmpLang === 'es') ? 'es' : 'en';
 
           // Now we get into the CKEditor conversion specific things.
-          const { writer, consumable, safeInsert } = conversionApi;
+          const { writer, consumable, safeInsert, convertChildren } = conversionApi;
 
           // Consume the element and all its attributes to prevent default conversion
           if (!consumable.consume(viewElement, { name: true })) {
@@ -268,27 +279,8 @@ export default class GlossifyEditing extends Plugin {
             glossLang,
           });
 
-          // Manually extract and convert only text content and basic formatting
-          // TODO: I don't know about this one. I need analysis on the inner HTML of def links.
-          const extractContent = (element, target) => {
-            for (const child of element.getChildren()) {
-              if (child.is('$text')) {
-                writer.insertText(child.data, target);
-              } else if (child.is('element')) {
-                // Only allow basic formatting elements, not other anchors
-                if (['strong', 'em', 'b', 'i', 'u', 'sub', 'sup'].includes(child.name)) {
-                  const formattingElement = writer.createElement(child.name);
-                  writer.insert(formattingElement, target);
-                  extractContent(child, formattingElement);
-                } else {
-                  // For other elements, just extract their text content
-                  extractContent(child, target);
-                }
-              }
-            }
-          };
-
-          extractContent(viewElement, nciDefinition);
+          // Use CKEditor's built-in convertChildren to handle child elements
+          convertChildren(viewElement, nciDefinition);
 
           // Insert the element
           if (!safeInsert(nciDefinition, data.modelCursor)) {
@@ -300,6 +292,81 @@ export default class GlossifyEditing extends Plugin {
 
         }, { priority: 'high' });
       });
+  }
+
+  /**
+   * Disables the link command when the selection is inside an nciDefinition element.
+   */
+  _disableLinkCommandInDefinitions() {
+    const editor = this.editor;
+    const linkCommand = editor.commands.get('link');
+
+    if (linkCommand) {
+      // Override the link command's refresh method to disable it in nciDefinition
+      const originalRefresh = linkCommand.refresh.bind(linkCommand);
+
+      linkCommand.refresh = () => {
+        originalRefresh();
+
+        const selection = editor.model.document.selection;
+        const selectedElement = selection.getSelectedElement();
+
+        // Check if selection is inside nciDefinition
+        if (selectedElement && selectedElement.is('element', 'nciDefinition')) {
+          linkCommand.isEnabled = false;
+          return;
+        }
+
+        // Check if any ancestor is nciDefinition
+        const position = selection.getFirstPosition();
+        if (position) {
+          const ancestors = position.getAncestors();
+          const hasNciDefinitionAncestor = ancestors.some(ancestor =>
+            ancestor.is('element', 'nciDefinition')
+          );
+
+          if (hasNciDefinitionAncestor) {
+            linkCommand.isEnabled = false;
+          }
+        }
+      };
+
+      // Force initial refresh
+      linkCommand.refresh();
+    }
+  }
+
+  /**
+   * Prevents links from being upcasted inside nci-definition elements.
+   * This handles cases where users manually add links via source view.
+   */
+  _preventLinksInDefinitions(conversion) {
+    conversion.for('upcast').add(dispatcher => {
+      dispatcher.on('element:a', (evt, data, conversionApi) => {
+        const viewElement = data.viewItem;
+
+        // Check if this link is inside an nci-definition element
+        let parent = viewElement.parent;
+        while (parent) {
+          if (parent.is('element', 'nci-definition')) {
+            // This link is inside an nci-definition, so we'll unwrap it but keep its content
+            const { consumable, convertChildren } = conversionApi;
+
+            // Consume the link element to prevent default processing
+            if (consumable.consume(viewElement, { name: true })) {
+              // Convert the children of the link without creating the link wrapper
+              // This effectively unwraps the <a> tag but preserves all inner content and formatting
+              convertChildren(viewElement, data.modelCursor);
+
+              // Stop the event to prevent the link from being created
+              evt.stop();
+            }
+            return;
+          }
+          parent = parent.parent;
+        }
+      }, { priority: 'high' });
+    });
   }
 
 }
