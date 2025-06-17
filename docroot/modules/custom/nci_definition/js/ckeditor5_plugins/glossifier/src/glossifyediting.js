@@ -3,9 +3,20 @@ import GlossifyActionCommand from './glossifyactioncommand';
 
 export default class GlossifyEditing extends Plugin {
 
+  /**
+   * Initializes the GlossifyEditing plugin.
+   */
   init() {
-    this._defineSchema();
-    this._defineConverters();
+    const config = this.editor.config.get('nci_definition');
+    const schema = this.editor.model.schema;
+    const conversion = this.editor.conversion;
+
+    this._defineSchema(schema);
+
+    this._defineUpcastConverter(conversion);
+    this._defineLegacyUpcastConverter(conversion);
+    this._defineEditingDowncast(conversion, config);
+    this._defineDataDowncast(conversion);
 
     this.editor.commands.add(
       'glossifyAction',
@@ -16,8 +27,7 @@ export default class GlossifyEditing extends Plugin {
   /**
    * Defines the shape (element name, attributes, etc) of the widget.
    */
-  _defineSchema() {
-    const schema = this.editor.model.schema;
+  _defineSchema(schema) {
 
     // This defines the Model's schema, which is not the same as what is
     // in the HTML.
@@ -39,14 +49,13 @@ export default class GlossifyEditing extends Plugin {
   }
 
   /**
-   * Defines how to move from editing the widget and previewing the widget.
+   * Defines the upcast converter for the <nci-definition> element.
+   *
+   * This goes from our markup to the model. See:
+   * @see https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/upcast.html
+   * @param {*} conversion
    */
-  _defineConverters() {
-    const config = this.editor.config.get('nci_definition');
-    const conversion = this.editor.conversion;
-
-    // This goes from our markup to the model. See:
-    // https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/upcast.html
+  _defineUpcastConverter(conversion) {
     conversion
       .for("upcast")
       .elementToElement({
@@ -68,7 +77,87 @@ export default class GlossifyEditing extends Plugin {
           });
         },
       });
+  }
 
+  /**
+   * Defines the downcast converter for the editing view.
+   *
+   * Downcast to move from custom element to HTML for the editing view.
+   * The editing view is what you see when you open the editor.
+   * @see https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/downcast.html#downcast-pipelines
+   * @param {*} conversion
+   * @param {*} config
+   */
+  _defineEditingDowncast(conversion, config) {
+
+    conversion.for("editingDowncast").elementToElement({
+      model: 'nciDefinition',
+      view: (modelElement, { writer }) => {
+        const glossId = modelElement.getAttribute('glossId');
+        const glossDictionary = modelElement.getAttribute('glossDictionary');
+        const glossAudience = modelElement.getAttribute('glossAudience');
+        const glossLang = modelElement.getAttribute('glossLang');
+
+        const matchingFormatter = config['nci_glossary_dictionary_urls']?.find((entry) =>
+          entry['dictionary']?.toLowerCase() === glossDictionary?.toLowerCase() &&
+          entry['audience']?.toLowerCase() === glossAudience?.toLowerCase() &&
+          entry['langcode']?.toLowerCase() === glossLang?.toLowerCase()
+        )?.formatter;
+
+        // TODO: In the future we should make it so clicking the link presents a
+        // balloon dialog to remove the dictionary link.
+        // TODO: In the future Fix formatter to not be so PHP.
+        const href = matchingFormatter ?
+          matchingFormatter.replace('%s', glossId) :
+          `#UNKNOWN_FORMATTER`;
+
+        return writer.createContainerElement('a', {
+          ...(config['definition_classes'] ?
+            { class: config['definition_classes'] } :
+            { }
+          ),
+          href,
+          'data-gloss-id': glossId,
+          'data-gloss-dictionary': glossDictionary,
+          'data-gloss-audience': glossAudience,
+          'data-gloss-lang': glossLang,
+        })
+      },
+    });
+  }
+
+  /**
+   * Defines the downcast converter for the data pipeline.
+   *
+   * Downcast to move from custom element to HTML for the data pipeline.
+   * Used when generating the editor output. This process is controlled by the data pipeline.
+   * @see https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/downcast.html#downcast-pipelines
+   * @param {*} conversion
+   */
+  _defineDataDowncast(conversion) {
+    conversion
+      .for("dataDowncast")
+      .elementToElement({
+        model: 'nciDefinition',
+        view: (modelElement, { writer }) => {
+          return writer.createContainerElement('nci-definition', {
+            'data-gloss-id': modelElement.getAttribute('glossId'),
+            'data-gloss-dictionary': modelElement.getAttribute('glossDictionary'),
+            'data-gloss-audience': modelElement.getAttribute('glossAudience'),
+            'data-gloss-lang': modelElement.getAttribute('glossLang'),
+          });
+        },
+      });
+  }
+
+  /**
+   * Upcast converter for legacy definition links.
+   *
+   * This should be removed once all legacy links are converted to the
+   * <nci-definition> format.
+   * @param {*} conversion
+   */
+  _defineLegacyUpcastConverter(conversion) {
     /**
      * Helper to extract the glossary ID from legacy definition links.
      *
@@ -210,61 +299,6 @@ export default class GlossifyEditing extends Plugin {
           conversionApi.updateConversionResult(nciDefinition, data);
 
         }, { priority: 'high' });
-      });
-
-    // Downcast to move from custom element to HTML for the editing view.
-    // The editing view is what you see when you open the editor.
-    // https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/downcast.html#downcast-pipelines
-    conversion.for("editingDowncast").elementToElement({
-      model: 'nciDefinition',
-      view: (modelElement, { writer }) => {
-        const glossId = modelElement.getAttribute('glossId');
-        const glossDictionary = modelElement.getAttribute('glossDictionary');
-        const glossAudience = modelElement.getAttribute('glossAudience');
-        const glossLang = modelElement.getAttribute('glossLang');
-
-        const matchingFormatter = config['nci_glossary_dictionary_urls']?.find((entry) =>
-          entry['dictionary']?.toLowerCase() === glossDictionary?.toLowerCase() &&
-          entry['audience']?.toLowerCase() === glossAudience?.toLowerCase() &&
-          entry['langcode']?.toLowerCase() === glossLang?.toLowerCase()
-        )?.formatter;
-
-        // TODO: In the future we should make it so clicking the link presents a
-        // balloon dialog to remove the dictionary link.
-        // TODO: In the future Fix formatter to not be so PHP.
-        const href = matchingFormatter ?
-          matchingFormatter.replace('%s', glossId) :
-          `#UNKNOWN_FORMATTER`;
-
-        return writer.createContainerElement('a', {
-          ...(config['definition_classes'] ?
-            { class: config['definition_classes'] } :
-            { }
-          ),
-          href,
-          'data-gloss-id': glossId,
-          'data-gloss-dictionary': glossDictionary,
-          'data-gloss-audience': glossAudience,
-          'data-gloss-lang': glossLang,
-        })
-      },
-    });
-
-    // Downcast to move from custom element to HTML for the data pipeline.
-    // Used when generating the editor output. This process is controlled by the data pipeline.
-    // https://ckeditor.com/docs/ckeditor5/latest/framework/deep-dive/conversion/downcast.html#downcast-pipelines
-    conversion
-      .for("dataDowncast")
-      .elementToElement({
-        model: 'nciDefinition',
-        view: (modelElement, { writer }) => {
-          return writer.createContainerElement('nci-definition', {
-            'data-gloss-id': modelElement.getAttribute('glossId'),
-            'data-gloss-dictionary': modelElement.getAttribute('glossDictionary'),
-            'data-gloss-audience': modelElement.getAttribute('glossAudience'),
-            'data-gloss-lang': modelElement.getAttribute('glossLang'),
-          });
-        },
       });
   }
 
