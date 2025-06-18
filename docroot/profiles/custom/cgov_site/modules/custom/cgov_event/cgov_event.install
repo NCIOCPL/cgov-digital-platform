@@ -5,6 +5,8 @@
  * Contains cgov_event.install.
  */
 
+use Drupal\taxonomy\Entity\Term;
+
 /**
  * Implements hook_install().
  *
@@ -18,4 +20,124 @@ function cgov_event_install() {
 
   // Add content type permissions.
   $siteHelper->addContentTypePermissions('cgov_event', ['content_author']);
+
+  // Add the default event group.
+  _cgov_event_add_default_event_group();
+}
+
+/**
+ * Helper to add the default term to the event group.
+ */
+function _cgov_event_add_default_event_group() {
+  $vocabulary = 'cgov_event_group';
+  $term_name = 'Default';
+
+  // Check if the term already exists in the vocabulary.
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => $vocabulary,
+      'name' => $term_name,
+    ]);
+
+  if (empty($terms)) {
+    // Create the new term.
+    $term = Term::create([
+      'vid' => $vocabulary,
+      'name' => $term_name,
+    ]);
+    $term->save();
+
+    return $term->id();
+  }
+  return NULL;
+}
+
+/**
+ * Update sites for Event Groups.
+ */
+function cgov_event_update_10001() {
+
+  // We must import the config for the cgov_event_group or
+  // else we cannot add the default group.
+  $service = \Drupal::service('features.manager');
+  $service->import(['cgov_event']);
+
+  // Add the default event group.
+  $default_id = _cgov_event_add_default_event_group();
+
+  // Load content without the field.
+  // Make sure software querying the field doesn't get back a NULL.
+  $db = \Drupal::database();
+  $bundle = 'cgov_event';
+  $fields = [
+    'bundle',
+    'deleted',
+    'entity_id',
+    'revision_id',
+    'langcode',
+    'delta',
+    'field_event_group_target_id',
+  ];
+
+  // We need to loop over the node table and revisions to set it
+  // to previous values.
+  $prefixes = ['node', 'node_revision'];
+  foreach ($prefixes as $prefix) {
+    // Table we are updating.
+    $event_group_table = "{$prefix}__field_event_group";
+    // Table that has know revisions.
+    $browser_title_table = "{$prefix}__field_browser_title";
+
+    // Get the entity/revision/langcode instances that have
+    // a value in the table. We won't update these.
+    $results = $db->select($event_group_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $found = [];
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      $found[$key] = $key;
+    }
+
+    // Now we are going to look for all the entity/revisions/langcode
+    // combos for a required field that everything should have. For
+    // this we use the oldest required field.
+    $results = $db->select($browser_title_table, 't')
+      ->fields('t', ['entity_id', 'revision_id', 'langcode'])
+      ->condition('bundle', $bundle)
+      ->condition('deleted', 0)
+      ->distinct()
+      ->execute();
+    $records = [];
+    // Now we loop through all the entity/revision/langcode combos
+    // that should be for everything, and insert a record into the
+    // event group table if there was not a previous value for that
+    // combo.
+    foreach ($results as $result) {
+      $key = $result->entity_id . '|' . $result->revision_id . '|' . $result->langcode;
+      if (!array_key_exists($key, $found)) {
+        $records[] = [
+          'bundle' => $bundle,
+          'deleted' => 0,
+          'entity_id' => $result->entity_id,
+          'revision_id' => $result->revision_id,
+          'langcode' => $result->langcode,
+          'delta' => 0,
+          'field_event_group_target_id' => $default_id,
+        ];
+      }
+    }
+    $insert = $db->insert($event_group_table)->fields($fields);
+    foreach ($records as $record) {
+      $insert->values($record);
+    }
+    $insert->execute();
+    $count = count($records);
+    \Drupal::logger($bundle)->notice("Created $count rows in $event_group_table.");
+  }
+
 }

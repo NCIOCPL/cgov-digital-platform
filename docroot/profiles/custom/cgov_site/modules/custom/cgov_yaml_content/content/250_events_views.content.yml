@@ -27,15 +27,30 @@
   field_credit:
     value: "C.A.D. Schjelderup"
 
+## We are reserving tids 4000 - 4099 for Event Group taxonomy
+## Event Group taxonomy
+- entity: "taxonomy_term"
+  vid: "cgov_event_group"
+  tid: 4000
+  name: "CGH"
+- entity: "taxonomy_term"
+  vid: "cgov_event_group"
+  tid: 4001
+  name: "DCB"
+
+## We are reserving tids 4100 - 5000 for Event Series taxonomy
 ## Event Series taxonomy
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4100
   name: "DCEG Events"
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4101
   name: "NCI Event Series"
 - entity: "taxonomy_term"
   vid: "cgov_event_series"
+  tid: 4102
   name: "Other Events"
 
 ## Upcoming event pages
@@ -62,7 +77,9 @@
   field_feature_card_description:
     - value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
   field_list_description:
-    - value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
+    - value: |
+        Group: CGH Series: NCI Event Series
+        Using Novel Methods to Understand How Distinct Behaviors Impact Health
   field_page_description:
     value: 'Using Novel Methods to Understand How Distinct Behaviors Impact Health'
   field_event_start_date:
@@ -70,6 +87,13 @@
   field_event_end_date:
     value: '2019-07-11T11:30:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -133,7 +157,9 @@
   field_feature_card_description:
     - value: 'Center of Excellence in Chromosome Biology (CECB), offers an opportunity to learn more about the current status of chromosome structure'
   field_list_description:
-    - value: 'Center of Excellence in Chromosome Biology (CECB), offers an opportunity to learn more about the current status of chromosome structure'
+    - value: |
+        Group: DCB Series: NCI Event Series
+        Center of Excellence in Chromosome Biology (CECB), offers an opportunity to learn more about the current status of chromosome structure
   field_page_description:
     value: 'Center of Excellence in Chromosome Biology (CECB), offers an opportunity to learn more about the current status of chromosome structure'
   field_event_start_date:
@@ -141,6 +167,13 @@
   field_event_end_date:
     value: '2019-11-15T17:00:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -197,7 +230,9 @@
   field_feature_card_description:
     - value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
   field_list_description:
-    - value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
+    - value: |
+        Group: CGH Series: Other Events
+        Radiation Epidemiology & Dosimetry Course September 9-12, 2019
   field_page_description:
     value: 'Radiation Epidemiology & Dosimetry Course September 9-12, 2019'
   field_event_start_date:
@@ -205,6 +240,13 @@
   field_event_end_date:
     value: '2019-12-12T17:00:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -261,6 +303,7 @@
         Become a part of our sustainable event and show your support for the UNC Children's Hospital by running the Krispy Kreme Challenge!
   field_list_description:
     - value: |
+        Group: CGH Series: Other Events
         Become a part of our sustainable event and show your support for the UNC Children's Hospital by running the Krispy Kreme Challenge!
   field_page_description:
     - value: |
@@ -270,6 +313,13 @@
   field_event_end_date:
     value: '2020-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -322,18 +372,25 @@
     - value: 'Test Future Event 1'
   field_feature_card_description:
     - value: |
-        I am testing future event pages.
+        Group: DCB Series: Other Events
   field_list_description:
     - value: |
-        I am testing future event pages.
+        Group: DCB Series: Other Events
   field_page_description:
     - value: |
-        I am testing future event pages.
+        Group: DCB Series: Other Events
   field_event_start_date:
     value: '2030-04-12T06:30:00'
   field_event_end_date:
     value: '2030-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -369,15 +426,25 @@
     - value: 'Test Future Event 2'
   field_feature_card_description:
     - value: |
-        I am testing future event pages.
+        Group: CGH Series: NCI Event Series
+  field_list_description:
+    - value: |
+        Group: CGH Series: NCI Event Series
   field_page_description:
     - value: |
-        I am testing future event pages.
+        Group: CGH Series: NCI Event Series
   field_event_start_date:
     value: '2040-04-12T06:30:00'
   field_event_end_date:
     value: '2040-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'CGH'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -413,18 +480,25 @@
     - value: 'Test Future Event 3'
   field_feature_card_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: DCEG Events
   field_list_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: DCEG Events
   field_page_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: DCEG Events
   field_event_start_date:
     value: '2050-04-12T06:30:00'
   field_event_end_date:
     value: '2050-04-12T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -460,18 +534,25 @@
     - value: 'Test Future Event 4'
   field_feature_card_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: NCI Event Series
   field_list_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: NCI Event Series
   field_page_description:
     - value: |
-        I am describing future event pages.
+        Group: DCB Series: NCI Event Series
   field_event_start_date:
     value: '2033-06-15T06:30:00'
   field_event_end_date:
     value: '2033-06-15T14:35:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'DCB'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -517,6 +598,13 @@
   field_event_end_date:
     value: '2019-04-16T12:00:00'
   field_all_day_event: 1
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'Default'
   field_event_series:
     - '#process':
         callback: 'reference'
@@ -579,7 +667,9 @@
   field_feature_card_description:
     - value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
   field_list_description:
-    - value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
+    - value: |
+        Group: Default Series: NCI Event Series
+        Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.
   field_page_description:
     value: 'Dr. Mark Schiffman will deliver the 2017 Robert S. Gordon, Jr. award lecture in epidemiology.'
   field_event_start_date:
@@ -587,6 +677,13 @@
   field_event_end_date:
     value: '2017-05-03T14:00:00'
   field_all_day_event: 0
+  field_event_group:
+    - '#process':
+        callback: 'reference'
+        args:
+          - 'taxonomy_term'
+          - vid: 'cgov_event_group'
+            name: 'Default'
   field_event_series:
     - '#process':
         callback: 'reference'
