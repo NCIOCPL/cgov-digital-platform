@@ -19,6 +19,12 @@ export default class GlossifyEditing extends Plugin {
     this._defineDataDowncast(conversion);
     this._preventLinksInDefinitions(conversion);
 
+    // Register nci-definition as an inline object so that <nci-definition>s are
+    // correctly recognized as inline elements in editing pipeline.
+    // This prevents converting spaces around definitions to `&nbsp;`s.
+    this.editor.data.htmlProcessor.domConverter.inlineObjectElements.push('nci-definition');
+    this.editor.editing.view.domConverter.inlineObjectElements.push('nci-definition');
+
     this.editor.commands.add(
       'glossifyAction',
       new GlossifyActionCommand(this.editor),
