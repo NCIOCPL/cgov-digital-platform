@@ -100,8 +100,18 @@ export default class GlossifyActionCommand extends Command {
    * @param {HTMLElement} contents the html of the suggestions
    */
   _setModalContentsToSuggestions(contents) {
+
     this.modalContents.replaceChildren();
-    this.modalContents.appendChild(contents);
+
+    // Why are the contents HTMLElement instead of a string you
+    // might wonder? Well that is because a checkbox's state
+    // of being checked is not serialized as part of innerText.
+    // Because createHtmlFromSuggestions adds a wrapping <div>
+    // to hold all the contents (which could be actually
+    // multiple <p> tags and the like) we need to extract the
+    // child nodes here, or we end up adding extra <div>
+    // elements wrapping the WYSIWYG contents.
+    this.modalContents.replaceChildren(...contents.childNodes);
     this.buttonContents.replaceChildren();
 
     const saveBtn = document.createElement('button')
